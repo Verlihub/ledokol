@@ -1,0 +1,118 @@
+[ 2.7.6 :: 2014-03-04 ]
+
+Fixed: Unknown user IP on unknown protocol command before user login
+Fixed: Ban and unban notification without reason
+Added: Full GeoIP information to user information, if supported by hub
+Added: Updated country code list according to Maxminds ISO-3166 standard, also added "EU=European Union" and "AP=Asia Pacific Region" missing country codes, report by Uhlik
+Added: "x" as multiplication character in calculator, you can use "*" or "x", idea by Uhlik
+Added: "*" in <days> parameter to delete all users with chosen class on registered users table cleanup, idea by Uhlik
+Added: !dropip <ip> command to drop users with specific IP address, sends notification to users with class classnotikick and higher
+Added: +citylive <cc> command to show live user city statistics by country code
+Added: mchistclass configuration to restrict main chat history to specific classes, idea by Lord_Zero
+Added: Help notes to help command, request by Meka][Meka
+Added: !ipinfo <ip> command to get GeoIP information about specific IP address
+Added: Feed notification for replaced chat messages, real message is displayed, configured with classnotirepl, idea by Lord_Zero
+Added: Separate kick time for clone detection, configured with miclonekicktime
+Changed: Corrected some English language strings, report by madkid
+
+[ 2.7.5 :: 2013-08-13 ]
+
+Fixed: Consider custom nick when sending replaced main chat and private message on antispam action 9
+Fixed: Duplication of IP gag entries, report by Uhlik
+Added: Consider custom sender nick in receivers private chat when sending private message
+Added: useripsupport configuration to enable $UserIP support for operators, off by default, request by Uhlik
+Added: Information to operators about replaced main chat message on antispam action 9
+Added: Update tables according to old version number so the script can load much faster
+Added: histautonewlinedel configuration to allow deletion of new lines in automatic history messages, default is on
+Added: Unknown protocol command detection before login, supported since Verlihub 1.0
+Added: unkbeforelogin configuration to disable unknown protocol command detection before login, on by default
+Added: Antispam action 10, hard ban the IP and drop user, hard ban feature must be enabled
+Added: Client supports and NMDC version to MyINFO check and user information
+Changed: Minimum value of histautolinemax is 0, means don't cut automatic history messages
+Changed: Manually added IP gag entries are saved permanently, those added by antispam and antiflood remain temporary, request by Uhlik
+Removed: Support for iConv
+Removed: Support for LuaSocket and its modules
+Removed: Hublist pinger feature
+Removed: Old client $Capabilities from unknown protocol command exception list
+
+[ 2.7.4 :: 2013-04-14 ]
+
+Fixed: Ban notification without reason, report by Uhlik
+Fixed: Invalid translation on !wmforce command for user without access, report by Uhlik
+Added: ulogautoclean = 30, meaning user logger will automatically delete entries older than 30 days, request by many people
+Added: Soft hyphen character to forbidden nick list by default, request by PetterOSS
+Added: Ability to use A1, A2 and --, unknown, in all country code functions
+Changed: Now using Team Elite Hublist instead of FearDC Hublist for user search
+Removed: $UserIP support, now supported by Verlihub
+
+[ 2.7.3 :: 2012-02-22 ]
+
+Fixed: Correct usage of percent character in string.gsub Lua function
+Fixed: Chat modes when changing for yourself
+Fixed: Unknown protocol command function for Verlihub 1.0.0
+Fixed: Broken IP gag flags
+Added: Support for Lua 5.2 and backward compatibility for Lua 5.1
+Added: Country code gag, request by Trumpy
+Changed: Using FearDC Hublist instead of QSDCHublist.com for user lookup
+Changed: User lookup no longer requires iConv
+
+[ 2.7.2 :: 2011-05-16 ]
+
+Fixed: Missing function parameter, report by Uhlik
+
+[ 2.7.1 :: 2011-05-16 ]
+
+Fixed: Garbage collection timer interval
+Fixed: Missing translation on blacklist notification
+Fixed: Custom nick removal when used by real user, report by Aeolide
+Fixed: Critical search filter vulnerability
+Added: $ConnectToMe protocol flood detection
+Added: Automatic Ledokol update check with custom interval, request by Marcel and Uhlik
+Added: Support for VH:GetTopic and VH:SetTopic
+Added: Custom character list for chat code, request by Maximum
+Added: Ability to add multiple hard IP bans at once, separate each IP by space
+Added: IP watch to notify about public user actions from IP or range, idea by Lord_Zero
+Added: Using CC chatroom share size as member counter
+Improved: Hard IP ban entry is always found in the beginning of a string
+Changed: Renamed configuration variable classnotictm to classnotibadctm
+Changed: Using country name in CC chatroom description
+
+[ 2.7.0 :: 2011-03-15 ]
+
+Fixed: Misspelling of configuration variable addspecialver
+Fixed: Spam detection after translit conversion
+Fixed: Some menu items are created when corresponding features are disabled, report by Uhlik
+Fixed: Flood detection before IP gag detection
+Fixed: Error on IP gag check, report by Trumpy
+Fixed: Cyrillic conversion table, report by Aeolide
+Fixed: Error when saving topic, report by Jaguar
+Added: Ability for users to see themselves as operators
+Added: Hard IP ban ability
+Added: Requirement to gain some uptime in order to use search engine
+Added: Blacklist support, very slow with large blacklists
+Added: Split fake share detection into same numbers and divide by unit detections
+Added: Current topic and its owner to statistics table
+Added: Clone detection actions
+Added: <cn> which represents country name in ccroomstyle variable
+Removed: nGrep support
+
+[ 2.6.9 :: 2011-01-14 ]
+
+Fixed: Allow messages to hub security bot for users not allowed to send PM, report by Trumpy
+Fixed: Lua error on !replug, report by Toecutter
+Fixed: Command logger against plugin commands
+Fixed: Replaced chat messages containing inappropriate replace variables
+Added: -L option for cURL to follow redirects, report by Marcel
+Added: clearclass configuration variable for !clear command restriction, request by Neolo
+Added: <avgshare>, <peakavgshare>, <peakavgsharetime> and <peakavgshareshrttime> replace variables, request by Uhlik
+Added: Accept case insensitive chat security code when chatcodeon is set to 2
+Added: Blocked PM list to disallow sending private messages to certain users
+Added: IP gag flags to gag in MC, PM or both, request by Marcel
+Added: Flood detection now drops, kicks, bans all users with detected IP instead of the last one only, request by Maximum
+Added: Cleanup for antispam and search filter, request by Marcel
+Added: Experts only section to Ledokol help
+Removed: LuaSocket and nGrep warning messages
+
+[ #.#.# :: ####-##-## ]
+
+Missing: Older changelogs are not available
