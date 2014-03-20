@@ -1,3 +1,8 @@
+[ 2.7.7 :: ####-##-## ]
+
+Fixed: Operator and user commands against multiple triggers in cmd_start_op and cmd_start_user
+Changed: Ban and unban notifications now use OnNewBan and OnUnBan callbacks instead of scanning for commands, report by Uhlik
+
 [ 2.7.6 :: 2014-03-04 ]
 
 Fixed: Unknown user IP on unknown protocol command before user login
