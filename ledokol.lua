@@ -74,7 +74,7 @@ over sixty different features for Verlihub.
 -- global storage variables and tables >>
 ---------------------------------------------------------------------
 
-ver_ledo = "2.7.6" -- ledokol version
+ver_ledo = "2.7.7" -- ledokol version
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -658,7 +658,7 @@ table_lang_def = {
 	[101] = "No rows to remove: %s",
 	[102] = "date",
 	[103] = "%s with class %s used command: %s",
-	[104] = "%s permanently banned: <%s> %s",
+	[104] = "",
 	[105] = "Deleted from chat rank list: %s",
 	[106] = "Not found in chat rank list: %s",
 	[107] = "Deleted from operator rank list: %s",
@@ -704,7 +704,7 @@ table_lang_def = {
 	[147] = "%s with IP %s and class %s kicked: <%s> %s",
 	[148] = "%s with class %s deleted %s statistics plugin entries older than %s days.",
 	[149] = "offset",
-	[150] = "%s unbanned: <%s> %s",
+	[150] = "",
 	[151] = "%s didn't get any search results.",
 	[152] = "Redirected %s with IP %s and class %s to %s: <%s> %s",
 	[153] = "Unknown protocol command from %s with IP %s and class %s: %s",
@@ -762,7 +762,7 @@ table_lang_def = {
 	[205] = "value",
 	[206] = "minutes",
 	[207] = "%s library version: %s",
-	[208] = "%s temporary banned for %s: <%s> %s",
+	[208] = "",
 	[209] = "lines",
 	[210] = "Couldn't add rank exception because already exists: %s",
 	[211] = "Added rank exception: %s",
@@ -1486,7 +1486,27 @@ table_lang_def = {
 	[929] = "Quoted parameters %s or %s must be used with quotes.",
 	[930] = "IP information",
 	[931] = "IP information not available: %s",
-	[932] = "Chat message replaced for user with class %s: <%s> %s"
+	[932] = "Chat message replaced for user with class %s: <%s> %s",
+	[933] = "IP %s permanently banned: <%s> %s",
+	[934] = "Nick %s permanently banned: <%s> %s",
+	[935] = "Range %s permanently banned: <%s> %s",
+	[936] = "Host %s permanently banned: <%s> %s",
+	[937] = "Share %s permanently banned: <%s> %s",
+	[938] = "Prefix %s permanently banned: <%s> %s",
+	[939] = "IP %s temporarily banned until %s: <%s> %s",
+	[940] = "Nick %s temporarily banned until %s: <%s> %s",
+	[941] = "Range %s temporarily banned until %s: <%s> %s",
+	[942] = "Host %s temporarily banned until %s: <%s> %s",
+	[943] = "Share %s temporarily banned until %s: <%s> %s",
+	[944] = "Prefix %s temporarily banned until %s: <%s> %s",
+	[945] = "IP %s unbanned: <%s> %s",
+	[946] = "Nick %s unbanned: <%s> %s",
+	[947] = "Range %s unbanned: <%s> %s",
+	[948] = "Host %s unbanned: <%s> %s",
+	[949] = "Share %s unbanned: <%s> %s",
+	[950] = "Prefix %s unbanned: <%s> %s",
+	[951] = "Nick and IP %s unbanned: <%s> %s",
+	[952] = "Other %s unbanned: <%s> %s",
 }
 
 ---------------------------------------------------------------------
@@ -1891,8 +1911,25 @@ function Main (file)
 		return 1
 	end
 
-	table_othsets ["optrig"] = getconfig ("cmd_start_op")
-	table_othsets ["ustrig"] = getconfig ("cmd_start_user")
+	-- set up operator and user triggers
+
+	local optrig = getconfig ("cmd_start_op")
+	table_othsets ["optrig"] = "["
+
+	for pos = 1, string.len (optrig) do
+		table_othsets ["optrig"] = table_othsets ["optrig"] .. "%" .. string.sub (optrig, pos, pos)
+	end
+
+	table_othsets ["optrig"] = table_othsets ["optrig"] .. "]"
+
+	local ustrig = getconfig ("cmd_start_user")
+	table_othsets ["ustrig"] = "["
+
+	for pos = 1, string.len (ustrig) do
+		table_othsets ["ustrig"] = table_othsets ["ustrig"] .. "%" .. string.sub (ustrig, pos, pos)
+	end
+
+	table_othsets ["ustrig"] = table_othsets ["ustrig"] .. "]"
 
 	-- update tables according to old version number
 
@@ -2096,7 +2133,7 @@ if string.find (data, "^"..table_othsets ["optrig"].."kick%s+%S+ .*$") then
 	elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["chatadd"].." %S+ .* %d+ %d+ %S+$") then
 		if ucl >= table_sets ["mincommandclass"] then
 			donotifycmd (nick, data, 0, ucl)
-			addchatroom (nick, string.sub (data, string.len (table_othsets ["optrig"]..table_cmnds ["chatadd"]) + 2, -1))
+			addchatroom (nick, string.sub (data, string.len (table_cmnds ["chatadd"]) + 3, -1))
 		else
 			commandanswer (nick, getlang (128))
 		end
@@ -2108,7 +2145,7 @@ if string.find (data, "^"..table_othsets ["optrig"].."kick%s+%S+ .*$") then
 	elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["chatdel"].." %S+$") then
 		if ucl >= table_sets ["mincommandclass"] then
 			donotifycmd (nick, data, 0, ucl)
-			delchatroom (nick, string.sub (data, string.len (table_othsets ["optrig"]..table_cmnds ["chatdel"]) + 2, -1))
+			delchatroom (nick, string.sub (data, string.len (table_cmnds ["chatdel"]) + 3, -1))
 		else
 			commandanswer (nick, getlang (128))
 		end
@@ -2132,7 +2169,7 @@ if string.find (data, "^"..table_othsets ["optrig"].."kick%s+%S+ .*$") then
 elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["remadd"].." %S+ .+ %d+ %d+ %d %d+$") then
 if ucl >= table_sets ["mincommandclass"] then
 donotifycmd (nick, data, 0, ucl)
-addreminder (nick, string.sub (data, string.len (table_othsets ["optrig"]..table_cmnds ["remadd"]) + 2, -1))
+addreminder (nick, string.sub (data, string.len (table_cmnds ["remadd"]) + 3, -1))
 else
 commandanswer (nick, getlang (128))
 end
@@ -2144,7 +2181,7 @@ return 0
 elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["remdel"].." %S+$") then
 if ucl >= table_sets ["mincommandclass"] then
 donotifycmd (nick, data, 0, ucl)
-delreminder (nick, string.sub (data, string.len (table_othsets ["optrig"]..table_cmnds ["remdel"]) + 2, -1))
+delreminder (nick, string.sub (data, string.len (table_cmnds ["remdel"]) + 3, -1))
 else
 commandanswer (nick, getlang (128))
 end
@@ -2168,7 +2205,7 @@ return 0
 elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["remshow"].." %S+$") then
 if ucl >= table_sets ["mincommandclass"] then
 donotifycmd (nick, data, 0, ucl)
-showreminder (nick, string.sub (data, string.len (table_othsets ["optrig"]..table_cmnds ["remshow"]) + 2, -1))
+showreminder (nick, string.sub (data, string.len (table_cmnds ["remshow"]) + 3, -1))
 else
 commandanswer (nick, getlang (128))
 end
@@ -2180,7 +2217,7 @@ return 0
 	elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["nopmadd"].." %S+ %d %d+ .+$") then
 		if ucl >= table_sets ["mincommandclass"] then
 			donotifycmd (nick, data, 0, ucl)
-			addnopm (nick, string.sub (data, string.len (table_othsets ["optrig"]..table_cmnds ["nopmadd"]) + 2, -1))
+			addnopm (nick, string.sub (data, string.len (table_cmnds ["nopmadd"]) + 3, -1))
 		else
 			commandanswer (nick, getlang (128))
 		end
@@ -2192,7 +2229,7 @@ return 0
 	elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["nopmdel"].." %S+$") then
 		if ucl >= table_sets ["mincommandclass"] then
 			donotifycmd (nick, data, 0, ucl)
-			delnopm (nick, string.sub (data, string.len (table_othsets ["optrig"]..table_cmnds ["nopmdel"]) + 2, -1))
+			delnopm (nick, string.sub (data, string.len (table_cmnds ["nopmdel"]) + 3, -1))
 		else
 			commandanswer (nick, getlang (128))
 		end
@@ -2216,7 +2253,7 @@ return 0
 	elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["rcmenuadd"].." \".+\" \".+\" %d %d+ %d+$") then
 		if ucl >= table_sets ["mincommandclass"] then
 			donotifycmd (nick, data, 0, ucl)
-			addrcmenu (nick, string.sub (data, string.len (table_othsets ["optrig"]..table_cmnds ["rcmenuadd"]) + 2, -1))
+			addrcmenu (nick, string.sub (data, string.len (table_cmnds ["rcmenuadd"]) + 3, -1))
 		else
 			commandanswer (nick, getlang (128))
 		end
@@ -2228,7 +2265,7 @@ return 0
 	elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["rcmenudel"].." %d+$") then
 		if ucl >= table_sets ["mincommandclass"] then
 			donotifycmd (nick, data, 0, ucl)
-			delrcmenu (nick, string.sub (data, string.len (table_othsets ["optrig"]..table_cmnds ["rcmenudel"]) + 2, -1))
+			delrcmenu (nick, string.sub (data, string.len (table_cmnds ["rcmenudel"]) + 3, -1))
 		else
 			commandanswer (nick, getlang (128))
 		end
@@ -2252,7 +2289,7 @@ return 0
 	elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["ipwatadd"].." %S+ \".+\" %d$") then
 		if ucl >= table_sets ["mincommandclass"] then
 			donotifycmd (nick, data, 0, ucl)
-			addipwat (nick, string.sub (data, string.len (table_othsets ["optrig"]..table_cmnds ["ipwatadd"]) + 2, -1))
+			addipwat (nick, string.sub (data, string.len (table_cmnds ["ipwatadd"]) + 3, -1))
 		else
 			commandanswer (nick, getlang (128))
 		end
@@ -2264,7 +2301,7 @@ return 0
 	elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["ipwatdel"].." %S+$") then
 		if ucl >= table_sets ["mincommandclass"] then
 			donotifycmd (nick, data, 0, ucl)
-			delipwat (nick, string.sub (data, string.len (table_othsets ["optrig"]..table_cmnds ["ipwatdel"]) + 2, -1))
+			delipwat (nick, string.sub (data, string.len (table_cmnds ["ipwatdel"]) + 3, -1))
 		else
 			commandanswer (nick, getlang (128))
 		end
@@ -2288,7 +2325,7 @@ return 0
 	elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["hban"].." .+ \".+\"$") then
 		if ucl >= table_sets ["mincommandclass"] then
 			donotifycmd (nick, data, 0, ucl)
-			addhban (nick, string.sub (data, string.len (table_othsets ["optrig"]..table_cmnds ["hban"]) + 2, -1))
+			addhban (nick, string.sub (data, string.len (table_cmnds ["hban"]) + 3, -1))
 		else
 			commandanswer (nick, getlang (128))
 		end
@@ -2300,7 +2337,7 @@ return 0
 	elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["hunban"].." %S+$") then
 		if ucl >= table_sets ["mincommandclass"] then
 			donotifycmd (nick, data, 0, ucl)
-			delhban (nick, string.sub (data, string.len (table_othsets ["optrig"]..table_cmnds ["hunban"]) + 2, -1))
+			delhban (nick, string.sub (data, string.len (table_cmnds ["hunban"]) + 3, -1))
 		else
 			commandanswer (nick, getlang (128))
 		end
@@ -2324,7 +2361,7 @@ return 0
 elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["newsadd"].." .+$") then
 if ucl >= table_sets ["mincommandclass"] then
 donotifycmd (nick, data, 0, ucl)
-addnews (nick, string.sub (data, string.len (table_othsets ["optrig"]..table_cmnds ["newsadd"]) + 2, -1))
+addnews (nick, string.sub (data, string.len (table_cmnds ["newsadd"]) + 3, -1))
 else
 commandanswer (nick, getlang (128))
 end
@@ -2336,7 +2373,7 @@ return 0
 elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["newsdel"].." .+$") then
 if ucl >= table_sets ["mincommandclass"] then
 donotifycmd (nick, data, 0, ucl)
-delnews (nick, string.sub (data, string.len (table_othsets ["optrig"]..table_cmnds ["newsdel"]) + 2, -1))
+delnews (nick, string.sub (data, string.len (table_cmnds ["newsdel"]) + 3, -1))
 else
 commandanswer (nick, getlang (128))
 end
@@ -2348,7 +2385,7 @@ return 0
 	elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["reladd"].." \".+\" \".+\"$") or string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["reladd"].." \".+\" \".+\" %S+$") then
 		if ucl >= table_sets ["relmodclass"] then
 			donotifycmd (nick, data, 0, ucl)
-			addrelease (nick, string.sub (data, string.len (table_othsets ["optrig"]..table_cmnds ["reladd"]) + 2, -1))
+			addrelease (nick, string.sub (data, string.len (table_cmnds ["reladd"]) + 3, -1))
 		else
 			commandanswer (nick, getlang (128))
 		end
@@ -2360,7 +2397,7 @@ return 0
 	elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["reldel"].." %S+ .+$") then
 		if ucl >= table_sets ["relmodclass"] then
 			donotifycmd (nick, data, 0, ucl)
-			delrelease (nick, string.sub (data, string.len (table_othsets ["optrig"]..table_cmnds ["reldel"]) + 2, -1))
+			delrelease (nick, string.sub (data, string.len (table_cmnds ["reldel"]) + 3, -1))
 		else
 			commandanswer (nick, getlang (128))
 		end
@@ -2372,7 +2409,7 @@ return 0
 	elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["respadd"].." \".+\" \".+\" %d+$") then
 		if ucl >= table_sets ["mincommandclass"] then
 			donotifycmd (nick, data, 0, ucl)
-			addresponder (nick, string.sub (data, string.len (table_othsets ["optrig"]..table_cmnds ["respadd"]) + 2, -1))
+			addresponder (nick, string.sub (data, string.len (table_cmnds ["respadd"]) + 3, -1))
 		else
 			commandanswer (nick, getlang (128))
 		end
@@ -2384,7 +2421,7 @@ return 0
 	elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["respdel"].." %d+$") then
 		if ucl >= table_sets ["mincommandclass"] then
 			donotifycmd (nick, data, 0, ucl)
-			delresponder (nick, string.sub (data, string.len (table_othsets ["optrig"]..table_cmnds ["respdel"]) + 2, -1))
+			delresponder (nick, string.sub (data, string.len (table_cmnds ["respdel"]) + 3, -1))
 		else
 			commandanswer (nick, getlang (128))
 		end
@@ -2408,7 +2445,7 @@ return 0
 	elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["respexadd"].." %S+$") then
 		if ucl >= table_sets ["mincommandclass"] then
 			donotifycmd (nick, data, 0, ucl)
-			addrespex (nick, string.sub (data, string.len (table_othsets ["optrig"]..table_cmnds ["respexadd"]) + 2, -1))
+			addrespex (nick, string.sub (data, string.len (table_cmnds ["respexadd"]) + 3, -1))
 		else
 			commandanswer (nick, getlang (128))
 		end
@@ -2420,7 +2457,7 @@ return 0
 	elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["respexdel"].." %S+$") then
 		if ucl >= table_sets ["mincommandclass"] then
 			donotifycmd (nick, data, 0, ucl)
-			delrespex (nick, string.sub (data, string.len (table_othsets ["optrig"]..table_cmnds ["respexdel"]) + 2, -1))
+			delrespex (nick, string.sub (data, string.len (table_cmnds ["respexdel"]) + 3, -1))
 		else
 			commandanswer (nick, getlang (128))
 		end
@@ -2444,7 +2481,7 @@ return 0
 	elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["repladd"].." \".+\" \".+\" %d+$") then
 		if ucl >= table_sets ["mincommandclass"] then
 			donotifycmd (nick, data, 0, ucl)
-			addreplacer (nick, string.sub (data, string.len (table_othsets ["optrig"]..table_cmnds ["repladd"]) + 2, -1))
+			addreplacer (nick, string.sub (data, string.len (table_cmnds ["repladd"]) + 3, -1))
 		else
 			commandanswer (nick, getlang (128))
 		end
@@ -2456,7 +2493,7 @@ return 0
 	elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["repldel"].." %d+$") then
 		if ucl >= table_sets ["mincommandclass"] then
 			donotifycmd (nick, data, 0, ucl)
-			delreplacer (nick, string.sub (data, string.len (table_othsets ["optrig"]..table_cmnds ["repldel"]) + 2, -1))
+			delreplacer (nick, string.sub (data, string.len (table_cmnds ["repldel"]) + 3, -1))
 		else
 			commandanswer (nick, getlang (128))
 		end
@@ -2480,7 +2517,7 @@ return 0
 	elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["replexadd"].." %S+$") then
 		if ucl >= table_sets ["mincommandclass"] then
 			donotifycmd (nick, data, 0, ucl)
-			addreplex (nick, string.sub (data, string.len (table_othsets ["optrig"]..table_cmnds ["replexadd"]) + 2, -1))
+			addreplex (nick, string.sub (data, string.len (table_cmnds ["replexadd"]) + 3, -1))
 		else
 			commandanswer (nick, getlang (128))
 		end
@@ -2492,7 +2529,7 @@ return 0
 	elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["replexdel"].." %S+$") then
 		if ucl >= table_sets ["mincommandclass"] then
 			donotifycmd (nick, data, 0, ucl)
-			delreplex (nick, string.sub (data, string.len (table_othsets ["optrig"]..table_cmnds ["replexdel"]) + 2, -1))
+			delreplex (nick, string.sub (data, string.len (table_cmnds ["replexdel"]) + 3, -1))
 		else
 			commandanswer (nick, getlang (128))
 		end
@@ -2516,7 +2553,7 @@ return 0
 elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["antiadd"].." .+ %d %d+ %d$") then
 if ucl >= table_sets ["mincommandclass"] then
 donotifycmd (nick, data, 0, ucl)
-addantientry (nick, string.sub (data, string.len (table_othsets ["optrig"]..table_cmnds ["antiadd"]) + 2, -1))
+addantientry (nick, string.sub (data, string.len (table_cmnds ["antiadd"]) + 3, -1))
 else
 commandanswer (nick, getlang (128))
 end
@@ -2528,7 +2565,7 @@ return 0
 elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["antidel"].." .+$") then
 if ucl >= table_sets ["mincommandclass"] then
 donotifycmd (nick, data, 0, ucl)
-delantientry (nick, string.sub (data, string.len (table_othsets ["optrig"]..table_cmnds ["antidel"]) + 2, -1))
+delantientry (nick, string.sub (data, string.len (table_cmnds ["antidel"]) + 3, -1))
 else
 commandanswer (nick, getlang (128))
 end
@@ -2552,7 +2589,7 @@ return 0
 elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["antiexadd"].." .+$") then
 if ucl >= table_sets ["mincommandclass"] then
 donotifycmd (nick, data, 0, ucl)
-addexentry (nick, string.sub (data, string.len (table_othsets ["optrig"]..table_cmnds ["antiexadd"]) + 2, -1))
+addexentry (nick, string.sub (data, string.len (table_cmnds ["antiexadd"]) + 3, -1))
 else
 commandanswer (nick, getlang (128))
 end
@@ -2564,7 +2601,7 @@ return 0
 elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["antiexdel"].." .+$") then
 if ucl >= table_sets ["mincommandclass"] then
 donotifycmd (nick, data, 0, ucl)
-delexentry (nick, string.sub (data, string.len (table_othsets ["optrig"]..table_cmnds ["antiexdel"]) + 2, -1))
+delexentry (nick, string.sub (data, string.len (table_cmnds ["antiexdel"]) + 3, -1))
 else
 commandanswer (nick, getlang (128))
 end
@@ -2588,7 +2625,7 @@ return 0
 elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["sefiadd"].." .+ %d %d %d$") then
 if ucl >= table_sets ["mincommandclass"] then
 donotifycmd (nick, data, 0, ucl)
-addsefientry (nick, string.sub (data, string.len (table_othsets ["optrig"]..table_cmnds ["sefiadd"]) + 2, -1))
+addsefientry (nick, string.sub (data, string.len (table_cmnds ["sefiadd"]) + 3, -1))
 else
 commandanswer (nick, getlang (128))
 end
@@ -2600,7 +2637,7 @@ return 0
 elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["sefidel"].." .+$") then
 if ucl >= table_sets ["mincommandclass"] then
 donotifycmd (nick, data, 0, ucl)
-delsefientry (nick, string.sub (data, string.len (table_othsets ["optrig"]..table_cmnds ["sefidel"]) + 2, -1))
+delsefientry (nick, string.sub (data, string.len (table_cmnds ["sefidel"]) + 3, -1))
 else
 commandanswer (nick, getlang (128))
 end
@@ -2624,7 +2661,7 @@ return 0
 elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["sefiexadd"].." .+$") then
 if ucl >= table_sets ["mincommandclass"] then
 donotifycmd (nick, data, 0, ucl)
-addsefiexentry (nick, string.sub (data, string.len (table_othsets ["optrig"]..table_cmnds ["sefiexadd"]) + 2, -1))
+addsefiexentry (nick, string.sub (data, string.len (table_cmnds ["sefiexadd"]) + 3, -1))
 else
 commandanswer (nick, getlang (128))
 end
@@ -2636,7 +2673,7 @@ return 0
 elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["sefiexdel"].." .+$") then
 if ucl >= table_sets ["mincommandclass"] then
 donotifycmd (nick, data, 0, ucl)
-delsefiexentry (nick, string.sub (data, string.len (table_othsets ["optrig"]..table_cmnds ["sefiexdel"]) + 2, -1))
+delsefiexentry (nick, string.sub (data, string.len (table_cmnds ["sefiexdel"]) + 3, -1))
 else
 commandanswer (nick, getlang (128))
 end
@@ -2659,7 +2696,7 @@ return 0
 
 elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["cmndset"].." %S+ %S+$") then
 if ucl >= table_sets ["mincommandclass"] then
-setledocmd (nick, ucl, string.sub (data, string.len (table_othsets ["optrig"]..table_cmnds ["cmndset"]) + 2, -1))
+setledocmd (nick, ucl, string.sub (data, string.len (table_cmnds ["cmndset"]) + 3, -1))
 else
 commandanswer (nick, getlang (128))
 end
@@ -2695,7 +2732,7 @@ return 0
 elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["cmndadd"].." .+ %d+$") then
 if ucl >= table_sets ["mincommandclass"] then
 donotifycmd (nick, data, 0, ucl)
-addcmdentry (nick, string.sub (data, string.len (table_othsets ["optrig"]..table_cmnds ["cmndadd"]) + 2, -1))
+addcmdentry (nick, string.sub (data, string.len (table_cmnds ["cmndadd"]) + 3, -1))
 else
 commandanswer (nick, getlang (128))
 end
@@ -2707,7 +2744,7 @@ return 0
 elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["cmnddel"].." .+$") then
 if ucl >= table_sets ["mincommandclass"] then
 donotifycmd (nick, data, 0, ucl)
-delcmdentry (nick, string.sub (data, string.len (table_othsets ["optrig"]..table_cmnds ["cmnddel"]) + 2, -1))
+delcmdentry (nick, string.sub (data, string.len (table_cmnds ["cmnddel"]) + 3, -1))
 else
 commandanswer (nick, getlang (128))
 end
@@ -2731,7 +2768,7 @@ return 0
 elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["cmndexadd"].." .+$") then
 if ucl >= table_sets ["mincommandclass"] then
 donotifycmd (nick, data, 0, ucl)
-addcmdexentry (nick, string.sub (data, string.len (table_othsets ["optrig"]..table_cmnds ["cmndexadd"]) + 2, -1))
+addcmdexentry (nick, string.sub (data, string.len (table_cmnds ["cmndexadd"]) + 3, -1))
 else
 commandanswer (nick, getlang (128))
 end
@@ -2743,7 +2780,7 @@ return 0
 elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["cmndexdel"].." .+$") then
 if ucl >= table_sets ["mincommandclass"] then
 donotifycmd (nick, data, 0, ucl)
-delcmdexentry (nick, string.sub (data, string.len (table_othsets ["optrig"]..table_cmnds ["cmndexdel"]) + 2, -1))
+delcmdexentry (nick, string.sub (data, string.len (table_cmnds ["cmndexdel"]) + 3, -1))
 else
 commandanswer (nick, getlang (128))
 end
@@ -2767,7 +2804,7 @@ return 0
 elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["authadd"].." %S+ .+$") then
 	if ucl >= table_sets ["mincommandclass"] then
 		donotifycmd (nick, data, 0, ucl)
-		addauthentry (nick, string.sub (data, string.len (table_othsets ["optrig"]..table_cmnds ["authadd"]) + 2, -1))
+		addauthentry (nick, string.sub (data, string.len (table_cmnds ["authadd"]) + 3, -1))
 	else
 		commandanswer (nick, getlang (128))
 	end
@@ -2779,7 +2816,7 @@ elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["authadd"]
 elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["authmod"].." %d+ .+$") then
 	if ucl >= table_sets ["mincommandclass"] then
 		donotifycmd (nick, data, 0, ucl)
-		modauthentry (nick, string.sub (data, string.len (table_othsets ["optrig"]..table_cmnds ["authmod"]) + 2, -1))
+		modauthentry (nick, string.sub (data, string.len (table_cmnds ["authmod"]) + 3, -1))
 	else
 		commandanswer (nick, getlang (128))
 	end
@@ -2791,7 +2828,7 @@ elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["authmod"]
 elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["authdel"].." %d+$") then
 	if ucl >= table_sets ["mincommandclass"] then
 		donotifycmd (nick, data, 0, ucl)
-		delauthentry (nick, string.sub (data, string.len (table_othsets ["optrig"]..table_cmnds ["authdel"]) + 2, -1))
+		delauthentry (nick, string.sub (data, string.len (table_cmnds ["authdel"]) + 3, -1))
 	else
 		commandanswer (nick, getlang (128))
 	end
@@ -2818,7 +2855,7 @@ if table_sets ["classnotiwelcome"] == 11 then
 donotifycmd (nick, data, 0, ucl)
 end
 
-forcewelcome (nick, string.sub (data, string.len (table_othsets ["optrig"]..table_cmnds ["wmforce"]) + 2, -1), ucl)
+forcewelcome (nick, string.sub (data, string.len (table_cmnds ["wmforce"]) + 3, -1), ucl)
 else
 commandanswer (nick, getlang (128))
 end
@@ -2842,7 +2879,7 @@ return 0
 	elseif string.find (data, "^" .. table_othsets ["optrig"] .. table_cmnds ["myhistory"] .. " %d+$") then
 		if (ucl >= table_sets ["mchistclass"]) and (table_sets ["histlimit"] > 0) then
 			donotifycmd (nick, data, 0, ucl)
-			sendownhistory (nick, string.sub (data, string.len (table_othsets ["optrig"] .. table_cmnds ["myhistory"]) + 2, -1))
+			sendownhistory (nick, string.sub (data, string.len (table_cmnds ["myhistory"]) + 3, -1))
 		else
 			commandanswer (nick, getlang (128))
 		end
@@ -2854,7 +2891,7 @@ return 0
 	elseif string.find (data, "^" .. table_othsets ["optrig"] .. table_cmnds ["history"] .. " %d+$") then
 		if (ucl >= table_sets ["mchistclass"]) and (table_sets ["histlimit"] > 0) then
 			donotifycmd (nick, data, 0, ucl)
-			sendmchistory (nick, string.sub (data, string.len (table_othsets ["optrig"] .. table_cmnds ["history"]) + 2, -1), 0)
+			sendmchistory (nick, string.sub (data, string.len (table_cmnds ["history"]) + 3, -1), 0)
 		else
 			commandanswer (nick, getlang (128))
 		end
@@ -2866,7 +2903,7 @@ return 0
 	elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["hubnews"].." %d+$") then
 		if ucl >= table_sets ["newsclass"] then
 			donotifycmd (nick, data, 0, ucl)
-			sendnews (nick, string.sub (data, string.len (table_othsets ["optrig"]..table_cmnds ["hubnews"]) + 2, -1), 0)
+			sendnews (nick, string.sub (data, string.len (table_cmnds ["hubnews"]) + 3, -1), 0)
 		else
 			commandanswer (nick, getlang (128))
 		end
@@ -2878,7 +2915,7 @@ return 0
 elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["calculate"].." %S+ %S %S+$") then
 if ucl >= table_sets ["minusrcommandclass"] then
 donotifycmd (nick, data, 0, ucl)
-calculate (nick, string.sub (data, string.len (table_othsets ["optrig"]..table_cmnds ["calculate"]) + 2, -1))
+calculate (nick, string.sub (data, string.len (table_cmnds ["calculate"]) + 3, -1))
 else
 commandanswer (nick, getlang (128))
 end
@@ -2901,7 +2938,7 @@ return 0
 
 elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["offmsg"].." %S+ .+$") then
 if ucl >= table_sets ["offmsgclass"] then
-sendoffmsg (nick, string.sub (data, string.len (table_othsets ["optrig"]..table_cmnds ["offmsg"]) + 2, -1), ucl)
+sendoffmsg (nick, string.sub (data, string.len (table_cmnds ["offmsg"]) + 3, -1), ucl)
 else
 commandanswer (nick, getlang (128))
 end
@@ -2925,7 +2962,7 @@ return 0
 	elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["realnick"].." %S+$") then
 		if table_sets ["custnickclass"] < 11 then
 			donotifycmd (nick, data, 0, ucl)
-			getrealnick (nick, string.sub (data, string.len (table_othsets ["optrig"]..table_cmnds ["realnick"]) + 2, -1))
+			getrealnick (nick, string.sub (data, string.len (table_cmnds ["realnick"]) + 3, -1))
 		else
 			commandanswer (nick, getlang (128))
 		end
@@ -2936,7 +2973,7 @@ return 0
 
 	elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["nick"].."$") or string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["nick"].." .+$") then
 		if ucl >= table_sets ["custnickclass"] then
-			setcustnick (nick, string.sub (data, string.len (table_othsets ["optrig"]..table_cmnds ["nick"]) + 2, -1), ucl)
+			setcustnick (nick, string.sub (data, string.len (table_cmnds ["nick"]) + 3, -1), ucl)
 		else
 			commandanswer (nick, getlang (128))
 		end
@@ -2963,7 +3000,7 @@ if table_sets ["classnotiwelcome"] == 11 then
 donotifycmd (nick, data, 0, ucl)
 end
 
-setwelcome (nick, string.sub (data, string.len (table_othsets ["optrig"]..table_cmnds ["wmset"]) + 2, -1), ucl)
+setwelcome (nick, string.sub (data, string.len (table_cmnds ["wmset"]) + 3, -1), ucl)
 else
 commandanswer (nick, getlang (128))
 end
@@ -2975,7 +3012,7 @@ return 0
 	elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["relfind"].." .+$") then
 		if ucl >= table_sets ["minusrcommandclass"] then
 			donotifycmd (nick, data, 0, ucl)
-			findrelease (nick, string.sub (data, string.len (table_othsets ["optrig"]..table_cmnds ["relfind"]) + 2, -1))
+			findrelease (nick, string.sub (data, string.len (table_cmnds ["relfind"]) + 3, -1))
 		else
 			commandanswer (nick, getlang (128))
 		end
@@ -2987,7 +3024,7 @@ return 0
 	elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["rellist"].." %S+ %d+$") or string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["rellist"].." %S+ %d+ .+$") then
 		if ucl >= table_sets ["minusrcommandclass"] then
 			donotifycmd (nick, data, 0, ucl)
-			listrelease (nick, string.sub (data, string.len (table_othsets ["optrig"]..table_cmnds ["rellist"]) + 2, -1))
+			listrelease (nick, string.sub (data, string.len (table_cmnds ["rellist"]) + 3, -1))
 		else
 			commandanswer (nick, getlang (128))
 		end
@@ -3035,7 +3072,7 @@ return 0
 	elseif string.find (data, "^" .. table_othsets ["optrig"] .. table_cmnds ["citylive"] .. " [%a%d]+$") then
 		if ucl >= table_sets ["ccstatsclass"] then
 			donotifycmd (nick, data, 0, ucl)
-			sendlivecity (nick, string.sub (data, string.len (table_othsets ["optrig"] .. table_cmnds ["citylive"]) + 2, -1))
+			sendlivecity (nick, string.sub (data, string.len (table_cmnds ["citylive"]) + 3, -1))
 		else
 			commandanswer (nick, getlang (128))
 		end
@@ -3119,7 +3156,7 @@ return 0
 	elseif string.find (data, "^" .. table_othsets ["optrig"] .. table_cmnds ["ulog"] .. " %S+ .+ %d+$") then
 		if (ucl >= table_sets ["mincommandclass"]) and (table_sets ["enableuserlog"] == 1) then
 			donotifycmd (nick, data, 0, ucl)
-			showuserlog (nick, string.sub (data, string.len (table_othsets ["optrig"] .. table_cmnds ["ulog"]) + 2, -1))
+			showuserlog (nick, string.sub (data, string.len (table_cmnds ["ulog"]) + 3, -1))
 		else
 			commandanswer (nick, getlang (128))
 		end
@@ -3131,7 +3168,7 @@ return 0
 elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["clog"].." %d+$") then
 	if (ucl >= table_sets ["mincommandclass"]) and (table_sets ["enablecmdlog"] > 0) then
 		donotifycmd (nick, data, 0, ucl)
-		showcmdlog (nick, ucl, string.sub (data, string.len (table_othsets ["optrig"]..table_cmnds ["clog"]) + 2, -1))
+		showcmdlog (nick, ucl, string.sub (data, string.len (table_cmnds ["clog"]) + 3, -1))
 	else
 		commandanswer (nick, getlang (128))
 	end
@@ -3143,7 +3180,7 @@ elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["clog"].."
 	elseif string.find (data, "^" .. table_othsets ["optrig"] .. table_cmnds ["userinfo"] .. " %S+$") then
 		if ucl >= table_sets ["mincommandclass"] then
 			donotifycmd (nick, data, 0, ucl)
-			showuserinfo (nick, string.sub (data, string.len (table_othsets ["optrig"] .. table_cmnds ["userinfo"]) + 2, -1))
+			showuserinfo (nick, string.sub (data, string.len (table_cmnds ["userinfo"]) + 3, -1))
 		else
 			commandanswer (nick, getlang (128))
 		end
@@ -3155,7 +3192,7 @@ elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["clog"].."
 	elseif string.find (data, "^" .. table_othsets ["optrig"] .. table_cmnds ["ipinfo"] .. " %d+%.%d+%.%d+%.%d+$") then
 		if ucl >= table_sets ["mincommandclass"] then
 			donotifycmd (nick, data, 0, ucl)
-			showipinfo (nick, string.sub (data, string.len (table_othsets ["optrig"] .. table_cmnds ["ipinfo"]) + 2, -1))
+			showipinfo (nick, string.sub (data, string.len (table_cmnds ["ipinfo"]) + 3, -1))
 		else
 			commandanswer (nick, getlang (128))
 		end
@@ -3167,7 +3204,7 @@ elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["clog"].."
 elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["seen"].." %S+$") then
 	if ucl >= table_sets ["mincommandclass"] then
 		donotifycmd (nick, data, 0, ucl)
-		seenlookup (nick, string.sub (data, string.len (table_othsets ["optrig"]..table_cmnds ["seen"]) + 2, -1))
+		seenlookup (nick, string.sub (data, string.len (table_cmnds ["seen"]) + 3, -1))
 	else
 		commandanswer (nick, getlang (128))
 	end
@@ -3178,7 +3215,7 @@ elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["seen"].."
 
 	elseif string.find (data, "^" .. table_othsets ["optrig"] .. table_cmnds ["dropip"] .. " %d+%.%d+%.%d+%.%d+$") then
 		if ucl >= table_sets ["mincommandclass"] then
-			dropip (nick, string.sub (data, string.len (table_othsets ["optrig"] .. table_cmnds ["dropip"]) + 2, -1))
+			dropip (nick, string.sub (data, string.len (table_cmnds ["dropip"]) + 3, -1))
 		else
 			commandanswer (nick, getlang (128))
 		end
@@ -3190,7 +3227,7 @@ elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["seen"].."
 	elseif string.find (data, "^" .. table_othsets ["optrig"] .. table_cmnds ["gagipadd"] .. " %S+ %d$") then
 		if ucl >= table_sets ["mincommandclass"] then
 			donotifycmd (nick, data, 0, ucl)
-			gagipadd (nick, string.sub (data, string.len (table_othsets ["optrig"] .. table_cmnds ["gagipadd"]) + 2, -1))
+			gagipadd (nick, string.sub (data, string.len (table_cmnds ["gagipadd"]) + 3, -1))
 		else
 			commandanswer (nick, getlang (128))
 		end
@@ -3202,7 +3239,7 @@ elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["seen"].."
 	elseif string.find (data, "^" .. table_othsets ["optrig"] .. table_cmnds ["gagipdel"] .. " %S+$") then
 		if ucl >= table_sets ["mincommandclass"] then
 			donotifycmd (nick, data, 0, ucl)
-			gagipdel (nick, string.sub (data, string.len (table_othsets ["optrig"] .. table_cmnds ["gagipdel"]) + 2, -1))
+			gagipdel (nick, string.sub (data, string.len (table_cmnds ["gagipdel"]) + 3, -1))
 		else
 			commandanswer (nick, getlang (128))
 		end
@@ -3226,7 +3263,7 @@ elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["seen"].."
 	elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["gagccadd"].." [%a%-][%a%d%-] %d$") then
 		if ucl >= table_sets ["mincommandclass"] then
 			donotifycmd (nick, data, 0, ucl)
-			gagccadd (nick, string.sub (data, string.len (table_othsets ["optrig"]..table_cmnds ["gagccadd"]) + 2, -1))
+			gagccadd (nick, string.sub (data, string.len (table_cmnds ["gagccadd"]) + 3, -1))
 		else
 			commandanswer (nick, getlang (128))
 		end
@@ -3238,7 +3275,7 @@ elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["seen"].."
 	elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["gagccdel"].." [%a%d%-%*]+$") then
 		if ucl >= table_sets ["mincommandclass"] then
 			donotifycmd (nick, data, 0, ucl)
-			gagccdel (nick, string.sub (data, string.len (table_othsets ["optrig"]..table_cmnds ["gagccdel"]) + 2, -1))
+			gagccdel (nick, string.sub (data, string.len (table_cmnds ["gagccdel"]) + 3, -1))
 		else
 			commandanswer (nick, getlang (128))
 		end
@@ -3265,7 +3302,7 @@ if table_sets ["classnotiwelcome"] == 11 then
 donotifycmd (nick, data, 0, ucl)
 end
 
-delwelcome (nick, string.sub (data, string.len (table_othsets ["optrig"]..table_cmnds ["wmdel"]) + 2, -1), ucl)
+delwelcome (nick, string.sub (data, string.len (table_cmnds ["wmdel"]) + 3, -1), ucl)
 else
 commandanswer (nick, getlang (128))
 end
@@ -3277,7 +3314,7 @@ return 0
 elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["hubadd"].." %S+ \".+\" \".*\"$") then
 if ucl >= table_sets ["mincommandclass"] then
 donotifycmd (nick, data, 0, ucl)
-hublistadd (nick, string.sub (data, string.len (table_othsets ["optrig"]..table_cmnds ["hubadd"]) + 2, -1))
+hublistadd (nick, string.sub (data, string.len (table_cmnds ["hubadd"]) + 3, -1))
 else
 commandanswer (nick, getlang (128))
 end
@@ -3289,7 +3326,7 @@ return 0
 elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["hubdel"].." %S+$") then
 if ucl >= table_sets ["mincommandclass"] then
 donotifycmd (nick, data, 0, ucl)
-hublistdel (nick, string.sub (data, string.len (table_othsets ["optrig"]..table_cmnds ["hubdel"]) + 2, -1))
+hublistdel (nick, string.sub (data, string.len (table_cmnds ["hubdel"]) + 3, -1))
 else
 commandanswer (nick, getlang (128))
 end
@@ -3319,7 +3356,7 @@ if ucl >= table_sets ["mincommandclass"] then
 			donotifycmd (nick, data, 0, ucl)
 		end
 
-		namereg (nick, string.sub (data, string.len (table_othsets ["optrig"]..table_cmnds ["regname"]) + 2, -1), ucl)
+		namereg (nick, string.sub (data, string.len (table_cmnds ["regname"]) + 3, -1), ucl)
 	end
 
 else
@@ -3333,7 +3370,7 @@ return 0
 elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["reglist"].." %d+ %d+x%d+$") or string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["reglist"].." %-%d %d+x%d+$") then
 if ucl >= table_sets ["mincommandclass"] then
 donotifycmd (nick, data, 0, ucl)
-sendreglist (nick, string.sub (data, string.len (table_othsets ["optrig"]..table_cmnds ["reglist"]) + 2, -1))
+sendreglist (nick, string.sub (data, string.len (table_cmnds ["reglist"]) + 3, -1))
 else
 commandanswer (nick, getlang (128))
 end
@@ -3345,7 +3382,7 @@ return 0
 elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["regfind"].." %S+$") then
 	if ucl >= table_sets ["mincommandclass"] then
 		donotifycmd (nick, data, 0, ucl)
-		findreglist (nick, string.sub (data, string.len (table_othsets ["optrig"]..table_cmnds ["regfind"]) + 2, -1))
+		findreglist (nick, string.sub (data, string.len (table_cmnds ["regfind"]) + 3, -1))
 	else
 		commandanswer (nick, getlang (128))
 	end
@@ -3369,7 +3406,7 @@ return 0
 elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["readlog"].." %S+ %d+$") then
 if ucl >= table_sets ["mincommandclass"] then
 donotifycmd (nick, data, 0, ucl)
-logsread (nick, string.sub (data, string.len (table_othsets ["optrig"]..table_cmnds ["readlog"]) + 2, -1))
+logsread (nick, string.sub (data, string.len (table_cmnds ["readlog"]) + 3, -1))
 else
 commandanswer (nick, getlang (128))
 end
@@ -3381,7 +3418,7 @@ return 0
 elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["randel"].." %S+ %S+$") then
 if ucl >= table_sets ["mincommandclass"] then
 donotifycmd (nick, data, 0, ucl)
-delrank (nick, string.sub (data, string.len (table_othsets ["optrig"]..table_cmnds ["randel"]) + 2, -1))
+delrank (nick, string.sub (data, string.len (table_cmnds ["randel"]) + 3, -1))
 else
 commandanswer (nick, getlang (128))
 end
@@ -3393,7 +3430,7 @@ return 0
 elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["ranexadd"].." %S+$") then
 if ucl >= table_sets ["mincommandclass"] then
 donotifycmd (nick, data, 0, ucl)
-addrankex (nick, string.sub (data, string.len (table_othsets ["optrig"]..table_cmnds ["ranexadd"]) + 2, -1))
+addrankex (nick, string.sub (data, string.len (table_cmnds ["ranexadd"]) + 3, -1))
 else
 commandanswer (nick, getlang (128))
 end
@@ -3405,7 +3442,7 @@ return 0
 elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["ranexdel"].." %S+$") then
 if ucl >= table_sets ["mincommandclass"] then
 donotifycmd (nick, data, 0, ucl)
-delrankex (nick, string.sub (data, string.len (table_othsets ["optrig"]..table_cmnds ["ranexdel"]) + 2, -1))
+delrankex (nick, string.sub (data, string.len (table_cmnds ["ranexdel"]) + 3, -1))
 else
 commandanswer (nick, getlang (128))
 end
@@ -3432,7 +3469,7 @@ if table_sets ["classnotiledoact"] == 11 then
 donotifycmd (nick, data, 0, ucl)
 end
 
-cleanupranks (nick, string.sub (data, string.len (table_othsets ["optrig"]..table_cmnds ["ranclean"]) + 2, -1), ucl)
+cleanupranks (nick, string.sub (data, string.len (table_cmnds ["ranclean"]) + 3, -1), ucl)
 else
 commandanswer (nick, getlang (128))
 end
@@ -3459,7 +3496,7 @@ if table_sets ["classnotisay"] == 11 then
 donotifycmd (nick, data, 0, ucl)
 end
 
-sendsay (nick, string.sub (data, string.len (table_othsets ["optrig"]..table_cmnds ["say"]) + 2, -1), ucl)
+sendsay (nick, string.sub (data, string.len (table_cmnds ["say"]) + 3, -1), ucl)
 else
 commandanswer (nick, getlang (128))
 end
@@ -3483,7 +3520,7 @@ return 0
 elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["mode"].." .+ %S+$") then
 	if ucl >= table_sets ["chatmodeclass"] then
 		donotifycmd (nick, data, 0, ucl)
-		setmode (nick, string.sub (data, string.len (table_othsets ["optrig"]..table_cmnds ["mode"]) + 2, -1))
+		setmode (nick, string.sub (data, string.len (table_cmnds ["mode"]) + 3, -1))
 	else
 		commandanswer (nick, getlang (128))
 	end
@@ -3495,7 +3532,7 @@ elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["mode"].."
 elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["mode"].." %S+$") then
 	if ucl >= table_sets ["chatmodeclass"] then
 		donotifycmd (nick, data, 0, ucl)
-		setmode (nick, reppatchars (tolow (nick)).." "..string.sub (data, string.len (table_othsets ["optrig"]..table_cmnds ["mode"]) + 2, -1))
+		setmode (nick, reppatchars (tolow (nick)).." "..string.sub (data, string.len (table_cmnds ["mode"]) + 3, -1))
 	else
 		commandanswer (nick, getlang (128))
 	end
@@ -3606,7 +3643,7 @@ if table_sets ["classnoticonfig"] == 11 then
 donotifycmd (nick, data, 0, ucl)
 end
 
-setledoconf (nick, ucl, string.sub (data, string.len (table_othsets ["optrig"]..table_cmnds ["ledoset"]) + 2, -1))
+setledoconf (nick, ucl, string.sub (data, string.len (table_cmnds ["ledoset"]) + 3, -1))
 else
 commandanswer (nick, getlang (128))
 end
@@ -3635,7 +3672,7 @@ elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["ledosql"]
 
 	if (getledoconf ("allow_sql") == 1) and (ucl == 10) then
 		donotifycmd (nick, data, 10, ucl)
-		local _, rows = VH:SQLQuery (repnmdcinchars (string.sub (data, string.len (table_othsets ["optrig"]..table_cmnds ["ledosql"]) + 2, -1)))
+		local _, rows = VH:SQLQuery (repnmdcinchars (string.sub (data, string.len (table_cmnds ["ledosql"]) + 3, -1)))
 
 		if rows > 0 then
 			local anentry = ""
@@ -3672,7 +3709,7 @@ elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["ledoshell
 
 	if (getledoconf ("allow_shell") == 1) and (ucl == 10) then
 		donotifycmd (nick, data, 10, ucl)
-		local res, err = os.execute (repnmdcinchars (string.sub (data, string.len (table_othsets ["optrig"]..table_cmnds ["ledoshell"]) + 2, -1)).." > \""..table_othsets ["cfgdir"]..table_othsets ["tmpfile"].."\" 2>&1")
+		local res, err = os.execute (repnmdcinchars (string.sub (data, string.len (table_cmnds ["ledoshell"]) + 3, -1)).." > \""..table_othsets ["cfgdir"]..table_othsets ["tmpfile"].."\" 2>&1")
 
 		if res then
 			local f = io.open (table_othsets ["cfgdir"]..table_othsets ["tmpfile"], "r")
@@ -3709,7 +3746,7 @@ elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["ledoshell
 				donotifycmd (nick, data, 0, ucl)
 			end
 
-			cleanuptable (nick, string.sub (data, string.len (table_othsets ["optrig"]..table_cmnds ["cleanup"]) + 2, -1), ucl)
+			cleanuptable (nick, string.sub (data, string.len (table_cmnds ["cleanup"]) + 3, -1), ucl)
 		else
 			commandanswer (nick, getlang (128))
 		end
@@ -3724,7 +3761,7 @@ elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["ledoshell
 				donotifycmd (nick, data, 0, ucl)
 			end
 
-			altcleanuptable (nick, string.sub (data, string.len (table_othsets ["optrig"] .. table_cmnds ["cleanup"]) + 2, -1), ucl)
+			altcleanuptable (nick, string.sub (data, string.len (table_cmnds ["cleanup"]) + 3, -1), ucl)
 		else
 			commandanswer (nick, getlang (128))
 		end
@@ -3736,7 +3773,7 @@ elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["ledoshell
 	elseif string.find (data, "^" .. table_othsets ["optrig"] .. table_cmnds ["myinfadd"] .. " %S+ .+$")--[[ or string.find (data, "^" .. table_othsets ["optrig"] .. table_cmnds ["myinfadd"] .. " %S+ .+ %d+[%u%l]$")]] then
 		if ucl >= table_sets ["mincommandclass"] then
 			donotifycmd (nick, data, 0, ucl)
-			addmyinfoentry (nick, string.sub (data, string.len (table_othsets ["optrig"] .. table_cmnds ["myinfadd"]) + 2, -1))
+			addmyinfoentry (nick, string.sub (data, string.len (table_cmnds ["myinfadd"]) + 3, -1))
 		else
 			commandanswer (nick, getlang (128))
 		end
@@ -3748,7 +3785,7 @@ elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["ledoshell
 	elseif string.find (data, "^" .. table_othsets ["optrig"] .. table_cmnds ["myinfdel"] .. " %S+ .+$") then
 		if ucl >= table_sets ["mincommandclass"] then
 			donotifycmd (nick, data, 0, ucl)
-			delmyinfoentry (nick, string.sub (data, string.len (table_othsets ["optrig"] .. table_cmnds ["myinfdel"]) + 2, -1))
+			delmyinfoentry (nick, string.sub (data, string.len (table_cmnds ["myinfdel"]) + 3, -1))
 		else
 			commandanswer (nick, getlang (128))
 		end
@@ -3760,7 +3797,7 @@ elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["ledoshell
 	elseif string.find (data, "^" .. table_othsets ["optrig"] .. table_cmnds ["myinflist"] .. " %S+$") then
 		if ucl >= table_sets ["mincommandclass"] then
 			donotifycmd (nick, data, 0, ucl)
-			listmyinfoentry (nick, string.sub (data, string.len (table_othsets ["optrig"] .. table_cmnds ["myinflist"]) + 2, -1))
+			listmyinfoentry (nick, string.sub (data, string.len (table_cmnds ["myinflist"]) + 3, -1))
 		else
 			commandanswer (nick, getlang (128))
 		end
@@ -3772,7 +3809,7 @@ elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["ledoshell
 elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["protadd"].." .+$") then
 if ucl >= table_sets ["mincommandclass"] then
 donotifycmd (nick, data, 0, ucl)
-addprotentry (nick, string.sub (data, string.len (table_othsets ["optrig"]..table_cmnds ["protadd"]) + 2, -1))
+addprotentry (nick, string.sub (data, string.len (table_cmnds ["protadd"]) + 3, -1))
 else
 commandanswer (nick, getlang (128))
 end
@@ -3784,7 +3821,7 @@ return 0
 elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["protdel"].." .+$") then
 if ucl >= table_sets ["mincommandclass"] then
 donotifycmd (nick, data, 0, ucl)
-delprotentry (nick, string.sub (data, string.len (table_othsets ["optrig"]..table_cmnds ["protdel"]) + 2, -1))
+delprotentry (nick, string.sub (data, string.len (table_cmnds ["protdel"]) + 3, -1))
 else
 commandanswer (nick, getlang (128))
 end
@@ -3808,7 +3845,7 @@ return 0
 	elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["custdel"].." %S+$") then
 		if ucl >= table_sets ["mincommandclass"] then
 			donotifycmd (nick, data, 0, ucl)
-			opdelcustnick (nick, string.sub (data, string.len (table_othsets ["optrig"]..table_cmnds ["custdel"]) + 2, -1))
+			opdelcustnick (nick, string.sub (data, string.len (table_cmnds ["custdel"]) + 3, -1))
 		else
 			commandanswer (nick, getlang (128))
 		end
@@ -3820,7 +3857,7 @@ return 0
 	elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["rename"].." %S+ .+$") then
 		if ucl >= table_sets ["mincommandclass"] then
 			donotifycmd (nick, data, 0, ucl)
-			opforcecustnick (nick, string.sub (data, string.len (table_othsets ["optrig"]..table_cmnds ["rename"]) + 2, -1))
+			opforcecustnick (nick, string.sub (data, string.len (table_cmnds ["rename"]) + 3, -1))
 		else
 			commandanswer (nick, getlang (128))
 		end
@@ -3844,7 +3881,7 @@ return 0
 elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["offdel"].." .+$") then
 if ucl >= table_sets ["mincommandclass"] then
 donotifycmd (nick, data, 0, ucl)
-deloffline (nick, string.sub (data, string.len (table_othsets ["optrig"]..table_cmnds ["offdel"]) + 2, -1))
+deloffline (nick, string.sub (data, string.len (table_cmnds ["offdel"]) + 3, -1))
 else
 commandanswer (nick, getlang (128))
 end
@@ -3886,7 +3923,7 @@ return 0
 elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["ophistory"].." %d+$") then
 if (ucl >= 3) and (table_sets ["histlimit"] > 0) then
 donotifycmd (nick, data, 0, ucl)
-sendophistory (nick, string.sub (data, string.len (table_othsets ["optrig"]..table_cmnds ["ophistory"]) + 2, -1), 0, false)
+sendophistory (nick, string.sub (data, string.len (table_cmnds ["ophistory"]) + 3, -1), 0, false)
 else
 commandanswer (nick, getlang (128))
 end
@@ -3901,7 +3938,7 @@ elseif string.find (data, "^"..table_othsets ["optrig"].."topic$") or string.fin
 ----- ---- --- -- -
 
 elseif string.find (data, "^"..table_othsets ["optrig"].."topic .+$") then
-	local tpc = string.sub (data, string.len (table_othsets ["optrig"].."topic") + 2, -1)
+	local tpc = string.sub (data, string.len ("topic") + 3, -1)
 
 	if string.find (tpc, "&#124;") then
 		commandanswer (nick, string.format (getlang (772), "&#124;"))
@@ -3913,7 +3950,7 @@ elseif string.find (data, "^"..table_othsets ["optrig"].."topic .+$") then
 ----- ---- --- -- -
 
 elseif string.find (data, "^"..table_othsets ["optrig"].."hubtopic .+$") then
-	local tpc = string.sub (data, string.len (table_othsets ["optrig"].."hubtopic") + 2, -1)
+	local tpc = string.sub (data, string.len ("hubtopic") + 3, -1)
 
 	if string.find (tpc, "&#124;") then
 		commandanswer (nick, string.format (getlang (772), "&#124;"))
@@ -3937,7 +3974,7 @@ if table_sets ["classnotireg"] == 11 then
 donotifycmd (nick, data, 0, ucl)
 end
 
-donotifyregnew (nick, ucl, string.sub (data, string.len (table_othsets ["optrig"].."rn") + 2, -1))
+donotifyregnew (nick, ucl, string.sub (data, string.len ("rn") + 3, -1))
 
 ----- ---- --- -- -
 
@@ -3946,7 +3983,7 @@ if table_sets ["classnotireg"] == 11 then
 donotifycmd (nick, data, 0, ucl)
 end
 
-donotifyregnew (nick, ucl, string.sub (data, string.len (table_othsets ["optrig"].."rnew") + 2, -1))
+donotifyregnew (nick, ucl, string.sub (data, string.len ("rnew") + 3, -1))
 
 ----- ---- --- -- -
 
@@ -3955,7 +3992,7 @@ if table_sets ["classnotireg"] == 11 then
 donotifycmd (nick, data, 0, ucl)
 end
 
-donotifyregnew (nick, ucl, string.sub (data, string.len (table_othsets ["optrig"].."regnew") + 2, -1))
+donotifyregnew (nick, ucl, string.sub (data, string.len ("regnew") + 3, -1))
 
 ----- ---- --- -- -
 
@@ -3964,7 +4001,7 @@ if table_sets ["classnotireg"] == 11 then
 donotifycmd (nick, data, 0, ucl)
 end
 
-donotifyregnew (nick, ucl, string.sub (data, string.len (table_othsets ["optrig"].."regn") + 2, -1))
+donotifyregnew (nick, ucl, string.sub (data, string.len ("regn") + 3, -1))
 
 ----- ---- --- -- -
 
@@ -3973,7 +4010,7 @@ if table_sets ["classnotireg"] == 11 then
 donotifycmd (nick, data, 0, ucl)
 end
 
-donotifyregdel (nick, ucl, string.sub (data, string.len (table_othsets ["optrig"].."rdel") + 2, -1))
+donotifyregdel (nick, ucl, string.sub (data, string.len ("rdel") + 3, -1))
 
 ----- ---- --- -- -
 
@@ -3982,7 +4019,7 @@ if table_sets ["classnotireg"] == 11 then
 donotifycmd (nick, data, 0, ucl)
 end
 
-donotifyregdel (nick, ucl, string.sub (data, string.len (table_othsets ["optrig"].."rdelete") + 2, -1))
+donotifyregdel (nick, ucl, string.sub (data, string.len ("rdelete") + 3, -1))
 
 ----- ---- --- -- -
 
@@ -3991,7 +4028,7 @@ if table_sets ["classnotireg"] == 11 then
 donotifycmd (nick, data, 0, ucl)
 end
 
-donotifyregdel (nick, ucl, string.sub (data, string.len (table_othsets ["optrig"].."regdel") + 2, -1))
+donotifyregdel (nick, ucl, string.sub (data, string.len ("regdel") + 3, -1))
 
 ----- ---- --- -- -
 
@@ -4000,7 +4037,7 @@ if table_sets ["classnotireg"] == 11 then
 donotifycmd (nick, data, 0, ucl)
 end
 
-donotifyregdel (nick, ucl, string.sub (data, string.len (table_othsets ["optrig"].."regdelete") + 2, -1))
+donotifyregdel (nick, ucl, string.sub (data, string.len ("regdelete") + 3, -1))
 
 ----- ---- --- -- -
 
@@ -4009,7 +4046,7 @@ if table_sets ["classnotireg"] == 11 then
 donotifycmd (nick, data, 0, ucl)
 end
 
-donotifyregclass (nick, ucl, string.sub (data, string.len (table_othsets ["optrig"].."rclass") + 2, -1))
+donotifyregclass (nick, ucl, string.sub (data, string.len ("rclass") + 3, -1))
 
 ----- ---- --- -- -
 
@@ -4018,25 +4055,25 @@ if table_sets ["classnotireg"] == 11 then
 donotifycmd (nick, data, 0, ucl)
 end
 
-donotifyregclass (nick, ucl, string.sub (data, string.len (table_othsets ["optrig"].."regclass") + 2, -1))
+donotifyregclass (nick, ucl, string.sub (data, string.len ("regclass") + 3, -1))
 
 	----- ---- --- -- -
 
-	elseif string.find (data, "^" .. table_othsets ["optrig"] .. "ban%S*%s+%S+%s*.*$") then
+	elseif string.find (data, "^" .. table_othsets ["optrig"] .. "ban") then -- ban%S*%s+%S+%s*.*$
 		if table_sets ["classnotiban"] == 11 then
 			donotifycmd (nick, data, 0, ucl)
 		end
 
-		donotifyban (nick, ucl, data)
+		--donotifyban (nick, ucl, data)
 
 	----- ---- --- -- -
 
-	elseif string.find (data, "^" .. table_othsets ["optrig"] .. "unban%S*%s+%S+%s*.*$") then
+	elseif string.find (data, "^" .. table_othsets ["optrig"] .. "unban") then -- unban%S*%s+%S+%s*.*$
 		if table_sets ["classnotiban"] == 11 then
 			donotifycmd (nick, data, 0, ucl)
 		end
 
-		donotifyunban (nick, ucl, data)
+		--donotifyunban (nick, ucl, data)
 
 ----- ---- --- -- -
 
@@ -4046,20 +4083,20 @@ elseif string.find (data, "^"..table_othsets ["optrig"].."set%s+%[%S+%]%s+%S+ .*
 			donotifycmd (nick, data, 0, ucl)
 		end
 
-		donotifyextconfig (nick, string.sub (data, string.len (table_othsets ["optrig"].."set") + 2, -1), ucl)
+		donotifyextconfig (nick, string.sub (data, string.len ("set") + 3, -1), ucl)
 	end
 
 ----- ---- --- -- -
 
 elseif string.find (data, "^"..table_othsets ["optrig"].."set%s+%S+ .*$") then
 	if ucl >= 5 then
-		sethubconf (string.sub (data, string.len (table_othsets ["optrig"].."set") + 2, -1))
+		sethubconf (string.sub (data, string.len ("set") + 3, -1))
 
 		if table_sets ["classnoticonfig"] == 11 then
 			donotifycmd (nick, data, 0, ucl)
 		end
 
-		donotifyconfig (nick, string.sub (data, string.len (table_othsets ["optrig"].."set") + 2, -1), ucl)
+		donotifyconfig (nick, string.sub (data, string.len ("set") + 3, -1), ucl)
 	end
 
 ----- ---- --- -- -
@@ -4070,20 +4107,20 @@ elseif string.find (data, "^"..table_othsets ["optrig"].."=%s+%[%S+%]%s+%S+ .*$"
 			donotifycmd (nick, data, 0, ucl)
 		end
 
-		donotifyextconfig (nick, string.sub (data, string.len (table_othsets ["optrig"].."=") + 2, -1), ucl)
+		donotifyextconfig (nick, string.sub (data, string.len ("=") + 3, -1), ucl)
 	end
 
 ----- ---- --- -- -
 
 elseif string.find (data, "^"..table_othsets ["optrig"].."=%s+%S+ .*$") then
 	if ucl >= 5 then
-		sethubconf (string.sub (data, string.len (table_othsets ["optrig"].."=") + 2, -1))
+		sethubconf (string.sub (data, string.len ("=") + 3, -1))
 
 		if table_sets ["classnoticonfig"] == 11 then
 			donotifycmd (nick, data, 0, ucl)
 		end
 
-		donotifyconfig (nick, string.sub (data, string.len (table_othsets ["optrig"].."=") + 2, -1), ucl)
+		donotifyconfig (nick, string.sub (data, string.len ("=") + 3, -1), ucl)
 	end
 
 ----- ---- --- -- -
@@ -4172,7 +4209,7 @@ function VH_OnUserCommand (nick, data)
 
 if string.find (data, "^"..table_othsets ["ustrig"].."me .*$") then
 if getconfig ("disable_me_cmd") ~= 0 then return 1 end
-local msg = string.sub (data, string.len (table_othsets ["ustrig"].."me") + 2, -1)
+local msg = string.sub (data, string.len ("me") + 3, -1)
 
 if isprotected (nick, ip) == false then -- protection
 	if table_sets ["chatcodeon"] > 0 then -- chatcode
@@ -4281,7 +4318,7 @@ else -- no ip
 	end
 end
 
-addmchistoryline (fakenick, nick, table_othsets ["ustrig"].."me "..cvdat)
+addmchistoryline (fakenick, nick, string.sub (getconfig ("cmd_start_user"), 1, 1).."me "..cvdat)
 replyresponder (fakenick, ucl, cvdat)
 chatrankaccept (nick, ucl)
 wordrankaccept (nick, ucl, cvdat)
@@ -4371,7 +4408,7 @@ end
 			if cfg and (cfg ~= 0) then return 1 end
 			if table_sets ["allowspamtoops"] == 1 then return 1 end
 			if isprotected (nick, getip (nick)) == true then return 1 end
-			return antiscan (nick, ucl, string.sub (data, string.len (table_othsets ["ustrig"].."report") + 2, -1), 4, nil, nil)
+			return antiscan (nick, ucl, string.sub (data, string.len ("report") + 3, -1), 4, nil, nil)
 		end
 
 ----- ---- --- -- -
@@ -4487,7 +4524,7 @@ return 0
 	elseif string.find (data, "^" .. table_othsets ["ustrig"] .. table_cmnds ["citylive"] .. " [%a%d]+$") then
 		if ucl >= table_sets ["ccstatsclass"] then
 			donotifycmd (nick, data, 0, ucl)
-			sendlivecity (nick, string.sub (data, string.len (table_othsets ["ustrig"] .. table_cmnds ["citylive"]) + 2, -1))
+			sendlivecity (nick, string.sub (data, string.len (table_cmnds ["citylive"]) + 3, -1))
 		else
 			commandanswer (nick, getlang (128))
 		end
@@ -4522,7 +4559,7 @@ return 0
 
 elseif string.find (data, "^"..table_othsets ["ustrig"]..table_cmnds ["offmsg"].." %S+ .+$") then
 if ucl >= table_sets ["offmsgclass"] then
-sendoffmsg (nick, string.sub (data, string.len (table_othsets ["ustrig"]..table_cmnds ["offmsg"]) + 2, -1), ucl)
+sendoffmsg (nick, string.sub (data, string.len (table_cmnds ["offmsg"]) + 3, -1), ucl)
 else
 commandanswer (nick, getlang (128))
 end
@@ -4534,7 +4571,7 @@ return 0
 	elseif string.find (data, "^"..table_othsets ["ustrig"]..table_cmnds ["hubnews"].." %d+$") then
 		if ucl >= table_sets ["newsclass"] then
 			donotifycmd (nick, data, 0, ucl)
-			sendnews (nick, string.sub (data, string.len (table_othsets ["ustrig"]..table_cmnds ["hubnews"]) + 2, -1), 0)
+			sendnews (nick, string.sub (data, string.len (table_cmnds ["hubnews"]) + 3, -1), 0)
 		else
 			commandanswer (nick, getlang (128))
 		end
@@ -4546,7 +4583,7 @@ return 0
 elseif string.find (data, "^"..table_othsets ["ustrig"]..table_cmnds ["calculate"].." %S+ %S %S+$") then
 if ucl >= table_sets ["minusrcommandclass"] then
 donotifycmd (nick, data, 0, ucl)
-calculate (nick, string.sub (data, string.len (table_othsets ["ustrig"]..table_cmnds ["calculate"]) + 2, -1))
+calculate (nick, string.sub (data, string.len (table_cmnds ["calculate"]) + 3, -1))
 else
 commandanswer (nick, getlang (128))
 end
@@ -4558,7 +4595,7 @@ return 0
 elseif string.find (data, "^"..table_othsets ["ustrig"]..table_cmnds ["mode"].." %S+$") then
 	if ucl >= table_sets ["chatmodeclass"] then
 		donotifycmd (nick, data, 0, ucl)
-		setmode (nick, reppatchars (tolow (nick)).." "..string.sub (data, string.len (table_othsets ["ustrig"]..table_cmnds ["mode"]) + 2, -1))
+		setmode (nick, reppatchars (tolow (nick)).." "..string.sub (data, string.len (table_cmnds ["mode"]) + 3, -1))
 	else
 		commandanswer (nick, getlang (128))
 	end
@@ -4570,7 +4607,7 @@ elseif string.find (data, "^"..table_othsets ["ustrig"]..table_cmnds ["mode"].."
 	elseif string.find (data, "^"..table_othsets ["ustrig"]..table_cmnds ["rellist"].." %S+ %d+$") or string.find (data, "^"..table_othsets ["ustrig"]..table_cmnds ["rellist"].." %S+ %d+ .+$") then
 		if ucl >= table_sets ["minusrcommandclass"] then
 			donotifycmd (nick, data, 0, ucl)
-			listrelease (nick, string.sub (data, string.len (table_othsets ["ustrig"]..table_cmnds ["rellist"]) + 2, -1))
+			listrelease (nick, string.sub (data, string.len (table_cmnds ["rellist"]) + 3, -1))
 		else
 			commandanswer (nick, getlang (128))
 		end
@@ -4582,7 +4619,7 @@ elseif string.find (data, "^"..table_othsets ["ustrig"]..table_cmnds ["mode"].."
 	elseif string.find (data, "^"..table_othsets ["ustrig"]..table_cmnds ["reladd"].." \".+\" \".+\"$") or string.find (data, "^"..table_othsets ["ustrig"]..table_cmnds ["reladd"].." \".+\" \".+\" %S+$") then
 		if ucl >= table_sets ["relmodclass"] then
 			donotifycmd (nick, data, 0, ucl)
-			addrelease (nick, string.sub (data, string.len (table_othsets ["ustrig"]..table_cmnds ["reladd"]) + 2, -1))
+			addrelease (nick, string.sub (data, string.len (table_cmnds ["reladd"]) + 3, -1))
 		else
 			commandanswer (nick, getlang (128))
 		end
@@ -4594,7 +4631,7 @@ elseif string.find (data, "^"..table_othsets ["ustrig"]..table_cmnds ["mode"].."
 	elseif string.find (data, "^"..table_othsets ["ustrig"]..table_cmnds ["reldel"].." %S+ .+$") then
 		if ucl >= table_sets ["relmodclass"] then
 			donotifycmd (nick, data, 0, ucl)
-			delrelease (nick, string.sub (data, string.len (table_othsets ["ustrig"]..table_cmnds ["reldel"]) + 2, -1))
+			delrelease (nick, string.sub (data, string.len (table_cmnds ["reldel"]) + 3, -1))
 		else
 			commandanswer (nick, getlang (128))
 		end
@@ -4606,7 +4643,7 @@ elseif string.find (data, "^"..table_othsets ["ustrig"]..table_cmnds ["mode"].."
 	elseif string.find (data, "^"..table_othsets ["ustrig"]..table_cmnds ["relfind"].." .+$") then
 		if ucl >= table_sets ["minusrcommandclass"] then
 			donotifycmd (nick, data, 0, ucl)
-			findrelease (nick, string.sub (data, string.len (table_othsets ["ustrig"]..table_cmnds ["relfind"]) + 2, -1))
+			findrelease (nick, string.sub (data, string.len (table_cmnds ["relfind"]) + 3, -1))
 		else
 			commandanswer (nick, getlang (128))
 		end
@@ -4618,7 +4655,7 @@ elseif string.find (data, "^"..table_othsets ["ustrig"]..table_cmnds ["mode"].."
 	elseif string.find (data, "^" .. table_othsets ["ustrig"] .. table_cmnds ["history"] .. " %d+$") then
 		if (ucl >= table_sets ["mchistclass"]) and (table_sets ["histlimit"] > 0) then
 			donotifycmd (nick, data, 0, ucl)
-			sendmchistory (nick, string.sub (data, string.len (table_othsets ["ustrig"] .. table_cmnds ["history"]) + 2, -1), 0)
+			sendmchistory (nick, string.sub (data, string.len (table_cmnds ["history"]) + 3, -1), 0)
 		else
 			commandanswer (nick, getlang (128))
 		end
@@ -4630,7 +4667,7 @@ elseif string.find (data, "^"..table_othsets ["ustrig"]..table_cmnds ["mode"].."
 	elseif string.find (data, "^" .. table_othsets ["ustrig"] .. table_cmnds ["myhistory"] .. " %d+$") then
 		if (ucl >= table_sets ["mchistclass"]) and (table_sets ["histlimit"] > 0) then
 			donotifycmd (nick, data, 0, ucl)
-			sendownhistory (nick, string.sub (data, string.len (table_othsets ["ustrig"] .. table_cmnds ["myhistory"]) + 2, -1))
+			sendownhistory (nick, string.sub (data, string.len (table_cmnds ["myhistory"]) + 3, -1))
 		else
 			commandanswer (nick, getlang (128))
 		end
@@ -4641,7 +4678,7 @@ elseif string.find (data, "^"..table_othsets ["ustrig"]..table_cmnds ["mode"].."
 
 	elseif string.find (data, "^"..table_othsets ["ustrig"]..table_cmnds ["nick"].."$") or string.find (data, "^"..table_othsets ["ustrig"]..table_cmnds ["nick"].." .+$") then
 		if ucl >= table_sets ["custnickclass"] then
-			setcustnick (nick, string.sub (data, string.len (table_othsets ["ustrig"]..table_cmnds ["nick"]) + 2, -1), ucl)
+			setcustnick (nick, string.sub (data, string.len (table_cmnds ["nick"]) + 3, -1), ucl)
 		else
 			commandanswer (nick, getlang (128))
 		end
@@ -4653,7 +4690,7 @@ elseif string.find (data, "^"..table_othsets ["ustrig"]..table_cmnds ["mode"].."
 	elseif string.find (data, "^"..table_othsets ["ustrig"]..table_cmnds ["realnick"].." %S+$") then
 		if table_sets ["custnickclass"] < 11 then
 			donotifycmd (nick, data, 0, ucl)
-			getrealnick (nick, string.sub (data, string.len (table_othsets ["ustrig"]..table_cmnds ["realnick"]) + 2, -1))
+			getrealnick (nick, string.sub (data, string.len (table_cmnds ["realnick"]) + 3, -1))
 		else
 			commandanswer (nick, getlang (128))
 		end
@@ -4680,7 +4717,7 @@ elseif string.find (data, "^"..table_othsets ["ustrig"]..table_cmnds ["mode"].."
 				donotifycmd (nick, data, 0, ucl)
 			end
 
-			setwelcome (nick, string.sub (data, string.len (table_othsets ["ustrig"]..table_cmnds ["wmset"]) + 2, -1), ucl)
+			setwelcome (nick, string.sub (data, string.len (table_cmnds ["wmset"]) + 3, -1), ucl)
 		else
 			commandanswer (nick, getlang (128))
 		end
@@ -5081,22 +5118,6 @@ end
 
 ----- ---- --- -- -
 
-function VH_OnNewBan (op, ip, nick, reason)
-	--if table_othsets ["locked"] == true then return 1 end
-	-- use ban notification from here in future
-	return 1
-end
-
------ ---- --- -- -
-
-function VH_OnUnBan (op, ip, nick, reason)
-	--if table_othsets ["locked"] == true then return 1 end
-	-- use unban notification from here in future
-	return 1
-end
-
------ ---- --- -- -
-
 function VH_OnHubName (nick, name)
 	--if table_othsets ["locked"] == true then return 1 end
 	-- use this for rolling topic in future
@@ -5415,6 +5436,119 @@ end
 
 ----- ---- --- -- -
 
+function VH_OnNewBan (ip, nick, host, share, ran_min, ran_max, bype, bate, why, op)
+	if table_othsets ["locked"] or table_sets ["classnotiban"] == 11 then
+		return 1
+	end
+
+	local banshare = tonumber (share) or 0
+	local bantype = tonumber (bype) or 0 -- we dont use ban type here because miltiple parts might be banned
+	local bandate = tonumber (bate) or 0
+	local banwhy = why
+
+	if not banwhy or string.len (banwhy) == 0 then
+		banwhy = getlang (888)
+	end
+
+	if bandate == 0 then
+		if bantype ~= 3 and bantype ~= 4 and bantype ~= 5 and bantype ~= 6 and bantype ~= 9 and ip and string.len (ip) > 0 then
+			opsnotify (table_sets ["classnotiban"], string.format (getlang (933), ip, op, banwhy))
+		end
+
+		if nick and string.len (nick) > 0 then
+			if bantype == 8 then
+				opsnotify (table_sets ["classnotiban"], string.format (getlang (938), nick, op, banwhy))
+			else
+				opsnotify (table_sets ["classnotiban"], string.format (getlang (934), nick, op, banwhy))
+			end
+		end
+
+		if host and string.len (host) > 0 then
+			opsnotify (table_sets ["classnotiban"], string.format (getlang (936), host, op, banwhy))
+		end
+
+		if banshare > 0 then
+			opsnotify (table_sets ["classnotiban"], string.format (getlang (937), tostring (banshare), op, banwhy))
+		end
+
+		if ran_min and ran_max and string.len (ran_min) > 0 and string.len (ran_max) > 0 then
+			opsnotify (table_sets ["classnotiban"], string.format (getlang (935), ran_min .. " - " .. ran_max, op, banwhy))
+		end
+	else
+		if bantype ~= 3 and ip and string.len (ip) > 0 then
+			opsnotify (table_sets ["classnotiban"], string.format (getlang (939), ip, os.date (table_sets ["dateformat"] .. " " .. table_sets ["timeformat"], bandate), op, banwhy))
+		end
+
+		if nick and string.len (nick) > 0 then
+			if bantype == 8 then
+				opsnotify (table_sets ["classnotiban"], string.format (getlang (944), nick, os.date (table_sets ["dateformat"] .. " " .. table_sets ["timeformat"], bandate), op, banwhy))
+			else
+				opsnotify (table_sets ["classnotiban"], string.format (getlang (940), nick, os.date (table_sets ["dateformat"] .. " " .. table_sets ["timeformat"], bandate), op, banwhy))
+			end
+		end
+
+		if host and string.len (host) > 0 then
+			opsnotify (table_sets ["classnotiban"], string.format (getlang (942), host, os.date (table_sets ["dateformat"] .. " " .. table_sets ["timeformat"], bandate), op, banwhy))
+		end
+
+		if banshare > 0 then
+			opsnotify (table_sets ["classnotiban"], string.format (getlang (943), tostring (banshare), os.date (table_sets ["dateformat"] .. " " .. table_sets ["timeformat"], bandate), op, banwhy))
+		end
+
+		if ran_min and ran_max and string.len (ran_min) > 0 and string.len (ran_max) > 0 then
+			opsnotify (table_sets ["classnotiban"], string.format (getlang (941), ran_min .. " - " .. ran_max, os.date (table_sets ["dateformat"] .. " " .. table_sets ["timeformat"], bandate), op, banwhy))
+		end
+	end
+
+	oprankaccept (op, getclass (op))
+	return 1
+end
+
+----- ---- --- -- -
+
+function VH_OnUnBan (what, op, why)
+	if table_othsets ["locked"] or table_sets ["classnotiban"] == 11 then
+		return 1
+	end
+
+	local repwhat = repsqlchars (what)
+	local _, rows = VH:SQLQuery ("select `ban_type` from `banlist` where `ip` = '" .. repwhat .. "' or `nick` = '" .. repwhat .. "' or `host` = '" .. repwhat .. "' or `share_size` = '" .. repwhat .. "' limit 1")
+
+	if rows > 0 then
+		local _, bantype = VH:SQLFetch (0)
+		bantype = tonumber (bantype) or -1
+		local banwhy = why
+
+		if not banwhy or string.len (banwhy) == 0 then
+			banwhy = getlang (888)
+		end
+
+		if bantype == 0 then -- nick + ip
+			opsnotify (table_sets ["classnotiban"], string.format (getlang (951), what, op, banwhy))
+		elseif bantype == 1 then -- ip
+			opsnotify (table_sets ["classnotiban"], string.format (getlang (945), what, op, banwhy))
+		elseif bantype == 2 then -- nick
+			opsnotify (table_sets ["classnotiban"], string.format (getlang (946), what, op, banwhy))
+		elseif bantype == 3 then -- range
+			opsnotify (table_sets ["classnotiban"], string.format (getlang (947), what, op, banwhy))
+		elseif bantype == 4 or bantype == 5 or bantype == 6 or bantype == 9 then -- host
+			opsnotify (table_sets ["classnotiban"], string.format (getlang (948), what, op, banwhy))
+		elseif bantype == 7 then -- share
+			opsnotify (table_sets ["classnotiban"], string.format (getlang (949), what, op, banwhy))
+		elseif bantype == 8 then -- prefix
+			opsnotify (table_sets ["classnotiban"], string.format (getlang (950), what, op, banwhy))
+		else -- other
+			opsnotify (table_sets ["classnotiban"], string.format (getlang (952), what, op, banwhy))
+		end
+
+		oprankaccept (op, getclass (op))
+	end
+
+	return 1
+end
+
+----- ---- --- -- -
+
 function VH_OnOperatorKicks (op, nick, data)
 if table_othsets ["locked"] == true then return 1 end
 local ip = getip (nick)
@@ -5532,7 +5666,7 @@ function VH_OnParsedMsgPM (from, data, to)
 			if string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["ophistory"].." %d+$") then
 				if table_sets ["histlimit"] > 0 then
 					donotifycmd (from, data, 0, fcls)
-					sendophistory (from, string.sub (data, string.len (table_othsets ["optrig"]..table_cmnds ["ophistory"]) + 2, -1), 0, true)
+					sendophistory (from, string.sub (data, string.len (table_cmnds ["ophistory"]) + 3, -1), 0, true)
 				else
 					pmtouser (from, table_othsets ["opchatnick"], getlang (128))
 				end
@@ -5548,9 +5682,7 @@ function VH_OnParsedMsgPM (from, data, to)
 	----- ---- --- -- -
 
 	elseif to == table_othsets ["botnick"] then -- hub security
-		if string.sub (data, 1, 1) == table_othsets ["ustrig"] then
-			-- skip
-		elseif string.sub (data, 1, 1) == table_othsets ["optrig"] then
+		if string.find (string.sub (data, 1, 1), table_othsets ["optrig"]) then
 			if fcls >= 3 then -- operator command
 				if string.find (data, "^"..table_othsets ["optrig"].."luaload .*$") or string.find (data, "^"..table_othsets ["optrig"].."luaunload .*$") or string.find (data, "^"..table_othsets ["optrig"].."luareload .*$") then
 					if fcls >= getconfig ("plugin_mod_class") then -- use plugin permission for lua scripts too
@@ -5575,6 +5707,8 @@ function VH_OnParsedMsgPM (from, data, to)
 			else
 				opsnotify (table_sets ["classnotibotpm"], string.format (getlang (432), from, ip, fcls, table_othsets ["botnick"], data))
 			end
+		elseif string.find (string.sub (data, 1, 1), table_othsets ["ustrig"]) then
+			-- skip
 		else
 			opsnotify (table_sets ["classnotibotpm"], string.format (getlang (432), from, ip, fcls, table_othsets ["botnick"], data))
 		end
@@ -5584,7 +5718,7 @@ function VH_OnParsedMsgPM (from, data, to)
 	elseif to == table_sets ["ledobotnick"] then -- ledokol bot
 		if table_sets ["addledobot"] == 1 then
 			if fcls == 10 then
-				if string.sub (data, 1, 1) == table_othsets ["optrig"] then -- accept operator command
+				if string.find (string.sub (data, 1, 1), table_othsets ["optrig"]) then -- accept operator command
 					VH_OnOperatorCommand (from, data)
 				else
 					for x in string.gmatch (getnicklist (), "([^$]+)%$%$") do
@@ -5598,7 +5732,7 @@ function VH_OnParsedMsgPM (from, data, to)
 					end
 				end
 			elseif fcls >= 3 then
-				if string.sub (data, 1, 1) == table_othsets ["optrig"] then -- accept operator command
+				if string.find (string.sub (data, 1, 1), table_othsets ["optrig"]) then -- accept operator command
 					VH_OnOperatorCommand (from, data)
 				end
 			else
@@ -6176,10 +6310,11 @@ end
 ----- ---- --- -- -
 
 function chatroomhelp ()
-	local txt = " "..table_othsets ["ustrig"]..table_cmnds ["chatenter"].." - "..getlang (627).."\r\n"
-	txt = txt.." "..table_othsets ["ustrig"]..table_cmnds ["chatleave"].." - "..getlang (628).."\r\n"
-	txt = txt.." "..table_othsets ["ustrig"]..table_cmnds ["chatusers"].." - "..getlang (621).."\r\n"
-	txt = txt.." "..table_othsets ["ustrig"]..table_cmnds ["chathelp"].." - "..getlang (179).."\r\n"
+	local ustrig = string.sub (getconfig ("cmd_start_user"), 1, 1)
+	local txt = " "..ustrig..table_cmnds ["chatenter"].." - "..getlang (627).."\r\n"
+	txt = txt.." "..ustrig..table_cmnds ["chatleave"].." - "..getlang (628).."\r\n"
+	txt = txt.." "..ustrig..table_cmnds ["chatusers"].." - "..getlang (621).."\r\n"
+	txt = txt.." "..ustrig..table_cmnds ["chathelp"].." - "..getlang (179).."\r\n"
 	return txt
 end
 
@@ -6224,7 +6359,7 @@ for k, v in pairs (table_room) do
 					VH:SendDataToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..getlang (624)..":\r\n\r\n"..chatroomhelp ().."|", nick)
 
 				else -- unknown command
-					VH:SendDataToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..string.format (getlang (626), table_othsets ["ustrig"]..table_cmnds ["chathelp"]).."|", nick)
+					VH:SendDataToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..string.format (getlang (626), string.sub (getconfig ("cmd_start_user"), 1, 1)..table_cmnds ["chathelp"]).."|", nick)
 				end
 
 			else -- regular message
@@ -6270,7 +6405,7 @@ for k, v in pairs (table_room) do
 						VH:SendDataToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..getlang (624)..":\r\n\r\n"..chatroomhelp ().."|", nick)
 
 					else -- unknown command
-						VH:SendDataToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..string.format (getlang (626), table_othsets ["ustrig"]..table_cmnds ["chathelp"]).."|", nick)
+						VH:SendDataToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..string.format (getlang (626), string.sub (getconfig ("cmd_start_user"), 1, 1)..table_cmnds ["chathelp"]).."|", nick)
 					end
 
 				else -- regular message
@@ -6388,7 +6523,7 @@ function broadcastchatroom (to, nick, data, ucl) -- class based chatroom
 						VH:SendDataToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..getlang (624)..":\r\n\r\n"..chatroomhelp ().."|", nick)
 
 					else -- unknown command
-						VH:SendDataToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..string.format (getlang (626), table_othsets ["ustrig"]..table_cmnds ["chathelp"]).."|", nick)
+						VH:SendDataToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..string.format (getlang (626), string.sub (getconfig ("cmd_start_user"), 1, 1)..table_cmnds ["chathelp"]).."|", nick)
 					end
 
 				else -- regular message
@@ -8771,7 +8906,7 @@ function autoupdatecheck ()
 
 			if ver then
 				if string.find (ver, "^%d+%.%d+%.%d+$") and (ver ~= ver_ledo) then -- versions differ
-					opsnotify (table_sets ["classnotiledoact"], string.format (getlang (822), ver, table_othsets ["optrig"]..table_cmnds ["ledover"]))
+					opsnotify (table_sets ["classnotiledoact"], string.format (getlang (822), ver, string.sub (getconfig ("cmd_start_op"), 1, 1)..table_cmnds ["ledover"]))
 				end
 			end
 		end
@@ -12114,6 +12249,8 @@ end
 
 ----- ---- --- -- -
 
+--[[
+
 function donotifyban (nick, ucls, line)
 	local _, _, cmd, user, reason = string.find (line, "^(%S*)%s+(%S+)%s*(.*)$")
 
@@ -12140,7 +12277,11 @@ function donotifyban (nick, ucls, line)
 	end
 end
 
+]]--
+
 ----- ---- --- -- -
+
+--[[
 
 function donotifyunban (nick, ucls, line)
 	local _, _, user, reason = string.find (line, "^%S*%s+(%S+)%s*(.*)$")
@@ -12156,6 +12297,8 @@ function donotifyunban (nick, ucls, line)
 		oprankaccept (nick, ucls)
 	end
 end
+
+]]--
 
 ----- ---- --- -- -
 
@@ -12217,33 +12360,33 @@ local ucmd = cmd
 
 if string.find (ucmd, "^."..table_cmnds ["offmsg"].." %S+ .+$") then -- skip sensitive data
 	local _, _, par = string.find (ucmd, "^."..table_cmnds ["offmsg"].." (%S+) .+$")
-	ucmd = table_othsets ["ustrig"]..table_cmnds ["offmsg"].." "..par.." <"..getlang (44)..">"
+	ucmd = string.sub (getconfig ("cmd_start_user"), 1, 1)..table_cmnds ["offmsg"].." "..par.." <"..getlang (44)..">"
 
 elseif string.find (ucmd, "^"..table_othsets ["ustrig"].."msgsend%s+%S+ .+$") then
 	local _, _, par = string.find (ucmd, "^"..table_othsets ["ustrig"].."msgsend%s+(%S+) .+$")
-	ucmd = table_othsets ["ustrig"].."msgsend "..par.." <"..getlang (44)..">"
+	ucmd = string.sub (getconfig ("cmd_start_user"), 1, 1).."msgsend "..par.." <"..getlang (44)..">"
 
 elseif string.find (ucmd, "^"..table_othsets ["optrig"].."rpass%s+%S+ .+$") then
 	local _, _, par = string.find (ucmd, "^"..table_othsets ["optrig"].."rpass%s+(%S+) .+$")
-	ucmd = table_othsets ["optrig"].."rpass "..par.." <"..getlang (784)..">"
+	ucmd = string.sub (getconfig ("cmd_start_op"), 1, 1).."rpass "..par.." <"..getlang (784)..">"
 
 elseif string.find (ucmd, "^"..table_othsets ["optrig"].."rpasswd%s+%S+ .+$") then
 	local _, _, par = string.find (ucmd, "^"..table_othsets ["optrig"].."rpasswd%s+(%S+) .+$")
-	ucmd = table_othsets ["optrig"].."rpasswd "..par.." <"..getlang (784)..">"
+	ucmd = string.sub (getconfig ("cmd_start_op"), 1, 1).."rpasswd "..par.." <"..getlang (784)..">"
 
 elseif string.find (ucmd, "^"..table_othsets ["optrig"].."regpass%s+%S+ .+$") then
 	local _, _, par = string.find (ucmd, "^"..table_othsets ["optrig"].."regpass%s+(%S+) .+$")
-	ucmd = table_othsets ["optrig"].."regpass "..par.." <"..getlang (784)..">"
+	ucmd = string.sub (getconfig ("cmd_start_op"), 1, 1).."regpass "..par.." <"..getlang (784)..">"
 
 elseif string.find (ucmd, "^"..table_othsets ["optrig"].."regpasswd%s+%S+ .+$") then
 	local _, _, par = string.find (ucmd, "^"..table_othsets ["optrig"].."regpasswd%s+(%S+) .+$")
-	ucmd = table_othsets ["optrig"].."regpasswd "..par.." <"..getlang (784)..">"
+	ucmd = string.sub (getconfig ("cmd_start_op"), 1, 1).."regpasswd "..par.." <"..getlang (784)..">"
 
 elseif string.find (ucmd, "^"..table_othsets ["ustrig"].."passwd%s+.+$") then
-	ucmd = table_othsets ["ustrig"].."passwd <"..getlang (784)..">"
+	ucmd = string.sub (getconfig ("cmd_start_user"), 1, 1).."passwd <"..getlang (784)..">"
 
 elseif string.find (ucmd, "^"..table_othsets ["ustrig"].."regme%s+.+$") then
-	ucmd = table_othsets ["ustrig"].."regme <"..getlang (784)..">"
+	ucmd = string.sub (getconfig ("cmd_start_user"), 1, 1).."regme <"..getlang (784)..">"
 end
 
 VH:SQLQuery ("insert into `"..tbl_sql ["clog"].."` (`time`, `nick`, `class`, `command`) values ("..(os.time () + table_sets ["srvtimediff"])..", '"..repsqlchars (nick).."', "..cls..", '"..repsqlchars (ucmd).."')")
@@ -12775,13 +12918,13 @@ end
 ----- ---- --- -- -
 
 function sopmenitm (usr, txt, cmd)
-VH:SendDataToUser ("$UserCommand 1 3 "..table_sets ["usermenuname"].."\\.:: "..txt.." $<%[mynick]> "..table_othsets ["optrig"]..cmd.."&#124;|", usr)
+VH:SendDataToUser ("$UserCommand 1 3 "..table_sets ["usermenuname"].."\\.:: "..txt.." $<%[mynick]> "..string.sub (getconfig ("cmd_start_op"), 1, 1)..cmd.."&#124;|", usr)
 end
 
 ----- ---- --- -- -
 
 function susmenitm (usr, txt, cmd)
-VH:SendDataToUser ("$UserCommand 1 3 "..table_sets ["usermenuname"].."\\.:: "..txt.." $<%[mynick]> "..table_othsets ["ustrig"]..cmd.."&#124;|", usr)
+VH:SendDataToUser ("$UserCommand 1 3 "..table_sets ["usermenuname"].."\\.:: "..txt.." $<%[mynick]> "..string.sub (getconfig ("cmd_start_user"), 1, 1)..cmd.."&#124;|", usr)
 end
 
 ----- ---- --- -- -
@@ -12793,23 +12936,41 @@ end
 ----- ---- --- -- -
 
 function sethubconf (line)
-local _, _, cname, cvalu = string.find (line, "^%s*(%S+) (.*)$")
-local _, _, nospval = string.find (cvalu, "^%s*(%S+)%s*$") -- truncate spaces
+	local _, _, cname, cvalu = string.find (line, "^%s*(%S+) (.*)$")
+	local _, _, nospval = string.find (cvalu, "^%s*(%S+)%s*$") -- truncate spaces
 
-if cname == "hub_security" then
-	table_othsets ["botnick"] = nospval
-	if table_sets ["addledobot"] == 0 then table_othsets ["sendfrom"] = nospval end
+	if cname == "hub_security" then
+		table_othsets ["botnick"] = nospval
 
-elseif cname == "opchat_name" then
-	table_othsets ["opchatnick"] = nospval
-	if (table_sets ["addledobot"] == 0) and (table_sets ["useextrafeed"] == 0) then table_othsets ["feednick"] = nospval end
+		if table_sets ["addledobot"] == 0 then
+			table_othsets ["sendfrom"] = nospval
+		end
 
-elseif cname == "cmd_start_op" then
-	table_othsets ["optrig"] = string.sub (nospval, 1, 1)
+	elseif cname == "opchat_name" then
+		table_othsets ["opchatnick"] = nospval
 
-elseif cname == "cmd_start_user" then
-	table_othsets ["ustrig"] = string.sub (nospval, 1, 1)
-end
+		if table_sets ["addledobot"] == 0 and table_sets ["useextrafeed"] == 0 then
+			table_othsets ["feednick"] = nospval
+		end
+
+	elseif cname == "cmd_start_op" then
+		table_othsets ["optrig"] = "["
+
+		for pos = 1, string.len (nospval) do
+			table_othsets ["optrig"] = table_othsets ["optrig"] .. "%" .. string.sub (nospval, pos, pos)
+		end
+
+		table_othsets ["optrig"] = table_othsets ["optrig"] .. "]"
+
+	elseif cname == "cmd_start_user" then
+		table_othsets ["ustrig"] = "["
+
+		for pos = 1, string.len (nospval) do
+			table_othsets ["ustrig"] = table_othsets ["ustrig"] .. "%" .. string.sub (nospval, pos, pos)
+		end
+
+		table_othsets ["ustrig"] = table_othsets ["ustrig"] .. "]"
+	end
 end
 
 ----- ---- --- -- -
@@ -14055,19 +14216,18 @@ else
 commandanswer (nick, string.format (getlang (198), tvar))
 end
 
------ ---- --- -- -
+	----- ---- --- -- -
 
-elseif tvar == "classnotiban" then
-if num == true then
-if ((setto >= 0) and (setto <= 5)) or (setto == 10) or (setto == 11) then
-ok = true
-else
-commandanswer (nick, string.format (getlang (196), tvar, "0, 1, 2, 3, 4, 5, 10 "..getlang (197).." 11"))
-end
-
-else
-commandanswer (nick, string.format (getlang (198), tvar))
-end
+	elseif tvar == "classnotiban" then
+		if num == true then
+			if ((setto >= 0) and (setto <= 5)) or (setto == 10) or (setto == 11) then
+				ok = true
+			else
+				commandanswer (nick, string.format (getlang (196), tvar, "0, 1, 2, 3, 4, 5, 10 " .. getlang (197) .. " 11"))
+			end
+		else
+			commandanswer (nick, string.format (getlang (198), tvar))
+		end
 
 ----- ---- --- -- -
 
@@ -15528,227 +15688,230 @@ end
 
 function sendhelp (nick)
 local help = "\r\n\r\n .:: "..getlang (155)..":\r\n\r\n"
+	local optrig = string.sub (getconfig ("cmd_start_op"), 1, 1)
 
 -- antispam
-help = help.." "..table_othsets ["optrig"]..table_cmnds ["antiadd"].." <"..getlang (193).."> <"..getlang (30).."> <"..getlang (194).."> <"..getlang (126).."> - "..getlang (156).."\r\n"
-help = help.." "..table_othsets ["optrig"]..table_cmnds ["antilist"].." - "..getlang (131).."\r\n"
-help = help.." "..table_othsets ["optrig"]..table_cmnds ["antidel"].." <"..getlang (193).."> - "..getlang (158).."\r\n"
-help = help.." "..table_othsets ["optrig"]..table_cmnds ["antiexadd"].." <"..getlang (193).."> - "..getlang (159).."\r\n"
-help = help.." "..table_othsets ["optrig"]..table_cmnds ["antiexlist"].." - "..getlang (137).."\r\n"
-help = help.." "..table_othsets ["optrig"]..table_cmnds ["antiexdel"].." <"..getlang (193).."> - "..getlang (160).."\r\n\r\n"
+help = help.." "..optrig..table_cmnds ["antiadd"].." <"..getlang (193).."> <"..getlang (30).."> <"..getlang (194).."> <"..getlang (126).."> - "..getlang (156).."\r\n"
+help = help.." "..optrig..table_cmnds ["antilist"].." - "..getlang (131).."\r\n"
+help = help.." "..optrig..table_cmnds ["antidel"].." <"..getlang (193).."> - "..getlang (158).."\r\n"
+help = help.." "..optrig..table_cmnds ["antiexadd"].." <"..getlang (193).."> - "..getlang (159).."\r\n"
+help = help.." "..optrig..table_cmnds ["antiexlist"].." - "..getlang (137).."\r\n"
+help = help.." "..optrig..table_cmnds ["antiexdel"].." <"..getlang (193).."> - "..getlang (160).."\r\n\r\n"
 
 -- search filter
-help = help.." "..table_othsets ["optrig"]..table_cmnds ["sefiadd"].." <"..getlang (193).."> <"..getlang (30).."> <"..getlang (194).."> <"..getlang (48).."> - "..getlang (225).."\r\n"
-help = help.." "..table_othsets ["optrig"]..table_cmnds ["sefilist"].." - "..getlang (222).."\r\n"
-help = help.." "..table_othsets ["optrig"]..table_cmnds ["sefidel"].." <"..getlang (193).."> - "..getlang (226).."\r\n"
-help = help.." "..table_othsets ["optrig"]..table_cmnds ["sefiexadd"].." <"..getlang (193).."> - "..getlang (284).."\r\n"
-help = help.." "..table_othsets ["optrig"]..table_cmnds ["sefiexlist"].." - "..getlang (286).."\r\n"
-help = help.." "..table_othsets ["optrig"]..table_cmnds ["sefiexdel"].." <"..getlang (193).."> - "..getlang (285).."\r\n\r\n"
+help = help.." "..optrig..table_cmnds ["sefiadd"].." <"..getlang (193).."> <"..getlang (30).."> <"..getlang (194).."> <"..getlang (48).."> - "..getlang (225).."\r\n"
+help = help.." "..optrig..table_cmnds ["sefilist"].." - "..getlang (222).."\r\n"
+help = help.." "..optrig..table_cmnds ["sefidel"].." <"..getlang (193).."> - "..getlang (226).."\r\n"
+help = help.." "..optrig..table_cmnds ["sefiexadd"].." <"..getlang (193).."> - "..getlang (284).."\r\n"
+help = help.." "..optrig..table_cmnds ["sefiexlist"].." - "..getlang (286).."\r\n"
+help = help.." "..optrig..table_cmnds ["sefiexdel"].." <"..getlang (193).."> - "..getlang (285).."\r\n\r\n"
 
 	-- myinfo check
-	help = help.." "..table_othsets ["optrig"]..table_cmnds ["myinfadd"].." <"..getlang (48).."> <"..getlang (193).."> ["..getlang (318).."] - "..getlang (161).."\r\n"
-	help = help.." "..table_othsets ["optrig"]..table_cmnds ["myinflist"].." <"..getlang (48).."> - "..getlang (163).."\r\n"
-	help = help.." "..table_othsets ["optrig"]..table_cmnds ["myinfdel"].." <"..getlang (48).."> <"..getlang (193).."> - "..getlang (162).."\r\n\r\n"
+	help = help.." "..optrig..table_cmnds ["myinfadd"].." <"..getlang (48).."> <"..getlang (193).."> ["..getlang (318).."] - "..getlang (161).."\r\n"
+	help = help.." "..optrig..table_cmnds ["myinflist"].." <"..getlang (48).."> - "..getlang (163).."\r\n"
+	help = help.." "..optrig..table_cmnds ["myinfdel"].." <"..getlang (48).."> <"..getlang (193).."> - "..getlang (162).."\r\n\r\n"
 
 -- protection list
-help = help.." "..table_othsets ["optrig"]..table_cmnds ["protadd"].." <"..getlang (193).."> - "..getlang (124).."\r\n"
-help = help.." "..table_othsets ["optrig"]..table_cmnds ["protlist"].." - "..getlang (607).."\r\n"
-help = help.." "..table_othsets ["optrig"]..table_cmnds ["protdel"].." <"..getlang (193).."> - "..getlang (125).."\r\n\r\n"
+help = help.." "..optrig..table_cmnds ["protadd"].." <"..getlang (193).."> - "..getlang (124).."\r\n"
+help = help.." "..optrig..table_cmnds ["protlist"].." - "..getlang (607).."\r\n"
+help = help.." "..optrig..table_cmnds ["protdel"].." <"..getlang (193).."> - "..getlang (125).."\r\n\r\n"
 
 -- ip authorization
-help = help.." "..table_othsets ["optrig"]..table_cmnds ["authadd"].." <"..getlang (178).."> <"..getlang (193).."> - "..getlang (241).."\r\n"
-help = help.." "..table_othsets ["optrig"]..table_cmnds ["authmod"].." <"..getlang (185).."> <"..getlang (193).."> - "..getlang (785).."\r\n"
-help = help.." "..table_othsets ["optrig"]..table_cmnds ["authlist"].." - "..getlang (239).."\r\n"
-help = help.." "..table_othsets ["optrig"]..table_cmnds ["authdel"].." <"..getlang (185).."> - "..getlang (242).."\r\n\r\n"
+help = help.." "..optrig..table_cmnds ["authadd"].." <"..getlang (178).."> <"..getlang (193).."> - "..getlang (241).."\r\n"
+help = help.." "..optrig..table_cmnds ["authmod"].." <"..getlang (185).."> <"..getlang (193).."> - "..getlang (785).."\r\n"
+help = help.." "..optrig..table_cmnds ["authlist"].." - "..getlang (239).."\r\n"
+help = help.." "..optrig..table_cmnds ["authdel"].." <"..getlang (185).."> - "..getlang (242).."\r\n\r\n"
 
 -- ranks
-help = help.." "..table_othsets ["optrig"]..table_cmnds ["myoprank"].." - "..getlang (175).."\r\n"
-help = help.." "..table_othsets ["optrig"]..table_cmnds ["ranexadd"].." <"..getlang (178).."> - "..getlang (216).."\r\n"
-help = help.." "..table_othsets ["optrig"]..table_cmnds ["ranexlist"].." - "..getlang (214).."\r\n"
-help = help.." "..table_othsets ["optrig"]..table_cmnds ["ranexdel"].." <"..getlang (178).."> - "..getlang (217).."\r\n"
-help = help.." "..table_othsets ["optrig"]..table_cmnds ["randel"].." <"..getlang (48).."> <"..getlang (205).."> - "..getlang (166).."\r\n"
-help = help.." "..table_othsets ["optrig"]..table_cmnds ["ranclean"].." <"..getlang (48).."> <"..getlang (373).."> - "..getlang (372).."\r\n\r\n"
+help = help.." "..optrig..table_cmnds ["myoprank"].." - "..getlang (175).."\r\n"
+help = help.." "..optrig..table_cmnds ["ranexadd"].." <"..getlang (178).."> - "..getlang (216).."\r\n"
+help = help.." "..optrig..table_cmnds ["ranexlist"].." - "..getlang (214).."\r\n"
+help = help.." "..optrig..table_cmnds ["ranexdel"].." <"..getlang (178).."> - "..getlang (217).."\r\n"
+help = help.." "..optrig..table_cmnds ["randel"].." <"..getlang (48).."> <"..getlang (205).."> - "..getlang (166).."\r\n"
+help = help.." "..optrig..table_cmnds ["ranclean"].." <"..getlang (48).."> <"..getlang (373).."> - "..getlang (372).."\r\n\r\n"
 
 -- welcome messages
-help = help.." "..table_othsets ["optrig"]..table_cmnds ["wmforce"].." <"..getlang (48).."> <"..getlang (178).."> ["..getlang (44).."] - "..getlang (484).."\r\n"
-help = help.." "..table_othsets ["optrig"]..table_cmnds ["wmlist"].." - "..getlang (252).."\r\n"
-help = help.." "..table_othsets ["optrig"]..table_cmnds ["wmdel"].." <"..getlang (178).."> - "..getlang (253).."\r\n\r\n"
+help = help.." "..optrig..table_cmnds ["wmforce"].." <"..getlang (48).."> <"..getlang (178).."> ["..getlang (44).."] - "..getlang (484).."\r\n"
+help = help.." "..optrig..table_cmnds ["wmlist"].." - "..getlang (252).."\r\n"
+help = help.." "..optrig..table_cmnds ["wmdel"].." <"..getlang (178).."> - "..getlang (253).."\r\n\r\n"
 
 -- chatrooms
-help = help.." "..table_othsets ["optrig"]..table_cmnds ["chatadd"].." <"..getlang (178).."> <"..getlang (269).."> <"..getlang (270).."> <"..getlang (271).."> <"..getlang (789).."> - "..getlang (266).."\r\n"
-help = help.." "..table_othsets ["optrig"]..table_cmnds ["chatlist"].." - "..getlang (267).."\r\n"
-help = help.." "..table_othsets ["optrig"]..table_cmnds ["chatdel"].." <"..getlang (178).."> - "..getlang (268).."\r\n\r\n"
+help = help.." "..optrig..table_cmnds ["chatadd"].." <"..getlang (178).."> <"..getlang (269).."> <"..getlang (270).."> <"..getlang (271).."> <"..getlang (789).."> - "..getlang (266).."\r\n"
+help = help.." "..optrig..table_cmnds ["chatlist"].." - "..getlang (267).."\r\n"
+help = help.." "..optrig..table_cmnds ["chatdel"].." <"..getlang (178).."> - "..getlang (268).."\r\n\r\n"
 
 -- reminders
-help = help.." "..table_othsets ["optrig"]..table_cmnds ["remadd"].." <"..getlang (185).."> <"..getlang (380).."> <"..getlang (270).."> <"..getlang (271).."> <"..getlang (381).."> <"..getlang (382).."> - "..getlang (383).."\r\n"
-help = help.." "..table_othsets ["optrig"]..table_cmnds ["remlist"].." - "..getlang (385).."\r\n"
-help = help.." "..table_othsets ["optrig"]..table_cmnds ["remshow"].." <"..getlang (185).."> - "..getlang (509).."\r\n"
-help = help.." "..table_othsets ["optrig"]..table_cmnds ["remdel"].." <"..getlang (185).."> - "..getlang (384).."\r\n\r\n"
+help = help.." "..optrig..table_cmnds ["remadd"].." <"..getlang (185).."> <"..getlang (380).."> <"..getlang (270).."> <"..getlang (271).."> <"..getlang (381).."> <"..getlang (382).."> - "..getlang (383).."\r\n"
+help = help.." "..optrig..table_cmnds ["remlist"].." - "..getlang (385).."\r\n"
+help = help.." "..optrig..table_cmnds ["remshow"].." <"..getlang (185).."> - "..getlang (509).."\r\n"
+help = help.." "..optrig..table_cmnds ["remdel"].." <"..getlang (185).."> - "..getlang (384).."\r\n\r\n"
 
 	-- no pm
-	help = help.." "..table_othsets ["optrig"]..table_cmnds ["nopmadd"].." <"..getlang (178).."> <"..getlang (194).."> <"..getlang (271).."> <"..getlang (828).."> - "..getlang (829).."\r\n"
-	help = help.." "..table_othsets ["optrig"]..table_cmnds ["nopmlist"].." - "..getlang (831).."\r\n"
-	help = help.." "..table_othsets ["optrig"]..table_cmnds ["nopmdel"].." <"..getlang (178).."> - "..getlang (830).."\r\n\r\n"
+	help = help.." "..optrig..table_cmnds ["nopmadd"].." <"..getlang (178).."> <"..getlang (194).."> <"..getlang (271).."> <"..getlang (828).."> - "..getlang (829).."\r\n"
+	help = help.." "..optrig..table_cmnds ["nopmlist"].." - "..getlang (831).."\r\n"
+	help = help.." "..optrig..table_cmnds ["nopmdel"].." <"..getlang (178).."> - "..getlang (830).."\r\n\r\n"
 
 	-- right click menu
-	help = help.." "..table_othsets ["optrig"]..table_cmnds ["rcmenuadd"].." <\""..getlang (823).."\"> <\""..getlang (420).."\"> <"..getlang (381).."> <"..getlang (270).."> <"..getlang (271).."> - "..getlang (858).."\r\n"
-	help = help.." "..table_othsets ["optrig"]..table_cmnds ["rcmenulist"].." - "..getlang (860).."\r\n"
-	help = help.." "..table_othsets ["optrig"]..table_cmnds ["rcmenudel"].." <"..getlang (185).."> - "..getlang (859).."\r\n\r\n"
+	help = help.." "..optrig..table_cmnds ["rcmenuadd"].." <\""..getlang (823).."\"> <\""..getlang (420).."\"> <"..getlang (381).."> <"..getlang (270).."> <"..getlang (271).."> - "..getlang (858).."\r\n"
+	help = help.." "..optrig..table_cmnds ["rcmenulist"].." - "..getlang (860).."\r\n"
+	help = help.." "..optrig..table_cmnds ["rcmenudel"].." <"..getlang (185).."> - "..getlang (859).."\r\n\r\n"
 
 	-- ip watch
-	help = help.." "..table_othsets ["optrig"]..table_cmnds ["ipwatadd"].." <"..getlang (193).."> <\""..getlang (828).."\"> <"..getlang (866).."> - "..getlang (863).."\r\n"
-	help = help.." "..table_othsets ["optrig"]..table_cmnds ["ipwatlist"].." - "..getlang (865).."\r\n"
-	help = help.." "..table_othsets ["optrig"]..table_cmnds ["ipwatdel"].." <"..getlang (193).."> - "..getlang (864).."\r\n\r\n"
+	help = help.." "..optrig..table_cmnds ["ipwatadd"].." <"..getlang (193).."> <\""..getlang (828).."\"> <"..getlang (866).."> - "..getlang (863).."\r\n"
+	help = help.." "..optrig..table_cmnds ["ipwatlist"].." - "..getlang (865).."\r\n"
+	help = help.." "..optrig..table_cmnds ["ipwatdel"].." <"..getlang (193).."> - "..getlang (864).."\r\n\r\n"
 
 	-- hard ban
-	help = help.." "..table_othsets ["optrig"]..table_cmnds ["hban"].." <"..getlang (193).."> <\""..getlang (828).."\"> - "..getlang (845).."\r\n"
-	help = help.." "..table_othsets ["optrig"]..table_cmnds ["hbans"].." - "..getlang (847).."\r\n"
-	help = help.." "..table_othsets ["optrig"]..table_cmnds ["hunban"].." <"..getlang (193).."> - "..getlang (846).."\r\n\r\n"
+	help = help.." "..optrig..table_cmnds ["hban"].." <"..getlang (193).."> <\""..getlang (828).."\"> - "..getlang (845).."\r\n"
+	help = help.." "..optrig..table_cmnds ["hbans"].." - "..getlang (847).."\r\n"
+	help = help.." "..optrig..table_cmnds ["hunban"].." <"..getlang (193).."> - "..getlang (846).."\r\n\r\n"
 
 -- news
-help = help.." "..table_othsets ["optrig"]..table_cmnds ["newsadd"].." <"..getlang (120).."> - "..getlang (453).."\r\n"
-help = help.." "..table_othsets ["optrig"]..table_cmnds ["newsdel"].." <"..getlang (102).."> - "..getlang (454).."\r\n\r\n"
+help = help.." "..optrig..table_cmnds ["newsadd"].." <"..getlang (120).."> - "..getlang (453).."\r\n"
+help = help.." "..optrig..table_cmnds ["newsdel"].." <"..getlang (102).."> - "..getlang (454).."\r\n\r\n"
 
 -- chat replacer
-help = help.." "..table_othsets ["optrig"]..table_cmnds ["repladd"].." <\""..getlang (193).."\"> <\""..getlang (810).."\"> <"..getlang (271).."> - "..getlang (811).."\r\n"
-help = help.." "..table_othsets ["optrig"]..table_cmnds ["repllist"].." - "..getlang (801).."\r\n"
-help = help.." "..table_othsets ["optrig"]..table_cmnds ["repldel"].." <"..getlang (185).."> - "..getlang (812).."\r\n"
-help = help.." "..table_othsets ["optrig"]..table_cmnds ["replexadd"].." <"..getlang (178).." "..getlang (197).." "..getlang (243).."> - "..getlang (813).."\r\n"
-help = help.." "..table_othsets ["optrig"]..table_cmnds ["replexlist"].." - "..getlang (808).."\r\n"
-help = help.." "..table_othsets ["optrig"]..table_cmnds ["replexdel"].." <"..getlang (178).." "..getlang (197).." "..getlang (243).."> - "..getlang (814).."\r\n\r\n"
+help = help.." "..optrig..table_cmnds ["repladd"].." <\""..getlang (193).."\"> <\""..getlang (810).."\"> <"..getlang (271).."> - "..getlang (811).."\r\n"
+help = help.." "..optrig..table_cmnds ["repllist"].." - "..getlang (801).."\r\n"
+help = help.." "..optrig..table_cmnds ["repldel"].." <"..getlang (185).."> - "..getlang (812).."\r\n"
+help = help.." "..optrig..table_cmnds ["replexadd"].." <"..getlang (178).." "..getlang (197).." "..getlang (243).."> - "..getlang (813).."\r\n"
+help = help.." "..optrig..table_cmnds ["replexlist"].." - "..getlang (808).."\r\n"
+help = help.." "..optrig..table_cmnds ["replexdel"].." <"..getlang (178).." "..getlang (197).." "..getlang (243).."> - "..getlang (814).."\r\n\r\n"
 
 -- chat responder
-help = help.." "..table_othsets ["optrig"]..table_cmnds ["respadd"].." <\""..getlang (193).."\"> <\""..getlang (400).."\"> <"..getlang (271).."> - "..getlang (401).."\r\n"
-help = help.." "..table_othsets ["optrig"]..table_cmnds ["resplist"].." - "..getlang (403).."\r\n"
-help = help.." "..table_othsets ["optrig"]..table_cmnds ["respdel"].." <"..getlang (185).."> - "..getlang (402).."\r\n"
-help = help.." "..table_othsets ["optrig"]..table_cmnds ["respexadd"].." <"..getlang (178).." "..getlang (197).." "..getlang (243).."> - "..getlang (412).."\r\n"
-help = help.." "..table_othsets ["optrig"]..table_cmnds ["respexlist"].." - "..getlang (414).."\r\n"
-help = help.." "..table_othsets ["optrig"]..table_cmnds ["respexdel"].." <"..getlang (178).." "..getlang (197).." "..getlang (243).."> - "..getlang (413).."\r\n\r\n"
+help = help.." "..optrig..table_cmnds ["respadd"].." <\""..getlang (193).."\"> <\""..getlang (400).."\"> <"..getlang (271).."> - "..getlang (401).."\r\n"
+help = help.." "..optrig..table_cmnds ["resplist"].." - "..getlang (403).."\r\n"
+help = help.." "..optrig..table_cmnds ["respdel"].." <"..getlang (185).."> - "..getlang (402).."\r\n"
+help = help.." "..optrig..table_cmnds ["respexadd"].." <"..getlang (178).." "..getlang (197).." "..getlang (243).."> - "..getlang (412).."\r\n"
+help = help.." "..optrig..table_cmnds ["respexlist"].." - "..getlang (414).."\r\n"
+help = help.." "..optrig..table_cmnds ["respexdel"].." <"..getlang (178).." "..getlang (197).." "..getlang (243).."> - "..getlang (413).."\r\n\r\n"
 
 -- offline messenger
-help = help.." "..table_othsets ["optrig"]..table_cmnds ["offlist"].." - "..getlang (168).."\r\n"
-help = help.." "..table_othsets ["optrig"]..table_cmnds ["offdel"].." <"..getlang (102).."> - "..getlang (169).."\r\n"
-help = help.." "..table_othsets ["optrig"]..table_cmnds ["offclean"].." - "..getlang (170).."\r\n\r\n"
+help = help.." "..optrig..table_cmnds ["offlist"].." - "..getlang (168).."\r\n"
+help = help.." "..optrig..table_cmnds ["offdel"].." <"..getlang (102).."> - "..getlang (169).."\r\n"
+help = help.." "..optrig..table_cmnds ["offclean"].." - "..getlang (170).."\r\n\r\n"
 
 	-- history
-	help = help .. " " .. table_othsets ["optrig"] .. table_cmnds ["ophistory"] .. " <" .. getlang (209) .. "> - " .. getlang (173) .. "\r\n"
-	help = help .. " " .. table_othsets ["optrig"] .. table_cmnds ["histclean"] .. " - " .. getlang (174) .. "\r\n\r\n"
+	help = help .. " " .. optrig .. table_cmnds ["ophistory"] .. " <" .. getlang (209) .. "> - " .. getlang (173) .. "\r\n"
+	help = help .. " " .. optrig .. table_cmnds ["histclean"] .. " - " .. getlang (174) .. "\r\n\r\n"
 
 -- commands
-help = help.." "..table_othsets ["optrig"]..table_cmnds ["cmndset"].." <"..getlang (420).."> <"..getlang (420).."> - "..getlang (421).."\r\n"
-help = help.." "..table_othsets ["optrig"]..table_cmnds ["cmndshow"].." - "..getlang (651).."\r\n"
-help = help.." "..table_othsets ["optrig"]..table_cmnds ["cmndreset"].." - "..getlang (426).."\r\n"
-help = help.." "..table_othsets ["optrig"]..table_cmnds ["clog"].." <"..getlang (209).."> - "..getlang (779).."\r\n"
-help = help.." "..table_othsets ["optrig"]..table_cmnds ["cmndadd"].." <"..getlang (193).."> <"..getlang (171).."> - "..getlang (336).."\r\n"
-help = help.." "..table_othsets ["optrig"]..table_cmnds ["cmndlist"].." - "..getlang (338).."\r\n"
-help = help.." "..table_othsets ["optrig"]..table_cmnds ["cmnddel"].." <"..getlang (193).."> - "..getlang (337).."\r\n"
-help = help.." "..table_othsets ["optrig"]..table_cmnds ["cmndexadd"].." <"..getlang (193).."> - "..getlang (296).."\r\n"
-help = help.." "..table_othsets ["optrig"]..table_cmnds ["cmndexlist"].." - "..getlang (298).."\r\n"
-help = help.." "..table_othsets ["optrig"]..table_cmnds ["cmndexdel"].." <"..getlang (193).."> - "..getlang (297).."\r\n\r\n"
+help = help.." "..optrig..table_cmnds ["cmndset"].." <"..getlang (420).."> <"..getlang (420).."> - "..getlang (421).."\r\n"
+help = help.." "..optrig..table_cmnds ["cmndshow"].." - "..getlang (651).."\r\n"
+help = help.." "..optrig..table_cmnds ["cmndreset"].." - "..getlang (426).."\r\n"
+help = help.." "..optrig..table_cmnds ["clog"].." <"..getlang (209).."> - "..getlang (779).."\r\n"
+help = help.." "..optrig..table_cmnds ["cmndadd"].." <"..getlang (193).."> <"..getlang (171).."> - "..getlang (336).."\r\n"
+help = help.." "..optrig..table_cmnds ["cmndlist"].." - "..getlang (338).."\r\n"
+help = help.." "..optrig..table_cmnds ["cmnddel"].." <"..getlang (193).."> - "..getlang (337).."\r\n"
+help = help.." "..optrig..table_cmnds ["cmndexadd"].." <"..getlang (193).."> - "..getlang (296).."\r\n"
+help = help.." "..optrig..table_cmnds ["cmndexlist"].." - "..getlang (298).."\r\n"
+help = help.." "..optrig..table_cmnds ["cmndexdel"].." <"..getlang (193).."> - "..getlang (297).."\r\n\r\n"
 
 -- custom nicks
-help = help.." "..table_othsets ["optrig"]..table_cmnds ["rename"].." <"..getlang (178).."> <"..getlang (178).."> - "..getlang (467).."\r\n"
-help = help.." "..table_othsets ["optrig"]..table_cmnds ["custdel"].." <"..getlang (178).."> - "..getlang (329).."\r\n\r\n"
+help = help.." "..optrig..table_cmnds ["rename"].." <"..getlang (178).."> <"..getlang (178).."> - "..getlang (467).."\r\n"
+help = help.." "..optrig..table_cmnds ["custdel"].." <"..getlang (178).."> - "..getlang (329).."\r\n\r\n"
 
 -- registered users
-help = help.." "..table_othsets ["optrig"]..table_cmnds ["regname"].." <"..getlang (178).."> <"..getlang (178).."> - "..getlang (486).."\r\n"
-help = help.." "..table_othsets ["optrig"]..table_cmnds ["reglist"].." <"..getlang (171).."> <"..getlang (149).."> - "..getlang (164).."\r\n"
-help = help.." "..table_othsets ["optrig"]..table_cmnds ["regfind"].." <"..getlang (178).."> - "..getlang (686).."\r\n"
-help = help.." "..table_othsets ["optrig"]..table_cmnds ["regstats"].." - "..getlang (687).."\r\n\r\n"
+help = help.." "..optrig..table_cmnds ["regname"].." <"..getlang (178).."> <"..getlang (178).."> - "..getlang (486).."\r\n"
+help = help.." "..optrig..table_cmnds ["reglist"].." <"..getlang (171).."> <"..getlang (149).."> - "..getlang (164).."\r\n"
+help = help.." "..optrig..table_cmnds ["regfind"].." <"..getlang (178).."> - "..getlang (686).."\r\n"
+help = help.." "..optrig..table_cmnds ["regstats"].." - "..getlang (687).."\r\n\r\n"
 
 -- hublist
-help = help.." "..table_othsets ["optrig"]..table_cmnds ["hubadd"].." <"..getlang (522).."> <\""..getlang (470).."\"> <\""..getlang (523).."\"> - "..getlang (524).."\r\n"
-help = help.." "..table_othsets ["optrig"]..table_cmnds ["hubdel"].." <"..getlang (522).."> - "..getlang (525).."\r\n\r\n"
+help = help.." "..optrig..table_cmnds ["hubadd"].." <"..getlang (522).."> <\""..getlang (470).."\"> <\""..getlang (523).."\"> - "..getlang (524).."\r\n"
+help = help.." "..optrig..table_cmnds ["hubdel"].." <"..getlang (522).."> - "..getlang (525).."\r\n\r\n"
 
 -- chat
-help = help.." "..table_othsets ["optrig"]..table_cmnds ["mode"].." <"..getlang (193).."> <"..getlang (632).."> - "..getlang (630).."\r\n"
-help = help.." "..table_othsets ["optrig"]..table_cmnds ["mode"].." - "..getlang (635).."\r\n"
-help = help.." "..table_othsets ["optrig"]..table_cmnds ["say"].." <"..getlang (178).."> <"..getlang (44).."> - "..getlang (165).."\r\n"
-help = help.." "..table_othsets ["optrig"]..table_cmnds ["clear"].." - "..getlang (684).."\r\n\r\n"
+help = help.." "..optrig..table_cmnds ["mode"].." <"..getlang (193).."> <"..getlang (632).."> - "..getlang (630).."\r\n"
+help = help.." "..optrig..table_cmnds ["mode"].." - "..getlang (635).."\r\n"
+help = help.." "..optrig..table_cmnds ["say"].." <"..getlang (178).."> <"..getlang (44).."> - "..getlang (165).."\r\n"
+help = help.." "..optrig..table_cmnds ["clear"].." - "..getlang (684).."\r\n\r\n"
 
 	-- ip gag
-	help = help .. " " .. table_othsets ["optrig"] .. table_cmnds ["gagipadd"] .. " <" .. getlang (193) .. "> <" .. getlang (126) .. "> - " .. getlang (641) .. "\r\n"
-	help = help .. " " .. table_othsets ["optrig"] .. table_cmnds ["gagiplist"] .. " - " .. getlang (646) .. "\r\n"
-	help = help .. " " .. table_othsets ["optrig"] .. table_cmnds ["gagipdel"] .. " <" .. getlang (193) .. " " .. getlang (197) .. " *> - " .. getlang (648) .. "\r\n\r\n"
+	help = help .. " " .. optrig .. table_cmnds ["gagipadd"] .. " <" .. getlang (193) .. "> <" .. getlang (126) .. "> - " .. getlang (641) .. "\r\n"
+	help = help .. " " .. optrig .. table_cmnds ["gagiplist"] .. " - " .. getlang (646) .. "\r\n"
+	help = help .. " " .. optrig .. table_cmnds ["gagipdel"] .. " <" .. getlang (193) .. " " .. getlang (197) .. " *> - " .. getlang (648) .. "\r\n\r\n"
 
 	-- cc gag
-	help = help.." "..table_othsets ["optrig"]..table_cmnds ["gagccadd"].." <"..getlang (789).."> <"..getlang (126).."> - "..getlang (877).."\r\n"
-	help = help.." "..table_othsets ["optrig"]..table_cmnds ["gagcclist"].." - "..getlang (882).."\r\n"
-	help = help.." "..table_othsets ["optrig"]..table_cmnds ["gagccdel"].." <"..getlang (789).." "..getlang (197).." *> - "..getlang (884).."\r\n\r\n"
+	help = help.." "..optrig..table_cmnds ["gagccadd"].." <"..getlang (789).."> <"..getlang (126).."> - "..getlang (877).."\r\n"
+	help = help.." "..optrig..table_cmnds ["gagcclist"].." - "..getlang (882).."\r\n"
+	help = help.." "..optrig..table_cmnds ["gagccdel"].." <"..getlang (789).." "..getlang (197).." *> - "..getlang (884).."\r\n\r\n"
 
 	-- user logger
-	help = help .. " " .. table_othsets ["optrig"] .. table_cmnds ["userinfo"] .. " <" .. getlang (178) .. "> - " .. getlang (703) .. "\r\n"
-	help = help .. " " .. table_othsets ["optrig"] .. table_cmnds ["ipinfo"] .. " <" .. getlang (243) .. "> - " .. getlang (930) .. "\r\n"
-	help = help .. " " .. table_othsets ["optrig"] .. table_cmnds ["ulog"] .. " <" .. getlang (48) .. "> <" .. getlang (120) .. "> <" .. getlang (209) .. "> - " .. getlang (406) .. "\r\n"
-	help = help .. " " .. table_othsets ["optrig"] .. table_cmnds ["seen"] .. " <" .. getlang (178) .. "> - " .. string.format (getlang (637), "http://www.te-home.net/?do=hublist") .. "\r\n\r\n"
+	help = help .. " " .. optrig .. table_cmnds ["userinfo"] .. " <" .. getlang (178) .. "> - " .. getlang (703) .. "\r\n"
+	help = help .. " " .. optrig .. table_cmnds ["ipinfo"] .. " <" .. getlang (243) .. "> - " .. getlang (930) .. "\r\n"
+	help = help .. " " .. optrig .. table_cmnds ["ulog"] .. " <" .. getlang (48) .. "> <" .. getlang (120) .. "> <" .. getlang (209) .. "> - " .. getlang (406) .. "\r\n"
+	help = help .. " " .. optrig .. table_cmnds ["seen"] .. " <" .. getlang (178) .. "> - " .. string.format (getlang (637), "http://www.te-home.net/?do=hublist") .. "\r\n\r\n"
 
 	-- other
-	help = help .. " " .. table_othsets ["optrig"] .. table_cmnds ["dropip"] .. " <" .. getlang (243) .. "> - " .. getlang (919) .. "\r\n"
-	help = help .. " " .. table_othsets ["optrig"] .. table_cmnds ["cleanup"] .. " <" .. getlang (48) .. "> <" .. getlang (4) .. " " .. getlang (197) .. " *> [" .. getlang (171) .. "] - " .. getlang (172) .. "\r\n"
-	help = help .. " " .. table_othsets ["optrig"] .. table_cmnds ["readlog"] .. " <" .. getlang (292) .. "> <" .. getlang (209) .. "> - " .. getlang (293) .. "\r\n\r\n"
+	help = help .. " " .. optrig .. table_cmnds ["dropip"] .. " <" .. getlang (243) .. "> - " .. getlang (919) .. "\r\n"
+	help = help .. " " .. optrig .. table_cmnds ["cleanup"] .. " <" .. getlang (48) .. "> <" .. getlang (4) .. " " .. getlang (197) .. " *> [" .. getlang (171) .. "] - " .. getlang (172) .. "\r\n"
+	help = help .. " " .. optrig .. table_cmnds ["readlog"] .. " <" .. getlang (292) .. "> <" .. getlang (209) .. "> - " .. getlang (293) .. "\r\n\r\n"
 
 -- ledokol commands
-help = help.." "..table_othsets ["optrig"]..table_cmnds ["ledoconf"].." - "..getlang (176).."\r\n"
-help = help.." "..table_othsets ["optrig"]..table_cmnds ["ledoset"].." <"..getlang (204).."> <"..getlang (205).."> - "..getlang (177).."\r\n"
-help = help.." "..table_othsets ["optrig"]..table_cmnds ["ledover"].." - "..getlang (10).."\r\n"
-help = help.." "..table_othsets ["optrig"]..table_cmnds ["ledohelp"].." - "..getlang (179).."\r\n"
-help = help.." "..table_othsets ["optrig"]..table_cmnds ["ledostats"].." - "..getlang (188).."\r\n\r\n"
+help = help.." "..optrig..table_cmnds ["ledoconf"].." - "..getlang (176).."\r\n"
+help = help.." "..optrig..table_cmnds ["ledoset"].." <"..getlang (204).."> <"..getlang (205).."> - "..getlang (177).."\r\n"
+help = help.." "..optrig..table_cmnds ["ledover"].." - "..getlang (10).."\r\n"
+help = help.." "..optrig..table_cmnds ["ledohelp"].." - "..getlang (179).."\r\n"
+help = help.." "..optrig..table_cmnds ["ledostats"].." - "..getlang (188).."\r\n\r\n"
 
 	-- experts only commands
 	if getclass (nick) == 10 then
 		help = help.." .:: "..getlang (844)..":\r\n\r\n"
 
 		if getledoconf ("allow_sql") == 1 then
-			help = help.." "..table_othsets ["optrig"]..table_cmnds ["ledosql"].." <"..getlang (841).."> - "..getlang (842).."\r\n"
+			help = help.." "..optrig..table_cmnds ["ledosql"].." <"..getlang (841).."> - "..getlang (842).."\r\n"
 		end
 
 		if getledoconf ("allow_shell") == 1 then
-			help = help.." "..table_othsets ["optrig"]..table_cmnds ["ledoshell"].." <"..getlang (420).."> - "..getlang (843).."\r\n"
+			help = help.." "..optrig..table_cmnds ["ledoshell"].." <"..getlang (420).."> - "..getlang (843).."\r\n"
 		end
 
-		help = help.." "..table_othsets ["optrig"]..table_cmnds ["ledokoluninstallisconfirmed"].." - "..getlang (769).."\r\n\r\n"
+		help = help.." "..optrig..table_cmnds ["ledokoluninstallisconfirmed"].." - "..getlang (769).."\r\n\r\n"
 	end
 
 	help = help.." .:: "..getlang (180)..":\r\n\r\n"
 
+	local ustrig = string.sub (getconfig ("cmd_start_user"), 1, 1)
+
 -- ranks
-help = help.." "..table_othsets ["ustrig"]..table_cmnds ["mychatrank"].." - "..getlang (182).."\r\n"
-help = help.." "..table_othsets ["ustrig"]..table_cmnds ["mysharerank"].." - "..getlang (323).."\r\n"
-help = help.." "..table_othsets ["ustrig"]..table_cmnds ["chatranks"].." - "..string.format (getlang (116), table_sets ["ranklimit"]).."\r\n"
-help = help.." "..table_othsets ["ustrig"]..table_cmnds ["shareranks"].." - "..string.format (getlang (324), table_sets ["ranklimit"]).."\r\n"
-help = help.." "..table_othsets ["ustrig"]..table_cmnds ["opranks"].." - "..string.format (getlang (118), table_sets ["ranklimit"]).."\r\n"
-help = help.." "..table_othsets ["ustrig"]..table_cmnds ["searranks"].." - "..string.format (getlang (694), table_sets ["ranklimit"]).."\r\n"
-help = help.." "..table_othsets ["ustrig"]..table_cmnds ["wordranks"].." - "..string.format (getlang (439), table_sets ["ranklimit"]).."\r\n"
-	help = help .. " " .. table_othsets ["ustrig"] .. table_cmnds ["cclive"] .. " - " .. getlang (512) .. "\r\n"
-	help = help .. " " .. table_othsets ["ustrig"] .. table_cmnds ["citylive"] .. " <" .. getlang (789) .. "> - " .. getlang (923) .. "\r\n"
-	help = help .. " " .. table_othsets ["ustrig"] .. table_cmnds ["cchist"] .. " - " .. getlang (513) .. "\r\n\r\n"
+help = help.." "..ustrig..table_cmnds ["mychatrank"].." - "..getlang (182).."\r\n"
+help = help.." "..ustrig..table_cmnds ["mysharerank"].." - "..getlang (323).."\r\n"
+help = help.." "..ustrig..table_cmnds ["chatranks"].." - "..string.format (getlang (116), table_sets ["ranklimit"]).."\r\n"
+help = help.." "..ustrig..table_cmnds ["shareranks"].." - "..string.format (getlang (324), table_sets ["ranklimit"]).."\r\n"
+help = help.." "..ustrig..table_cmnds ["opranks"].." - "..string.format (getlang (118), table_sets ["ranklimit"]).."\r\n"
+help = help.." "..ustrig..table_cmnds ["searranks"].." - "..string.format (getlang (694), table_sets ["ranklimit"]).."\r\n"
+help = help.." "..ustrig..table_cmnds ["wordranks"].." - "..string.format (getlang (439), table_sets ["ranklimit"]).."\r\n"
+	help = help .. " " .. ustrig .. table_cmnds ["cclive"] .. " - " .. getlang (512) .. "\r\n"
+	help = help .. " " .. ustrig .. table_cmnds ["citylive"] .. " <" .. getlang (789) .. "> - " .. getlang (923) .. "\r\n"
+	help = help .. " " .. ustrig .. table_cmnds ["cchist"] .. " - " .. getlang (513) .. "\r\n\r\n"
 
 -- releases
-help = help.." "..table_othsets ["ustrig"]..table_cmnds ["reladd"].." <\""..getlang (470).."\"> <\""..getlang (471).."\"> ["..getlang (472).."] - "..getlang (473).."\r\n"
-help = help.." "..table_othsets ["ustrig"]..table_cmnds ["reldel"].." <"..getlang (48).."> <"..getlang (470).."> - "..getlang (474).."\r\n"
-help = help.." "..table_othsets ["ustrig"]..table_cmnds ["rellist"].." <"..getlang (48).."> <"..getlang (209).."> ["..getlang (471).." "..getlang (197).." "..getlang (310).."] - "..getlang (475).."\r\n"
-help = help.." "..table_othsets ["ustrig"]..table_cmnds ["relfind"].." <"..getlang (470).."> - "..getlang (476).."\r\n\r\n"
+help = help.." "..ustrig..table_cmnds ["reladd"].." <\""..getlang (470).."\"> <\""..getlang (471).."\"> ["..getlang (472).."] - "..getlang (473).."\r\n"
+help = help.." "..ustrig..table_cmnds ["reldel"].." <"..getlang (48).."> <"..getlang (470).."> - "..getlang (474).."\r\n"
+help = help.." "..ustrig..table_cmnds ["rellist"].." <"..getlang (48).."> <"..getlang (209).."> ["..getlang (471).." "..getlang (197).." "..getlang (310).."] - "..getlang (475).."\r\n"
+help = help.." "..ustrig..table_cmnds ["relfind"].." <"..getlang (470).."> - "..getlang (476).."\r\n\r\n"
 
 -- welcome messages
-help = help.." "..table_othsets ["ustrig"]..table_cmnds ["wmset"].." <"..getlang (48).."> ["..getlang (44).."] - "..getlang (249).."\r\n"
-help = help.." "..table_othsets ["ustrig"]..table_cmnds ["wmshow"].." - "..getlang (251).."\r\n\r\n"
+help = help.." "..ustrig..table_cmnds ["wmset"].." <"..getlang (48).."> ["..getlang (44).."] - "..getlang (249).."\r\n"
+help = help.." "..ustrig..table_cmnds ["wmshow"].." - "..getlang (251).."\r\n\r\n"
 
 -- custom nicks
-help = help.." "..table_othsets ["ustrig"]..table_cmnds ["nick"].." ["..getlang (178).."] - "..getlang (247).."\r\n"
-help = help.." "..table_othsets ["ustrig"]..table_cmnds ["realnick"].." <"..getlang (178).."> - "..getlang (367).."\r\n"
-help = help.." "..table_othsets ["ustrig"]..table_cmnds ["custlist"].." - "..getlang (154).."\r\n\r\n"
+help = help.." "..ustrig..table_cmnds ["nick"].." ["..getlang (178).."] - "..getlang (247).."\r\n"
+help = help.." "..ustrig..table_cmnds ["realnick"].." <"..getlang (178).."> - "..getlang (367).."\r\n"
+help = help.." "..ustrig..table_cmnds ["custlist"].." - "..getlang (154).."\r\n\r\n"
 
 	-- chat history
-	help = help .. " " .. table_othsets ["ustrig"] .. table_cmnds ["history"] .. " <" .. getlang (209) .. "> - " .. getlang (187) .. "\r\n"
-	help = help .. " " .. table_othsets ["ustrig"] .. table_cmnds ["myhistory"] .. " <" .. getlang (209) .. "> - " .. getlang (464) .. "\r\n\r\n"
+	help = help .. " " .. ustrig .. table_cmnds ["history"] .. " <" .. getlang (209) .. "> - " .. getlang (187) .. "\r\n"
+	help = help .. " " .. ustrig .. table_cmnds ["myhistory"] .. " <" .. getlang (209) .. "> - " .. getlang (464) .. "\r\n\r\n"
 
 -- other
-help = help.." "..table_othsets ["ustrig"]..table_cmnds ["mode"].." <"..getlang (632).."> - "..getlang (630).."\r\n"
-help = help.." "..table_othsets ["ustrig"]..table_cmnds ["offmsg"].." <"..getlang (178).."> <"..getlang (44).."> - "..getlang (186).."\r\n"
-help = help.." "..table_othsets ["ustrig"]..table_cmnds ["calculate"].." <"..getlang (479).."> - "..getlang (480).."\r\n"
-help = help.." "..table_othsets ["ustrig"]..table_cmnds ["hubnews"].." <"..getlang (209).."> - "..getlang (455).."\r\n"
-help = help.." "..table_othsets ["ustrig"]..table_cmnds ["showtopic"].." - "..getlang (181).."\r\n"
-help = help.." "..table_othsets ["ustrig"]..table_cmnds ["showhubs"].." - "..getlang (526).."\r\n\r\n"
+help = help.." "..ustrig..table_cmnds ["mode"].." <"..getlang (632).."> - "..getlang (630).."\r\n"
+help = help.." "..ustrig..table_cmnds ["offmsg"].." <"..getlang (178).."> <"..getlang (44).."> - "..getlang (186).."\r\n"
+help = help.." "..ustrig..table_cmnds ["calculate"].." <"..getlang (479).."> - "..getlang (480).."\r\n"
+help = help.." "..ustrig..table_cmnds ["hubnews"].." <"..getlang (209).."> - "..getlang (455).."\r\n"
+help = help.." "..ustrig..table_cmnds ["showtopic"].." - "..getlang (181).."\r\n"
+help = help.." "..ustrig..table_cmnds ["showhubs"].." - "..getlang (526).."\r\n\r\n"
 
 help = help.." .:: "..getlang (624)..":\r\n\r\n"
 
@@ -15926,8 +16089,8 @@ conf = conf.."\r\n [::] classnotigagip = "..table_sets ["classnotigagip"]
 conf = conf.."\r\n [::] classnoticom = "..table_sets ["classnoticom"]
 conf = conf.."\r\n [::] classnotisay = "..table_sets ["classnotisay"]
 	conf = conf .. "\r\n [::] classnotirepl = " .. table_sets ["classnotirepl"]
-conf = conf.."\r\n [::] classnotikick = "..table_sets ["classnotikick"]
-conf = conf.."\r\n [::] classnotiban = "..table_sets ["classnotiban"]
+	conf = conf .. "\r\n [::] classnotikick = " .. table_sets ["classnotikick"]
+	conf = conf .. "\r\n [::] classnotiban = " .. table_sets ["classnotiban"]
 conf = conf.."\r\n [::] classnotireg = "..table_sets ["classnotireg"]
 conf = conf.."\r\n [::] classnoticonfig = "..table_sets ["classnoticonfig"]
 conf = conf.."\r\n [::] classnotiredir = "..table_sets ["classnotiredir"]
@@ -16546,15 +16709,15 @@ function createsettings ()
 
 	if not getledoconf ("cmdexinstalled") then -- add commands i prefer to except
 		VH:SQLQuery ("insert ignore into `"..tbl_sql ["cmdex"].."` (`exception`) values "..
-		"('"..repsqlchars ("^%"..table_othsets ["optrig"].."drop .+$").."'), "..
-		"('"..repsqlchars ("^%"..table_othsets ["optrig"].."rpass .+$").."'), "..
-		"('"..repsqlchars ("^%"..table_othsets ["optrig"].."rpasswd .+$").."'), "..
-		"('"..repsqlchars ("^%"..table_othsets ["optrig"].."regpass .+$").."'), "..
-		"('"..repsqlchars ("^%"..table_othsets ["optrig"].."regpasswd .+$").."'), "..
-		"('"..repsqlchars ("^%"..table_othsets ["ustrig"].."msgsend .+$").."'), "..
-		"('"..repsqlchars ("^%"..table_othsets ["ustrig"].."report .+$").."'), "..
-		"('"..repsqlchars ("^%"..table_othsets ["ustrig"].."passwd .*$").."'), "..
-		"('"..repsqlchars ("^%"..table_othsets ["ustrig"].."regme").."')")
+		"('"..repsqlchars ("^"..table_othsets ["optrig"].."drop .+$").."'), "..
+		"('"..repsqlchars ("^"..table_othsets ["optrig"].."rpass .+$").."'), "..
+		"('"..repsqlchars ("^"..table_othsets ["optrig"].."rpasswd .+$").."'), "..
+		"('"..repsqlchars ("^"..table_othsets ["optrig"].."regpass .+$").."'), "..
+		"('"..repsqlchars ("^"..table_othsets ["optrig"].."regpasswd .+$").."'), "..
+		"('"..repsqlchars ("^"..table_othsets ["ustrig"].."msgsend .+$").."'), "..
+		"('"..repsqlchars ("^"..table_othsets ["ustrig"].."report .+$").."'), "..
+		"('"..repsqlchars ("^"..table_othsets ["ustrig"].."passwd .*$").."'), "..
+		"('"..repsqlchars ("^"..table_othsets ["ustrig"].."regme").."')")
 	end
 
 	if not getledoconf ("defmyinfnick") then -- add nicks i prefer to forbid
@@ -17578,11 +17741,11 @@ if string.find (txt, "<hubver>") then
 end
 
 if string.find (txt, "<optrig>") then
-	txt = string.gsub (txt, "<optrig>", reprexpchars (table_othsets ["optrig"]))
+	txt = string.gsub (txt, "<optrig>", reprexpchars (string.sub (getconfig ("cmd_start_op"), 1, 1)))
 end
 
 if string.find (txt, "<ustrig>") then
-	txt = string.gsub (txt, "<ustrig>", reprexpchars (table_othsets ["ustrig"]))
+	txt = string.gsub (txt, "<ustrig>", reprexpchars (string.sub (getconfig ("cmd_start_user"), 1, 1)))
 end
 
 if string.find (txt, "<hubbot>") then
