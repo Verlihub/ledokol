@@ -3,7 +3,7 @@
 -------------------------- INFORMATION --------------------------
 
 Language: English
-Version: 2.7.6
+Version: 2.7.7
 Author: RoLex
 Email: webmaster@feardc.net
 
@@ -135,7 +135,7 @@ t = {
 	[101] = "No rows to remove: %s",
 	[102] = "date",
 	[103] = "%s with class %s used command: %s",
-	[104] = "%s permanently banned: <%s> %s",
+	[104] = "",
 	[105] = "Deleted from chat rank list: %s",
 	[106] = "Not found in chat rank list: %s",
 	[107] = "Deleted from operator rank list: %s",
@@ -181,7 +181,7 @@ t = {
 	[147] = "%s with IP %s and class %s kicked: <%s> %s",
 	[148] = "%s with class %s deleted %s statistics plugin entries older than %s days.",
 	[149] = "offset",
-	[150] = "%s unbanned: <%s> %s",
+	[150] = "",
 	[151] = "%s didn't get any search results.",
 	[152] = "Redirected %s with IP %s and class %s to %s: <%s> %s",
 	[153] = "Unknown protocol command from %s with IP %s and class %s: %s",
@@ -239,7 +239,7 @@ t = {
 	[205] = "value",
 	[206] = "minutes",
 	[207] = "%s library version: %s",
-	[208] = "%s temporary banned for %s: <%s> %s",
+	[208] = "",
 	[209] = "lines",
 	[210] = "Couldn't add rank exception because already exists: %s",
 	[211] = "Added rank exception: %s",
@@ -963,7 +963,25 @@ t = {
 	[929] = "Quoted parameters %s or %s must be used with quotes.",
 	[930] = "IP information",
 	[931] = "IP information not available: %s",
-	[932] = "Chat message replaced for user with class %s: <%s> %s"
+	[932] = "Chat message replaced for user with class %s: <%s> %s",
+	[933] = "IP %s permanently banned: <%s> %s",
+	[934] = "Nick %s permanently banned: <%s> %s",
+	[935] = "Range %s permanently banned: <%s> %s",
+	[936] = "Host %s permanently banned: <%s> %s",
+	[937] = "Share %s permanently banned: <%s> %s",
+	[938] = "Prefix %s permanently banned: <%s> %s",
+	[939] = "IP %s temporarily banned until %s: <%s> %s",
+	[940] = "Nick %s temporarily banned until %s: <%s> %s",
+	[941] = "Range %s temporarily banned until %s: <%s> %s",
+	[942] = "Host %s temporarily banned until %s: <%s> %s",
+	[943] = "Share %s temporarily banned until %s: <%s> %s",
+	[944] = "Prefix %s temporarily banned until %s: <%s> %s",
+	[945] = "IP %s unbanned: <%s> %s",
+	[946] = "Nick %s unbanned: <%s> %s",
+	[947] = "Range %s unbanned: <%s> %s",
+	[948] = "Host %s unbanned: <%s> %s",
+	[949] = "Share %s unbanned: <%s> %s",
+	[950] = "Prefix %s unbanned: <%s> %s"
 
 	-- finish editing above this line
 
