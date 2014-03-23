@@ -90,6 +90,7 @@ table_sets = {
 	["seventhacttime"] = "",
 	["ninthactrepmsg"] = "Sorry. I won't be spamming this hub again.",
 	["enableantispam"] = 1,
+	["antibelowclass"] = 3,
 	["allowspamtoops"] = 0,
 	["checkcmdspam"] = 0,
 	["antikreason"] = "Spam detected: *",
@@ -1972,6 +1973,10 @@ function Main (file)
 					end
 
 					if ver <= 277 then
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('antibelowclass', '" .. repsqlchars (table_sets ["antibelowclass"]) .. "')")
+					end
+
+					if ver <= 278 then
 						-- todo
 					end
 
@@ -13307,6 +13312,19 @@ else
 commandanswer (nick, string.format (getlang (198), tvar))
 end
 
+	----- ---- --- -- -
+
+	elseif tvar == "antibelowclass" then
+		if num == true then
+			if ((setto >= 1) and (setto <= 5)) or (setto == 10) then
+				ok = true
+			else
+				commandanswer (nick, string.format (getlang (196), tvar, "1, 2, 3, 4, 5 " .. getlang (197) .. " 10"))
+			end
+		else
+			commandanswer (nick, string.format (getlang (198), tvar))
+		end
+
 ----- ---- --- -- -
 
 	elseif tvar == "regkickaction" then
@@ -16071,6 +16089,7 @@ conf = conf.."\r\n [::] sixthactaddr = "..table_sets ["sixthactaddr"]
 conf = conf.."\r\n [::] ninthactrepmsg = "..table_sets ["ninthactrepmsg"]
 conf = conf.."\r\n"
 conf = conf.."\r\n [::] enableantispam = "..table_sets ["enableantispam"]
+	conf = conf .. "\r\n [::] antibelowclass = " .. table_sets ["antibelowclass"]
 conf = conf.."\r\n [::] allowspamtoops = "..table_sets ["allowspamtoops"]
 conf = conf.."\r\n [::] checkcmdspam = "..table_sets ["checkcmdspam"]
 conf = conf.."\r\n [::] antikreason = "..table_sets ["antikreason"]
@@ -18172,7 +18191,7 @@ function antiscan (nick, class, data, where, to, status)
 		return 1
 	end
 
-	if class >= table_sets ["scanbelowclass"] then
+	if class >= table_sets ["antibelowclass"] then
 		return 1
 	end
 
