@@ -225,6 +225,7 @@ table_sets = {
 	["timebotnick"] = "#" .. string.char (160) .. "%d/%m" .. string.char (160) .. "%H:%M",
 	["fasttimebot"] = 0,
 	["srvtimediff"] = 0,
+	["longdateformat"] = "%d/%m -%y",
 	["dateformat"] = "%d/%m",
 	["timeformat"] = "%H:%M",
 	["shrtuptimefmt"] = "%s:%s:%s:%s:%s",
@@ -1974,6 +1975,7 @@ function Main (file)
 
 					if ver <= 277 then
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('antibelowclass', '" .. repsqlchars (table_sets ["antibelowclass"]) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('longdateformat', '" .. repsqlchars (table_sets ["longdateformat"]) .. "')")
 					end
 
 					if ver <= 278 then
@@ -12151,7 +12153,7 @@ local areg = ""
 
 for x = 0, rows - 1 do
 local _, user, rgdate, pwdc, lastlog, enacc = VH:SQLFetch (x)
-areg = areg.." "..prezero (string.len (rows), (x + 1))..". [ R: "..fromunixtime (rgdate, false).." ] [ L: "..fromunixtime (lastlog, false).." ] [ P: "..pwdc.." ] [ E: "..enacc.." ] [ O: "..getstatus (user).." ] "..user.."\r\n"
+areg = areg.." "..prezero (string.len (rows), (x + 1))..". [ R: "..fromunixtime (rgdate, true, table_sets ["longdateformat"]).." ] [ L: "..fromunixtime (lastlog, false, table_sets ["longdateformat"]).." ] [ P: "..pwdc.." ] [ E: "..enacc.." ] [ O: "..getstatus (user).." ] "..user.."\r\n"
 end
 
 commandanswer (nick, string.format (getlang (141), rows, trows, class, sfrom)..":\r\n\r\n"..areg)
@@ -15384,14 +15386,23 @@ else
 commandanswer (nick, string.format (getlang (198), tvar))
 end
 
------ ---- --- -- -
+	----- ---- --- -- -
 
-elseif tvar == "dateformat" then
-if string.len (setto) > 0 then
-ok = true
-else
-commandanswer (nick, string.format (getlang (320), tvar))
-end
+	elseif tvar == "longdateformat" then
+		if string.len (setto) > 0 then
+			ok = true
+		else
+			commandanswer (nick, string.format (getlang (320), tvar))
+		end
+
+	----- ---- --- -- -
+
+	elseif tvar == "dateformat" then
+		if string.len (setto) > 0 then
+			ok = true
+		else
+			commandanswer (nick, string.format (getlang (320), tvar))
+		end
 
 ----- ---- --- -- -
 
@@ -16243,7 +16254,8 @@ conf = conf.."\r\n [::] timebotnick = "..table_sets ["timebotnick"]
 conf = conf.."\r\n [::] fasttimebot = "..table_sets ["fasttimebot"]
 conf = conf.."\r\n"
 conf = conf.."\r\n [::] srvtimediff = "..table_sets ["srvtimediff"]
-conf = conf.."\r\n [::] dateformat = "..table_sets ["dateformat"]
+	conf = conf .. "\r\n [::] longdateformat = " .. table_sets ["longdateformat"]
+	conf = conf .. "\r\n [::] dateformat = " .. table_sets ["dateformat"]
 conf = conf.."\r\n [::] timeformat = "..table_sets ["timeformat"]
 conf = conf.."\r\n [::] shrtuptimefmt = "..table_sets ["shrtuptimefmt"]
 conf = conf.."\r\n"
@@ -18021,13 +18033,13 @@ end
 
 ----- ---- --- -- -
 
-function fromunixtime (sec, shrt)
+function fromunixtime (sec, shrt, ldate)
 	local ntm = tonumber (sec) or 0
 
-	if shrt == true then
-		return os.date (table_sets ["dateformat"], ntm)
+	if shrt then
+		return os.date (ldate or table_sets ["dateformat"], ntm)
 	else
-		return os.date (table_sets ["dateformat"].." "..table_sets ["timeformat"], ntm)
+		return os.date (ldate or table_sets ["dateformat"] .. " " .. table_sets ["timeformat"], ntm)
 	end
 end
 
