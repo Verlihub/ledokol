@@ -4181,13 +4181,21 @@ elseif string.find (data, "^"..table_othsets ["optrig"].."offplug .*$") or strin
 elseif string.find (data, "^"..table_othsets ["optrig"].."lstplug.*$") then
 	donotifycmd (nick, data, 0, ucl)
 
------ ---- --- -- -
+	----- ---- --- -- -
 
-else -- unknown command
-	donotifycmd (nick, data, 0, ucl)
-end
+	elseif string.find (data, "^" .. table_othsets ["optrig"] .. "me$") then
+		-- do nothing
 
-return 1
+	----- ---- --- -- -
+
+	elseif string.find (data, "^" .. table_othsets ["optrig"] .. "me ") then
+		-- do nothing
+
+	else -- unknown command
+		donotifycmd (nick, data, 0, ucl)
+	end
+
+	return 1
 end
 
 ----- ---- --- -- -
