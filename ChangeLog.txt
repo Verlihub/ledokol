@@ -2,6 +2,7 @@
 
 Fixed: Operator and user commands against multiple triggers in cmd_start_op and cmd_start_user
 Changed: Ban and unban notifications now use OnNewBan and OnUnBan callbacks instead of scanning for commands, report by Uhlik
+Changed: Don't notify /me command from operators
 Added: Configuration antibelowclass that will override scanbelowclass for spam detection
 Added: Configuration longdateformat to show in registered users list
 
