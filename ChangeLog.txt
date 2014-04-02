@@ -1,6 +1,7 @@
 [ 2.7.7 :: ####-##-## ]
 
 Fixed: Operator and user commands against multiple triggers in cmd_start_op and cmd_start_user
+Fixed: Look for higher version during Ledokol update detection, report by KCAHDEP
 Changed: Ban and unban notifications now use OnNewBan and OnUnBan callbacks instead of scanning for commands, report by Uhlik
 Changed: Don't notify /me command from operators
 Added: Configuration antibelowclass that will override scanbelowclass for spam detection
