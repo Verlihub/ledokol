@@ -8910,129 +8910,123 @@ end
 ----- ---- --- -- -
 
 function autoupdatecheck ()
-	local res, _ = os.execute ("curl -L --retry 3 --connect-timeout 5 -m 15 -A \"Verlihub\" -s -o \""..table_othsets ["cfgdir"]..table_othsets ["tmpfile"].."\" \""..table_othsets ["updserv"]..table_othsets ["verfile"].."\"")
+	local res, _ = os.execute ("curl -L --retry 3 --connect-timeout 5 -m 15 -A \"Verlihub\" -s -o \"" .. table_othsets ["cfgdir"] .. table_othsets ["tmpfile"] .. "\" \"" .. table_othsets ["updserv"] .. table_othsets ["verfile"] .. "\"")
 
 	if res then
-		local f = io.open (table_othsets ["cfgdir"]..table_othsets ["tmpfile"], "r")
+		local f = io.open (table_othsets ["cfgdir"] .. table_othsets ["tmpfile"], "r")
 
 		if f then
 			local ver, _ = f:read ("*line") -- read first line
 			f:close ()
 
-			if ver then
-				if string.find (ver, "^%d+%.%d+%.%d+$") and (ver ~= ver_ledo) then -- versions differ
-					opsnotify (table_sets ["classnotiledoact"], string.format (getlang (822), ver, string.sub (getconfig ("cmd_start_op"), 1, 1)..table_cmnds ["ledover"]))
+			if ver and string.find (ver, "^%d+%.%d+%.%d+$") then
+				local vernum = tonumber (ver:gsub ("%.", ""))
+				local verledonum = tonumber (ver_ledo:gsub ("%.", ""))
+
+				if vernum > verledonum then -- version number is higher
+					opsnotify (table_sets ["classnotiledoact"], string.format (getlang (822), ver, string.sub (getconfig ("cmd_start_op"), 1, 1) .. table_cmnds ["ledover"]))
 				end
 			end
 		end
 
-		os.remove (table_othsets ["cfgdir"]..table_othsets ["tmpfile"]) -- cleanup
+		os.remove (table_othsets ["cfgdir"] .. table_othsets ["tmpfile"]) -- cleanup
 	end
 end
 
 ----- ---- --- -- -
 
 function updatescript (nick)
-if not table_othsets ["ver_curl"] then
-	commandanswer (nick, string.format (getlang (691), "cURL"))
-else
-	commandanswer (nick, getlang (229))
-	local res, err = os.execute ("curl -L --retry 3 --connect-timeout 5 -m 15 -A \"Verlihub\" -s -o \""..table_othsets ["cfgdir"]..table_othsets ["tmpfile"].."\" \""..table_othsets ["updserv"]..table_othsets ["verfile"].."\"")
+	if not table_othsets ["ver_curl"] then
+		commandanswer (nick, string.format (getlang (691), "cURL"))
+	else
+		commandanswer (nick, getlang (229))
+		local res, err = os.execute ("curl -L --retry 3 --connect-timeout 5 -m 15 -A \"Verlihub\" -s -o \"" .. table_othsets ["cfgdir"] .. table_othsets ["tmpfile"] .. "\" \"" .. table_othsets ["updserv"] .. table_othsets ["verfile"] .. "\"")
 
-	if res then
-		--local f, err = io.open (table_othsets ["cfgdir"]..table_othsets ["tmpfile"], "r")
-		local f = io.open (table_othsets ["cfgdir"]..table_othsets ["tmpfile"], "r")
+		if res then
+			local f = io.open (table_othsets ["cfgdir"] .. table_othsets ["tmpfile"], "r")
 
-		if f then
-			local ver, err = f:read ("*line") -- read first line
-			f:close ()
-			os.remove (table_othsets ["cfgdir"]..table_othsets ["tmpfile"])
+			if f then
+				local ver, err = f:read ("*line") -- read first line
+				f:close ()
+				os.remove (table_othsets ["cfgdir"] .. table_othsets ["tmpfile"])
 
-			if ver then
-				if not string.find (ver, "^%d+%.%d+%.%d+$") then -- unexpected content
-					commandanswer (nick, string.format (getlang (19), table_othsets ["verfile"]))
-				else -- expected content
-					if ver ~= ver_ledo then -- versions differ
-						commandanswer (nick, string.format (getlang (24), ver))
-						local res, err = os.execute ("curl -L --retry 3 --connect-timeout 5 -m 15 -A \"Verlihub\" -s -o \""..table_othsets ["cfgdir"].."ledokol.lua\" \""..table_othsets ["updserv"].."ledokol.lua\"")
+				if ver then
+					if not string.find (ver, "^%d+%.%d+%.%d+$") then -- unexpected content
+						commandanswer (nick, string.format (getlang (19), table_othsets ["verfile"]))
+					else -- expected content
+						local vernum = tonumber (ver:gsub ("%.", ""))
+						local verledonum = tonumber (ver_ledo:gsub ("%.", ""))
 
-						if res then
-							--local f, err = io.open (table_othsets ["cfgdir"].."ledokol.lua", "r")
-							local f = io.open (table_othsets ["cfgdir"].."ledokol.lua", "r")
+						if vernum > verledonum then -- version number is higher
+							commandanswer (nick, string.format (getlang (24), ver))
+							local res, err = os.execute ("curl -L --retry 3 --connect-timeout 5 -m 15 -A \"Verlihub\" -s -o \"" .. table_othsets ["cfgdir"] .. "ledokol.lua\" \"" .. table_othsets ["updserv"] .. "ledokol.lua\"")
 
-							if f then
-								local ledo, err = f:read ("*all") -- read the file
-								f:close ()
+							if res then
+								local f = io.open (table_othsets ["cfgdir"] .. "ledokol.lua", "r")
 
-								if ledo then
-									if not string.find (ledo, "ver_ledo = \""..ver.."\" %-%- ledokol version") then -- unexpected content
-										os.remove (table_othsets ["cfgdir"].."ledokol.lua")
-										commandanswer (nick, string.format (getlang (19), "ledokol.lua"))
-									else -- expected content
-										commandanswer (nick, getlang (346))
-										local res, err = os.execute ("mv -f \""..table_othsets ["cfgdir"].."ledokol.lua\" \""..table_othsets ["cfgdir"].."scripts/ledokol.lua\"")
+								if f then
+									local ledo, err = f:read ("*all") -- read the file
+									f:close ()
 
-										if res then
-											if os.execute ("curl -L --retry 3 --connect-timeout 5 -m 15 -A \"Verlihub\" -s -o \""..table_othsets ["cfgdir"].."ledo_en.txt\" \""..table_othsets ["updserv"].."ledo_en.txt\"") then
-												local f = io.open (table_othsets ["cfgdir"].."ledo_en.txt", "r")
+									if ledo then
+										if not string.find (ledo, "ver_ledo = \"" .. ver .. "\" %-%- ledokol version") then -- unexpected content
+											os.remove (table_othsets ["cfgdir"] .. "ledokol.lua")
+											commandanswer (nick, string.format (getlang (19), "ledokol.lua"))
+										else -- expected content
+											commandanswer (nick, getlang (346))
+											local res, err = os.execute ("mv -f \"" .. table_othsets ["cfgdir"] .. "ledokol.lua\" \"" .. table_othsets ["cfgdir"] .. "scripts/ledokol.lua\"")
 
-												if f then
-													local ledo = f:read ("*all") -- read the file
-													f:close ()
+											if res then
+												if os.execute ("curl -L --retry 3 --connect-timeout 5 -m 15 -A \"Verlihub\" -s -o \"" .. table_othsets ["cfgdir"] .. "ledo_en.txt\" \"" .. table_othsets ["updserv"] .. "ledo_en.txt\"") then
+													local f = io.open (table_othsets ["cfgdir"] .. "ledo_en.txt", "r")
 
-													if ledo then
-														if not string.find (ledo, "Version: "..ver) then -- unexpected content
-															os.remove (table_othsets ["cfgdir"].."ledo_en.txt")
-														else -- expected content
-															if not os.execute ("mv -f \""..table_othsets ["cfgdir"].."ledo_en.txt\" \""..table_othsets ["cfgdir"].."scripts/ledo_en.txt\"") then
-																os.remove (table_othsets ["cfgdir"].."ledo_en.txt")
+													if f then
+														local ledo = f:read ("*all") -- read the file
+														f:close ()
+
+														if ledo then
+															if not string.find (ledo, "Version: " .. ver) then -- unexpected content
+																os.remove (table_othsets ["cfgdir"] .. "ledo_en.txt")
+															else if not os.execute ("mv -f \"" .. table_othsets ["cfgdir"] .. "ledo_en.txt\" \"" .. table_othsets ["cfgdir"] .. "scripts/ledo_en.txt\"") then -- expected content
+																os.remove (table_othsets ["cfgdir"] .. "ledo_en.txt")
 															end
+														else -- unable to read ledo_en.txt
+															os.remove (table_othsets ["cfgdir"] .. "ledo_en.txt")
 														end
-
-													else -- unable to read ledo_en.txt
-														os.remove (table_othsets ["cfgdir"].."ledo_en.txt")
 													end
 												end
+
+												commandanswer (nick, getlang (345) .. "\r\n\r\n !luaunload " .. table_othsets ["cfgdir"] .. "scripts/ledokol.lua\r\n !luaload " .. table_othsets ["cfgdir"] .. "scripts/ledokol.lua\r\n")
+											else -- unable to execute shell command
+												os.remove (table_othsets ["cfgdir"] .. "ledokol.lua")
+												commandanswer (nick, string.format (getlang (661), (err or getlang (662))))
 											end
-
-											commandanswer (nick, getlang (345).."\r\n\r\n !luaunload "..table_othsets ["cfgdir"].."scripts/ledokol.lua\r\n !luaload "..table_othsets ["cfgdir"].."scripts/ledokol.lua\r\n")
-										else -- unable to execute shell command
-											os.remove (table_othsets ["cfgdir"].."ledokol.lua")
-											commandanswer (nick, string.format (getlang (661), (err or getlang (662))))
 										end
+									else -- unable to read ledokol.lua
+										commandanswer (nick, string.format (getlang (661), (err or getlang (662))))
 									end
-
-								else -- unable to read ledokol.lua
-									commandanswer (nick, string.format (getlang (661), (err or getlang (662))))
+								else -- unable to open ledokol.lua
+									--commandanswer (nick, string.format (getlang (661), (err or getlang (662))))
+									commandanswer (nick, getlang (16))
 								end
-
-							else -- unable to open ledokol.lua
-								--commandanswer (nick, string.format (getlang (661), (err or getlang (662))))
-								commandanswer (nick, getlang (16))
+							else -- unable to execute shell command
+								commandanswer (nick, string.format (getlang (661), (err or getlang (662))))
 							end
-
-						else -- unable to execute shell command
-							commandanswer (nick, string.format (getlang (661), (err or getlang (662))))
+						else -- version number is same or lower
+							commandanswer (nick, getlang (25))
 						end
-
-					else -- versions match
-						commandanswer (nick, getlang (25))
 					end
+				else -- unable to read ledokol.ver
+					commandanswer (nick, string.format (getlang (661), (err or getlang (662))))
 				end
-
-			else -- unable to read ledokol.ver
-				commandanswer (nick, string.format (getlang (661), (err or getlang (662))))
+			else -- unable to open ledokol.ver
+				--commandanswer (nick, string.format (getlang (661), (err or getlang (662))))
+				commandanswer (nick, getlang (16))
 			end
-
-		else -- unable to open ledokol.ver
-			--commandanswer (nick, string.format (getlang (661), (err or getlang (662))))
-			commandanswer (nick, getlang (16))
+		else -- unable to execute shell command
+			commandanswer (nick, string.format (getlang (661), (err or getlang (662))))
 		end
-
-	else -- unable to execute shell command
-		commandanswer (nick, string.format (getlang (661), (err or getlang (662))))
 	end
-end
 end
 
 ----- ---- --- -- -
