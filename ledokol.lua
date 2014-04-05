@@ -269,6 +269,7 @@ table_sets = {
 	["userrecmsg"] = "New user record since <shortdate>: <old> -> <new>",
 	["sharerecmsg"] = "New share record since <shortdate>: <old> -> <new>",
 	["instusermenu"] = 0,
+	["instrcmenu"] = 0,
 	["usermenuname"] = ".:: Ledokol menu",
 	["tolowcharcase"] = 0,
 	["translitmode"] = 0,
@@ -393,7 +394,8 @@ tbl_sql = {
 	["nopm"] = "lua_ledo_nopm",
 	["hban"] = "lua_ledo_hban",
 	["ipwa"] = "lua_ledo_ipwa",
-	["ipgag"] = "lua_ledo_ipgag"
+	["ipgag"] = "lua_ledo_ipgag",
+	["rcmenu"] = "lua_ledo_rcmenu"
 }
 
 ---------------------------------------------------------------------
@@ -454,6 +456,7 @@ table_cmnds = {
 	["rcmenuadd"] = "rcmenuadd",
 	["rcmenudel"] = "rcmenudel",
 	["rcmenulist"] = "rcmenulist",
+	["rcmenuord"] = "rcmenuord",
 	["ipwatadd"] = "ipwatadd",
 	["ipwatdel"] = "ipwatdel",
 	["ipwatlist"] = "ipwatlist",
@@ -660,7 +663,7 @@ table_lang_def = {
 	[101] = "No rows to remove: %s",
 	[102] = "date",
 	[103] = "%s with class %s used command: %s",
-	[104] = "",
+	[104] = "context",
 	[105] = "Deleted from chat rank list: %s",
 	[106] = "Not found in chat rank list: %s",
 	[107] = "Deleted from operator rank list: %s",
@@ -706,7 +709,7 @@ table_lang_def = {
 	[147] = "%s with IP %s and class %s kicked: <%s> %s",
 	[148] = "%s with class %s deleted %s statistics plugin entries older than %s days.",
 	[149] = "offset",
-	[150] = "",
+	[150] = "order",
 	[151] = "%s didn't get any search results.",
 	[152] = "Redirected %s with IP %s and class %s to %s: <%s> %s",
 	[153] = "Unknown protocol command from %s with IP %s and class %s: %s",
@@ -764,7 +767,7 @@ table_lang_def = {
 	[205] = "value",
 	[206] = "minutes",
 	[207] = "%s library version: %s",
-	[208] = "",
+	[208] = "Reorder right click menu item",
 	[209] = "lines",
 	[210] = "Couldn't add rank exception because already exists: %s",
 	[211] = "Added rank exception: %s",
@@ -1507,8 +1510,17 @@ table_lang_def = {
 	[948] = "Host %s unbanned: <%s> %s",
 	[949] = "Share %s unbanned: <%s> %s",
 	[950] = "Prefix %s unbanned: <%s> %s",
-	[951] = "Nick and IP %s unbanned: <%s> %s",
-	[952] = "Other %s unbanned: <%s> %s",
+	[951] = "Known contexts are: %s",
+	[952] = "Known orders are: %s",
+	[953] = "Modified right click menu item: %s",
+	[954] = "Added right click menu item: %s",
+	[955] = "Deleted right click menu item: %s",
+	[956] = "Right click menu item not found: %s",
+	[957] = "Right click menu item list is empty.",
+	[958] = "Menu item",
+	[959] = "Menu command",
+	[960] = "Changed right click menu item order: %s",
+	[961] = "Separator or eraser"
 }
 
 ---------------------------------------------------------------------
@@ -1974,8 +1986,16 @@ function Main (file)
 					end
 
 					if ver <= 277 then
+						VH:SQLQuery ("create table if not exists `" .. tbl_sql ["rcmenu"] .. "` (`id` bigint(20) unsigned not null auto_increment primary key, `menu` varchar(255) not null, `command` varchar(255) not null, `type` tinyint(3) unsigned not null default 1, `cont` tinyint(2) unsigned not null default 3, `order` smallint(5) unsigned not null default 0, `minclass` tinyint(2) unsigned not null default 0, `maxclass` tinyint(2) unsigned not null default 10) engine = myisam default character set utf8 collate utf8_unicode_ci")
+
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('antibelowclass', '" .. repsqlchars (table_sets ["antibelowclass"]) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('longdateformat', '" .. repsqlchars (table_sets ["longdateformat"]) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('instrcmenu', '" .. repsqlchars (table_sets ["instrcmenu"]) .. "')")
+
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["ledocmd"] .. "` (`original`, `new`) values ('" .. repsqlchars ("rcmenuadd") .. "', '" .. repsqlchars (table_cmnds ["rcmenuadd"]) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["ledocmd"] .. "` (`original`, `new`) values ('" .. repsqlchars ("rcmenudel") .. "', '" .. repsqlchars (table_cmnds ["rcmenudel"]) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["ledocmd"] .. "` (`original`, `new`) values ('" .. repsqlchars ("rcmenulist") .. "', '" .. repsqlchars (table_cmnds ["rcmenulist"]) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["ledocmd"] .. "` (`original`, `new`) values ('" .. repsqlchars ("rcmenuord") .. "', '" .. repsqlchars (table_cmnds ["rcmenuord"]) .. "')")
 					end
 
 					if ver <= 278 then
@@ -2255,36 +2275,48 @@ return 0
 
 		return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
 
-	elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["rcmenuadd"].." \".+\" \".+\" %d %d+ %d+$") then
+	elseif string.find (data, "^" .. table_othsets ["optrig"] .. table_cmnds ["rcmenuadd"] .. " \".+\" \".*\" %d+ %d+ %d+ %d+ %d+$") then
 		if ucl >= table_sets ["mincommandclass"] then
 			donotifycmd (nick, data, 0, ucl)
-			addrcmenu (nick, string.sub (data, string.len (table_cmnds ["rcmenuadd"]) + 3, -1))
+			addrcmenu (nick, data:sub (# table_cmnds ["rcmenuadd"] + 3))
 		else
 			commandanswer (nick, getlang (128))
 		end
 
 		return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
 
-	elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["rcmenudel"].." %d+$") then
+	elseif string.find (data, "^" .. table_othsets ["optrig"] .. table_cmnds ["rcmenudel"] .. " %d+$") then
 		if ucl >= table_sets ["mincommandclass"] then
 			donotifycmd (nick, data, 0, ucl)
-			delrcmenu (nick, string.sub (data, string.len (table_cmnds ["rcmenudel"]) + 3, -1))
+			delrcmenu (nick, data:sub (# table_cmnds ["rcmenudel"] + 3))
 		else
 			commandanswer (nick, getlang (128))
 		end
 
 		return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
 
-	elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["rcmenulist"].."$") then
+	elseif string.find (data, "^" .. table_othsets ["optrig"] .. table_cmnds ["rcmenulist"] .. "$") then
 		if ucl >= table_sets ["mincommandclass"] then
 			donotifycmd (nick, data, 0, ucl)
 			listrcmenu (nick)
+		else
+			commandanswer (nick, getlang (128))
+		end
+
+		return 0
+
+	----- ---- --- -- -
+
+	elseif string.find (data, "^" .. table_othsets ["optrig"] .. table_cmnds ["rcmenuord"] .. " %d+ %d+$") then
+		if ucl >= table_sets ["mincommandclass"] then
+			donotifycmd (nick, data, 0, ucl)
+			ordrcmenu (nick, data:sub (# table_cmnds ["rcmenuord"] + 3))
 		else
 			commandanswer (nick, getlang (128))
 		end
@@ -4958,9 +4990,9 @@ if (table_sets ["opkeyclass"] < 11) or (table_sets ["opkeyshare"] > 0) then
 	end
 end
 
-installusermenu (nick)
-
-return 1
+	installusermenu (nick)
+	sendrcmenu (nick, cls)
+	return 1
 end
 
 ----- ---- --- -- -
@@ -7445,19 +7477,133 @@ end
 ----- ---- --- -- -
 
 function addrcmenu (nick, line)
-	-- todo
+	local _, _, menu, cmnd, cype, cont, ord, minc, maxc = line:find ("^\"(.+)\" \"(.*)\" (%d+) (%d+) (%d+) (%d+) (%d+)$")
+	cype = tonumber (cype)
+
+	if (cype >= 0 and cype <= 2) or cype == 255 then
+		cont = tonumber (cont)
+
+		if cont >= 1 and cont <= 15 then
+			ord = tonumber (ord)
+
+			if ord >= 0 and ord <= 65535 then
+				minc = tonumber (minc)
+
+				if (minc >= 0 and minc <= 5) or minc == 10 or minc == 11 then
+					maxc = tonumber (maxc)
+
+					if (maxc >= 0 and maxc <= 5) or maxc == 10 then
+						local repmenu = repsqlchars (repnmdcoutchars (menu))
+						local repcmnd = repsqlchars (repnmdcoutchars (cmnd))
+						local _, rows = VH:SQLQuery ("select `id` from `" .. tbl_sql ["rcmenu"] .. "` where `menu` = '" .. repmenu .. "' limit 1")
+
+						if rows > 0 then -- update
+							local _, id = VH:SQLFetch (0)
+							VH:SQLQuery ("update `" .. tbl_sql ["rcmenu"] .. "` set `command` = '" .. repcmnd .."', `type` = " .. tostring (cype) .. ", `cont` = " .. tostring (cont) .. ", `order` = " .. tostring (ord) .. ", `minclass` = " .. tostring (minc) .. ", `maxclass` = " .. tostring (maxc) .. " where `id` = " .. tostring (id) .. " limit 1")
+							commandanswer (nick, getlang (953):format (menu))
+						else -- add
+							VH:SQLQuery ("insert into `" .. tbl_sql ["rcmenu"] .. "` (`menu`, `command`, `type`, `cont`, `order`, `minclass`, `maxclass`) values ('" .. repmenu .. "', '" .. repcmnd .. "', " .. tostring (cype) .. ", " .. tostring (cont) .. ", " .. tostring (ord) .. ", " .. tostring (minc) .. ", " .. tostring (maxc) .. ")")
+							commandanswer (nick, getlang (954):format (menu))
+						end
+					else -- unknown maximum class
+						commandanswer (nick, getlang (143):format ("0, 1, 2, 3, 4, 5 " .. getlang (70) .. " 10"))
+					end
+				else -- unknown minimum class
+					commandanswer (nick, getlang (143):format ("0, 1, 2, 3, 4, 5, 10 " .. getlang (70) .. " 11"))
+				end
+			else -- unknown order
+				commandanswer (nick, getlang (952):format ("0 " .. getlang (199) .. " 65535"))
+			end
+		else -- unknown context
+			commandanswer (nick, getlang (951):format ("1 " .. getlang (199) .. " 15"))
+		end
+	else -- unknown type
+		commandanswer (nick, getlang (100):format ("0, 1, 2, " .. getlang (70) .. " 255"))
+	end
 end
 
 ----- ---- --- -- -
 
-function delrcmenu (nick, idx)
-	-- todo
+function delrcmenu (nick, id)
+	local _, rows = VH:SQLQuery ("select `menu` from `" .. tbl_sql ["rcmenu"] .. "` where `id` = " .. id .. " limit 1")
+
+	if rows > 0 then
+		local _, menu = VH:SQLFetch (0)
+		VH:SQLQuery ("delete from `" .. tbl_sql ["rcmenu"] .. "` where `id` = " .. id .. " limit 1")
+		commandanswer (nick, getlang (955):format (menu))
+	else
+		commandanswer (nick, getlang (956):format (id))
+	end
 end
 
 ----- ---- --- -- -
 
 function listrcmenu (nick)
-	-- todo
+	local _, rows = VH:SQLQuery ("select * from `" .. tbl_sql ["rcmenu"] .. "` order by `order` asc, `id` desc")
+
+	if rows > 0 then
+		local list = ""
+
+		for x = 0, rows - 1 do
+			local _, id, menu, cmnd, cype, cont, ord, minc, maxc = VH:SQLFetch (x)
+			list = list .. "\r\n " .. getlang (958) .. ": " .. menu .. "\r\n"
+
+			if cmnd == "" then
+				list = list .. " " .. getlang (959) .. ": " .. getlang (961) .. "\r\n"
+			else
+				list = list .. " " .. getlang (959) .. ": " .. cmnd .. "\r\n"
+			end
+
+			list = list .. " [ I: " .. tostring (id) .. " ] [ T: " .. tostring (cype) .. " ] [ C: " .. tostring (cont) .. " ] [ O: " .. tostring (ord) .. " ] [ MIC: " .. tostring (minc) .. " ] [ MAC: " .. tostring (maxc) .. " ]\r\n"
+		end
+
+		commandanswer (nick, getlang (860) .. ":\r\n" .. list)
+	else
+		commandanswer (nick, getlang (957))
+	end
+end
+
+----- ---- --- -- -
+
+function ordrcmenu (nick, line)
+	local _, _, id, ord = line:find ("^(%d+) (%d+)$")
+	ord = tonumber (ord)
+
+	if ord >= 0 and ord <= 65535 then
+		local _, rows = VH:SQLQuery ("select `menu` from `" .. tbl_sql ["rcmenu"] .. "` where `id` = " .. id .. " limit 1")
+
+		if rows > 0 then
+			local _, menu = VH:SQLFetch (0)
+			VH:SQLQuery ("update `" .. tbl_sql ["rcmenu"] .. "` set `order` = " .. tostring (ord) .. " where `id` = " .. tostring (id) .. " limit 1")
+			commandanswer (nick, getlang (960):format (menu))
+		else
+			commandanswer (nick, getlang (956):format (id))
+		end
+	else -- unknown order
+		commandanswer (nick, getlang (952):format ("0 " .. getlang (199) .. " 65535"))
+	end
+end
+
+----- ---- --- -- -
+
+function sendrcmenu (nick, class)
+	if table_sets ["instrcmenu"] == 0 or class < 0 then
+		return
+	end
+
+	local _, rows = VH:SQLQuery ("select `menu`, `command`, `type`, `cont` from `" .. tbl_sql ["rcmenu"] .. "` where `minclass` <= " .. tostring (class) .. " and `maxclass` >= " .. tonumber (class) .. " order by `order` asc, `id` desc")
+
+	if rows > 0 then
+		for x = 0, rows - 1 do
+			local _, menu, cmnd, cype, cont = VH:SQLFetch (x)
+
+			if cmnd == "" then
+				VH:SendDataToUser ("$UserCommand " .. tostring (cype) .. " " .. tostring (cont) .. "|", nick)
+			else
+				VH:SendDataToUser ("$UserCommand " .. tostring (cype) .. " " .. tostring (cont) .. " " .. menu .. "$<%[mynick]> " .. cmnd .. "&#124;|", nick)
+			end
+		end
+	end
 end
 
 ----- ---- --- -- -
@@ -8987,7 +9133,7 @@ function updatescript (nick)
 														if ledo then
 															if not string.find (ledo, "Version: " .. ver) then -- unexpected content
 																os.remove (table_othsets ["cfgdir"] .. "ledo_en.txt")
-															else if not os.execute ("mv -f \"" .. table_othsets ["cfgdir"] .. "ledo_en.txt\" \"" .. table_othsets ["cfgdir"] .. "scripts/ledo_en.txt\"") then -- expected content
+															elseif not os.execute ("mv -f \"" .. table_othsets ["cfgdir"] .. "ledo_en.txt\" \"" .. table_othsets ["cfgdir"] .. "scripts/ledo_en.txt\"") then -- expected content
 																os.remove (table_othsets ["cfgdir"] .. "ledo_en.txt")
 															end
 														else -- unable to read ledo_en.txt
@@ -12528,8 +12674,15 @@ end
 ----- ---- --- -- -
 
 function installusermenu (usr)
-if table_sets ["instusermenu"] == 0 then return nil end
-local ucl = getclass (usr)
+	if table_sets ["instusermenu"] == 0 then
+		return
+	end
+
+	local ucl = getclass (usr)
+
+	if ucl < 0 then
+		return
+	end
 
 -- antispam
 
@@ -12893,6 +13046,9 @@ end
 		sopmenitm (usr, getlang (681) .. "\\" .. getlang (406), table_cmnds ["ulog"] .. " %[line:<" .. getlang (48) .. ">] %[line:<" .. getlang (120) .. ">] %[line:<" .. getlang (209) .. ">]")
 		sopmenitm (usr, getlang (681) .. "\\" .. string.format (getlang (637), "http://www.te-home.net/?do=hublist"), table_cmnds ["seen"] .. " %[line:<" .. getlang (178) .. ">]")
 	end
+
+	-- todo: no pm
+	-- todo: rc menu
 
 	-- other
 
@@ -13845,19 +14001,31 @@ elseif tvar == "enablecmdlog" then
 		commandanswer (nick, string.format (getlang (198), tvar))
 	end
 
------ ---- --- -- -
+	----- ---- --- -- -
 
-elseif tvar == "instusermenu" then
-if num == true then
-if (setto == 0) or (setto == 1) then
-ok = true
-else
-commandanswer (nick, string.format (getlang (196), tvar, "0 "..getlang (197).." 1"))
-end
+	elseif tvar == "instusermenu" then
+		if num == true then
+			if setto == 0 or setto == 1 then
+				ok = true
+			else
+				commandanswer (nick, string.format (getlang (196), tvar, "0 " .. getlang (197) .. " 1"))
+			end
+		else
+			commandanswer (nick, string.format (getlang (198), tvar))
+		end
 
-else
-commandanswer (nick, string.format (getlang (198), tvar))
-end
+	----- ---- --- -- -
+
+	elseif tvar == "instrcmenu" then
+		if num == true then
+			if setto == 0 or setto == 1 then
+				ok = true
+			else
+				commandanswer (nick, string.format (getlang (196), tvar, "0 " .. getlang (197) .. " 1"))
+			end
+		else
+			commandanswer (nick, string.format (getlang (198), tvar))
+		end
 
 	--[[
 
@@ -15783,9 +15951,10 @@ help = help.." "..optrig..table_cmnds ["remdel"].." <"..getlang (185).."> - "..g
 	help = help.." "..optrig..table_cmnds ["nopmdel"].." <"..getlang (178).."> - "..getlang (830).."\r\n\r\n"
 
 	-- right click menu
-	help = help.." "..optrig..table_cmnds ["rcmenuadd"].." <\""..getlang (823).."\"> <\""..getlang (420).."\"> <"..getlang (381).."> <"..getlang (270).."> <"..getlang (271).."> - "..getlang (858).."\r\n"
-	help = help.." "..optrig..table_cmnds ["rcmenulist"].." - "..getlang (860).."\r\n"
-	help = help.." "..optrig..table_cmnds ["rcmenudel"].." <"..getlang (185).."> - "..getlang (859).."\r\n\r\n"
+	help = help .. " " .. optrig .. table_cmnds ["rcmenuadd"] .. " <\"" .. getlang (823) .. "\"> <\"" .. getlang (420) .. "\"> <" .. getlang (48) .. "> <" .. getlang (104) .. "> <" .. getlang (150) .. "> <" .. getlang (270) .. "> <" .. getlang (271) .. "> - " .. getlang (858) .. "\r\n"
+	help = help .. " " .. optrig .. table_cmnds ["rcmenulist"] .. " - " .. getlang (860) .. "\r\n"
+	help = help .. " " .. optrig .. table_cmnds ["rcmenudel"] .. " <" .. getlang (185) .. "> - " .. getlang (859) .. "\r\n"
+	help = help .. " " .. optrig .. table_cmnds ["rcmenuord"] .. " <" .. getlang (185) .. "> <" .. getlang (150) .. "> - " .. getlang (208) .. "\r\n\r\n"
 
 	-- ip watch
 	help = help.." "..optrig..table_cmnds ["ipwatadd"].." <"..getlang (193).."> <\""..getlang (828).."\"> <"..getlang (866).."> - "..getlang (863).."\r\n"
@@ -16303,7 +16472,8 @@ conf = conf.."\r\n [::] ctmminclass = "..table_sets ["ctmminclass"]
 conf = conf.."\r\n [::] ctmmsginterval = "..table_sets ["ctmmsginterval"]
 conf = conf.."\r\n [::] ctmblockmsg = "..table_sets ["ctmblockmsg"]
 conf = conf.."\r\n"
-conf = conf.."\r\n [::] instusermenu = "..table_sets ["instusermenu"]
+	conf = conf .. "\r\n [::] instusermenu = " .. table_sets ["instusermenu"]
+	conf = conf .. "\r\n [::] instrcmenu = " .. table_sets ["instrcmenu"]
 conf = conf.."\r\n [::] usermenuname = "..table_sets ["usermenuname"]
 conf = conf.."\r\n [::] enablecmdlog = "..table_sets ["enablecmdlog"]
 conf = conf.."\r\n"
@@ -16421,6 +16591,9 @@ VH:SQLQuery ("create table if not exists `"..tbl_sql ["stat"].."` (`type` varcha
 
 	-- ip gag
 	VH:SQLQuery ("create table if not exists `" .. tbl_sql ["ipgag"] .. "` (`ip` varchar(255) not null, `flag` tinyint(1) unsigned not null default 0, primary key (`ip`)) engine = myisam default character set utf8 collate utf8_unicode_ci")
+
+	-- right click menu
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql ["rcmenu"] .. "` (`id` bigint(20) unsigned not null auto_increment primary key, `menu` varchar(255) not null, `command` varchar(255) not null, `type` tinyint(3) unsigned not null default 1, `cont` tinyint(2) unsigned not null default 3, `order` smallint(5) unsigned not null default 0, `minclass` tinyint(2) unsigned not null default 0, `maxclass` tinyint(2) unsigned not null default 10) engine = myisam default character set utf8 collate utf8_unicode_ci")
 end
 
 ----- ---- --- -- -
