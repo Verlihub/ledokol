@@ -1,11 +1,13 @@
-[ 2.7.7 :: ####-##-## ]
+[ 2.7.7 :: 2014-04-05 ]
 
 Fixed: Operator and user commands against multiple triggers in cmd_start_op and cmd_start_user
 Fixed: Look for higher version during Ledokol update detection, report by KCAHDEP
+Fixed: Don't try to send user commands to pingers
 Changed: Ban and unban notifications now use OnNewBan and OnUnBan callbacks instead of scanning for commands, report by Uhlik
 Changed: Don't notify /me command from operators
 Added: Configuration antibelowclass that will override scanbelowclass for spam detection
 Added: Configuration longdateformat to show in registered users list
+Added: Right click menu feature to build custom user commands, set instrcmenu to 1 and see !ledohelp, user must reconnect to get new menu
 
 [ 2.7.6 :: 2014-03-04 ]
 
