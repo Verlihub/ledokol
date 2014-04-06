@@ -3,7 +3,7 @@
 -------------------------- INFORMATION --------------------------
 
 Language: English
-Version: 2.7.7
+Version: 2.7.8
 Author: RoLex
 Email: webmaster@feardc.net
 
@@ -992,7 +992,9 @@ t = {
 	[958] = "Menu item",
 	[959] = "Menu command",
 	[960] = "Changed right click menu item order: %s",
-	[961] = "Separator or eraser"
+	[961] = "Separator or eraser",
+	[962] = "Nick and IP %s unbanned: <%s> %s",
+	[963] = "Other %s unbanned: <%s> %s"
 
 	-- finish editing above this line
 
