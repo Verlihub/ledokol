@@ -1,3 +1,9 @@
+[ 2.7.8 :: 2014-##-## ]
+
+Fixed: Missing translations on ban and unban
+Fixed: Secondary right click menu item order
+Fixed: Version numbers comparison on update
+
 [ 2.7.7 :: 2014-04-05 ]
 
 Fixed: Operator and user commands against multiple triggers in cmd_start_op and cmd_start_user
