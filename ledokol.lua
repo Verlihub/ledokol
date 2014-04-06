@@ -74,7 +74,7 @@ over sixty different features for Verlihub.
 -- global storage variables and tables >>
 ---------------------------------------------------------------------
 
-ver_ledo = "2.7.7" -- ledokol version
+ver_ledo = "2.7.8" -- ledokol version
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -1520,7 +1520,9 @@ table_lang_def = {
 	[958] = "Menu item",
 	[959] = "Menu command",
 	[960] = "Changed right click menu item order: %s",
-	[961] = "Separator or eraser"
+	[961] = "Separator or eraser",
+	[962] = "Nick and IP %s unbanned: <%s> %s",
+	[963] = "Other %s unbanned: <%s> %s"
 }
 
 ---------------------------------------------------------------------
@@ -1999,6 +2001,10 @@ function Main (file)
 					end
 
 					if ver <= 278 then
+						-- 2.7.8
+					end
+
+					if ver <= 279 then
 						-- todo
 					end
 
@@ -5571,7 +5577,7 @@ function VH_OnUnBan (what, op, why)
 		end
 
 		if bantype == 0 then -- nick + ip
-			opsnotify (table_sets ["classnotiban"], string.format (getlang (951), what, op, banwhy))
+			opsnotify (table_sets ["classnotiban"], string.format (getlang (962), what, op, banwhy))
 		elseif bantype == 1 then -- ip
 			opsnotify (table_sets ["classnotiban"], string.format (getlang (945), what, op, banwhy))
 		elseif bantype == 2 then -- nick
@@ -5585,7 +5591,7 @@ function VH_OnUnBan (what, op, why)
 		elseif bantype == 8 then -- prefix
 			opsnotify (table_sets ["classnotiban"], string.format (getlang (950), what, op, banwhy))
 		else -- other
-			opsnotify (table_sets ["classnotiban"], string.format (getlang (952), what, op, banwhy))
+			opsnotify (table_sets ["classnotiban"], string.format (getlang (963), what, op, banwhy))
 		end
 
 		oprankaccept (op, getclass (op))
@@ -7539,7 +7545,7 @@ end
 ----- ---- --- -- -
 
 function listrcmenu (nick)
-	local _, rows = VH:SQLQuery ("select * from `" .. tbl_sql ["rcmenu"] .. "` order by `order` asc, `id` desc")
+	local _, rows = VH:SQLQuery ("select * from `" .. tbl_sql ["rcmenu"] .. "` order by `order` asc, `id` asc")
 
 	if rows > 0 then
 		local list = ""
@@ -7591,7 +7597,7 @@ function sendrcmenu (nick, class)
 		return
 	end
 
-	local _, rows = VH:SQLQuery ("select `menu`, `command`, `type`, `cont` from `" .. tbl_sql ["rcmenu"] .. "` where `minclass` <= " .. tostring (class) .. " and `maxclass` >= " .. tonumber (class) .. " order by `order` asc, `id` desc")
+	local _, rows = VH:SQLQuery ("select `menu`, `command`, `type`, `cont` from `" .. tbl_sql ["rcmenu"] .. "` where `minclass` <= " .. tostring (class) .. " and `maxclass` >= " .. tonumber (class) .. " order by `order` asc, `id` asc")
 
 	if rows > 0 then
 		for x = 0, rows - 1 do
@@ -9066,10 +9072,10 @@ function autoupdatecheck ()
 			f:close ()
 
 			if ver and string.find (ver, "^%d+%.%d+%.%d+$") then
-				local vernum = tonumber (ver:gsub ("%.", ""))
-				local verledonum = tonumber (ver_ledo:gsub ("%.", ""))
+				local vernum = ver:gsub ("%.", "")
+				local verledonum = ver_ledo:gsub ("%.", "")
 
-				if vernum > verledonum then -- version number is higher
+				if tonumber (vernum) > tonumber (verledonum) then -- version number is higher
 					opsnotify (table_sets ["classnotiledoact"], string.format (getlang (822), ver, string.sub (getconfig ("cmd_start_op"), 1, 1) .. table_cmnds ["ledover"]))
 				end
 			end
@@ -9100,10 +9106,10 @@ function updatescript (nick)
 					if not string.find (ver, "^%d+%.%d+%.%d+$") then -- unexpected content
 						commandanswer (nick, string.format (getlang (19), table_othsets ["verfile"]))
 					else -- expected content
-						local vernum = tonumber (ver:gsub ("%.", ""))
-						local verledonum = tonumber (ver_ledo:gsub ("%.", ""))
+						local vernum = ver:gsub ("%.", "")
+						local verledonum = ver_ledo:gsub ("%.", "")
 
-						if vernum > verledonum then -- version number is higher
+						if tonumber (vernum) > tonumber (verledonum) then -- version number is higher
 							commandanswer (nick, string.format (getlang (24), ver))
 							local res, err = os.execute ("curl -L --retry 3 --connect-timeout 5 -m 15 -A \"Verlihub\" -s -o \"" .. table_othsets ["cfgdir"] .. "ledokol.lua\" \"" .. table_othsets ["updserv"] .. "ledokol.lua\"")
 
