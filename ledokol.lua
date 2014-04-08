@@ -178,6 +178,8 @@ table_sets = {
 	["opkeyself"] = 11,
 	["opkeyshare"] = 0,
 	["enablevipkick"] = 0,
+	["votekickclass"] = 11,
+	["votekickcount"] = 5,
 	["relmodclass"] = 3,
 	["welcomeclass"] = 3,
 	["offmsgclass"] = 3,
@@ -241,6 +243,7 @@ table_sets = {
 	["chatfloodcmdgag"] = 0,
 	["protofloodctmcnt"] = 0,
 	["protofloodctmint"] = 10,
+	["protofloodctmact"] = 0,
 	["ipconantiflint"] = 0,
 	["enablehardban"] = 0,
 	["useblacklist"] = 0,
@@ -528,6 +531,7 @@ table_cmnds = {
 	["seen"] = "seen",
 	["clog"] = "clog",
 	["dropip"] = "dropip",
+	["votekick"] = "votekick",
 	["gagipadd"] = "gagipadd",
 	["gagipdel"] = "gagipdel",
 	["gagiplist"] = "gagiplist",
@@ -1522,7 +1526,12 @@ table_lang_def = {
 	[960] = "Changed right click menu item order: %s",
 	[961] = "Separator or eraser",
 	[962] = "Nick and IP %s unbanned: <%s> %s",
-	[963] = "Other %s unbanned: <%s> %s"
+	[963] = "Other %s unbanned: <%s> %s",
+	[964] = "Vote for user to be kicked",
+	[965] = "You don't want to vote for kicking an operator.",
+	[966] = "User voted kick",
+	[967] = "You have already voted for kicking that user.",
+	[968] = "%s added vote %s of %s for kicking user with class %s: %s"
 }
 
 ---------------------------------------------------------------------
@@ -1883,6 +1892,7 @@ table_chat = {}
 table_mode = {}
 table_igag = {}
 table_cgag = {}
+table_voki = {}
 table_flod = {}
 table_opks = {}
 table_usup = {}
@@ -2001,7 +2011,11 @@ function Main (file)
 					end
 
 					if ver <= 278 then
-						-- 2.7.8
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["ledocmd"] .. "` (`original`, `new`) values ('" .. repsqlchars ("votekick") .. "', '" .. repsqlchars (table_cmnds ["votekick"]) .. "')")
+
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('votekickclass', '" .. repsqlchars (table_sets ["votekickclass"]) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('votekickcount', '" .. repsqlchars (table_sets ["votekickcount"]) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('protofloodctmact', '" .. repsqlchars (table_sets ["protofloodctmact"]) .. "')")
 					end
 
 					if ver <= 279 then
@@ -2018,7 +2032,7 @@ function Main (file)
 		end
 	end
 
-	if old == true then -- old style or new install
+	if old == true then -- old style or fresh install
 		renametables ()
 		createtables ()
 		altertables ()
@@ -2150,18 +2164,30 @@ end
 ----- ---- --- -- -
 
 function VH_OnOperatorCommand (nick, data)
-if table_othsets ["locked"] == true then return 1 end
-local ucl = getclass (nick)
-if ucl < 3 then return 0 end
-if checkcmd (nick, ucl, data) == 0 then return 0 end -- command permissions
-savecmdlog (nick, ucl, data, true) -- command log
-
-if string.find (data, "^"..table_othsets ["optrig"].."kick%s+%S+ .*$") then
-	if table_sets ["classnotikick"] == 11 then
-		donotifycmd (nick, data, 0, ucl)
+	if table_othsets ["locked"] then
+		return 1
 	end
 
------ ---- --- -- -
+	local ucl = getclass (nick)
+
+	if ucl < 3 then
+		return 0
+	end
+
+	if checkcmd (nick, ucl, data) == 0 then -- command permissions
+		return 0
+	end
+
+	savecmdlog (nick, ucl, data, true) -- command logger
+
+	----- ---- --- -- -
+
+	if string.find (data, "^" .. table_othsets ["optrig"] .. "kick%s+%S+%s*.*$") then
+		if table_sets ["classnotikick"] == 11 then
+			donotifycmd (nick, data, 0, ucl)
+		end
+
+	----- ---- --- -- -
 
 	elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["chatadd"].." %S+ .* %d+ %d+ %S+$") then
 		if ucl >= table_sets ["mincommandclass"] then
@@ -2173,7 +2199,7 @@ if string.find (data, "^"..table_othsets ["optrig"].."kick%s+%S+ .*$") then
 
 		return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
 
 	elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["chatdel"].." %S+$") then
 		if ucl >= table_sets ["mincommandclass"] then
@@ -2185,7 +2211,7 @@ if string.find (data, "^"..table_othsets ["optrig"].."kick%s+%S+ .*$") then
 
 		return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
 
 	elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["chatlist"].."$") then
 		if ucl >= table_sets ["mincommandclass"] then
@@ -3586,6 +3612,18 @@ elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["mode"].."
 
 ----- ---- --- -- -
 
+	elseif string.find (data, "^" .. table_othsets ["optrig"] .. table_cmnds ["votekick"] .. " %S+$") then
+		if ucl >= table_sets ["votekickclass"] then
+			-- donotifycmd (nick, data, 0, ucl)
+			votekickuser (nick, string.sub (data, string.len (table_cmnds ["votekick"]) + 3))
+		else
+			commandanswer (nick, getlang (128))
+		end
+
+		return 0
+
+	----- ---- --- -- -
+
 elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["mode"].."$") then
 	if ucl >= table_sets ["chatmodeclass"] then
 		donotifycmd (nick, data, 0, ucl)
@@ -4239,22 +4277,72 @@ end
 ----- ---- --- -- -
 
 function VH_OnUserCommand (nick, data)
-	if table_othsets ["locked"] == true then return 1 end
-	local ucl, ip = getclass (nick), getip (nick)
-	if ucl < 0 then return 0 end
-	if getconfig ("disable_usr_cmds") ~= 0 then return 1 end
-	if checkcmd (nick, ucl, data) == 0 then return 0 end -- command permissions
+	if table_othsets ["locked"] then
+		return 1
+	end
+
+	local ucl = getclass (nick)
+
+	if ucl < 0 then
+		return 0
+	end
+
+	if getconfig ("disable_usr_cmds") ~= 0 then
+		return 1
+	end
+
+	if checkcmd (nick, ucl, data) == 0 then -- command permissions
+		return 0
+	end
+
+	local ip = getip (nick)
 
 	if table_sets ["chatfloodcmdgag"] == 1 then -- check ip gag
-		if gagipcheck (nick, ip, ucl, nil, data) == true then return 0 end
-		if gagccheck (nick, ip, ucl, nil, data) == true then return 0 end
+		if gagipcheck (nick, ip, ucl, nil, data) then
+			return 0
+		end
+
+		if gagccheck (nick, ip, ucl, nil, data) then
+			return 0
+		end
 	end
 
-	if table_sets ["checkcmdspam"] == 1 then -- check spam
-		if antiscan (nick, ucl, data, 1, nil, nil) == 0 then return 0 end
+	if table_sets ["checkcmdspam"] == 1 and antiscan (nick, ucl, data, 1, nil, nil) == 0 then -- check command spam
+		return 0
 	end
 
-	savecmdlog (nick, ucl, data, false) -- command log
+	savecmdlog (nick, ucl, data, false) -- command logger
+
+	-- kick command for vips
+
+	if string.find (data, "^" .. table_othsets ["ustrig"] .. "kick%s+(%S+)%s*(.*)$") and table_sets ["enablevipkick"] == 1 and ucl == 2 then
+		local _, _, usr, rsn = string.find (data, "^" .. table_othsets ["ustrig"] .. "kick%s+(%S+)%s*(.*)$")
+
+		if getstatus (usr) == 1 then
+			local ucls = getclass (usr)
+
+			if ucls < 2 then -- only users with lower class
+				local uip = getip (usr)
+
+				if not isprotected (usr, uip) then
+					if rsn == "" then
+						rsn = getlang (770)
+					end
+
+					commandanswer (nick, string.format (getlang (147), usr, uip, ucls, nick, rsn))
+					VH:KickUser (nick, usr, rsn) -- kick using vips nick
+				else -- protected
+					commandanswer (nick, getlang (46))
+				end
+			else
+				commandanswer (nick, getlang (771))
+			end
+		else -- not in list
+			commandanswer (nick, string.format (getlang (704), usr))
+		end
+
+		return 0
+	end
 
 ---------------------------------------------------------------------
 -- process +me command >>
@@ -4464,7 +4552,19 @@ end
 			return antiscan (nick, ucl, string.sub (data, string.len ("report") + 3, -1), 4, nil, nil)
 		end
 
------ ---- --- -- -
+	----- ---- --- -- -
+
+	elseif string.find (data, "^" .. table_othsets ["ustrig"] .. table_cmnds ["votekick"] .. " %S+$") then
+		if ucl >= table_sets ["votekickclass"] then
+			-- donotifycmd (nick, data, 0, ucl)
+			votekickuser (nick, string.sub (data, string.len (table_cmnds ["votekick"]) + 3))
+		else
+			commandanswer (nick, getlang (128))
+		end
+
+		return 0
+
+	----- ---- --- -- -
 
 elseif string.find (data, "^"..table_othsets ["ustrig"]..table_cmnds ["showtopic"].."$") then
 if ucl >= table_sets ["minusrcommandclass"] then
@@ -5050,6 +5150,7 @@ function VH_OnUserLogout (nick, uip)
 	end
 
 	table_opks [nick] = nil -- operator keys
+	table_voki [nick] = nil -- vote kicks
 	return 1
 end
 
@@ -5881,38 +5982,6 @@ if isprotected (nick, ip) == false then -- protection
 	if gagipcheck (nick, ip, ucl, nil, data) == true then return 0 end
 	if gagccheck (nick, ip, ucl, nil, data) == true then return 0 end
 	if antiscan (nick, ucl, data, 1, nil, nil) == 0 then return 0 end -- antispam
-end
-
-if table_sets ["enablevipkick"] == 1 then -- vip kick
-	if ucl == 2 then
-		local _, _, usr, rsn = string.find (data, "^"..table_othsets ["optrig"].."kick%s+(%S+)%s*(.*)$")
-
-		if usr and rsn then
-			if getstatus (usr) == 1 then
-				local ucls = getclass (usr)
-
-				if ucls < 2 then -- only users with lower class
-					local uip = getip (usr)
-
-					if isprotected (usr, uip) == false then
-						if rsn == "" then rsn = getlang (770) end
-						commandanswer (nick, string.format (getlang (147), usr, uip, ucls, table_othsets ["sendfrom"], rsn))
-						VH:KickUser (table_othsets ["sendfrom"], usr, rsn)
-					else -- protected
-						commandanswer (nick, getlang (46))
-					end
-
-				else
-					commandanswer (nick, getlang (771))
-				end
-
-			else -- not in list
-				commandanswer (nick, string.format (getlang (704), usr))
-			end
-
-			return 0
-		end
-	end
 end
 
 local fakenick = nick
@@ -10576,11 +10645,16 @@ end
 ----- ---- --- -- -
 
 function detprotoflood (pref, prot, nick, ip, class)
-	if table_sets ["protoflood"..pref.."cnt"] == 0 then return false end -- disabled
-	if class >= table_sets ["scanbelowclass"] then return false end -- minimum class
+	if table_sets ["protoflood" .. pref .. "cnt"] == 0 then -- disabled
+		return false
+	end
 
-	if prot == true then -- protection
-		if isprotected (nick, ip) == true then return false end
+	if class >= table_sets ["scanbelowclass"] then -- minimum class
+		return false
+	end
+
+	if prot and isprotected (nick, ip) then -- protection
+		return false
 	end
 
 	local tm = os.time ()
@@ -10588,20 +10662,39 @@ function detprotoflood (pref, prot, nick, ip, class)
 	if table_prfl [pref][nick] then
 		local dif = os.difftime (tm, table_prfl [pref][nick]["lst"])
 
-		if (table_prfl [pref][nick]["cnt"] >= table_sets ["protoflood"..pref.."cnt"]) and (dif <= table_sets ["protoflood"..pref.."int"]) then -- match
+		if table_prfl [pref][nick]["cnt"] >= table_sets ["protoflood" .. pref .. "cnt"] and dif <= table_sets ["protoflood" .. pref .. "int"] then -- match
 			local sts = genprflsts (pref)
-			maintouser (nick, string.format (getlang (821), sts))
-			opsnotify (table_sets ["classnotiprotoflood"], string.format (getlang (820), nick, ip, class, sts))
-			VH:CloseConnection (nick) -- drop
+
+			if pref == "ctm" then -- for now use only on ctm detection, in future add to all detections
+				if table_sets ["protoflood" .. pref .. "act"] == 0 then -- drop
+					maintouser (nick, string.format (getlang (821), sts))
+					opsnotify (table_sets ["classnotiprotoflood"], string.format (getlang (820), nick, ip, class, sts))
+					VH:CloseConnection (nick)
+				elseif table_sets ["protoflood" .. pref .. "act"] == 1 then -- kick
+					VH:KickUser (table_othsets ["sendfrom"], nick, string.format (getlang (821), sts))
+				elseif table_sets ["protoflood" .. pref .. "act"] == 2 then -- temporary ban
+					VH:KickUser (table_othsets ["sendfrom"], nick, string.format (getlang (821), sts) .. "     #_ban_" .. table_sets ["thirdacttime"])
+				elseif table_sets ["protoflood" .. pref .. "act"] == 3 then -- permanent ban
+					VH:KickUser (table_othsets ["sendfrom"], nick, string.format (getlang (821), sts) .. "     #_ban_" .. table_sets ["seventhacttime"])
+				end
+			else
+				maintouser (nick, string.format (getlang (821), sts))
+				opsnotify (table_sets ["classnotiprotoflood"], string.format (getlang (820), nick, ip, class, sts))
+				VH:CloseConnection (nick) -- drop
+			end
+
 			return true
-		elseif dif > table_sets ["protoflood"..pref.."int"] then -- start over
+		elseif dif > table_sets ["protoflood" .. pref .. "int"] then -- start over
 			table_prfl [pref][nick]["cnt"] = 1
 			table_prfl [pref][nick]["lst"] = tm
 		else -- update count
 			table_prfl [pref][nick]["cnt"] = table_prfl [pref][nick]["cnt"] + 1
 		end
 	else -- not in list
-		table_prfl [pref][nick] = {["cnt"] = 1, ["lst"] = tm}
+		table_prfl [pref][nick] = {
+			["cnt"] = 1,
+			["lst"] = tm
+		}
 	end
 
 	return false
@@ -12116,6 +12209,48 @@ commandanswer (nick, getlang (137)..":\r\n\r\n"..anentry)
 else
 commandanswer (nick, getlang (138))
 end
+end
+
+----- ---- --- -- -
+
+function votekickuser (nick, user)
+	if getstatus (user) == 1 then
+		local class = getclass (user)
+
+		if class < 3 then
+			if not isprotected (user, getip (user)) then
+				if table_voki [user] then -- add vote
+					for _, val in pairs (table_voki [user]["u"]) do
+						if val == nick then
+							commandanswer (nick, getlang (967))
+							return
+						end
+					end
+
+					table_voki [user]["c"] = table_voki [user]["c"] + 1
+					table.insert (table_voki [user]["u"], nick)
+				else -- new vote
+					table_voki [user] = {
+						["c"] = 1,
+						["u"] = {nick}
+					}
+				end
+
+				maintoall (string.format (getlang (968), nick, table_voki [user]["c"], table_sets ["votekickcount"], class, user), 0, 10) -- notify all users
+
+				if table_voki [user]["c"] >= table_sets ["votekickcount"] then -- kick user
+					table_voki [user] = nil
+					VH:KickUser (table_othsets ["sendfrom"], user, getlang (966))
+				end
+			else -- user or ip is protected
+				commandanswer (nick, getlang (46))
+			end
+		else -- dont allow to kick operators
+			commandanswer (nick, getlang (965))
+		end
+	else -- not in list
+		commandanswer (nick, string.format (getlang (704), user))
+	end
 end
 
 ----- ---- --- -- -
@@ -13703,7 +13838,20 @@ elseif tvar == "chatfloodcount" then
 			commandanswer (nick, string.format (getlang (198), tvar))
 		end
 
------ ---- --- -- -
+	----- ---- --- -- -
+
+	elseif tvar == "protofloodctmact" then
+		if num == true then
+			if setto >= 0 and setto <= 3 then
+				ok = true
+			else
+				commandanswer (nick, string.format (getlang (196), tvar, "0 " .. getlang (199) .. " 3"))
+			end
+		else
+			commandanswer (nick, string.format (getlang (198), tvar))
+		end
+
+	----- ---- --- -- -
 
 	elseif tvar == "protofloodctmint" then
 		if num == true then
@@ -15186,19 +15334,44 @@ else
 commandanswer (nick, string.format (getlang (198), tvar))
 end
 
------ ---- --- -- -
+	----- ---- --- -- -
 
-elseif tvar == "enablevipkick" then
-	if num == true then
-		if (setto == 0) or (setto == 1) then
-			ok = true
+	elseif tvar == "enablevipkick" then
+		if num == true then
+			if setto == 0 or setto == 1 then
+				ok = true
+			else
+				commandanswer (nick, string.format (getlang (196), tvar, "0 " .. getlang (197) .. " 1"))
+			end
 		else
-			commandanswer (nick, string.format (getlang (196), tvar, "0 "..getlang (197).." 1"))
+			commandanswer (nick, string.format (getlang (198), tvar))
 		end
 
-	else
-		commandanswer (nick, string.format (getlang (198), tvar))
-	end
+	----- ---- --- -- -
+
+	elseif tvar == "votekickclass" then
+		if num == true then
+			if (setto >= 0 and setto <= 5) or setto == 10 or setto == 11 then
+				ok = true
+			else
+				commandanswer (nick, string.format (getlang (196), tvar, "0, 1, 2, 3, 4, 5, 10 " .. getlang (197) .. " 11"))
+			end
+		else
+			commandanswer (nick, string.format (getlang (198), tvar))
+		end
+
+	----- ---- --- -- -
+
+	elseif tvar == "votekickcount" then
+		if num == true then
+			if setto >= 1 and setto <= 100 then
+				ok = true
+			else
+				commandanswer (nick, string.format (getlang (196), tvar, "1 " .. getlang (199) .. " 100"))
+			end
+		else
+			commandanswer (nick, string.format (getlang (198), tvar))
+		end
 
 	----- ---- --- -- -
 
@@ -16111,7 +16284,9 @@ help = help.." "..ustrig..table_cmnds ["custlist"].." - "..getlang (154).."\r\n\
 	help = help .. " " .. ustrig .. table_cmnds ["history"] .. " <" .. getlang (209) .. "> - " .. getlang (187) .. "\r\n"
 	help = help .. " " .. ustrig .. table_cmnds ["myhistory"] .. " <" .. getlang (209) .. "> - " .. getlang (464) .. "\r\n\r\n"
 
--- other
+	-- other
+
+	help = help .. " " .. ustrig .. table_cmnds ["votekick"] .. " <" .. getlang (178) .. "> - " .. getlang (964) .. "\r\n"
 help = help.." "..ustrig..table_cmnds ["mode"].." <"..getlang (632).."> - "..getlang (630).."\r\n"
 help = help.." "..ustrig..table_cmnds ["offmsg"].." <"..getlang (178).."> <"..getlang (44).."> - "..getlang (186).."\r\n"
 help = help.." "..ustrig..table_cmnds ["calculate"].." <"..getlang (479).."> - "..getlang (480).."\r\n"
@@ -16372,8 +16547,11 @@ conf = conf.."\r\n"
 conf = conf.."\r\n [::] opkeyclass = "..table_sets ["opkeyclass"]
 conf = conf.."\r\n [::] opkeyshare = "..table_sets ["opkeyshare"]
 conf = conf.."\r\n [::] opkeyself = "..table_sets ["opkeyself"]
-conf = conf.."\r\n [::] enablevipkick = "..table_sets ["enablevipkick"]
-conf = conf.."\r\n"
+	conf = conf .. "\r\n"
+	conf = conf .. "\r\n [::] enablevipkick = " .. table_sets ["enablevipkick"]
+	conf = conf .. "\r\n [::] votekickclass = " .. table_sets ["votekickclass"]
+	conf = conf .. "\r\n [::] votekickcount = " .. table_sets ["votekickcount"]
+	conf = conf .. "\r\n"
 conf = conf.."\r\n [::] relmodclass = "..table_sets ["relmodclass"]
 conf = conf.."\r\n [::] welcomeclass = "..table_sets ["welcomeclass"]
 conf = conf.."\r\n [::] offmsgclass = "..table_sets ["offmsgclass"]
@@ -16457,10 +16635,11 @@ conf = conf.."\r\n [::] chatfloodcmdgag = "..table_sets ["chatfloodcmdgag"]
 conf = conf.."\r\n [::] ipconantiflint = "..table_sets ["ipconantiflint"]
 conf = conf.."\r\n [::] enablehardban = "..table_sets ["enablehardban"]
 conf = conf.."\r\n [::] useblacklist = "..table_sets ["useblacklist"]
-conf = conf.."\r\n"
-conf = conf.."\r\n [::] protofloodctmcnt = "..table_sets ["protofloodctmcnt"]
-conf = conf.."\r\n [::] protofloodctmint = "..table_sets ["protofloodctmint"]
-conf = conf.."\r\n"
+	conf = conf .. "\r\n"
+	conf = conf .. "\r\n [::] protofloodctmcnt = " .. table_sets ["protofloodctmcnt"]
+	conf = conf .. "\r\n [::] protofloodctmint = " .. table_sets ["protofloodctmint"]
+	conf = conf .. "\r\n [::] protofloodctmact = " .. table_sets ["protofloodctmact"]
+	conf = conf .. "\r\n"
 conf = conf .. "\r\n [::] enableuserlog = " .. table_sets ["enableuserlog"]
 conf = conf .. "\r\n [::] ulogautoclean = " .. table_sets ["ulogautoclean"]
 conf = conf.."\r\n [::] logallmyinfos = "..table_sets ["logallmyinfos"]
