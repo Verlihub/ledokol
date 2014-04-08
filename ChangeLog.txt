@@ -1,8 +1,12 @@
-[ 2.7.8 :: 2014-##-## ]
+[ 2.7.8 :: 2014-04-08 ]
 
 Fixed: Missing translations on ban and unban
 Fixed: Secondary right click menu item order
 Fixed: Version numbers comparison on update
+Fixed: VIP kick was not accessible with new style commands in Verlihub
+Changed: VIP kicks are made with users nick instead of bot nick
+Added: Basic vote kicks using +votekick <nick>, configured with votekickclass and votekickcount
+Added: CTM protocol flood actions, 0 = drop, 1 = kick, 2 = temporary ban, 3 = permanent ban, request by KCAHDEP
 
 [ 2.7.7 :: 2014-04-05 ]
 
