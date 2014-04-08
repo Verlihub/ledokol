@@ -994,7 +994,12 @@ t = {
 	[960] = "Changed right click menu item order: %s",
 	[961] = "Separator or eraser",
 	[962] = "Nick and IP %s unbanned: <%s> %s",
-	[963] = "Other %s unbanned: <%s> %s"
+	[963] = "Other %s unbanned: <%s> %s",
+	[964] = "Vote for user to be kicked",
+	[965] = "You don't want to vote for kicking an operator.",
+	[966] = "User voted kick",
+	[967] = "You have already voted for kicking that user.",
+	[968] = "%s added vote %s of %s for kicking user with class %s: %s"
 
 	-- finish editing above this line
 
