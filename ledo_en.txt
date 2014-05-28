@@ -3,7 +3,7 @@
 -------------------------- INFORMATION --------------------------
 
 Language: English
-Version: 2.7.8
+Version: 2.7.9
 Author: RoLex
 Email: webmaster@feardc.net
 
@@ -917,8 +917,8 @@ t = {
 	[883] = "Country code gag list is empty.",
 	[884] = "Delete country code gag",
 	[885] = "Cleared country code gag list.",
-	[886] = "%s with IP %s.%s and class %s tries to speak with country code gag in MC: %s",
-	[887] = "%s with IP %s.%s and class %s tries to speak with country code gag in PM: %s",
+	[886] = "%s with IP %s and class %s tries to speak with country code gag in MC: %s",
+	[887] = "%s with IP %s and class %s tries to speak with country code gag in PM: %s",
 	[888] = "No reason specified",
 	[889] = "Automatically deleted %s user log entries older than %s days.",
 	[890] = "Main chat message replaced for user: %s",
@@ -999,7 +999,26 @@ t = {
 	[965] = "You don't want to vote for kicking an operator.",
 	[966] = "User voted kick",
 	[967] = "You have already voted for kicking that user.",
-	[968] = "%s added vote %s of %s for kicking user with class %s: %s"
+	[968] = "%s added vote %s of %s for kicking user with class %s: %s",
+	[969] = "There is an error in following antispam entry pattern",
+	[970] = "Pattern",
+	[971] = "Error",
+	[972] = "Solution",
+	[973] = "There is an error in following search filter pattern",
+	[974] = "There is an error in following search filter exception pattern",
+	[975] = "There is an error in following antispam exception entry pattern",
+	[976] = "There is an error in following forbidden nick pattern",
+	[977] = "There is an error in following MyINFO exception pattern",
+	[978] = "There is an error in following forbidden description pattern",
+	[979] = "There is an error in following forbidden tag pattern",
+	[980] = "There is an error in following forbidden connection type pattern",
+	[981] = "There is an error in following forbidden email pattern",
+	[982] = "There is an error in following forbidden share size pattern",
+	[983] = "There is an error in following forbidden IP address pattern",
+	[984] = "There is an error in following forbidden CC pattern",
+	[985] = "There is an error in following forbidden DNS pattern",
+	[986] = "There is an error in following forbidden client supports pattern",
+	[987] = "There is an error in following forbidden NMDC version pattern"
 
 	-- finish editing above this line
 
