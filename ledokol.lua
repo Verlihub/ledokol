@@ -74,7 +74,7 @@ over sixty different features for Verlihub.
 -- global storage variables and tables >>
 ---------------------------------------------------------------------
 
-ver_ledo = "2.7.8" -- ledokol version
+ver_ledo = "2.7.9" -- ledokol version
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -1449,8 +1449,8 @@ table_lang_def = {
 	[883] = "Country code gag list is empty.",
 	[884] = "Delete country code gag",
 	[885] = "Cleared country code gag list.",
-	[886] = "%s with IP %s.%s and class %s tries to speak with country code gag in MC: %s",
-	[887] = "%s with IP %s.%s and class %s tries to speak with country code gag in PM: %s",
+	[886] = "%s with IP %s and class %s tries to speak with country code gag in MC: %s",
+	[887] = "%s with IP %s and class %s tries to speak with country code gag in PM: %s",
 	[888] = "No reason specified",
 	[889] = "Automatically deleted %s user log entries older than %s days.",
 	[890] = "Main chat message replaced for user: %s",
@@ -1531,7 +1531,26 @@ table_lang_def = {
 	[965] = "You don't want to vote for kicking an operator.",
 	[966] = "User voted kick",
 	[967] = "You have already voted for kicking that user.",
-	[968] = "%s added vote %s of %s for kicking user with class %s: %s"
+	[968] = "%s added vote %s of %s for kicking user with class %s: %s",
+	[969] = "There is an error in following antispam entry pattern",
+	[970] = "Pattern",
+	[971] = "Error",
+	[972] = "Solution",
+	[973] = "There is an error in following search filter pattern",
+	[974] = "There is an error in following search filter exception pattern",
+	[975] = "There is an error in following antispam exception entry pattern",
+	[976] = "There is an error in following forbidden nick pattern",
+	[977] = "There is an error in following MyINFO exception pattern",
+	[978] = "There is an error in following forbidden description pattern",
+	[979] = "There is an error in following forbidden tag pattern",
+	[980] = "There is an error in following forbidden connection type pattern",
+	[981] = "There is an error in following forbidden email pattern",
+	[982] = "There is an error in following forbidden share size pattern",
+	[983] = "There is an error in following forbidden IP address pattern",
+	[984] = "There is an error in following forbidden CC pattern",
+	[985] = "There is an error in following forbidden DNS pattern",
+	[986] = "There is an error in following forbidden client supports pattern",
+	[987] = "There is an error in following forbidden NMDC version pattern"
 }
 
 ---------------------------------------------------------------------
@@ -2619,19 +2638,19 @@ return 0
 
 		return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
 
-elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["antiadd"].." .+ %d %d+ %d$") then
-if ucl >= table_sets ["mincommandclass"] then
-donotifycmd (nick, data, 0, ucl)
-addantientry (nick, string.sub (data, string.len (table_cmnds ["antiadd"]) + 3, -1))
-else
-commandanswer (nick, getlang (128))
-end
+	elseif string.find (data, "^" .. table_othsets ["optrig"] .. table_cmnds ["antiadd"] .. " .+ %d %d+ %d$") then
+		if ucl >= table_sets ["mincommandclass"] then
+			donotifycmd (nick, data, 0, ucl)
+			addantientry (nick, string.sub (data, string.len (table_cmnds ["antiadd"]) + 3))
+		else
+			commandanswer (nick, getlang (128))
+		end
 
-return 0
+		return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
 
 elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["antidel"].." .+$") then
 if ucl >= table_sets ["mincommandclass"] then
@@ -4329,7 +4348,7 @@ function VH_OnUserCommand (nick, data)
 						rsn = getlang (770)
 					end
 
-					commandanswer (nick, string.format (getlang (147), usr, uip, ucls, nick, rsn))
+					commandanswer (nick, string.format (getlang (147), usr, uip .. tryipcc (uip, usr), ucls, nick, rsn))
 					VH:KickUser (nick, usr, rsn) -- kick using vips nick
 				else -- protected
 					commandanswer (nick, getlang (46))
@@ -5413,7 +5432,7 @@ function VH_OnUnknownMsg (nick, data, isnick, ipaddr)
 		end
 
 		local class = getclass (nick)
-		opsnotify (table_sets ["classnotiunk"], string.format (getlang (153), nick, ip, class, repnmdcoutchars (data)))
+		opsnotify (table_sets ["classnotiunk"], string.format (getlang (153), nick, ip .. tryipcc (ip, nick), class, repnmdcoutchars (data)))
 
 		if table_sets ["kickunkusers"] == 1 and class < table_sets ["scanbelowclass"] and isprotected (nick, ip) == false then -- kick
 			local rsn = string.gsub (table_sets ["unkkickreason"], "%*", reprexpchars (repnmdcoutchars (data)))
@@ -5421,7 +5440,7 @@ function VH_OnUnknownMsg (nick, data, isnick, ipaddr)
 			return 0
 		end
 	elseif table_sets ["unkbeforelogin"] == 1 then -- new version with ip
-		opsnotify (table_sets ["classnotiunk"], string.format (getlang (891), nick, repnmdcoutchars (data)))
+		opsnotify (table_sets ["classnotiunk"], string.format (getlang (891), nick .. tryipcc (nick), repnmdcoutchars (data)))
 
 		if table_sets ["kickunkusers"] == 1 and isprotected (nil, nick) == false then -- drop
 			local rsn = string.gsub (table_sets ["unkkickreason"], "%*", reprexpchars (repnmdcoutchars (data)))
@@ -5493,7 +5512,7 @@ function VH_OnParsedMsgAny (nick, data)
 			commandanswer (nick, getlang (46))
 			return 0
 		else
-			opsnotify (table_sets ["classnotiredir"], string.format (getlang (152), who, ip, getclass (who), where, nick, msg))
+			opsnotify (table_sets ["classnotiredir"], string.format (getlang (152), who, ip .. tryipcc (ip, who), getclass (who), where, nick, msg))
 			oprankaccept (nick, cls)
 		end
 
@@ -5509,11 +5528,11 @@ function VH_OnParsedMsgAny (nick, data)
 
 					if ip and port then
 						if ip ~= rip then -- either ctm exploitation or incorrect ip in client settings
-							opsnotify (table_sets ["classnotibadctm"], string.format (getlang (693), nick, rip, getclass (nick), othernick, repnmdcoutchars (ip..":"..port)))
+							opsnotify (table_sets ["classnotibadctm"], string.format (getlang (693), nick, rip .. tryipcc (rip, nick), getclass (nick), othernick, repnmdcoutchars (ip..":"..port)))
 						end
 					else
 						if ctm ~= rip then
-							opsnotify (table_sets ["classnotibadctm"], string.format (getlang (693), nick, rip, getclass (nick), othernick, repnmdcoutchars (ctm)))
+							opsnotify (table_sets ["classnotibadctm"], string.format (getlang (693), nick, rip .. tryipcc (rip, nick), getclass (nick), othernick, repnmdcoutchars (ctm)))
 						end
 					end
 				end
@@ -5713,7 +5732,7 @@ if isprotected (nick, ip) == true then -- protected
 end
 
 local ucl = getclass (nick)
-opsnotify (table_sets ["classnotikick"], string.format (getlang (147), nick, ip, ucl, op, data))
+opsnotify (table_sets ["classnotikick"], string.format (getlang (147), nick, ip .. tryipcc (ip, nick), ucl, op, data))
 oprankaccept (op, getclass (op))
 
 if (ucl > 0) and (ucl < table_sets ["scanbelowclass"]) then
@@ -5830,7 +5849,7 @@ function VH_OnParsedMsgPM (from, data, to)
 				addophistoryline (from, data) -- log operators chat
 			end
 		else
-			opsnotify (table_sets ["classnotibotpm"], string.format (getlang (432), from, ip, fcls, table_othsets ["opchatnick"], data))
+			opsnotify (table_sets ["classnotibotpm"], string.format (getlang (432), from, ip .. tryipcc (ip, from), fcls, table_othsets ["opchatnick"], data))
 		end
 
 	----- ---- --- -- -
@@ -5859,12 +5878,12 @@ function VH_OnParsedMsgPM (from, data, to)
 					savecmdlog (from, fcls, data, true)
 				end
 			else
-				opsnotify (table_sets ["classnotibotpm"], string.format (getlang (432), from, ip, fcls, table_othsets ["botnick"], data))
+				opsnotify (table_sets ["classnotibotpm"], string.format (getlang (432), from, ip .. tryipcc (ip, from), fcls, table_othsets ["botnick"], data))
 			end
 		elseif string.find (string.sub (data, 1, 1), table_othsets ["ustrig"]) then
 			-- skip
 		else
-			opsnotify (table_sets ["classnotibotpm"], string.format (getlang (432), from, ip, fcls, table_othsets ["botnick"], data))
+			opsnotify (table_sets ["classnotibotpm"], string.format (getlang (432), from, ip .. tryipcc (ip, from), fcls, table_othsets ["botnick"], data))
 		end
 
 	----- ---- --- -- -
@@ -5890,7 +5909,7 @@ function VH_OnParsedMsgPM (from, data, to)
 					VH_OnOperatorCommand (from, data)
 				end
 			else
-				opsnotify (table_sets ["classnotibotpm"], string.format (getlang (432), from, ip, fcls, table_sets ["ledobotnick"], data))
+				opsnotify (table_sets ["classnotibotpm"], string.format (getlang (432), from, ip .. tryipcc (ip, from), fcls, table_sets ["ledobotnick"], data))
 				VH:SendDataToUser ("$To: "..from.." From: "..table_sets ["ledobotnick"].." $<"..table_sets ["ledobotnick"].."> "..getlang (9).."|", from)
 			end
 		end
@@ -5899,7 +5918,7 @@ function VH_OnParsedMsgPM (from, data, to)
 
 	elseif table_othsets ["lasttimenick"] and (to == table_othsets ["lasttimenick"]) then -- time bot
 		if table_sets ["timebotint"] > 0 then
-			opsnotify (table_sets ["classnotibotpm"], string.format (getlang (432), from, ip, fcls, table_othsets ["lasttimenick"], data))
+			opsnotify (table_sets ["classnotibotpm"], string.format (getlang (432), from, ip .. tryipcc (ip, from), fcls, table_othsets ["lasttimenick"], data))
 			VH:SendDataToUser ("$To: "..from.." From: "..table_othsets ["lasttimenick"].." $<"..table_othsets ["lasttimenick"].."> "..getlang (9).."|", from)
 		end
 
@@ -6494,7 +6513,8 @@ for k, v in pairs (table_room) do
 
 		else -- not member
 			if class < table_sets ["ccroommancls"] then
-				opsnotify (table_sets ["classnotibotpm"], string.format (getlang (432), nick, getip (nick), class, to, data))
+				local mtip = getip (nick)
+				opsnotify (table_sets ["classnotibotpm"], string.format (getlang (432), nick, mtip .. tryipcc (mtip, nick), class, to, data))
 				VH:SendDataToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..getlang (620).."|", nick)
 			else
 				if cmd then -- user command
@@ -6665,7 +6685,8 @@ function broadcastchatroom (to, nick, data, ucl) -- class based chatroom
 				end
 
 			else -- not member
-				opsnotify (table_sets ["classnotibotpm"], string.format (getlang (432), nick, getip (nick), ucl, to, data))
+				local mtip = getip (nick)
+				opsnotify (table_sets ["classnotibotpm"], string.format (getlang (432), nick, mtip .. tryipcc (mtip, nick), ucl, to, data))
 				VH:SendDataToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..getlang (620).."|", nick)
 			end
 
@@ -7481,7 +7502,7 @@ function checkipwat (nick, ip, data)
 			local _, lre, rsn, res = VH:SQLFetch (x)
 
 			if string.find (ip, "^"..lre) then
-				opsnotify (table_sets ["classnotiipwatch"], string.format (getlang (873), (nick or getlang (874)), ip, rsn).."\r\n\r\n "..repnmdcoutchars (data).."\r\n") -- notify
+				opsnotify (table_sets ["classnotiipwatch"], string.format (getlang (873), (nick or getlang (874)), ip .. tryipcc (ip, nick), rsn).."\r\n\r\n "..repnmdcoutchars (data).."\r\n") -- notify
 
 				if tonumber (res) == 0 then
 					return true
@@ -7817,7 +7838,7 @@ function checkhban (ip)
 			local _, lre, rsn = VH:SQLFetch (x)
 
 			if string.find (ip, "^"..lre) then
-				opsnotify (table_sets ["classnotihardban"], string.format (getlang (853), ip, rsn)) -- notify
+				opsnotify (table_sets ["classnotihardban"], string.format (getlang (853), ip .. tryipcc (ip), rsn)) -- notify
 				return true
 			end
 		end
@@ -9081,7 +9102,7 @@ function authcheck (nick, cls, uip)
 
 		if string.find (uip, ip) then -- match
 			VH:SQLQuery ("update `"..tbl_sql ["auth"].."` set `good` = `good` + 1 where `id` = "..id.." limit 1")
-			opsnotify (table_sets ["classnotiauth"], string.format (getlang (244), nick, uip, cls))
+			opsnotify (table_sets ["classnotiauth"], string.format (getlang (244), nick, uip .. tryipcc (uip, nick), cls))
 			return false
 		end
 	end
@@ -9089,7 +9110,7 @@ function authcheck (nick, cls, uip)
 	maintouser (nick, table_sets ["authmessage"])
 	VH:SQLQuery ("update `"..tbl_sql ["auth"].."` set `badip` = '"..repsqlchars (uip).."', `bad` = `bad` + 1 where `nick` = '"..user.."'")
 	VH:CloseConnection (nick) -- drop user
-	opsnotify (table_sets ["classnotiauth"], string.format (getlang (245), nick, uip, cls))
+	opsnotify (table_sets ["classnotiauth"], string.format (getlang (245), nick, uip .. tryipcc (uip, nick), cls))
 	return true
 end
 
@@ -9759,7 +9780,7 @@ function sendoffmsg (from, line, ucls)
 				local ndate = os.time () + table_sets ["srvtimediff"] -- current time
 				VH:SQLQuery ("insert into `"..tbl_sql ["off"].."` (`from`, `ip`, `to`, `date`, `message`) values ('"..repsqlchars (from).."', '"..uip.."', '"..repsqlchars (to).."', "..ndate..", '"..repsqlchars (msg).."')")
 				commandanswer (from, string.format (getlang (28), to))
-				opsnotify (table_sets ["classnotioff"], string.format (getlang (29), from, uip, ucls))
+				opsnotify (table_sets ["classnotioff"], string.format (getlang (29), from, uip .. tryipcc (uip, from), ucls))
 			end
 		end
 	end
@@ -9787,7 +9808,7 @@ end
 offlinepm (from, to, getlang (34)..": "..sts)
 end
 
-opsnotify (table_sets ["classnotioff"], string.format (getlang (35), to, tip, ucls))
+opsnotify (table_sets ["classnotioff"], string.format (getlang (35), to, tip .. tryipcc (tip, to), ucls))
 VH:SQLQuery ("delete from `"..tbl_sql ["off"].."` where `to` = '"..user.."'") -- remove all stored message to that user
 end
 end
@@ -9863,33 +9884,50 @@ end
 ----- ---- --- -- -
 
 function checknick (nick, ucls, aip)
-	if table_sets ["michnick"] == 0 then return 0 end
-	local _, rows = VH:SQLQuery ("select `nick`, `time` from `"..tbl_sql ["minick"].."` order by `occurred` desc")
+	if table_sets ["michnick"] == 0 then
+		return 0
+	end
+
+	local _, rows = VH:SQLQuery ("select `nick`, `time` from `" .. tbl_sql ["minick"] .. "` order by `occurred` desc")
 
 	if rows > 0 then
 		local lowtxt = tolow (repnmdcinchars (nick))
 
 		for x = 0, rows - 1 do
 			local _, entry, btime = VH:SQLFetch (x)
+			local fres, fval = pcall (string.find, lowtxt, entry)
 
-			if string.find (lowtxt, entry) then
-				VH:SQLQuery ("update `"..tbl_sql ["minick"].."` set `occurred` = `occurred` + 1 where `nick` = '"..repsqlchars (entry).."' limit 1")
-				local _, rows = VH:SQLQuery ("select `exception` from `"..tbl_sql ["miex"].."`")
+			if not fres then
+				local ferr = getlang (976) .. ":\r\n\r\n"
+				ferr = ferr .. " " .. getlang (970) .. ": " .. repnmdcoutchars (entry) .. "\r\n"
+				ferr = ferr .. " " .. getlang (971) .. ": " .. repnmdcoutchars (fval or getlang (662)) .. "\r\n"
+				ferr = ferr .. " " .. getlang (972) .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+				opsnotify (table_sets ["classnotiledoact"], ferr)
+			elseif fval then
+				VH:SQLQuery ("update `" .. tbl_sql ["minick"] .. "` set `occurred` = `occurred` + 1 where `nick` = '" .. repsqlchars (entry) .. "' limit 1")
+				local _, rows = VH:SQLQuery ("select `exception` from `" .. tbl_sql ["miex"] .. "`")
 
 				if rows > 0 then
 					for x = 0, rows - 1 do
 						local _, entry = VH:SQLFetch (x)
+						local fres, fval = pcall (string.find, lowtxt, entry)
 
-						if string.find (lowtxt, entry) then
-							VH:SQLQuery ("update `"..tbl_sql ["miex"].."` set `occurred` = `occurred` + 1 where `exception` = '"..repsqlchars (entry).."' limit 1")
-							opsnotify (table_sets ["classnotiex"], string.format (getlang (43), nick, aip, ucls, nick))
+						if not fres then
+							local ferr = getlang (977) .. ":\r\n\r\n"
+							ferr = ferr .. " " .. getlang (970) .. ": " .. repnmdcoutchars (entry) .. "\r\n"
+							ferr = ferr .. " " .. getlang (971) .. ": " .. repnmdcoutchars (fval or getlang (662)) .. "\r\n"
+							ferr = ferr .. " " .. getlang (972) .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+							opsnotify (table_sets ["classnotiledoact"], ferr)
+						elseif fval then
+							VH:SQLQuery ("update `" .. tbl_sql ["miex"] .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (entry) .. "' limit 1")
+							opsnotify (table_sets ["classnotiex"], string.format (getlang (43), nick, aip .. tryipcc (aip, nick), ucls, nick))
 							return 0
 						end
 					end
 				end
 
 				local rsn = string.gsub (table_sets ["minickmessage"], "%*", reprexpchars (nick))
-				VH:KickUser (table_othsets ["sendfrom"], nick, rsn.."     #_ban_"..btime)
+				VH:KickUser (table_othsets ["sendfrom"], nick, rsn .. "     #_ban_" .. btime)
 				return 1
 			end
 		end
@@ -9909,18 +9947,32 @@ function checkdesc (nick, desc, ucls, aip)
 
 		for x = 0, rows - 1 do
 			local _, entry, btime = VH:SQLFetch (x)
+			local fres, fval = pcall (string.find, lowtxt, entry)
 
-			if string.find (lowtxt, entry) then
+			if not fres then
+				local ferr = getlang (978) .. ":\r\n\r\n"
+				ferr = ferr .. " " .. getlang (970) .. ": " .. repnmdcoutchars (entry) .. "\r\n"
+				ferr = ferr .. " " .. getlang (971) .. ": " .. repnmdcoutchars (fval or getlang (662)) .. "\r\n"
+				ferr = ferr .. " " .. getlang (972) .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+				opsnotify (table_sets ["classnotiledoact"], ferr)
+			elseif fval then
 				VH:SQLQuery ("update `"..tbl_sql ["midesc"].."` set `occurred` = `occurred` + 1 where `description` = '"..repsqlchars (entry).."' limit 1")
 				local _, rows = VH:SQLQuery ("select `exception` from `"..tbl_sql ["miex"].."`")
 
 				if rows > 0 then
 					for x = 0, rows - 1 do
 						local _, entry = VH:SQLFetch (x)
+						local fres, fval = pcall (string.find, lowtxt, entry)
 
-						if string.find (lowtxt, entry) then
+						if not fres then
+							local ferr = getlang (977) .. ":\r\n\r\n"
+							ferr = ferr .. " " .. getlang (970) .. ": " .. repnmdcoutchars (entry) .. "\r\n"
+							ferr = ferr .. " " .. getlang (971) .. ": " .. repnmdcoutchars (fval or getlang (662)) .. "\r\n"
+							ferr = ferr .. " " .. getlang (972) .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+							opsnotify (table_sets ["classnotiledoact"], ferr)
+						elseif fval then
 							VH:SQLQuery ("update `"..tbl_sql ["miex"].."` set `occurred` = `occurred` + 1 where `exception` = '"..repsqlchars (entry).."' limit 1")
-							opsnotify (table_sets ["classnotiex"], string.format (getlang (45), nick, aip, ucls, desc))
+							opsnotify (table_sets ["classnotiex"], string.format (getlang (45), nick, aip .. tryipcc (aip, nick), ucls, desc))
 							return 0
 						end
 					end
@@ -9947,18 +9999,32 @@ function checktag (nick, tag, ucls, aip)
 
 		for x = 0, rows - 1 do
 			local _, entry, btime = VH:SQLFetch (x)
+			local fres, fval = pcall (string.find, lowtxt, entry)
 
-			if string.find (lowtxt, entry) then
+			if not fres then
+				local ferr = getlang (979) .. ":\r\n\r\n"
+				ferr = ferr .. " " .. getlang (970) .. ": " .. repnmdcoutchars (entry) .. "\r\n"
+				ferr = ferr .. " " .. getlang (971) .. ": " .. repnmdcoutchars (fval or getlang (662)) .. "\r\n"
+				ferr = ferr .. " " .. getlang (972) .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+				opsnotify (table_sets ["classnotiledoact"], ferr)
+			elseif fval then
 				VH:SQLQuery ("update `"..tbl_sql ["mitag"].."` set `occurred` = `occurred` + 1 where `tag` = '"..repsqlchars (entry).."' limit 1")
 				local _, rows = VH:SQLQuery ("select `exception` from `"..tbl_sql ["miex"].."`")
 
 				if rows > 0 then
 					for x = 0, rows - 1 do
 						local _, entry = VH:SQLFetch (x)
+						local fres, fval = pcall (string.find, lowtxt, entry)
 
-						if string.find (lowtxt, entry) then
+						if not fres then
+							local ferr = getlang (977) .. ":\r\n\r\n"
+							ferr = ferr .. " " .. getlang (970) .. ": " .. repnmdcoutchars (entry) .. "\r\n"
+							ferr = ferr .. " " .. getlang (971) .. ": " .. repnmdcoutchars (fval or getlang (662)) .. "\r\n"
+							ferr = ferr .. " " .. getlang (972) .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+							opsnotify (table_sets ["classnotiledoact"], ferr)
+						elseif fval then
 							VH:SQLQuery ("update `"..tbl_sql ["miex"].."` set `occurred` = `occurred` + 1 where `exception` = '"..(entry).."' limit 1")
-							opsnotify (table_sets ["classnotiex"], string.format (getlang (47), nick, aip, ucls, tag))
+							opsnotify (table_sets ["classnotiex"], string.format (getlang (47), nick, aip .. tryipcc (aip, nick), ucls, tag))
 							return 0
 						end
 					end
@@ -9985,18 +10051,32 @@ function checkconn (nick, conn, ucls, aip)
 
 		for x = 0, rows - 1 do
 			local _, entry, btime = VH:SQLFetch (x)
+			local fres, fval = pcall (string.find, lowtxt, entry)
 
-			if string.find (lowtxt, entry) then
+			if not fres then
+				local ferr = getlang (980) .. ":\r\n\r\n"
+				ferr = ferr .. " " .. getlang (970) .. ": " .. repnmdcoutchars (entry) .. "\r\n"
+				ferr = ferr .. " " .. getlang (971) .. ": " .. repnmdcoutchars (fval or getlang (662)) .. "\r\n"
+				ferr = ferr .. " " .. getlang (972) .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+				opsnotify (table_sets ["classnotiledoact"], ferr)
+			elseif fval then
 				VH:SQLQuery ("update `"..tbl_sql ["miconn"].."` set `occurred` = `occurred` + 1 where `connection` = '"..repsqlchars (entry).."' limit 1")
 				local _, rows = VH:SQLQuery ("select `exception` from `"..tbl_sql ["miex"].."`")
 
 				if rows > 0 then
 					for x = 0, rows - 1 do
 						local _, entry = VH:SQLFetch (x)
+						local fres, fval = pcall (string.find, lowtxt, entry)
 
-						if string.find (lowtxt, entry) then
+						if not fres then
+							local ferr = getlang (977) .. ":\r\n\r\n"
+							ferr = ferr .. " " .. getlang (970) .. ": " .. repnmdcoutchars (entry) .. "\r\n"
+							ferr = ferr .. " " .. getlang (971) .. ": " .. repnmdcoutchars (fval or getlang (662)) .. "\r\n"
+							ferr = ferr .. " " .. getlang (972) .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+							opsnotify (table_sets ["classnotiledoact"], ferr)
+						elseif fval then
 							VH:SQLQuery ("update `"..tbl_sql ["miex"].."` set `occurred` = `occurred` + 1 where `exception` = '"..repsqlchars (entry).."' limit 1")
-							opsnotify (table_sets ["classnotiex"], string.format (getlang (49), nick, aip, ucls, conn))
+							opsnotify (table_sets ["classnotiex"], string.format (getlang (49), nick, aip .. tryipcc (aip, nick), ucls, conn))
 							return 0
 						end
 					end
@@ -10023,18 +10103,32 @@ function checkemail (nick, email, ucls, aip)
 
 		for x = 0, rows - 1 do
 			local _, entry, btime = VH:SQLFetch (x)
+			local fres, fval = pcall (string.find, lowtxt, entry)
 
-			if string.find (lowtxt, entry) then
+			if not fres then
+				local ferr = getlang (981) .. ":\r\n\r\n"
+				ferr = ferr .. " " .. getlang (970) .. ": " .. repnmdcoutchars (entry) .. "\r\n"
+				ferr = ferr .. " " .. getlang (971) .. ": " .. repnmdcoutchars (fval or getlang (662)) .. "\r\n"
+				ferr = ferr .. " " .. getlang (972) .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+				opsnotify (table_sets ["classnotiledoact"], ferr)
+			elseif fval then
 				VH:SQLQuery ("update `"..tbl_sql ["miemail"].."` set `occurred` = `occurred` + 1 where `email` = '"..repsqlchars (entry).."' limit 1")
 				local _, rows = VH:SQLQuery ("select `exception` from `"..tbl_sql ["miex"].."`")
 
 				if rows > 0 then
 					for x = 0, rows - 1 do
 						local _, entry = VH:SQLFetch (x)
+						local fres, fval = pcall (string.find, lowtxt, entry)
 
-						if string.find (lowtxt, entry) then
+						if not fres then
+							local ferr = getlang (977) .. ":\r\n\r\n"
+							ferr = ferr .. " " .. getlang (970) .. ": " .. repnmdcoutchars (entry) .. "\r\n"
+							ferr = ferr .. " " .. getlang (971) .. ": " .. repnmdcoutchars (fval or getlang (662)) .. "\r\n"
+							ferr = ferr .. " " .. getlang (972) .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+							opsnotify (table_sets ["classnotiledoact"], ferr)
+						elseif fval then
 							VH:SQLQuery ("update `"..tbl_sql ["miex"].."` set `occurred` = `occurred` + 1 where `exception` = '"..repsqlchars (entry).."' limit 1")
-							opsnotify (table_sets ["classnotiex"], string.format (getlang (51), nick, aip, ucls, email))
+							opsnotify (table_sets ["classnotiex"], string.format (getlang (51), nick, aip .. tryipcc (aip, nick), ucls, email))
 							return 0
 						end
 					end
@@ -10061,18 +10155,32 @@ function checkshare (nick, share, ucls, aip)
 
 		for x = 0, rows - 1 do
 			local _, entry, btime = VH:SQLFetch (x)
+			local fres, fval = pcall (string.find, lowtxt, entry)
 
-			if string.find (lowtxt, entry) then
+			if not fres then
+				local ferr = getlang (982) .. ":\r\n\r\n"
+				ferr = ferr .. " " .. getlang (970) .. ": " .. repnmdcoutchars (entry) .. "\r\n"
+				ferr = ferr .. " " .. getlang (971) .. ": " .. repnmdcoutchars (fval or getlang (662)) .. "\r\n"
+				ferr = ferr .. " " .. getlang (972) .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+				opsnotify (table_sets ["classnotiledoact"], ferr)
+			elseif fval then
 				VH:SQLQuery ("update `"..tbl_sql ["mishare"].."` set `occurred` = `occurred` + 1 where `share` = '"..repsqlchars (entry).."' limit 1")
 				local _, rows = VH:SQLQuery ("select `exception` from `"..tbl_sql ["miex"].."`")
 
 				if rows > 0 then
 					for x = 0, rows - 1 do
 						local _, entry = VH:SQLFetch (x)
+						local fres, fval = pcall (string.find, lowtxt, entry)
 
-						if string.find (lowtxt, entry) then
+						if not fres then
+							local ferr = getlang (977) .. ":\r\n\r\n"
+							ferr = ferr .. " " .. getlang (970) .. ": " .. repnmdcoutchars (entry) .. "\r\n"
+							ferr = ferr .. " " .. getlang (971) .. ": " .. repnmdcoutchars (fval or getlang (662)) .. "\r\n"
+							ferr = ferr .. " " .. getlang (972) .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+							opsnotify (table_sets ["classnotiledoact"], ferr)
+						elseif fval then
 							VH:SQLQuery ("update `"..tbl_sql ["miex"].."` set `occurred` = `occurred` + 1 where `exception` = '"..repsqlchars (entry).."' limit 1")
-							opsnotify (table_sets ["classnotiex"], string.format (getlang (53), nick, aip, ucls, share))
+							opsnotify (table_sets ["classnotiex"], string.format (getlang (53), nick, aip .. tryipcc (aip, nick), ucls, share))
 							return 0
 						end
 					end
@@ -10100,18 +10208,32 @@ function checkip (nick, aip, ucls)
 
 		for x = 0, rows - 1 do
 			local _, entry, btime = VH:SQLFetch (x)
+			local fres, fval = pcall (string.find, lowtxt, entry)
 
-			if string.find (lowtxt, entry) then
+			if not fres then
+				local ferr = getlang (983) .. ":\r\n\r\n"
+				ferr = ferr .. " " .. getlang (970) .. ": " .. repnmdcoutchars (entry) .. "\r\n"
+				ferr = ferr .. " " .. getlang (971) .. ": " .. repnmdcoutchars (fval or getlang (662)) .. "\r\n"
+				ferr = ferr .. " " .. getlang (972) .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+				opsnotify (table_sets ["classnotiledoact"], ferr)
+			elseif fval then
 				VH:SQLQuery ("update `"..tbl_sql ["miip"].."` set `occurred` = `occurred` + 1 where `ip` = '"..repsqlchars (entry).."' limit 1")
 				local _, rows = VH:SQLQuery ("select `exception` from `"..tbl_sql ["miex"].."`")
 
 				if rows > 0 then
 					for x = 0, rows - 1 do
 						local _, entry = VH:SQLFetch (x)
+						local fres, fval = pcall (string.find, lowtxt, entry)
 
-						if string.find (lowtxt, entry) then
+						if not fres then
+							local ferr = getlang (977) .. ":\r\n\r\n"
+							ferr = ferr .. " " .. getlang (970) .. ": " .. repnmdcoutchars (entry) .. "\r\n"
+							ferr = ferr .. " " .. getlang (971) .. ": " .. repnmdcoutchars (fval or getlang (662)) .. "\r\n"
+							ferr = ferr .. " " .. getlang (972) .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+							opsnotify (table_sets ["classnotiledoact"], ferr)
+						elseif fval then
 							VH:SQLQuery ("update `"..tbl_sql ["miex"].."` set `occurred` = `occurred` + 1 where `exception` = '"..repsqlchars (entry).."' limit 1")
-							opsnotify (table_sets ["classnotiex"], string.format (getlang (354), nick, aip, ucls, aip))
+							opsnotify (table_sets ["classnotiex"], string.format (getlang (354), nick, aip .. tryipcc (aip, nick), ucls, aip))
 							return 0
 						end
 					end
@@ -10141,18 +10263,32 @@ function checkcc (nick, cls)
 
 		for x = 0, rows - 1 do
 			local _, ent, btime = VH:SQLFetch (x)
+			local fres, fval = pcall (string.find, lcc, ent)
 
-			if string.find (lcc, ent) then
+			if not fres then
+				local ferr = getlang (984) .. ":\r\n\r\n"
+				ferr = ferr .. " " .. getlang (970) .. ": " .. repnmdcoutchars (ent) .. "\r\n"
+				ferr = ferr .. " " .. getlang (971) .. ": " .. repnmdcoutchars (fval or getlang (662)) .. "\r\n"
+				ferr = ferr .. " " .. getlang (972) .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+				opsnotify (table_sets ["classnotiledoact"], ferr)
+			elseif fval then
 				VH:SQLQuery ("update `"..tbl_sql ["micc"].."` set `occurred` = `occurred` + 1 where `cc` = '"..repsqlchars (ent).."' limit 1")
 				local _, rows = VH:SQLQuery ("select `exception` from `"..tbl_sql ["miex"].."`")
 
 				if rows > 0 then
 					for x = 0, rows - 1 do
 						local _, ent = VH:SQLFetch (x)
+						local fres, fval = pcall (string.find, lcc, ent)
 
-						if string.find (lcc, ent) then
+						if not fres then
+							local ferr = getlang (977) .. ":\r\n\r\n"
+							ferr = ferr .. " " .. getlang (970) .. ": " .. repnmdcoutchars (ent) .. "\r\n"
+							ferr = ferr .. " " .. getlang (971) .. ": " .. repnmdcoutchars (fval or getlang (662)) .. "\r\n"
+							ferr = ferr .. " " .. getlang (972) .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+							opsnotify (table_sets ["classnotiledoact"], ferr)
+						elseif fval then
 							VH:SQLQuery ("update `"..tbl_sql ["miex"].."` set `occurred` = `occurred` + 1 where `exception` = '"..repsqlchars (ent).."' limit 1")
-							opsnotify (table_sets ["classnotiex"], string.format (getlang (796), nick, ip, cls, cc))
+							opsnotify (table_sets ["classnotiex"], string.format (getlang (796), nick, ip .. tryipcc (ip, nick), cls, cc))
 							return false
 						end
 					end
@@ -10182,18 +10318,32 @@ function checkdns (nick, cls, ip)
 
 		for x = 0, rows - 1 do
 			local _, ent, btime = VH:SQLFetch (x)
+			local fres, fval = pcall (string.find, ldns, ent)
 
-			if string.find (ldns, ent) then
+			if not fres then
+				local ferr = getlang (985) .. ":\r\n\r\n"
+				ferr = ferr .. " " .. getlang (970) .. ": " .. repnmdcoutchars (ent) .. "\r\n"
+				ferr = ferr .. " " .. getlang (971) .. ": " .. repnmdcoutchars (fval or getlang (662)) .. "\r\n"
+				ferr = ferr .. " " .. getlang (972) .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+				opsnotify (table_sets ["classnotiledoact"], ferr)
+			elseif fval then
 				VH:SQLQuery ("update `"..tbl_sql ["midns"].."` set `occurred` = `occurred` + 1 where `dns` = '"..repsqlchars (ent).."' limit 1")
 				local _, rows = VH:SQLQuery ("select `exception` from `"..tbl_sql ["miex"].."`")
 
 				if rows > 0 then
 					for x = 0, rows - 1 do
 						local _, ent = VH:SQLFetch (x)
+						local fres, fval = pcall (string.find, ldns, ent)
 
-						if string.find (ldns, ent) then
+						if not fres then
+							local ferr = getlang (977) .. ":\r\n\r\n"
+							ferr = ferr .. " " .. getlang (970) .. ": " .. repnmdcoutchars (ent) .. "\r\n"
+							ferr = ferr .. " " .. getlang (971) .. ": " .. repnmdcoutchars (fval or getlang (662)) .. "\r\n"
+							ferr = ferr .. " " .. getlang (972) .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+							opsnotify (table_sets ["classnotiledoact"], ferr)
+						elseif fval then
 							VH:SQLQuery ("update `"..tbl_sql ["miex"].."` set `occurred` = `occurred` + 1 where `exception` = '"..repsqlchars (ent).."' limit 1")
-							opsnotify (table_sets ["classnotiex"], string.format (getlang (757), nick, ip, cls, dns))
+							opsnotify (table_sets ["classnotiex"], string.format (getlang (757), nick, ip .. tryipcc (ip, nick), cls, dns))
 							return false
 						end
 					end
@@ -10223,18 +10373,32 @@ function checksup (nick, cls, ip)
 
 		for x = 0, rows - 1 do
 			local _, ent, btime = VH:SQLFetch (x)
+			local fres, fval = pcall (string.find, lsup, ent)
 
-			if string.find (lsup, ent) then
+			if not fres then
+				local ferr = getlang (986) .. ":\r\n\r\n"
+				ferr = ferr .. " " .. getlang (970) .. ": " .. repnmdcoutchars (ent) .. "\r\n"
+				ferr = ferr .. " " .. getlang (971) .. ": " .. repnmdcoutchars (fval or getlang (662)) .. "\r\n"
+				ferr = ferr .. " " .. getlang (972) .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+				opsnotify (table_sets ["classnotiledoact"], ferr)
+			elseif fval then
 				VH:SQLQuery ("update `" .. tbl_sql ["misup"] .. "` set `occurred` = `occurred` + 1 where `supports` = '" .. repsqlchars (ent) .. "' limit 1")
 				local _, rows = VH:SQLQuery ("select `exception` from `" .. tbl_sql ["miex"] .. "`")
 
 				if rows > 0 then
 					for x = 0, rows - 1 do
 						local _, ent = VH:SQLFetch (x)
+						local fres, fval = pcall (string.find, lsup, ent)
 
-						if string.find (lsup, ent) then
+						if not fres then
+							local ferr = getlang (977) .. ":\r\n\r\n"
+							ferr = ferr .. " " .. getlang (970) .. ": " .. repnmdcoutchars (ent) .. "\r\n"
+							ferr = ferr .. " " .. getlang (971) .. ": " .. repnmdcoutchars (fval or getlang (662)) .. "\r\n"
+							ferr = ferr .. " " .. getlang (972) .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+							opsnotify (table_sets ["classnotiledoact"], ferr)
+						elseif fval then
 							VH:SQLQuery ("update `" .. tbl_sql ["miex"] .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (ent) .. "' limit 1")
-							opsnotify (table_sets ["classnotiex"], string.format (getlang (908), nick, ip, cls, sup))
+							opsnotify (table_sets ["classnotiex"], string.format (getlang (908), nick, ip .. tryipcc (ip, nick), cls, sup))
 							return false
 						end
 					end
@@ -10264,18 +10428,32 @@ function checkver (nick, cls, ip)
 
 		for x = 0, rows - 1 do
 			local _, ent, btime = VH:SQLFetch (x)
+			local fres, fval = pcall (string.find, lver, ent)
 
-			if string.find (lver, ent) then
+			if not fres then
+				local ferr = getlang (987) .. ":\r\n\r\n"
+				ferr = ferr .. " " .. getlang (970) .. ": " .. repnmdcoutchars (ent) .. "\r\n"
+				ferr = ferr .. " " .. getlang (971) .. ": " .. repnmdcoutchars (fval or getlang (662)) .. "\r\n"
+				ferr = ferr .. " " .. getlang (972) .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+				opsnotify (table_sets ["classnotiledoact"], ferr)
+			elseif fval then
 				VH:SQLQuery ("update `" .. tbl_sql ["miver"] .. "` set `occurred` = `occurred` + 1 where `version` = '" .. repsqlchars (ent) .. "' limit 1")
 				local _, rows = VH:SQLQuery ("select `exception` from `" .. tbl_sql ["miex"] .. "`")
 
 				if rows > 0 then
 					for x = 0, rows - 1 do
 						local _, ent = VH:SQLFetch (x)
+						local fres, fval = pcall (string.find, lver, ent)
 
-						if string.find (lver, ent) then
+						if not fres then
+							local ferr = getlang (977) .. ":\r\n\r\n"
+							ferr = ferr .. " " .. getlang (970) .. ": " .. repnmdcoutchars (ent) .. "\r\n"
+							ferr = ferr .. " " .. getlang (971) .. ": " .. repnmdcoutchars (fval or getlang (662)) .. "\r\n"
+							ferr = ferr .. " " .. getlang (972) .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+							opsnotify (table_sets ["classnotiledoact"], ferr)
+						elseif fval then
 							VH:SQLQuery ("update `" .. tbl_sql ["miex"] .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (ent) .. "' limit 1")
-							opsnotify (table_sets ["classnotiex"], string.format (getlang (909), nick, ip, cls, ver))
+							opsnotify (table_sets ["classnotiex"], string.format (getlang (909), nick, ip .. tryipcc (ip, nick), cls, ver))
 							return false
 						end
 					end
@@ -10323,7 +10501,7 @@ function checkfake (nick, share, ucls, aip)
 
 				if string.find (sh, entry) then
 					VH:SQLQuery ("update `"..tbl_sql ["miex"].."` set `occurred` = `occurred` + 1 where `exception` = '"..repsqlchars (entry).."' limit 1")
-					opsnotify (table_sets ["classnotiex"], string.format (getlang (449), nick, aip, ucls, share.." "..getlang (365)))
+					opsnotify (table_sets ["classnotiex"], string.format (getlang (449), nick, aip .. tryipcc (aip, nick), ucls, share.." "..getlang (365)))
 					return 0
 				end
 			end
@@ -10353,7 +10531,7 @@ function checkclone (nick, share, aip, ucls)
 
 						if string.find (repnmdcinchars (share), entry) or string.find (repnmdcinchars (aip), entry) then
 							VH:SQLQuery ("update `"..tbl_sql ["miex"].."` set `occurred` = `occurred` + 1 where `exception` = '"..repsqlchars (entry).."' limit 1")
-							opsnotify (table_sets ["classnotiex"], string.format (getlang (450), nick, aip, ucls, user))
+							opsnotify (table_sets ["classnotiex"], string.format (getlang (450), nick, aip .. tryipcc (aip, nick), ucls, user))
 							return 0
 						end
 					end
@@ -10363,7 +10541,7 @@ function checkclone (nick, share, aip, ucls)
 
 				if table_sets ["michclone"] == 1 then
 					maintouser (nick, rsn)
-					opsnotify (table_sets ["classnotimich"], string.format (getlang (824), aip, ucls, nick, user))
+					opsnotify (table_sets ["classnotimich"], string.format (getlang (824), aip .. tryipcc (aip, nick), ucls, nick, user))
 					VH:CloseConnection (nick)
 				elseif table_sets ["michclone"] == 2 then
 					if table_sets ["miclonekicktime"] ~= "" then
@@ -10397,7 +10575,7 @@ function checksameip (nick, ip, ucls)
 
 						if string.find (repnmdcinchars (ip), entry) then
 							VH:SQLQuery ("update `"..tbl_sql ["miex"].."` set `occurred` = `occurred` + 1 where `exception` = '"..repsqlchars (entry).."' limit 1")
-							opsnotify (table_sets ["classnotiex"], string.format (getlang (451), nick, ip, ucls, user))
+							opsnotify (table_sets ["classnotiex"], string.format (getlang (451), nick, ip .. tryipcc (ip, nick), ucls, user))
 							return 0
 						end
 					end
@@ -10541,11 +10719,11 @@ function gagipcheck (nick, ip, class, to, data)
 		if string.find (ip, key) then
 			if to and ((value == 0) or (value == 2)) then -- pm
 				pmtouser (nick, to, getlang (658))
-				opsnotify (table_sets ["classnotigagip"], string.format (getlang (777), nick, ip, class, data))
+				opsnotify (table_sets ["classnotigagip"], string.format (getlang (777), nick, ip .. tryipcc (ip, nick), class, data))
 				return true
 			elseif (not to) and ((value == 0) or (value == 1)) then -- mc
 				maintouser (nick, getlang (649))
-				opsnotify (table_sets ["classnotigagip"], string.format (getlang (776), nick, ip, class, data))
+				opsnotify (table_sets ["classnotigagip"], string.format (getlang (776), nick, ip .. tryipcc (ip, nick), class, data))
 				return true
 			end
 
@@ -10619,7 +10797,7 @@ end
 
 function gagccheck (nick, ip, class, to, msg)
 	if class >= table_sets ["scanbelowclass"] then return false end
-	cc = getcc (nick)
+	local cc = getcc (nick)
 	if not cc then return false end
 	cc = string.upper (cc)
 
@@ -10627,11 +10805,11 @@ function gagccheck (nick, ip, class, to, msg)
 		if cc == k then
 			if to and ((v == 0) or (v == 2)) then -- pm
 				pmtouser (nick, to, getlang (658))
-				opsnotify (table_sets ["classnotigagip"], string.format (getlang (887), nick, ip, cc, class, msg))
+				opsnotify (table_sets ["classnotigagip"], string.format (getlang (887), nick, ip .. tryipcc (ip, nick), class, msg))
 				return true
 			elseif (not to) and ((v == 0) or (v == 1)) then -- mc
 				maintouser (nick, getlang (649))
-				opsnotify (table_sets ["classnotigagip"], string.format (getlang (886), nick, ip, cc, class, msg))
+				opsnotify (table_sets ["classnotigagip"], string.format (getlang (886), nick, ip .. tryipcc (ip, nick), class, msg))
 				return true
 			end
 
@@ -10668,7 +10846,7 @@ function detprotoflood (pref, prot, nick, ip, class)
 			if pref == "ctm" then -- for now use only on ctm detection, in future add to all detections
 				if table_sets ["protoflood" .. pref .. "act"] == 0 then -- drop
 					maintouser (nick, string.format (getlang (821), sts))
-					opsnotify (table_sets ["classnotiprotoflood"], string.format (getlang (820), nick, ip, class, sts))
+					opsnotify (table_sets ["classnotiprotoflood"], string.format (getlang (820), nick, ip .. tryipcc (ip, nick), class, sts))
 					VH:CloseConnection (nick)
 				elseif table_sets ["protoflood" .. pref .. "act"] == 1 then -- kick
 					VH:KickUser (table_othsets ["sendfrom"], nick, string.format (getlang (821), sts))
@@ -10679,7 +10857,7 @@ function detprotoflood (pref, prot, nick, ip, class)
 				end
 			else
 				maintouser (nick, string.format (getlang (821), sts))
-				opsnotify (table_sets ["classnotiprotoflood"], string.format (getlang (820), nick, ip, class, sts))
+				opsnotify (table_sets ["classnotiprotoflood"], string.format (getlang (820), nick, ip .. tryipcc (ip, nick), class, sts))
 				VH:CloseConnection (nick) -- drop
 			end
 
@@ -10725,13 +10903,13 @@ if table_flod [ip] then
 	if (table_flod [ip]["cnt"] >= table_sets ["chatfloodcount"]) and (dif <= table_sets ["chatfloodint"]) then -- match
 		if to then -- pm
 			if table_flod [ip]["fst"] == true then -- notify only first time
-				opsnotify (table_sets ["classnotiflood"], string.format (getlang (657), ip, nick, class, msg))
+				opsnotify (table_sets ["classnotiflood"], string.format (getlang (657), ip, nick .. tryipcc (ip, nick), class, msg))
 			end
 
 			pmtouser (nick, to, getlang (659))
 		else -- mc
 			if table_flod [ip]["fst"] == true then -- notify only first time
-				opsnotify (table_sets ["classnotiflood"], string.format (getlang (656), ip, nick, class, msg))
+				opsnotify (table_sets ["classnotiflood"], string.format (getlang (656), ip, nick .. tryipcc (ip, nick), class, msg))
 			end
 
 			maintouser (nick, getlang (659))
@@ -10745,14 +10923,14 @@ if table_flod [ip] then
 			end
 
 			if table_flod [ip]["fst"] == true then -- notify only first time
-				opsnotify (table_sets ["classnotiflood"], string.format (getlang (655), ip, table.getn (getusersbyip (ip))))
+				opsnotify (table_sets ["classnotiflood"], string.format (getlang (655), ip .. tryipcc (ip, nick), table.getn (getusersbyip (ip))))
 			end
 
 		elseif table_sets ["chatfloodaction"] == 2 then -- drop
 			local res = dropallbyip (ip)
 
 			if table_flod [ip]["fst"] == true then -- notify only first time
-				opsnotify (table_sets ["classnotiflood"], string.format (getlang (660), res, ip))
+				opsnotify (table_sets ["classnotiflood"], string.format (getlang (660), res, ip .. tryipcc (ip, nick)))
 			end
 
 		elseif table_sets ["chatfloodaction"] == 3 then -- kick
@@ -12094,39 +12272,43 @@ end
 ----- ---- --- -- -
 
 function addantientry (nick, item)
-local _, _, aitem, prio, aaction, flags = string.find (item, "^(.+) (%d) (%d+) (%d)$")
-prio, aaction, flags = tonumber (prio), tonumber (aaction), tonumber (flags)
+	local _, _, aitem, prio, aaction, flags = string.find (item, "^(.+) (%d) (%d+) (%d)$")
+	prio, aaction, flags = tonumber (prio), tonumber (aaction), tonumber (flags)
 
-if (aaction < 0) or (aaction > 10) then -- invalid action
-	commandanswer (nick, string.format (getlang (227), "0, 1, 2, 3, 4, 5, 6, 7, 8, 9 "..getlang (70).." 10"))
-elseif (flags < 1) or (flags > 3) then -- invalid flag
-	commandanswer (nick, string.format (getlang (228), "1, 2 "..getlang (70).." 3"))
-elseif (prio < 0) or (prio > 9) then -- invalid priority
-	commandanswer (nick, string.format (getlang (23), 0, 9))
-else
-	local entry = repsqlchars (repnmdcinchars (aitem))
-	local _, rows = VH:SQLQuery ("select `action` from `"..tbl_sql ["anti"].."` where `antispam` = '"..entry.."' limit 1")
-
-	if rows > 0 then
-		VH:SQLQuery ("update `"..tbl_sql ["anti"].."` set `priority` = "..prio..", `action` = "..aaction..", `flags` = "..flags.." where `antispam` = '"..entry.."' limit 1")
-		local note = 554
-
-		if flags == 1 then note = 552
-		elseif flags == 2 then note = 553
-		end
-
-		commandanswer (nick, string.format (getlang (note), aaction, prio, aitem))
+	if (aaction < 0) or (aaction > 10) then -- invalid action
+		commandanswer (nick, string.format (getlang (227), "0, 1, 2, 3, 4, 5, 6, 7, 8, 9 " .. getlang (70) .. " 10"))
+	elseif (flags < 1) or (flags > 3) then -- invalid flag
+		commandanswer (nick, string.format (getlang (228), "1, 2 " .. getlang (70) .. " 3"))
+	elseif (prio < 0) or (prio > 9) then -- invalid priority
+		commandanswer (nick, string.format (getlang (23), 0, 9))
 	else
-		VH:SQLQuery ("insert into `"..tbl_sql ["anti"].."` (`antispam`, `priority`, `action`, `flags`) values ('"..entry.."', "..prio..", "..aaction..", "..flags..")")
-		local note = 557
+		local entry = repsqlchars (repnmdcinchars (aitem))
+		local _, rows = VH:SQLQuery ("select `action` from `" .. tbl_sql ["anti"] .. "` where `antispam` = '" .. entry .. "' limit 1")
 
-		if flags == 1 then note = 555
-		elseif flags == 2 then note = 556
+		if rows > 0 then
+			VH:SQLQuery ("update `" .. tbl_sql ["anti"] .. "` set `priority` = " .. tostring (prio) .. ", `action` = " .. tostring (aaction) .. ", `flags` = " .. tostring (flags) .. " where `antispam` = '" .. entry .. "' limit 1")
+			local note = 554
+
+			if flags == 1 then
+				note = 552
+			elseif flags == 2 then
+				note = 553
+			end
+
+			commandanswer (nick, string.format (getlang (note), aaction, prio, aitem))
+		else
+			VH:SQLQuery ("insert into `" .. tbl_sql ["anti"] .. "` (`antispam`, `priority`, `action`, `flags`) values ('" .. entry .. "', " .. tostring (prio) .. ", " .. tostring (aaction) .. ", " .. tostring (flags) .. ")")
+			local note = 557
+
+			if flags == 1 then
+				note = 555
+			elseif flags == 2 then
+				note = 556
+			end
+
+			commandanswer (nick, string.format (getlang (note), aaction, prio, aitem))
 		end
-
-		commandanswer (nick, string.format (getlang (note), aaction, prio, aitem))
 	end
-end
 end
 
 ----- ---- --- -- -
@@ -12828,7 +13010,7 @@ function installusermenu (usr)
 -- antispam
 
 if ucl >= table_sets ["mincommandclass"] then
-sopmenitm (usr, getlang (109).."\\"..getlang (156), table_cmnds ["antiadd"].." %[line:<"..getlang (193)..">] %[line:<"..getlang (30)..">] %[line:<"..getlang (194)..">] %[line:<"..getlang (126)..">]")
+	sopmenitm (usr, getlang (109) .. "\\" .. getlang (156), table_cmnds ["antiadd"] .. " %[line:<" .. getlang (193) .. ">] %[line:<" .. getlang (30) .. ">] %[line:<" .. getlang (194) .. ">] %[line:<" .. getlang (126) .. ">]")
 sopmenitm (usr, getlang (109).."\\"..getlang (131), table_cmnds ["antilist"])
 smensep (usr)
 sopmenitm (usr, getlang (109).."\\"..getlang (158), table_cmnds ["antidel"].." %[line:<"..getlang (193)..">]")
@@ -16032,7 +16214,7 @@ end
 function checkblacklist (ip)
 	for _, bld in pairs (table_blst) do
 		if ipinrange (bld.r, ip) == true then
-			opsnotify (table_sets ["classnotiblist"], string.format (getlang (861), ip, repnmdcoutchars (bld.d))) -- notify
+			opsnotify (table_sets ["classnotiblist"], string.format (getlang (861), ip .. tryipcc (ip), repnmdcoutchars (bld.d))) -- notify
 			return true
 		end
 	end
@@ -16068,8 +16250,8 @@ function sendhelp (nick)
 local help = "\r\n\r\n .:: "..getlang (155)..":\r\n\r\n"
 	local optrig = string.sub (getconfig ("cmd_start_op"), 1, 1)
 
--- antispam
-help = help.." "..optrig..table_cmnds ["antiadd"].." <"..getlang (193).."> <"..getlang (30).."> <"..getlang (194).."> <"..getlang (126).."> - "..getlang (156).."\r\n"
+	-- antispam
+	help = help .. " " .. optrig .. table_cmnds ["antiadd"] .. " <" .. getlang (193) .. "> <" .. getlang (30) .. "> <" .. getlang (194) .. "> <" .. getlang (126) .. "> - " .. getlang (156) .. "\r\n"
 help = help.." "..optrig..table_cmnds ["antilist"].." - "..getlang (131).."\r\n"
 help = help.." "..optrig..table_cmnds ["antidel"].." <"..getlang (193).."> - "..getlang (158).."\r\n"
 help = help.." "..optrig..table_cmnds ["antiexadd"].." <"..getlang (193).."> - "..getlang (159).."\r\n"
@@ -17767,6 +17949,38 @@ function getcc (nick)
 	end
 end
 
+----- ---- --- -- -
+
+function tryipcc (addr, nick)
+	if nick then
+		local res, code = VH:GetUserCC (nick)
+
+		if res and code then
+			if code == "--" then
+				return ""
+			else
+				return "." .. code
+			end
+		end
+	end
+
+	if VH.GetIPCC then
+		local res, code = VH:GetIPCC (addr)
+
+		if res and code then
+			if code == "--" then
+				return ""
+			else
+				return "." .. code
+			end
+		end
+	end
+
+	return ""
+end
+
+----- ---- --- -- -
+
 function getusercity (nick)
 	local res, city = VH:GetUserCity (nick)
 
@@ -18594,13 +18808,28 @@ function antiscan (nick, class, data, where, to, status)
 
 	for x = 0, rows - 1 do
 		local _, entry, priority, action = VH:SQLFetch (x)
+		local fres, fval = pcall (string.find, lowdata, entry)
 
-		if string.find (lowdata, entry) then
+		if not fres then
+			local ferr = getlang (969) .. ":\r\n\r\n"
+			ferr = ferr .. " " .. getlang (970) .. ": " .. repnmdcoutchars (entry) .. "\r\n"
+			ferr = ferr .. " " .. getlang (971) .. ": " .. repnmdcoutchars (fval or getlang (662)) .. "\r\n"
+			ferr = ferr .. " " .. getlang (972) .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+			opsnotify (table_sets ["classnotiledoact"], ferr)
+		elseif fval then
 			VH:SQLQuery ("update `" .. tbl_sql ["anti"] .. "` set `occurred` = `occurred` + 1 where `antispam` = '" .. repsqlchars (entry) .. "' limit 1")
 
 			if tonumber (priority) < 7 then -- skip exlist for 7, 8 and 9
 				for _, value in pairs (exlist) do
-					if string.find (lowdata, value) then
+					local fres, fval = pcall (string.find, lowdata, value)
+
+					if not fres then
+						local ferr = getlang (975) .. ":\r\n\r\n"
+						ferr = ferr .. " " .. getlang (970) .. ": " .. repnmdcoutchars (value) .. "\r\n"
+						ferr = ferr .. " " .. getlang (971) .. ": " .. repnmdcoutchars (fval or getlang (662)) .. "\r\n"
+						ferr = ferr .. " " .. getlang (972) .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+						opsnotify (table_sets ["classnotiledoact"], ferr)
+					elseif fval then
 						VH:SQLQuery ("update `" .. tbl_sql ["antiex"] .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (value) .. "' limit 1")
 						local note = 540
 
@@ -18612,7 +18841,8 @@ function antiscan (nick, class, data, where, to, status)
 							note = 543
 						end
 
-						opsnotify (table_sets ["classnotiex"], string.format (getlang (note), nick, getip (nick), class, data))
+						local mtip = getip (nick)
+						opsnotify (table_sets ["classnotiex"], string.format (getlang (note), nick, mtip .. tryipcc (mtip, nick), class, data))
 						return 1
 					end
 				end
@@ -18631,7 +18861,8 @@ function antiscan (nick, class, data, where, to, status)
 					note = 547
 				end
 
-				opsnotify (table_sets ["classnotianti"], string.format (getlang (note), nick, getip (nick), class, data))
+				local mtip = getip (nick)
+				opsnotify (table_sets ["classnotianti"], string.format (getlang (note), nick, mtip .. tryipcc (mtip, nick), class, data))
 				return 1
 			end
 
@@ -18687,7 +18918,7 @@ function antiscan (nick, class, data, where, to, status)
 			end
 
 			local ip = getip (nick)
-			opsnotify (table_sets ["classnotianti"], string.format (getlang (note), nick, ip, class, data))
+			opsnotify (table_sets ["classnotianti"], string.format (getlang (note), nick, ip .. tryipcc (ip, nick), class, data))
 
 			if action == 1 then -- drop
 				opsnotify (table_sets ["classnotianti"], string.format (getlang (203), nick))
@@ -18709,7 +18940,7 @@ function antiscan (nick, class, data, where, to, status)
 				VH:KickUser (table_othsets ["sendfrom"], nick, reason .. "     #_ban_" .. table_sets ["seventhacttime"])
 			elseif action == 8 then -- gag ip
 				gagipadd (nil, ip .. " " .. tostring (where))
-				opsnotify (table_sets ["classnotianti"], string.format (getlang (655), ip, table.getn (getusersbyip (ip))))
+				opsnotify (table_sets ["classnotianti"], string.format (getlang (655), ip .. tryipcc (ip, nick), table.getn (getusersbyip (ip))))
 			elseif action == 9 then -- replace
 				if where == 1 then -- mc
 					opsnotify (table_sets ["classnotianti"], string.format (getlang (890), nick))
@@ -18732,116 +18963,169 @@ end
 ----- ---- --- -- -
 
 function sefiscan (nick, srch, cls, ip)
-local _, _, tp, str = string.find (srch, "^%$Search .* .*%?.*%?.*%?(.*)%?(.*)$")
-if not str then return 1 end
-if string.len (str) == 0 then return 1 end -- search setting might be zero
-tp = tonumber (tp or 1) or 1
-if (tp < 1) or (tp > 9) then tp = 1 end
-local _, rows = VH:SQLQuery ("select `exception` from `"..tbl_sql ["sefiex"].."`")
-local exlist = {} -- prepare exceptions
+	local _, _, tp, str = srch:find ("^%$Search .* .*%?.*%?.*%?(.*)%?(.*)$")
 
-for x = 0, rows - 1 do
-	local _, ent = VH:SQLFetch (x)
-	table.insert (exlist, ent)
-end
+	if not str or # str == 0 then
+		return 1
+	end
 
-str = repsrchchars (str)
-if tp == 9 then str = string.sub (str, 5, -1) end -- truncate tth
-local lsr = str
-if tp ~= 9 then lsr = tolow (lsr) end
-_, rows = VH:SQLQuery ("select `filter`, `priority`, `action` from `"..tbl_sql ["sefi"].."` where `type` = "..tp.." or `type` = 1 order by `priority` desc, `occurred` desc")
+	tp = tonumber (tp) or 1
 
-for x = 0, rows - 1 do
-	local _, ent, prio, act = VH:SQLFetch (x)
+	if tp < 1 or tp > 9 then
+		tp = 1
+	end
 
-	if string.find (lsr, ent) then
-		VH:SQLQuery ("update `"..tbl_sql ["sefi"].."` set `occurred` = `occurred` + 1 where `filter` = '"..repsqlchars (ent).."' limit 1")
+	local _, rows = VH:SQLQuery ("select `exception` from `" .. tbl_sql ["sefiex"] .. "`")
+	local exlist = {}
 
-		if tonumber (prio) < 7 then -- skip for 7, 8 and 9
-			for _, v in pairs (exlist) do
-				if string.find (lsr, v) then
-					VH:SQLQuery ("update `"..tbl_sql ["sefiex"].."` set `occurred` = `occurred` + 1 where `exception` = '"..repsqlchars (v).."' limit 1")
-					local note = 558
+	for x = 0, rows - 1 do
+		local _, ent = VH:SQLFetch (x)
+		table.insert (exlist, ent)
+	end
 
-					if tp == 2 then note = 559
-					elseif tp == 3 then note = 560
-					elseif tp == 4 then note = 561
-					elseif tp == 5 then note = 562
-					elseif tp == 6 then note = 563
-					elseif tp == 7 then note = 564
-					elseif tp == 8 then note = 565
-					elseif tp == 9 then note = 566
+	if tp == 9 and str:sub (1, 4):lower () == "tth:" then -- remove "TTH:"
+		str = str:sub (5)
+	end
+
+	str = repsrchchars (str)
+	local lsr = str
+
+	if tp ~= 9 then
+		lsr = tolow (lsr)
+	end
+
+	local _, rows = VH:SQLQuery ("select `filter`, `priority`, `action` from `" .. tbl_sql ["sefi"] .. "` where `type` = " .. tostring (tp) .. " or `type` = 1 order by `priority` desc, `occurred` desc")
+
+	for x = 0, rows - 1 do
+		local _, ent, prio, act = VH:SQLFetch (x)
+		local fres, fval = pcall (string.find, lsr, ent)
+
+		if not fres then
+			local ferr = getlang (973) .. ":\r\n\r\n"
+			ferr = ferr .. " " .. getlang (970) .. ": " .. repnmdcoutchars (ent) .. "\r\n"
+			ferr = ferr .. " " .. getlang (971) .. ": " .. repnmdcoutchars (fval or getlang (662)) .. "\r\n"
+			ferr = ferr .. " " .. getlang (972) .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+			opsnotify (table_sets ["classnotiledoact"], ferr)
+		elseif fval then
+			VH:SQLQuery ("update `" .. tbl_sql ["sefi"] .. "` set `occurred` = `occurred` + 1 where `filter` = '" .. repsqlchars (ent) .. "' limit 1")
+
+			if tonumber (prio) < 7 then -- skip for 7, 8 and 9
+				for _, v in pairs (exlist) do
+					local fres, fval = pcall (string.find, lsr, v)
+
+					if not fres then
+						local ferr = getlang (974) .. ":\r\n\r\n"
+						ferr = ferr .. " " .. getlang (970) .. ": " .. repnmdcoutchars (v) .. "\r\n"
+						ferr = ferr .. " " .. getlang (971) .. ": " .. repnmdcoutchars (fval or getlang (662)) .. "\r\n"
+						ferr = ferr .. " " .. getlang (972) .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+						opsnotify (table_sets ["classnotiledoact"], ferr)
+					elseif fval then
+						VH:SQLQuery ("update `" .. tbl_sql ["sefiex"] .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (v) .. "' limit 1")
+						local note = 558
+
+						if tp == 2 then
+							note = 559
+						elseif tp == 3 then
+							note = 560
+						elseif tp == 4 then
+							note = 561
+						elseif tp == 5 then
+							note = 562
+						elseif tp == 6 then
+							note = 563
+						elseif tp == 7 then
+							note = 564
+						elseif tp == 8 then
+							note = 565
+						elseif tp == 9 then
+							note = 566
+						end
+
+						opsnotify (table_sets ["classnotiex"], string.format (getlang (note), nick, ip .. tryipcc (ip, nick), cls, str))
+						return 1
 					end
-
-					opsnotify (table_sets ["classnotiex"], string.format (getlang (note), nick, ip, cls, str))
-					return 1
 				end
 			end
-		end
 
-		act = tonumber (act)
+			act = tonumber (act)
 
-		if act == 5 then
-			local note = 567
+			if act == 5 then
+				local note = 567
 
-			if tp == 2 then note = 568
-			elseif tp == 3 then note = 569
-			elseif tp == 4 then note = 570
-			elseif tp == 5 then note = 571
-			elseif tp == 6 then note = 572
-			elseif tp == 7 then note = 573
-			elseif tp == 8 then note = 574
-			elseif tp == 9 then note = 575
+				if tp == 2 then
+					note = 568
+				elseif tp == 3 then
+					note = 569
+				elseif tp == 4 then
+					note = 570
+				elseif tp == 5 then
+					note = 571
+				elseif tp == 6 then
+					note = 572
+				elseif tp == 7 then
+					note = 573
+				elseif tp == 8 then
+					note = 574
+				elseif tp == 9 then
+					note = 575
+				end
+
+				opsnotify (table_sets ["classnotisefi"], string.format (getlang (note), nick, ip .. tryipcc (ip, nick), cls, str))
+				return 1
 			end
 
-			opsnotify (table_sets ["classnotisefi"], string.format (getlang (note), nick, ip, cls, str))
-			return 1
+			if act ~= 4 then
+				local rsn = string.gsub (table_sets ["searfiltmsg"], "%*", reprexpchars (str))
+				commandanswer (nick, rsn)
+			end
+
+			local note = 576
+
+			if tp == 2 then
+				note = 577
+			elseif tp == 3 then
+				note = 578
+			elseif tp == 4 then
+				note = 579
+			elseif tp == 5 then
+				note = 580
+			elseif tp == 6 then
+				note = 581
+			elseif tp == 7 then
+				note = 582
+			elseif tp == 8 then
+				note = 583
+			elseif tp == 9 then
+				note = 584
+			end
+
+			opsnotify (table_sets ["classnotisefi"], string.format (getlang (note), nick, ip .. tryipcc (ip, nick), cls, str))
+
+			if act == 1 then
+				opsnotify (table_sets ["classnotisefi"], string.format (getlang (127), nick))
+				VH:CloseConnection (nick)
+			elseif act == 2 then
+				local rsn = string.gsub (table_sets ["sefireason"], "%*", reprexpchars (str))
+				VH:KickUser (table_othsets ["sendfrom"], nick, rsn)
+			elseif act == 3 then
+				local rsn = string.gsub (table_sets ["sefireason"], "%*", reprexpchars (str))
+				VH:KickUser (table_othsets ["sendfrom"], nick, rsn .. "     #_ban_" .. table_sets ["thirdacttime"])
+			elseif act == 4 then
+				opsnotify (table_sets ["classnotisefi"], string.format (getlang (151), nick))
+			elseif act == 6 then
+				opsnotify (table_sets ["classnotisefi"], string.format (getlang (357), nick))
+				VH:SendDataToUser ("$ForceMove " .. table_sets ["sixthactaddr"] .. "|", nick)
+				VH:CloseConnection (nick)
+			elseif act == 7 then
+				local rsn = string.gsub (table_sets ["sefireason"], "%*", reprexpchars (str))
+				VH:KickUser (table_othsets ["sendfrom"], nick, rsn .. "     #_ban_" .. table_sets ["seventhacttime"])
+			end
+
+			return 0
 		end
-
-		if act ~= 4 then
-			local rsn = string.gsub (table_sets ["searfiltmsg"], "%*", reprexpchars (str))
-			commandanswer (nick, rsn)
-		end
-
-		local note = 576
-
-		if tp == 2 then note = 577
-		elseif tp == 3 then note = 578
-		elseif tp == 4 then note = 579
-		elseif tp == 5 then note = 580
-		elseif tp == 6 then note = 581
-		elseif tp == 7 then note = 582
-		elseif tp == 8 then note = 583
-		elseif tp == 9 then note = 584
-		end
-
-		opsnotify (table_sets ["classnotisefi"], string.format (getlang (note), nick, ip, cls, str))
-
-		if act == 1 then
-			opsnotify (table_sets ["classnotisefi"], string.format (getlang (127), nick))
-			VH:CloseConnection (nick)
-		elseif act == 2 then
-			local rsn = string.gsub (table_sets ["sefireason"], "%*", reprexpchars (str))
-			VH:KickUser (table_othsets ["sendfrom"], nick, rsn)
-		elseif act == 3 then
-			local rsn = string.gsub (table_sets ["sefireason"], "%*", reprexpchars (str))
-			VH:KickUser (table_othsets ["sendfrom"], nick, rsn.."     #_ban_"..table_sets ["thirdacttime"])
-		elseif act == 4 then
-			opsnotify (table_sets ["classnotisefi"], string.format (getlang (151), nick))
-		elseif act == 6 then
-			opsnotify (table_sets ["classnotisefi"], string.format (getlang (357), nick))
-			VH:SendDataToUser ("$ForceMove "..table_sets ["sixthactaddr"].."|", nick)
-			VH:CloseConnection (nick)
-		elseif act == 7 then
-			local rsn = string.gsub (table_sets ["sefireason"], "%*", reprexpchars (str))
-			VH:KickUser (table_othsets ["sendfrom"], nick, rsn.."     #_ban_"..table_sets ["seventhacttime"])
-		end
-
-		return 0
 	end
-end
 
-return 1
+	return 1
 end
 
 ----- ---- --- -- -
