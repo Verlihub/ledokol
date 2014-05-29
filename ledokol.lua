@@ -1495,7 +1495,7 @@ table_lang_def = {
 	[929] = "Quoted parameters %s or %s must be used with quotes.",
 	[930] = "IP information",
 	[931] = "IP information not available: %s",
-	[932] = "Chat message replaced for user with class %s: <%s> %s",
+	[932] = "Message replaced for user with class %s in MC: <%s> %s",
 	[933] = "IP %s permanently banned: <%s> %s",
 	[934] = "Nick %s permanently banned: <%s> %s",
 	[935] = "Range %s permanently banned: <%s> %s",
@@ -1552,7 +1552,8 @@ table_lang_def = {
 	[986] = "There is an error in following forbidden client supports pattern",
 	[987] = "There is an error in following forbidden NMDC version pattern",
 	[988] = "Added replacer in PM: %s",
-	[989] = "Added replacer in MC and PM: %s"
+	[989] = "Added replacer in MC and PM: %s",
+	[990] = "Message replaced for user with class %s in PM: <%s> %s"
 }
 
 ---------------------------------------------------------------------
@@ -5965,13 +5966,19 @@ function VH_OnParsedMsgPM (from, data, to)
 			local custnick = getcustnick (from)
 
 			if custnick then
+				if data ~= pmdat then
+					opsnotify (table_sets ["classnotirepl"], string.format (getlang (990), fcls, from, pmdat))
+				end
+
 				VH:SendDataToUser ("$To: " .. to .. " From: " .. from .. " $<" .. custnick .. "> " .. pmdat .. "|", to)
 				return 0
 			elseif data ~= pmdat then
+				opsnotify (table_sets ["classnotirepl"], string.format (getlang (990), fcls, from, pmdat))
 				VH:SendDataToUser ("$To: " .. to .. " From: " .. from .. " $<" .. from .. "> " .. pmdat .. "|", to)
 				return 0
 			end
 		elseif data ~= pmdat then
+			opsnotify (table_sets ["classnotirepl"], string.format (getlang (990), fcls, from, pmdat))
 			VH:SendDataToUser ("$To: " .. to .. " From: " .. from .. " $<" .. from .. "> " .. pmdat .. "|", to)
 			return 0
 		end
