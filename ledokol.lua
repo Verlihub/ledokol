@@ -5967,18 +5967,18 @@ function VH_OnParsedMsgPM (from, data, to)
 
 			if custnick then
 				if data ~= pmdat then
-					opsnotify (table_sets ["classnotirepl"], string.format (getlang (990), fcls, from, pmdat))
+					opsnotify (table_sets ["classnotirepl"], string.format (getlang (990), fcls, from, data))
 				end
 
 				VH:SendDataToUser ("$To: " .. to .. " From: " .. from .. " $<" .. custnick .. "> " .. pmdat .. "|", to)
 				return 0
 			elseif data ~= pmdat then
-				opsnotify (table_sets ["classnotirepl"], string.format (getlang (990), fcls, from, pmdat))
+				opsnotify (table_sets ["classnotirepl"], string.format (getlang (990), fcls, from, data))
 				VH:SendDataToUser ("$To: " .. to .. " From: " .. from .. " $<" .. from .. "> " .. pmdat .. "|", to)
 				return 0
 			end
 		elseif data ~= pmdat then
-			opsnotify (table_sets ["classnotirepl"], string.format (getlang (990), fcls, from, pmdat))
+			opsnotify (table_sets ["classnotirepl"], string.format (getlang (990), fcls, from, data))
 			VH:SendDataToUser ("$To: " .. to .. " From: " .. from .. " $<" .. from .. "> " .. pmdat .. "|", to)
 			return 0
 		end
