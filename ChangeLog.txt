@@ -1,5 +1,6 @@
 [ 2.7.9 :: ####-##-## ]
 
+Changed: Chat replacer now supports PM using flags, 0 = MC & PM, 1 = MC, 2 = PM, old and default items have 1 = MC, idea by JOE™
 Added: Try to display country code along every IP address in hub feed messages
 Added: Check for invalid patterns on antispam, search filter and forbidden MyINFO detections and their exceptions, feed message with solution is sent when error is found
 
@@ -37,7 +38,7 @@ Added: +citylive <cc> command to show live user city statistics by country code
 Added: mchistclass configuration to restrict main chat history to specific classes, idea by Lord_Zero
 Added: Help notes to help command, request by Meka][Meka
 Added: !ipinfo <ip> command to get GeoIP information about specific IP address
-Added: Feed notification for replaced chat messages, real message is displayed, configured with classnotirepl, idea by Lord_Zero
+Added: Feed notification for replaced MC messages, real message is displayed, configured with classnotirepl, idea by Lord_Zero
 Added: Separate kick time for clone detection, configured with miclonekicktime
 Changed: Corrected some English language strings, report by madkid
 
