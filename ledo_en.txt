@@ -829,11 +829,11 @@ t = {
 	[795] = "Forbidden CC list is empty.",
 	[796] = "%s with IP %s and class %s allowed due to forbidden CC exception: %s",
 	[797] = "I'm staying idle due to confusion.",
-	[798] = "Added chat replacer: %s",
+	[798] = "Added replacer in MC: %s",
 	[799] = "Deleted chat replacer with ID: %s",
 	[800] = "Couldn't delete chat replacer because ID not found: %s",
-	[801] = "Main chat replacer list",
-	[802] = "Main chat replacer list is empty.",
+	[801] = "Chat replacer list",
+	[802] = "Chat replacer list is empty.",
 	[803] = "Replace",
 	[804] = "Couldn't add chat replacer exception because already exists: %s",
 	[805] = "Added chat replacer exception: %s",
@@ -1018,7 +1018,9 @@ t = {
 	[984] = "There is an error in following forbidden CC pattern",
 	[985] = "There is an error in following forbidden DNS pattern",
 	[986] = "There is an error in following forbidden client supports pattern",
-	[987] = "There is an error in following forbidden NMDC version pattern"
+	[987] = "There is an error in following forbidden NMDC version pattern",
+	[988] = "Added replacer in PM: %s",
+	[989] = "Added replacer in MC and PM: %s"
 
 	-- finish editing above this line
 
