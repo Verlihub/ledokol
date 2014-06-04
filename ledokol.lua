@@ -10947,13 +10947,13 @@ if table_flod [ip] then
 	if (table_flod [ip]["cnt"] >= table_sets ["chatfloodcount"]) and (dif <= table_sets ["chatfloodint"]) then -- match
 		if to then -- pm
 			if table_flod [ip]["fst"] == true then -- notify only first time
-				opsnotify (table_sets ["classnotiflood"], string.format (getlang (657), ip, nick .. tryipcc (ip, nick), class, msg))
+				opsnotify (table_sets ["classnotiflood"], string.format (getlang (657), ip .. tryipcc (ip, nick), nick, class, msg))
 			end
 
 			pmtouser (nick, to, getlang (659))
 		else -- mc
 			if table_flod [ip]["fst"] == true then -- notify only first time
-				opsnotify (table_sets ["classnotiflood"], string.format (getlang (656), ip, nick .. tryipcc (ip, nick), class, msg))
+				opsnotify (table_sets ["classnotiflood"], string.format (getlang (656), ip .. tryipcc (ip, nick), nick, class, msg))
 			end
 
 			maintouser (nick, getlang (659))
