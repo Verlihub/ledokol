@@ -1021,7 +1021,8 @@ t = {
 	[987] = "There is an error in following forbidden NMDC version pattern",
 	[988] = "Added replacer in PM: %s",
 	[989] = "Added replacer in MC and PM: %s",
-	[990] = "Message replaced for user with class %s in PM: <%s> %s"
+	[990] = "Message replaced for user with class %s in PM: <%s> %s",
+	[991] = "Message ignored due to flood detection from %s with IP %s and class %s in MC: %s"
 
 	-- finish editing above this line
 
