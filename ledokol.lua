@@ -236,7 +236,7 @@ table_sets = {
 	["showtopicowner"] = 1,
 	["chatantiflood"] = 0,
 	["chatfloodallcount"] = 10,
-	["chatfloodallint"] = 10, -- todo
+	["chatfloodallint"] = 10,
 	["chatfloodcount"] = 5,
 	["chatfloodint"] = 5,
 	["chatfloodaction"] = 1,
@@ -306,6 +306,8 @@ table_othsets = {
 	["ustrig"] = "",
 	["topicowner"] = nil,
 	["topicvalue"] = nil,
+	["chflallcount"] = 0,
+	["chflalltime"] = os.time (),
 	["lastupdcheck"] = os.time (),
 	["remseconds"] = os.time (),
 	["timebotseconds"] = os.time (),
@@ -1553,7 +1555,8 @@ table_lang_def = {
 	[987] = "There is an error in following forbidden NMDC version pattern",
 	[988] = "Added replacer in PM: %s",
 	[989] = "Added replacer in MC and PM: %s",
-	[990] = "Message replaced for user with class %s in PM: <%s> %s"
+	[990] = "Message replaced for user with class %s in PM: <%s> %s",
+	[991] = "Message ignored due to flood detection from %s with IP %s and class %s in MC: %s"
 }
 
 ---------------------------------------------------------------------
@@ -2043,6 +2046,9 @@ function Main (file)
 					if ver <= 279 then
 						VH:SQLQuery ("alter ignore table `lua_ledo_mcrepl` rename to `" .. tbl_sql ["chatrepl"] .. "`")
 						VH:SQLQuery ("alter ignore table `" .. tbl_sql ["chatrepl"] .. "` add column `flags` tinyint(1) unsigned not null default 1 after `maxclass`")
+
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('chatfloodallcount', '" .. repsqlchars (table_sets ["chatfloodallcount"]) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('chatfloodallint', '" .. repsqlchars (table_sets ["chatfloodallint"]) .. "')")
 					end
 
 					if ver <= 280 then
@@ -10937,71 +10943,94 @@ end
 ----- ---- --- -- -
 
 function detchatflood (nick, class, ip, msg, to)
-if table_sets ["chatantiflood"] == 0 then return false end
-if class >= table_sets ["scanbelowclass"] then return false end
-local tm = os.time ()
-
-if table_flod [ip] then
-	local dif = os.difftime (tm, table_flod [ip]["lst"])
-
-	if (table_flod [ip]["cnt"] >= table_sets ["chatfloodcount"]) and (dif <= table_sets ["chatfloodint"]) then -- match
-		if to then -- pm
-			if table_flod [ip]["fst"] == true then -- notify only first time
-				opsnotify (table_sets ["classnotiflood"], string.format (getlang (657), ip .. tryipcc (ip, nick), nick, class, msg))
-			end
-
-			pmtouser (nick, to, getlang (659))
-		else -- mc
-			if table_flod [ip]["fst"] == true then -- notify only first time
-				opsnotify (table_sets ["classnotiflood"], string.format (getlang (656), ip .. tryipcc (ip, nick), nick, class, msg))
-			end
-
-			maintouser (nick, getlang (659))
-		end
-
-		if table_sets ["chatfloodaction"] == 1 then -- gag ip
-			if to then
-				gagipadd (nil, ip .. " 2")
-			else
-				gagipadd (nil, ip .. " 1")
-			end
-
-			if table_flod [ip]["fst"] == true then -- notify only first time
-				opsnotify (table_sets ["classnotiflood"], string.format (getlang (655), ip .. tryipcc (ip, nick), table.getn (getusersbyip (ip))))
-			end
-
-		elseif table_sets ["chatfloodaction"] == 2 then -- drop
-			local res = dropallbyip (ip)
-
-			if table_flod [ip]["fst"] == true then -- notify only first time
-				opsnotify (table_sets ["classnotiflood"], string.format (getlang (660), res, ip .. tryipcc (ip, nick)))
-			end
-
-		elseif table_sets ["chatfloodaction"] == 3 then -- kick
-			kickallbyip (ip, getlang (659))
-
-		elseif table_sets ["chatfloodaction"] == 4 then -- temporary ban
-			kickallbyip (ip, getlang (659).."     #_ban_"..table_sets ["thirdacttime"])
-
-		elseif table_sets ["chatfloodaction"] == 5 then -- permanent ban
-			kickallbyip (ip, getlang (659).."     #_ban_"..table_sets ["seventhacttime"])
-		end
-
-		table_flod [ip]["fst"] = false
-		return true
-	elseif dif > table_sets ["chatfloodint"] then -- start over: create new variable instead of chatfloodint
-		table_flod [ip]["cnt"] = 1
-		table_flod [ip]["lst"] = tm
-		table_flod [ip]["fst"] = true
-	else -- update count
-		table_flod [ip]["cnt"] = table_flod [ip]["cnt"] + 1
+	if table_sets ["chatantiflood"] == 0 then
+		return false
 	end
 
-else -- not in list
-	table_flod [ip] = {["cnt"] = 1, ["lst"] = tm, ["fst"] = true}
-end
+	if class >= table_sets ["scanbelowclass"] then
+		return false
+	end
 
-return false
+	local tm = os.time ()
+
+	if table_sets ["chatantiflood"] == 2 and not to then -- main chat only for now
+		local dif = os.difftime (tm, table_othsets ["chflalltime"])
+
+		if table_othsets ["chflallcount"] >= table_sets ["chatfloodallcount"] and dif <= table_sets ["chatfloodallint"] then
+			opsnotify (table_sets ["classnotiflood"], string.format (getlang (991), nick, ip .. tryipcc (ip, nick), class, msg))
+			return true
+		elseif dif > table_sets ["chatfloodallint"] then
+			table_othsets ["chflallcount"] = 1
+			table_othsets ["chflalltime"] = tm
+		else
+			table_othsets ["chflallcount"] = table_othsets ["chflallcount"] + 1
+		end
+	end
+
+	if table_flod [ip] then
+		local dif = os.difftime (tm, table_flod [ip]["lst"])
+
+		if table_flod [ip]["cnt"] >= table_sets ["chatfloodcount"] and dif <= table_sets ["chatfloodint"] then -- match
+			if to then -- pm
+				if table_flod [ip]["fst"] == true then -- notify only first time
+					opsnotify (table_sets ["classnotiflood"], string.format (getlang (657), ip .. tryipcc (ip, nick), nick, class, msg))
+				end
+
+				pmtouser (nick, to, getlang (659))
+			else -- mc
+				if table_flod [ip]["fst"] == true then -- notify only first time
+					opsnotify (table_sets ["classnotiflood"], string.format (getlang (656), ip .. tryipcc (ip, nick), nick, class, msg))
+				end
+
+				maintouser (nick, getlang (659))
+			end
+
+			if table_sets ["chatfloodaction"] == 1 then -- gag ip
+				if to then
+					gagipadd (nil, ip .. " 2")
+				else
+					gagipadd (nil, ip .. " 1")
+				end
+
+				if table_flod [ip]["fst"] == true then -- notify only first time
+					opsnotify (table_sets ["classnotiflood"], string.format (getlang (655), ip .. tryipcc (ip, nick), table.getn (getusersbyip (ip))))
+				end
+
+			elseif table_sets ["chatfloodaction"] == 2 then -- drop
+				local res = dropallbyip (ip)
+
+				if table_flod [ip]["fst"] == true then -- notify only first time
+					opsnotify (table_sets ["classnotiflood"], string.format (getlang (660), res, ip .. tryipcc (ip, nick)))
+				end
+
+			elseif table_sets ["chatfloodaction"] == 3 then -- kick
+				kickallbyip (ip, getlang (659))
+
+			elseif table_sets ["chatfloodaction"] == 4 then -- temporary ban
+				kickallbyip (ip, getlang (659).."     #_ban_" .. table_sets ["thirdacttime"])
+
+			elseif table_sets ["chatfloodaction"] == 5 then -- permanent ban
+				kickallbyip (ip, getlang (659).."     #_ban_" .. table_sets ["seventhacttime"])
+			end
+
+			table_flod [ip]["fst"] = false
+			return true
+		elseif dif > table_sets ["chatfloodint"] then -- start over
+			table_flod [ip]["cnt"] = 1
+			table_flod [ip]["lst"] = tm
+			table_flod [ip]["fst"] = true
+		else -- update count
+			table_flod [ip]["cnt"] = table_flod [ip]["cnt"] + 1
+		end
+	else -- not in list
+		table_flod [ip] = {
+			["cnt"] = 1,
+			["lst"] = tm,
+			["fst"] = true
+		}
+	end
+
+	return false
 end
 
 ----- ---- --- -- -
@@ -14011,20 +14040,33 @@ elseif tvar == "chatfloodcount" then
 		commandanswer (nick, string.format (getlang (198), tvar))
 	end
 
------ ---- --- -- -
+	----- ---- --- -- -
 
 	elseif tvar == "chatfloodallcount" then
 		if num == true then
-			if (setto >= 1) and (setto <= 250) then
+			if setto >= 1 and setto <= 250 then
 				ok = true
 			else
-				commandanswer (nick, string.format (getlang (196), tvar, "1 "..getlang (199).." 250"))
+				commandanswer (nick, string.format (getlang (196), tvar, "1 " .. getlang (199) .. " 250"))
 			end
 		else
 			commandanswer (nick, string.format (getlang (198), tvar))
 		end
 
------ ---- --- -- -
+	----- ---- --- -- -
+
+	elseif tvar == "chatfloodallint" then
+		if num == true then
+			if setto >= 1 and setto <= 3600 then
+				ok = true
+			else
+				commandanswer (nick, string.format (getlang (196), tvar, "1 " .. getlang (199) .. " 3600"))
+			end
+		else
+			commandanswer (nick, string.format (getlang (198), tvar))
+		end
+
+	----- ---- --- -- -
 
 	elseif tvar == "protofloodctmcnt" then
 		if num == true then
@@ -14041,19 +14083,6 @@ elseif tvar == "chatfloodcount" then
 ----- ---- --- -- -
 
 	elseif tvar == "chatfloodint" then
-		if num == true then
-			if (setto >= 1) and (setto <= 3600) then
-				ok = true
-			else
-				commandanswer (nick, string.format (getlang (196), tvar, "1 "..getlang (199).." 3600"))
-			end
-		else
-			commandanswer (nick, string.format (getlang (198), tvar))
-		end
-
------ ---- --- -- -
-
-	elseif tvar == "chatfloodallint" then
 		if num == true then
 			if (setto >= 1) and (setto <= 3600) then
 				ok = true
@@ -14233,21 +14262,29 @@ end
 			commandanswer (nick, string.format (getlang (198), tvar))
 		end
 
------ ---- --- -- -
+	----- ---- --- -- -
 
 	elseif tvar == "chatantiflood" then
 		if num == true then
-			if (setto == 0) or (setto == 1) then
+			if setto >= 0 and setto <= 2 then
 				ok = true
-				if setto == 0 then table_flod = {} end -- flush
+
+				if setto == 0 then -- flush
+					table_flod = {}
+					table_othsets ["chflallcount"] = 0
+					table_othsets ["chflalltime"] = os.time ()
+				elseif setto == 1 then
+					table_othsets ["chflallcount"] = 0
+					table_othsets ["chflalltime"] = os.time ()
+				end
 			else
-				commandanswer (nick, string.format (getlang (196), tvar, "0 "..getlang (197).." 1"))
+				commandanswer (nick, string.format (getlang (196), tvar, "0, 1 " .. getlang (197) .. " 2"))
 			end
 		else
 			commandanswer (nick, string.format (getlang (198), tvar))
 		end
 
------ ---- --- -- -
+	----- ---- --- -- -
 
 	elseif tvar == "enablehardban" then
 		if num == true then
@@ -16851,9 +16888,9 @@ conf = conf.."\r\n"
 	--conf = conf .. "\r\n [::] hublistpingint = " .. table_sets ["hublistpingint"]
 	--conf = conf .. "\r\n [::] hubpingtimeout = " .. table_sets ["hubpingtimeout"]
 	--conf = conf .. "\r\n"
-conf = conf.."\r\n [::] chatantiflood = "..table_sets ["chatantiflood"]
-conf = conf.."\r\n [::] chatfloodallcount = "..table_sets ["chatfloodallcount"]
-conf = conf.."\r\n [::] chatfloodallint = "..table_sets ["chatfloodallint"]
+	conf = conf .. "\r\n [::] chatantiflood = " .. table_sets ["chatantiflood"]
+	conf = conf .. "\r\n [::] chatfloodallcount = " .. table_sets ["chatfloodallcount"]
+	conf = conf .. "\r\n [::] chatfloodallint = " .. table_sets ["chatfloodallint"]
 conf = conf.."\r\n [::] chatfloodcount = "..table_sets ["chatfloodcount"]
 conf = conf.."\r\n [::] chatfloodint = "..table_sets ["chatfloodint"]
 conf = conf.."\r\n [::] chatfloodaction = "..table_sets ["chatfloodaction"]
