@@ -4,6 +4,7 @@ Changed: Chat replacer now supports PM using flags, 0 = MC & PM, 1 = MC, 2 = PM,
 Added: Try to display country code along every IP address in hub feed messages
 Added: Check for invalid patterns on antispam, search filter and forbidden MyINFO detections and their exceptions, feed message with solution is sent when error is found
 Added: Feed notification for replaced PM messages aswell
+Added: Main chat flood detection from all users, messages are ignored for now, enable with chatantiflood = 2
 
 [ 2.7.8 :: 2014-04-08 ]
 
