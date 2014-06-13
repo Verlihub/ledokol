@@ -1,5 +1,6 @@
 [ 2.7.9 :: ####-##-## ]
 
+Fixed: Escape newline character in word ranks
 Changed: Chat replacer now supports PM using flags, 0 = MC & PM, 1 = MC, 2 = PM, old and default items have 1 = MC, idea by JOE™
 Added: Try to display country code along every IP address in hub feed messages
 Added: Check for invalid patterns on antispam, search filter and forbidden MyINFO detections and their exceptions, feed message with solution is sent when error is found
