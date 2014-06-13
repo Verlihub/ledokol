@@ -4495,9 +4495,8 @@ end
 addmchistoryline (fakenick, nick, string.sub (getconfig ("cmd_start_user"), 1, 1).."me "..cvdat)
 replyresponder (fakenick, ucl, cvdat)
 chatrankaccept (nick, ucl)
-wordrankaccept (nick, ucl, cvdat)
-
-return retval
+	wordrankaccept (nick, ucl, cvdat)
+	return retval
 
 elseif string.find (data, "^"..table_othsets ["ustrig"].."me$") then
 if getconfig ("disable_me_cmd") ~= 0 then return 1 end
@@ -6105,9 +6104,8 @@ end
 addmchistoryline (fakenick, nick, cvdat)
 replyresponder (fakenick, ucl, cvdat)
 chatrankaccept (nick, ucl)
-wordrankaccept (nick, ucl, cvdat)
-
-return retval
+	wordrankaccept (nick, ucl, cvdat)
+	return retval
 end
 
 ---------------------------------------------------------------------
@@ -11751,21 +11749,24 @@ end
 ----- ---- --- -- -
 
 function wordrankaccept (nick, ucls, line)
-	if ucls < table_sets ["wordrankclass"] then return nil end
+	if ucls < table_sets ["wordrankclass"] then
+		return
+	end
+
 	local usr = repsqlchars (nick)
-	local _, rows = VH:SQLQuery ("select `nick` from `"..tbl_sql ["ranex"].."` where `nick` = '"..usr.."' limit 1")
+	local _, rows = VH:SQLQuery ("select `nick` from `" .. tbl_sql ["ranex"] .. "` where `nick` = '" .. usr .. "' limit 1")
 
 	if rows > 0 then
-		VH:SQLQuery ("update `"..tbl_sql ["ranex"].."` set `occurred` = `occurred` + 1 where `nick` = '"..usr.."' limit 1")
+		VH:SQLQuery ("update `" .. tbl_sql ["ranex"] .. "` set `occurred` = `occurred` + 1 where `nick` = '" .. usr .. "' limit 1")
 	else
-		local str = repwordranchars (repnmdcinchars (line), 0).."$"
+		local str = repwordranchars (repnmdcinchars (line), 0) .. "$"
 
 		for aword in string.gmatch (str, "([^$]+)%$") do
 			aword = repwordranchars (aword, 1)
 			local stlen = string.len (aword)
 
-			if (stlen >= table_sets ["wordranmin"]) and (stlen <= table_sets ["wordranmax"]) then
-				VH:SQLQuery ("insert into `"..tbl_sql ["wdran"].."` (`word`) values ('"..repsqlchars (aword).."') on duplicate key update `rank` = `rank` + 1")
+			if stlen >= table_sets ["wordranmin"] and stlen <= table_sets ["wordranmax"] then
+				VH:SQLQuery ("insert into `" .. tbl_sql ["wdran"] .. "` (`word`) values ('" .. repsqlchars (aword) .. "') on duplicate key update `rank` = `rank` + 1")
 			end
 		end
 	end
@@ -18350,8 +18351,9 @@ function repwordranchars (s, stage)
 		r = string.gsub (r, string.char (34), "$") -- double quotation mark
 		r = string.gsub (r, string.char (33), "$") -- exclamation mark
 		r = string.gsub (r, string.char (32), "$") -- space
-		r = string.gsub (r, "\r", "$")
 		r = string.gsub (r, "\r\n", "$")
+		r = string.gsub (r, "\r", "$")
+		r = string.gsub (r, "\n", "$")
 		r = string.gsub (r, "\t", "$")
 	else
 		r = string.gsub (s, "^["..string.char (160).."]+", "") -- non-breaking space
