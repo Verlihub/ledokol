@@ -1022,7 +1022,8 @@ t = {
 	[988] = "Added replacer in PM: %s",
 	[989] = "Added replacer in MC and PM: %s",
 	[990] = "Message replaced for user with class %s in PM: <%s> %s",
-	[991] = "Message ignored due to flood detection from %s with IP %s and class %s in MC: %s"
+	[991] = "Message ignored due to flood detection from %s with IP %s and class %s in MC: %s",
+	[992] = "Users with same IP"
 
 	-- finish editing above this line
 
