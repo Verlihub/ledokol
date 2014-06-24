@@ -1556,7 +1556,8 @@ table_lang_def = {
 	[988] = "Added replacer in PM: %s",
 	[989] = "Added replacer in MC and PM: %s",
 	[990] = "Message replaced for user with class %s in PM: <%s> %s",
-	[991] = "Message ignored due to flood detection from %s with IP %s and class %s in MC: %s"
+	[991] = "Message ignored due to flood detection from %s with IP %s and class %s in MC: %s",
+	[992] = "Users with same IP"
 }
 
 ---------------------------------------------------------------------
@@ -8709,6 +8710,20 @@ else -- user
 		end
 	end
 
+	local usli = getusersbyip (ip)
+
+	if # usli > 1 then
+		info = info .. " " .. getlang (992) .. ":" -- users with same ip
+
+		for _, usni in pairs (usli) do
+			if usni ~= user then
+				info = info .. " " .. usni
+			end
+		end
+
+		info = info .. "\r\n"
+	end
+
 	commandanswer (nick, getlang (703)..":\r\n\r\n"..info)
 end
 end
@@ -10991,7 +11006,7 @@ function detchatflood (nick, class, ip, msg, to)
 				end
 
 				if table_flod [ip]["fst"] == true then -- notify only first time
-					opsnotify (table_sets ["classnotiflood"], string.format (getlang (655), ip .. tryipcc (ip, nick), table.getn (getusersbyip (ip))))
+					opsnotify (table_sets ["classnotiflood"], string.format (getlang (655), ip .. tryipcc (ip, nick), table.getn (getusersbyip (ip, table_sets ["scanbelowclass"]))))
 				end
 
 			elseif table_sets ["chatfloodaction"] == 2 then -- drop
@@ -17978,13 +17993,13 @@ end
 
 ----- ---- --- -- -
 
-function getusersbyip (ip)
+function getusersbyip (ip, class)
 	local ul = {}
 
 	for user in string.gmatch (getnicklist (), "([^$]+)%$%$") do
 		if user ~= "" then
 			if getip (user) == ip then
-				if getclass (user) < table_sets ["scanbelowclass"] then
+				if not class or (class and getclass (user) < class) then
 					table.insert (ul, user)
 				end
 			end
@@ -17997,7 +18012,7 @@ end
 ----- ---- --- -- -
 
 function dropallbyip (ip)
-	local ul = getusersbyip (ip)
+	local ul = getusersbyip (ip, table_sets ["scanbelowclass"])
 
 	for _, u in pairs (ul) do
 		VH:CloseConnection (u)
@@ -18009,7 +18024,7 @@ end
 ----- ---- --- -- -
 
 function kickallbyip (ip, rsn)
-	local ul = getusersbyip (ip)
+	local ul = getusersbyip (ip, table_sets ["scanbelowclass"])
 
 	for _, u in pairs (ul) do
 		VH:KickUser (table_othsets ["sendfrom"], u, rsn)
@@ -19024,7 +19039,7 @@ function antiscan (nick, class, data, where, to, status)
 				VH:KickUser (table_othsets ["sendfrom"], nick, reason .. "     #_ban_" .. table_sets ["seventhacttime"])
 			elseif action == 8 then -- gag ip
 				gagipadd (nil, ip .. " " .. tostring (where))
-				opsnotify (table_sets ["classnotianti"], string.format (getlang (655), ip .. tryipcc (ip, nick), table.getn (getusersbyip (ip))))
+				opsnotify (table_sets ["classnotianti"], string.format (getlang (655), ip .. tryipcc (ip, nick), table.getn (getusersbyip (ip, table_sets ["scanbelowclass"]))))
 			elseif action == 9 then -- replace
 				if where == 1 then -- mc
 					opsnotify (table_sets ["classnotianti"], string.format (getlang (890), nick))
@@ -19033,7 +19048,7 @@ function antiscan (nick, class, data, where, to, status)
 				end
 			elseif action == 10 then -- hard ban
 				addhban (nil, repexdots (ip) .. "$ \"" .. entry .. "\"")
-				opsnotify (table_sets ["classnotianti"], string.format (getlang (892), ip, table.getn (getusersbyip (ip))))
+				opsnotify (table_sets ["classnotianti"], string.format (getlang (892), ip, table.getn (getusersbyip (ip, table_sets ["scanbelowclass"]))))
 				VH:CloseConnection (nick)
 			end
 
