@@ -44,37 +44,22 @@ over sixty different features for Verlihub.
 ---------------------------------------------------------------------
 
 ---------------------------------------------------------------------
---[[ special thanks >>
+--[[ special thanks to >>
 ---------------------------------------------------------------------
 
-* chaos for previous web and hub hosting
-* Doxtur for previous hub hosting
-* BulleT for previous hub hosting
-* Maximum for previous hub hosting
-* TheBoss for previous hub hosting
-* netcelli for rich Lua plugin
-* Aethra for script management back in 2008
-* Stefani for idea of creating LSD Zone
-* Hungarista for general code suggestions
-* burek for LuaSocket and other code suggestions
-* Molotov for QSDCHublist user lookup back in 2010
-* Seth for a lot of general suggestions and testing
-* LadyStardust for Polish translation
-* Astronomik for Russian translation
-* Uhlik for Czech translation
-* Neolo for Ukrainian translation
-* Everyone else for testing and reporting bugs
-* Myself for having patience while building this powerful icebreaker
+chaos, Doxtur, BulleT, Maximum, TheBoss, netcelli, Aethra, Stefani,
+Hungarista, burek, Molotov, Seth, LadyStardust, Astronomik, Uhlik,
+Neolo
 
 ---------------------------------------------------------------------
-]]-- special thanks <<
+]]-- special thanks to <<
 ---------------------------------------------------------------------
 
 ---------------------------------------------------------------------
 -- global storage variables and tables >>
 ---------------------------------------------------------------------
 
-ver_ledo = "2.7.9" -- ledokol version
+ver_ledo = "2.8.0" -- ledokol version
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -562,1009 +547,6 @@ table_cmnds = {
 ---------------------------------------------------------------------
 
 ---------------------------------------------------------------------
--- default language table >>
----------------------------------------------------------------------
-
-table_lang_def = {
-	[1] = "Current topic: %s",
-	[2] = "Current topic set by %s: %s",
-	[3] = "This operation might take very long time depending on how much is going to be removed. Please be patient.",
-	[4] = "days",
-	[5] = "%s with class %s deleted %s IP logger plugin entries older than %s days.",
-	[6] = "%s with class %s deleted %s unbans older than %s days.",
-	[7] = "%s with class %s deleted %s bans older than %s days.",
-	[8] = "%s with class %s deleted %s kicks older than %s days.",
-	[9] = "I'm probably away. State your business and I might answer later if you're lucky.",
-	[10] = "Perform script update",
-	[11] = "Deleted %s main chat history messages.",
-	[12] = "There are no main chat history messages to remove.",
-	[13] = "Deleted %s operator chat history messages.",
-	[14] = "There are no operator chat history messages to remove.",
-	[15] = "%s with class %s deleted %s main chat history messages.",
-	[16] = "Unable to connect to target server. Please try again later.",
-	[17] = "Last %s main chat messages",
-	[18] = "Main chat history is empty.",
-	[19] = "Requested file %s not found on target server. Please try again later.",
-	[20] = "%s is now known as: %s",
-	[21] = "Last %s operator chat messages",
-	[22] = "Operator chat history is empty.",
-	[23] = "Valid priority is a number from %s to %s.",
-	[24] = "Ledokol version %s released. Downloading script files...",
-	[25] = "You are currently running latest version of Ledokol. No update is required.",
-	[26] = "Why would you send offline message to yourself?",
-	[27] = "User %s is online. Sending message directly.",
-	[28] = "Your offline message stored for user: %s",
-	[29] = "%s with IP %s and class %s sent offline message.",
-	[30] = "priority",
-	[31] = "Offline",
-	[32] = "Online",
-	[33] = "I sent offline message to you on %s",
-	[34] = "My current status",
-	[35] = "%s with IP %s and class %s received offline messages.",
-	[36] = "Stored offline messages",
-	[37] = "Offline message list is empty.",
-	[38] = "Deleted %s offline messages.",
-	[39] = "Couldn't delete offline messages because not found: %s",
-	[40] = "%s with class %s deleted all offline messages.",
-	[41] = "There are no offline messages to remove.",
-	[42] = "No topic is set.",
-	[43] = "%s with IP %s and class %s allowed due to forbidden nick exception: %s",
-	[44] = "message",
-	[45] = "%s with IP %s and class %s allowed due to forbidden description exception: %s",
-	[46] = "User you're trying to kick or redirect is protected.",
-	[47] = "%s with IP %s and class %s allowed due to forbidden tag exception: %s",
-	[48] = "type",
-	[49] = "%s with IP %s and class %s allowed due to forbidden connection type exception: %s",
-	[50] = "%s with class %s changed configuration variable %s: %s => %s",
-	[51] = "%s with IP %s and class %s allowed due to forbidden email exception: %s",
-	[52] = "%s received own message.",
-	[53] = "%s with IP %s and class %s allowed due to forbidden share size exception: %s",
-	[54] = "Deleted %s releases from category: %s",
-	[55] = "Why would you want to set empty topic?",
-	[56] = "Couldn't add forbidden nick because already exists: %s",
-	[57] = "Added forbidden nick: %s",
-	[58] = "Couldn't add forbidden description because already exists: %s",
-	[59] = "Added forbidden description: %s",
-	[60] = "Couldn't add forbidden tag because already exists: %s",
-	[61] = "Added forbidden tag: %s",
-	[62] = "Couldn't add forbidden connection type because already exists: %s",
-	[63] = "Added forbidden connection type: %s",
-	[64] = "Couldn't add forbidden email because already exists: %s",
-	[65] = "Added forbidden email: %s",
-	[66] = "Couldn't add forbidden share size because already exists: %s",
-	[67] = "Added forbidden share size: %s",
-	[68] = "Couldn't add MyINFO exception because already exists: %s",
-	[69] = "Added MyINFO exception: %s",
-	[70] = "and",
-	[71] = "Deleted forbidden nick: %s",
-	[72] = "Couldn't delete forbidden nick because not found: %s",
-	[73] = "Deleted forbidden description: %s",
-	[74] = "Couldn't delete forbidden description because not found: %s",
-	[75] = "Deleted forbidden tag: %s",
-	[76] = "Couldn't delete forbidden tag because not found: %s",
-	[77] = "Deleted forbidden connection type: %s",
-	[78] = "Couldn't delete forbidden connection type because not found: %s",
-	[79] = "Deleted forbidden email: %s",
-	[80] = "Couldn't delete forbidden email because not found: %s",
-	[81] = "Deleted forbidden share size: %s",
-	[82] = "Couldn't delete forbidden share size because not found: %s",
-	[83] = "Deleted MyINFO exception: %s",
-	[84] = "Couldn't delete MyINFO exception because not found: %s",
-	[85] = "Forbidden nick list",
-	[86] = "Forbidden nick list is empty.",
-	[87] = "Forbidden description list",
-	[88] = "Forbidden description list is empty.",
-	[89] = "Forbidden tag list",
-	[90] = "Forbidden tag list is empty.",
-	[91] = "Forbidden connection type list",
-	[92] = "Forbidden connection type list is empty.",
-	[93] = "Forbidden email list",
-	[94] = "Forbidden email list is empty.",
-	[95] = "Forbidden share size list",
-	[96] = "Forbidden share size list is empty.",
-	[97] = "MyINFO exception list",
-	[98] = "MyINFO exception list is empty.",
-	[99] = "Deleted %s rows: %s",
-	[100] = "Known types are: %s",
-	[101] = "No rows to remove: %s",
-	[102] = "date",
-	[103] = "%s with class %s used command: %s",
-	[104] = "context",
-	[105] = "Deleted from chat rank list: %s",
-	[106] = "Not found in chat rank list: %s",
-	[107] = "Deleted from operator rank list: %s",
-	[108] = "Not found in operator rank list: %s",
-	[109] = "Antispam",
-	[110] = "Your chat rank is: %s",
-	[111] = "You have to write something in main chat to get started.",
-	[112] = "Custom nick list is empty.",
-	[113] = "Total share rank size: %s",
-	[114] = "Your operator rank is: %s",
-	[115] = "You have to do some operator actions to get started.",
-	[116] = "Top %s chat rankers",
-	[117] = "Chat rank list is empty.",
-	[118] = "Top %s operator rankers",
-	[119] = "Operator rank list is empty.",
-	[120] = "string",
-	[121] = "No user results found.",
-	[122] = "Showing %s user log results",
-	[123] = "Size of user log table: %s [ %s: %s @ %s ]",
-	[124] = "Add protection entry",
-	[125] = "Delete protection entry",
-	[126] = "flags",
-	[127] = "%s dropped due to bad search request.",
-	[128] = "This command is either disabled or you don't have access to it.",
-	[129] = "Deleted antispam entry: %s",
-	[130] = "Couldn't delete antispam entry because not found: %s",
-	[131] = "Antispam list",
-	[132] = "Antispam list is empty.",
-	[133] = "Couldn't add antispam exception entry because already exists: %s",
-	[134] = "Added antispam exception entry: %s",
-	[135] = "Deleted antispam exception entry: %s",
-	[136] = "Couldn't delete antispam exception entry because not found: %s",
-	[137] = "Antispam exception list",
-	[138] = "Antispam exception list is empty.",
-	[139] = "The user you're trying to send offline message to is a bot. Message is discarded.",
-	[140] = "You can't start at user number %s when you only have %s accounts with class %s.",
-	[141] = "Showing %s out of total %s accounts with class %s starting at user number %s",
-	[142] = "There are no accounts with class: %s",
-	[143] = "Known classes are: %s",
-	[144] = "%s with class %s sent say message: <%s> %s",
-	[145] = "%s with class %s had bad luck sending say message: <%s> %s",
-	[146] = "You can't talk from nick whose class is higher or equals your own.",
-	[147] = "%s with IP %s and class %s kicked: <%s> %s",
-	[148] = "%s with class %s deleted %s statistics plugin entries older than %s days.",
-	[149] = "offset",
-	[150] = "order",
-	[151] = "%s didn't get any search results.",
-	[152] = "Redirected %s with IP %s and class %s to %s: <%s> %s",
-	[153] = "Unknown protocol command from %s with IP %s and class %s: %s",
-	[154] = "Custom nick list",
-	[155] = "Ledokol operator commands",
-	[156] = "Add antispam entry",
-	[157] = "Showing last %s lines out of total %s found in %s file",
-	[158] = "Delete antispam entry",
-	[159] = "Add antispam exception entry",
-	[160] = "Delete antispam exception entry",
-	[161] = "Add MyINFO entry",
-	[162] = "Delete MyINFO entry",
-	[163] = "MyINFO list",
-	[164] = "List of registered users by class",
-	[165] = "Speak from other nick",
-	[166] = "Remove user or word from rank list",
-	[167] = "%s with class %s deleted %s user log entries older than %s days.",
-	[168] = "List stored offline messages",
-	[169] = "Delete offline messages by date",
-	[170] = "Delete all offline messages",
-	[171] = "class",
-	[172] = "Clean up tables",
-	[173] = "Operator chat history",
-	[174] = "Delete all history messages",
-	[175] = "Your operator rank",
-	[176] = "Script configuration variables",
-	[177] = "Change configuration variable",
-	[178] = "nick",
-	[179] = "This list of commands",
-	[180] = "Ledokol user commands",
-	[181] = "Current topic",
-	[182] = "Your chat rank",
-	[183] = "You're not allowed to send private messages.",
-	[184] = "Unknown",
-	[185] = "identifier",
-	[186] = "Offline message to user",
-	[187] = "Main chat history",
-	[188] = "Ledokol statistics",
-	[189] = "Script version: %s",
-	[190] = "Total chat rank points: %s",
-	[191] = "Total operator rank points: %s",
-	[192] = "Average message count per user: %s",
-	[193] = "lre",
-	[194] = "action",
-	[195] = "Changed configuration variable %s: %s => %s",
-	[196] = "Configuration variable %s can only be set to: %s",
-	[197] = "or",
-	[198] = "Configuration variable %s must be a number.",
-	[199] = "to",
-	[200] = "Unknown configuration variable: %s",
-	[201] = "%s version: %s",
-	[202] = "Not installed",
-	[203] = "%s dropped due to spam.",
-	[204] = "variable",
-	[205] = "value",
-	[206] = "minutes",
-	[207] = "%s library version: %s",
-	[208] = "Reorder right click menu item",
-	[209] = "lines",
-	[210] = "Couldn't add rank exception because already exists: %s",
-	[211] = "Added rank exception: %s",
-	[212] = "Deleted rank exception: %s",
-	[213] = "Couldn't delete rank exception because not found: %s",
-	[214] = "Rank exception list",
-	[215] = "Rank exception list is empty.",
-	[216] = "Add rank exception",
-	[217] = "Delete rank exception",
-	[218] = "In order to use this feature you must turn off registered users list cache. Do it by setting hub configuration variable %s to %s and restarting the hub. Please note: Turning cache off is not recommended with large list of registered users.",
-	[219] = "Both",
-	[220] = "Deleted search filter: %s",
-	[221] = "Couldn't delete search filter because not found: %s",
-	[222] = "Search filter list",
-	[223] = "Search filter list is empty.",
-	[224] = "Magnet link: %s",
-	[225] = "Add search filter",
-	[226] = "Delete search filter",
-	[227] = "Known actions are: %s",
-	[228] = "Known flags are: %s",
-	[229] = "Downloading version file...",
-	[230] = "Size of kicks table: %s [ %s: %s @ %s ]",
-	[231] = "Size of bans table: %s [ %s: %s @ %s ]",
-	[232] = "Size of unbans table: %s [ %s: %s @ %s ]",
-	[233] = "Size of IP logger plugin table: %s [ %s: %s @ %s ]",
-	[234] = "Size of statistics plugin table: %s [ %s: %s @ %s ]",
-	[235] = "Modified authorization entry: %s @ %s",
-	[236] = "Added authorization entry: %s @ %s",
-	[237] = "Deleted authorization entry: %s",
-	[238] = "Couldn't delete authorization entry because not found: %s",
-	[239] = "IP authorization list",
-	[240] = "IP authorization list is empty.",
-	[241] = "Add IP authorization entry",
-	[242] = "Delete authorization entry",
-	[243] = "ip",
-	[244] = "%s with IP %s and class %s authorized.",
-	[245] = "%s with IP %s and class %s failed authorization and disconnected.",
-	[246] = "Category: %s",
-	[247] = "Set custom nick for yourself",
-	[248] = "This nick is registered or in use and therefore can't be used as custom nick: %s",
-	[249] = "Set your welcome message",
-	[250] = "Division by zero is forbidden.",
-	[251] = "Show your welcome messages",
-	[252] = "Welcome message list",
-	[253] = "Delete user and his welcome messages",
-	[254] = "Nick",
-	[255] = "Login message",
-	[256] = "Logout message",
-	[257] = "Welcome message list is empty.",
-	[258] = "Welcome messages were deleted for user: %s",
-	[259] = "Couldn't delete user from welcome message list because not found: %s",
-	[260] = "Your login message set: %s",
-	[261] = "%s with class %s changed his login message: %s",
-	[262] = "Your logout message set: %s",
-	[263] = "%s with class %s changed his logout message: %s",
-	[264] = "You don't have any welcome messages.",
-	[265] = "Your login message: %s",
-	[266] = "Add chatroom",
-	[267] = "Chatroom list",
-	[268] = "Delete chatroom",
-	[269] = "description",
-	[270] = "minclass",
-	[271] = "maxclass",
-	[272] = "Modified chatroom: %s",
-	[273] = "Added chatroom: %s",
-	[274] = "Deleted chatroom: %s",
-	[275] = "Couldn't delete chatroom because not found: %s",
-	[276] = "Chatroom",
-	[277] = "Description",
-	[278] = "Chatroom list is empty.",
-	[279] = "Not found in country code statistics table: %s",
-	[280] = "Custom nick %s is now owned by real user and therefore has been reset for user: %s",
-	[281] = "%s is registered with class %s.",
-	[282] = "Query executed but didn't return any results.",
-	[283] = "Published: %s",
-	[284] = "Add search filter exception entry",
-	[285] = "Delete search filter exception entry",
-	[286] = "Search filter exception list",
-	[287] = "Couldn't add search filter exception entry because already exists: %s",
-	[288] = "Added search filter exception entry: %s",
-	[289] = "Deleted search filter exception entry: %s",
-	[290] = "Couldn't delete search filter exception entry because not found: %s",
-	[291] = "Search filter exception list is empty.",
-	[292] = "file",
-	[293] = "Read hub logs",
-	[294] = "Known files are: %s",
-	[295] = "Requested file is empty or couldn't be found.",
-	[296] = "Add command notification exception",
-	[297] = "Delete command notification exception",
-	[298] = "Command notification exception list",
-	[299] = "Added command notification exception entry: %s",
-	[300] = "Couldn't add command notification exception entry because already exists: %s",
-	[301] = "Deleted command notification exception entry: %s",
-	[302] = "Couldn't delete command notification exception entry because not found: %s",
-	[303] = "Command notification exception list is empty.",
-	[304] = "Couldn't add chatroom because nick is already in use: %s",
-	[305] = "Query results",
-	[306] = "Connections from your IP aren't allowed for another %s seconds.",
-	[307] = "Executed shell command didn't return any status code: %s",
-	[308] = "Returned status code: %s",
-	[309] = "Added by: %s",
-	[310] = "publisher",
-	[311] = "Release list is empty.",
-	[312] = "Last %s releases",
-	[313] = "No releases by requested publisher were found: %s",
-	[314] = "Last %s releases published by %s",
-	[315] = "No releases by requested category were found: %s",
-	[316] = "Last %s releases by category %s",
-	[317] = "No releases by requested search string were found: %s",
-	[318] = "time",
-	[319] = "Known search types are: %s",
-	[320] = "Configuration variable %s can't be empty.",
-	[321] = "Deleted from share rank list: %s",
-	[322] = "Not found in share rank list: %s",
-	[323] = "Your share rank",
-	[324] = "Top %s share rankers",
-	[325] = "You have to share %s and reconnect to get started.",
-	[326] = "Share rank list is empty.",
-	[327] = "Your share rank is: %s",
-	[328] = "Custom nick can't be longer than %s characters.",
-	[329] = "Delete custom nick",
-	[330] = "Deleted user from custom nick list: %s",
-	[331] = "Couldn't delete user from custom nick list because not found: %s",
-	[332] = "Selected type requires extra parameters. Please refer to manual for more information.",
-	[333] = "Size of registered users table: %s [ %s: %s @ %s ]",
-	[334] = "Deleted %s accounts with class %s",
-	[335] = "%s with class %s deleted %s accounts with class %s that has been inactive for %s days.",
-	[336] = "Add command permission",
-	[337] = "Delete command permission",
-	[338] = "Command permission list",
-	[339] = "Modified command permission with class %s: %s",
-	[340] = "Added command permission with class %s: %s",
-	[341] = "Deleted command permission: %s",
-	[342] = "Couldn't delete command permission because not found: %s",
-	[343] = "Command permission list is empty.",
-	[344] = "Total search rank points: %s",
-	[345] = "Please use following commands to finish update process.",
-	[346] = "Moving files...",
-	[347] = "Please visit %s to download the script manually.",
-	[348] = "Couldn't add forbidden IP address because already exists: %s",
-	[349] = "Added forbidden IP address: %s",
-	[350] = "Deleted forbidden IP address: %s",
-	[351] = "Couldn't delete forbidden IP address because not found: %s",
-	[352] = "Forbidden IP address list",
-	[353] = "Forbidden IP address list is empty.",
-	[354] = "%s with IP %s and class %s allowed due to forbidden IP address exception: %s",
-	[355] = "Couldn't delete category because not found: %s",
-	[356] = "%s redirected due to spam.",
-	[357] = "%s redirected due to bad search request.",
-	[358] = "You can download me from: %s",
-	[359] = "%s is registered with class %s and has been automatically unregistered and deleted from other tables.",
-	[360] = "PiB",
-	[361] = "TiB",
-	[362] = "GiB",
-	[363] = "MiB",
-	[364] = "KiB",
-	[365] = "B",
-	[366] = "EiB",
-	[367] = "Get users real nick",
-	[368] = "Requested nick wasn't found in custom nick list.",
-	[369] = "Requested nick belongs to a user who is %s: %s",
-	[370] = "offline",
-	[371] = "online",
-	[372] = "Clean up ranks",
-	[373] = "limit",
-	[374] = "%s with class %s deleted %s chat ranks lower than %s.",
-	[375] = "%s with class %s deleted %s share ranks lower than %s GiB.",
-	[376] = "%s with class %s deleted %s operator ranks lower than %s.",
-	[377] = "Size of chat ranks table: %s [ %s: %s @ %s ]",
-	[378] = "Size of share ranks table: %s [ %s: %s @ %s ]",
-	[379] = "Size of operator ranks table: %s [ %s: %s @ %s ]",
-	[380] = "content",
-	[381] = "destination",
-	[382] = "interval",
-	[383] = "Add reminder",
-	[384] = "Delete reminder",
-	[385] = "Reminder list",
-	[386] = "Reminder list is empty.",
-	[387] = "Known destinanions are: %s",
-	[388] = "Known interval is: %s",
-	[389] = "Modified reminder: %s",
-	[390] = "Added reminder: %s",
-	[391] = "Deleted reminder: %s",
-	[392] = "Reminder not found: %s",
-	[393] = "Identifier: %s",
-	[394] = "Content: %s",
-	[395] = "Interval: %s of %s",
-	[396] = "Destination: %s",
-	[397] = "Raw command",
-	[398] = "PM",
-	[399] = "MC",
-	[400] = "reply",
-	[401] = "Add chat responder",
-	[402] = "Delete chat responder",
-	[403] = "Main chat responder list",
-	[404] = "Main chat responder list is empty.",
-	[405] = "%s with class %s deleted %s operator chat history messages.",
-	[406] = "Search in user log",
-	[407] = "Added chat responder: %s",
-	[408] = "Deleted chat responder with ID: %s",
-	[409] = "Couldn't delete chat responder because ID not found: %s",
-	[410] = "Responder",
-	[411] = "Reply",
-	[412] = "Add chat responder exception",
-	[413] = "Delete chat responder exception",
-	[414] = "Chat responder exception list",
-	[415] = "Chat responder exception list is empty.",
-	[416] = "Couldn't add chat responder exception because already exists: %s",
-	[417] = "Added chat responder exception: %s",
-	[418] = "Deleted chat responder exception: %s",
-	[419] = "Couldn't delete chat responder exception because not found: %s",
-	[420] = "command",
-	[421] = "Customize script command",
-	[422] = "Customized script command: %s => %s",
-	[423] = "Unknown script command: %s",
-	[424] = "Requested nick is real.",
-	[425] = "%s with class %s customized script command: %s => %s",
-	[426] = "Reset all custom commands",
-	[427] = "%s custom commands were reset.",
-	[428] = "Ledokol tables are now deleted and script is locked.",
-	[429] = "Please unload the script and remove it from scripts directory.",
-	[430] = "Good luck.",
-	[431] = "Please unload the script to finish.",
-	[432] = "%s with IP %s and class %s sent message to %s: %s",
-	[433] = "Script uptime: %s",
-	[434] = "month",
-	[435] = "months",
-	[436] = "day",
-	[437] = "hour",
-	[438] = "hours",
-	[439] = "Top %s used words",
-	[440] = "Deleted from word rank list: %s",
-	[441] = "Not found in word rank list: %s",
-	[442] = "%s with class %s deleted %s word ranks lower than %s.",
-	[443] = "Size of word ranks table: %s [ %s: %s @ %s ]",
-	[444] = "Total word rank points: %s",
-	[445] = "Word rank list is empty.",
-	[446] = "%s with class %s registered new user with class %s: %s",
-	[447] = "%s with class %s deleted registered user with class %s: %s",
-	[448] = "%s with class %s changed user class from %s to %s: %s",
-	[449] = "%s with IP %s and class %s allowed due to fake share exception: %s",
-	[450] = "%s with IP %s and class %s allowed due to clone exception: %s",
-	[451] = "%s with IP %s and class %s allowed due to same IP exception: %s",
-	[452] = "seconds",
-	[453] = "Add news item",
-	[454] = "Delete news items",
-	[455] = "Read hub news",
-	[456] = "Added news item: %s",
-	[457] = "Hub news list is empty.",
-	[458] = "Deleted %s news items.",
-	[459] = "Couldn't delete news items because not found: %s",
-	[460] = "Last %s news items",
-	[461] = "By %s on %s: %s",
-	[462] = "There are no main chat history messages written by you.",
-	[463] = "Last %s main chat messages written by you",
-	[464] = "Your main chat history",
-	[465] = "Script memory usage: %s",
-	[466] = "Couldn't load language file %s: %s",
-	[467] = "Force custom nick for user",
-	[468] = "User is not in userlist: %s",
-	[469] = "Either the feature is disabled or user that you're trying to set welcome message for doesn't have access to it.",
-	[470] = "name",
-	[471] = "category",
-	[472] = "tth",
-	[473] = "Add new release",
-	[474] = "Delete releases",
-	[475] = "List of available releases",
-	[476] = "Find release by name or category",
-	[477] = "Hub is now going for a very quick restart. Please be patient.",
-	[478] = "Hub is now going to shut down. Please be patient.",
-	[479] = "equation",
-	[480] = "Calculate an equation",
-	[481] = "Both numbers must be either pi or numbers.",
-	[482] = "Known operations are: %s",
-	[483] = "Your logout message: %s",
-	[484] = "Force welcome message for user",
-	[485] = "Login message set for %s: %s",
-	[486] = "Change nick of an registered user",
-	[487] = "User is not registered: %s",
-	[488] = "You are now going to be disconnected from the hub in order for your new nick to apply: %s",
-	[489] = "Renamed account %s: %s",
-	[490] = "%s with class %s renamed account %s: %s",
-	[491] = "Your login message deleted.",
-	[492] = "Your logout message deleted.",
-	[493] = "%s with class %s deleted his login message.",
-	[494] = "%s with class %s deleted his logout message.",
-	[495] = "Logout message set for %s: %s",
-	[496] = "%s with class %s changed login message for %s: %s",
-	[497] = "%s with class %s changed logout message for %s: %s",
-	[498] = "Login message deleted for user: %s",
-	[499] = "Logout message deleted for user: %s",
-	[500] = "%s with class %s deleted login message for user: %s",
-	[501] = "%s with class %s deleted logout message for user: %s",
-	[502] = "%s with class %s deleted welcome messages for user: %s",
-	[503] = "minute",
-	[504] = "Last %s releases by search string %s",
-	[505] = "Modified release: %s",
-	[506] = "Added release: %s",
-	[507] = "Deleted release: %s",
-	[508] = "Couldn't delete release because not found: %s",
-	[509] = "Reminder preview",
-	[510] = "Preview of %s reminder: %s",
-	[511] = "Specified nick is already in use.",
-	[512] = "Live user location statistics by country",
-	[513] = "All time user location statistics",
-	[514] = "This feature requires %s or later installed on your system.",
-	[515] = "Total count since %s: %s",
-	[516] = "Unknown country",
-	[517] = "No users in the hub.",
-	[518] = "User location statistics table is empty.",
-	[519] = "Total count: %s",
-	[520] = "Deleted all rows: %s",
-	[521] = "%s with class %s deleted all user location entries.",
-	[522] = "address",
-	[523] = "owner",
-	[524] = "Add friendly hub",
-	[525] = "Delete friendly hub",
-	[526] = "Show friendly hubs",
-	[527] = "Added friendly hub: %s",
-	[528] = "Modified friendly hub: %s",
-	[529] = "Deleted friendly hub: %s",
-	[530] = "Friendly hub not found: %s",
-	[531] = "Friendly hublist",
-	[532] = "Friendly hublist is empty.",
-	[533] = "Executed shell command didn't return any output.",
-	[534] = "Returned output",
-	[535] = "%s renamed %s to: %s",
-	[536] = "%s plugin version: %s",
-	[537] = "second",
-	[538] = "You are now known as: %s",
-	[539] = "You renamed %s to: %s",
-	[540] = "Spam exception from %s with IP %s and class %s in MC: %s",
-	[541] = "Spam exception from %s with IP %s and class %s in PM: %s",
-	[542] = "Spam exception from %s with IP %s and class %s in offline message: %s",
-	[543] = "Spam exception from %s with IP %s and class %s in report: %s",
-	[544] = "Spam notification from %s with IP %s and class %s in MC: %s",
-	[545] = "Spam notification from %s with IP %s and class %s in PM: %s",
-	[546] = "Spam notification from %s with IP %s and class %s in offline message: %s",
-	[547] = "Spam notification from %s with IP %s and class %s in report: %s",
-	[548] = "Spam from %s with IP %s and class %s in MC: %s",
-	[549] = "Spam from %s with IP %s and class %s in PM: %s",
-	[550] = "Spam from %s with IP %s and class %s in offline message: %s",
-	[551] = "Spam from %s with IP %s and class %s in report: %s",
-	[552] = "Modified antispam entry with action %s and priority %s to scan in MC: %s",
-	[553] = "Modified antispam entry with action %s and priority %s to scan in PM: %s",
-	[554] = "Modified antispam entry with action %s and priority %s to scan in MC and PM: %s",
-	[555] = "Added antispam entry with action %s and priority %s to scan in MC: %s",
-	[556] = "Added antispam entry with action %s and priority %s to scan in PM: %s",
-	[557] = "Added antispam entry with action %s and priority %s to scan in MC and PM: %s",
-	[558] = "Search request exception from %s with IP %s and class %s as any file: %s",
-	[559] = "Search request exception from %s with IP %s and class %s as audio file: %s",
-	[560] = "Search request exception from %s with IP %s and class %s as compressed file: %s",
-	[561] = "Search request exception from %s with IP %s and class %s as document: %s",
-	[562] = "Search request exception from %s with IP %s and class %s as executable: %s",
-	[563] = "Search request exception from %s with IP %s and class %s as picture: %s",
-	[564] = "Search request exception from %s with IP %s and class %s as video: %s",
-	[565] = "Search request exception from %s with IP %s and class %s as folder: %s",
-	[566] = "Search request exception from %s with IP %s and class %s as TTH: %s",
-	[567] = "Search request notification from %s with IP %s and class %s as any file: %s",
-	[568] = "Search request notification from %s with IP %s and class %s as audio file: %s",
-	[569] = "Search request notification from %s with IP %s and class %s as compressed file: %s",
-	[570] = "Search request notification from %s with IP %s and class %s as document: %s",
-	[571] = "Search request notification from %s with IP %s and class %s as executable: %s",
-	[572] = "Search request notification from %s with IP %s and class %s as picture: %s",
-	[573] = "Search request notification from %s with IP %s and class %s as video: %s",
-	[574] = "Search request notification from %s with IP %s and class %s as folder: %s",
-	[575] = "Search request notification from %s with IP %s and class %s as TTH: %s",
-	[576] = "Bad search request from %s with IP %s and class %s as any file: %s",
-	[577] = "Bad search request from %s with IP %s and class %s as audio file: %s",
-	[578] = "Bad search request from %s with IP %s and class %s as compressed file: %s",
-	[579] = "Bad search request from %s with IP %s and class %s as document: %s",
-	[580] = "Bad search request from %s with IP %s and class %s as executable: %s",
-	[581] = "Bad search request from %s with IP %s and class %s as picture: %s",
-	[582] = "Bad search request from %s with IP %s and class %s as video: %s",
-	[583] = "Bad search request from %s with IP %s and class %s as folder: %s",
-	[584] = "Bad search request from %s with IP %s and class %s as TTH: %s",
-	[585] = "Modified search filter with action %s and priority %s as any file: %s",
-	[586] = "Modified search filter with action %s and priority %s as audio file: %s",
-	[587] = "Modified search filter with action %s and priority %s as compressed file: %s",
-	[588] = "Modified search filter with action %s and priority %s as document: %s",
-	[589] = "Modified search filter with action %s and priority %s as executable: %s",
-	[590] = "Modified search filter with action %s and priority %s as picture: %s",
-	[591] = "Modified search filter with action %s and priority %s as video: %s",
-	[592] = "Modified search filter with action %s and priority %s as folder: %s",
-	[593] = "Modified search filter with action %s and priority %s as TTH: %s",
-	[594] = "Added search filter with action %s and priority %s as any file: %s",
-	[595] = "Added search filter with action %s and priority %s as audio file: %s",
-	[596] = "Added search filter with action %s and priority %s as compressed file: %s",
-	[597] = "Added search filter with action %s and priority %s as document: %s",
-	[598] = "Added search filter with action %s and priority %s as executable: %s",
-	[599] = "Added search filter with action %s and priority %s as picture: %s",
-	[600] = "Added search filter with action %s and priority %s as video: %s",
-	[601] = "Added search filter with action %s and priority %s as folder: %s",
-	[602] = "Added search filter with action %s and priority %s as TTH: %s",
-	[603] = "%s with class %s deleted %s releases older than %s days.",
-	[604] = "Size of release table: %s [ %s: %s @ %s ]",
-	[605] = "LRE",
-	[606] = "Code accepted.",
-	[607] = "Protection list",
-	[608] = "Added protection entry: %s",
-	[609] = "Deleted protection entry: %s",
-	[610] = "Protection entry already exists: %s",
-	[611] = "Protection entry not found: %s",
-	[612] = "Protection list is empty.",
-	[613] = "Missing %s in configuration variable.",
-	[614] = "Chatroom: %s",
-	[615] = "You've left the chatroom.",
-	[616] = "User left the chatroom: %s",
-	[617] = "User entered the chatroom: %s",
-	[618] = "You've entered %s chatroom.",
-	[619] = "You're not member of this chatroom.",
-	[620] = "You don't have access to this chatroom.",
-	[621] = "Chatroom member list",
-	[622] = "Chatroom is empty.",
-	[623] = "You're already member of this chatroom.",
-	[624] = "Chatroom user commands",
-	[625] = "This feature requires %s module installed on your system.",
-	[626] = "Unknown chatroom command. Use %s for help.",
-	[627] = "Enter the chatroom",
-	[628] = "Leave the chatroom",
-	[629] = "Deleted %s rows from country code statistics table: %s",
-	[630] = "Set chat mode",
-	[631] = "Known chat modes are: %s",
-	[632] = "mode",
-	[633] = "Changing chat mode for %s: %s => %s",
-	[634] = "Not found in chat mode list: %s",
-	[635] = "Chat mode user list",
-	[636] = "Chat mode user list is empty.",
-	[637] = "%s user lookup",
-	[638] = "Looking on %s for %s...",
-	[639] = "User %s found in following hubs",
-	[640] = "User %s wasn't found in any hubs.",
-	[641] = "Add IP gag",
-	[642] = "Added IP gag: %s",
-	[643] = "Modified IP gag: %s",
-	[644] = "Deleted IP gag: %s",
-	[645] = "IP gag not found: %s",
-	[646] = "IP gag list",
-	[647] = "IP gag list is empty.",
-	[648] = "Delete IP gag",
-	[649] = "Main chat is currently disabled for you.",
-	[650] = "Cleared temporary IP gag list.",
-	[651] = "Show custom script commands",
-	[652] = "Custom script command list",
-	[653] = "Custom script command list is empty.",
-	[654] = "Script size: %s lines in %s",
-	[655] = "Added %s to IP gag list, %s users in total.",
-	[656] = "Flood detected from IP %s last known as %s with class %s in MC: %s",
-	[657] = "Flood detected from IP %s last known as %s with class %s in PM: %s",
-	[658] = "Private chat is currently disabled for you.",
-	[659] = "Flood detected from your IP.",
-	[660] = "%s users with IP %s dropped due to flood.",
-	[661] = "Unable to proceed: %s",
-	[662] = "No error message specified.",
-	[663] = "Search filter",
-	[664] = "MyINFO check",
-	[665] = "Authorization",
-	[666] = "Ranks",
-	[667] = "Welcome messages",
-	[668] = "Chatrooms",
-	[669] = "Reminders",
-	[670] = "Hub news",
-	[671] = "Chat responder",
-	[672] = "Releases",
-	[673] = "Offline messenger",
-	[674] = "Chat history",
-	[675] = "Commands",
-	[676] = "Custom nicks",
-	[677] = "Registered users",
-	[678] = "Hublist",
-	[679] = "Chat",
-	[680] = "IP gag",
-	[681] = "User logger",
-	[682] = "Other",
-	[683] = "Configuration",
-	[684] = "Clear main chat",
-	[685] = "Chat cleanup performed by %s",
-	[686] = "Search in registered users list",
-	[687] = "Registered users list statistics",
-	[688] = "Registered users list results for %s",
-	[689] = "Class %s: %s",
-	[690] = "Registered users list is empty.",
-	[691] = "This feature requires any version of %s installed on your system.",
-	[692] = "Configuration directory: %s",
-	[693] = "%s with IP %s and class %s stated incorrect IP in connect request to %s: %s",
-	[694] = "Top %s search requests",
-	[695] = "Search rank list is empty.",
-	[696] = "Deleted from search rank list: %s",
-	[697] = "Not found in search rank list: %s",
-	[698] = "%s with class %s deleted %s search ranks lower than %s.",
-	[699] = "Size of search ranks table: %s [ %s: %s @ %s ]",
-	[700] = "Size of user location statistics table: %s [ %s: %s ]",
-	[701] = "File not found: %s",
-	[702] = "Open files limit: %s",
-	[703] = "User information",
-	[704] = "User not in list: %s",
-	[705] = "Nick: %s",
-	[706] = "Description: %s",
-	[707] = "Tag: %s",
-	[708] = "Mode: %s",
-	[709] = "Slots: %s",
-	[710] = "Hubs: %s",
-	[711] = "Limiter: %s KiB/s",
-	[712] = "Connection: %s",
-	[713] = "Status: %s",
-	[714] = "Email: %s",
-	[715] = "Share: %s",
-	[716] = "Exact share: %s",
-	[717] = "Class: %s",
-	[718] = "IP: %s",
-	[719] = "DNS: %s",
-	[720] = "Country: %s",
-	[721] = "Client: %s",
-	[722] = "Version: %s",
-	[723] = "Normal",
-	[724] = "Away",
-	[725] = "Normal away",
-	[726] = "Fileserver",
-	[727] = "Normal fileserver",
-	[728] = "Away fileserver",
-	[729] = "Normal away fileserver",
-	[730] = "Fireball",
-	[731] = "Normal fireball",
-	[732] = "Away fireball",
-	[733] = "Normal away fireball",
-	[734] = "Fileserver fireball",
-	[735] = "Normal fileserver fireball",
-	[736] = "Away fileserver fireball",
-	[737] = "Normal away fileserver fireball",
-	[738] = "TLS",
-	[739] = "Normal TLS",
-	[740] = "Away TLS",
-	[741] = "Normal away TLS",
-	[742] = "Fileserver TLS",
-	[743] = "Normal fileserver TLS",
-	[744] = "Away fileserver TLS",
-	[745] = "Normal away fileserver TLS",
-	[746] = "Fireball TLS",
-	[747] = "Normal fireball TLS",
-	[748] = "Away fireball TLS",
-	[749] = "Normal away fireball TLS",
-	[750] = "Fileserver fireball TLS",
-	[751] = "Normal fileserver fireball TLS",
-	[752] = "Away fileserver fireball TLS",
-	[753] = "Normal away fileserver fireball TLS",
-	[754] = "Unable to get bot information: %s",
-	[755] = "Bot information",
-	[756] = "Owner script: %s",
-	[757] = "%s with IP %s and class %s allowed due to forbidden DNS exception: %s",
-	[758] = "In order to use this feature you need to enable DNS lookup. Do it by setting hub configuration variable %s to %s. Please note: Enabling DNS lookup might slow your hub performance down.",
-	[759] = "Couldn't add forbidden DNS because already exists: %s",
-	[760] = "Added forbidden DNS: %s",
-	[761] = "Deleted forbidden DNS: %s",
-	[762] = "Couldn't delete forbidden DNS because not found: %s",
-	[763] = "Forbidden DNS list",
-	[764] = "Forbidden DNS list is empty.",
-	[765] = "Powered by %s",
-	[766] = "Warning: %s",
-	[767] = "Open files limit set to %s is smaller than maximum users configuration which is %s. You can correct this by setting %s to %s or higher and restarting the hub.",
-	[768] = "Additional help",
-	[769] = "Remove all Ledokol tables and files",
-	[770] = "No reason specified.",
-	[771] = "You can't kick a user whose class is higher or equals your own.",
-	[772] = "Your topic contains forbidden characters which can't be used for security reason: %s",
-	[773] = "Hub uptime: %s",
-	[774] = "User count: %s",
-	[775] = "Total share: %s",
-	[776] = "%s with IP %s and class %s tries to speak with IP gag in MC: %s",
-	[777] = "%s with IP %s and class %s tries to speak with IP gag in PM: %s",
-	[778] = "Private message replaced for user: %s",
-	[779] = "Command logger",
-	[780] = "Showing %s entries from command logger",
-	[781] = "Command logger is empty.",
-	[782] = "%s with class %s deleted %s command log entries older than %s days.",
-	[783] = "Size of command log table: %s [ %s: %s @ %s ]",
-	[784] = "password",
-	[785] = "Modify IP authorization entry",
-	[786] = "Couldn't modify authorization entry because not found: %s",
-	[787] = "Uptime: %s",
-	[788] = "Enable requested feature and try again.",
-	[789] = "cc",
-	[790] = "Couldn't add forbidden CC because already exists: %s",
-	[791] = "Added forbidden CC: %s",
-	[792] = "Deleted forbidden CC: %s",
-	[793] = "Couldn't delete forbidden CC because not found: %s",
-	[794] = "Forbidden CC list",
-	[795] = "Forbidden CC list is empty.",
-	[796] = "%s with IP %s and class %s allowed due to forbidden CC exception: %s",
-	[797] = "I'm staying idle due to confusion.",
-	[798] = "Added replacer in MC: %s",
-	[799] = "Deleted chat replacer with ID: %s",
-	[800] = "Couldn't delete chat replacer because ID not found: %s",
-	[801] = "Chat replacer list",
-	[802] = "Chat replacer list is empty.",
-	[803] = "Replace",
-	[804] = "Couldn't add chat replacer exception because already exists: %s",
-	[805] = "Added chat replacer exception: %s",
-	[806] = "Deleted chat replacer exception: %s",
-	[807] = "Couldn't delete chat replacer exception because not found: %s",
-	[808] = "Chat replacer exception list",
-	[809] = "Chat replacer exception list is empty.",
-	[810] = "replace",
-	[811] = "Add chat replacer",
-	[812] = "Delete chat replacer",
-	[813] = "Add chat replacer exception",
-	[814] = "Delete chat replacer exception",
-	[815] = "Chat replacer",
-	[816] = "You need to send another %s main chat messages in order to use hub registration.",
-	[817] = "Please wait another %s minutes before using hub registration.",
-	[818] = "In order to use this feature you need to set %s to: %s",
-	[819] = "Please reconnect to gain %s minutes of uptime in order to use hub registration.",
-	[820] = "Dropping %s with IP %s and class %s due to protocol flood detection: %s",
-	[821] = "Protocol flood detected from your client: %s",
-	[822] = "Automatic update detected Ledokol version %s released, to upgrade use: %s",
-	[823] = "menu",
-	[824] = "Dropping user due to clone detection from IP %s with class %s: %s = %s",
-	[825] = "Configuration variable %s must be a valid IP address.",
-	[826] = "Average share per user: %s",
-	[827] = "Don't be stupid.",
-	[828] = "reason",
-	[829] = "Add blocked PM entry",
-	[830] = "Delete blocked PM entry",
-	[831] = "List of blocked PM entries",
-	[832] = "Modified blocked PM entry: %s",
-	[833] = "Added blocked PM entry: %s",
-	[834] = "Deleted blocked PM entry: %s",
-	[835] = "Blocked PM list is empty.",
-	[836] = "Couldn't delete blocked PM entry because not found: %s",
-	[837] = "Reason: %s",
-	[838] = "You're not allowed to send PM to this user because: %s",
-	[839] = "%s with class %s deleted %s antispam entries with occurrence less than %s.",
-	[840] = "%s with class %s deleted %s search filter entries with occurrence less than %s.",
-	[841] = "query",
-	[842] = "Execute MySQL query",
-	[843] = "Execute shell command",
-	[844] = "Experts only",
-	[845] = "Add hard IP ban entry",
-	[846] = "Delete hard IP ban entry",
-	[847] = "List of hard IP ban entries",
-	[848] = "Modified hard IP ban entry: %s",
-	[849] = "Added hard IP ban entry: %s",
-	[850] = "Deleted hard IP ban entry: %s",
-	[851] = "Hard IP ban list is empty.",
-	[852] = "Couldn't delete hard IP ban entry because not found: %s",
-	[853] = "Hard IP ban refused connection from IP %s: %s",
-	[854] = "Please wait another %s seconds before using hub search engine.",
-	[855] = "Loading %s in memory...",
-	[856] = "Finished loading %s in memory.",
-	[857] = "Unable to locate %s in hub configuration directory.",
-	[858] = "Add right click menu item",
-	[859] = "Delete right click menu item",
-	[860] = "List of right click menu items",
-	[861] = "Blacklisted connection from IP %s dropped: %s",
-	[862] = "To add multiple entries with this command you need to separate every entry by space.",
-	[863] = "Add IP watch entry",
-	[864] = "Delete IP watch entry",
-	[865] = "List of IP watch entries",
-	[866] = "result",
-	[867] = "Modified IP watch entry: %s",
-	[868] = "Added IP watch entry: %s",
-	[869] = "Known results are: %s",
-	[870] = "Deleted IP watch entry: %s",
-	[871] = "IP watch list is empty.",
-	[872] = "Couldn't delete IP watch entry because not found: %s",
-	[873] = "IP watch notification from %s with IP %s: %s",
-	[874] = "unknown nick",
-	[875] = "Either user %s wasn't found in any hubs or target server is down. Please try again later.",
-	[876] = "Country code gag",
-	[877] = "Add country code gag",
-	[878] = "Added country code gag: %s",
-	[879] = "Modified country code gag: %s",
-	[880] = "Deleted country code gag: %s",
-	[881] = "Country code gag not found: %s",
-	[882] = "Country code gag list",
-	[883] = "Country code gag list is empty.",
-	[884] = "Delete country code gag",
-	[885] = "Cleared country code gag list.",
-	[886] = "%s with IP %s and class %s tries to speak with country code gag in MC: %s",
-	[887] = "%s with IP %s and class %s tries to speak with country code gag in PM: %s",
-	[888] = "No reason specified",
-	[889] = "Automatically deleted %s user log entries older than %s days.",
-	[890] = "Main chat message replaced for user: %s",
-	[891] = "Unknown protocol command from IP %s before login: %s",
-	[892] = "Added %s to hard ban list, %s users in total.",
-	[893] = "NMDC version: %s",
-	[894] = "Client supports: %s",
-	[895] = "Couldn't add forbidden client supports because already exists: %s",
-	[896] = "Added forbidden client supports: %s",
-	[897] = "Couldn't add forbidden NMDC version because already exists: %s",
-	[898] = "Added forbidden NMDC version: %s",
-	[899] = "Latest version of %s is required in order to use this feature.",
-	[900] = "Deleted forbidden client supports: %s",
-	[901] = "Couldn't delete forbidden client supports because not found: %s",
-	[902] = "Deleted forbidden NMDC version: %s",
-	[903] = "Couldn't delete forbidden NMDC version because not found: %s",
-	[904] = "Forbidden client supports list",
-	[905] = "Forbidden client supports list is empty.",
-	[906] = "Forbidden NMDC version list",
-	[907] = "Forbidden NMDC version list is empty.",
-	[908] = "%s with IP %s and class %s allowed due to forbidden client supports exception: %s",
-	[909] = "%s with IP %s and class %s allowed due to forbidden NMDC version exception: %s",
-	[910] = "City: %s",
-	[911] = "IP range: %s - %s",
-	[912] = "Region: %s",
-	[913] = "Time zone: %s",
-	[914] = "Continent: %s",
-	[915] = "Postal code: %s",
-	[916] = "Coordinates: %f %f",
-	[917] = "Metro code: %d",
-	[918] = "Area code: %d",
-	[919] = "Drop users with IP",
-	[920] = "No users found with IP: %s",
-	[921] = "Dropped %s users with IP: %s",
-	[922] = "%s dropped %s users with IP: %s",
-	[923] = "Live user location statistics by city",
-	[924] = "Live user location statistics by city from %s=%s",
-	[925] = "No users in the hub from: %s=%s",
-	[926] = "Help notes",
-	[927] = "parameter",
-	[928] = "Command parameters %s are always required, while %s are optional.",
-	[929] = "Quoted parameters %s or %s must be used with quotes.",
-	[930] = "IP information",
-	[931] = "IP information not available: %s",
-	[932] = "Message replaced for user with class %s in MC: <%s> %s",
-	[933] = "IP %s permanently banned: <%s> %s",
-	[934] = "Nick %s permanently banned: <%s> %s",
-	[935] = "Range %s permanently banned: <%s> %s",
-	[936] = "Host %s permanently banned: <%s> %s",
-	[937] = "Share %s permanently banned: <%s> %s",
-	[938] = "Prefix %s permanently banned: <%s> %s",
-	[939] = "IP %s temporarily banned until %s: <%s> %s",
-	[940] = "Nick %s temporarily banned until %s: <%s> %s",
-	[941] = "Range %s temporarily banned until %s: <%s> %s",
-	[942] = "Host %s temporarily banned until %s: <%s> %s",
-	[943] = "Share %s temporarily banned until %s: <%s> %s",
-	[944] = "Prefix %s temporarily banned until %s: <%s> %s",
-	[945] = "IP %s unbanned: <%s> %s",
-	[946] = "Nick %s unbanned: <%s> %s",
-	[947] = "Range %s unbanned: <%s> %s",
-	[948] = "Host %s unbanned: <%s> %s",
-	[949] = "Share %s unbanned: <%s> %s",
-	[950] = "Prefix %s unbanned: <%s> %s",
-	[951] = "Known contexts are: %s",
-	[952] = "Known orders are: %s",
-	[953] = "Modified right click menu item: %s",
-	[954] = "Added right click menu item: %s",
-	[955] = "Deleted right click menu item: %s",
-	[956] = "Right click menu item not found: %s",
-	[957] = "Right click menu item list is empty.",
-	[958] = "Menu item",
-	[959] = "Menu command",
-	[960] = "Changed right click menu item order: %s",
-	[961] = "Separator or eraser",
-	[962] = "Nick and IP %s unbanned: <%s> %s",
-	[963] = "Other %s unbanned: <%s> %s",
-	[964] = "Vote for user to be kicked",
-	[965] = "You don't want to vote for kicking an operator.",
-	[966] = "User voted kick",
-	[967] = "You have already voted for kicking that user.",
-	[968] = "%s added vote %s of %s for kicking user with class %s: %s",
-	[969] = "There is an error in following antispam entry pattern",
-	[970] = "Pattern",
-	[971] = "Error",
-	[972] = "Solution",
-	[973] = "There is an error in following search filter pattern",
-	[974] = "There is an error in following search filter exception pattern",
-	[975] = "There is an error in following antispam exception entry pattern",
-	[976] = "There is an error in following forbidden nick pattern",
-	[977] = "There is an error in following MyINFO exception pattern",
-	[978] = "There is an error in following forbidden description pattern",
-	[979] = "There is an error in following forbidden tag pattern",
-	[980] = "There is an error in following forbidden connection type pattern",
-	[981] = "There is an error in following forbidden email pattern",
-	[982] = "There is an error in following forbidden share size pattern",
-	[983] = "There is an error in following forbidden IP address pattern",
-	[984] = "There is an error in following forbidden CC pattern",
-	[985] = "There is an error in following forbidden DNS pattern",
-	[986] = "There is an error in following forbidden client supports pattern",
-	[987] = "There is an error in following forbidden NMDC version pattern",
-	[988] = "Added replacer in PM: %s",
-	[989] = "Added replacer in MC and PM: %s",
-	[990] = "Message replaced for user with class %s in PM: <%s> %s",
-	[991] = "Message ignored due to flood detection from %s with IP %s and class %s in MC: %s",
-	[992] = "Users with same IP"
-}
-
----------------------------------------------------------------------
--- default language table <<
----------------------------------------------------------------------
-
----------------------------------------------------------------------
 -- translit table >>
 ---------------------------------------------------------------------
 
@@ -1908,7 +890,7 @@ cc_names = {
 -- country names by code table <<
 ---------------------------------------------------------------------
 
-table_lang = {}
+table_lang = ""
 table_resp = {}
 table_rcnn = {}
 table_faau = {}
@@ -2117,12 +1099,12 @@ function Main (file)
 		local umax = getconfig ("max_users")
 
 		if ulim < umax then
-			VH:SendDataToAll ("<"..table_othsets ["sendfrom"].."> "..string.format (getlang (766), string.format (getlang (767), ulim, umax, "ulimit -n", umax)).."|", 5, 10)
+			VH:SendDataToAll ("<"..table_othsets ["sendfrom"].."> "..string.format (gettext ("Warning: %s"), string.format (gettext ("Open files limit set to %s is smaller than maximum users configuration which is %s. You can correct this by setting %s to %s or higher and restarting the hub."), ulim, umax, "ulimit -n", umax)).."|", 5, 10)
 		end
 	end
 
 	if table_sets ["addspecialver"] == 1 then -- special version
-		VH:SetConfig ("config", "hub_version_special", string.format (getlang (765), "Ledokol "..ver_ledo))
+		VH:SetConfig ("config", "hub_version_special", string.format (gettext ("Powered by %s"), "Ledokol "..ver_ledo))
 	end
 
 	math.randomseed (os.time ()) -- randomize
@@ -2228,7 +1210,7 @@ function VH_OnOperatorCommand (nick, data)
 			donotifycmd (nick, data, 0, ucl)
 			addchatroom (nick, string.sub (data, string.len (table_cmnds ["chatadd"]) + 3, -1))
 		else
-			commandanswer (nick, getlang (128))
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
@@ -2240,7 +1222,7 @@ function VH_OnOperatorCommand (nick, data)
 			donotifycmd (nick, data, 0, ucl)
 			delchatroom (nick, string.sub (data, string.len (table_cmnds ["chatdel"]) + 3, -1))
 		else
-			commandanswer (nick, getlang (128))
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
@@ -2252,7 +1234,7 @@ function VH_OnOperatorCommand (nick, data)
 			donotifycmd (nick, data, 0, ucl)
 			listchatroom (nick)
 		else
-			commandanswer (nick, getlang (128))
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
@@ -2264,7 +1246,7 @@ if ucl >= table_sets ["mincommandclass"] then
 donotifycmd (nick, data, 0, ucl)
 addreminder (nick, string.sub (data, string.len (table_cmnds ["remadd"]) + 3, -1))
 else
-commandanswer (nick, getlang (128))
+commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 end
 
 return 0
@@ -2276,7 +1258,7 @@ if ucl >= table_sets ["mincommandclass"] then
 donotifycmd (nick, data, 0, ucl)
 delreminder (nick, string.sub (data, string.len (table_cmnds ["remdel"]) + 3, -1))
 else
-commandanswer (nick, getlang (128))
+commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 end
 
 return 0
@@ -2288,7 +1270,7 @@ if ucl >= table_sets ["mincommandclass"] then
 donotifycmd (nick, data, 0, ucl)
 listreminder (nick)
 else
-commandanswer (nick, getlang (128))
+commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 end
 
 return 0
@@ -2300,7 +1282,7 @@ if ucl >= table_sets ["mincommandclass"] then
 donotifycmd (nick, data, 0, ucl)
 showreminder (nick, string.sub (data, string.len (table_cmnds ["remshow"]) + 3, -1))
 else
-commandanswer (nick, getlang (128))
+commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 end
 
 return 0
@@ -2312,7 +1294,7 @@ return 0
 			donotifycmd (nick, data, 0, ucl)
 			addnopm (nick, string.sub (data, string.len (table_cmnds ["nopmadd"]) + 3, -1))
 		else
-			commandanswer (nick, getlang (128))
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
@@ -2324,7 +1306,7 @@ return 0
 			donotifycmd (nick, data, 0, ucl)
 			delnopm (nick, string.sub (data, string.len (table_cmnds ["nopmdel"]) + 3, -1))
 		else
-			commandanswer (nick, getlang (128))
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
@@ -2336,7 +1318,7 @@ return 0
 			donotifycmd (nick, data, 0, ucl)
 			listnopm (nick)
 		else
-			commandanswer (nick, getlang (128))
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
@@ -2348,7 +1330,7 @@ return 0
 			donotifycmd (nick, data, 0, ucl)
 			addrcmenu (nick, data:sub (# table_cmnds ["rcmenuadd"] + 3))
 		else
-			commandanswer (nick, getlang (128))
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
@@ -2360,7 +1342,7 @@ return 0
 			donotifycmd (nick, data, 0, ucl)
 			delrcmenu (nick, data:sub (# table_cmnds ["rcmenudel"] + 3))
 		else
-			commandanswer (nick, getlang (128))
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
@@ -2372,7 +1354,7 @@ return 0
 			donotifycmd (nick, data, 0, ucl)
 			listrcmenu (nick)
 		else
-			commandanswer (nick, getlang (128))
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
@@ -2384,7 +1366,7 @@ return 0
 			donotifycmd (nick, data, 0, ucl)
 			ordrcmenu (nick, data:sub (# table_cmnds ["rcmenuord"] + 3))
 		else
-			commandanswer (nick, getlang (128))
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
@@ -2396,7 +1378,7 @@ return 0
 			donotifycmd (nick, data, 0, ucl)
 			addipwat (nick, string.sub (data, string.len (table_cmnds ["ipwatadd"]) + 3, -1))
 		else
-			commandanswer (nick, getlang (128))
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
@@ -2408,7 +1390,7 @@ return 0
 			donotifycmd (nick, data, 0, ucl)
 			delipwat (nick, string.sub (data, string.len (table_cmnds ["ipwatdel"]) + 3, -1))
 		else
-			commandanswer (nick, getlang (128))
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
@@ -2420,7 +1402,7 @@ return 0
 			donotifycmd (nick, data, 0, ucl)
 			listipwat (nick)
 		else
-			commandanswer (nick, getlang (128))
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
@@ -2432,7 +1414,7 @@ return 0
 			donotifycmd (nick, data, 0, ucl)
 			addhban (nick, string.sub (data, string.len (table_cmnds ["hban"]) + 3, -1))
 		else
-			commandanswer (nick, getlang (128))
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
@@ -2444,7 +1426,7 @@ return 0
 			donotifycmd (nick, data, 0, ucl)
 			delhban (nick, string.sub (data, string.len (table_cmnds ["hunban"]) + 3, -1))
 		else
-			commandanswer (nick, getlang (128))
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
@@ -2456,7 +1438,7 @@ return 0
 			donotifycmd (nick, data, 0, ucl)
 			listhban (nick)
 		else
-			commandanswer (nick, getlang (128))
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
@@ -2468,7 +1450,7 @@ if ucl >= table_sets ["mincommandclass"] then
 donotifycmd (nick, data, 0, ucl)
 addnews (nick, string.sub (data, string.len (table_cmnds ["newsadd"]) + 3, -1))
 else
-commandanswer (nick, getlang (128))
+commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 end
 
 return 0
@@ -2480,7 +1462,7 @@ if ucl >= table_sets ["mincommandclass"] then
 donotifycmd (nick, data, 0, ucl)
 delnews (nick, string.sub (data, string.len (table_cmnds ["newsdel"]) + 3, -1))
 else
-commandanswer (nick, getlang (128))
+commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 end
 
 return 0
@@ -2492,7 +1474,7 @@ return 0
 			donotifycmd (nick, data, 0, ucl)
 			addrelease (nick, string.sub (data, string.len (table_cmnds ["reladd"]) + 3, -1))
 		else
-			commandanswer (nick, getlang (128))
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
@@ -2504,7 +1486,7 @@ return 0
 			donotifycmd (nick, data, 0, ucl)
 			delrelease (nick, string.sub (data, string.len (table_cmnds ["reldel"]) + 3, -1))
 		else
-			commandanswer (nick, getlang (128))
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
@@ -2516,7 +1498,7 @@ return 0
 			donotifycmd (nick, data, 0, ucl)
 			addresponder (nick, string.sub (data, string.len (table_cmnds ["respadd"]) + 3, -1))
 		else
-			commandanswer (nick, getlang (128))
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
@@ -2528,7 +1510,7 @@ return 0
 			donotifycmd (nick, data, 0, ucl)
 			delresponder (nick, string.sub (data, string.len (table_cmnds ["respdel"]) + 3, -1))
 		else
-			commandanswer (nick, getlang (128))
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
@@ -2540,7 +1522,7 @@ return 0
 			donotifycmd (nick, data, 0, ucl)
 			listresponder (nick)
 		else
-			commandanswer (nick, getlang (128))
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
@@ -2552,7 +1534,7 @@ return 0
 			donotifycmd (nick, data, 0, ucl)
 			addrespex (nick, string.sub (data, string.len (table_cmnds ["respexadd"]) + 3, -1))
 		else
-			commandanswer (nick, getlang (128))
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
@@ -2564,7 +1546,7 @@ return 0
 			donotifycmd (nick, data, 0, ucl)
 			delrespex (nick, string.sub (data, string.len (table_cmnds ["respexdel"]) + 3, -1))
 		else
-			commandanswer (nick, getlang (128))
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
@@ -2576,7 +1558,7 @@ return 0
 			donotifycmd (nick, data, 0, ucl)
 			listrespex (nick)
 		else
-			commandanswer (nick, getlang (128))
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
@@ -2588,7 +1570,7 @@ return 0
 			donotifycmd (nick, data, 0, ucl)
 			addreplacer (nick, string.sub (data, string.len (table_cmnds ["repladd"]) + 3))
 		else
-			commandanswer (nick, getlang (128))
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
@@ -2600,7 +1582,7 @@ return 0
 			donotifycmd (nick, data, 0, ucl)
 			delreplacer (nick, string.sub (data, string.len (table_cmnds ["repldel"]) + 3, -1))
 		else
-			commandanswer (nick, getlang (128))
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
@@ -2612,7 +1594,7 @@ return 0
 			donotifycmd (nick, data, 0, ucl)
 			listreplacer (nick)
 		else
-			commandanswer (nick, getlang (128))
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
@@ -2624,7 +1606,7 @@ return 0
 			donotifycmd (nick, data, 0, ucl)
 			addreplex (nick, string.sub (data, string.len (table_cmnds ["replexadd"]) + 3, -1))
 		else
-			commandanswer (nick, getlang (128))
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
@@ -2636,7 +1618,7 @@ return 0
 			donotifycmd (nick, data, 0, ucl)
 			delreplex (nick, string.sub (data, string.len (table_cmnds ["replexdel"]) + 3, -1))
 		else
-			commandanswer (nick, getlang (128))
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
@@ -2648,7 +1630,7 @@ return 0
 			donotifycmd (nick, data, 0, ucl)
 			listreplex (nick)
 		else
-			commandanswer (nick, getlang (128))
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
@@ -2660,7 +1642,7 @@ return 0
 			donotifycmd (nick, data, 0, ucl)
 			addantientry (nick, string.sub (data, string.len (table_cmnds ["antiadd"]) + 3))
 		else
-			commandanswer (nick, getlang (128))
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
@@ -2672,7 +1654,7 @@ if ucl >= table_sets ["mincommandclass"] then
 donotifycmd (nick, data, 0, ucl)
 delantientry (nick, string.sub (data, string.len (table_cmnds ["antidel"]) + 3, -1))
 else
-commandanswer (nick, getlang (128))
+commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 end
 
 return 0
@@ -2684,7 +1666,7 @@ if ucl >= table_sets ["mincommandclass"] then
 donotifycmd (nick, data, 0, ucl)
 listantientry (nick)
 else
-commandanswer (nick, getlang (128))
+commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 end
 
 return 0
@@ -2696,7 +1678,7 @@ if ucl >= table_sets ["mincommandclass"] then
 donotifycmd (nick, data, 0, ucl)
 addexentry (nick, string.sub (data, string.len (table_cmnds ["antiexadd"]) + 3, -1))
 else
-commandanswer (nick, getlang (128))
+commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 end
 
 return 0
@@ -2708,7 +1690,7 @@ if ucl >= table_sets ["mincommandclass"] then
 donotifycmd (nick, data, 0, ucl)
 delexentry (nick, string.sub (data, string.len (table_cmnds ["antiexdel"]) + 3, -1))
 else
-commandanswer (nick, getlang (128))
+commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 end
 
 return 0
@@ -2720,7 +1702,7 @@ if ucl >= table_sets ["mincommandclass"] then
 donotifycmd (nick, data, 0, ucl)
 listexentry (nick)
 else
-commandanswer (nick, getlang (128))
+commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 end
 
 return 0
@@ -2732,7 +1714,7 @@ if ucl >= table_sets ["mincommandclass"] then
 donotifycmd (nick, data, 0, ucl)
 addsefientry (nick, string.sub (data, string.len (table_cmnds ["sefiadd"]) + 3, -1))
 else
-commandanswer (nick, getlang (128))
+commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 end
 
 return 0
@@ -2744,7 +1726,7 @@ if ucl >= table_sets ["mincommandclass"] then
 donotifycmd (nick, data, 0, ucl)
 delsefientry (nick, string.sub (data, string.len (table_cmnds ["sefidel"]) + 3, -1))
 else
-commandanswer (nick, getlang (128))
+commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 end
 
 return 0
@@ -2756,7 +1738,7 @@ if ucl >= table_sets ["mincommandclass"] then
 donotifycmd (nick, data, 0, ucl)
 listsefientry (nick)
 else
-commandanswer (nick, getlang (128))
+commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 end
 
 return 0
@@ -2768,7 +1750,7 @@ if ucl >= table_sets ["mincommandclass"] then
 donotifycmd (nick, data, 0, ucl)
 addsefiexentry (nick, string.sub (data, string.len (table_cmnds ["sefiexadd"]) + 3, -1))
 else
-commandanswer (nick, getlang (128))
+commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 end
 
 return 0
@@ -2780,7 +1762,7 @@ if ucl >= table_sets ["mincommandclass"] then
 donotifycmd (nick, data, 0, ucl)
 delsefiexentry (nick, string.sub (data, string.len (table_cmnds ["sefiexdel"]) + 3, -1))
 else
-commandanswer (nick, getlang (128))
+commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 end
 
 return 0
@@ -2792,7 +1774,7 @@ if ucl >= table_sets ["mincommandclass"] then
 donotifycmd (nick, data, 0, ucl)
 listsefiexentry (nick)
 else
-commandanswer (nick, getlang (128))
+commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 end
 
 return 0
@@ -2803,7 +1785,7 @@ elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["cmndset"]
 if ucl >= table_sets ["mincommandclass"] then
 setledocmd (nick, ucl, string.sub (data, string.len (table_cmnds ["cmndset"]) + 3, -1))
 else
-commandanswer (nick, getlang (128))
+commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 end
 
 return 0
@@ -2815,7 +1797,7 @@ if ucl >= table_sets ["mincommandclass"] then
 donotifycmd (nick, data, 0, ucl)
 resetledocmd (nick)
 else
-commandanswer (nick, getlang (128))
+commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 end
 
 return 0
@@ -2827,7 +1809,7 @@ if ucl >= table_sets ["mincommandclass"] then
 donotifycmd (nick, data, 0, ucl)
 showledocmd (nick)
 else
-commandanswer (nick, getlang (128))
+commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 end
 
 return 0
@@ -2839,7 +1821,7 @@ if ucl >= table_sets ["mincommandclass"] then
 donotifycmd (nick, data, 0, ucl)
 addcmdentry (nick, string.sub (data, string.len (table_cmnds ["cmndadd"]) + 3, -1))
 else
-commandanswer (nick, getlang (128))
+commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 end
 
 return 0
@@ -2851,7 +1833,7 @@ if ucl >= table_sets ["mincommandclass"] then
 donotifycmd (nick, data, 0, ucl)
 delcmdentry (nick, string.sub (data, string.len (table_cmnds ["cmnddel"]) + 3, -1))
 else
-commandanswer (nick, getlang (128))
+commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 end
 
 return 0
@@ -2863,7 +1845,7 @@ if ucl >= table_sets ["mincommandclass"] then
 donotifycmd (nick, data, 0, ucl)
 listcmdentry (nick)
 else
-commandanswer (nick, getlang (128))
+commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 end
 
 return 0
@@ -2875,7 +1857,7 @@ if ucl >= table_sets ["mincommandclass"] then
 donotifycmd (nick, data, 0, ucl)
 addcmdexentry (nick, string.sub (data, string.len (table_cmnds ["cmndexadd"]) + 3, -1))
 else
-commandanswer (nick, getlang (128))
+commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 end
 
 return 0
@@ -2887,7 +1869,7 @@ if ucl >= table_sets ["mincommandclass"] then
 donotifycmd (nick, data, 0, ucl)
 delcmdexentry (nick, string.sub (data, string.len (table_cmnds ["cmndexdel"]) + 3, -1))
 else
-commandanswer (nick, getlang (128))
+commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 end
 
 return 0
@@ -2899,7 +1881,7 @@ if ucl >= table_sets ["mincommandclass"] then
 donotifycmd (nick, data, 0, ucl)
 listcmdexentry (nick)
 else
-commandanswer (nick, getlang (128))
+commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 end
 
 return 0
@@ -2911,7 +1893,7 @@ elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["authadd"]
 		donotifycmd (nick, data, 0, ucl)
 		addauthentry (nick, string.sub (data, string.len (table_cmnds ["authadd"]) + 3, -1))
 	else
-		commandanswer (nick, getlang (128))
+		commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 	end
 
 	return 0
@@ -2923,7 +1905,7 @@ elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["authmod"]
 		donotifycmd (nick, data, 0, ucl)
 		modauthentry (nick, string.sub (data, string.len (table_cmnds ["authmod"]) + 3, -1))
 	else
-		commandanswer (nick, getlang (128))
+		commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 	end
 
 	return 0
@@ -2935,7 +1917,7 @@ elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["authdel"]
 		donotifycmd (nick, data, 0, ucl)
 		delauthentry (nick, string.sub (data, string.len (table_cmnds ["authdel"]) + 3, -1))
 	else
-		commandanswer (nick, getlang (128))
+		commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 	end
 
 	return 0
@@ -2947,7 +1929,7 @@ elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["authlist"
 		donotifycmd (nick, data, 0, ucl)
 		listauthentry (nick)
 	else
-		commandanswer (nick, getlang (128))
+		commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 	end
 
 	return 0
@@ -2962,7 +1944,7 @@ end
 
 forcewelcome (nick, string.sub (data, string.len (table_cmnds ["wmforce"]) + 3, -1), ucl)
 else
-commandanswer (nick, getlang (128))
+commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 end
 
 return 0
@@ -2974,7 +1956,7 @@ if ucl >= table_sets ["mincommandclass"] then
 donotifycmd (nick, data, 0, ucl)
 listwelcome (nick)
 else
-commandanswer (nick, getlang (128))
+commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 end
 
 return 0
@@ -2986,7 +1968,7 @@ return 0
 			donotifycmd (nick, data, 0, ucl)
 			sendownhistory (nick, string.sub (data, string.len (table_cmnds ["myhistory"]) + 3, -1))
 		else
-			commandanswer (nick, getlang (128))
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
@@ -2998,7 +1980,7 @@ return 0
 			donotifycmd (nick, data, 0, ucl)
 			sendmchistory (nick, string.sub (data, string.len (table_cmnds ["history"]) + 3, -1), 0)
 		else
-			commandanswer (nick, getlang (128))
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
@@ -3010,7 +1992,7 @@ return 0
 			donotifycmd (nick, data, 0, ucl)
 			sendnews (nick, string.sub (data, string.len (table_cmnds ["hubnews"]) + 3, -1), 0)
 		else
-			commandanswer (nick, getlang (128))
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
@@ -3022,7 +2004,7 @@ if ucl >= table_sets ["minusrcommandclass"] then
 donotifycmd (nick, data, 0, ucl)
 calculate (nick, string.sub (data, string.len (table_cmnds ["calculate"]) + 3, -1))
 else
-commandanswer (nick, getlang (128))
+commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 end
 
 return 0
@@ -3034,7 +2016,7 @@ if ucl >= table_sets ["minusrcommandclass"] then
 donotifycmd (nick, data, 0, ucl)
 sendtopic (nick)
 else
-commandanswer (nick, getlang (128))
+commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 end
 
 return 0
@@ -3045,7 +2027,7 @@ elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["offmsg"].
 if ucl >= table_sets ["offmsgclass"] then
 sendoffmsg (nick, string.sub (data, string.len (table_cmnds ["offmsg"]) + 3, -1), ucl)
 else
-commandanswer (nick, getlang (128))
+commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 end
 
 return 0
@@ -3057,7 +2039,7 @@ return 0
 			donotifycmd (nick, data, 0, ucl)
 			listcustnick (nick)
 		else
-			commandanswer (nick, getlang (128))
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
@@ -3069,7 +2051,7 @@ return 0
 			donotifycmd (nick, data, 0, ucl)
 			getrealnick (nick, string.sub (data, string.len (table_cmnds ["realnick"]) + 3, -1))
 		else
-			commandanswer (nick, getlang (128))
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
@@ -3080,7 +2062,7 @@ return 0
 		if ucl >= table_sets ["custnickclass"] then
 			setcustnick (nick, string.sub (data, string.len (table_cmnds ["nick"]) + 3, -1), ucl)
 		else
-			commandanswer (nick, getlang (128))
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
@@ -3092,7 +2074,7 @@ if ucl >= table_sets ["welcomeclass"] then
 donotifycmd (nick, data, 0, ucl)
 showwelcome (nick)
 else
-commandanswer (nick, getlang (128))
+commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 end
 
 return 0
@@ -3107,7 +2089,7 @@ end
 
 setwelcome (nick, string.sub (data, string.len (table_cmnds ["wmset"]) + 3, -1), ucl)
 else
-commandanswer (nick, getlang (128))
+commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 end
 
 return 0
@@ -3119,7 +2101,7 @@ return 0
 			donotifycmd (nick, data, 0, ucl)
 			findrelease (nick, string.sub (data, string.len (table_cmnds ["relfind"]) + 3, -1))
 		else
-			commandanswer (nick, getlang (128))
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
@@ -3131,7 +2113,7 @@ return 0
 			donotifycmd (nick, data, 0, ucl)
 			listrelease (nick, string.sub (data, string.len (table_cmnds ["rellist"]) + 3, -1))
 		else
-			commandanswer (nick, getlang (128))
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
@@ -3143,7 +2125,7 @@ if ucl >= table_sets ["wordrankclass"] then
 donotifycmd (nick, data, 0, ucl)
 wordranksendall (nick)
 else
-commandanswer (nick, getlang (128))
+commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 end
 
 return 0
@@ -3155,7 +2137,7 @@ elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["searranks
 		donotifycmd (nick, data, 0, ucl)
 		searranksendall (nick)
 	else
-		commandanswer (nick, getlang (128))
+		commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 	end
 
 	return 0
@@ -3167,7 +2149,7 @@ if ucl >= table_sets ["ccstatsclass"] then
 donotifycmd (nick, data, 0, ucl)
 sendlivecc (nick)
 else
-commandanswer (nick, getlang (128))
+commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 end
 
 return 0
@@ -3179,7 +2161,7 @@ return 0
 			donotifycmd (nick, data, 0, ucl)
 			sendlivecity (nick, string.sub (data, string.len (table_cmnds ["citylive"]) + 3, -1))
 		else
-			commandanswer (nick, getlang (128))
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 	return 0
@@ -3191,7 +2173,7 @@ if (table_sets ["savecchistory"] == 1) and (ucl >= table_sets ["ccstatsclass"]) 
 donotifycmd (nick, data, 0, ucl)
 sendhistcc (nick)
 else
-commandanswer (nick, getlang (128))
+commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 end
 
 return 0
@@ -3203,7 +2185,7 @@ if ucl >= table_sets ["oprankclass"] then
 donotifycmd (nick, data, 0, ucl)
 opranksendall (nick)
 else
-commandanswer (nick, getlang (128))
+commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 end
 
 return 0
@@ -3215,7 +2197,7 @@ if ucl >= table_sets ["sharerankclass"] then
 donotifycmd (nick, data, 0, ucl)
 shareranksendall (nick)
 else
-commandanswer (nick, getlang (128))
+commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 end
 
 return 0
@@ -3227,7 +2209,7 @@ if ucl >= table_sets ["chatrankclass"] then
 donotifycmd (nick, data, 0, ucl)
 chatranksendall (nick)
 else
-commandanswer (nick, getlang (128))
+commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 end
 
 return 0
@@ -3239,7 +2221,7 @@ if ucl >= table_sets ["sharerankclass"] then
 donotifycmd (nick, data, 0, ucl)
 shareranksendown (nick)
 else
-commandanswer (nick, getlang (128))
+commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 end
 
 return 0
@@ -3251,7 +2233,7 @@ if ucl >= table_sets ["chatrankclass"] then
 donotifycmd (nick, data, 0, ucl)
 chatranksendown (nick)
 else
-commandanswer (nick, getlang (128))
+commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 end
 
 return 0
@@ -3263,7 +2245,7 @@ return 0
 			donotifycmd (nick, data, 0, ucl)
 			showuserlog (nick, string.sub (data, string.len (table_cmnds ["ulog"]) + 3, -1))
 		else
-			commandanswer (nick, getlang (128))
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
@@ -3275,7 +2257,7 @@ elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["clog"].."
 		donotifycmd (nick, data, 0, ucl)
 		showcmdlog (nick, ucl, string.sub (data, string.len (table_cmnds ["clog"]) + 3, -1))
 	else
-		commandanswer (nick, getlang (128))
+		commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 	end
 
 	return 0
@@ -3287,7 +2269,7 @@ elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["clog"].."
 			donotifycmd (nick, data, 0, ucl)
 			showuserinfo (nick, string.sub (data, string.len (table_cmnds ["userinfo"]) + 3, -1))
 		else
-			commandanswer (nick, getlang (128))
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
@@ -3299,7 +2281,7 @@ elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["clog"].."
 			donotifycmd (nick, data, 0, ucl)
 			showipinfo (nick, string.sub (data, string.len (table_cmnds ["ipinfo"]) + 3, -1))
 		else
-			commandanswer (nick, getlang (128))
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
@@ -3311,7 +2293,7 @@ elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["seen"].."
 		donotifycmd (nick, data, 0, ucl)
 		seenlookup (nick, string.sub (data, string.len (table_cmnds ["seen"]) + 3, -1))
 	else
-		commandanswer (nick, getlang (128))
+		commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 	end
 
 	return 0
@@ -3322,7 +2304,7 @@ elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["seen"].."
 		if ucl >= table_sets ["mincommandclass"] then
 			dropip (nick, string.sub (data, string.len (table_cmnds ["dropip"]) + 3, -1))
 		else
-			commandanswer (nick, getlang (128))
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
@@ -3334,7 +2316,7 @@ elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["seen"].."
 			donotifycmd (nick, data, 0, ucl)
 			gagipadd (nick, string.sub (data, string.len (table_cmnds ["gagipadd"]) + 3, -1))
 		else
-			commandanswer (nick, getlang (128))
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
@@ -3346,7 +2328,7 @@ elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["seen"].."
 			donotifycmd (nick, data, 0, ucl)
 			gagipdel (nick, string.sub (data, string.len (table_cmnds ["gagipdel"]) + 3, -1))
 		else
-			commandanswer (nick, getlang (128))
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
@@ -3358,7 +2340,7 @@ elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["seen"].."
 			donotifycmd (nick, data, 0, ucl)
 			gagiplist (nick)
 		else
-			commandanswer (nick, getlang (128))
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
@@ -3370,7 +2352,7 @@ elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["seen"].."
 			donotifycmd (nick, data, 0, ucl)
 			gagccadd (nick, string.sub (data, string.len (table_cmnds ["gagccadd"]) + 3, -1))
 		else
-			commandanswer (nick, getlang (128))
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
@@ -3382,7 +2364,7 @@ elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["seen"].."
 			donotifycmd (nick, data, 0, ucl)
 			gagccdel (nick, string.sub (data, string.len (table_cmnds ["gagccdel"]) + 3, -1))
 		else
-			commandanswer (nick, getlang (128))
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
@@ -3394,7 +2376,7 @@ elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["seen"].."
 			donotifycmd (nick, data, 0, ucl)
 			gagcclist (nick)
 		else
-			commandanswer (nick, getlang (128))
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
@@ -3409,7 +2391,7 @@ end
 
 delwelcome (nick, string.sub (data, string.len (table_cmnds ["wmdel"]) + 3, -1), ucl)
 else
-commandanswer (nick, getlang (128))
+commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 end
 
 return 0
@@ -3421,7 +2403,7 @@ if ucl >= table_sets ["mincommandclass"] then
 donotifycmd (nick, data, 0, ucl)
 hublistadd (nick, string.sub (data, string.len (table_cmnds ["hubadd"]) + 3, -1))
 else
-commandanswer (nick, getlang (128))
+commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 end
 
 return 0
@@ -3433,7 +2415,7 @@ if ucl >= table_sets ["mincommandclass"] then
 donotifycmd (nick, data, 0, ucl)
 hublistdel (nick, string.sub (data, string.len (table_cmnds ["hubdel"]) + 3, -1))
 else
-commandanswer (nick, getlang (128))
+commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 end
 
 return 0
@@ -3445,7 +2427,7 @@ if ucl >= table_sets ["minusrcommandclass"] then
 donotifycmd (nick, data, 0, ucl)
 hublistshow (nick)
 else
-commandanswer (nick, getlang (128))
+commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 end
 
 return 0
@@ -3455,7 +2437,7 @@ return 0
 elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["regname"].." %S+ %S+$") then
 if ucl >= table_sets ["mincommandclass"] then
 	if getconfig ("use_reglist_cache") == 1 then -- reglist cache is on
-		commandanswer (nick, string.format (getlang (218), "use_reglist_cache", "0"))
+		commandanswer (nick, string.format (gettext ("In order to use this feature you must turn off registered users list cache. Do it by setting hub configuration variable %s to %s and restarting the hub. Please note: Turning cache off is not recommended with large list of registered users."), "use_reglist_cache", "0"))
 	else
 		if table_sets ["classnotireg"] == 11 then
 			donotifycmd (nick, data, 0, ucl)
@@ -3465,7 +2447,7 @@ if ucl >= table_sets ["mincommandclass"] then
 	end
 
 else
-	commandanswer (nick, getlang (128))
+	commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 end
 
 return 0
@@ -3477,7 +2459,7 @@ if ucl >= table_sets ["mincommandclass"] then
 donotifycmd (nick, data, 0, ucl)
 sendreglist (nick, string.sub (data, string.len (table_cmnds ["reglist"]) + 3, -1))
 else
-commandanswer (nick, getlang (128))
+commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 end
 
 return 0
@@ -3489,7 +2471,7 @@ elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["regfind"]
 		donotifycmd (nick, data, 0, ucl)
 		findreglist (nick, string.sub (data, string.len (table_cmnds ["regfind"]) + 3, -1))
 	else
-		commandanswer (nick, getlang (128))
+		commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 	end
 
 return 0
@@ -3501,7 +2483,7 @@ return 0
 			donotifycmd (nick, data, 0, ucl)
 			statsreglist (nick)
 		else
-			commandanswer (nick, getlang (128))
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
@@ -3513,7 +2495,7 @@ if ucl >= table_sets ["mincommandclass"] then
 donotifycmd (nick, data, 0, ucl)
 logsread (nick, string.sub (data, string.len (table_cmnds ["readlog"]) + 3, -1))
 else
-commandanswer (nick, getlang (128))
+commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 end
 
 return 0
@@ -3525,7 +2507,7 @@ if ucl >= table_sets ["mincommandclass"] then
 donotifycmd (nick, data, 0, ucl)
 delrank (nick, string.sub (data, string.len (table_cmnds ["randel"]) + 3, -1))
 else
-commandanswer (nick, getlang (128))
+commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 end
 
 return 0
@@ -3537,7 +2519,7 @@ if ucl >= table_sets ["mincommandclass"] then
 donotifycmd (nick, data, 0, ucl)
 addrankex (nick, string.sub (data, string.len (table_cmnds ["ranexadd"]) + 3, -1))
 else
-commandanswer (nick, getlang (128))
+commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 end
 
 return 0
@@ -3549,7 +2531,7 @@ if ucl >= table_sets ["mincommandclass"] then
 donotifycmd (nick, data, 0, ucl)
 delrankex (nick, string.sub (data, string.len (table_cmnds ["ranexdel"]) + 3, -1))
 else
-commandanswer (nick, getlang (128))
+commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 end
 
 return 0
@@ -3561,7 +2543,7 @@ if ucl >= table_sets ["mincommandclass"] then
 donotifycmd (nick, data, 0, ucl)
 listrankex (nick)
 else
-commandanswer (nick, getlang (128))
+commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 end
 
 return 0
@@ -3576,7 +2558,7 @@ end
 
 cleanupranks (nick, string.sub (data, string.len (table_cmnds ["ranclean"]) + 3, -1), ucl)
 else
-commandanswer (nick, getlang (128))
+commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 end
 
 return 0
@@ -3588,7 +2570,7 @@ if ucl >= table_sets ["oprankclass"] then
 donotifycmd (nick, data, 0, ucl)
 opranksendown (nick)
 else
-commandanswer (nick, getlang (128))
+commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 end
 
 return 0
@@ -3603,7 +2585,7 @@ end
 
 sendsay (nick, string.sub (data, string.len (table_cmnds ["say"]) + 3, -1), ucl)
 else
-commandanswer (nick, getlang (128))
+commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 end
 
 return 0
@@ -3613,9 +2595,9 @@ return 0
 	elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["clear"].."$") then
 		if ucl >= table_sets ["clearclass"] then
 			donotifycmd (nick, data, 0, ucl)
-			VH:SendDataToAll ("<"..table_othsets ["sendfrom"].."> "..string.rep ("\r\n", 100).." ~ "..string.format (getlang (685), nick).." ~\r\n|", 0, 10)
+			VH:SendDataToAll ("<"..table_othsets ["sendfrom"].."> "..string.rep ("\r\n", 100).." ~ "..string.format (gettext ("Chat cleanup performed by %s"), nick).." ~\r\n|", 0, 10)
 		else
-			commandanswer (nick, getlang (128))
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
@@ -3627,7 +2609,7 @@ elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["mode"].."
 		donotifycmd (nick, data, 0, ucl)
 		setmode (nick, string.sub (data, string.len (table_cmnds ["mode"]) + 3, -1))
 	else
-		commandanswer (nick, getlang (128))
+		commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 	end
 
 	return 0
@@ -3639,7 +2621,7 @@ elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["mode"].."
 		donotifycmd (nick, data, 0, ucl)
 		setmode (nick, reppatchars (tolow (nick)).." "..string.sub (data, string.len (table_cmnds ["mode"]) + 3, -1))
 	else
-		commandanswer (nick, getlang (128))
+		commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 	end
 
 	return 0
@@ -3651,7 +2633,7 @@ elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["mode"].."
 			-- donotifycmd (nick, data, 0, ucl)
 			votekickuser (nick, string.sub (data, string.len (table_cmnds ["votekick"]) + 3))
 		else
-			commandanswer (nick, getlang (128))
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
@@ -3663,7 +2645,7 @@ elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["mode"].."
 		donotifycmd (nick, data, 0, ucl)
 		listmodes (nick)
 	else
-		commandanswer (nick, getlang (128))
+		commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 	end
 
 	return 0
@@ -3675,7 +2657,7 @@ if ucl >= table_sets ["mincommandclass"] then
 donotifycmd (nick, data, 0, ucl)
 sendhelp (nick)
 else
-commandanswer (nick, getlang (128))
+commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 end
 
 return 0
@@ -3687,7 +2669,7 @@ elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["ledostats
 		donotifycmd (nick, data, 0, ucl)
 		sendstats (nick)
 	else
-		commandanswer (nick, getlang (128))
+		commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 	end
 
 	return 0
@@ -3699,7 +2681,7 @@ elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["ledover"]
 		donotifycmd (nick, data, 0, ucl)
 		updatescript (nick)
 	else
-		commandanswer (nick, getlang (128))
+		commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 	end
 
 	return 0
@@ -3741,13 +2723,13 @@ elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["ledokolun
 		if f then
 			f:close ()
 			os.remove (table_othsets ["cfgdir"].."scripts/ledokol.lua") -- delete script file
-			os.remove (table_othsets ["cfgdir"].."scripts/ledo_en.txt") -- delete language files
-			commandanswer (nick, getlang (428).." "..getlang (431).." "..getlang (430)) -- finish
+			os.remove (table_othsets ["cfgdir"].."scripts/ledo_en.lang") -- delete language files
+			commandanswer (nick, gettext ("Ledokol tables are now deleted and script is locked.").." "..gettext ("Please unload the script to finish.").." "..gettext ("Good luck.")) -- finish
 		else
-			commandanswer (nick, getlang (428).." "..getlang (429).." "..getlang (430)) -- finish
+			commandanswer (nick, gettext ("Ledokol tables are now deleted and script is locked.").." "..gettext ("Please unload the script and remove it from scripts directory.").." "..gettext ("Good luck.")) -- finish
 		end
 	else
-		commandanswer (nick, getlang (128))
+		commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 	end
 
 	return 0
@@ -3762,7 +2744,7 @@ end
 
 setledoconf (nick, ucl, string.sub (data, string.len (table_cmnds ["ledoset"]) + 3, -1))
 else
-commandanswer (nick, getlang (128))
+commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 end
 
 return 0
@@ -3774,7 +2756,7 @@ if ucl >= table_sets ["mincommandclass"] then
 donotifycmd (nick, data, 0, ucl)
 showledoconf (nick)
 else
-commandanswer (nick, getlang (128))
+commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 end
 
 return 0
@@ -3807,12 +2789,12 @@ elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["ledosql"]
 				anentry = anentry.."\r\n"
 			end
 
-			commandanswer (nick, getlang (305)..":\r\n\r\n"..anentry)
+			commandanswer (nick, gettext ("Query results")..":\r\n\r\n"..anentry)
 		else
-			commandanswer (nick, getlang (282))
+			commandanswer (nick, gettext ("Query executed but didn't return any results."))
 		end
 	else
-		commandanswer (nick, getlang (128))
+		commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 	end
 
 	return 0
@@ -3839,18 +2821,18 @@ elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["ledoshell
 			end
 
 			if f and o and (string.len (o) > 0) then
-				commandanswer (nick, getlang (534)..":\r\n\r\n"..repnmdcoutchars (o))
+				commandanswer (nick, gettext ("Returned output")..":\r\n\r\n"..repnmdcoutchars (o))
 			else
-				commandanswer (nick, getlang (533))
+				commandanswer (nick, gettext ("Executed shell command didn't return any output."))
 			end
 
-			commandanswer (nick, string.format (getlang (308), res))
+			commandanswer (nick, string.format (gettext ("Returned status code: %s"), res))
 		else
-			commandanswer (nick, string.format (getlang (307), (err or getlang (662))))
+			commandanswer (nick, string.format (gettext ("Executed shell command didn't return any status code: %s"), (err or gettext ("No error message specified."))))
 		end
 
 	else
-		commandanswer (nick, getlang (128))
+		commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 	end
 
 	return 0
@@ -3865,7 +2847,7 @@ elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["ledoshell
 
 			cleanuptable (nick, string.sub (data, string.len (table_cmnds ["cleanup"]) + 3, -1), ucl)
 		else
-			commandanswer (nick, getlang (128))
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
@@ -3880,7 +2862,7 @@ elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["ledoshell
 
 			altcleanuptable (nick, string.sub (data, string.len (table_cmnds ["cleanup"]) + 3, -1), ucl)
 		else
-			commandanswer (nick, getlang (128))
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
@@ -3892,7 +2874,7 @@ elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["ledoshell
 			donotifycmd (nick, data, 0, ucl)
 			addmyinfoentry (nick, string.sub (data, string.len (table_cmnds ["myinfadd"]) + 3, -1))
 		else
-			commandanswer (nick, getlang (128))
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
@@ -3904,7 +2886,7 @@ elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["ledoshell
 			donotifycmd (nick, data, 0, ucl)
 			delmyinfoentry (nick, string.sub (data, string.len (table_cmnds ["myinfdel"]) + 3, -1))
 		else
-			commandanswer (nick, getlang (128))
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
@@ -3916,7 +2898,7 @@ elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["ledoshell
 			donotifycmd (nick, data, 0, ucl)
 			listmyinfoentry (nick, string.sub (data, string.len (table_cmnds ["myinflist"]) + 3, -1))
 		else
-			commandanswer (nick, getlang (128))
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
@@ -3928,7 +2910,7 @@ if ucl >= table_sets ["mincommandclass"] then
 donotifycmd (nick, data, 0, ucl)
 addprotentry (nick, string.sub (data, string.len (table_cmnds ["protadd"]) + 3, -1))
 else
-commandanswer (nick, getlang (128))
+commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 end
 
 return 0
@@ -3940,7 +2922,7 @@ if ucl >= table_sets ["mincommandclass"] then
 donotifycmd (nick, data, 0, ucl)
 delprotentry (nick, string.sub (data, string.len (table_cmnds ["protdel"]) + 3, -1))
 else
-commandanswer (nick, getlang (128))
+commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 end
 
 return 0
@@ -3952,7 +2934,7 @@ if ucl >= table_sets ["mincommandclass"] then
 donotifycmd (nick, data, 0, ucl)
 listprotentry (nick)
 else
-commandanswer (nick, getlang (128))
+commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 end
 
 return 0
@@ -3964,7 +2946,7 @@ return 0
 			donotifycmd (nick, data, 0, ucl)
 			opdelcustnick (nick, string.sub (data, string.len (table_cmnds ["custdel"]) + 3, -1))
 		else
-			commandanswer (nick, getlang (128))
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
@@ -3976,7 +2958,7 @@ return 0
 			donotifycmd (nick, data, 0, ucl)
 			opforcecustnick (nick, string.sub (data, string.len (table_cmnds ["rename"]) + 3, -1))
 		else
-			commandanswer (nick, getlang (128))
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
@@ -3988,7 +2970,7 @@ if ucl >= table_sets ["mincommandclass"] then
 donotifycmd (nick, data, 0, ucl)
 listoffline (nick)
 else
-commandanswer (nick, getlang (128))
+commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 end
 
 return 0
@@ -4000,7 +2982,7 @@ if ucl >= table_sets ["mincommandclass"] then
 donotifycmd (nick, data, 0, ucl)
 deloffline (nick, string.sub (data, string.len (table_cmnds ["offdel"]) + 3, -1))
 else
-commandanswer (nick, getlang (128))
+commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 end
 
 return 0
@@ -4015,7 +2997,7 @@ end
 
 cleanoffline (nick, ucl)
 else
-commandanswer (nick, getlang (128))
+commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 end
 
 return 0
@@ -4030,7 +3012,7 @@ end
 
 cleanhistory (nick, 0, 0, ucl)
 else
-commandanswer (nick, getlang (128))
+commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 end
 
 return 0
@@ -4042,7 +3024,7 @@ if (ucl >= 3) and (table_sets ["histlimit"] > 0) then
 donotifycmd (nick, data, 0, ucl)
 sendophistory (nick, string.sub (data, string.len (table_cmnds ["ophistory"]) + 3, -1), 0, false)
 else
-commandanswer (nick, getlang (128))
+commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 end
 
 return 0
@@ -4058,7 +3040,7 @@ elseif string.find (data, "^"..table_othsets ["optrig"].."topic .+$") then
 	local tpc = string.sub (data, string.len ("topic") + 3, -1)
 
 	if string.find (tpc, "&#124;") then
-		commandanswer (nick, string.format (getlang (772), "&#124;"))
+		commandanswer (nick, string.format (gettext ("Your topic contains forbidden characters which can't be used for security reason: %s"), "&#124;"))
 		return 0
 	else
 		savetopic (nick, tpc, ucl)
@@ -4070,7 +3052,7 @@ elseif string.find (data, "^"..table_othsets ["optrig"].."hubtopic .+$") then
 	local tpc = string.sub (data, string.len ("hubtopic") + 3, -1)
 
 	if string.find (tpc, "&#124;") then
-		commandanswer (nick, string.format (getlang (772), "&#124;"))
+		commandanswer (nick, string.format (gettext ("Your topic contains forbidden characters which can't be used for security reason: %s"), "&#124;"))
 		return 0
 	else
 		savetopic (nick, tpc, ucl)
@@ -4080,7 +3062,7 @@ elseif string.find (data, "^"..table_othsets ["optrig"].."hubtopic .+$") then
 
 elseif string.find (data, "^"..table_othsets ["optrig"].."topic $") or string.find (data, "^"..table_othsets ["optrig"].."hubtopic $") then
 	if ucl >= getconfig ("topic_mod_class") then
-		commandanswer (nick, getlang (55))
+		commandanswer (nick, gettext ("Why would you want to set empty topic?"))
 		return 0
 	end
 
@@ -4244,11 +3226,11 @@ elseif string.find (data, "^"..table_othsets ["optrig"].."=%s+%S+ .*$") then
 
 elseif string.find (data, "^"..table_othsets ["optrig"].."restart$") or string.find (data, "^"..table_othsets ["optrig"].."restart .*$") then
 	if ucl == 10 then
-		maintoall (getlang (477), 0, 10)
+		maintoall (gettext ("Hub is now going for a very quick restart. Please be patient."), 0, 10)
 		donotifycmd (nick, data, 0, ucl)
 		table_othsets ["restart"] = true
 	else
-		commandanswer (nick, getlang (128))
+		commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		return 0
 	end
 
@@ -4256,11 +3238,11 @@ elseif string.find (data, "^"..table_othsets ["optrig"].."restart$") or string.f
 
 elseif string.find (data, "^"..table_othsets ["optrig"].."quit$") or string.find (data, "^"..table_othsets ["optrig"].."quit .*$") then
 	if ucl == 10 then
-		maintoall (getlang (478), 0, 10)
+		maintoall (gettext ("Hub is now going to shut down. Please be patient."), 0, 10)
 		donotifycmd (nick, data, 0, ucl)
 		table_othsets ["restart"] = true
 	else
-		commandanswer (nick, getlang (128))
+		commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		return 0
 	end
 
@@ -4270,7 +3252,7 @@ elseif string.find (data, "^"..table_othsets ["optrig"].."luaload .*$") or strin
 	if ucl >= getconfig ("plugin_mod_class") then -- use plugin permission for lua scripts too
 		donotifycmd (nick, data, 0, ucl)
 	else
-		commandanswer (nick, getlang (128))
+		commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		return 0
 	end
 
@@ -4360,19 +3342,19 @@ function VH_OnUserCommand (nick, data)
 
 				if not isprotected (usr, uip) then
 					if rsn == "" then
-						rsn = getlang (770)
+						rsn = gettext ("No reason specified.")
 					end
 
-					commandanswer (nick, string.format (getlang (147), usr, uip .. tryipcc (uip, usr), ucls, nick, rsn))
+					commandanswer (nick, string.format (gettext ("%s with IP %s and class %s kicked: <%s> %s"), usr, uip .. tryipcc (uip, usr), ucls, nick, rsn))
 					VH:KickUser (nick, usr, rsn) -- kick using vips nick
 				else -- protected
-					commandanswer (nick, getlang (46))
+					commandanswer (nick, gettext ("User you're trying to kick or redirect is protected."))
 				end
 			else
-				commandanswer (nick, getlang (771))
+				commandanswer (nick, gettext ("You can't kick a user whose class is higher or equals your own."))
 			end
 		else -- not in list
-			commandanswer (nick, string.format (getlang (704), usr))
+			commandanswer (nick, string.format (gettext ("User not in list: %s"), usr))
 		end
 
 		return 0
@@ -4402,7 +3384,7 @@ if isprotected (nick, ip) == false then -- protection
 
 					if (msg == rcode) or (msg == table_code [nick]["code"]) then
 						table_code [nick]["lock"] = false
-						maintouser (nick, getlang (606))
+						maintouser (nick, gettext ("Code accepted."))
 					else
 						local txt = string.gsub (table_sets ["codetext"], "<code>", reprexpchars (table_code [nick]["vcode"]))
 						maintouser (nick, txt)
@@ -4464,7 +3446,7 @@ end
 		cvdat = replchatmsg (nick, ucl, cvdat, 1)
 
 		if norepl ~= cvdat then
-			opsnotify (table_sets ["classnotirepl"], string.format (getlang (932), ucl, nick, "+me " .. msg))
+			opsnotify (table_sets ["classnotirepl"], string.format (gettext ("Message replaced for user with class %s in MC: <%s> %s"), ucl, nick, "+me " .. msg))
 		end
 	end
 
@@ -4592,7 +3574,7 @@ end
 			-- donotifycmd (nick, data, 0, ucl)
 			votekickuser (nick, string.sub (data, string.len (table_cmnds ["votekick"]) + 3))
 		else
-			commandanswer (nick, getlang (128))
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
@@ -4604,7 +3586,7 @@ if ucl >= table_sets ["minusrcommandclass"] then
 donotifycmd (nick, data, 0, ucl)
 sendtopic (nick)
 else
-commandanswer (nick, getlang (128))
+commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 end
 
 return 0
@@ -4616,7 +3598,7 @@ if ucl >= table_sets ["chatrankclass"] then
 donotifycmd (nick, data, 0, ucl)
 chatranksendown (nick)
 else
-commandanswer (nick, getlang (128))
+commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 end
 
 return 0
@@ -4628,7 +3610,7 @@ if ucl >= table_sets ["sharerankclass"] then
 donotifycmd (nick, data, 0, ucl)
 shareranksendown (nick)
 else
-commandanswer (nick, getlang (128))
+commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 end
 
 return 0
@@ -4640,7 +3622,7 @@ if ucl >= table_sets ["chatrankclass"] then
 donotifycmd (nick, data, 0, ucl)
 chatranksendall (nick)
 else
-commandanswer (nick, getlang (128))
+commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 end
 
 return 0
@@ -4652,7 +3634,7 @@ if ucl >= table_sets ["sharerankclass"] then
 donotifycmd (nick, data, 0, ucl)
 shareranksendall (nick)
 else
-commandanswer (nick, getlang (128))
+commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 end
 
 return 0
@@ -4664,7 +3646,7 @@ if ucl >= table_sets ["oprankclass"] then
 donotifycmd (nick, data, 0, ucl)
 opranksendall (nick)
 else
-commandanswer (nick, getlang (128))
+commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 end
 
 return 0
@@ -4676,7 +3658,7 @@ if ucl >= table_sets ["wordrankclass"] then
 donotifycmd (nick, data, 0, ucl)
 wordranksendall (nick)
 else
-commandanswer (nick, getlang (128))
+commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 end
 
 return 0
@@ -4688,7 +3670,7 @@ elseif string.find (data, "^"..table_othsets ["ustrig"]..table_cmnds ["searranks
 		donotifycmd (nick, data, 0, ucl)
 		searranksendall (nick)
 	else
-		commandanswer (nick, getlang (128))
+		commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 	end
 
 	return 0
@@ -4700,7 +3682,7 @@ if ucl >= table_sets ["ccstatsclass"] then
 donotifycmd (nick, data, 0, ucl)
 sendlivecc (nick)
 else
-commandanswer (nick, getlang (128))
+commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 end
 
 return 0
@@ -4712,7 +3694,7 @@ return 0
 			donotifycmd (nick, data, 0, ucl)
 			sendlivecity (nick, string.sub (data, string.len (table_cmnds ["citylive"]) + 3, -1))
 		else
-			commandanswer (nick, getlang (128))
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 	return 0
@@ -4724,7 +3706,7 @@ if (table_sets ["savecchistory"] == 1) and (ucl >= table_sets ["ccstatsclass"]) 
 donotifycmd (nick, data, 0, ucl)
 sendhistcc (nick)
 else
-commandanswer (nick, getlang (128))
+commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 end
 
 return 0
@@ -4736,7 +3718,7 @@ if ucl >= table_sets ["minusrcommandclass"] then
 donotifycmd (nick, data, 0, ucl)
 hublistshow (nick)
 else
-commandanswer (nick, getlang (128))
+commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 end
 
 return 0
@@ -4747,7 +3729,7 @@ elseif string.find (data, "^"..table_othsets ["ustrig"]..table_cmnds ["offmsg"].
 if ucl >= table_sets ["offmsgclass"] then
 sendoffmsg (nick, string.sub (data, string.len (table_cmnds ["offmsg"]) + 3, -1), ucl)
 else
-commandanswer (nick, getlang (128))
+commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 end
 
 return 0
@@ -4759,7 +3741,7 @@ return 0
 			donotifycmd (nick, data, 0, ucl)
 			sendnews (nick, string.sub (data, string.len (table_cmnds ["hubnews"]) + 3, -1), 0)
 		else
-			commandanswer (nick, getlang (128))
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
@@ -4771,7 +3753,7 @@ if ucl >= table_sets ["minusrcommandclass"] then
 donotifycmd (nick, data, 0, ucl)
 calculate (nick, string.sub (data, string.len (table_cmnds ["calculate"]) + 3, -1))
 else
-commandanswer (nick, getlang (128))
+commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 end
 
 return 0
@@ -4783,7 +3765,7 @@ elseif string.find (data, "^"..table_othsets ["ustrig"]..table_cmnds ["mode"].."
 		donotifycmd (nick, data, 0, ucl)
 		setmode (nick, reppatchars (tolow (nick)).." "..string.sub (data, string.len (table_cmnds ["mode"]) + 3, -1))
 	else
-		commandanswer (nick, getlang (128))
+		commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 	end
 
 	return 0
@@ -4795,7 +3777,7 @@ elseif string.find (data, "^"..table_othsets ["ustrig"]..table_cmnds ["mode"].."
 			donotifycmd (nick, data, 0, ucl)
 			listrelease (nick, string.sub (data, string.len (table_cmnds ["rellist"]) + 3, -1))
 		else
-			commandanswer (nick, getlang (128))
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
@@ -4807,7 +3789,7 @@ elseif string.find (data, "^"..table_othsets ["ustrig"]..table_cmnds ["mode"].."
 			donotifycmd (nick, data, 0, ucl)
 			addrelease (nick, string.sub (data, string.len (table_cmnds ["reladd"]) + 3, -1))
 		else
-			commandanswer (nick, getlang (128))
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
@@ -4819,7 +3801,7 @@ elseif string.find (data, "^"..table_othsets ["ustrig"]..table_cmnds ["mode"].."
 			donotifycmd (nick, data, 0, ucl)
 			delrelease (nick, string.sub (data, string.len (table_cmnds ["reldel"]) + 3, -1))
 		else
-			commandanswer (nick, getlang (128))
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
@@ -4831,7 +3813,7 @@ elseif string.find (data, "^"..table_othsets ["ustrig"]..table_cmnds ["mode"].."
 			donotifycmd (nick, data, 0, ucl)
 			findrelease (nick, string.sub (data, string.len (table_cmnds ["relfind"]) + 3, -1))
 		else
-			commandanswer (nick, getlang (128))
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
@@ -4843,7 +3825,7 @@ elseif string.find (data, "^"..table_othsets ["ustrig"]..table_cmnds ["mode"].."
 			donotifycmd (nick, data, 0, ucl)
 			sendmchistory (nick, string.sub (data, string.len (table_cmnds ["history"]) + 3, -1), 0)
 		else
-			commandanswer (nick, getlang (128))
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
@@ -4855,7 +3837,7 @@ elseif string.find (data, "^"..table_othsets ["ustrig"]..table_cmnds ["mode"].."
 			donotifycmd (nick, data, 0, ucl)
 			sendownhistory (nick, string.sub (data, string.len (table_cmnds ["myhistory"]) + 3, -1))
 		else
-			commandanswer (nick, getlang (128))
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
@@ -4866,7 +3848,7 @@ elseif string.find (data, "^"..table_othsets ["ustrig"]..table_cmnds ["mode"].."
 		if ucl >= table_sets ["custnickclass"] then
 			setcustnick (nick, string.sub (data, string.len (table_cmnds ["nick"]) + 3, -1), ucl)
 		else
-			commandanswer (nick, getlang (128))
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
@@ -4878,7 +3860,7 @@ elseif string.find (data, "^"..table_othsets ["ustrig"]..table_cmnds ["mode"].."
 			donotifycmd (nick, data, 0, ucl)
 			getrealnick (nick, string.sub (data, string.len (table_cmnds ["realnick"]) + 3, -1))
 		else
-			commandanswer (nick, getlang (128))
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
@@ -4890,7 +3872,7 @@ elseif string.find (data, "^"..table_othsets ["ustrig"]..table_cmnds ["mode"].."
 			donotifycmd (nick, data, 0, ucl)
 			listcustnick (nick)
 		else
-			commandanswer (nick, getlang (128))
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
@@ -4905,7 +3887,7 @@ elseif string.find (data, "^"..table_othsets ["ustrig"]..table_cmnds ["mode"].."
 
 			setwelcome (nick, string.sub (data, string.len (table_cmnds ["wmset"]) + 3, -1), ucl)
 		else
-			commandanswer (nick, getlang (128))
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
@@ -4917,7 +3899,7 @@ elseif string.find (data, "^"..table_othsets ["ustrig"]..table_cmnds ["mode"].."
 			donotifycmd (nick, data, 0, ucl)
 			showwelcome (nick)
 		else
-			commandanswer (nick, getlang (128))
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
@@ -5009,7 +3991,7 @@ if (table_sets ["ipconantiflint"] > 0) and (cls < table_sets ["scanbelowclass"])
 			if dif >= table_sets ["ipconantiflint"] then
 				table_rcnn [ip] = nil -- delete
 			else
-				maintouser (nick, string.format (getlang (306), table_sets ["ipconantiflint"] - dif))
+				maintouser (nick, string.format (gettext ("Connections from your IP aren't allowed for another %s seconds."), table_sets ["ipconantiflint"] - dif))
 				VH:CloseConnection (nick) -- drop user
 
 				if cls >= table_sets ["welcomeclass"] then -- dont send logout message
@@ -5210,7 +4192,7 @@ function VH_OnParsedMsgSearch (nick, data)
 
 				if dif < table_sets ["searchuptime"] then
 					if table_sets ["searuptimeact"] == 0 then -- message
-						maintouser (nick, string.format (getlang (854), (table_sets ["searchuptime"] - dif)))
+						maintouser (nick, string.format (gettext ("Please wait another %s seconds before using hub search engine."), (table_sets ["searchuptime"] - dif)))
 					elseif table_sets ["searuptimeact"] == 1 then -- drop
 						VH:CloseConnection (nick)
 					end
@@ -5373,7 +4355,7 @@ function VH_OnTimer (msec)
 
 			if rows > 0 then
 				VH:SQLQuery ("delete from `" .. tbl_sql ["ulog"] .. "` where `time` < " .. secs)
-				opsnotify (table_sets ["classnotiledoact"], string.format (getlang (889), rows, table_sets ["ulogautoclean"]))
+				opsnotify (table_sets ["classnotiledoact"], string.format (gettext ("Automatically deleted %s user log entries older than %s days."), rows, table_sets ["ulogautoclean"]))
 				local tdiff = st + table_sets ["srvtimediff"]
 				VH:SQLQuery ("insert into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('lastcleanulog', " .. tdiff .. ") on duplicate key update `value` = " .. tdiff)
 				VH:SQLQuery ("insert into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('limcleanulog', " .. table_sets ["ulogautoclean"] .. ") on duplicate key update `value` = " .. table_sets ["ulogautoclean"])
@@ -5446,7 +4428,7 @@ function VH_OnUnknownMsg (nick, data, isnick, ipaddr)
 		end
 
 		local class = getclass (nick)
-		opsnotify (table_sets ["classnotiunk"], string.format (getlang (153), nick, ip .. tryipcc (ip, nick), class, repnmdcoutchars (data)))
+		opsnotify (table_sets ["classnotiunk"], string.format (gettext ("Unknown protocol command from %s with IP %s and class %s: %s"), nick, ip .. tryipcc (ip, nick), class, repnmdcoutchars (data)))
 
 		if table_sets ["kickunkusers"] == 1 and class < table_sets ["scanbelowclass"] and isprotected (nick, ip) == false then -- kick
 			local rsn = string.gsub (table_sets ["unkkickreason"], "%*", reprexpchars (repnmdcoutchars (data)))
@@ -5454,7 +4436,7 @@ function VH_OnUnknownMsg (nick, data, isnick, ipaddr)
 			return 0
 		end
 	elseif table_sets ["unkbeforelogin"] == 1 then -- new version with ip
-		opsnotify (table_sets ["classnotiunk"], string.format (getlang (891), nick .. tryipcc (nick), repnmdcoutchars (data)))
+		opsnotify (table_sets ["classnotiunk"], string.format (gettext ("Unknown protocol command from IP %s before login: %s"), nick .. tryipcc (nick), repnmdcoutchars (data)))
 
 		if table_sets ["kickunkusers"] == 1 and isprotected (nil, nick) == false then -- drop
 			local rsn = string.gsub (table_sets ["unkkickreason"], "%*", reprexpchars (repnmdcoutchars (data)))
@@ -5493,7 +4475,7 @@ function VH_OnParsedMsgAny (nick, data)
 						donotifycmd (nick, cmd, 0, cls)
 						savecmdlog (nick, cls, cmd, true)
 					else
-						commandanswer (nick, getlang (128))
+						commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 						return 0
 					end
 
@@ -5523,10 +4505,10 @@ function VH_OnParsedMsgAny (nick, data)
 		local ip = getip (who)
 
 		if isprotected (who, ip) == true then
-			commandanswer (nick, getlang (46))
+			commandanswer (nick, gettext ("User you're trying to kick or redirect is protected."))
 			return 0
 		else
-			opsnotify (table_sets ["classnotiredir"], string.format (getlang (152), who, ip .. tryipcc (ip, who), getclass (who), where, nick, msg))
+			opsnotify (table_sets ["classnotiredir"], string.format (gettext ("Redirected %s with IP %s and class %s to %s: <%s> %s"), who, ip .. tryipcc (ip, who), getclass (who), where, nick, msg))
 			oprankaccept (nick, cls)
 		end
 
@@ -5542,11 +4524,11 @@ function VH_OnParsedMsgAny (nick, data)
 
 					if ip and port then
 						if ip ~= rip then -- either ctm exploitation or incorrect ip in client settings
-							opsnotify (table_sets ["classnotibadctm"], string.format (getlang (693), nick, rip .. tryipcc (rip, nick), getclass (nick), othernick, repnmdcoutchars (ip..":"..port)))
+							opsnotify (table_sets ["classnotibadctm"], string.format (gettext ("%s with IP %s and class %s stated incorrect IP in connect request to %s: %s"), nick, rip .. tryipcc (rip, nick), getclass (nick), othernick, repnmdcoutchars (ip..":"..port)))
 						end
 					else
 						if ctm ~= rip then
-							opsnotify (table_sets ["classnotibadctm"], string.format (getlang (693), nick, rip .. tryipcc (rip, nick), getclass (nick), othernick, repnmdcoutchars (ctm)))
+							opsnotify (table_sets ["classnotibadctm"], string.format (gettext ("%s with IP %s and class %s stated incorrect IP in connect request to %s: %s"), nick, rip .. tryipcc (rip, nick), getclass (nick), othernick, repnmdcoutchars (ctm)))
 						end
 					end
 				end
@@ -5569,7 +4551,7 @@ function VH_OnParsedMsgConnectToMe (nick, othernick, ip, port)
 	end
 
 	--if (table_sets ["addledobot"] == 1) and (othernick == table_sets ["ledobotnick"]) then
-		--maintouser (nick, string.format (getlang (358), "http://ledo.feardc.net/"))
+		--maintouser (nick, string.format (gettext ("You can download me from: %s"), "http://ledo.feardc.net/"))
 		--return 0
 	--else
 
@@ -5600,7 +4582,7 @@ function VH_OnParsedMsgRevConnectToMe (nick, othernick)
 	end
 
 	--if (table_sets ["addledobot"] == 1) and (othernick == table_sets ["ledobotnick"]) then
-		--maintouser (nick, string.format (getlang (358), "http://ledo.feardc.net/"))
+		--maintouser (nick, string.format (gettext ("You can download me from: %s"), "http://ledo.feardc.net/"))
 		--return 0
 	--else
 
@@ -5634,56 +4616,56 @@ function VH_OnNewBan (ip, nick, host, share, ran_min, ran_max, bype, bate, why, 
 	local banwhy = why
 
 	if not banwhy or string.len (banwhy) == 0 then
-		banwhy = getlang (888)
+		banwhy = gettext ("No reason specified")
 	end
 
 	if bandate == 0 then
 		if bantype ~= 3 and bantype ~= 4 and bantype ~= 5 and bantype ~= 6 and bantype ~= 9 and ip and string.len (ip) > 0 then
-			opsnotify (table_sets ["classnotiban"], string.format (getlang (933), ip, op, banwhy))
+			opsnotify (table_sets ["classnotiban"], string.format (gettext ("IP %s permanently banned: <%s> %s"), ip, op, banwhy))
 		end
 
 		if nick and string.len (nick) > 0 then
 			if bantype == 8 then
-				opsnotify (table_sets ["classnotiban"], string.format (getlang (938), nick, op, banwhy))
+				opsnotify (table_sets ["classnotiban"], string.format (gettext ("Prefix %s permanently banned: <%s> %s"), nick, op, banwhy))
 			else
-				opsnotify (table_sets ["classnotiban"], string.format (getlang (934), nick, op, banwhy))
+				opsnotify (table_sets ["classnotiban"], string.format (gettext ("Nick %s permanently banned: <%s> %s"), nick, op, banwhy))
 			end
 		end
 
 		if host and string.len (host) > 0 then
-			opsnotify (table_sets ["classnotiban"], string.format (getlang (936), host, op, banwhy))
+			opsnotify (table_sets ["classnotiban"], string.format (gettext ("Host %s permanently banned: <%s> %s"), host, op, banwhy))
 		end
 
 		if banshare > 0 then
-			opsnotify (table_sets ["classnotiban"], string.format (getlang (937), tostring (banshare), op, banwhy))
+			opsnotify (table_sets ["classnotiban"], string.format (gettext ("Share %s permanently banned: <%s> %s"), tostring (banshare), op, banwhy))
 		end
 
 		if ran_min and ran_max and string.len (ran_min) > 0 and string.len (ran_max) > 0 then
-			opsnotify (table_sets ["classnotiban"], string.format (getlang (935), ran_min .. " - " .. ran_max, op, banwhy))
+			opsnotify (table_sets ["classnotiban"], string.format (gettext ("Range %s permanently banned: <%s> %s"), ran_min .. " - " .. ran_max, op, banwhy))
 		end
 	else
 		if bantype ~= 3 and ip and string.len (ip) > 0 then
-			opsnotify (table_sets ["classnotiban"], string.format (getlang (939), ip, os.date (table_sets ["dateformat"] .. " " .. table_sets ["timeformat"], bandate), op, banwhy))
+			opsnotify (table_sets ["classnotiban"], string.format (gettext ("IP %s temporarily banned until %s: <%s> %s"), ip, os.date (table_sets ["dateformat"] .. " " .. table_sets ["timeformat"], bandate), op, banwhy))
 		end
 
 		if nick and string.len (nick) > 0 then
 			if bantype == 8 then
-				opsnotify (table_sets ["classnotiban"], string.format (getlang (944), nick, os.date (table_sets ["dateformat"] .. " " .. table_sets ["timeformat"], bandate), op, banwhy))
+				opsnotify (table_sets ["classnotiban"], string.format (gettext ("Prefix %s temporarily banned until %s: <%s> %s"), nick, os.date (table_sets ["dateformat"] .. " " .. table_sets ["timeformat"], bandate), op, banwhy))
 			else
-				opsnotify (table_sets ["classnotiban"], string.format (getlang (940), nick, os.date (table_sets ["dateformat"] .. " " .. table_sets ["timeformat"], bandate), op, banwhy))
+				opsnotify (table_sets ["classnotiban"], string.format (gettext ("Nick %s temporarily banned until %s: <%s> %s"), nick, os.date (table_sets ["dateformat"] .. " " .. table_sets ["timeformat"], bandate), op, banwhy))
 			end
 		end
 
 		if host and string.len (host) > 0 then
-			opsnotify (table_sets ["classnotiban"], string.format (getlang (942), host, os.date (table_sets ["dateformat"] .. " " .. table_sets ["timeformat"], bandate), op, banwhy))
+			opsnotify (table_sets ["classnotiban"], string.format (gettext ("Host %s temporarily banned until %s: <%s> %s"), host, os.date (table_sets ["dateformat"] .. " " .. table_sets ["timeformat"], bandate), op, banwhy))
 		end
 
 		if banshare > 0 then
-			opsnotify (table_sets ["classnotiban"], string.format (getlang (943), tostring (banshare), os.date (table_sets ["dateformat"] .. " " .. table_sets ["timeformat"], bandate), op, banwhy))
+			opsnotify (table_sets ["classnotiban"], string.format (gettext ("Share %s temporarily banned until %s: <%s> %s"), tostring (banshare), os.date (table_sets ["dateformat"] .. " " .. table_sets ["timeformat"], bandate), op, banwhy))
 		end
 
 		if ran_min and ran_max and string.len (ran_min) > 0 and string.len (ran_max) > 0 then
-			opsnotify (table_sets ["classnotiban"], string.format (getlang (941), ran_min .. " - " .. ran_max, os.date (table_sets ["dateformat"] .. " " .. table_sets ["timeformat"], bandate), op, banwhy))
+			opsnotify (table_sets ["classnotiban"], string.format (gettext ("Range %s temporarily banned until %s: <%s> %s"), ran_min .. " - " .. ran_max, os.date (table_sets ["dateformat"] .. " " .. table_sets ["timeformat"], bandate), op, banwhy))
 		end
 	end
 
@@ -5707,25 +4689,25 @@ function VH_OnUnBan (what, op, why)
 		local banwhy = why
 
 		if not banwhy or string.len (banwhy) == 0 then
-			banwhy = getlang (888)
+			banwhy = gettext ("No reason specified")
 		end
 
 		if bantype == 0 then -- nick + ip
-			opsnotify (table_sets ["classnotiban"], string.format (getlang (962), what, op, banwhy))
+			opsnotify (table_sets ["classnotiban"], string.format (gettext ("Nick and IP %s unbanned: <%s> %s"), what, op, banwhy))
 		elseif bantype == 1 then -- ip
-			opsnotify (table_sets ["classnotiban"], string.format (getlang (945), what, op, banwhy))
+			opsnotify (table_sets ["classnotiban"], string.format (gettext ("IP %s unbanned: <%s> %s"), what, op, banwhy))
 		elseif bantype == 2 then -- nick
-			opsnotify (table_sets ["classnotiban"], string.format (getlang (946), what, op, banwhy))
+			opsnotify (table_sets ["classnotiban"], string.format (gettext ("Nick %s unbanned: <%s> %s"), what, op, banwhy))
 		elseif bantype == 3 then -- range
-			opsnotify (table_sets ["classnotiban"], string.format (getlang (947), what, op, banwhy))
+			opsnotify (table_sets ["classnotiban"], string.format (gettext ("Range %s unbanned: <%s> %s"), what, op, banwhy))
 		elseif bantype == 4 or bantype == 5 or bantype == 6 or bantype == 9 then -- host
-			opsnotify (table_sets ["classnotiban"], string.format (getlang (948), what, op, banwhy))
+			opsnotify (table_sets ["classnotiban"], string.format (gettext ("Host %s unbanned: <%s> %s"), what, op, banwhy))
 		elseif bantype == 7 then -- share
-			opsnotify (table_sets ["classnotiban"], string.format (getlang (949), what, op, banwhy))
+			opsnotify (table_sets ["classnotiban"], string.format (gettext ("Share %s unbanned: <%s> %s"), what, op, banwhy))
 		elseif bantype == 8 then -- prefix
-			opsnotify (table_sets ["classnotiban"], string.format (getlang (950), what, op, banwhy))
+			opsnotify (table_sets ["classnotiban"], string.format (gettext ("Prefix %s unbanned: <%s> %s"), what, op, banwhy))
 		else -- other
-			opsnotify (table_sets ["classnotiban"], string.format (getlang (963), what, op, banwhy))
+			opsnotify (table_sets ["classnotiban"], string.format (gettext ("Other %s unbanned: <%s> %s"), what, op, banwhy))
 		end
 
 		oprankaccept (op, getclass (op))
@@ -5741,12 +4723,12 @@ if table_othsets ["locked"] == true then return 1 end
 local ip = getip (nick)
 
 if isprotected (nick, ip) == true then -- protected
-	commandanswer (op, getlang (46))
+	commandanswer (op, gettext ("User you're trying to kick or redirect is protected."))
 	return 0
 end
 
 local ucl = getclass (nick)
-opsnotify (table_sets ["classnotikick"], string.format (getlang (147), nick, ip .. tryipcc (ip, nick), ucl, op, data))
+opsnotify (table_sets ["classnotikick"], string.format (gettext ("%s with IP %s and class %s kicked: <%s> %s"), nick, ip .. tryipcc (ip, nick), ucl, op, data))
 oprankaccept (op, getclass (op))
 
 if (ucl > 0) and (ucl < table_sets ["scanbelowclass"]) then
@@ -5754,7 +4736,7 @@ if (ucl > 0) and (ucl < table_sets ["scanbelowclass"]) then
 		local rucl = getregclass (nick)
 
 		if rucl then -- check if physically registered
-			opsnotify (table_sets ["classnotikick"], string.format (getlang (281), nick, rucl))
+			opsnotify (table_sets ["classnotikick"], string.format (gettext ("%s is registered with class %s."), nick, rucl))
 		end
 
 	elseif table_sets ["regkickaction"] == 2 then
@@ -5763,7 +4745,7 @@ if (ucl > 0) and (ucl < table_sets ["scanbelowclass"]) then
 		if rucl then -- only if registered
 			delledouser (nick)
 			VH:SQLQuery ("delete from `reglist` where `nick` = '"..repsqlchars (nick).."' limit 1")
-			opsnotify (table_sets ["classnotikick"], string.format (getlang (359), nick, rucl))
+			opsnotify (table_sets ["classnotikick"], string.format (gettext ("%s is registered with class %s and has been automatically unregistered and deleted from other tables."), nick, rucl))
 		end
 	end
 end
@@ -5777,7 +4759,7 @@ function VH_OnOperatorDrops (op, nick)
 if table_othsets ["locked"] == true then return 1 end
 
 if isprotected (nick, getip (nick)) == true then -- protected
-	commandanswer (op, getlang (46))
+	commandanswer (op, gettext ("User you're trying to kick or redirect is protected."))
 	return 0
 end
 
@@ -5799,7 +4781,7 @@ function VH_OnParsedMsgPM (from, data, to)
 
 	if prot == false then -- protection
 		if (fcls < table_sets ["pmminclass"]) and (to ~= table_othsets ["botnick"]) then
-			pmtouser (from, to, getlang (183))
+			pmtouser (from, to, gettext ("You're not allowed to send private messages."))
 			return 0
 		end
 
@@ -5821,7 +4803,7 @@ function VH_OnParsedMsgPM (from, data, to)
 
 						if (data == rcode) or (data == table_code [from]["code"]) then
 							table_code [from]["lock"] = false
-							pmtouser (from, to, getlang (606))
+							pmtouser (from, to, gettext ("Code accepted."))
 						else
 							local txt = string.gsub (table_sets ["codetext"], "<code>", reprexpchars (table_code [from]["vcode"]))
 							pmtouser (from, to, txt)
@@ -5855,7 +4837,7 @@ function VH_OnParsedMsgPM (from, data, to)
 					donotifycmd (from, data, 0, fcls)
 					sendophistory (from, string.sub (data, string.len (table_cmnds ["ophistory"]) + 3, -1), 0, true)
 				else
-					pmtouser (from, table_othsets ["opchatnick"], getlang (128))
+					pmtouser (from, table_othsets ["opchatnick"], gettext ("This command is either disabled or you don't have access to it."))
 				end
 
 				return 0
@@ -5863,7 +4845,7 @@ function VH_OnParsedMsgPM (from, data, to)
 				addophistoryline (from, data) -- log operators chat
 			end
 		else
-			opsnotify (table_sets ["classnotibotpm"], string.format (getlang (432), from, ip .. tryipcc (ip, from), fcls, table_othsets ["opchatnick"], data))
+			opsnotify (table_sets ["classnotibotpm"], string.format (gettext ("%s with IP %s and class %s sent message to %s: %s"), from, ip .. tryipcc (ip, from), fcls, table_othsets ["opchatnick"], data))
 		end
 
 	----- ---- --- -- -
@@ -5876,7 +4858,7 @@ function VH_OnParsedMsgPM (from, data, to)
 						donotifycmd (from, data, 0, fcls)
 						savecmdlog (from, fcls, data, true)
 					else
-						commandanswer (from, getlang (128))
+						commandanswer (from, gettext ("This command is either disabled or you don't have access to it."))
 						return 0
 					end
 				elseif string.find (data, "^"..table_othsets ["optrig"].."lualist.*$") or string.find (data, "^"..table_othsets ["optrig"].."luainfo.*$") or string.find (data, "^"..table_othsets ["optrig"].."luaversion.*$") then
@@ -5892,12 +4874,12 @@ function VH_OnParsedMsgPM (from, data, to)
 					savecmdlog (from, fcls, data, true)
 				end
 			else
-				opsnotify (table_sets ["classnotibotpm"], string.format (getlang (432), from, ip .. tryipcc (ip, from), fcls, table_othsets ["botnick"], data))
+				opsnotify (table_sets ["classnotibotpm"], string.format (gettext ("%s with IP %s and class %s sent message to %s: %s"), from, ip .. tryipcc (ip, from), fcls, table_othsets ["botnick"], data))
 			end
 		elseif string.find (string.sub (data, 1, 1), table_othsets ["ustrig"]) then
 			-- skip
 		else
-			opsnotify (table_sets ["classnotibotpm"], string.format (getlang (432), from, ip .. tryipcc (ip, from), fcls, table_othsets ["botnick"], data))
+			opsnotify (table_sets ["classnotibotpm"], string.format (gettext ("%s with IP %s and class %s sent message to %s: %s"), from, ip .. tryipcc (ip, from), fcls, table_othsets ["botnick"], data))
 		end
 
 	----- ---- --- -- -
@@ -5923,8 +4905,8 @@ function VH_OnParsedMsgPM (from, data, to)
 					VH_OnOperatorCommand (from, data)
 				end
 			else
-				opsnotify (table_sets ["classnotibotpm"], string.format (getlang (432), from, ip .. tryipcc (ip, from), fcls, table_sets ["ledobotnick"], data))
-				VH:SendDataToUser ("$To: "..from.." From: "..table_sets ["ledobotnick"].." $<"..table_sets ["ledobotnick"].."> "..getlang (9).."|", from)
+				opsnotify (table_sets ["classnotibotpm"], string.format (gettext ("%s with IP %s and class %s sent message to %s: %s"), from, ip .. tryipcc (ip, from), fcls, table_sets ["ledobotnick"], data))
+				VH:SendDataToUser ("$To: "..from.." From: "..table_sets ["ledobotnick"].." $<"..table_sets ["ledobotnick"].."> "..gettext ("I'm probably away. State your business and I might answer later if you're lucky.").."|", from)
 			end
 		end
 
@@ -5932,8 +4914,8 @@ function VH_OnParsedMsgPM (from, data, to)
 
 	elseif table_othsets ["lasttimenick"] and (to == table_othsets ["lasttimenick"]) then -- time bot
 		if table_sets ["timebotint"] > 0 then
-			opsnotify (table_sets ["classnotibotpm"], string.format (getlang (432), from, ip .. tryipcc (ip, from), fcls, table_othsets ["lasttimenick"], data))
-			VH:SendDataToUser ("$To: "..from.." From: "..table_othsets ["lasttimenick"].." $<"..table_othsets ["lasttimenick"].."> "..getlang (9).."|", from)
+			opsnotify (table_sets ["classnotibotpm"], string.format (gettext ("%s with IP %s and class %s sent message to %s: %s"), from, ip .. tryipcc (ip, from), fcls, table_othsets ["lasttimenick"], data))
+			VH:SendDataToUser ("$To: "..from.." From: "..table_othsets ["lasttimenick"].." $<"..table_othsets ["lasttimenick"].."> "..gettext ("I'm probably away. State your business and I might answer later if you're lucky.").."|", from)
 		end
 
 	----- ---- --- -- -
@@ -5973,18 +4955,18 @@ function VH_OnParsedMsgPM (from, data, to)
 
 			if custnick then
 				if data ~= pmdat then
-					opsnotify (table_sets ["classnotirepl"], string.format (getlang (990), fcls, from, data))
+					opsnotify (table_sets ["classnotirepl"], string.format (gettext ("Message replaced for user with class %s in PM: <%s> %s"), fcls, from, data))
 				end
 
 				VH:SendDataToUser ("$To: " .. to .. " From: " .. from .. " $<" .. custnick .. "> " .. pmdat .. "|", to)
 				return 0
 			elseif data ~= pmdat then
-				opsnotify (table_sets ["classnotirepl"], string.format (getlang (990), fcls, from, data))
+				opsnotify (table_sets ["classnotirepl"], string.format (gettext ("Message replaced for user with class %s in PM: <%s> %s"), fcls, from, data))
 				VH:SendDataToUser ("$To: " .. to .. " From: " .. from .. " $<" .. from .. "> " .. pmdat .. "|", to)
 				return 0
 			end
 		elseif data ~= pmdat then
-			opsnotify (table_sets ["classnotirepl"], string.format (getlang (990), fcls, from, data))
+			opsnotify (table_sets ["classnotirepl"], string.format (gettext ("Message replaced for user with class %s in PM: <%s> %s"), fcls, from, data))
 			VH:SendDataToUser ("$To: " .. to .. " From: " .. from .. " $<" .. from .. "> " .. pmdat .. "|", to)
 			return 0
 		end
@@ -6017,7 +4999,7 @@ if isprotected (nick, ip) == false then -- protection
 
 					if (data == rcode) or (data == table_code [nick]["code"]) then
 						table_code [nick]["lock"] = false
-						maintouser (nick, getlang (606))
+						maintouser (nick, gettext ("Code accepted."))
 					else
 						local txt = string.gsub (table_sets ["codetext"], "<code>", reprexpchars (table_code [nick]["vcode"]))
 						maintouser (nick, txt)
@@ -6073,7 +5055,7 @@ end
 		cvdat = replchatmsg (nick, ucl, cvdat, 1)
 
 		if norepl ~= cvdat then
-			opsnotify (table_sets ["classnotirepl"], string.format (getlang (932), ucl, nick, data))
+			opsnotify (table_sets ["classnotirepl"], string.format (gettext ("Message replaced for user with class %s in MC: <%s> %s"), ucl, nick, data))
 		end
 	end
 
@@ -6125,7 +5107,7 @@ if (stype == "in") or (stype == "out") then
 local _, _, user, item = string.find (item, "^%S+ (%S+) (.+)$")
 
 if (getstatus (user) == 1) and ((table_sets ["welcomeclass"] == 11) or (getclass (user) < table_sets ["welcomeclass"])) then
-commandanswer (nick, getlang (469))
+commandanswer (nick, gettext ("Either the feature is disabled or user that you're trying to set welcome message for doesn't have access to it."))
 else
 local auser = repsqlchars (user)
 local _, rows = VH:SQLQuery ("select `nick` from `"..tbl_sql ["wm"].."` where `nick` = '"..auser.."' limit 1")
@@ -6139,16 +5121,16 @@ end
 item = string.gsub (item, "%*", reprexpchars (user))
 
 if stype == "in" then
-commandanswer (nick, string.format (getlang (485), user, item))
-opsnotify (table_sets ["classnotiwelcome"], string.format (getlang (496), nick, cls, user, item))
+commandanswer (nick, string.format (gettext ("Login message set for %s: %s"), user, item))
+opsnotify (table_sets ["classnotiwelcome"], string.format (gettext ("%s with class %s changed login message for %s: %s"), nick, cls, user, item))
 elseif stype == "out" then
-commandanswer (nick, string.format (getlang (495), user, item))
-opsnotify (table_sets ["classnotiwelcome"], string.format (getlang (497), nick, cls, user, item))
+commandanswer (nick, string.format (gettext ("Logout message set for %s: %s"), user, item))
+opsnotify (table_sets ["classnotiwelcome"], string.format (gettext ("%s with class %s changed logout message for %s: %s"), nick, cls, user, item))
 end
 end
 
 else -- unknown type
-commandanswer (nick, string.format (getlang (100), "in "..getlang (70).." out"))
+commandanswer (nick, string.format (gettext ("Known types are: %s"), "in "..gettext ("and").." out"))
 end
 
 else -- deleting
@@ -6158,30 +5140,30 @@ if stype == "in" then
 local _, _, user = string.find (item, "^%S+ (%S+)$")
 
 if (getstatus (user) == 1) and ((table_sets ["welcomeclass"] == 11) or (getclass (user) < table_sets ["welcomeclass"])) then
-commandanswer (nick, getlang (469))
+commandanswer (nick, gettext ("Either the feature is disabled or user that you're trying to set welcome message for doesn't have access to it."))
 else
 local anick = repsqlchars (user)
 VH:SQLQuery ("update `"..tbl_sql ["wm"].."` set `in` = '' where `nick` = '"..anick.."' limit 1")
 VH:SQLQuery ("delete from `"..tbl_sql ["wm"].."` where `nick` = '"..anick.."' and `out` = '' limit 1")
-commandanswer (nick, string.format (getlang (498), user))
-opsnotify (table_sets ["classnotiwelcome"], string.format (getlang (500), nick, cls, user))
+commandanswer (nick, string.format (gettext ("Login message deleted for user: %s"), user))
+opsnotify (table_sets ["classnotiwelcome"], string.format (gettext ("%s with class %s deleted login message for user: %s"), nick, cls, user))
 end
 
 elseif stype == "out" then
 local _, _, user = string.find (item, "^%S+ (%S+)$")
 
 if (getstatus (user) == 1) and ((table_sets ["welcomeclass"] == 11) or (getclass (user) < table_sets ["welcomeclass"])) then
-commandanswer (nick, getlang (469))
+commandanswer (nick, gettext ("Either the feature is disabled or user that you're trying to set welcome message for doesn't have access to it."))
 else
 local anick = repsqlchars (user)
 VH:SQLQuery ("update `"..tbl_sql ["wm"].."` set `out` = '' where `nick` = '"..anick.."' limit 1")
 VH:SQLQuery ("delete from `"..tbl_sql ["wm"].."` where `nick` = '"..anick.."' and `in` = '' limit 1")
-commandanswer (nick, string.format (getlang (499), user))
-opsnotify (table_sets ["classnotiwelcome"], string.format (getlang (501), nick, cls, user))
+commandanswer (nick, string.format (gettext ("Logout message deleted for user: %s"), user))
+opsnotify (table_sets ["classnotiwelcome"], string.format (gettext ("%s with class %s deleted logout message for user: %s"), nick, cls, user))
 end
 
 else -- unknown type
-commandanswer (nick, string.format (getlang (100), "in "..getlang (70).." out"))
+commandanswer (nick, string.format (gettext ("Known types are: %s"), "in "..gettext ("and").." out"))
 end
 end
 end
@@ -6198,12 +5180,12 @@ for x = 0, rows - 1 do
 local _, user, inm, outm = VH:SQLFetch (x)
 inm = string.gsub (inm, "%*", reprexpchars (user))
 outm = string.gsub (outm, "%*", reprexpchars (user))
-anentry = anentry.."\r\n "..getlang (254)..": "..user.."\r\n "..getlang (255)..": "..inm.."\r\n "..getlang (256)..": "..outm.."\r\n"
+anentry = anentry.."\r\n "..gettext ("Nick")..": "..user.."\r\n "..gettext ("Login message")..": "..inm.."\r\n "..gettext ("Logout message")..": "..outm.."\r\n"
 end
 
-commandanswer (nick, getlang (252)..":\r\n"..anentry)
+commandanswer (nick, gettext ("Welcome message list")..":\r\n"..anentry)
 else
-commandanswer (nick, getlang (257))
+commandanswer (nick, gettext ("Welcome message list is empty."))
 end
 end
 
@@ -6215,10 +5197,10 @@ local _, rows = VH:SQLQuery ("select `nick` from `"..tbl_sql ["wm"].."` where `n
 
 if rows > 0 then
 VH:SQLQuery ("delete from `"..tbl_sql ["wm"].."` where `nick` = '"..aitem.."' limit 1")
-commandanswer (nick, string.format (getlang (258), item))
-opsnotify (table_sets ["classnotiwelcome"], string.format (getlang (502), nick, cls, item))
+commandanswer (nick, string.format (gettext ("Welcome messages were deleted for user: %s"), item))
+opsnotify (table_sets ["classnotiwelcome"], string.format (gettext ("%s with class %s deleted welcome messages for user: %s"), nick, cls, item))
 else
-commandanswer (nick, string.format (getlang (259), item))
+commandanswer (nick, string.format (gettext ("Couldn't delete user from welcome message list because not found: %s"), item))
 end
 end
 
@@ -6242,15 +5224,15 @@ end
 item = string.gsub (item, "%*", reprexpchars (nick))
 
 if stype == "in" then
-commandanswer (nick, string.format (getlang (260), item))
-opsnotify (table_sets ["classnotiwelcome"], string.format (getlang (261), nick, cls, item))
+commandanswer (nick, string.format (gettext ("Your login message set: %s"), item))
+opsnotify (table_sets ["classnotiwelcome"], string.format (gettext ("%s with class %s changed his login message: %s"), nick, cls, item))
 elseif stype == "out" then
-commandanswer (nick, string.format (getlang (262), item))
-opsnotify (table_sets ["classnotiwelcome"], string.format (getlang (263), nick, cls, item))
+commandanswer (nick, string.format (gettext ("Your logout message set: %s"), item))
+opsnotify (table_sets ["classnotiwelcome"], string.format (gettext ("%s with class %s changed his logout message: %s"), nick, cls, item))
 end
 
 else -- unknown type
-commandanswer (nick, string.format (getlang (100), "in "..getlang (70).." out"))
+commandanswer (nick, string.format (gettext ("Known types are: %s"), "in "..gettext ("and").." out"))
 end
 
 else -- deleting
@@ -6260,18 +5242,18 @@ if stype == "in" then
 local anick = repsqlchars (nick)
 VH:SQLQuery ("update `"..tbl_sql ["wm"].."` set `in` = '' where `nick` = '"..anick.."' limit 1")
 VH:SQLQuery ("delete from `"..tbl_sql ["wm"].."` where `nick` = '"..anick.."' and `out` = '' limit 1")
-commandanswer (nick, getlang (491))
-opsnotify (table_sets ["classnotiwelcome"], string.format (getlang (493), nick, cls))
+commandanswer (nick, gettext ("Your login message deleted."))
+opsnotify (table_sets ["classnotiwelcome"], string.format (gettext ("%s with class %s deleted his login message."), nick, cls))
 
 elseif stype == "out" then
 local anick = repsqlchars (nick)
 VH:SQLQuery ("update `"..tbl_sql ["wm"].."` set `out` = '' where `nick` = '"..anick.."' limit 1")
 VH:SQLQuery ("delete from `"..tbl_sql ["wm"].."` where `nick` = '"..anick.."' and `in` = '' limit 1")
-commandanswer (nick, getlang (492))
-opsnotify (table_sets ["classnotiwelcome"], string.format (getlang (494), nick, cls))
+commandanswer (nick, gettext ("Your logout message deleted."))
+opsnotify (table_sets ["classnotiwelcome"], string.format (gettext ("%s with class %s deleted his logout message."), nick, cls))
 
 else -- unknown type
-commandanswer (nick, string.format (getlang (100), "in "..getlang (70).." out"))
+commandanswer (nick, string.format (gettext ("Known types are: %s"), "in "..gettext ("and").." out"))
 end
 end
 end
@@ -6284,11 +5266,11 @@ local _, rows = VH:SQLQuery ("select `in`, `out` from `"..tbl_sql ["wm"].."` whe
 if rows > 0 then
 local _, inm, outm = VH:SQLFetch (0)
 inm = string.gsub (inm, "%*", reprexpchars (nick))
-commandanswer (nick, string.format (getlang (265), inm))
+commandanswer (nick, string.format (gettext ("Your login message: %s"), inm))
 outm = string.gsub (outm, "%*", reprexpchars (nick))
-commandanswer (nick, string.format (getlang (483), outm))
+commandanswer (nick, string.format (gettext ("Your logout message: %s"), outm))
 else
-commandanswer (nick, getlang (264))
+commandanswer (nick, gettext ("You don't have any welcome messages."))
 end
 end
 
@@ -6337,21 +5319,21 @@ function addchatroom (nick, item)
 	minc, maxc = tonumber (minc), tonumber (maxc)
 
 	if ((minc > 5) and (minc < 10)) or (minc > 10) or ((maxc > 5) and (maxc < 10)) or (maxc > 10) then -- invalid class
-		commandanswer (nick, string.format (getlang (143), "0, 1, 2, 3, 4, 5 "..getlang (70).." 10"))
+		commandanswer (nick, string.format (gettext ("Known classes are: %s"), "0, 1, 2, 3, 4, 5 "..gettext ("and").." 10"))
 	else
 		local entry = repsqlchars (room)
 		local _, rows = VH:SQLQuery ("select `minclass` from `"..tbl_sql ["chat"].."` where `room` = '"..entry.."' limit 1")
 
 		if rows > 0 then
 			VH:SQLQuery ("update `"..tbl_sql ["chat"].."` set `description` = '"..repsqlchars (desc).."', `minclass` = "..minc..", `maxclass` = "..maxc..", `cc` = '"..repsqlchars (string.upper (cc)).."' where `room` = '"..entry.."' limit 1")
-			commandanswer (nick, string.format (getlang (272), room))
+			commandanswer (nick, string.format (gettext ("Modified chatroom: %s"), room))
 		else
 			if getstatus (room) == 0 then
 				VH:SQLQuery ("insert into `"..tbl_sql ["chat"].."` (`room`, `description`, `minclass`, `maxclass`, `cc`) values ('"..entry.."', '"..repsqlchars (desc).."', "..minc..", "..maxc..", '"..repsqlchars (string.upper (cc)).."')")
 				if table_sets ["chatrunning"] == 1 then addhubrobot (room, desc, 1, "", 0) end
-				commandanswer (nick, string.format (getlang (273), room))
+				commandanswer (nick, string.format (gettext ("Added chatroom: %s"), room))
 			else -- nick is already in use
-				commandanswer (nick, string.format (getlang (304), room))
+				commandanswer (nick, string.format (gettext ("Couldn't add chatroom because nick is already in use: %s"), room))
 			end
 		end
 	end
@@ -6367,9 +5349,9 @@ function delchatroom (nick, item)
 		VH:SQLQuery ("delete from `"..tbl_sql ["chat"].."` where `room` = '"..aitem.."' limit 1")
 		if table_sets ["chatrunning"] == 1 then delhubrobot (item) end
 		table_chat [item] = nil -- delete ignore list
-		commandanswer (nick, string.format (getlang (274), item))
+		commandanswer (nick, string.format (gettext ("Deleted chatroom: %s"), item))
 	else
-		commandanswer (nick, string.format (getlang (275), item))
+		commandanswer (nick, string.format (gettext ("Couldn't delete chatroom because not found: %s"), item))
 	end
 end
 
@@ -6383,12 +5365,12 @@ function listchatroom (nick)
 
 		for x = 0, rows - 1 do
 			local _, room, desc, minc, maxc, cc = VH:SQLFetch (x)
-			anentry = anentry.."\r\n "..getlang (276)..": "..room.." [ "..minc.." / "..maxc.." / "..cc.." ]\r\n "..getlang (277)..": "..desc.."\r\n"
+			anentry = anentry.."\r\n "..gettext ("Chatroom")..": "..room.." [ "..minc.." / "..maxc.." / "..cc.." ]\r\n "..gettext ("Description")..": "..desc.."\r\n"
 		end
 
-		commandanswer (nick, getlang (267)..":\r\n"..anentry)
+		commandanswer (nick, gettext ("Chatroom list")..":\r\n"..anentry)
 	else
-		commandanswer (nick, getlang (278))
+		commandanswer (nick, gettext ("Chatroom list is empty."))
 	end
 end
 
@@ -6421,7 +5403,7 @@ end
 function uninstallccrooms ()
 	for k, _ in pairs (table_room) do
 		local robot = string.gsub (table_sets ["ccroomstyle"], "<cc>", reprexpchars (k))
-		robot = string.gsub (robot, "<cn>", reprexpchars (cc_names [k] or getlang (516)))
+		robot = string.gsub (robot, "<cn>", reprexpchars (cc_names [k] or gettext ("Unknown country")))
 		robot = string.gsub (robot, string.char (32), string.char (160)) -- space to non-breaking space
 		delhubrobot (robot)
 		table_room [k] = nil
@@ -6465,17 +5447,17 @@ function addccroommember (nick, class)
 	if not cc then return nil end
 	if cc == "--" then return nil end
 	local robot = string.gsub (table_sets ["ccroomstyle"], "<cc>", reprexpchars (cc)) -- create robot nick
-	robot = string.gsub (robot, "<cn>", reprexpchars (cc_names [cc] or getlang (516)))
+	robot = string.gsub (robot, "<cn>", reprexpchars (cc_names [cc] or gettext ("Unknown country")))
 	robot = string.gsub (robot, string.char (32), string.char (160)) -- space to non-breaking space
 
 	if table_room [cc] then -- room exists
 		if getccroommember (nick, cc) == 0 then -- add user to member list
 			table.insert (table_room [cc], nick)
-			edithubrobot (robot, string.format (getlang (614), (cc_names [cc] or getlang (516))), 1, "", table.getn (table_room [cc]))
+			edithubrobot (robot, string.format (gettext ("Chatroom: %s"), (cc_names [cc] or gettext ("Unknown country"))), 1, "", table.getn (table_room [cc]))
 		end
 	else -- create new room
 		table_room [cc] = {nick}
-		addhubrobot (robot, string.format (getlang (614), (cc_names [cc] or getlang (516))), 1, "", 1)
+		addhubrobot (robot, string.format (gettext ("Chatroom: %s"), (cc_names [cc] or gettext ("Unknown country"))), 1, "", 1)
 	end
 end
 
@@ -6483,10 +5465,10 @@ end
 
 function chatroomhelp ()
 	local ustrig = string.sub (getconfig ("cmd_start_user"), 1, 1)
-	local txt = " "..ustrig..table_cmnds ["chatenter"].." - "..getlang (627).."\r\n"
-	txt = txt.." "..ustrig..table_cmnds ["chatleave"].." - "..getlang (628).."\r\n"
-	txt = txt.." "..ustrig..table_cmnds ["chatusers"].." - "..getlang (621).."\r\n"
-	txt = txt.." "..ustrig..table_cmnds ["chathelp"].." - "..getlang (179).."\r\n"
+	local txt = " "..ustrig..table_cmnds ["chatenter"].." - "..gettext ("Enter the chatroom").."\r\n"
+	txt = txt.." "..ustrig..table_cmnds ["chatleave"].." - "..gettext ("Leave the chatroom").."\r\n"
+	txt = txt.." "..ustrig..table_cmnds ["chatusers"].." - "..gettext ("Chatroom member list").."\r\n"
+	txt = txt.." "..ustrig..table_cmnds ["chathelp"].." - "..gettext ("This list of commands").."\r\n"
 	return txt
 end
 
@@ -6498,7 +5480,7 @@ if table_sets ["ccroomrunning"] == 0 then return false end
 
 for k, v in pairs (table_room) do
 	local robot = string.gsub (table_sets ["ccroomstyle"], "<cc>", reprexpchars (k))
-	robot = string.gsub (robot, "<cn>", reprexpchars (cc_names [k] or getlang (516)))
+	robot = string.gsub (robot, "<cn>", reprexpchars (cc_names [k] or gettext ("Unknown country")))
 	robot = string.gsub (robot, string.char (32), string.char (160)) -- space to non-breaking space
 
 	if robot == to then -- room match
@@ -6508,16 +5490,16 @@ for k, v in pairs (table_room) do
 		if mem > 0 then -- is member
 			if cmd then -- user command
 				if cmd == table_cmnds ["chatenter"] then
-					VH:SendDataToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..getlang (623).."|", nick)
+					VH:SendDataToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..gettext ("You're already member of this chatroom.").."|", nick)
 
 				elseif cmd == table_cmnds ["chatleave"] then
 					table.remove (table_room [k], mem)
-					VH:SendDataToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..getlang (615).."|", nick)
+					VH:SendDataToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..gettext ("You've left the chatroom.").."|", nick)
 
 					if table_sets ["roomusernotify"] == 1 then -- notification
 						for _, x in pairs (v) do
 							if x ~= nick then -- skip self
-								VH:SendDataToUser ("$To: "..x.." From: "..to.." $<"..to.."> "..string.format (getlang (616), nick).."|", x)
+								VH:SendDataToUser ("$To: "..x.." From: "..to.." $<"..to.."> "..string.format (gettext ("User left the chatroom: %s"), nick).."|", x)
 							end
 						end
 					end
@@ -6525,13 +5507,13 @@ for k, v in pairs (table_room) do
 				elseif cmd == table_cmnds ["chatusers"] then
 					local list = ""
 					for c, x in pairs (v) do list = list.." "..c..". "..x.."\r\n" end
-					VH:SendDataToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..getlang (621)..":\r\n\r\n"..list.."|", nick)
+					VH:SendDataToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..gettext ("Chatroom member list")..":\r\n\r\n"..list.."|", nick)
 
 				elseif cmd == table_cmnds ["chathelp"] then
-					VH:SendDataToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..getlang (624)..":\r\n\r\n"..chatroomhelp ().."|", nick)
+					VH:SendDataToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..gettext ("Chatroom user commands")..":\r\n\r\n"..chatroomhelp ().."|", nick)
 
 				else -- unknown command
-					VH:SendDataToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..string.format (getlang (626), string.sub (getconfig ("cmd_start_user"), 1, 1)..table_cmnds ["chathelp"]).."|", nick)
+					VH:SendDataToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..string.format (gettext ("Unknown chatroom command. Use %s for help."), string.sub (getconfig ("cmd_start_user"), 1, 1)..table_cmnds ["chathelp"]).."|", nick)
 				end
 
 			else -- regular message
@@ -6545,44 +5527,44 @@ for k, v in pairs (table_room) do
 		else -- not member
 			if class < table_sets ["ccroommancls"] then
 				local mtip = getip (nick)
-				opsnotify (table_sets ["classnotibotpm"], string.format (getlang (432), nick, mtip .. tryipcc (mtip, nick), class, to, data))
-				VH:SendDataToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..getlang (620).."|", nick)
+				opsnotify (table_sets ["classnotibotpm"], string.format (gettext ("%s with IP %s and class %s sent message to %s: %s"), nick, mtip .. tryipcc (mtip, nick), class, to, data))
+				VH:SendDataToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..gettext ("You don't have access to this chatroom.").."|", nick)
 			else
 				if cmd then -- user command
 					if cmd == table_cmnds ["chatenter"] then
 						table.insert (table_room [k], nick)
-						VH:SendDataToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..string.format (getlang (618), k).."|", nick)
+						VH:SendDataToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..string.format (gettext ("You've entered %s chatroom."), k).."|", nick)
 
 						if table_sets ["roomusernotify"] == 1 then -- notification
 							for _, x in pairs (v) do
 								if x ~= nick then -- skip self
-									VH:SendDataToUser ("$To: "..x.." From: "..to.." $<"..to.."> "..string.format (getlang (617), nick).."|", x)
+									VH:SendDataToUser ("$To: "..x.." From: "..to.." $<"..to.."> "..string.format (gettext ("User entered the chatroom: %s"), nick).."|", x)
 								end
 							end
 						end
 
 					elseif cmd == table_cmnds ["chatleave"] then
-						VH:SendDataToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..getlang (619).."|", nick)
+						VH:SendDataToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..gettext ("You're not member of this chatroom.").."|", nick)
 
 					elseif cmd == table_cmnds ["chatusers"] then
 						local list = ""
 						for c, x in pairs (v) do list = list.." "..c..". "..x.."\r\n" end
 
 						if list == "" then
-							VH:SendDataToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..getlang (622).."|", nick)
+							VH:SendDataToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..gettext ("Chatroom is empty.").."|", nick)
 						else
-							VH:SendDataToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..getlang (621)..":\r\n\r\n"..list.."|", nick)
+							VH:SendDataToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..gettext ("Chatroom member list")..":\r\n\r\n"..list.."|", nick)
 						end
 
 					elseif cmd == table_cmnds ["chathelp"] then
-						VH:SendDataToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..getlang (624)..":\r\n\r\n"..chatroomhelp ().."|", nick)
+						VH:SendDataToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..gettext ("Chatroom user commands")..":\r\n\r\n"..chatroomhelp ().."|", nick)
 
 					else -- unknown command
-						VH:SendDataToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..string.format (getlang (626), string.sub (getconfig ("cmd_start_user"), 1, 1)..table_cmnds ["chathelp"]).."|", nick)
+						VH:SendDataToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..string.format (gettext ("Unknown chatroom command. Use %s for help."), string.sub (getconfig ("cmd_start_user"), 1, 1)..table_cmnds ["chathelp"]).."|", nick)
 					end
 
 				else -- regular message
-					VH:SendDataToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..getlang (619).."|", nick)
+					VH:SendDataToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..gettext ("You're not member of this chatroom.").."|", nick)
 				end
 			end
 		end
@@ -6629,7 +5611,7 @@ function broadcastchatroom (to, nick, data, ucl) -- class based chatroom
 					if cmd == table_cmnds ["chatenter"] then
 						if ign > 0 then -- remove from ignore list
 							table.remove (table_chat [to], ign)
-							VH:SendDataToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..string.format (getlang (618), to).."|", nick)
+							VH:SendDataToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..string.format (gettext ("You've entered %s chatroom."), to).."|", nick)
 
 							if table_sets ["roomusernotify"] == 1 then -- notification
 								for x in string.gmatch (getnicklist (), "([^$]+)%$%$") do
@@ -6637,18 +5619,18 @@ function broadcastchatroom (to, nick, data, ucl) -- class based chatroom
 										local cl = getclass (x)
 
 										if (x ~= nick) and (cl >= minc) and (cl <= maxc) and ((table_othsets ["func_getcc"] == false) or (cc == "*") or (cc == getcc (x))) and (getchatroomignore (x, to) == 0) then -- skip self
-											VH:SendDataToUser ("$To: "..x.." From: "..to.." $<"..to.."> "..string.format (getlang (617), nick).."|", x)
+											VH:SendDataToUser ("$To: "..x.." From: "..to.." $<"..to.."> "..string.format (gettext ("User entered the chatroom: %s"), nick).."|", x)
 										end
 									end
 								end
 							end
 						else -- not ignoring
-							VH:SendDataToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..getlang (623).."|", nick)
+							VH:SendDataToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..gettext ("You're already member of this chatroom.").."|", nick)
 						end
 
 					elseif cmd == table_cmnds ["chatleave"] then
 						if ign > 0 then -- already ignoring
-							VH:SendDataToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..getlang (619).."|", nick)
+							VH:SendDataToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..gettext ("You're not member of this chatroom.").."|", nick)
 						else -- add to ignore list
 							if table_chat [to] then -- ignore list exists
 								table.insert (table_chat [to], nick)
@@ -6656,7 +5638,7 @@ function broadcastchatroom (to, nick, data, ucl) -- class based chatroom
 								table_chat [to] = {nick}
 							end
 
-							VH:SendDataToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..getlang (615).."|", nick)
+							VH:SendDataToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..gettext ("You've left the chatroom.").."|", nick)
 
 							if table_sets ["roomusernotify"] == 1 then -- notification
 								for x in string.gmatch (getnicklist (), "([^$]+)%$%$") do
@@ -6664,7 +5646,7 @@ function broadcastchatroom (to, nick, data, ucl) -- class based chatroom
 										local cl = getclass (x)
 
 										if (x ~= nick) and (cl >= minc) and (cl <= maxc) and ((table_othsets ["func_getcc"] == false) or (cc == "*") or (cc == getcc (x))) and (getchatroomignore (x, to) == 0) then -- skip self
-											VH:SendDataToUser ("$To: "..x.." From: "..to.." $<"..to.."> "..string.format (getlang (616), nick).."|", x)
+											VH:SendDataToUser ("$To: "..x.." From: "..to.." $<"..to.."> "..string.format (gettext ("User left the chatroom: %s"), nick).."|", x)
 										end
 									end
 								end
@@ -6687,21 +5669,21 @@ function broadcastchatroom (to, nick, data, ucl) -- class based chatroom
 						end
 
 						if list == "" then
-							VH:SendDataToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..getlang (622).."|", nick)
+							VH:SendDataToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..gettext ("Chatroom is empty.").."|", nick)
 						else
-							VH:SendDataToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..getlang (621)..":\r\n\r\n"..list.."|", nick)
+							VH:SendDataToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..gettext ("Chatroom member list")..":\r\n\r\n"..list.."|", nick)
 						end
 
 					elseif cmd == table_cmnds ["chathelp"] then
-						VH:SendDataToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..getlang (624)..":\r\n\r\n"..chatroomhelp ().."|", nick)
+						VH:SendDataToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..gettext ("Chatroom user commands")..":\r\n\r\n"..chatroomhelp ().."|", nick)
 
 					else -- unknown command
-						VH:SendDataToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..string.format (getlang (626), string.sub (getconfig ("cmd_start_user"), 1, 1)..table_cmnds ["chathelp"]).."|", nick)
+						VH:SendDataToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..string.format (gettext ("Unknown chatroom command. Use %s for help."), string.sub (getconfig ("cmd_start_user"), 1, 1)..table_cmnds ["chathelp"]).."|", nick)
 					end
 
 				else -- regular message
 					if ign > 0 then -- ignoring
-						VH:SendDataToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..getlang (619).."|", nick)
+						VH:SendDataToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..gettext ("You're not member of this chatroom.").."|", nick)
 					else -- broadcast
 						for x in string.gmatch (getnicklist (), "([^$]+)%$%$") do
 							if isbot (x) == false then
@@ -6717,8 +5699,8 @@ function broadcastchatroom (to, nick, data, ucl) -- class based chatroom
 
 			else -- not member
 				local mtip = getip (nick)
-				opsnotify (table_sets ["classnotibotpm"], string.format (getlang (432), nick, mtip .. tryipcc (mtip, nick), ucl, to, data))
-				VH:SendDataToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..getlang (620).."|", nick)
+				opsnotify (table_sets ["classnotibotpm"], string.format (gettext ("%s with IP %s and class %s sent message to %s: %s"), nick, mtip .. tryipcc (mtip, nick), ucl, to, data))
+				VH:SendDataToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..gettext ("You don't have access to this chatroom.").."|", nick)
 			end
 
 			return true
@@ -6741,14 +5723,14 @@ for k, _ in pairs (table_room) do -- remove user from all rooms
 	if mem > 0 then
 		table.remove (table_room [k], mem)
 		local robot = string.gsub (table_sets ["ccroomstyle"], "<cc>", reprexpchars (k)) -- create robot nick
-		robot = string.gsub (robot, "<cn>", reprexpchars (cc_names [k] or getlang (516)))
+		robot = string.gsub (robot, "<cn>", reprexpchars (cc_names [k] or gettext ("Unknown country")))
 		robot = string.gsub (robot, string.char (32), string.char (160)) -- space to non-breaking space
 
 		if table.getn (table_room [k]) == 0 then -- remove the room itself when empty
 			delhubrobot (robot)
 			table_room [k] = nil
 		else -- modify room
-			edithubrobot (robot, string.format (getlang (614), (cc_names [k] or getlang (516))), 1, "", table.getn (table_room [k]))
+			edithubrobot (robot, string.format (gettext ("Chatroom: %s"), (cc_names [k] or gettext ("Unknown country"))), 1, "", table.getn (table_room [k]))
 		end
 	end
 end
@@ -6794,20 +5776,20 @@ function getrealnick (nick, custom)
 
 	if not rnick then
 		if getstatus (custom) == 1 then
-			commandanswer (nick, getlang (424))
+			commandanswer (nick, gettext ("Requested nick is real."))
 		else
-			commandanswer (nick, getlang (368))
+			commandanswer (nick, gettext ("Requested nick wasn't found in custom nick list."))
 		end
 	else
 		local stsword = ""
 
 		if getstatus (rnick) == 1 then
-			stsword = getlang (371)
+			stsword = gettext ("online")
 		else
-			stsword = getlang (370)
+			stsword = gettext ("offline")
 		end
 
-		commandanswer (nick, string.format (getlang (369), stsword, rnick))
+		commandanswer (nick, string.format (gettext ("Requested nick belongs to a user who is %s: %s"), stsword, rnick))
 	end
 end
 
@@ -6882,7 +5864,7 @@ function cleancustnick (limit, byclass)
 
 			if getstatus (k) == 1 then
 				if table_sets ["classnoticust"] ~= 11 then
-					maintoall (string.format (getlang (20), v, k), table_sets ["classnoticust"], 10)
+					maintoall (string.format (gettext ("%s is now known as: %s"), v, k), table_sets ["classnoticust"], 10)
 				end
 			end
 
@@ -6934,7 +5916,7 @@ function resetrealnick (nick)
 
 	for k, v in pairs (table_cust) do
 		if tolow (v) == lnick then
-			maintoall (string.format (getlang (280), nick, k), 0, 10)
+			maintoall (string.format (gettext ("Custom nick %s is now owned by real user and therefore has been reset for user: %s"), nick, k), 0, 10)
 			table_cust [k] = nil
 			return nil
 		end
@@ -6946,7 +5928,7 @@ function resetrealnick (nick)
 		if rows > 0 then
 			local _, cust = VH:SQLFetch (0)
 			VH:SQLQuery ("delete from `"..tbl_sql ["cust"].."` where `nick` = '"..repsqlchars (cust).."' limit 1")
-			maintoall (string.format (getlang (280), nick, cust), 0, 10)
+			maintoall (string.format (gettext ("Custom nick %s is now owned by real user and therefore has been reset for user: %s"), nick, cust), 0, 10)
 		end
 	end
 end
@@ -6957,11 +5939,11 @@ function opforcecustnick (nick, line)
 	local _, _, onick, ncust = string.find (line, "^(%S+) (.+)$")
 
 	if table_sets ["custnickclass"] == 11 then
-		commandanswer (nick, getlang (788))
+		commandanswer (nick, gettext ("Enable requested feature and try again."))
 	elseif getstatus (onick) == 0 then
-		commandanswer (nick, string.format (getlang (468), onick))
+		commandanswer (nick, string.format (gettext ("User is not in userlist: %s"), onick))
 	elseif string.len (ncust) > table_sets ["custmaxlen"] then
-		commandanswer (nick, string.format (getlang (328), table_sets ["custmaxlen"]))
+		commandanswer (nick, string.format (gettext ("Custom nick can't be longer than %s characters."), table_sets ["custmaxlen"]))
 	else
 		local oldcust = getcustnick (onick)
 		ncust = repnickchars (ncust)
@@ -6986,12 +5968,12 @@ function opforcecustnick (nick, line)
 			end
 
 			if table_sets ["classnoticust"] == 11 then
-				commandanswer (nick, string.format (getlang (539), (oldcust or getcsnick (onick) or onick), ncust))
+				commandanswer (nick, string.format (gettext ("You renamed %s to: %s"), (oldcust or getcsnick (onick) or onick), ncust))
 			else
-				maintoall (string.format (getlang (535), (getcustnick (nick) or nick), (oldcust or getcsnick (onick) or onick), ncust), table_sets ["classnoticust"], 10)
+				maintoall (string.format (gettext ("%s renamed %s to: %s"), (getcustnick (nick) or nick), (oldcust or getcsnick (onick) or onick), ncust), table_sets ["classnoticust"], 10)
 			end
 		else -- nick already exists in list
-			commandanswer (nick, string.format (getlang (248), ncust))
+			commandanswer (nick, string.format (gettext ("This nick is registered or in use and therefore can't be used as custom nick: %s"), ncust))
 		end
 	end
 end
@@ -7023,17 +6005,17 @@ function opdelcustnick (nick, user)
 	if ok == true then
 		if getstatus (orig) == 1 then
 			if table_sets ["classnoticust"] == 11 then
-				commandanswer (nick, string.format (getlang (20), cust, (getcsnick (orig) or orig)))
+				commandanswer (nick, string.format (gettext ("%s is now known as: %s"), cust, (getcsnick (orig) or orig)))
 			else
-				maintoall (string.format (getlang (20), cust, (getcsnick (orig) or orig)), table_sets ["classnoticust"], 10)
+				maintoall (string.format (gettext ("%s is now known as: %s"), cust, (getcsnick (orig) or orig)), table_sets ["classnoticust"], 10)
 			end
 		else
-			commandanswer (nick, string.format (getlang (330), orig))
+			commandanswer (nick, string.format (gettext ("Deleted user from custom nick list: %s"), orig))
 		end
 
 		VH:SendDataToAll ("$Quit "..cust.."|", 0, 10)
 	else
-		commandanswer (nick, string.format (getlang (331), user))
+		commandanswer (nick, string.format (gettext ("Couldn't delete user from custom nick list because not found: %s"), user))
 	end
 end
 
@@ -7058,7 +6040,7 @@ function resetcustnicks ()
 
 			if getstatus (k) == 1 then
 				if table_sets ["classnoticust"] ~= 11 then
-					maintoall (string.format (getlang (20), v, k), table_sets ["classnoticust"], 10)
+					maintoall (string.format (gettext ("%s is now known as: %s"), v, k), table_sets ["classnoticust"], 10)
 				end
 			end
 		end
@@ -7095,16 +6077,16 @@ if string.len (custom) == 0 then -- user is resetting his nick
 		delcustnick (nick, ucl, true)
 
 		if table_sets ["classnoticust"] == 11 then
-			commandanswer (nick, string.format (getlang (538), nick))
+			commandanswer (nick, string.format (gettext ("You are now known as: %s"), nick))
 		else
-			maintoall (string.format (getlang (20), oldcust, nick), table_sets ["classnoticust"], 10)
+			maintoall (string.format (gettext ("%s is now known as: %s"), oldcust, nick), table_sets ["classnoticust"], 10)
 		end
 	else
-		commandanswer (nick, getlang (797))
+		commandanswer (nick, gettext ("I'm staying idle due to confusion."))
 	end
 
 elseif string.len (custom) > table_sets ["custmaxlen"] then
-	commandanswer (nick, string.format (getlang (328), table_sets ["custmaxlen"]))
+	commandanswer (nick, string.format (gettext ("Custom nick can't be longer than %s characters."), table_sets ["custmaxlen"]))
 else
 	if antiscan (nick, ucl, custom, 1, nil, nil) == 0 then return nil end -- scan for spam
 	local custom = repnickchars (custom)
@@ -7119,13 +6101,13 @@ else
 		end
 
 		if table_sets ["classnoticust"] == 11 then
-			commandanswer (nick, string.format (getlang (538), custom))
+			commandanswer (nick, string.format (gettext ("You are now known as: %s"), custom))
 		else
-			maintoall (string.format (getlang (20), (oldcust or nick), custom), table_sets ["classnoticust"], 10)
+			maintoall (string.format (gettext ("%s is now known as: %s"), (oldcust or nick), custom), table_sets ["classnoticust"], 10)
 		end
 
 	else -- nick already used
-		commandanswer (nick, string.format (getlang (248), custom))
+		commandanswer (nick, string.format (gettext ("This nick is registered or in use and therefore can't be used as custom nick: %s"), custom))
 	end
 end
 end
@@ -7155,9 +6137,9 @@ function listcustnick (nick)
 	end
 
 	if list ~= "" then
-		commandanswer (nick, getlang (154)..":\r\n\r\n"..list)
+		commandanswer (nick, gettext ("Custom nick list")..":\r\n\r\n"..list)
 	else
-		commandanswer (nick, getlang (112))
+		commandanswer (nick, gettext ("Custom nick list is empty."))
 	end
 end
 
@@ -7201,15 +6183,15 @@ function logsread (nick, item)
 					end
 				end
 
-				commandanswer (nick, string.format (getlang (157), showcnt, cnt, logfile)..":\r\n\r\n"..aline)
+				commandanswer (nick, string.format (gettext ("Showing last %s lines out of total %s found in %s file"), showcnt, cnt, logfile)..":\r\n\r\n"..aline)
 			else -- empty file
-				commandanswer (nick, getlang (295))
+				commandanswer (nick, gettext ("Requested file is empty or couldn't be found."))
 			end
 		else -- file not found
-			commandanswer (nick, getlang (295))
+			commandanswer (nick, gettext ("Requested file is empty or couldn't be found."))
 		end
 	else -- invalid file
-		commandanswer (nick, string.format (getlang (294), "log, err, log.old, err.old "..getlang (70).." net_out.log"))
+		commandanswer (nick, string.format (gettext ("Known files are: %s"), "log, err, log.old, err.old "..gettext ("and").." net_out.log"))
 	end
 end
 
@@ -7226,7 +6208,7 @@ function checkcmd (nick, class, cmd)
 
 			if string.find (rcmd, entry) and (class < tonumber (cls)) then
 				VH:SQLQuery ("update `"..tbl_sql ["cmd"].."` set `occurred` = `occurred` + 1 where `command` = '"..repsqlchars (entry).."' limit 1")
-				commandanswer (nick, getlang (128))
+				commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 				return 0
 			end
 		end
@@ -7248,14 +6230,14 @@ local _, rows = VH:SQLQuery ("select `class` from `"..tbl_sql ["cmd"].."` where 
 
 if rows > 0 then
 VH:SQLQuery ("update `"..tbl_sql ["cmd"].."` set `class` = "..class.." where `command` = '"..str.."' limit 1")
-commandanswer (nick, string.format (getlang (339), class, entry))
+commandanswer (nick, string.format (gettext ("Modified command permission with class %s: %s"), class, entry))
 else
 VH:SQLQuery ("insert into `"..tbl_sql ["cmd"].."` (`command`, `class`) values ('"..str.."', "..class..")")
-commandanswer (nick, string.format (getlang (340), class, entry))
+commandanswer (nick, string.format (gettext ("Added command permission with class %s: %s"), class, entry))
 end
 
 else
-commandanswer (nick, string.format (getlang (143), "1, 2, 3, 4, 5, 10 "..getlang (70).." 11"))
+commandanswer (nick, string.format (gettext ("Known classes are: %s"), "1, 2, 3, 4, 5, 10 "..gettext ("and").." 11"))
 end
 end
 
@@ -7267,9 +6249,9 @@ local _, rows = VH:SQLQuery ("select `class` from `"..tbl_sql ["cmd"].."` where 
 
 if rows > 0 then
 VH:SQLQuery ("delete from `"..tbl_sql ["cmd"].."` where `command` = '"..aitem.."' limit 1")
-commandanswer (nick, string.format (getlang (341), item))
+commandanswer (nick, string.format (gettext ("Deleted command permission: %s"), item))
 else
-commandanswer (nick, string.format (getlang (342), item))
+commandanswer (nick, string.format (gettext ("Couldn't delete command permission because not found: %s"), item))
 end
 end
 
@@ -7287,9 +6269,9 @@ if x == 0 then len = string.len (occurred) end
 anentry = anentry.." "..prezero (string.len (rows), (x + 1))..". [ O: "..prezero (len, occurred).." ] "..repnmdcoutchars (entry).." ["..class.."]\r\n"
 end
 
-commandanswer (nick, getlang (338)..":\r\n\r\n"..anentry)
+commandanswer (nick, gettext ("Command permission list")..":\r\n\r\n"..anentry)
 else
-commandanswer (nick, getlang (343))
+commandanswer (nick, gettext ("Command permission list is empty."))
 end
 end
 
@@ -7300,10 +6282,10 @@ local entry = repsqlchars (repnmdcinchars (item))
 local _, rows = VH:SQLQuery ("select `occurred` from `"..tbl_sql ["cmdex"].."` where `exception` = '"..entry.."' limit 1")
 
 if rows > 0 then
-commandanswer (nick, string.format (getlang (300), item))
+commandanswer (nick, string.format (gettext ("Couldn't add command notification exception entry because already exists: %s"), item))
 else
 VH:SQLQuery ("insert into `"..tbl_sql ["cmdex"].."` (`exception`) values ('"..entry.."')")
-commandanswer (nick, string.format (getlang (299), item))
+commandanswer (nick, string.format (gettext ("Added command notification exception entry: %s"), item))
 end
 end
 
@@ -7315,9 +6297,9 @@ local _, rows = VH:SQLQuery ("select `occurred` from `"..tbl_sql ["cmdex"].."` w
 
 if rows > 0 then
 VH:SQLQuery ("delete from `"..tbl_sql ["cmdex"].."` where `exception` = '"..aitem.."' limit 1")
-commandanswer (nick, string.format (getlang (301), item))
+commandanswer (nick, string.format (gettext ("Deleted command notification exception entry: %s"), item))
 else
-commandanswer (nick, string.format (getlang (302), item))
+commandanswer (nick, string.format (gettext ("Couldn't delete command notification exception entry because not found: %s"), item))
 end
 end
 
@@ -7335,9 +6317,9 @@ if x == 0 then len = string.len (occurred) end
 anentry = anentry.." "..prezero (string.len (rows), (x + 1))..". [ O: "..prezero (len, occurred).." ] "..repnmdcoutchars (entry).."\r\n"
 end
 
-commandanswer (nick, getlang (298)..":\r\n\r\n"..anentry)
+commandanswer (nick, gettext ("Command notification exception list")..":\r\n\r\n"..anentry)
 else
-commandanswer (nick, getlang (303))
+commandanswer (nick, gettext ("Command notification exception list is empty."))
 end
 end
 
@@ -7372,24 +6354,24 @@ function addreminder (nick, item)
 	minc, maxc, dest, intv = tonumber (minc), tonumber (maxc), tonumber (dest), tonumber (intv)
 
 	if ((minc > 5) and (minc < 10)) or (minc > 10) or ((maxc > 5) and (maxc < 10)) or (maxc > 10) then -- invalid class
-		commandanswer (nick, string.format (getlang (143), "0, 1, 2, 3, 4, 5 "..getlang (70).." 10"))
+		commandanswer (nick, string.format (gettext ("Known classes are: %s"), "0, 1, 2, 3, 4, 5 "..gettext ("and").." 10"))
 	elseif dest > 3 then -- invalid destination
-		commandanswer (nick, string.format (getlang (387), "0, 1, 2 "..getlang (70).." 3"))
+		commandanswer (nick, string.format (gettext ("Known destinanions are: %s"), "0, 1, 2 "..gettext ("and").." 3"))
 	elseif (intv < 1) or (intv > 10080) then -- invalid interval
-		commandanswer (nick, string.format (getlang (388), "1 "..getlang (199).." 10080"))
+		commandanswer (nick, string.format (gettext ("Known interval is: %s"), "1 "..gettext ("to").." 10080"))
 	else
 		if (dest == 3) and string.find (cntnt, string.char (67, 111, 110, 110, 101, 99, 116, 84, 111, 77, 101)) then
-			commandanswer (nick, getlang (827))
+			commandanswer (nick, gettext ("Don't be stupid."))
 		else
 			local entry = repsqlchars (ident)
 			local _, rows = VH:SQLQuery ("select `dest` from `"..tbl_sql ["rem"].."` where `id` = '"..entry.."' limit 1")
 
 			if rows > 0 then
 				VH:SQLQuery ("update `"..tbl_sql ["rem"].."` set `content` = '"..repsqlchars (cntnt).."', `minclass` = "..minc..", `maxclass` = "..maxc..", `dest` = "..dest..", `interval` = "..intv.." where `id` = '"..entry.."' limit 1")
-				commandanswer (nick, string.format (getlang (389), ident))
+				commandanswer (nick, string.format (gettext ("Modified reminder: %s"), ident))
 			else
 				VH:SQLQuery ("insert into `"..tbl_sql ["rem"].."` (`id`, `content`, `minclass`, `maxclass`, `dest`, `interval`) values ('"..entry.."', '"..repsqlchars (cntnt).."', "..minc..", "..maxc..", "..dest..", "..intv..")")
-				commandanswer (nick, string.format (getlang (390), ident))
+				commandanswer (nick, string.format (gettext ("Added reminder: %s"), ident))
 			end
 		end
 	end
@@ -7403,9 +6385,9 @@ function delreminder (nick, item)
 
 	if rows > 0 then
 		VH:SQLQuery ("delete from `"..tbl_sql ["rem"].."` where `id` = '"..aitem.."' limit 1")
-		commandanswer (nick, string.format (getlang (391), item))
+		commandanswer (nick, string.format (gettext ("Deleted reminder: %s"), item))
 	else
-		commandanswer (nick, string.format (getlang (392), item))
+		commandanswer (nick, string.format (gettext ("Reminder not found: %s"), item))
 	end
 end
 
@@ -7416,9 +6398,9 @@ function showreminder (nick, id)
 
 	if rows > 0 then
 		local _, contn = VH:SQLFetch (0)
-		commandanswer (nick, string.format (getlang (510), id, reptextvars (contn, nil, nil)))
+		commandanswer (nick, string.format (gettext ("Preview of %s reminder: %s"), id, reptextvars (contn, nil, nil)))
 	else
-		commandanswer (nick, string.format (getlang (392), id))
+		commandanswer (nick, string.format (gettext ("Reminder not found: %s"), id))
 	end
 end
 
@@ -7435,21 +6417,21 @@ if rows > 0 then
 		dest = tonumber (dest)
 
 		if dest == 0 then
-			dest = getlang (399)
+			dest = gettext ("MC")
 		elseif dest == 1 then
-			dest = getlang (398)
+			dest = gettext ("PM")
 		elseif dest == 3 then
-			dest = getlang (397)
+			dest = gettext ("Raw command")
 		else -- 2
-			dest = getlang (219)
+			dest = gettext ("Both")
 		end
 
-		anentry = anentry.."\r\n "..string.format (getlang (393), ident).."\r\n "..string.format (getlang (396), dest).." [ C: "..minc.."-"..maxc.." ]\r\n "..string.format (getlang (395), timr, intv).."\r\n "..string.format (getlang (394), cntnt).."\r\n"
+		anentry = anentry.."\r\n "..string.format (gettext ("Identifier: %s"), ident).."\r\n "..string.format (gettext ("Destination: %s"), dest).." [ C: "..minc.."-"..maxc.." ]\r\n "..string.format (gettext ("Interval: %s of %s"), timr, intv).."\r\n "..string.format (gettext ("Content: %s"), cntnt).."\r\n"
 	end
 
-	commandanswer (nick, getlang (385)..":\r\n"..anentry)
+	commandanswer (nick, gettext ("Reminder list")..":\r\n"..anentry)
 else
-	commandanswer (nick, getlang (386))
+	commandanswer (nick, gettext ("Reminder list is empty."))
 end
 end
 
@@ -7505,19 +6487,19 @@ function addnopm (nick, line)
 	local _, _, lre, act, cls, rsn = string.find (line, "^(%S+) (%d) (%d+) (.+)$")
 
 	if tonumber (act) > 1 then -- invalid action
-		commandanswer (nick, string.format (getlang (227), "0 "..getlang (70).." 1"))
+		commandanswer (nick, string.format (gettext ("Known actions are: %s"), "0 "..gettext ("and").." 1"))
 	elseif ((tonumber (cls) > 5) and (tonumber (cls) < 10)) or (tonumber (cls) > 11) then -- invalid class
-		commandanswer (nick, string.format (getlang (143), "0, 1, 2, 3, 4, 5, 10 "..getlang (70).." 11"))
+		commandanswer (nick, string.format (gettext ("Known classes are: %s"), "0, 1, 2, 3, 4, 5, 10 "..gettext ("and").." 11"))
 	else
 		local rlre = repsqlchars (repnmdcinchars (lre))
 		local _, rows = VH:SQLQuery ("select `action` from `"..tbl_sql ["nopm"].."` where `nick` = '"..rlre.."' limit 1")
 
 		if rows > 0 then -- update
 			VH:SQLQuery ("update `"..tbl_sql ["nopm"].."` set `action` = "..act..", `maxclass` = "..cls..", `reason` = '"..repsqlchars (rsn).."' where `nick` = '"..rlre.."' limit 1")
-			commandanswer (nick, string.format (getlang (832), lre))
+			commandanswer (nick, string.format (gettext ("Modified blocked PM entry: %s"), lre))
 		else -- add
 			VH:SQLQuery ("insert into `"..tbl_sql ["nopm"].."` (`nick`, `action`, `maxclass`, `reason`) values ('"..rlre.."', "..act..", "..cls..", '"..repsqlchars (rsn).."')")
-			commandanswer (nick, string.format (getlang (833), lre))
+			commandanswer (nick, string.format (gettext ("Added blocked PM entry: %s"), lre))
 		end
 	end
 end
@@ -7533,7 +6515,7 @@ function checkipwat (nick, ip, data)
 			local _, lre, rsn, res = VH:SQLFetch (x)
 
 			if string.find (ip, "^"..lre) then
-				opsnotify (table_sets ["classnotiipwatch"], string.format (getlang (873), (nick or getlang (874)), ip .. tryipcc (ip, nick), rsn).."\r\n\r\n "..repnmdcoutchars (data).."\r\n") -- notify
+				opsnotify (table_sets ["classnotiipwatch"], string.format (gettext ("IP watch notification from %s with IP %s: %s"), (nick or gettext ("unknown nick")), ip .. tryipcc (ip, nick), rsn).."\r\n\r\n "..repnmdcoutchars (data).."\r\n") -- notify
 
 				if tonumber (res) == 0 then
 					return true
@@ -7553,17 +6535,17 @@ function addipwat (nick, line)
 	local _, _, lre, rsn, res = string.find (line, "^(%S+) \"(.+)\" (%d)$")
 
 	if (tonumber (res) < 0) or (tonumber (res) > 1) then
-		commandanswer (nick, string.format (getlang (869), "0 "..getlang (70).." 1"))
+		commandanswer (nick, string.format (gettext ("Known results are: %s"), "0 "..gettext ("and").." 1"))
 	else
 		local rlre = repsqlchars (repnmdcinchars (lre))
 		local _, rows = VH:SQLQuery ("select `result` from `"..tbl_sql ["ipwa"].."` where `ip` = '"..rlre.."' limit 1")
 
 		if rows > 0 then -- update
 			VH:SQLQuery ("update `"..tbl_sql ["ipwa"].."` set `reason` = '"..repsqlchars (rsn).."', `result` = "..res.." where `ip` = '"..rlre.."' limit 1")
-			commandanswer (nick, string.format (getlang (867), lre))
+			commandanswer (nick, string.format (gettext ("Modified IP watch entry: %s"), lre))
 		else -- add
 			VH:SQLQuery ("insert into `"..tbl_sql ["ipwa"].."` (`ip`, `reason`, `result`) values ('"..rlre.."', '"..repsqlchars (rsn).."', "..res..")")
-			commandanswer (nick, string.format (getlang (868), lre))
+			commandanswer (nick, string.format (gettext ("Added IP watch entry: %s"), lre))
 		end
 	end
 end
@@ -7576,9 +6558,9 @@ function delipwat (nick, line)
 
 	if rows > 0 then -- delete
 		VH:SQLQuery ("delete from `"..tbl_sql ["ipwa"].."` where `ip` = '"..rlre.."' limit 1")
-		commandanswer (nick, string.format (getlang (870), line))
+		commandanswer (nick, string.format (gettext ("Deleted IP watch entry: %s"), line))
 	else -- not in list
-		commandanswer (nick, string.format (getlang (872), line))
+		commandanswer (nick, string.format (gettext ("Couldn't delete IP watch entry because not found: %s"), line))
 	end
 end
 
@@ -7595,9 +6577,9 @@ function listipwat (nick)
 			iwlist = iwlist.." "..prezero (string.len (rows), (x + 1))..". "..repnmdcoutchars (lre).." [ R: "..rsn.." ] [ R: "..res.." ]\r\n"
 		end
 
-		commandanswer (nick, getlang (865)..":\r\n\r\n"..iwlist)
+		commandanswer (nick, gettext ("List of IP watch entries")..":\r\n\r\n"..iwlist)
 	else -- empty
-		commandanswer (nick, getlang (871))
+		commandanswer (nick, gettext ("IP watch list is empty."))
 	end
 end
 
@@ -7627,25 +6609,25 @@ function addrcmenu (nick, line)
 						if rows > 0 then -- update
 							local _, id = VH:SQLFetch (0)
 							VH:SQLQuery ("update `" .. tbl_sql ["rcmenu"] .. "` set `command` = '" .. repcmnd .."', `type` = " .. tostring (cype) .. ", `cont` = " .. tostring (cont) .. ", `order` = " .. tostring (ord) .. ", `minclass` = " .. tostring (minc) .. ", `maxclass` = " .. tostring (maxc) .. " where `id` = " .. tostring (id) .. " limit 1")
-							commandanswer (nick, getlang (953):format (menu))
+							commandanswer (nick, gettext ("Modified right click menu item: %s"):format (menu))
 						else -- add
 							VH:SQLQuery ("insert into `" .. tbl_sql ["rcmenu"] .. "` (`menu`, `command`, `type`, `cont`, `order`, `minclass`, `maxclass`) values ('" .. repmenu .. "', '" .. repcmnd .. "', " .. tostring (cype) .. ", " .. tostring (cont) .. ", " .. tostring (ord) .. ", " .. tostring (minc) .. ", " .. tostring (maxc) .. ")")
-							commandanswer (nick, getlang (954):format (menu))
+							commandanswer (nick, gettext ("Added right click menu item: %s"):format (menu))
 						end
 					else -- unknown maximum class
-						commandanswer (nick, getlang (143):format ("0, 1, 2, 3, 4, 5 " .. getlang (70) .. " 10"))
+						commandanswer (nick, gettext ("Known classes are: %s"):format ("0, 1, 2, 3, 4, 5 " .. gettext ("and") .. " 10"))
 					end
 				else -- unknown minimum class
-					commandanswer (nick, getlang (143):format ("0, 1, 2, 3, 4, 5, 10 " .. getlang (70) .. " 11"))
+					commandanswer (nick, gettext ("Known classes are: %s"):format ("0, 1, 2, 3, 4, 5, 10 " .. gettext ("and") .. " 11"))
 				end
 			else -- unknown order
-				commandanswer (nick, getlang (952):format ("0 " .. getlang (199) .. " 65535"))
+				commandanswer (nick, gettext ("Known orders are: %s"):format ("0 " .. gettext ("to") .. " 65535"))
 			end
 		else -- unknown context
-			commandanswer (nick, getlang (951):format ("1 " .. getlang (199) .. " 15"))
+			commandanswer (nick, gettext ("Known contexts are: %s"):format ("1 " .. gettext ("to") .. " 15"))
 		end
 	else -- unknown type
-		commandanswer (nick, getlang (100):format ("0, 1, 2, " .. getlang (70) .. " 255"))
+		commandanswer (nick, gettext ("Known types are: %s"):format ("0, 1, 2, " .. gettext ("and") .. " 255"))
 	end
 end
 
@@ -7657,9 +6639,9 @@ function delrcmenu (nick, id)
 	if rows > 0 then
 		local _, menu = VH:SQLFetch (0)
 		VH:SQLQuery ("delete from `" .. tbl_sql ["rcmenu"] .. "` where `id` = " .. id .. " limit 1")
-		commandanswer (nick, getlang (955):format (menu))
+		commandanswer (nick, gettext ("Deleted right click menu item: %s"):format (menu))
 	else
-		commandanswer (nick, getlang (956):format (id))
+		commandanswer (nick, gettext ("Right click menu item not found: %s"):format (id))
 	end
 end
 
@@ -7673,20 +6655,20 @@ function listrcmenu (nick)
 
 		for x = 0, rows - 1 do
 			local _, id, menu, cmnd, cype, cont, ord, minc, maxc = VH:SQLFetch (x)
-			list = list .. "\r\n " .. getlang (958) .. ": " .. menu .. "\r\n"
+			list = list .. "\r\n " .. gettext ("Menu item") .. ": " .. menu .. "\r\n"
 
 			if cmnd == "" then
-				list = list .. " " .. getlang (959) .. ": " .. getlang (961) .. "\r\n"
+				list = list .. " " .. gettext ("Menu command") .. ": " .. gettext ("Separator or eraser") .. "\r\n"
 			else
-				list = list .. " " .. getlang (959) .. ": " .. cmnd .. "\r\n"
+				list = list .. " " .. gettext ("Menu command") .. ": " .. cmnd .. "\r\n"
 			end
 
 			list = list .. " [ I: " .. tostring (id) .. " ] [ T: " .. tostring (cype) .. " ] [ C: " .. tostring (cont) .. " ] [ O: " .. tostring (ord) .. " ] [ MIC: " .. tostring (minc) .. " ] [ MAC: " .. tostring (maxc) .. " ]\r\n"
 		end
 
-		commandanswer (nick, getlang (860) .. ":\r\n" .. list)
+		commandanswer (nick, gettext ("List of right click menu items") .. ":\r\n" .. list)
 	else
-		commandanswer (nick, getlang (957))
+		commandanswer (nick, gettext ("Right click menu item list is empty."))
 	end
 end
 
@@ -7702,12 +6684,12 @@ function ordrcmenu (nick, line)
 		if rows > 0 then
 			local _, menu = VH:SQLFetch (0)
 			VH:SQLQuery ("update `" .. tbl_sql ["rcmenu"] .. "` set `order` = " .. tostring (ord) .. " where `id` = " .. tostring (id) .. " limit 1")
-			commandanswer (nick, getlang (960):format (menu))
+			commandanswer (nick, gettext ("Changed right click menu item order: %s"):format (menu))
 		else
-			commandanswer (nick, getlang (956):format (id))
+			commandanswer (nick, gettext ("Right click menu item not found: %s"):format (id))
 		end
 	else -- unknown order
-		commandanswer (nick, getlang (952):format ("0 " .. getlang (199) .. " 65535"))
+		commandanswer (nick, gettext ("Known orders are: %s"):format ("0 " .. gettext ("to") .. " 65535"))
 	end
 end
 
@@ -7741,9 +6723,9 @@ function delnopm (nick, line)
 
 	if rows > 0 then -- delete
 		VH:SQLQuery ("delete from `"..tbl_sql ["nopm"].."` where `nick` = '"..rlre.."' limit 1")
-		commandanswer (nick, string.format (getlang (834), line))
+		commandanswer (nick, string.format (gettext ("Deleted blocked PM entry: %s"), line))
 	else -- not in list
-		commandanswer (nick, string.format (getlang (836), line))
+		commandanswer (nick, string.format (gettext ("Couldn't delete blocked PM entry because not found: %s"), line))
 	end
 end
 
@@ -7757,12 +6739,12 @@ function listnopm (nick)
 
 		for x = 0, rows - 1 do
 			local _, lre, act, cls, rsn = VH:SQLFetch (x)
-			nplist = nplist.."\r\n "..prezero (string.len (rows), (x + 1))..". "..repnmdcoutchars (lre).." [ A: "..act.." ] [ C: "..cls.." ]\r\n "..string.format (getlang (837), rsn).."\r\n"
+			nplist = nplist.."\r\n "..prezero (string.len (rows), (x + 1))..". "..repnmdcoutchars (lre).." [ A: "..act.." ] [ C: "..cls.." ]\r\n "..string.format (gettext ("Reason: %s"), rsn).."\r\n"
 		end
 
-		commandanswer (nick, getlang (831)..":\r\n"..nplist)
+		commandanswer (nick, gettext ("List of blocked PM entries")..":\r\n"..nplist)
 	else -- empty
-		commandanswer (nick, getlang (835))
+		commandanswer (nick, gettext ("Blocked PM list is empty."))
 	end
 end
 
@@ -7778,7 +6760,7 @@ function checknopm (from, cls, to)
 
 			if string.find (tolow (to), lre) then
 				if cls <= tonumber (mcl) then
-					pmtouser (from, to, string.format (getlang (838), rsn))
+					pmtouser (from, to, string.format (gettext ("You're not allowed to send PM to this user because: %s"), rsn))
 
 					if tonumber (act) == 1 then -- drop
 						VH:CloseConnection (from)
@@ -7810,19 +6792,19 @@ function addhban (nick, line)
 			VH:SQLQuery ("update `" .. tbl_sql ["hban"] .. "` set `reason` = '" .. repsqlchars (rsn) .. "' where `ip` = '" .. rlre .. "' limit 1")
 
 			if nick then
-				commandanswer (nick, string.format (getlang (848), lre))
+				commandanswer (nick, string.format (gettext ("Modified hard IP ban entry: %s"), lre))
 			end
 		else -- add
 			VH:SQLQuery ("insert into `" .. tbl_sql ["hban"] .. "` (`ip`, `reason`) values ('" .. rlre .. "', '" .. repsqlchars (rsn) .. "')")
 
 			if nick then
-				commandanswer (nick, string.format (getlang (849), lre))
+				commandanswer (nick, string.format (gettext ("Added hard IP ban entry: %s"), lre))
 			end
 		end
 	end
 
 	if (cnt == 0) and nick then
-		commandanswer (nick, getlang (862))
+		commandanswer (nick, gettext ("To add multiple entries with this command you need to separate every entry by space."))
 	end
 end
 
@@ -7834,9 +6816,9 @@ function delhban (nick, line)
 
 	if rows > 0 then -- delete
 		VH:SQLQuery ("delete from `"..tbl_sql ["hban"].."` where `ip` = '"..rlre.."' limit 1")
-		commandanswer (nick, string.format (getlang (850), line))
+		commandanswer (nick, string.format (gettext ("Deleted hard IP ban entry: %s"), line))
 	else -- not in list
-		commandanswer (nick, string.format (getlang (852), line))
+		commandanswer (nick, string.format (gettext ("Couldn't delete hard IP ban entry because not found: %s"), line))
 	end
 end
 
@@ -7853,9 +6835,9 @@ function listhban (nick)
 			hblist = hblist.." "..prezero (string.len (rows), (x + 1))..". "..repnmdcoutchars (lre).." [ R: "..rsn.." ]\r\n"
 		end
 
-		commandanswer (nick, getlang (847)..":\r\n\r\n"..hblist)
+		commandanswer (nick, gettext ("List of hard IP ban entries")..":\r\n\r\n"..hblist)
 	else -- empty
-		commandanswer (nick, getlang (851))
+		commandanswer (nick, gettext ("Hard IP ban list is empty."))
 	end
 end
 
@@ -7869,7 +6851,7 @@ function checkhban (ip)
 			local _, lre, rsn = VH:SQLFetch (x)
 
 			if string.find (ip, "^"..lre) then
-				opsnotify (table_sets ["classnotihardban"], string.format (getlang (853), ip .. tryipcc (ip), rsn)) -- notify
+				opsnotify (table_sets ["classnotihardban"], string.format (gettext ("Hard IP ban refused connection from IP %s: %s"), ip .. tryipcc (ip), rsn)) -- notify
 				return true
 			end
 		end
@@ -7883,7 +6865,7 @@ end
 function addnews (nick, item)
 	local ndate = os.time () + table_sets ["srvtimediff"] -- current time
 	VH:SQLQuery ("insert into `"..tbl_sql ["news"].."` (`date`, `by`, `item`) values ("..ndate..", '"..repsqlchars (nick).."', '"..repsqlchars (item).."')")
-	commandanswer (nick, string.format (getlang (456), os.date (table_sets ["dateformat"].." "..table_sets ["timeformat"], ndate)))
+	commandanswer (nick, string.format (gettext ("Added news item: %s"), os.date (table_sets ["dateformat"].." "..table_sets ["timeformat"], ndate)))
 end
 
 ----- ---- --- -- -
@@ -7901,7 +6883,7 @@ function delnews (nick, adate)
 			end
 		end
 	else
-		commandanswer (nick, getlang (457))
+		commandanswer (nick, gettext ("Hub news list is empty."))
 		return nil
 	end
 
@@ -7914,9 +6896,9 @@ function delnews (nick, adate)
 	local num = table.getn (t)
 
 	if num > 0 then
-		commandanswer (nick, string.format (getlang (458), num))
+		commandanswer (nick, string.format (gettext ("Deleted %s news items."), num))
 	else
-		commandanswer (nick, string.format (getlang (459), adate))
+		commandanswer (nick, string.format (gettext ("Couldn't delete news items because not found: %s"), adate))
 	end
 end
 
@@ -7932,17 +6914,17 @@ function sendnews (nick, lnnum, autosend)
 
 		for x = 0, rows - 1 do
 			local _, adate, user, msg = VH:SQLFetch (x)
-			aentry = " "..string.format (getlang (461), user, os.date (table_sets ["dateformat"].." "..table_sets ["timeformat"], adate), msg).."\r\n"..aentry
+			aentry = " "..string.format (gettext ("By %s on %s: %s"), user, os.date (table_sets ["dateformat"].." "..table_sets ["timeformat"], adate), msg).."\r\n"..aentry
 		end
 
 		if autosend == 0 then
-			commandanswer (nick, string.format (getlang (460), rows)..":\r\n\r\n"..aentry)
+			commandanswer (nick, string.format (gettext ("Last %s news items"), rows)..":\r\n\r\n"..aentry)
 		else
-			maintouser (nick, string.format (getlang (460), rows)..":\r\n\r\n"..aentry)
+			maintouser (nick, string.format (gettext ("Last %s news items"), rows)..":\r\n\r\n"..aentry)
 		end
 	else
 		if autosend == 0 then -- only if sending manually
-			commandanswer (nick, getlang (457))
+			commandanswer (nick, gettext ("Hub news list is empty."))
 		end
 	end
 end
@@ -7955,9 +6937,9 @@ function addresponder (nick, item)
 
 	if (maxc >= 0) and (maxc <= 5) or (maxc == 10) then
 		VH:SQLQuery ("insert into `"..tbl_sql ["mcresp"].."` (`message`, `reply`, `maxclass`) values ('"..repsqlchars (repnmdcinchars (msg)).."', '"..repsqlchars (rpl).."', "..maxc..")")
-		commandanswer (nick, string.format (getlang (407), msg))
+		commandanswer (nick, string.format (gettext ("Added chat responder: %s"), msg))
 	else
-		commandanswer (nick, string.format (getlang (143), "0, 1, 2, 3, 4, 5 "..getlang (70).." 10"))
+		commandanswer (nick, string.format (gettext ("Known classes are: %s"), "0, 1, 2, 3, 4, 5 "..gettext ("and").." 10"))
 	end
 end
 
@@ -7968,9 +6950,9 @@ function delresponder (nick, id)
 
 	if rows > 0 then
 		VH:SQLQuery ("delete from `"..tbl_sql ["mcresp"].."` where `id` = "..id)
-		commandanswer (nick, string.format (getlang (408), id))
+		commandanswer (nick, string.format (gettext ("Deleted chat responder with ID: %s"), id))
 	else
-		commandanswer (nick, string.format (getlang (409), id))
+		commandanswer (nick, string.format (gettext ("Couldn't delete chat responder because ID not found: %s"), id))
 	end
 end
 
@@ -7984,12 +6966,12 @@ function listresponder (nick)
 
 		for x = 0, rows - 1 do
 			local _, id, msg, repl, maxc, occur = VH:SQLFetch (x)
-			anentry = anentry.."\r\n "..getlang (410)..": "..repnmdcoutchars (msg).."\r\n "..getlang (411)..": "..repl.."\r\n [ I: "..id.." ] [ C: "..maxc.." ] [ O: "..occur.." ]\r\n"
+			anentry = anentry.."\r\n "..gettext ("Responder")..": "..repnmdcoutchars (msg).."\r\n "..gettext ("Reply")..": "..repl.."\r\n [ I: "..id.." ] [ C: "..maxc.." ] [ O: "..occur.." ]\r\n"
 		end
 
-		commandanswer (nick, getlang (403)..":\r\n"..anentry)
+		commandanswer (nick, gettext ("Main chat responder list")..":\r\n"..anentry)
 	else
-		commandanswer (nick, getlang (404))
+		commandanswer (nick, gettext ("Main chat responder list is empty."))
 	end
 end
 
@@ -8000,10 +6982,10 @@ function addrespex (nick, item)
 	local _, rows = VH:SQLQuery ("select `exception` from `"..tbl_sql ["respex"].."` where `exception` = '"..entry.."'")
 
 	if rows > 0 then
-		commandanswer (nick, string.format (getlang (416), item))
+		commandanswer (nick, string.format (gettext ("Couldn't add chat responder exception because already exists: %s"), item))
 	else
 		VH:SQLQuery ("insert into `"..tbl_sql ["respex"].."` (`exception`) values ('"..entry.."')")
-		commandanswer (nick, string.format (getlang (417), item))
+		commandanswer (nick, string.format (gettext ("Added chat responder exception: %s"), item))
 	end
 end
 
@@ -8015,9 +6997,9 @@ function delrespex (nick, item)
 
 	if rows > 0 then
 		VH:SQLQuery ("delete from `"..tbl_sql ["respex"].."` where `exception` = '"..aitem.."'")
-		commandanswer (nick, string.format (getlang (418), item))
+		commandanswer (nick, string.format (gettext ("Deleted chat responder exception: %s"), item))
 	else
-		commandanswer (nick, string.format (getlang (419), item))
+		commandanswer (nick, string.format (gettext ("Couldn't delete chat responder exception because not found: %s"), item))
 	end
 end
 
@@ -8035,9 +7017,9 @@ function listrespex (nick)
 			anentry = anentry.." "..prezero (string.len (rows), (x + 1))..". [ O: "..prezero (len, occurred).." ] "..entry.."\r\n"
 		end
 
-		commandanswer (nick, getlang (414)..":\r\n\r\n"..anentry)
+		commandanswer (nick, gettext ("Chat responder exception list")..":\r\n\r\n"..anentry)
 	else
-		commandanswer (nick, getlang (415))
+		commandanswer (nick, gettext ("Chat responder exception list is empty."))
 	end
 end
 
@@ -8094,20 +7076,20 @@ function addreplacer (nick, item)
 	flags = tonumber (flags)
 
 	if maxc < 0 or maxc > 10 or (maxc > 5 and maxc < 10) then
-		commandanswer (nick, getlang (143):format ("0, 1, 2, 3, 4, 5 " .. getlang (70) .. " 10"))
+		commandanswer (nick, gettext ("Known classes are: %s"):format ("0, 1, 2, 3, 4, 5 " .. gettext ("and") .. " 10"))
 	elseif flags < 0 or flags > 2 then
-		commandanswer (nick, getlang (228):format ("0=ALL, 1=MC " .. getlang (70) .. " 2=PM"))
+		commandanswer (nick, gettext ("Known flags are: %s"):format ("0=ALL, 1=MC " .. gettext ("and") .. " 2=PM"))
 	else
 		VH:SQLQuery ("insert into `" .. tbl_sql ["chatrepl"] .. "` (`message`, `replace`, `maxclass`, `flags`) values ('" .. repsqlchars (repnmdcinchars (msg)) .. "', '" .. repsqlchars (rpl) .. "', " .. tostring (maxc) .. ", " .. tostring (flags) .. ")")
-		local note = 798
+		local note = "Added replacer in MC: %s"
 
 		if flags == 0 then
-			note = 989
+			note = "Added replacer in MC and PM: %s"
 		elseif flags == 2 then
-			note = 988
+			note = "Added replacer in PM: %s"
 		end
 
-		commandanswer (nick, getlang (note):format (msg))
+		commandanswer (nick, gettext (note):format (msg))
 	end
 end
 
@@ -8118,9 +7100,9 @@ function delreplacer (nick, id)
 
 	if rows > 0 then
 		VH:SQLQuery ("delete from `" .. tbl_sql ["chatrepl"] .. "` where `id` = " .. id)
-		commandanswer (nick, string.format (getlang (799), id))
+		commandanswer (nick, string.format (gettext ("Deleted chat replacer with ID: %s"), id))
 	else
-		commandanswer (nick, string.format (getlang (800), id))
+		commandanswer (nick, string.format (gettext ("Couldn't delete chat replacer because ID not found: %s"), id))
 	end
 end
 
@@ -8134,12 +7116,12 @@ function listreplacer (nick)
 
 		for x = 0, rows - 1 do
 			local _, id, msg, repl, maxc, flags, occur = VH:SQLFetch (x)
-			anentry = anentry .. "\r\n " .. getlang (605) .. ": " .. repnmdcoutchars (msg) .. "\r\n " .. getlang (803) .. ": " .. repl .. "\r\n [ I: " .. id .. " ] [ C: " .. maxc .. " ] [ F: " .. flags .. " ] [ O: " .. occur .. " ]\r\n"
+			anentry = anentry .. "\r\n " .. gettext ("LRE") .. ": " .. repnmdcoutchars (msg) .. "\r\n " .. gettext ("Replace") .. ": " .. repl .. "\r\n [ I: " .. id .. " ] [ C: " .. maxc .. " ] [ F: " .. flags .. " ] [ O: " .. occur .. " ]\r\n"
 		end
 
-		commandanswer (nick, getlang (801) .. ":\r\n" .. anentry)
+		commandanswer (nick, gettext ("Chat replacer list") .. ":\r\n" .. anentry)
 	else
-		commandanswer (nick, getlang (802))
+		commandanswer (nick, gettext ("Chat replacer list is empty."))
 	end
 end
 
@@ -8150,10 +7132,10 @@ function addreplex (nick, item)
 	local _, rows = VH:SQLQuery ("select `exception` from `"..tbl_sql ["replex"].."` where `exception` = '"..entry.."'")
 
 	if rows > 0 then
-		commandanswer (nick, string.format (getlang (804), item))
+		commandanswer (nick, string.format (gettext ("Couldn't add chat replacer exception because already exists: %s"), item))
 	else
 		VH:SQLQuery ("insert into `"..tbl_sql ["replex"].."` (`exception`) values ('"..entry.."')")
-		commandanswer (nick, string.format (getlang (805), item))
+		commandanswer (nick, string.format (gettext ("Added chat replacer exception: %s"), item))
 	end
 end
 
@@ -8165,9 +7147,9 @@ function delreplex (nick, item)
 
 	if rows > 0 then
 		VH:SQLQuery ("delete from `"..tbl_sql ["replex"].."` where `exception` = '"..aitem.."'")
-		commandanswer (nick, string.format (getlang (806), item))
+		commandanswer (nick, string.format (gettext ("Deleted chat replacer exception: %s"), item))
 	else
-		commandanswer (nick, string.format (getlang (807), item))
+		commandanswer (nick, string.format (gettext ("Couldn't delete chat replacer exception because not found: %s"), item))
 	end
 end
 
@@ -8185,9 +7167,9 @@ function listreplex (nick)
 			anentry = anentry.." "..prezero (string.len (rows), (x + 1))..". [ O: "..prezero (len, occurred).." ] "..entry.."\r\n"
 		end
 
-		commandanswer (nick, getlang (808)..":\r\n\r\n"..anentry)
+		commandanswer (nick, gettext ("Chat replacer exception list")..":\r\n\r\n"..anentry)
 	else
-		commandanswer (nick, getlang (809))
+		commandanswer (nick, gettext ("Chat replacer exception list is empty."))
 	end
 end
 
@@ -8249,10 +7231,10 @@ function addrelease (nick, line)
 
 	if rows > 0 then
 		VH:SQLQuery ("update `"..tbl_sql ["rel"].."` set `category` = '"..repsqlchars (cat).."', `tth` = '"..repsqlchars (tth).."', `date` = '"..ndate.."' where `release` = '"..arel.."' limit 1")
-		commandanswer (nick, string.format (getlang (505), rel))
+		commandanswer (nick, string.format (gettext ("Modified release: %s"), rel))
 	else
 		VH:SQLQuery ("insert into `"..tbl_sql ["rel"].."` (`release`, `category`, `tth`, `by`, `date`) values ('"..arel.."', '"..repsqlchars (cat).."', '"..repsqlchars (tth).."', '"..repsqlchars (nick).."', '"..ndate.."')")
-		commandanswer (nick, string.format (getlang (506), rel))
+		commandanswer (nick, string.format (gettext ("Added release: %s"), rel))
 	end
 end
 
@@ -8268,9 +7250,9 @@ local _, rows = VH:SQLQuery ("select `date` from `"..tbl_sql ["rel"].."` where `
 
 if rows > 0 then
 VH:SQLQuery ("delete from `"..tbl_sql ["rel"].."` where `release` = '"..arel.."' limit 1")
-commandanswer (nick, string.format (getlang (507), rel))
+commandanswer (nick, string.format (gettext ("Deleted release: %s"), rel))
 else
-commandanswer (nick, string.format (getlang (508), rel))
+commandanswer (nick, string.format (gettext ("Couldn't delete release because not found: %s"), rel))
 end
 
 elseif stype == "cat" then
@@ -8280,13 +7262,13 @@ local _, rows = VH:SQLQuery ("select `date` from `"..tbl_sql ["rel"].."` where `
 
 if rows > 0 then
 VH:SQLQuery ("delete from `"..tbl_sql ["rel"].."` where `category` = '"..acat.."'") -- no limit
-commandanswer (nick, string.format (getlang (54), rows ,cat))
+commandanswer (nick, string.format (gettext ("Deleted %s releases from category: %s"), rows ,cat))
 else
-commandanswer (nick, string.format (getlang (355), cat))
+commandanswer (nick, string.format (gettext ("Couldn't delete category because not found: %s"), cat))
 end
 
 else -- unknown type
-commandanswer (nick, string.format (getlang (100), "rel "..getlang (70).." cat"))
+commandanswer (nick, string.format (gettext ("Known types are: %s"), "rel "..gettext ("and").." cat"))
 end
 end
 
@@ -8307,7 +7289,7 @@ if lnnum < 1 then lnnum = 1 end
 
 if stype == "cat" then
 if not catst then
-commandanswer (nick, getlang (332))
+commandanswer (nick, gettext ("Selected type requires extra parameters. Please refer to manual for more information."))
 else
 local _, rows = VH:SQLQuery ("select `release`, `tth`, `by`, `date` from `"..tbl_sql ["rel"].."` where `category` = '"..repsqlchars (catst).."' order by `date` desc limit "..lnnum)
 
@@ -8318,21 +7300,21 @@ for x = 0, rows - 1 do
 local _, rel, tth, auth, adate = VH:SQLFetch (x)
 
 if string.len (tth) > 0 then
-tth = "\r\n "..string.format (getlang (224), "magnet:?xt=urn:tree:tiger:"..tth)
+tth = "\r\n "..string.format (gettext ("Magnet link: %s"), "magnet:?xt=urn:tree:tiger:"..tth)
 end
 
-anentry = anentry.."\r\n "..prezero (string.len (rows), (x + 1))..". "..rel.."\r\n "..string.format (getlang (309), auth).."\r\n "..string.format (getlang (283), os.date (table_sets ["dateformat"].." "..table_sets ["timeformat"], adate))..tth.."\r\n"
+anentry = anentry.."\r\n "..prezero (string.len (rows), (x + 1))..". "..rel.."\r\n "..string.format (gettext ("Added by: %s"), auth).."\r\n "..string.format (gettext ("Published: %s"), os.date (table_sets ["dateformat"].." "..table_sets ["timeformat"], adate))..tth.."\r\n"
 end
 
-commandanswer (nick, string.format (getlang (316), rows, catst)..":\r\n"..anentry)
+commandanswer (nick, string.format (gettext ("Last %s releases by category %s"), rows, catst)..":\r\n"..anentry)
 else
-commandanswer (nick, string.format (getlang (315), catst))
+commandanswer (nick, string.format (gettext ("No releases by requested category were found: %s"), catst))
 end
 end
 
 elseif stype == "pub" then
 if not catst then
-commandanswer (nick, getlang (332))
+commandanswer (nick, gettext ("Selected type requires extra parameters. Please refer to manual for more information."))
 else
 local _, rows = VH:SQLQuery ("select `release`, `category`, `tth`, `date` from `"..tbl_sql ["rel"].."` where `by` = '"..repsqlchars (catst).."' order by `date` desc limit "..lnnum)
 
@@ -8343,15 +7325,15 @@ for x = 0, rows - 1 do
 local _, rel, cat, tth, adate = VH:SQLFetch (x)
 
 if string.len (tth) > 0 then
-tth = "\r\n "..string.format (getlang (224), "magnet:?xt=urn:tree:tiger:"..tth)
+tth = "\r\n "..string.format (gettext ("Magnet link: %s"), "magnet:?xt=urn:tree:tiger:"..tth)
 end
 
-anentry = anentry.."\r\n "..prezero (string.len (rows), (x + 1))..". "..rel.."\r\n "..string.format (getlang (246), cat).."\r\n "..string.format (getlang (283), os.date (table_sets ["dateformat"].." "..table_sets ["timeformat"], adate))..tth.."\r\n"
+anentry = anentry.."\r\n "..prezero (string.len (rows), (x + 1))..". "..rel.."\r\n "..string.format (gettext ("Category: %s"), cat).."\r\n "..string.format (gettext ("Published: %s"), os.date (table_sets ["dateformat"].." "..table_sets ["timeformat"], adate))..tth.."\r\n"
 end
 
-commandanswer (nick, string.format (getlang (314), rows, catst)..":\r\n"..anentry)
+commandanswer (nick, string.format (gettext ("Last %s releases published by %s"), rows, catst)..":\r\n"..anentry)
 else
-commandanswer (nick, string.format (getlang (313), catst))
+commandanswer (nick, string.format (gettext ("No releases by requested publisher were found: %s"), catst))
 end
 end
 
@@ -8365,19 +7347,19 @@ for x = 0, rows - 1 do
 local _, rel, cat, tth, auth, adate = VH:SQLFetch (x)
 
 if string.len (tth) > 0 then
-tth = "\r\n "..string.format (getlang (224), "magnet:?xt=urn:tree:tiger:"..tth)
+tth = "\r\n "..string.format (gettext ("Magnet link: %s"), "magnet:?xt=urn:tree:tiger:"..tth)
 end
 
-anentry = anentry.."\r\n "..prezero (string.len (rows), (x + 1))..". "..rel.."\r\n "..string.format (getlang (246), cat).."\r\n "..string.format (getlang (309), auth).."\r\n "..string.format (getlang (283), os.date (table_sets ["dateformat"].." "..table_sets ["timeformat"], adate))..tth.."\r\n"
+anentry = anentry.."\r\n "..prezero (string.len (rows), (x + 1))..". "..rel.."\r\n "..string.format (gettext ("Category: %s"), cat).."\r\n "..string.format (gettext ("Added by: %s"), auth).."\r\n "..string.format (gettext ("Published: %s"), os.date (table_sets ["dateformat"].." "..table_sets ["timeformat"], adate))..tth.."\r\n"
 end
 
-commandanswer (nick, string.format (getlang (312), rows)..":\r\n"..anentry)
+commandanswer (nick, string.format (gettext ("Last %s releases"), rows)..":\r\n"..anentry)
 else
-commandanswer (nick, getlang (311))
+commandanswer (nick, gettext ("Release list is empty."))
 end
 
 else -- unknown type
-commandanswer (nick, string.format (getlang (100), "cat, pub "..getlang (70).." all"))
+commandanswer (nick, string.format (gettext ("Known types are: %s"), "cat, pub "..gettext ("and").." all"))
 end
 end
 
@@ -8396,15 +7378,15 @@ function findrelease (nick, line)
 			local _, rel, cat, tth, auth, adate = VH:SQLFetch (x)
 
 			if string.len (tth) > 0 then
-				tth = "\r\n "..string.format (getlang (224), "magnet:?xt=urn:tree:tiger:"..tth)
+				tth = "\r\n "..string.format (gettext ("Magnet link: %s"), "magnet:?xt=urn:tree:tiger:"..tth)
 			end
 
-			anentry = anentry.."\r\n "..prezero (string.len (rows), (x + 1))..". "..rel.."\r\n "..string.format (getlang (246), cat).."\r\n "..string.format (getlang (309), auth).."\r\n "..string.format (getlang (283), os.date (table_sets ["dateformat"].." "..table_sets ["timeformat"], adate))..tth.."\r\n"
+			anentry = anentry.."\r\n "..prezero (string.len (rows), (x + 1))..". "..rel.."\r\n "..string.format (gettext ("Category: %s"), cat).."\r\n "..string.format (gettext ("Added by: %s"), auth).."\r\n "..string.format (gettext ("Published: %s"), os.date (table_sets ["dateformat"].." "..table_sets ["timeformat"], adate))..tth.."\r\n"
 		end
 
-		commandanswer (nick, string.format (getlang (504), rows, line)..":\r\n"..anentry)
+		commandanswer (nick, string.format (gettext ("Last %s releases by search string %s"), rows, line)..":\r\n"..anentry)
 	else
-		commandanswer (nick, string.format (getlang (317), line))
+		commandanswer (nick, string.format (gettext ("No releases by requested search string were found: %s"), line))
 	end
 end
 
@@ -8412,9 +7394,9 @@ end
 
 function seenlookup (nick, user)
 	if not table_othsets ["ver_curl"] then
-		commandanswer (nick, string.format (getlang (691), "cURL"))
+		commandanswer (nick, string.format (gettext ("This feature requires any version of %s installed on your system."), "cURL"))
 	else
-		commandanswer (nick, string.format (getlang (638), "http://www.te-home.net/?do=hublist", user))
+		commandanswer (nick, string.format (gettext ("Looking on %s for %s..."), "http://www.te-home.net/?do=hublist", user))
 		local res, err = os.execute ("curl -L -G --retry 3 --connect-timeout 5 -m 15 -A \"Verlihub\" -s -o \""..table_othsets ["cfgdir"]..table_othsets ["tmpfile"].."\" \""..table_othsets ["seenurl"]..encodeurl (user).."\"")
 
 		if res then
@@ -8425,9 +7407,9 @@ function seenlookup (nick, user)
 				f:close ()
 
 				if not seen then
-					commandanswer (nick, string.format (getlang (19), "index.php"))
+					commandanswer (nick, string.format (gettext ("Requested file %s not found on target server. Please try again later."), "index.php"))
 				elseif seen == "" then
-					commandanswer (nick, string.format (getlang (640), user))
+					commandanswer (nick, string.format (gettext ("User %s wasn't found in any hubs."), user))
 				else
 					local list, c = "", 1
 
@@ -8443,18 +7425,18 @@ function seenlookup (nick, user)
 					end
 
 					if list == "" then
-						commandanswer (nick, string.format (getlang (640), user))
+						commandanswer (nick, string.format (gettext ("User %s wasn't found in any hubs."), user))
 					else
-						commandanswer (nick, string.format (getlang (639), user)..":\r\n\r\n"..list)
+						commandanswer (nick, string.format (gettext ("User %s found in following hubs"), user)..":\r\n\r\n"..list)
 					end
 				end
 
 				os.remove (table_othsets ["cfgdir"]..table_othsets ["tmpfile"])
 			else
-				commandanswer (nick, string.format (getlang (875), user))
+				commandanswer (nick, string.format (gettext ("Either user %s wasn't found in any hubs or target server is down. Please try again later."), user))
 			end
 		else
-			commandanswer (nick, string.format (getlang (661), (err or getlang (662))))
+			commandanswer (nick, string.format (gettext ("Unable to proceed: %s"), (err or gettext ("No error message specified."))))
 		end
 	end
 end
@@ -8465,10 +7447,10 @@ function dropip (nick, ip)
 	local num = dropallbyip (ip)
 
 	if num == 0 then
-		commandanswer (nick, string.format (getlang (920), ip))
+		commandanswer (nick, string.format (gettext ("No users found with IP: %s"), ip))
 	else
-		commandanswer (nick, string.format (getlang (921), num, ip))
-		opsnotify (table_sets ["classnotikick"], string.format (getlang (922), nick, num, ip))
+		commandanswer (nick, string.format (gettext ("Dropped %s users with IP: %s"), num, ip))
+		opsnotify (table_sets ["classnotikick"], string.format (gettext ("%s dropped %s users with IP: %s"), nick, num, ip))
 	end
 end
 
@@ -8478,7 +7460,7 @@ function showuserinfo (nick, usr)
 local user = getcsnick (usr)
 
 if not user then -- not in list
-	commandanswer (nick, string.format (getlang (704), usr))
+	commandanswer (nick, string.format (gettext ("User not in list: %s"), usr))
 elseif isbot (user) == true then -- bot
 	if table_othsets ["func_getbots"] == true then
 		local bots = VH:GetBots ()
@@ -8487,52 +7469,52 @@ elseif isbot (user) == true then -- bot
 		if bots then
 			for _, v in pairs (bots) do
 				if user == v ["sNick"] then
-					info = info.." "..string.format (getlang (705), user).."\r\n" -- nick
+					info = info.." "..string.format (gettext ("Nick: %s"), user).."\r\n" -- nick
 
 					if v ["iClass"] then -- class
-						info = info.." "..string.format (getlang (717), v ["iClass"]).."\r\n"
+						info = info.." "..string.format (gettext ("Class: %s"), v ["iClass"]).."\r\n"
 					end
 
 					if v ["sScriptname"] then -- script
-						info = info.." "..string.format (getlang (756), v ["sScriptname"]).."\r\n"
+						info = info.." "..string.format (gettext ("Owner script: %s"), v ["sScriptname"]).."\r\n"
 					end
 
 					if v ["sMyINFO"] then -- myinfo
 						local desc, tag, conn, sts, email, share = parsemyinfo (user, v ["sMyINFO"])
-						info = info.." "..string.format (getlang (706), desc).."\r\n" -- description
-						info = info.." "..string.format (getlang (707), tag).."\r\n" -- tag
+						info = info.." "..string.format (gettext ("Description: %s"), desc).."\r\n" -- description
+						info = info.." "..string.format (gettext ("Tag: %s"), tag).."\r\n" -- tag
 
 						if string.len (tag) > 0 then -- tag information
 							local _, _, cl, ver, mode, hubs, slots = string.find (tag, "^<(.+) V:(.+),M:(%S+),H:(%S+),S:(%d+).*>$")
 
 							if cl then -- client
-								info = info.." "..string.format (getlang (721), cl).."\r\n"
+								info = info.." "..string.format (gettext ("Client: %s"), cl).."\r\n"
 							end
 
 							if ver then -- version
-								info = info.." "..string.format (getlang (722), ver).."\r\n"
+								info = info.." "..string.format (gettext ("Version: %s"), ver).."\r\n"
 							end
 
 							if mode then -- mode
-								info = info.." "..string.format (getlang (708), mode).."\r\n"
+								info = info.." "..string.format (gettext ("Mode: %s"), mode).."\r\n"
 							end
 
 							if hubs then -- hubs
-								info = info.." "..string.format (getlang (710), hubs).."\r\n"
+								info = info.." "..string.format (gettext ("Hubs: %s"), hubs).."\r\n"
 							end
 
 							if slots then -- slots
-								info = info.." "..string.format (getlang (709), slots).."\r\n"
+								info = info.." "..string.format (gettext ("Slots: %s"), slots).."\r\n"
 							end
 						end
 
-						info = info.." "..string.format (getlang (712), conn).."\r\n" -- connection
-						info = info.." "..string.format (getlang (713), statustostr (sts)).."\r\n" -- status
-						info = info.." "..string.format (getlang (714), email).."\r\n" -- email
-						info = info.." "..string.format (getlang (715), makesize (share)).."\r\n" -- share
+						info = info.." "..string.format (gettext ("Connection: %s"), conn).."\r\n" -- connection
+						info = info.." "..string.format (gettext ("Status: %s"), statustostr (sts)).."\r\n" -- status
+						info = info.." "..string.format (gettext ("Email: %s"), email).."\r\n" -- email
+						info = info.." "..string.format (gettext ("Share: %s"), makesize (share)).."\r\n" -- share
 
 						if tonumber (share) > 0 then
-							info = info.." "..string.format (getlang (716), share.." "..getlang (365)).."\r\n" -- exact share
+							info = info.." "..string.format (gettext ("Exact share: %s"), share.." "..gettext ("B")).."\r\n" -- exact share
 						end
 					end
 
@@ -8542,13 +7524,13 @@ elseif isbot (user) == true then -- bot
 		end
 
 		if info == "" then
-			commandanswer (nick, string.format (getlang (754), user))
+			commandanswer (nick, string.format (gettext ("Unable to get bot information: %s"), user))
 		else
-			commandanswer (nick, getlang (755)..":\r\n\r\n"..info)
+			commandanswer (nick, gettext ("Bot information")..":\r\n\r\n"..info)
 		end
 
 	else
-		commandanswer (nick, string.format (getlang (754), user))
+		commandanswer (nick, string.format (gettext ("Unable to get bot information: %s"), user))
 	end
 
 else -- user
@@ -8560,37 +7542,37 @@ else -- user
 		local cn = getcustnick (user)
 
 		if cn then
-			info = info.." "..string.format (getlang (705), user.." @ "..cn).."\r\n"
+			info = info.." "..string.format (gettext ("Nick: %s"), user.." @ "..cn).."\r\n"
 		else
-			info = info.." "..string.format (getlang (705), user).."\r\n"
+			info = info.." "..string.format (gettext ("Nick: %s"), user).."\r\n"
 		end
 
 	else
-		info = info.." "..string.format (getlang (705), user).."\r\n"
+		info = info.." "..string.format (gettext ("Nick: %s"), user).."\r\n"
 	end
 
 		if (table_sets ["showuseruptime"] == 1) and table_usup [user] then -- uptime
-			info = info.." "..string.format (getlang (787), formatuptime (table_usup [user], false)).."\r\n"
+			info = info.." "..string.format (gettext ("Uptime: %s"), formatuptime (table_usup [user], false)).."\r\n"
 		end
 
-	info = info.." "..string.format (getlang (717), class).."\r\n" -- class
+	info = info.." "..string.format (gettext ("Class: %s"), class).."\r\n" -- class
 
 	if getconfig ("dns_lookup") ~= 0 then
-		info = info .. " " .. string.format (getlang (719), gethost (user)) .. "\r\n" -- dns
+		info = info .. " " .. string.format (gettext ("DNS: %s"), gethost (user)) .. "\r\n" -- dns
 	end
 
-	info = info .. " " .. string.format (getlang (718), ip) .. "\r\n" -- ip
+	info = info .. " " .. string.format (gettext ("IP: %s"), ip) .. "\r\n" -- ip
 
 	if table_othsets ["func_getusergeoip"] == true then
 		local on, geoip = VH:GetUserGeoIP (user)
 
 		if on and geoip and geoip ["host"] then
 			if geoip ["range_low"] and geoip ["range_high"] then
-				info = info .. " " .. string.format (getlang (911), geoip ["range_low"], geoip ["range_high"]) .. "\r\n" -- range
+				info = info .. " " .. string.format (gettext ("IP range: %s - %s"), geoip ["range_low"], geoip ["range_high"]) .. "\r\n" -- range
 			end
 
 			if geoip ["city"] then
-				info = info .. " " .. string.format (getlang (910), geoip ["city"]) .. "\r\n" -- city
+				info = info .. " " .. string.format (gettext ("City: %s"), geoip ["city"]) .. "\r\n" -- city
 			end
 
 			if geoip ["region_code"] then
@@ -8600,7 +7582,7 @@ else -- user
 					extra = "=" .. geoip ["region"]
 				end
 
-				info = info .. " " .. string.format (getlang (912), geoip ["region_code"] .. extra) .. "\r\n" -- region code and region
+				info = info .. " " .. string.format (gettext ("Region: %s"), geoip ["region_code"] .. extra) .. "\r\n" -- region code and region
 			end
 
 			if geoip ["country_code"] then
@@ -8610,7 +7592,7 @@ else -- user
 					extra = "=" .. geoip ["country"]
 				end
 
-				info = info .. " " .. string.format (getlang (720), geoip ["country_code"] .. extra) .. "\r\n" -- country code and country
+				info = info .. " " .. string.format (gettext ("Country: %s"), geoip ["country_code"] .. extra) .. "\r\n" -- country code and country
 			end
 
 			if geoip ["continent_code"] then
@@ -8620,27 +7602,27 @@ else -- user
 					extra = "=" .. geoip ["continent"]
 				end
 
-				info = info .. " " .. string.format (getlang (914), geoip ["continent_code"] .. extra) .. "\r\n" -- continent code and continent
+				info = info .. " " .. string.format (gettext ("Continent: %s"), geoip ["continent_code"] .. extra) .. "\r\n" -- continent code and continent
 			end
 
 			if geoip ["time_zone"] then
-				info = info .. " " .. string.format (getlang (913), geoip ["time_zone"]) .. "\r\n" -- time zone
+				info = info .. " " .. string.format (gettext ("Time zone: %s"), geoip ["time_zone"]) .. "\r\n" -- time zone
 			end
 
 			if geoip ["latitude"] and geoip ["latitude"] > 0 and geoip ["longitude"] and geoip ["longitude"] > 0 then
-				info = info .. " " .. string.format (getlang (916), geoip ["latitude"], geoip ["longitude"]) .. "\r\n" -- latitude and longitude
+				info = info .. " " .. string.format (gettext ("Coordinates: %f %f"), geoip ["latitude"], geoip ["longitude"]) .. "\r\n" -- latitude and longitude
 			end
 
 			if geoip ["postal_code"] then
-				info = info .. " " .. string.format (getlang (915), geoip ["postal_code"]) .. "\r\n" -- postal code
+				info = info .. " " .. string.format (gettext ("Postal code: %s"), geoip ["postal_code"]) .. "\r\n" -- postal code
 			end
 
 			if geoip ["metro_code"] and geoip ["metro_code"] > 0 then
-				info = info .. " " .. string.format (getlang (917), geoip ["metro_code"]) .. "\r\n" -- metro code
+				info = info .. " " .. string.format (gettext ("Metro code: %d"), geoip ["metro_code"]) .. "\r\n" -- metro code
 			end
 
 			if geoip ["area_code"] and geoip ["area_code"] > 0 then
-				info = info .. " " .. string.format (getlang (918), geoip ["area_code"]) .. "\r\n" -- area code
+				info = info .. " " .. string.format (gettext ("Area code: %d"), geoip ["area_code"]) .. "\r\n" -- area code
 			end
 		end
 	end
@@ -8649,8 +7631,8 @@ else -- user
 
 	if mi then
 		local desc, tag, conn, sts, email, share = parsemyinfo (user, mi)
-		info = info.." "..string.format (getlang (706), desc).."\r\n" -- description
-		info = info.." "..string.format (getlang (707), tag).."\r\n" -- tag
+		info = info.." "..string.format (gettext ("Description: %s"), desc).."\r\n" -- description
+		info = info.." "..string.format (gettext ("Tag: %s"), tag).."\r\n" -- tag
 
 		if string.len (tag) > 0 then -- tag information
 			local _, _, cl, ver, mode, hubs, slots, lmt = string.find (tag, "^<(.+) V:(.+),M:(%S+),H:(%S+),S:(%d+)(.*>)$")
@@ -8660,37 +7642,37 @@ else -- user
 			end
 
 			if cl then -- client
-				info = info.." "..string.format (getlang (721), cl).."\r\n"
+				info = info.." "..string.format (gettext ("Client: %s"), cl).."\r\n"
 			end
 
 			if ver then -- version
-				info = info.." "..string.format (getlang (722), ver).."\r\n"
+				info = info.." "..string.format (gettext ("Version: %s"), ver).."\r\n"
 			end
 
 			if mode then -- mode
-				info = info.." "..string.format (getlang (708), mode).."\r\n"
+				info = info.." "..string.format (gettext ("Mode: %s"), mode).."\r\n"
 			end
 
 			if hubs then -- hubs
-				info = info.." "..string.format (getlang (710), hubs).."\r\n"
+				info = info.." "..string.format (gettext ("Hubs: %s"), hubs).."\r\n"
 			end
 
 			if slots then -- slots
-				info = info.." "..string.format (getlang (709), slots).."\r\n"
+				info = info.." "..string.format (gettext ("Slots: %s"), slots).."\r\n"
 			end
 
 			if lmt then -- limiter
-				info = info.." "..string.format (getlang (711), lmt).."\r\n"
+				info = info.." "..string.format (gettext ("Limiter: %s KiB/s"), lmt).."\r\n"
 			end
 		end
 
-		info = info.." "..string.format (getlang (712), conn).."\r\n" -- connection
-		info = info.." "..string.format (getlang (713), statustostr (sts)).."\r\n" -- status
-		info = info.." "..string.format (getlang (714), email).."\r\n" -- email
-		info = info.." "..string.format (getlang (715), makesize (share)).."\r\n" -- share
+		info = info.." "..string.format (gettext ("Connection: %s"), conn).."\r\n" -- connection
+		info = info.." "..string.format (gettext ("Status: %s"), statustostr (sts)).."\r\n" -- status
+		info = info.." "..string.format (gettext ("Email: %s"), email).."\r\n" -- email
+		info = info.." "..string.format (gettext ("Share: %s"), makesize (share)).."\r\n" -- share
 
 		if tonumber (share) > 0 then
-			info = info.." "..string.format (getlang (716), share.." "..getlang (365)).."\r\n" -- exact share
+			info = info.." "..string.format (gettext ("Exact share: %s"), share.." "..gettext ("B")).."\r\n" -- exact share
 		end
 	end
 
@@ -8698,7 +7680,7 @@ else -- user
 		local on, sup = VH:GetUserSupports (user)
 
 		if on and sup and sup ~= "" then
-			info = info .. " " .. string.format (getlang (894), sup) .. "\r\n" -- supports
+			info = info .. " " .. string.format (gettext ("Client supports: %s"), sup) .. "\r\n" -- supports
 		end
 	end
 
@@ -8706,14 +7688,14 @@ else -- user
 		local on, ver = VH:GetUserVersion (user)
 
 		if on and ver and ver ~= "" then
-			info = info .. " " .. string.format (getlang (893), ver) .. "\r\n" -- version
+			info = info .. " " .. string.format (gettext ("NMDC version: %s"), ver) .. "\r\n" -- version
 		end
 	end
 
 	local usli = getusersbyip (ip)
 
 	if # usli > 1 then
-		info = info .. " " .. getlang (992) .. ":" -- users with same ip
+		info = info .. " " .. gettext ("Users with same IP") .. ":" -- users with same ip
 
 		for _, usni in pairs (usli) do
 			if usni ~= user then
@@ -8724,7 +7706,7 @@ else -- user
 		info = info .. "\r\n"
 	end
 
-	commandanswer (nick, getlang (703)..":\r\n\r\n"..info)
+	commandanswer (nick, gettext ("User information")..":\r\n\r\n"..info)
 end
 end
 
@@ -8737,11 +7719,11 @@ function showipinfo (nick, ip)
 
 		if ok and geoip and geoip ["host"] then
 			if geoip ["range_low"] and geoip ["range_high"] then
-				info = info .. " " .. string.format (getlang (911), geoip ["range_low"], geoip ["range_high"]) .. "\r\n" -- range
+				info = info .. " " .. string.format (gettext ("IP range: %s - %s"), geoip ["range_low"], geoip ["range_high"]) .. "\r\n" -- range
 			end
 
 			if geoip ["city"] then
-				info = info .. " " .. string.format (getlang (910), geoip ["city"]) .. "\r\n" -- city
+				info = info .. " " .. string.format (gettext ("City: %s"), geoip ["city"]) .. "\r\n" -- city
 			end
 
 			if geoip ["region_code"] then
@@ -8751,7 +7733,7 @@ function showipinfo (nick, ip)
 					extra = "=" .. geoip ["region"]
 				end
 
-				info = info .. " " .. string.format (getlang (912), geoip ["region_code"] .. extra) .. "\r\n" -- region code and region
+				info = info .. " " .. string.format (gettext ("Region: %s"), geoip ["region_code"] .. extra) .. "\r\n" -- region code and region
 			end
 
 			if geoip ["country_code"] then
@@ -8761,7 +7743,7 @@ function showipinfo (nick, ip)
 					extra = "=" .. geoip ["country"]
 				end
 
-				info = info .. " " .. string.format (getlang (720), geoip ["country_code"] .. extra) .. "\r\n" -- country code and country
+				info = info .. " " .. string.format (gettext ("Country: %s"), geoip ["country_code"] .. extra) .. "\r\n" -- country code and country
 			end
 
 			if geoip ["continent_code"] then
@@ -8771,37 +7753,37 @@ function showipinfo (nick, ip)
 					extra = "=" .. geoip ["continent"]
 				end
 
-				info = info .. " " .. string.format (getlang (914), geoip ["continent_code"] .. extra) .. "\r\n" -- continent code and continent
+				info = info .. " " .. string.format (gettext ("Continent: %s"), geoip ["continent_code"] .. extra) .. "\r\n" -- continent code and continent
 			end
 
 			if geoip ["time_zone"] then
-				info = info .. " " .. string.format (getlang (913), geoip ["time_zone"]) .. "\r\n" -- time zone
+				info = info .. " " .. string.format (gettext ("Time zone: %s"), geoip ["time_zone"]) .. "\r\n" -- time zone
 			end
 
 			if geoip ["latitude"] and geoip ["latitude"] > 0 and geoip ["longitude"] and geoip ["longitude"] > 0 then
-				info = info .. " " .. string.format (getlang (916), geoip ["latitude"], geoip ["longitude"]) .. "\r\n" -- latitude and longitude
+				info = info .. " " .. string.format (gettext ("Coordinates: %f %f"), geoip ["latitude"], geoip ["longitude"]) .. "\r\n" -- latitude and longitude
 			end
 
 			if geoip ["postal_code"] then
-				info = info .. " " .. string.format (getlang (915), geoip ["postal_code"]) .. "\r\n" -- postal code
+				info = info .. " " .. string.format (gettext ("Postal code: %s"), geoip ["postal_code"]) .. "\r\n" -- postal code
 			end
 
 			if geoip ["metro_code"] and geoip ["metro_code"] > 0 then
-				info = info .. " " .. string.format (getlang (917), geoip ["metro_code"]) .. "\r\n" -- metro code
+				info = info .. " " .. string.format (gettext ("Metro code: %d"), geoip ["metro_code"]) .. "\r\n" -- metro code
 			end
 
 			if geoip ["area_code"] and geoip ["area_code"] > 0 then
-				info = info .. " " .. string.format (getlang (918), geoip ["area_code"]) .. "\r\n" -- area code
+				info = info .. " " .. string.format (gettext ("Area code: %d"), geoip ["area_code"]) .. "\r\n" -- area code
 			end
 		end
 
 		if info ~= "" then
-			commandanswer (nick, getlang (930) .. ":\r\n\r\n " .. string.format (getlang (718), ip) .. "\r\n" .. info)
+			commandanswer (nick, gettext ("IP information") .. ":\r\n\r\n " .. string.format (gettext ("IP: %s"), ip) .. "\r\n" .. info)
 		else
-			commandanswer (nick, string.format (getlang (931), ip))
+			commandanswer (nick, string.format (gettext ("IP information not available: %s"), ip))
 		end
 	else
-		commandanswer (nick, string.format (getlang (514), "Verlihub 1.0.0 RC1"))
+		commandanswer (nick, string.format (gettext ("This feature requires %s or later installed on your system."), "Verlihub 1.0.0 RC1"))
 	end
 end
 
@@ -8820,9 +7802,9 @@ if rows > 0 then
 		list = list.." "..os.date (table_sets ["dateformat"].." "..table_sets ["timeformat"], tm)..": ["..prezero (2, ucl).."] <"..usr.."> "..cmd.."\r\n"
 	end
 
-	commandanswer (nick, string.format (getlang (780), rows)..":\r\n\r\n"..list)
+	commandanswer (nick, string.format (gettext ("Showing %s entries from command logger"), rows)..":\r\n\r\n"..list)
 else
-	commandanswer (nick, getlang (781))
+	commandanswer (nick, gettext ("Command logger is empty."))
 end
 end
 
@@ -8854,9 +7836,9 @@ if rshare ~= "0" then res = res.." [ S: "..repnmdcoutchars (rshare).." ]" end
 res = res.."\r\n"
 end
 
-commandanswer (nick, string.format (getlang (122), rows)..":\r\n\r\n"..res)
+commandanswer (nick, string.format (gettext ("Showing %s user log results"), rows)..":\r\n\r\n"..res)
 else
-commandanswer (nick, getlang (121))
+commandanswer (nick, gettext ("No user results found."))
 end
 
 else -- specific
@@ -8877,14 +7859,14 @@ if rshare ~= "0" then res = res.." [ S: "..repnmdcoutchars (rshare).." ]" end
 res = res.."\r\n"
 end
 
-commandanswer (nick, string.format (getlang (122), rows)..":\r\n\r\n"..res)
+commandanswer (nick, string.format (gettext ("Showing %s user log results"), rows)..":\r\n\r\n"..res)
 else
-commandanswer (nick, getlang (121))
+commandanswer (nick, gettext ("No user results found."))
 end
 end
 
 else -- unknown type
-commandanswer (nick, string.format (getlang (100), "nick, ip, desc, tag, conn, email, share "..getlang (70).." all"))
+commandanswer (nick, string.format (gettext ("Known types are: %s"), "nick, ip, desc, tag, conn, email, share "..gettext ("and").." all"))
 end
 end
 
@@ -9072,7 +8054,7 @@ function calculate (nick, line)
 				reslt = anum * bnum
 			elseif oper == "/" then
 				if bnum == 0 then -- division by zero
-					commandanswer (nick, getlang (250))
+					commandanswer (nick, gettext ("Division by zero is forbidden."))
 					return nil
 				end
 
@@ -9083,10 +8065,10 @@ function calculate (nick, line)
 
 			commandanswer (nick, anum.." "..oper.." "..bnum.." = "..reslt)
 		else
-			commandanswer (nick, string.format (getlang (482), "+, -, *, / "..getlang (70).." ^"))
+			commandanswer (nick, string.format (gettext ("Known operations are: %s"), "+, -, *, / "..gettext ("and").." ^"))
 		end
 	else
-		commandanswer (nick, getlang (481))
+		commandanswer (nick, gettext ("Both numbers must be either pi or numbers."))
 	end
 end
 
@@ -9095,7 +8077,7 @@ end
 function addauthentry (nick, item)
 	local _, _, user, ip = string.find (item, "^(%S+) (.+)$")
 	VH:SQLQuery ("insert into `"..tbl_sql ["auth"].."` (`nick`, `ip`) values ('"..repsqlchars (user).."', '"..repsqlchars (repnmdcinchars (ip)).."')")
-	commandanswer (nick, string.format (getlang (236), user, ip))
+	commandanswer (nick, string.format (gettext ("Added authorization entry: %s @ %s"), user, ip))
 end
 
 ----- ---- --- -- -
@@ -9107,9 +8089,9 @@ function modauthentry (nick, item)
 	if rows > 0 then
 		local _, user = VH:SQLFetch (0)
 		VH:SQLQuery ("update `"..tbl_sql ["auth"].."` set `ip` = '"..repsqlchars (repnmdcinchars (ip)).."' where `id` = "..id.." limit 1")
-		commandanswer (nick, string.format (getlang (235), user, ip))
+		commandanswer (nick, string.format (gettext ("Modified authorization entry: %s @ %s"), user, ip))
 	else
-		commandanswer (nick, string.format (getlang (786), id))
+		commandanswer (nick, string.format (gettext ("Couldn't modify authorization entry because not found: %s"), id))
 	end
 end
 
@@ -9121,9 +8103,9 @@ function delauthentry (nick, id)
 	if rows > 0 then
 		local _, user = VH:SQLFetch (0)
 		VH:SQLQuery ("delete from `"..tbl_sql ["auth"].."` where `id` = "..id.." limit 1")
-		commandanswer (nick, string.format (getlang (237), user))
+		commandanswer (nick, string.format (gettext ("Deleted authorization entry: %s"), user))
 	else
-		commandanswer (nick, string.format (getlang (238), id))
+		commandanswer (nick, string.format (gettext ("Couldn't delete authorization entry because not found: %s"), id))
 	end
 end
 
@@ -9146,9 +8128,9 @@ function listauthentry (nick)
 			list = list.." "..prezero (string.len (rows), (x + 1))..". [ B: "..prezero (seclen, bad).." ] [ G: "..prezero (len, good).." ] [ I: "..id.." ] "..user.." @ "..repnmdcoutchars (ip).." [ LB: "..bip.." ]\r\n"
 		end
 
-		commandanswer (nick, getlang (239)..":\r\n\r\n"..list)
+		commandanswer (nick, gettext ("IP authorization list")..":\r\n\r\n"..list)
 	else
-		commandanswer (nick, getlang (240))
+		commandanswer (nick, gettext ("IP authorization list is empty."))
 	end
 end
 
@@ -9165,7 +8147,7 @@ function authcheck (nick, cls, uip)
 
 		if string.find (uip, ip) then -- match
 			VH:SQLQuery ("update `"..tbl_sql ["auth"].."` set `good` = `good` + 1 where `id` = "..id.." limit 1")
-			opsnotify (table_sets ["classnotiauth"], string.format (getlang (244), nick, uip .. tryipcc (uip, nick), cls))
+			opsnotify (table_sets ["classnotiauth"], string.format (gettext ("%s with IP %s and class %s authorized."), nick, uip .. tryipcc (uip, nick), cls))
 			return false
 		end
 	end
@@ -9173,7 +8155,7 @@ function authcheck (nick, cls, uip)
 	maintouser (nick, table_sets ["authmessage"])
 	VH:SQLQuery ("update `"..tbl_sql ["auth"].."` set `badip` = '"..repsqlchars (uip).."', `bad` = `bad` + 1 where `nick` = '"..user.."'")
 	VH:CloseConnection (nick) -- drop user
-	opsnotify (table_sets ["classnotiauth"], string.format (getlang (245), nick, uip .. tryipcc (uip, nick), cls))
+	opsnotify (table_sets ["classnotiauth"], string.format (gettext ("%s with IP %s and class %s failed authorization and disconnected."), nick, uip .. tryipcc (uip, nick), cls))
 	return true
 end
 
@@ -9186,11 +8168,11 @@ function checkregmecmd (nick, ucl)
 	if table_sets ["regmechatcnt"] > 0 then
 		if table_regm [nick] then
 			if table_regm [nick] < table_sets ["regmechatcnt"] then
-				commandanswer (nick, string.format (getlang (816), (table_sets ["regmechatcnt"] - table_regm [nick])))
+				commandanswer (nick, string.format (gettext ("You need to send another %s main chat messages in order to use hub registration."), (table_sets ["regmechatcnt"] - table_regm [nick])))
 				return 0
 			end
 		else
-			commandanswer (nick, string.format (getlang (816), table_sets ["regmechatcnt"]))
+			commandanswer (nick, string.format (gettext ("You need to send another %s main chat messages in order to use hub registration."), table_sets ["regmechatcnt"]))
 			return 0
 		end
 	end
@@ -9200,11 +8182,11 @@ function checkregmecmd (nick, ucl)
 			local dif = os.time () - table_usup [nick]
 
 			if (dif / 60) < table_sets ["regmeuptime"] then
-				commandanswer (nick, string.format (getlang (817), roundint ((table_sets ["regmeuptime"] - (dif / 60)), 1)))
+				commandanswer (nick, string.format (gettext ("Please wait another %s minutes before using hub registration."), roundint ((table_sets ["regmeuptime"] - (dif / 60)), 1)))
 				return 0
 			end
 		--else
-			--commandanswer (nick, string.format (getlang (819), table_sets ["regmeuptime"]))
+			--commandanswer (nick, string.format (gettext ("Please reconnect to gain %s minutes of uptime in order to use hub registration."), table_sets ["regmeuptime"]))
 			--return 0
 		end
 	end
@@ -9229,7 +8211,7 @@ function autoupdatecheck ()
 				local verledonum = ver_ledo:gsub ("%.", "")
 
 				if tonumber (vernum) > tonumber (verledonum) then -- version number is higher
-					opsnotify (table_sets ["classnotiledoact"], string.format (getlang (822), ver, string.sub (getconfig ("cmd_start_op"), 1, 1) .. table_cmnds ["ledover"]))
+					opsnotify (table_sets ["classnotiledoact"], string.format (gettext ("Automatic update detected Ledokol version %s released, to upgrade use: %s"), ver, string.sub (getconfig ("cmd_start_op"), 1, 1) .. table_cmnds ["ledover"]))
 				end
 			end
 		end
@@ -9242,9 +8224,9 @@ end
 
 function updatescript (nick)
 	if not table_othsets ["ver_curl"] then
-		commandanswer (nick, string.format (getlang (691), "cURL"))
+		commandanswer (nick, string.format (gettext ("This feature requires any version of %s installed on your system."), "cURL"))
 	else
-		commandanswer (nick, getlang (229))
+		commandanswer (nick, gettext ("Downloading version file..."))
 		local res, err = os.execute ("curl -L --retry 3 --connect-timeout 5 -m 15 -A \"Verlihub\" -s -o \"" .. table_othsets ["cfgdir"] .. table_othsets ["tmpfile"] .. "\" \"" .. table_othsets ["updserv"] .. table_othsets ["verfile"] .. "\"")
 
 		if res then
@@ -9257,13 +8239,13 @@ function updatescript (nick)
 
 				if ver then
 					if not string.find (ver, "^%d+%.%d+%.%d+$") then -- unexpected content
-						commandanswer (nick, string.format (getlang (19), table_othsets ["verfile"]))
+						commandanswer (nick, string.format (gettext ("Requested file %s not found on target server. Please try again later."), table_othsets ["verfile"]))
 					else -- expected content
 						local vernum = ver:gsub ("%.", "")
 						local verledonum = ver_ledo:gsub ("%.", "")
 
 						if tonumber (vernum) > tonumber (verledonum) then -- version number is higher
-							commandanswer (nick, string.format (getlang (24), ver))
+							commandanswer (nick, string.format (gettext ("Ledokol version %s released. Downloading script files..."), ver))
 							local res, err = os.execute ("curl -L --retry 3 --connect-timeout 5 -m 15 -A \"Verlihub\" -s -o \"" .. table_othsets ["cfgdir"] .. "ledokol.lua\" \"" .. table_othsets ["updserv"] .. "ledokol.lua\"")
 
 							if res then
@@ -9276,14 +8258,14 @@ function updatescript (nick)
 									if ledo then
 										if not string.find (ledo, "ver_ledo = \"" .. ver .. "\" %-%- ledokol version") then -- unexpected content
 											os.remove (table_othsets ["cfgdir"] .. "ledokol.lua")
-											commandanswer (nick, string.format (getlang (19), "ledokol.lua"))
+											commandanswer (nick, string.format (gettext ("Requested file %s not found on target server. Please try again later."), "ledokol.lua"))
 										else -- expected content
-											commandanswer (nick, getlang (346))
+											commandanswer (nick, gettext ("Moving files..."))
 											local res, err = os.execute ("mv -f \"" .. table_othsets ["cfgdir"] .. "ledokol.lua\" \"" .. table_othsets ["cfgdir"] .. "scripts/ledokol.lua\"")
 
 											if res then
-												if os.execute ("curl -L --retry 3 --connect-timeout 5 -m 15 -A \"Verlihub\" -s -o \"" .. table_othsets ["cfgdir"] .. "ledo_en.txt\" \"" .. table_othsets ["updserv"] .. "ledo_en.txt\"") then
-													local f = io.open (table_othsets ["cfgdir"] .. "ledo_en.txt", "r")
+												if os.execute ("curl -L --retry 3 --connect-timeout 5 -m 15 -A \"Verlihub\" -s -o \"" .. table_othsets ["cfgdir"] .. "ledo_en.lang\" \"" .. table_othsets ["updserv"] .. "ledo_en.lang\"") then
+													local f = io.open (table_othsets ["cfgdir"] .. "ledo_en.lang", "r")
 
 													if f then
 														local ledo = f:read ("*all") -- read the file
@@ -9291,45 +8273,45 @@ function updatescript (nick)
 
 														if ledo then
 															if not string.find (ledo, "Version: " .. ver) then -- unexpected content
-																os.remove (table_othsets ["cfgdir"] .. "ledo_en.txt")
-															elseif not os.execute ("mv -f \"" .. table_othsets ["cfgdir"] .. "ledo_en.txt\" \"" .. table_othsets ["cfgdir"] .. "scripts/ledo_en.txt\"") then -- expected content
-																os.remove (table_othsets ["cfgdir"] .. "ledo_en.txt")
+																os.remove (table_othsets ["cfgdir"] .. "ledo_en.lang")
+															elseif not os.execute ("mv -f \"" .. table_othsets ["cfgdir"] .. "ledo_en.lang\" \"" .. table_othsets ["cfgdir"] .. "scripts/ledo_en.lang\"") then -- expected content
+																os.remove (table_othsets ["cfgdir"] .. "ledo_en.lang")
 															end
-														else -- unable to read ledo_en.txt
-															os.remove (table_othsets ["cfgdir"] .. "ledo_en.txt")
+														else -- unable to read ledo_en.lang
+															os.remove (table_othsets ["cfgdir"] .. "ledo_en.lang")
 														end
 													end
 												end
 
-												commandanswer (nick, getlang (345) .. "\r\n\r\n !luaunload " .. table_othsets ["cfgdir"] .. "scripts/ledokol.lua\r\n !luaload " .. table_othsets ["cfgdir"] .. "scripts/ledokol.lua\r\n")
+												commandanswer (nick, gettext ("Please use following commands to finish update process.") .. "\r\n\r\n !luaunload " .. table_othsets ["cfgdir"] .. "scripts/ledokol.lua\r\n !luaload " .. table_othsets ["cfgdir"] .. "scripts/ledokol.lua\r\n")
 											else -- unable to execute shell command
 												os.remove (table_othsets ["cfgdir"] .. "ledokol.lua")
-												commandanswer (nick, string.format (getlang (661), (err or getlang (662))))
+												commandanswer (nick, string.format (gettext ("Unable to proceed: %s"), (err or gettext ("No error message specified."))))
 											end
 										end
 									else -- unable to read ledokol.lua
-										commandanswer (nick, string.format (getlang (661), (err or getlang (662))))
+										commandanswer (nick, string.format (gettext ("Unable to proceed: %s"), (err or gettext ("No error message specified."))))
 									end
 								else -- unable to open ledokol.lua
-									--commandanswer (nick, string.format (getlang (661), (err or getlang (662))))
-									commandanswer (nick, getlang (16))
+									--commandanswer (nick, string.format (gettext ("Unable to proceed: %s"), (err or gettext ("No error message specified."))))
+									commandanswer (nick, gettext ("Unable to connect to target server. Please try again later."))
 								end
 							else -- unable to execute shell command
-								commandanswer (nick, string.format (getlang (661), (err or getlang (662))))
+								commandanswer (nick, string.format (gettext ("Unable to proceed: %s"), (err or gettext ("No error message specified."))))
 							end
 						else -- version number is same or lower
-							commandanswer (nick, getlang (25))
+							commandanswer (nick, gettext ("You are currently running latest version of Ledokol. No update is required."))
 						end
 					end
 				else -- unable to read ledokol.ver
-					commandanswer (nick, string.format (getlang (661), (err or getlang (662))))
+					commandanswer (nick, string.format (gettext ("Unable to proceed: %s"), (err or gettext ("No error message specified."))))
 				end
 			else -- unable to open ledokol.ver
-				--commandanswer (nick, string.format (getlang (661), (err or getlang (662))))
-				commandanswer (nick, getlang (16))
+				--commandanswer (nick, string.format (gettext ("Unable to proceed: %s"), (err or gettext ("No error message specified."))))
+				commandanswer (nick, gettext ("Unable to connect to target server. Please try again later."))
 			end
 		else -- unable to execute shell command
-			commandanswer (nick, string.format (getlang (661), (err or getlang (662))))
+			commandanswer (nick, string.format (gettext ("Unable to proceed: %s"), (err or gettext ("No error message specified."))))
 		end
 	end
 end
@@ -9348,14 +8330,14 @@ VH:SQLQuery ("delete from `"..tbl_sql ["mchist"].."` order by `date` asc limit "
 end
 
 if (limt == 0) or (rows > limt) then
-commandanswer (nick, string.format (getlang (11), rows))
-opsnotify (table_sets ["classnotiledoact"], string.format (getlang (15), nick, cls, rows))
+commandanswer (nick, string.format (gettext ("Deleted %s main chat history messages."), rows))
+opsnotify (table_sets ["classnotiledoact"], string.format (gettext ("%s with class %s deleted %s main chat history messages."), nick, cls, rows))
 end
 
 else
 
 if autom == 0 then
-commandanswer (nick, getlang (12))
+commandanswer (nick, gettext ("There are no main chat history messages to remove."))
 end
 end
 
@@ -9370,14 +8352,14 @@ VH:SQLQuery ("delete from `"..tbl_sql ["ophist"].."` order by `date` asc limit "
 end
 
 if (limt == 0) or (rows > limt) then
-commandanswer (nick, string.format (getlang (13), rows))
-opsnotify (table_sets ["classnotiledoact"], string.format (getlang (405), nick, cls, rows))
+commandanswer (nick, string.format (gettext ("Deleted %s operator chat history messages."), rows))
+opsnotify (table_sets ["classnotiledoact"], string.format (gettext ("%s with class %s deleted %s operator chat history messages."), nick, cls, rows))
 end
 
 else
 
 if autom == 0 then
-commandanswer (nick, getlang (14))
+commandanswer (nick, gettext ("There are no operator chat history messages to remove."))
 end
 end
 end
@@ -9415,15 +8397,15 @@ aentry = " "..os.date (table_sets ["dateformat"].." "..table_sets ["timeformat"]
 end
 
 if autosend == 0 then
-commandanswer (nick, string.format (getlang (17), rows)..":\r\n\r\n"..aentry)
+commandanswer (nick, string.format (gettext ("Last %s main chat messages"), rows)..":\r\n\r\n"..aentry)
 else
-maintouser (nick, string.format (getlang (17), rows)..":\r\n\r\n"..aentry)
+maintouser (nick, string.format (gettext ("Last %s main chat messages"), rows)..":\r\n\r\n"..aentry)
 end
 
 else
 
 if autosend == 0 then -- only if sending manually
-commandanswer (nick, getlang (18))
+commandanswer (nick, gettext ("Main chat history is empty."))
 end
 end
 end
@@ -9462,22 +8444,22 @@ end
 
 if autosend == 0 then
 if inopchat == true then
-pmtouser (nick, table_othsets ["opchatnick"], string.format (getlang (21), rows)..":\r\n\r\n"..aentry)
+pmtouser (nick, table_othsets ["opchatnick"], string.format (gettext ("Last %s operator chat messages"), rows)..":\r\n\r\n"..aentry)
 else
-commandanswer (nick, string.format (getlang (21), rows)..":\r\n\r\n"..aentry)
+commandanswer (nick, string.format (gettext ("Last %s operator chat messages"), rows)..":\r\n\r\n"..aentry)
 end
 
 else
-maintouser (nick, string.format (getlang (21), rows)..":\r\n\r\n"..aentry)
+maintouser (nick, string.format (gettext ("Last %s operator chat messages"), rows)..":\r\n\r\n"..aentry)
 end
 
 else
 
 if autosend == 0 then -- only if sending manually
 if inopchat == true then
-pmtouser (nick, table_othsets ["opchatnick"], getlang (22))
+pmtouser (nick, table_othsets ["opchatnick"], gettext ("Operator chat history is empty."))
 else
-commandanswer (nick, getlang (22))
+commandanswer (nick, gettext ("Operator chat history is empty."))
 end
 end
 end
@@ -9504,9 +8486,9 @@ local _, user, adate, msg = VH:SQLFetch (x)
 aentry = " "..os.date (table_sets ["dateformat"].." "..table_sets ["timeformat"], adate)..": <"..user.."> "..msg.."\r\n"..aentry
 end
 
-commandanswer (nick, string.format (getlang (463), rows)..":\r\n\r\n"..aentry)
+commandanswer (nick, string.format (gettext ("Last %s main chat messages written by you"), rows)..":\r\n\r\n"..aentry)
 else
-commandanswer (nick, getlang (462))
+commandanswer (nick, gettext ("There are no main chat history messages written by you."))
 end
 end
 
@@ -9565,10 +8547,10 @@ local ent = repsqlchars (repnmdcinchars (line))
 local _, rows = VH:SQLQuery ("select `occurred` from `"..tbl_sql ["prot"].."` where `protected` = '"..ent.."' limit 1")
 
 if rows > 0 then -- exists
-	commandanswer (nick, string.format (getlang (610), line))
+	commandanswer (nick, string.format (gettext ("Protection entry already exists: %s"), line))
 else -- add
 	VH:SQLQuery ("insert into `"..tbl_sql ["prot"].."` (`protected`) values ('"..ent.."')")
-	commandanswer (nick, string.format (getlang (608), line))
+	commandanswer (nick, string.format (gettext ("Added protection entry: %s"), line))
 end
 end
 
@@ -9580,9 +8562,9 @@ local _, rows = VH:SQLQuery ("select `occurred` from `"..tbl_sql ["prot"].."` wh
 
 if rows > 0 then -- delete
 	VH:SQLQuery ("delete from `"..tbl_sql ["prot"].."` where `protected` = '"..ent.."' limit 1")
-	commandanswer (nick, string.format (getlang (609), line))
+	commandanswer (nick, string.format (gettext ("Deleted protection entry: %s"), line))
 else -- not in list
-	commandanswer (nick, string.format (getlang (611), line))
+	commandanswer (nick, string.format (gettext ("Protection entry not found: %s"), line))
 end
 end
 
@@ -9600,9 +8582,9 @@ if rows > 0 then
 		list = list.." "..prezero (string.len (rows), (x + 1))..". [ O: "..prezero (len, occ).." ] "..repnmdcoutchars (ent).."\r\n"
 	end
 
-	commandanswer (nick, getlang (607)..":\r\n\r\n"..list)
+	commandanswer (nick, gettext ("Protection list")..":\r\n\r\n"..list)
 else -- empty
-	commandanswer (nick, getlang (612))
+	commandanswer (nick, gettext ("Protection list is empty."))
 end
 end
 
@@ -9633,21 +8615,21 @@ local _, _, usr, tp = string.find (line, "^(.+) (%S+)$")
 --if getstatus (usr) == 1 then
 	if tp == "norm" then
 		if table_mode [usr] then
-			commandanswer (nick, string.format (getlang (633), usr, table_mode [usr], tp))
+			commandanswer (nick, string.format (gettext ("Changing chat mode for %s: %s => %s"), usr, table_mode [usr], tp))
 			table_mode [usr] = nil
 		else
-			commandanswer (nick, string.format (getlang (634), usr))
+			commandanswer (nick, string.format (gettext ("Not found in chat mode list: %s"), usr))
 		end
 
 	elseif (tp == "rev") or (tp == "cyr") or (tp == "lat") or (tp == "cap") or (tp == "low") or (tp == "pwd") or (tp == "num") then
-			commandanswer (nick, string.format (getlang (633), usr, (table_mode [usr] or "norm"), tp))
+			commandanswer (nick, string.format (gettext ("Changing chat mode for %s: %s => %s"), usr, (table_mode [usr] or "norm"), tp))
 			table_mode [usr] = tp
 
 	else -- unknown mode
-		commandanswer (nick, string.format (getlang (631), "rev, cyr, lat, cap, low, pwd, num "..getlang (70).." norm"))
+		commandanswer (nick, string.format (gettext ("Known chat modes are: %s"), "rev, cyr, lat, cap, low, pwd, num "..gettext ("and").." norm"))
 	end
 --else
-	--commandanswer (nick, string.format (getlang (468), usr))
+	--commandanswer (nick, string.format (gettext ("User is not in userlist: %s"), usr))
 --end
 end
 
@@ -9663,9 +8645,9 @@ for k, v in pairs (table_mode) do
 end
 
 if list == "" then
-	commandanswer (nick, getlang (636))
+	commandanswer (nick, gettext ("Chat mode user list is empty."))
 else
-	commandanswer (nick, getlang (635)..":\r\n\r\n"..list)
+	commandanswer (nick, gettext ("Chat mode user list")..":\r\n\r\n"..list)
 end
 end
 
@@ -9716,10 +8698,10 @@ local _, rows = VH:SQLQuery ("select `owner` from `"..tbl_sql ["hubs"].."` where
 
 if rows > 0 then -- update
 VH:SQLQuery ("update `"..tbl_sql ["hubs"].."` set `name` = '"..repsqlchars (name).."', `owner` = '"..repsqlchars (ownr).."' where `address` = '"..raddr.."' limit 1")
-commandanswer (nick, string.format (getlang (528), addr))
+commandanswer (nick, string.format (gettext ("Modified friendly hub: %s"), addr))
 else -- add
 VH:SQLQuery ("insert into `"..tbl_sql ["hubs"].."` (`address`, `name`, `owner`) values ('"..raddr.."', '"..repsqlchars (name).."', '"..repsqlchars (ownr).."')")
-commandanswer (nick, string.format (getlang (527), addr))
+commandanswer (nick, string.format (gettext ("Added friendly hub: %s"), addr))
 end
 end
 
@@ -9733,9 +8715,9 @@ local _, rows = VH:SQLQuery ("select `owner` from `"..tbl_sql ["hubs"].."` where
 
 if rows > 0 then -- delete
 VH:SQLQuery ("delete from `"..tbl_sql ["hubs"].."` where `address` = '"..raddr.."' limit 1")
-commandanswer (nick, string.format (getlang (529), maddr))
+commandanswer (nick, string.format (gettext ("Deleted friendly hub: %s"), maddr))
 else -- not in list
-commandanswer (nick, string.format (getlang (530), maddr))
+commandanswer (nick, string.format (gettext ("Friendly hub not found: %s"), maddr))
 end
 end
 
@@ -9763,18 +8745,18 @@ function hublistshow (nick)
 				sts = ""
 			--else
 				--if tonumber (sts) == 1 then
-					--sts = " [ S: " .. getlang (32) .. " ]"
+					--sts = " [ S: " .. gettext ("Online") .. " ]"
 				--else
-					--sts = " [ S: " .. getlang (31) .. " ]"
+					--sts = " [ S: " .. gettext ("Offline") .. " ]"
 				--end
 			--end
 
 			hlist = hlist .. " " .. prezero (string.len (rows), (x + 1)) .. ". " .. name .. " @ dchub://" .. addr .. "/" .. ownr .. sts .. "\r\n" -- todo: do something about adc:// hubs
 		end
 
-		commandanswer (nick, getlang (531) .. ":\r\n\r\n" .. hlist)
+		commandanswer (nick, gettext ("Friendly hublist") .. ":\r\n\r\n" .. hlist)
 	else -- empty
-		commandanswer (nick, getlang (532))
+		commandanswer (nick, gettext ("Friendly hublist is empty."))
 	end
 end
 
@@ -9827,9 +8809,9 @@ function sendoffmsg (from, line, ucls)
 	local _, _, to = string.find (line, "^(%S+) .+$")
 
 	if string.lower (to) == string.lower (from) then
-		commandanswer (from, getlang (26))
+		commandanswer (from, gettext ("Why would you send offline message to yourself?"))
 	elseif isbot (to) == true then
-		commandanswer (from, getlang (139))
+		commandanswer (from, gettext ("The user you're trying to send offline message to is a bot. Message is discarded."))
 	else
 		local _, _, msg = string.find (line, "^%S+ (.+)$")
 		local uip = getip (from)
@@ -9838,12 +8820,12 @@ function sendoffmsg (from, line, ucls)
 		if (isprotected (from, uip) == true) or (antiscan (from, ucls, msg, 3, to, tsts) == 1) then
 			if tsts == 1 then
 				offlinepm (from, to, msg)
-				commandanswer (from, string.format (getlang (27), to))
+				commandanswer (from, string.format (gettext ("User %s is online. Sending message directly."), to))
 			else
 				local ndate = os.time () + table_sets ["srvtimediff"] -- current time
 				VH:SQLQuery ("insert into `"..tbl_sql ["off"].."` (`from`, `ip`, `to`, `date`, `message`) values ('"..repsqlchars (from).."', '"..uip.."', '"..repsqlchars (to).."', "..ndate..", '"..repsqlchars (msg).."')")
-				commandanswer (from, string.format (getlang (28), to))
-				opsnotify (table_sets ["classnotioff"], string.format (getlang (29), from, uip .. tryipcc (uip, from), ucls))
+				commandanswer (from, string.format (gettext ("Your offline message stored for user: %s"), to))
+				opsnotify (table_sets ["classnotioff"], string.format (gettext ("%s with IP %s and class %s sent offline message."), from, uip .. tryipcc (uip, from), ucls))
 			end
 		end
 	end
@@ -9859,19 +8841,19 @@ local _, rows = VH:SQLQuery ("select `from`, `date`, `message` from `"..tbl_sql 
 if rows > 0 then
 for x = 0, rows - 1 do
 local _, from, adate, msg = VH:SQLFetch (x)
-offlinepm (from, to, string.format (getlang (33), os.date (table_sets ["dateformat"].." "..table_sets ["timeformat"], adate))..":\r\n\r\n"..msg.."\r\n")
+offlinepm (from, to, string.format (gettext ("I sent offline message to you on %s"), os.date (table_sets ["dateformat"].." "..table_sets ["timeformat"], adate))..":\r\n\r\n"..msg.."\r\n")
 local sts = ""
 
 if getstatus (from) == 0 then
-sts = getlang (31)
+sts = gettext ("Offline")
 else
-sts = getlang (32)
+sts = gettext ("Online")
 end
 
-offlinepm (from, to, getlang (34)..": "..sts)
+offlinepm (from, to, gettext ("My current status")..": "..sts)
 end
 
-opsnotify (table_sets ["classnotioff"], string.format (getlang (35), to, tip .. tryipcc (tip, to), ucls))
+opsnotify (table_sets ["classnotioff"], string.format (gettext ("%s with IP %s and class %s received offline messages."), to, tip .. tryipcc (tip, to), ucls))
 VH:SQLQuery ("delete from `"..tbl_sql ["off"].."` where `to` = '"..user.."'") -- remove all stored message to that user
 end
 end
@@ -9890,9 +8872,9 @@ local _, from, ip, adate = VH:SQLFetch (x)
 anentry = anentry.." "..prezero (string.len (rows), (x + 1))..". [ D: "..os.date (table_sets ["dateformat"].." "..table_sets ["timeformat"], adate).." ] "..from.." @ "..ip.."\r\n"
 end
 
-commandanswer (nick, getlang (36)..":\r\n\r\n"..anentry)
+commandanswer (nick, gettext ("Stored offline messages")..":\r\n\r\n"..anentry)
 else
-commandanswer (nick, getlang (37))
+commandanswer (nick, gettext ("Offline message list is empty."))
 end
 end
 
@@ -9912,7 +8894,7 @@ if rows > 0 then
 	end
 
 else
-	commandanswer (nick, getlang (37))
+	commandanswer (nick, gettext ("Offline message list is empty."))
 	return nil
 end
 
@@ -9924,9 +8906,9 @@ end
 local num = table.getn (t)
 
 if num > 0 then
-	commandanswer (nick, string.format (getlang (38), num))
+	commandanswer (nick, string.format (gettext ("Deleted %s offline messages."), num))
 else
-	commandanswer (nick, string.format (getlang (39), adate))
+	commandanswer (nick, string.format (gettext ("Couldn't delete offline messages because not found: %s"), adate))
 end
 end
 
@@ -9937,10 +8919,10 @@ local rows = counttable (tbl_sql ["off"])
 
 if rows > 0 then
 VH:SQLQuery ("truncate table `"..tbl_sql ["off"].."`")
-commandanswer (nick, string.format (getlang (38), rows))
-opsnotify (table_sets ["classnotiledoact"], string.format (getlang (40), nick, cls))
+commandanswer (nick, string.format (gettext ("Deleted %s offline messages."), rows))
+opsnotify (table_sets ["classnotiledoact"], string.format (gettext ("%s with class %s deleted all offline messages."), nick, cls))
 else
-commandanswer (nick, getlang (41))
+commandanswer (nick, gettext ("There are no offline messages to remove."))
 end
 end
 
@@ -9961,10 +8943,10 @@ function checknick (nick, ucls, aip)
 			local fres, fval = pcall (string.find, lowtxt, entry)
 
 			if not fres then
-				local ferr = getlang (976) .. ":\r\n\r\n"
-				ferr = ferr .. " " .. getlang (970) .. ": " .. repnmdcoutchars (entry) .. "\r\n"
-				ferr = ferr .. " " .. getlang (971) .. ": " .. repnmdcoutchars (fval or getlang (662)) .. "\r\n"
-				ferr = ferr .. " " .. getlang (972) .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+				local ferr = gettext ("There is an error in following forbidden nick pattern") .. ":\r\n\r\n"
+				ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (entry) .. "\r\n"
+				ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
+				ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
 				opsnotify (table_sets ["classnotiledoact"], ferr)
 			elseif fval then
 				VH:SQLQuery ("update `" .. tbl_sql ["minick"] .. "` set `occurred` = `occurred` + 1 where `nick` = '" .. repsqlchars (entry) .. "' limit 1")
@@ -9976,14 +8958,14 @@ function checknick (nick, ucls, aip)
 						local fres, fval = pcall (string.find, lowtxt, entry)
 
 						if not fres then
-							local ferr = getlang (977) .. ":\r\n\r\n"
-							ferr = ferr .. " " .. getlang (970) .. ": " .. repnmdcoutchars (entry) .. "\r\n"
-							ferr = ferr .. " " .. getlang (971) .. ": " .. repnmdcoutchars (fval or getlang (662)) .. "\r\n"
-							ferr = ferr .. " " .. getlang (972) .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+							local ferr = gettext ("There is an error in following MyINFO exception pattern") .. ":\r\n\r\n"
+							ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (entry) .. "\r\n"
+							ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
+							ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
 							opsnotify (table_sets ["classnotiledoact"], ferr)
 						elseif fval then
 							VH:SQLQuery ("update `" .. tbl_sql ["miex"] .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (entry) .. "' limit 1")
-							opsnotify (table_sets ["classnotiex"], string.format (getlang (43), nick, aip .. tryipcc (aip, nick), ucls, nick))
+							opsnotify (table_sets ["classnotiex"], string.format (gettext ("%s with IP %s and class %s allowed due to forbidden nick exception: %s"), nick, aip .. tryipcc (aip, nick), ucls, nick))
 							return 0
 						end
 					end
@@ -10013,10 +8995,10 @@ function checkdesc (nick, desc, ucls, aip)
 			local fres, fval = pcall (string.find, lowtxt, entry)
 
 			if not fres then
-				local ferr = getlang (978) .. ":\r\n\r\n"
-				ferr = ferr .. " " .. getlang (970) .. ": " .. repnmdcoutchars (entry) .. "\r\n"
-				ferr = ferr .. " " .. getlang (971) .. ": " .. repnmdcoutchars (fval or getlang (662)) .. "\r\n"
-				ferr = ferr .. " " .. getlang (972) .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+				local ferr = gettext ("There is an error in following forbidden description pattern") .. ":\r\n\r\n"
+				ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (entry) .. "\r\n"
+				ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
+				ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
 				opsnotify (table_sets ["classnotiledoact"], ferr)
 			elseif fval then
 				VH:SQLQuery ("update `"..tbl_sql ["midesc"].."` set `occurred` = `occurred` + 1 where `description` = '"..repsqlchars (entry).."' limit 1")
@@ -10028,14 +9010,14 @@ function checkdesc (nick, desc, ucls, aip)
 						local fres, fval = pcall (string.find, lowtxt, entry)
 
 						if not fres then
-							local ferr = getlang (977) .. ":\r\n\r\n"
-							ferr = ferr .. " " .. getlang (970) .. ": " .. repnmdcoutchars (entry) .. "\r\n"
-							ferr = ferr .. " " .. getlang (971) .. ": " .. repnmdcoutchars (fval or getlang (662)) .. "\r\n"
-							ferr = ferr .. " " .. getlang (972) .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+							local ferr = gettext ("There is an error in following MyINFO exception pattern") .. ":\r\n\r\n"
+							ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (entry) .. "\r\n"
+							ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
+							ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
 							opsnotify (table_sets ["classnotiledoact"], ferr)
 						elseif fval then
 							VH:SQLQuery ("update `"..tbl_sql ["miex"].."` set `occurred` = `occurred` + 1 where `exception` = '"..repsqlchars (entry).."' limit 1")
-							opsnotify (table_sets ["classnotiex"], string.format (getlang (45), nick, aip .. tryipcc (aip, nick), ucls, desc))
+							opsnotify (table_sets ["classnotiex"], string.format (gettext ("%s with IP %s and class %s allowed due to forbidden description exception: %s"), nick, aip .. tryipcc (aip, nick), ucls, desc))
 							return 0
 						end
 					end
@@ -10065,10 +9047,10 @@ function checktag (nick, tag, ucls, aip)
 			local fres, fval = pcall (string.find, lowtxt, entry)
 
 			if not fres then
-				local ferr = getlang (979) .. ":\r\n\r\n"
-				ferr = ferr .. " " .. getlang (970) .. ": " .. repnmdcoutchars (entry) .. "\r\n"
-				ferr = ferr .. " " .. getlang (971) .. ": " .. repnmdcoutchars (fval or getlang (662)) .. "\r\n"
-				ferr = ferr .. " " .. getlang (972) .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+				local ferr = gettext ("There is an error in following forbidden tag pattern") .. ":\r\n\r\n"
+				ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (entry) .. "\r\n"
+				ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
+				ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
 				opsnotify (table_sets ["classnotiledoact"], ferr)
 			elseif fval then
 				VH:SQLQuery ("update `"..tbl_sql ["mitag"].."` set `occurred` = `occurred` + 1 where `tag` = '"..repsqlchars (entry).."' limit 1")
@@ -10080,14 +9062,14 @@ function checktag (nick, tag, ucls, aip)
 						local fres, fval = pcall (string.find, lowtxt, entry)
 
 						if not fres then
-							local ferr = getlang (977) .. ":\r\n\r\n"
-							ferr = ferr .. " " .. getlang (970) .. ": " .. repnmdcoutchars (entry) .. "\r\n"
-							ferr = ferr .. " " .. getlang (971) .. ": " .. repnmdcoutchars (fval or getlang (662)) .. "\r\n"
-							ferr = ferr .. " " .. getlang (972) .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+							local ferr = gettext ("There is an error in following MyINFO exception pattern") .. ":\r\n\r\n"
+							ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (entry) .. "\r\n"
+							ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
+							ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
 							opsnotify (table_sets ["classnotiledoact"], ferr)
 						elseif fval then
 							VH:SQLQuery ("update `"..tbl_sql ["miex"].."` set `occurred` = `occurred` + 1 where `exception` = '"..(entry).."' limit 1")
-							opsnotify (table_sets ["classnotiex"], string.format (getlang (47), nick, aip .. tryipcc (aip, nick), ucls, tag))
+							opsnotify (table_sets ["classnotiex"], string.format (gettext ("%s with IP %s and class %s allowed due to forbidden tag exception: %s"), nick, aip .. tryipcc (aip, nick), ucls, tag))
 							return 0
 						end
 					end
@@ -10117,10 +9099,10 @@ function checkconn (nick, conn, ucls, aip)
 			local fres, fval = pcall (string.find, lowtxt, entry)
 
 			if not fres then
-				local ferr = getlang (980) .. ":\r\n\r\n"
-				ferr = ferr .. " " .. getlang (970) .. ": " .. repnmdcoutchars (entry) .. "\r\n"
-				ferr = ferr .. " " .. getlang (971) .. ": " .. repnmdcoutchars (fval or getlang (662)) .. "\r\n"
-				ferr = ferr .. " " .. getlang (972) .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+				local ferr = gettext ("There is an error in following forbidden connection type pattern") .. ":\r\n\r\n"
+				ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (entry) .. "\r\n"
+				ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
+				ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
 				opsnotify (table_sets ["classnotiledoact"], ferr)
 			elseif fval then
 				VH:SQLQuery ("update `"..tbl_sql ["miconn"].."` set `occurred` = `occurred` + 1 where `connection` = '"..repsqlchars (entry).."' limit 1")
@@ -10132,14 +9114,14 @@ function checkconn (nick, conn, ucls, aip)
 						local fres, fval = pcall (string.find, lowtxt, entry)
 
 						if not fres then
-							local ferr = getlang (977) .. ":\r\n\r\n"
-							ferr = ferr .. " " .. getlang (970) .. ": " .. repnmdcoutchars (entry) .. "\r\n"
-							ferr = ferr .. " " .. getlang (971) .. ": " .. repnmdcoutchars (fval or getlang (662)) .. "\r\n"
-							ferr = ferr .. " " .. getlang (972) .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+							local ferr = gettext ("There is an error in following MyINFO exception pattern") .. ":\r\n\r\n"
+							ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (entry) .. "\r\n"
+							ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
+							ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
 							opsnotify (table_sets ["classnotiledoact"], ferr)
 						elseif fval then
 							VH:SQLQuery ("update `"..tbl_sql ["miex"].."` set `occurred` = `occurred` + 1 where `exception` = '"..repsqlchars (entry).."' limit 1")
-							opsnotify (table_sets ["classnotiex"], string.format (getlang (49), nick, aip .. tryipcc (aip, nick), ucls, conn))
+							opsnotify (table_sets ["classnotiex"], string.format (gettext ("%s with IP %s and class %s allowed due to forbidden connection type exception: %s"), nick, aip .. tryipcc (aip, nick), ucls, conn))
 							return 0
 						end
 					end
@@ -10169,10 +9151,10 @@ function checkemail (nick, email, ucls, aip)
 			local fres, fval = pcall (string.find, lowtxt, entry)
 
 			if not fres then
-				local ferr = getlang (981) .. ":\r\n\r\n"
-				ferr = ferr .. " " .. getlang (970) .. ": " .. repnmdcoutchars (entry) .. "\r\n"
-				ferr = ferr .. " " .. getlang (971) .. ": " .. repnmdcoutchars (fval or getlang (662)) .. "\r\n"
-				ferr = ferr .. " " .. getlang (972) .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+				local ferr = gettext ("There is an error in following forbidden email pattern") .. ":\r\n\r\n"
+				ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (entry) .. "\r\n"
+				ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
+				ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
 				opsnotify (table_sets ["classnotiledoact"], ferr)
 			elseif fval then
 				VH:SQLQuery ("update `"..tbl_sql ["miemail"].."` set `occurred` = `occurred` + 1 where `email` = '"..repsqlchars (entry).."' limit 1")
@@ -10184,14 +9166,14 @@ function checkemail (nick, email, ucls, aip)
 						local fres, fval = pcall (string.find, lowtxt, entry)
 
 						if not fres then
-							local ferr = getlang (977) .. ":\r\n\r\n"
-							ferr = ferr .. " " .. getlang (970) .. ": " .. repnmdcoutchars (entry) .. "\r\n"
-							ferr = ferr .. " " .. getlang (971) .. ": " .. repnmdcoutchars (fval or getlang (662)) .. "\r\n"
-							ferr = ferr .. " " .. getlang (972) .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+							local ferr = gettext ("There is an error in following MyINFO exception pattern") .. ":\r\n\r\n"
+							ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (entry) .. "\r\n"
+							ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
+							ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
 							opsnotify (table_sets ["classnotiledoact"], ferr)
 						elseif fval then
 							VH:SQLQuery ("update `"..tbl_sql ["miex"].."` set `occurred` = `occurred` + 1 where `exception` = '"..repsqlchars (entry).."' limit 1")
-							opsnotify (table_sets ["classnotiex"], string.format (getlang (51), nick, aip .. tryipcc (aip, nick), ucls, email))
+							opsnotify (table_sets ["classnotiex"], string.format (gettext ("%s with IP %s and class %s allowed due to forbidden email exception: %s"), nick, aip .. tryipcc (aip, nick), ucls, email))
 							return 0
 						end
 					end
@@ -10221,10 +9203,10 @@ function checkshare (nick, share, ucls, aip)
 			local fres, fval = pcall (string.find, lowtxt, entry)
 
 			if not fres then
-				local ferr = getlang (982) .. ":\r\n\r\n"
-				ferr = ferr .. " " .. getlang (970) .. ": " .. repnmdcoutchars (entry) .. "\r\n"
-				ferr = ferr .. " " .. getlang (971) .. ": " .. repnmdcoutchars (fval or getlang (662)) .. "\r\n"
-				ferr = ferr .. " " .. getlang (972) .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+				local ferr = gettext ("There is an error in following forbidden share size pattern") .. ":\r\n\r\n"
+				ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (entry) .. "\r\n"
+				ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
+				ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
 				opsnotify (table_sets ["classnotiledoact"], ferr)
 			elseif fval then
 				VH:SQLQuery ("update `"..tbl_sql ["mishare"].."` set `occurred` = `occurred` + 1 where `share` = '"..repsqlchars (entry).."' limit 1")
@@ -10236,14 +9218,14 @@ function checkshare (nick, share, ucls, aip)
 						local fres, fval = pcall (string.find, lowtxt, entry)
 
 						if not fres then
-							local ferr = getlang (977) .. ":\r\n\r\n"
-							ferr = ferr .. " " .. getlang (970) .. ": " .. repnmdcoutchars (entry) .. "\r\n"
-							ferr = ferr .. " " .. getlang (971) .. ": " .. repnmdcoutchars (fval or getlang (662)) .. "\r\n"
-							ferr = ferr .. " " .. getlang (972) .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+							local ferr = gettext ("There is an error in following MyINFO exception pattern") .. ":\r\n\r\n"
+							ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (entry) .. "\r\n"
+							ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
+							ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
 							opsnotify (table_sets ["classnotiledoact"], ferr)
 						elseif fval then
 							VH:SQLQuery ("update `"..tbl_sql ["miex"].."` set `occurred` = `occurred` + 1 where `exception` = '"..repsqlchars (entry).."' limit 1")
-							opsnotify (table_sets ["classnotiex"], string.format (getlang (53), nick, aip .. tryipcc (aip, nick), ucls, share))
+							opsnotify (table_sets ["classnotiex"], string.format (gettext ("%s with IP %s and class %s allowed due to forbidden share size exception: %s"), nick, aip .. tryipcc (aip, nick), ucls, share))
 							return 0
 						end
 					end
@@ -10274,10 +9256,10 @@ function checkip (nick, aip, ucls)
 			local fres, fval = pcall (string.find, lowtxt, entry)
 
 			if not fres then
-				local ferr = getlang (983) .. ":\r\n\r\n"
-				ferr = ferr .. " " .. getlang (970) .. ": " .. repnmdcoutchars (entry) .. "\r\n"
-				ferr = ferr .. " " .. getlang (971) .. ": " .. repnmdcoutchars (fval or getlang (662)) .. "\r\n"
-				ferr = ferr .. " " .. getlang (972) .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+				local ferr = gettext ("There is an error in following forbidden IP address pattern") .. ":\r\n\r\n"
+				ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (entry) .. "\r\n"
+				ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
+				ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
 				opsnotify (table_sets ["classnotiledoact"], ferr)
 			elseif fval then
 				VH:SQLQuery ("update `"..tbl_sql ["miip"].."` set `occurred` = `occurred` + 1 where `ip` = '"..repsqlchars (entry).."' limit 1")
@@ -10289,14 +9271,14 @@ function checkip (nick, aip, ucls)
 						local fres, fval = pcall (string.find, lowtxt, entry)
 
 						if not fres then
-							local ferr = getlang (977) .. ":\r\n\r\n"
-							ferr = ferr .. " " .. getlang (970) .. ": " .. repnmdcoutchars (entry) .. "\r\n"
-							ferr = ferr .. " " .. getlang (971) .. ": " .. repnmdcoutchars (fval or getlang (662)) .. "\r\n"
-							ferr = ferr .. " " .. getlang (972) .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+							local ferr = gettext ("There is an error in following MyINFO exception pattern") .. ":\r\n\r\n"
+							ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (entry) .. "\r\n"
+							ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
+							ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
 							opsnotify (table_sets ["classnotiledoact"], ferr)
 						elseif fval then
 							VH:SQLQuery ("update `"..tbl_sql ["miex"].."` set `occurred` = `occurred` + 1 where `exception` = '"..repsqlchars (entry).."' limit 1")
-							opsnotify (table_sets ["classnotiex"], string.format (getlang (354), nick, aip .. tryipcc (aip, nick), ucls, aip))
+							opsnotify (table_sets ["classnotiex"], string.format (gettext ("%s with IP %s and class %s allowed due to forbidden IP address exception: %s"), nick, aip .. tryipcc (aip, nick), ucls, aip))
 							return 0
 						end
 					end
@@ -10329,10 +9311,10 @@ function checkcc (nick, cls)
 			local fres, fval = pcall (string.find, lcc, ent)
 
 			if not fres then
-				local ferr = getlang (984) .. ":\r\n\r\n"
-				ferr = ferr .. " " .. getlang (970) .. ": " .. repnmdcoutchars (ent) .. "\r\n"
-				ferr = ferr .. " " .. getlang (971) .. ": " .. repnmdcoutchars (fval or getlang (662)) .. "\r\n"
-				ferr = ferr .. " " .. getlang (972) .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+				local ferr = gettext ("There is an error in following forbidden CC pattern") .. ":\r\n\r\n"
+				ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (ent) .. "\r\n"
+				ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
+				ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
 				opsnotify (table_sets ["classnotiledoact"], ferr)
 			elseif fval then
 				VH:SQLQuery ("update `"..tbl_sql ["micc"].."` set `occurred` = `occurred` + 1 where `cc` = '"..repsqlchars (ent).."' limit 1")
@@ -10344,14 +9326,14 @@ function checkcc (nick, cls)
 						local fres, fval = pcall (string.find, lcc, ent)
 
 						if not fres then
-							local ferr = getlang (977) .. ":\r\n\r\n"
-							ferr = ferr .. " " .. getlang (970) .. ": " .. repnmdcoutchars (ent) .. "\r\n"
-							ferr = ferr .. " " .. getlang (971) .. ": " .. repnmdcoutchars (fval or getlang (662)) .. "\r\n"
-							ferr = ferr .. " " .. getlang (972) .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+							local ferr = gettext ("There is an error in following MyINFO exception pattern") .. ":\r\n\r\n"
+							ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (ent) .. "\r\n"
+							ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
+							ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
 							opsnotify (table_sets ["classnotiledoact"], ferr)
 						elseif fval then
 							VH:SQLQuery ("update `"..tbl_sql ["miex"].."` set `occurred` = `occurred` + 1 where `exception` = '"..repsqlchars (ent).."' limit 1")
-							opsnotify (table_sets ["classnotiex"], string.format (getlang (796), nick, ip .. tryipcc (ip, nick), cls, cc))
+							opsnotify (table_sets ["classnotiex"], string.format (gettext ("%s with IP %s and class %s allowed due to forbidden CC exception: %s"), nick, ip .. tryipcc (ip, nick), cls, cc))
 							return false
 						end
 					end
@@ -10384,10 +9366,10 @@ function checkdns (nick, cls, ip)
 			local fres, fval = pcall (string.find, ldns, ent)
 
 			if not fres then
-				local ferr = getlang (985) .. ":\r\n\r\n"
-				ferr = ferr .. " " .. getlang (970) .. ": " .. repnmdcoutchars (ent) .. "\r\n"
-				ferr = ferr .. " " .. getlang (971) .. ": " .. repnmdcoutchars (fval or getlang (662)) .. "\r\n"
-				ferr = ferr .. " " .. getlang (972) .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+				local ferr = gettext ("There is an error in following forbidden DNS pattern") .. ":\r\n\r\n"
+				ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (ent) .. "\r\n"
+				ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
+				ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
 				opsnotify (table_sets ["classnotiledoact"], ferr)
 			elseif fval then
 				VH:SQLQuery ("update `"..tbl_sql ["midns"].."` set `occurred` = `occurred` + 1 where `dns` = '"..repsqlchars (ent).."' limit 1")
@@ -10399,14 +9381,14 @@ function checkdns (nick, cls, ip)
 						local fres, fval = pcall (string.find, ldns, ent)
 
 						if not fres then
-							local ferr = getlang (977) .. ":\r\n\r\n"
-							ferr = ferr .. " " .. getlang (970) .. ": " .. repnmdcoutchars (ent) .. "\r\n"
-							ferr = ferr .. " " .. getlang (971) .. ": " .. repnmdcoutchars (fval or getlang (662)) .. "\r\n"
-							ferr = ferr .. " " .. getlang (972) .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+							local ferr = gettext ("There is an error in following MyINFO exception pattern") .. ":\r\n\r\n"
+							ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (ent) .. "\r\n"
+							ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
+							ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
 							opsnotify (table_sets ["classnotiledoact"], ferr)
 						elseif fval then
 							VH:SQLQuery ("update `"..tbl_sql ["miex"].."` set `occurred` = `occurred` + 1 where `exception` = '"..repsqlchars (ent).."' limit 1")
-							opsnotify (table_sets ["classnotiex"], string.format (getlang (757), nick, ip .. tryipcc (ip, nick), cls, dns))
+							opsnotify (table_sets ["classnotiex"], string.format (gettext ("%s with IP %s and class %s allowed due to forbidden DNS exception: %s"), nick, ip .. tryipcc (ip, nick), cls, dns))
 							return false
 						end
 					end
@@ -10439,10 +9421,10 @@ function checksup (nick, cls, ip)
 			local fres, fval = pcall (string.find, lsup, ent)
 
 			if not fres then
-				local ferr = getlang (986) .. ":\r\n\r\n"
-				ferr = ferr .. " " .. getlang (970) .. ": " .. repnmdcoutchars (ent) .. "\r\n"
-				ferr = ferr .. " " .. getlang (971) .. ": " .. repnmdcoutchars (fval or getlang (662)) .. "\r\n"
-				ferr = ferr .. " " .. getlang (972) .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+				local ferr = gettext ("There is an error in following forbidden client supports pattern") .. ":\r\n\r\n"
+				ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (ent) .. "\r\n"
+				ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
+				ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
 				opsnotify (table_sets ["classnotiledoact"], ferr)
 			elseif fval then
 				VH:SQLQuery ("update `" .. tbl_sql ["misup"] .. "` set `occurred` = `occurred` + 1 where `supports` = '" .. repsqlchars (ent) .. "' limit 1")
@@ -10454,14 +9436,14 @@ function checksup (nick, cls, ip)
 						local fres, fval = pcall (string.find, lsup, ent)
 
 						if not fres then
-							local ferr = getlang (977) .. ":\r\n\r\n"
-							ferr = ferr .. " " .. getlang (970) .. ": " .. repnmdcoutchars (ent) .. "\r\n"
-							ferr = ferr .. " " .. getlang (971) .. ": " .. repnmdcoutchars (fval or getlang (662)) .. "\r\n"
-							ferr = ferr .. " " .. getlang (972) .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+							local ferr = gettext ("There is an error in following MyINFO exception pattern") .. ":\r\n\r\n"
+							ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (ent) .. "\r\n"
+							ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
+							ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
 							opsnotify (table_sets ["classnotiledoact"], ferr)
 						elseif fval then
 							VH:SQLQuery ("update `" .. tbl_sql ["miex"] .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (ent) .. "' limit 1")
-							opsnotify (table_sets ["classnotiex"], string.format (getlang (908), nick, ip .. tryipcc (ip, nick), cls, sup))
+							opsnotify (table_sets ["classnotiex"], string.format (gettext ("%s with IP %s and class %s allowed due to forbidden client supports exception: %s"), nick, ip .. tryipcc (ip, nick), cls, sup))
 							return false
 						end
 					end
@@ -10494,10 +9476,10 @@ function checkver (nick, cls, ip)
 			local fres, fval = pcall (string.find, lver, ent)
 
 			if not fres then
-				local ferr = getlang (987) .. ":\r\n\r\n"
-				ferr = ferr .. " " .. getlang (970) .. ": " .. repnmdcoutchars (ent) .. "\r\n"
-				ferr = ferr .. " " .. getlang (971) .. ": " .. repnmdcoutchars (fval or getlang (662)) .. "\r\n"
-				ferr = ferr .. " " .. getlang (972) .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+				local ferr = gettext ("There is an error in following forbidden NMDC version pattern") .. ":\r\n\r\n"
+				ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (ent) .. "\r\n"
+				ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
+				ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
 				opsnotify (table_sets ["classnotiledoact"], ferr)
 			elseif fval then
 				VH:SQLQuery ("update `" .. tbl_sql ["miver"] .. "` set `occurred` = `occurred` + 1 where `version` = '" .. repsqlchars (ent) .. "' limit 1")
@@ -10509,14 +9491,14 @@ function checkver (nick, cls, ip)
 						local fres, fval = pcall (string.find, lver, ent)
 
 						if not fres then
-							local ferr = getlang (977) .. ":\r\n\r\n"
-							ferr = ferr .. " " .. getlang (970) .. ": " .. repnmdcoutchars (ent) .. "\r\n"
-							ferr = ferr .. " " .. getlang (971) .. ": " .. repnmdcoutchars (fval or getlang (662)) .. "\r\n"
-							ferr = ferr .. " " .. getlang (972) .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+							local ferr = gettext ("There is an error in following MyINFO exception pattern") .. ":\r\n\r\n"
+							ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (ent) .. "\r\n"
+							ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
+							ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
 							opsnotify (table_sets ["classnotiledoact"], ferr)
 						elseif fval then
 							VH:SQLQuery ("update `" .. tbl_sql ["miex"] .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (ent) .. "' limit 1")
-							opsnotify (table_sets ["classnotiex"], string.format (getlang (909), nick, ip .. tryipcc (ip, nick), cls, ver))
+							opsnotify (table_sets ["classnotiex"], string.format (gettext ("%s with IP %s and class %s allowed due to forbidden NMDC version exception: %s"), nick, ip .. tryipcc (ip, nick), cls, ver))
 							return false
 						end
 					end
@@ -10564,13 +9546,13 @@ function checkfake (nick, share, ucls, aip)
 
 				if string.find (sh, entry) then
 					VH:SQLQuery ("update `"..tbl_sql ["miex"].."` set `occurred` = `occurred` + 1 where `exception` = '"..repsqlchars (entry).."' limit 1")
-					opsnotify (table_sets ["classnotiex"], string.format (getlang (449), nick, aip .. tryipcc (aip, nick), ucls, share.." "..getlang (365)))
+					opsnotify (table_sets ["classnotiex"], string.format (gettext ("%s with IP %s and class %s allowed due to fake share exception: %s"), nick, aip .. tryipcc (aip, nick), ucls, share.." "..gettext ("B")))
 					return 0
 				end
 			end
 		end
 
-		local rsn = string.gsub (table_sets ["mifakemessage"], "%*", reprexpchars (share.." "..getlang (365)))
+		local rsn = string.gsub (table_sets ["mifakemessage"], "%*", reprexpchars (share.." "..gettext ("B")))
 		VH:KickUser (table_othsets ["sendfrom"], nick, rsn.."     #_ban_"..table_sets ["mitbantime"])
 		return 1
 	end
@@ -10594,7 +9576,7 @@ function checkclone (nick, share, aip, ucls)
 
 						if string.find (repnmdcinchars (share), entry) or string.find (repnmdcinchars (aip), entry) then
 							VH:SQLQuery ("update `"..tbl_sql ["miex"].."` set `occurred` = `occurred` + 1 where `exception` = '"..repsqlchars (entry).."' limit 1")
-							opsnotify (table_sets ["classnotiex"], string.format (getlang (450), nick, aip .. tryipcc (aip, nick), ucls, user))
+							opsnotify (table_sets ["classnotiex"], string.format (gettext ("%s with IP %s and class %s allowed due to clone exception: %s"), nick, aip .. tryipcc (aip, nick), ucls, user))
 							return 0
 						end
 					end
@@ -10604,7 +9586,7 @@ function checkclone (nick, share, aip, ucls)
 
 				if table_sets ["michclone"] == 1 then
 					maintouser (nick, rsn)
-					opsnotify (table_sets ["classnotimich"], string.format (getlang (824), aip .. tryipcc (aip, nick), ucls, nick, user))
+					opsnotify (table_sets ["classnotimich"], string.format (gettext ("Dropping user due to clone detection from IP %s with class %s: %s = %s"), aip .. tryipcc (aip, nick), ucls, nick, user))
 					VH:CloseConnection (nick)
 				elseif table_sets ["michclone"] == 2 then
 					if table_sets ["miclonekicktime"] ~= "" then
@@ -10638,7 +9620,7 @@ function checksameip (nick, ip, ucls)
 
 						if string.find (repnmdcinchars (ip), entry) then
 							VH:SQLQuery ("update `"..tbl_sql ["miex"].."` set `occurred` = `occurred` + 1 where `exception` = '"..repsqlchars (entry).."' limit 1")
-							opsnotify (table_sets ["classnotiex"], string.format (getlang (451), nick, ip .. tryipcc (ip, nick), ucls, user))
+							opsnotify (table_sets ["classnotiex"], string.format (gettext ("%s with IP %s and class %s allowed due to same IP exception: %s"), nick, ip .. tryipcc (ip, nick), ucls, user))
 							return 0
 						end
 					end
@@ -10662,17 +9644,17 @@ function gagipadd (nick, line)
 
 	if nick then
 		if (flag < 0) or (flag > 2) then
-			commandanswer (nick, string.format (getlang (228), "0=ALL, 1=MC " .. getlang (70) .. " 2=PM"))
+			commandanswer (nick, string.format (gettext ("Known flags are: %s"), "0=ALL, 1=MC " .. gettext ("and") .. " 2=PM"))
 		else
 			local rip = repsqlchars (repnmdcinchars (ip))
 			local _, rows = VH:SQLQuery ("select `flag` from `" .. tbl_sql ["ipgag"] .. "` where `ip` = '" .. rip .. "' limit 1")
 
 			if rows > 0 then -- modify
 				VH:SQLQuery ("update `" .. tbl_sql ["ipgag"] .. "` set `flag` = " .. tostring (flag) .. " where `ip` = '" .. rip .. "' limit 1")
-				commandanswer (nick, string.format (getlang (643), ip))
+				commandanswer (nick, string.format (gettext ("Modified IP gag: %s"), ip))
 			else -- add
 				VH:SQLQuery ("insert into `" .. tbl_sql ["ipgag"] .. "` (`ip`, `flag`) values ('" .. rip .. "', " .. tostring (flag) .. ")")
-				commandanswer (nick, string.format (getlang (642), ip))
+				commandanswer (nick, string.format (gettext ("Added IP gag: %s"), ip))
 			end
 
 			if table_igag [ip] then
@@ -10695,7 +9677,7 @@ end
 function gagipdel (nick, ip)
 	if ip == "*" then
 		table_igag = {}
-		commandanswer (nick, getlang (650))
+		commandanswer (nick, gettext ("Cleared temporary IP gag list."))
 	else
 		local ok = false
 
@@ -10713,9 +9695,9 @@ function gagipdel (nick, ip)
 		end
 
 		if ok == true then
-			commandanswer (nick, string.format (getlang (644), ip))
+			commandanswer (nick, string.format (gettext ("Deleted IP gag: %s"), ip))
 		else -- not in list
-			commandanswer (nick, string.format (getlang (645), ip))
+			commandanswer (nick, string.format (gettext ("IP gag not found: %s"), ip))
 		end
 	end
 end
@@ -10750,9 +9732,9 @@ function gagiplist (nick)
 	end
 
 	if list == "" then
-		commandanswer (nick, getlang (647))
+		commandanswer (nick, gettext ("IP gag list is empty."))
 	else
-		commandanswer (nick, getlang (646) .. ":\r\n\r\n" .. list)
+		commandanswer (nick, gettext ("IP gag list") .. ":\r\n\r\n" .. list)
 	end
 end
 
@@ -10781,12 +9763,12 @@ function gagipcheck (nick, ip, class, to, data)
 	for key, value in pairs (t) do
 		if string.find (ip, key) then
 			if to and ((value == 0) or (value == 2)) then -- pm
-				pmtouser (nick, to, getlang (658))
-				opsnotify (table_sets ["classnotigagip"], string.format (getlang (777), nick, ip .. tryipcc (ip, nick), class, data))
+				pmtouser (nick, to, gettext ("Private chat is currently disabled for you."))
+				opsnotify (table_sets ["classnotigagip"], string.format (gettext ("%s with IP %s and class %s tries to speak with IP gag in PM: %s"), nick, ip .. tryipcc (ip, nick), class, data))
 				return true
 			elseif (not to) and ((value == 0) or (value == 1)) then -- mc
-				maintouser (nick, getlang (649))
-				opsnotify (table_sets ["classnotigagip"], string.format (getlang (776), nick, ip .. tryipcc (ip, nick), class, data))
+				maintouser (nick, gettext ("Main chat is currently disabled for you."))
+				opsnotify (table_sets ["classnotigagip"], string.format (gettext ("%s with IP %s and class %s tries to speak with IP gag in MC: %s"), nick, ip .. tryipcc (ip, nick), class, data))
 				return true
 			end
 
@@ -10805,13 +9787,13 @@ function gagccadd (nick, line)
 	flg = tonumber (flg)
 
 	if (flg > 2) and nick then
-		commandanswer (nick, string.format (getlang (228), "0, 1 "..getlang (70).." 2"))
+		commandanswer (nick, string.format (gettext ("Known flags are: %s"), "0, 1 "..gettext ("and").." 2"))
 	else
 		if nick then
 			if table_cgag [cc] then
-				commandanswer (nick, string.format (getlang (879), cc))
+				commandanswer (nick, string.format (gettext ("Modified country code gag: %s"), cc))
 			else
-				commandanswer (nick, string.format (getlang (878), cc))
+				commandanswer (nick, string.format (gettext ("Added country code gag: %s"), cc))
 			end
 		elseif table_cgag [cc] then
 			flg = 0
@@ -10826,15 +9808,15 @@ end
 function gagccdel (nick, cc)
 	if cc == "*" then
 		table_cgag = {}
-		commandanswer (nick, getlang (885))
+		commandanswer (nick, gettext ("Cleared country code gag list."))
 	else
 		cc = string.upper (cc)
 
 		if table_cgag [cc] then
 			table_cgag [cc] = nil
-			commandanswer (nick, string.format (getlang (880), cc))
+			commandanswer (nick, string.format (gettext ("Deleted country code gag: %s"), cc))
 		else
-			commandanswer (nick, string.format (getlang (881), cc)) -- not in list
+			commandanswer (nick, string.format (gettext ("Country code gag not found: %s"), cc)) -- not in list
 		end
 	end
 end
@@ -10850,9 +9832,9 @@ function gagcclist (nick)
 	end
 
 	if list == "" then
-		commandanswer (nick, getlang (883))
+		commandanswer (nick, gettext ("Country code gag list is empty."))
 	else
-		commandanswer (nick, getlang (882)..":\r\n\r\n"..list)
+		commandanswer (nick, gettext ("Country code gag list")..":\r\n\r\n"..list)
 	end
 end
 
@@ -10867,12 +9849,12 @@ function gagccheck (nick, ip, class, to, msg)
 	for k, v in pairs (table_cgag) do
 		if cc == k then
 			if to and ((v == 0) or (v == 2)) then -- pm
-				pmtouser (nick, to, getlang (658))
-				opsnotify (table_sets ["classnotigagip"], string.format (getlang (887), nick, ip .. tryipcc (ip, nick), class, msg))
+				pmtouser (nick, to, gettext ("Private chat is currently disabled for you."))
+				opsnotify (table_sets ["classnotigagip"], string.format (gettext ("%s with IP %s and class %s tries to speak with country code gag in PM: %s"), nick, ip .. tryipcc (ip, nick), class, msg))
 				return true
 			elseif (not to) and ((v == 0) or (v == 1)) then -- mc
-				maintouser (nick, getlang (649))
-				opsnotify (table_sets ["classnotigagip"], string.format (getlang (886), nick, ip .. tryipcc (ip, nick), class, msg))
+				maintouser (nick, gettext ("Main chat is currently disabled for you."))
+				opsnotify (table_sets ["classnotigagip"], string.format (gettext ("%s with IP %s and class %s tries to speak with country code gag in MC: %s"), nick, ip .. tryipcc (ip, nick), class, msg))
 				return true
 			end
 
@@ -10908,19 +9890,19 @@ function detprotoflood (pref, prot, nick, ip, class)
 
 			if pref == "ctm" then -- for now use only on ctm detection, in future add to all detections
 				if table_sets ["protoflood" .. pref .. "act"] == 0 then -- drop
-					maintouser (nick, string.format (getlang (821), sts))
-					opsnotify (table_sets ["classnotiprotoflood"], string.format (getlang (820), nick, ip .. tryipcc (ip, nick), class, sts))
+					maintouser (nick, string.format (gettext ("Protocol flood detected from your client: %s"), sts))
+					opsnotify (table_sets ["classnotiprotoflood"], string.format (gettext ("Dropping %s with IP %s and class %s due to protocol flood detection: %s"), nick, ip .. tryipcc (ip, nick), class, sts))
 					VH:CloseConnection (nick)
 				elseif table_sets ["protoflood" .. pref .. "act"] == 1 then -- kick
-					VH:KickUser (table_othsets ["sendfrom"], nick, string.format (getlang (821), sts))
+					VH:KickUser (table_othsets ["sendfrom"], nick, string.format (gettext ("Protocol flood detected from your client: %s"), sts))
 				elseif table_sets ["protoflood" .. pref .. "act"] == 2 then -- temporary ban
-					VH:KickUser (table_othsets ["sendfrom"], nick, string.format (getlang (821), sts) .. "     #_ban_" .. table_sets ["thirdacttime"])
+					VH:KickUser (table_othsets ["sendfrom"], nick, string.format (gettext ("Protocol flood detected from your client: %s"), sts) .. "     #_ban_" .. table_sets ["thirdacttime"])
 				elseif table_sets ["protoflood" .. pref .. "act"] == 3 then -- permanent ban
-					VH:KickUser (table_othsets ["sendfrom"], nick, string.format (getlang (821), sts) .. "     #_ban_" .. table_sets ["seventhacttime"])
+					VH:KickUser (table_othsets ["sendfrom"], nick, string.format (gettext ("Protocol flood detected from your client: %s"), sts) .. "     #_ban_" .. table_sets ["seventhacttime"])
 				end
 			else
-				maintouser (nick, string.format (getlang (821), sts))
-				opsnotify (table_sets ["classnotiprotoflood"], string.format (getlang (820), nick, ip .. tryipcc (ip, nick), class, sts))
+				maintouser (nick, string.format (gettext ("Protocol flood detected from your client: %s"), sts))
+				opsnotify (table_sets ["classnotiprotoflood"], string.format (gettext ("Dropping %s with IP %s and class %s due to protocol flood detection: %s"), nick, ip .. tryipcc (ip, nick), class, sts))
 				VH:CloseConnection (nick) -- drop
 			end
 
@@ -10970,7 +9952,7 @@ function detchatflood (nick, class, ip, msg, to)
 		local dif = os.difftime (tm, table_othsets ["chflalltime"])
 
 		if table_othsets ["chflallcount"] >= table_sets ["chatfloodallcount"] and dif <= table_sets ["chatfloodallint"] then
-			opsnotify (table_sets ["classnotiflood"], string.format (getlang (991), nick, ip .. tryipcc (ip, nick), class, msg))
+			opsnotify (table_sets ["classnotiflood"], string.format (gettext ("Message ignored due to flood detection from %s with IP %s and class %s in MC: %s"), nick, ip .. tryipcc (ip, nick), class, msg))
 			return true
 		elseif dif > table_sets ["chatfloodallint"] then
 			table_othsets ["chflallcount"] = 1
@@ -10986,16 +9968,16 @@ function detchatflood (nick, class, ip, msg, to)
 		if table_flod [ip]["cnt"] >= table_sets ["chatfloodcount"] and dif <= table_sets ["chatfloodint"] then -- match
 			if to then -- pm
 				if table_flod [ip]["fst"] == true then -- notify only first time
-					opsnotify (table_sets ["classnotiflood"], string.format (getlang (657), ip .. tryipcc (ip, nick), nick, class, msg))
+					opsnotify (table_sets ["classnotiflood"], string.format (gettext ("Flood detected from IP %s last known as %s with class %s in PM: %s"), ip .. tryipcc (ip, nick), nick, class, msg))
 				end
 
-				pmtouser (nick, to, getlang (659))
+				pmtouser (nick, to, gettext ("Flood detected from your IP."))
 			else -- mc
 				if table_flod [ip]["fst"] == true then -- notify only first time
-					opsnotify (table_sets ["classnotiflood"], string.format (getlang (656), ip .. tryipcc (ip, nick), nick, class, msg))
+					opsnotify (table_sets ["classnotiflood"], string.format (gettext ("Flood detected from IP %s last known as %s with class %s in MC: %s"), ip .. tryipcc (ip, nick), nick, class, msg))
 				end
 
-				maintouser (nick, getlang (659))
+				maintouser (nick, gettext ("Flood detected from your IP."))
 			end
 
 			if table_sets ["chatfloodaction"] == 1 then -- gag ip
@@ -11006,24 +9988,24 @@ function detchatflood (nick, class, ip, msg, to)
 				end
 
 				if table_flod [ip]["fst"] == true then -- notify only first time
-					opsnotify (table_sets ["classnotiflood"], string.format (getlang (655), ip .. tryipcc (ip, nick), table.getn (getusersbyip (ip, table_sets ["scanbelowclass"]))))
+					opsnotify (table_sets ["classnotiflood"], string.format (gettext ("Added %s to IP gag list, %s users in total."), ip .. tryipcc (ip, nick), table.getn (getusersbyip (ip, table_sets ["scanbelowclass"]))))
 				end
 
 			elseif table_sets ["chatfloodaction"] == 2 then -- drop
 				local res = dropallbyip (ip)
 
 				if table_flod [ip]["fst"] == true then -- notify only first time
-					opsnotify (table_sets ["classnotiflood"], string.format (getlang (660), res, ip .. tryipcc (ip, nick)))
+					opsnotify (table_sets ["classnotiflood"], string.format (gettext ("%s users with IP %s dropped due to flood."), res, ip .. tryipcc (ip, nick)))
 				end
 
 			elseif table_sets ["chatfloodaction"] == 3 then -- kick
-				kickallbyip (ip, getlang (659))
+				kickallbyip (ip, gettext ("Flood detected from your IP."))
 
 			elseif table_sets ["chatfloodaction"] == 4 then -- temporary ban
-				kickallbyip (ip, getlang (659).."     #_ban_" .. table_sets ["thirdacttime"])
+				kickallbyip (ip, gettext ("Flood detected from your IP.").."     #_ban_" .. table_sets ["thirdacttime"])
 
 			elseif table_sets ["chatfloodaction"] == 5 then -- permanent ban
-				kickallbyip (ip, getlang (659).."     #_ban_" .. table_sets ["seventhacttime"])
+				kickallbyip (ip, gettext ("Flood detected from your IP.").."     #_ban_" .. table_sets ["seventhacttime"])
 			end
 
 			table_flod [ip]["fst"] = false
@@ -11099,124 +10081,124 @@ function addmyinfoentry (nick, line)
 		local _, rows = VH:SQLQuery ("select `occurred` from `"..tbl_sql ["minick"].."` where `nick` = '"..entry.."' limit 1")
 
 		if rows > 0 then
-			commandanswer (nick, string.format (getlang (56), item))
+			commandanswer (nick, string.format (gettext ("Couldn't add forbidden nick because already exists: %s"), item))
 		else
 			VH:SQLQuery ("insert into `"..tbl_sql ["minick"].."` (`nick`, `time`) values ('"..entry.."', '"..repsqlchars (btime).."')")
-			commandanswer (nick, string.format (getlang (57), item))
+			commandanswer (nick, string.format (gettext ("Added forbidden nick: %s"), item))
 		end
 
 	elseif part == "desc" then
 		local _, rows = VH:SQLQuery ("select `occurred` from `"..tbl_sql ["midesc"].."` where `description` = '"..entry.."' limit 1")
 
 		if rows > 0 then
-			commandanswer (nick, string.format (getlang (58), item))
+			commandanswer (nick, string.format (gettext ("Couldn't add forbidden description because already exists: %s"), item))
 		else
 			VH:SQLQuery ("insert into `"..tbl_sql ["midesc"].."` (`description`, `time`) values ('"..entry.."', '"..repsqlchars (btime).."')")
-			commandanswer (nick, string.format (getlang (59), item))
+			commandanswer (nick, string.format (gettext ("Added forbidden description: %s"), item))
 		end
 
 	elseif part == "tag" then
 		local _, rows = VH:SQLQuery ("select `occurred` from `"..tbl_sql ["mitag"].."` where `tag` = '"..entry.."' limit 1")
 
 		if rows > 0 then
-			commandanswer (nick, string.format (getlang (60), item))
+			commandanswer (nick, string.format (gettext ("Couldn't add forbidden tag because already exists: %s"), item))
 		else
 			VH:SQLQuery ("insert into `"..tbl_sql ["mitag"].."` (`tag`, `time`) values ('"..entry.."', '"..repsqlchars (btime).."')")
-			commandanswer (nick, string.format (getlang (61), item))
+			commandanswer (nick, string.format (gettext ("Added forbidden tag: %s"), item))
 		end
 
 	elseif part == "conn" then
 		local _, rows = VH:SQLQuery ("select `occurred` from `"..tbl_sql ["miconn"].."` where `connection` = '"..entry.."' limit 1")
 
 		if rows > 0 then
-			commandanswer (nick, string.format (getlang (62), item))
+			commandanswer (nick, string.format (gettext ("Couldn't add forbidden connection type because already exists: %s"), item))
 		else
 			VH:SQLQuery ("insert into `"..tbl_sql ["miconn"].."` (`connection`, `time`) values ('"..entry.."', '"..repsqlchars (btime).."')")
-			commandanswer (nick, string.format (getlang (63), item))
+			commandanswer (nick, string.format (gettext ("Added forbidden connection type: %s"), item))
 		end
 
 	elseif part == "email" then
 		local _, rows = VH:SQLQuery ("select `occurred` from `"..tbl_sql ["miemail"].."` where `email` = '"..entry.."' limit 1")
 
 		if rows > 0 then
-			commandanswer (nick, string.format (getlang (64), item))
+			commandanswer (nick, string.format (gettext ("Couldn't add forbidden email because already exists: %s"), item))
 		else
 			VH:SQLQuery ("insert into `"..tbl_sql ["miemail"].."` (`email`, `time`) values ('"..entry.."', '"..repsqlchars (btime).."')")
-			commandanswer (nick, string.format (getlang (65), item))
+			commandanswer (nick, string.format (gettext ("Added forbidden email: %s"), item))
 		end
 
 	elseif part == "share" then
 		local _, rows = VH:SQLQuery ("select `occurred` from `"..tbl_sql ["mishare"].."` where `share` = '"..entry.."' limit 1")
 
 		if rows > 0 then
-			commandanswer (nick, string.format (getlang (66), item))
+			commandanswer (nick, string.format (gettext ("Couldn't add forbidden share size because already exists: %s"), item))
 		else
 			VH:SQLQuery ("insert into `"..tbl_sql ["mishare"].."` (`share`, `time`) values ('"..entry.."', '"..repsqlchars (btime).."')")
-			commandanswer (nick, string.format (getlang (67), item))
+			commandanswer (nick, string.format (gettext ("Added forbidden share size: %s"), item))
 		end
 
 	elseif part == "ip" then
 		local _, rows = VH:SQLQuery ("select `occurred` from `"..tbl_sql ["miip"].."` where `ip` = '"..entry.."' limit 1")
 
 		if rows > 0 then
-			commandanswer (nick, string.format (getlang (348), item))
+			commandanswer (nick, string.format (gettext ("Couldn't add forbidden IP address because already exists: %s"), item))
 		else
 			VH:SQLQuery ("insert into `"..tbl_sql ["miip"].."` (`ip`, `time`) values ('"..entry.."', '"..repsqlchars (btime).."')")
-			commandanswer (nick, string.format (getlang (349), item))
+			commandanswer (nick, string.format (gettext ("Added forbidden IP address: %s"), item))
 		end
 
 	elseif part == "cc" then
 		local _, rows = VH:SQLQuery ("select `occurred` from `"..tbl_sql ["micc"].."` where `cc` = '"..entry.."' limit 1")
 
 		if rows > 0 then
-			commandanswer (nick, string.format (getlang (790), item))
+			commandanswer (nick, string.format (gettext ("Couldn't add forbidden CC because already exists: %s"), item))
 		else
 			VH:SQLQuery ("insert into `"..tbl_sql ["micc"].."` (`cc`, `time`) values ('"..entry.."', '"..repsqlchars (btime).."')")
-			commandanswer (nick, string.format (getlang (791), item))
+			commandanswer (nick, string.format (gettext ("Added forbidden CC: %s"), item))
 		end
 
 	elseif part == "dns" then
 		local _, rows = VH:SQLQuery ("select `occurred` from `"..tbl_sql ["midns"].."` where `dns` = '"..entry.."' limit 1")
 
 		if rows > 0 then
-			commandanswer (nick, string.format (getlang (759), item))
+			commandanswer (nick, string.format (gettext ("Couldn't add forbidden DNS because already exists: %s"), item))
 		else
 			VH:SQLQuery ("insert into `"..tbl_sql ["midns"].."` (`dns`, `time`) values ('"..entry.."', '"..repsqlchars (btime).."')")
-			commandanswer (nick, string.format (getlang (760), item))
+			commandanswer (nick, string.format (gettext ("Added forbidden DNS: %s"), item))
 		end
 
 	elseif part == "sup" then
 		local _, rows = VH:SQLQuery ("select `occurred` from `" .. tbl_sql ["misup"] .. "` where `supports` = '" .. entry .. "' limit 1")
 
 		if rows > 0 then
-			commandanswer (nick, string.format (getlang (895), item))
+			commandanswer (nick, string.format (gettext ("Couldn't add forbidden client supports because already exists: %s"), item))
 		else
 			VH:SQLQuery ("insert into `" .. tbl_sql ["misup"] .. "` (`supports`, `time`) values ('" .. entry .. "', '" .. repsqlchars (btime) .. "')")
-			commandanswer (nick, string.format (getlang (896), item))
+			commandanswer (nick, string.format (gettext ("Added forbidden client supports: %s"), item))
 		end
 
 	elseif part == "ver" then
 		local _, rows = VH:SQLQuery ("select `occurred` from `" .. tbl_sql ["miver"] .. "` where `version` = '" .. entry .. "' limit 1")
 
 		if rows > 0 then
-			commandanswer (nick, string.format (getlang (897), item))
+			commandanswer (nick, string.format (gettext ("Couldn't add forbidden NMDC version because already exists: %s"), item))
 		else
 			VH:SQLQuery ("insert into `" .. tbl_sql ["miver"] .. "` (`version`, `time`) values ('" .. entry .. "', '" .. repsqlchars (btime) .. "')")
-			commandanswer (nick, string.format (getlang (898), item))
+			commandanswer (nick, string.format (gettext ("Added forbidden NMDC version: %s"), item))
 		end
 
 	elseif part == "ex" then
 		local _, rows = VH:SQLQuery ("select `occurred` from `"..tbl_sql ["miex"].."` where `exception` = '"..entry.."' limit 1")
 
 		if rows > 0 then
-			commandanswer (nick, string.format (getlang (68), item))
+			commandanswer (nick, string.format (gettext ("Couldn't add MyINFO exception because already exists: %s"), item))
 		else
 			VH:SQLQuery ("insert into `"..tbl_sql ["miex"].."` (`exception`) values ('"..entry.."')")
-			commandanswer (nick, string.format (getlang (69), item))
+			commandanswer (nick, string.format (gettext ("Added MyINFO exception: %s"), item))
 		end
 
 	else -- unknown
-		commandanswer (nick, string.format (getlang (100), "nick, desc, tag, conn, email, share, ip, cc, dns, sup, ver " .. getlang (70) .. " ex"))
+		commandanswer (nick, string.format (gettext ("Known types are: %s"), "nick, desc, tag, conn, email, share, ip, cc, dns, sup, ver " .. gettext ("and") .. " ex"))
 	end
 end
 
@@ -11231,9 +10213,9 @@ function delmyinfoentry (nick, line)
 
 		if rows > 0 then
 			VH:SQLQuery ("delete from `"..tbl_sql ["minick"].."` where `nick` = '"..entry.."' limit 1")
-			commandanswer (nick, string.format (getlang (71), item))
+			commandanswer (nick, string.format (gettext ("Deleted forbidden nick: %s"), item))
 		else
-			commandanswer (nick, string.format (getlang (72), item))
+			commandanswer (nick, string.format (gettext ("Couldn't delete forbidden nick because not found: %s"), item))
 		end
 
 	elseif part == "desc" then
@@ -11241,9 +10223,9 @@ function delmyinfoentry (nick, line)
 
 		if rows > 0 then
 			VH:SQLQuery ("delete from `"..tbl_sql ["midesc"].."` where `description` = '"..entry.."' limit 1")
-			commandanswer (nick, string.format (getlang (73), item))
+			commandanswer (nick, string.format (gettext ("Deleted forbidden description: %s"), item))
 		else
-			commandanswer (nick, string.format (getlang (74), item))
+			commandanswer (nick, string.format (gettext ("Couldn't delete forbidden description because not found: %s"), item))
 		end
 
 	elseif part == "tag" then
@@ -11251,9 +10233,9 @@ function delmyinfoentry (nick, line)
 
 		if rows > 0 then
 			VH:SQLQuery ("delete from `"..tbl_sql ["mitag"].."` where `tag` = '"..entry.."' limit 1")
-			commandanswer (nick, string.format (getlang (75), item))
+			commandanswer (nick, string.format (gettext ("Deleted forbidden tag: %s"), item))
 		else
-			commandanswer (nick, string.format (getlang (76), item))
+			commandanswer (nick, string.format (gettext ("Couldn't delete forbidden tag because not found: %s"), item))
 		end
 
 	elseif part == "conn" then
@@ -11261,9 +10243,9 @@ function delmyinfoentry (nick, line)
 
 		if rows > 0 then
 			VH:SQLQuery ("delete from `"..tbl_sql ["miconn"].."` where `connection` = '"..entry.."' limit 1")
-			commandanswer (nick, string.format (getlang (77), item))
+			commandanswer (nick, string.format (gettext ("Deleted forbidden connection type: %s"), item))
 		else
-			commandanswer (nick, string.format (getlang (78), item))
+			commandanswer (nick, string.format (gettext ("Couldn't delete forbidden connection type because not found: %s"), item))
 		end
 
 	elseif part == "email" then
@@ -11271,9 +10253,9 @@ function delmyinfoentry (nick, line)
 
 		if rows > 0 then
 			VH:SQLQuery ("delete from `"..tbl_sql ["miemail"].."` where `email` = '"..entry.."' limit 1")
-			commandanswer (nick, string.format (getlang (79), item))
+			commandanswer (nick, string.format (gettext ("Deleted forbidden email: %s"), item))
 		else
-			commandanswer (nick, string.format (getlang (80), item))
+			commandanswer (nick, string.format (gettext ("Couldn't delete forbidden email because not found: %s"), item))
 		end
 
 	elseif part == "share" then
@@ -11281,9 +10263,9 @@ function delmyinfoentry (nick, line)
 
 		if rows > 0 then
 			VH:SQLQuery ("delete from `"..tbl_sql ["mishare"].."` where `share` = '"..entry.."' limit 1")
-			commandanswer (nick, string.format (getlang (81), item))
+			commandanswer (nick, string.format (gettext ("Deleted forbidden share size: %s"), item))
 		else
-			commandanswer (nick, string.format (getlang (82), item))
+			commandanswer (nick, string.format (gettext ("Couldn't delete forbidden share size because not found: %s"), item))
 		end
 
 	elseif part == "ip" then
@@ -11291,9 +10273,9 @@ function delmyinfoentry (nick, line)
 
 		if rows > 0 then
 			VH:SQLQuery ("delete from `"..tbl_sql ["miip"].."` where `ip` = '"..entry.."' limit 1")
-			commandanswer (nick, string.format (getlang (350), item))
+			commandanswer (nick, string.format (gettext ("Deleted forbidden IP address: %s"), item))
 		else
-			commandanswer (nick, string.format (getlang (351), item))
+			commandanswer (nick, string.format (gettext ("Couldn't delete forbidden IP address because not found: %s"), item))
 		end
 
 	elseif part == "cc" then
@@ -11301,9 +10283,9 @@ function delmyinfoentry (nick, line)
 
 		if rows > 0 then
 			VH:SQLQuery ("delete from `"..tbl_sql ["micc"].."` where `cc` = '"..entry.."' limit 1")
-			commandanswer (nick, string.format (getlang (792), item))
+			commandanswer (nick, string.format (gettext ("Deleted forbidden CC: %s"), item))
 		else
-			commandanswer (nick, string.format (getlang (793), item))
+			commandanswer (nick, string.format (gettext ("Couldn't delete forbidden CC because not found: %s"), item))
 		end
 
 	elseif part == "dns" then
@@ -11311,9 +10293,9 @@ function delmyinfoentry (nick, line)
 
 		if rows > 0 then
 			VH:SQLQuery ("delete from `"..tbl_sql ["midns"].."` where `dns` = '"..entry.."' limit 1")
-			commandanswer (nick, string.format (getlang (761), item))
+			commandanswer (nick, string.format (gettext ("Deleted forbidden DNS: %s"), item))
 		else
-			commandanswer (nick, string.format (getlang (762), item))
+			commandanswer (nick, string.format (gettext ("Couldn't delete forbidden DNS because not found: %s"), item))
 		end
 
 	elseif part == "sup" then
@@ -11321,9 +10303,9 @@ function delmyinfoentry (nick, line)
 
 		if rows > 0 then
 			VH:SQLQuery ("delete from `" .. tbl_sql ["misup"] .. "` where `supports` = '" .. entry .. "' limit 1")
-			commandanswer (nick, string.format (getlang (900), item))
+			commandanswer (nick, string.format (gettext ("Deleted forbidden client supports: %s"), item))
 		else
-			commandanswer (nick, string.format (getlang (901), item))
+			commandanswer (nick, string.format (gettext ("Couldn't delete forbidden client supports because not found: %s"), item))
 		end
 
 	elseif part == "ver" then
@@ -11331,9 +10313,9 @@ function delmyinfoentry (nick, line)
 
 		if rows > 0 then
 			VH:SQLQuery ("delete from `" .. tbl_sql ["miver"] .. "` where `version` = '" .. entry .. "' limit 1")
-			commandanswer (nick, string.format (getlang (902), item))
+			commandanswer (nick, string.format (gettext ("Deleted forbidden NMDC version: %s"), item))
 		else
-			commandanswer (nick, string.format (getlang (903), item))
+			commandanswer (nick, string.format (gettext ("Couldn't delete forbidden NMDC version because not found: %s"), item))
 		end
 
 	elseif part == "ex" then
@@ -11341,13 +10323,13 @@ function delmyinfoentry (nick, line)
 
 		if rows > 0 then
 			VH:SQLQuery ("delete from `"..tbl_sql ["miex"].."` where `exception` = '"..entry.."' limit 1")
-			commandanswer (nick, string.format (getlang (83), item))
+			commandanswer (nick, string.format (gettext ("Deleted MyINFO exception: %s"), item))
 		else
-			commandanswer (nick, string.format (getlang (84), item))
+			commandanswer (nick, string.format (gettext ("Couldn't delete MyINFO exception because not found: %s"), item))
 		end
 
 	else -- unknown
-		commandanswer (nick, string.format (getlang (100), "nick, desc, tag, conn, email, share, ip, cc, dns, sup, ver " .. getlang (70) .. " ex"))
+		commandanswer (nick, string.format (gettext ("Known types are: %s"), "nick, desc, tag, conn, email, share, ip, cc, dns, sup, ver " .. gettext ("and") .. " ex"))
 	end
 end
 
@@ -11358,66 +10340,66 @@ function listmyinfoentry (nick, part)
 
 	if part == "nick" then
 		_, rows = VH:SQLQuery ("select `nick`, `time`, `occurred` from `"..tbl_sql ["minick"].."` order by `occurred` desc")
-		lsttxt = getlang (85)
-		nolsttxt = getlang (86)
+		lsttxt = gettext ("Forbidden nick list")
+		nolsttxt = gettext ("Forbidden nick list is empty.")
 
 	elseif part == "desc" then
 		_, rows = VH:SQLQuery ("select `description`, `time`, `occurred` from `"..tbl_sql ["midesc"].."` order by `occurred` desc")
-		lsttxt = getlang (87)
-		nolsttxt = getlang (88)
+		lsttxt = gettext ("Forbidden description list")
+		nolsttxt = gettext ("Forbidden description list is empty.")
 
 	elseif part == "tag" then
 		_, rows = VH:SQLQuery ("select `tag`, `time`, `occurred` from `"..tbl_sql ["mitag"].."` order by `occurred` desc")
-		lsttxt = getlang (89)
-		nolsttxt = getlang (90)
+		lsttxt = gettext ("Forbidden tag list")
+		nolsttxt = gettext ("Forbidden tag list is empty.")
 
 	elseif part == "conn" then
 		_, rows = VH:SQLQuery ("select `connection`, `time`, `occurred` from `"..tbl_sql ["miconn"].."` order by `occurred` desc")
-		lsttxt = getlang (91)
-		nolsttxt = getlang (92)
+		lsttxt = gettext ("Forbidden connection type list")
+		nolsttxt = gettext ("Forbidden connection type list is empty.")
 
 	elseif part == "email" then
 		_, rows = VH:SQLQuery ("select `email`, `time`, `occurred` from `"..tbl_sql ["miemail"].."` order by `occurred` desc")
-		lsttxt = getlang (93)
-		nolsttxt = getlang (94)
+		lsttxt = gettext ("Forbidden email list")
+		nolsttxt = gettext ("Forbidden email list is empty.")
 
 	elseif part == "share" then
 		_, rows = VH:SQLQuery ("select `share`, `time`, `occurred` from `"..tbl_sql ["mishare"].."` order by `occurred` desc")
-		lsttxt = getlang (95)
-		nolsttxt = getlang (96)
+		lsttxt = gettext ("Forbidden share size list")
+		nolsttxt = gettext ("Forbidden share size list is empty.")
 
 	elseif part == "ip" then
 		_, rows = VH:SQLQuery ("select `ip`, `time`, `occurred` from `"..tbl_sql ["miip"].."` order by `occurred` desc")
-		lsttxt = getlang (352)
-		nolsttxt = getlang (353)
+		lsttxt = gettext ("Forbidden IP address list")
+		nolsttxt = gettext ("Forbidden IP address list is empty.")
 
 	elseif part == "cc" then
 		_, rows = VH:SQLQuery ("select `cc`, `time`, `occurred` from `"..tbl_sql ["micc"].."` order by `occurred` desc")
-		lsttxt = getlang (794)
-		nolsttxt = getlang (795)
+		lsttxt = gettext ("Forbidden CC list")
+		nolsttxt = gettext ("Forbidden CC list is empty.")
 
 	elseif part == "dns" then
 		_, rows = VH:SQLQuery ("select `dns`, `time`, `occurred` from `"..tbl_sql ["midns"].."` order by `occurred` desc")
-		lsttxt = getlang (763)
-		nolsttxt = getlang (764)
+		lsttxt = gettext ("Forbidden DNS list")
+		nolsttxt = gettext ("Forbidden DNS list is empty.")
 
 	elseif part == "sup" then
 		_, rows = VH:SQLQuery ("select `supports`, `time`, `occurred` from `" .. tbl_sql ["misup"] .. "` order by `occurred` desc")
-		lsttxt = getlang (904)
-		nolsttxt = getlang (905)
+		lsttxt = gettext ("Forbidden client supports list")
+		nolsttxt = gettext ("Forbidden client supports list is empty.")
 
 	elseif part == "ver" then
 		_, rows = VH:SQLQuery ("select `version`, `time`, `occurred` from `" .. tbl_sql ["miver"] .. "` order by `occurred` desc")
-		lsttxt = getlang (906)
-		nolsttxt = getlang (907)
+		lsttxt = gettext ("Forbidden NMDC version list")
+		nolsttxt = gettext ("Forbidden NMDC version list is empty.")
 
 	elseif part == "ex" then
 		_, rows = VH:SQLQuery ("select `exception`, `occurred` from `"..tbl_sql ["miex"].."` order by `occurred` desc")
-		lsttxt = getlang (97)
-		nolsttxt = getlang (98)
+		lsttxt = gettext ("MyINFO exception list")
+		nolsttxt = gettext ("MyINFO exception list is empty.")
 
 	else -- unknown
-		commandanswer (nick, string.format (getlang (100), "nick, desc, tag, conn, email, share, ip, cc, dns, sup, ver " .. getlang (70) .. " ex"))
+		commandanswer (nick, string.format (gettext ("Known types are: %s"), "nick, desc, tag, conn, email, share, ip, cc, dns, sup, ver " .. gettext ("and") .. " ex"))
 	end
 
 	if lsttxt then
@@ -11451,146 +10433,146 @@ function cleanuptable (nick, line, cls)
 	local tm = os.time () + table_sets ["srvtimediff"]
 
 	if ctype == "kick" then
-		commandanswer (nick, getlang (3))
+		commandanswer (nick, gettext ("This operation might take very long time depending on how much is going to be removed. Please be patient."))
 		local _, rows = VH:SQLQuery ("select `is_drop` from `kicklist` where `time` < "..seconds)
 
 		if rows > 0 then
 			VH:SQLQuery ("delete from `kicklist` where `time` < "..seconds)
-			commandanswer (nick, string.format (getlang (99), rows, ctype))
-			opsnotify (table_sets ["classnotiledoact"], string.format (getlang (8), nick, cls, rows, cdays))
+			commandanswer (nick, string.format (gettext ("Deleted %s rows: %s"), rows, ctype))
+			opsnotify (table_sets ["classnotiledoact"], string.format (gettext ("%s with class %s deleted %s kicks older than %s days."), nick, cls, rows, cdays))
 			VH:SQLQuery ("insert into `"..tbl_sql ["conf"].."` (`variable`, `value`) values ('lastcleankick', "..tm..") on duplicate key update `value` = "..tm)
 			VH:SQLQuery ("insert into `"..tbl_sql ["conf"].."` (`variable`, `value`) values ('limcleankick', "..cdays..") on duplicate key update `value` = "..cdays)
 		else
-			commandanswer (nick, string.format (getlang (101), ctype))
+			commandanswer (nick, string.format (gettext ("No rows to remove: %s"), ctype))
 		end
 
 	elseif ctype == "ban" then
-		commandanswer (nick, getlang (3))
+		commandanswer (nick, gettext ("This operation might take very long time depending on how much is going to be removed. Please be patient."))
 		local _, rows = VH:SQLQuery ("select `ban_type` from `banlist` where `date_start` < "..seconds)
 
 		if rows > 0 then
 			VH:SQLQuery ("delete from `banlist` where `date_start` < "..seconds)
-			commandanswer (nick, string.format (getlang (99), rows, ctype))
-			opsnotify (table_sets ["classnotiledoact"], string.format (getlang (7), nick, cls, rows, cdays))
+			commandanswer (nick, string.format (gettext ("Deleted %s rows: %s"), rows, ctype))
+			opsnotify (table_sets ["classnotiledoact"], string.format (gettext ("%s with class %s deleted %s bans older than %s days."), nick, cls, rows, cdays))
 			VH:SQLQuery ("insert into `"..tbl_sql ["conf"].."` (`variable`, `value`) values ('lastcleanban', "..tm..") on duplicate key update `value` = "..tm)
 			VH:SQLQuery ("insert into `"..tbl_sql ["conf"].."` (`variable`, `value`) values ('limcleanban', "..cdays..") on duplicate key update `value` = "..cdays)
 		else
-			commandanswer (nick, string.format (getlang (101), ctype))
+			commandanswer (nick, string.format (gettext ("No rows to remove: %s"), ctype))
 		end
 
 	elseif ctype == "unban" then
-		commandanswer (nick, getlang (3))
+		commandanswer (nick, gettext ("This operation might take very long time depending on how much is going to be removed. Please be patient."))
 		local _, rows = VH:SQLQuery ("select `ban_type` from `unbanlist` where `date_start` < "..seconds)
 
 		if rows > 0 then
 			VH:SQLQuery ("delete from `unbanlist` where `date_start` < "..seconds)
-			commandanswer (nick, string.format (getlang (99), rows, ctype))
-			opsnotify (table_sets ["classnotiledoact"], string.format (getlang (6), nick, cls, rows, cdays))
+			commandanswer (nick, string.format (gettext ("Deleted %s rows: %s"), rows, ctype))
+			opsnotify (table_sets ["classnotiledoact"], string.format (gettext ("%s with class %s deleted %s unbans older than %s days."), nick, cls, rows, cdays))
 			VH:SQLQuery ("insert into `"..tbl_sql ["conf"].."` (`variable`, `value`) values ('lastcleanunban', "..tm..") on duplicate key update `value` = "..tm)
 			VH:SQLQuery ("insert into `"..tbl_sql ["conf"].."` (`variable`, `value`) values ('limcleanunban', "..cdays..") on duplicate key update `value` = "..cdays)
 		else
-			commandanswer (nick, string.format (getlang (101), ctype))
+			commandanswer (nick, string.format (gettext ("No rows to remove: %s"), ctype))
 		end
 
 	elseif ctype == "reg" then
-		commandanswer (nick, getlang (332))
+		commandanswer (nick, gettext ("Selected type requires extra parameters. Please refer to manual for more information."))
 
 	elseif ctype == "iplog" then
-		commandanswer (nick, getlang (3))
+		commandanswer (nick, gettext ("This operation might take very long time depending on how much is going to be removed. Please be patient."))
 		local _, rows = VH:SQLQuery ("select `id` from `pi_iplog` where `date` < "..seconds)
 
 		if rows > 0 then
 			VH:SQLQuery ("delete from `pi_iplog` where `date` < "..seconds)
-			commandanswer (nick, string.format (getlang (99), rows, ctype))
-			opsnotify (table_sets ["classnotiledoact"], string.format (getlang (5), nick, cls, rows, cdays))
+			commandanswer (nick, string.format (gettext ("Deleted %s rows: %s"), rows, ctype))
+			opsnotify (table_sets ["classnotiledoact"], string.format (gettext ("%s with class %s deleted %s IP logger plugin entries older than %s days."), nick, cls, rows, cdays))
 			VH:SQLQuery ("insert into `"..tbl_sql ["conf"].."` (`variable`, `value`) values ('lastcleaniplog', "..tm..") on duplicate key update `value` = "..tm)
 			VH:SQLQuery ("insert into `"..tbl_sql ["conf"].."` (`variable`, `value`) values ('limcleaniplog', "..cdays..") on duplicate key update `value` = "..cdays)
 		else
-			commandanswer (nick, string.format (getlang (101), ctype))
+			commandanswer (nick, string.format (gettext ("No rows to remove: %s"), ctype))
 		end
 
 	elseif ctype == "stats" then
-		commandanswer (nick, getlang (3))
+		commandanswer (nick, gettext ("This operation might take very long time depending on how much is going to be removed. Please be patient."))
 		local _, rows = VH:SQLQuery ("select `realtime` from `pi_stats` where `realtime` < "..seconds)
 
 		if rows > 0 then
 			VH:SQLQuery ("delete from `pi_stats` where `realtime` < "..seconds)
-			commandanswer (nick, string.format (getlang (99), rows, ctype))
-			opsnotify (table_sets ["classnotiledoact"], string.format (getlang (148), nick, cls, rows, cdays))
+			commandanswer (nick, string.format (gettext ("Deleted %s rows: %s"), rows, ctype))
+			opsnotify (table_sets ["classnotiledoact"], string.format (gettext ("%s with class %s deleted %s statistics plugin entries older than %s days."), nick, cls, rows, cdays))
 			VH:SQLQuery ("insert into `"..tbl_sql ["conf"].."` (`variable`, `value`) values ('lastcleanstats', "..tm..") on duplicate key update `value` = "..tm)
 			VH:SQLQuery ("insert into `"..tbl_sql ["conf"].."` (`variable`, `value`) values ('limcleanstats', "..cdays..") on duplicate key update `value` = "..cdays)
 		else
-			commandanswer (nick, string.format (getlang (101), ctype))
+			commandanswer (nick, string.format (gettext ("No rows to remove: %s"), ctype))
 		end
 
 	elseif ctype == "ulog" then
-		commandanswer (nick, getlang (3))
+		commandanswer (nick, gettext ("This operation might take very long time depending on how much is going to be removed. Please be patient."))
 		local _, rows = VH:SQLQuery ("select `id` from `"..tbl_sql ["ulog"].."` where `time` < "..seconds)
 
 		if rows > 0 then
 			VH:SQLQuery ("delete from `"..tbl_sql ["ulog"].."` where `time` < "..seconds)
-			commandanswer (nick, string.format (getlang (99), rows, ctype))
-			opsnotify (table_sets ["classnotiledoact"], string.format (getlang (167), nick, cls, rows, cdays))
+			commandanswer (nick, string.format (gettext ("Deleted %s rows: %s"), rows, ctype))
+			opsnotify (table_sets ["classnotiledoact"], string.format (gettext ("%s with class %s deleted %s user log entries older than %s days."), nick, cls, rows, cdays))
 			VH:SQLQuery ("insert into `"..tbl_sql ["conf"].."` (`variable`, `value`) values ('lastcleanulog', "..tm..") on duplicate key update `value` = "..tm)
 			VH:SQLQuery ("insert into `"..tbl_sql ["conf"].."` (`variable`, `value`) values ('limcleanulog', "..cdays..") on duplicate key update `value` = "..cdays)
 		else
-			commandanswer (nick, string.format (getlang (101), ctype))
+			commandanswer (nick, string.format (gettext ("No rows to remove: %s"), ctype))
 		end
 
 	elseif ctype == "clog" then
-		commandanswer (nick, getlang (3))
+		commandanswer (nick, gettext ("This operation might take very long time depending on how much is going to be removed. Please be patient."))
 		local _, rows = VH:SQLQuery ("select `id` from `"..tbl_sql ["clog"].."` where `time` < "..seconds)
 
 		if rows > 0 then
 			VH:SQLQuery ("delete from `"..tbl_sql ["clog"].."` where `time` < "..seconds)
-			commandanswer (nick, string.format (getlang (99), rows, ctype))
-			opsnotify (table_sets ["classnotiledoact"], string.format (getlang (782), nick, cls, rows, cdays))
+			commandanswer (nick, string.format (gettext ("Deleted %s rows: %s"), rows, ctype))
+			opsnotify (table_sets ["classnotiledoact"], string.format (gettext ("%s with class %s deleted %s command log entries older than %s days."), nick, cls, rows, cdays))
 			VH:SQLQuery ("insert into `"..tbl_sql ["conf"].."` (`variable`, `value`) values ('lastcleanclog', "..tm..") on duplicate key update `value` = "..tm)
 			VH:SQLQuery ("insert into `"..tbl_sql ["conf"].."` (`variable`, `value`) values ('limcleanclog', "..cdays..") on duplicate key update `value` = "..cdays)
 		else
-			commandanswer (nick, string.format (getlang (101), ctype))
+			commandanswer (nick, string.format (gettext ("No rows to remove: %s"), ctype))
 		end
 
 	elseif ctype == "anti" then
-		commandanswer (nick, getlang (3))
+		commandanswer (nick, gettext ("This operation might take very long time depending on how much is going to be removed. Please be patient."))
 		local _, rows = VH:SQLQuery ("select `occurred` from `"..tbl_sql ["anti"].."` where `occurred` < "..cdays)
 
 		if rows > 0 then
 			VH:SQLQuery ("delete from `"..tbl_sql ["anti"].."` where `occurred` < "..cdays)
-			commandanswer (nick, string.format (getlang (99), rows, ctype))
-			opsnotify (table_sets ["classnotiledoact"], string.format (getlang (839), nick, cls, rows, cdays))
+			commandanswer (nick, string.format (gettext ("Deleted %s rows: %s"), rows, ctype))
+			opsnotify (table_sets ["classnotiledoact"], string.format (gettext ("%s with class %s deleted %s antispam entries with occurrence less than %s."), nick, cls, rows, cdays))
 		else
-			commandanswer (nick, string.format (getlang (101), ctype))
+			commandanswer (nick, string.format (gettext ("No rows to remove: %s"), ctype))
 		end
 
 	elseif ctype == "sefi" then
-		commandanswer (nick, getlang (3))
+		commandanswer (nick, gettext ("This operation might take very long time depending on how much is going to be removed. Please be patient."))
 		local _, rows = VH:SQLQuery ("select `occurred` from `"..tbl_sql ["sefi"].."` where `occurred` < "..cdays)
 
 		if rows > 0 then
 			VH:SQLQuery ("delete from `"..tbl_sql ["sefi"].."` where `occurred` < "..cdays)
-			commandanswer (nick, string.format (getlang (99), rows, ctype))
-			opsnotify (table_sets ["classnotiledoact"], string.format (getlang (840), nick, cls, rows, cdays))
+			commandanswer (nick, string.format (gettext ("Deleted %s rows: %s"), rows, ctype))
+			opsnotify (table_sets ["classnotiledoact"], string.format (gettext ("%s with class %s deleted %s search filter entries with occurrence less than %s."), nick, cls, rows, cdays))
 		else
-			commandanswer (nick, string.format (getlang (101), ctype))
+			commandanswer (nick, string.format (gettext ("No rows to remove: %s"), ctype))
 		end
 
 	elseif ctype == "rel" then
-		commandanswer (nick, getlang (3))
+		commandanswer (nick, gettext ("This operation might take very long time depending on how much is going to be removed. Please be patient."))
 		local _, rows = VH:SQLQuery ("select `date` from `"..tbl_sql ["rel"].."` where `date` < "..seconds)
 
 		if rows > 0 then
 			VH:SQLQuery ("delete from `"..tbl_sql ["rel"].."` where `date` < "..seconds)
-			commandanswer (nick, string.format (getlang (99), rows, ctype))
-			opsnotify (table_sets ["classnotiledoact"], string.format (getlang (603), nick, cls, rows, cdays))
+			commandanswer (nick, string.format (gettext ("Deleted %s rows: %s"), rows, ctype))
+			opsnotify (table_sets ["classnotiledoact"], string.format (gettext ("%s with class %s deleted %s releases older than %s days."), nick, cls, rows, cdays))
 			VH:SQLQuery ("insert into `"..tbl_sql ["conf"].."` (`variable`, `value`) values ('lastcleanrel', "..tm..") on duplicate key update `value` = "..tm)
 			VH:SQLQuery ("insert into `"..tbl_sql ["conf"].."` (`variable`, `value`) values ('limcleanrel', "..cdays..") on duplicate key update `value` = "..cdays)
 		else
-			commandanswer (nick, string.format (getlang (101), ctype))
+			commandanswer (nick, string.format (gettext ("No rows to remove: %s"), ctype))
 		end
 
 	else -- unknown type
-		commandanswer (nick, string.format (getlang (100), "kick, ban, unban, reg, ulog, clog, rel, anti, sefi, iplog "..getlang (70).." stats"))
+		commandanswer (nick, string.format (gettext ("Known types are: %s"), "kick, ban, unban, reg, ulog, clog, rel, anti, sefi, iplog "..gettext ("and").." stats"))
 	end
 end
 
@@ -11614,7 +10596,7 @@ function altcleanuptable (nick, line, cls)
 				seconds = os.difftime (os.time (), (cdays * 24 * 3600))
 			end
 
-			commandanswer (nick, getlang (3))
+			commandanswer (nick, gettext ("This operation might take very long time depending on how much is going to be removed. Please be patient."))
 			local rows = 0
 
 			if cdays == "*" then
@@ -11641,16 +10623,16 @@ function altcleanuptable (nick, line, cls)
 					VH:SQLQuery ("delete from `reglist` where `login_last` is not null and `login_last` < " .. seconds .. " and `class` = " .. altvar)
 				end
 
-				commandanswer (nick, string.format (getlang (334), rows, altvar) .. ":\r\n\r\n" .. anick)
-				opsnotify (table_sets ["classnotiledoact"], string.format (getlang (335), nick, cls, rows, altvar, cdays))
+				commandanswer (nick, string.format (gettext ("Deleted %s accounts with class %s"), rows, altvar) .. ":\r\n\r\n" .. anick)
+				opsnotify (table_sets ["classnotiledoact"], string.format (gettext ("%s with class %s deleted %s accounts with class %s that has been inactive for %s days."), nick, cls, rows, altvar, cdays))
 				local tm = os.time () + table_sets ["srvtimediff"]
 				VH:SQLQuery ("insert into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('lastcleanreg', " .. tm .. ") on duplicate key update `value` = " .. tm)
 				VH:SQLQuery ("insert into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('limcleanreg', '" .. cdays .. "') on duplicate key update `value` = '" .. cdays .. "'")
 			else
-				commandanswer (nick, string.format (getlang (101), ctype))
+				commandanswer (nick, string.format (gettext ("No rows to remove: %s"), ctype))
 			end
 		else
-			commandanswer (nick, string.format (getlang (143), "-1, 0, 1, 2, 3, 4, 5 " .. getlang (70) .. " 10"))
+			commandanswer (nick, string.format (gettext ("Known classes are: %s"), "-1, 0, 1, 2, 3, 4, 5 " .. gettext ("and") .. " 10"))
 		end
 	else -- redirect to another type
 		cleanuptable (nick, line, cls)
@@ -11755,9 +10737,9 @@ if rows > 0 then
 		arank = arank.." "..prezero (string.len (rows), (x + 1))..". [ R: "..prezero (len, rank).." ] "..repnmdcoutchars (user).."\r\n"
 	end
 
-	commandanswer (nick, string.format (getlang (694), rows)..":\r\n\r\n"..arank)
+	commandanswer (nick, string.format (gettext ("Top %s search requests"), rows)..":\r\n\r\n"..arank)
 else
-	commandanswer (nick, getlang (695))
+	commandanswer (nick, gettext ("Search rank list is empty."))
 end
 end
 
@@ -11828,9 +10810,9 @@ local _, rows = VH:SQLQuery ("select `rank` from `"..tbl_sql ["chran"].."` where
 
 if rows > 0 then
 VH:SQLQuery ("delete from `"..tbl_sql ["chran"].."` where `nick` = '"..auser.."' limit 1")
-commandanswer (nick, string.format (getlang (105), cuser))
+commandanswer (nick, string.format (gettext ("Deleted from chat rank list: %s"), cuser))
 else
-commandanswer (nick, string.format (getlang (106), cuser))
+commandanswer (nick, string.format (gettext ("Not found in chat rank list: %s"), cuser))
 end
 
 elseif ctype == "share" then
@@ -11838,9 +10820,9 @@ local _, rows = VH:SQLQuery ("select `rank` from `"..tbl_sql ["shran"].."` where
 
 if rows > 0 then
 VH:SQLQuery ("delete from `"..tbl_sql ["shran"].."` where `nick` = '"..auser.."' limit 1")
-commandanswer (nick, string.format (getlang (321), cuser))
+commandanswer (nick, string.format (gettext ("Deleted from share rank list: %s"), cuser))
 else
-commandanswer (nick, string.format (getlang (322), cuser))
+commandanswer (nick, string.format (gettext ("Not found in share rank list: %s"), cuser))
 end
 
 elseif ctype == "op" then
@@ -11848,9 +10830,9 @@ local _, rows = VH:SQLQuery ("select `rank` from `"..tbl_sql ["opran"].."` where
 
 if rows > 0 then
 VH:SQLQuery ("delete from `"..tbl_sql ["opran"].."` where `nick` = '"..auser.."' limit 1")
-commandanswer (nick, string.format (getlang (107), cuser))
+commandanswer (nick, string.format (gettext ("Deleted from operator rank list: %s"), cuser))
 else
-commandanswer (nick, string.format (getlang (108), cuser))
+commandanswer (nick, string.format (gettext ("Not found in operator rank list: %s"), cuser))
 end
 
 elseif ctype == "sear" then
@@ -11858,9 +10840,9 @@ elseif ctype == "sear" then
 
 	if rows > 0 then
 		VH:SQLQuery ("delete from `"..tbl_sql ["srran"].."` where `search` = '"..auser.."' limit 1")
-		commandanswer (nick, string.format (getlang (696), cuser))
+		commandanswer (nick, string.format (gettext ("Deleted from search rank list: %s"), cuser))
 	else
-		commandanswer (nick, string.format (getlang (697), cuser))
+		commandanswer (nick, string.format (gettext ("Not found in search rank list: %s"), cuser))
 	end
 
 elseif ctype == "word" then
@@ -11868,9 +10850,9 @@ local _, rows = VH:SQLQuery ("select `rank` from `"..tbl_sql ["wdran"].."` where
 
 if rows > 0 then
 VH:SQLQuery ("delete from `"..tbl_sql ["wdran"].."` where `word` = '"..auser.."' limit 1")
-commandanswer (nick, string.format (getlang (440), cuser))
+commandanswer (nick, string.format (gettext ("Deleted from word rank list: %s"), cuser))
 else
-commandanswer (nick, string.format (getlang (441), cuser))
+commandanswer (nick, string.format (gettext ("Not found in word rank list: %s"), cuser))
 end
 
 elseif ctype == "cc" then
@@ -11878,9 +10860,9 @@ local _, rows = VH:SQLQuery ("select `cc` from `"..tbl_sql ["ccstat"].."` where 
 
 if rows > 0 then
 VH:SQLQuery ("delete from `"..tbl_sql ["ccstat"].."` where `cc` = '"..auser.."'")
-commandanswer (nick, string.format (getlang (629), rows, cuser))
+commandanswer (nick, string.format (gettext ("Deleted %s rows from country code statistics table: %s"), rows, cuser))
 else
-commandanswer (nick, string.format (getlang (279), cuser))
+commandanswer (nick, string.format (gettext ("Not found in country code statistics table: %s"), cuser))
 end
 
 elseif ctype == "all" then
@@ -11892,7 +10874,7 @@ delrank (nick, "op "..cuser)
 -- cc ranks not added
 
 else -- unknown type
-commandanswer (nick, string.format (getlang (100), "chat, share, op, sear, word, cc "..getlang (70).." all"))
+commandanswer (nick, string.format (gettext ("Known types are: %s"), "chat, share, op, sear, word, cc "..gettext ("and").." all"))
 end
 end
 
@@ -11904,7 +10886,7 @@ local climt = tonumber (climt)
 local tm = os.time () + table_sets ["srvtimediff"]
 
 if ctype == "chat" then
-commandanswer (nick, getlang (3))
+commandanswer (nick, gettext ("This operation might take very long time depending on how much is going to be removed. Please be patient."))
 local rows = 0
 
 if climt == 0 then
@@ -11920,16 +10902,16 @@ else
 VH:SQLQuery ("delete from `"..tbl_sql ["chran"].."` where `rank` < "..climt)
 end
 
-commandanswer (nick, string.format (getlang (99), rows, ctype))
-opsnotify (table_sets ["classnotiledoact"], string.format (getlang (374), nick, cls, rows, climt))
+commandanswer (nick, string.format (gettext ("Deleted %s rows: %s"), rows, ctype))
+opsnotify (table_sets ["classnotiledoact"], string.format (gettext ("%s with class %s deleted %s chat ranks lower than %s."), nick, cls, rows, climt))
 VH:SQLQuery ("insert into `"..tbl_sql ["conf"].."` (`variable`, `value`) values ('lastcleanchran', "..tm..") on duplicate key update `value` = "..tm)
 VH:SQLQuery ("insert into `"..tbl_sql ["conf"].."` (`variable`, `value`) values ('limcleanchran', "..climt..") on duplicate key update `value` = "..climt)
 else
-commandanswer (nick, string.format (getlang (101), ctype))
+commandanswer (nick, string.format (gettext ("No rows to remove: %s"), ctype))
 end
 
 elseif ctype == "share" then
-commandanswer (nick, getlang (3))
+commandanswer (nick, gettext ("This operation might take very long time depending on how much is going to be removed. Please be patient."))
 local rows, cbytes = 0, 0
 
 if climt == 0 then
@@ -11946,16 +10928,16 @@ else
 VH:SQLQuery ("delete from `"..tbl_sql ["shran"].."` where `rank` < "..cbytes)
 end
 
-commandanswer (nick, string.format (getlang (99), rows, ctype))
-opsnotify (table_sets ["classnotiledoact"], string.format (getlang (375), nick, cls, rows, climt))
+commandanswer (nick, string.format (gettext ("Deleted %s rows: %s"), rows, ctype))
+opsnotify (table_sets ["classnotiledoact"], string.format (gettext ("%s with class %s deleted %s share ranks lower than %s GiB."), nick, cls, rows, climt))
 VH:SQLQuery ("insert into `"..tbl_sql ["conf"].."` (`variable`, `value`) values ('lastcleanshran', "..tm..") on duplicate key update `value` = "..tm)
 VH:SQLQuery ("insert into `"..tbl_sql ["conf"].."` (`variable`, `value`) values ('limcleanshran', "..climt..") on duplicate key update `value` = "..climt)
 else
-commandanswer (nick, string.format (getlang (101), ctype))
+commandanswer (nick, string.format (gettext ("No rows to remove: %s"), ctype))
 end
 
 elseif ctype == "op" then
-commandanswer (nick, getlang (3))
+commandanswer (nick, gettext ("This operation might take very long time depending on how much is going to be removed. Please be patient."))
 local rows = 0
 
 if climt == 0 then
@@ -11971,16 +10953,16 @@ else
 VH:SQLQuery ("delete from `"..tbl_sql ["opran"].."` where `rank` < "..climt)
 end
 
-commandanswer (nick, string.format (getlang (99), rows, ctype))
-opsnotify (table_sets ["classnotiledoact"], string.format (getlang (376), nick, cls, rows, climt))
+commandanswer (nick, string.format (gettext ("Deleted %s rows: %s"), rows, ctype))
+opsnotify (table_sets ["classnotiledoact"], string.format (gettext ("%s with class %s deleted %s operator ranks lower than %s."), nick, cls, rows, climt))
 VH:SQLQuery ("insert into `"..tbl_sql ["conf"].."` (`variable`, `value`) values ('lastcleanopran', "..tm..") on duplicate key update `value` = "..tm)
 VH:SQLQuery ("insert into `"..tbl_sql ["conf"].."` (`variable`, `value`) values ('limcleanopran', "..climt..") on duplicate key update `value` = "..climt)
 else
-commandanswer (nick, string.format (getlang (101), ctype))
+commandanswer (nick, string.format (gettext ("No rows to remove: %s"), ctype))
 end
 
 elseif ctype == "sear" then
-	commandanswer (nick, getlang (3))
+	commandanswer (nick, gettext ("This operation might take very long time depending on how much is going to be removed. Please be patient."))
 	local rows = 0
 
 	if climt == 0 then
@@ -11996,16 +10978,16 @@ elseif ctype == "sear" then
 			VH:SQLQuery ("delete from `"..tbl_sql ["srran"].."` where `rank` < "..climt)
 		end
 
-		commandanswer (nick, string.format (getlang (99), rows, ctype))
-		opsnotify (table_sets ["classnotiledoact"], string.format (getlang (698), nick, cls, rows, climt))
+		commandanswer (nick, string.format (gettext ("Deleted %s rows: %s"), rows, ctype))
+		opsnotify (table_sets ["classnotiledoact"], string.format (gettext ("%s with class %s deleted %s search ranks lower than %s."), nick, cls, rows, climt))
 		VH:SQLQuery ("insert into `"..tbl_sql ["conf"].."` (`variable`, `value`) values ('lastcleansrran', "..tm..") on duplicate key update `value` = "..tm)
 		VH:SQLQuery ("insert into `"..tbl_sql ["conf"].."` (`variable`, `value`) values ('limcleansrran', "..climt..") on duplicate key update `value` = "..climt)
 	else
-		commandanswer (nick, string.format (getlang (101), ctype))
+		commandanswer (nick, string.format (gettext ("No rows to remove: %s"), ctype))
 	end
 
 elseif ctype == "word" then
-commandanswer (nick, getlang (3))
+commandanswer (nick, gettext ("This operation might take very long time depending on how much is going to be removed. Please be patient."))
 local rows = 0
 
 if climt == 0 then
@@ -12021,22 +11003,22 @@ else
 VH:SQLQuery ("delete from `"..tbl_sql ["wdran"].."` where `rank` < "..climt)
 end
 
-commandanswer (nick, string.format (getlang (99), rows, ctype))
-opsnotify (table_sets ["classnotiledoact"], string.format (getlang (442), nick, cls, rows, climt))
+commandanswer (nick, string.format (gettext ("Deleted %s rows: %s"), rows, ctype))
+opsnotify (table_sets ["classnotiledoact"], string.format (gettext ("%s with class %s deleted %s word ranks lower than %s."), nick, cls, rows, climt))
 VH:SQLQuery ("insert into `"..tbl_sql ["conf"].."` (`variable`, `value`) values ('lastcleanwdran', "..tm..") on duplicate key update `value` = "..tm)
 VH:SQLQuery ("insert into `"..tbl_sql ["conf"].."` (`variable`, `value`) values ('limcleanwdran', "..climt..") on duplicate key update `value` = "..climt)
 else
-commandanswer (nick, string.format (getlang (101), ctype))
+commandanswer (nick, string.format (gettext ("No rows to remove: %s"), ctype))
 end
 
 elseif ctype == "cc" then
 VH:SQLQuery ("truncate table `"..tbl_sql ["ccstat"].."`")
 VH:SQLQuery ("update ignore `"..tbl_sql ["conf"].."` set `value` = '"..(os.time () + table_sets ["srvtimediff"]).."' where `variable` = 'date_ccstats' limit 1")
-commandanswer (nick, string.format (getlang (520), ctype))
-opsnotify (table_sets ["classnotiledoact"], string.format (getlang (521), nick, cls))
+commandanswer (nick, string.format (gettext ("Deleted all rows: %s"), ctype))
+opsnotify (table_sets ["classnotiledoact"], string.format (gettext ("%s with class %s deleted all user location entries."), nick, cls))
 
 else -- unknown type
-	commandanswer (nick, string.format (getlang (100), "chat, share, op, sear, word "..getlang (70).." cc"))
+	commandanswer (nick, string.format (gettext ("Known types are: %s"), "chat, share, op, sear, word "..gettext ("and").." cc"))
 end
 end
 
@@ -12047,9 +11029,9 @@ local _, rows = VH:SQLQuery ("select `rank` from `"..tbl_sql ["chran"].."` where
 
 if rows > 0 then
 local _, rank = VH:SQLFetch (0)
-commandanswer (nick, string.format (getlang (110), rank))
+commandanswer (nick, string.format (gettext ("Your chat rank is: %s"), rank))
 else
-commandanswer (nick, getlang (111))
+commandanswer (nick, gettext ("You have to write something in main chat to get started."))
 end
 end
 
@@ -12060,9 +11042,9 @@ local _, rows = VH:SQLQuery ("select `rank` from `"..tbl_sql ["shran"].."` where
 
 if rows > 0 then
 local _, rank = VH:SQLFetch (0)
-commandanswer (nick, string.format (getlang (327), makesize (rank)))
+commandanswer (nick, string.format (gettext ("Your share rank is: %s"), makesize (rank)))
 else
-commandanswer (nick, string.format (getlang (325), table_sets ["shareranmin"].." "..getlang (362)))
+commandanswer (nick, string.format (gettext ("You have to share %s and reconnect to get started."), table_sets ["shareranmin"].." "..gettext ("GiB")))
 end
 end
 
@@ -12073,9 +11055,9 @@ local _, rows = VH:SQLQuery ("select `rank` from `"..tbl_sql ["opran"].."` where
 
 if rows > 0 then
 local _, rank = VH:SQLFetch (0)
-commandanswer (nick, string.format (getlang (114), rank))
+commandanswer (nick, string.format (gettext ("Your operator rank is: %s"), rank))
 else
-commandanswer (nick, getlang (115))
+commandanswer (nick, gettext ("You have to do some operator actions to get started."))
 end
 end
 
@@ -12093,9 +11075,9 @@ if x == 0 then len = string.len (rank) end
 arank = arank.." "..prezero (string.len (rows), (x + 1))..". [ R: "..prezero (len, rank).." ] "..user.."\r\n"
 end
 
-commandanswer (nick, string.format (getlang (116), rows)..":\r\n\r\n"..arank)
+commandanswer (nick, string.format (gettext ("Top %s chat rankers"), rows)..":\r\n\r\n"..arank)
 else
-commandanswer (nick, getlang (117))
+commandanswer (nick, gettext ("Chat rank list is empty."))
 end
 end
 
@@ -12112,9 +11094,9 @@ local _, user, rank = VH:SQLFetch (x)
 arank = arank.." "..prezero (string.len (rows), (x + 1))..". "..user.." @ "..makesize (rank).."\r\n"
 end
 
-commandanswer (nick, string.format (getlang (324), rows)..":\r\n\r\n"..arank)
+commandanswer (nick, string.format (gettext ("Top %s share rankers"), rows)..":\r\n\r\n"..arank)
 else
-commandanswer (nick, getlang (326))
+commandanswer (nick, gettext ("Share rank list is empty."))
 end
 end
 
@@ -12132,9 +11114,9 @@ if x == 0 then len = string.len (rank) end
 arank = arank.." "..prezero (string.len (rows), (x + 1))..". [ R: "..prezero (len, rank).." ] "..user.."\r\n"
 end
 
-commandanswer (nick, string.format (getlang (118), rows)..":\r\n\r\n"..arank)
+commandanswer (nick, string.format (gettext ("Top %s operator rankers"), rows)..":\r\n\r\n"..arank)
 else
-commandanswer (nick, getlang (119))
+commandanswer (nick, gettext ("Operator rank list is empty."))
 end
 end
 
@@ -12152,9 +11134,9 @@ if rows > 0 then
 		arank = arank.." "..prezero (string.len (rows), (x + 1))..". [ R: "..prezero (len, rank).." ] "..repnmdcoutchars (user).."\r\n"
 	end
 
-	commandanswer (nick, string.format (getlang (439), rows)..":\r\n\r\n"..arank)
+	commandanswer (nick, string.format (gettext ("Top %s used words"), rows)..":\r\n\r\n"..arank)
 else
-	commandanswer (nick, getlang (445))
+	commandanswer (nick, gettext ("Word rank list is empty."))
 end
 end
 
@@ -12165,10 +11147,10 @@ local entry = repsqlchars (item)
 local _, rows = VH:SQLQuery ("select `nick` from `"..tbl_sql ["ranex"].."` where `nick` = '"..entry.."' limit 1")
 
 if rows > 0 then
-commandanswer (nick, string.format (getlang (210), item))
+commandanswer (nick, string.format (gettext ("Couldn't add rank exception because already exists: %s"), item))
 else
 VH:SQLQuery ("insert into `"..tbl_sql ["ranex"].."` (`nick`) values ('"..entry.."')")
-commandanswer (nick, string.format (getlang (211), item))
+commandanswer (nick, string.format (gettext ("Added rank exception: %s"), item))
 delrank (nick, "all "..item)
 end
 end
@@ -12181,9 +11163,9 @@ local _, rows = VH:SQLQuery ("select `nick` from `"..tbl_sql ["ranex"].."` where
 
 if rows > 0 then
 VH:SQLQuery ("delete from `"..tbl_sql ["ranex"].."` where `nick` = '"..aitem.."' limit 1")
-commandanswer (nick, string.format (getlang (212), item))
+commandanswer (nick, string.format (gettext ("Deleted rank exception: %s"), item))
 else
-commandanswer (nick, string.format (getlang (213), item))
+commandanswer (nick, string.format (gettext ("Couldn't delete rank exception because not found: %s"), item))
 end
 end
 
@@ -12201,9 +11183,9 @@ if x == 0 then len = string.len (occurred) end
 anentry = anentry.." "..prezero (string.len (rows), (x + 1))..". [ O: "..prezero (len, occurred).." ] "..entry.."\r\n"
 end
 
-commandanswer (nick, getlang (214)..":\r\n\r\n"..anentry)
+commandanswer (nick, gettext ("Rank exception list")..":\r\n\r\n"..anentry)
 else
-commandanswer (nick, getlang (215))
+commandanswer (nick, gettext ("Rank exception list is empty."))
 end
 end
 
@@ -12232,11 +11214,11 @@ aaction = tonumber (aaction)
 stype = tonumber (stype)
 
 if (aaction < 0) or (aaction > 7) then -- invalid action
-commandanswer (nick, string.format (getlang (227), "0, 1, 2, 3, 4, 5, 6 "..getlang (70).." 7"))
+commandanswer (nick, string.format (gettext ("Known actions are: %s"), "0, 1, 2, 3, 4, 5, 6 "..gettext ("and").." 7"))
 elseif (prio < 0) or (prio > 9) then -- invalid priority
-commandanswer (nick, string.format (getlang (23), 0, 9))
+commandanswer (nick, string.format (gettext ("Valid priority is a number from %s to %s."), 0, 9))
 elseif (stype < 1) or (stype > 9) then -- invalid search type
-commandanswer (nick, string.format (getlang (319), "1, 2, 3, 4, 5, 6, 7, 8 "..getlang (70).." 9"))
+commandanswer (nick, string.format (gettext ("Known search types are: %s"), "1, 2, 3, 4, 5, 6, 7, 8 "..gettext ("and").." 9"))
 else
 local _, _, aitem = string.find (item, "^(.+) %d %d %d$")
 local entry = repsqlchars (repnmdcinchars (aitem))
@@ -12244,34 +11226,34 @@ local _, rows = VH:SQLQuery ("select `action` from `"..tbl_sql ["sefi"].."` wher
 
 if rows > 0 then
 VH:SQLQuery ("update `"..tbl_sql ["sefi"].."` set `priority` = "..prio..", `action` = "..aaction..", `type` = "..stype.." where `filter` = '"..entry.."' limit 1")
-local note = 585
+local note = "Modified search filter with action %s and priority %s as any file: %s"
 
-if stype == 2 then note = 586
-elseif stype == 3 then note = 587
-elseif stype == 4 then note = 588
-elseif stype == 5 then note = 589
-elseif stype == 6 then note = 590
-elseif stype == 7 then note = 591
-elseif stype == 8 then note = 592
-elseif stype == 9 then note = 593
+if stype == 2 then note = "Modified search filter with action %s and priority %s as audio file: %s"
+elseif stype == 3 then note = "Modified search filter with action %s and priority %s as compressed file: %s"
+elseif stype == 4 then note = "Modified search filter with action %s and priority %s as document: %s"
+elseif stype == 5 then note = "Modified search filter with action %s and priority %s as executable: %s"
+elseif stype == 6 then note = "Modified search filter with action %s and priority %s as picture: %s"
+elseif stype == 7 then note = "Modified search filter with action %s and priority %s as video: %s"
+elseif stype == 8 then note = "Modified search filter with action %s and priority %s as folder: %s"
+elseif stype == 9 then note = "Modified search filter with action %s and priority %s as TTH: %s"
 end
 
-commandanswer (nick, string.format (getlang (note), aaction, prio, aitem))
+commandanswer (nick, string.format (gettext (note), aaction, prio, aitem))
 else
 VH:SQLQuery ("insert into `"..tbl_sql ["sefi"].."` (`filter`, `priority`, `action`, `type`) values ('"..entry.."', "..prio..", "..aaction..", "..stype..")")
-local note = 594
+local note = "Added search filter with action %s and priority %s as any file: %s"
 
-if stype == 2 then note = 595
-elseif stype == 3 then note = 596
-elseif stype == 4 then note = 597
-elseif stype == 5 then note = 598
-elseif stype == 6 then note = 599
-elseif stype == 7 then note = 600
-elseif stype == 8 then note = 601
-elseif stype == 9 then note = 602
+if stype == 2 then note = "Added search filter with action %s and priority %s as audio file: %s"
+elseif stype == 3 then note = "Added search filter with action %s and priority %s as compressed file: %s"
+elseif stype == 4 then note = "Added search filter with action %s and priority %s as document: %s"
+elseif stype == 5 then note = "Added search filter with action %s and priority %s as executable: %s"
+elseif stype == 6 then note = "Added search filter with action %s and priority %s as picture: %s"
+elseif stype == 7 then note = "Added search filter with action %s and priority %s as video: %s"
+elseif stype == 8 then note = "Added search filter with action %s and priority %s as folder: %s"
+elseif stype == 9 then note = "Added search filter with action %s and priority %s as TTH: %s"
 end
 
-commandanswer (nick, string.format (getlang (note), aaction, prio, aitem))
+commandanswer (nick, string.format (gettext (note), aaction, prio, aitem))
 end
 end
 end
@@ -12284,9 +11266,9 @@ local _, rows = VH:SQLQuery ("select `occurred` from `"..tbl_sql ["sefi"].."` wh
 
 if rows > 0 then
 VH:SQLQuery ("delete from `"..tbl_sql ["sefi"].."` where `filter` = '"..aitem.."' limit 1")
-commandanswer (nick, string.format (getlang (220), item))
+commandanswer (nick, string.format (gettext ("Deleted search filter: %s"), item))
 else
-commandanswer (nick, string.format (getlang (221), item))
+commandanswer (nick, string.format (gettext ("Couldn't delete search filter because not found: %s"), item))
 end
 end
 
@@ -12304,9 +11286,9 @@ if x == 0 then len = string.len (occurred) end
 anentry = anentry.." "..prezero (string.len (rows), (x + 1))..". [ P: "..prio.." ] [ A: "..aaction.." ] [ T: "..stype.." ] [ O: "..prezero (len, occurred).." ] "..repnmdcoutchars (entry).."\r\n"
 end
 
-commandanswer (nick, getlang (222)..":\r\n\r\n"..anentry)
+commandanswer (nick, gettext ("Search filter list")..":\r\n\r\n"..anentry)
 else
-commandanswer (nick, getlang (223))
+commandanswer (nick, gettext ("Search filter list is empty."))
 end
 end
 
@@ -12317,10 +11299,10 @@ local entry = repsqlchars (repnmdcinchars (item))
 local _, rows = VH:SQLQuery ("select `occurred` from `"..tbl_sql ["sefiex"].."` where `exception` = '"..entry.."' limit 1")
 
 if rows > 0 then
-commandanswer (nick, string.format (getlang (287), item))
+commandanswer (nick, string.format (gettext ("Couldn't add search filter exception entry because already exists: %s"), item))
 else
 VH:SQLQuery ("insert into `"..tbl_sql ["sefiex"].."` (`exception`) values ('"..entry.."')")
-commandanswer (nick, string.format (getlang (288), item))
+commandanswer (nick, string.format (gettext ("Added search filter exception entry: %s"), item))
 end
 end
 
@@ -12332,9 +11314,9 @@ local _, rows = VH:SQLQuery ("select `occurred` from `"..tbl_sql ["sefiex"].."` 
 
 if rows > 0 then
 VH:SQLQuery ("delete from `"..tbl_sql ["sefiex"].."` where `exception` = '"..aitem.."' limit 1")
-commandanswer (nick, string.format (getlang (289), item))
+commandanswer (nick, string.format (gettext ("Deleted search filter exception entry: %s"), item))
 else
-commandanswer (nick, string.format (getlang (290), item))
+commandanswer (nick, string.format (gettext ("Couldn't delete search filter exception entry because not found: %s"), item))
 end
 end
 
@@ -12352,9 +11334,9 @@ if x == 0 then len = string.len (occurred) end
 anentry = anentry.." "..prezero (string.len (rows), (x + 1))..". [ O: "..prezero (len, occurred).." ] "..repnmdcoutchars (entry).."\r\n"
 end
 
-commandanswer (nick, getlang (286)..":\r\n\r\n"..anentry)
+commandanswer (nick, gettext ("Search filter exception list")..":\r\n\r\n"..anentry)
 else
-commandanswer (nick, getlang (291))
+commandanswer (nick, gettext ("Search filter exception list is empty."))
 end
 end
 
@@ -12365,37 +11347,37 @@ function addantientry (nick, item)
 	prio, aaction, flags = tonumber (prio), tonumber (aaction), tonumber (flags)
 
 	if (aaction < 0) or (aaction > 10) then -- invalid action
-		commandanswer (nick, string.format (getlang (227), "0, 1, 2, 3, 4, 5, 6, 7, 8, 9 " .. getlang (70) .. " 10"))
+		commandanswer (nick, string.format (gettext ("Known actions are: %s"), "0, 1, 2, 3, 4, 5, 6, 7, 8, 9 " .. gettext ("and") .. " 10"))
 	elseif (flags < 1) or (flags > 3) then -- invalid flag
-		commandanswer (nick, string.format (getlang (228), "1, 2 " .. getlang (70) .. " 3"))
+		commandanswer (nick, string.format (gettext ("Known flags are: %s"), "1, 2 " .. gettext ("and") .. " 3"))
 	elseif (prio < 0) or (prio > 9) then -- invalid priority
-		commandanswer (nick, string.format (getlang (23), 0, 9))
+		commandanswer (nick, string.format (gettext ("Valid priority is a number from %s to %s."), 0, 9))
 	else
 		local entry = repsqlchars (repnmdcinchars (aitem))
 		local _, rows = VH:SQLQuery ("select `action` from `" .. tbl_sql ["anti"] .. "` where `antispam` = '" .. entry .. "' limit 1")
 
 		if rows > 0 then
 			VH:SQLQuery ("update `" .. tbl_sql ["anti"] .. "` set `priority` = " .. tostring (prio) .. ", `action` = " .. tostring (aaction) .. ", `flags` = " .. tostring (flags) .. " where `antispam` = '" .. entry .. "' limit 1")
-			local note = 554
+			local note = "Modified antispam entry with action %s and priority %s to scan in MC and PM: %s"
 
 			if flags == 1 then
-				note = 552
+				note = "Modified antispam entry with action %s and priority %s to scan in MC: %s"
 			elseif flags == 2 then
-				note = 553
+				note = "Modified antispam entry with action %s and priority %s to scan in PM: %s"
 			end
 
-			commandanswer (nick, string.format (getlang (note), aaction, prio, aitem))
+			commandanswer (nick, string.format (gettext (note), aaction, prio, aitem))
 		else
 			VH:SQLQuery ("insert into `" .. tbl_sql ["anti"] .. "` (`antispam`, `priority`, `action`, `flags`) values ('" .. entry .. "', " .. tostring (prio) .. ", " .. tostring (aaction) .. ", " .. tostring (flags) .. ")")
-			local note = 557
+			local note = "Added antispam entry with action %s and priority %s to scan in MC and PM: %s"
 
 			if flags == 1 then
-				note = 555
+				note = "Added antispam entry with action %s and priority %s to scan in MC: %s"
 			elseif flags == 2 then
-				note = 556
+				note = "Added antispam entry with action %s and priority %s to scan in PM: %s"
 			end
 
-			commandanswer (nick, string.format (getlang (note), aaction, prio, aitem))
+			commandanswer (nick, string.format (gettext (note), aaction, prio, aitem))
 		end
 	end
 end
@@ -12408,9 +11390,9 @@ local _, rows = VH:SQLQuery ("select `occurred` from `"..tbl_sql ["anti"].."` wh
 
 if rows > 0 then
 	VH:SQLQuery ("delete from `"..tbl_sql ["anti"].."` where `antispam` = '"..aitem.."' limit 1")
-	commandanswer (nick, string.format (getlang (129), item))
+	commandanswer (nick, string.format (gettext ("Deleted antispam entry: %s"), item))
 else
-	commandanswer (nick, string.format (getlang (130), item))
+	commandanswer (nick, string.format (gettext ("Couldn't delete antispam entry because not found: %s"), item))
 end
 end
 
@@ -12428,9 +11410,9 @@ if rows > 0 then
 		anentry = anentry.." "..prezero (string.len (rows), (x + 1))..". [ P: "..prio.." ] [ A: "..aaction.." ] [ F: "..flags.." ] [ O: "..prezero (len, occurred).." ] "..repnmdcoutchars (entry).."\r\n"
 	end
 
-	commandanswer (nick, getlang (131)..":\r\n\r\n"..anentry)
+	commandanswer (nick, gettext ("Antispam list")..":\r\n\r\n"..anentry)
 else
-	commandanswer (nick, getlang (132))
+	commandanswer (nick, gettext ("Antispam list is empty."))
 end
 end
 
@@ -12441,10 +11423,10 @@ local entry = repsqlchars (repnmdcinchars (item))
 local _, rows = VH:SQLQuery ("select `occurred` from `"..tbl_sql ["antiex"].."` where `exception` = '"..entry.."' limit 1")
 
 if rows > 0 then
-commandanswer (nick, string.format (getlang (133), item))
+commandanswer (nick, string.format (gettext ("Couldn't add antispam exception entry because already exists: %s"), item))
 else
 VH:SQLQuery ("insert into `"..tbl_sql ["antiex"].."` (`exception`) values ('"..entry.."')")
-commandanswer (nick, string.format (getlang (134), item))
+commandanswer (nick, string.format (gettext ("Added antispam exception entry: %s"), item))
 end
 end
 
@@ -12456,9 +11438,9 @@ local _, rows = VH:SQLQuery ("select `occurred` from `"..tbl_sql ["antiex"].."` 
 
 if rows > 0 then
 VH:SQLQuery ("delete from `"..tbl_sql ["antiex"].."` where `exception` = '"..aitem.."' limit 1")
-commandanswer (nick, string.format (getlang (135), item))
+commandanswer (nick, string.format (gettext ("Deleted antispam exception entry: %s"), item))
 else
-commandanswer (nick, string.format (getlang (136), item))
+commandanswer (nick, string.format (gettext ("Couldn't delete antispam exception entry because not found: %s"), item))
 end
 end
 
@@ -12476,9 +11458,9 @@ if x == 0 then len = string.len (occurred) end
 anentry = anentry.." "..prezero (string.len (rows), (x + 1))..". [ O: "..prezero (len, occurred).." ] "..repnmdcoutchars (entry).."\r\n"
 end
 
-commandanswer (nick, getlang (137)..":\r\n\r\n"..anentry)
+commandanswer (nick, gettext ("Antispam exception list")..":\r\n\r\n"..anentry)
 else
-commandanswer (nick, getlang (138))
+commandanswer (nick, gettext ("Antispam exception list is empty."))
 end
 end
 
@@ -12493,7 +11475,7 @@ function votekickuser (nick, user)
 				if table_voki [user] then -- add vote
 					for _, val in pairs (table_voki [user]["u"]) do
 						if val == nick then
-							commandanswer (nick, getlang (967))
+							commandanswer (nick, gettext ("You have already voted for kicking that user."))
 							return
 						end
 					end
@@ -12507,20 +11489,20 @@ function votekickuser (nick, user)
 					}
 				end
 
-				maintoall (string.format (getlang (968), nick, table_voki [user]["c"], table_sets ["votekickcount"], class, user), 0, 10) -- notify all users
+				maintoall (string.format (gettext ("%s added vote %s of %s for kicking user with class %s: %s"), nick, table_voki [user]["c"], table_sets ["votekickcount"], class, user), 0, 10) -- notify all users
 
 				if table_voki [user]["c"] >= table_sets ["votekickcount"] then -- kick user
 					table_voki [user] = nil
-					VH:KickUser (table_othsets ["sendfrom"], user, getlang (966))
+					VH:KickUser (table_othsets ["sendfrom"], user, gettext ("User voted kick"))
 				end
 			else -- user or ip is protected
-				commandanswer (nick, getlang (46))
+				commandanswer (nick, gettext ("User you're trying to kick or redirect is protected."))
 			end
 		else -- dont allow to kick operators
-			commandanswer (nick, getlang (965))
+			commandanswer (nick, gettext ("You don't want to vote for kicking an operator."))
 		end
 	else -- not in list
-		commandanswer (nick, string.format (getlang (704), user))
+		commandanswer (nick, string.format (gettext ("User not in list: %s"), user))
 	end
 end
 
@@ -12557,21 +11539,21 @@ function sendtopic (nick)
 
 		if topic and (topic ~= "") then
 			if table_othsets ["topicowner"] and (table_sets ["showtopicowner"] == 1) then
-				commandanswer (nick, string.format (getlang (2), table_othsets ["topicowner"], topic))
+				commandanswer (nick, string.format (gettext ("Current topic set by %s: %s"), table_othsets ["topicowner"], topic))
 			else
-				commandanswer (nick, string.format (getlang (1), topic))
+				commandanswer (nick, string.format (gettext ("Current topic: %s"), topic))
 			end
 		else
-			commandanswer (nick, getlang (42))
+			commandanswer (nick, gettext ("No topic is set."))
 		end
 	else -- old fashion way
 		if not table_othsets ["topicvalue"] then
-			commandanswer (nick, getlang (42))
+			commandanswer (nick, gettext ("No topic is set."))
 		else
 			if table_othsets ["topicowner"] and (table_sets ["showtopicowner"] == 1) then
-				commandanswer (nick, string.format (getlang (2), table_othsets ["topicowner"], table_othsets ["topicvalue"]))
+				commandanswer (nick, string.format (gettext ("Current topic set by %s: %s"), table_othsets ["topicowner"], table_othsets ["topicvalue"]))
 			else
-				commandanswer (nick, string.format (getlang (1), table_othsets ["topicvalue"]))
+				commandanswer (nick, string.format (gettext ("Current topic: %s"), table_othsets ["topicvalue"]))
 			end
 		end
 	end
@@ -12603,13 +11585,13 @@ function namereg (nick, line, cls)
 local _, _, oldn = string.find (line, "^(%S+) %S+$")
 
 if not getregclass (oldn) then -- check if physically registered
-commandanswer (nick, string.format (getlang (487), oldn))
+commandanswer (nick, string.format (gettext ("User is not registered: %s"), oldn))
 else
 local _, _, newn = string.find (line, "^%S+ (%S+)$")
 newn = repnickchars (newn)
 
 if getstatus (oldn) == 1 then -- notify and disconnect user if hes online
-pmtouser (oldn, table_othsets ["botnick"], string.format (getlang (488), newn))
+pmtouser (oldn, table_othsets ["botnick"], string.format (gettext ("You are now going to be disconnected from the hub in order for your new nick to apply: %s"), newn))
 VH:CloseConnection (oldn)
 end
 
@@ -12627,8 +11609,8 @@ VH:SQLQuery ("update `"..tbl_sql ["news"].."` set `by` = '"..rnewn.."' where `by
 VH:SQLQuery ("update `"..tbl_sql ["rel"].."` set `by` = '"..rnewn.."' where `by` = '"..roldn.."'") -- no limit
 VH:SQLQuery ("update `"..tbl_sql ["mchist"].."` set `realnick` = '"..rnewn.."' where `realnick` = '"..roldn.."'") -- no limit
 VH:SQLQuery ("update `"..tbl_sql ["ophist"].."` set `nick` = '"..rnewn.."' where `nick` = '"..roldn.."'") -- no limit
-commandanswer (nick, string.format (getlang (489), oldn, newn))
-opsnotify (table_sets ["classnotireg"], string.format (getlang (490), nick, cls, oldn, newn))
+commandanswer (nick, string.format (gettext ("Renamed account %s: %s"), oldn, newn))
+opsnotify (table_sets ["classnotireg"], string.format (gettext ("%s with class %s renamed account %s: %s"), nick, cls, oldn, newn))
 end
 end
 
@@ -12645,9 +11627,9 @@ if rows > 0 then
 		list = list.." "..prezero (string.len (rows), (x + 1))..". "..n.." @ "..c.."\r\n"
 	end
 
-	commandanswer (nick, string.format (getlang (688), usr)..":\r\n\r\n"..list)
+	commandanswer (nick, string.format (gettext ("Registered users list results for %s"), usr)..":\r\n\r\n"..list)
 else
-	commandanswer (nick, getlang (121))
+	commandanswer (nick, gettext ("No user results found."))
 end
 end
 
@@ -12673,13 +11655,13 @@ function statsreglist (nick)
 		table.sort (tmp, function (a, b) return a.val > b.val end)
 
 		for _, v in pairs (tmp) do
-			list = list.." "..string.format (getlang (689), v.key, v.val).."\r\n"
+			list = list.." "..string.format (gettext ("Class %s: %s"), v.key, v.val).."\r\n"
 			tot = tot + v.val
 		end
 
-		commandanswer (nick, getlang (687)..":\r\n\r\n"..list.."\r\n "..string.format (getlang (519), tot).."\r\n")
+		commandanswer (nick, gettext ("Registered users list statistics")..":\r\n\r\n"..list.."\r\n "..string.format (gettext ("Total count: %s"), tot).."\r\n")
 	else
-		commandanswer (nick, getlang (690))
+		commandanswer (nick, gettext ("Registered users list is empty."))
 	end
 end
 
@@ -12704,7 +11686,7 @@ local _, trows = VH:SQLQuery ("select `class` from `reglist` where `class` = "..
 
 if trows > 0 then
 if (sfrom <= 0) or (sfrom > trows) then
-commandanswer (nick, string.format (getlang (140), sfrom, trows, class))
+commandanswer (nick, string.format (gettext ("You can't start at user number %s when you only have %s accounts with class %s."), sfrom, trows, class))
 else
 local _, rows = VH:SQLQuery ("select `nick`, `reg_date`, `pwd_change`, `login_last`, `enabled` from `reglist` where `class` = "..class.." order by `login_last` desc limit "..(sfrom - 1)..", "..hmany)
 
@@ -12716,16 +11698,16 @@ local _, user, rgdate, pwdc, lastlog, enacc = VH:SQLFetch (x)
 areg = areg.." "..prezero (string.len (rows), (x + 1))..". [ R: "..fromunixtime (rgdate, true, table_sets ["longdateformat"]).." ] [ L: "..fromunixtime (lastlog, false, table_sets ["longdateformat"]).." ] [ P: "..pwdc.." ] [ E: "..enacc.." ] [ O: "..getstatus (user).." ] "..user.."\r\n"
 end
 
-commandanswer (nick, string.format (getlang (141), rows, trows, class, sfrom)..":\r\n\r\n"..areg)
+commandanswer (nick, string.format (gettext ("Showing %s out of total %s accounts with class %s starting at user number %s"), rows, trows, class, sfrom)..":\r\n\r\n"..areg)
 end
 end
 
 else
-commandanswer (nick, string.format (getlang (142), class))
+commandanswer (nick, string.format (gettext ("There are no accounts with class: %s"), class))
 end
 
 else
-commandanswer (nick, string.format (getlang (143), "-1, 0, 1, 2, 3, 4, 5 "..getlang (70).." 10"))
+commandanswer (nick, string.format (gettext ("Known classes are: %s"), "-1, 0, 1, 2, 3, 4, 5 "..gettext ("and").." 10"))
 end
 end
 
@@ -12748,12 +11730,12 @@ function sendsay (nick, message, ucl)
 	local _, _, user, message = string.find (message, "^(%S*) (.*)$")
 
 	if ((user == table_sets ["ledobotnick"]) or (user == table_othsets ["botnick"]) or (user == table_othsets ["opchatnick"]) or (user == nick)) or (getclass (user) < ucl) then
-		opsnotify (table_sets ["classnotisay"], string.format (getlang (144), nick, ucl, user, message))
+		opsnotify (table_sets ["classnotisay"], string.format (gettext ("%s with class %s sent say message: <%s> %s"), nick, ucl, user, message))
 		VH:SendDataToAll ("<"..user.."> "..message.."|", 0, 10)
 		addmchistoryline (user, nick, message)
 	else
-		opsnotify (table_sets ["classnotisay"], string.format (getlang (145), nick, ucl, user, message))
-		commandanswer (nick, getlang (146))
+		opsnotify (table_sets ["classnotisay"], string.format (gettext ("%s with class %s had bad luck sending say message: <%s> %s"), nick, ucl, user, message))
+		commandanswer (nick, gettext ("You can't talk from nick whose class is higher or equals your own."))
 	end
 end
 
@@ -12779,7 +11761,7 @@ end
 if (ucls < 10) and (class > ucls - getconfig ("classdif_reg")) then return nil end -- check verlihub configuration
 
 if not getregclass (user) then -- only if not registered
-opsnotify (table_sets ["classnotireg"], string.format (getlang (446), nick, ucls, class, user))
+opsnotify (table_sets ["classnotireg"], string.format (gettext ("%s with class %s registered new user with class %s: %s"), nick, ucls, class, user))
 oprankaccept (nick, ucls)
 end
 end
@@ -12791,7 +11773,7 @@ function donotifyregdel (nick, ucls, line)
 	local _, _, user = string.find (line, "^%s*(%S+)%s*.*$")
 	local class = getregclass (user)
 	if (not class) or ((ucls < 10) and (class > ucls - getconfig ("classdif_reg"))) then return nil end -- only if registered
-	opsnotify (table_sets ["classnotireg"], string.format (getlang (447), nick, ucls, class, user))
+	opsnotify (table_sets ["classnotireg"], string.format (gettext ("%s with class %s deleted registered user with class %s: %s"), nick, ucls, class, user))
 	oprankaccept (nick, ucls)
 	delledouser (user) -- remove user from ledokol tables aswell
 end
@@ -12810,7 +11792,7 @@ function donotifyregclass (nick, ucls, line)
 		VH:SQLQuery ("delete from `"..tbl_sql ["opran"].."` where `nick` = '"..repsqlchars (user).."' limit 1")
 	end
 
-	opsnotify (table_sets ["classnotireg"], string.format (getlang (448), nick, ucls, uclass, class, user))
+	opsnotify (table_sets ["classnotireg"], string.format (gettext ("%s with class %s changed user class from %s to %s: %s"), nick, ucls, uclass, class, user))
 	oprankaccept (nick, ucls)
 end
 
@@ -12833,14 +11815,14 @@ function donotifyban (nick, ucls, line)
 	local _, bantime = string.find (cmd, "_")
 
 	if not reason or string.len (reason) == 0 then -- without reason
-		reason = getlang (888)
+		reason = gettext ("No reason specified")
 	end
 
 	if not bantime then
-		opsnotify (table_sets ["classnotiban"], string.format (getlang (104), user, nick, reason))
+		opsnotify (table_sets ["classnotiban"], string.format (gettext ("context"), user, nick, reason))
 	else
 		bantime = string.sub (cmd, bantime + 1, -1) -- i dont understand this: !ban_ user test => "_" gets banned with reason "user test"
-		opsnotify (table_sets ["classnotiban"], string.format (getlang (208), user, bantime, nick, reason))
+		opsnotify (table_sets ["classnotiban"], string.format (gettext ("Reorder right click menu item"), user, bantime, nick, reason))
 	end
 end
 
@@ -12857,10 +11839,10 @@ function donotifyunban (nick, ucls, line)
 
 	if rows > 0 then
 		if not reason or string.len (reason) == 0 then
-			reason = getlang (888)
+			reason = gettext ("No reason specified")
 		end
 
-		opsnotify (table_sets ["classnotiban"], string.format (getlang (150), user, nick, reason))
+		opsnotify (table_sets ["classnotiban"], string.format (gettext ("order"), user, nick, reason))
 		oprankaccept (nick, ucls)
 	end
 end
@@ -12875,7 +11857,7 @@ function donotifyconfig (nick, line, cls)
 	--local _, rows = VH:SQLQuery ("select `var` from `SetupList` where `file` = 'config' and `var` = '"..repsqlchars (var).."' limit 1")
 
 	if oval then
-		opsnotify (table_sets ["classnoticonfig"], string.format (getlang (50), nick, cls, var, oval, val))
+		opsnotify (table_sets ["classnoticonfig"], string.format (gettext ("%s with class %s changed configuration variable %s: %s => %s"), nick, cls, var, oval, val))
 		oprankaccept (nick, cls)
 	end
 end
@@ -12884,7 +11866,7 @@ end
 
 function donotifyextconfig (nick, line, cls)
 	local _, _, cfg, var, val = string.find (line, "^%s*%[(%S+)%]%s+(%S+) (.*)$")
-	opsnotify (table_sets ["classnoticonfig"], string.format (getlang (50), nick, cls, var.." @ "..cfg, (getextconfig (cfg, var) or ""), val))
+	opsnotify (table_sets ["classnoticonfig"], string.format (gettext ("%s with class %s changed configuration variable %s: %s => %s"), nick, cls, var.." @ "..cfg, (getextconfig (cfg, var) or ""), val))
 	oprankaccept (nick, cls)
 end
 
@@ -12905,7 +11887,7 @@ if rows > 0 then
 	end
 end
 
-local cmsg = string.format (getlang (103), nick, cls, cmd)
+local cmsg = string.format (gettext ("%s with class %s used command: %s"), nick, cls, cmd)
 
 if limited == 0 then
 	VH:SendPMToAll ("["..prezero (2, table_sets ["classnoticom"]).."] "..cmsg, table_othsets ["feednick"], table_sets ["classnoticom"], 10)
@@ -12927,33 +11909,33 @@ local ucmd = cmd
 
 if string.find (ucmd, "^."..table_cmnds ["offmsg"].." %S+ .+$") then -- skip sensitive data
 	local _, _, par = string.find (ucmd, "^."..table_cmnds ["offmsg"].." (%S+) .+$")
-	ucmd = string.sub (getconfig ("cmd_start_user"), 1, 1)..table_cmnds ["offmsg"].." "..par.." <"..getlang (44)..">"
+	ucmd = string.sub (getconfig ("cmd_start_user"), 1, 1)..table_cmnds ["offmsg"].." "..par.." <"..gettext ("message")..">"
 
 elseif string.find (ucmd, "^"..table_othsets ["ustrig"].."msgsend%s+%S+ .+$") then
 	local _, _, par = string.find (ucmd, "^"..table_othsets ["ustrig"].."msgsend%s+(%S+) .+$")
-	ucmd = string.sub (getconfig ("cmd_start_user"), 1, 1).."msgsend "..par.." <"..getlang (44)..">"
+	ucmd = string.sub (getconfig ("cmd_start_user"), 1, 1).."msgsend "..par.." <"..gettext ("message")..">"
 
 elseif string.find (ucmd, "^"..table_othsets ["optrig"].."rpass%s+%S+ .+$") then
 	local _, _, par = string.find (ucmd, "^"..table_othsets ["optrig"].."rpass%s+(%S+) .+$")
-	ucmd = string.sub (getconfig ("cmd_start_op"), 1, 1).."rpass "..par.." <"..getlang (784)..">"
+	ucmd = string.sub (getconfig ("cmd_start_op"), 1, 1).."rpass "..par.." <"..gettext ("password")..">"
 
 elseif string.find (ucmd, "^"..table_othsets ["optrig"].."rpasswd%s+%S+ .+$") then
 	local _, _, par = string.find (ucmd, "^"..table_othsets ["optrig"].."rpasswd%s+(%S+) .+$")
-	ucmd = string.sub (getconfig ("cmd_start_op"), 1, 1).."rpasswd "..par.." <"..getlang (784)..">"
+	ucmd = string.sub (getconfig ("cmd_start_op"), 1, 1).."rpasswd "..par.." <"..gettext ("password")..">"
 
 elseif string.find (ucmd, "^"..table_othsets ["optrig"].."regpass%s+%S+ .+$") then
 	local _, _, par = string.find (ucmd, "^"..table_othsets ["optrig"].."regpass%s+(%S+) .+$")
-	ucmd = string.sub (getconfig ("cmd_start_op"), 1, 1).."regpass "..par.." <"..getlang (784)..">"
+	ucmd = string.sub (getconfig ("cmd_start_op"), 1, 1).."regpass "..par.." <"..gettext ("password")..">"
 
 elseif string.find (ucmd, "^"..table_othsets ["optrig"].."regpasswd%s+%S+ .+$") then
 	local _, _, par = string.find (ucmd, "^"..table_othsets ["optrig"].."regpasswd%s+(%S+) .+$")
-	ucmd = string.sub (getconfig ("cmd_start_op"), 1, 1).."regpasswd "..par.." <"..getlang (784)..">"
+	ucmd = string.sub (getconfig ("cmd_start_op"), 1, 1).."regpasswd "..par.." <"..gettext ("password")..">"
 
 elseif string.find (ucmd, "^"..table_othsets ["ustrig"].."passwd%s+.+$") then
-	ucmd = string.sub (getconfig ("cmd_start_user"), 1, 1).."passwd <"..getlang (784)..">"
+	ucmd = string.sub (getconfig ("cmd_start_user"), 1, 1).."passwd <"..gettext ("password")..">"
 
 elseif string.find (ucmd, "^"..table_othsets ["ustrig"].."regme%s+.+$") then
-	ucmd = string.sub (getconfig ("cmd_start_user"), 1, 1).."regme <"..getlang (784)..">"
+	ucmd = string.sub (getconfig ("cmd_start_user"), 1, 1).."regme <"..gettext ("password")..">"
 end
 
 VH:SQLQuery ("insert into `"..tbl_sql ["clog"].."` (`time`, `nick`, `class`, `command`) values ("..(os.time () + table_sets ["srvtimediff"])..", '"..repsqlchars (nick).."', "..cls..", '"..repsqlchars (ucmd).."')")
@@ -12963,7 +11945,7 @@ end
 
 function sendlivecc (nick)
 if table_othsets ["func_getcc"] == false then
-	commandanswer (nick, string.format (getlang (514), "Verlihub 0.9.8e"))
+	commandanswer (nick, string.format (gettext ("This feature requires %s or later installed on your system."), "Verlihub 0.9.8e"))
 else
 	local ccs, cnt = {}, 0
 
@@ -12980,9 +11962,9 @@ else
 	end
 
 	if cnt > 0 then
-		commandanswer (nick, getlang (512)..":\r\n\r\n"..genccstats (ccs, cnt).."\r\n\t"..string.format (getlang (519), cnt).."\r\n")
+		commandanswer (nick, gettext ("Live user location statistics by country")..":\r\n\r\n"..genccstats (ccs, cnt).."\r\n\t"..string.format (gettext ("Total count: %s"), cnt).."\r\n")
 	else -- empty
-		commandanswer (nick, getlang (517))
+		commandanswer (nick, gettext ("No users in the hub."))
 	end
 end
 end
@@ -12991,7 +11973,7 @@ end
 
 function sendlivecity (nick, cc)
 	if (table_othsets ["func_getcc"] == false) or (table_othsets ["func_getusercity"] == false) then
-		commandanswer (nick, string.format (getlang (514), "Verlihub 1.0"))
+		commandanswer (nick, string.format (gettext ("This feature requires %s or later installed on your system."), "Verlihub 1.0"))
 	else
 		local list, count, ucc = {}, 0, string.upper (cc)
 
@@ -13012,9 +11994,9 @@ function sendlivecity (nick, cc)
 		end
 
 		if count > 0 then
-			commandanswer (nick, string.format (getlang (924), ucc, cc_names [ucc] or getlang (516)) .. ":\r\n\r\n" .. gencitystats (list, count) .. "\r\n\t" .. string.format (getlang (519), count) .. "\r\n")
+			commandanswer (nick, string.format (gettext ("Live user location statistics by city from %s=%s"), ucc, cc_names [ucc] or gettext ("Unknown country")) .. ":\r\n\r\n" .. gencitystats (list, count) .. "\r\n\t" .. string.format (gettext ("Total count: %s"), count) .. "\r\n")
 		else -- empty
-			commandanswer (nick, string.format (getlang (925), ucc, cc_names [ucc] or getlang (516)))
+			commandanswer (nick, string.format (gettext ("No users in the hub from: %s=%s"), ucc, cc_names [ucc] or gettext ("Unknown country")))
 		end
 	end
 end
@@ -13023,7 +12005,7 @@ end
 
 function sendhistcc (nick)
 if table_othsets ["func_getcc"] == false then
-	commandanswer (nick, string.format (getlang (514), "Verlihub 0.9.8e"))
+	commandanswer (nick, string.format (gettext ("This feature requires %s or later installed on your system."), "Verlihub 0.9.8e"))
 else
 	local _, rows = VH:SQLQuery ("select `cc` from `"..tbl_sql ["ccstat"].."`")
 
@@ -13036,9 +12018,9 @@ else
 			ccs [cc] = (ccs [cc] or 0) + 1
 		end
 
-		commandanswer (nick, getlang (513)..":\r\n\r\n"..genccstats (ccs, rows).."\r\n\t"..string.format (getlang (515), fromunixtime ((getledoconf ("date_ccstats") or os.time () + table_sets ["srvtimediff"]), true), rows).."\r\n")
+		commandanswer (nick, gettext ("All time user location statistics")..":\r\n\r\n"..genccstats (ccs, rows).."\r\n\t"..string.format (gettext ("Total count since %s: %s"), fromunixtime ((getledoconf ("date_ccstats") or os.time () + table_sets ["srvtimediff"]), true), rows).."\r\n")
 	else -- empty
-		commandanswer (nick, getlang (518))
+		commandanswer (nick, gettext ("User location statistics table is empty."))
 	end
 end
 end
@@ -13057,7 +12039,7 @@ local ilen = string.len (tmp [1].val) -- first highest value
 local stats = ""
 
 for _, v in pairs (tmp) do
-	stats = stats.."\t"..prezero (ilen, v.val).."   ~   "..prezero (5, string.format ("%."..(2).."f", (v.val / cnt * 100))).."%   ~   [ "..v.key.."   ~   "..(cc_names [v.key] or getlang (516)).." ]\r\n"
+	stats = stats.."\t"..prezero (ilen, v.val).."   ~   "..prezero (5, string.format ("%."..(2).."f", (v.val / cnt * 100))).."%   ~   [ "..v.key.."   ~   "..(cc_names [v.key] or gettext ("Unknown country")).." ]\r\n"
 end
 
 return stats
@@ -13099,117 +12081,117 @@ function installusermenu (usr)
 -- antispam
 
 if ucl >= table_sets ["mincommandclass"] then
-	sopmenitm (usr, getlang (109) .. "\\" .. getlang (156), table_cmnds ["antiadd"] .. " %[line:<" .. getlang (193) .. ">] %[line:<" .. getlang (30) .. ">] %[line:<" .. getlang (194) .. ">] %[line:<" .. getlang (126) .. ">]")
-sopmenitm (usr, getlang (109).."\\"..getlang (131), table_cmnds ["antilist"])
+	sopmenitm (usr, gettext ("Antispam") .. "\\" .. gettext ("Add antispam entry"), table_cmnds ["antiadd"] .. " %[line:<" .. gettext ("lre") .. ">] %[line:<" .. gettext ("priority") .. ">] %[line:<" .. gettext ("action") .. ">] %[line:<" .. gettext ("flags") .. ">]")
+sopmenitm (usr, gettext ("Antispam").."\\"..gettext ("Antispam list"), table_cmnds ["antilist"])
 smensep (usr)
-sopmenitm (usr, getlang (109).."\\"..getlang (158), table_cmnds ["antidel"].." %[line:<"..getlang (193)..">]")
+sopmenitm (usr, gettext ("Antispam").."\\"..gettext ("Delete antispam entry"), table_cmnds ["antidel"].." %[line:<"..gettext ("lre")..">]")
 smensep (usr)
-sopmenitm (usr, getlang (109).."\\"..getlang (159), table_cmnds ["antiexadd"].." %[line:<"..getlang (193)..">]")
-sopmenitm (usr, getlang (109).."\\"..getlang (137), table_cmnds ["antiexlist"])
+sopmenitm (usr, gettext ("Antispam").."\\"..gettext ("Add antispam exception entry"), table_cmnds ["antiexadd"].." %[line:<"..gettext ("lre")..">]")
+sopmenitm (usr, gettext ("Antispam").."\\"..gettext ("Antispam exception list"), table_cmnds ["antiexlist"])
 smensep (usr)
-sopmenitm (usr, getlang (109).."\\"..getlang (160), table_cmnds ["antiexdel"].." %[line:<"..getlang (193)..">]")
+sopmenitm (usr, gettext ("Antispam").."\\"..gettext ("Delete antispam exception entry"), table_cmnds ["antiexdel"].." %[line:<"..gettext ("lre")..">]")
 end
 
 -- search filter
 
 if ucl >= table_sets ["mincommandclass"] then
-sopmenitm (usr, getlang (663).."\\"..getlang (225), table_cmnds ["sefiadd"].." %[line:<"..getlang (193)..">] %[line:<"..getlang (30)..">] %[line:<"..getlang (194)..">] %[line:<"..getlang (48)..">]")
-sopmenitm (usr, getlang (663).."\\"..getlang (222), table_cmnds ["sefilist"])
+sopmenitm (usr, gettext ("Search filter").."\\"..gettext ("Add search filter"), table_cmnds ["sefiadd"].." %[line:<"..gettext ("lre")..">] %[line:<"..gettext ("priority")..">] %[line:<"..gettext ("action")..">] %[line:<"..gettext ("type")..">]")
+sopmenitm (usr, gettext ("Search filter").."\\"..gettext ("Search filter list"), table_cmnds ["sefilist"])
 smensep (usr)
-sopmenitm (usr, getlang (663).."\\"..getlang (226), table_cmnds ["sefidel"].." %[line:<"..getlang (193)..">]")
+sopmenitm (usr, gettext ("Search filter").."\\"..gettext ("Delete search filter"), table_cmnds ["sefidel"].." %[line:<"..gettext ("lre")..">]")
 smensep (usr)
-sopmenitm (usr, getlang (663).."\\"..getlang (284), table_cmnds ["sefiexadd"].." %[line:<"..getlang (193)..">]")
-sopmenitm (usr, getlang (663).."\\"..getlang (286), table_cmnds ["sefiexlist"])
+sopmenitm (usr, gettext ("Search filter").."\\"..gettext ("Add search filter exception entry"), table_cmnds ["sefiexadd"].." %[line:<"..gettext ("lre")..">]")
+sopmenitm (usr, gettext ("Search filter").."\\"..gettext ("Search filter exception list"), table_cmnds ["sefiexlist"])
 smensep (usr)
-sopmenitm (usr, getlang (663).."\\"..getlang (285), table_cmnds ["sefiexdel"].." %[line:<"..getlang (193)..">]")
+sopmenitm (usr, gettext ("Search filter").."\\"..gettext ("Delete search filter exception entry"), table_cmnds ["sefiexdel"].." %[line:<"..gettext ("lre")..">]")
 end
 
 	-- myinfo check
 	if ucl >= table_sets ["mincommandclass"] then
-		sopmenitm (usr, getlang (664).."\\"..getlang (161), table_cmnds ["myinfadd"].." %[line:<"..getlang (48)..">] %[line:<"..getlang (193)..">]") -- %[line:["..getlang (318).."]]
-		sopmenitm (usr, getlang (664).."\\"..getlang (163), table_cmnds ["myinflist"].." %[line:<"..getlang (48)..">]")
+		sopmenitm (usr, gettext ("MyINFO check").."\\"..gettext ("Add MyINFO entry"), table_cmnds ["myinfadd"].." %[line:<"..gettext ("type")..">] %[line:<"..gettext ("lre")..">]") -- %[line:["..gettext ("time").."]]
+		sopmenitm (usr, gettext ("MyINFO check").."\\"..gettext ("MyINFO list"), table_cmnds ["myinflist"].." %[line:<"..gettext ("type")..">]")
 		smensep (usr)
-		sopmenitm (usr, getlang (664).."\\"..getlang (162), table_cmnds ["myinfdel"].." %[line:<"..getlang (48)..">] %[line:<"..getlang (193)..">]")
+		sopmenitm (usr, gettext ("MyINFO check").."\\"..gettext ("Delete MyINFO entry"), table_cmnds ["myinfdel"].." %[line:<"..gettext ("type")..">] %[line:<"..gettext ("lre")..">]")
 	end
 
 -- protection list
 
 if ucl >= table_sets ["mincommandclass"] then
-sopmenitm (usr, getlang (607).."\\"..getlang (124), table_cmnds ["protadd"].." %[line:<"..getlang (193)..">]")
-sopmenitm (usr, getlang (607).."\\"..getlang (607), table_cmnds ["protlist"])
+sopmenitm (usr, gettext ("Protection list").."\\"..gettext ("Add protection entry"), table_cmnds ["protadd"].." %[line:<"..gettext ("lre")..">]")
+sopmenitm (usr, gettext ("Protection list").."\\"..gettext ("Protection list"), table_cmnds ["protlist"])
 smensep (usr)
-sopmenitm (usr, getlang (607).."\\"..getlang (125), table_cmnds ["protdel"].." %[line:<"..getlang (193)..">]")
+sopmenitm (usr, gettext ("Protection list").."\\"..gettext ("Delete protection entry"), table_cmnds ["protdel"].." %[line:<"..gettext ("lre")..">]")
 end
 
 -- authorization
 
 if ucl >= table_sets ["mincommandclass"] then
-sopmenitm (usr, getlang (665).."\\"..getlang (241), table_cmnds ["authadd"].." %[line:<"..getlang (178)..">] %[line:<"..getlang (193)..">]")
-sopmenitm (usr, getlang (665).."\\"..getlang (785), table_cmnds ["authmod"].." %[line:<"..getlang (185)..">] %[line:<"..getlang (193)..">]")
-sopmenitm (usr, getlang (665).."\\"..getlang (239), table_cmnds ["authlist"])
+sopmenitm (usr, gettext ("Authorization").."\\"..gettext ("Add IP authorization entry"), table_cmnds ["authadd"].." %[line:<"..gettext ("nick")..">] %[line:<"..gettext ("lre")..">]")
+sopmenitm (usr, gettext ("Authorization").."\\"..gettext ("Modify IP authorization entry"), table_cmnds ["authmod"].." %[line:<"..gettext ("identifier")..">] %[line:<"..gettext ("lre")..">]")
+sopmenitm (usr, gettext ("Authorization").."\\"..gettext ("IP authorization list"), table_cmnds ["authlist"])
 smensep (usr)
-sopmenitm (usr, getlang (665).."\\"..getlang (242), table_cmnds ["authdel"].." %[line:<"..getlang (185)..">]")
+sopmenitm (usr, gettext ("Authorization").."\\"..gettext ("Delete authorization entry"), table_cmnds ["authdel"].." %[line:<"..gettext ("identifier")..">]")
 end
 
 -- ranks
 
 if ucl >= table_sets ["chatrankclass"] then
-susmenitm (usr, getlang (666).."\\"..string.format (getlang (116), table_sets ["ranklimit"]), table_cmnds ["chatranks"])
-susmenitm (usr, getlang (666).."\\"..getlang (182), table_cmnds ["mychatrank"])
+susmenitm (usr, gettext ("Ranks").."\\"..string.format (gettext ("Top %s chat rankers"), table_sets ["ranklimit"]), table_cmnds ["chatranks"])
+susmenitm (usr, gettext ("Ranks").."\\"..gettext ("Your chat rank"), table_cmnds ["mychatrank"])
 smensep (usr)
 end
 
 if ucl >= table_sets ["sharerankclass"] then
-susmenitm (usr, getlang (666).."\\"..string.format (getlang (324), table_sets ["ranklimit"]), table_cmnds ["shareranks"])
-susmenitm (usr, getlang (666).."\\"..getlang (323), table_cmnds ["mysharerank"])
+susmenitm (usr, gettext ("Ranks").."\\"..string.format (gettext ("Top %s share rankers"), table_sets ["ranklimit"]), table_cmnds ["shareranks"])
+susmenitm (usr, gettext ("Ranks").."\\"..gettext ("Your share rank"), table_cmnds ["mysharerank"])
 smensep (usr)
 end
 
 if ucl >= table_sets ["oprankclass"] then
-susmenitm (usr, getlang (666).."\\"..string.format (getlang (118), table_sets ["ranklimit"]), table_cmnds ["opranks"])
+susmenitm (usr, gettext ("Ranks").."\\"..string.format (gettext ("Top %s operator rankers"), table_sets ["ranklimit"]), table_cmnds ["opranks"])
 
 if ucl >= 3 then
-sopmenitm (usr, getlang (666).."\\"..getlang (175), table_cmnds ["myoprank"])
+sopmenitm (usr, gettext ("Ranks").."\\"..gettext ("Your operator rank"), table_cmnds ["myoprank"])
 end
 
 smensep (usr)
 end
 
 if ucl >= table_sets ["searrankclass"] then
-susmenitm (usr, getlang (666).."\\"..string.format (getlang (694), table_sets ["ranklimit"]), table_cmnds ["searranks"])
+susmenitm (usr, gettext ("Ranks").."\\"..string.format (gettext ("Top %s search requests"), table_sets ["ranklimit"]), table_cmnds ["searranks"])
 smensep (usr)
 end
 
 if ucl >= table_sets ["wordrankclass"] then
-susmenitm (usr, getlang (666).."\\"..string.format (getlang (439), table_sets ["ranklimit"]), table_cmnds ["wordranks"])
+susmenitm (usr, gettext ("Ranks").."\\"..string.format (gettext ("Top %s used words"), table_sets ["ranklimit"]), table_cmnds ["wordranks"])
 smensep (usr)
 end
 
 	if ucl >= table_sets ["ccstatsclass"] then
-		susmenitm (usr, getlang (666) .. "\\" .. getlang (512), table_cmnds ["cclive"])
-		susmenitm (usr, getlang (666) .. "\\" .. getlang (923), table_cmnds ["citylive"] .. " %[line:<" .. getlang (789) .. ">]")
-		susmenitm (usr, getlang (666) .. "\\" .. getlang (513), table_cmnds ["cchist"])
+		susmenitm (usr, gettext ("Ranks") .. "\\" .. gettext ("Live user location statistics by country"), table_cmnds ["cclive"])
+		susmenitm (usr, gettext ("Ranks") .. "\\" .. gettext ("Live user location statistics by city"), table_cmnds ["citylive"] .. " %[line:<" .. gettext ("cc") .. ">]")
+		susmenitm (usr, gettext ("Ranks") .. "\\" .. gettext ("All time user location statistics"), table_cmnds ["cchist"])
 	end
 
 if ucl >= table_sets ["mincommandclass"] then
 smensep (usr)
-sopmenitm (usr, getlang (666).."\\"..getlang (216), table_cmnds ["ranexadd"].." %[line:<"..getlang (178)..">]")
-sopmenitm (usr, getlang (666).."\\"..getlang (214), table_cmnds ["ranexlist"])
+sopmenitm (usr, gettext ("Ranks").."\\"..gettext ("Add rank exception"), table_cmnds ["ranexadd"].." %[line:<"..gettext ("nick")..">]")
+sopmenitm (usr, gettext ("Ranks").."\\"..gettext ("Rank exception list"), table_cmnds ["ranexlist"])
 smensep (usr)
-sopmenitm (usr, getlang (666).."\\"..getlang (217), table_cmnds ["ranexdel"].." %[line:<"..getlang (178)..">]")
+sopmenitm (usr, gettext ("Ranks").."\\"..gettext ("Delete rank exception"), table_cmnds ["ranexdel"].." %[line:<"..gettext ("nick")..">]")
 smensep (usr)
-sopmenitm (usr, getlang (666).."\\"..getlang (166), table_cmnds ["randel"].." %[line:<"..getlang (48)..">] %[line:<"..getlang (205)..">]")
-sopmenitm (usr, getlang (666).."\\"..getlang (372), table_cmnds ["ranclean"].." %[line:<"..getlang (48)..">] %[line:<"..getlang (373)..">]")
+sopmenitm (usr, gettext ("Ranks").."\\"..gettext ("Remove user or word from rank list"), table_cmnds ["randel"].." %[line:<"..gettext ("type")..">] %[line:<"..gettext ("value")..">]")
+sopmenitm (usr, gettext ("Ranks").."\\"..gettext ("Clean up ranks"), table_cmnds ["ranclean"].." %[line:<"..gettext ("type")..">] %[line:<"..gettext ("limit")..">]")
 end
 
 -- welcome messages
 
 if ucl >= table_sets ["mincommandclass"] then
-sopmenitm (usr, getlang (667).."\\"..getlang (484), table_cmnds ["wmforce"].." %[line:<"..getlang (48)..">] %[line:<"..getlang (178)..">] %[line:<"..getlang (44)..">]")
---sopmenitm (usr, getlang (667).."\\"..getlang (484), table_cmnds ["wmforce"].." %[line:<"..getlang (48)..">] %[line:<"..getlang (178)..">]")
-sopmenitm (usr, getlang (667).."\\"..getlang (252), table_cmnds ["wmlist"])
+sopmenitm (usr, gettext ("Welcome messages").."\\"..gettext ("Force welcome message for user"), table_cmnds ["wmforce"].." %[line:<"..gettext ("type")..">] %[line:<"..gettext ("nick")..">] %[line:<"..gettext ("message")..">]")
+--sopmenitm (usr, gettext ("Welcome messages").."\\"..gettext ("Force welcome message for user"), table_cmnds ["wmforce"].." %[line:<"..gettext ("type")..">] %[line:<"..gettext ("nick")..">]")
+sopmenitm (usr, gettext ("Welcome messages").."\\"..gettext ("Welcome message list"), table_cmnds ["wmlist"])
 smensep (usr)
-sopmenitm (usr, getlang (667).."\\"..getlang (253), table_cmnds ["wmdel"].." %[line:<"..getlang (178)..">]")
+sopmenitm (usr, gettext ("Welcome messages").."\\"..gettext ("Delete user and his welcome messages"), table_cmnds ["wmdel"].." %[line:<"..gettext ("nick")..">]")
 end
 
 if ucl >= table_sets ["welcomeclass"] then
@@ -13217,36 +12199,36 @@ if ucl >= table_sets ["mincommandclass"] then
 smensep (usr)
 end
 
-susmenitm (usr, getlang (667).."\\"..getlang (249), table_cmnds ["wmset"].." %[line:<"..getlang (48)..">] %[line:<"..getlang (44)..">]")
---susmenitm (usr, getlang (667).."\\"..getlang (249), table_cmnds ["wmset"].." %[line:<"..getlang (48)..">]")
-susmenitm (usr, getlang (667).."\\"..getlang (251), table_cmnds ["wmshow"])
+susmenitm (usr, gettext ("Welcome messages").."\\"..gettext ("Set your welcome message"), table_cmnds ["wmset"].." %[line:<"..gettext ("type")..">] %[line:<"..gettext ("message")..">]")
+--susmenitm (usr, gettext ("Welcome messages").."\\"..gettext ("Set your welcome message"), table_cmnds ["wmset"].." %[line:<"..gettext ("type")..">]")
+susmenitm (usr, gettext ("Welcome messages").."\\"..gettext ("Show your welcome messages"), table_cmnds ["wmshow"])
 end
 
 -- chatrooms
 
 if ucl >= table_sets ["mincommandclass"] then
-sopmenitm (usr, getlang (668).."\\"..getlang (266), table_cmnds ["chatadd"].." %[line:<"..getlang (178)..">] %[line:<"..getlang (269)..">] %[line:<"..getlang (270)..">] %[line:<"..getlang (271)..">] %[line:<"..getlang (789)..">]")
-sopmenitm (usr, getlang (668).."\\"..getlang (267), table_cmnds ["chatlist"])
+sopmenitm (usr, gettext ("Chatrooms").."\\"..gettext ("Add chatroom"), table_cmnds ["chatadd"].." %[line:<"..gettext ("nick")..">] %[line:<"..gettext ("description")..">] %[line:<"..gettext ("minclass")..">] %[line:<"..gettext ("maxclass")..">] %[line:<"..gettext ("cc")..">]")
+sopmenitm (usr, gettext ("Chatrooms").."\\"..gettext ("Chatroom list"), table_cmnds ["chatlist"])
 smensep (usr)
-sopmenitm (usr, getlang (668).."\\"..getlang (268), table_cmnds ["chatdel"].." %[line:<"..getlang (178)..">]")
+sopmenitm (usr, gettext ("Chatrooms").."\\"..gettext ("Delete chatroom"), table_cmnds ["chatdel"].." %[line:<"..gettext ("nick")..">]")
 end
 
 -- reminders
 
 if ucl >= table_sets ["mincommandclass"] then
-sopmenitm (usr, getlang (669).."\\"..getlang (383), table_cmnds ["remadd"].." %[line:<"..getlang (185)..">] %[line:<"..getlang (380)..">] %[line:<"..getlang (270)..">] %[line:<"..getlang (271)..">] %[line:<"..getlang (381)..">] %[line:<"..getlang (382)..">]")
-sopmenitm (usr, getlang (669).."\\"..getlang (385), table_cmnds ["remlist"])
-sopmenitm (usr, getlang (669).."\\"..getlang (509), table_cmnds ["remshow"].." %[line:<"..getlang (185)..">]")
+sopmenitm (usr, gettext ("Reminders").."\\"..gettext ("Add reminder"), table_cmnds ["remadd"].." %[line:<"..gettext ("identifier")..">] %[line:<"..gettext ("content")..">] %[line:<"..gettext ("minclass")..">] %[line:<"..gettext ("maxclass")..">] %[line:<"..gettext ("destination")..">] %[line:<"..gettext ("interval")..">]")
+sopmenitm (usr, gettext ("Reminders").."\\"..gettext ("Reminder list"), table_cmnds ["remlist"])
+sopmenitm (usr, gettext ("Reminders").."\\"..gettext ("Reminder preview"), table_cmnds ["remshow"].." %[line:<"..gettext ("identifier")..">]")
 smensep (usr)
-sopmenitm (usr, getlang (669).."\\"..getlang (384), table_cmnds ["remdel"].." %[line:<"..getlang (185)..">]")
+sopmenitm (usr, gettext ("Reminders").."\\"..gettext ("Delete reminder"), table_cmnds ["remdel"].." %[line:<"..gettext ("identifier")..">]")
 end
 
 -- hub news
 
 if ucl >= table_sets ["mincommandclass"] then
-sopmenitm (usr, getlang (670).."\\"..getlang (453), table_cmnds ["newsadd"].." %[line:<"..getlang (120)..">]")
+sopmenitm (usr, gettext ("Hub news").."\\"..gettext ("Add news item"), table_cmnds ["newsadd"].." %[line:<"..gettext ("string")..">]")
 smensep (usr)
-sopmenitm (usr, getlang (670).."\\"..getlang (454), table_cmnds ["newsdel"].." %[line:<"..getlang (102)..">]")
+sopmenitm (usr, gettext ("Hub news").."\\"..gettext ("Delete news items"), table_cmnds ["newsdel"].." %[line:<"..gettext ("date")..">]")
 end
 
 if ucl >= table_sets ["newsclass"] then
@@ -13254,44 +12236,44 @@ if ucl >= table_sets ["mincommandclass"] then
 smensep (usr)
 end
 
-susmenitm (usr, getlang (670).."\\"..getlang (455), table_cmnds ["hubnews"].." %[line:<"..getlang (209)..">]")
+susmenitm (usr, gettext ("Hub news").."\\"..gettext ("Read hub news"), table_cmnds ["hubnews"].." %[line:<"..gettext ("lines")..">]")
 end
 
 -- chat replacer
 
 	if ucl >= table_sets ["mincommandclass"] then
-		sopmenitm (usr, getlang (815) .. "\\" .. getlang (811), table_cmnds ["repladd"] .. " \"%[line:<" .. getlang (193) .. ">]\" \"%[line:<" .. getlang (810) .. ">]\" %[line:<" .. getlang (271) .. ">] %[line:<" .. getlang (126) .. ">]")
-		sopmenitm (usr, getlang (815).."\\"..getlang (801), table_cmnds ["repllist"])
+		sopmenitm (usr, gettext ("Chat replacer") .. "\\" .. gettext ("Add chat replacer"), table_cmnds ["repladd"] .. " \"%[line:<" .. gettext ("lre") .. ">]\" \"%[line:<" .. gettext ("replace") .. ">]\" %[line:<" .. gettext ("maxclass") .. ">] %[line:<" .. gettext ("flags") .. ">]")
+		sopmenitm (usr, gettext ("Chat replacer").."\\"..gettext ("Chat replacer list"), table_cmnds ["repllist"])
 		smensep (usr)
-		sopmenitm (usr, getlang (815).."\\"..getlang (812), table_cmnds ["repldel"].." %[line:<"..getlang (185)..">]")
+		sopmenitm (usr, gettext ("Chat replacer").."\\"..gettext ("Delete chat replacer"), table_cmnds ["repldel"].." %[line:<"..gettext ("identifier")..">]")
 		smensep (usr)
-		sopmenitm (usr, getlang (815).."\\"..getlang (813), table_cmnds ["replexadd"].." %[line:<"..getlang (178).." "..getlang (197).." "..getlang (243)..">]")
-		sopmenitm (usr, getlang (815).."\\"..getlang (808), table_cmnds ["replexlist"])
+		sopmenitm (usr, gettext ("Chat replacer").."\\"..gettext ("Add chat replacer exception"), table_cmnds ["replexadd"].." %[line:<"..gettext ("nick").." "..gettext ("or").." "..gettext ("ip")..">]")
+		sopmenitm (usr, gettext ("Chat replacer").."\\"..gettext ("Chat replacer exception list"), table_cmnds ["replexlist"])
 		smensep (usr)
-		sopmenitm (usr, getlang (815).."\\"..getlang (814), table_cmnds ["replexdel"].." %[line:<"..getlang (178).." "..getlang (197).." "..getlang (243)..">]")
+		sopmenitm (usr, gettext ("Chat replacer").."\\"..gettext ("Delete chat replacer exception"), table_cmnds ["replexdel"].." %[line:<"..gettext ("nick").." "..gettext ("or").." "..gettext ("ip")..">]")
 	end
 
 -- chat responder
 
 	if ucl >= table_sets ["mincommandclass"] then
-		sopmenitm (usr, getlang (671).."\\"..getlang (401), table_cmnds ["respadd"].." \"%[line:<"..getlang (193)..">]\" \"%[line:<"..getlang (400)..">]\" %[line:<"..getlang (271)..">]")
-		sopmenitm (usr, getlang (671).."\\"..getlang (403), table_cmnds ["resplist"])
+		sopmenitm (usr, gettext ("Chat responder").."\\"..gettext ("Add chat responder"), table_cmnds ["respadd"].." \"%[line:<"..gettext ("lre")..">]\" \"%[line:<"..gettext ("reply")..">]\" %[line:<"..gettext ("maxclass")..">]")
+		sopmenitm (usr, gettext ("Chat responder").."\\"..gettext ("Main chat responder list"), table_cmnds ["resplist"])
 		smensep (usr)
-		sopmenitm (usr, getlang (671).."\\"..getlang (402), table_cmnds ["respdel"].." %[line:<"..getlang (185)..">]")
+		sopmenitm (usr, gettext ("Chat responder").."\\"..gettext ("Delete chat responder"), table_cmnds ["respdel"].." %[line:<"..gettext ("identifier")..">]")
 		smensep (usr)
-		sopmenitm (usr, getlang (671).."\\"..getlang (412), table_cmnds ["respexadd"].." %[line:<"..getlang (178).." "..getlang (197).." "..getlang (243)..">]")
-		sopmenitm (usr, getlang (671).."\\"..getlang (414), table_cmnds ["respexlist"])
+		sopmenitm (usr, gettext ("Chat responder").."\\"..gettext ("Add chat responder exception"), table_cmnds ["respexadd"].." %[line:<"..gettext ("nick").." "..gettext ("or").." "..gettext ("ip")..">]")
+		sopmenitm (usr, gettext ("Chat responder").."\\"..gettext ("Chat responder exception list"), table_cmnds ["respexlist"])
 		smensep (usr)
-		sopmenitm (usr, getlang (671).."\\"..getlang (413), table_cmnds ["respexdel"].." %[line:<"..getlang (178).." "..getlang (197).." "..getlang (243)..">]")
+		sopmenitm (usr, gettext ("Chat responder").."\\"..gettext ("Delete chat responder exception"), table_cmnds ["respexdel"].." %[line:<"..gettext ("nick").." "..gettext ("or").." "..gettext ("ip")..">]")
 	end
 
 -- releases
 
 if ucl >= table_sets ["relmodclass"] then
-susmenitm (usr, getlang (672).."\\"..getlang (473), table_cmnds ["reladd"].." \"%[line:<"..getlang (470)..">]\" \"%[line:<"..getlang (471)..">]\" %[line:<"..getlang (472)..">]")
---susmenitm (usr, getlang (672).."\\"..getlang (473), table_cmnds ["reladd"].." \"%[line:<"..getlang (470)..">]\" \"%[line:<"..getlang (471)..">]\"")
+susmenitm (usr, gettext ("Releases").."\\"..gettext ("Add new release"), table_cmnds ["reladd"].." \"%[line:<"..gettext ("name")..">]\" \"%[line:<"..gettext ("category")..">]\" %[line:<"..gettext ("tth")..">]")
+--susmenitm (usr, gettext ("Releases").."\\"..gettext ("Add new release"), table_cmnds ["reladd"].." \"%[line:<"..gettext ("name")..">]\" \"%[line:<"..gettext ("category")..">]\"")
 smensep (usr)
-susmenitm (usr, getlang (672).."\\"..getlang (474), table_cmnds ["reldel"].." %[line:<"..getlang (48)..">] %[line:<"..getlang (470)..">]")
+susmenitm (usr, gettext ("Releases").."\\"..gettext ("Delete releases"), table_cmnds ["reldel"].." %[line:<"..gettext ("type")..">] %[line:<"..gettext ("name")..">]")
 end
 
 if ucl >= table_sets ["minusrcommandclass"] then
@@ -13299,18 +12281,18 @@ if ucl >= table_sets ["relmodclass"] then
 smensep (usr)
 end
 
-susmenitm (usr, getlang (672).."\\"..getlang (475), table_cmnds ["rellist"].." %[line:<"..getlang (48)..">] %[line:<"..getlang (209)..">] %[line:<"..getlang (471).." "..getlang (197).." "..getlang (310)..">]")
---susmenitm (usr, getlang (672).."\\"..getlang (475), table_cmnds ["rellist"].." %[line:<"..getlang (48)..">] %[line:<"..getlang (209)..">]")
-susmenitm (usr, getlang (672).."\\"..getlang (476), table_cmnds ["relfind"].." %[line:<"..getlang (470)..">]")
+susmenitm (usr, gettext ("Releases").."\\"..gettext ("List of available releases"), table_cmnds ["rellist"].." %[line:<"..gettext ("type")..">] %[line:<"..gettext ("lines")..">] %[line:<"..gettext ("category").." "..gettext ("or").." "..gettext ("publisher")..">]")
+--susmenitm (usr, gettext ("Releases").."\\"..gettext ("List of available releases"), table_cmnds ["rellist"].." %[line:<"..gettext ("type")..">] %[line:<"..gettext ("lines")..">]")
+susmenitm (usr, gettext ("Releases").."\\"..gettext ("Find release by name or category"), table_cmnds ["relfind"].." %[line:<"..gettext ("name")..">]")
 end
 
 -- offline messenger
 
 if ucl >= table_sets ["mincommandclass"] then
-sopmenitm (usr, getlang (673).."\\"..getlang (168), table_cmnds ["offlist"])
+sopmenitm (usr, gettext ("Offline messenger").."\\"..gettext ("List stored offline messages"), table_cmnds ["offlist"])
 smensep (usr)
-sopmenitm (usr, getlang (673).."\\"..getlang (169), table_cmnds ["offdel"].." %[line:<"..getlang (102)..">]")
-sopmenitm (usr, getlang (673).."\\"..getlang (170), table_cmnds ["offclean"])
+sopmenitm (usr, gettext ("Offline messenger").."\\"..gettext ("Delete offline messages by date"), table_cmnds ["offdel"].." %[line:<"..gettext ("date")..">]")
+sopmenitm (usr, gettext ("Offline messenger").."\\"..gettext ("Delete all offline messages"), table_cmnds ["offclean"])
 end
 
 if ucl >= table_sets ["offmsgclass"] then
@@ -13318,14 +12300,14 @@ if ucl >= table_sets ["mincommandclass"] then
 smensep (usr)
 end
 
-susmenitm (usr, getlang (673).."\\"..getlang (186), table_cmnds ["offmsg"].." %[line:<"..getlang (178)..">] %[line:<"..getlang (44)..">]")
+susmenitm (usr, gettext ("Offline messenger").."\\"..gettext ("Offline message to user"), table_cmnds ["offmsg"].." %[line:<"..gettext ("nick")..">] %[line:<"..gettext ("message")..">]")
 end
 
 	-- chat history
 
 	if (ucl >= table_sets ["mchistclass"]) and (table_sets ["histlimit"] > 0) then
-		susmenitm (usr, getlang (674) .. "\\" .. getlang (187), table_cmnds ["history"] .. " %[line:<" .. getlang (209) .. ">]")
-		susmenitm (usr, getlang (674) .. "\\" .. getlang (464), table_cmnds ["myhistory"] .. " %[line:<" .. getlang (209) .. ">]")
+		susmenitm (usr, gettext ("Chat history") .. "\\" .. gettext ("Main chat history"), table_cmnds ["history"] .. " %[line:<" .. gettext ("lines") .. ">]")
+		susmenitm (usr, gettext ("Chat history") .. "\\" .. gettext ("Your main chat history"), table_cmnds ["myhistory"] .. " %[line:<" .. gettext ("lines") .. ">]")
 	end
 
 	if ucl >= 3 then
@@ -13333,7 +12315,7 @@ end
 			smensep (usr)
 		end
 
-		sopmenitm (usr, getlang (674) .. "\\" .. getlang (173), table_cmnds ["ophistory"] .. " %[line:<" .. getlang (209) .. ">]")
+		sopmenitm (usr, gettext ("Chat history") .. "\\" .. gettext ("Operator chat history"), table_cmnds ["ophistory"] .. " %[line:<" .. gettext ("lines") .. ">]")
 	end
 
 	if ucl >= table_sets ["mincommandclass"] then
@@ -13341,36 +12323,36 @@ end
 			smensep (usr)
 		end
 
-		sopmenitm (usr, getlang (674) .. "\\" .. getlang (174), table_cmnds ["histclean"])
+		sopmenitm (usr, gettext ("Chat history") .. "\\" .. gettext ("Delete all history messages"), table_cmnds ["histclean"])
 	end
 
 -- commands
 
 if ucl >= table_sets ["mincommandclass"] then
-sopmenitm (usr, getlang (675).."\\"..getlang (421), table_cmnds ["cmndset"].." %[line:<"..getlang (420)..">] %[line:<"..getlang (420)..">]")
-sopmenitm (usr, getlang (675).."\\"..getlang (651), table_cmnds ["cmndshow"])
+sopmenitm (usr, gettext ("Commands").."\\"..gettext ("Customize script command"), table_cmnds ["cmndset"].." %[line:<"..gettext ("command")..">] %[line:<"..gettext ("command")..">]")
+sopmenitm (usr, gettext ("Commands").."\\"..gettext ("Show custom script commands"), table_cmnds ["cmndshow"])
 smensep (usr)
-sopmenitm (usr, getlang (675).."\\"..getlang (426), table_cmnds ["cmndreset"])
+sopmenitm (usr, gettext ("Commands").."\\"..gettext ("Reset all custom commands"), table_cmnds ["cmndreset"])
 smensep (usr)
-sopmenitm (usr, getlang (675).."\\"..getlang (779), table_cmnds ["clog"].." %[line:<"..getlang (209)..">]")
+sopmenitm (usr, gettext ("Commands").."\\"..gettext ("Command logger"), table_cmnds ["clog"].." %[line:<"..gettext ("lines")..">]")
 smensep (usr)
-sopmenitm (usr, getlang (675).."\\"..getlang (336), table_cmnds ["cmndadd"].." %[line:<"..getlang (193)..">] %[line:<"..getlang (171)..">]")
-sopmenitm (usr, getlang (675).."\\"..getlang (338), table_cmnds ["cmndlist"])
+sopmenitm (usr, gettext ("Commands").."\\"..gettext ("Add command permission"), table_cmnds ["cmndadd"].." %[line:<"..gettext ("lre")..">] %[line:<"..gettext ("class")..">]")
+sopmenitm (usr, gettext ("Commands").."\\"..gettext ("Command permission list"), table_cmnds ["cmndlist"])
 smensep (usr)
-sopmenitm (usr, getlang (675).."\\"..getlang (337), table_cmnds ["cmnddel"].." %[line:<"..getlang (193)..">]")
+sopmenitm (usr, gettext ("Commands").."\\"..gettext ("Delete command permission"), table_cmnds ["cmnddel"].." %[line:<"..gettext ("lre")..">]")
 smensep (usr)
-sopmenitm (usr, getlang (675).."\\"..getlang (296), table_cmnds ["cmndexadd"].." %[line:<"..getlang (193)..">]")
-sopmenitm (usr, getlang (675).."\\"..getlang (298), table_cmnds ["cmndexlist"])
+sopmenitm (usr, gettext ("Commands").."\\"..gettext ("Add command notification exception"), table_cmnds ["cmndexadd"].." %[line:<"..gettext ("lre")..">]")
+sopmenitm (usr, gettext ("Commands").."\\"..gettext ("Command notification exception list"), table_cmnds ["cmndexlist"])
 smensep (usr)
-sopmenitm (usr, getlang (675).."\\"..getlang (297), table_cmnds ["cmndexdel"].." %[line:<"..getlang (193)..">]")
+sopmenitm (usr, gettext ("Commands").."\\"..gettext ("Delete command notification exception"), table_cmnds ["cmndexdel"].." %[line:<"..gettext ("lre")..">]")
 end
 
 -- custom nicks
 
 if ucl >= table_sets ["mincommandclass"] then
-sopmenitm (usr, getlang (676).."\\"..getlang (467), table_cmnds ["rename"].." %[line:<"..getlang (178)..">] %[line:<"..getlang (178)..">]")
+sopmenitm (usr, gettext ("Custom nicks").."\\"..gettext ("Force custom nick for user"), table_cmnds ["rename"].." %[line:<"..gettext ("nick")..">] %[line:<"..gettext ("nick")..">]")
 smensep (usr)
-sopmenitm (usr, getlang (676).."\\"..getlang (329), table_cmnds ["custdel"].." %[line:<"..getlang (178)..">]")
+sopmenitm (usr, gettext ("Custom nicks").."\\"..gettext ("Delete custom nick"), table_cmnds ["custdel"].." %[line:<"..gettext ("nick")..">]")
 end
 
 if ucl >= table_sets ["custnickclass"] then
@@ -13378,28 +12360,28 @@ if ucl >= table_sets ["mincommandclass"] then
 smensep (usr)
 end
 
-susmenitm (usr, getlang (676).."\\"..getlang (247), table_cmnds ["nick"].." %[line:<"..getlang (178)..">]")
---susmenitm (usr, getlang (676).."\\"..getlang (247), table_cmnds ["nick"])
+susmenitm (usr, gettext ("Custom nicks").."\\"..gettext ("Set custom nick for yourself"), table_cmnds ["nick"].." %[line:<"..gettext ("nick")..">]")
+--susmenitm (usr, gettext ("Custom nicks").."\\"..gettext ("Set custom nick for yourself"), table_cmnds ["nick"])
 end
 
-susmenitm (usr, getlang (676).."\\"..getlang (367), table_cmnds ["realnick"].." %[line:<"..getlang (178)..">]")
-susmenitm (usr, getlang (676).."\\"..getlang (154), table_cmnds ["custlist"])
+susmenitm (usr, gettext ("Custom nicks").."\\"..gettext ("Get users real nick"), table_cmnds ["realnick"].." %[line:<"..gettext ("nick")..">]")
+susmenitm (usr, gettext ("Custom nicks").."\\"..gettext ("Custom nick list"), table_cmnds ["custlist"])
 
 -- registered users
 
 if ucl >= table_sets ["mincommandclass"] then
-sopmenitm (usr, getlang (677).."\\"..getlang (486), table_cmnds ["regname"].." %[line:<"..getlang (178)..">] %[line:<"..getlang (178)..">]")
-sopmenitm (usr, getlang (677).."\\"..getlang (164), table_cmnds ["reglist"].." %[line:<"..getlang (171)..">] %[line:<"..getlang (149)..">]")
-sopmenitm (usr, getlang (677).."\\"..getlang (686), table_cmnds ["regfind"].." %[line:<"..getlang (178)..">]")
-sopmenitm (usr, getlang (677).."\\"..getlang (687), table_cmnds ["regstats"])
+sopmenitm (usr, gettext ("Registered users").."\\"..gettext ("Change nick of an registered user"), table_cmnds ["regname"].." %[line:<"..gettext ("nick")..">] %[line:<"..gettext ("nick")..">]")
+sopmenitm (usr, gettext ("Registered users").."\\"..gettext ("List of registered users by class"), table_cmnds ["reglist"].." %[line:<"..gettext ("class")..">] %[line:<"..gettext ("offset")..">]")
+sopmenitm (usr, gettext ("Registered users").."\\"..gettext ("Search in registered users list"), table_cmnds ["regfind"].." %[line:<"..gettext ("nick")..">]")
+sopmenitm (usr, gettext ("Registered users").."\\"..gettext ("Registered users list statistics"), table_cmnds ["regstats"])
 end
 
 -- hublist
 
 if ucl >= table_sets ["mincommandclass"] then
-sopmenitm (usr, getlang (678).."\\"..getlang (524), table_cmnds ["hubadd"].." %[line:<"..getlang (522)..">] \"%[line:<"..getlang (470)..">]\" \"%[line:<"..getlang (523)..">]\"")
+sopmenitm (usr, gettext ("Hublist").."\\"..gettext ("Add friendly hub"), table_cmnds ["hubadd"].." %[line:<"..gettext ("address")..">] \"%[line:<"..gettext ("name")..">]\" \"%[line:<"..gettext ("owner")..">]\"")
 smensep (usr)
-sopmenitm (usr, getlang (678).."\\"..getlang (525), table_cmnds ["hubdel"].." %[line:<"..getlang (522)..">]")
+sopmenitm (usr, gettext ("Hublist").."\\"..gettext ("Delete friendly hub"), table_cmnds ["hubdel"].." %[line:<"..gettext ("address")..">]")
 end
 
 if ucl >= table_sets ["minusrcommandclass"] then
@@ -13407,18 +12389,18 @@ if ucl >= table_sets ["mincommandclass"] then
 smensep (usr)
 end
 
-susmenitm (usr, getlang (678).."\\"..getlang (526), table_cmnds ["showhubs"])
+susmenitm (usr, gettext ("Hublist").."\\"..gettext ("Show friendly hubs"), table_cmnds ["showhubs"])
 end
 
 -- chat
 
 if ucl >= table_sets ["chatmodeclass"] then
 if ucl >= table_sets ["mincommandclass"] then
-sopmenitm (usr, getlang (679).."\\"..getlang (630), table_cmnds ["mode"].." %[line:<"..getlang (193)..">] %[line:<"..getlang (632)..">]")
-sopmenitm (usr, getlang (679).."\\"..getlang (635), table_cmnds ["mode"])
+sopmenitm (usr, gettext ("Chat").."\\"..gettext ("Set chat mode"), table_cmnds ["mode"].." %[line:<"..gettext ("lre")..">] %[line:<"..gettext ("mode")..">]")
+sopmenitm (usr, gettext ("Chat").."\\"..gettext ("Chat mode user list"), table_cmnds ["mode"])
 end
 
-susmenitm (usr, getlang (679).."\\"..getlang (630), table_cmnds ["mode"].." %[line:<"..getlang (632)..">]")
+susmenitm (usr, gettext ("Chat").."\\"..gettext ("Set chat mode"), table_cmnds ["mode"].." %[line:<"..gettext ("mode")..">]")
 end
 
 if ucl >= table_sets ["sayclass"] then
@@ -13426,37 +12408,37 @@ if (ucl >= table_sets ["chatmodeclass"]) and (ucl >= table_sets ["mincommandclas
 smensep (usr)
 end
 
-sopmenitm (usr, getlang (679).."\\"..getlang (165), table_cmnds ["say"].." %[line:<"..getlang (178)..">] %[line:<"..getlang (44)..">]")
+sopmenitm (usr, gettext ("Chat").."\\"..gettext ("Speak from other nick"), table_cmnds ["say"].." %[line:<"..gettext ("nick")..">] %[line:<"..gettext ("message")..">]")
 end
 
 	if ucl >= table_sets ["clearclass"] then
 		smensep (usr)
-		sopmenitm (usr, getlang (679).."\\"..getlang (684), table_cmnds ["clear"])
+		sopmenitm (usr, gettext ("Chat").."\\"..gettext ("Clear main chat"), table_cmnds ["clear"])
 	end
 
 	-- ip gag
 	if ucl >= table_sets ["mincommandclass"] then
-		sopmenitm (usr, getlang (680) .. "\\" .. getlang (641), table_cmnds ["gagipadd"] .. " %[line:<" .. getlang (193) .. ">] %[line:<" .. getlang (126) .. ">]")
-		sopmenitm (usr, getlang (680) .. "\\" .. getlang (646), table_cmnds ["gagiplist"])
+		sopmenitm (usr, gettext ("IP gag") .. "\\" .. gettext ("Add IP gag"), table_cmnds ["gagipadd"] .. " %[line:<" .. gettext ("lre") .. ">] %[line:<" .. gettext ("flags") .. ">]")
+		sopmenitm (usr, gettext ("IP gag") .. "\\" .. gettext ("IP gag list"), table_cmnds ["gagiplist"])
 		smensep (usr)
-		sopmenitm (usr, getlang (680) .. "\\" .. getlang (648), table_cmnds ["gagipdel"] .. " %[line:<" .. getlang (193) .. " " .. getlang (197) .. " *>]")
+		sopmenitm (usr, gettext ("IP gag") .. "\\" .. gettext ("Delete IP gag"), table_cmnds ["gagipdel"] .. " %[line:<" .. gettext ("lre") .. " " .. gettext ("or") .. " *>]")
 	end
 
 	-- cc gag
 	if ucl >= table_sets ["mincommandclass"] then
-		sopmenitm (usr, getlang (876).."\\"..getlang (877), table_cmnds ["gagccadd"].." %[line:<"..getlang (789)..">] %[line:<"..getlang (126)..">]")
-		sopmenitm (usr, getlang (876).."\\"..getlang (882), table_cmnds ["gagcclist"])
+		sopmenitm (usr, gettext ("Country code gag").."\\"..gettext ("Add country code gag"), table_cmnds ["gagccadd"].." %[line:<"..gettext ("cc")..">] %[line:<"..gettext ("flags")..">]")
+		sopmenitm (usr, gettext ("Country code gag").."\\"..gettext ("Country code gag list"), table_cmnds ["gagcclist"])
 		smensep (usr)
-		sopmenitm (usr, getlang (876).."\\"..getlang (884), table_cmnds ["gagccdel"].." %[line:<"..getlang (789).." "..getlang (197).." *>]")
+		sopmenitm (usr, gettext ("Country code gag").."\\"..gettext ("Delete country code gag"), table_cmnds ["gagccdel"].." %[line:<"..gettext ("cc").." "..gettext ("or").." *>]")
 	end
 
 	-- user logger
 
 	if ucl >= table_sets ["mincommandclass"] then
-		sopmenitm (usr, getlang (681) .. "\\" .. getlang (703), table_cmnds ["userinfo"] .. " %[line:<" .. getlang (178) .. ">]")
-		sopmenitm (usr, getlang (681) .. "\\" .. getlang (930), table_cmnds ["ipinfo"] .. " %[line:<" .. getlang (243) .. ">]")
-		sopmenitm (usr, getlang (681) .. "\\" .. getlang (406), table_cmnds ["ulog"] .. " %[line:<" .. getlang (48) .. ">] %[line:<" .. getlang (120) .. ">] %[line:<" .. getlang (209) .. ">]")
-		sopmenitm (usr, getlang (681) .. "\\" .. string.format (getlang (637), "http://www.te-home.net/?do=hublist"), table_cmnds ["seen"] .. " %[line:<" .. getlang (178) .. ">]")
+		sopmenitm (usr, gettext ("User logger") .. "\\" .. gettext ("User information"), table_cmnds ["userinfo"] .. " %[line:<" .. gettext ("nick") .. ">]")
+		sopmenitm (usr, gettext ("User logger") .. "\\" .. gettext ("IP information"), table_cmnds ["ipinfo"] .. " %[line:<" .. gettext ("ip") .. ">]")
+		sopmenitm (usr, gettext ("User logger") .. "\\" .. gettext ("Search in user log"), table_cmnds ["ulog"] .. " %[line:<" .. gettext ("type") .. ">] %[line:<" .. gettext ("string") .. ">] %[line:<" .. gettext ("lines") .. ">]")
+		sopmenitm (usr, gettext ("User logger") .. "\\" .. string.format (gettext ("%s user lookup"), "http://www.te-home.net/?do=hublist"), table_cmnds ["seen"] .. " %[line:<" .. gettext ("nick") .. ">]")
 	end
 
 	-- todo: no pm
@@ -13465,11 +12447,11 @@ end
 	-- other
 
 	if ucl >= table_sets ["mincommandclass"] then
-		sopmenitm (usr, getlang (682) .. "\\" .. getlang (919), table_cmnds ["dropip"] .. " %[line:<" .. getlang (243) .. ">]")
+		sopmenitm (usr, gettext ("Other") .. "\\" .. gettext ("Drop users with IP"), table_cmnds ["dropip"] .. " %[line:<" .. gettext ("ip") .. ">]")
 		smensep (usr)
-		sopmenitm (usr, getlang (682) .. "\\" .. getlang (172), table_cmnds ["cleanup"] .. " %[line:<" .. getlang (48) .. ">] %[line:<" .. getlang (4) .. " " .. getlang (197) .. " *>] %[line:<" .. getlang (171) .. ">]")
-		--sopmenitm (usr, getlang (682) .. "\\" .. getlang (172), table_cmnds ["cleanup"] .. " %[line:<" .. getlang (48) .. ">] %[line:<" .. getlang (4) .. ">]")
-		sopmenitm (usr, getlang (682) .. "\\" .. getlang (293), table_cmnds ["readlog"] .. " %[line:<" .. getlang (292) .. ">] %[line:<" .. getlang (209) .. ">]")
+		sopmenitm (usr, gettext ("Other") .. "\\" .. gettext ("Clean up tables"), table_cmnds ["cleanup"] .. " %[line:<" .. gettext ("type") .. ">] %[line:<" .. gettext ("days") .. " " .. gettext ("or") .. " *>] %[line:<" .. gettext ("class") .. ">]")
+		--sopmenitm (usr, gettext ("Other") .. "\\" .. gettext ("Clean up tables"), table_cmnds ["cleanup"] .. " %[line:<" .. gettext ("type") .. ">] %[line:<" .. gettext ("days") .. ">]")
+		sopmenitm (usr, gettext ("Other") .. "\\" .. gettext ("Read hub logs"), table_cmnds ["readlog"] .. " %[line:<" .. gettext ("file") .. ">] %[line:<" .. gettext ("lines") .. ">]")
 	end
 
 if ucl >= table_sets ["minusrcommandclass"] then
@@ -13477,18 +12459,18 @@ if ucl >= table_sets ["mincommandclass"] then
 smensep (usr)
 end
 
-susmenitm (usr, getlang (682).."\\"..getlang (480), table_cmnds ["calculate"].." %[line:<"..getlang (479)..">]")
-susmenitm (usr, getlang (682).."\\"..getlang (181), table_cmnds ["showtopic"])
+susmenitm (usr, gettext ("Other").."\\"..gettext ("Calculate an equation"), table_cmnds ["calculate"].." %[line:<"..gettext ("equation")..">]")
+susmenitm (usr, gettext ("Other").."\\"..gettext ("Current topic"), table_cmnds ["showtopic"])
 end
 
 -- configuration
 
 if ucl >= table_sets ["mincommandclass"] then
-sopmenitm (usr, getlang (683).."\\"..getlang (176), table_cmnds ["ledoconf"])
-sopmenitm (usr, getlang (683).."\\"..getlang (177), table_cmnds ["ledoset"].." %[line:<"..getlang (204)..">] %[line:<"..getlang (205)..">]")
-sopmenitm (usr, getlang (683).."\\"..getlang (10), table_cmnds ["ledover"])
-sopmenitm (usr, getlang (683).."\\"..getlang (179), table_cmnds ["ledohelp"])
-sopmenitm (usr, getlang (683).."\\"..getlang (188), table_cmnds ["ledostats"])
+sopmenitm (usr, gettext ("Configuration").."\\"..gettext ("Script configuration variables"), table_cmnds ["ledoconf"])
+sopmenitm (usr, gettext ("Configuration").."\\"..gettext ("Change configuration variable"), table_cmnds ["ledoset"].." %[line:<"..gettext ("variable")..">] %[line:<"..gettext ("value")..">]")
+sopmenitm (usr, gettext ("Configuration").."\\"..gettext ("Perform script update"), table_cmnds ["ledover"])
+sopmenitm (usr, gettext ("Configuration").."\\"..gettext ("This list of commands"), table_cmnds ["ledohelp"])
+sopmenitm (usr, gettext ("Configuration").."\\"..gettext ("Ledokol statistics"), table_cmnds ["ledostats"])
 end
 end
 
@@ -13569,12 +12551,12 @@ function setledocmd (nick, ucls, line)
 local _, _, orig, cnew = string.find (line, "^(%S+) (%S+)$")
 
 if not table_cmnds [orig] then
-	commandanswer (nick, string.format (getlang (423), orig))
+	commandanswer (nick, string.format (gettext ("Unknown script command: %s"), orig))
 else
 	table_cmnds [orig] = cnew
 	VH:SQLQuery ("update `"..tbl_sql ["ledocmd"].."` set `new` = '"..repsqlchars (cnew).."' where `original` = '"..repsqlchars (orig).."' limit 1")
-	commandanswer (nick, string.format (getlang (422), orig, cnew))
-	opsnotify (table_sets ["classnoticom"], string.format (getlang (425), nick, ucls, orig, cnew))
+	commandanswer (nick, string.format (gettext ("Customized script command: %s => %s"), orig, cnew))
+	opsnotify (table_sets ["classnoticom"], string.format (gettext ("%s with class %s customized script command: %s => %s"), nick, ucls, orig, cnew))
 end
 end
 
@@ -13592,9 +12574,9 @@ for k, v in pairs (table_cmnds) do
 end
 
 if list == "" then
-	commandanswer (nick, getlang (653))
+	commandanswer (nick, gettext ("Custom script command list is empty."))
 else
-	commandanswer (nick, getlang (652)..":\r\n\r\n"..list)
+	commandanswer (nick, gettext ("Custom script command list")..":\r\n\r\n"..list)
 end
 end
 
@@ -13612,7 +12594,7 @@ for k, v in pairs (table_cmnds) do
 	end
 end
 
-commandanswer (nick, string.format (getlang (427), cnum))
+commandanswer (nick, string.format (gettext ("%s custom commands were reset."), cnum))
 end
 
 ----- ---- --- -- -
@@ -13629,10 +12611,10 @@ if tonumber (setto) then setto = tonumber (setto) else num = false end
 			if (setto == 0) or (setto == 1) then
 				ok = true
 			else
-				commandanswer (nick, string.format (getlang (196), tvar, "0 "..getlang (197).." 1"))
+				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 "..gettext ("or").." 1"))
 			end
 		else
-			commandanswer (nick, string.format (getlang (198), tvar))
+			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 		end
 
 ----- ---- --- -- -
@@ -13642,10 +12624,10 @@ if tonumber (setto) then setto = tonumber (setto) else num = false end
 			if (setto == 0) or (setto == 1) then
 				ok = true
 			else
-				commandanswer (nick, string.format (getlang (196), tvar, "0 "..getlang (197).." 1"))
+				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 "..gettext ("or").." 1"))
 			end
 		else
-			commandanswer (nick, string.format (getlang (198), tvar))
+			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 		end
 
 ----- ---- --- -- -
@@ -13655,11 +12637,11 @@ if num == true then
 if (setto == 0) or (setto == 1) then
 ok = true
 else
-commandanswer (nick, string.format (getlang (196), tvar, "0 "..getlang (197).." 1"))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 "..gettext ("or").." 1"))
 end
 
 else
-commandanswer (nick, string.format (getlang (198), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 end
 
 	----- ---- --- -- -
@@ -13669,10 +12651,10 @@ end
 			if (setto == 0) or (setto == 1) then
 				ok = true
 			else
-				commandanswer (nick, string.format (getlang (196), tvar, "0 "..getlang (197).." 1"))
+				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 "..gettext ("or").." 1"))
 			end
 		else
-			commandanswer (nick, string.format (getlang (198), tvar))
+			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 		end
 
 	----- ---- --- -- -
@@ -13682,10 +12664,10 @@ end
 			if (setto == 0) or (setto == 1) then
 				ok = true
 			else
-				commandanswer (nick, string.format (getlang (196), tvar, "0 "..getlang (197).." 1"))
+				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 "..gettext ("or").." 1"))
 			end
 		else
-			commandanswer (nick, string.format (getlang (198), tvar))
+			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 		end
 
 	----- ---- --- -- -
@@ -13704,11 +12686,11 @@ end
 end
 
 else
-commandanswer (nick, string.format (getlang (196), tvar, "0 "..getlang (197).." 1"))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 "..gettext ("or").." 1"))
 end
 
 else
-commandanswer (nick, string.format (getlang (198), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 end
 
 ----- ---- --- -- -
@@ -13716,15 +12698,15 @@ end
 elseif tvar == "ccroomrunning" then
 if num == true then
 if (setto == 0) or (setto == 1) then
-if (setto == 1) and (table_othsets ["func_getcc"] == false) then commandanswer (nick, string.format (getlang (514), "Verlihub 0.9.8e")) end
+if (setto == 1) and (table_othsets ["func_getcc"] == false) then commandanswer (nick, string.format (gettext ("This feature requires %s or later installed on your system."), "Verlihub 0.9.8e")) end
 if (table_sets [tvar] ~= setto) and (setto == 0) then uninstallccrooms () end
 ok = true
 else
-commandanswer (nick, string.format (getlang (196), tvar, "0 "..getlang (197).." 1"))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 "..gettext ("or").." 1"))
 end
 
 else
-commandanswer (nick, string.format (getlang (198), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 end
 
 ----- ---- --- -- -
@@ -13734,11 +12716,11 @@ if num == true then
 if (setto == 0) or (setto == 1) then
 ok = true
 else
-commandanswer (nick, string.format (getlang (196), tvar, "0 "..getlang (197).." 1"))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 "..gettext ("or").." 1"))
 end
 
 else
-commandanswer (nick, string.format (getlang (198), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 end
 
 ----- ---- --- -- -
@@ -13748,11 +12730,11 @@ if num == true then
 if ((setto >= 0) and (setto <= 5)) or (setto == 10) then
 ok = true
 else
-commandanswer (nick, string.format (getlang (196), tvar, "0, 1, 2, 3, 4, 5 "..getlang (197).." 10"))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0, 1, 2, 3, 4, 5 "..gettext ("or").." 10"))
 end
 
 else
-commandanswer (nick, string.format (getlang (198), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 end
 
 ----- ---- --- -- -
@@ -13762,11 +12744,11 @@ if num == true then
 if ((setto >= 0) and (setto <= 5)) or (setto == 10) then
 ok = true
 else
-commandanswer (nick, string.format (getlang (196), tvar, "0, 1, 2, 3, 4, 5 "..getlang (197).." 10"))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0, 1, 2, 3, 4, 5 "..gettext ("or").." 10"))
 end
 
 else
-commandanswer (nick, string.format (getlang (198), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 end
 
 ----- ---- --- -- -
@@ -13774,13 +12756,13 @@ end
 	elseif tvar == "ccroomstyle" then
 		if string.len (setto) > 0 then
 			if (not string.find (setto, "<cc>")) and (not string.find (setto, "<cn>")) then
-				commandanswer (nick, string.format (getlang (613), "<cc> "..getlang (197).." <cn>"))
+				commandanswer (nick, string.format (gettext ("Missing %s in configuration variable."), "<cc> "..gettext ("or").." <cn>"))
 			else
 				setto = string.gsub (setto, string.char (32), string.char (160)) -- space to non-breaking space
 				ok = true
 			end
 		else
-			commandanswer (nick, string.format (getlang (320), tvar))
+			commandanswer (nick, string.format (gettext ("Configuration variable %s can't be empty."), tvar))
 		end
 
 ----- ---- --- -- -
@@ -13788,12 +12770,12 @@ end
 	elseif tvar == "codetext" then
 		if string.len (setto) > 0 then
 			if not string.find (setto, "<code>") then
-				commandanswer (nick, string.format (getlang (613), "<code>"))
+				commandanswer (nick, string.format (gettext ("Missing %s in configuration variable."), "<code>"))
 			else
 				ok = true
 			end
 		else
-			commandanswer (nick, string.format (getlang (320), tvar))
+			commandanswer (nick, string.format (gettext ("Configuration variable %s can't be empty."), tvar))
 		end
 
 ----- ---- --- -- -
@@ -13802,7 +12784,7 @@ elseif tvar == "thirdacttime" then
 if string.len (setto) > 0 then
 ok = true
 else
-commandanswer (nick, string.format (getlang (320), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can't be empty."), tvar))
 end
 
 ----- ---- --- -- -
@@ -13811,7 +12793,7 @@ elseif tvar == "sixthactaddr" then
 if string.len (setto) > 0 then
 ok = true
 else
-commandanswer (nick, string.format (getlang (320), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can't be empty."), tvar))
 end
 
 ----- ---- --- -- -
@@ -13820,7 +12802,7 @@ elseif tvar == "ninthactrepmsg" then
 	if string.len (setto) > 0 then
 		ok = true
 	else
-		commandanswer (nick, string.format (getlang (320), tvar))
+		commandanswer (nick, string.format (gettext ("Configuration variable %s can't be empty."), tvar))
 	end
 
 ----- ---- --- -- -
@@ -13839,7 +12821,7 @@ elseif tvar == "ninthactrepmsg" then
 		if string.len (setto) > 0 then
 			ok = true
 		else
-			commandanswer (nick, string.format (getlang (320), tvar))
+			commandanswer (nick, string.format (gettext ("Configuration variable %s can't be empty."), tvar))
 		end
 
 ----- ---- --- -- -
@@ -13853,7 +12835,7 @@ elseif tvar == "unkkickreason" then
 if string.len (setto) > 0 then
 ok = true
 else
-commandanswer (nick, string.format (getlang (320), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can't be empty."), tvar))
 end
 
 ----- ---- --- -- -
@@ -13863,11 +12845,11 @@ if num == true then
 if (setto == 0) or (setto == 1) then
 ok = true
 else
-commandanswer (nick, string.format (getlang (196), tvar, "0 "..getlang (197).." 1"))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 "..gettext ("or").." 1"))
 end
 
 else
-commandanswer (nick, string.format (getlang (198), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 end
 
 ----- ---- --- -- -
@@ -13877,11 +12859,11 @@ if num == true then
 if ((setto >= 1) and (setto <= 5)) or (setto == 10) then
 ok = true
 else
-commandanswer (nick, string.format (getlang (196), tvar, "1, 2, 3, 4, 5 "..getlang (197).." 10"))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "1, 2, 3, 4, 5 "..gettext ("or").." 10"))
 end
 
 else
-commandanswer (nick, string.format (getlang (198), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 end
 
 	----- ---- --- -- -
@@ -13891,10 +12873,10 @@ end
 			if ((setto >= 1) and (setto <= 5)) or (setto == 10) then
 				ok = true
 			else
-				commandanswer (nick, string.format (getlang (196), tvar, "1, 2, 3, 4, 5 " .. getlang (197) .. " 10"))
+				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "1, 2, 3, 4, 5 " .. gettext ("or") .. " 10"))
 			end
 		else
-			commandanswer (nick, string.format (getlang (198), tvar))
+			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 		end
 
 ----- ---- --- -- -
@@ -13904,10 +12886,10 @@ end
 			if (setto >= 0) and (setto <= 2) then
 				ok = true
 			else
-				commandanswer (nick, string.format (getlang (196), tvar, "0, 1 "..getlang (197).." 2"))
+				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0, 1 "..gettext ("or").." 2"))
 			end
 		else
-			commandanswer (nick, string.format (getlang (198), tvar))
+			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 		end
 
 ----- ---- --- -- -
@@ -13918,10 +12900,10 @@ end
 				if setto == 0 then table_regm = {} end
 				ok = true
 			else
-				commandanswer (nick, string.format (getlang (196), tvar, "0 "..getlang (199).." 100"))
+				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 "..gettext ("to").." 100"))
 			end
 		else
-			commandanswer (nick, string.format (getlang (198), tvar))
+			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 		end
 
 ----- ---- --- -- -
@@ -13930,15 +12912,15 @@ end
 		if num == true then
 			if (setto >= 0) and (setto <= 1440) then
 				if (setto > 0) and (table_sets ["showuseruptime"] == 0) then
-					commandanswer (nick, string.format (getlang (818), "showuseruptime", 1))
+					commandanswer (nick, string.format (gettext ("In order to use this feature you need to set %s to: %s"), "showuseruptime", 1))
 				end
 
 				ok = true
 			else
-				commandanswer (nick, string.format (getlang (196), tvar, "0 "..getlang (199).." 1440"))
+				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 "..gettext ("to").." 1440"))
 			end
 		else
-			commandanswer (nick, string.format (getlang (198), tvar))
+			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 		end
 
 ----- ---- --- -- -
@@ -13947,15 +12929,15 @@ end
 		if num == true then
 			if (setto >= 0) and (setto <= 86400) then
 				if (setto > 0) and (table_sets ["showuseruptime"] == 0) then
-					commandanswer (nick, string.format (getlang (818), "showuseruptime", 1))
+					commandanswer (nick, string.format (gettext ("In order to use this feature you need to set %s to: %s"), "showuseruptime", 1))
 				end
 
 				ok = true
 			else
-				commandanswer (nick, string.format (getlang (196), tvar, "0 "..getlang (199).." 86400"))
+				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 "..gettext ("to").." 86400"))
 			end
 		else
-			commandanswer (nick, string.format (getlang (198), tvar))
+			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 		end
 
 ----- ---- --- -- -
@@ -13965,10 +12947,10 @@ end
 			if (setto == 0) or (setto == 1) then
 				ok = true
 			else
-				commandanswer (nick, string.format (getlang (196), tvar, "0 "..getlang (197).." 1"))
+				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 "..gettext ("or").." 1"))
 			end
 		else
-			commandanswer (nick, string.format (getlang (198), tvar))
+			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 		end
 
 ----- ---- --- -- -
@@ -13978,11 +12960,11 @@ if num == true then
 if (setto == 0) or (setto == 1) then
 ok = true
 else
-commandanswer (nick, string.format (getlang (196), tvar, "0 "..getlang (197).." 1"))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 "..gettext ("or").." 1"))
 end
 
 else
-commandanswer (nick, string.format (getlang (198), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 end
 
 ----- ---- --- -- -
@@ -13993,11 +12975,11 @@ if (setto >= 0) and (setto <= 3600) then
 ok = true
 if setto == 0 then table_rcnn = {} end -- flush
 else
-commandanswer (nick, string.format (getlang (196), tvar, "0 "..getlang (199).." 3600"))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 "..gettext ("to").." 3600"))
 end
 
 else
-commandanswer (nick, string.format (getlang (198), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 end
 
 ----- ---- --- -- -
@@ -14007,11 +12989,11 @@ elseif tvar == "statscollint" then
 		if (setto >= 0) and (setto <= 1440) then
 			ok = true
 		else
-			commandanswer (nick, string.format (getlang (196), tvar, "0 "..getlang (199).." 1440"))
+			commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 "..gettext ("to").." 1440"))
 		end
 
 	else
-		commandanswer (nick, string.format (getlang (198), tvar))
+		commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 	end
 
 ----- ---- --- -- -
@@ -14019,13 +13001,13 @@ elseif tvar == "statscollint" then
 elseif tvar == "userrecmsg" then
 	if string.len (setto) > 0 then
 		if not string.find (setto, "<new>") then
-			commandanswer (nick, string.format (getlang (613), "<new>"))
+			commandanswer (nick, string.format (gettext ("Missing %s in configuration variable."), "<new>"))
 		else
 			ok = true
 		end
 
 	else
-		commandanswer (nick, string.format (getlang (320), tvar))
+		commandanswer (nick, string.format (gettext ("Configuration variable %s can't be empty."), tvar))
 	end
 
 ----- ---- --- -- -
@@ -14033,13 +13015,13 @@ elseif tvar == "userrecmsg" then
 elseif tvar == "sharerecmsg" then
 	if string.len (setto) > 0 then
 		if not string.find (setto, "<new>") then
-			commandanswer (nick, string.format (getlang (613), "<new>"))
+			commandanswer (nick, string.format (gettext ("Missing %s in configuration variable."), "<new>"))
 		else
 			ok = true
 		end
 
 	else
-		commandanswer (nick, string.format (getlang (320), tvar))
+		commandanswer (nick, string.format (gettext ("Configuration variable %s can't be empty."), tvar))
 	end
 
 ----- ---- --- -- -
@@ -14049,11 +13031,11 @@ elseif tvar == "chatfloodcount" then
 		if (setto >= 1) and (setto <= 100) then
 			ok = true
 		else
-			commandanswer (nick, string.format (getlang (196), tvar, "1 "..getlang (199).." 100"))
+			commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "1 "..gettext ("to").." 100"))
 		end
 
 	else
-		commandanswer (nick, string.format (getlang (198), tvar))
+		commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 	end
 
 	----- ---- --- -- -
@@ -14063,10 +13045,10 @@ elseif tvar == "chatfloodcount" then
 			if setto >= 1 and setto <= 250 then
 				ok = true
 			else
-				commandanswer (nick, string.format (getlang (196), tvar, "1 " .. getlang (199) .. " 250"))
+				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "1 " .. gettext ("to") .. " 250"))
 			end
 		else
-			commandanswer (nick, string.format (getlang (198), tvar))
+			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 		end
 
 	----- ---- --- -- -
@@ -14076,10 +13058,10 @@ elseif tvar == "chatfloodcount" then
 			if setto >= 1 and setto <= 3600 then
 				ok = true
 			else
-				commandanswer (nick, string.format (getlang (196), tvar, "1 " .. getlang (199) .. " 3600"))
+				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "1 " .. gettext ("to") .. " 3600"))
 			end
 		else
-			commandanswer (nick, string.format (getlang (198), tvar))
+			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 		end
 
 	----- ---- --- -- -
@@ -14090,10 +13072,10 @@ elseif tvar == "chatfloodcount" then
 				if setto == 0 then table_prfl ["ctm"] = {} end -- flush
 				ok = true
 			else
-				commandanswer (nick, string.format (getlang (196), tvar, "0 "..getlang (199).." 1000"))
+				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 "..gettext ("to").." 1000"))
 			end
 		else
-			commandanswer (nick, string.format (getlang (198), tvar))
+			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 		end
 
 ----- ---- --- -- -
@@ -14103,10 +13085,10 @@ elseif tvar == "chatfloodcount" then
 			if (setto >= 1) and (setto <= 3600) then
 				ok = true
 			else
-				commandanswer (nick, string.format (getlang (196), tvar, "1 "..getlang (199).." 3600"))
+				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "1 "..gettext ("to").." 3600"))
 			end
 		else
-			commandanswer (nick, string.format (getlang (198), tvar))
+			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 		end
 
 	----- ---- --- -- -
@@ -14116,10 +13098,10 @@ elseif tvar == "chatfloodcount" then
 			if setto >= 0 and setto <= 3 then
 				ok = true
 			else
-				commandanswer (nick, string.format (getlang (196), tvar, "0 " .. getlang (199) .. " 3"))
+				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 " .. gettext ("to") .. " 3"))
 			end
 		else
-			commandanswer (nick, string.format (getlang (198), tvar))
+			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 		end
 
 	----- ---- --- -- -
@@ -14129,10 +13111,10 @@ elseif tvar == "chatfloodcount" then
 			if (setto >= 1) and (setto <= 3600) then
 				ok = true
 			else
-				commandanswer (nick, string.format (getlang (196), tvar, "1 "..getlang (199).." 3600"))
+				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "1 "..gettext ("to").." 3600"))
 			end
 		else
-			commandanswer (nick, string.format (getlang (198), tvar))
+			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 		end
 
 ----- ---- --- -- -
@@ -14142,10 +13124,10 @@ elseif tvar == "chatfloodcount" then
 			if (setto >= 1) and (setto <= 25) then
 				ok = true
 			else
-				commandanswer (nick, string.format (getlang (196), tvar, "1 "..getlang (199).." 25"))
+				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "1 "..gettext ("to").." 25"))
 			end
 		else
-			commandanswer (nick, string.format (getlang (198), tvar))
+			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 		end
 
 ----- ---- --- -- -
@@ -14155,11 +13137,11 @@ if num == true then
 if ((setto >= 0) and (setto <= 5)) or (setto == 10) then
 ok = true
 else
-commandanswer (nick, string.format (getlang (196), tvar, "0, 1, 2, 3, 4, 5 "..getlang (197).." 10"))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0, 1, 2, 3, 4, 5 "..gettext ("or").." 10"))
 end
 
 else
-commandanswer (nick, string.format (getlang (198), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 end
 
 ----- ---- --- -- -
@@ -14169,10 +13151,10 @@ end
 			if ((setto >= 0) and (setto <= 5)) or (setto == 10) then
 				ok = true
 			else
-				commandanswer (nick, string.format (getlang (196), tvar, "0, 1, 2, 3, 4, 5 "..getlang (197).." 10"))
+				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0, 1, 2, 3, 4, 5 "..gettext ("or").." 10"))
 			end
 		else
-			commandanswer (nick, string.format (getlang (198), tvar))
+			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 		end
 
 ----- ---- --- -- -
@@ -14182,10 +13164,10 @@ end
 			if (setto >= 0) and (setto <= 3600) then
 				ok = true
 			else
-				commandanswer (nick, string.format (getlang (196), tvar, "0 "..getlang (199).." 3600"))
+				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 "..gettext ("to").." 3600"))
 			end
 		else
-			commandanswer (nick, string.format (getlang (198), tvar))
+			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 		end
 
 ----- ---- --- -- -
@@ -14194,7 +13176,7 @@ end
 		if string.len (setto) > 0 then
 			ok = true
 		else
-			commandanswer (nick, string.format (getlang (320), tvar))
+			commandanswer (nick, string.format (gettext ("Configuration variable %s can't be empty."), tvar))
 		end
 
 ----- ---- --- -- -
@@ -14204,11 +13186,11 @@ if num == true then
 if ((setto >= 0) and (setto <= 5)) or (setto == 10) or (setto == 11) then
 ok = true
 else
-commandanswer (nick, string.format (getlang (196), tvar, "0, 1, 2, 3, 4, 5, 10 "..getlang (197).." 11"))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0, 1, 2, 3, 4, 5, 10 "..gettext ("or").." 11"))
 end
 
 else
-commandanswer (nick, string.format (getlang (198), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 end
 
 ----- ---- --- -- -
@@ -14219,10 +13201,10 @@ end
 				if setto == 0 then table_code = {} end -- flush
 				ok = true
 			else
-				commandanswer (nick, string.format (getlang (196), tvar, "0 "..getlang (199).." 2"))
+				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 "..gettext ("to").." 2"))
 			end
 		else
-			commandanswer (nick, string.format (getlang (198), tvar))
+			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 		end
 
 ----- ---- --- -- -
@@ -14232,11 +13214,11 @@ if num == true then
 if (setto >= 0) and (setto <= 2) then
 ok = true
 else
-commandanswer (nick, string.format (getlang (196), tvar, "0 "..getlang (199).." 2"))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 "..gettext ("to").." 2"))
 end
 
 else
-commandanswer (nick, string.format (getlang (198), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 end
 
 ----- ---- --- -- -
@@ -14246,10 +13228,10 @@ end
 			if (setto == 0) or (setto == 1) then
 				ok = true
 			else
-				commandanswer (nick, string.format (getlang (196), tvar, "0 " .. getlang (197) .. " 1"))
+				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 " .. gettext ("or") .. " 1"))
 			end
 		else
-			commandanswer (nick, string.format (getlang (198), tvar))
+			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 		end
 
 ----- ---- --- -- -
@@ -14259,10 +13241,10 @@ end
 			if (setto >= 0) and (setto <= 365) then
 				ok = true
 			else
-				commandanswer (nick, string.format (getlang (196), tvar, "0 " .. getlang (199) .. " 365"))
+				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 " .. gettext ("to") .. " 365"))
 			end
 		else
-			commandanswer (nick, string.format (getlang (198), tvar))
+			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 		end
 
 ----- ---- --- -- -
@@ -14272,10 +13254,10 @@ end
 			if (setto == 0) or (setto == 1) then
 				ok = true
 			else
-				commandanswer (nick, string.format (getlang (196), tvar, "0 "..getlang (197).." 1"))
+				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 "..gettext ("or").." 1"))
 			end
 		else
-			commandanswer (nick, string.format (getlang (198), tvar))
+			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 		end
 
 	----- ---- --- -- -
@@ -14294,10 +13276,10 @@ end
 					table_othsets ["chflalltime"] = os.time ()
 				end
 			else
-				commandanswer (nick, string.format (getlang (196), tvar, "0, 1 " .. getlang (197) .. " 2"))
+				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0, 1 " .. gettext ("or") .. " 2"))
 			end
 		else
-			commandanswer (nick, string.format (getlang (198), tvar))
+			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 		end
 
 	----- ---- --- -- -
@@ -14307,10 +13289,10 @@ end
 			if (setto == 0) or (setto == 1) then
 				ok = true
 			else
-				commandanswer (nick, string.format (getlang (196), tvar, "0 "..getlang (197).." 1"))
+				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 "..gettext ("or").." 1"))
 			end
 		else
-			commandanswer (nick, string.format (getlang (198), tvar))
+			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 		end
 
 ----- ---- --- -- -
@@ -14322,20 +13304,20 @@ end
 					table_blst = {} -- flush
 					ok = true
 				elseif table_sets ["useblacklist"] == 0 then -- load
-					commandanswer (nick, string.format (getlang (855), "blacklist.txt"))
+					commandanswer (nick, string.format (gettext ("Loading %s in memory..."), "blacklist.txt"))
 
 					if loadblacklist () == true then
 						ok = true
-						commandanswer (nick, string.format (getlang (856), "blacklist.txt"))
+						commandanswer (nick, string.format (gettext ("Finished loading %s in memory."), "blacklist.txt"))
 					else
-						commandanswer (nick, string.format (getlang (857), "blacklist.txt"))
+						commandanswer (nick, string.format (gettext ("Unable to locate %s in hub configuration directory."), "blacklist.txt"))
 					end
 				end
 			else
-				commandanswer (nick, string.format (getlang (196), tvar, "0 "..getlang (197).." 1"))
+				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 "..gettext ("or").." 1"))
 			end
 		else
-			commandanswer (nick, string.format (getlang (198), tvar))
+			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 		end
 
 ----- ---- --- -- -
@@ -14345,10 +13327,10 @@ end
 			if (setto == 0) or (setto == 1) then
 				ok = true
 			else
-				commandanswer (nick, string.format (getlang (196), tvar, "0 "..getlang (197).." 1"))
+				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 "..gettext ("or").." 1"))
 			end
 		else
-			commandanswer (nick, string.format (getlang (198), tvar))
+			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 		end
 
 ----- ---- --- -- -
@@ -14358,11 +13340,11 @@ elseif tvar == "chatfloodaction" then
 		if (setto >= 0) and (setto <= 5) then
 			ok = true
 		else
-			commandanswer (nick, string.format (getlang (196), tvar, "0, 1, 2, 3, 4 "..getlang (197).." 5"))
+			commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0, 1, 2, 3, 4 "..gettext ("or").." 5"))
 		end
 
 	else
-		commandanswer (nick, string.format (getlang (198), tvar))
+		commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 	end
 
 ----- ---- --- -- -
@@ -14372,11 +13354,11 @@ if num == true then
 if (setto == 0) or (setto == 1) then
 ok = true
 else
-commandanswer (nick, string.format (getlang (196), tvar, "0 "..getlang (197).." 1"))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 "..gettext ("or").." 1"))
 end
 
 else
-commandanswer (nick, string.format (getlang (198), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 end
 
 ----- ---- --- -- -
@@ -14386,11 +13368,11 @@ if num == true then
 if (setto == 0) or (setto == 1) then
 ok = true
 else
-commandanswer (nick, string.format (getlang (196), tvar, "0 "..getlang (197).." 1"))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 "..gettext ("or").." 1"))
 end
 
 else
-commandanswer (nick, string.format (getlang (198), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 end
 
 ----- ---- --- -- -
@@ -14400,10 +13382,10 @@ end
 			if (setto == 0) or (setto == 1) then
 				ok = true
 			else
-				commandanswer (nick, string.format (getlang (196), tvar, "0 "..getlang (197).." 1"))
+				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 "..gettext ("or").." 1"))
 			end
 		else
-			commandanswer (nick, string.format (getlang (198), tvar))
+			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 		end
 
 ----- ---- --- -- -
@@ -14413,11 +13395,11 @@ elseif tvar == "useripinchat" then
 		if (setto >= 0) and (setto <= 2) then
 			ok = true
 		else
-			commandanswer (nick, string.format (getlang (196), tvar, "0, 1 "..getlang (197).." 2"))
+			commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0, 1 "..gettext ("or").." 2"))
 		end
 
 	else
-		commandanswer (nick, string.format (getlang (198), tvar))
+		commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 	end
 
 ----- ---- --- -- -
@@ -14427,11 +13409,11 @@ elseif tvar == "enablecmdlog" then
 		if (setto >= 0) and (setto <= 2) then
 			ok = true
 		else
-			commandanswer (nick, string.format (getlang (196), tvar, "0, 1 "..getlang (197).." 2"))
+			commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0, 1 "..gettext ("or").." 2"))
 		end
 
 	else
-		commandanswer (nick, string.format (getlang (198), tvar))
+		commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 	end
 
 	----- ---- --- -- -
@@ -14441,10 +13423,10 @@ elseif tvar == "enablecmdlog" then
 			if setto == 0 or setto == 1 then
 				ok = true
 			else
-				commandanswer (nick, string.format (getlang (196), tvar, "0 " .. getlang (197) .. " 1"))
+				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 " .. gettext ("or") .. " 1"))
 			end
 		else
-			commandanswer (nick, string.format (getlang (198), tvar))
+			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 		end
 
 	----- ---- --- -- -
@@ -14454,10 +13436,10 @@ elseif tvar == "enablecmdlog" then
 			if setto == 0 or setto == 1 then
 				ok = true
 			else
-				commandanswer (nick, string.format (getlang (196), tvar, "0 " .. getlang (197) .. " 1"))
+				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 " .. gettext ("or") .. " 1"))
 			end
 		else
-			commandanswer (nick, string.format (getlang (198), tvar))
+			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 		end
 
 	--[[
@@ -14470,17 +13452,17 @@ elseif tvar == "enablecmdlog" then
 				ok = true
 
 				if (setto > 0) and (not lsock) then
-					commandanswer (nick, string.format (getlang (625), "LuaSocket"))
+					commandanswer (nick, string.format (gettext ("This feature requires %s module installed on your system."), "LuaSocket"))
 				end
 
 				if setto == 0 then -- reset
 					VH:SQLQuery ("update `" .. tbl_sql ["hubs"] .. "` set `status` = 0")
 				end
 			else
-				commandanswer (nick, string.format (getlang (196), tvar, "0 " .. getlang (199) .. " 1440"))
+				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 " .. gettext ("to") .. " 1440"))
 			end
 		else
-			commandanswer (nick, string.format (getlang (198), tvar))
+			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 		end
 
 	----- ---- --- -- -
@@ -14490,10 +13472,10 @@ elseif tvar == "enablecmdlog" then
 			if (setto >= 0) and (setto <= 10) then
 				ok = true
 			else
-				commandanswer (nick, string.format (getlang (196), tvar, "0 " .. getlang (199) .. " 10"))
+				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 " .. gettext ("to") .. " 10"))
 			end
 		else
-			commandanswer (nick, string.format (getlang (198), tvar))
+			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 		end
 
 	]]--
@@ -14506,11 +13488,11 @@ if ((setto >= 0) and (setto <= 5)) or (setto == 10) or (setto == 11) then
 ok = true
 if setto > table_sets [tvar] then cleantablebyclass (setto, tbl_sql ["chran"]) end
 else
-commandanswer (nick, string.format (getlang (196), tvar, "0, 1, 2, 3, 4, 5, 10 "..getlang (197).." 11"))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0, 1, 2, 3, 4, 5, 10 "..gettext ("or").." 11"))
 end
 
 else
-commandanswer (nick, string.format (getlang (198), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 end
 
 ----- ---- --- -- -
@@ -14521,11 +13503,11 @@ if ((setto >= 0) and (setto <= 5)) or (setto == 10) or (setto == 11) then
 ok = true
 if setto > table_sets [tvar] then cleantablebyclass (setto, tbl_sql ["opran"]) end
 else
-commandanswer (nick, string.format (getlang (196), tvar, "0, 1, 2, 3, 4, 5, 10 "..getlang (197).." 11"))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0, 1, 2, 3, 4, 5, 10 "..gettext ("or").." 11"))
 end
 
 else
-commandanswer (nick, string.format (getlang (198), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 end
 
 ----- ---- --- -- -
@@ -14535,11 +13517,11 @@ elseif tvar == "searrankclass" then
 		if ((setto >= 0) and (setto <= 5)) or (setto == 10) or (setto == 11) then
 			ok = true
 		else
-			commandanswer (nick, string.format (getlang (196), tvar, "0, 1, 2, 3, 4, 5, 10 "..getlang (197).." 11"))
+			commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0, 1, 2, 3, 4, 5, 10 "..gettext ("or").." 11"))
 		end
 
 	else
-		commandanswer (nick, string.format (getlang (198), tvar))
+		commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 	end
 
 ----- ---- --- -- -
@@ -14550,11 +13532,11 @@ if ((setto >= 0) and (setto <= 5)) or (setto == 10) or (setto == 11) then
 ok = true
 if setto > table_sets [tvar] then cleantablebyclass (setto, tbl_sql ["shran"]) end
 else
-commandanswer (nick, string.format (getlang (196), tvar, "0, 1, 2, 3, 4, 5, 10 "..getlang (197).." 11"))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0, 1, 2, 3, 4, 5, 10 "..gettext ("or").." 11"))
 end
 
 else
-commandanswer (nick, string.format (getlang (198), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 end
 
 ----- ---- --- -- -
@@ -14564,11 +13546,11 @@ if num == true then
 if ((setto >= 0) and (setto <= 5)) or (setto == 10) or (setto == 11) then
 ok = true
 else
-commandanswer (nick, string.format (getlang (196), tvar, "0, 1, 2, 3, 4, 5, 10 "..getlang (197).." 11"))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0, 1, 2, 3, 4, 5, 10 "..gettext ("or").." 11"))
 end
 
 else
-commandanswer (nick, string.format (getlang (198), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 end
 
 	----- ---- --- -- -
@@ -14578,20 +13560,20 @@ end
 			if ((setto >= 0) and (setto <= 5)) or (setto == 10) or (setto == 11) then
 				if setto < 11 then
 					if table_othsets ["func_getcc"] == false then
-						commandanswer (nick, string.format (getlang (514), "Verlihub 0.9.8e"))
+						commandanswer (nick, string.format (gettext ("This feature requires %s or later installed on your system."), "Verlihub 0.9.8e"))
 					end
 
 					if table_othsets ["func_getusercity"] == false then
-						commandanswer (nick, string.format (getlang (514), "Verlihub 1.0"))
+						commandanswer (nick, string.format (gettext ("This feature requires %s or later installed on your system."), "Verlihub 1.0"))
 					end
 				end
 
 				ok = true
 			else
-				commandanswer (nick, string.format (getlang (196), tvar, "0, 1, 2, 3, 4, 5, 10 " .. getlang (197) .. " 11"))
+				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0, 1, 2, 3, 4, 5, 10 " .. gettext ("or") .. " 11"))
 			end
 		else
-			commandanswer (nick, string.format (getlang (198), tvar))
+			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 		end
 
 	----- ---- --- -- -
@@ -14603,18 +13585,18 @@ ok = true
 
 if setto == 1 then -- set first date
 if table_othsets ["func_getcc"] == false then
-commandanswer (nick, string.format (getlang (514), "Verlihub 0.9.8e"))
+commandanswer (nick, string.format (gettext ("This feature requires %s or later installed on your system."), "Verlihub 0.9.8e"))
 else
 VH:SQLQuery ("insert ignore into `"..tbl_sql ["conf"].."` (`variable`, `value`) values ('date_ccstats', "..(os.time () + table_sets ["srvtimediff"])..")")
 end
 end
 
 else
-commandanswer (nick, string.format (getlang (196), tvar, "0 "..getlang (197).." 1"))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 "..gettext ("or").." 1"))
 end
 
 else
-commandanswer (nick, string.format (getlang (198), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 end
 
 ----- ---- --- -- -
@@ -14628,10 +13610,10 @@ end
 					table_usup = {}
 				end
 			else
-				commandanswer (nick, string.format (getlang (196), tvar, "0 "..getlang (197).." 1"))
+				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 "..gettext ("or").." 1"))
 			end
 		else
-			commandanswer (nick, string.format (getlang (198), tvar))
+			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 		end
 
 ----- ---- --- -- -
@@ -14641,11 +13623,11 @@ if num == true then
 if (setto >= 1) and (setto <= 1000) then
 ok = true
 else
-commandanswer (nick, string.format (getlang (196), tvar, "1 "..getlang (199).." 1000"))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "1 "..gettext ("to").." 1000"))
 end
 
 else
-commandanswer (nick, string.format (getlang (198), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 end
 
 ----- ---- --- -- -
@@ -14660,11 +13642,11 @@ VH:SQLQuery ("delete from `"..tbl_sql ["shran"].."` where `rank` < "..(setto * 1
 end
 
 else
-commandanswer (nick, string.format (getlang (196), tvar, "1 "..getlang (199).." 1024"))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "1 "..gettext ("to").." 1024"))
 end
 
 else
-commandanswer (nick, string.format (getlang (198), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 end
 
 ----- ---- --- -- -
@@ -14675,11 +13657,11 @@ if (setto >= 1) and (setto <= 25) then
 ok = true
 if setto > table_sets [tvar] then cleanwordrank (setto, 0) end
 else
-commandanswer (nick, string.format (getlang (196), tvar, "1 "..getlang (199).." 25"))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "1 "..gettext ("to").." 25"))
 end
 
 else
-commandanswer (nick, string.format (getlang (198), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 end
 
 ----- ---- --- -- -
@@ -14694,11 +13676,11 @@ cleanwordrank (setto, 1)
 end
 
 else
-commandanswer (nick, string.format (getlang (196), tvar, "1 "..getlang (199).." 100"))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "1 "..gettext ("to").." 100"))
 end
 
 else
-commandanswer (nick, string.format (getlang (198), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 end
 
 ----- ---- --- -- -
@@ -14708,11 +13690,11 @@ if num == true then
 if ((setto >= 0) and (setto <= 5)) or (setto == 10) or (setto == 11) then
 ok = true
 else
-commandanswer (nick, string.format (getlang (196), tvar, "0, 1, 2, 3, 4, 5, 10 "..getlang (197).." 11"))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0, 1, 2, 3, 4, 5, 10 "..gettext ("or").." 11"))
 end
 
 else
-commandanswer (nick, string.format (getlang (198), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 end
 
 ----- ---- --- -- -
@@ -14722,11 +13704,11 @@ if num == true then
 if ((setto >= 0) and (setto <= 5)) or (setto == 10) or (setto == 11) then
 ok = true
 else
-commandanswer (nick, string.format (getlang (196), tvar, "0, 1, 2, 3, 4, 5, 10 "..getlang (197).." 11"))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0, 1, 2, 3, 4, 5, 10 "..gettext ("or").." 11"))
 end
 
 else
-commandanswer (nick, string.format (getlang (198), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 end
 
 ----- ---- --- -- -
@@ -14736,11 +13718,11 @@ if num == true then
 if ((setto >= 0) and (setto <= 5)) or (setto == 10) or (setto == 11) then
 ok = true
 else
-commandanswer (nick, string.format (getlang (196), tvar, "0, 1, 2, 3, 4, 5, 10 "..getlang (197).." 11"))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0, 1, 2, 3, 4, 5, 10 "..gettext ("or").." 11"))
 end
 
 else
-commandanswer (nick, string.format (getlang (198), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 end
 
 ----- ---- --- -- -
@@ -14750,10 +13732,10 @@ end
 			if ((setto >= 0) and (setto <= 5)) or (setto == 10) or (setto == 11) then
 				ok = true
 			else
-				commandanswer (nick, string.format (getlang (196), tvar, "0, 1, 2, 3, 4, 5, 10 "..getlang (197).." 11"))
+				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0, 1, 2, 3, 4, 5, 10 "..gettext ("or").." 11"))
 			end
 		else
-			commandanswer (nick, string.format (getlang (198), tvar))
+			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 		end
 
 ----- ---- --- -- -
@@ -14763,11 +13745,11 @@ elseif tvar == "classnotiflood" then
 		if ((setto >= 0) and (setto <= 5)) or (setto == 10) or (setto == 11) then
 			ok = true
 		else
-			commandanswer (nick, string.format (getlang (196), tvar, "0, 1, 2, 3, 4, 5, 10 "..getlang (197).." 11"))
+			commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0, 1, 2, 3, 4, 5, 10 "..gettext ("or").." 11"))
 		end
 
 	else
-		commandanswer (nick, string.format (getlang (198), tvar))
+		commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 	end
 
 ----- ---- --- -- -
@@ -14777,11 +13759,11 @@ elseif tvar == "classnotigagip" then
 		if ((setto >= 0) and (setto <= 5)) or (setto == 10) or (setto == 11) then
 			ok = true
 		else
-			commandanswer (nick, string.format (getlang (196), tvar, "0, 1, 2, 3, 4, 5, 10 "..getlang (197).." 11"))
+			commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0, 1, 2, 3, 4, 5, 10 "..gettext ("or").." 11"))
 		end
 
 	else
-		commandanswer (nick, string.format (getlang (198), tvar))
+		commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 	end
 
 ----- ---- --- -- -
@@ -14791,11 +13773,11 @@ if num == true then
 if ((setto >= 0) and (setto <= 5)) or (setto == 10) or (setto == 11) then
 ok = true
 else
-commandanswer (nick, string.format (getlang (196), tvar, "0, 1, 2, 3, 4, 5, 10 "..getlang (197).." 11"))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0, 1, 2, 3, 4, 5, 10 "..gettext ("or").." 11"))
 end
 
 else
-commandanswer (nick, string.format (getlang (198), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 end
 
 ----- ---- --- -- -
@@ -14805,11 +13787,11 @@ if num == true then
 if ((setto >= 0) and (setto <= 5)) or (setto == 10) or (setto == 11) then
 ok = true
 else
-commandanswer (nick, string.format (getlang (196), tvar, "0, 1, 2, 3, 4, 5, 10 "..getlang (197).." 11"))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0, 1, 2, 3, 4, 5, 10 "..gettext ("or").." 11"))
 end
 
 else
-commandanswer (nick, string.format (getlang (198), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 end
 
 	----- ---- --- -- -
@@ -14819,10 +13801,10 @@ end
 			if ((setto >= 0) and (setto <= 5)) or (setto == 10) or (setto == 11) then
 				ok = true
 			else
-				commandanswer (nick, string.format (getlang (196), tvar, "0, 1, 2, 3, 4, 5, 10 " .. getlang (197) .. " 11"))
+				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0, 1, 2, 3, 4, 5, 10 " .. gettext ("or") .. " 11"))
 			end
 		else
-			commandanswer (nick, string.format (getlang (198), tvar))
+			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 		end
 
 ----- ---- --- -- -
@@ -14832,11 +13814,11 @@ if num == true then
 if ((setto >= 0) and (setto <= 5)) or (setto == 10) or (setto == 11) then
 ok = true
 else
-commandanswer (nick, string.format (getlang (196), tvar, "0, 1, 2, 3, 4, 5, 10 "..getlang (197).." 11"))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0, 1, 2, 3, 4, 5, 10 "..gettext ("or").." 11"))
 end
 
 else
-commandanswer (nick, string.format (getlang (198), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 end
 
 	----- ---- --- -- -
@@ -14846,10 +13828,10 @@ end
 			if ((setto >= 0) and (setto <= 5)) or (setto == 10) or (setto == 11) then
 				ok = true
 			else
-				commandanswer (nick, string.format (getlang (196), tvar, "0, 1, 2, 3, 4, 5, 10 " .. getlang (197) .. " 11"))
+				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0, 1, 2, 3, 4, 5, 10 " .. gettext ("or") .. " 11"))
 			end
 		else
-			commandanswer (nick, string.format (getlang (198), tvar))
+			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 		end
 
 ----- ---- --- -- -
@@ -14859,11 +13841,11 @@ if num == true then
 if ((setto >= 0) and (setto <= 5)) or (setto == 10) or (setto == 11) then
 ok = true
 else
-commandanswer (nick, string.format (getlang (196), tvar, "0, 1, 2, 3, 4, 5, 10 "..getlang (197).." 11"))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0, 1, 2, 3, 4, 5, 10 "..gettext ("or").." 11"))
 end
 
 else
-commandanswer (nick, string.format (getlang (198), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 end
 
 ----- ---- --- -- -
@@ -14873,11 +13855,11 @@ if num == true then
 if ((setto >= 0) and (setto <= 5)) or (setto == 10) or (setto == 11) then
 ok = true
 else
-commandanswer (nick, string.format (getlang (196), tvar, "0, 1, 2, 3, 4, 5, 10 "..getlang (197).." 11"))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0, 1, 2, 3, 4, 5, 10 "..gettext ("or").." 11"))
 end
 
 else
-commandanswer (nick, string.format (getlang (198), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 end
 
 ----- ---- --- -- -
@@ -14887,11 +13869,11 @@ if num == true then
 if ((setto >= 0) and (setto <= 5)) or (setto == 10) or (setto == 11) then
 ok = true
 else
-commandanswer (nick, string.format (getlang (196), tvar, "0, 1, 2, 3, 4, 5, 10 "..getlang (197).." 11"))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0, 1, 2, 3, 4, 5, 10 "..gettext ("or").." 11"))
 end
 
 else
-commandanswer (nick, string.format (getlang (198), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 end
 
 ----- ---- --- -- -
@@ -14901,11 +13883,11 @@ elseif tvar == "classnotibadctm" then
 		if ((setto >= 0) and (setto <= 5)) or (setto == 10) or (setto == 11) then
 			ok = true
 		else
-			commandanswer (nick, string.format (getlang (196), tvar, "0, 1, 2, 3, 4, 5, 10 "..getlang (197).." 11"))
+			commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0, 1, 2, 3, 4, 5, 10 "..gettext ("or").." 11"))
 		end
 
 	else
-		commandanswer (nick, string.format (getlang (198), tvar))
+		commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 	end
 
 ----- ---- --- -- -
@@ -14915,11 +13897,11 @@ if num == true then
 if ((setto >= 0) and (setto <= 5)) or (setto == 10) or (setto == 11) then
 ok = true
 else
-commandanswer (nick, string.format (getlang (196), tvar, "0, 1, 2, 3, 4, 5, 10 "..getlang (197).." 11"))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0, 1, 2, 3, 4, 5, 10 "..gettext ("or").." 11"))
 end
 
 else
-commandanswer (nick, string.format (getlang (198), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 end
 
 ----- ---- --- -- -
@@ -14929,11 +13911,11 @@ if num == true then
 if ((setto >= 0) and (setto <= 5)) or (setto == 10) or (setto == 11) then
 ok = true
 else
-commandanswer (nick, string.format (getlang (196), tvar, "0, 1, 2, 3, 4, 5, 10 "..getlang (197).." 11"))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0, 1, 2, 3, 4, 5, 10 "..gettext ("or").." 11"))
 end
 
 else
-commandanswer (nick, string.format (getlang (198), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 end
 
 ----- ---- --- -- -
@@ -14943,11 +13925,11 @@ if num == true then
 if ((setto >= 0) and (setto <= 5)) or (setto == 10) or (setto == 11) then
 ok = true
 else
-commandanswer (nick, string.format (getlang (196), tvar, "0, 1, 2, 3, 4, 5, 10 "..getlang (197).." 11"))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0, 1, 2, 3, 4, 5, 10 "..gettext ("or").." 11"))
 end
 
 else
-commandanswer (nick, string.format (getlang (198), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 end
 
 ----- ---- --- -- -
@@ -14957,10 +13939,10 @@ end
 			if ((setto >= 0) and (setto <= 5)) or (setto == 10) or (setto == 11) then
 				ok = true
 			else
-				commandanswer (nick, string.format (getlang (196), tvar, "0, 1, 2, 3, 4, 5, 10 "..getlang (197).." 11"))
+				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0, 1, 2, 3, 4, 5, 10 "..gettext ("or").." 11"))
 			end
 		else
-			commandanswer (nick, string.format (getlang (198), tvar))
+			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 		end
 
 ----- ---- --- -- -
@@ -14970,11 +13952,11 @@ if num == true then
 if ((setto >= 0) and (setto <= 5)) or (setto == 10) or (setto == 11) then
 ok = true
 else
-commandanswer (nick, string.format (getlang (196), tvar, "0, 1, 2, 3, 4, 5, 10 "..getlang (197).." 11"))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0, 1, 2, 3, 4, 5, 10 "..gettext ("or").." 11"))
 end
 
 else
-commandanswer (nick, string.format (getlang (198), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 end
 
 ----- ---- --- -- -
@@ -14984,11 +13966,11 @@ if num == true then
 if ((setto >= 0) and (setto <= 5)) or (setto == 10) or (setto == 11) then
 ok = true
 else
-commandanswer (nick, string.format (getlang (196), tvar, "0, 1, 2, 3, 4, 5, 10 "..getlang (197).." 11"))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0, 1, 2, 3, 4, 5, 10 "..gettext ("or").." 11"))
 end
 
 else
-commandanswer (nick, string.format (getlang (198), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 end
 
 ----- ---- --- -- -
@@ -14998,11 +13980,11 @@ if num == true then
 if ((setto >= 0) and (setto <= 5)) or (setto == 10) or (setto == 11) then
 ok = true
 else
-commandanswer (nick, string.format (getlang (196), tvar, "0, 1, 2, 3, 4, 5, 10 "..getlang (197).." 11"))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0, 1, 2, 3, 4, 5, 10 "..gettext ("or").." 11"))
 end
 
 else
-commandanswer (nick, string.format (getlang (198), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 end
 
 ----- ---- --- -- -
@@ -15012,10 +13994,10 @@ end
 			if ((setto >= 0) and (setto <= 5)) or (setto == 10) or (setto == 11) then
 				ok = true
 			else
-				commandanswer (nick, string.format (getlang (196), tvar, "0, 1, 2, 3, 4, 5, 10 "..getlang (197).." 11"))
+				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0, 1, 2, 3, 4, 5, 10 "..gettext ("or").." 11"))
 			end
 		else
-			commandanswer (nick, string.format (getlang (198), tvar))
+			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 		end
 
 ----- ---- --- -- -
@@ -15025,10 +14007,10 @@ end
 			if ((setto >= 0) and (setto <= 5)) or (setto == 10) or (setto == 11) then
 				ok = true
 			else
-				commandanswer (nick, string.format (getlang (196), tvar, "0, 1, 2, 3, 4, 5, 10 "..getlang (197).." 11"))
+				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0, 1, 2, 3, 4, 5, 10 "..gettext ("or").." 11"))
 			end
 		else
-			commandanswer (nick, string.format (getlang (198), tvar))
+			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 		end
 
 ----- ---- --- -- -
@@ -15038,10 +14020,10 @@ end
 			if ((setto >= 0) and (setto <= 5)) or (setto == 10) or (setto == 11) then
 				ok = true
 			else
-				commandanswer (nick, string.format (getlang (196), tvar, "0, 1, 2, 3, 4, 5, 10 "..getlang (197).." 11"))
+				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0, 1, 2, 3, 4, 5, 10 "..gettext ("or").." 11"))
 			end
 		else
-			commandanswer (nick, string.format (getlang (198), tvar))
+			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 		end
 
 ----- ---- --- -- -
@@ -15051,11 +14033,11 @@ if num == true then
 if ((setto >= 0) and (setto <= 5)) or (setto == 10) or (setto == 11) then
 ok = true
 else
-commandanswer (nick, string.format (getlang (196), tvar, "0, 1, 2, 3, 4, 5, 10 "..getlang (197).." 11"))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0, 1, 2, 3, 4, 5, 10 "..gettext ("or").." 11"))
 end
 
 else
-commandanswer (nick, string.format (getlang (198), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 end
 
 ----- ---- --- -- -
@@ -15065,11 +14047,11 @@ elseif tvar == "classnotipeakts" then
 		if ((setto >= 0) and (setto <= 5)) or (setto == 10) or (setto == 11) then
 			ok = true
 		else
-			commandanswer (nick, string.format (getlang (196), tvar, "0, 1, 2, 3, 4, 5, 10 "..getlang (197).." 11"))
+			commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0, 1, 2, 3, 4, 5, 10 "..gettext ("or").." 11"))
 		end
 
 	else
-		commandanswer (nick, string.format (getlang (198), tvar))
+		commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 	end
 
 ----- ---- --- -- -
@@ -15079,11 +14061,11 @@ elseif tvar == "classnotipeakuc" then
 		if ((setto >= 0) and (setto <= 5)) or (setto == 10) or (setto == 11) then
 			ok = true
 		else
-			commandanswer (nick, string.format (getlang (196), tvar, "0, 1, 2, 3, 4, 5, 10 "..getlang (197).." 11"))
+			commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0, 1, 2, 3, 4, 5, 10 "..gettext ("or").." 11"))
 		end
 
 	else
-		commandanswer (nick, string.format (getlang (198), tvar))
+		commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 	end
 
 ----- ---- --- -- -
@@ -15093,11 +14075,11 @@ if num == true then
 if ((setto >= 3) and (setto <= 5)) or (setto == 10) then
 ok = true
 else
-commandanswer (nick, string.format (getlang (196), tvar, "3, 4, 5 "..getlang (197).." 10"))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "3, 4, 5 "..gettext ("or").." 10"))
 end
 
 else
-commandanswer (nick, string.format (getlang (198), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 end
 
 ----- ---- --- -- -
@@ -15107,11 +14089,11 @@ if num == true then
 if ((setto >= 0) and (setto <= 5)) or (setto == 10) then
 ok = true
 else
-commandanswer (nick, string.format (getlang (196), tvar, "0, 1, 2, 3, 4, 5 "..getlang (197).." 10"))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0, 1, 2, 3, 4, 5 "..gettext ("or").." 10"))
 end
 
 else
-commandanswer (nick, string.format (getlang (198), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 end
 
 ----- ---- --- -- -
@@ -15122,10 +14104,10 @@ end
 				ok = true
 				if setto > table_sets [tvar] then cleancustnick (setto, 1) end
 			else
-				commandanswer (nick, string.format (getlang (196), tvar, "0, 1, 2, 3, 4, 5, 10 "..getlang (197).." 11"))
+				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0, 1, 2, 3, 4, 5, 10 "..gettext ("or").." 11"))
 			end
 		else
-			commandanswer (nick, string.format (getlang (198), tvar))
+			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 		end
 
 ----- ---- --- -- -
@@ -15136,11 +14118,11 @@ if ((setto >= 0) and (setto <= 5)) or (setto == 10) or (setto == 11) then
 ok = true
 if setto > table_sets [tvar] then cleantablebyclass (setto, tbl_sql ["wm"]) end
 else
-commandanswer (nick, string.format (getlang (196), tvar, "0, 1, 2, 3, 4, 5, 10 "..getlang (197).." 11"))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0, 1, 2, 3, 4, 5, 10 "..gettext ("or").." 11"))
 end
 
 else
-commandanswer (nick, string.format (getlang (198), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 end
 
 ----- ---- --- -- -
@@ -15158,10 +14140,10 @@ elseif tvar == "opkeyclass" then
 
 			ok = true
 		else
-			commandanswer (nick, string.format (getlang (196), tvar, "0, 1, 2 "..getlang (197).." 11"))
+			commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0, 1, 2 "..gettext ("or").." 11"))
 		end
 	else
-		commandanswer (nick, string.format (getlang (198), tvar))
+		commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 	end
 
 ----- ---- --- -- -
@@ -15171,10 +14153,10 @@ elseif tvar == "opkeyclass" then
 			if ((setto >= 0) and (setto <= 2)) or (setto == 11) then
 				ok = true
 			else
-				commandanswer (nick, string.format (getlang (196), tvar, "0, 1, 2 "..getlang (197).." 11"))
+				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0, 1, 2 "..gettext ("or").." 11"))
 			end
 		else
-			commandanswer (nick, string.format (getlang (198), tvar))
+			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 		end
 
 ----- ---- --- -- -
@@ -15192,11 +14174,11 @@ elseif tvar == "opkeyshare" then
 
 			ok = true
 		else
-			commandanswer (nick, string.format (getlang (196), tvar, "0 "..getlang (199).." 10240"))
+			commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 "..gettext ("to").." 10240"))
 		end
 
 	else
-		commandanswer (nick, string.format (getlang (198), tvar))
+		commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 	end
 
 ----- ---- --- -- -
@@ -15206,10 +14188,10 @@ elseif tvar == "opkeyshare" then
 			if ((setto >= 0) and (setto <= 5)) or (setto == 10) or (setto == 11) then
 				ok = true
 			else
-				commandanswer (nick, string.format (getlang (196), tvar, "0, 1, 2, 3, 4, 5, 10 "..getlang (197).." 11"))
+				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0, 1, 2, 3, 4, 5, 10 "..gettext ("or").." 11"))
 			end
 		else
-			commandanswer (nick, string.format (getlang (198), tvar))
+			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 		end
 
 ----- ---- --- -- -
@@ -15218,7 +14200,7 @@ elseif tvar == "antimessage" then
 if string.len (setto) > 0 then
 ok = true
 else
-commandanswer (nick, string.format (getlang (320), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can't be empty."), tvar))
 end
 
 ----- ---- --- -- -
@@ -15227,7 +14209,7 @@ elseif tvar == "usermenuname" then
 if string.len (setto) > 0 then
 ok = true
 else
-commandanswer (nick, string.format (getlang (320), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can't be empty."), tvar))
 end
 
 ----- ---- --- -- -
@@ -15236,7 +14218,7 @@ elseif tvar == "authmessage" then
 if string.len (setto) > 0 then
 ok = true
 else
-commandanswer (nick, string.format (getlang (320), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can't be empty."), tvar))
 end
 
 ----- ---- --- -- -
@@ -15245,7 +14227,7 @@ elseif tvar == "searfiltmsg" then
 if string.len (setto) > 0 then
 ok = true
 else
-commandanswer (nick, string.format (getlang (320), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can't be empty."), tvar))
 end
 
 ----- ---- --- -- -
@@ -15254,7 +14236,7 @@ elseif tvar == "antikreason" then
 if string.len (setto) > 0 then
 ok = true
 else
-commandanswer (nick, string.format (getlang (320), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can't be empty."), tvar))
 end
 
 ----- ---- --- -- -
@@ -15263,7 +14245,7 @@ elseif tvar == "sefireason" then
 if string.len (setto) > 0 then
 ok = true
 else
-commandanswer (nick, string.format (getlang (320), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can't be empty."), tvar))
 end
 
 ----- ---- --- -- -
@@ -15273,11 +14255,11 @@ if num == true then
 if (setto == 0) or (setto == 1) then
 ok = true
 else
-commandanswer (nick, string.format (getlang (196), tvar, "0 "..getlang (197).." 1"))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 "..gettext ("or").." 1"))
 end
 
 else
-commandanswer (nick, string.format (getlang (198), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 end
 
 ----- ---- --- -- -
@@ -15287,11 +14269,11 @@ if num == true then
 if (setto == 0) or (setto == 1) then
 ok = true
 else
-commandanswer (nick, string.format (getlang (196), tvar, "0 "..getlang (197).." 1"))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 "..gettext ("or").." 1"))
 end
 
 else
-commandanswer (nick, string.format (getlang (198), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 end
 
 ----- ---- --- -- -
@@ -15301,10 +14283,10 @@ end
 			if (setto == 0) or (setto == 1) then
 				ok = true
 			else
-				commandanswer (nick, string.format (getlang (196), tvar, "0 "..getlang (197).." 1"))
+				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 "..gettext ("or").." 1"))
 			end
 		else
-			commandanswer (nick, string.format (getlang (198), tvar))
+			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 		end
 
 ----- ---- --- -- -
@@ -15314,10 +14296,10 @@ end
 			if (setto == 0) or (setto == 1) then
 				ok = true
 			else
-				commandanswer (nick, string.format (getlang (196), tvar, "0 "..getlang (197).." 1"))
+				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 "..gettext ("or").." 1"))
 			end
 		else
-			commandanswer (nick, string.format (getlang (198), tvar))
+			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 		end
 
 ----- ---- --- -- -
@@ -15328,11 +14310,11 @@ if (setto == 0) or (setto == 1) then
 ok = true
 if setto == 0 then table_resp = {} end -- flush
 else
-commandanswer (nick, string.format (getlang (196), tvar, "0 "..getlang (197).." 1"))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 "..gettext ("or").." 1"))
 end
 
 else
-commandanswer (nick, string.format (getlang (198), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 end
 
 ----- ---- --- -- -
@@ -15342,11 +14324,11 @@ if num == true then
 if (setto >= 1) and (setto <= 60) then
 ok = true
 else
-commandanswer (nick, string.format (getlang (196), tvar, "1 "..getlang (199).." 60"))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "1 "..gettext ("to").." 60"))
 end
 
 else
-commandanswer (nick, string.format (getlang (198), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 end
 
 ----- ---- --- -- -
@@ -15357,11 +14339,11 @@ if (setto >= 3) and (setto <= 64) then
 ok = true
 if setto < table_sets [tvar] then cleancustnick (setto, 0) end
 else
-commandanswer (nick, string.format (getlang (196), tvar, "3 "..getlang (199).." 64"))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "3 "..gettext ("to").." 64"))
 end
 
 else
-commandanswer (nick, string.format (getlang (198), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 end
 
 ----- ---- --- -- -
@@ -15371,11 +14353,11 @@ if num == true then
 if (setto == 0) or (setto == 1) then
 ok = true
 else
-commandanswer (nick, string.format (getlang (196), tvar, "0 "..getlang (197).." 1"))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 "..gettext ("or").." 1"))
 end
 
 else
-commandanswer (nick, string.format (getlang (198), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 end
 
 ----- ---- --- -- -
@@ -15385,11 +14367,11 @@ if num == true then
 if (setto == 0) or (setto == 1) then
 ok = true
 else
-commandanswer (nick, string.format (getlang (196), tvar, "0 "..getlang (197).." 1"))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 "..gettext ("or").." 1"))
 end
 
 else
-commandanswer (nick, string.format (getlang (198), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 end
 
 ----- ---- --- -- -
@@ -15399,11 +14381,11 @@ if num == true then
 if (setto == 0) or (setto == 1) then
 ok = true
 else
-commandanswer (nick, string.format (getlang (196), tvar, "0 "..getlang (197).." 1"))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 "..gettext ("or").." 1"))
 end
 
 else
-commandanswer (nick, string.format (getlang (198), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 end
 
 ----- ---- --- -- -
@@ -15413,11 +14395,11 @@ if num == true then
 if (setto == 0) or (setto == 1) then
 ok = true
 else
-commandanswer (nick, string.format (getlang (196), tvar, "0 "..getlang (197).." 1"))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 "..gettext ("or").." 1"))
 end
 
 else
-commandanswer (nick, string.format (getlang (198), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 end
 
 ----- ---- --- -- -
@@ -15427,11 +14409,11 @@ if num == true then
 if (setto == 0) or (setto == 1) then
 ok = true
 else
-commandanswer (nick, string.format (getlang (196), tvar, "0 "..getlang (197).." 1"))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 "..gettext ("or").." 1"))
 end
 
 else
-commandanswer (nick, string.format (getlang (198), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 end
 
 ----- ---- --- -- -
@@ -15441,11 +14423,11 @@ if num == true then
 if (setto == 0) or (setto == 1) then
 ok = true
 else
-commandanswer (nick, string.format (getlang (196), tvar, "0 "..getlang (197).." 1"))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 "..gettext ("or").." 1"))
 end
 
 else
-commandanswer (nick, string.format (getlang (198), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 end
 
 ----- ---- --- -- -
@@ -15455,11 +14437,11 @@ if num == true then
 if (setto == 0) or (setto == 1) then
 ok = true
 else
-commandanswer (nick, string.format (getlang (196), tvar, "0 "..getlang (197).." 1"))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 "..gettext ("or").." 1"))
 end
 
 else
-commandanswer (nick, string.format (getlang (198), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 end
 
 ----- ---- --- -- -
@@ -15469,11 +14451,11 @@ if num == true then
 if (setto == 0) or (setto == 1) then
 ok = true
 else
-commandanswer (nick, string.format (getlang (196), tvar, "0 "..getlang (197).." 1"))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 "..gettext ("or").." 1"))
 end
 
 else
-commandanswer (nick, string.format (getlang (198), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 end
 
 ----- ---- --- -- -
@@ -15483,11 +14465,11 @@ if num == true then
 if (setto == 0) or (setto == 1) then
 ok = true
 else
-commandanswer (nick, string.format (getlang (196), tvar, "0 "..getlang (197).." 1"))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 "..gettext ("or").." 1"))
 end
 
 else
-commandanswer (nick, string.format (getlang (198), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 end
 
 	----- ---- --- -- -
@@ -15496,15 +14478,15 @@ end
 		if num == true then
 			if (setto == 0) or (setto == 1) then
 				if (setto == 1) and (getconfig ("dns_lookup") == 0) then
-					commandanswer (nick, string.format (getlang (758), "dns_lookup", 1))
+					commandanswer (nick, string.format (gettext ("In order to use this feature you need to enable DNS lookup. Do it by setting hub configuration variable %s to %s. Please note: Enabling DNS lookup might slow your hub performance down."), "dns_lookup", 1))
 				end
 
 				ok = true
 			else
-				commandanswer (nick, string.format (getlang (196), tvar, "0 "..getlang (197).." 1"))
+				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 "..gettext ("or").." 1"))
 			end
 		else
-			commandanswer (nick, string.format (getlang (198), tvar))
+			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 		end
 
 	----- ---- --- -- -
@@ -15513,15 +14495,15 @@ end
 		if num == true then
 			if (setto == 0) or (setto == 1) then
 				if (setto == 1) and (table_othsets ["func_getusersupports"] == false) then
-					commandanswer (nick, string.format (getlang (899), "Verlihub"))
+					commandanswer (nick, string.format (gettext ("Latest version of %s is required in order to use this feature."), "Verlihub"))
 				end
 
 				ok = true
 			else
-				commandanswer (nick, string.format (getlang (196), tvar, "0 " .. getlang (197) .. " 1"))
+				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 " .. gettext ("or") .. " 1"))
 			end
 		else
-			commandanswer (nick, string.format (getlang (198), tvar))
+			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 		end
 
 	----- ---- --- -- -
@@ -15530,15 +14512,15 @@ end
 		if num == true then
 			if (setto == 0) or (setto == 1) then
 				if (setto == 1) and (table_othsets ["func_getuserversion"] == false) then
-					commandanswer (nick, string.format (getlang (899), "Verlihub"))
+					commandanswer (nick, string.format (gettext ("Latest version of %s is required in order to use this feature."), "Verlihub"))
 				end
 
 				ok = true
 			else
-				commandanswer (nick, string.format (getlang (196), tvar, "0 " .. getlang (197) .. " 1"))
+				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 " .. gettext ("or") .. " 1"))
 			end
 		else
-			commandanswer (nick, string.format (getlang (198), tvar))
+			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 		end
 
 ----- ---- --- -- -
@@ -15547,17 +14529,17 @@ end
 		if num == true then
 			if (setto == 0) or (setto == 1) then
 				if (setto == 1) and (table_othsets ["func_getcc"] == false) then
-					commandanswer (nick, string.format (getlang (514), "Verlihub 0.9.8e"))
+					commandanswer (nick, string.format (gettext ("This feature requires %s or later installed on your system."), "Verlihub 0.9.8e"))
 				--else
 					--ok = true
 				end
 
 				ok = true
 			else
-				commandanswer (nick, string.format (getlang (196), tvar, "0 "..getlang (197).." 1"))
+				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 "..gettext ("or").." 1"))
 			end
 		else
-			commandanswer (nick, string.format (getlang (198), tvar))
+			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 		end
 
 ----- ---- --- -- -
@@ -15567,10 +14549,10 @@ end
 			if ((setto >= 4) and (setto <= 15)) or (setto == 0) then
 				ok = true
 			else
-				commandanswer (nick, string.format (getlang (196), tvar, "4 "..getlang (199).." 15 "..getlang (197).." 0"))
+				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "4 "..gettext ("to").." 15 "..gettext ("or").." 0"))
 			end
 		else
-			commandanswer (nick, string.format (getlang (198), tvar))
+			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 		end
 
 ----- ---- --- -- -
@@ -15580,10 +14562,10 @@ end
 			if (setto == 0) or (setto == 1) then
 				ok = true
 			else
-				commandanswer (nick, string.format (getlang (196), tvar, "0 "..getlang (197).." 1"))
+				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 "..gettext ("or").." 1"))
 			end
 		else
-			commandanswer (nick, string.format (getlang (198), tvar))
+			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 		end
 
 ----- ---- --- -- -
@@ -15593,10 +14575,10 @@ end
 			if (setto >= 0) and (setto <= 2) then
 				ok = true
 			else
-				commandanswer (nick, string.format (getlang (196), tvar, "0 "..getlang (199).." 2"))
+				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 "..gettext ("to").." 2"))
 			end
 		else
-			commandanswer (nick, string.format (getlang (198), tvar))
+			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 		end
 
 ----- ---- --- -- -
@@ -15606,11 +14588,11 @@ if num == true then
 if (setto == 0) or (setto == 1) then
 ok = true
 else
-commandanswer (nick, string.format (getlang (196), tvar, "0 "..getlang (197).." 1"))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 "..gettext ("or").." 1"))
 end
 
 else
-commandanswer (nick, string.format (getlang (198), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 end
 
 	----- ---- --- -- -
@@ -15620,10 +14602,10 @@ end
 			if setto == 0 or setto == 1 then
 				ok = true
 			else
-				commandanswer (nick, string.format (getlang (196), tvar, "0 " .. getlang (197) .. " 1"))
+				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 " .. gettext ("or") .. " 1"))
 			end
 		else
-			commandanswer (nick, string.format (getlang (198), tvar))
+			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 		end
 
 	----- ---- --- -- -
@@ -15633,10 +14615,10 @@ end
 			if (setto >= 0 and setto <= 5) or setto == 10 or setto == 11 then
 				ok = true
 			else
-				commandanswer (nick, string.format (getlang (196), tvar, "0, 1, 2, 3, 4, 5, 10 " .. getlang (197) .. " 11"))
+				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0, 1, 2, 3, 4, 5, 10 " .. gettext ("or") .. " 11"))
 			end
 		else
-			commandanswer (nick, string.format (getlang (198), tvar))
+			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 		end
 
 	----- ---- --- -- -
@@ -15646,10 +14628,10 @@ end
 			if setto >= 1 and setto <= 100 then
 				ok = true
 			else
-				commandanswer (nick, string.format (getlang (196), tvar, "1 " .. getlang (199) .. " 100"))
+				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "1 " .. gettext ("to") .. " 100"))
 			end
 		else
-			commandanswer (nick, string.format (getlang (198), tvar))
+			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 		end
 
 	----- ---- --- -- -
@@ -15668,7 +14650,7 @@ elseif tvar == "minickmessage" then
 if string.len (setto) > 0 then
 ok = true
 else
-commandanswer (nick, string.format (getlang (320), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can't be empty."), tvar))
 end
 
 ----- ---- --- -- -
@@ -15677,7 +14659,7 @@ elseif tvar == "midescmessage" then
 if string.len (setto) > 0 then
 ok = true
 else
-commandanswer (nick, string.format (getlang (320), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can't be empty."), tvar))
 end
 
 ----- ---- --- -- -
@@ -15686,7 +14668,7 @@ elseif tvar == "mitagmessage" then
 if string.len (setto) > 0 then
 ok = true
 else
-commandanswer (nick, string.format (getlang (320), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can't be empty."), tvar))
 end
 
 ----- ---- --- -- -
@@ -15695,7 +14677,7 @@ elseif tvar == "miconnmessage" then
 if string.len (setto) > 0 then
 ok = true
 else
-commandanswer (nick, string.format (getlang (320), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can't be empty."), tvar))
 end
 
 ----- ---- --- -- -
@@ -15704,7 +14686,7 @@ elseif tvar == "miemailmessage" then
 if string.len (setto) > 0 then
 ok = true
 else
-commandanswer (nick, string.format (getlang (320), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can't be empty."), tvar))
 end
 
 ----- ---- --- -- -
@@ -15713,7 +14695,7 @@ elseif tvar == "misharemessage" then
 if string.len (setto) > 0 then
 ok = true
 else
-commandanswer (nick, string.format (getlang (320), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can't be empty."), tvar))
 end
 
 ----- ---- --- -- -
@@ -15722,7 +14704,7 @@ elseif tvar == "miipmessage" then
 if string.len (setto) > 0 then
 ok = true
 else
-commandanswer (nick, string.format (getlang (320), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can't be empty."), tvar))
 end
 
 	----- ---- --- -- -
@@ -15731,7 +14713,7 @@ end
 		if string.len (setto) > 0 then
 			ok = true
 		else
-			commandanswer (nick, string.format (getlang (320), tvar))
+			commandanswer (nick, string.format (gettext ("Configuration variable %s can't be empty."), tvar))
 		end
 
 	----- ---- --- -- -
@@ -15740,7 +14722,7 @@ end
 		if string.len (setto) > 0 then
 			ok = true
 		else
-			commandanswer (nick, string.format (getlang (320), tvar))
+			commandanswer (nick, string.format (gettext ("Configuration variable %s can't be empty."), tvar))
 		end
 
 	----- ---- --- -- -
@@ -15749,7 +14731,7 @@ end
 		if string.len (setto) > 0 then
 			ok = true
 		else
-			commandanswer (nick, string.format (getlang (320), tvar))
+			commandanswer (nick, string.format (gettext ("Configuration variable %s can't be empty."), tvar))
 		end
 
 	----- ---- --- -- -
@@ -15758,7 +14740,7 @@ end
 		if string.len (setto) > 0 then
 			ok = true
 		else
-			commandanswer (nick, string.format (getlang (320), tvar))
+			commandanswer (nick, string.format (gettext ("Configuration variable %s can't be empty."), tvar))
 		end
 
 ----- ---- --- -- -
@@ -15767,7 +14749,7 @@ elseif tvar == "mifakemessage" then
 if string.len (setto) > 0 then
 ok = true
 else
-commandanswer (nick, string.format (getlang (320), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can't be empty."), tvar))
 end
 
 ----- ---- --- -- -
@@ -15776,7 +14758,7 @@ elseif tvar == "miclonemessage" then
 if string.len (setto) > 0 then
 ok = true
 else
-commandanswer (nick, string.format (getlang (320), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can't be empty."), tvar))
 end
 
 ----- ---- --- -- -
@@ -15785,7 +14767,7 @@ elseif tvar == "misameipmessage" then
 if string.len (setto) > 0 then
 ok = true
 else
-commandanswer (nick, string.format (getlang (320), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can't be empty."), tvar))
 end
 
 ----- ---- --- -- -
@@ -15795,11 +14777,11 @@ if num == true then
 if ((setto >= 0) and (setto <= 5)) or (setto == 10) or (setto == 11) then
 ok = true
 else
-commandanswer (nick, string.format (getlang (196), tvar, "0, 1, 2, 3, 4, 5, 10 "..getlang (197).." 11"))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0, 1, 2, 3, 4, 5, 10 "..gettext ("or").." 11"))
 end
 
 else
-commandanswer (nick, string.format (getlang (198), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 end
 
 	----- ---- --- -- -
@@ -15809,10 +14791,10 @@ end
 			if ((setto >= 0) and (setto <= 5)) or (setto == 10) or (setto == 11) then
 				ok = true
 			else
-				commandanswer (nick, string.format (getlang (196), tvar, "0, 1, 2, 3, 4, 5, 10 " .. getlang (197) .. " 11"))
+				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0, 1, 2, 3, 4, 5, 10 " .. gettext ("or") .. " 11"))
 			end
 		else
-			commandanswer (nick, string.format (getlang (198), tvar))
+			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 		end
 
 	----- ---- --- -- -
@@ -15822,11 +14804,11 @@ if num == true then
 if ((setto >= 3) and (setto <= 5)) or (setto == 10) or (setto == 11) then
 ok = true
 else
-commandanswer (nick, string.format (getlang (196), tvar, "3, 4, 5, 10 "..getlang (197).." 11"))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "3, 4, 5, 10 "..gettext ("or").." 11"))
 end
 
 else
-commandanswer (nick, string.format (getlang (198), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 end
 
 ----- ---- --- -- -
@@ -15836,10 +14818,10 @@ end
 			if ((setto >= 3) and (setto <= 5)) or (setto == 10) or (setto == 11) then
 				ok = true
 			else
-				commandanswer (nick, string.format (getlang (196), tvar, "3, 4, 5, 10 "..getlang (197).." 11"))
+				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "3, 4, 5, 10 "..gettext ("or").." 11"))
 			end
 		else
-			commandanswer (nick, string.format (getlang (198), tvar))
+			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 		end
 
 ----- ---- --- -- -
@@ -15849,11 +14831,11 @@ if num == true then
 if ((setto >= 0) and (setto <= 5)) or (setto == 10) or (setto == 11) then
 ok = true
 else
-commandanswer (nick, string.format (getlang (196), tvar, "0, 1, 2, 3, 4, 5, 10 "..getlang (197).." 11"))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0, 1, 2, 3, 4, 5, 10 "..gettext ("or").." 11"))
 end
 
 else
-commandanswer (nick, string.format (getlang (198), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 end
 
 ----- ---- --- -- -
@@ -15863,11 +14845,11 @@ if num == true then
 if (setto == 0) or (setto == 1) then
 ok = true
 else
-commandanswer (nick, string.format (getlang (196), tvar, "0 "..getlang (197).." 1"))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 "..gettext ("or").." 1"))
 end
 
 else
-commandanswer (nick, string.format (getlang (198), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 end
 
 ----- ---- --- -- -
@@ -15877,11 +14859,11 @@ if num == true then
 if (setto >= 0) and (setto <= 100) then
 ok = true
 else
-commandanswer (nick, string.format (getlang (196), tvar, "0 "..getlang (199).." 100"))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 "..gettext ("to").." 100"))
 end
 
 else
-commandanswer (nick, string.format (getlang (198), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 end
 
 ----- ---- --- -- -
@@ -15891,11 +14873,11 @@ if num == true then
 if (setto >= 0) and (setto <= 100) then
 ok = true
 else
-commandanswer (nick, string.format (getlang (196), tvar, "0 "..getlang (199).." 100"))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 "..gettext ("to").." 100"))
 end
 
 else
-commandanswer (nick, string.format (getlang (198), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 end
 
 	----- ---- --- -- -
@@ -15905,10 +14887,10 @@ end
 			if (setto == 0) or (setto == 1) then
 				ok = true
 			else
-				commandanswer (nick, string.format (getlang (196), tvar, "0 " .. getlang (197) .. " 1"))
+				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 " .. gettext ("or") .. " 1"))
 			end
 		else
-			commandanswer (nick, string.format (getlang (198), tvar))
+			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 		end
 
 	----- ---- --- -- -
@@ -15918,10 +14900,10 @@ end
 			if (setto >= 0) and (setto <= 1000) then
 				ok = true
 			else
-				commandanswer (nick, string.format (getlang (196), tvar, "0 " .. getlang (199) .. " 1000"))
+				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 " .. gettext ("to") .. " 1000"))
 			end
 		else
-			commandanswer (nick, string.format (getlang (198), tvar))
+			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 		end
 
 	----- ---- --- -- -
@@ -15931,10 +14913,10 @@ end
 			if (setto >= 0) and (setto <= 168) then
 				ok = true
 			else
-				commandanswer (nick, string.format (getlang (196), tvar, "0 "..getlang (199).." 168"))
+				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 "..gettext ("to").." 168"))
 			end
 		else
-			commandanswer (nick, string.format (getlang (198), tvar))
+			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 		end
 
 ----- ---- --- -- -
@@ -15944,11 +14926,11 @@ if num == true then
 if (setto >= 0) and (setto <= 100) then
 ok = true
 else
-commandanswer (nick, string.format (getlang (196), tvar, "0 "..getlang (199).." 100"))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 "..gettext ("to").." 100"))
 end
 
 else
-commandanswer (nick, string.format (getlang (198), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 end
 
 ----- ---- --- -- -
@@ -15959,11 +14941,11 @@ elseif tvar == "histlimit" then
 			ok = true
 			cleanhistory (nick, setto, 1, ucls)
 		else
-			commandanswer (nick, string.format (getlang (196), tvar, "0 "..getlang (199).." 10000"))
+			commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 "..gettext ("to").." 10000"))
 		end
 
 	else
-		commandanswer (nick, string.format (getlang (198), tvar))
+		commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 	end
 
 ----- ---- --- -- -
@@ -15973,11 +14955,11 @@ if num == true then
 if (setto >= 0) and (setto <= 2) then
 ok = true
 else
-commandanswer (nick, string.format (getlang (196), tvar, "0 "..getlang (199).." 2"))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 "..gettext ("to").." 2"))
 end
 
 else
-commandanswer (nick, string.format (getlang (198), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 end
 
 ----- ---- --- -- -
@@ -15987,11 +14969,11 @@ elseif tvar == "tolowcharcase" then
 		if (setto == 0) or (setto == 1) then
 			ok = true
 		else
-			commandanswer (nick, string.format (getlang (196), tvar, "0 "..getlang (197).." 1"))
+			commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 "..gettext ("or").." 1"))
 		end
 
 	else
-		commandanswer (nick, string.format (getlang (198), tvar))
+		commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 	end
 
 ----- ---- --- -- -
@@ -16007,11 +14989,11 @@ if num == true then
 if (setto >= -43200) and (setto <= 43200) then
 ok = true
 else
-commandanswer (nick, string.format (getlang (196), tvar, "-43200 "..getlang (199).." 43200"))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "-43200 "..gettext ("to").." 43200"))
 end
 
 else
-commandanswer (nick, string.format (getlang (198), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 end
 
 	----- ---- --- -- -
@@ -16020,7 +15002,7 @@ end
 		if string.len (setto) > 0 then
 			ok = true
 		else
-			commandanswer (nick, string.format (getlang (320), tvar))
+			commandanswer (nick, string.format (gettext ("Configuration variable %s can't be empty."), tvar))
 		end
 
 	----- ---- --- -- -
@@ -16029,7 +15011,7 @@ end
 		if string.len (setto) > 0 then
 			ok = true
 		else
-			commandanswer (nick, string.format (getlang (320), tvar))
+			commandanswer (nick, string.format (gettext ("Configuration variable %s can't be empty."), tvar))
 		end
 
 ----- ---- --- -- -
@@ -16038,7 +15020,7 @@ elseif tvar == "timeformat" then
 if string.len (setto) > 0 then
 ok = true
 else
-commandanswer (nick, string.format (getlang (320), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can't be empty."), tvar))
 end
 
 ----- ---- --- -- -
@@ -16047,7 +15029,7 @@ elseif tvar == "shrtuptimefmt" then
 if string.len (setto) > 0 then
 ok = true
 else
-commandanswer (nick, string.format (getlang (320), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can't be empty."), tvar))
 end
 
 ----- ---- --- -- -
@@ -16068,11 +15050,11 @@ if (table_sets [tvar] ~= setto) and (setto == 0) and table_othsets ["lasttimenic
 end
 
 else
-commandanswer (nick, string.format (getlang (196), tvar, "0 "..getlang (199).." 86400"))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 "..gettext ("to").." 86400"))
 end
 
 else
-commandanswer (nick, string.format (getlang (198), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 end
 
 ----- ---- --- -- -
@@ -16082,11 +15064,11 @@ if num == true then
 if (setto >= 0) and (setto <= 3600) then
 ok = true
 else
-commandanswer (nick, string.format (getlang (196), tvar, "0 "..getlang (199).." 3600"))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 "..gettext ("to").." 3600"))
 end
 
 else
-commandanswer (nick, string.format (getlang (198), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 end
 
 ----- ---- --- -- -
@@ -16096,11 +15078,11 @@ if num == true then
 if (setto >= 0) and (setto <= 10) then
 ok = true
 else
-commandanswer (nick, string.format (getlang (196), tvar, "0 "..getlang (199).." 10"))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 "..gettext ("to").." 10"))
 end
 
 else
-commandanswer (nick, string.format (getlang (198), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 end
 
 ----- ---- --- -- -
@@ -16111,13 +15093,13 @@ setto = repnickchars (setto)
 
 if (setto == table_sets [tvar]) or (getstatus (setto) == 1) then
 -- isbot (setto) == true
-commandanswer (nick, getlang (511))
+commandanswer (nick, gettext ("Specified nick is already in use."))
 return nil
 end
 
 ok = true
 else
-commandanswer (nick, string.format (getlang (320), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can't be empty."), tvar))
 end
 
 ----- ---- --- -- -
@@ -16138,11 +15120,11 @@ if (table_sets [tvar] ~= setto) and table_othsets ["lasttimenick"] then
 end
 
 else
-commandanswer (nick, string.format (getlang (196), tvar, "0 "..getlang (197).." 1"))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 "..gettext ("or").." 1"))
 end
 
 else
-commandanswer (nick, string.format (getlang (198), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 end
 
 ----- ---- --- -- -
@@ -16166,11 +15148,11 @@ end
 end
 
 else
-commandanswer (nick, string.format (getlang (196), tvar, "0 "..getlang (197).." 1"))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 "..gettext ("or").." 1"))
 end
 
 else
-commandanswer (nick, string.format (getlang (198), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 end
 
 ----- ---- --- -- -
@@ -16185,10 +15167,10 @@ end
 
 				ok = true
 			else
-				commandanswer (nick, string.format (getlang (196), tvar, "-1 "..getlang (199).." 21990232555520"))
+				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "-1 "..gettext ("to").." 21990232555520"))
 			end
 		else
-			commandanswer (nick, string.format (getlang (198), tvar))
+			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 		end
 
 ----- ---- --- -- -
@@ -16199,16 +15181,16 @@ elseif tvar == "addspecialver" then
 			if (setto ~= table_sets [tvar]) and (setto == 0) then
 				VH:SetConfig ("config", "hub_version_special", "")
 			elseif setto == 1 then
-				VH:SetConfig ("config", "hub_version_special", string.format (getlang (765), "Ledokol "..ver_ledo))
+				VH:SetConfig ("config", "hub_version_special", string.format (gettext ("Powered by %s"), "Ledokol "..ver_ledo))
 			end
 
 			ok = true
 		else
-			commandanswer (nick, string.format (getlang (196), tvar, "0 "..getlang (197).." 1"))
+			commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 "..gettext ("or").." 1"))
 		end
 
 	else
-		commandanswer (nick, string.format (getlang (198), tvar))
+		commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 	end
 
 ----- ---- --- -- -
@@ -16219,7 +15201,7 @@ elseif tvar == "addspecialver" then
 
 			if (setto == table_sets [tvar]) or (getstatus (setto) == 1) then
 				-- isbot (setto) == true
-				commandanswer (nick, getlang (511))
+				commandanswer (nick, gettext ("Specified nick is already in use."))
 				return nil
 			end
 
@@ -16232,7 +15214,7 @@ elseif tvar == "addspecialver" then
 				table_othsets ["sendfrom"] = setto
 			end
 		else
-			commandanswer (nick, string.format (getlang (320), tvar))
+			commandanswer (nick, string.format (gettext ("Configuration variable %s can't be empty."), tvar))
 		end
 
 ----- ---- --- -- -
@@ -16259,11 +15241,11 @@ end
 end
 
 else
-commandanswer (nick, string.format (getlang (196), tvar, "0 "..getlang (197).." 1"))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 "..gettext ("or").." 1"))
 end
 
 else
-commandanswer (nick, string.format (getlang (198), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 end
 
 ----- ---- --- -- -
@@ -16274,7 +15256,7 @@ ok = true
 setto = repnickchars (setto)
 if table_sets ["useextrafeed"] == 1 then table_othsets ["feednick"] = setto end
 else
-commandanswer (nick, string.format (getlang (320), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can't be empty."), tvar))
 end
 
 ----- ---- --- -- -
@@ -16284,22 +15266,22 @@ if num == true then
 if (setto == 0) or (setto == 1) then
 ok = true
 else
-commandanswer (nick, string.format (getlang (196), tvar, "0 "..getlang (197).." 1"))
+commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 "..gettext ("or").." 1"))
 end
 
 else
-commandanswer (nick, string.format (getlang (198), tvar))
+commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 end
 
 ----- ---- --- -- -
 
 else -- unknown variable
-commandanswer (nick, string.format (getlang (200), tvar))
+commandanswer (nick, string.format (gettext ("Unknown configuration variable: %s"), tvar))
 end
 
 if ok == true then -- finalize
-commandanswer (nick, string.format (getlang (195), tvar, table_sets [tvar], setto))
-opsnotify (table_sets ["classnoticonfig"], string.format (getlang (50), nick, ucls, tvar, table_sets [tvar], setto))
+commandanswer (nick, string.format (gettext ("Changed configuration variable %s: %s => %s"), tvar, table_sets [tvar], setto))
+opsnotify (table_sets ["classnoticonfig"], string.format (gettext ("%s with class %s changed configuration variable %s: %s => %s"), nick, ucls, tvar, table_sets [tvar], setto))
 VH:SQLQuery ("update `"..tbl_sql ["conf"].."` set `value` = '"..repsqlchars (setto).."' where `variable` = '"..tvar.."' limit 1")
 table_sets [tvar] = setto
 oprankaccept (nick, ucls)
@@ -16311,7 +15293,7 @@ end
 function checkblacklist (ip)
 	for _, bld in pairs (table_blst) do
 		if ipinrange (bld.r, ip) == true then
-			opsnotify (table_sets ["classnotiblist"], string.format (getlang (861), ip .. tryipcc (ip), repnmdcoutchars (bld.d))) -- notify
+			opsnotify (table_sets ["classnotiblist"], string.format (gettext ("Blacklisted connection from IP %s dropped: %s"), ip .. tryipcc (ip), repnmdcoutchars (bld.d))) -- notify
 			return true
 		end
 	end
@@ -16344,247 +15326,247 @@ end
 ----- ---- --- -- -
 
 function sendhelp (nick)
-local help = "\r\n\r\n .:: "..getlang (155)..":\r\n\r\n"
+local help = "\r\n\r\n .:: "..gettext ("Ledokol operator commands")..":\r\n\r\n"
 	local optrig = string.sub (getconfig ("cmd_start_op"), 1, 1)
 
 	-- antispam
-	help = help .. " " .. optrig .. table_cmnds ["antiadd"] .. " <" .. getlang (193) .. "> <" .. getlang (30) .. "> <" .. getlang (194) .. "> <" .. getlang (126) .. "> - " .. getlang (156) .. "\r\n"
-help = help.." "..optrig..table_cmnds ["antilist"].." - "..getlang (131).."\r\n"
-help = help.." "..optrig..table_cmnds ["antidel"].." <"..getlang (193).."> - "..getlang (158).."\r\n"
-help = help.." "..optrig..table_cmnds ["antiexadd"].." <"..getlang (193).."> - "..getlang (159).."\r\n"
-help = help.." "..optrig..table_cmnds ["antiexlist"].." - "..getlang (137).."\r\n"
-help = help.." "..optrig..table_cmnds ["antiexdel"].." <"..getlang (193).."> - "..getlang (160).."\r\n\r\n"
+	help = help .. " " .. optrig .. table_cmnds ["antiadd"] .. " <" .. gettext ("lre") .. "> <" .. gettext ("priority") .. "> <" .. gettext ("action") .. "> <" .. gettext ("flags") .. "> - " .. gettext ("Add antispam entry") .. "\r\n"
+help = help.." "..optrig..table_cmnds ["antilist"].." - "..gettext ("Antispam list").."\r\n"
+help = help.." "..optrig..table_cmnds ["antidel"].." <"..gettext ("lre").."> - "..gettext ("Delete antispam entry").."\r\n"
+help = help.." "..optrig..table_cmnds ["antiexadd"].." <"..gettext ("lre").."> - "..gettext ("Add antispam exception entry").."\r\n"
+help = help.." "..optrig..table_cmnds ["antiexlist"].." - "..gettext ("Antispam exception list").."\r\n"
+help = help.." "..optrig..table_cmnds ["antiexdel"].." <"..gettext ("lre").."> - "..gettext ("Delete antispam exception entry").."\r\n\r\n"
 
 -- search filter
-help = help.." "..optrig..table_cmnds ["sefiadd"].." <"..getlang (193).."> <"..getlang (30).."> <"..getlang (194).."> <"..getlang (48).."> - "..getlang (225).."\r\n"
-help = help.." "..optrig..table_cmnds ["sefilist"].." - "..getlang (222).."\r\n"
-help = help.." "..optrig..table_cmnds ["sefidel"].." <"..getlang (193).."> - "..getlang (226).."\r\n"
-help = help.." "..optrig..table_cmnds ["sefiexadd"].." <"..getlang (193).."> - "..getlang (284).."\r\n"
-help = help.." "..optrig..table_cmnds ["sefiexlist"].." - "..getlang (286).."\r\n"
-help = help.." "..optrig..table_cmnds ["sefiexdel"].." <"..getlang (193).."> - "..getlang (285).."\r\n\r\n"
+help = help.." "..optrig..table_cmnds ["sefiadd"].." <"..gettext ("lre").."> <"..gettext ("priority").."> <"..gettext ("action").."> <"..gettext ("type").."> - "..gettext ("Add search filter").."\r\n"
+help = help.." "..optrig..table_cmnds ["sefilist"].." - "..gettext ("Search filter list").."\r\n"
+help = help.." "..optrig..table_cmnds ["sefidel"].." <"..gettext ("lre").."> - "..gettext ("Delete search filter").."\r\n"
+help = help.." "..optrig..table_cmnds ["sefiexadd"].." <"..gettext ("lre").."> - "..gettext ("Add search filter exception entry").."\r\n"
+help = help.." "..optrig..table_cmnds ["sefiexlist"].." - "..gettext ("Search filter exception list").."\r\n"
+help = help.." "..optrig..table_cmnds ["sefiexdel"].." <"..gettext ("lre").."> - "..gettext ("Delete search filter exception entry").."\r\n\r\n"
 
 	-- myinfo check
-	help = help.." "..optrig..table_cmnds ["myinfadd"].." <"..getlang (48).."> <"..getlang (193).."> ["..getlang (318).."] - "..getlang (161).."\r\n"
-	help = help.." "..optrig..table_cmnds ["myinflist"].." <"..getlang (48).."> - "..getlang (163).."\r\n"
-	help = help.." "..optrig..table_cmnds ["myinfdel"].." <"..getlang (48).."> <"..getlang (193).."> - "..getlang (162).."\r\n\r\n"
+	help = help.." "..optrig..table_cmnds ["myinfadd"].." <"..gettext ("type").."> <"..gettext ("lre").."> ["..gettext ("time").."] - "..gettext ("Add MyINFO entry").."\r\n"
+	help = help.." "..optrig..table_cmnds ["myinflist"].." <"..gettext ("type").."> - "..gettext ("MyINFO list").."\r\n"
+	help = help.." "..optrig..table_cmnds ["myinfdel"].." <"..gettext ("type").."> <"..gettext ("lre").."> - "..gettext ("Delete MyINFO entry").."\r\n\r\n"
 
 -- protection list
-help = help.." "..optrig..table_cmnds ["protadd"].." <"..getlang (193).."> - "..getlang (124).."\r\n"
-help = help.." "..optrig..table_cmnds ["protlist"].." - "..getlang (607).."\r\n"
-help = help.." "..optrig..table_cmnds ["protdel"].." <"..getlang (193).."> - "..getlang (125).."\r\n\r\n"
+help = help.." "..optrig..table_cmnds ["protadd"].." <"..gettext ("lre").."> - "..gettext ("Add protection entry").."\r\n"
+help = help.." "..optrig..table_cmnds ["protlist"].." - "..gettext ("Protection list").."\r\n"
+help = help.." "..optrig..table_cmnds ["protdel"].." <"..gettext ("lre").."> - "..gettext ("Delete protection entry").."\r\n\r\n"
 
 -- ip authorization
-help = help.." "..optrig..table_cmnds ["authadd"].." <"..getlang (178).."> <"..getlang (193).."> - "..getlang (241).."\r\n"
-help = help.." "..optrig..table_cmnds ["authmod"].." <"..getlang (185).."> <"..getlang (193).."> - "..getlang (785).."\r\n"
-help = help.." "..optrig..table_cmnds ["authlist"].." - "..getlang (239).."\r\n"
-help = help.." "..optrig..table_cmnds ["authdel"].." <"..getlang (185).."> - "..getlang (242).."\r\n\r\n"
+help = help.." "..optrig..table_cmnds ["authadd"].." <"..gettext ("nick").."> <"..gettext ("lre").."> - "..gettext ("Add IP authorization entry").."\r\n"
+help = help.." "..optrig..table_cmnds ["authmod"].." <"..gettext ("identifier").."> <"..gettext ("lre").."> - "..gettext ("Modify IP authorization entry").."\r\n"
+help = help.." "..optrig..table_cmnds ["authlist"].." - "..gettext ("IP authorization list").."\r\n"
+help = help.." "..optrig..table_cmnds ["authdel"].." <"..gettext ("identifier").."> - "..gettext ("Delete authorization entry").."\r\n\r\n"
 
 -- ranks
-help = help.." "..optrig..table_cmnds ["myoprank"].." - "..getlang (175).."\r\n"
-help = help.." "..optrig..table_cmnds ["ranexadd"].." <"..getlang (178).."> - "..getlang (216).."\r\n"
-help = help.." "..optrig..table_cmnds ["ranexlist"].." - "..getlang (214).."\r\n"
-help = help.." "..optrig..table_cmnds ["ranexdel"].." <"..getlang (178).."> - "..getlang (217).."\r\n"
-help = help.." "..optrig..table_cmnds ["randel"].." <"..getlang (48).."> <"..getlang (205).."> - "..getlang (166).."\r\n"
-help = help.." "..optrig..table_cmnds ["ranclean"].." <"..getlang (48).."> <"..getlang (373).."> - "..getlang (372).."\r\n\r\n"
+help = help.." "..optrig..table_cmnds ["myoprank"].." - "..gettext ("Your operator rank").."\r\n"
+help = help.." "..optrig..table_cmnds ["ranexadd"].." <"..gettext ("nick").."> - "..gettext ("Add rank exception").."\r\n"
+help = help.." "..optrig..table_cmnds ["ranexlist"].." - "..gettext ("Rank exception list").."\r\n"
+help = help.." "..optrig..table_cmnds ["ranexdel"].." <"..gettext ("nick").."> - "..gettext ("Delete rank exception").."\r\n"
+help = help.." "..optrig..table_cmnds ["randel"].." <"..gettext ("type").."> <"..gettext ("value").."> - "..gettext ("Remove user or word from rank list").."\r\n"
+help = help.." "..optrig..table_cmnds ["ranclean"].." <"..gettext ("type").."> <"..gettext ("limit").."> - "..gettext ("Clean up ranks").."\r\n\r\n"
 
 -- welcome messages
-help = help.." "..optrig..table_cmnds ["wmforce"].." <"..getlang (48).."> <"..getlang (178).."> ["..getlang (44).."] - "..getlang (484).."\r\n"
-help = help.." "..optrig..table_cmnds ["wmlist"].." - "..getlang (252).."\r\n"
-help = help.." "..optrig..table_cmnds ["wmdel"].." <"..getlang (178).."> - "..getlang (253).."\r\n\r\n"
+help = help.." "..optrig..table_cmnds ["wmforce"].." <"..gettext ("type").."> <"..gettext ("nick").."> ["..gettext ("message").."] - "..gettext ("Force welcome message for user").."\r\n"
+help = help.." "..optrig..table_cmnds ["wmlist"].." - "..gettext ("Welcome message list").."\r\n"
+help = help.." "..optrig..table_cmnds ["wmdel"].." <"..gettext ("nick").."> - "..gettext ("Delete user and his welcome messages").."\r\n\r\n"
 
 -- chatrooms
-help = help.." "..optrig..table_cmnds ["chatadd"].." <"..getlang (178).."> <"..getlang (269).."> <"..getlang (270).."> <"..getlang (271).."> <"..getlang (789).."> - "..getlang (266).."\r\n"
-help = help.." "..optrig..table_cmnds ["chatlist"].." - "..getlang (267).."\r\n"
-help = help.." "..optrig..table_cmnds ["chatdel"].." <"..getlang (178).."> - "..getlang (268).."\r\n\r\n"
+help = help.." "..optrig..table_cmnds ["chatadd"].." <"..gettext ("nick").."> <"..gettext ("description").."> <"..gettext ("minclass").."> <"..gettext ("maxclass").."> <"..gettext ("cc").."> - "..gettext ("Add chatroom").."\r\n"
+help = help.." "..optrig..table_cmnds ["chatlist"].." - "..gettext ("Chatroom list").."\r\n"
+help = help.." "..optrig..table_cmnds ["chatdel"].." <"..gettext ("nick").."> - "..gettext ("Delete chatroom").."\r\n\r\n"
 
 -- reminders
-help = help.." "..optrig..table_cmnds ["remadd"].." <"..getlang (185).."> <"..getlang (380).."> <"..getlang (270).."> <"..getlang (271).."> <"..getlang (381).."> <"..getlang (382).."> - "..getlang (383).."\r\n"
-help = help.." "..optrig..table_cmnds ["remlist"].." - "..getlang (385).."\r\n"
-help = help.." "..optrig..table_cmnds ["remshow"].." <"..getlang (185).."> - "..getlang (509).."\r\n"
-help = help.." "..optrig..table_cmnds ["remdel"].." <"..getlang (185).."> - "..getlang (384).."\r\n\r\n"
+help = help.." "..optrig..table_cmnds ["remadd"].." <"..gettext ("identifier").."> <"..gettext ("content").."> <"..gettext ("minclass").."> <"..gettext ("maxclass").."> <"..gettext ("destination").."> <"..gettext ("interval").."> - "..gettext ("Add reminder").."\r\n"
+help = help.." "..optrig..table_cmnds ["remlist"].." - "..gettext ("Reminder list").."\r\n"
+help = help.." "..optrig..table_cmnds ["remshow"].." <"..gettext ("identifier").."> - "..gettext ("Reminder preview").."\r\n"
+help = help.." "..optrig..table_cmnds ["remdel"].." <"..gettext ("identifier").."> - "..gettext ("Delete reminder").."\r\n\r\n"
 
 	-- no pm
-	help = help.." "..optrig..table_cmnds ["nopmadd"].." <"..getlang (178).."> <"..getlang (194).."> <"..getlang (271).."> <"..getlang (828).."> - "..getlang (829).."\r\n"
-	help = help.." "..optrig..table_cmnds ["nopmlist"].." - "..getlang (831).."\r\n"
-	help = help.." "..optrig..table_cmnds ["nopmdel"].." <"..getlang (178).."> - "..getlang (830).."\r\n\r\n"
+	help = help.." "..optrig..table_cmnds ["nopmadd"].." <"..gettext ("nick").."> <"..gettext ("action").."> <"..gettext ("maxclass").."> <"..gettext ("reason").."> - "..gettext ("Add blocked PM entry").."\r\n"
+	help = help.." "..optrig..table_cmnds ["nopmlist"].." - "..gettext ("List of blocked PM entries").."\r\n"
+	help = help.." "..optrig..table_cmnds ["nopmdel"].." <"..gettext ("nick").."> - "..gettext ("Delete blocked PM entry").."\r\n\r\n"
 
 	-- right click menu
-	help = help .. " " .. optrig .. table_cmnds ["rcmenuadd"] .. " <\"" .. getlang (823) .. "\"> <\"" .. getlang (420) .. "\"> <" .. getlang (48) .. "> <" .. getlang (104) .. "> <" .. getlang (150) .. "> <" .. getlang (270) .. "> <" .. getlang (271) .. "> - " .. getlang (858) .. "\r\n"
-	help = help .. " " .. optrig .. table_cmnds ["rcmenulist"] .. " - " .. getlang (860) .. "\r\n"
-	help = help .. " " .. optrig .. table_cmnds ["rcmenudel"] .. " <" .. getlang (185) .. "> - " .. getlang (859) .. "\r\n"
-	help = help .. " " .. optrig .. table_cmnds ["rcmenuord"] .. " <" .. getlang (185) .. "> <" .. getlang (150) .. "> - " .. getlang (208) .. "\r\n\r\n"
+	help = help .. " " .. optrig .. table_cmnds ["rcmenuadd"] .. " <\"" .. gettext ("menu") .. "\"> <\"" .. gettext ("command") .. "\"> <" .. gettext ("type") .. "> <" .. gettext ("context") .. "> <" .. gettext ("order") .. "> <" .. gettext ("minclass") .. "> <" .. gettext ("maxclass") .. "> - " .. gettext ("Add right click menu item") .. "\r\n"
+	help = help .. " " .. optrig .. table_cmnds ["rcmenulist"] .. " - " .. gettext ("List of right click menu items") .. "\r\n"
+	help = help .. " " .. optrig .. table_cmnds ["rcmenudel"] .. " <" .. gettext ("identifier") .. "> - " .. gettext ("Delete right click menu item") .. "\r\n"
+	help = help .. " " .. optrig .. table_cmnds ["rcmenuord"] .. " <" .. gettext ("identifier") .. "> <" .. gettext ("order") .. "> - " .. gettext ("Reorder right click menu item") .. "\r\n\r\n"
 
 	-- ip watch
-	help = help.." "..optrig..table_cmnds ["ipwatadd"].." <"..getlang (193).."> <\""..getlang (828).."\"> <"..getlang (866).."> - "..getlang (863).."\r\n"
-	help = help.." "..optrig..table_cmnds ["ipwatlist"].." - "..getlang (865).."\r\n"
-	help = help.." "..optrig..table_cmnds ["ipwatdel"].." <"..getlang (193).."> - "..getlang (864).."\r\n\r\n"
+	help = help.." "..optrig..table_cmnds ["ipwatadd"].." <"..gettext ("lre").."> <\""..gettext ("reason").."\"> <"..gettext ("result").."> - "..gettext ("Add IP watch entry").."\r\n"
+	help = help.." "..optrig..table_cmnds ["ipwatlist"].." - "..gettext ("List of IP watch entries").."\r\n"
+	help = help.." "..optrig..table_cmnds ["ipwatdel"].." <"..gettext ("lre").."> - "..gettext ("Delete IP watch entry").."\r\n\r\n"
 
 	-- hard ban
-	help = help.." "..optrig..table_cmnds ["hban"].." <"..getlang (193).."> <\""..getlang (828).."\"> - "..getlang (845).."\r\n"
-	help = help.." "..optrig..table_cmnds ["hbans"].." - "..getlang (847).."\r\n"
-	help = help.." "..optrig..table_cmnds ["hunban"].." <"..getlang (193).."> - "..getlang (846).."\r\n\r\n"
+	help = help.." "..optrig..table_cmnds ["hban"].." <"..gettext ("lre").."> <\""..gettext ("reason").."\"> - "..gettext ("Add hard IP ban entry").."\r\n"
+	help = help.." "..optrig..table_cmnds ["hbans"].." - "..gettext ("List of hard IP ban entries").."\r\n"
+	help = help.." "..optrig..table_cmnds ["hunban"].." <"..gettext ("lre").."> - "..gettext ("Delete hard IP ban entry").."\r\n\r\n"
 
 -- news
-help = help.." "..optrig..table_cmnds ["newsadd"].." <"..getlang (120).."> - "..getlang (453).."\r\n"
-help = help.." "..optrig..table_cmnds ["newsdel"].." <"..getlang (102).."> - "..getlang (454).."\r\n\r\n"
+help = help.." "..optrig..table_cmnds ["newsadd"].." <"..gettext ("string").."> - "..gettext ("Add news item").."\r\n"
+help = help.." "..optrig..table_cmnds ["newsdel"].." <"..gettext ("date").."> - "..gettext ("Delete news items").."\r\n\r\n"
 
 	-- chat replacer
-	help = help .. " " .. optrig .. table_cmnds ["repladd"] .. " <\"" .. getlang (193) .. "\"> <\"" .. getlang (810) .. "\"> <" .. getlang (271) .. "> [" .. getlang (126) .. "] - " .. getlang (811) .. "\r\n"
-help = help.." "..optrig..table_cmnds ["repllist"].." - "..getlang (801).."\r\n"
-help = help.." "..optrig..table_cmnds ["repldel"].." <"..getlang (185).."> - "..getlang (812).."\r\n"
-help = help.." "..optrig..table_cmnds ["replexadd"].." <"..getlang (178).." "..getlang (197).." "..getlang (243).."> - "..getlang (813).."\r\n"
-help = help.." "..optrig..table_cmnds ["replexlist"].." - "..getlang (808).."\r\n"
-help = help.." "..optrig..table_cmnds ["replexdel"].." <"..getlang (178).." "..getlang (197).." "..getlang (243).."> - "..getlang (814).."\r\n\r\n"
+	help = help .. " " .. optrig .. table_cmnds ["repladd"] .. " <\"" .. gettext ("lre") .. "\"> <\"" .. gettext ("replace") .. "\"> <" .. gettext ("maxclass") .. "> [" .. gettext ("flags") .. "] - " .. gettext ("Add chat replacer") .. "\r\n"
+help = help.." "..optrig..table_cmnds ["repllist"].." - "..gettext ("Chat replacer list").."\r\n"
+help = help.." "..optrig..table_cmnds ["repldel"].." <"..gettext ("identifier").."> - "..gettext ("Delete chat replacer").."\r\n"
+help = help.." "..optrig..table_cmnds ["replexadd"].." <"..gettext ("nick").." "..gettext ("or").." "..gettext ("ip").."> - "..gettext ("Add chat replacer exception").."\r\n"
+help = help.." "..optrig..table_cmnds ["replexlist"].." - "..gettext ("Chat replacer exception list").."\r\n"
+help = help.." "..optrig..table_cmnds ["replexdel"].." <"..gettext ("nick").." "..gettext ("or").." "..gettext ("ip").."> - "..gettext ("Delete chat replacer exception").."\r\n\r\n"
 
 -- chat responder
-help = help.." "..optrig..table_cmnds ["respadd"].." <\""..getlang (193).."\"> <\""..getlang (400).."\"> <"..getlang (271).."> - "..getlang (401).."\r\n"
-help = help.." "..optrig..table_cmnds ["resplist"].." - "..getlang (403).."\r\n"
-help = help.." "..optrig..table_cmnds ["respdel"].." <"..getlang (185).."> - "..getlang (402).."\r\n"
-help = help.." "..optrig..table_cmnds ["respexadd"].." <"..getlang (178).." "..getlang (197).." "..getlang (243).."> - "..getlang (412).."\r\n"
-help = help.." "..optrig..table_cmnds ["respexlist"].." - "..getlang (414).."\r\n"
-help = help.." "..optrig..table_cmnds ["respexdel"].." <"..getlang (178).." "..getlang (197).." "..getlang (243).."> - "..getlang (413).."\r\n\r\n"
+help = help.." "..optrig..table_cmnds ["respadd"].." <\""..gettext ("lre").."\"> <\""..gettext ("reply").."\"> <"..gettext ("maxclass").."> - "..gettext ("Add chat responder").."\r\n"
+help = help.." "..optrig..table_cmnds ["resplist"].." - "..gettext ("Main chat responder list").."\r\n"
+help = help.." "..optrig..table_cmnds ["respdel"].." <"..gettext ("identifier").."> - "..gettext ("Delete chat responder").."\r\n"
+help = help.." "..optrig..table_cmnds ["respexadd"].." <"..gettext ("nick").." "..gettext ("or").." "..gettext ("ip").."> - "..gettext ("Add chat responder exception").."\r\n"
+help = help.." "..optrig..table_cmnds ["respexlist"].." - "..gettext ("Chat responder exception list").."\r\n"
+help = help.." "..optrig..table_cmnds ["respexdel"].." <"..gettext ("nick").." "..gettext ("or").." "..gettext ("ip").."> - "..gettext ("Delete chat responder exception").."\r\n\r\n"
 
 -- offline messenger
-help = help.." "..optrig..table_cmnds ["offlist"].." - "..getlang (168).."\r\n"
-help = help.." "..optrig..table_cmnds ["offdel"].." <"..getlang (102).."> - "..getlang (169).."\r\n"
-help = help.." "..optrig..table_cmnds ["offclean"].." - "..getlang (170).."\r\n\r\n"
+help = help.." "..optrig..table_cmnds ["offlist"].." - "..gettext ("List stored offline messages").."\r\n"
+help = help.." "..optrig..table_cmnds ["offdel"].." <"..gettext ("date").."> - "..gettext ("Delete offline messages by date").."\r\n"
+help = help.." "..optrig..table_cmnds ["offclean"].." - "..gettext ("Delete all offline messages").."\r\n\r\n"
 
 	-- history
-	help = help .. " " .. optrig .. table_cmnds ["ophistory"] .. " <" .. getlang (209) .. "> - " .. getlang (173) .. "\r\n"
-	help = help .. " " .. optrig .. table_cmnds ["histclean"] .. " - " .. getlang (174) .. "\r\n\r\n"
+	help = help .. " " .. optrig .. table_cmnds ["ophistory"] .. " <" .. gettext ("lines") .. "> - " .. gettext ("Operator chat history") .. "\r\n"
+	help = help .. " " .. optrig .. table_cmnds ["histclean"] .. " - " .. gettext ("Delete all history messages") .. "\r\n\r\n"
 
 -- commands
-help = help.." "..optrig..table_cmnds ["cmndset"].." <"..getlang (420).."> <"..getlang (420).."> - "..getlang (421).."\r\n"
-help = help.." "..optrig..table_cmnds ["cmndshow"].." - "..getlang (651).."\r\n"
-help = help.." "..optrig..table_cmnds ["cmndreset"].." - "..getlang (426).."\r\n"
-help = help.." "..optrig..table_cmnds ["clog"].." <"..getlang (209).."> - "..getlang (779).."\r\n"
-help = help.." "..optrig..table_cmnds ["cmndadd"].." <"..getlang (193).."> <"..getlang (171).."> - "..getlang (336).."\r\n"
-help = help.." "..optrig..table_cmnds ["cmndlist"].." - "..getlang (338).."\r\n"
-help = help.." "..optrig..table_cmnds ["cmnddel"].." <"..getlang (193).."> - "..getlang (337).."\r\n"
-help = help.." "..optrig..table_cmnds ["cmndexadd"].." <"..getlang (193).."> - "..getlang (296).."\r\n"
-help = help.." "..optrig..table_cmnds ["cmndexlist"].." - "..getlang (298).."\r\n"
-help = help.." "..optrig..table_cmnds ["cmndexdel"].." <"..getlang (193).."> - "..getlang (297).."\r\n\r\n"
+help = help.." "..optrig..table_cmnds ["cmndset"].." <"..gettext ("command").."> <"..gettext ("command").."> - "..gettext ("Customize script command").."\r\n"
+help = help.." "..optrig..table_cmnds ["cmndshow"].." - "..gettext ("Show custom script commands").."\r\n"
+help = help.." "..optrig..table_cmnds ["cmndreset"].." - "..gettext ("Reset all custom commands").."\r\n"
+help = help.." "..optrig..table_cmnds ["clog"].." <"..gettext ("lines").."> - "..gettext ("Command logger").."\r\n"
+help = help.." "..optrig..table_cmnds ["cmndadd"].." <"..gettext ("lre").."> <"..gettext ("class").."> - "..gettext ("Add command permission").."\r\n"
+help = help.." "..optrig..table_cmnds ["cmndlist"].." - "..gettext ("Command permission list").."\r\n"
+help = help.." "..optrig..table_cmnds ["cmnddel"].." <"..gettext ("lre").."> - "..gettext ("Delete command permission").."\r\n"
+help = help.." "..optrig..table_cmnds ["cmndexadd"].." <"..gettext ("lre").."> - "..gettext ("Add command notification exception").."\r\n"
+help = help.." "..optrig..table_cmnds ["cmndexlist"].." - "..gettext ("Command notification exception list").."\r\n"
+help = help.." "..optrig..table_cmnds ["cmndexdel"].." <"..gettext ("lre").."> - "..gettext ("Delete command notification exception").."\r\n\r\n"
 
 -- custom nicks
-help = help.." "..optrig..table_cmnds ["rename"].." <"..getlang (178).."> <"..getlang (178).."> - "..getlang (467).."\r\n"
-help = help.." "..optrig..table_cmnds ["custdel"].." <"..getlang (178).."> - "..getlang (329).."\r\n\r\n"
+help = help.." "..optrig..table_cmnds ["rename"].." <"..gettext ("nick").."> <"..gettext ("nick").."> - "..gettext ("Force custom nick for user").."\r\n"
+help = help.." "..optrig..table_cmnds ["custdel"].." <"..gettext ("nick").."> - "..gettext ("Delete custom nick").."\r\n\r\n"
 
 -- registered users
-help = help.." "..optrig..table_cmnds ["regname"].." <"..getlang (178).."> <"..getlang (178).."> - "..getlang (486).."\r\n"
-help = help.." "..optrig..table_cmnds ["reglist"].." <"..getlang (171).."> <"..getlang (149).."> - "..getlang (164).."\r\n"
-help = help.." "..optrig..table_cmnds ["regfind"].." <"..getlang (178).."> - "..getlang (686).."\r\n"
-help = help.." "..optrig..table_cmnds ["regstats"].." - "..getlang (687).."\r\n\r\n"
+help = help.." "..optrig..table_cmnds ["regname"].." <"..gettext ("nick").."> <"..gettext ("nick").."> - "..gettext ("Change nick of an registered user").."\r\n"
+help = help.." "..optrig..table_cmnds ["reglist"].." <"..gettext ("class").."> <"..gettext ("offset").."> - "..gettext ("List of registered users by class").."\r\n"
+help = help.." "..optrig..table_cmnds ["regfind"].." <"..gettext ("nick").."> - "..gettext ("Search in registered users list").."\r\n"
+help = help.." "..optrig..table_cmnds ["regstats"].." - "..gettext ("Registered users list statistics").."\r\n\r\n"
 
 -- hublist
-help = help.." "..optrig..table_cmnds ["hubadd"].." <"..getlang (522).."> <\""..getlang (470).."\"> <\""..getlang (523).."\"> - "..getlang (524).."\r\n"
-help = help.." "..optrig..table_cmnds ["hubdel"].." <"..getlang (522).."> - "..getlang (525).."\r\n\r\n"
+help = help.." "..optrig..table_cmnds ["hubadd"].." <"..gettext ("address").."> <\""..gettext ("name").."\"> <\""..gettext ("owner").."\"> - "..gettext ("Add friendly hub").."\r\n"
+help = help.." "..optrig..table_cmnds ["hubdel"].." <"..gettext ("address").."> - "..gettext ("Delete friendly hub").."\r\n\r\n"
 
 -- chat
-help = help.." "..optrig..table_cmnds ["mode"].." <"..getlang (193).."> <"..getlang (632).."> - "..getlang (630).."\r\n"
-help = help.." "..optrig..table_cmnds ["mode"].." - "..getlang (635).."\r\n"
-help = help.." "..optrig..table_cmnds ["say"].." <"..getlang (178).."> <"..getlang (44).."> - "..getlang (165).."\r\n"
-help = help.." "..optrig..table_cmnds ["clear"].." - "..getlang (684).."\r\n\r\n"
+help = help.." "..optrig..table_cmnds ["mode"].." <"..gettext ("lre").."> <"..gettext ("mode").."> - "..gettext ("Set chat mode").."\r\n"
+help = help.." "..optrig..table_cmnds ["mode"].." - "..gettext ("Chat mode user list").."\r\n"
+help = help.." "..optrig..table_cmnds ["say"].." <"..gettext ("nick").."> <"..gettext ("message").."> - "..gettext ("Speak from other nick").."\r\n"
+help = help.." "..optrig..table_cmnds ["clear"].." - "..gettext ("Clear main chat").."\r\n\r\n"
 
 	-- ip gag
-	help = help .. " " .. optrig .. table_cmnds ["gagipadd"] .. " <" .. getlang (193) .. "> <" .. getlang (126) .. "> - " .. getlang (641) .. "\r\n"
-	help = help .. " " .. optrig .. table_cmnds ["gagiplist"] .. " - " .. getlang (646) .. "\r\n"
-	help = help .. " " .. optrig .. table_cmnds ["gagipdel"] .. " <" .. getlang (193) .. " " .. getlang (197) .. " *> - " .. getlang (648) .. "\r\n\r\n"
+	help = help .. " " .. optrig .. table_cmnds ["gagipadd"] .. " <" .. gettext ("lre") .. "> <" .. gettext ("flags") .. "> - " .. gettext ("Add IP gag") .. "\r\n"
+	help = help .. " " .. optrig .. table_cmnds ["gagiplist"] .. " - " .. gettext ("IP gag list") .. "\r\n"
+	help = help .. " " .. optrig .. table_cmnds ["gagipdel"] .. " <" .. gettext ("lre") .. " " .. gettext ("or") .. " *> - " .. gettext ("Delete IP gag") .. "\r\n\r\n"
 
 	-- cc gag
-	help = help.." "..optrig..table_cmnds ["gagccadd"].." <"..getlang (789).."> <"..getlang (126).."> - "..getlang (877).."\r\n"
-	help = help.." "..optrig..table_cmnds ["gagcclist"].." - "..getlang (882).."\r\n"
-	help = help.." "..optrig..table_cmnds ["gagccdel"].." <"..getlang (789).." "..getlang (197).." *> - "..getlang (884).."\r\n\r\n"
+	help = help.." "..optrig..table_cmnds ["gagccadd"].." <"..gettext ("cc").."> <"..gettext ("flags").."> - "..gettext ("Add country code gag").."\r\n"
+	help = help.." "..optrig..table_cmnds ["gagcclist"].." - "..gettext ("Country code gag list").."\r\n"
+	help = help.." "..optrig..table_cmnds ["gagccdel"].." <"..gettext ("cc").." "..gettext ("or").." *> - "..gettext ("Delete country code gag").."\r\n\r\n"
 
 	-- user logger
-	help = help .. " " .. optrig .. table_cmnds ["userinfo"] .. " <" .. getlang (178) .. "> - " .. getlang (703) .. "\r\n"
-	help = help .. " " .. optrig .. table_cmnds ["ipinfo"] .. " <" .. getlang (243) .. "> - " .. getlang (930) .. "\r\n"
-	help = help .. " " .. optrig .. table_cmnds ["ulog"] .. " <" .. getlang (48) .. "> <" .. getlang (120) .. "> <" .. getlang (209) .. "> - " .. getlang (406) .. "\r\n"
-	help = help .. " " .. optrig .. table_cmnds ["seen"] .. " <" .. getlang (178) .. "> - " .. string.format (getlang (637), "http://www.te-home.net/?do=hublist") .. "\r\n\r\n"
+	help = help .. " " .. optrig .. table_cmnds ["userinfo"] .. " <" .. gettext ("nick") .. "> - " .. gettext ("User information") .. "\r\n"
+	help = help .. " " .. optrig .. table_cmnds ["ipinfo"] .. " <" .. gettext ("ip") .. "> - " .. gettext ("IP information") .. "\r\n"
+	help = help .. " " .. optrig .. table_cmnds ["ulog"] .. " <" .. gettext ("type") .. "> <" .. gettext ("string") .. "> <" .. gettext ("lines") .. "> - " .. gettext ("Search in user log") .. "\r\n"
+	help = help .. " " .. optrig .. table_cmnds ["seen"] .. " <" .. gettext ("nick") .. "> - " .. string.format (gettext ("%s user lookup"), "http://www.te-home.net/?do=hublist") .. "\r\n\r\n"
 
 	-- other
-	help = help .. " " .. optrig .. table_cmnds ["dropip"] .. " <" .. getlang (243) .. "> - " .. getlang (919) .. "\r\n"
-	help = help .. " " .. optrig .. table_cmnds ["cleanup"] .. " <" .. getlang (48) .. "> <" .. getlang (4) .. " " .. getlang (197) .. " *> [" .. getlang (171) .. "] - " .. getlang (172) .. "\r\n"
-	help = help .. " " .. optrig .. table_cmnds ["readlog"] .. " <" .. getlang (292) .. "> <" .. getlang (209) .. "> - " .. getlang (293) .. "\r\n\r\n"
+	help = help .. " " .. optrig .. table_cmnds ["dropip"] .. " <" .. gettext ("ip") .. "> - " .. gettext ("Drop users with IP") .. "\r\n"
+	help = help .. " " .. optrig .. table_cmnds ["cleanup"] .. " <" .. gettext ("type") .. "> <" .. gettext ("days") .. " " .. gettext ("or") .. " *> [" .. gettext ("class") .. "] - " .. gettext ("Clean up tables") .. "\r\n"
+	help = help .. " " .. optrig .. table_cmnds ["readlog"] .. " <" .. gettext ("file") .. "> <" .. gettext ("lines") .. "> - " .. gettext ("Read hub logs") .. "\r\n\r\n"
 
 -- ledokol commands
-help = help.." "..optrig..table_cmnds ["ledoconf"].." - "..getlang (176).."\r\n"
-help = help.." "..optrig..table_cmnds ["ledoset"].." <"..getlang (204).."> <"..getlang (205).."> - "..getlang (177).."\r\n"
-help = help.." "..optrig..table_cmnds ["ledover"].." - "..getlang (10).."\r\n"
-help = help.." "..optrig..table_cmnds ["ledohelp"].." - "..getlang (179).."\r\n"
-help = help.." "..optrig..table_cmnds ["ledostats"].." - "..getlang (188).."\r\n\r\n"
+help = help.." "..optrig..table_cmnds ["ledoconf"].." - "..gettext ("Script configuration variables").."\r\n"
+help = help.." "..optrig..table_cmnds ["ledoset"].." <"..gettext ("variable").."> <"..gettext ("value").."> - "..gettext ("Change configuration variable").."\r\n"
+help = help.." "..optrig..table_cmnds ["ledover"].." - "..gettext ("Perform script update").."\r\n"
+help = help.." "..optrig..table_cmnds ["ledohelp"].." - "..gettext ("This list of commands").."\r\n"
+help = help.." "..optrig..table_cmnds ["ledostats"].." - "..gettext ("Ledokol statistics").."\r\n\r\n"
 
 	-- experts only commands
 	if getclass (nick) == 10 then
-		help = help.." .:: "..getlang (844)..":\r\n\r\n"
+		help = help.." .:: "..gettext ("Experts only")..":\r\n\r\n"
 
 		if getledoconf ("allow_sql") == 1 then
-			help = help.." "..optrig..table_cmnds ["ledosql"].." <"..getlang (841).."> - "..getlang (842).."\r\n"
+			help = help.." "..optrig..table_cmnds ["ledosql"].." <"..gettext ("query").."> - "..gettext ("Execute MySQL query").."\r\n"
 		end
 
 		if getledoconf ("allow_shell") == 1 then
-			help = help.." "..optrig..table_cmnds ["ledoshell"].." <"..getlang (420).."> - "..getlang (843).."\r\n"
+			help = help.." "..optrig..table_cmnds ["ledoshell"].." <"..gettext ("command").."> - "..gettext ("Execute shell command").."\r\n"
 		end
 
-		help = help.." "..optrig..table_cmnds ["ledokoluninstallisconfirmed"].." - "..getlang (769).."\r\n\r\n"
+		help = help.." "..optrig..table_cmnds ["ledokoluninstallisconfirmed"].." - "..gettext ("Remove all Ledokol tables and files").."\r\n\r\n"
 	end
 
-	help = help.." .:: "..getlang (180)..":\r\n\r\n"
+	help = help.." .:: "..gettext ("Ledokol user commands")..":\r\n\r\n"
 
 	local ustrig = string.sub (getconfig ("cmd_start_user"), 1, 1)
 
 -- ranks
-help = help.." "..ustrig..table_cmnds ["mychatrank"].." - "..getlang (182).."\r\n"
-help = help.." "..ustrig..table_cmnds ["mysharerank"].." - "..getlang (323).."\r\n"
-help = help.." "..ustrig..table_cmnds ["chatranks"].." - "..string.format (getlang (116), table_sets ["ranklimit"]).."\r\n"
-help = help.." "..ustrig..table_cmnds ["shareranks"].." - "..string.format (getlang (324), table_sets ["ranklimit"]).."\r\n"
-help = help.." "..ustrig..table_cmnds ["opranks"].." - "..string.format (getlang (118), table_sets ["ranklimit"]).."\r\n"
-help = help.." "..ustrig..table_cmnds ["searranks"].." - "..string.format (getlang (694), table_sets ["ranklimit"]).."\r\n"
-help = help.." "..ustrig..table_cmnds ["wordranks"].." - "..string.format (getlang (439), table_sets ["ranklimit"]).."\r\n"
-	help = help .. " " .. ustrig .. table_cmnds ["cclive"] .. " - " .. getlang (512) .. "\r\n"
-	help = help .. " " .. ustrig .. table_cmnds ["citylive"] .. " <" .. getlang (789) .. "> - " .. getlang (923) .. "\r\n"
-	help = help .. " " .. ustrig .. table_cmnds ["cchist"] .. " - " .. getlang (513) .. "\r\n\r\n"
+help = help.." "..ustrig..table_cmnds ["mychatrank"].." - "..gettext ("Your chat rank").."\r\n"
+help = help.." "..ustrig..table_cmnds ["mysharerank"].." - "..gettext ("Your share rank").."\r\n"
+help = help.." "..ustrig..table_cmnds ["chatranks"].." - "..string.format (gettext ("Top %s chat rankers"), table_sets ["ranklimit"]).."\r\n"
+help = help.." "..ustrig..table_cmnds ["shareranks"].." - "..string.format (gettext ("Top %s share rankers"), table_sets ["ranklimit"]).."\r\n"
+help = help.." "..ustrig..table_cmnds ["opranks"].." - "..string.format (gettext ("Top %s operator rankers"), table_sets ["ranklimit"]).."\r\n"
+help = help.." "..ustrig..table_cmnds ["searranks"].." - "..string.format (gettext ("Top %s search requests"), table_sets ["ranklimit"]).."\r\n"
+help = help.." "..ustrig..table_cmnds ["wordranks"].." - "..string.format (gettext ("Top %s used words"), table_sets ["ranklimit"]).."\r\n"
+	help = help .. " " .. ustrig .. table_cmnds ["cclive"] .. " - " .. gettext ("Live user location statistics by country") .. "\r\n"
+	help = help .. " " .. ustrig .. table_cmnds ["citylive"] .. " <" .. gettext ("cc") .. "> - " .. gettext ("Live user location statistics by city") .. "\r\n"
+	help = help .. " " .. ustrig .. table_cmnds ["cchist"] .. " - " .. gettext ("All time user location statistics") .. "\r\n\r\n"
 
 -- releases
-help = help.." "..ustrig..table_cmnds ["reladd"].." <\""..getlang (470).."\"> <\""..getlang (471).."\"> ["..getlang (472).."] - "..getlang (473).."\r\n"
-help = help.." "..ustrig..table_cmnds ["reldel"].." <"..getlang (48).."> <"..getlang (470).."> - "..getlang (474).."\r\n"
-help = help.." "..ustrig..table_cmnds ["rellist"].." <"..getlang (48).."> <"..getlang (209).."> ["..getlang (471).." "..getlang (197).." "..getlang (310).."] - "..getlang (475).."\r\n"
-help = help.." "..ustrig..table_cmnds ["relfind"].." <"..getlang (470).."> - "..getlang (476).."\r\n\r\n"
+help = help.." "..ustrig..table_cmnds ["reladd"].." <\""..gettext ("name").."\"> <\""..gettext ("category").."\"> ["..gettext ("tth").."] - "..gettext ("Add new release").."\r\n"
+help = help.." "..ustrig..table_cmnds ["reldel"].." <"..gettext ("type").."> <"..gettext ("name").."> - "..gettext ("Delete releases").."\r\n"
+help = help.." "..ustrig..table_cmnds ["rellist"].." <"..gettext ("type").."> <"..gettext ("lines").."> ["..gettext ("category").." "..gettext ("or").." "..gettext ("publisher").."] - "..gettext ("List of available releases").."\r\n"
+help = help.." "..ustrig..table_cmnds ["relfind"].." <"..gettext ("name").."> - "..gettext ("Find release by name or category").."\r\n\r\n"
 
 -- welcome messages
-help = help.." "..ustrig..table_cmnds ["wmset"].." <"..getlang (48).."> ["..getlang (44).."] - "..getlang (249).."\r\n"
-help = help.." "..ustrig..table_cmnds ["wmshow"].." - "..getlang (251).."\r\n\r\n"
+help = help.." "..ustrig..table_cmnds ["wmset"].." <"..gettext ("type").."> ["..gettext ("message").."] - "..gettext ("Set your welcome message").."\r\n"
+help = help.." "..ustrig..table_cmnds ["wmshow"].." - "..gettext ("Show your welcome messages").."\r\n\r\n"
 
 -- custom nicks
-help = help.." "..ustrig..table_cmnds ["nick"].." ["..getlang (178).."] - "..getlang (247).."\r\n"
-help = help.." "..ustrig..table_cmnds ["realnick"].." <"..getlang (178).."> - "..getlang (367).."\r\n"
-help = help.." "..ustrig..table_cmnds ["custlist"].." - "..getlang (154).."\r\n\r\n"
+help = help.." "..ustrig..table_cmnds ["nick"].." ["..gettext ("nick").."] - "..gettext ("Set custom nick for yourself").."\r\n"
+help = help.." "..ustrig..table_cmnds ["realnick"].." <"..gettext ("nick").."> - "..gettext ("Get users real nick").."\r\n"
+help = help.." "..ustrig..table_cmnds ["custlist"].." - "..gettext ("Custom nick list").."\r\n\r\n"
 
 	-- chat history
-	help = help .. " " .. ustrig .. table_cmnds ["history"] .. " <" .. getlang (209) .. "> - " .. getlang (187) .. "\r\n"
-	help = help .. " " .. ustrig .. table_cmnds ["myhistory"] .. " <" .. getlang (209) .. "> - " .. getlang (464) .. "\r\n\r\n"
+	help = help .. " " .. ustrig .. table_cmnds ["history"] .. " <" .. gettext ("lines") .. "> - " .. gettext ("Main chat history") .. "\r\n"
+	help = help .. " " .. ustrig .. table_cmnds ["myhistory"] .. " <" .. gettext ("lines") .. "> - " .. gettext ("Your main chat history") .. "\r\n\r\n"
 
 	-- other
 
-	help = help .. " " .. ustrig .. table_cmnds ["votekick"] .. " <" .. getlang (178) .. "> - " .. getlang (964) .. "\r\n"
-help = help.." "..ustrig..table_cmnds ["mode"].." <"..getlang (632).."> - "..getlang (630).."\r\n"
-help = help.." "..ustrig..table_cmnds ["offmsg"].." <"..getlang (178).."> <"..getlang (44).."> - "..getlang (186).."\r\n"
-help = help.." "..ustrig..table_cmnds ["calculate"].." <"..getlang (479).."> - "..getlang (480).."\r\n"
-help = help.." "..ustrig..table_cmnds ["hubnews"].." <"..getlang (209).."> - "..getlang (455).."\r\n"
-help = help.." "..ustrig..table_cmnds ["showtopic"].." - "..getlang (181).."\r\n"
-help = help.." "..ustrig..table_cmnds ["showhubs"].." - "..getlang (526).."\r\n\r\n"
+	help = help .. " " .. ustrig .. table_cmnds ["votekick"] .. " <" .. gettext ("nick") .. "> - " .. gettext ("Vote for user to be kicked") .. "\r\n"
+help = help.." "..ustrig..table_cmnds ["mode"].." <"..gettext ("mode").."> - "..gettext ("Set chat mode").."\r\n"
+help = help.." "..ustrig..table_cmnds ["offmsg"].." <"..gettext ("nick").."> <"..gettext ("message").."> - "..gettext ("Offline message to user").."\r\n"
+help = help.." "..ustrig..table_cmnds ["calculate"].." <"..gettext ("equation").."> - "..gettext ("Calculate an equation").."\r\n"
+help = help.." "..ustrig..table_cmnds ["hubnews"].." <"..gettext ("lines").."> - "..gettext ("Read hub news").."\r\n"
+help = help.." "..ustrig..table_cmnds ["showtopic"].." - "..gettext ("Current topic").."\r\n"
+help = help.." "..ustrig..table_cmnds ["showhubs"].." - "..gettext ("Show friendly hubs").."\r\n\r\n"
 
-help = help.." .:: "..getlang (624)..":\r\n\r\n"
+help = help.." .:: "..gettext ("Chatroom user commands")..":\r\n\r\n"
 
 -- chatroom commands
 help = help..chatroomhelp ().."\r\n"
 
 	-- help notes
-	help = help .. " .:: " .. getlang (926) .. ":\r\n\r\n"
+	help = help .. " .:: " .. gettext ("Help notes") .. ":\r\n\r\n"
 
-	help = help .. " " .. string.format (getlang (928), "<" .. getlang (927) .. ">", "[" .. getlang (927) .. "]") .. "\r\n"
-	help = help .. " " .. string.format (getlang (929), "<\"" .. getlang (927) .. "\">", "[\"" .. getlang (927) .. "\"]") .. "\r\n\r\n"
+	help = help .. " " .. string.format (gettext ("Command parameters %s are always required, while %s are optional."), "<" .. gettext ("parameter") .. ">", "[" .. gettext ("parameter") .. "]") .. "\r\n"
+	help = help .. " " .. string.format (gettext ("Quoted parameters %s or %s must be used with quotes."), "<\"" .. gettext ("parameter") .. "\">", "[\"" .. gettext ("parameter") .. "\"]") .. "\r\n\r\n"
 
-help = help.." .:: "..getlang (768)..":\r\n\r\n"
+help = help.." .:: "..gettext ("Additional help")..":\r\n\r\n"
 
 -- additional help
 help = help.." dchub://"..table_othsets ["vazhub"].."/ - VAZ\r\n"
@@ -16600,18 +15582,18 @@ local cntchatran = countranks (tbl_sql ["chran"])
 local mesperuser = 0
 if entchatran > 0 then mesperuser = cntchatran / entchatran end
 
-local stats = "\r\n\r\n .:: "..getlang (188)..":\r\n"
-stats = stats.."\r\n "..string.format (getlang (189), ver_ledo).." ["..table_othsets ["langver"].."]"
-stats = stats.."\r\n "..string.format (getlang (201), "Verlihub", (getconfig ("hub_version") or getlang (184)))
-stats = stats.."\r\n "..string.format (getlang (536), "Lua", (table_othsets ["ver_luaplug"] or getlang (184)))
-stats = stats.."\r\n "..string.format (getlang (207), "Lua", (table_othsets ["ver_lua"] or getlang (184)))
-	--stats = stats .. "\r\n " .. string.format (getlang (201), "LuaSocket", (table_othsets ["ver_sock"] or getlang (202)))
-	--stats = stats .. "\r\n " .. string.format (getlang (201), "LTN12", (table_othsets ["ver_ltn12"] or getlang (184)))
-stats = stats.."\r\n "..string.format (getlang (201), "MySQL", (table_othsets ["ver_sql"] or getlang (184)))
-stats = stats.."\r\n "..string.format (getlang (201), "cURL", (table_othsets ["ver_curl"] or getlang (184)))
-	--stats = stats .. "\r\n " .. string.format (getlang (201), "iConv", (table_othsets ["ver_iconv"] or getlang (184)))
+local stats = "\r\n\r\n .:: "..gettext ("Ledokol statistics")..":\r\n"
+stats = stats.."\r\n "..string.format (gettext ("Script version: %s"), ver_ledo).." ["..table_othsets ["langver"].."]"
+stats = stats.."\r\n "..string.format (gettext ("%s version: %s"), "Verlihub", (getconfig ("hub_version") or gettext ("Unknown")))
+stats = stats.."\r\n "..string.format (gettext ("%s plugin version: %s"), "Lua", (table_othsets ["ver_luaplug"] or gettext ("Unknown")))
+stats = stats.."\r\n "..string.format (gettext ("%s library version: %s"), "Lua", (table_othsets ["ver_lua"] or gettext ("Unknown")))
+	--stats = stats .. "\r\n " .. string.format (gettext ("%s version: %s"), "LuaSocket", (table_othsets ["ver_sock"] or gettext ("Not installed")))
+	--stats = stats .. "\r\n " .. string.format (gettext ("%s version: %s"), "LTN12", (table_othsets ["ver_ltn12"] or gettext ("Unknown")))
+stats = stats.."\r\n "..string.format (gettext ("%s version: %s"), "MySQL", (table_othsets ["ver_sql"] or gettext ("Unknown")))
+stats = stats.."\r\n "..string.format (gettext ("%s version: %s"), "cURL", (table_othsets ["ver_curl"] or gettext ("Unknown")))
+	--stats = stats .. "\r\n " .. string.format (gettext ("%s version: %s"), "iConv", (table_othsets ["ver_iconv"] or gettext ("Unknown")))
 stats = stats.."\r\n"
-stats = stats.."\r\n "..string.format (getlang (433), formatuptime (table_othsets ["uptime"], false))
+stats = stats.."\r\n "..string.format (gettext ("Script uptime: %s"), formatuptime (table_othsets ["uptime"], false))
 local mu = makesize (getmemusg ()) -- memory
 
 if table_sets ["statscollint"] > 0 then
@@ -16623,8 +15605,8 @@ if table_sets ["statscollint"] > 0 then
 	end
 end
 
-stats = stats.."\r\n "..string.format (getlang (465), mu)
-stats = stats.."\r\n "..string.format (getlang (654), getownlinecnt (), makesize (getownsize (false, nil)))
+stats = stats.."\r\n "..string.format (gettext ("Script memory usage: %s"), mu)
+stats = stats.."\r\n "..string.format (gettext ("Script size: %s lines in %s"), getownlinecnt (), makesize (getownsize (false, nil)))
 
 if table_othsets ["func_getuptime"] == true then -- hub uptime
 	local ut = formatuptime ((os.time () - getuptime ()), true)
@@ -16638,7 +15620,7 @@ if table_othsets ["func_getuptime"] == true then -- hub uptime
 		end
 	end
 
-	stats = stats.."\r\n "..string.format (getlang (773), ut)
+	stats = stats.."\r\n "..string.format (gettext ("Hub uptime: %s"), ut)
 end
 
 	local uc = getusercount () -- users
@@ -16653,7 +15635,7 @@ end
 		end
 	end
 
-	stats = stats.."\r\n "..string.format (getlang (774), val)
+	stats = stats.."\r\n "..string.format (gettext ("User count: %s"), val)
 
 	local ts = gettotsharesize () -- share
 	val = makesize (ts)
@@ -16667,7 +15649,7 @@ end
 		end
 	end
 
-	stats = stats.."\r\n "..string.format (getlang (775), val)
+	stats = stats.."\r\n "..string.format (gettext ("Total share: %s"), val)
 
 	-- average share per user
 
@@ -16683,34 +15665,34 @@ end
 			end
 		end
 
-		stats = stats.."\r\n "..string.format (getlang (826), val)
+		stats = stats.."\r\n "..string.format (gettext ("Average share per user: %s"), val)
 	end
 
-stats = stats.."\r\n "..string.format (getlang (692), table_othsets ["cfgdir"])
-stats = stats.."\r\n "..string.format (getlang (702), (getulimit () or getlang (184)))
+stats = stats.."\r\n "..string.format (gettext ("Configuration directory: %s"), table_othsets ["cfgdir"])
+stats = stats.."\r\n "..string.format (gettext ("Open files limit: %s"), (getulimit () or gettext ("Unknown")))
 stats = stats.."\r\n"
-stats = stats.."\r\n "..string.format (getlang (190), cntchatran)
-stats = stats.."\r\n "..string.format (getlang (113), makesize (countranks (tbl_sql ["shran"])))
-stats = stats.."\r\n "..string.format (getlang (191), countranks (tbl_sql ["opran"]))
-stats = stats.."\r\n "..string.format (getlang (344), countranks (tbl_sql ["srran"]))
-stats = stats.."\r\n "..string.format (getlang (444), countranks (tbl_sql ["wdran"]))
-stats = stats.."\r\n "..string.format (getlang (192), roundint (mesperuser, 2))
+stats = stats.."\r\n "..string.format (gettext ("Total chat rank points: %s"), cntchatran)
+stats = stats.."\r\n "..string.format (gettext ("Total share rank size: %s"), makesize (countranks (tbl_sql ["shran"])))
+stats = stats.."\r\n "..string.format (gettext ("Total operator rank points: %s"), countranks (tbl_sql ["opran"]))
+stats = stats.."\r\n "..string.format (gettext ("Total search rank points: %s"), countranks (tbl_sql ["srran"]))
+stats = stats.."\r\n "..string.format (gettext ("Total word rank points: %s"), countranks (tbl_sql ["wdran"]))
+stats = stats.."\r\n "..string.format (gettext ("Average message count per user: %s"), roundint (mesperuser, 2))
 stats = stats.."\r\n"
-stats = stats.."\r\n "..string.format (getlang (230), counttable ("kicklist"), "C", (getledoconf ("limcleankick") or 0), fromunixtime ((getledoconf ("lastcleankick") or 0), true))
-stats = stats.."\r\n "..string.format (getlang (231), counttable ("banlist"), "C", (getledoconf ("limcleanban") or 0), fromunixtime ((getledoconf ("lastcleanban") or 0), true))
-stats = stats.."\r\n "..string.format (getlang (232), counttable ("unbanlist"), "C", (getledoconf ("limcleanunban") or 0), fromunixtime ((getledoconf ("lastcleanunban") or 0), true))
-stats = stats.."\r\n "..string.format (getlang (333), counttable ("reglist"), "C", (getledoconf ("limcleanreg") or 0), fromunixtime ((getledoconf ("lastcleanreg") or 0), true))
-stats = stats.."\r\n "..string.format (getlang (123), counttable (tbl_sql ["ulog"]), "C", (getledoconf ("limcleanulog") or 0), fromunixtime ((getledoconf ("lastcleanulog") or 0), true))
-stats = stats.."\r\n "..string.format (getlang (783), counttable (tbl_sql ["clog"]), "C", (getledoconf ("limcleanclog") or 0), fromunixtime ((getledoconf ("lastcleanclog") or 0), true))
-stats = stats.."\r\n "..string.format (getlang (604), counttable (tbl_sql ["rel"]), "C", (getledoconf ("limcleanrel") or 0), fromunixtime ((getledoconf ("lastcleanrel") or 0), true))
-stats = stats.."\r\n "..string.format (getlang (377), counttable (tbl_sql ["chran"]), "C", (getledoconf ("limcleanchran") or 0), fromunixtime ((getledoconf ("lastcleanchran") or 0), true))
-stats = stats.."\r\n "..string.format (getlang (378), counttable (tbl_sql ["shran"]), "C", (getledoconf ("limcleanshran") or 0), fromunixtime ((getledoconf ("lastcleanshran") or 0), true))
-stats = stats.."\r\n "..string.format (getlang (379), counttable (tbl_sql ["opran"]), "C", (getledoconf ("limcleanopran") or 0), fromunixtime ((getledoconf ("lastcleanopran") or 0), true))
-stats = stats.."\r\n "..string.format (getlang (699), counttable (tbl_sql ["srran"]), "C", (getledoconf ("limcleansrran") or 0), fromunixtime ((getledoconf ("lastcleansrran") or 0), true))
-stats = stats.."\r\n "..string.format (getlang (443), counttable (tbl_sql ["wdran"]), "C", (getledoconf ("limcleanwdran") or 0), fromunixtime ((getledoconf ("lastcleanwdran") or 0), true))
-stats = stats.."\r\n "..string.format (getlang (700), counttable (tbl_sql ["ccstat"]), "C", fromunixtime ((getledoconf ("date_ccstats") or 0), true))
-stats = stats.."\r\n "..string.format (getlang (233), counttable ("pi_iplog"), "C", (getledoconf ("limcleaniplog") or 0), fromunixtime ((getledoconf ("lastcleaniplog") or 0), true))
-stats = stats.."\r\n "..string.format (getlang (234), counttable ("pi_stats"), "C", (getledoconf ("limcleanstats") or 0), fromunixtime ((getledoconf ("lastcleanstats") or 0), true)).."\r\n"
+stats = stats.."\r\n "..string.format (gettext ("Size of kicks table: %s [ %s: %s @ %s ]"), counttable ("kicklist"), "C", (getledoconf ("limcleankick") or 0), fromunixtime ((getledoconf ("lastcleankick") or 0), true))
+stats = stats.."\r\n "..string.format (gettext ("Size of bans table: %s [ %s: %s @ %s ]"), counttable ("banlist"), "C", (getledoconf ("limcleanban") or 0), fromunixtime ((getledoconf ("lastcleanban") or 0), true))
+stats = stats.."\r\n "..string.format (gettext ("Size of unbans table: %s [ %s: %s @ %s ]"), counttable ("unbanlist"), "C", (getledoconf ("limcleanunban") or 0), fromunixtime ((getledoconf ("lastcleanunban") or 0), true))
+stats = stats.."\r\n "..string.format (gettext ("Size of registered users table: %s [ %s: %s @ %s ]"), counttable ("reglist"), "C", (getledoconf ("limcleanreg") or 0), fromunixtime ((getledoconf ("lastcleanreg") or 0), true))
+stats = stats.."\r\n "..string.format (gettext ("Size of user log table: %s [ %s: %s @ %s ]"), counttable (tbl_sql ["ulog"]), "C", (getledoconf ("limcleanulog") or 0), fromunixtime ((getledoconf ("lastcleanulog") or 0), true))
+stats = stats.."\r\n "..string.format (gettext ("Size of command log table: %s [ %s: %s @ %s ]"), counttable (tbl_sql ["clog"]), "C", (getledoconf ("limcleanclog") or 0), fromunixtime ((getledoconf ("lastcleanclog") or 0), true))
+stats = stats.."\r\n "..string.format (gettext ("Size of release table: %s [ %s: %s @ %s ]"), counttable (tbl_sql ["rel"]), "C", (getledoconf ("limcleanrel") or 0), fromunixtime ((getledoconf ("lastcleanrel") or 0), true))
+stats = stats.."\r\n "..string.format (gettext ("Size of chat ranks table: %s [ %s: %s @ %s ]"), counttable (tbl_sql ["chran"]), "C", (getledoconf ("limcleanchran") or 0), fromunixtime ((getledoconf ("lastcleanchran") or 0), true))
+stats = stats.."\r\n "..string.format (gettext ("Size of share ranks table: %s [ %s: %s @ %s ]"), counttable (tbl_sql ["shran"]), "C", (getledoconf ("limcleanshran") or 0), fromunixtime ((getledoconf ("lastcleanshran") or 0), true))
+stats = stats.."\r\n "..string.format (gettext ("Size of operator ranks table: %s [ %s: %s @ %s ]"), counttable (tbl_sql ["opran"]), "C", (getledoconf ("limcleanopran") or 0), fromunixtime ((getledoconf ("lastcleanopran") or 0), true))
+stats = stats.."\r\n "..string.format (gettext ("Size of search ranks table: %s [ %s: %s @ %s ]"), counttable (tbl_sql ["srran"]), "C", (getledoconf ("limcleansrran") or 0), fromunixtime ((getledoconf ("lastcleansrran") or 0), true))
+stats = stats.."\r\n "..string.format (gettext ("Size of word ranks table: %s [ %s: %s @ %s ]"), counttable (tbl_sql ["wdran"]), "C", (getledoconf ("limcleanwdran") or 0), fromunixtime ((getledoconf ("lastcleanwdran") or 0), true))
+stats = stats.."\r\n "..string.format (gettext ("Size of user location statistics table: %s [ %s: %s ]"), counttable (tbl_sql ["ccstat"]), "C", fromunixtime ((getledoconf ("date_ccstats") or 0), true))
+stats = stats.."\r\n "..string.format (gettext ("Size of IP logger plugin table: %s [ %s: %s @ %s ]"), counttable ("pi_iplog"), "C", (getledoconf ("limcleaniplog") or 0), fromunixtime ((getledoconf ("lastcleaniplog") or 0), true))
+stats = stats.."\r\n "..string.format (gettext ("Size of statistics plugin table: %s [ %s: %s @ %s ]"), counttable ("pi_stats"), "C", (getledoconf ("limcleanstats") or 0), fromunixtime ((getledoconf ("lastcleanstats") or 0), true)).."\r\n"
 
 commandanswer (nick, stats)
 end
@@ -16718,7 +15700,7 @@ end
 ----- ---- --- -- -
 
 function showledoconf (nick)
-local conf = getlang (176)..":\r\n"
+local conf = gettext ("Script configuration variables")..":\r\n"
 
 conf = conf.."\r\n [::] mincommandclass = "..table_sets ["mincommandclass"]
 conf = conf.."\r\n [::] minusrcommandclass = "..table_sets ["minusrcommandclass"]
@@ -17435,31 +16417,53 @@ end
 
 ----- ---- --- -- -
 
-function loadlangfile (nick, new)
-	table_lang = table_lang_def -- load default table
-	local lang = new or table_sets ["langfileprefix"]
-	if string.len (lang) == 0 then return nil end
-	local l, err = loadfile (table_othsets ["cfgdir"].."scripts/ledo_"..lang..".txt") -- try to load the file
+function loadlangfile (nick, pref)
+	local lang = pref or table_sets ["langfileprefix"]
 
-	if not l then -- not found or syntax error
-		if nick and err then
-			commandanswer (nick, string.format (getlang (466), "ledo_"..lang..".txt", err))
+	if # lang == 0 then
+		return
+	end
+
+	local file, err = io.open (table_othsets ["cfgdir"] .. "scripts/ledo_" .. lang .. ".lang", "r")
+
+	if file then
+		table_lang = file:read ("*all")
+		file:close ()
+
+		if # table_lang > 0 then
+			table_othsets ["langver"] = lang:upper ()
+		else
+			if nick then
+				commandanswer (nick, gettext ("Couldn't load language file %s: %s"):format ("ledo_" .. lang .. ".lang", gettext ("No error message specified.")))
+			end
+
+			table_othsets ["langver"] = "EN"
+		end
+	else
+		if nick then
+			commandanswer (nick, gettext ("Couldn't load language file %s: %s"):format ("ledo_" .. lang .. ".lang", (err or gettext ("No error message specified."))))
 		end
 
 		table_othsets ["langver"] = "EN"
-	else
-		l () -- define the chunk
-		table_lang = f () -- return the function as a global table
-		t, f = nil -- destroy
-		table_othsets ["langver"] = string.upper (lang)
 	end
 end
 
 ----- ---- --- -- -
 
-function getlang (var)
-	local str = repnmdcoutchars (table_lang [var] or table_lang_def [var] or "[error]") -- fall back
-	return str
+function gettext (data)
+	if # table_lang > 0 then
+		for line in table_lang:gmatch ("[^\r\n]+") do
+			if # line > 2 and line:sub (1, 1) ~= "#" then
+				local _, _, orig, tran = line:find ("^(.+)|(.+)$")
+
+				if orig and tran and orig == data then
+					return repnmdcoutchars (tran)
+				end
+			end
+		end
+	end
+
+	return data -- own data is always safe
 end
 
 ----- ---- --- -- -
@@ -18638,67 +17642,67 @@ end
 
 function statustostr (sts)
 if sts == 1 then
-	return getlang (723)
+	return gettext ("Normal")
 elseif sts == 2 then
-	return getlang (724)
+	return gettext ("Away")
 elseif sts == 3 then
-	return getlang (725)
+	return gettext ("Normal away")
 elseif sts == 4 then
-	return getlang (726)
+	return gettext ("Fileserver")
 elseif sts == 5 then
-	return getlang (727)
+	return gettext ("Normal fileserver")
 elseif sts == 6 then
-	return getlang (728)
+	return gettext ("Away fileserver")
 elseif sts == 7 then
-	return getlang (729)
+	return gettext ("Normal away fileserver")
 elseif sts == 8 then
-	return getlang (730)
+	return gettext ("Fireball")
 elseif sts == 9 then
-	return getlang (731)
+	return gettext ("Normal fireball")
 elseif sts == 10 then
-	return getlang (732)
+	return gettext ("Away fireball")
 elseif sts == 11 then
-	return getlang (733)
+	return gettext ("Normal away fireball")
 elseif sts == 12 then
-	return getlang (734)
+	return gettext ("Fileserver fireball")
 elseif sts == 13 then
-	return getlang (735)
+	return gettext ("Normal fileserver fireball")
 elseif sts == 14 then
-	return getlang (736)
+	return gettext ("Away fileserver fireball")
 elseif sts == 15 then
-	return getlang (737)
+	return gettext ("Normal away fileserver fireball")
 elseif sts == 16 then
-	return getlang (738)
+	return gettext ("TLS")
 elseif sts == 17 then
-	return getlang (739)
+	return gettext ("Normal TLS")
 elseif sts == 18 then
-	return getlang (740)
+	return gettext ("Away TLS")
 elseif sts == 19 then
-	return getlang (741)
+	return gettext ("Normal away TLS")
 elseif sts == 20 then
-	return getlang (742)
+	return gettext ("Fileserver TLS")
 elseif sts == 21 then
-	return getlang (743)
+	return gettext ("Normal fileserver TLS")
 elseif sts == 22 then
-	return getlang (744)
+	return gettext ("Away fileserver TLS")
 elseif sts == 23 then
-	return getlang (745)
+	return gettext ("Normal away fileserver TLS")
 elseif sts == 24 then
-	return getlang (746)
+	return gettext ("Fireball TLS")
 elseif sts == 25 then
-	return getlang (747)
+	return gettext ("Normal fireball TLS")
 elseif sts == 26 then
-	return getlang (748)
+	return gettext ("Away fireball TLS")
 elseif sts == 27 then
-	return getlang (749)
+	return gettext ("Normal away fireball TLS")
 elseif sts == 28 then
-	return getlang (750)
+	return gettext ("Fileserver fireball TLS")
 elseif sts == 29 then
-	return getlang (751)
+	return gettext ("Normal fileserver fireball TLS")
 elseif sts == 30 then
-	return getlang (752)
+	return gettext ("Away fileserver fireball TLS")
 elseif sts == 31 then
-	return getlang (753)
+	return gettext ("Normal away fileserver fireball TLS")
 else
 	return sts
 end
@@ -18751,30 +17755,30 @@ function makesize (bytes)
 local b = tonumber (bytes) or 0
 
 if b >= 1152921504606846976 then -- eib
-	return roundint (b / 1152921504606846976, 2).." "..getlang (366)
+	return roundint (b / 1152921504606846976, 2).." "..gettext ("EiB")
 end
 
 if b >= 1125899906842624 then -- pib
-	return roundint (b / 1125899906842624, 2).." "..getlang (360)
+	return roundint (b / 1125899906842624, 2).." "..gettext ("PiB")
 end
 
 if b >= 1099511627776 then -- tib
-	return roundint (b / 1099511627776, 2).." "..getlang (361)
+	return roundint (b / 1099511627776, 2).." "..gettext ("TiB")
 end
 
 if b >= 1073741824 then -- gib
-	return roundint (b / 1073741824, 2).." "..getlang (362)
+	return roundint (b / 1073741824, 2).." "..gettext ("GiB")
 end
 
 if b >= 1048576 then -- mib
-	return roundint (b / 1048576, 2).." "..getlang (363)
+	return roundint (b / 1048576, 2).." "..gettext ("MiB")
 end
 
 if b >= 1024 then -- kib
-	return roundint (b / 1024, 2).." "..getlang (364)
+	return roundint (b / 1024, 2).." "..gettext ("KiB")
 end
 
-return b.." "..getlang (365)
+return b.." "..gettext ("B")
 end
 
 ----- ---- --- -- -
@@ -18789,22 +17793,22 @@ if fmt == true then -- short
 	ret = string.format (table_sets ["shrtuptimefmt"], prezero (2, t.month), prezero (2, t.day), prezero (2, t.hour), prezero (2, t.min), prezero (2, t.sec))
 else -- long
 	if t.month > 0 then
-		if t.month == 1 then ret = ret..t.month.." "..getlang (434).." " else ret = ret..t.month.." "..getlang (435).." " end
+		if t.month == 1 then ret = ret..t.month.." "..gettext ("month").." " else ret = ret..t.month.." "..gettext ("months").." " end
 	end
 
 	if t.day > 0 then
-		if t.day == 1 then ret = ret..t.day.." "..getlang (436).." " else ret = ret..t.day.." "..getlang (4).." " end
+		if t.day == 1 then ret = ret..t.day.." "..gettext ("day").." " else ret = ret..t.day.." "..gettext ("days").." " end
 	end
 
 	if t.hour > 0 then
-		if t.hour == 1 then ret = ret..t.hour.." "..getlang (437).." " else ret = ret..t.hour.." "..getlang (438).." " end
+		if t.hour == 1 then ret = ret..t.hour.." "..gettext ("hour").." " else ret = ret..t.hour.." "..gettext ("hours").." " end
 	end
 
 	if t.min > 0 then
-		if t.min == 1 then ret = ret..t.min.." "..getlang (503).." " else ret = ret..t.min.." "..getlang (206).." " end
+		if t.min == 1 then ret = ret..t.min.." "..gettext ("minute").." " else ret = ret..t.min.." "..gettext ("minutes").." " end
 	end
 
-	if t.sec == 1 then ret = ret..t.sec.." "..getlang (537) else ret = ret..t.sec.." "..getlang (452) end
+	if t.sec == 1 then ret = ret..t.sec.." "..gettext ("second") else ret = ret..t.sec.." "..gettext ("seconds") end
 end
 
 return ret
@@ -18910,10 +17914,10 @@ function antiscan (nick, class, data, where, to, status)
 		local fres, fval = pcall (string.find, lowdata, entry)
 
 		if not fres then
-			local ferr = getlang (969) .. ":\r\n\r\n"
-			ferr = ferr .. " " .. getlang (970) .. ": " .. repnmdcoutchars (entry) .. "\r\n"
-			ferr = ferr .. " " .. getlang (971) .. ": " .. repnmdcoutchars (fval or getlang (662)) .. "\r\n"
-			ferr = ferr .. " " .. getlang (972) .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+			local ferr = gettext ("There is an error in following antispam entry pattern") .. ":\r\n\r\n"
+			ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (entry) .. "\r\n"
+			ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
+			ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
 			opsnotify (table_sets ["classnotiledoact"], ferr)
 		elseif fval then
 			VH:SQLQuery ("update `" .. tbl_sql ["anti"] .. "` set `occurred` = `occurred` + 1 where `antispam` = '" .. repsqlchars (entry) .. "' limit 1")
@@ -18923,25 +17927,25 @@ function antiscan (nick, class, data, where, to, status)
 					local fres, fval = pcall (string.find, lowdata, value)
 
 					if not fres then
-						local ferr = getlang (975) .. ":\r\n\r\n"
-						ferr = ferr .. " " .. getlang (970) .. ": " .. repnmdcoutchars (value) .. "\r\n"
-						ferr = ferr .. " " .. getlang (971) .. ": " .. repnmdcoutchars (fval or getlang (662)) .. "\r\n"
-						ferr = ferr .. " " .. getlang (972) .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+						local ferr = gettext ("There is an error in following antispam exception entry pattern") .. ":\r\n\r\n"
+						ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (value) .. "\r\n"
+						ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
+						ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
 						opsnotify (table_sets ["classnotiledoact"], ferr)
 					elseif fval then
 						VH:SQLQuery ("update `" .. tbl_sql ["antiex"] .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (value) .. "' limit 1")
-						local note = 540
+						local note = "Spam exception from %s with IP %s and class %s in MC: %s"
 
 						if where == 2 then
-							note = 541
+							note = "Spam exception from %s with IP %s and class %s in PM: %s"
 						elseif where == 3 then
-							note = 542
+							note = "Spam exception from %s with IP %s and class %s in offline message: %s"
 						elseif where == 4 then
-							note = 543
+							note = "Spam exception from %s with IP %s and class %s in report: %s"
 						end
 
 						local mtip = getip (nick)
-						opsnotify (table_sets ["classnotiex"], string.format (getlang (note), nick, mtip .. tryipcc (mtip, nick), class, data))
+						opsnotify (table_sets ["classnotiex"], string.format (gettext (note), nick, mtip .. tryipcc (mtip, nick), class, data))
 						return 1
 					end
 				end
@@ -18950,18 +17954,18 @@ function antiscan (nick, class, data, where, to, status)
 			action = tonumber (action)
 
 			if action == 5 then
-				local note = 544
+				local note = "Spam notification from %s with IP %s and class %s in MC: %s"
 
 				if where == 2 then
-					note = 545
+					note = "Spam notification from %s with IP %s and class %s in PM: %s"
 				elseif where == 3 then
-					note = 546
+					note = "Spam notification from %s with IP %s and class %s in offline message: %s"
 				elseif where == 4 then
-					note = 547
+					note = "Spam notification from %s with IP %s and class %s in report: %s"
 				end
 
 				local mtip = getip (nick)
-				opsnotify (table_sets ["classnotianti"], string.format (getlang (note), nick, mtip .. tryipcc (mtip, nick), class, data))
+				opsnotify (table_sets ["classnotianti"], string.format (gettext (note), nick, mtip .. tryipcc (mtip, nick), class, data))
 				return 1
 			end
 
@@ -18970,9 +17974,9 @@ function antiscan (nick, class, data, where, to, status)
 					maintoself (nick, data)
 				elseif where == 3 then
 					if status == 1 then
-						commandanswer (nick, string.format (getlang (27), to))
+						commandanswer (nick, string.format (gettext ("User %s is online. Sending message directly."), to))
 					else
-						commandanswer (nick, string.format (getlang (28), to))
+						commandanswer (nick, string.format (gettext ("Your offline message stored for user: %s"), to))
 					end
 				end
 			elseif action == 9 then -- replace with ninthactrepmsg
@@ -19006,21 +18010,21 @@ function antiscan (nick, class, data, where, to, status)
 				end
 			end
 
-			local note = 548
+			local note = "Spam from %s with IP %s and class %s in MC: %s"
 
 			if where == 2 then
-				note = 549
+				note = "Spam from %s with IP %s and class %s in PM: %s"
 			elseif where == 3 then
-				note = 550
+				note = "Spam from %s with IP %s and class %s in offline message: %s"
 			elseif where == 4 then
-				note = 551
+				note = "Spam from %s with IP %s and class %s in report: %s"
 			end
 
 			local ip = getip (nick)
-			opsnotify (table_sets ["classnotianti"], string.format (getlang (note), nick, ip .. tryipcc (ip, nick), class, data))
+			opsnotify (table_sets ["classnotianti"], string.format (gettext (note), nick, ip .. tryipcc (ip, nick), class, data))
 
 			if action == 1 then -- drop
-				opsnotify (table_sets ["classnotianti"], string.format (getlang (203), nick))
+				opsnotify (table_sets ["classnotianti"], string.format (gettext ("%s dropped due to spam."), nick))
 				VH:CloseConnection (nick)
 			elseif action == 2 then -- kick
 				local reason = string.gsub (table_sets ["antikreason"], "%*", reprexpchars (data))
@@ -19029,9 +18033,9 @@ function antiscan (nick, class, data, where, to, status)
 				local reason = string.gsub (table_sets ["antikreason"], "%*", reprexpchars (data))
 				VH:KickUser (table_othsets ["sendfrom"], nick, reason .. "     #_ban_" .. table_sets ["thirdacttime"])
 			elseif action == 4 then -- spam to self
-				opsnotify (table_sets ["classnotianti"], string.format (getlang (52), nick))
+				opsnotify (table_sets ["classnotianti"], string.format (gettext ("%s received own message."), nick))
 			elseif action == 6 then -- redirect to sixthactaddr
-				opsnotify (table_sets ["classnotianti"], string.format (getlang (356), nick))
+				opsnotify (table_sets ["classnotianti"], string.format (gettext ("%s redirected due to spam."), nick))
 				VH:SendDataToUser ("$ForceMove " .. table_sets ["sixthactaddr"] .. "|", nick)
 				VH:CloseConnection (nick)
 			elseif action == 7 then -- permanent ban, kick using seventhacttime
@@ -19039,16 +18043,16 @@ function antiscan (nick, class, data, where, to, status)
 				VH:KickUser (table_othsets ["sendfrom"], nick, reason .. "     #_ban_" .. table_sets ["seventhacttime"])
 			elseif action == 8 then -- gag ip
 				gagipadd (nil, ip .. " " .. tostring (where))
-				opsnotify (table_sets ["classnotianti"], string.format (getlang (655), ip .. tryipcc (ip, nick), table.getn (getusersbyip (ip, table_sets ["scanbelowclass"]))))
+				opsnotify (table_sets ["classnotianti"], string.format (gettext ("Added %s to IP gag list, %s users in total."), ip .. tryipcc (ip, nick), table.getn (getusersbyip (ip, table_sets ["scanbelowclass"]))))
 			elseif action == 9 then -- replace
 				if where == 1 then -- mc
-					opsnotify (table_sets ["classnotianti"], string.format (getlang (890), nick))
+					opsnotify (table_sets ["classnotianti"], string.format (gettext ("Main chat message replaced for user: %s"), nick))
 				elseif where == 2 then -- pm
-					opsnotify (table_sets ["classnotianti"], string.format (getlang (778), nick))
+					opsnotify (table_sets ["classnotianti"], string.format (gettext ("Private message replaced for user: %s"), nick))
 				end
 			elseif action == 10 then -- hard ban
 				addhban (nil, repexdots (ip) .. "$ \"" .. entry .. "\"")
-				opsnotify (table_sets ["classnotianti"], string.format (getlang (892), ip, table.getn (getusersbyip (ip, table_sets ["scanbelowclass"]))))
+				opsnotify (table_sets ["classnotianti"], string.format (gettext ("Added %s to hard ban list, %s users in total."), ip, table.getn (getusersbyip (ip, table_sets ["scanbelowclass"]))))
 				VH:CloseConnection (nick)
 			end
 
@@ -19100,10 +18104,10 @@ function sefiscan (nick, srch, cls, ip)
 		local fres, fval = pcall (string.find, lsr, ent)
 
 		if not fres then
-			local ferr = getlang (973) .. ":\r\n\r\n"
-			ferr = ferr .. " " .. getlang (970) .. ": " .. repnmdcoutchars (ent) .. "\r\n"
-			ferr = ferr .. " " .. getlang (971) .. ": " .. repnmdcoutchars (fval or getlang (662)) .. "\r\n"
-			ferr = ferr .. " " .. getlang (972) .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+			local ferr = gettext ("There is an error in following search filter pattern") .. ":\r\n\r\n"
+			ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (ent) .. "\r\n"
+			ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
+			ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
 			opsnotify (table_sets ["classnotiledoact"], ferr)
 		elseif fval then
 			VH:SQLQuery ("update `" .. tbl_sql ["sefi"] .. "` set `occurred` = `occurred` + 1 where `filter` = '" .. repsqlchars (ent) .. "' limit 1")
@@ -19113,34 +18117,34 @@ function sefiscan (nick, srch, cls, ip)
 					local fres, fval = pcall (string.find, lsr, v)
 
 					if not fres then
-						local ferr = getlang (974) .. ":\r\n\r\n"
-						ferr = ferr .. " " .. getlang (970) .. ": " .. repnmdcoutchars (v) .. "\r\n"
-						ferr = ferr .. " " .. getlang (971) .. ": " .. repnmdcoutchars (fval or getlang (662)) .. "\r\n"
-						ferr = ferr .. " " .. getlang (972) .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+						local ferr = gettext ("There is an error in following search filter exception pattern") .. ":\r\n\r\n"
+						ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (v) .. "\r\n"
+						ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
+						ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
 						opsnotify (table_sets ["classnotiledoact"], ferr)
 					elseif fval then
 						VH:SQLQuery ("update `" .. tbl_sql ["sefiex"] .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (v) .. "' limit 1")
-						local note = 558
+						local note = "Search request exception from %s with IP %s and class %s as any file: %s"
 
 						if tp == 2 then
-							note = 559
+							note = "Search request exception from %s with IP %s and class %s as audio file: %s"
 						elseif tp == 3 then
-							note = 560
+							note = "Search request exception from %s with IP %s and class %s as compressed file: %s"
 						elseif tp == 4 then
-							note = 561
+							note = "Search request exception from %s with IP %s and class %s as document: %s"
 						elseif tp == 5 then
-							note = 562
+							note = "Search request exception from %s with IP %s and class %s as executable: %s"
 						elseif tp == 6 then
-							note = 563
+							note = "Search request exception from %s with IP %s and class %s as picture: %s"
 						elseif tp == 7 then
-							note = 564
+							note = "Search request exception from %s with IP %s and class %s as video: %s"
 						elseif tp == 8 then
-							note = 565
+							note = "Search request exception from %s with IP %s and class %s as folder: %s"
 						elseif tp == 9 then
-							note = 566
+							note = "Search request exception from %s with IP %s and class %s as TTH: %s"
 						end
 
-						opsnotify (table_sets ["classnotiex"], string.format (getlang (note), nick, ip .. tryipcc (ip, nick), cls, str))
+						opsnotify (table_sets ["classnotiex"], string.format (gettext (note), nick, ip .. tryipcc (ip, nick), cls, str))
 						return 1
 					end
 				end
@@ -19149,27 +18153,27 @@ function sefiscan (nick, srch, cls, ip)
 			act = tonumber (act)
 
 			if act == 5 then
-				local note = 567
+				local note = "Search request notification from %s with IP %s and class %s as any file: %s"
 
 				if tp == 2 then
-					note = 568
+					note = "Search request notification from %s with IP %s and class %s as audio file: %s"
 				elseif tp == 3 then
-					note = 569
+					note = "Search request notification from %s with IP %s and class %s as compressed file: %s"
 				elseif tp == 4 then
-					note = 570
+					note = "Search request notification from %s with IP %s and class %s as document: %s"
 				elseif tp == 5 then
-					note = 571
+					note = "Search request notification from %s with IP %s and class %s as executable: %s"
 				elseif tp == 6 then
-					note = 572
+					note = "Search request notification from %s with IP %s and class %s as picture: %s"
 				elseif tp == 7 then
-					note = 573
+					note = "Search request notification from %s with IP %s and class %s as video: %s"
 				elseif tp == 8 then
-					note = 574
+					note = "Search request notification from %s with IP %s and class %s as folder: %s"
 				elseif tp == 9 then
-					note = 575
+					note = "Search request notification from %s with IP %s and class %s as TTH: %s"
 				end
 
-				opsnotify (table_sets ["classnotisefi"], string.format (getlang (note), nick, ip .. tryipcc (ip, nick), cls, str))
+				opsnotify (table_sets ["classnotisefi"], string.format (gettext (note), nick, ip .. tryipcc (ip, nick), cls, str))
 				return 1
 			end
 
@@ -19178,30 +18182,30 @@ function sefiscan (nick, srch, cls, ip)
 				commandanswer (nick, rsn)
 			end
 
-			local note = 576
+			local note = "Bad search request from %s with IP %s and class %s as any file: %s"
 
 			if tp == 2 then
-				note = 577
+				note = "Bad search request from %s with IP %s and class %s as audio file: %s"
 			elseif tp == 3 then
-				note = 578
+				note = "Bad search request from %s with IP %s and class %s as compressed file: %s"
 			elseif tp == 4 then
-				note = 579
+				note = "Bad search request from %s with IP %s and class %s as document: %s"
 			elseif tp == 5 then
-				note = 580
+				note = "Bad search request from %s with IP %s and class %s as executable: %s"
 			elseif tp == 6 then
-				note = 581
+				note = "Bad search request from %s with IP %s and class %s as picture: %s"
 			elseif tp == 7 then
-				note = 582
+				note = "Bad search request from %s with IP %s and class %s as video: %s"
 			elseif tp == 8 then
-				note = 583
+				note = "Bad search request from %s with IP %s and class %s as folder: %s"
 			elseif tp == 9 then
-				note = 584
+				note = "Bad search request from %s with IP %s and class %s as TTH: %s"
 			end
 
-			opsnotify (table_sets ["classnotisefi"], string.format (getlang (note), nick, ip .. tryipcc (ip, nick), cls, str))
+			opsnotify (table_sets ["classnotisefi"], string.format (gettext (note), nick, ip .. tryipcc (ip, nick), cls, str))
 
 			if act == 1 then
-				opsnotify (table_sets ["classnotisefi"], string.format (getlang (127), nick))
+				opsnotify (table_sets ["classnotisefi"], string.format (gettext ("%s dropped due to bad search request."), nick))
 				VH:CloseConnection (nick)
 			elseif act == 2 then
 				local rsn = string.gsub (table_sets ["sefireason"], "%*", reprexpchars (str))
@@ -19210,9 +18214,9 @@ function sefiscan (nick, srch, cls, ip)
 				local rsn = string.gsub (table_sets ["sefireason"], "%*", reprexpchars (str))
 				VH:KickUser (table_othsets ["sendfrom"], nick, rsn .. "     #_ban_" .. table_sets ["thirdacttime"])
 			elseif act == 4 then
-				opsnotify (table_sets ["classnotisefi"], string.format (getlang (151), nick))
+				opsnotify (table_sets ["classnotisefi"], string.format (gettext ("%s didn't get any search results."), nick))
 			elseif act == 6 then
-				opsnotify (table_sets ["classnotisefi"], string.format (getlang (357), nick))
+				opsnotify (table_sets ["classnotisefi"], string.format (gettext ("%s redirected due to bad search request."), nick))
 				VH:SendDataToUser ("$ForceMove " .. table_sets ["sixthactaddr"] .. "|", nick)
 				VH:CloseConnection (nick)
 			elseif act == 7 then
