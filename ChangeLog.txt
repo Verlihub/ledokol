@@ -1,3 +1,7 @@
+[ 2.8.0 :: 2014-##-## ]
+
+Added: Custom orderless gettext() format for translations, strings must be in format "english|translation\n" with each string on new line, comment with # character
+
 [ 2.7.9 :: 2014-06-25 ]
 
 Fixed: Use newline character as delimiter in word ranks instead of using it as part of the word
