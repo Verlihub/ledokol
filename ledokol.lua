@@ -16453,11 +16453,15 @@ end
 function gettext (data)
 	if # table_lang > 0 then
 		for line in table_lang:gmatch ("[^\r\n]+") do
-			if # line > 2 and line:sub (1, 1) ~= "#" then
-				local _, _, orig, tran = line:find ("^(.+)|(.+)$")
+			if # line > 1 and line:sub (1, 1) ~= "#" then
+				local _, _, orig, tran = line:find ("^(.+)|(.*)$")
 
 				if orig and tran and orig == data then
-					return repnmdcoutchars (tran)
+					if # tran > 0 then
+						return repnmdcoutchars (tran)
+					else -- not translated yet
+						return data
+					end
 				end
 			end
 		end
