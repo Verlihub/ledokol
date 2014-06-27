@@ -1,6 +1,7 @@
 [ 2.8.0 :: 2014-##-## ]
 
 Added: Custom orderless gettext() format for translations, strings must be in format "english|translation\n" with each string on new line, comment with # character
+Fixed: +me command triggered by operator did not perform any operations
 
 [ 2.7.9 :: 2014-06-25 ]
 
