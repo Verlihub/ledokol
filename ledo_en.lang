@@ -3,995 +3,995 @@
 # Author: RoLex
 # Email: webmaster@feardc.net
 
-Current topic: %s|Current topic: %s
-Current topic set by %s: %s|Current topic set by %s: %s
-This operation might take very long time depending on how much is going to be removed. Please be patient.|This operation might take very long time depending on how much is going to be removed. Please be patient.
-days|days
-%s with class %s deleted %s IP logger plugin entries older than %s days.|%s with class %s deleted %s IP logger plugin entries older than %s days.
-%s with class %s deleted %s unbans older than %s days.|%s with class %s deleted %s unbans older than %s days.
-%s with class %s deleted %s bans older than %s days.|%s with class %s deleted %s bans older than %s days.
-%s with class %s deleted %s kicks older than %s days.|%s with class %s deleted %s kicks older than %s days.
-I'm probably away. State your business and I might answer later if you're lucky.|I'm probably away. State your business and I might answer later if you're lucky.
-Perform script update|Perform script update
-Deleted %s main chat history messages.|Deleted %s main chat history messages.
-There are no main chat history messages to remove.|There are no main chat history messages to remove.
-Deleted %s operator chat history messages.|Deleted %s operator chat history messages.
-There are no operator chat history messages to remove.|There are no operator chat history messages to remove.
-%s with class %s deleted %s main chat history messages.|%s with class %s deleted %s main chat history messages.
-Unable to connect to target server. Please try again later.|Unable to connect to target server. Please try again later.
-Last %s main chat messages|Last %s main chat messages
-Main chat history is empty.|Main chat history is empty.
-Requested file %s not found on target server. Please try again later.|Requested file %s not found on target server. Please try again later.
-%s is now known as: %s|%s is now known as: %s
-Last %s operator chat messages|Last %s operator chat messages
-Operator chat history is empty.|Operator chat history is empty.
-Valid priority is a number from %s to %s.|Valid priority is a number from %s to %s.
-Ledokol version %s released. Downloading script files...|Ledokol version %s released. Downloading script files...
-You are currently running latest version of Ledokol. No update is required.|You are currently running latest version of Ledokol. No update is required.
-Why would you send offline message to yourself?|Why would you send offline message to yourself?
-User %s is online. Sending message directly.|User %s is online. Sending message directly.
-Your offline message stored for user: %s|Your offline message stored for user: %s
-%s with IP %s and class %s sent offline message.|%s with IP %s and class %s sent offline message.
-priority|priority
-Offline|Offline
-Online|Online
-I sent offline message to you on %s|I sent offline message to you on %s
-My current status|My current status
-%s with IP %s and class %s received offline messages.|%s with IP %s and class %s received offline messages.
-Stored offline messages|Stored offline messages
-Offline message list is empty.|Offline message list is empty.
-Deleted %s offline messages.|Deleted %s offline messages.
-Couldn't delete offline messages because not found: %s|Couldn't delete offline messages because not found: %s
-%s with class %s deleted all offline messages.|%s with class %s deleted all offline messages.
-There are no offline messages to remove.|There are no offline messages to remove.
-No topic is set.|No topic is set.
-%s with IP %s and class %s allowed due to forbidden nick exception: %s|%s with IP %s and class %s allowed due to forbidden nick exception: %s
-message|message
-%s with IP %s and class %s allowed due to forbidden description exception: %s|%s with IP %s and class %s allowed due to forbidden description exception: %s
-User you're trying to kick or redirect is protected.|User you're trying to kick or redirect is protected.
-%s with IP %s and class %s allowed due to forbidden tag exception: %s|%s with IP %s and class %s allowed due to forbidden tag exception: %s
-type|type
-%s with IP %s and class %s allowed due to forbidden connection type exception: %s|%s with IP %s and class %s allowed due to forbidden connection type exception: %s
-%s with class %s changed configuration variable %s: %s => %s|%s with class %s changed configuration variable %s: %s => %s
-%s with IP %s and class %s allowed due to forbidden email exception: %s|%s with IP %s and class %s allowed due to forbidden email exception: %s
-%s received own message.|%s received own message.
-%s with IP %s and class %s allowed due to forbidden share size exception: %s|%s with IP %s and class %s allowed due to forbidden share size exception: %s
-Deleted %s releases from category: %s|Deleted %s releases from category: %s
-Why would you want to set empty topic?|Why would you want to set empty topic?
-Couldn't add forbidden nick because already exists: %s|Couldn't add forbidden nick because already exists: %s
-Added forbidden nick: %s|Added forbidden nick: %s
-Couldn't add forbidden description because already exists: %s|Couldn't add forbidden description because already exists: %s
-Added forbidden description: %s|Added forbidden description: %s
-Couldn't add forbidden tag because already exists: %s|Couldn't add forbidden tag because already exists: %s
-Added forbidden tag: %s|Added forbidden tag: %s
-Couldn't add forbidden connection type because already exists: %s|Couldn't add forbidden connection type because already exists: %s
-Added forbidden connection type: %s|Added forbidden connection type: %s
-Couldn't add forbidden email because already exists: %s|Couldn't add forbidden email because already exists: %s
-Added forbidden email: %s|Added forbidden email: %s
-Couldn't add forbidden share size because already exists: %s|Couldn't add forbidden share size because already exists: %s
-Added forbidden share size: %s|Added forbidden share size: %s
-Couldn't add MyINFO exception because already exists: %s|Couldn't add MyINFO exception because already exists: %s
-Added MyINFO exception: %s|Added MyINFO exception: %s
-and|and
-Deleted forbidden nick: %s|Deleted forbidden nick: %s
-Couldn't delete forbidden nick because not found: %s|Couldn't delete forbidden nick because not found: %s
-Deleted forbidden description: %s|Deleted forbidden description: %s
-Couldn't delete forbidden description because not found: %s|Couldn't delete forbidden description because not found: %s
-Deleted forbidden tag: %s|Deleted forbidden tag: %s
-Couldn't delete forbidden tag because not found: %s|Couldn't delete forbidden tag because not found: %s
-Deleted forbidden connection type: %s|Deleted forbidden connection type: %s
-Couldn't delete forbidden connection type because not found: %s|Couldn't delete forbidden connection type because not found: %s
-Deleted forbidden email: %s|Deleted forbidden email: %s
-Couldn't delete forbidden email because not found: %s|Couldn't delete forbidden email because not found: %s
-Deleted forbidden share size: %s|Deleted forbidden share size: %s
-Couldn't delete forbidden share size because not found: %s|Couldn't delete forbidden share size because not found: %s
-Deleted MyINFO exception: %s|Deleted MyINFO exception: %s
-Couldn't delete MyINFO exception because not found: %s|Couldn't delete MyINFO exception because not found: %s
-Forbidden nick list|Forbidden nick list
-Forbidden nick list is empty.|Forbidden nick list is empty.
-Forbidden description list|Forbidden description list
-Forbidden description list is empty.|Forbidden description list is empty.
-Forbidden tag list|Forbidden tag list
-Forbidden tag list is empty.|Forbidden tag list is empty.
-Forbidden connection type list|Forbidden connection type list
-Forbidden connection type list is empty.|Forbidden connection type list is empty.
-Forbidden email list|Forbidden email list
-Forbidden email list is empty.|Forbidden email list is empty.
-Forbidden share size list|Forbidden share size list
-Forbidden share size list is empty.|Forbidden share size list is empty.
-MyINFO exception list|MyINFO exception list
-MyINFO exception list is empty.|MyINFO exception list is empty.
-Deleted %s rows: %s|Deleted %s rows: %s
-Known types are: %s|Known types are: %s
-No rows to remove: %s|No rows to remove: %s
-date|date
-%s with class %s used command: %s|%s with class %s used command: %s
-context|context
-Deleted from chat rank list: %s|Deleted from chat rank list: %s
-Not found in chat rank list: %s|Not found in chat rank list: %s
-Deleted from operator rank list: %s|Deleted from operator rank list: %s
-Not found in operator rank list: %s|Not found in operator rank list: %s
-Antispam|Antispam
-Your chat rank is: %s|Your chat rank is: %s
-You have to write something in main chat to get started.|You have to write something in main chat to get started.
-Custom nick list is empty.|Custom nick list is empty.
-Total share rank size: %s|Total share rank size: %s
-Your operator rank is: %s|Your operator rank is: %s
-You have to do some operator actions to get started.|You have to do some operator actions to get started.
-Top %s chat rankers|Top %s chat rankers
-Chat rank list is empty.|Chat rank list is empty.
-Top %s operator rankers|Top %s operator rankers
-Operator rank list is empty.|Operator rank list is empty.
-string|string
-No user results found.|No user results found.
-Showing %s user log results|Showing %s user log results
-Size of user log table: %s [ %s: %s @ %s ]|Size of user log table: %s [ %s: %s @ %s ]
-Add protection entry|Add protection entry
-Delete protection entry|Delete protection entry
-flags|flags
-%s dropped due to bad search request.|%s dropped due to bad search request.
-This command is either disabled or you don't have access to it.|This command is either disabled or you don't have access to it.
-Deleted antispam entry: %s|Deleted antispam entry: %s
-Couldn't delete antispam entry because not found: %s|Couldn't delete antispam entry because not found: %s
-Antispam list|Antispam list
-Antispam list is empty.|Antispam list is empty.
-Couldn't add antispam exception entry because already exists: %s|Couldn't add antispam exception entry because already exists: %s
-Added antispam exception entry: %s|Added antispam exception entry: %s
-Deleted antispam exception entry: %s|Deleted antispam exception entry: %s
-Couldn't delete antispam exception entry because not found: %s|Couldn't delete antispam exception entry because not found: %s
-Antispam exception list|Antispam exception list
-Antispam exception list is empty.|Antispam exception list is empty.
-The user you're trying to send offline message to is a bot. Message is discarded.|The user you're trying to send offline message to is a bot. Message is discarded.
-You can't start at user number %s when you only have %s accounts with class %s.|You can't start at user number %s when you only have %s accounts with class %s.
-Showing %s out of total %s accounts with class %s starting at user number %s|Showing %s out of total %s accounts with class %s starting at user number %s
-There are no accounts with class: %s|There are no accounts with class: %s
-Known classes are: %s|Known classes are: %s
-%s with class %s sent say message: <%s> %s|%s with class %s sent say message: <%s> %s
-%s with class %s had bad luck sending say message: <%s> %s|%s with class %s had bad luck sending say message: <%s> %s
-You can't talk from nick whose class is higher or equals your own.|You can't talk from nick whose class is higher or equals your own.
-%s with IP %s and class %s kicked: <%s> %s|%s with IP %s and class %s kicked: <%s> %s
-%s with class %s deleted %s statistics plugin entries older than %s days.|%s with class %s deleted %s statistics plugin entries older than %s days.
-offset|offset
-order|order
-%s didn't get any search results.|%s didn't get any search results.
-Redirected %s with IP %s and class %s to %s: <%s> %s|Redirected %s with IP %s and class %s to %s: <%s> %s
-Unknown protocol command from %s with IP %s and class %s: %s|Unknown protocol command from %s with IP %s and class %s: %s
-Custom nick list|Custom nick list
-Ledokol operator commands|Ledokol operator commands
-Add antispam entry|Add antispam entry
-Showing last %s lines out of total %s found in %s file|Showing last %s lines out of total %s found in %s file
-Delete antispam entry|Delete antispam entry
-Add antispam exception entry|Add antispam exception entry
-Delete antispam exception entry|Delete antispam exception entry
-Add MyINFO entry|Add MyINFO entry
-Delete MyINFO entry|Delete MyINFO entry
-MyINFO list|MyINFO list
-List of registered users by class|List of registered users by class
-Speak from other nick|Speak from other nick
-Remove user or word from rank list|Remove user or word from rank list
-%s with class %s deleted %s user log entries older than %s days.|%s with class %s deleted %s user log entries older than %s days.
-List stored offline messages|List stored offline messages
-Delete offline messages by date|Delete offline messages by date
-Delete all offline messages|Delete all offline messages
-class|class
-Clean up tables|Clean up tables
-Operator chat history|Operator chat history
-Delete all history messages|Delete all history messages
-Your operator rank|Your operator rank
-Script configuration variables|Script configuration variables
-Change configuration variable|Change configuration variable
-nick|nick
-This list of commands|This list of commands
-Ledokol user commands|Ledokol user commands
-Current topic|Current topic
-Your chat rank|Your chat rank
-You're not allowed to send private messages.|You're not allowed to send private messages.
-Unknown|Unknown
-identifier|identifier
-Offline message to user|Offline message to user
-Main chat history|Main chat history
-Ledokol statistics|Ledokol statistics
-Script version: %s|Script version: %s
-Total chat rank points: %s|Total chat rank points: %s
-Total operator rank points: %s|Total operator rank points: %s
-Average message count per user: %s|Average message count per user: %s
-lre|lre
-action|action
-Changed configuration variable %s: %s => %s|Changed configuration variable %s: %s => %s
-Configuration variable %s can only be set to: %s|Configuration variable %s can only be set to: %s
-or|or
-Configuration variable %s must be a number.|Configuration variable %s must be a number.
-to|to
-Unknown configuration variable: %s|Unknown configuration variable: %s
-%s version: %s|%s version: %s
-Not installed|Not installed
-%s dropped due to spam.|%s dropped due to spam.
-variable|variable
-value|value
-minutes|minutes
-%s library version: %s|%s library version: %s
-Reorder right click menu item|Reorder right click menu item
-lines|lines
-Couldn't add rank exception because already exists: %s|Couldn't add rank exception because already exists: %s
-Added rank exception: %s|Added rank exception: %s
-Deleted rank exception: %s|Deleted rank exception: %s
-Couldn't delete rank exception because not found: %s|Couldn't delete rank exception because not found: %s
-Rank exception list|Rank exception list
-Rank exception list is empty.|Rank exception list is empty.
-Add rank exception|Add rank exception
-Delete rank exception|Delete rank exception
-In order to use this feature you must turn off registered users list cache. Do it by setting hub configuration variable %s to %s and restarting the hub. Please note: Turning cache off is not recommended with large list of registered users.|In order to use this feature you must turn off registered users list cache. Do it by setting hub configuration variable %s to %s and restarting the hub. Please note: Turning cache off is not recommended with large list of registered users.
-Both|Both
-Deleted search filter: %s|Deleted search filter: %s
-Couldn't delete search filter because not found: %s|Couldn't delete search filter because not found: %s
-Search filter list|Search filter list
-Search filter list is empty.|Search filter list is empty.
-Magnet link: %s|Magnet link: %s
-Add search filter|Add search filter
-Delete search filter|Delete search filter
-Known actions are: %s|Known actions are: %s
-Known flags are: %s|Known flags are: %s
-Downloading version file...|Downloading version file...
-Size of kicks table: %s [ %s: %s @ %s ]|Size of kicks table: %s [ %s: %s @ %s ]
-Size of bans table: %s [ %s: %s @ %s ]|Size of bans table: %s [ %s: %s @ %s ]
-Size of unbans table: %s [ %s: %s @ %s ]|Size of unbans table: %s [ %s: %s @ %s ]
-Size of IP logger plugin table: %s [ %s: %s @ %s ]|Size of IP logger plugin table: %s [ %s: %s @ %s ]
-Size of statistics plugin table: %s [ %s: %s @ %s ]|Size of statistics plugin table: %s [ %s: %s @ %s ]
-Modified authorization entry: %s @ %s|Modified authorization entry: %s @ %s
-Added authorization entry: %s @ %s|Added authorization entry: %s @ %s
-Deleted authorization entry: %s|Deleted authorization entry: %s
-Couldn't delete authorization entry because not found: %s|Couldn't delete authorization entry because not found: %s
-IP authorization list|IP authorization list
-IP authorization list is empty.|IP authorization list is empty.
-Add IP authorization entry|Add IP authorization entry
-Delete authorization entry|Delete authorization entry
-ip|ip
-%s with IP %s and class %s authorized.|%s with IP %s and class %s authorized.
-%s with IP %s and class %s failed authorization and disconnected.|%s with IP %s and class %s failed authorization and disconnected.
-Category: %s|Category: %s
-Set custom nick for yourself|Set custom nick for yourself
-This nick is registered or in use and therefore can't be used as custom nick: %s|This nick is registered or in use and therefore can't be used as custom nick: %s
-Set your welcome message|Set your welcome message
-Division by zero is forbidden.|Division by zero is forbidden.
-Show your welcome messages|Show your welcome messages
-Welcome message list|Welcome message list
-Delete user and his welcome messages|Delete user and his welcome messages
-Nick|Nick
-Login message|Login message
-Logout message|Logout message
-Welcome message list is empty.|Welcome message list is empty.
-Welcome messages were deleted for user: %s|Welcome messages were deleted for user: %s
-Couldn't delete user from welcome message list because not found: %s|Couldn't delete user from welcome message list because not found: %s
-Your login message set: %s|Your login message set: %s
-%s with class %s changed his login message: %s|%s with class %s changed his login message: %s
-Your logout message set: %s|Your logout message set: %s
-%s with class %s changed his logout message: %s|%s with class %s changed his logout message: %s
-You don't have any welcome messages.|You don't have any welcome messages.
-Your login message: %s|Your login message: %s
-Add chatroom|Add chatroom
-Chatroom list|Chatroom list
-Delete chatroom|Delete chatroom
-description|description
-minclass|minclass
-maxclass|maxclass
-Modified chatroom: %s|Modified chatroom: %s
-Added chatroom: %s|Added chatroom: %s
-Deleted chatroom: %s|Deleted chatroom: %s
-Couldn't delete chatroom because not found: %s|Couldn't delete chatroom because not found: %s
-Chatroom|Chatroom
-Description|Description
-Chatroom list is empty.|Chatroom list is empty.
-Not found in country code statistics table: %s|Not found in country code statistics table: %s
-Custom nick %s is now owned by real user and therefore has been reset for user: %s|Custom nick %s is now owned by real user and therefore has been reset for user: %s
-%s is registered with class %s.|%s is registered with class %s.
-Query executed but didn't return any results.|Query executed but didn't return any results.
-Published: %s|Published: %s
-Add search filter exception entry|Add search filter exception entry
-Delete search filter exception entry|Delete search filter exception entry
-Search filter exception list|Search filter exception list
-Couldn't add search filter exception entry because already exists: %s|Couldn't add search filter exception entry because already exists: %s
-Added search filter exception entry: %s|Added search filter exception entry: %s
-Deleted search filter exception entry: %s|Deleted search filter exception entry: %s
-Couldn't delete search filter exception entry because not found: %s|Couldn't delete search filter exception entry because not found: %s
-Search filter exception list is empty.|Search filter exception list is empty.
-file|file
-Read hub logs|Read hub logs
-Known files are: %s|Known files are: %s
-Requested file is empty or couldn't be found.|Requested file is empty or couldn't be found.
-Add command notification exception|Add command notification exception
-Delete command notification exception|Delete command notification exception
-Command notification exception list|Command notification exception list
-Added command notification exception entry: %s|Added command notification exception entry: %s
-Couldn't add command notification exception entry because already exists: %s|Couldn't add command notification exception entry because already exists: %s
-Deleted command notification exception entry: %s|Deleted command notification exception entry: %s
-Couldn't delete command notification exception entry because not found: %s|Couldn't delete command notification exception entry because not found: %s
-Command notification exception list is empty.|Command notification exception list is empty.
-Couldn't add chatroom because nick is already in use: %s|Couldn't add chatroom because nick is already in use: %s
-Query results|Query results
-Connections from your IP aren't allowed for another %s seconds.|Connections from your IP aren't allowed for another %s seconds.
-Executed shell command didn't return any status code: %s|Executed shell command didn't return any status code: %s
-Returned status code: %s|Returned status code: %s
-Added by: %s|Added by: %s
-publisher|publisher
-Release list is empty.|Release list is empty.
-Last %s releases|Last %s releases
-No releases by requested publisher were found: %s|No releases by requested publisher were found: %s
-Last %s releases published by %s|Last %s releases published by %s
-No releases by requested category were found: %s|No releases by requested category were found: %s
-Last %s releases by category %s|Last %s releases by category %s
-No releases by requested search string were found: %s|No releases by requested search string were found: %s
-time|time
-Known search types are: %s|Known search types are: %s
-Configuration variable %s can't be empty.|Configuration variable %s can't be empty.
-Deleted from share rank list: %s|Deleted from share rank list: %s
-Not found in share rank list: %s|Not found in share rank list: %s
-Your share rank|Your share rank
-Top %s share rankers|Top %s share rankers
-You have to share %s and reconnect to get started.|You have to share %s and reconnect to get started.
-Share rank list is empty.|Share rank list is empty.
-Your share rank is: %s|Your share rank is: %s
-Custom nick can't be longer than %s characters.|Custom nick can't be longer than %s characters.
-Delete custom nick|Delete custom nick
-Deleted user from custom nick list: %s|Deleted user from custom nick list: %s
-Couldn't delete user from custom nick list because not found: %s|Couldn't delete user from custom nick list because not found: %s
-Selected type requires extra parameters. Please refer to manual for more information.|Selected type requires extra parameters. Please refer to manual for more information.
-Size of registered users table: %s [ %s: %s @ %s ]|Size of registered users table: %s [ %s: %s @ %s ]
-Deleted %s accounts with class %s|Deleted %s accounts with class %s
-%s with class %s deleted %s accounts with class %s that has been inactive for %s days.|%s with class %s deleted %s accounts with class %s that has been inactive for %s days.
-Add command permission|Add command permission
-Delete command permission|Delete command permission
-Command permission list|Command permission list
-Modified command permission with class %s: %s|Modified command permission with class %s: %s
-Added command permission with class %s: %s|Added command permission with class %s: %s
-Deleted command permission: %s|Deleted command permission: %s
-Couldn't delete command permission because not found: %s|Couldn't delete command permission because not found: %s
-Command permission list is empty.|Command permission list is empty.
-Total search rank points: %s|Total search rank points: %s
-Please use following commands to finish update process.|Please use following commands to finish update process.
-Moving files...|Moving files...
-Please visit %s to download the script manually.|Please visit %s to download the script manually.
-Couldn't add forbidden IP address because already exists: %s|Couldn't add forbidden IP address because already exists: %s
-Added forbidden IP address: %s|Added forbidden IP address: %s
-Deleted forbidden IP address: %s|Deleted forbidden IP address: %s
-Couldn't delete forbidden IP address because not found: %s|Couldn't delete forbidden IP address because not found: %s
-Forbidden IP address list|Forbidden IP address list
-Forbidden IP address list is empty.|Forbidden IP address list is empty.
-%s with IP %s and class %s allowed due to forbidden IP address exception: %s|%s with IP %s and class %s allowed due to forbidden IP address exception: %s
-Couldn't delete category because not found: %s|Couldn't delete category because not found: %s
-%s redirected due to spam.|%s redirected due to spam.
-%s redirected due to bad search request.|%s redirected due to bad search request.
-You can download me from: %s|You can download me from: %s
-%s is registered with class %s and has been automatically unregistered and deleted from other tables.|%s is registered with class %s and has been automatically unregistered and deleted from other tables.
-PiB|PiB
-TiB|TiB
-GiB|GiB
-MiB|MiB
-KiB|KiB
-B|B
-EiB|EiB
-Get users real nick|Get users real nick
-Requested nick wasn't found in custom nick list.|Requested nick wasn't found in custom nick list.
-Requested nick belongs to a user who is %s: %s|Requested nick belongs to a user who is %s: %s
-offline|offline
-online|online
-Clean up ranks|Clean up ranks
-limit|limit
-%s with class %s deleted %s chat ranks lower than %s.|%s with class %s deleted %s chat ranks lower than %s.
-%s with class %s deleted %s share ranks lower than %s GiB.|%s with class %s deleted %s share ranks lower than %s GiB.
-%s with class %s deleted %s operator ranks lower than %s.|%s with class %s deleted %s operator ranks lower than %s.
-Size of chat ranks table: %s [ %s: %s @ %s ]|Size of chat ranks table: %s [ %s: %s @ %s ]
-Size of share ranks table: %s [ %s: %s @ %s ]|Size of share ranks table: %s [ %s: %s @ %s ]
-Size of operator ranks table: %s [ %s: %s @ %s ]|Size of operator ranks table: %s [ %s: %s @ %s ]
-content|content
-destination|destination
-interval|interval
-Add reminder|Add reminder
-Delete reminder|Delete reminder
-Reminder list|Reminder list
-Reminder list is empty.|Reminder list is empty.
-Known destinanions are: %s|Known destinanions are: %s
-Known interval is: %s|Known interval is: %s
-Modified reminder: %s|Modified reminder: %s
-Added reminder: %s|Added reminder: %s
-Deleted reminder: %s|Deleted reminder: %s
-Reminder not found: %s|Reminder not found: %s
-Identifier: %s|Identifier: %s
-Content: %s|Content: %s
-Interval: %s of %s|Interval: %s of %s
-Destination: %s|Destination: %s
-Raw command|Raw command
-PM|PM
-MC|MC
-reply|reply
-Add chat responder|Add chat responder
-Delete chat responder|Delete chat responder
-Main chat responder list|Main chat responder list
-Main chat responder list is empty.|Main chat responder list is empty.
-%s with class %s deleted %s operator chat history messages.|%s with class %s deleted %s operator chat history messages.
-Search in user log|Search in user log
-Added chat responder: %s|Added chat responder: %s
-Deleted chat responder with ID: %s|Deleted chat responder with ID: %s
-Couldn't delete chat responder because ID not found: %s|Couldn't delete chat responder because ID not found: %s
-Responder|Responder
-Reply|Reply
-Add chat responder exception|Add chat responder exception
-Delete chat responder exception|Delete chat responder exception
-Chat responder exception list|Chat responder exception list
-Chat responder exception list is empty.|Chat responder exception list is empty.
-Couldn't add chat responder exception because already exists: %s|Couldn't add chat responder exception because already exists: %s
-Added chat responder exception: %s|Added chat responder exception: %s
-Deleted chat responder exception: %s|Deleted chat responder exception: %s
-Couldn't delete chat responder exception because not found: %s|Couldn't delete chat responder exception because not found: %s
-command|command
-Customize script command|Customize script command
-Customized script command: %s => %s|Customized script command: %s => %s
-Unknown script command: %s|Unknown script command: %s
-Requested nick is real.|Requested nick is real.
-%s with class %s customized script command: %s => %s|%s with class %s customized script command: %s => %s
-Reset all custom commands|Reset all custom commands
-%s custom commands were reset.|%s custom commands were reset.
-Ledokol tables are now deleted and script is locked.|Ledokol tables are now deleted and script is locked.
-Please unload the script and remove it from scripts directory.|Please unload the script and remove it from scripts directory.
-Good luck.|Good luck.
-Please unload the script to finish.|Please unload the script to finish.
-%s with IP %s and class %s sent message to %s: %s|%s with IP %s and class %s sent message to %s: %s
-Script uptime: %s|Script uptime: %s
-month|month
-months|months
-day|day
-hour|hour
-hours|hours
-Top %s used words|Top %s used words
-Deleted from word rank list: %s|Deleted from word rank list: %s
-Not found in word rank list: %s|Not found in word rank list: %s
-%s with class %s deleted %s word ranks lower than %s.|%s with class %s deleted %s word ranks lower than %s.
-Size of word ranks table: %s [ %s: %s @ %s ]|Size of word ranks table: %s [ %s: %s @ %s ]
-Total word rank points: %s|Total word rank points: %s
-Word rank list is empty.|Word rank list is empty.
-%s with class %s registered new user with class %s: %s|%s with class %s registered new user with class %s: %s
-%s with class %s deleted registered user with class %s: %s|%s with class %s deleted registered user with class %s: %s
-%s with class %s changed user class from %s to %s: %s|%s with class %s changed user class from %s to %s: %s
-%s with IP %s and class %s allowed due to fake share exception: %s|%s with IP %s and class %s allowed due to fake share exception: %s
-%s with IP %s and class %s allowed due to clone exception: %s|%s with IP %s and class %s allowed due to clone exception: %s
-%s with IP %s and class %s allowed due to same IP exception: %s|%s with IP %s and class %s allowed due to same IP exception: %s
-seconds|seconds
-Add news item|Add news item
-Delete news items|Delete news items
-Read hub news|Read hub news
-Added news item: %s|Added news item: %s
-Hub news list is empty.|Hub news list is empty.
-Deleted %s news items.|Deleted %s news items.
-Couldn't delete news items because not found: %s|Couldn't delete news items because not found: %s
-Last %s news items|Last %s news items
-By %s on %s: %s|By %s on %s: %s
-There are no main chat history messages written by you.|There are no main chat history messages written by you.
-Last %s main chat messages written by you|Last %s main chat messages written by you
-Your main chat history|Your main chat history
-Script memory usage: %s|Script memory usage: %s
-Couldn't load language file %s: %s|Couldn't load language file %s: %s
-Force custom nick for user|Force custom nick for user
-User is not in userlist: %s|User is not in userlist: %s
-Either the feature is disabled or user that you're trying to set welcome message for doesn't have access to it.|Either the feature is disabled or user that you're trying to set welcome message for doesn't have access to it.
-name|name
-category|category
-tth|tth
-Add new release|Add new release
-Delete releases|Delete releases
-List of available releases|List of available releases
-Find release by name or category|Find release by name or category
-Hub is now going for a very quick restart. Please be patient.|Hub is now going for a very quick restart. Please be patient.
-Hub is now going to shut down. Please be patient.|Hub is now going to shut down. Please be patient.
-equation|equation
-Calculate an equation|Calculate an equation
-Both numbers must be either pi or numbers.|Both numbers must be either pi or numbers.
-Known operations are: %s|Known operations are: %s
-Your logout message: %s|Your logout message: %s
-Force welcome message for user|Force welcome message for user
-Login message set for %s: %s|Login message set for %s: %s
-Change nick of an registered user|Change nick of an registered user
-User is not registered: %s|User is not registered: %s
-You are now going to be disconnected from the hub in order for your new nick to apply: %s|You are now going to be disconnected from the hub in order for your new nick to apply: %s
-Renamed account %s: %s|Renamed account %s: %s
-%s with class %s renamed account %s: %s|%s with class %s renamed account %s: %s
-Your login message deleted.|Your login message deleted.
-Your logout message deleted.|Your logout message deleted.
-%s with class %s deleted his login message.|%s with class %s deleted his login message.
-%s with class %s deleted his logout message.|%s with class %s deleted his logout message.
-Logout message set for %s: %s|Logout message set for %s: %s
-%s with class %s changed login message for %s: %s|%s with class %s changed login message for %s: %s
-%s with class %s changed logout message for %s: %s|%s with class %s changed logout message for %s: %s
-Login message deleted for user: %s|Login message deleted for user: %s
-Logout message deleted for user: %s|Logout message deleted for user: %s
-%s with class %s deleted login message for user: %s|%s with class %s deleted login message for user: %s
-%s with class %s deleted logout message for user: %s|%s with class %s deleted logout message for user: %s
-%s with class %s deleted welcome messages for user: %s|%s with class %s deleted welcome messages for user: %s
-minute|minute
-Last %s releases by search string %s|Last %s releases by search string %s
-Modified release: %s|Modified release: %s
-Added release: %s|Added release: %s
-Deleted release: %s|Deleted release: %s
-Couldn't delete release because not found: %s|Couldn't delete release because not found: %s
-Reminder preview|Reminder preview
-Preview of %s reminder: %s|Preview of %s reminder: %s
-Specified nick is already in use.|Specified nick is already in use.
-Live user location statistics by country|Live user location statistics by country
-All time user location statistics|All time user location statistics
-This feature requires %s or later installed on your system.|This feature requires %s or later installed on your system.
-Total count since %s: %s|Total count since %s: %s
-Unknown country|Unknown country
-No users in the hub.|No users in the hub.
-User location statistics table is empty.|User location statistics table is empty.
-Total count: %s|Total count: %s
-Deleted all rows: %s|Deleted all rows: %s
-%s with class %s deleted all user location entries.|%s with class %s deleted all user location entries.
-address|address
-owner|owner
-Add friendly hub|Add friendly hub
-Delete friendly hub|Delete friendly hub
-Show friendly hubs|Show friendly hubs
-Added friendly hub: %s|Added friendly hub: %s
-Modified friendly hub: %s|Modified friendly hub: %s
-Deleted friendly hub: %s|Deleted friendly hub: %s
-Friendly hub not found: %s|Friendly hub not found: %s
-Friendly hublist|Friendly hublist
-Friendly hublist is empty.|Friendly hublist is empty.
-Executed shell command didn't return any output.|Executed shell command didn't return any output.
-Returned output|Returned output
-%s renamed %s to: %s|%s renamed %s to: %s
-%s plugin version: %s|%s plugin version: %s
-second|second
-You are now known as: %s|You are now known as: %s
-You renamed %s to: %s|You renamed %s to: %s
-Spam exception from %s with IP %s and class %s in MC: %s|Spam exception from %s with IP %s and class %s in MC: %s
-Spam exception from %s with IP %s and class %s in PM: %s|Spam exception from %s with IP %s and class %s in PM: %s
-Spam exception from %s with IP %s and class %s in offline message: %s|Spam exception from %s with IP %s and class %s in offline message: %s
-Spam exception from %s with IP %s and class %s in report: %s|Spam exception from %s with IP %s and class %s in report: %s
-Spam notification from %s with IP %s and class %s in MC: %s|Spam notification from %s with IP %s and class %s in MC: %s
-Spam notification from %s with IP %s and class %s in PM: %s|Spam notification from %s with IP %s and class %s in PM: %s
-Spam notification from %s with IP %s and class %s in offline message: %s|Spam notification from %s with IP %s and class %s in offline message: %s
-Spam notification from %s with IP %s and class %s in report: %s|Spam notification from %s with IP %s and class %s in report: %s
-Spam from %s with IP %s and class %s in MC: %s|Spam from %s with IP %s and class %s in MC: %s
-Spam from %s with IP %s and class %s in PM: %s|Spam from %s with IP %s and class %s in PM: %s
-Spam from %s with IP %s and class %s in offline message: %s|Spam from %s with IP %s and class %s in offline message: %s
-Spam from %s with IP %s and class %s in report: %s|Spam from %s with IP %s and class %s in report: %s
-Modified antispam entry with action %s and priority %s to scan in MC: %s|Modified antispam entry with action %s and priority %s to scan in MC: %s
-Modified antispam entry with action %s and priority %s to scan in PM: %s|Modified antispam entry with action %s and priority %s to scan in PM: %s
-Modified antispam entry with action %s and priority %s to scan in MC and PM: %s|Modified antispam entry with action %s and priority %s to scan in MC and PM: %s
-Added antispam entry with action %s and priority %s to scan in MC: %s|Added antispam entry with action %s and priority %s to scan in MC: %s
-Added antispam entry with action %s and priority %s to scan in PM: %s|Added antispam entry with action %s and priority %s to scan in PM: %s
-Added antispam entry with action %s and priority %s to scan in MC and PM: %s|Added antispam entry with action %s and priority %s to scan in MC and PM: %s
-Search request exception from %s with IP %s and class %s as any file: %s|Search request exception from %s with IP %s and class %s as any file: %s
-Search request exception from %s with IP %s and class %s as audio file: %s|Search request exception from %s with IP %s and class %s as audio file: %s
-Search request exception from %s with IP %s and class %s as compressed file: %s|Search request exception from %s with IP %s and class %s as compressed file: %s
-Search request exception from %s with IP %s and class %s as document: %s|Search request exception from %s with IP %s and class %s as document: %s
-Search request exception from %s with IP %s and class %s as executable: %s|Search request exception from %s with IP %s and class %s as executable: %s
-Search request exception from %s with IP %s and class %s as picture: %s|Search request exception from %s with IP %s and class %s as picture: %s
-Search request exception from %s with IP %s and class %s as video: %s|Search request exception from %s with IP %s and class %s as video: %s
-Search request exception from %s with IP %s and class %s as folder: %s|Search request exception from %s with IP %s and class %s as folder: %s
-Search request exception from %s with IP %s and class %s as TTH: %s|Search request exception from %s with IP %s and class %s as TTH: %s
-Search request notification from %s with IP %s and class %s as any file: %s|Search request notification from %s with IP %s and class %s as any file: %s
-Search request notification from %s with IP %s and class %s as audio file: %s|Search request notification from %s with IP %s and class %s as audio file: %s
-Search request notification from %s with IP %s and class %s as compressed file: %s|Search request notification from %s with IP %s and class %s as compressed file: %s
-Search request notification from %s with IP %s and class %s as document: %s|Search request notification from %s with IP %s and class %s as document: %s
-Search request notification from %s with IP %s and class %s as executable: %s|Search request notification from %s with IP %s and class %s as executable: %s
-Search request notification from %s with IP %s and class %s as picture: %s|Search request notification from %s with IP %s and class %s as picture: %s
-Search request notification from %s with IP %s and class %s as video: %s|Search request notification from %s with IP %s and class %s as video: %s
-Search request notification from %s with IP %s and class %s as folder: %s|Search request notification from %s with IP %s and class %s as folder: %s
-Search request notification from %s with IP %s and class %s as TTH: %s|Search request notification from %s with IP %s and class %s as TTH: %s
-Bad search request from %s with IP %s and class %s as any file: %s|Bad search request from %s with IP %s and class %s as any file: %s
-Bad search request from %s with IP %s and class %s as audio file: %s|Bad search request from %s with IP %s and class %s as audio file: %s
-Bad search request from %s with IP %s and class %s as compressed file: %s|Bad search request from %s with IP %s and class %s as compressed file: %s
-Bad search request from %s with IP %s and class %s as document: %s|Bad search request from %s with IP %s and class %s as document: %s
-Bad search request from %s with IP %s and class %s as executable: %s|Bad search request from %s with IP %s and class %s as executable: %s
-Bad search request from %s with IP %s and class %s as picture: %s|Bad search request from %s with IP %s and class %s as picture: %s
-Bad search request from %s with IP %s and class %s as video: %s|Bad search request from %s with IP %s and class %s as video: %s
-Bad search request from %s with IP %s and class %s as folder: %s|Bad search request from %s with IP %s and class %s as folder: %s
-Bad search request from %s with IP %s and class %s as TTH: %s|Bad search request from %s with IP %s and class %s as TTH: %s
-Modified search filter with action %s and priority %s as any file: %s|Modified search filter with action %s and priority %s as any file: %s
-Modified search filter with action %s and priority %s as audio file: %s|Modified search filter with action %s and priority %s as audio file: %s
-Modified search filter with action %s and priority %s as compressed file: %s|Modified search filter with action %s and priority %s as compressed file: %s
-Modified search filter with action %s and priority %s as document: %s|Modified search filter with action %s and priority %s as document: %s
-Modified search filter with action %s and priority %s as executable: %s|Modified search filter with action %s and priority %s as executable: %s
-Modified search filter with action %s and priority %s as picture: %s|Modified search filter with action %s and priority %s as picture: %s
-Modified search filter with action %s and priority %s as video: %s|Modified search filter with action %s and priority %s as video: %s
-Modified search filter with action %s and priority %s as folder: %s|Modified search filter with action %s and priority %s as folder: %s
-Modified search filter with action %s and priority %s as TTH: %s|Modified search filter with action %s and priority %s as TTH: %s
-Added search filter with action %s and priority %s as any file: %s|Added search filter with action %s and priority %s as any file: %s
-Added search filter with action %s and priority %s as audio file: %s|Added search filter with action %s and priority %s as audio file: %s
-Added search filter with action %s and priority %s as compressed file: %s|Added search filter with action %s and priority %s as compressed file: %s
-Added search filter with action %s and priority %s as document: %s|Added search filter with action %s and priority %s as document: %s
-Added search filter with action %s and priority %s as executable: %s|Added search filter with action %s and priority %s as executable: %s
-Added search filter with action %s and priority %s as picture: %s|Added search filter with action %s and priority %s as picture: %s
-Added search filter with action %s and priority %s as video: %s|Added search filter with action %s and priority %s as video: %s
-Added search filter with action %s and priority %s as folder: %s|Added search filter with action %s and priority %s as folder: %s
-Added search filter with action %s and priority %s as TTH: %s|Added search filter with action %s and priority %s as TTH: %s
-%s with class %s deleted %s releases older than %s days.|%s with class %s deleted %s releases older than %s days.
-Size of release table: %s [ %s: %s @ %s ]|Size of release table: %s [ %s: %s @ %s ]
-LRE|LRE
-Code accepted.|Code accepted.
-Protection list|Protection list
-Added protection entry: %s|Added protection entry: %s
-Deleted protection entry: %s|Deleted protection entry: %s
-Protection entry already exists: %s|Protection entry already exists: %s
-Protection entry not found: %s|Protection entry not found: %s
-Protection list is empty.|Protection list is empty.
-Missing %s in configuration variable.|Missing %s in configuration variable.
-Chatroom: %s|Chatroom: %s
-You've left the chatroom.|You've left the chatroom.
-User left the chatroom: %s|User left the chatroom: %s
-User entered the chatroom: %s|User entered the chatroom: %s
-You've entered %s chatroom.|You've entered %s chatroom.
-You're not member of this chatroom.|You're not member of this chatroom.
-You don't have access to this chatroom.|You don't have access to this chatroom.
-Chatroom member list|Chatroom member list
-Chatroom is empty.|Chatroom is empty.
-You're already member of this chatroom.|You're already member of this chatroom.
-Chatroom user commands|Chatroom user commands
-This feature requires %s module installed on your system.|This feature requires %s module installed on your system.
-Unknown chatroom command. Use %s for help.|Unknown chatroom command. Use %s for help.
-Enter the chatroom|Enter the chatroom
-Leave the chatroom|Leave the chatroom
-Deleted %s rows from country code statistics table: %s|Deleted %s rows from country code statistics table: %s
-Set chat mode|Set chat mode
-Known chat modes are: %s|Known chat modes are: %s
-mode|mode
-Changing chat mode for %s: %s => %s|Changing chat mode for %s: %s => %s
-Not found in chat mode list: %s|Not found in chat mode list: %s
-Chat mode user list|Chat mode user list
-Chat mode user list is empty.|Chat mode user list is empty.
-%s user lookup|%s user lookup
-Looking on %s for %s...|Looking on %s for %s...
-User %s found in following hubs|User %s found in following hubs
-User %s wasn't found in any hubs.|User %s wasn't found in any hubs.
-Add IP gag|Add IP gag
-Added IP gag: %s|Added IP gag: %s
-Modified IP gag: %s|Modified IP gag: %s
-Deleted IP gag: %s|Deleted IP gag: %s
-IP gag not found: %s|IP gag not found: %s
-IP gag list|IP gag list
-IP gag list is empty.|IP gag list is empty.
-Delete IP gag|Delete IP gag
-Main chat is currently disabled for you.|Main chat is currently disabled for you.
-Cleared temporary IP gag list.|Cleared temporary IP gag list.
-Show custom script commands|Show custom script commands
-Custom script command list|Custom script command list
-Custom script command list is empty.|Custom script command list is empty.
-Script size: %s lines in %s|Script size: %s lines in %s
-Added %s to IP gag list, %s users in total.|Added %s to IP gag list, %s users in total.
-Flood detected from IP %s last known as %s with class %s in MC: %s|Flood detected from IP %s last known as %s with class %s in MC: %s
-Flood detected from IP %s last known as %s with class %s in PM: %s|Flood detected from IP %s last known as %s with class %s in PM: %s
-Private chat is currently disabled for you.|Private chat is currently disabled for you.
-Flood detected from your IP.|Flood detected from your IP.
-%s users with IP %s dropped due to flood.|%s users with IP %s dropped due to flood.
-Unable to proceed: %s|Unable to proceed: %s
-No error message specified.|No error message specified.
-Search filter|Search filter
-MyINFO check|MyINFO check
-Authorization|Authorization
-Ranks|Ranks
-Welcome messages|Welcome messages
-Chatrooms|Chatrooms
-Reminders|Reminders
-Hub news|Hub news
-Chat responder|Chat responder
-Releases|Releases
-Offline messenger|Offline messenger
-Chat history|Chat history
-Commands|Commands
-Custom nicks|Custom nicks
-Registered users|Registered users
-Hublist|Hublist
-Chat|Chat
-IP gag|IP gag
-User logger|User logger
-Other|Other
-Configuration|Configuration
-Clear main chat|Clear main chat
-Chat cleanup performed by %s|Chat cleanup performed by %s
-Search in registered users list|Search in registered users list
-Registered users list statistics|Registered users list statistics
-Registered users list results for %s|Registered users list results for %s
-Class %s: %s|Class %s: %s
-Registered users list is empty.|Registered users list is empty.
-This feature requires any version of %s installed on your system.|This feature requires any version of %s installed on your system.
-Configuration directory: %s|Configuration directory: %s
-%s with IP %s and class %s stated incorrect IP in connect request to %s: %s|%s with IP %s and class %s stated incorrect IP in connect request to %s: %s
-Top %s search requests|Top %s search requests
-Search rank list is empty.|Search rank list is empty.
-Deleted from search rank list: %s|Deleted from search rank list: %s
-Not found in search rank list: %s|Not found in search rank list: %s
-%s with class %s deleted %s search ranks lower than %s.|%s with class %s deleted %s search ranks lower than %s.
-Size of search ranks table: %s [ %s: %s @ %s ]|Size of search ranks table: %s [ %s: %s @ %s ]
-Size of user location statistics table: %s [ %s: %s ]|Size of user location statistics table: %s [ %s: %s ]
-File not found: %s|File not found: %s
-Open files limit: %s|Open files limit: %s
-User information|User information
-User not in list: %s|User not in list: %s
-Nick: %s|Nick: %s
-Description: %s|Description: %s
-Tag: %s|Tag: %s
-Mode: %s|Mode: %s
-Slots: %s|Slots: %s
-Hubs: %s|Hubs: %s
-Limiter: %s KiB/s|Limiter: %s KiB/s
-Connection: %s|Connection: %s
-Status: %s|Status: %s
-Email: %s|Email: %s
-Share: %s|Share: %s
-Exact share: %s|Exact share: %s
-Class: %s|Class: %s
-IP: %s|IP: %s
-DNS: %s|DNS: %s
-Country: %s|Country: %s
-Client: %s|Client: %s
-Version: %s|Version: %s
-Normal|Normal
-Away|Away
-Normal away|Normal away
-Fileserver|Fileserver
-Normal fileserver|Normal fileserver
-Away fileserver|Away fileserver
-Normal away fileserver|Normal away fileserver
-Fireball|Fireball
-Normal fireball|Normal fireball
-Away fireball|Away fireball
-Normal away fireball|Normal away fireball
-Fileserver fireball|Fileserver fireball
-Normal fileserver fireball|Normal fileserver fireball
-Away fileserver fireball|Away fileserver fireball
-Normal away fileserver fireball|Normal away fileserver fireball
-TLS|TLS
-Normal TLS|Normal TLS
-Away TLS|Away TLS
-Normal away TLS|Normal away TLS
-Fileserver TLS|Fileserver TLS
-Normal fileserver TLS|Normal fileserver TLS
-Away fileserver TLS|Away fileserver TLS
-Normal away fileserver TLS|Normal away fileserver TLS
-Fireball TLS|Fireball TLS
-Normal fireball TLS|Normal fireball TLS
-Away fireball TLS|Away fireball TLS
-Normal away fireball TLS|Normal away fireball TLS
-Fileserver fireball TLS|Fileserver fireball TLS
-Normal fileserver fireball TLS|Normal fileserver fireball TLS
-Away fileserver fireball TLS|Away fileserver fireball TLS
-Normal away fileserver fireball TLS|Normal away fileserver fireball TLS
-Unable to get bot information: %s|Unable to get bot information: %s
-Bot information|Bot information
-Owner script: %s|Owner script: %s
-%s with IP %s and class %s allowed due to forbidden DNS exception: %s|%s with IP %s and class %s allowed due to forbidden DNS exception: %s
-In order to use this feature you need to enable DNS lookup. Do it by setting hub configuration variable %s to %s. Please note: Enabling DNS lookup might slow your hub performance down.|In order to use this feature you need to enable DNS lookup. Do it by setting hub configuration variable %s to %s. Please note: Enabling DNS lookup might slow your hub performance down.
-Couldn't add forbidden DNS because already exists: %s|Couldn't add forbidden DNS because already exists: %s
-Added forbidden DNS: %s|Added forbidden DNS: %s
-Deleted forbidden DNS: %s|Deleted forbidden DNS: %s
-Couldn't delete forbidden DNS because not found: %s|Couldn't delete forbidden DNS because not found: %s
-Forbidden DNS list|Forbidden DNS list
-Forbidden DNS list is empty.|Forbidden DNS list is empty.
-Powered by %s|Powered by %s
-Warning: %s|Warning: %s
-Open files limit set to %s is smaller than maximum users configuration which is %s. You can correct this by setting %s to %s or higher and restarting the hub.|Open files limit set to %s is smaller than maximum users configuration which is %s. You can correct this by setting %s to %s or higher and restarting the hub.
-Additional help|Additional help
-Remove all Ledokol tables and files|Remove all Ledokol tables and files
-No reason specified.|No reason specified.
-You can't kick a user whose class is higher or equals your own.|You can't kick a user whose class is higher or equals your own.
-Your topic contains forbidden characters which can't be used for security reason: %s|Your topic contains forbidden characters which can't be used for security reason: %s
-Hub uptime: %s|Hub uptime: %s
-User count: %s|User count: %s
-Total share: %s|Total share: %s
-%s with IP %s and class %s tries to speak with IP gag in MC: %s|%s with IP %s and class %s tries to speak with IP gag in MC: %s
-%s with IP %s and class %s tries to speak with IP gag in PM: %s|%s with IP %s and class %s tries to speak with IP gag in PM: %s
-Private message replaced for user: %s|Private message replaced for user: %s
-Command logger|Command logger
-Showing %s entries from command logger|Showing %s entries from command logger
-Command logger is empty.|Command logger is empty.
-%s with class %s deleted %s command log entries older than %s days.|%s with class %s deleted %s command log entries older than %s days.
-Size of command log table: %s [ %s: %s @ %s ]|Size of command log table: %s [ %s: %s @ %s ]
-password|password
-Modify IP authorization entry|Modify IP authorization entry
-Couldn't modify authorization entry because not found: %s|Couldn't modify authorization entry because not found: %s
-Uptime: %s|Uptime: %s
-Enable requested feature and try again.|Enable requested feature and try again.
-cc|cc
-Couldn't add forbidden CC because already exists: %s|Couldn't add forbidden CC because already exists: %s
-Added forbidden CC: %s|Added forbidden CC: %s
-Deleted forbidden CC: %s|Deleted forbidden CC: %s
-Couldn't delete forbidden CC because not found: %s|Couldn't delete forbidden CC because not found: %s
-Forbidden CC list|Forbidden CC list
-Forbidden CC list is empty.|Forbidden CC list is empty.
-%s with IP %s and class %s allowed due to forbidden CC exception: %s|%s with IP %s and class %s allowed due to forbidden CC exception: %s
-I'm staying idle due to confusion.|I'm staying idle due to confusion.
-Added replacer in MC: %s|Added replacer in MC: %s
-Deleted chat replacer with ID: %s|Deleted chat replacer with ID: %s
-Couldn't delete chat replacer because ID not found: %s|Couldn't delete chat replacer because ID not found: %s
-Chat replacer list|Chat replacer list
-Chat replacer list is empty.|Chat replacer list is empty.
-Replace|Replace
-Couldn't add chat replacer exception because already exists: %s|Couldn't add chat replacer exception because already exists: %s
-Added chat replacer exception: %s|Added chat replacer exception: %s
-Deleted chat replacer exception: %s|Deleted chat replacer exception: %s
-Couldn't delete chat replacer exception because not found: %s|Couldn't delete chat replacer exception because not found: %s
-Chat replacer exception list|Chat replacer exception list
-Chat replacer exception list is empty.|Chat replacer exception list is empty.
-replace|replace
-Add chat replacer|Add chat replacer
-Delete chat replacer|Delete chat replacer
-Add chat replacer exception|Add chat replacer exception
-Delete chat replacer exception|Delete chat replacer exception
-Chat replacer|Chat replacer
-You need to send another %s main chat messages in order to use hub registration.|You need to send another %s main chat messages in order to use hub registration.
-Please wait another %s minutes before using hub registration.|Please wait another %s minutes before using hub registration.
-In order to use this feature you need to set %s to: %s|In order to use this feature you need to set %s to: %s
-Please reconnect to gain %s minutes of uptime in order to use hub registration.|Please reconnect to gain %s minutes of uptime in order to use hub registration.
-Dropping %s with IP %s and class %s due to protocol flood detection: %s|Dropping %s with IP %s and class %s due to protocol flood detection: %s
-Protocol flood detected from your client: %s|Protocol flood detected from your client: %s
-Automatic update detected Ledokol version %s released, to upgrade use: %s|Automatic update detected Ledokol version %s released, to upgrade use: %s
-menu|menu
-Dropping user due to clone detection from IP %s with class %s: %s = %s|Dropping user due to clone detection from IP %s with class %s: %s = %s
-Configuration variable %s must be a valid IP address.|Configuration variable %s must be a valid IP address.
-Average share per user: %s|Average share per user: %s
-Don't be stupid.|Don't be stupid.
-reason|reason
-Add blocked PM entry|Add blocked PM entry
-Delete blocked PM entry|Delete blocked PM entry
-List of blocked PM entries|List of blocked PM entries
-Modified blocked PM entry: %s|Modified blocked PM entry: %s
-Added blocked PM entry: %s|Added blocked PM entry: %s
-Deleted blocked PM entry: %s|Deleted blocked PM entry: %s
-Blocked PM list is empty.|Blocked PM list is empty.
-Couldn't delete blocked PM entry because not found: %s|Couldn't delete blocked PM entry because not found: %s
-Reason: %s|Reason: %s
-You're not allowed to send PM to this user because: %s|You're not allowed to send PM to this user because: %s
-%s with class %s deleted %s antispam entries with occurrence less than %s.|%s with class %s deleted %s antispam entries with occurrence less than %s.
-%s with class %s deleted %s search filter entries with occurrence less than %s.|%s with class %s deleted %s search filter entries with occurrence less than %s.
-query|query
-Execute MySQL query|Execute MySQL query
-Execute shell command|Execute shell command
-Experts only|Experts only
-Add hard IP ban entry|Add hard IP ban entry
-Delete hard IP ban entry|Delete hard IP ban entry
-List of hard IP ban entries|List of hard IP ban entries
-Modified hard IP ban entry: %s|Modified hard IP ban entry: %s
-Added hard IP ban entry: %s|Added hard IP ban entry: %s
-Deleted hard IP ban entry: %s|Deleted hard IP ban entry: %s
-Hard IP ban list is empty.|Hard IP ban list is empty.
-Couldn't delete hard IP ban entry because not found: %s|Couldn't delete hard IP ban entry because not found: %s
-Hard IP ban refused connection from IP %s: %s|Hard IP ban refused connection from IP %s: %s
-Please wait another %s seconds before using hub search engine.|Please wait another %s seconds before using hub search engine.
-Loading %s in memory...|Loading %s in memory...
-Finished loading %s in memory.|Finished loading %s in memory.
-Unable to locate %s in hub configuration directory.|Unable to locate %s in hub configuration directory.
-Add right click menu item|Add right click menu item
-Delete right click menu item|Delete right click menu item
-List of right click menu items|List of right click menu items
-Blacklisted connection from IP %s dropped: %s|Blacklisted connection from IP %s dropped: %s
-To add multiple entries with this command you need to separate every entry by space.|To add multiple entries with this command you need to separate every entry by space.
-Add IP watch entry|Add IP watch entry
-Delete IP watch entry|Delete IP watch entry
-List of IP watch entries|List of IP watch entries
-result|result
-Modified IP watch entry: %s|Modified IP watch entry: %s
-Added IP watch entry: %s|Added IP watch entry: %s
-Known results are: %s|Known results are: %s
-Deleted IP watch entry: %s|Deleted IP watch entry: %s
-IP watch list is empty.|IP watch list is empty.
-Couldn't delete IP watch entry because not found: %s|Couldn't delete IP watch entry because not found: %s
-IP watch notification from %s with IP %s: %s|IP watch notification from %s with IP %s: %s
-unknown nick|unknown nick
-Either user %s wasn't found in any hubs or target server is down. Please try again later.|Either user %s wasn't found in any hubs or target server is down. Please try again later.
-Country code gag|Country code gag
-Add country code gag|Add country code gag
-Added country code gag: %s|Added country code gag: %s
-Modified country code gag: %s|Modified country code gag: %s
-Deleted country code gag: %s|Deleted country code gag: %s
-Country code gag not found: %s|Country code gag not found: %s
-Country code gag list|Country code gag list
-Country code gag list is empty.|Country code gag list is empty.
-Delete country code gag|Delete country code gag
-Cleared country code gag list.|Cleared country code gag list.
-%s with IP %s and class %s tries to speak with country code gag in MC: %s|%s with IP %s and class %s tries to speak with country code gag in MC: %s
-%s with IP %s and class %s tries to speak with country code gag in PM: %s|%s with IP %s and class %s tries to speak with country code gag in PM: %s
-No reason specified|No reason specified
-Automatically deleted %s user log entries older than %s days.|Automatically deleted %s user log entries older than %s days.
-Main chat message replaced for user: %s|Main chat message replaced for user: %s
-Unknown protocol command from IP %s before login: %s|Unknown protocol command from IP %s before login: %s
-Added %s to hard ban list, %s users in total.|Added %s to hard ban list, %s users in total.
-NMDC version: %s|NMDC version: %s
-Client supports: %s|Client supports: %s
-Couldn't add forbidden client supports because already exists: %s|Couldn't add forbidden client supports because already exists: %s
-Added forbidden client supports: %s|Added forbidden client supports: %s
-Couldn't add forbidden NMDC version because already exists: %s|Couldn't add forbidden NMDC version because already exists: %s
-Added forbidden NMDC version: %s|Added forbidden NMDC version: %s
-Latest version of %s is required in order to use this feature.|Latest version of %s is required in order to use this feature.
-Deleted forbidden client supports: %s|Deleted forbidden client supports: %s
-Couldn't delete forbidden client supports because not found: %s|Couldn't delete forbidden client supports because not found: %s
-Deleted forbidden NMDC version: %s|Deleted forbidden NMDC version: %s
-Couldn't delete forbidden NMDC version because not found: %s|Couldn't delete forbidden NMDC version because not found: %s
-Forbidden client supports list|Forbidden client supports list
-Forbidden client supports list is empty.|Forbidden client supports list is empty.
-Forbidden NMDC version list|Forbidden NMDC version list
-Forbidden NMDC version list is empty.|Forbidden NMDC version list is empty.
-%s with IP %s and class %s allowed due to forbidden client supports exception: %s|%s with IP %s and class %s allowed due to forbidden client supports exception: %s
-%s with IP %s and class %s allowed due to forbidden NMDC version exception: %s|%s with IP %s and class %s allowed due to forbidden NMDC version exception: %s
-City: %s|City: %s
-IP range: %s - %s|IP range: %s - %s
-Region: %s|Region: %s
-Time zone: %s|Time zone: %s
-Continent: %s|Continent: %s
-Postal code: %s|Postal code: %s
-Coordinates: %f %f|Coordinates: %f %f
-Metro code: %d|Metro code: %d
-Area code: %d|Area code: %d
-Drop users with IP|Drop users with IP
-No users found with IP: %s|No users found with IP: %s
-Dropped %s users with IP: %s|Dropped %s users with IP: %s
-%s dropped %s users with IP: %s|%s dropped %s users with IP: %s
-Live user location statistics by city|Live user location statistics by city
-Live user location statistics by city from %s=%s|Live user location statistics by city from %s=%s
-No users in the hub from: %s=%s|No users in the hub from: %s=%s
-Help notes|Help notes
-parameter|parameter
-Command parameters %s are always required, while %s are optional.|Command parameters %s are always required, while %s are optional.
-Quoted parameters %s or %s must be used with quotes.|Quoted parameters %s or %s must be used with quotes.
-IP information|IP information
-IP information not available: %s|IP information not available: %s
-Message replaced for user with class %s in MC: <%s> %s|Message replaced for user with class %s in MC: <%s> %s
-IP %s permanently banned: <%s> %s|IP %s permanently banned: <%s> %s
-Nick %s permanently banned: <%s> %s|Nick %s permanently banned: <%s> %s
-Range %s permanently banned: <%s> %s|Range %s permanently banned: <%s> %s
-Host %s permanently banned: <%s> %s|Host %s permanently banned: <%s> %s
-Share %s permanently banned: <%s> %s|Share %s permanently banned: <%s> %s
-Prefix %s permanently banned: <%s> %s|Prefix %s permanently banned: <%s> %s
-IP %s temporarily banned until %s: <%s> %s|IP %s temporarily banned until %s: <%s> %s
-Nick %s temporarily banned until %s: <%s> %s|Nick %s temporarily banned until %s: <%s> %s
-Range %s temporarily banned until %s: <%s> %s|Range %s temporarily banned until %s: <%s> %s
-Host %s temporarily banned until %s: <%s> %s|Host %s temporarily banned until %s: <%s> %s
-Share %s temporarily banned until %s: <%s> %s|Share %s temporarily banned until %s: <%s> %s
-Prefix %s temporarily banned until %s: <%s> %s|Prefix %s temporarily banned until %s: <%s> %s
-IP %s unbanned: <%s> %s|IP %s unbanned: <%s> %s
-Nick %s unbanned: <%s> %s|Nick %s unbanned: <%s> %s
-Range %s unbanned: <%s> %s|Range %s unbanned: <%s> %s
-Host %s unbanned: <%s> %s|Host %s unbanned: <%s> %s
-Share %s unbanned: <%s> %s|Share %s unbanned: <%s> %s
-Prefix %s unbanned: <%s> %s|Prefix %s unbanned: <%s> %s
-Known contexts are: %s|Known contexts are: %s
-Known orders are: %s|Known orders are: %s
-Modified right click menu item: %s|Modified right click menu item: %s
-Added right click menu item: %s|Added right click menu item: %s
-Deleted right click menu item: %s|Deleted right click menu item: %s
-Right click menu item not found: %s|Right click menu item not found: %s
-Right click menu item list is empty.|Right click menu item list is empty.
-Menu item|Menu item
-Menu command|Menu command
-Changed right click menu item order: %s|Changed right click menu item order: %s
-Separator or eraser|Separator or eraser
-Nick and IP %s unbanned: <%s> %s|Nick and IP %s unbanned: <%s> %s
-Other %s unbanned: <%s> %s|Other %s unbanned: <%s> %s
-Vote for user to be kicked|Vote for user to be kicked
-You don't want to vote for kicking an operator.|You don't want to vote for kicking an operator.
-User voted kick|User voted kick
-You have already voted for kicking that user.|You have already voted for kicking that user.
-%s added vote %s of %s for kicking user with class %s: %s|%s added vote %s of %s for kicking user with class %s: %s
-There is an error in following antispam entry pattern|There is an error in following antispam entry pattern
-Pattern|Pattern
-Error|Error
-Solution|Solution
-There is an error in following search filter pattern|There is an error in following search filter pattern
-There is an error in following search filter exception pattern|There is an error in following search filter exception pattern
-There is an error in following antispam exception entry pattern|There is an error in following antispam exception entry pattern
-There is an error in following forbidden nick pattern|There is an error in following forbidden nick pattern
-There is an error in following MyINFO exception pattern|There is an error in following MyINFO exception pattern
-There is an error in following forbidden description pattern|There is an error in following forbidden description pattern
-There is an error in following forbidden tag pattern|There is an error in following forbidden tag pattern
-There is an error in following forbidden connection type pattern|There is an error in following forbidden connection type pattern
-There is an error in following forbidden email pattern|There is an error in following forbidden email pattern
-There is an error in following forbidden share size pattern|There is an error in following forbidden share size pattern
-There is an error in following forbidden IP address pattern|There is an error in following forbidden IP address pattern
-There is an error in following forbidden CC pattern|There is an error in following forbidden CC pattern
-There is an error in following forbidden DNS pattern|There is an error in following forbidden DNS pattern
-There is an error in following forbidden client supports pattern|There is an error in following forbidden client supports pattern
-There is an error in following forbidden NMDC version pattern|There is an error in following forbidden NMDC version pattern
-Added replacer in PM: %s|Added replacer in PM: %s
-Added replacer in MC and PM: %s|Added replacer in MC and PM: %s
-Message replaced for user with class %s in PM: <%s> %s|Message replaced for user with class %s in PM: <%s> %s
-Message ignored due to flood detection from %s with IP %s and class %s in MC: %s|Message ignored due to flood detection from %s with IP %s and class %s in MC: %s
-Users with same IP|Users with same IP
+Current topic: %s|
+Current topic set by %s: %s|
+This operation might take very long time depending on how much is going to be removed. Please be patient.|
+days|
+%s with class %s deleted %s IP logger plugin entries older than %s days.|
+%s with class %s deleted %s unbans older than %s days.|
+%s with class %s deleted %s bans older than %s days.|
+%s with class %s deleted %s kicks older than %s days.|
+I'm probably away. State your business and I might answer later if you're lucky.|
+Perform script update|
+Deleted %s main chat history messages.|
+There are no main chat history messages to remove.|
+Deleted %s operator chat history messages.|
+There are no operator chat history messages to remove.|
+%s with class %s deleted %s main chat history messages.|
+Unable to connect to target server. Please try again later.|
+Last %s main chat messages|
+Main chat history is empty.|
+Requested file %s not found on target server. Please try again later.|
+%s is now known as: %s|
+Last %s operator chat messages|
+Operator chat history is empty.|
+Valid priority is a number from %s to %s.|
+Ledokol version %s released. Downloading script files...|
+You are currently running latest version of Ledokol. No update is required.|
+Why would you send offline message to yourself?|
+User %s is online. Sending message directly.|
+Your offline message stored for user: %s|
+%s with IP %s and class %s sent offline message.|
+priority|
+Offline|
+Online|
+I sent offline message to you on %s|
+My current status|
+%s with IP %s and class %s received offline messages.|
+Stored offline messages|
+Offline message list is empty.|
+Deleted %s offline messages.|
+Couldn't delete offline messages because not found: %s|
+%s with class %s deleted all offline messages.|
+There are no offline messages to remove.|
+No topic is set.|
+%s with IP %s and class %s allowed due to forbidden nick exception: %s|
+message|
+%s with IP %s and class %s allowed due to forbidden description exception: %s|
+User you're trying to kick or redirect is protected.|
+%s with IP %s and class %s allowed due to forbidden tag exception: %s|
+type|
+%s with IP %s and class %s allowed due to forbidden connection type exception: %s|
+%s with class %s changed configuration variable %s: %s => %s|
+%s with IP %s and class %s allowed due to forbidden email exception: %s|
+%s received own message.|
+%s with IP %s and class %s allowed due to forbidden share size exception: %s|
+Deleted %s releases from category: %s|
+Why would you want to set empty topic?|
+Couldn't add forbidden nick because already exists: %s|
+Added forbidden nick: %s|
+Couldn't add forbidden description because already exists: %s|
+Added forbidden description: %s|
+Couldn't add forbidden tag because already exists: %s|
+Added forbidden tag: %s|
+Couldn't add forbidden connection type because already exists: %s|
+Added forbidden connection type: %s|
+Couldn't add forbidden email because already exists: %s|
+Added forbidden email: %s|
+Couldn't add forbidden share size because already exists: %s|
+Added forbidden share size: %s|
+Couldn't add MyINFO exception because already exists: %s|
+Added MyINFO exception: %s|
+and|
+Deleted forbidden nick: %s|
+Couldn't delete forbidden nick because not found: %s|
+Deleted forbidden description: %s|
+Couldn't delete forbidden description because not found: %s|
+Deleted forbidden tag: %s|
+Couldn't delete forbidden tag because not found: %s|
+Deleted forbidden connection type: %s|
+Couldn't delete forbidden connection type because not found: %s|
+Deleted forbidden email: %s|
+Couldn't delete forbidden email because not found: %s|
+Deleted forbidden share size: %s|
+Couldn't delete forbidden share size because not found: %s|
+Deleted MyINFO exception: %s|
+Couldn't delete MyINFO exception because not found: %s|
+Forbidden nick list|
+Forbidden nick list is empty.|
+Forbidden description list|
+Forbidden description list is empty.|
+Forbidden tag list|
+Forbidden tag list is empty.|
+Forbidden connection type list|
+Forbidden connection type list is empty.|
+Forbidden email list|
+Forbidden email list is empty.|
+Forbidden share size list|
+Forbidden share size list is empty.|
+MyINFO exception list|
+MyINFO exception list is empty.|
+Deleted %s rows: %s|
+Known types are: %s|
+No rows to remove: %s|
+date|
+%s with class %s used command: %s|
+context|
+Deleted from chat rank list: %s|
+Not found in chat rank list: %s|
+Deleted from operator rank list: %s|
+Not found in operator rank list: %s|
+Antispam|
+Your chat rank is: %s|
+You have to write something in main chat to get started.|
+Custom nick list is empty.|
+Total share rank size: %s|
+Your operator rank is: %s|
+You have to do some operator actions to get started.|
+Top %s chat rankers|
+Chat rank list is empty.|
+Top %s operator rankers|
+Operator rank list is empty.|
+string|
+No user results found.|
+Showing %s user log results|
+Size of user log table: %s [ %s: %s @ %s ]|
+Add protection entry|
+Delete protection entry|
+flags|
+%s dropped due to bad search request.|
+This command is either disabled or you don't have access to it.|
+Deleted antispam entry: %s|
+Couldn't delete antispam entry because not found: %s|
+Antispam list|
+Antispam list is empty.|
+Couldn't add antispam exception entry because already exists: %s|
+Added antispam exception entry: %s|
+Deleted antispam exception entry: %s|
+Couldn't delete antispam exception entry because not found: %s|
+Antispam exception list|
+Antispam exception list is empty.|
+The user you're trying to send offline message to is a bot. Message is discarded.|
+You can't start at user number %s when you only have %s accounts with class %s.|
+Showing %s out of total %s accounts with class %s starting at user number %s|
+There are no accounts with class: %s|
+Known classes are: %s|
+%s with class %s sent say message: <%s> %s|
+%s with class %s had bad luck sending say message: <%s> %s|
+You can't talk from nick whose class is higher or equals your own.|
+%s with IP %s and class %s kicked: <%s> %s|
+%s with class %s deleted %s statistics plugin entries older than %s days.|
+offset|
+order|
+%s didn't get any search results.|
+Redirected %s with IP %s and class %s to %s: <%s> %s|
+Unknown protocol command from %s with IP %s and class %s: %s|
+Custom nick list|
+Ledokol operator commands|
+Add antispam entry|
+Showing last %s lines out of total %s found in %s file|
+Delete antispam entry|
+Add antispam exception entry|
+Delete antispam exception entry|
+Add MyINFO entry|
+Delete MyINFO entry|
+MyINFO list|
+List of registered users by class|
+Speak from other nick|
+Remove user or word from rank list|
+%s with class %s deleted %s user log entries older than %s days.|
+List stored offline messages|
+Delete offline messages by date|
+Delete all offline messages|
+class|
+Clean up tables|
+Operator chat history|
+Delete all history messages|
+Your operator rank|
+Script configuration variables|
+Change configuration variable|
+nick|
+This list of commands|
+Ledokol user commands|
+Current topic|
+Your chat rank|
+You're not allowed to send private messages.|
+Unknown|
+identifier|
+Offline message to user|
+Main chat history|
+Ledokol statistics|
+Script version: %s|
+Total chat rank points: %s|
+Total operator rank points: %s|
+Average message count per user: %s|
+lre|
+action|
+Changed configuration variable %s: %s => %s|
+Configuration variable %s can only be set to: %s|
+or|
+Configuration variable %s must be a number.|
+to|
+Unknown configuration variable: %s|
+%s version: %s|
+Not installed|
+%s dropped due to spam.|
+variable|
+value|
+minutes|
+%s library version: %s|
+Reorder right click menu item|
+lines|
+Couldn't add rank exception because already exists: %s|
+Added rank exception: %s|
+Deleted rank exception: %s|
+Couldn't delete rank exception because not found: %s|
+Rank exception list|
+Rank exception list is empty.|
+Add rank exception|
+Delete rank exception|
+In order to use this feature you must turn off registered users list cache. Do it by setting hub configuration variable %s to %s and restarting the hub. Please note: Turning cache off is not recommended with large list of registered users.|
+Both|
+Deleted search filter: %s|
+Couldn't delete search filter because not found: %s|
+Search filter list|
+Search filter list is empty.|
+Magnet link: %s|
+Add search filter|
+Delete search filter|
+Known actions are: %s|
+Known flags are: %s|
+Downloading version file...|
+Size of kicks table: %s [ %s: %s @ %s ]|
+Size of bans table: %s [ %s: %s @ %s ]|
+Size of unbans table: %s [ %s: %s @ %s ]|
+Size of IP logger plugin table: %s [ %s: %s @ %s ]|
+Size of statistics plugin table: %s [ %s: %s @ %s ]|
+Modified authorization entry: %s @ %s|
+Added authorization entry: %s @ %s|
+Deleted authorization entry: %s|
+Couldn't delete authorization entry because not found: %s|
+IP authorization list|
+IP authorization list is empty.|
+Add IP authorization entry|
+Delete authorization entry|
+ip|
+%s with IP %s and class %s authorized.|
+%s with IP %s and class %s failed authorization and disconnected.|
+Category: %s|
+Set custom nick for yourself|
+This nick is registered or in use and therefore can't be used as custom nick: %s|
+Set your welcome message|
+Division by zero is forbidden.|
+Show your welcome messages|
+Welcome message list|
+Delete user and his welcome messages|
+Nick|
+Login message|
+Logout message|
+Welcome message list is empty.|
+Welcome messages were deleted for user: %s|
+Couldn't delete user from welcome message list because not found: %s|
+Your login message set: %s|
+%s with class %s changed his login message: %s|
+Your logout message set: %s|
+%s with class %s changed his logout message: %s|
+You don't have any welcome messages.|
+Your login message: %s|
+Add chatroom|
+Chatroom list|
+Delete chatroom|
+description|
+minclass|
+maxclass|
+Modified chatroom: %s|
+Added chatroom: %s|
+Deleted chatroom: %s|
+Couldn't delete chatroom because not found: %s|
+Chatroom|
+Description|
+Chatroom list is empty.|
+Not found in country code statistics table: %s|
+Custom nick %s is now owned by real user and therefore has been reset for user: %s|
+%s is registered with class %s.|
+Query executed but didn't return any results.|
+Published: %s|
+Add search filter exception entry|
+Delete search filter exception entry|
+Search filter exception list|
+Couldn't add search filter exception entry because already exists: %s|
+Added search filter exception entry: %s|
+Deleted search filter exception entry: %s|
+Couldn't delete search filter exception entry because not found: %s|
+Search filter exception list is empty.|
+file|
+Read hub logs|
+Known files are: %s|
+Requested file is empty or couldn't be found.|
+Add command notification exception|
+Delete command notification exception|
+Command notification exception list|
+Added command notification exception entry: %s|
+Couldn't add command notification exception entry because already exists: %s|
+Deleted command notification exception entry: %s|
+Couldn't delete command notification exception entry because not found: %s|
+Command notification exception list is empty.|
+Couldn't add chatroom because nick is already in use: %s|
+Query results|
+Connections from your IP aren't allowed for another %s seconds.|
+Executed shell command didn't return any status code: %s|
+Returned status code: %s|
+Added by: %s|
+publisher|
+Release list is empty.|
+Last %s releases|
+No releases by requested publisher were found: %s|
+Last %s releases published by %s|
+No releases by requested category were found: %s|
+Last %s releases by category %s|
+No releases by requested search string were found: %s|
+time|
+Known search types are: %s|
+Configuration variable %s can't be empty.|
+Deleted from share rank list: %s|
+Not found in share rank list: %s|
+Your share rank|
+Top %s share rankers|
+You have to share %s and reconnect to get started.|
+Share rank list is empty.|
+Your share rank is: %s|
+Custom nick can't be longer than %s characters.|
+Delete custom nick|
+Deleted user from custom nick list: %s|
+Couldn't delete user from custom nick list because not found: %s|
+Selected type requires extra parameters. Please refer to manual for more information.|
+Size of registered users table: %s [ %s: %s @ %s ]|
+Deleted %s accounts with class %s|
+%s with class %s deleted %s accounts with class %s that has been inactive for %s days.|
+Add command permission|
+Delete command permission|
+Command permission list|
+Modified command permission with class %s: %s|
+Added command permission with class %s: %s|
+Deleted command permission: %s|
+Couldn't delete command permission because not found: %s|
+Command permission list is empty.|
+Total search rank points: %s|
+Please use following commands to finish update process.|
+Moving files...|
+Please visit %s to download the script manually.|
+Couldn't add forbidden IP address because already exists: %s|
+Added forbidden IP address: %s|
+Deleted forbidden IP address: %s|
+Couldn't delete forbidden IP address because not found: %s|
+Forbidden IP address list|
+Forbidden IP address list is empty.|
+%s with IP %s and class %s allowed due to forbidden IP address exception: %s|
+Couldn't delete category because not found: %s|
+%s redirected due to spam.|
+%s redirected due to bad search request.|
+You can download me from: %s|
+%s is registered with class %s and has been automatically unregistered and deleted from other tables.|
+PiB|
+TiB|
+GiB|
+MiB|
+KiB|
+B|
+EiB|
+Get users real nick|
+Requested nick wasn't found in custom nick list.|
+Requested nick belongs to a user who is %s: %s|
+offline|
+online|
+Clean up ranks|
+limit|
+%s with class %s deleted %s chat ranks lower than %s.|
+%s with class %s deleted %s share ranks lower than %s GiB.|
+%s with class %s deleted %s operator ranks lower than %s.|
+Size of chat ranks table: %s [ %s: %s @ %s ]|
+Size of share ranks table: %s [ %s: %s @ %s ]|
+Size of operator ranks table: %s [ %s: %s @ %s ]|
+content|
+destination|
+interval|
+Add reminder|
+Delete reminder|
+Reminder list|
+Reminder list is empty.|
+Known destinanions are: %s|
+Known interval is: %s|
+Modified reminder: %s|
+Added reminder: %s|
+Deleted reminder: %s|
+Reminder not found: %s|
+Identifier: %s|
+Content: %s|
+Interval: %s of %s|
+Destination: %s|
+Raw command|
+PM|
+MC|
+reply|
+Add chat responder|
+Delete chat responder|
+Main chat responder list|
+Main chat responder list is empty.|
+%s with class %s deleted %s operator chat history messages.|
+Search in user log|
+Added chat responder: %s|
+Deleted chat responder with ID: %s|
+Couldn't delete chat responder because ID not found: %s|
+Responder|
+Reply|
+Add chat responder exception|
+Delete chat responder exception|
+Chat responder exception list|
+Chat responder exception list is empty.|
+Couldn't add chat responder exception because already exists: %s|
+Added chat responder exception: %s|
+Deleted chat responder exception: %s|
+Couldn't delete chat responder exception because not found: %s|
+command|
+Customize script command|
+Customized script command: %s => %s|
+Unknown script command: %s|
+Requested nick is real.|
+%s with class %s customized script command: %s => %s|
+Reset all custom commands|
+%s custom commands were reset.|
+Ledokol tables are now deleted and script is locked.|
+Please unload the script and remove it from scripts directory.|
+Good luck.|
+Please unload the script to finish.|
+%s with IP %s and class %s sent message to %s: %s|
+Script uptime: %s|
+month|
+months|
+day|
+hour|
+hours|
+Top %s used words|
+Deleted from word rank list: %s|
+Not found in word rank list: %s|
+%s with class %s deleted %s word ranks lower than %s.|
+Size of word ranks table: %s [ %s: %s @ %s ]|
+Total word rank points: %s|
+Word rank list is empty.|
+%s with class %s registered new user with class %s: %s|
+%s with class %s deleted registered user with class %s: %s|
+%s with class %s changed user class from %s to %s: %s|
+%s with IP %s and class %s allowed due to fake share exception: %s|
+%s with IP %s and class %s allowed due to clone exception: %s|
+%s with IP %s and class %s allowed due to same IP exception: %s|
+seconds|
+Add news item|
+Delete news items|
+Read hub news|
+Added news item: %s|
+Hub news list is empty.|
+Deleted %s news items.|
+Couldn't delete news items because not found: %s|
+Last %s news items|
+By %s on %s: %s|
+There are no main chat history messages written by you.|
+Last %s main chat messages written by you|
+Your main chat history|
+Script memory usage: %s|
+Couldn't load language file %s: %s|
+Force custom nick for user|
+User is not in userlist: %s|
+Either the feature is disabled or user that you're trying to set welcome message for doesn't have access to it.|
+name|
+category|
+tth|
+Add new release|
+Delete releases|
+List of available releases|
+Find release by name or category|
+Hub is now going for a very quick restart. Please be patient.|
+Hub is now going to shut down. Please be patient.|
+equation|
+Calculate an equation|
+Both numbers must be either pi or numbers.|
+Known operations are: %s|
+Your logout message: %s|
+Force welcome message for user|
+Login message set for %s: %s|
+Change nick of an registered user|
+User is not registered: %s|
+You are now going to be disconnected from the hub in order for your new nick to apply: %s|
+Renamed account %s: %s|
+%s with class %s renamed account %s: %s|
+Your login message deleted.|
+Your logout message deleted.|
+%s with class %s deleted his login message.|
+%s with class %s deleted his logout message.|
+Logout message set for %s: %s|
+%s with class %s changed login message for %s: %s|
+%s with class %s changed logout message for %s: %s|
+Login message deleted for user: %s|
+Logout message deleted for user: %s|
+%s with class %s deleted login message for user: %s|
+%s with class %s deleted logout message for user: %s|
+%s with class %s deleted welcome messages for user: %s|
+minute|
+Last %s releases by search string %s|
+Modified release: %s|
+Added release: %s|
+Deleted release: %s|
+Couldn't delete release because not found: %s|
+Reminder preview|
+Preview of %s reminder: %s|
+Specified nick is already in use.|
+Live user location statistics by country|
+All time user location statistics|
+This feature requires %s or later installed on your system.|
+Total count since %s: %s|
+Unknown country|
+No users in the hub.|
+User location statistics table is empty.|
+Total count: %s|
+Deleted all rows: %s|
+%s with class %s deleted all user location entries.|
+address|
+owner|
+Add friendly hub|
+Delete friendly hub|
+Show friendly hubs|
+Added friendly hub: %s|
+Modified friendly hub: %s|
+Deleted friendly hub: %s|
+Friendly hub not found: %s|
+Friendly hublist|
+Friendly hublist is empty.|
+Executed shell command didn't return any output.|
+Returned output|
+%s renamed %s to: %s|
+%s plugin version: %s|
+second|
+You are now known as: %s|
+You renamed %s to: %s|
+Spam exception from %s with IP %s and class %s in MC: %s|
+Spam exception from %s with IP %s and class %s in PM: %s|
+Spam exception from %s with IP %s and class %s in offline message: %s|
+Spam exception from %s with IP %s and class %s in report: %s|
+Spam notification from %s with IP %s and class %s in MC: %s|
+Spam notification from %s with IP %s and class %s in PM: %s|
+Spam notification from %s with IP %s and class %s in offline message: %s|
+Spam notification from %s with IP %s and class %s in report: %s|
+Spam from %s with IP %s and class %s in MC: %s|
+Spam from %s with IP %s and class %s in PM: %s|
+Spam from %s with IP %s and class %s in offline message: %s|
+Spam from %s with IP %s and class %s in report: %s|
+Modified antispam entry with action %s and priority %s to scan in MC: %s|
+Modified antispam entry with action %s and priority %s to scan in PM: %s|
+Modified antispam entry with action %s and priority %s to scan in MC and PM: %s|
+Added antispam entry with action %s and priority %s to scan in MC: %s|
+Added antispam entry with action %s and priority %s to scan in PM: %s|
+Added antispam entry with action %s and priority %s to scan in MC and PM: %s|
+Search request exception from %s with IP %s and class %s as any file: %s|
+Search request exception from %s with IP %s and class %s as audio file: %s|
+Search request exception from %s with IP %s and class %s as compressed file: %s|
+Search request exception from %s with IP %s and class %s as document: %s|
+Search request exception from %s with IP %s and class %s as executable: %s|
+Search request exception from %s with IP %s and class %s as picture: %s|
+Search request exception from %s with IP %s and class %s as video: %s|
+Search request exception from %s with IP %s and class %s as folder: %s|
+Search request exception from %s with IP %s and class %s as TTH: %s|
+Search request notification from %s with IP %s and class %s as any file: %s|
+Search request notification from %s with IP %s and class %s as audio file: %s|
+Search request notification from %s with IP %s and class %s as compressed file: %s|
+Search request notification from %s with IP %s and class %s as document: %s|
+Search request notification from %s with IP %s and class %s as executable: %s|
+Search request notification from %s with IP %s and class %s as picture: %s|
+Search request notification from %s with IP %s and class %s as video: %s|
+Search request notification from %s with IP %s and class %s as folder: %s|
+Search request notification from %s with IP %s and class %s as TTH: %s|
+Bad search request from %s with IP %s and class %s as any file: %s|
+Bad search request from %s with IP %s and class %s as audio file: %s|
+Bad search request from %s with IP %s and class %s as compressed file: %s|
+Bad search request from %s with IP %s and class %s as document: %s|
+Bad search request from %s with IP %s and class %s as executable: %s|
+Bad search request from %s with IP %s and class %s as picture: %s|
+Bad search request from %s with IP %s and class %s as video: %s|
+Bad search request from %s with IP %s and class %s as folder: %s|
+Bad search request from %s with IP %s and class %s as TTH: %s|
+Modified search filter with action %s and priority %s as any file: %s|
+Modified search filter with action %s and priority %s as audio file: %s|
+Modified search filter with action %s and priority %s as compressed file: %s|
+Modified search filter with action %s and priority %s as document: %s|
+Modified search filter with action %s and priority %s as executable: %s|
+Modified search filter with action %s and priority %s as picture: %s|
+Modified search filter with action %s and priority %s as video: %s|
+Modified search filter with action %s and priority %s as folder: %s|
+Modified search filter with action %s and priority %s as TTH: %s|
+Added search filter with action %s and priority %s as any file: %s|
+Added search filter with action %s and priority %s as audio file: %s|
+Added search filter with action %s and priority %s as compressed file: %s|
+Added search filter with action %s and priority %s as document: %s|
+Added search filter with action %s and priority %s as executable: %s|
+Added search filter with action %s and priority %s as picture: %s|
+Added search filter with action %s and priority %s as video: %s|
+Added search filter with action %s and priority %s as folder: %s|
+Added search filter with action %s and priority %s as TTH: %s|
+%s with class %s deleted %s releases older than %s days.|
+Size of release table: %s [ %s: %s @ %s ]|
+LRE|
+Code accepted.|
+Protection list|
+Added protection entry: %s|
+Deleted protection entry: %s|
+Protection entry already exists: %s|
+Protection entry not found: %s|
+Protection list is empty.|
+Missing %s in configuration variable.|
+Chatroom: %s|
+You've left the chatroom.|
+User left the chatroom: %s|
+User entered the chatroom: %s|
+You've entered %s chatroom.|
+You're not member of this chatroom.|
+You don't have access to this chatroom.|
+Chatroom member list|
+Chatroom is empty.|
+You're already member of this chatroom.|
+Chatroom user commands|
+This feature requires %s module installed on your system.|
+Unknown chatroom command. Use %s for help.|
+Enter the chatroom|
+Leave the chatroom|
+Deleted %s rows from country code statistics table: %s|
+Set chat mode|
+Known chat modes are: %s|
+mode|
+Changing chat mode for %s: %s => %s|
+Not found in chat mode list: %s|
+Chat mode user list|
+Chat mode user list is empty.|
+%s user lookup|
+Looking on %s for %s...|
+User %s found in following hubs|
+User %s wasn't found in any hubs.|
+Add IP gag|
+Added IP gag: %s|
+Modified IP gag: %s|
+Deleted IP gag: %s|
+IP gag not found: %s|
+IP gag list|
+IP gag list is empty.|
+Delete IP gag|
+Main chat is currently disabled for you.|
+Cleared temporary IP gag list.|
+Show custom script commands|
+Custom script command list|
+Custom script command list is empty.|
+Script size: %s lines in %s|
+Added %s to IP gag list, %s users in total.|
+Flood detected from IP %s last known as %s with class %s in MC: %s|
+Flood detected from IP %s last known as %s with class %s in PM: %s|
+Private chat is currently disabled for you.|
+Flood detected from your IP.|
+%s users with IP %s dropped due to flood.|
+Unable to proceed: %s|
+No error message specified.|
+Search filter|
+MyINFO check|
+Authorization|
+Ranks|
+Welcome messages|
+Chatrooms|
+Reminders|
+Hub news|
+Chat responder|
+Releases|
+Offline messenger|
+Chat history|
+Commands|
+Custom nicks|
+Registered users|
+Hublist|
+Chat|
+IP gag|
+User logger|
+Other|
+Configuration|
+Clear main chat|
+Chat cleanup performed by %s|
+Search in registered users list|
+Registered users list statistics|
+Registered users list results for %s|
+Class %s: %s|
+Registered users list is empty.|
+This feature requires any version of %s installed on your system.|
+Configuration directory: %s|
+%s with IP %s and class %s stated incorrect IP in connect request to %s: %s|
+Top %s search requests|
+Search rank list is empty.|
+Deleted from search rank list: %s|
+Not found in search rank list: %s|
+%s with class %s deleted %s search ranks lower than %s.|
+Size of search ranks table: %s [ %s: %s @ %s ]|
+Size of user location statistics table: %s [ %s: %s ]|
+File not found: %s|
+Open files limit: %s|
+User information|
+User not in list: %s|
+Nick: %s|
+Description: %s|
+Tag: %s|
+Mode: %s|
+Slots: %s|
+Hubs: %s|
+Limiter: %s KiB/s|
+Connection: %s|
+Status: %s|
+Email: %s|
+Share: %s|
+Exact share: %s|
+Class: %s|
+IP: %s|
+DNS: %s|
+Country: %s|
+Client: %s|
+Version: %s|
+Normal|
+Away|
+Normal away|
+Fileserver|
+Normal fileserver|
+Away fileserver|
+Normal away fileserver|
+Fireball|
+Normal fireball|
+Away fireball|
+Normal away fireball|
+Fileserver fireball|
+Normal fileserver fireball|
+Away fileserver fireball|
+Normal away fileserver fireball|
+TLS|
+Normal TLS|
+Away TLS|
+Normal away TLS|
+Fileserver TLS|
+Normal fileserver TLS|
+Away fileserver TLS|
+Normal away fileserver TLS|
+Fireball TLS|
+Normal fireball TLS|
+Away fireball TLS|
+Normal away fireball TLS|
+Fileserver fireball TLS|
+Normal fileserver fireball TLS|
+Away fileserver fireball TLS|
+Normal away fileserver fireball TLS|
+Unable to get bot information: %s|
+Bot information|
+Owner script: %s|
+%s with IP %s and class %s allowed due to forbidden DNS exception: %s|
+In order to use this feature you need to enable DNS lookup. Do it by setting hub configuration variable %s to %s. Please note: Enabling DNS lookup might slow your hub performance down.|
+Couldn't add forbidden DNS because already exists: %s|
+Added forbidden DNS: %s|
+Deleted forbidden DNS: %s|
+Couldn't delete forbidden DNS because not found: %s|
+Forbidden DNS list|
+Forbidden DNS list is empty.|
+Powered by %s|
+Warning: %s|
+Open files limit set to %s is smaller than maximum users configuration which is %s. You can correct this by setting %s to %s or higher and restarting the hub.|
+Additional help|
+Remove all Ledokol tables and files|
+No reason specified.|
+You can't kick a user whose class is higher or equals your own.|
+Your topic contains forbidden characters which can't be used for security reason: %s|
+Hub uptime: %s|
+User count: %s|
+Total share: %s|
+%s with IP %s and class %s tries to speak with IP gag in MC: %s|
+%s with IP %s and class %s tries to speak with IP gag in PM: %s|
+Private message replaced for user: %s|
+Command logger|
+Showing %s entries from command logger|
+Command logger is empty.|
+%s with class %s deleted %s command log entries older than %s days.|
+Size of command log table: %s [ %s: %s @ %s ]|
+password|
+Modify IP authorization entry|
+Couldn't modify authorization entry because not found: %s|
+Uptime: %s|
+Enable requested feature and try again.|
+cc|
+Couldn't add forbidden CC because already exists: %s|
+Added forbidden CC: %s|
+Deleted forbidden CC: %s|
+Couldn't delete forbidden CC because not found: %s|
+Forbidden CC list|
+Forbidden CC list is empty.|
+%s with IP %s and class %s allowed due to forbidden CC exception: %s|
+I'm staying idle due to confusion.|
+Added replacer in MC: %s|
+Deleted chat replacer with ID: %s|
+Couldn't delete chat replacer because ID not found: %s|
+Chat replacer list|
+Chat replacer list is empty.|
+Replace|
+Couldn't add chat replacer exception because already exists: %s|
+Added chat replacer exception: %s|
+Deleted chat replacer exception: %s|
+Couldn't delete chat replacer exception because not found: %s|
+Chat replacer exception list|
+Chat replacer exception list is empty.|
+replace|
+Add chat replacer|
+Delete chat replacer|
+Add chat replacer exception|
+Delete chat replacer exception|
+Chat replacer|
+You need to send another %s main chat messages in order to use hub registration.|
+Please wait another %s minutes before using hub registration.|
+In order to use this feature you need to set %s to: %s|
+Please reconnect to gain %s minutes of uptime in order to use hub registration.|
+Dropping %s with IP %s and class %s due to protocol flood detection: %s|
+Protocol flood detected from your client: %s|
+Automatic update detected Ledokol version %s released, to upgrade use: %s|
+menu|
+Dropping user due to clone detection from IP %s with class %s: %s = %s|
+Configuration variable %s must be a valid IP address.|
+Average share per user: %s|
+Don't be stupid.|
+reason|
+Add blocked PM entry|
+Delete blocked PM entry|
+List of blocked PM entries|
+Modified blocked PM entry: %s|
+Added blocked PM entry: %s|
+Deleted blocked PM entry: %s|
+Blocked PM list is empty.|
+Couldn't delete blocked PM entry because not found: %s|
+Reason: %s|
+You're not allowed to send PM to this user because: %s|
+%s with class %s deleted %s antispam entries with occurrence less than %s.|
+%s with class %s deleted %s search filter entries with occurrence less than %s.|
+query|
+Execute MySQL query|
+Execute shell command|
+Experts only|
+Add hard IP ban entry|
+Delete hard IP ban entry|
+List of hard IP ban entries|
+Modified hard IP ban entry: %s|
+Added hard IP ban entry: %s|
+Deleted hard IP ban entry: %s|
+Hard IP ban list is empty.|
+Couldn't delete hard IP ban entry because not found: %s|
+Hard IP ban refused connection from IP %s: %s|
+Please wait another %s seconds before using hub search engine.|
+Loading %s in memory...|
+Finished loading %s in memory.|
+Unable to locate %s in hub configuration directory.|
+Add right click menu item|
+Delete right click menu item|
+List of right click menu items|
+Blacklisted connection from IP %s dropped: %s|
+To add multiple entries with this command you need to separate every entry by space.|
+Add IP watch entry|
+Delete IP watch entry|
+List of IP watch entries|
+result|
+Modified IP watch entry: %s|
+Added IP watch entry: %s|
+Known results are: %s|
+Deleted IP watch entry: %s|
+IP watch list is empty.|
+Couldn't delete IP watch entry because not found: %s|
+IP watch notification from %s with IP %s: %s|
+unknown nick|
+Either user %s wasn't found in any hubs or target server is down. Please try again later.|
+Country code gag|
+Add country code gag|
+Added country code gag: %s|
+Modified country code gag: %s|
+Deleted country code gag: %s|
+Country code gag not found: %s|
+Country code gag list|
+Country code gag list is empty.|
+Delete country code gag|
+Cleared country code gag list.|
+%s with IP %s and class %s tries to speak with country code gag in MC: %s|
+%s with IP %s and class %s tries to speak with country code gag in PM: %s|
+No reason specified|
+Automatically deleted %s user log entries older than %s days.|
+Main chat message replaced for user: %s|
+Unknown protocol command from IP %s before login: %s|
+Added %s to hard ban list, %s users in total.|
+NMDC version: %s|
+Client supports: %s|
+Couldn't add forbidden client supports because already exists: %s|
+Added forbidden client supports: %s|
+Couldn't add forbidden NMDC version because already exists: %s|
+Added forbidden NMDC version: %s|
+Latest version of %s is required in order to use this feature.|
+Deleted forbidden client supports: %s|
+Couldn't delete forbidden client supports because not found: %s|
+Deleted forbidden NMDC version: %s|
+Couldn't delete forbidden NMDC version because not found: %s|
+Forbidden client supports list|
+Forbidden client supports list is empty.|
+Forbidden NMDC version list|
+Forbidden NMDC version list is empty.|
+%s with IP %s and class %s allowed due to forbidden client supports exception: %s|
+%s with IP %s and class %s allowed due to forbidden NMDC version exception: %s|
+City: %s|
+IP range: %s - %s|
+Region: %s|
+Time zone: %s|
+Continent: %s|
+Postal code: %s|
+Coordinates: %f %f|
+Metro code: %d|
+Area code: %d|
+Drop users with IP|
+No users found with IP: %s|
+Dropped %s users with IP: %s|
+%s dropped %s users with IP: %s|
+Live user location statistics by city|
+Live user location statistics by city from %s=%s|
+No users in the hub from: %s=%s|
+Help notes|
+parameter|
+Command parameters %s are always required, while %s are optional.|
+Quoted parameters %s or %s must be used with quotes.|
+IP information|
+IP information not available: %s|
+Message replaced for user with class %s in MC: <%s> %s|
+IP %s permanently banned: <%s> %s|
+Nick %s permanently banned: <%s> %s|
+Range %s permanently banned: <%s> %s|
+Host %s permanently banned: <%s> %s|
+Share %s permanently banned: <%s> %s|
+Prefix %s permanently banned: <%s> %s|
+IP %s temporarily banned until %s: <%s> %s|
+Nick %s temporarily banned until %s: <%s> %s|
+Range %s temporarily banned until %s: <%s> %s|
+Host %s temporarily banned until %s: <%s> %s|
+Share %s temporarily banned until %s: <%s> %s|
+Prefix %s temporarily banned until %s: <%s> %s|
+IP %s unbanned: <%s> %s|
+Nick %s unbanned: <%s> %s|
+Range %s unbanned: <%s> %s|
+Host %s unbanned: <%s> %s|
+Share %s unbanned: <%s> %s|
+Prefix %s unbanned: <%s> %s|
+Known contexts are: %s|
+Known orders are: %s|
+Modified right click menu item: %s|
+Added right click menu item: %s|
+Deleted right click menu item: %s|
+Right click menu item not found: %s|
+Right click menu item list is empty.|
+Menu item|
+Menu command|
+Changed right click menu item order: %s|
+Separator or eraser|
+Nick and IP %s unbanned: <%s> %s|
+Other %s unbanned: <%s> %s|
+Vote for user to be kicked|
+You don't want to vote for kicking an operator.|
+User voted kick|
+You have already voted for kicking that user.|
+%s added vote %s of %s for kicking user with class %s: %s|
+There is an error in following antispam entry pattern|
+Pattern|
+Error|
+Solution|
+There is an error in following search filter pattern|
+There is an error in following search filter exception pattern|
+There is an error in following antispam exception entry pattern|
+There is an error in following forbidden nick pattern|
+There is an error in following MyINFO exception pattern|
+There is an error in following forbidden description pattern|
+There is an error in following forbidden tag pattern|
+There is an error in following forbidden connection type pattern|
+There is an error in following forbidden email pattern|
+There is an error in following forbidden share size pattern|
+There is an error in following forbidden IP address pattern|
+There is an error in following forbidden CC pattern|
+There is an error in following forbidden DNS pattern|
+There is an error in following forbidden client supports pattern|
+There is an error in following forbidden NMDC version pattern|
+Added replacer in PM: %s|
+Added replacer in MC and PM: %s|
+Message replaced for user with class %s in PM: <%s> %s|
+Message ignored due to flood detection from %s with IP %s and class %s in MC: %s|
+Users with same IP|
