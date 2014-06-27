@@ -3276,12 +3276,12 @@ elseif string.find (data, "^"..table_othsets ["optrig"].."lstplug.*$") then
 	----- ---- --- -- -
 
 	elseif string.find (data, "^" .. table_othsets ["optrig"] .. "me$") then
-		-- do nothing
+		return VH_OnUserCommand (nick, data)
 
 	----- ---- --- -- -
 
 	elseif string.find (data, "^" .. table_othsets ["optrig"] .. "me ") then
-		-- do nothing
+		return VH_OnUserCommand (nick, data)
 
 	else -- unknown command
 		donotifycmd (nick, data, 0, ucl)
