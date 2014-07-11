@@ -16458,7 +16458,15 @@ function gettext (data)
 
 				if orig and tran and orig == data then
 					if # tran > 0 then
-						return repnmdcoutchars (tran)
+						local _, cori = orig:gsub ("%%[sdf]", "")
+						local _, ctra = tran:gsub ("%%[sdf]", "")
+
+						if cori == ctra then
+							return repnmdcoutchars (tran)
+						else
+							opsnotify (table_sets ["classnotiledoact"], gettext ("Parameter count mismatch detected in following translation string: %s"):format (repnmdcoutchars (tran)))
+							return data
+						end
 					else -- not translated yet
 						return data
 					end
