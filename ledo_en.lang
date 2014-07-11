@@ -995,3 +995,4 @@ Added replacer in MC and PM: %s|
 Message replaced for user with class %s in PM: <%s> %s|
 Message ignored due to flood detection from %s with IP %s and class %s in MC: %s|
 Users with same IP|
+Parameter count mismatch detected in following translation string: %s|
