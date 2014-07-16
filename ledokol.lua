@@ -7481,40 +7481,44 @@ elseif isbot (user) == true then -- bot
 
 					if v ["sMyINFO"] then -- myinfo
 						local desc, tag, conn, sts, email, share = parsemyinfo (user, v ["sMyINFO"])
-						info = info.." "..string.format (gettext ("Description: %s"), desc).."\r\n" -- description
-						info = info.." "..string.format (gettext ("Tag: %s"), tag).."\r\n" -- tag
+						info = info .. " " .. string.format (gettext ("Description: %s"), desc) .. "\r\n" -- description
+						info = info .. " " .. string.format (gettext ("Tag: %s"), tag) .. "\r\n" -- tag
 
-						if string.len (tag) > 0 then -- tag information
-							local _, _, cl, ver, mode, hubs, slots = string.find (tag, "^<(.+) V:(.+),M:(%S+),H:(%S+),S:(%d+).*>$")
+						if # tag > 0 then -- tag information
+							local res = parsetag (tag)
 
-							if cl then -- client
-								info = info.." "..string.format (gettext ("Client: %s"), cl).."\r\n"
+							if res ["cl"] then -- client
+								info = info .. " " .. gettext ("Client: %s"):format (res ["cl"]) .. "\r\n"
 							end
 
-							if ver then -- version
-								info = info.." "..string.format (gettext ("Version: %s"), ver).."\r\n"
+							if res ["ve"] then -- version
+								info = info .. " " .. gettext ("Version: %s"):format (res ["ve"]) .. "\r\n"
 							end
 
-							if mode then -- mode
-								info = info.." "..string.format (gettext ("Mode: %s"), mode).."\r\n"
+							if res ["mo"] then -- mode
+								info = info .. " " .. gettext ("Mode: %s"):format (res ["mo"]) .. "\r\n"
 							end
 
-							if hubs then -- hubs
-								info = info.." "..string.format (gettext ("Hubs: %s"), hubs).."\r\n"
+							if res ["hu"] then -- hubs
+								info = info .. " " .. gettext ("Hubs: %s"):format (res ["hu"]) .. "\r\n"
 							end
 
-							if slots then -- slots
-								info = info.." "..string.format (gettext ("Slots: %s"), slots).."\r\n"
+							if res ["sl"] then -- slots
+								info = info .. " " .. gettext ("Slots: %s"):format (res ["sl"]) .. "\r\n"
+							end
+
+							if res ["li"] then -- limiter
+								info = info .. " " .. gettext ("Limiter: %s KiB/s"):format (res ["li"]) .. "\r\n"
 							end
 						end
 
-						info = info.." "..string.format (gettext ("Connection: %s"), conn).."\r\n" -- connection
-						info = info.." "..string.format (gettext ("Status: %s"), statustostr (sts)).."\r\n" -- status
-						info = info.." "..string.format (gettext ("Email: %s"), email).."\r\n" -- email
-						info = info.." "..string.format (gettext ("Share: %s"), makesize (share)).."\r\n" -- share
+						info = info .. " " .. string.format (gettext ("Connection: %s"), conn) .. "\r\n" -- connection
+						info = info .. " " .. string.format (gettext ("Status: %s"), statustostr (sts)) .. "\r\n" -- status
+						info = info .. " " .. string.format (gettext ("Email: %s"), email) .. "\r\n" -- email
+						info = info .. " " .. string.format (gettext ("Share: %s"), makesize (share)) .. "\r\n" -- share
 
 						if tonumber (share) > 0 then
-							info = info.." "..string.format (gettext ("Exact share: %s"), share.." "..gettext ("B")).."\r\n" -- exact share
+							info = info .. " " .. string.format (gettext ("Exact share: %s"), share .. " " .. gettext ("B")) .. "\r\n" -- exact share
 						end
 					end
 
@@ -7631,48 +7635,44 @@ else -- user
 
 	if mi then
 		local desc, tag, conn, sts, email, share = parsemyinfo (user, mi)
-		info = info.." "..string.format (gettext ("Description: %s"), desc).."\r\n" -- description
-		info = info.." "..string.format (gettext ("Tag: %s"), tag).."\r\n" -- tag
+		info = info .. " " .. string.format (gettext ("Description: %s"), desc) .. "\r\n" -- description
+		info = info .. " " .. string.format (gettext ("Tag: %s"), tag) .. "\r\n" -- tag
 
-		if string.len (tag) > 0 then -- tag information
-			local _, _, cl, ver, mode, hubs, slots, lmt = string.find (tag, "^<(.+) V:(.+),M:(%S+),H:(%S+),S:(%d+)(.*>)$")
+		if # tag > 0 then -- tag information
+			local res = parsetag (tag)
 
-			if lmt then
-				_, _, lmt = string.find (lmt, ",L:(.+)[,>]")
+			if res ["cl"] then -- client
+				info = info .. " " .. gettext ("Client: %s"):format (res ["cl"]) .. "\r\n"
 			end
 
-			if cl then -- client
-				info = info.." "..string.format (gettext ("Client: %s"), cl).."\r\n"
+			if res ["ve"] then -- version
+				info = info .. " " .. gettext ("Version: %s"):format (res ["ve"]) .. "\r\n"
 			end
 
-			if ver then -- version
-				info = info.." "..string.format (gettext ("Version: %s"), ver).."\r\n"
+			if res ["mo"] then -- mode
+				info = info .. " " .. gettext ("Mode: %s"):format (res ["mo"]) .. "\r\n"
 			end
 
-			if mode then -- mode
-				info = info.." "..string.format (gettext ("Mode: %s"), mode).."\r\n"
+			if res ["hu"] then -- hubs
+				info = info .. " " .. gettext ("Hubs: %s"):format (res ["hu"]) .. "\r\n"
 			end
 
-			if hubs then -- hubs
-				info = info.." "..string.format (gettext ("Hubs: %s"), hubs).."\r\n"
+			if res ["sl"] then -- slots
+				info = info .. " " .. gettext ("Slots: %s"):format (res ["sl"]) .. "\r\n"
 			end
 
-			if slots then -- slots
-				info = info.." "..string.format (gettext ("Slots: %s"), slots).."\r\n"
-			end
-
-			if lmt then -- limiter
-				info = info.." "..string.format (gettext ("Limiter: %s KiB/s"), lmt).."\r\n"
+			if res ["li"] then -- limiter
+				info = info .. " " .. gettext ("Limiter: %s KiB/s"):format (res ["li"]) .. "\r\n"
 			end
 		end
 
-		info = info.." "..string.format (gettext ("Connection: %s"), conn).."\r\n" -- connection
-		info = info.." "..string.format (gettext ("Status: %s"), statustostr (sts)).."\r\n" -- status
-		info = info.." "..string.format (gettext ("Email: %s"), email).."\r\n" -- email
-		info = info.." "..string.format (gettext ("Share: %s"), makesize (share)).."\r\n" -- share
+		info = info .. " " .. string.format (gettext ("Connection: %s"), conn) .. "\r\n" -- connection
+		info = info .. " " .. string.format (gettext ("Status: %s"), statustostr (sts)) .. "\r\n" -- status
+		info = info .. " " .. string.format (gettext ("Email: %s"), email) .. "\r\n" -- email
+		info = info .. " " .. string.format (gettext ("Share: %s"), makesize (share)) .. "\r\n" -- share
 
 		if tonumber (share) > 0 then
-			info = info.." "..string.format (gettext ("Exact share: %s"), share.." "..gettext ("B")).."\r\n" -- exact share
+			info = info .. " " .. string.format (gettext ("Exact share: %s"), share .. " " .. gettext ("B")) .. "\r\n" -- exact share
 		end
 	end
 
@@ -9075,8 +9075,35 @@ function checktag (nick, tag, ucls, aip)
 					end
 				end
 
-				local rsn = string.gsub (table_sets ["mitagmessage"], "%*", reprexpchars (tag))
-				VH:KickUser (table_othsets ["sendfrom"], nick, rsn.."     #_ban_"..btime)
+				local rsn = table_sets ["mitagmessage"]
+				local res = parsetag (tag)
+
+				if res ["cl"] then -- client
+					rsn = rsn:gsub ("<cl>", reprexpchars (res ["cl"]))
+				end
+
+				if res ["ve"] then -- version
+					rsn = rsn:gsub ("<ve>", reprexpchars (res ["ve"]))
+				end
+
+				if res ["mo"] then -- mode
+					rsn = rsn:gsub ("<mo>", reprexpchars (res ["mo"]))
+				end
+
+				if res ["hu"] then -- hubs
+					rsn = rsn:gsub ("<hu>", reprexpchars (res ["hu"]))
+				end
+
+				if res ["sl"] then -- slots
+					rsn = rsn:gsub ("<sl>", reprexpchars (res ["sl"]))
+				end
+
+				if res ["li"] then -- limiter
+					rsn = rsn:gsub ("<li>", reprexpchars (res ["li"]))
+				end
+
+				rsn = rsn:gsub ("%*", reprexpchars (tag))
+				VH:KickUser (table_othsets ["sendfrom"], nick, rsn .. "     #_ban_" .. btime)
 				return 1
 			end
 		end
@@ -10062,6 +10089,46 @@ email = email or ""
 if share and tonumber (share) then share = tonumber (share) else share = 0 end
 
 return desc, tag, conn, sts, email, share
+end
+
+----- ---- --- -- -
+
+function parsetag (tag)
+	local res = {}
+
+	if # tag > 0 then		
+		local _, _, cl, ve, mo, hu, sl, ot = tag:find ("^<(.+) V:(.+),M:(%S+),H:(%S+),S:(%d+)(.*>)$")
+
+		if cl then
+			res ["cl"] = cl
+		end
+
+		if ve then
+			res ["ve"] = ve
+		end
+
+		if mo then
+			res ["mo"] = mo
+		end
+
+		if hu then
+			res ["hu"] = hu
+		end
+
+		if sl then
+			res ["sl"] = sl
+		end
+
+		if ot then
+			local _, _, li = ot:find (",L:(.+)[,>]")
+
+			if li then
+				res ["li"] = li
+			end
+		end
+	end
+
+	return res
 end
 
 ----- ---- --- -- -
@@ -14662,16 +14729,16 @@ else
 commandanswer (nick, string.format (gettext ("Configuration variable %s can't be empty."), tvar))
 end
 
------ ---- --- -- -
+	----- ---- --- -- -
 
-elseif tvar == "mitagmessage" then
-if string.len (setto) > 0 then
-ok = true
-else
-commandanswer (nick, string.format (gettext ("Configuration variable %s can't be empty."), tvar))
-end
+	elseif tvar == "mitagmessage" then
+		if string.len (setto) > 0 then
+			ok = true
+		else
+			commandanswer (nick, string.format (gettext ("Configuration variable %s can't be empty."), tvar))
+		end
 
------ ---- --- -- -
+	----- ---- --- -- -
 
 elseif tvar == "miconnmessage" then
 if string.len (setto) > 0 then
@@ -15771,7 +15838,7 @@ conf = conf.."\r\n [::] michclone = "..table_sets ["michclone"]
 conf = conf.."\r\n [::] michsameip = "..table_sets ["michsameip"]
 conf = conf.."\r\n [::] minickmessage = "..table_sets ["minickmessage"]
 conf = conf.."\r\n [::] midescmessage = "..table_sets ["midescmessage"]
-conf = conf.."\r\n [::] mitagmessage = "..table_sets ["mitagmessage"]
+	conf = conf .. "\r\n [::] mitagmessage = " .. table_sets ["mitagmessage"]
 conf = conf.."\r\n [::] miconnmessage = "..table_sets ["miconnmessage"]
 conf = conf.."\r\n [::] miemailmessage = "..table_sets ["miemailmessage"]
 conf = conf.."\r\n [::] misharemessage = "..table_sets ["misharemessage"]
