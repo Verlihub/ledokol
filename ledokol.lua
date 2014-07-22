@@ -32,7 +32,6 @@ Email: webmaster@feardc.net
 License: GNU General Public License
 Website: http://ledo.feardc.net/
 Support hub: dchub://hub.verlihub.net:7777/
-
 Description:
 
 Ledokol stands for Russian word - icebreaker. In this case it's the
@@ -47,9 +46,9 @@ over sixty different features for Verlihub.
 --[[ special thanks to >>
 ---------------------------------------------------------------------
 
-chaos, Doxtur, BulleT, Maximum, TheBoss, netcelli, Aethra, Stefani,
-Hungarista, burek, Molotov, Seth, LadyStardust, Astronomik, Uhlik,
-Neolo
+Neolo, Uhlik, Astronomik, LadyStardust, Seth, Molotov, burek,
+Hungarista, Stefani, Aethra, netcelli, TheBoss, Maximum, BulleT,
+Doxtur, chaos
 
 ---------------------------------------------------------------------
 ]]-- special thanks to <<
@@ -277,9 +276,8 @@ table_othsets = {
 	["ledobotdesc"] = "Security and entertainment bot",
 	["timebotdesc"] = "Ledokol time bot",
 	["updserv"] = "http://ledo.feardc.net/",
-	["vazhub"] = "hub.verlihub.net:7777",
+	["vazhub"] = "dchub://hub.verlihub.net:7777/",
 	["tmpfile"] = "ledokol.tmp",
-	["sectmpfile"] = "ledo.tmp",
 	["verfile"] = "ledokol.ver",
 	["seenurl"] = "http://www.te-home.net/?do=hublist&action=seen&nick=",
 	["cfgdir"] = "",
@@ -3299,7 +3297,7 @@ function VH_OnUserCommand (nick, data)
 
 	local ucl = getclass (nick)
 
-	if ucl < 0 then
+	if ucl < 0 and not string.find (data, "^" .. table_othsets ["ustrig"] .. "report .+$") then
 		return 0
 	end
 
@@ -15636,7 +15634,7 @@ help = help..chatroomhelp ().."\r\n"
 help = help.." .:: "..gettext ("Additional help")..":\r\n\r\n"
 
 -- additional help
-help = help.." dchub://"..table_othsets ["vazhub"].."/ - VAZ\r\n"
+help = help.." "..table_othsets ["vazhub"].."/ - VAZ\r\n"
 
 commandanswer (nick, help)
 end
