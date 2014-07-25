@@ -7,6 +7,7 @@ Changed: Allow pingers to use +report command, required for AVDB
 Added: Custom orderless gettext() format for translations, strings must be in format "english|translation\n" with each string on new line, comment with # character
 Added: Detection of paramenter count mismatch in translation strings, this helps to detect errors in translation files
 Added: Support for replace variables in mitagmessage, <cl> = client, <ve> = version, <mo> = mode, <hu> = hubs, <sl> = slots, <li> = limiter
+Added: Virus spreader detection with AVDB support, requires cURL
 
 [ 2.7.9 :: 2014-06-25 ]
 
