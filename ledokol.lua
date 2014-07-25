@@ -2856,13 +2856,13 @@ elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["ledoshell
 
 	----- ---- --- -- -
 
-	elseif string.find (data, "^" .. table_othsets ["optrig"] .. table_cmnds ["oldclean"] .. " %S+ [%d+%*] %d+$") or string.find (data, "^" .. table_othsets ["optrig"] .. table_cmnds ["oldclean"] .. " %S+ [%d+%*] %-%d$") then
+	elseif data:find ("^" .. table_othsets ["optrig"] .. table_cmnds ["oldclean"] .. " %S+ %* %d+$") or data:find ("^" .. table_othsets ["optrig"] .. table_cmnds ["oldclean"] .. " %S+ %* %-%d$") or data:find ("^" .. table_othsets ["optrig"] .. table_cmnds ["oldclean"] .. " %S+ %d+ %d+$") or data:find ("^" .. table_othsets ["optrig"] .. table_cmnds ["oldclean"] .. " %S+ %d+ %-%d$") then
 		if ucl >= table_sets ["mincommandclass"] then
 			if table_sets ["classnotiledoact"] == 11 then
 				donotifycmd (nick, data, 0, ucl)
 			end
 
-			altcleanuptable (nick, string.sub (data, string.len (table_cmnds ["oldclean"]) + 3), ucl)
+			altcleanuptable (nick, data:sub (# table_cmnds ["oldclean"] + 3), ucl)
 		else
 			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
@@ -10650,10 +10650,14 @@ end
 function altcleanuptable (nick, line, cls)
 	local _, ctype, cdays, seconds, altvar = 0, "", 0, 0, 0
 
-	if string.find (line, "^%S+ [%d+%*] %-%d$") then
-		_, _, ctype, cdays, altvar = string.find (line, "^(%S+) ([%d+%*]) (%-%d)$")
-	else
-		_, _, ctype, cdays, altvar = string.find (line, "^(%S+) ([%d+%*]) (%d+)$")
+	if line:find ("^%S+ %* %-%d$") then
+		_, _, ctype, cdays, altvar = line:find ("^(%S+) (%*) (%-%d)$")
+	elseif line:find ("^%S+ %* %d+$") then
+		_, _, ctype, cdays, altvar = line:find ("^(%S+) (%*) (%d+)$")
+	elseif line:find ("^%S+ %d+ %-%d$") then
+		_, _, ctype, cdays, altvar = line:find ("^(%S+) (%d+) (%-%d)$")
+	elseif line:find ("^%S+ %d+ %d+$") then
+		_, _, ctype, cdays, altvar = line:find ("^(%S+) (%d+) (%d+)$")
 	end
 
 	if ctype == "reg" then
