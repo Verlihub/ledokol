@@ -996,3 +996,7 @@ Message replaced for user with class %s in PM: <%s> %s|
 Message ignored due to flood detection from %s with IP %s and class %s in MC: %s|
 Users with same IP|
 Parameter count mismatch detected in following translation string: %s|
+Infected user detected|
+Found files|
+Infected user detected with IP %s: %s|
+Sadly I don't have access to send infected user information to AVDB, please ask maintainer of this script to add your server IP address to access list. AVDB reporting feature has been automatically disabled.|
