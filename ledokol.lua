@@ -496,7 +496,7 @@ table_cmnds = {
 	["ranexlist"] = "ranexlist",
 	["randel"] = "randel",
 	["ranclean"] = "ranclean",
-	["cleanup"] = "cleanup",
+	["oldclean"] = "oldclean",
 	["nick"] = "nick",
 	["realnick"] = "realnick",
 	["custlist"] = "custlist",
@@ -1033,6 +1033,10 @@ function Main (file)
 					end
 
 					if ver <= 280 then
+						VH:SQLQuery ("update `" .. tbl_sql ["ledocmd"] .. "` set `original` = 'oldclean', `new` = '" .. repsqlchars (table_cmnds ["oldclean"]) .. "' where `original` = 'cleanup'")
+					end
+
+					if ver <= 281 then
 						-- todo
 					end
 
@@ -2837,13 +2841,13 @@ elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["ledoshell
 
 ----- ---- --- -- -
 
-	elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["cleanup"].." %S+ %d+$") then
+	elseif string.find (data, "^" .. table_othsets ["optrig"] .. table_cmnds ["oldclean"] .. " %S+ %d+$") then
 		if ucl >= table_sets ["mincommandclass"] then
 			if table_sets ["classnotiledoact"] == 11 then
 				donotifycmd (nick, data, 0, ucl)
 			end
 
-			cleanuptable (nick, string.sub (data, string.len (table_cmnds ["cleanup"]) + 3, -1), ucl)
+			cleanuptable (nick, string.sub (data, string.len (table_cmnds ["oldclean"]) + 3), ucl)
 		else
 			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
@@ -2852,13 +2856,13 @@ elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["ledoshell
 
 	----- ---- --- -- -
 
-	elseif string.find (data, "^" .. table_othsets ["optrig"] .. table_cmnds ["cleanup"] .. " %S+ [%d+%*] %d+$") or string.find (data, "^" .. table_othsets ["optrig"] .. table_cmnds ["cleanup"] .. " %S+ [%d+%*] %-%d$") then
+	elseif string.find (data, "^" .. table_othsets ["optrig"] .. table_cmnds ["oldclean"] .. " %S+ [%d+%*] %d+$") or string.find (data, "^" .. table_othsets ["optrig"] .. table_cmnds ["oldclean"] .. " %S+ [%d+%*] %-%d$") then
 		if ucl >= table_sets ["mincommandclass"] then
 			if table_sets ["classnotiledoact"] == 11 then
 				donotifycmd (nick, data, 0, ucl)
 			end
 
-			altcleanuptable (nick, string.sub (data, string.len (table_cmnds ["cleanup"]) + 3, -1), ucl)
+			altcleanuptable (nick, string.sub (data, string.len (table_cmnds ["oldclean"]) + 3), ucl)
 		else
 			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
@@ -12514,8 +12518,8 @@ end
 	if ucl >= table_sets ["mincommandclass"] then
 		sopmenitm (usr, gettext ("Other") .. "\\" .. gettext ("Drop users with IP"), table_cmnds ["dropip"] .. " %[line:<" .. gettext ("ip") .. ">]")
 		smensep (usr)
-		sopmenitm (usr, gettext ("Other") .. "\\" .. gettext ("Clean up tables"), table_cmnds ["cleanup"] .. " %[line:<" .. gettext ("type") .. ">] %[line:<" .. gettext ("days") .. " " .. gettext ("or") .. " *>] %[line:<" .. gettext ("class") .. ">]")
-		--sopmenitm (usr, gettext ("Other") .. "\\" .. gettext ("Clean up tables"), table_cmnds ["cleanup"] .. " %[line:<" .. gettext ("type") .. ">] %[line:<" .. gettext ("days") .. ">]")
+		sopmenitm (usr, gettext ("Other") .. "\\" .. gettext ("Clean up tables"), table_cmnds ["oldclean"] .. " %[line:<" .. gettext ("type") .. ">] %[line:<" .. gettext ("days") .. " " .. gettext ("or") .. " *>] %[line:<" .. gettext ("class") .. ">]")
+		--sopmenitm (usr, gettext ("Other") .. "\\" .. gettext ("Clean up tables"), table_cmnds ["oldclean"] .. " %[line:<" .. gettext ("type") .. ">] %[line:<" .. gettext ("days") .. ">]")
 		sopmenitm (usr, gettext ("Other") .. "\\" .. gettext ("Read hub logs"), table_cmnds ["readlog"] .. " %[line:<" .. gettext ("file") .. ">] %[line:<" .. gettext ("lines") .. ">]")
 	end
 
@@ -15550,7 +15554,7 @@ help = help.." "..optrig..table_cmnds ["clear"].." - "..gettext ("Clear main cha
 
 	-- other
 	help = help .. " " .. optrig .. table_cmnds ["dropip"] .. " <" .. gettext ("ip") .. "> - " .. gettext ("Drop users with IP") .. "\r\n"
-	help = help .. " " .. optrig .. table_cmnds ["cleanup"] .. " <" .. gettext ("type") .. "> <" .. gettext ("days") .. " " .. gettext ("or") .. " *> [" .. gettext ("class") .. "] - " .. gettext ("Clean up tables") .. "\r\n"
+	help = help .. " " .. optrig .. table_cmnds ["oldclean"] .. " <" .. gettext ("type") .. "> <" .. gettext ("days") .. " " .. gettext ("or") .. " *> [" .. gettext ("class") .. "] - " .. gettext ("Clean up tables") .. "\r\n"
 	help = help .. " " .. optrig .. table_cmnds ["readlog"] .. " <" .. gettext ("file") .. "> <" .. gettext ("lines") .. "> - " .. gettext ("Read hub logs") .. "\r\n\r\n"
 
 -- ledokol commands
@@ -15633,8 +15637,8 @@ help = help..chatroomhelp ().."\r\n"
 
 help = help.." .:: "..gettext ("Additional help")..":\r\n\r\n"
 
--- additional help
-help = help.." "..table_othsets ["vazhub"].."/ - VAZ\r\n"
+	-- additional help
+	help = help .. " " .. table_othsets ["vazhub"] .. " - VAZ\r\n"
 
 commandanswer (nick, help)
 end
