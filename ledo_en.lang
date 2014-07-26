@@ -1000,3 +1000,4 @@ Infected user detected|
 Found files|
 Infected user detected with IP %s: %s|
 Sadly I don't have access to send infected user information to AVDB, please ask maintainer of this script to add your server IP address to access list. AVDB reporting feature has been automatically disabled.|
+In order to send infected user information to AVDB you need to ask maintainer of this script to add your server IP address to AVDB access list.|
