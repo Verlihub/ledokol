@@ -13214,8 +13214,13 @@ end
 	elseif tvar == "avsendtodb" then
 		if num == true then
 			if setto == 0 or setto == 1 then
-				if setto == 1 and not table_othsets ["ver_curl"] then
-					commandanswer (nick, string.format (gettext ("This feature requires any version of %s installed on your system."), "cURL"))
+				if setto == 1 then
+					if not table_othsets ["ver_curl"] then
+						commandanswer (nick, string.format (gettext ("This feature requires any version of %s installed on your system."), "cURL"))
+					else
+						commandanswer (nick, gettext ("In order to send infected user information to AVDB you need to ask maintainer of this script to add your server IP address to AVDB access list."))
+						ok = true
+					end
 				else
 					ok = true
 				end
