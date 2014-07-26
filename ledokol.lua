@@ -82,12 +82,11 @@ table_sets = {
 	["enablesearfilt"] = 0,
 	["sefireason"] = "Forbidden search request detected: *",
 	["searfiltmsg"] = "Your search request is forbidden and therefore discarded: *",
-	["avenable"] = 0,
+	["avsearchint"] = 30,
 	["avfilediff"] = 256,
 	["avfilecount"] = 30,
-	["avfeedverb"] = 2,
-	["avsearchint"] = 30,
 	["avuserfree"] = 120,
+	["avfeedverb"] = 2,
 	["avsendtodb"] = 0,
 	["avkicktext"] = "Virus spreaders are not welcome here _ban_",
 	["classnotianti"] = 3,
@@ -1061,12 +1060,11 @@ function Main (file)
 					if ver <= 280 then
 						VH:SQLQuery ("update `" .. tbl_sql ["ledocmd"] .. "` set `original` = 'oldclean', `new` = '" .. repsqlchars (table_cmnds ["oldclean"]) .. "' where `original` = 'cleanup'")
 
-						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('avenable', '" .. repsqlchars (table_sets ["avenable"]) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('avsearchint', '" .. repsqlchars (table_sets ["avsearchint"]) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('avfilediff', '" .. repsqlchars (table_sets ["avfilediff"]) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('avfilecount', '" .. repsqlchars (table_sets ["avfilecount"]) .. "')")
-						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('avfeedverb', '" .. repsqlchars (table_sets ["avfeedverb"]) .. "')")
-						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('avsearchint', '" .. repsqlchars (table_sets ["avsearchint"]) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('avuserfree', '" .. repsqlchars (table_sets ["avuserfree"]) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('avfeedverb', '" .. repsqlchars (table_sets ["avfeedverb"]) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('avsendtodb', '" .. repsqlchars (table_sets ["avsendtodb"]) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('avkicktext', '" .. repsqlchars (table_sets ["avkicktext"]) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('classnotiav', '" .. repsqlchars (table_sets ["classnotiav"]) .. "')")
@@ -1145,7 +1143,7 @@ function Main (file)
 		VH:SetConfig ("config", "hub_version_special", string.format (gettext ("Powered by %s"), "Ledokol "..ver_ledo))
 	end
 
-	if table_sets ["avenable"] == 1 then -- antivirus
+	if table_sets ["avsearchint"] > 0 then -- antivirus
 		loadavstr ()
 	end
 
@@ -4270,7 +4268,7 @@ function VH_OnParsedMsgSR (nick, data)
 		return 1
 	end
 
-	if table_sets ["avenable"] == 1 then -- antivirus
+	if table_sets ["avsearchint"] > 0 then -- antivirus
 		local class = getclass (nick)
 
 		if class >= table_sets ["scanbelowclass"] then
@@ -4474,7 +4472,7 @@ function VH_OnTimer (msec)
 
 	local st = os.time () -- current time
 
-	if table_sets ["avenable"] == 1 and os.difftime (st, table_othsets ["avlasttick"]) >= table_sets ["avsearchint"] then -- antivirus
+	if table_sets ["avsearchint"] > 0 and os.difftime (st, table_othsets ["avlasttick"]) >= table_sets ["avsearchint"] then -- antivirus
 		for nick, data in pairs (table_avus) do
 			if os.difftime (st, data [""]) >= table_sets ["avuserfree"] * 60 then
 				table_avus [nick] = nil
@@ -13127,25 +13125,6 @@ end
 
 	----- ---- --- -- -
 
-	elseif tvar == "avenable" then
-		if num == true then
-			if setto == 0 then
-				table_avse = {} -- clear
-				table_avus = {}
-				table_othsets ["avnextitem"] = 1
-				ok = true
-			elseif setto == 1 then
-				loadavstr ()
-				ok = true
-			else
-				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 " .. gettext ("or") .. " 1"))
-			end
-		else
-			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
-		end
-
-	----- ---- --- -- -
-
 	elseif tvar == "avfilediff" then
 		if num == true then
 			if setto >= 0 and setto <= 10240 then
@@ -13187,10 +13166,10 @@ end
 
 	elseif tvar == "avsearchint" then
 		if num == true then
-			if setto >= 1 and setto <= 600 then
+			if setto >= 0 and setto <= 900 then
 				ok = true
 			else
-				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "1 " .. gettext ("to") .. " 600"))
+				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 " .. gettext ("to") .. " 900"))
 			end
 		else
 			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
@@ -16124,12 +16103,11 @@ conf = conf.."\r\n [::] enablesearfilt = "..table_sets ["enablesearfilt"]
 conf = conf.."\r\n [::] sefireason = "..table_sets ["sefireason"]
 conf = conf.."\r\n [::] searfiltmsg = "..table_sets ["searfiltmsg"]
 	conf = conf .. "\r\n"
-	conf = conf .. "\r\n [::] avenable = " .. table_sets ["avenable"]
+	conf = conf .. "\r\n [::] avsearchint = " .. table_sets ["avsearchint"]
 	conf = conf .. "\r\n [::] avfilediff = " .. table_sets ["avfilediff"]
 	conf = conf .. "\r\n [::] avfilecount = " .. table_sets ["avfilecount"]
-	conf = conf .. "\r\n [::] avfeedverb = " .. table_sets ["avfeedverb"]
-	conf = conf .. "\r\n [::] avsearchint = " .. table_sets ["avsearchint"]
 	conf = conf .. "\r\n [::] avuserfree = " .. table_sets ["avuserfree"]
+	conf = conf .. "\r\n [::] avfeedverb = " .. table_sets ["avfeedverb"]
 	conf = conf .. "\r\n [::] avsendtodb = " .. table_sets ["avsendtodb"]
 	conf = conf .. "\r\n [::] avkicktext = " .. table_sets ["avkicktext"]
 	conf = conf .. "\r\n"
