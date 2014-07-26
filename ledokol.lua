@@ -48,7 +48,7 @@ over sixty different features for Verlihub.
 
 Neolo, Uhlik, Astronomik, LadyStardust, Seth, Molotov, burek,
 Hungarista, Stefani, Aethra, netcelli, TheBoss, Maximum, BulleT,
-Doxtur, chaos
+Doxtur, chaos, sphinx
 
 ---------------------------------------------------------------------
 ]]-- special thanks to <<
@@ -82,9 +82,18 @@ table_sets = {
 	["enablesearfilt"] = 0,
 	["sefireason"] = "Forbidden search request detected: *",
 	["searfiltmsg"] = "Your search request is forbidden and therefore discarded: *",
+	["avenable"] = 0,
+	["avfilediff"] = 256,
+	["avfilecount"] = 30,
+	["avfeedverb"] = 2,
+	["avsearchint"] = 30,
+	["avuserfree"] = 120,
+	["avsendtodb"] = 0,
+	["avkicktext"] = "Virus spreaders are not welcome here _ban_",
 	["classnotianti"] = 3,
 	["classnotiex"] = 3,
 	["classnotisefi"] = 3,
+	["classnotiav"] = 3,
 	["classnotimich"] = 3,
 	["classnotiflood"] = 3,
 	["classnotigagip"] = 11,
@@ -280,6 +289,7 @@ table_othsets = {
 	["tmpfile"] = "ledokol.tmp",
 	["verfile"] = "ledokol.ver",
 	["seenurl"] = "http://www.te-home.net/?do=hublist&action=seen&nick=",
+	["avdburl"] = "http://www.te-home.net/?do=tools&action=avdbsend",
 	["cfgdir"] = "",
 	["feednick"] = "",
 	["sendfrom"] = "",
@@ -289,6 +299,8 @@ table_othsets = {
 	["ustrig"] = "",
 	["topicowner"] = nil,
 	["topicvalue"] = nil,
+	["avlasttick"] = os.time (),
+	["avnextitem"] = 1,
 	["chflallcount"] = 0,
 	["chflalltime"] = os.time (),
 	["lastupdcheck"] = os.time (),
@@ -907,6 +919,20 @@ table_ctmb = {}
 table_regm = {}
 table_blst = {}
 table_prfl = {["ctm"] = {}}
+table_avus = {}
+table_avse = {}
+
+table_avfi = {
+	"100 best", "top 100", "top girl", "18 girl", "sexy girl", "top wallpaper",
+	"sexy wallpaper", "anti virus", "0day", "apple", "microsoft", "windows",
+	"office", "adobe", "google", "android", "crack", "patch", "keygen", "serial",
+	"trojan", "torrent", "advanced", "ahead", "collection", "wallpaper", "porn",
+	"ptsc", "pthc", "preteen", "lolita", "sex", "img_ .jpg", "01 .mp3"
+}
+
+table_avex = {
+	".exe", ".zip", ".rar"
+}
 
 ---------------------------------------------------------------------
 -- global storage variables and tables <<
@@ -1034,6 +1060,16 @@ function Main (file)
 
 					if ver <= 280 then
 						VH:SQLQuery ("update `" .. tbl_sql ["ledocmd"] .. "` set `original` = 'oldclean', `new` = '" .. repsqlchars (table_cmnds ["oldclean"]) .. "' where `original` = 'cleanup'")
+
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('avenable', '" .. repsqlchars (table_sets ["avenable"]) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('avfilediff', '" .. repsqlchars (table_sets ["avfilediff"]) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('avfilecount', '" .. repsqlchars (table_sets ["avfilecount"]) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('avfeedverb', '" .. repsqlchars (table_sets ["avfeedverb"]) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('avsearchint', '" .. repsqlchars (table_sets ["avsearchint"]) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('avuserfree', '" .. repsqlchars (table_sets ["avuserfree"]) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('avsendtodb', '" .. repsqlchars (table_sets ["avsendtodb"]) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('avkicktext', '" .. repsqlchars (table_sets ["avkicktext"]) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('classnotiav', '" .. repsqlchars (table_sets ["classnotiav"]) .. "')")
 					end
 
 					if ver <= 281 then
@@ -1107,6 +1143,10 @@ function Main (file)
 
 	if table_sets ["addspecialver"] == 1 then -- special version
 		VH:SetConfig ("config", "hub_version_special", string.format (gettext ("Powered by %s"), "Ledokol "..ver_ledo))
+	end
+
+	if table_sets ["avenable"] == 1 then -- antivirus
+		loadavstr ()
 	end
 
 	math.randomseed (os.time ()) -- randomize
@@ -4226,13 +4266,143 @@ end
 ----- ---- --- -- -
 
 function VH_OnParsedMsgSR (nick, data)
-	if table_othsets ["locked"] == true then return 1 end
-
-	if table_sets ["enableipwatch"] == 1 then -- ip watch
-		if checkipwat (nick, getip (nick), data) == true then return 0 end
+	if table_othsets ["locked"] == true then
+		return 1
 	end
 
-	-- add srfi - search result filter
+	if table_sets ["avenable"] == 1 then -- antivirus
+		local class = getclass (nick)
+
+		if class >= table_sets ["scanbelowclass"] then
+			if table_sets ["enableipwatch"] == 1 then -- ip watch
+				if checkipwat (nick, getip (nick), data) == true then
+					return 0
+				end
+			end
+
+			return 1
+		end
+
+		local _, _, path, name, size = data:find ("^%$SR [^ ]+ (.-)([^\\]-)" .. string.char (5) .. "(%d+) .+")
+
+		if path and name and size and # path > 0 and # name > 0 and tonumber (size) > 0 then
+			local lame = name:lower ()
+
+			for _, ext in pairs (table_avex) do
+				if lame:sub (-# ext) == ext then
+					if ext == ".rar" and lame:find ("part%d+%.rar$") then
+						if table_sets ["enableipwatch"] == 1 then -- ip watch
+							if checkipwat (nick, getip (nick), data) == true then
+								return 0
+							end
+						end
+
+						return 1
+					end
+
+					for _, file in pairs (table_avfi) do
+						if getstrpart (lame, file) then
+							size = tonumber (size)
+
+							if table_avus [nick] then
+								if table_avus [nick][path] then
+									if not table_avus [nick][path][name] and math.abs (table_avus [nick][path][""] - size) <= table_sets ["avfilediff"] then
+										table_avus [nick][path][name] = size
+
+										if getitemcount (table_avus [nick][path]) >= table_sets ["avfilecount"] then
+											if table_sets ["avfeedverb"] == 2 then
+												local feed, list = "", ""
+
+												for fame, fize in pairs (table_avus [nick][path]) do
+													if # fame > 0 then
+														list = list .. " " .. path .. fame .. " | " .. makesize (fize) .. "\r\n"
+													end
+												end
+
+												feed = gettext ("Infected user detected") .. ":\r\n\r\n"
+												feed = feed .. " " .. gettext ("Nick: %s"):format (nick) .. "\r\n"
+												feed = feed .. " " .. gettext ("IP: %s"):format (getip (nick) .. tryipcc (nil, nick)) .. "\r\n"
+												feed = feed .. " " .. gettext ("Found files") .. ":\r\n\r\n"
+												feed = feed .. repnmdcoutchars (list)
+
+												opsnotify (table_sets ["classnotiav"], feed)
+											elseif table_sets ["avfeedverb"] == 1 then
+												opsnotify (table_sets ["classnotiav"], gettext ("Infected user detected with IP %s: %s"):format (getip (nick) .. tryipcc (nil, nick), nick))
+											end
+
+											if table_sets ["avsendtodb"] == 1 then -- antivirus database
+												local shar = parsemyinfoshare (getmyinfo (nick))
+
+												if shar > 0 and table_othsets ["ver_curl"] then
+													local res, _ = os.execute ("curl -G -L --retry 3 --connect-timeout 5 -m 30 -s -o \"" .. table_othsets ["cfgdir"] .. table_othsets ["tmpfile"] .. "\" --data-urlencode \"nick=" .. repurlchars (nick) .. "\" \"" .. table_othsets ["avdburl"] .. "&size=" .. tostring (shar) .. "&addr=" .. getip (nick) .. "\"")
+
+													if res then
+														local avfi = io.open (table_othsets ["cfgdir"] .. table_othsets ["tmpfile"], "r")
+
+														if avfi then
+															local avre = avfi:read ("*all")
+															avfi:close ()
+
+															if avre and tostring (avre) == "0" then
+																table_sets ["avsendtodb"] = 0
+																VH:SQLQuery ("update `" .. tbl_sql ["conf"] .. "` set `value` = '0' where `variable` = 'avsendtodb'")
+																opsnotify (table_sets ["classnotiledoact"], gettext ("Sadly I don't have access to send infected user information to AVDB, please ask maintainer of this script to add your server IP address to access list. AVDB reporting feature has been automatically disabled."))
+															end
+
+															os.remove (table_othsets ["cfgdir"] .. table_othsets ["tmpfile"])
+														end
+													end
+												end
+											end
+
+											if table_sets ["enableipwatch"] == 1 then -- ip watch
+												checkipwat (nick, getip (nick), data)
+											end
+
+											VH:KickUser (table_othsets ["sendfrom"], nick, table_sets ["avkicktext"])
+											table_avus [nick] = nil
+											return 0
+										end
+									end
+
+									table_avus [nick][path][""] = size
+								else
+									table_avus [nick][path] = {
+										[""] = size,
+										[name] = size
+									}
+								end
+							else
+								table_avus [nick] = {
+									[""] = os.time (),
+									[path] = {
+										[""] = size,
+										[name] = size
+									}
+								}
+							end
+
+							if table_sets ["enableipwatch"] == 1 then -- ip watch
+								if checkipwat (nick, getip (nick), data) == true then
+									return 0
+								end
+							end
+
+							return 1
+						end
+					end
+				end
+			end
+		end
+	end
+
+	if table_sets ["enableipwatch"] == 1 then -- ip watch
+		if checkipwat (nick, getip (nick), data) == true then
+			return 0
+		end
+	end
+
+	-- todo: add srfi = search result filter
 	return 1
 end
 
@@ -4298,8 +4468,29 @@ end
 ----- ---- --- -- -
 
 function VH_OnTimer (msec)
-	if table_othsets ["locked"] == true then return 1 end
+	if table_othsets ["locked"] == true then
+		return 1
+	end
+
 	local st = os.time () -- current time
+
+	if table_sets ["avenable"] == 1 and os.difftime (st, table_othsets ["avlasttick"]) >= table_sets ["avsearchint"] then -- antivirus
+		for nick, data in pairs (table_avus) do
+			if os.difftime (st, data [""]) >= table_sets ["avuserfree"] * 60 then
+				table_avus [nick] = nil
+			end
+		end
+
+		VH:SendToClass ("$Search Hub:" .. table_othsets ["sendfrom"] .. " F?F?0?1?" .. table_avse [table_othsets ["avnextitem"]] .. "|", 0, table_sets ["scanbelowclass"] - 1)
+
+		if table_othsets ["avnextitem"] == # table_avse then
+			table_othsets ["avnextitem"] = 1
+		else
+			table_othsets ["avnextitem"] = table_othsets ["avnextitem"] + 1
+		end
+
+		table_othsets ["avlasttick"] = st
+	end
 
 	if table_sets ["remrunning"] == 1 then -- reminder
 		if os.difftime (st, table_othsets ["remseconds"]) >= 60 then
@@ -4937,7 +5128,7 @@ function VH_OnParsedMsgPM (from, data, to)
 			return 0
 		end
 
-		-- todo: i dont remember what this is
+		-- todo: send pm to real nick when is sent to custom nick, do it after all checks and replaces
 		--if broadcastcustnick (to, from, data) == true then -- check custom nicks
 			--return 0
 		--end
@@ -8753,7 +8944,7 @@ function hublistshow (nick)
 				--end
 			--end
 
-			hlist = hlist .. " " .. prezero (string.len (rows), (x + 1)) .. ". " .. name .. " @ dchub://" .. addr .. "/" .. ownr .. sts .. "\r\n" -- todo: do something about adc:// hubs
+			hlist = hlist .. " " .. prezero (string.len (rows), (x + 1)) .. ". " .. name .. " @ dchub://" .. addr .. "/" .. ownr .. sts .. "\r\n" -- todo: allow adding adc, adcs, nmdcs hubs
 		end
 
 		commandanswer (nick, gettext ("Friendly hublist") .. ":\r\n\r\n" .. hlist)
@@ -10060,10 +10251,19 @@ end
 ----- ---- --- -- -
 
 function parsemyinfoshare (myinfo)
-local _, _, share = string.find (myinfo, "^%$MyINFO %$ALL .+ .*%$.*%$.*%$.*%$(.*)%$$")
-if share and tonumber (share) then share = tonumber (share) else share = 0 end
+	local share = 0
 
-return share
+	if myinfo then
+		local _, _, share = string.find (myinfo, "^%$MyINFO %$ALL .+ .*%$.*%$.*%$.*%$(.*)%$$")
+
+		if share then
+			share = tonumber (share) or 0
+		else
+			share = 0
+		end
+	end
+
+	return share
 end
 
 ----- ---- --- -- -
@@ -10098,7 +10298,7 @@ end
 function parsetag (tag)
 	local res = {}
 
-	if # tag > 0 then		
+	if # tag > 0 then
 		local _, _, cl, ve, mo, hu, sl, ot = tag:find ("^<(.+) V:(.+),M:(%S+),H:(%S+),S:(%d+)(.*>)$")
 
 		if cl then
@@ -12925,7 +13125,117 @@ else
 commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 end
 
------ ---- --- -- -
+	----- ---- --- -- -
+
+	elseif tvar == "avenable" then
+		if num == true then
+			if setto == 0 then
+				table_avse = {} -- clear
+				table_avus = {}
+				table_othsets ["avnextitem"] = 1
+				ok = true
+			elseif setto == 1 then
+				loadavstr ()
+				ok = true
+			else
+				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 " .. gettext ("or") .. " 1"))
+			end
+		else
+			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
+		end
+
+	----- ---- --- -- -
+
+	elseif tvar == "avfilediff" then
+		if num == true then
+			if setto >= 0 and setto <= 10240 then
+				ok = true
+			else
+				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 " .. gettext ("to") .. " 10240"))
+			end
+		else
+			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
+		end
+
+	----- ---- --- -- -
+
+	elseif tvar == "avfilecount" then
+		if num == true then
+			if setto >= 1 and setto <= 500 then
+				ok = true
+			else
+				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "1 " .. gettext ("to") .. " 500"))
+			end
+		else
+			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
+		end
+
+	----- ---- --- -- -
+
+	elseif tvar == "avfeedverb" then
+		if num == true then
+			if setto >= 0 and setto <= 2 then
+				ok = true
+			else
+				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0, 1 " .. gettext ("or") .. " 2"))
+			end
+		else
+			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
+		end
+
+	----- ---- --- -- -
+
+	elseif tvar == "avsearchint" then
+		if num == true then
+			if setto >= 1 and setto <= 600 then
+				ok = true
+			else
+				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "1 " .. gettext ("to") .. " 600"))
+			end
+		else
+			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
+		end
+
+	----- ---- --- -- -
+
+	elseif tvar == "avuserfree" then
+		if num == true then
+			if setto >= 1 and setto <= 1440 then
+				ok = true
+			else
+				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "1 " .. gettext ("to") .. " 1440"))
+			end
+		else
+			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
+		end
+
+	----- ---- --- -- -
+
+	elseif tvar == "avsendtodb" then
+		if num == true then
+			if setto == 0 or setto == 1 then
+				if setto == 1 and not table_othsets ["ver_curl"] then
+					commandanswer (nick, string.format (gettext ("This feature requires any version of %s installed on your system."), "cURL"))
+				else
+					ok = true
+				end
+			else
+				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 " .. gettext ("or") .. " 1"))
+			end
+		else
+			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
+		end
+
+	----- ---- --- -- -
+
+	elseif tvar == "avkicktext" then
+		if # setto > 0 then
+			ok = true
+		else
+			commandanswer (nick, string.format (gettext ("Configuration variable %s can't be empty."), tvar))
+		end
+
+	----- ---- --- -- -
 
 elseif tvar == "scanbelowclass" then
 if num == true then
@@ -13798,7 +14108,20 @@ else
 commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 end
 
------ ---- --- -- -
+	----- ---- --- -- -
+
+	elseif tvar == "classnotiav" then
+		if num == true then
+			if (setto >= 0 and setto <= 5) or setto == 10 or setto == 11 then
+				ok = true
+			else
+				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0, 1, 2, 3, 4, 5, 10 " .. gettext ("or") .. " 11"))
+			end
+		else
+			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
+		end
+
+	----- ---- --- -- -
 
 	elseif tvar == "classnotimich" then
 		if num == true then
@@ -15795,10 +16118,20 @@ conf = conf.."\r\n"
 conf = conf.."\r\n [::] enablesearfilt = "..table_sets ["enablesearfilt"]
 conf = conf.."\r\n [::] sefireason = "..table_sets ["sefireason"]
 conf = conf.."\r\n [::] searfiltmsg = "..table_sets ["searfiltmsg"]
-conf = conf.."\r\n"
+	conf = conf .. "\r\n"
+	conf = conf .. "\r\n [::] avenable = " .. table_sets ["avenable"]
+	conf = conf .. "\r\n [::] avfilediff = " .. table_sets ["avfilediff"]
+	conf = conf .. "\r\n [::] avfilecount = " .. table_sets ["avfilecount"]
+	conf = conf .. "\r\n [::] avfeedverb = " .. table_sets ["avfeedverb"]
+	conf = conf .. "\r\n [::] avsearchint = " .. table_sets ["avsearchint"]
+	conf = conf .. "\r\n [::] avuserfree = " .. table_sets ["avuserfree"]
+	conf = conf .. "\r\n [::] avsendtodb = " .. table_sets ["avsendtodb"]
+	conf = conf .. "\r\n [::] avkicktext = " .. table_sets ["avkicktext"]
+	conf = conf .. "\r\n"
 conf = conf.."\r\n [::] classnotianti = "..table_sets ["classnotianti"]
 conf = conf.."\r\n [::] classnotiex = "..table_sets ["classnotiex"]
-conf = conf.."\r\n [::] classnotisefi = "..table_sets ["classnotisefi"]
+	conf = conf .. "\r\n [::] classnotisefi = " .. table_sets ["classnotisefi"]
+	conf = conf .. "\r\n [::] classnotiav = " .. table_sets ["classnotiav"]
 conf = conf.."\r\n [::] classnotimich = "..table_sets ["classnotimich"]
 conf = conf.."\r\n [::] classnotiflood = "..table_sets ["classnotiflood"]
 conf = conf.."\r\n [::] classnotigagip = "..table_sets ["classnotigagip"]
@@ -16681,6 +17014,51 @@ end
 
 ----- ---- --- -- -
 
+function repurlchars (data)
+	local back = data
+	back = back:gsub ("\"", "\\\"")
+	return back
+end
+
+----- ---- --- -- -
+
+function getstrpart (name, file)
+	for part in file:gmatch ("[^ ]+") do
+		if not name:find (part, 1, true) then -- plain text
+			return false
+		end
+	end
+
+	return true
+end
+
+----- ---- --- -- -
+
+function getitemcount (list)
+	local back = 0
+
+	for _, _ in pairs (list) do
+		back = back + 1
+	end
+
+	return back
+end
+
+----- ---- --- -- -
+
+function loadavstr ()
+	table_avse = {}
+
+	for _, ext in pairs (table_avex) do
+		for _, file in pairs (table_avfi) do
+			local item = file:gsub (" ", "$")
+			table.insert (table_avse, item .. "$" .. ext)
+		end
+	end
+end
+
+----- ---- --- -- -
+
 function loadcomponents ()
 	local _, paths = 0, {"", "/usr/local/bin/", "/usr/bin/"} -- prepare
 
@@ -17011,13 +17389,13 @@ end
 ----- ---- --- -- -
 
 function getmyinfo (nick)
-local _, mi = VH:GetMyINFO (nick)
+	local _, mi = VH:GetMyINFO (nick)
 
-if mi and (string.len (mi) > 0) then
-	return mi
-else
-	return nil
-end
+	if mi and (string.len (mi) > 0) then
+		return mi
+	else
+		return nil
+	end
 end
 
 ----- ---- --- -- -
@@ -17073,10 +17451,10 @@ end
 function getip (nick)
 	local _, ip = VH:GetUserIP (nick)
 
-	if ip and (string.len (ip) > 0) then
+	if ip and # ip >= 7 and # ip <= 15 then
 		return ip
 	else
-		return "[unknown]"
+		return "0.0.0.0"
 	end
 end
 
