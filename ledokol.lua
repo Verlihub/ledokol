@@ -85,7 +85,7 @@ table_sets = {
 	["avsearchint"] = 30,
 	["avfilediff"] = 256,
 	["avfilecount"] = 30,
-	["avuserfree"] = 120,
+	["avuserfree"] = 180,
 	["avfeedverb"] = 2,
 	["avsendtodb"] = 0,
 	["avkicktext"] = "Virus spreaders are not welcome here _ban_",
@@ -4268,12 +4268,14 @@ function VH_OnParsedMsgSR (nick, data)
 		return 1
 	end
 
+	local usip = getip (nick)
+
 	if table_sets ["avsearchint"] > 0 then -- antivirus
 		local class = getclass (nick)
 
 		if class >= table_sets ["scanbelowclass"] then
 			if table_sets ["enableipwatch"] == 1 then -- ip watch
-				if checkipwat (nick, getip (nick), data) == true then
+				if checkipwat (nick, usip, data) == true then
 					return 0
 				end
 			end
@@ -4290,7 +4292,7 @@ function VH_OnParsedMsgSR (nick, data)
 				if lame:sub (-# ext) == ext then
 					if ext == ".rar" and lame:find ("part%d+%.rar$") then
 						if table_sets ["enableipwatch"] == 1 then -- ip watch
-							if checkipwat (nick, getip (nick), data) == true then
+							if checkipwat (nick, usip, data) == true then
 								return 0
 							end
 						end
@@ -4319,20 +4321,20 @@ function VH_OnParsedMsgSR (nick, data)
 
 												feed = gettext ("Infected user detected") .. ":\r\n\r\n"
 												feed = feed .. " " .. gettext ("Nick: %s"):format (nick) .. "\r\n"
-												feed = feed .. " " .. gettext ("IP: %s"):format (getip (nick) .. tryipcc (nil, nick)) .. "\r\n"
+												feed = feed .. " " .. gettext ("IP: %s"):format (usip .. tryipcc (usip, nick)) .. "\r\n"
 												feed = feed .. " " .. gettext ("Found files") .. ":\r\n\r\n"
 												feed = feed .. repnmdcoutchars (list)
 
 												opsnotify (table_sets ["classnotiav"], feed)
 											elseif table_sets ["avfeedverb"] == 1 then
-												opsnotify (table_sets ["classnotiav"], gettext ("Infected user detected with IP %s: %s"):format (getip (nick) .. tryipcc (nil, nick), nick))
+												opsnotify (table_sets ["classnotiav"], gettext ("Infected user detected with IP %s: %s"):format (usip .. tryipcc (usip, nick), nick))
 											end
 
 											if table_sets ["avsendtodb"] == 1 then -- antivirus database
 												local shar = parsemyinfoshare (getmyinfo (nick))
 
 												if shar > 0 and table_othsets ["ver_curl"] then
-													local res, _ = os.execute ("curl -G -L --retry 3 --connect-timeout 5 -m 30 -s -o \"" .. table_othsets ["cfgdir"] .. table_othsets ["tmpfile"] .. "\" --data-urlencode \"nick=" .. repurlchars (nick) .. "\" \"" .. table_othsets ["avdburl"] .. "&size=" .. tostring (shar) .. "&addr=" .. getip (nick) .. "\"")
+													local res, _ = os.execute ("curl -G -L --retry 3 --connect-timeout 5 -m 30 -s -o \"" .. table_othsets ["cfgdir"] .. table_othsets ["tmpfile"] .. "\" --data-urlencode \"nick=" .. repurlchars (nick) .. "\" \"" .. table_othsets ["avdburl"] .. "&size=" .. tostring (shar) .. "&addr=" .. usip .. "\"")
 
 													if res then
 														local avfi = io.open (table_othsets ["cfgdir"] .. table_othsets ["tmpfile"], "r")
@@ -4354,7 +4356,7 @@ function VH_OnParsedMsgSR (nick, data)
 											end
 
 											if table_sets ["enableipwatch"] == 1 then -- ip watch
-												checkipwat (nick, getip (nick), data)
+												checkipwat (nick, usip, data)
 											end
 
 											VH:KickUser (table_othsets ["sendfrom"], nick, table_sets ["avkicktext"])
@@ -4381,7 +4383,7 @@ function VH_OnParsedMsgSR (nick, data)
 							end
 
 							if table_sets ["enableipwatch"] == 1 then -- ip watch
-								if checkipwat (nick, getip (nick), data) == true then
+								if checkipwat (nick, usip, data) == true then
 									return 0
 								end
 							end
@@ -4395,7 +4397,7 @@ function VH_OnParsedMsgSR (nick, data)
 	end
 
 	if table_sets ["enableipwatch"] == 1 then -- ip watch
-		if checkipwat (nick, getip (nick), data) == true then
+		if checkipwat (nick, usip, data) == true then
 			return 0
 		end
 	end
