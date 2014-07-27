@@ -88,6 +88,8 @@ table_sets = {
 	["avuserfree"] = 180,
 	["avfeedverb"] = 2,
 	["avsendtodb"] = 0,
+	["avdbloadint"] = 0,
+	["avdbloadlim"] = 100,
 	["avkicktext"] = "Virus spreaders are not welcome here _ban_",
 	["classnotianti"] = 3,
 	["classnotiex"] = 3,
@@ -288,7 +290,8 @@ table_othsets = {
 	["tmpfile"] = "ledokol.tmp",
 	["verfile"] = "ledokol.ver",
 	["seenurl"] = "http://www.te-home.net/?do=hublist&action=seen&nick=",
-	["avdburl"] = "http://www.te-home.net/?do=tools&action=avdbsend",
+	["avdbsendurl"] = "http://www.te-home.net/?do=tools&action=avdbsend",
+	["avdbloadurl"] = "http://www.te-home.net/?do=tools&action=avdbload",
 	["cfgdir"] = "",
 	["feednick"] = "",
 	["sendfrom"] = "",
@@ -298,7 +301,8 @@ table_othsets = {
 	["ustrig"] = "",
 	["topicowner"] = nil,
 	["topicvalue"] = nil,
-	["avlasttick"] = os.time (),
+	["avlastseartick"] = os.time (),
+	["avlastloadtick"] = os.time (),
 	["avnextitem"] = 1,
 	["chflallcount"] = 0,
 	["chflalltime"] = os.time (),
@@ -919,14 +923,15 @@ table_ctmb = {}
 table_regm = {}
 table_blst = {}
 table_prfl = {["ctm"] = {}}
+table_avlo = {}
 table_avus = {}
 table_avse = {}
 
 table_avfi = {
-	"100 best", "top 100", "top girl", "18 girl", "sexy girl", "top wallpaper",
-	"sexy wallpaper", "anti virus", "0day", "apple", "microsoft", "windows",
-	"office", "adobe", "google", "android", "crack", "patch", "keygen", "serial",
-	"trojan", "torrent", "advanced", "ahead", "collection", "wallpaper", "porn",
+	"download", "free", "driver", "100 best", "top 100", "top girl", "18 girl", "sexy girl",
+	"top wallpaper", "sexy wallpaper", "anti virus", "0day", "apple", "microsoft", "nero",
+	"tools", "windows", "office", "adobe", "google", "android", "crack", "patch", "keygen",
+	"serial", "trojan", "torrent", "advanced", "ahead", "collection", "wallpaper", "porn",
 	"ptsc", "pthc", "preteen", "lolita", "sex", "img_ .jpg", "01 .mp3"
 }
 
@@ -1068,6 +1073,8 @@ function Main (file)
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('avuserfree', '" .. repsqlchars (table_sets ["avuserfree"]) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('avfeedverb', '" .. repsqlchars (table_sets ["avfeedverb"]) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('avsendtodb', '" .. repsqlchars (table_sets ["avsendtodb"]) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('avdbloadint', '" .. repsqlchars (table_sets ["avdbloadint"]) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('avdbloadlim', '" .. repsqlchars (table_sets ["avdbloadlim"]) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('avkicktext', '" .. repsqlchars (table_sets ["avkicktext"]) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('classnotiav', '" .. repsqlchars (table_sets ["classnotiav"]) .. "')")
 					end
@@ -4014,8 +4021,11 @@ end
 ----- ---- --- -- -
 
 function VH_OnUserLogin (nick, uip)
-	if table_othsets ["locked"] == true then return 1 end
-	local mistr, ip, desc, tag, conn, email, size, prot, hasip, hasinfo, hasprot, hasmistr = "", "", "", "", "", "", 0, false, false, false, false, false
+	if table_othsets ["locked"] == true then
+		return 1
+	end
+
+	local mistr, ip, desc, tag, conn, email, size, prot, hasip, hasinfo, hasprot, hasmistr, _ = "", "", "", "", "", "", 0, false, false, false, false, false, 0
 
 	if table_sets ["enableipwatch"] == 1 then -- ip watch
 		mistr, hasmistr = getmyinfo (nick), true
@@ -4060,6 +4070,34 @@ if (table_sets ["ipconantiflint"] > 0) and (cls < table_sets ["scanbelowclass"])
 		end
 	end
 end
+
+	if table_sets ["avdbloadint"] > 0 and cls < table_sets ["scanbelowclass"] and table_avlo [nick] then -- antivirus load
+		if hasip == false then
+			ip, hasip = getip (nick), true
+		end
+
+		if table_avlo [nick]["addr"] == ip then
+			if not hasinfo then
+				if hasmistr == false then
+					mistr, hasmistr = getmyinfo (nick), true
+				end
+
+				desc, tag, conn, _, email, size = parsemyinfo (nick, mistr)
+				hasinfo = true
+			end
+
+			if size > 0 and table_avlo [nick]["size"] == size then
+				opsnotify (table_sets ["classnotiav"], gettext ("Infected user logged in with IP %s and share %s: %s"):format (ip .. tryipcc (ip, nick), makesize (size), nick))
+				VH:KickUser (table_othsets ["sendfrom"], nick, table_sets ["avkicktext"])
+
+				if cls >= table_sets ["welcomeclass"] then -- dont send logout message
+					table_faau [nick] = 1
+				end
+
+				return 0
+			end
+		end
+	end
 
 if table_sets ["authrunning"] == 1 then -- ip authorization
 	if hasip == false then ip, hasip = getip (nick), true end
@@ -4325,11 +4363,12 @@ function VH_OnParsedMsgSR (nick, data)
 
 										if getitemcount (table_avus [nick][path]) >= table_sets ["avfilecount"] then
 											if table_sets ["avfeedverb"] == 2 then
-												local feed, list = "", ""
+												local feed, list = "", " " .. repnmdcoutchars (path) .. "\r\n"
+												local plen = # path
 
 												for fame, fize in pairs (table_avus [nick][path]) do
 													if # fame > 0 then
-														list = list .. " " .. path .. fame .. " | " .. makesize (fize) .. "\r\n"
+														list = list .. " " .. string.rep (" ", plen) .. repnmdcoutchars (fame) .. " &#124; " .. makesize (fize) .. "\r\n"
 													end
 												end
 
@@ -4338,18 +4377,18 @@ function VH_OnParsedMsgSR (nick, data)
 												feed = feed .. " " .. gettext ("IP: %s"):format (usip .. tryipcc (usip, nick)) .. "\r\n"
 												feed = feed .. " " .. gettext ("Spent time: %s"):format (formatuptime (table_avus [nick][""], false)) .. "\r\n"
 												feed = feed .. " " .. gettext ("Found files") .. ":\r\n\r\n"
-												feed = feed .. repnmdcoutchars (list)
+												feed = feed .. list
 
 												opsnotify (table_sets ["classnotiav"], feed)
 											elseif table_sets ["avfeedverb"] == 1 then
-												opsnotify (table_sets ["classnotiav"], gettext ("Infected user detected with IP %s: %s"):format (usip .. tryipcc (usip, nick), nick))
+												opsnotify (table_sets ["classnotiav"], gettext ("Infected user detected with nick %s and IP %s and spent time: %s"):format (nick, usip .. tryipcc (usip, nick), formatuptime (table_avus [nick][""], false)))
 											end
 
 											if table_sets ["avsendtodb"] == 1 then -- antivirus database
 												local shar = parsemyinfoshare (getmyinfo (nick))
 
 												if shar > 0 and table_othsets ["ver_curl"] then
-													local res, _ = os.execute ("curl -G -L --retry 3 --connect-timeout 5 -m 30 -s -o \"" .. table_othsets ["cfgdir"] .. table_othsets ["tmpfile"] .. "\" --data-urlencode \"nick=" .. repurlchars (nick) .. "\" \"" .. table_othsets ["avdburl"] .. "&size=" .. tostring (shar) .. "&addr=" .. usip .. "\"")
+													local res, _ = os.execute ("curl -G -L --retry 3 --connect-timeout 5 -m 30 -s -o \"" .. table_othsets ["cfgdir"] .. table_othsets ["tmpfile"] .. "\" --data-urlencode \"nick=" .. repurlchars (nick) .. "\" \"" .. table_othsets ["avdbsendurl"] .. "&size=" .. tostring (shar) .. "&addr=" .. usip .. "\"")
 
 													if res then
 														local avfi = io.open (table_othsets ["cfgdir"] .. table_othsets ["tmpfile"], "r")
@@ -4489,7 +4528,7 @@ function VH_OnTimer (msec)
 
 	local st = os.time () -- current time
 
-	if table_sets ["avsearchint"] > 0 and os.difftime (st, table_othsets ["avlasttick"]) >= table_sets ["avsearchint"] then -- antivirus
+	if table_sets ["avsearchint"] > 0 and os.difftime (st, table_othsets ["avlastseartick"]) >= table_sets ["avsearchint"] then -- antivirus search
 		for nick, data in pairs (table_avus) do
 			if os.difftime (st, data [""]) >= table_sets ["avuserfree"] * 60 then
 				table_avus [nick] = nil
@@ -4504,7 +4543,34 @@ function VH_OnTimer (msec)
 			table_othsets ["avnextitem"] = table_othsets ["avnextitem"] + 1
 		end
 
-		table_othsets ["avlasttick"] = st
+		table_othsets ["avlastseartick"] = st
+	end
+
+	if table_sets ["avdbloadint"] > 0 and table_othsets ["ver_curl"] and os.difftime (st, table_othsets ["avlastloadtick"]) >= table_sets ["avdbloadint"] then -- antivirus load
+		local res, _ = os.execute ("curl -G -L --retry 3 --connect-timeout 5 -m 30 -s -o \"" .. table_othsets ["cfgdir"] .. table_othsets ["tmpfile"] .. "\" \"" .. table_othsets ["avdbloadurl"] .. "&limit=" .. tostring (table_sets ["avdbloadlim"]) .. "\"")
+
+		if res then
+			local avfi = io.open (table_othsets ["cfgdir"] .. table_othsets ["tmpfile"], "r")
+
+			if avfi then
+				table_avlo = {}
+
+				for avli in avfi:lines () do
+					local _, _, avni, avip, avsi, avti = avli:find ("^([^ ]+)|(%d+%.%d+%.%d+%.%d+)|(%d+)|(%d+)$")
+
+					if avni and avip and avsi and avti then
+						table_avlo [avni] = {
+							["addr"] = avip,
+							["size"] = tonumber (avsi),
+							["time"] = tonumber (avti)
+						}
+					end
+				end
+
+				avfi:close ()
+				os.remove (table_othsets ["cfgdir"] .. table_othsets ["tmpfile"])
+			end
+		end
 	end
 
 	if table_sets ["remrunning"] == 1 then -- reminder
@@ -13158,10 +13224,10 @@ end
 
 	elseif tvar == "avfilecount" then
 		if num == true then
-			if setto >= 1 and setto <= 500 then
+			if setto >= 5 and setto <= 300 then
 				ok = true
 			else
-				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "1 " .. gettext ("to") .. " 500"))
+				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "5 " .. gettext ("to") .. " 300"))
 			end
 		else
 			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
@@ -13185,6 +13251,14 @@ end
 	elseif tvar == "avsearchint" then
 		if num == true then
 			if setto >= 0 and setto <= 900 then
+				if setto == 0 then
+					table_avse = {} -- clear
+					table_avus = {}
+					table_othsets ["avnextitem"] = 1
+				else
+					loadavstr ()
+				end
+
 				ok = true
 			else
 				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 " .. gettext ("to") .. " 900"))
@@ -13223,6 +13297,41 @@ end
 				end
 			else
 				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 " .. gettext ("or") .. " 1"))
+			end
+		else
+			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
+		end
+
+	----- ---- --- -- -
+
+	elseif tvar == "avdbloadint" then
+		if num == true then
+			if setto == 0 or (setto >= 30 and setto <= 1440) then
+				if setto == 0 then
+					table_avlo = {} -- clear
+					ok = true
+				else
+					if not table_othsets ["ver_curl"] then
+						commandanswer (nick, string.format (gettext ("This feature requires any version of %s installed on your system."), "cURL"))
+					else
+						ok = true
+					end
+				end
+			else
+				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 " .. gettext ("or") .. " 30 " .. gettext ("to") .. " 1440"))
+			end
+		else
+			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
+		end
+
+	----- ---- --- -- -
+
+	elseif tvar == "avdbloadlim" then
+		if num == true then
+			if setto >= 1 and setto <= 1000 then
+				ok = true
+			else
+				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "1 " .. gettext ("to") .. " 1000"))
 			end
 		else
 			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
@@ -16128,6 +16237,8 @@ conf = conf.."\r\n [::] searfiltmsg = "..table_sets ["searfiltmsg"]
 	conf = conf .. "\r\n [::] avuserfree = " .. table_sets ["avuserfree"]
 	conf = conf .. "\r\n [::] avfeedverb = " .. table_sets ["avfeedverb"]
 	conf = conf .. "\r\n [::] avsendtodb = " .. table_sets ["avsendtodb"]
+	conf = conf .. "\r\n [::] avdbloadint = " .. table_sets ["avdbloadint"]
+	conf = conf .. "\r\n [::] avdbloadlim = " .. table_sets ["avdbloadlim"]
 	conf = conf .. "\r\n [::] avkicktext = " .. table_sets ["avkicktext"]
 	conf = conf .. "\r\n"
 conf = conf.."\r\n [::] classnotianti = "..table_sets ["classnotianti"]
@@ -17039,8 +17150,10 @@ end
 function getitemcount (list)
 	local back = 0
 
-	for _, _ in pairs (list) do
-		back = back + 1
+	for name, _ in pairs (list) do
+		if # name > 0 then
+			back = back + 1
+		end
 	end
 
 	return back
@@ -17064,20 +17177,70 @@ end
 function showavstats (nick, user)
 	local stats = ""
 
-	if # user == 0 then
+	if # user == 0 then -- general mode
 		stats = gettext ("Antivirus statistics") .. ":\r\n\r\n"
-		stats = stats .. " " .. gettext ("File names used for search") .. ":\r\n\r\n " .. table.concat (table_avfi, "\r\n ") .. "\r\n"
-		stats = stats .. "\r\n " .. gettext ("File extensions used for search") .. ":\r\n\r\n " .. table.concat (table_avex, "\r\n ") .. "\r\n"
-		local users = ""
+		stats = stats .. " " .. gettext ("File names used for search") .. ":\r\n\r\n"
 
-		for usni, _ in pairs (table_avus) do
-			users = users .. " " .. usni .. "\r\n"
+		local sext = table_avse [table_othsets ["avnextitem"]]:gsub ("%$", " ")
+		local _, _, sextfi, sextex = sext:find ("^(.+) (%..+)$")
+
+		for _, avfi in pairs (table_avfi) do
+			stats = stats .. "\t" .. avfi
+
+			if sextfi and sextfi == avfi then
+				stats = stats .. " *"
+			end
+
+			stats = stats .. "\r\n"
 		end
 
-		if # users > 0 then
-			stats = stats .. "\r\n " .. gettext ("Possibly infected users") .. ":\r\n\r\n" .. users
+		stats = stats .. "\r\n " .. gettext ("File extensions used for search") .. ":\r\n\r\n"
+
+		for _, avex in pairs (table_avex) do
+			stats = stats .. "\t" .. avex
+
+			if sextex and sextex == avex then
+				stats = stats .. " *"
+			end
+
+			stats = stats .. "\r\n"
 		end
-	elseif table_avus [user] then
+
+		local usli = ""
+
+		for usni, data in pairs (table_avus) do
+			local fint = 0
+
+			for dapa, dafi in pairs (data) do
+				if fint >= 5 then
+					break
+				end
+
+				if # dapa > 0 then
+					fint = 0
+
+					for fina, _ in pairs (dafi) do
+						if fint >= 5 then
+							break
+						end
+
+						if # fina > 0 then
+							fint = fint + 1
+						end
+					end
+				end
+			end
+
+			if fint >= 5 then
+				usli = usli .. "\t" .. gettext ("Nick: %s"):format (usni) .. " &#124; " .. gettext ("Spent time: %s"):format (formatuptime (data [""], false)) .. "\r\n"
+			end
+		end
+
+		if # usli > 0 then
+			stats = stats .. "\r\n " .. gettext ("Possibly infected users") .. ":\r\n\r\n" .. usli
+		end
+
+	elseif table_avus [user] then -- user mode
 		local addr = getip (user)
 		stats = gettext ("Antivirus statistics") .. ":\r\n\r\n"
 		stats = stats .. " " .. gettext ("Nick: %s"):format (user) .. "\r\n"
@@ -17097,7 +17260,8 @@ function showavstats (nick, user)
 				end
 			end
 		end
-	else
+
+	else -- not in list
 		stats = gettext ("User not in list: %s"):format (user)
 	end
 
