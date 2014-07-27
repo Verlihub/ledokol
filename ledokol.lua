@@ -4077,30 +4077,32 @@ if (table_sets ["ipconantiflint"] > 0) and (cls < table_sets ["scanbelowclass"])
 	end
 end
 
-	if table_sets ["avdbloadint"] > 0 and cls < table_sets ["scanbelowclass"] and table_avlo [nick] then -- antivirus load
+	if table_sets ["avdbloadint"] > 0 and cls < table_sets ["scanbelowclass"] then -- antivirus load
 		if hasip == false then
 			ip, hasip = getip (nick), true
 		end
 
-		if table_avlo [nick]["addr"] == ip then
-			if not hasinfo then
-				if hasmistr == false then
-					mistr, hasmistr = getmyinfo (nick), true
-				end
-
-				desc, tag, conn, _, email, size = parsemyinfo (nick, mistr)
-				hasinfo = true
+		if not hasinfo then
+			if hasmistr == false then
+				mistr, hasmistr = getmyinfo (nick), true
 			end
 
-			if size > 0 and table_avlo [nick]["size"] == size then
-				opsnotify (table_sets ["classnotiav"], gettext ("Infected user logged in with IP %s and share %s: %s"):format (ip .. tryipcc (ip, nick), makesize (size), nick))
-				VH:KickUser (table_othsets ["sendfrom"], nick, table_sets ["avkicktext"])
+			desc, tag, conn, _, email, size = parsemyinfo (nick, mistr)
+			hasinfo = true
+		end
 
-				if cls >= table_sets ["welcomeclass"] then -- dont send logout message
-					table_faau [nick] = 1
+		if size > 0 then
+			for _, data in pairs (table_avlo) do
+				if nick == data ["nick"] and ip == data ["addr"] and data ["size"] == size then
+					opsnotify (table_sets ["classnotiav"], gettext ("Infected user logged in with IP %s and share %s: %s"):format (ip .. tryipcc (ip, nick), makesize (size), nick))
+					VH:KickUser (table_othsets ["sendfrom"], nick, table_sets ["avkicktext"])
+
+					if cls >= table_sets ["welcomeclass"] then -- dont send logout message
+						table_faau [nick] = 1
+					end
+
+					return 0
 				end
-
-				return 0
 			end
 		end
 	end
@@ -17186,11 +17188,12 @@ function loadavdb ()
 				local _, _, avni, avip, avsi, avti = avli:find ("^([^ ]+)|(%d+%.%d+%.%d+%.%d+)|(%d+)|(%d+)$")
 
 				if avni and avip and avsi and avti then
-					table_avlo [avni] = {
+					table.insert (table_avlo, {
+						["nick"] = avni,
 						["addr"] = avip,
 						["size"] = tonumber (avsi),
 						["time"] = tonumber (avti)
-					}
+					})
 
 					lint = lint + 1
 				end
@@ -17243,30 +17246,34 @@ function showavstats (nick, user)
 		local usli = ""
 
 		for usni, data in pairs (table_avus) do
-			local fint = 0
+			if getstatus (usni) == 0 then
+				table_avus [usni] = nil
+			else
+				local fint = 0
 
-			for dapa, dafi in pairs (data) do
-				if fint >= 5 then
-					break
-				end
+				for dapa, dafi in pairs (data) do
+					if fint >= 5 then
+						break
+					end
 
-				if # dapa > 0 then
-					fint = 0
+					if # dapa > 0 then
+						fint = 0
 
-					for fina, _ in pairs (dafi) do
-						if fint >= 5 then
-							break
-						end
+						for fina, _ in pairs (dafi) do
+							if fint >= 5 then
+								break
+							end
 
-						if # fina > 0 then
-							fint = fint + 1
+							if # fina > 0 then
+								fint = fint + 1
+							end
 						end
 					end
 				end
-			end
 
-			if fint >= 5 then
-				usli = usli .. "\t" .. gettext ("Nick: %s"):format (usni) .. " &#124; " .. gettext ("Spent time: %s"):format (formatuptime (data [""], false)) .. "\r\n"
+				if fint >= 5 then
+					usli = usli .. "\t" .. gettext ("Nick: %s"):format (usni) .. " &#124; " .. gettext ("Spent time: %s"):format (formatuptime (data [""], false)) .. "\r\n"
+				end
 			end
 		end
 
@@ -17275,21 +17282,26 @@ function showavstats (nick, user)
 		end
 
 	elseif table_avus [user] then -- user mode
-		local addr = getip (user)
-		stats = gettext ("Antivirus statistics") .. ":\r\n\r\n"
-		stats = stats .. " " .. gettext ("Nick: %s"):format (user) .. "\r\n"
-		stats = stats .. " " .. gettext ("IP: %s"):format (addr .. tryipcc (addr, user)) .. "\r\n"
-		stats = stats .. " " .. gettext ("Spent time: %s"):format (formatuptime (table_avus [user][""], false)) .. "\r\n"
-		stats = stats .. " " .. gettext ("Found files") .. ":\r\n\r\n"
+		if getstatus (user) == 0 then
+			table_avus [user] = nil
+			stats = gettext ("User not in list: %s"):format (user)
+		else
+			local addr = getip (user)
+			stats = gettext ("Antivirus statistics") .. ":\r\n\r\n"
+			stats = stats .. " " .. gettext ("Nick: %s"):format (user) .. "\r\n"
+			stats = stats .. " " .. gettext ("IP: %s"):format (addr .. tryipcc (addr, user)) .. "\r\n"
+			stats = stats .. " " .. gettext ("Spent time: %s"):format (formatuptime (table_avus [user][""], false)) .. "\r\n"
+			stats = stats .. " " .. gettext ("Found files") .. ":\r\n\r\n"
 
-		for path, file in pairs (table_avus [user]) do
-			if # path > 0 then
-				stats = stats .. " " .. repnmdcoutchars (path) .. "\r\n"
-				local plen = # path
+			for path, file in pairs (table_avus [user]) do
+				if # path > 0 then
+					stats = stats .. " " .. repnmdcoutchars (path) .. "\r\n"
+					local plen = # path
 
-				for fame, fize in pairs (file) do
-					if # fame > 0 then
-						stats = stats .. " " .. string.rep (" ", plen) .. repnmdcoutchars (fame) .. " &#124; " .. makesize (fize) .. "\r\n"
+					for fame, fize in pairs (file) do
+						if # fame > 0 then
+							stats = stats .. " " .. string.rep (" ", plen) .. repnmdcoutchars (fame) .. " &#124; " .. makesize (fize) .. "\r\n"
+						end
 					end
 				end
 			end
