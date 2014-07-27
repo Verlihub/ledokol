@@ -290,7 +290,7 @@ table_othsets = {
 	["vazhub"] = "dchub://hub.verlihub.net:7777/",
 	["tmpfile"] = "ledokol.tmp",
 	["verfile"] = "ledokol.ver",
-	["seenurl"] = "http://www.te-home.net/?do=hublist&action=seen&nick=",
+	["seenurl"] = "http://www.te-home.net/?do=hublist&action=seen",
 	["avdbsendurl"] = "http://www.te-home.net/?do=tools&action=avdbsend",
 	["avdbloadurl"] = "http://www.te-home.net/?do=tools&action=avdbload",
 	["cfgdir"] = "",
@@ -7657,7 +7657,7 @@ function seenlookup (nick, user)
 		commandanswer (nick, string.format (gettext ("This feature requires any version of %s installed on your system."), "cURL"))
 	else
 		commandanswer (nick, string.format (gettext ("Looking on %s for %s..."), "http://www.te-home.net/?do=hublist", user))
-		local res, err = os.execute ("curl -L -G --retry 3 --connect-timeout 5 -m 15 -A \"Verlihub\" -s -o \""..table_othsets ["cfgdir"]..table_othsets ["tmpfile"].."\" \""..table_othsets ["seenurl"]..encodeurl (user).."\"")
+		local res, err = os.execute ("curl -G -L --retry 3 --connect-timeout 5 -m 15 -A \"Verlihub\" -s -o \"" .. table_othsets ["cfgdir"] .. table_othsets ["tmpfile"] .. "\" --data-urlencode \"nick=" .. repurlchars (user) .. "\" \"" .. table_othsets ["seenurl"] .. "\"")
 
 		if res then
 			local f = io.open (table_othsets ["cfgdir"]..table_othsets ["tmpfile"], "r")
@@ -17923,45 +17923,6 @@ function repsqlchars (txt)
 	local ret = string.gsub (txt, string.char (92), string.char (92, 92)) -- backslash
 	ret = string.gsub (ret, string.char (34), string.char (92, 34)) -- double quote
 	ret = string.gsub (ret, string.char (39), string.char (92, 39)) -- single quote
-	return ret
-end
-
------ ---- --- -- -
-
-function encodeurl (url)
-	local ret = url
-	ret = string.gsub (ret, "%%", "%%25")
-	ret = string.gsub (ret, "!", "%%21")
-	ret = string.gsub (ret, "%*", "%%2A")
-	ret = string.gsub (ret, "\"", "%%22")
-	ret = string.gsub (ret, "'", "%%27")
-	ret = string.gsub (ret, "%(", "%%28")
-	ret = string.gsub (ret, "%)", "%%29")
-	ret = string.gsub (ret, ";", "%%3B")
-	ret = string.gsub (ret, ":", "%%3A")
-	ret = string.gsub (ret, "@", "%%40")
-	ret = string.gsub (ret, "&", "%%26")
-	ret = string.gsub (ret, "=", "%%3D")
-	ret = string.gsub (ret, "%+", "%%2B")
-	ret = string.gsub (ret, "%$", "%%24")
-	ret = string.gsub (ret, ",", "%%2C")
-	ret = string.gsub (ret, "/", "%%2F")
-	ret = string.gsub (ret, "%?", "%%3F")
-	ret = string.gsub (ret, "#", "%%23")
-	ret = string.gsub (ret, "%[", "%%5B")
-	ret = string.gsub (ret, "%]", "%%5D")
-	ret = string.gsub (ret, "<", "%%3C")
-	ret = string.gsub (ret, ">", "%%3E")
-	ret = string.gsub (ret, "~", "%%7E")
-	ret = string.gsub (ret, "%.", "%%2E")
-	ret = string.gsub (ret, "{", "%%7B")
-	ret = string.gsub (ret, "}", "%%7D")
-	ret = string.gsub (ret, "|", "%%7C")
-	ret = string.gsub (ret, "\\", "%%5C")
-	ret = string.gsub (ret, "%-", "%%2D")
-	ret = string.gsub (ret, "`", "%%60")
-	ret = string.gsub (ret, "_", "%%5F")
-	ret = string.gsub (ret, "%^", "%%5E")
 	return ret
 end
 
