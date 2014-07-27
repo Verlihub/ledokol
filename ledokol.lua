@@ -89,7 +89,7 @@ table_sets = {
 	["avfeedverb"] = 2,
 	["avsendtodb"] = 0,
 	["avdbloadint"] = 0,
-	["avdbloadlim"] = 100,
+	["avdbloadlim"] = 1000,
 	["avkicktext"] = "Virus spreaders are not welcome here _ban_",
 	["classnotianti"] = 3,
 	["classnotiex"] = 3,
@@ -1152,8 +1152,12 @@ function Main (file)
 		VH:SetConfig ("config", "hub_version_special", string.format (gettext ("Powered by %s"), "Ledokol "..ver_ledo))
 	end
 
-	if table_sets ["avsearchint"] > 0 then -- antivirus
+	if table_sets ["avsearchint"] > 0 then -- antivirus search
 		loadavstr ()
+	end
+
+	if table_sets ["avdbloadint"] > 0 and table_othsets ["ver_curl"] then -- antivirus load
+		loadavdb ()
 	end
 
 	math.randomseed (os.time ()) -- randomize
@@ -4547,30 +4551,8 @@ function VH_OnTimer (msec)
 	end
 
 	if table_sets ["avdbloadint"] > 0 and table_othsets ["ver_curl"] and os.difftime (st, table_othsets ["avlastloadtick"]) >= table_sets ["avdbloadint"] then -- antivirus load
-		local res, _ = os.execute ("curl -G -L --retry 3 --connect-timeout 5 -m 30 -s -o \"" .. table_othsets ["cfgdir"] .. table_othsets ["tmpfile"] .. "\" \"" .. table_othsets ["avdbloadurl"] .. "&limit=" .. tostring (table_sets ["avdbloadlim"]) .. "\"")
-
-		if res then
-			local avfi = io.open (table_othsets ["cfgdir"] .. table_othsets ["tmpfile"], "r")
-
-			if avfi then
-				table_avlo = {}
-
-				for avli in avfi:lines () do
-					local _, _, avni, avip, avsi, avti = avli:find ("^([^ ]+)|(%d+%.%d+%.%d+%.%d+)|(%d+)|(%d+)$")
-
-					if avni and avip and avsi and avti then
-						table_avlo [avni] = {
-							["addr"] = avip,
-							["size"] = tonumber (avsi),
-							["time"] = tonumber (avti)
-						}
-					end
-				end
-
-				avfi:close ()
-				os.remove (table_othsets ["cfgdir"] .. table_othsets ["tmpfile"])
-			end
-		end
+		loadavdb ()
+		table_othsets ["avlastloadtick"] = st
 	end
 
 	if table_sets ["remrunning"] == 1 then -- reminder
@@ -17168,6 +17150,35 @@ function loadavstr ()
 		for _, file in pairs (table_avfi) do
 			local item = file:gsub (" ", "$")
 			table.insert (table_avse, item .. "$" .. ext)
+		end
+	end
+end
+
+----- ---- --- -- -
+
+function loadavdb ()
+	local res, _ = os.execute ("curl -G -L --retry 3 --connect-timeout 5 -m 30 -s -o \"" .. table_othsets ["cfgdir"] .. table_othsets ["tmpfile"] .. "\" \"" .. table_othsets ["avdbloadurl"] .. "&limit=" .. tostring (table_sets ["avdbloadlim"]) .. "\"")
+
+	if res then
+		local avfi = io.open (table_othsets ["cfgdir"] .. table_othsets ["tmpfile"], "r")
+
+		if avfi then
+			table_avlo = {}
+
+			for avli in avfi:lines () do
+				local _, _, avni, avip, avsi, avti = avli:find ("^([^ ]+)|(%d+%.%d+%.%d+%.%d+)|(%d+)|(%d+)$")
+
+				if avni and avip and avsi and avti then
+					table_avlo [avni] = {
+						["addr"] = avip,
+						["size"] = tonumber (avsi),
+						["time"] = tonumber (avti)
+					}
+				end
+			end
+
+			avfi:close ()
+			os.remove (table_othsets ["cfgdir"] .. table_othsets ["tmpfile"])
 		end
 	end
 end
