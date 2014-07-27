@@ -8,6 +8,7 @@ Added: Custom orderless gettext() format for translations, strings must be in fo
 Added: Detection of paramenter count mismatch in translation strings, this helps to detect errors in translation files
 Added: Support for replace variables in mitagmessage, <cl> = client, <ve> = version, <mo> = mode, <hu> = hubs, <sl> = slots, <li> = limiter
 Added: Virus spreader detection with AVDB support, requires cURL
+Added: Antivirus statistics, general and for each user separately
 
 [ 2.7.9 :: 2014-06-25 ]
 
