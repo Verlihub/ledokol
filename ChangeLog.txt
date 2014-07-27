@@ -3,6 +3,7 @@
 Fixed: +me command triggered by operator did not perform any operations
 Fixed: Renamed "cleanup" command to "oldclean" since Verlihub has got "clean*" prefix reserver for some of its own commands
 Fixed: Pattern of "oldclean" command parameters
+Fixed: Correctly encode nick with cURL on user lookup
 Changed: Allow pingers to use +report command, required for AVDB
 Added: Custom orderless gettext() format for translations, strings must be in format "english|translation\n" with each string on new line, comment with # character
 Added: Detection of paramenter count mismatch in translation strings, this helps to detect errors in translation files
