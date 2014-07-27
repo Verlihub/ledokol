@@ -90,6 +90,7 @@ table_sets = {
 	["avsendtodb"] = 0,
 	["avdbloadint"] = 0,
 	["avdbloadlim"] = 1000,
+	["avdbloadnoti"] = 0,
 	["avkicktext"] = "Virus spreaders are not welcome here _ban_",
 	["classnotianti"] = 3,
 	["classnotiex"] = 3,
@@ -1075,6 +1076,7 @@ function Main (file)
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('avsendtodb', '" .. repsqlchars (table_sets ["avsendtodb"]) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('avdbloadint', '" .. repsqlchars (table_sets ["avdbloadint"]) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('avdbloadlim', '" .. repsqlchars (table_sets ["avdbloadlim"]) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('avdbloadnoti', '" .. repsqlchars (table_sets ["avdbloadnoti"]) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('avkicktext', '" .. repsqlchars (table_sets ["avkicktext"]) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('classnotiav', '" .. repsqlchars (table_sets ["classnotiav"]) .. "')")
 					end
@@ -4550,7 +4552,7 @@ function VH_OnTimer (msec)
 		table_othsets ["avlastseartick"] = st
 	end
 
-	if table_sets ["avdbloadint"] > 0 and table_othsets ["ver_curl"] and os.difftime (st, table_othsets ["avlastloadtick"]) >= table_sets ["avdbloadint"] then -- antivirus load
+	if table_sets ["avdbloadint"] > 0 and table_othsets ["ver_curl"] and os.difftime (st, table_othsets ["avlastloadtick"]) >= (table_sets ["avdbloadint"] * 60) then -- antivirus load
 		loadavdb ()
 		table_othsets ["avlastloadtick"] = st
 	end
@@ -13321,6 +13323,19 @@ end
 
 	----- ---- --- -- -
 
+	elseif tvar == "avdbloadnoti" then
+		if num == true then
+			if setto == 0 or setto == 1 then
+				ok = true
+			else
+				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 " .. gettext ("or") .. " 1"))
+			end
+		else
+			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
+		end
+
+	----- ---- --- -- -
+
 	elseif tvar == "avkicktext" then
 		if # setto > 0 then
 			ok = true
@@ -16221,6 +16236,7 @@ conf = conf.."\r\n [::] searfiltmsg = "..table_sets ["searfiltmsg"]
 	conf = conf .. "\r\n [::] avsendtodb = " .. table_sets ["avsendtodb"]
 	conf = conf .. "\r\n [::] avdbloadint = " .. table_sets ["avdbloadint"]
 	conf = conf .. "\r\n [::] avdbloadlim = " .. table_sets ["avdbloadlim"]
+	conf = conf .. "\r\n [::] avdbloadnoti = " .. table_sets ["avdbloadnoti"]
 	conf = conf .. "\r\n [::] avkicktext = " .. table_sets ["avkicktext"]
 	conf = conf .. "\r\n"
 conf = conf.."\r\n [::] classnotianti = "..table_sets ["classnotianti"]
@@ -17164,6 +17180,7 @@ function loadavdb ()
 
 		if avfi then
 			table_avlo = {}
+			local lint = 0
 
 			for avli in avfi:lines () do
 				local _, _, avni, avip, avsi, avti = avli:find ("^([^ ]+)|(%d+%.%d+%.%d+%.%d+)|(%d+)|(%d+)$")
@@ -17174,11 +17191,17 @@ function loadavdb ()
 						["size"] = tonumber (avsi),
 						["time"] = tonumber (avti)
 					}
+
+					lint = lint + 1
 				end
 			end
 
 			avfi:close ()
 			os.remove (table_othsets ["cfgdir"] .. table_othsets ["tmpfile"])
+
+			if table_sets ["avdbloadnoti"] == 1 then
+				opsnotify (table_sets ["classnotiav"], gettext ("Loaded %s items: %s"):format (lint, "AVDB"))
+			end
 		end
 	end
 end
