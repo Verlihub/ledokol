@@ -478,6 +478,7 @@ table_cmnds = {
 	["regfind"] = "regfind",
 	["regstats"] = "regstats",
 	["readlog"] = "readlog",
+	["avstats"] = "avstats",
 	["cmndset"] = "cmndset",
 	["cmndshow"] = "cmndshow",
 	["cmndreset"] = "cmndreset",
@@ -1058,6 +1059,7 @@ function Main (file)
 					end
 
 					if ver <= 280 then
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["ledocmd"] .. "` (`original`, `new`) values ('" .. repsqlchars ("avstats") .. "', '" .. repsqlchars (table_cmnds ["avstats"]) .. "')")
 						VH:SQLQuery ("update `" .. tbl_sql ["ledocmd"] .. "` set `original` = 'oldclean', `new` = '" .. repsqlchars (table_cmnds ["oldclean"]) .. "' where `original` = 'cleanup'")
 
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('avsearchint', '" .. repsqlchars (table_sets ["avsearchint"]) .. "')")
@@ -2540,7 +2542,19 @@ end
 
 return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
+
+	elseif data:find ("^" .. table_othsets ["optrig"] .. table_cmnds ["avstats"] .. "$") or data:find ("^" .. table_othsets ["optrig"] .. table_cmnds ["avstats"] .. " [^ ]+$") then
+		if ucl >= table_sets ["mincommandclass"] and table_sets ["avsearchint"] > 0 then
+			donotifycmd (nick, data, 0, ucl)
+			showavstats (nick, data:sub (# table_cmnds ["avstats"] + 3))
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
+
+		return 0
+
+	----- ---- --- -- -
 
 elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["randel"].." %S+ %S+$") then
 if ucl >= table_sets ["mincommandclass"] then
@@ -4322,6 +4336,7 @@ function VH_OnParsedMsgSR (nick, data)
 												feed = gettext ("Infected user detected") .. ":\r\n\r\n"
 												feed = feed .. " " .. gettext ("Nick: %s"):format (nick) .. "\r\n"
 												feed = feed .. " " .. gettext ("IP: %s"):format (usip .. tryipcc (usip, nick)) .. "\r\n"
+												feed = feed .. " " .. gettext ("Spent time: %s"):format (formatuptime (table_avus [nick][""], false)) .. "\r\n"
 												feed = feed .. " " .. gettext ("Found files") .. ":\r\n\r\n"
 												feed = feed .. repnmdcoutchars (list)
 
@@ -12725,6 +12740,7 @@ end
 		sopmenitm (usr, gettext ("Other") .. "\\" .. gettext ("Clean up tables"), table_cmnds ["oldclean"] .. " %[line:<" .. gettext ("type") .. ">] %[line:<" .. gettext ("days") .. " " .. gettext ("or") .. " *>] %[line:<" .. gettext ("class") .. ">]")
 		--sopmenitm (usr, gettext ("Other") .. "\\" .. gettext ("Clean up tables"), table_cmnds ["oldclean"] .. " %[line:<" .. gettext ("type") .. ">] %[line:<" .. gettext ("days") .. ">]")
 		sopmenitm (usr, gettext ("Other") .. "\\" .. gettext ("Read hub logs"), table_cmnds ["readlog"] .. " %[line:<" .. gettext ("file") .. ">] %[line:<" .. gettext ("lines") .. ">]")
+		sopmenitm (usr, gettext ("Other") .. "\\" .. gettext ("Antivirus statistics"), table_cmnds ["avstats"] .. " %[line:<" .. gettext ("nick") .. ">]")
 	end
 
 if ucl >= table_sets ["minusrcommandclass"] then
@@ -15868,7 +15884,8 @@ help = help.." "..optrig..table_cmnds ["clear"].." - "..gettext ("Clear main cha
 	-- other
 	help = help .. " " .. optrig .. table_cmnds ["dropip"] .. " <" .. gettext ("ip") .. "> - " .. gettext ("Drop users with IP") .. "\r\n"
 	help = help .. " " .. optrig .. table_cmnds ["oldclean"] .. " <" .. gettext ("type") .. "> <" .. gettext ("days") .. " " .. gettext ("or") .. " *> [" .. gettext ("class") .. "] - " .. gettext ("Clean up tables") .. "\r\n"
-	help = help .. " " .. optrig .. table_cmnds ["readlog"] .. " <" .. gettext ("file") .. "> <" .. gettext ("lines") .. "> - " .. gettext ("Read hub logs") .. "\r\n\r\n"
+	help = help .. " " .. optrig .. table_cmnds ["readlog"] .. " <" .. gettext ("file") .. "> <" .. gettext ("lines") .. "> - " .. gettext ("Read hub logs") .. "\r\n"
+	help = help .. " " .. optrig .. table_cmnds ["avstats"] .. " [" .. gettext ("nick") .. "] - " .. gettext ("Antivirus statistics") .. "\r\n\r\n"
 
 -- ledokol commands
 help = help.." "..optrig..table_cmnds ["ledoconf"].." - "..gettext ("Script configuration variables").."\r\n"
@@ -17040,6 +17057,51 @@ function loadavstr ()
 			table.insert (table_avse, item .. "$" .. ext)
 		end
 	end
+end
+
+----- ---- --- -- -
+
+function showavstats (nick, user)
+	local stats = ""
+
+	if # user == 0 then
+		stats = gettext ("Antivirus statistics") .. ":\r\n\r\n"
+		stats = stats .. " " .. gettext ("File names used for search") .. ":\r\n\r\n " .. table.concat (table_avfi, "\r\n ") .. "\r\n"
+		stats = stats .. "\r\n " .. gettext ("File extensions used for search") .. ":\r\n\r\n " .. table.concat (table_avex, "\r\n ") .. "\r\n"
+		local users = ""
+
+		for usni, _ in pairs (table_avus) do
+			users = users .. " " .. usni .. "\r\n"
+		end
+
+		if # users > 0 then
+			stats = stats .. "\r\n " .. gettext ("Possibly infected users") .. ":\r\n\r\n" .. users
+		end
+	elseif table_avus [user] then
+		local addr = getip (user)
+		stats = gettext ("Antivirus statistics") .. ":\r\n\r\n"
+		stats = stats .. " " .. gettext ("Nick: %s"):format (user) .. "\r\n"
+		stats = stats .. " " .. gettext ("IP: %s"):format (addr .. tryipcc (addr, user)) .. "\r\n"
+		stats = stats .. " " .. gettext ("Spent time: %s"):format (formatuptime (table_avus [user][""], false)) .. "\r\n"
+		stats = stats .. " " .. gettext ("Found files") .. ":\r\n\r\n"
+
+		for path, file in pairs (table_avus [user]) do
+			if # path > 0 then
+				stats = stats .. " " .. repnmdcoutchars (path) .. "\r\n"
+				local plen = # path
+
+				for fame, fize in pairs (file) do
+					if # fame > 0 then
+						stats = stats .. " " .. string.rep (" ", plen) .. repnmdcoutchars (fame) .. " &#124; " .. makesize (fize) .. "\r\n"
+					end
+				end
+			end
+		end
+	else
+		stats = gettext ("User not in list: %s"):format (user)
+	end
+
+	commandanswer (nick, stats)
 end
 
 ----- ---- --- -- -
@@ -18232,34 +18294,54 @@ end
 ----- ---- --- -- -
 
 function formatuptime (uptime, fmt)
-local t = os.date ("!*t", os.time () - uptime)
-t.month = t.month - 1
-t.day = t.day - 1
-local ret = ""
+	local t = os.date ("!*t", os.time () - uptime)
+	t.month = t.month - 1
+	t.day = t.day - 1
+	local ret = ""
 
-if fmt == true then -- short
-	ret = string.format (table_sets ["shrtuptimefmt"], prezero (2, t.month), prezero (2, t.day), prezero (2, t.hour), prezero (2, t.min), prezero (2, t.sec))
-else -- long
-	if t.month > 0 then
-		if t.month == 1 then ret = ret..t.month.." "..gettext ("month").." " else ret = ret..t.month.." "..gettext ("months").." " end
+	if fmt == true then -- short
+		ret = string.format (table_sets ["shrtuptimefmt"], prezero (2, t.month), prezero (2, t.day), prezero (2, t.hour), prezero (2, t.min), prezero (2, t.sec))
+	else -- long
+		if t.month > 0 then
+			if t.month == 1 then
+				ret = ret .. t.month .. " " .. gettext ("month") .. " "
+			else
+				ret = ret .. t.month .. " " .. gettext ("months") .. " "
+			end
+		end
+
+		if t.day > 0 then
+			if t.day == 1 then
+				ret = ret .. t.day .. " " .. gettext ("day") .. " "
+			else
+				ret = ret .. t.day .. " " .. gettext ("days") .. " "
+			end
+		end
+
+		if t.hour > 0 then
+			if t.hour == 1 then
+				ret = ret .. t.hour .. " " .. gettext ("hour") .. " "
+			else
+				ret = ret .. t.hour .. " " .. gettext ("hours") .. " "
+			end
+		end
+
+		if t.min > 0 then
+			if t.min == 1 then
+				ret = ret .. t.min .. " " .. gettext ("minute") .. " "
+			else
+				ret = ret .. t.min .. " " .. gettext ("minutes") .. " "
+			end
+		end
+
+		if t.sec == 1 then
+			ret = ret .. t.sec .. " " .. gettext ("second")
+		else
+			ret = ret .. t.sec .. " " .. gettext ("seconds")
+		end
 	end
 
-	if t.day > 0 then
-		if t.day == 1 then ret = ret..t.day.." "..gettext ("day").." " else ret = ret..t.day.." "..gettext ("days").." " end
-	end
-
-	if t.hour > 0 then
-		if t.hour == 1 then ret = ret..t.hour.." "..gettext ("hour").." " else ret = ret..t.hour.." "..gettext ("hours").." " end
-	end
-
-	if t.min > 0 then
-		if t.min == 1 then ret = ret..t.min.." "..gettext ("minute").." " else ret = ret..t.min.." "..gettext ("minutes").." " end
-	end
-
-	if t.sec == 1 then ret = ret..t.sec.." "..gettext ("second") else ret = ret..t.sec.." "..gettext ("seconds") end
-end
-
-return ret
+	return ret
 end
 
 ----- ---- --- -- -
