@@ -90,7 +90,6 @@ table_sets = {
 	["avsendtodb"] = 0,
 	["avdbloadint"] = 0,
 	["avdbloadlim"] = 1000,
-	["avdbloadnoti"] = 0,
 	["avkicktext"] = "Virus spreaders are not welcome here _ban_",
 	["classnotianti"] = 3,
 	["classnotiex"] = 3,
@@ -1076,7 +1075,6 @@ function Main (file)
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('avsendtodb', '" .. repsqlchars (table_sets ["avsendtodb"]) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('avdbloadint', '" .. repsqlchars (table_sets ["avdbloadint"]) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('avdbloadlim', '" .. repsqlchars (table_sets ["avdbloadlim"]) .. "')")
-						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('avdbloadnoti', '" .. repsqlchars (table_sets ["avdbloadnoti"]) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('avkicktext', '" .. repsqlchars (table_sets ["avkicktext"]) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('classnotiav', '" .. repsqlchars (table_sets ["classnotiav"]) .. "')")
 					end
@@ -4370,7 +4368,9 @@ function VH_OnParsedMsgSR (nick, data)
 										table_avus [nick][path][name] = size
 
 										if getitemcount (table_avus [nick][path]) >= table_sets ["avfilecount"] then
-											if table_sets ["avfeedverb"] == 2 then
+											local shar, haveshar = 0, false
+
+											if table_sets ["avfeedverb"] >= 2 then
 												local feed, list = "", " " .. repnmdcoutchars (path) .. "\r\n"
 												local plen = # path
 
@@ -4380,39 +4380,63 @@ function VH_OnParsedMsgSR (nick, data)
 													end
 												end
 
+												if not haveshar then
+													shar = parsemyinfoshare (getmyinfo (nick))
+													haveshar = true
+												end
+
 												feed = gettext ("Infected user detected") .. ":\r\n\r\n"
 												feed = feed .. " " .. gettext ("Nick: %s"):format (nick) .. "\r\n"
 												feed = feed .. " " .. gettext ("IP: %s"):format (usip .. tryipcc (usip, nick)) .. "\r\n"
+												feed = feed .. " " .. gettext ("Share: %s"):format (makesize (shar)) .. "\r\n"
 												feed = feed .. " " .. gettext ("Spent time: %s"):format (formatuptime (table_avus [nick][""], false)) .. "\r\n"
 												feed = feed .. " " .. gettext ("Found files") .. ":\r\n\r\n"
 												feed = feed .. list
 
 												opsnotify (table_sets ["classnotiav"], feed)
 											elseif table_sets ["avfeedverb"] == 1 then
-												opsnotify (table_sets ["classnotiav"], gettext ("Infected user detected with nick %s and IP %s and spent time: %s"):format (nick, usip .. tryipcc (usip, nick), formatuptime (table_avus [nick][""], false)))
+												if not haveshar then
+													shar = parsemyinfoshare (getmyinfo (nick))
+													haveshar = true
+												end
+
+												opsnotify (table_sets ["classnotiav"], gettext ("Infected user detected with nick %s and IP %s and share %s and spent time: %s"):format (nick, usip .. tryipcc (usip, nick), makesize (shar), formatuptime (table_avus [nick][""], false)))
 											end
 
 											if table_sets ["avsendtodb"] == 1 then -- antivirus database
-												local shar = parsemyinfoshare (getmyinfo (nick))
+												if not haveshar then
+													shar = parsemyinfoshare (getmyinfo (nick))
+													haveshar = true
+												end
 
 												if shar > 0 and table_othsets ["ver_curl"] then
-													local res, _ = os.execute ("curl -G -L --retry 3 --connect-timeout 5 -m 30 -s -o \"" .. table_othsets ["cfgdir"] .. table_othsets ["tmpfile"] .. "\" --data-urlencode \"nick=" .. repurlchars (nick) .. "\" \"" .. table_othsets ["avdbsendurl"] .. "&size=" .. tostring (shar) .. "&addr=" .. usip .. "\"")
+													local res, err = os.execute ("curl -G -L --retry 3 --connect-timeout 5 -m 30 -s -o \"" .. table_othsets ["cfgdir"] .. table_othsets ["tmpfile"] .. "\" --data-urlencode \"nick=" .. repurlchars (nick) .. "\" \"" .. table_othsets ["avdbsendurl"] .. "&size=" .. tostring (shar) .. "&addr=" .. usip .. "\"")
 
 													if res then
 														local avfi = io.open (table_othsets ["cfgdir"] .. table_othsets ["tmpfile"], "r")
 
 														if avfi then
-															local avre = avfi:read ("*all")
+															local avre, err = avfi:read ("*all")
 															avfi:close ()
 
-															if avre and tostring (avre) == "0" then
-																table_sets ["avsendtodb"] = 0
-																VH:SQLQuery ("update `" .. tbl_sql ["conf"] .. "` set `value` = '0' where `variable` = 'avsendtodb'")
-																opsnotify (table_sets ["classnotiledoact"], gettext ("Sadly I don't have access to send infected user information to AVDB, please ask maintainer of this script to add your server IP address to access list. AVDB reporting feature has been automatically disabled."))
+															if avre then
+																if tostring (avre) == "0" then
+																	table_sets ["avsendtodb"] = 0
+																	VH:SQLQuery ("update `" .. tbl_sql ["conf"] .. "` set `value` = '0' where `variable` = 'avsendtodb'")
+																	opsnotify (table_sets ["classnotiav"], gettext ("Sadly I don't have access to send infected user information to AVDB, please ask maintainer of this script to add your server IP address to access list. AVDB reporting feature has been automatically disabled."))
+																elseif table_sets ["avfeedverb"] == 3 then
+																	opsnotify (table_sets ["classnotiav"], gettext ("Successfully sent infected user information to AVDB: %s"):format (nick))
+																end
+															elseif table_sets ["avfeedverb"] == 3 then
+																opsnotify (table_sets ["classnotiav"], gettext ("Unable to proceed: %s"):format (repnmdcoutchars (err or gettext ("No error message specified."))))
 															end
 
 															os.remove (table_othsets ["cfgdir"] .. table_othsets ["tmpfile"])
+														elseif table_sets ["avfeedverb"] == 3 then
+															opsnotify (table_sets ["classnotiav"], gettext ("Unable to connect to target server. Please try again later."))
 														end
+													elseif table_sets ["avfeedverb"] == 3 then
+														opsnotify (table_sets ["classnotiav"], gettext ("Unable to proceed: %s"):format (repnmdcoutchars (err or gettext ("No error message specified."))))
 													end
 												end
 											end
@@ -4661,7 +4685,7 @@ function VH_OnUnknownMsg (nick, data, isnick, ipaddr)
 					if getstatus (user) == 1 and isbot (user) == false then
 						local ip = getip (user)
 
-						if ip ~= "[unknown]" then
+						if ip ~= "0.0.0.0" then
 							il = il .. user .. " " .. ip .. "$$"
 						end
 					end
@@ -4779,7 +4803,7 @@ function VH_OnParsedMsgAny (nick, data)
 			if othernick and ctm then
 				local rip = getip (nick)
 
-				if rip ~= "[unknown]" then
+				if rip ~= "0.0.0.0" then
 					local _, _, ip, port = string.find (ctm, "^(.*):(.*)$")
 
 					if ip and port then
@@ -6091,7 +6115,7 @@ function addcustnick (nick, custom)
 	--if getconfig ("send_user_ip") == 1 then
 		--local ip = getip (nick)
 
-		--if ip ~= "[unknown]" then
+		--if ip ~= "0.0.0.0" then
 			--VH:SendDataToAll ("$UserIP "..custom.." "..ip.."$$|", 3, 10)
 		--end
 	--end
@@ -6219,7 +6243,7 @@ function opforcecustnick (nick, line)
 				--if getconfig ("send_user_ip") == 1 then
 					--local ip = getip (onick)
 
-					--if ip ~= "[unknown]" then
+					--if ip ~= "0.0.0.0" then
 						--VH:SendDataToAll ("$UserIP "..ncust.." "..ip.."$$|", 3, 10)
 					--end
 				--end
@@ -8071,63 +8095,108 @@ end
 ----- ---- --- -- -
 
 function showuserlog (nick, line)
-local _, _, tp, str, lim = string.find (line, "^(%S+) (.+) (%d+)$")
+	local _, _, tp, str, lim = line:find ("^(%S+) (.+) (%d+)$")
 
-if (tp == "nick") or (tp == "ip") or (tp == "desc") or (tp == "tag") or (tp == "conn") or (tp == "email") or (tp == "share") or (tp == "all") then
-lim = tonumber (lim)
-if lim < 1 then lim = 1 end
-str = repsqlchars (str)
+	if tp == "nick" or tp == "ip" or tp == "desc" or tp == "tag" or tp == "conn" or tp == "email" or tp == "share" or tp == "all" then
+		lim = tonumber (lim)
 
-if tp == "all" then
-local _, rows = VH:SQLQuery ("select `time`, `nick`, `ip`, `desc`, `tag`, `conn`, `email`, `share` from `"..tbl_sql ["ulog"].."` where `nick` like '%"..str.."%' or `ip` like '%"..str.."%' or `desc` like '%"..str.."%' or `tag` like '%"..str.."%' or `conn` like '%"..str.."%' or `email` like '%"..str.."%' or `share` like '%"..str.."%' order by `time` desc limit "..lim)
+		if lim < 1 then
+			lim = 1
+		end
 
-if rows > 0 then
-local res = ""
+		str = repsqlchars (str)
 
-for x = 0, rows - 1 do
-local _, rtime, rnick, rip, rdesc, rtag, rconn, remail, rshare = VH:SQLFetch (x)
-res = res.." [ O: "..fromunixtime (rtime, false).." ] [ N: "..repnmdcoutchars (rnick).." ]"
-if rip ~= "[unknown]" then res = res.." [ I: "..repnmdcoutchars (rip).." ]" end
-if rdesc ~= "" then res = res.." [ D: "..repnmdcoutchars (rdesc).." ]" end
-if rtag ~= "" then res = res.." [ T: "..repnmdcoutchars (rtag).." ]" end
-if rconn ~= "" then res = res.." [ C: "..repnmdcoutchars (rconn).." ]" end
-if remail ~= "" then res = res.." [ E: "..repnmdcoutchars (remail).." ]" end
-if rshare ~= "0" then res = res.." [ S: "..repnmdcoutchars (rshare).." ]" end
-res = res.."\r\n"
-end
+		if tp == "all" then -- any part
+			local _, rows = VH:SQLQuery ("select `time`, `nick`, `ip`, `desc`, `tag`, `conn`, `email`, `share` from `" .. tbl_sql ["ulog"] .. "` where `nick` like '%" .. str .. "%' or `ip` like '%" .. str .. "%' or `desc` like '%" .. str .. "%' or `tag` like '%" .. str .. "%' or `conn` like '%" .. str .. "%' or `email` like '%" .. str .. "%' or `share` like '%" .. str .. "%' order by `time` desc limit " .. lim)
 
-commandanswer (nick, string.format (gettext ("Showing %s user log results"), rows)..":\r\n\r\n"..res)
-else
-commandanswer (nick, gettext ("No user results found."))
-end
+			if rows > 0 then
+				local res = ""
 
-else -- specific
-local _, rows = VH:SQLQuery ("select `time`, `nick`, `ip`, `desc`, `tag`, `conn`, `email`, `share` from `"..tbl_sql ["ulog"].."` where `"..tp.."` like '%"..str.."%' order by `time` desc limit "..lim)
+				for x = 0, rows - 1 do
+					local _, rtime, rnick, rip, rdesc, rtag, rconn, remail, rshare = VH:SQLFetch (x)
+					rnick = repnmdcoutchars (rnick)
+					rip = repnmdcoutchars (rip)
+					res = res .. " [ O: " .. fromunixtime (rtime, false) .. " ] [ N: " .. rnick .. " ]"
 
-if rows > 0 then
-local res = ""
+					if rip ~= "0.0.0.0" then
+						res = res .. " [ I: " .. rip .. tryipcc (rip, rnick) .. " ]"
+					end
 
-for x = 0, rows - 1 do
-local _, rtime, rnick, rip, rdesc, rtag, rconn, remail, rshare = VH:SQLFetch (x)
-res = res.." [ O: "..fromunixtime (rtime, false).." ] [ N: "..repnmdcoutchars (rnick).." ]"
-if rip ~= "[unknown]" then res = res.." [ I: "..repnmdcoutchars (rip).." ]" end
-if rdesc ~= "" then res = res.." [ D: "..repnmdcoutchars (rdesc).." ]" end
-if rtag ~= "" then res = res.." [ T: "..repnmdcoutchars (rtag).." ]" end
-if rconn ~= "" then res = res.." [ C: "..repnmdcoutchars (rconn).." ]" end
-if remail ~= "" then res = res.." [ E: "..repnmdcoutchars (remail).." ]" end
-if rshare ~= "0" then res = res.." [ S: "..repnmdcoutchars (rshare).." ]" end
-res = res.."\r\n"
-end
+					if rdesc ~= "" then
+						res = res .. " [ D: " .. repnmdcoutchars (rdesc) .. " ]"
+					end
 
-commandanswer (nick, string.format (gettext ("Showing %s user log results"), rows)..":\r\n\r\n"..res)
-else
-commandanswer (nick, gettext ("No user results found."))
-end
-end
+					if rtag ~= "" then
+						res = res .. " [ T: " .. repnmdcoutchars (rtag) .. " ]"
+					end
 
-else -- unknown type
-commandanswer (nick, string.format (gettext ("Known types are: %s"), "nick, ip, desc, tag, conn, email, share "..gettext ("and").." all"))
-end
+					if rconn ~= "" then
+						res = res .. " [ C: " .. repnmdcoutchars (rconn) .. " ]"
+					end
+
+					if remail ~= "" then
+						res = res .. " [ E: " .. repnmdcoutchars (remail) .. " ]"
+					end
+
+					if rshare ~= "0" then
+						res = res .. " [ S: " .. repnmdcoutchars (rshare) .. " ]"
+					end
+
+					res = res .. "\r\n"
+				end
+
+				commandanswer (nick, gettext ("Showing %s user log results"):format (rows) .. ":\r\n\r\n" .. res)
+			else
+				commandanswer (nick, gettext ("No user results found."))
+			end
+
+		else -- specific
+			local _, rows = VH:SQLQuery ("select `time`, `nick`, `ip`, `desc`, `tag`, `conn`, `email`, `share` from `" .. tbl_sql ["ulog"] .. "` where `" .. tp .. "` like '%" .. str .. "%' order by `time` desc limit " .. lim)
+
+			if rows > 0 then
+				local res = ""
+
+				for x = 0, rows - 1 do
+					local _, rtime, rnick, rip, rdesc, rtag, rconn, remail, rshare = VH:SQLFetch (x)
+					rnick = repnmdcoutchars (rnick)
+					rip = repnmdcoutchars (rip)
+					res = res .. " [ O: " .. fromunixtime (rtime, false) .. " ] [ N: " .. rnick .. " ]"
+
+					if rip ~= "0.0.0.0" then
+						res = res .. " [ I: " .. rip .. tryipcc (rip, rnick) .. " ]"
+					end
+
+					if rdesc ~= "" then
+						res = res .. " [ D: " .. repnmdcoutchars (rdesc) .. " ]"
+					end
+
+					if rtag ~= "" then
+						res = res .. " [ T: " .. repnmdcoutchars (rtag) .. " ]"
+					end
+
+					if rconn ~= "" then
+						res = res .. " [ C: " .. repnmdcoutchars (rconn) .. " ]"
+					end
+
+					if remail ~= "" then
+						res = res .. " [ E: " .. repnmdcoutchars (remail) .. " ]"
+					end
+
+					if rshare ~= "0" then
+						res = res .. " [ S: " .. repnmdcoutchars (rshare) .. " ]"
+					end
+
+					res = res .. "\r\n"
+				end
+
+				commandanswer (nick, gettext ("Showing %s user log results"):format (rows) .. ":\r\n\r\n" .. res)
+			else
+				commandanswer (nick, gettext ("No user results found."))
+			end
+		end
+	else -- unknown type
+		commandanswer (nick, gettext ("Known types are: %s"):format ("nick, ip, desc, tag, conn, email, share " .. gettext ("and") .. " all"))
+	end
 end
 
 ----- ---- --- -- -
@@ -8397,7 +8466,7 @@ end
 ----- ---- --- -- -
 
 function authcheck (nick, cls, uip)
-	if uip == "[unknown]" then return false end
+	if uip == "0.0.0.0" then return false end
 	local user = repsqlchars (nick)
 	local _, rows = VH:SQLQuery ("select `id`, `ip` from `"..tbl_sql ["auth"].."` where `nick` = '"..user.."'")
 	if rows == 0 then return false end
@@ -9532,7 +9601,7 @@ end
 
 function checkip (nick, aip, ucls)
 	if table_sets ["michip"] == 0 then return 0 end
-	if aip == "[unknown]" then return 0 end
+	if aip == "0.0.0.0" then return 0 end
 	local _, rows = VH:SQLQuery ("select `ip`, `time` from `"..tbl_sql ["miip"].."` order by `occurred` desc")
 
 	if rows > 0 then
@@ -9850,7 +9919,7 @@ end
 ----- ---- --- -- -
 
 function checkclone (nick, share, aip, ucls)
-	if (table_sets ["michclone"] == 0) or (share == 0) or (aip == "[unknown]") then return 0 end -- skip
+	if (table_sets ["michclone"] == 0) or (share == 0) or (aip == "0.0.0.0") then return 0 end -- skip
 
 	for user in string.gmatch (getnicklist (), "([^$]+)%$%$") do
 		if (user ~= nick) and (getclass (user) < table_sets ["scanbelowclass"]) then -- skip user himself and if second user is protected
@@ -9894,7 +9963,7 @@ end
 ----- ---- --- -- -
 
 function checksameip (nick, ip, ucls)
-	if (table_sets ["michsameip"] == 0) or (ip == "[unknown]") then return 0 end -- skip
+	if (table_sets ["michsameip"] == 0) or (ip == "0.0.0.0") then return 0 end -- skip
 
 	for user in string.gmatch (getnicklist (), "([^$]+)%$%$") do
 		if (user ~= nick) and (getclass (user) < table_sets ["scanbelowclass"]) then -- skip user himself and if second user is protected
@@ -10317,20 +10386,18 @@ end
 
 ----- ---- --- -- -
 
-function parsemyinfoshare (myinfo)
-	local share = 0
+function parsemyinfoshare (info)
+	local shar = 0
 
-	if myinfo then
-		local _, _, share = string.find (myinfo, "^%$MyINFO %$ALL .+ .*%$.*%$.*%$.*%$(.*)%$$")
+	if info then
+		local _, _, size = info:find ("^%$MyINFO %$ALL [^ ]+ .*%$.*%$.*%$.*%$(%d+)%$$")
 
-		if share then
-			share = tonumber (share) or 0
-		else
-			share = 0
+		if size then
+			shar = tonumber (size) or 0
 		end
 	end
 
-	return share
+	return shar
 end
 
 ----- ---- --- -- -
@@ -13223,10 +13290,10 @@ end
 
 	elseif tvar == "avfeedverb" then
 		if num == true then
-			if setto >= 0 and setto <= 2 then
+			if setto >= 0 and setto <= 3 then
 				ok = true
 			else
-				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0, 1 " .. gettext ("or") .. " 2"))
+				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0, 1 " .. gettext ("or") .. " 3"))
 			end
 		else
 			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
@@ -13318,19 +13385,6 @@ end
 				ok = true
 			else
 				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "1 " .. gettext ("to") .. " 1000"))
-			end
-		else
-			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
-		end
-
-	----- ---- --- -- -
-
-	elseif tvar == "avdbloadnoti" then
-		if num == true then
-			if setto == 0 or setto == 1 then
-				ok = true
-			else
-				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 " .. gettext ("or") .. " 1"))
 			end
 		else
 			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
@@ -16238,7 +16292,6 @@ conf = conf.."\r\n [::] searfiltmsg = "..table_sets ["searfiltmsg"]
 	conf = conf .. "\r\n [::] avsendtodb = " .. table_sets ["avsendtodb"]
 	conf = conf .. "\r\n [::] avdbloadint = " .. table_sets ["avdbloadint"]
 	conf = conf .. "\r\n [::] avdbloadlim = " .. table_sets ["avdbloadlim"]
-	conf = conf .. "\r\n [::] avdbloadnoti = " .. table_sets ["avdbloadnoti"]
 	conf = conf .. "\r\n [::] avkicktext = " .. table_sets ["avkicktext"]
 	conf = conf .. "\r\n"
 conf = conf.."\r\n [::] classnotianti = "..table_sets ["classnotianti"]
@@ -17202,7 +17255,7 @@ function loadavdb ()
 			avfi:close ()
 			os.remove (table_othsets ["cfgdir"] .. table_othsets ["tmpfile"])
 
-			if table_sets ["avdbloadnoti"] == 1 then
+			if table_sets ["avfeedverb"] == 3 then
 				opsnotify (table_sets ["classnotiav"], gettext ("Loaded %s items: %s"):format (lint, "AVDB"))
 			end
 		end
@@ -17290,6 +17343,7 @@ function showavstats (nick, user)
 			stats = gettext ("Antivirus statistics") .. ":\r\n\r\n"
 			stats = stats .. " " .. gettext ("Nick: %s"):format (user) .. "\r\n"
 			stats = stats .. " " .. gettext ("IP: %s"):format (addr .. tryipcc (addr, user)) .. "\r\n"
+			stats = stats .. " " .. gettext ("Share: %s"):format (makesize (parsemyinfoshare (getmyinfo (user)))) .. "\r\n"
 			stats = stats .. " " .. gettext ("Spent time: %s"):format (formatuptime (table_avus [user][""], false)) .. "\r\n"
 			stats = stats .. " " .. gettext ("Found files") .. ":\r\n\r\n"
 
@@ -17646,10 +17700,10 @@ end
 ----- ---- --- -- -
 
 function getmyinfo (nick)
-	local _, mi = VH:GetMyINFO (nick)
+	local _, info = VH:GetMyINFO (nick)
 
-	if mi and (string.len (mi) > 0) then
-		return mi
+	if info and # info > 0 then
+		return info
 	else
 		return nil
 	end
