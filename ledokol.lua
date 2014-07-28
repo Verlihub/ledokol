@@ -326,14 +326,16 @@ table_othsets = {
 	--["ver_iconv"] = nil,
 	["func_getcc"] = false,
 	["func_getusercity"] = false,
+	["func_getipcc"] = false,
 	["func_getipcn"] = false,
 	["func_getusergeoip"] = false,
 	["func_gethostgeoip"] = false,
-	["func_getbots"] = false,
+	["func_getluabots"] = false,
 	["func_getuptime"] = false,
 	["func_gettopic"] = false,
 	["func_getuserversion"] = false,
 	["func_getusersupports"] = false,
+	["func_sendtoactiveclass"] = false,
 	["langver"] = "EN",
 	["locked"] = false,
 	["restart"] = false
@@ -1144,7 +1146,7 @@ function Main (file)
 		local umax = getconfig ("max_users")
 
 		if ulim < umax then
-			VH:SendDataToAll ("<"..table_othsets ["sendfrom"].."> "..string.format (gettext ("Warning: %s"), string.format (gettext ("Open files limit set to %s is smaller than maximum users configuration which is %s. You can correct this by setting %s to %s or higher and restarting the hub."), ulim, umax, "ulimit -n", umax)).."|", 5, 10)
+			VH:SendToClass ("<"..table_othsets ["sendfrom"].."> "..string.format (gettext ("Warning: %s"), string.format (gettext ("Open files limit set to %s is smaller than maximum users configuration which is %s. You can correct this by setting %s to %s or higher and restarting the hub."), ulim, umax, "ulimit -n", umax)).."|", 5, 10)
 		end
 	end
 
@@ -1187,7 +1189,7 @@ function UnLoad ()
 
 	if (table_sets ["timebotint"] > 0) and table_othsets ["lasttimenick"] then
 		if table_sets ["fasttimebot"] == 1 then
-			VH:SendDataToAll ("$Quit "..table_othsets ["lasttimenick"].."|", 0, 10)
+			VH:SendToClass ("$Quit "..table_othsets ["lasttimenick"].."|", 0, 10)
 		else
 			delhubrobot (table_othsets ["lasttimenick"])
 		end
@@ -2660,7 +2662,7 @@ return 0
 	elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["clear"].."$") then
 		if ucl >= table_sets ["clearclass"] then
 			donotifycmd (nick, data, 0, ucl)
-			VH:SendDataToAll ("<"..table_othsets ["sendfrom"].."> "..string.rep ("\r\n", 100).." ~ "..string.format (gettext ("Chat cleanup performed by %s"), nick).." ~\r\n|", 0, 10)
+			VH:SendToClass ("<"..table_othsets ["sendfrom"].."> "..string.rep ("\r\n", 100).." ~ "..string.format (gettext ("Chat cleanup performed by %s"), nick).." ~\r\n|", 0, 10)
 		else
 			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
@@ -2766,7 +2768,7 @@ elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["ledokolun
 
 		if (table_sets ["timebotint"] > 0) and table_othsets ["lasttimenick"] then
 			if table_sets ["fasttimebot"] == 1 then
-				VH:SendDataToAll ("$Quit "..table_othsets ["lasttimenick"].."|", 0, 10)
+				VH:SendToClass ("$Quit "..table_othsets ["lasttimenick"].."|", 0, 10)
 			else
 				delhubrobot (table_othsets ["lasttimenick"])
 			end
@@ -3530,12 +3532,12 @@ if table_sets ["useripinchat"] > 0 then -- ip in chat
 		pfx = "[ "..ip.." ]"
 	end
 
-	VH:SendDataToAll ("** "..fakenick.." "..cvdat.."|", 0, 2)
-	VH:SendDataToAll (pfx.." ** "..fakenick.." "..cvdat.."|", 3, 10)
+	VH:SendToClass ("** "..fakenick.." "..cvdat.."|", 0, 2)
+	VH:SendToClass (pfx.." ** "..fakenick.." "..cvdat.."|", 3, 10)
 	retval = 0
 else -- no ip
 	if (retval == 0) or (fakenick ~= nick) then -- only when modified
-		VH:SendDataToAll ("** "..fakenick.." "..cvdat.."|", 0, 10)
+		VH:SendToClass ("** "..fakenick.." "..cvdat.."|", 0, 10)
 		retval = 0
 	end
 end
@@ -3603,12 +3605,12 @@ if table_sets ["useripinchat"] > 0 then -- ip in chat
 		pfx = "[ "..ip.." ]"
 	end
 
-	VH:SendDataToAll ("** "..fakenick.."|", 0, 2)
-	VH:SendDataToAll (pfx.." ** "..fakenick.."|", 3, 10)
+	VH:SendToClass ("** "..fakenick.."|", 0, 2)
+	VH:SendToClass (pfx.." ** "..fakenick.."|", 3, 10)
 	retval = 0
 else -- no ip
 	if fakenick ~= nick then -- only when modified
-		VH:SendDataToAll ("** "..fakenick.."|", 0, 10)
+		VH:SendToClass ("** "..fakenick.."|", 0, 10)
 		retval = 0
 	end
 end
@@ -4060,7 +4062,7 @@ if (table_sets ["ipconantiflint"] > 0) and (cls < table_sets ["scanbelowclass"])
 				table_rcnn [ip] = nil -- delete
 			else
 				maintouser (nick, string.format (gettext ("Connections from your IP aren't allowed for another %s seconds."), table_sets ["ipconantiflint"] - dif))
-				VH:CloseConnection (nick) -- drop user
+				VH:Disconnect (nick) -- drop user
 
 				if cls >= table_sets ["welcomeclass"] then -- dont send logout message
 					table_faau [nick] = 1
@@ -4193,7 +4195,7 @@ if cls < 3 then -- operator keys
 	elseif (table_sets ["opkeyshare"] > 0) and (size >= (table_sets ["opkeyshare"] * 1073741824)) then
 		table_opks [nick] = 2 -- share
 	elseif cls >= table_sets ["opkeyself"] then -- self
-		VH:SendDataToUser ("$OpList "..nick.."|", nick)
+		VH:SendToUser ("$OpList "..nick.."|", nick)
 	end
 end
 
@@ -4205,7 +4207,7 @@ if (table_sets ["opkeyclass"] < 11) or (table_sets ["opkeyshare"] > 0) then
 	end
 
 	if list ~= "" then
-		VH:SendDataToAll ("$OpList "..list.."|", 0, 10)
+		VH:SendToClass ("$OpList "..list.."|", 0, 10)
 	end
 end
 
@@ -4292,7 +4294,7 @@ function VH_OnParsedMsgSearch (nick, data)
 					if table_sets ["searuptimeact"] == 0 then -- message
 						maintouser (nick, string.format (gettext ("Please wait another %s seconds before using hub search engine."), (table_sets ["searchuptime"] - dif)))
 					elseif table_sets ["searuptimeact"] == 1 then -- drop
-						VH:CloseConnection (nick)
+						VH:Disconnect (nick)
 					end
 
 					return 0
@@ -4413,7 +4415,7 @@ function VH_OnParsedMsgSR (nick, data)
 													local res, err = os.execute ("curl -G -L --retry 3 --connect-timeout 5 -m 30 -s -o \"" .. table_othsets ["cfgdir"] .. table_othsets ["tmpfile"] .. "\" --data-urlencode \"nick=" .. repurlchars (nick) .. "\" \"" .. table_othsets ["avdbsendurl"] .. "&size=" .. tostring (shar) .. "&addr=" .. usip .. "\"")
 
 													if res then
-														local avfi = io.open (table_othsets ["cfgdir"] .. table_othsets ["tmpfile"], "r")
+														local avfi, _ = io.open (table_othsets ["cfgdir"] .. table_othsets ["tmpfile"], "r")
 
 														if avfi then
 															local avre, err = avfi:read ("*all")
@@ -4425,18 +4427,18 @@ function VH_OnParsedMsgSR (nick, data)
 																	VH:SQLQuery ("update `" .. tbl_sql ["conf"] .. "` set `value` = '0' where `variable` = 'avsendtodb'")
 																	opsnotify (table_sets ["classnotiav"], gettext ("Sadly I don't have access to send infected user information to AVDB, please ask maintainer of this script to add your server IP address to access list. AVDB reporting feature has been automatically disabled."))
 																elseif table_sets ["avfeedverb"] == 3 then
-																	opsnotify (table_sets ["classnotiav"], gettext ("Successfully sent infected user information to AVDB: %s"):format (nick))
+																	opsnotify (table_sets ["classnotiav"], gettext ("Successfully sent infected user information to %s: %s"):format ("AVDB", nick))
 																end
 															elseif table_sets ["avfeedverb"] == 3 then
-																opsnotify (table_sets ["classnotiav"], gettext ("Unable to proceed: %s"):format (repnmdcoutchars (err or gettext ("No error message specified."))))
+																opsnotify (table_sets ["classnotiav"], gettext ("Failed to send information to %s: %s"):format ("AVDB", gettext ("Error on reading temporary file: %s"):format (repnmdcoutchars (err or gettext ("No error message specified.")))))
 															end
 
 															os.remove (table_othsets ["cfgdir"] .. table_othsets ["tmpfile"])
 														elseif table_sets ["avfeedverb"] == 3 then
-															opsnotify (table_sets ["classnotiav"], gettext ("Unable to connect to target server. Please try again later."))
+															opsnotify (table_sets ["classnotiav"], gettext ("Failed to send information to %s: %s"):format ("AVDB", gettext ("Error on connecting.")))
 														end
 													elseif table_sets ["avfeedverb"] == 3 then
-														opsnotify (table_sets ["classnotiav"], gettext ("Unable to proceed: %s"):format (repnmdcoutchars (err or gettext ("No error message specified."))))
+														opsnotify (table_sets ["classnotiav"], gettext ("Failed to send information to %s: %s"):format ("AVDB", gettext ("Error on executing %s: %s"):format ("cURL", repnmdcoutchars (err or gettext ("No error message specified.")))))
 													end
 												end
 											end
@@ -4567,7 +4569,11 @@ function VH_OnTimer (msec)
 			end
 		end
 
-		VH:SendToClass ("$Search Hub:" .. table_othsets ["sendfrom"] .. " F?F?0?1?" .. table_avse [table_othsets ["avnextitem"]] .. "|", 0, table_sets ["scanbelowclass"] - 1)
+		if table_othsets ["func_sendtoactiveclass"] then
+			VH:SendToActiveClass ("$Search Hub:" .. table_othsets ["sendfrom"] .. " F?F?0?1?" .. table_avse [table_othsets ["avnextitem"]] .. "|", 0, table_sets ["scanbelowclass"] - 1)
+		else
+			VH:SendToClass ("$Search Hub:" .. table_othsets ["sendfrom"] .. " F?F?0?1?" .. table_avse [table_othsets ["avnextitem"]] .. "|", 0, table_sets ["scanbelowclass"] - 1)
+		end
 
 		if table_othsets ["avnextitem"] == # table_avse then
 			table_othsets ["avnextitem"] = 1
@@ -4692,7 +4698,7 @@ function VH_OnUnknownMsg (nick, data, isnick, ipaddr)
 				end
 
 				if string.len (il) > 0 then
-					VH:SendDataToUser ("$UserIP " .. il .. "|", nick)
+					VH:SendToUser ("$UserIP " .. il .. "|", nick)
 				end
 			end
 		end
@@ -5179,7 +5185,7 @@ function VH_OnParsedMsgPM (from, data, to)
 							local cl = getclass (x)
 
 							if (x ~= from) and (cl == 10) then -- class 10 only
-								VH:SendDataToUser ("$To: "..x.." From: "..to.." $<"..from.."> "..data.."|", x)
+								VH:SendToUser ("$To: "..x.." From: "..to.." $<"..from.."> "..data.."|", x)
 							end
 						end
 					end
@@ -5190,7 +5196,7 @@ function VH_OnParsedMsgPM (from, data, to)
 				end
 			else
 				opsnotify (table_sets ["classnotibotpm"], string.format (gettext ("%s with IP %s and class %s sent message to %s: %s"), from, ip .. tryipcc (ip, from), fcls, table_sets ["ledobotnick"], data))
-				VH:SendDataToUser ("$To: "..from.." From: "..table_sets ["ledobotnick"].." $<"..table_sets ["ledobotnick"].."> "..gettext ("I'm probably away. State your business and I might answer later if you're lucky.").."|", from)
+				VH:SendToUser ("$To: "..from.." From: "..table_sets ["ledobotnick"].." $<"..table_sets ["ledobotnick"].."> "..gettext ("I'm probably away. State your business and I might answer later if you're lucky.").."|", from)
 			end
 		end
 
@@ -5199,7 +5205,7 @@ function VH_OnParsedMsgPM (from, data, to)
 	elseif table_othsets ["lasttimenick"] and (to == table_othsets ["lasttimenick"]) then -- time bot
 		if table_sets ["timebotint"] > 0 then
 			opsnotify (table_sets ["classnotibotpm"], string.format (gettext ("%s with IP %s and class %s sent message to %s: %s"), from, ip .. tryipcc (ip, from), fcls, table_othsets ["lasttimenick"], data))
-			VH:SendDataToUser ("$To: "..from.." From: "..table_othsets ["lasttimenick"].." $<"..table_othsets ["lasttimenick"].."> "..gettext ("I'm probably away. State your business and I might answer later if you're lucky.").."|", from)
+			VH:SendToUser ("$To: "..from.." From: "..table_othsets ["lasttimenick"].." $<"..table_othsets ["lasttimenick"].."> "..gettext ("I'm probably away. State your business and I might answer later if you're lucky.").."|", from)
 		end
 
 	----- ---- --- -- -
@@ -5242,16 +5248,16 @@ function VH_OnParsedMsgPM (from, data, to)
 					opsnotify (table_sets ["classnotirepl"], string.format (gettext ("Message replaced for user with class %s in PM: <%s> %s"), fcls, from, data))
 				end
 
-				VH:SendDataToUser ("$To: " .. to .. " From: " .. from .. " $<" .. custnick .. "> " .. pmdat .. "|", to)
+				VH:SendToUser ("$To: " .. to .. " From: " .. from .. " $<" .. custnick .. "> " .. pmdat .. "|", to)
 				return 0
 			elseif data ~= pmdat then
 				opsnotify (table_sets ["classnotirepl"], string.format (gettext ("Message replaced for user with class %s in PM: <%s> %s"), fcls, from, data))
-				VH:SendDataToUser ("$To: " .. to .. " From: " .. from .. " $<" .. from .. "> " .. pmdat .. "|", to)
+				VH:SendToUser ("$To: " .. to .. " From: " .. from .. " $<" .. from .. "> " .. pmdat .. "|", to)
 				return 0
 			end
 		elseif data ~= pmdat then
 			opsnotify (table_sets ["classnotirepl"], string.format (gettext ("Message replaced for user with class %s in PM: <%s> %s"), fcls, from, data))
-			VH:SendDataToUser ("$To: " .. to .. " From: " .. from .. " $<" .. from .. "> " .. pmdat .. "|", to)
+			VH:SendToUser ("$To: " .. to .. " From: " .. from .. " $<" .. from .. "> " .. pmdat .. "|", to)
 			return 0
 		end
 	end
@@ -5358,12 +5364,12 @@ if table_sets ["useripinchat"] > 0 then -- ip in chat
 		pfx = "[ "..ip.." ]"
 	end
 
-	VH:SendDataToAll ("<"..fakenick.."> "..cvdat.."|", 0, 2)
-	VH:SendDataToAll (pfx.." <"..fakenick.."> "..cvdat.."|", 3, 10)
+	VH:SendToClass ("<"..fakenick.."> "..cvdat.."|", 0, 2)
+	VH:SendToClass (pfx.." <"..fakenick.."> "..cvdat.."|", 3, 10)
 	retval = 0
 else -- no ip
 	if (retval == 0) or (fakenick ~= nick) then -- only when modified
-		VH:SendDataToAll ("<"..fakenick.."> "..cvdat.."|", 0, 10)
+		VH:SendToClass ("<"..fakenick.."> "..cvdat.."|", 0, 10)
 		retval = 0
 	end
 end
@@ -5774,16 +5780,16 @@ for k, v in pairs (table_room) do
 		if mem > 0 then -- is member
 			if cmd then -- user command
 				if cmd == table_cmnds ["chatenter"] then
-					VH:SendDataToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..gettext ("You're already member of this chatroom.").."|", nick)
+					VH:SendToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..gettext ("You're already member of this chatroom.").."|", nick)
 
 				elseif cmd == table_cmnds ["chatleave"] then
 					table.remove (table_room [k], mem)
-					VH:SendDataToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..gettext ("You've left the chatroom.").."|", nick)
+					VH:SendToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..gettext ("You've left the chatroom.").."|", nick)
 
 					if table_sets ["roomusernotify"] == 1 then -- notification
 						for _, x in pairs (v) do
 							if x ~= nick then -- skip self
-								VH:SendDataToUser ("$To: "..x.." From: "..to.." $<"..to.."> "..string.format (gettext ("User left the chatroom: %s"), nick).."|", x)
+								VH:SendToUser ("$To: "..x.." From: "..to.." $<"..to.."> "..string.format (gettext ("User left the chatroom: %s"), nick).."|", x)
 							end
 						end
 					end
@@ -5791,19 +5797,19 @@ for k, v in pairs (table_room) do
 				elseif cmd == table_cmnds ["chatusers"] then
 					local list = ""
 					for c, x in pairs (v) do list = list.." "..c..". "..x.."\r\n" end
-					VH:SendDataToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..gettext ("Chatroom member list")..":\r\n\r\n"..list.."|", nick)
+					VH:SendToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..gettext ("Chatroom member list")..":\r\n\r\n"..list.."|", nick)
 
 				elseif cmd == table_cmnds ["chathelp"] then
-					VH:SendDataToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..gettext ("Chatroom user commands")..":\r\n\r\n"..chatroomhelp ().."|", nick)
+					VH:SendToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..gettext ("Chatroom user commands")..":\r\n\r\n"..chatroomhelp ().."|", nick)
 
 				else -- unknown command
-					VH:SendDataToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..string.format (gettext ("Unknown chatroom command. Use %s for help."), string.sub (getconfig ("cmd_start_user"), 1, 1)..table_cmnds ["chathelp"]).."|", nick)
+					VH:SendToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..string.format (gettext ("Unknown chatroom command. Use %s for help."), string.sub (getconfig ("cmd_start_user"), 1, 1)..table_cmnds ["chathelp"]).."|", nick)
 				end
 
 			else -- regular message
 				for _, x in pairs (v) do
 					if x ~= nick then -- skip self
-						VH:SendDataToUser ("$To: "..x.." From: "..to.." $<"..nick.."> "..data.."|", x)
+						VH:SendToUser ("$To: "..x.." From: "..to.." $<"..nick.."> "..data.."|", x)
 					end
 				end
 			end
@@ -5812,43 +5818,43 @@ for k, v in pairs (table_room) do
 			if class < table_sets ["ccroommancls"] then
 				local mtip = getip (nick)
 				opsnotify (table_sets ["classnotibotpm"], string.format (gettext ("%s with IP %s and class %s sent message to %s: %s"), nick, mtip .. tryipcc (mtip, nick), class, to, data))
-				VH:SendDataToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..gettext ("You don't have access to this chatroom.").."|", nick)
+				VH:SendToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..gettext ("You don't have access to this chatroom.").."|", nick)
 			else
 				if cmd then -- user command
 					if cmd == table_cmnds ["chatenter"] then
 						table.insert (table_room [k], nick)
-						VH:SendDataToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..string.format (gettext ("You've entered %s chatroom."), k).."|", nick)
+						VH:SendToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..string.format (gettext ("You've entered %s chatroom."), k).."|", nick)
 
 						if table_sets ["roomusernotify"] == 1 then -- notification
 							for _, x in pairs (v) do
 								if x ~= nick then -- skip self
-									VH:SendDataToUser ("$To: "..x.." From: "..to.." $<"..to.."> "..string.format (gettext ("User entered the chatroom: %s"), nick).."|", x)
+									VH:SendToUser ("$To: "..x.." From: "..to.." $<"..to.."> "..string.format (gettext ("User entered the chatroom: %s"), nick).."|", x)
 								end
 							end
 						end
 
 					elseif cmd == table_cmnds ["chatleave"] then
-						VH:SendDataToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..gettext ("You're not member of this chatroom.").."|", nick)
+						VH:SendToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..gettext ("You're not member of this chatroom.").."|", nick)
 
 					elseif cmd == table_cmnds ["chatusers"] then
 						local list = ""
 						for c, x in pairs (v) do list = list.." "..c..". "..x.."\r\n" end
 
 						if list == "" then
-							VH:SendDataToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..gettext ("Chatroom is empty.").."|", nick)
+							VH:SendToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..gettext ("Chatroom is empty.").."|", nick)
 						else
-							VH:SendDataToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..gettext ("Chatroom member list")..":\r\n\r\n"..list.."|", nick)
+							VH:SendToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..gettext ("Chatroom member list")..":\r\n\r\n"..list.."|", nick)
 						end
 
 					elseif cmd == table_cmnds ["chathelp"] then
-						VH:SendDataToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..gettext ("Chatroom user commands")..":\r\n\r\n"..chatroomhelp ().."|", nick)
+						VH:SendToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..gettext ("Chatroom user commands")..":\r\n\r\n"..chatroomhelp ().."|", nick)
 
 					else -- unknown command
-						VH:SendDataToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..string.format (gettext ("Unknown chatroom command. Use %s for help."), string.sub (getconfig ("cmd_start_user"), 1, 1)..table_cmnds ["chathelp"]).."|", nick)
+						VH:SendToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..string.format (gettext ("Unknown chatroom command. Use %s for help."), string.sub (getconfig ("cmd_start_user"), 1, 1)..table_cmnds ["chathelp"]).."|", nick)
 					end
 
 				else -- regular message
-					VH:SendDataToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..gettext ("You're not member of this chatroom.").."|", nick)
+					VH:SendToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..gettext ("You're not member of this chatroom.").."|", nick)
 				end
 			end
 		end
@@ -5867,7 +5873,7 @@ function broadcastcustnick (to, nick, data)
 	local rnick = findcustnick (to)
 
 	if rnick then -- match
-		VH:SendDataToUser ("$To: "..rnick.." From: "..nick.." $<"..nick.."> "..data.."|", rnick)
+		VH:SendToUser ("$To: "..rnick.." From: "..nick.." $<"..nick.."> "..data.."|", rnick)
 		return true
 	end
 
@@ -5895,7 +5901,7 @@ function broadcastchatroom (to, nick, data, ucl) -- class based chatroom
 					if cmd == table_cmnds ["chatenter"] then
 						if ign > 0 then -- remove from ignore list
 							table.remove (table_chat [to], ign)
-							VH:SendDataToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..string.format (gettext ("You've entered %s chatroom."), to).."|", nick)
+							VH:SendToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..string.format (gettext ("You've entered %s chatroom."), to).."|", nick)
 
 							if table_sets ["roomusernotify"] == 1 then -- notification
 								for x in string.gmatch (getnicklist (), "([^$]+)%$%$") do
@@ -5903,18 +5909,18 @@ function broadcastchatroom (to, nick, data, ucl) -- class based chatroom
 										local cl = getclass (x)
 
 										if (x ~= nick) and (cl >= minc) and (cl <= maxc) and ((table_othsets ["func_getcc"] == false) or (cc == "*") or (cc == getcc (x))) and (getchatroomignore (x, to) == 0) then -- skip self
-											VH:SendDataToUser ("$To: "..x.." From: "..to.." $<"..to.."> "..string.format (gettext ("User entered the chatroom: %s"), nick).."|", x)
+											VH:SendToUser ("$To: "..x.." From: "..to.." $<"..to.."> "..string.format (gettext ("User entered the chatroom: %s"), nick).."|", x)
 										end
 									end
 								end
 							end
 						else -- not ignoring
-							VH:SendDataToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..gettext ("You're already member of this chatroom.").."|", nick)
+							VH:SendToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..gettext ("You're already member of this chatroom.").."|", nick)
 						end
 
 					elseif cmd == table_cmnds ["chatleave"] then
 						if ign > 0 then -- already ignoring
-							VH:SendDataToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..gettext ("You're not member of this chatroom.").."|", nick)
+							VH:SendToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..gettext ("You're not member of this chatroom.").."|", nick)
 						else -- add to ignore list
 							if table_chat [to] then -- ignore list exists
 								table.insert (table_chat [to], nick)
@@ -5922,7 +5928,7 @@ function broadcastchatroom (to, nick, data, ucl) -- class based chatroom
 								table_chat [to] = {nick}
 							end
 
-							VH:SendDataToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..gettext ("You've left the chatroom.").."|", nick)
+							VH:SendToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..gettext ("You've left the chatroom.").."|", nick)
 
 							if table_sets ["roomusernotify"] == 1 then -- notification
 								for x in string.gmatch (getnicklist (), "([^$]+)%$%$") do
@@ -5930,7 +5936,7 @@ function broadcastchatroom (to, nick, data, ucl) -- class based chatroom
 										local cl = getclass (x)
 
 										if (x ~= nick) and (cl >= minc) and (cl <= maxc) and ((table_othsets ["func_getcc"] == false) or (cc == "*") or (cc == getcc (x))) and (getchatroomignore (x, to) == 0) then -- skip self
-											VH:SendDataToUser ("$To: "..x.." From: "..to.." $<"..to.."> "..string.format (gettext ("User left the chatroom: %s"), nick).."|", x)
+											VH:SendToUser ("$To: "..x.." From: "..to.." $<"..to.."> "..string.format (gettext ("User left the chatroom: %s"), nick).."|", x)
 										end
 									end
 								end
@@ -5953,28 +5959,28 @@ function broadcastchatroom (to, nick, data, ucl) -- class based chatroom
 						end
 
 						if list == "" then
-							VH:SendDataToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..gettext ("Chatroom is empty.").."|", nick)
+							VH:SendToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..gettext ("Chatroom is empty.").."|", nick)
 						else
-							VH:SendDataToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..gettext ("Chatroom member list")..":\r\n\r\n"..list.."|", nick)
+							VH:SendToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..gettext ("Chatroom member list")..":\r\n\r\n"..list.."|", nick)
 						end
 
 					elseif cmd == table_cmnds ["chathelp"] then
-						VH:SendDataToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..gettext ("Chatroom user commands")..":\r\n\r\n"..chatroomhelp ().."|", nick)
+						VH:SendToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..gettext ("Chatroom user commands")..":\r\n\r\n"..chatroomhelp ().."|", nick)
 
 					else -- unknown command
-						VH:SendDataToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..string.format (gettext ("Unknown chatroom command. Use %s for help."), string.sub (getconfig ("cmd_start_user"), 1, 1)..table_cmnds ["chathelp"]).."|", nick)
+						VH:SendToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..string.format (gettext ("Unknown chatroom command. Use %s for help."), string.sub (getconfig ("cmd_start_user"), 1, 1)..table_cmnds ["chathelp"]).."|", nick)
 					end
 
 				else -- regular message
 					if ign > 0 then -- ignoring
-						VH:SendDataToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..gettext ("You're not member of this chatroom.").."|", nick)
+						VH:SendToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..gettext ("You're not member of this chatroom.").."|", nick)
 					else -- broadcast
 						for x in string.gmatch (getnicklist (), "([^$]+)%$%$") do
 							if isbot (x) == false then
 								local cl = getclass (x)
 
 								if (x ~= nick) and (cl >= minc) and (cl <= maxc) and ((table_othsets ["func_getcc"] == false) or (cc == "*") or (cc == getcc (x))) and (getchatroomignore (x, to) == 0) then -- skip self
-									VH:SendDataToUser ("$To: "..x.." From: "..to.." $<"..nick.."> "..data.."|", x)
+									VH:SendToUser ("$To: "..x.." From: "..to.." $<"..nick.."> "..data.."|", x)
 								end
 							end
 						end
@@ -5984,7 +5990,7 @@ function broadcastchatroom (to, nick, data, ucl) -- class based chatroom
 			else -- not member
 				local mtip = getip (nick)
 				opsnotify (table_sets ["classnotibotpm"], string.format (gettext ("%s with IP %s and class %s sent message to %s: %s"), nick, mtip .. tryipcc (mtip, nick), ucl, to, data))
-				VH:SendDataToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..gettext ("You don't have access to this chatroom.").."|", nick)
+				VH:SendToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..gettext ("You don't have access to this chatroom.").."|", nick)
 			end
 
 			return true
@@ -6106,7 +6112,7 @@ function addcustnick (nick, custom)
 
 	if rows > 0 then
 		local _, old = VH:SQLFetch (0)
-		VH:SendDataToAll ("$Quit "..old.."|", 0, 10)
+		VH:SendToClass ("$Quit "..old.."|", 0, 10)
 		VH:SQLQuery ("update `"..tbl_sql ["cust"].."` set `custom` = '"..repsqlchars (custom).."' where `nick` = '"..nnick.."'")
 	else
 		VH:SQLQuery ("insert into `"..tbl_sql ["cust"].."` (`nick`, `custom`) values ('"..nnick.."', '"..repsqlchars (custom).."')")
@@ -6116,7 +6122,7 @@ function addcustnick (nick, custom)
 		--local ip = getip (nick)
 
 		--if ip ~= "0.0.0.0" then
-			--VH:SendDataToAll ("$UserIP "..custom.." "..ip.."$$|", 3, 10)
+			--VH:SendToClass ("$UserIP "..custom.." "..ip.."$$|", 3, 10)
 		--end
 	--end
 end
@@ -6152,7 +6158,7 @@ function cleancustnick (limit, byclass)
 				end
 			end
 
-			VH:SendDataToAll ("$Quit "..v.."|", 0, 10)
+			VH:SendToClass ("$Quit "..v.."|", 0, 10)
 		end
 	end
 end
@@ -6167,7 +6173,7 @@ function delcustnick (nick, cls, quit)
 			table_cust [k] = nil
 
 			if quit == true then
-				VH:SendDataToAll ("$Quit "..v.."|", 0, 10)
+				VH:SendToClass ("$Quit "..v.."|", 0, 10)
 			end
 
 			return v
@@ -6183,7 +6189,7 @@ function delcustnick (nick, cls, quit)
 			VH:SQLQuery ("delete from `"..tbl_sql ["cust"].."` where `custom` = '"..repsqlchars (cust).."'")
 
 			if quit == true then
-				VH:SendDataToAll ("$Quit "..cust.."|", 0, 10)
+				VH:SendToClass ("$Quit "..cust.."|", 0, 10)
 			end
 
 			return cust
@@ -6237,14 +6243,14 @@ function opforcecustnick (nick, line)
 				table_cust [onick] = ncust
 
 				if oldcust then
-					VH:SendDataToAll ("$Quit "..oldcust.."|", 0, 10)
+					VH:SendToClass ("$Quit "..oldcust.."|", 0, 10)
 				end
 
 				--if getconfig ("send_user_ip") == 1 then
 					--local ip = getip (onick)
 
 					--if ip ~= "0.0.0.0" then
-						--VH:SendDataToAll ("$UserIP "..ncust.." "..ip.."$$|", 3, 10)
+						--VH:SendToClass ("$UserIP "..ncust.." "..ip.."$$|", 3, 10)
 					--end
 				--end
 			else
@@ -6297,7 +6303,7 @@ function opdelcustnick (nick, user)
 			commandanswer (nick, string.format (gettext ("Deleted user from custom nick list: %s"), orig))
 		end
 
-		VH:SendDataToAll ("$Quit "..cust.."|", 0, 10)
+		VH:SendToClass ("$Quit "..cust.."|", 0, 10)
 	else
 		commandanswer (nick, string.format (gettext ("Couldn't delete user from custom nick list because not found: %s"), user))
 	end
@@ -6616,10 +6622,10 @@ function installtimebot ()
 
 	if table_sets ["fasttimebot"] == 1 then
 		if table_othsets ["lasttimenick"] then
-			VH:SendDataToAll ("$Quit "..table_othsets ["lasttimenick"].."|", 0, 10)
+			VH:SendToClass ("$Quit "..table_othsets ["lasttimenick"].."|", 0, 10)
 		end
 
-		VH:SendDataToAll ("$OpList "..bottime.."$$|", 0, 10)
+		VH:SendToClass ("$OpList "..bottime.."$$|", 0, 10)
 	else
 		if table_othsets ["lasttimenick"] then
 			delhubrobot (table_othsets ["lasttimenick"])
@@ -6753,7 +6759,7 @@ function sendreminder ()
 				elseif pmf == 1 then -- pm
 					VH:SendPMToAll (repdvars, table_othsets ["sendfrom"], mincl, maxcl)
 				elseif pmf == 3 then -- raw
-					VH:SendDataToAll (repnmdcinchars (repdvars), mincl, maxcl)
+					VH:SendToClass (repnmdcinchars (repdvars), mincl, maxcl)
 				else -- 2, mc + pm
 					maintoall (repdvars, mincl, maxcl)
 					VH:SendPMToAll (repdvars, table_othsets ["sendfrom"], mincl, maxcl)
@@ -6991,9 +6997,9 @@ function sendrcmenu (nick, class)
 			local _, menu, cmnd, cype, cont = VH:SQLFetch (x)
 
 			if cmnd == "" then
-				VH:SendDataToUser ("$UserCommand " .. tostring (cype) .. " " .. tostring (cont) .. "|", nick)
+				VH:SendToUser ("$UserCommand " .. tostring (cype) .. " " .. tostring (cont) .. "|", nick)
 			else
-				VH:SendDataToUser ("$UserCommand " .. tostring (cype) .. " " .. tostring (cont) .. " " .. menu .. "$<%[mynick]> " .. cmnd .. "&#124;|", nick)
+				VH:SendToUser ("$UserCommand " .. tostring (cype) .. " " .. tostring (cont) .. " " .. menu .. "$<%[mynick]> " .. cmnd .. "&#124;|", nick)
 			end
 		end
 	end
@@ -7047,7 +7053,7 @@ function checknopm (from, cls, to)
 					pmtouser (from, to, string.format (gettext ("You're not allowed to send PM to this user because: %s"), rsn))
 
 					if tonumber (act) == 1 then -- drop
-						VH:CloseConnection (from)
+						VH:Disconnect (from)
 					end
 
 					return true
@@ -7746,8 +7752,8 @@ local user = getcsnick (usr)
 if not user then -- not in list
 	commandanswer (nick, string.format (gettext ("User not in list: %s"), usr))
 elseif isbot (user) == true then -- bot
-	if table_othsets ["func_getbots"] == true then
-		local bots = VH:GetBots ()
+	if table_othsets ["func_getluabots"] == true then
+		local bots = VH:GetLuaBots ()
 		local info = ""
 
 		if bots then
@@ -8483,7 +8489,7 @@ function authcheck (nick, cls, uip)
 
 	maintouser (nick, table_sets ["authmessage"])
 	VH:SQLQuery ("update `"..tbl_sql ["auth"].."` set `badip` = '"..repsqlchars (uip).."', `bad` = `bad` + 1 where `nick` = '"..user.."'")
-	VH:CloseConnection (nick) -- drop user
+	VH:Disconnect (nick) -- drop user
 	opsnotify (table_sets ["classnotiauth"], string.format (gettext ("%s with IP %s and class %s failed authorization and disconnected."), nick, uip .. tryipcc (uip, nick), cls))
 	return true
 end
@@ -9943,7 +9949,7 @@ function checkclone (nick, share, aip, ucls)
 				if table_sets ["michclone"] == 1 then
 					maintouser (nick, rsn)
 					opsnotify (table_sets ["classnotimich"], string.format (gettext ("Dropping user due to clone detection from IP %s with class %s: %s = %s"), aip .. tryipcc (aip, nick), ucls, nick, user))
-					VH:CloseConnection (nick)
+					VH:Disconnect (nick)
 				elseif table_sets ["michclone"] == 2 then
 					if table_sets ["miclonekicktime"] ~= "" then
 						rsn = rsn .. "     #_ban_" .. table_sets ["miclonekicktime"]
@@ -10248,7 +10254,7 @@ function detprotoflood (pref, prot, nick, ip, class)
 				if table_sets ["protoflood" .. pref .. "act"] == 0 then -- drop
 					maintouser (nick, string.format (gettext ("Protocol flood detected from your client: %s"), sts))
 					opsnotify (table_sets ["classnotiprotoflood"], string.format (gettext ("Dropping %s with IP %s and class %s due to protocol flood detection: %s"), nick, ip .. tryipcc (ip, nick), class, sts))
-					VH:CloseConnection (nick)
+					VH:Disconnect (nick)
 				elseif table_sets ["protoflood" .. pref .. "act"] == 1 then -- kick
 					VH:KickUser (table_othsets ["sendfrom"], nick, string.format (gettext ("Protocol flood detected from your client: %s"), sts))
 				elseif table_sets ["protoflood" .. pref .. "act"] == 2 then -- temporary ban
@@ -10259,7 +10265,7 @@ function detprotoflood (pref, prot, nick, ip, class)
 			else
 				maintouser (nick, string.format (gettext ("Protocol flood detected from your client: %s"), sts))
 				opsnotify (table_sets ["classnotiprotoflood"], string.format (gettext ("Dropping %s with IP %s and class %s due to protocol flood detection: %s"), nick, ip .. tryipcc (ip, nick), class, sts))
-				VH:CloseConnection (nick) -- drop
+				VH:Disconnect (nick) -- drop
 			end
 
 			return true
@@ -11933,7 +11939,7 @@ function savetopic (owner, topic, ucls)
 		if table_othsets ["func_gettopic"] == true then
 			VH:SetTopic (string.rep (" ", table_sets ["rolltopicspace"])..topic)
 		else
-			VH:SendDataToAll ("$HubName "..getconfig ("hub_name").." - "..string.rep (" ", table_sets ["rolltopicspace"])..topic.."|", 0, 10)
+			VH:SendToClass ("$HubName "..getconfig ("hub_name").." - "..string.rep (" ", table_sets ["rolltopicspace"])..topic.."|", 0, 10)
 		end
 	end
 end
@@ -11982,7 +11988,7 @@ function rolltopic ()
 	if table_othsets ["func_gettopic"] == true then
 		VH:SetTopic (newtopc)
 	else
-		VH:SendDataToAll ("$HubName "..getconfig ("hub_name").." - "..newtopc.."|", 0, 10)
+		VH:SendToClass ("$HubName "..getconfig ("hub_name").." - "..newtopc.."|", 0, 10)
 	end
 end
 
@@ -11999,7 +12005,7 @@ newn = repnickchars (newn)
 
 if getstatus (oldn) == 1 then -- notify and disconnect user if hes online
 pmtouser (oldn, table_othsets ["botnick"], string.format (gettext ("You are now going to be disconnected from the hub in order for your new nick to apply: %s"), newn))
-VH:CloseConnection (oldn)
+VH:Disconnect (oldn)
 end
 
 local rnewn = repsqlchars (newn)
@@ -12138,7 +12144,7 @@ function sendsay (nick, message, ucl)
 
 	if ((user == table_sets ["ledobotnick"]) or (user == table_othsets ["botnick"]) or (user == table_othsets ["opchatnick"]) or (user == nick)) or (getclass (user) < ucl) then
 		opsnotify (table_sets ["classnotisay"], string.format (gettext ("%s with class %s sent say message: <%s> %s"), nick, ucl, user, message))
-		VH:SendDataToAll ("<"..user.."> "..message.."|", 0, 10)
+		VH:SendToClass ("<"..user.."> "..message.."|", 0, 10)
 		addmchistoryline (user, nick, message)
 	else
 		opsnotify (table_sets ["classnotisay"], string.format (gettext ("%s with class %s had bad luck sending say message: <%s> %s"), nick, ucl, user, message))
@@ -12885,19 +12891,19 @@ end
 ----- ---- --- -- -
 
 function sopmenitm (usr, txt, cmd)
-VH:SendDataToUser ("$UserCommand 1 3 "..table_sets ["usermenuname"].."\\.:: "..txt.." $<%[mynick]> "..string.sub (getconfig ("cmd_start_op"), 1, 1)..cmd.."&#124;|", usr)
+VH:SendToUser ("$UserCommand 1 3 "..table_sets ["usermenuname"].."\\.:: "..txt.." $<%[mynick]> "..string.sub (getconfig ("cmd_start_op"), 1, 1)..cmd.."&#124;|", usr)
 end
 
 ----- ---- --- -- -
 
 function susmenitm (usr, txt, cmd)
-VH:SendDataToUser ("$UserCommand 1 3 "..table_sets ["usermenuname"].."\\.:: "..txt.." $<%[mynick]> "..string.sub (getconfig ("cmd_start_user"), 1, 1)..cmd.."&#124;|", usr)
+VH:SendToUser ("$UserCommand 1 3 "..table_sets ["usermenuname"].."\\.:: "..txt.." $<%[mynick]> "..string.sub (getconfig ("cmd_start_user"), 1, 1)..cmd.."&#124;|", usr)
 end
 
 ----- ---- --- -- -
 
 function smensep (usr)
-VH:SendDataToUser ("$UserCommand 0 3|", usr)
+VH:SendToUser ("$UserCommand 0 3|", usr)
 end
 
 ----- ---- --- -- -
@@ -15601,7 +15607,7 @@ ok = true
 
 if (table_sets [tvar] ~= setto) and (setto == 0) and table_othsets ["lasttimenick"] then
 	if table_sets ["fasttimebot"] == 1 then
-		VH:SendDataToAll ("$Quit "..table_othsets ["lasttimenick"].."|", 0, 10)
+		VH:SendToClass ("$Quit "..table_othsets ["lasttimenick"].."|", 0, 10)
 	else
 		delhubrobot (table_othsets ["lasttimenick"])
 	end
@@ -15671,7 +15677,7 @@ ok = true
 
 if (table_sets [tvar] ~= setto) and table_othsets ["lasttimenick"] then
 	if table_sets [tvar] == 1 then
-		VH:SendDataToAll ("$Quit "..table_othsets ["lasttimenick"].."|", 0, 10)
+		VH:SendToClass ("$Quit "..table_othsets ["lasttimenick"].."|", 0, 10)
 	else
 		delhubrobot (table_othsets ["lasttimenick"])
 	end
@@ -17087,8 +17093,8 @@ end
 ----- ---- --- -- -
 
 function addhubrobot (nick, desc, away, mail, share)
-	VH:AddRobot (nick, 3, desc, string.char (away), mail, share)
-	--VH:SendDataToAll ("$UserIP "..nick.." 127.0.0.1$$|", 0, 10)
+	VH:RegBot (nick, 3, desc, string.char (away), mail, share)
+	--VH:SendToClass ("$UserIP "..nick.." 127.0.0.1$$|", 0, 10)
 end
 
 ----- ---- --- -- -
@@ -17100,7 +17106,7 @@ end
 ----- ---- --- -- -
 
 function delhubrobot (nick)
-	VH:DelRobot (nick)
+	VH:UnRegBot (nick)
 end
 
 ----- ---- --- -- -
@@ -17228,7 +17234,7 @@ end
 ----- ---- --- -- -
 
 function loadavdb ()
-	local res, _ = os.execute ("curl -G -L --retry 3 --connect-timeout 5 -m 30 -s -o \"" .. table_othsets ["cfgdir"] .. table_othsets ["tmpfile"] .. "\" \"" .. table_othsets ["avdbloadurl"] .. "&limit=" .. tostring (table_sets ["avdbloadlim"]) .. "\"")
+	local res, err = os.execute ("curl -G -L --retry 3 --connect-timeout 5 -m 30 -s -o \"" .. table_othsets ["cfgdir"] .. table_othsets ["tmpfile"] .. "\" \"" .. table_othsets ["avdbloadurl"] .. "&limit=" .. tostring (table_sets ["avdbloadlim"]) .. "\"")
 
 	if res then
 		local avfi = io.open (table_othsets ["cfgdir"] .. table_othsets ["tmpfile"], "r")
@@ -17256,9 +17262,13 @@ function loadavdb ()
 			os.remove (table_othsets ["cfgdir"] .. table_othsets ["tmpfile"])
 
 			if table_sets ["avfeedverb"] == 3 then
-				opsnotify (table_sets ["classnotiav"], gettext ("Loaded %s items: %s"):format (lint, "AVDB"))
+				opsnotify (table_sets ["classnotiav"], gettext ("Successfully loaded %s items: %s"):format (lint, "AVDB"))
 			end
+		elseif table_sets ["avfeedverb"] == 3 then
+			opsnotify (table_sets ["classnotiav"], gettext ("Failed to load information from %s: %s"):format ("AVDB", gettext ("Error on connecting.")))
 		end
+	elseif table_sets ["avfeedverb"] == 3 then
+		opsnotify (table_sets ["classnotiav"], gettext ("Failed to load information from %s: %s"):format ("AVDB", gettext ("Error on executing %s: %s"):format ("cURL", repnmdcoutchars (err or gettext ("No error message specified.")))))
 	end
 end
 
@@ -17378,11 +17388,11 @@ function loadcomponents ()
 	if VH.GetVHCfgDir then
 		_, table_othsets ["cfgdir"] = VH:GetVHCfgDir ()
 	else
-		VH:SendDataToAll ("<" .. table_sets ["ledobotnick"] .. "> Warning: Unable to run VH:GetVHCfgDir|", 5, 10)
+		VH:SendToClass ("<" .. table_sets ["ledobotnick"] .. "> Warning: Unable to run VH:GetVHCfgDir|", 5, 10)
 		table_othsets ["cfgdir"] = os.getenv ("VERLIHUB_CFG")
 
 		if not table_othsets ["cfgdir"] then
-			VH:SendDataToAll ("<" .. table_sets ["ledobotnick"] .. "> Warning: Unable to get VERLIHUB_CFG|", 5, 10)
+			VH:SendToClass ("<" .. table_sets ["ledobotnick"] .. "> Warning: Unable to get VERLIHUB_CFG|", 5, 10)
 
 			for _, v in pairs (paths) do
 				local res = os.execute (v .. "vh_getcfg > \"./" .. table_othsets ["tmpfile"] .. "\"")
@@ -17404,7 +17414,7 @@ function loadcomponents ()
 			end
 
 			if (not table_othsets ["cfgdir"]) or (string.len (table_othsets ["cfgdir"]) == 0) then
-				VH:SendDataToAll ("<" .. table_sets ["ledobotnick"] .. "> Error: Unable to run vh_getcfg.sh|", 5, 10)
+				VH:SendToClass ("<" .. table_sets ["ledobotnick"] .. "> Error: Unable to run vh_getcfg.sh|", 5, 10)
 				return true
 			end
 		end
@@ -17417,7 +17427,7 @@ function loadcomponents ()
 	-- nicklist
 
 	if not VH.GetNickList then
-		VH:SendDataToAll ("<" .. table_sets ["ledobotnick"] .. "> Error: Unable to run VH:GetNickList|", 5, 10)
+		VH:SendToClass ("<" .. table_sets ["ledobotnick"] .. "> Error: Unable to run VH:GetNickList|", 5, 10)
 		return true
 	end
 
@@ -17426,7 +17436,7 @@ function loadcomponents ()
 	table_othsets ["ver_luaplug"] = _PLUGINVERSION
 
 	if not table_othsets ["ver_luaplug"] then
-		VH:SendDataToAll ("<" .. table_sets ["ledobotnick"] .. "> Warning: Unable to detect Lua plugin version|", 5, 10)
+		VH:SendToClass ("<" .. table_sets ["ledobotnick"] .. "> Warning: Unable to detect Lua plugin version|", 5, 10)
 	end
 
 	-- lua version
@@ -17454,12 +17464,12 @@ function loadcomponents ()
 	end
 
 	if not table_othsets ["ver_lua"] then
-		VH:SendDataToAll ("<" .. table_sets ["ledobotnick"] .. "> Warning: Unable to run \"lua -v\"|", 5, 10)
+		VH:SendToClass ("<" .. table_sets ["ledobotnick"] .. "> Warning: Unable to run \"lua -v\"|", 5, 10)
 		table_othsets ["ver_lua"] = string.sub (_VERSION, 5, -1)
 	end
 
 	if not table_othsets ["ver_lua"] then
-		VH:SendDataToAll ("<" .. table_sets ["ledobotnick"] .. "> Warning: Unable to detect Lua library version|", 5, 10)
+		VH:SendToClass ("<" .. table_sets ["ledobotnick"] .. "> Warning: Unable to detect Lua library version|", 5, 10)
 	else
 		if string.sub (table_othsets ["ver_lua"], 1, 3) == "5.0" then
 			string.gmatch = string.gfind -- lua 5.0 fix
@@ -17472,7 +17482,7 @@ function loadcomponents ()
 	_, table_othsets ["ver_sql"] = VH:SQLFetch (0)
 
 	if not table_othsets ["ver_sql"] then
-		VH:SendDataToAll ("<" .. table_sets ["ledobotnick"] .. "> Warning: Unable to detect MySQL version|", 5, 10)
+		VH:SendToClass ("<" .. table_sets ["ledobotnick"] .. "> Warning: Unable to detect MySQL version|", 5, 10)
 	end
 
 	-- curl version
@@ -17492,7 +17502,7 @@ function loadcomponents ()
 	end
 
 	if not table_othsets ["ver_curl"] then
-		VH:SendDataToAll ("<" .. table_sets ["ledobotnick"] .. "> Warning: Unable to run \"curl --version\"|", 5, 10)
+		VH:SendToClass ("<" .. table_sets ["ledobotnick"] .. "> Warning: Unable to run \"curl --version\"|", 5, 10)
 	end
 
 	--[[
@@ -17514,7 +17524,7 @@ function loadcomponents ()
 	end
 
 	if not table_othsets ["ver_iconv"] then
-		VH:SendDataToAll ("<" .. table_sets ["ledobotnick"] .. "> Warning: Unable to run \"iconv --version\"|", 5, 10)
+		VH:SendToClass ("<" .. table_sets ["ledobotnick"] .. "> Warning: Unable to run \"iconv --version\"|", 5, 10)
 	end
 
 	-- load socket
@@ -17522,33 +17532,33 @@ function loadcomponents ()
 	local res, err = pcall (function () lsock = require ("socket") end)
 
 	if not res then
-		--VH:SendDataToAll ("<" .. table_sets ["ledobotnick"] .. "> Warning: Unable to load LuaSocket module: " .. repnmdcoutchars (err) .. "|", 5, 10)
+		--VH:SendToClass ("<" .. table_sets ["ledobotnick"] .. "> Warning: Unable to load LuaSocket module: " .. repnmdcoutchars (err) .. "|", 5, 10)
 	else
 		-- luasocket version
 		table_othsets ["ver_sock"] = string.sub (lsock._VERSION, 11, -1)
 
 		if not table_othsets ["ver_sock"] then
-			VH:SendDataToAll ("<" .. table_sets ["ledobotnick"] .. "> Warning: Unable to detect LuaSocket version|", 5, 10)
+			VH:SendToClass ("<" .. table_sets ["ledobotnick"] .. "> Warning: Unable to detect LuaSocket version|", 5, 10)
 		end
 
 		-- load socket.http
 		local res, err = pcall (function () lsockhttp = require ("socket.http") end)
 
 		if not res then
-			VH:SendDataToAll ("<" .. table_sets ["ledobotnick"] .. "> Warning: Unable to load LuaSocket HTTP module: " .. repnmdcoutchars (err) .. "|", 5, 10)
+			VH:SendToClass ("<" .. table_sets ["ledobotnick"] .. "> Warning: Unable to load LuaSocket HTTP module: " .. repnmdcoutchars (err) .. "|", 5, 10)
 		end
 
 		-- load ltn12
 		local res, err = pcall (function () lsockltn12 = require ("ltn12") end)
 
 		if not res then
-			VH:SendDataToAll ("<" .. table_sets ["ledobotnick"] .. "> Warning: Unable to load LuaSocket LTN12 module: " .. repnmdcoutchars (err) .. "|", 5, 10)
+			VH:SendToClass ("<" .. table_sets ["ledobotnick"] .. "> Warning: Unable to load LuaSocket LTN12 module: " .. repnmdcoutchars (err) .. "|", 5, 10)
 		else
 			-- ltn12 version
 			table_othsets ["ver_ltn12"] = string.sub (lsockltn12._VERSION, 7, -1)
 
 			if not table_othsets ["ver_ltn12"] then
-				VH:SendDataToAll ("<" .. table_sets ["ledobotnick"] .. "> Warning: Unable to detect LuaSocket LTN12 version|", 5, 10)
+				VH:SendToClass ("<" .. table_sets ["ledobotnick"] .. "> Warning: Unable to detect LuaSocket LTN12 version|", 5, 10)
 			end
 		end
 	end
@@ -17560,7 +17570,7 @@ function loadcomponents ()
 	if VH.GetUserCC then
 		table_othsets ["func_getcc"] = true
 	else
-		VH:SendDataToAll ("<" .. table_sets ["ledobotnick"] .. "> Warning: Unable to run VH:GetUserCC|", 5, 10)
+		VH:SendToClass ("<" .. table_sets ["ledobotnick"] .. "> Warning: Unable to run VH:GetUserCC|", 5, 10)
 	end
 
 	-- getusercity function
@@ -17568,7 +17578,7 @@ function loadcomponents ()
 	if VH.GetUserCity then
 		table_othsets ["func_getusercity"] = true
 	else
-		VH:SendDataToAll ("<" .. table_sets ["ledobotnick"] .. "> Warning: Unable to run VH:GetUserCity|", 5, 10)
+		VH:SendToClass ("<" .. table_sets ["ledobotnick"] .. "> Warning: Unable to run VH:GetUserCity|", 5, 10)
 	end
 
 	-- getipcn function
@@ -17576,7 +17586,13 @@ function loadcomponents ()
 	if VH.GetIPCN then
 		table_othsets ["func_getipcn"] = true
 	else
-		VH:SendDataToAll ("<" .. table_sets ["ledobotnick"] .. "> Warning: Unable to run VH:GetIPCN|", 5, 10)
+		VH:SendToClass ("<" .. table_sets ["ledobotnick"] .. "> Warning: Unable to run VH:GetIPCN|", 5, 10)
+	end
+
+	if VH.GetIPCC then -- getipcc function
+		table_othsets ["func_getipcc"] = true
+	else
+		VH:SendToClass ("<" .. table_sets ["ledobotnick"] .. "> Warning: Unable to run VH:GetIPCC|", 5, 10)
 	end
 
 	-- getusergeoip function
@@ -17584,7 +17600,7 @@ function loadcomponents ()
 	if VH.GetUserGeoIP then
 		table_othsets ["func_getusergeoip"] = true
 	else
-		VH:SendDataToAll ("<" .. table_sets ["ledobotnick"] .. "> Warning: Unable to run VH:GetUserGeoIP|", 5, 10)
+		VH:SendToClass ("<" .. table_sets ["ledobotnick"] .. "> Warning: Unable to run VH:GetUserGeoIP|", 5, 10)
 	end
 
 	-- gethostgeoip function
@@ -17592,15 +17608,15 @@ function loadcomponents ()
 	if VH.GetHostGeoIP then
 		table_othsets ["func_gethostgeoip"] = true
 	else
-		VH:SendDataToAll ("<" .. table_sets ["ledobotnick"] .. "> Warning: Unable to run VH:GetHostGeoIP|", 5, 10)
+		VH:SendToClass ("<" .. table_sets ["ledobotnick"] .. "> Warning: Unable to run VH:GetHostGeoIP|", 5, 10)
 	end
 
-	-- getbots function
+	-- getluabots function
 
-	if VH.GetBots then
-		table_othsets ["func_getbots"] = true
+	if VH.GetLuaBots then
+		table_othsets ["func_getluabots"] = true
 	else
-		VH:SendDataToAll ("<" .. table_sets ["ledobotnick"] .. "> Warning: Unable to run VH:GetBots|", 5, 10)
+		VH:SendToClass ("<" .. table_sets ["ledobotnick"] .. "> Warning: Unable to run VH:GetLuaBots|", 5, 10)
 	end
 
 	-- getuptime function
@@ -17608,25 +17624,31 @@ function loadcomponents ()
 	if VH.GetUpTime then
 		table_othsets ["func_getuptime"] = true
 	else
-		VH:SendDataToAll ("<" .. table_sets ["ledobotnick"] .. "> Warning: Unable to run VH:GetUpTime|", 5, 10)
+		VH:SendToClass ("<" .. table_sets ["ledobotnick"] .. "> Warning: Unable to run VH:GetUpTime|", 5, 10)
 	end
 
 	if VH.GetTopic then -- gettopic function
 		table_othsets ["func_gettopic"] = true
 	else
-		VH:SendDataToAll ("<" .. table_sets ["ledobotnick"] .. "> Warning: Unable to run VH:GetTopic|", 5, 10)
+		VH:SendToClass ("<" .. table_sets ["ledobotnick"] .. "> Warning: Unable to run VH:GetTopic|", 5, 10)
 	end
 
 	if VH.GetUserVersion then -- getuserversion function
 		table_othsets ["func_getuserversion"] = true
 	else
-		VH:SendDataToAll ("<" .. table_sets ["ledobotnick"] .. "> Warning: Unable to run VH:GetUserVersion|", 5, 10)
+		VH:SendToClass ("<" .. table_sets ["ledobotnick"] .. "> Warning: Unable to run VH:GetUserVersion|", 5, 10)
 	end
 
 	if VH.GetUserSupports then -- getusersupports function
 		table_othsets ["func_getusersupports"] = true
 	else
-		VH:SendDataToAll ("<" .. table_sets ["ledobotnick"] .. "> Warning: Unable to run VH:GetUserSupports|", 5, 10)
+		VH:SendToClass ("<" .. table_sets ["ledobotnick"] .. "> Warning: Unable to run VH:GetUserSupports|", 5, 10)
+	end
+
+	if VH.SendToActiveClass then -- sendtoactiveclass function
+		table_othsets ["func_sendtoactiveclass"] = true
+	else
+		VH:SendToClass ("<" .. table_sets ["ledobotnick"] .. "> Warning: Unable to run VH:SendToActiveClass|", 5, 10)
 	end
 
 	return false
@@ -17793,7 +17815,7 @@ function dropallbyip (ip)
 	local ul = getusersbyip (ip, table_sets ["scanbelowclass"])
 
 	for _, u in pairs (ul) do
-		VH:CloseConnection (u)
+		VH:Disconnect (u)
 	end
 
 	return table.getn (ul)
@@ -17840,7 +17862,7 @@ function tryipcc (addr, nick)
 		end
 	end
 
-	if VH.GetIPCC then
+	if table_othsets ["func_getipcc"] then
 		local res, code = VH:GetIPCC (addr)
 
 		if res and code then
@@ -18610,8 +18632,8 @@ function isbot (nick)
 if nick == table_othsets ["botnick"] then return true end -- security bot
 if nick == table_othsets ["opchatnick"] then return true end -- operators chat
 
-if table_othsets ["func_getbots"] == true then
-	local bots = VH:GetBots () -- other registered bots
+if table_othsets ["func_getluabots"] == true then
+	local bots = VH:GetLuaBots () -- other registered bots
 	if not bots then return false end
 
 	for _, v in pairs (bots) do
@@ -18742,7 +18764,7 @@ function antiscan (nick, class, data, where, to, status)
 						custnick = getcustnick (nick) or nick
 					end
 
-					VH:SendDataToAll ("<" .. custnick .. "> " .. table_sets ["ninthactrepmsg"] .. "|", 0, 10)
+					VH:SendToClass ("<" .. custnick .. "> " .. table_sets ["ninthactrepmsg"] .. "|", 0, 10)
 					addmchistoryline (custnick, nick, table_sets ["ninthactrepmsg"])
 				elseif where == 2 then
 					local custnick = nick
@@ -18751,7 +18773,7 @@ function antiscan (nick, class, data, where, to, status)
 						custnick = getcustnick (nick) or nick
 					end
 
-					VH:SendDataToUser ("$To: " .. to .. " From: " .. nick .. " $<" .. custnick .. "> " .. table_sets ["ninthactrepmsg"] .. "|", to)
+					VH:SendToUser ("$To: " .. to .. " From: " .. nick .. " $<" .. custnick .. "> " .. table_sets ["ninthactrepmsg"] .. "|", to)
 				elseif (where == 3) or (where == 4) then
 					commandanswer (nick, table_sets ["antimessage"])
 				end
@@ -18780,7 +18802,7 @@ function antiscan (nick, class, data, where, to, status)
 
 			if action == 1 then -- drop
 				opsnotify (table_sets ["classnotianti"], string.format (gettext ("%s dropped due to spam."), nick))
-				VH:CloseConnection (nick)
+				VH:Disconnect (nick)
 			elseif action == 2 then -- kick
 				local reason = string.gsub (table_sets ["antikreason"], "%*", reprexpchars (data))
 				VH:KickUser (table_othsets ["sendfrom"], nick, reason)
@@ -18791,8 +18813,8 @@ function antiscan (nick, class, data, where, to, status)
 				opsnotify (table_sets ["classnotianti"], string.format (gettext ("%s received own message."), nick))
 			elseif action == 6 then -- redirect to sixthactaddr
 				opsnotify (table_sets ["classnotianti"], string.format (gettext ("%s redirected due to spam."), nick))
-				VH:SendDataToUser ("$ForceMove " .. table_sets ["sixthactaddr"] .. "|", nick)
-				VH:CloseConnection (nick)
+				VH:SendToUser ("$ForceMove " .. table_sets ["sixthactaddr"] .. "|", nick)
+				VH:Disconnect (nick)
 			elseif action == 7 then -- permanent ban, kick using seventhacttime
 				local reason = string.gsub (table_sets ["antikreason"], "%*", reprexpchars (data))
 				VH:KickUser (table_othsets ["sendfrom"], nick, reason .. "     #_ban_" .. table_sets ["seventhacttime"])
@@ -18808,7 +18830,7 @@ function antiscan (nick, class, data, where, to, status)
 			elseif action == 10 then -- hard ban
 				addhban (nil, repexdots (ip) .. "$ \"" .. entry .. "\"")
 				opsnotify (table_sets ["classnotianti"], string.format (gettext ("Added %s to hard ban list, %s users in total."), ip, table.getn (getusersbyip (ip, table_sets ["scanbelowclass"]))))
-				VH:CloseConnection (nick)
+				VH:Disconnect (nick)
 			end
 
 			return 0
@@ -18961,7 +18983,7 @@ function sefiscan (nick, srch, cls, ip)
 
 			if act == 1 then
 				opsnotify (table_sets ["classnotisefi"], string.format (gettext ("%s dropped due to bad search request."), nick))
-				VH:CloseConnection (nick)
+				VH:Disconnect (nick)
 			elseif act == 2 then
 				local rsn = string.gsub (table_sets ["sefireason"], "%*", reprexpchars (str))
 				VH:KickUser (table_othsets ["sendfrom"], nick, rsn)
@@ -18972,8 +18994,8 @@ function sefiscan (nick, srch, cls, ip)
 				opsnotify (table_sets ["classnotisefi"], string.format (gettext ("%s didn't get any search results."), nick))
 			elseif act == 6 then
 				opsnotify (table_sets ["classnotisefi"], string.format (gettext ("%s redirected due to bad search request."), nick))
-				VH:SendDataToUser ("$ForceMove " .. table_sets ["sixthactaddr"] .. "|", nick)
-				VH:CloseConnection (nick)
+				VH:SendToUser ("$ForceMove " .. table_sets ["sixthactaddr"] .. "|", nick)
+				VH:Disconnect (nick)
 			elseif act == 7 then
 				local rsn = string.gsub (table_sets ["sefireason"], "%*", reprexpchars (str))
 				VH:KickUser (table_othsets ["sendfrom"], nick, rsn .. "     #_ban_" .. table_sets ["seventhacttime"])
@@ -18989,31 +19011,31 @@ end
 ----- ---- --- -- -
 
 function maintoself (nick, message)
-	VH:SendDataToUser ("<"..nick.."> "..message.."|", nick)
+	VH:SendToUser ("<"..nick.."> "..message.."|", nick)
 end
 
 ----- ---- --- -- -
 
 function offlinepm (from, to, message)
-	VH:SendDataToUser ("$To: "..to.." From: "..from.." $<"..from.."> "..message.."|", to)
+	VH:SendToUser ("$To: "..to.." From: "..from.." $<"..from.."> "..message.."|", to)
 end
 
 ----- ---- --- -- -
 
 function pmtouser (to, from, message)
-	VH:SendDataToUser ("$To: "..to.." From: "..from.." $<"..table_othsets ["sendfrom"].."> "..message.."|", to)
+	VH:SendToUser ("$To: "..to.." From: "..from.." $<"..table_othsets ["sendfrom"].."> "..message.."|", to)
 end
 
 ----- ---- --- -- -
 
 function maintouser (to, message)
-	VH:SendDataToUser ("<"..table_othsets ["sendfrom"].."> "..message.."|", to)
+	VH:SendToUser ("<"..table_othsets ["sendfrom"].."> "..message.."|", to)
 end
 
 ----- ---- --- -- -
 
 function maintoall (message, mincl, maxcl)
-	VH:SendDataToAll ("<"..table_othsets ["sendfrom"].."> "..message.."|", mincl, maxcl)
+	VH:SendToClass ("<"..table_othsets ["sendfrom"].."> "..message.."|", mincl, maxcl)
 	addmchistoryline (table_othsets ["sendfrom"], table_othsets ["sendfrom"], message)
 end
 
@@ -19021,16 +19043,16 @@ end
 
 function commandanswer (to, message) -- todo: do we need to replace nmdc characters here? i think its better here than in every function
 	if table_sets ["commandstopm"] == 0 then
-		VH:SendDataToUser ("<" .. table_othsets ["sendfrom"] .. "> " .. message .. "|", to)
+		VH:SendToUser ("<" .. table_othsets ["sendfrom"] .. "> " .. message .. "|", to)
 	else
-		VH:SendDataToUser ("$To: " .. to .. " From: " .. table_othsets ["botnick"] .. " $<" .. table_othsets ["sendfrom"] .. "> " .. message .. "|", to)
+		VH:SendToUser ("$To: " .. to .. " From: " .. table_othsets ["botnick"] .. " $<" .. table_othsets ["sendfrom"] .. "> " .. message .. "|", to)
 	end
 end
 
 ----- ---- --- -- -
 
 function ledodbg (msg)
-	VH:SendDataToAll ("<Debugger> "..repnmdcoutchars (msg).."|", 10, 10)
+	VH:SendToClass ("<Debugger> "..repnmdcoutchars (msg).."|", 10, 10)
 end
 
 ----- ---- --- -- -
