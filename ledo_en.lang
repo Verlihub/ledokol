@@ -998,7 +998,7 @@ Users with same IP|
 Parameter count mismatch detected in following translation string: %s|
 Infected user detected|
 Found files|
-Infected user detected with nick %s and IP %s and spent time: %s|
+Infected user detected with nick %s and IP %s and share %s and spent time: %s|
 Sadly I don't have access to send infected user information to AVDB, please ask maintainer of this script to add your server IP address to access list. AVDB reporting feature has been automatically disabled.|
 In order to send infected user information to AVDB you need to ask maintainer of this script to add your server IP address to AVDB access list.|
 Antivirus statistics|
@@ -1008,3 +1008,4 @@ Possibly infected users|
 Spent time: %s|
 Infected user logged in with IP %s and share %s: %s|
 Loaded %s items: %s|
+Successfully sent infected user information to AVDB: %s|
