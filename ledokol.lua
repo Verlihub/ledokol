@@ -8250,7 +8250,8 @@ else
 	VH:SQLQuery ("insert into `"..tbl_sql ["stat"].."` (`type`, `time`, `count`) values ('users_peak', "..tm..", "..uc..")")
 end
 
-	-- share
+	-- total share
+
 	local ts = gettotsharesize ()
 	VH:SQLQuery ("insert into `" .. tbl_sql ["stat"] .. "` (`type`, `time`, `count`) values ('share_now', " .. tostring (tm) .. ", '" .. tostring (ts) .. "') on duplicate key update `time` = " .. tostring (tm) .. ", `count` = '" .. tostring (ts) .. "'")
 	local _, rows = VH:SQLQuery ("select `time`, `count` from `" .. tbl_sql ["stat"] .. "` where `type` = 'share_peak' limit 1")
@@ -8271,15 +8272,15 @@ end
 				end
 
 				if msg:find ("<shortdate>") then
-					msg = msg:gsub (msg, "<shortdate>", reprexpchars (fromunixtime (ptm, true)))
+					msg = msg:gsub ("<shortdate>", reprexpchars (fromunixtime (ptm, true)))
 				end
 
 				if msg:find ("<old>") then
-					msg = msg:gsub (msg, "<old>", reprexpchars (makesize (pts)))
+					msg = msg:gsub ("<old>", reprexpchars (makesize (pts)))
 				end
 
 				if msg:find ("<new>") then
-					msg = msg:gsub (msg, "<new>", reprexpchars (makesize (ts)))
+					msg = msg:gsub ("<new>", reprexpchars (makesize (ts)))
 				end
 
 				maintoall (msg, table_sets ["classnotipeakts"], 10)
@@ -8291,19 +8292,20 @@ end
 
 	-- average share per user
 
-	if (uc > 0) and (ts > 0) then
+	if uc > 0 and ts > 0 then
 		local avg = roundint ((ts / uc), 0)
-		VH:SQLQuery ("insert into `"..tbl_sql ["stat"].."` (`type`, `time`, `count`) values ('avgshare_now', "..tm..", "..avg..") on duplicate key update `time` = "..tm..", `count` = "..avg)
-		local _, rows = VH:SQLQuery ("select `count` from `"..tbl_sql ["stat"].."` where `type` = 'avgshare_peak' limit 1")
+		VH:SQLQuery ("insert into `" .. tbl_sql ["stat"] .. "` (`type`, `time`, `count`) values ('avgshare_now', " .. tostring (tm) .. ", '" .. tostring (avg) .. "') on duplicate key update `time` = " .. tostring (tm) .. ", `count` = '" .. tostring (avg) .. "'")
+		local _, rows = VH:SQLQuery ("select `count` from `" .. tbl_sql ["stat"] .. "` where `type` = 'avgshare_peak' limit 1")
 
 		if rows > 0 then
 			local _, pavg = VH:SQLFetch (0)
+			pavg = tonumber (pavg) or 0
 
-			if avg > tonumber (pavg) then
-				VH:SQLQuery ("update `"..tbl_sql ["stat"].."` set `time` = "..tm..", `count` = "..avg.." where `type` = 'avgshare_peak' limit 1")
+			if avg > pavg then
+				VH:SQLQuery ("update `" .. tbl_sql ["stat"] .. "` set `time` = " .. tostring (tm) .. ", `count` = '" .. tostring (avg) .. "' where `type` = 'avgshare_peak' limit 1")
 			end
 		else
-			VH:SQLQuery ("insert into `"..tbl_sql ["stat"].."` (`type`, `time`, `count`) values ('avgshare_peak', "..tm..", "..avg..")")
+			VH:SQLQuery ("insert into `" .. tbl_sql ["stat"] .. "` (`type`, `time`, `count`) values ('avgshare_peak', " .. tostring (tm) .. ", '" .. tostring (avg) .."')")
 		end
 	end
 
@@ -16214,21 +16216,26 @@ if table_othsets ["func_getuptime"] == true then -- hub uptime
 	stats = stats.."\r\n "..string.format (gettext ("Hub uptime: %s"), ut)
 end
 
-	local uc = getusercount () -- users
+	-- users
+
+	local uc = getusercount ()
 	local val = uc
 
 	if table_sets ["statscollint"] > 0 then
-		local _, rows = VH:SQLQuery ("select `count` from `"..tbl_sql ["stat"].."` where `type` = 'users_peak' limit 1")
+		local _, rows = VH:SQLQuery ("select `count` from `" .. tbl_sql ["stat"] .. "` where `type` = 'users_peak' limit 1")
 
 		if rows > 0 then
 			local _, puc = VH:SQLFetch (0)
-			val = uc.." ][ "..puc
+			puc = tonumber (puc) or 0
+			val = uc .. " ][ " .. puc
 		end
 	end
 
-	stats = stats.."\r\n "..string.format (gettext ("User count: %s"), val)
+	stats = stats .. "\r\n " .. gettext ("User count: %s"):format (val)
 
-	local ts = gettotsharesize () -- total share
+	-- total share
+
+	local ts = gettotsharesize ()
 	val = makesize (ts)
 
 	if table_sets ["statscollint"] > 0 then
@@ -16244,19 +16251,20 @@ end
 
 	-- average share per user
 
-	if (uc > 0) and (ts > 0) then
+	if uc > 0 and ts > 0 then
 		val = makesize (roundint ((ts / uc), 0))
 
 		if table_sets ["statscollint"] > 0 then
-			local _, rows = VH:SQLQuery ("select `count` from `"..tbl_sql ["stat"].."` where `type` = 'avgshare_peak' limit 1")
+			local _, rows = VH:SQLQuery ("select `count` from `" .. tbl_sql ["stat"] .. "` where `type` = 'avgshare_peak' limit 1")
 
 			if rows > 0 then
 				local _, pavg = VH:SQLFetch (0)
-				val = val.." ][ "..makesize (pavg)
+				pavg = tonumber (pavg) or 0
+				val = val .. " ][ " .. makesize (pavg)
 			end
 		end
 
-		stats = stats.."\r\n "..string.format (gettext ("Average share per user: %s"), val)
+		stats = stats .. "\r\n " .. gettext ("Average share per user: %s"):format (val)
 	end
 
 stats = stats.."\r\n "..string.format (gettext ("Configuration directory: %s"), table_othsets ["cfgdir"])
@@ -18340,58 +18348,64 @@ if string.find (txt, "<peakusers>") then
 	end
 end
 
-if string.find (txt, "<totshare>") then
-	txt = string.gsub (txt, "<totshare>", reprexpchars (makesize (gettotsharesize ())))
-end
+	-- total share
 
-if string.find (txt, "<peakshare>") then
-	local _, rows = VH:SQLQuery ("select `time`, `count` from `"..tbl_sql ["stat"].."` where `type` = 'share_peak' limit 1")
-	local ptm, pts = ntime, 0
-
-	if rows > 0 then
-		_, ptm, pts = VH:SQLFetch (0)
+	if txt:find ("<totshare>") then
+		txt = txt:gsub ("<totshare>", reprexpchars (makesize (gettotsharesize ())))
 	end
 
-	txt = string.gsub (txt, "<peakshare>", reprexpchars (makesize (pts)))
+	if txt:find ("<peakshare>") then
+		local _, rows = VH:SQLQuery ("select `time`, `count` from `" .. tbl_sql ["stat"] .. "` where `type` = 'share_peak' limit 1")
+		local ptm, pts = ntime, 0
 
-	if string.find (txt, "<peaksharetime>") then
-		txt = string.gsub (txt, "<peaksharetime>", reprexpchars (fromunixtime (ptm, false)))
-	end
+		if rows > 0 then
+			_, ptm, pts = VH:SQLFetch (0)
+			ptm = tonumber (ptm) or 0
+			pts = tonumber (pts) or 0
+		end
 
-	if string.find (txt, "<peakshareshrttime>") then
-		txt = string.gsub (txt, "<peakshareshrttime>", reprexpchars (fromunixtime (ptm, true)))
-	end
-end
+		txt = txt:gsub ("<peakshare>", reprexpchars (makesize (pts)))
 
-	-- average share per user
+		if txt:find ("<peaksharetime>") then
+			txt = txt:gsub ("<peaksharetime>", reprexpchars (fromunixtime (ptm, false)))
+		end
 
-	if string.find (txt, "<avgshare>") then
-		local uc = getusercount ()
-		local ts = gettotsharesize ()
-
-		if (uc > 0) and (ts > 0) then
-			txt = string.gsub (txt, "<avgshare>", reprexpchars (makesize (roundint ((ts / uc), 0))))
-		else
-			txt = string.gsub (txt, "<avgshare>", reprexpchars (makesize (0)))
+		if txt:find ("<peakshareshrttime>") then
+			txt = txt:gsub ("<peakshareshrttime>", reprexpchars (fromunixtime (ptm, true)))
 		end
 	end
 
-	if string.find (txt, "<peakavgshare>") then
-		local _, rows = VH:SQLQuery ("select `time`, `count` from `"..tbl_sql ["stat"].."` where `type` = 'avgshare_peak' limit 1")
+	-- average share per user
+
+	if txt:find ("<avgshare>") then
+		local uc = getusercount ()
+		local ts = gettotsharesize ()
+
+		if uc > 0 and ts > 0 then
+			txt = txt:gsub ("<avgshare>", reprexpchars (makesize (roundint ((ts / uc), 0))))
+		else
+			txt = txt:gsub ("<avgshare>", reprexpchars (makesize (0)))
+		end
+	end
+
+	if txt:find ("<peakavgshare>") then
+		local _, rows = VH:SQLQuery ("select `time`, `count` from `" .. tbl_sql ["stat"] .. "` where `type` = 'avgshare_peak' limit 1")
 		local pavgtm, pavg = ntime, 0
 
 		if rows > 0 then
 			_, pavgtm, pavg = VH:SQLFetch (0)
+			pavgtm = tonumber (pavgtm) or 0
+			pavg = tonumber (pavg) or 0
 		end
 
-		txt = string.gsub (txt, "<peakavgshare>", reprexpchars (makesize (pavg)))
+		txt = txt:gsub ("<peakavgshare>", reprexpchars (makesize (pavg)))
 
-		if string.find (txt, "<peakavgsharetime>") then
-			txt = string.gsub (txt, "<peakavgsharetime>", reprexpchars (fromunixtime (pavgtm, false)))
+		if txt:find ("<peakavgsharetime>") then
+			txt = txt:gsub ("<peakavgsharetime>", reprexpchars (fromunixtime (pavgtm, false)))
 		end
 
-		if string.find (txt, "<peakavgshareshrttime>") then
-			txt = string.gsub (txt, "<peakavgshareshrttime>", reprexpchars (fromunixtime (pavgtm, true)))
+		if txt:find ("<peakavgshareshrttime>") then
+			txt = txt:gsub ("<peakavgshareshrttime>", reprexpchars (fromunixtime (pavgtm, true)))
 		end
 	end
 
