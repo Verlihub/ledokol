@@ -5,6 +5,7 @@ Fixed: Renamed "cleanup" command to "oldclean" since Verlihub has got "clean*" p
 Fixed: Pattern of "oldclean" command parameters
 Fixed: Correctly encode nick with cURL on user lookup
 Changed: Allow pingers to use +report command, required for AVDB
+Changed: Store country code gags permanently, request by MaxFox
 Added: Custom orderless gettext() format for translations, strings must be in format "english|translation\n" with each string on new line, comment with # character
 Added: Detection of paramenter count mismatch in translation strings, this helps to detect errors in translation files
 Added: Support for replace variables in mitagmessage, <cl> = client, <ve> = version, <mo> = mode, <hu> = hubs, <sl> = slots, <li> = limiter
