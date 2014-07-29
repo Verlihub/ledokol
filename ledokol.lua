@@ -16170,13 +16170,16 @@ end
 ----- ---- --- -- -
 
 function sendstats (nick)
-local entchatran = counttable (tbl_sql ["chran"])
-local cntchatran = countranks (tbl_sql ["chran"])
-local mesperuser = 0
-if entchatran > 0 then mesperuser = cntchatran / entchatran end
+	local entchatran = counttable (tbl_sql ["chran"])
+	local cntchatran = countranks (tbl_sql ["chran"])
+	local mesperuser = 0
 
-local stats = "\r\n\r\n .:: "..gettext ("Ledokol statistics")..":\r\n"
-stats = stats.."\r\n "..string.format (gettext ("Script version: %s"), ver_ledo).." ["..table_othsets ["langver"].."]"
+	if entchatran > 0 then
+		mesperuser = cntchatran / entchatran
+	end
+
+	local stats = "\r\n\r\n .:: " .. gettext ("Ledokol statistics") .. ":\r\n"
+	stats = stats .. "\r\n " .. gettext ("Script version: %s"):format (ver_ledo) .. "-" .. table_othsets ["langver"]
 stats = stats.."\r\n "..string.format (gettext ("%s version: %s"), "Verlihub", (getconfig ("hub_version") or gettext ("Unknown")))
 stats = stats.."\r\n "..string.format (gettext ("%s plugin version: %s"), "Lua", (table_othsets ["ver_luaplug"] or gettext ("Unknown")))
 stats = stats.."\r\n "..string.format (gettext ("%s library version: %s"), "Lua", (table_othsets ["ver_lua"] or gettext ("Unknown")))
