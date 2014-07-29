@@ -8250,43 +8250,44 @@ else
 	VH:SQLQuery ("insert into `"..tbl_sql ["stat"].."` (`type`, `time`, `count`) values ('users_peak', "..tm..", "..uc..")")
 end
 
--- share
-local ts = gettotsharesize ()
-VH:SQLQuery ("insert into `"..tbl_sql ["stat"].."` (`type`, `time`, `count`) values ('share_now', "..tm..", "..ts..") on duplicate key update `time` = "..tm..", `count` = "..ts)
-local _, rows = VH:SQLQuery ("select `time`, `count` from `"..tbl_sql ["stat"].."` where `type` = 'share_peak' limit 1")
+	-- share
+	local ts = gettotsharesize ()
+	VH:SQLQuery ("insert into `" .. tbl_sql ["stat"] .. "` (`type`, `time`, `count`) values ('share_now', " .. tostring (tm) .. ", '" .. tostring (ts) .. "') on duplicate key update `time` = " .. tostring (tm) .. ", `count` = '" .. tostring (ts) .. "'")
+	local _, rows = VH:SQLQuery ("select `time`, `count` from `" .. tbl_sql ["stat"] .. "` where `type` = 'share_peak' limit 1")
 
-if rows > 0 then
-	local _, ptm, pts = VH:SQLFetch (0)
+	if rows > 0 then
+		local _, ptm, pts = VH:SQLFetch (0)
+		pts = tonumber (pts) or 0
+		ptm = tonumber (ptm) or 0
 
-	if ts > tonumber (pts) then
-		VH:SQLQuery ("update `"..tbl_sql ["stat"].."` set `time` = "..tm..", `count` = "..ts.." where `type` = 'share_peak' limit 1")
+		if ts > pts then
+			VH:SQLQuery ("update `" .. tbl_sql ["stat"] .. "` set `time` = " .. tostring (tm) .. ", `count` = '" .. tostring (ts) .. "' where `type` = 'share_peak' limit 1")
 
-		if table_sets ["classnotipeakts"] < 11 then
-			local msg = table_sets ["sharerecmsg"]
+			if table_sets ["classnotipeakts"] < 11 then
+				local msg = table_sets ["sharerecmsg"]
 
-			if string.find (msg, "<longdate>") then
-				msg = string.gsub (msg, "<longdate>", reprexpchars (fromunixtime (ptm, false)))
+				if msg:find ("<longdate>") then
+					msg = msg:gsub ("<longdate>", reprexpchars (fromunixtime (ptm, false)))
+				end
+
+				if msg:find ("<shortdate>") then
+					msg = msg:gsub (msg, "<shortdate>", reprexpchars (fromunixtime (ptm, true)))
+				end
+
+				if msg:find ("<old>") then
+					msg = msg:gsub (msg, "<old>", reprexpchars (makesize (pts)))
+				end
+
+				if msg:find ("<new>") then
+					msg = msg:gsub (msg, "<new>", reprexpchars (makesize (ts)))
+				end
+
+				maintoall (msg, table_sets ["classnotipeakts"], 10)
 			end
-
-			if string.find (msg, "<shortdate>") then
-				msg = string.gsub (msg, "<shortdate>", reprexpchars (fromunixtime (ptm, true)))
-			end
-
-			if string.find (msg, "<old>") then
-				msg = string.gsub (msg, "<old>", reprexpchars (makesize (pts)))
-			end
-
-			if string.find (msg, "<new>") then
-				msg = string.gsub (msg, "<new>", reprexpchars (makesize (ts)))
-			end
-
-			maintoall (msg, table_sets ["classnotipeakts"], 10)
 		end
+	else
+		VH:SQLQuery ("insert into `" .. tbl_sql ["stat"] .. "` (`type`, `time`, `count`) values ('share_peak', " .. tostring (tm) .. ", '" .. tostring (ts) .. "')")
 	end
-
-else
-	VH:SQLQuery ("insert into `"..tbl_sql ["stat"].."` (`type`, `time`, `count`) values ('share_peak', "..tm..", "..ts..")")
-end
 
 	-- average share per user
 
@@ -16227,19 +16228,19 @@ end
 
 	stats = stats.."\r\n "..string.format (gettext ("User count: %s"), val)
 
-	local ts = gettotsharesize () -- share
+	local ts = gettotsharesize () -- total share
 	val = makesize (ts)
 
 	if table_sets ["statscollint"] > 0 then
-		local _, rows = VH:SQLQuery ("select `count` from `"..tbl_sql ["stat"].."` where `type` = 'share_peak' limit 1")
+		local _, rows = VH:SQLQuery ("select `count` from `" .. tbl_sql ["stat"] .. "` where `type` = 'share_peak' limit 1")
 
 		if rows > 0 then
 			local _, pts = VH:SQLFetch (0)
-			val = val.." ][ "..makesize (pts)
+			val = val .. " ][ " .. makesize (tonumber (pts))
 		end
 	end
 
-	stats = stats.."\r\n "..string.format (gettext ("Total share: %s"), val)
+	stats = stats .. "\r\n " .. gettext ("Total share: %s"):format (val)
 
 	-- average share per user
 
@@ -17772,13 +17773,14 @@ end
 ----- ---- --- -- -
 
 function gettotsharesize ()
-local _, sz = VH:GetTotalShareSize ()
+	local back = 0
+	local _, size = VH:GetTotalShareSize ()
 
-if sz then
-	return tonumber (sz) or 0
-else
-	return 0
-end
+	if size then
+		back = tonumber (size) or 0
+	end
+
+	return back
 end
 
 ----- ---- --- -- -
