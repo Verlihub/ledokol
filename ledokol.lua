@@ -48,7 +48,7 @@ over sixty different features for Verlihub.
 
 Neolo, Uhlik, Astronomik, LadyStardust, Seth, Molotov, burek,
 Hungarista, Stefani, Aethra, netcelli, TheBoss, Maximum, BulleT,
-Doxtur, chaos, sphinx
+Doxtur, chaos, sphinx, Zorro, W1ZaRd, S0RiN, MaxFox
 
 ---------------------------------------------------------------------
 ]]-- special thanks to <<
