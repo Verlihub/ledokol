@@ -10207,7 +10207,7 @@ function gagcclist (nick)
 
 		for x = 0, rows - 1 do
 			local _, cc, flag = VH:SQLFetch (x)
-			list = list .. " " .. tostring (x + 1) .. ". " .. repnmdcoutchars (cc) .. " [ F: " .. flag .. flagname (tonumber (flag)) .. " ]\r\n"
+			list = list .. " " .. tostring (x + 1) .. ". " .. cc .. "=" .. (cc_names [cc] or gettext ("Unknown country")) .. " [ F: " .. flag .. flagname (tonumber (flag)) .. " ]\r\n"
 		end
 
 		commandanswer (nick, gettext ("Country code gag list") .. ":\r\n\r\n" .. list)
