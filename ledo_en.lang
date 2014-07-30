@@ -1013,3 +1013,5 @@ Failed to send information to %s: %s|
 Error on executing %s: %s|
 Error on reading temporary file: %s|
 Error on connecting.|
+No items were loaded: %s|
+Infected user found with IP %s and share %s: %s|
