@@ -949,17 +949,7 @@ table_avex = {
 -- backward compatibility >>
 ---------------------------------------------------------------------
 
-if not table.getn then -- lua 5.2.x no longer supports table.getn
-	table.getn = function (t)
-		local c = 0
-
-		for _, _ in pairs (t) do
-			c = c + 1
-		end
-
-		return c
-	end
-end
+-- nothing here
 
 ---------------------------------------------------------------------
 -- backward compatibility <<
@@ -1148,7 +1138,7 @@ function Main (file)
 		local umax = getconfig ("max_users")
 
 		if ulim < umax then
-			VH:SendToClass ("<"..table_othsets ["sendfrom"].."> "..string.format (gettext ("Warning: %s"), string.format (gettext ("Open files limit set to %s is smaller than maximum users configuration which is %s. You can correct this by setting %s to %s or higher and restarting the hub."), ulim, umax, "ulimit -n", umax)).."|", 5, 10)
+			VH:SendToClass ("<"..table_othsets ["sendfrom"].."> "..string.format (gettext ("Warning: %s"), string.format (gettext ("Open files limit set to %d is smaller than maximum users configuration which is %d. You can correct this by setting %s to %d or higher and restarting the hub."), ulim, umax, "ulimit -n", umax)).."|", 5, 10)
 		end
 	end
 
@@ -2494,7 +2484,7 @@ return 0
 elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["regname"].." %S+ %S+$") then
 if ucl >= table_sets ["mincommandclass"] then
 	if getconfig ("use_reglist_cache") == 1 then -- reglist cache is on
-		commandanswer (nick, string.format (gettext ("In order to use this feature you must turn off registered users list cache. Do it by setting hub configuration variable %s to %s and restarting the hub. Please note: Turning cache off is not recommended with large list of registered users."), "use_reglist_cache", "0"))
+		commandanswer (nick, string.format (gettext ("In order to use this feature you must turn off registered users list cache. Do it by setting hub configuration variable %s to %d and restarting the hub. Please note: Turning cache off is not recommended with large list of registered users."), "use_reglist_cache", 0))
 	else
 		if table_sets ["classnotireg"] == 11 then
 			donotifycmd (nick, data, 0, ucl)
@@ -3414,7 +3404,7 @@ function VH_OnUserCommand (nick, data)
 						rsn = gettext ("No reason specified.")
 					end
 
-					commandanswer (nick, string.format (gettext ("%s with IP %s and class %s kicked: <%s> %s"), usr, uip .. tryipcc (uip, usr), ucls, nick, rsn))
+					commandanswer (nick, string.format (gettext ("%s with IP %s and class %d kicked: <%s> %s"), usr, uip .. tryipcc (uip, usr), ucls, nick, rsn))
 					VH:KickUser (nick, usr, rsn) -- kick using vips nick
 				else -- protected
 					commandanswer (nick, gettext ("User you're trying to kick or redirect is protected."))
@@ -3515,7 +3505,7 @@ end
 		cvdat = replchatmsg (nick, ucl, cvdat, 1)
 
 		if norepl ~= cvdat then
-			opsnotify (table_sets ["classnotirepl"], string.format (gettext ("Message replaced for user with class %s in MC: <%s> %s"), ucl, nick, "+me " .. msg))
+			opsnotify (table_sets ["classnotirepl"], string.format (gettext ("Message replaced for user with class %d in MC: <%s> %s"), ucl, nick, "+me " .. msg))
 		end
 	end
 
@@ -4063,7 +4053,7 @@ if (table_sets ["ipconantiflint"] > 0) and (cls < table_sets ["scanbelowclass"])
 			if dif >= table_sets ["ipconantiflint"] then
 				table_rcnn [ip] = nil -- delete
 			else
-				maintouser (nick, string.format (gettext ("Connections from your IP aren't allowed for another %s seconds."), table_sets ["ipconantiflint"] - dif))
+				maintouser (nick, string.format (gettext ("Connections from your IP aren't allowed for another %d seconds."), table_sets ["ipconantiflint"] - dif))
 				VH:Disconnect (nick) -- drop user
 
 				if cls >= table_sets ["welcomeclass"] then -- dont send logout message
@@ -4294,7 +4284,7 @@ function VH_OnParsedMsgSearch (nick, data)
 
 				if dif < table_sets ["searchuptime"] then
 					if table_sets ["searuptimeact"] == 0 then -- message
-						maintouser (nick, string.format (gettext ("Please wait another %s seconds before using hub search engine."), (table_sets ["searchuptime"] - dif)))
+						maintouser (nick, string.format (gettext ("Please wait another %d seconds before using hub search engine."), (table_sets ["searchuptime"] - dif)))
 					elseif table_sets ["searuptimeact"] == 1 then -- drop
 						VH:Disconnect (nick)
 					end
@@ -4647,7 +4637,7 @@ function VH_OnTimer (msec)
 
 			if rows > 0 then
 				VH:SQLQuery ("delete from `" .. tbl_sql ["ulog"] .. "` where `time` < " .. secs)
-				opsnotify (table_sets ["classnotiledoact"], string.format (gettext ("Automatically deleted %s user log entries older than %s days."), rows, table_sets ["ulogautoclean"]))
+				opsnotify (table_sets ["classnotiledoact"], string.format (gettext ("Automatically deleted %d user log entries older than %d days."), rows, table_sets ["ulogautoclean"]))
 				local tdiff = st + table_sets ["srvtimediff"]
 				VH:SQLQuery ("insert into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('lastcleanulog', " .. tdiff .. ") on duplicate key update `value` = " .. tdiff)
 				VH:SQLQuery ("insert into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('limcleanulog', " .. table_sets ["ulogautoclean"] .. ") on duplicate key update `value` = " .. table_sets ["ulogautoclean"])
@@ -4720,7 +4710,7 @@ function VH_OnUnknownMsg (nick, data, isnick, ipaddr)
 		end
 
 		local class = getclass (nick)
-		opsnotify (table_sets ["classnotiunk"], string.format (gettext ("Unknown protocol command from %s with IP %s and class %s: %s"), nick, ip .. tryipcc (ip, nick), class, repnmdcoutchars (data)))
+		opsnotify (table_sets ["classnotiunk"], string.format (gettext ("Unknown protocol command from %s with IP %s and class %d: %s"), nick, ip .. tryipcc (ip, nick), class, repnmdcoutchars (data)))
 
 		if table_sets ["kickunkusers"] == 1 and class < table_sets ["scanbelowclass"] and isprotected (nick, ip) == false then -- kick
 			local rsn = string.gsub (table_sets ["unkkickreason"], "%*", reprexpchars (repnmdcoutchars (data)))
@@ -4800,7 +4790,7 @@ function VH_OnParsedMsgAny (nick, data)
 			commandanswer (nick, gettext ("User you're trying to kick or redirect is protected."))
 			return 0
 		else
-			opsnotify (table_sets ["classnotiredir"], string.format (gettext ("Redirected %s with IP %s and class %s to %s: <%s> %s"), who, ip .. tryipcc (ip, who), getclass (who), where, nick, msg))
+			opsnotify (table_sets ["classnotiredir"], string.format (gettext ("Redirected %s with IP %s and class %d to %s: <%s> %s"), who, ip .. tryipcc (ip, who), getclass (who), where, nick, msg))
 			oprankaccept (nick, cls)
 		end
 
@@ -4816,11 +4806,11 @@ function VH_OnParsedMsgAny (nick, data)
 
 					if ip and port then
 						if ip ~= rip then -- either ctm exploitation or incorrect ip in client settings
-							opsnotify (table_sets ["classnotibadctm"], string.format (gettext ("%s with IP %s and class %s stated incorrect IP in connect request to %s: %s"), nick, rip .. tryipcc (rip, nick), getclass (nick), othernick, repnmdcoutchars (ip..":"..port)))
+							opsnotify (table_sets ["classnotibadctm"], string.format (gettext ("%s with IP %s and class %d stated incorrect IP in connect request to %s: %s"), nick, rip .. tryipcc (rip, nick), getclass (nick), othernick, repnmdcoutchars (ip..":"..port)))
 						end
 					else
 						if ctm ~= rip then
-							opsnotify (table_sets ["classnotibadctm"], string.format (gettext ("%s with IP %s and class %s stated incorrect IP in connect request to %s: %s"), nick, rip .. tryipcc (rip, nick), getclass (nick), othernick, repnmdcoutchars (ctm)))
+							opsnotify (table_sets ["classnotibadctm"], string.format (gettext ("%s with IP %s and class %d stated incorrect IP in connect request to %s: %s"), nick, rip .. tryipcc (rip, nick), getclass (nick), othernick, repnmdcoutchars (ctm)))
 						end
 					end
 				end
@@ -5020,7 +5010,7 @@ if isprotected (nick, ip) == true then -- protected
 end
 
 local ucl = getclass (nick)
-opsnotify (table_sets ["classnotikick"], string.format (gettext ("%s with IP %s and class %s kicked: <%s> %s"), nick, ip .. tryipcc (ip, nick), ucl, op, data))
+opsnotify (table_sets ["classnotikick"], string.format (gettext ("%s with IP %s and class %d kicked: <%s> %s"), nick, ip .. tryipcc (ip, nick), ucl, op, data))
 oprankaccept (op, getclass (op))
 
 if (ucl > 0) and (ucl < table_sets ["scanbelowclass"]) then
@@ -5028,7 +5018,7 @@ if (ucl > 0) and (ucl < table_sets ["scanbelowclass"]) then
 		local rucl = getregclass (nick)
 
 		if rucl then -- check if physically registered
-			opsnotify (table_sets ["classnotikick"], string.format (gettext ("%s is registered with class %s."), nick, rucl))
+			opsnotify (table_sets ["classnotikick"], string.format (gettext ("%s is registered with class %d."), nick, rucl))
 		end
 
 	elseif table_sets ["regkickaction"] == 2 then
@@ -5037,7 +5027,7 @@ if (ucl > 0) and (ucl < table_sets ["scanbelowclass"]) then
 		if rucl then -- only if registered
 			delledouser (nick)
 			VH:SQLQuery ("delete from `reglist` where `nick` = '"..repsqlchars (nick).."' limit 1")
-			opsnotify (table_sets ["classnotikick"], string.format (gettext ("%s is registered with class %s and has been automatically unregistered and deleted from other tables."), nick, rucl))
+			opsnotify (table_sets ["classnotikick"], string.format (gettext ("%s is registered with class %d and has been automatically unregistered and deleted from other tables."), nick, rucl))
 		end
 	end
 end
@@ -5137,7 +5127,7 @@ function VH_OnParsedMsgPM (from, data, to)
 				addophistoryline (from, data) -- log operators chat
 			end
 		else
-			opsnotify (table_sets ["classnotibotpm"], string.format (gettext ("%s with IP %s and class %s sent message to %s: %s"), from, ip .. tryipcc (ip, from), fcls, table_othsets ["opchatnick"], data))
+			opsnotify (table_sets ["classnotibotpm"], string.format (gettext ("%s with IP %s and class %d sent message to %s: %s"), from, ip .. tryipcc (ip, from), fcls, table_othsets ["opchatnick"], data))
 		end
 
 	----- ---- --- -- -
@@ -5166,12 +5156,12 @@ function VH_OnParsedMsgPM (from, data, to)
 					savecmdlog (from, fcls, data, true)
 				end
 			else
-				opsnotify (table_sets ["classnotibotpm"], string.format (gettext ("%s with IP %s and class %s sent message to %s: %s"), from, ip .. tryipcc (ip, from), fcls, table_othsets ["botnick"], data))
+				opsnotify (table_sets ["classnotibotpm"], string.format (gettext ("%s with IP %s and class %d sent message to %s: %s"), from, ip .. tryipcc (ip, from), fcls, table_othsets ["botnick"], data))
 			end
 		elseif string.find (string.sub (data, 1, 1), table_othsets ["ustrig"]) then
 			-- skip
 		else
-			opsnotify (table_sets ["classnotibotpm"], string.format (gettext ("%s with IP %s and class %s sent message to %s: %s"), from, ip .. tryipcc (ip, from), fcls, table_othsets ["botnick"], data))
+			opsnotify (table_sets ["classnotibotpm"], string.format (gettext ("%s with IP %s and class %d sent message to %s: %s"), from, ip .. tryipcc (ip, from), fcls, table_othsets ["botnick"], data))
 		end
 
 	----- ---- --- -- -
@@ -5197,7 +5187,7 @@ function VH_OnParsedMsgPM (from, data, to)
 					VH_OnOperatorCommand (from, data)
 				end
 			else
-				opsnotify (table_sets ["classnotibotpm"], string.format (gettext ("%s with IP %s and class %s sent message to %s: %s"), from, ip .. tryipcc (ip, from), fcls, table_sets ["ledobotnick"], data))
+				opsnotify (table_sets ["classnotibotpm"], string.format (gettext ("%s with IP %s and class %d sent message to %s: %s"), from, ip .. tryipcc (ip, from), fcls, table_sets ["ledobotnick"], data))
 				VH:SendToUser ("$To: "..from.." From: "..table_sets ["ledobotnick"].." $<"..table_sets ["ledobotnick"].."> "..gettext ("I'm probably away. State your business and I might answer later if you're lucky.").."|", from)
 			end
 		end
@@ -5206,7 +5196,7 @@ function VH_OnParsedMsgPM (from, data, to)
 
 	elseif table_othsets ["lasttimenick"] and (to == table_othsets ["lasttimenick"]) then -- time bot
 		if table_sets ["timebotint"] > 0 then
-			opsnotify (table_sets ["classnotibotpm"], string.format (gettext ("%s with IP %s and class %s sent message to %s: %s"), from, ip .. tryipcc (ip, from), fcls, table_othsets ["lasttimenick"], data))
+			opsnotify (table_sets ["classnotibotpm"], string.format (gettext ("%s with IP %s and class %d sent message to %s: %s"), from, ip .. tryipcc (ip, from), fcls, table_othsets ["lasttimenick"], data))
 			VH:SendToUser ("$To: "..from.." From: "..table_othsets ["lasttimenick"].." $<"..table_othsets ["lasttimenick"].."> "..gettext ("I'm probably away. State your business and I might answer later if you're lucky.").."|", from)
 		end
 
@@ -5247,18 +5237,18 @@ function VH_OnParsedMsgPM (from, data, to)
 
 			if custnick then
 				if data ~= pmdat then
-					opsnotify (table_sets ["classnotirepl"], string.format (gettext ("Message replaced for user with class %s in PM: <%s> %s"), fcls, from, data))
+					opsnotify (table_sets ["classnotirepl"], string.format (gettext ("Message replaced for user with class %d in PM: <%s> %s"), fcls, from, data))
 				end
 
 				VH:SendToUser ("$To: " .. to .. " From: " .. from .. " $<" .. custnick .. "> " .. pmdat .. "|", to)
 				return 0
 			elseif data ~= pmdat then
-				opsnotify (table_sets ["classnotirepl"], string.format (gettext ("Message replaced for user with class %s in PM: <%s> %s"), fcls, from, data))
+				opsnotify (table_sets ["classnotirepl"], string.format (gettext ("Message replaced for user with class %d in PM: <%s> %s"), fcls, from, data))
 				VH:SendToUser ("$To: " .. to .. " From: " .. from .. " $<" .. from .. "> " .. pmdat .. "|", to)
 				return 0
 			end
 		elseif data ~= pmdat then
-			opsnotify (table_sets ["classnotirepl"], string.format (gettext ("Message replaced for user with class %s in PM: <%s> %s"), fcls, from, data))
+			opsnotify (table_sets ["classnotirepl"], string.format (gettext ("Message replaced for user with class %d in PM: <%s> %s"), fcls, from, data))
 			VH:SendToUser ("$To: " .. to .. " From: " .. from .. " $<" .. from .. "> " .. pmdat .. "|", to)
 			return 0
 		end
@@ -5347,7 +5337,7 @@ end
 		cvdat = replchatmsg (nick, ucl, cvdat, 1)
 
 		if norepl ~= cvdat then
-			opsnotify (table_sets ["classnotirepl"], string.format (gettext ("Message replaced for user with class %s in MC: <%s> %s"), ucl, nick, data))
+			opsnotify (table_sets ["classnotirepl"], string.format (gettext ("Message replaced for user with class %d in MC: <%s> %s"), ucl, nick, data))
 		end
 	end
 
@@ -5414,10 +5404,10 @@ item = string.gsub (item, "%*", reprexpchars (user))
 
 if stype == "in" then
 commandanswer (nick, string.format (gettext ("Login message set for %s: %s"), user, item))
-opsnotify (table_sets ["classnotiwelcome"], string.format (gettext ("%s with class %s changed login message for %s: %s"), nick, cls, user, item))
+opsnotify (table_sets ["classnotiwelcome"], string.format (gettext ("%s with class %d changed login message for %s: %s"), nick, cls, user, item))
 elseif stype == "out" then
 commandanswer (nick, string.format (gettext ("Logout message set for %s: %s"), user, item))
-opsnotify (table_sets ["classnotiwelcome"], string.format (gettext ("%s with class %s changed logout message for %s: %s"), nick, cls, user, item))
+opsnotify (table_sets ["classnotiwelcome"], string.format (gettext ("%s with class %d changed logout message for %s: %s"), nick, cls, user, item))
 end
 end
 
@@ -5438,7 +5428,7 @@ local anick = repsqlchars (user)
 VH:SQLQuery ("update `"..tbl_sql ["wm"].."` set `in` = '' where `nick` = '"..anick.."' limit 1")
 VH:SQLQuery ("delete from `"..tbl_sql ["wm"].."` where `nick` = '"..anick.."' and `out` = '' limit 1")
 commandanswer (nick, string.format (gettext ("Login message deleted for user: %s"), user))
-opsnotify (table_sets ["classnotiwelcome"], string.format (gettext ("%s with class %s deleted login message for user: %s"), nick, cls, user))
+opsnotify (table_sets ["classnotiwelcome"], string.format (gettext ("%s with class %d deleted login message for user: %s"), nick, cls, user))
 end
 
 elseif stype == "out" then
@@ -5451,7 +5441,7 @@ local anick = repsqlchars (user)
 VH:SQLQuery ("update `"..tbl_sql ["wm"].."` set `out` = '' where `nick` = '"..anick.."' limit 1")
 VH:SQLQuery ("delete from `"..tbl_sql ["wm"].."` where `nick` = '"..anick.."' and `in` = '' limit 1")
 commandanswer (nick, string.format (gettext ("Logout message deleted for user: %s"), user))
-opsnotify (table_sets ["classnotiwelcome"], string.format (gettext ("%s with class %s deleted logout message for user: %s"), nick, cls, user))
+opsnotify (table_sets ["classnotiwelcome"], string.format (gettext ("%s with class %d deleted logout message for user: %s"), nick, cls, user))
 end
 
 else -- unknown type
@@ -5490,7 +5480,7 @@ local _, rows = VH:SQLQuery ("select `nick` from `"..tbl_sql ["wm"].."` where `n
 if rows > 0 then
 VH:SQLQuery ("delete from `"..tbl_sql ["wm"].."` where `nick` = '"..aitem.."' limit 1")
 commandanswer (nick, string.format (gettext ("Welcome messages were deleted for user: %s"), item))
-opsnotify (table_sets ["classnotiwelcome"], string.format (gettext ("%s with class %s deleted welcome messages for user: %s"), nick, cls, item))
+opsnotify (table_sets ["classnotiwelcome"], string.format (gettext ("%s with class %d deleted welcome messages for user: %s"), nick, cls, item))
 else
 commandanswer (nick, string.format (gettext ("Couldn't delete user from welcome message list because not found: %s"), item))
 end
@@ -5517,10 +5507,10 @@ item = string.gsub (item, "%*", reprexpchars (nick))
 
 if stype == "in" then
 commandanswer (nick, string.format (gettext ("Your login message set: %s"), item))
-opsnotify (table_sets ["classnotiwelcome"], string.format (gettext ("%s with class %s changed his login message: %s"), nick, cls, item))
+opsnotify (table_sets ["classnotiwelcome"], string.format (gettext ("%s with class %d changed his login message: %s"), nick, cls, item))
 elseif stype == "out" then
 commandanswer (nick, string.format (gettext ("Your logout message set: %s"), item))
-opsnotify (table_sets ["classnotiwelcome"], string.format (gettext ("%s with class %s changed his logout message: %s"), nick, cls, item))
+opsnotify (table_sets ["classnotiwelcome"], string.format (gettext ("%s with class %d changed his logout message: %s"), nick, cls, item))
 end
 
 else -- unknown type
@@ -5535,14 +5525,14 @@ local anick = repsqlchars (nick)
 VH:SQLQuery ("update `"..tbl_sql ["wm"].."` set `in` = '' where `nick` = '"..anick.."' limit 1")
 VH:SQLQuery ("delete from `"..tbl_sql ["wm"].."` where `nick` = '"..anick.."' and `out` = '' limit 1")
 commandanswer (nick, gettext ("Your login message deleted."))
-opsnotify (table_sets ["classnotiwelcome"], string.format (gettext ("%s with class %s deleted his login message."), nick, cls))
+opsnotify (table_sets ["classnotiwelcome"], string.format (gettext ("%s with class %d deleted his login message."), nick, cls))
 
 elseif stype == "out" then
 local anick = repsqlchars (nick)
 VH:SQLQuery ("update `"..tbl_sql ["wm"].."` set `out` = '' where `nick` = '"..anick.."' limit 1")
 VH:SQLQuery ("delete from `"..tbl_sql ["wm"].."` where `nick` = '"..anick.."' and `in` = '' limit 1")
 commandanswer (nick, gettext ("Your logout message deleted."))
-opsnotify (table_sets ["classnotiwelcome"], string.format (gettext ("%s with class %s deleted his logout message."), nick, cls))
+opsnotify (table_sets ["classnotiwelcome"], string.format (gettext ("%s with class %d deleted his logout message."), nick, cls))
 
 else -- unknown type
 commandanswer (nick, string.format (gettext ("Known types are: %s"), "in "..gettext ("and").." out"))
@@ -5745,7 +5735,7 @@ function addccroommember (nick, class)
 	if table_room [cc] then -- room exists
 		if getccroommember (nick, cc) == 0 then -- add user to member list
 			table.insert (table_room [cc], nick)
-			edithubrobot (robot, string.format (gettext ("Chatroom: %s"), (cc_names [cc] or gettext ("Unknown country"))), 1, "", table.getn (table_room [cc]))
+			edithubrobot (robot, string.format (gettext ("Chatroom: %s"), (cc_names [cc] or gettext ("Unknown country"))), 1, "", # table_room [cc])
 		end
 	else -- create new room
 		table_room [cc] = {nick}
@@ -5819,7 +5809,7 @@ for k, v in pairs (table_room) do
 		else -- not member
 			if class < table_sets ["ccroommancls"] then
 				local mtip = getip (nick)
-				opsnotify (table_sets ["classnotibotpm"], string.format (gettext ("%s with IP %s and class %s sent message to %s: %s"), nick, mtip .. tryipcc (mtip, nick), class, to, data))
+				opsnotify (table_sets ["classnotibotpm"], string.format (gettext ("%s with IP %s and class %d sent message to %s: %s"), nick, mtip .. tryipcc (mtip, nick), class, to, data))
 				VH:SendToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..gettext ("You don't have access to this chatroom.").."|", nick)
 			else
 				if cmd then -- user command
@@ -5991,7 +5981,7 @@ function broadcastchatroom (to, nick, data, ucl) -- class based chatroom
 
 			else -- not member
 				local mtip = getip (nick)
-				opsnotify (table_sets ["classnotibotpm"], string.format (gettext ("%s with IP %s and class %s sent message to %s: %s"), nick, mtip .. tryipcc (mtip, nick), ucl, to, data))
+				opsnotify (table_sets ["classnotibotpm"], string.format (gettext ("%s with IP %s and class %d sent message to %s: %s"), nick, mtip .. tryipcc (mtip, nick), ucl, to, data))
 				VH:SendToUser ("$To: "..nick.." From: "..to.." $<"..to.."> "..gettext ("You don't have access to this chatroom.").."|", nick)
 			end
 
@@ -6018,11 +6008,11 @@ for k, _ in pairs (table_room) do -- remove user from all rooms
 		robot = string.gsub (robot, "<cn>", reprexpchars (cc_names [k] or gettext ("Unknown country")))
 		robot = string.gsub (robot, string.char (32), string.char (160)) -- space to non-breaking space
 
-		if table.getn (table_room [k]) == 0 then -- remove the room itself when empty
+		if # table_room [k] == 0 then -- remove the room itself when empty
 			delhubrobot (robot)
 			table_room [k] = nil
 		else -- modify room
-			edithubrobot (robot, string.format (gettext ("Chatroom: %s"), (cc_names [k] or gettext ("Unknown country"))), 1, "", table.getn (table_room [k]))
+			edithubrobot (robot, string.format (gettext ("Chatroom: %s"), (cc_names [k] or gettext ("Unknown country"))), 1, "", # table_room [k])
 		end
 	end
 end
@@ -6081,7 +6071,7 @@ function getrealnick (nick, custom)
 			stsword = gettext ("offline")
 		end
 
-		commandanswer (nick, string.format (gettext ("Requested nick belongs to a user who is %s: %s"), stsword, rnick))
+		commandanswer (nick, string.format (gettext ("Requested nick belongs to a user who is %s: %s"), stsword, rnick)) -- todo: split translation
 	end
 end
 
@@ -6235,7 +6225,7 @@ function opforcecustnick (nick, line)
 	elseif getstatus (onick) == 0 then
 		commandanswer (nick, string.format (gettext ("User is not in userlist: %s"), onick))
 	elseif string.len (ncust) > table_sets ["custmaxlen"] then
-		commandanswer (nick, string.format (gettext ("Custom nick can't be longer than %s characters."), table_sets ["custmaxlen"]))
+		commandanswer (nick, string.format (gettext ("Custom nick can't be longer than %d characters."), table_sets ["custmaxlen"]))
 	else
 		local oldcust = getcustnick (onick)
 		ncust = repnickchars (ncust)
@@ -6378,7 +6368,7 @@ if string.len (custom) == 0 then -- user is resetting his nick
 	end
 
 elseif string.len (custom) > table_sets ["custmaxlen"] then
-	commandanswer (nick, string.format (gettext ("Custom nick can't be longer than %s characters."), table_sets ["custmaxlen"]))
+	commandanswer (nick, string.format (gettext ("Custom nick can't be longer than %d characters."), table_sets ["custmaxlen"]))
 else
 	if antiscan (nick, ucl, custom, 1, nil, nil) == 0 then return nil end -- scan for spam
 	local custom = repnickchars (custom)
@@ -6475,7 +6465,7 @@ function logsread (nick, item)
 					end
 				end
 
-				commandanswer (nick, string.format (gettext ("Showing last %s lines out of total %s found in %s file"), showcnt, cnt, logfile)..":\r\n\r\n"..aline)
+				commandanswer (nick, string.format (gettext ("Showing last %d lines out of total %d found in %s file"), showcnt, cnt, logfile)..":\r\n\r\n"..aline)
 			else -- empty file
 				commandanswer (nick, gettext ("Requested file is empty or couldn't be found."))
 			end
@@ -6522,10 +6512,10 @@ local _, rows = VH:SQLQuery ("select `class` from `"..tbl_sql ["cmd"].."` where 
 
 if rows > 0 then
 VH:SQLQuery ("update `"..tbl_sql ["cmd"].."` set `class` = "..class.." where `command` = '"..str.."' limit 1")
-commandanswer (nick, string.format (gettext ("Modified command permission with class %s: %s"), class, entry))
+commandanswer (nick, string.format (gettext ("Modified command permission with class %d: %s"), class, entry))
 else
 VH:SQLQuery ("insert into `"..tbl_sql ["cmd"].."` (`command`, `class`) values ('"..str.."', "..class..")")
-commandanswer (nick, string.format (gettext ("Added command permission with class %s: %s"), class, entry))
+commandanswer (nick, string.format (gettext ("Added command permission with class %d: %s"), class, entry))
 end
 
 else
@@ -6718,7 +6708,7 @@ if rows > 0 then
 			dest = gettext ("Both")
 		end
 
-		anentry = anentry.."\r\n "..string.format (gettext ("Identifier: %s"), ident).."\r\n "..string.format (gettext ("Destination: %s"), dest).." [ C: "..minc.."-"..maxc.." ]\r\n "..string.format (gettext ("Interval: %s of %s"), timr, intv).."\r\n "..string.format (gettext ("Content: %s"), cntnt).."\r\n"
+		anentry = anentry.."\r\n "..string.format (gettext ("Identifier: %s"), ident).."\r\n "..string.format (gettext ("Destination: %s"), dest).." [ C: "..minc.."-"..maxc.." ]\r\n "..string.format (gettext ("Interval: %d of %d"), timr, intv).."\r\n "..string.format (gettext ("Content: %s"), cntnt).."\r\n"
 	end
 
 	commandanswer (nick, gettext ("Reminder list")..":\r\n"..anentry)
@@ -7185,10 +7175,10 @@ function delnews (nick, adate)
 		VH:SQLQuery ("delete from `"..tbl_sql ["news"].."` where `date` = "..v.." limit 1")
 	end
 
-	local num = table.getn (t)
+	local num = # t
 
 	if num > 0 then
-		commandanswer (nick, string.format (gettext ("Deleted %s news items."), num))
+		commandanswer (nick, string.format (gettext ("Deleted %d news items."), num))
 	else
 		commandanswer (nick, string.format (gettext ("Couldn't delete news items because not found: %s"), adate))
 	end
@@ -7210,9 +7200,9 @@ function sendnews (nick, lnnum, autosend)
 		end
 
 		if autosend == 0 then
-			commandanswer (nick, string.format (gettext ("Last %s news items"), rows)..":\r\n\r\n"..aentry)
+			commandanswer (nick, string.format (gettext ("Last %d news items"), rows)..":\r\n\r\n"..aentry)
 		else
-			maintouser (nick, string.format (gettext ("Last %s news items"), rows)..":\r\n\r\n"..aentry)
+			maintouser (nick, string.format (gettext ("Last %d news items"), rows)..":\r\n\r\n"..aentry)
 		end
 	else
 		if autosend == 0 then -- only if sending manually
@@ -7242,9 +7232,9 @@ function delresponder (nick, id)
 
 	if rows > 0 then
 		VH:SQLQuery ("delete from `"..tbl_sql ["mcresp"].."` where `id` = "..id)
-		commandanswer (nick, string.format (gettext ("Deleted chat responder with ID: %s"), id))
+		commandanswer (nick, string.format (gettext ("Deleted chat responder with ID: %d"), id))
 	else
-		commandanswer (nick, string.format (gettext ("Couldn't delete chat responder because ID not found: %s"), id))
+		commandanswer (nick, string.format (gettext ("Couldn't delete chat responder because ID not found: %d"), id))
 	end
 end
 
@@ -7342,7 +7332,7 @@ function replyresponder (nick, cls, msg)
 			end
 		end
 
-		local cnt = table.getn (respsel)
+		local cnt = # respsel
 
 		if cnt > 0 then
 			for k, v in pairs (respsel [math.random (cnt)]) do
@@ -7392,9 +7382,9 @@ function delreplacer (nick, id)
 
 	if rows > 0 then
 		VH:SQLQuery ("delete from `" .. tbl_sql ["chatrepl"] .. "` where `id` = " .. id)
-		commandanswer (nick, string.format (gettext ("Deleted chat replacer with ID: %s"), id))
+		commandanswer (nick, string.format (gettext ("Deleted chat replacer with ID: %d"), id))
 	else
-		commandanswer (nick, string.format (gettext ("Couldn't delete chat replacer because ID not found: %s"), id))
+		commandanswer (nick, string.format (gettext ("Couldn't delete chat replacer because ID not found: %d"), id))
 	end
 end
 
@@ -7491,7 +7481,7 @@ function replchatmsg (nick, cls, msg, flags)
 			end
 		end
 
-		local cnt = table.getn (replsel)
+		local cnt = # replsel
 
 		if cnt > 0 then
 			for k, v in pairs (replsel [math.random (cnt)]) do
@@ -7554,7 +7544,7 @@ local _, rows = VH:SQLQuery ("select `date` from `"..tbl_sql ["rel"].."` where `
 
 if rows > 0 then
 VH:SQLQuery ("delete from `"..tbl_sql ["rel"].."` where `category` = '"..acat.."'") -- no limit
-commandanswer (nick, string.format (gettext ("Deleted %s releases from category: %s"), rows ,cat))
+commandanswer (nick, string.format (gettext ("Deleted %d releases from category: %s"), rows ,cat))
 else
 commandanswer (nick, string.format (gettext ("Couldn't delete category because not found: %s"), cat))
 end
@@ -7598,7 +7588,7 @@ end
 anentry = anentry.."\r\n "..prezero (string.len (rows), (x + 1))..". "..rel.."\r\n "..string.format (gettext ("Added by: %s"), auth).."\r\n "..string.format (gettext ("Published: %s"), os.date (table_sets ["dateformat"].." "..table_sets ["timeformat"], adate))..tth.."\r\n"
 end
 
-commandanswer (nick, string.format (gettext ("Last %s releases by category %s"), rows, catst)..":\r\n"..anentry)
+commandanswer (nick, string.format (gettext ("Last %d releases by category %s"), rows, catst)..":\r\n"..anentry)
 else
 commandanswer (nick, string.format (gettext ("No releases by requested category were found: %s"), catst))
 end
@@ -7623,7 +7613,7 @@ end
 anentry = anentry.."\r\n "..prezero (string.len (rows), (x + 1))..". "..rel.."\r\n "..string.format (gettext ("Category: %s"), cat).."\r\n "..string.format (gettext ("Published: %s"), os.date (table_sets ["dateformat"].." "..table_sets ["timeformat"], adate))..tth.."\r\n"
 end
 
-commandanswer (nick, string.format (gettext ("Last %s releases published by %s"), rows, catst)..":\r\n"..anentry)
+commandanswer (nick, string.format (gettext ("Last %d releases published by %s"), rows, catst)..":\r\n"..anentry)
 else
 commandanswer (nick, string.format (gettext ("No releases by requested publisher were found: %s"), catst))
 end
@@ -7645,7 +7635,7 @@ end
 anentry = anentry.."\r\n "..prezero (string.len (rows), (x + 1))..". "..rel.."\r\n "..string.format (gettext ("Category: %s"), cat).."\r\n "..string.format (gettext ("Added by: %s"), auth).."\r\n "..string.format (gettext ("Published: %s"), os.date (table_sets ["dateformat"].." "..table_sets ["timeformat"], adate))..tth.."\r\n"
 end
 
-commandanswer (nick, string.format (gettext ("Last %s releases"), rows)..":\r\n"..anentry)
+commandanswer (nick, string.format (gettext ("Last %d releases"), rows)..":\r\n"..anentry)
 else
 commandanswer (nick, gettext ("Release list is empty."))
 end
@@ -7676,7 +7666,7 @@ function findrelease (nick, line)
 			anentry = anentry.."\r\n "..prezero (string.len (rows), (x + 1))..". "..rel.."\r\n "..string.format (gettext ("Category: %s"), cat).."\r\n "..string.format (gettext ("Added by: %s"), auth).."\r\n "..string.format (gettext ("Published: %s"), os.date (table_sets ["dateformat"].." "..table_sets ["timeformat"], adate))..tth.."\r\n"
 		end
 
-		commandanswer (nick, string.format (gettext ("Last %s releases by search string %s"), rows, line)..":\r\n"..anentry)
+		commandanswer (nick, string.format (gettext ("Last %d releases by search string %s"), rows, line)..":\r\n"..anentry)
 	else
 		commandanswer (nick, string.format (gettext ("No releases by requested search string were found: %s"), line))
 	end
@@ -7741,8 +7731,8 @@ function dropip (nick, ip)
 	if num == 0 then
 		commandanswer (nick, string.format (gettext ("No users found with IP: %s"), ip))
 	else
-		commandanswer (nick, string.format (gettext ("Dropped %s users with IP: %s"), num, ip))
-		opsnotify (table_sets ["classnotikick"], string.format (gettext ("%s dropped %s users with IP: %s"), nick, num, ip))
+		commandanswer (nick, string.format (gettext ("Dropped %d users with IP: %s"), num, ip))
+		opsnotify (table_sets ["classnotikick"], string.format (gettext ("%s dropped %d users with IP: %s"), nick, num, ip))
 	end
 end
 
@@ -7764,7 +7754,7 @@ elseif isbot (user) == true then -- bot
 					info = info.." "..string.format (gettext ("Nick: %s"), user).."\r\n" -- nick
 
 					if v ["iClass"] then -- class
-						info = info.." "..string.format (gettext ("Class: %s"), v ["iClass"]).."\r\n"
+						info = info.." "..string.format (gettext ("Class: %d"), v ["iClass"]).."\r\n"
 					end
 
 					if v ["sScriptname"] then -- script
@@ -7810,7 +7800,7 @@ elseif isbot (user) == true then -- bot
 						info = info .. " " .. string.format (gettext ("Share: %s"), makesize (share)) .. "\r\n" -- share
 
 						if tonumber (share) > 0 then
-							info = info .. " " .. string.format (gettext ("Exact share: %s"), share .. " " .. gettext ("B")) .. "\r\n" -- exact share
+							info = info .. " " .. string.format (gettext ("Exact share: %s"), tostring (share) .. " " .. gettext ("B")) .. "\r\n" -- exact share
 						end
 					end
 
@@ -7851,7 +7841,7 @@ else -- user
 			info = info.." "..string.format (gettext ("Uptime: %s"), formatuptime (table_usup [user], false)).."\r\n"
 		end
 
-	info = info.." "..string.format (gettext ("Class: %s"), class).."\r\n" -- class
+	info = info.." "..string.format (gettext ("Class: %d"), class).."\r\n" -- class
 
 	if getconfig ("dns_lookup") ~= 0 then
 		info = info .. " " .. string.format (gettext ("DNS: %s"), gethost (user)) .. "\r\n" -- dns
@@ -7964,7 +7954,7 @@ else -- user
 		info = info .. " " .. string.format (gettext ("Share: %s"), makesize (share)) .. "\r\n" -- share
 
 		if tonumber (share) > 0 then
-			info = info .. " " .. string.format (gettext ("Exact share: %s"), share .. " " .. gettext ("B")) .. "\r\n" -- exact share
+			info = info .. " " .. string.format (gettext ("Exact share: %s"), tostring (share) .. " " .. gettext ("B")) .. "\r\n" -- exact share
 		end
 	end
 
@@ -8075,7 +8065,7 @@ function showipinfo (nick, ip)
 			commandanswer (nick, string.format (gettext ("IP information not available: %s"), ip))
 		end
 	else
-		commandanswer (nick, string.format (gettext ("This feature requires %s or later installed on your system."), "Verlihub 1.0.0 RC1"))
+		commandanswer (nick, string.format (gettext ("This feature requires %s or later installed on your system."), "Verlihub 1.0.0-RC1"))
 	end
 end
 
@@ -8094,7 +8084,7 @@ if rows > 0 then
 		list = list.." "..os.date (table_sets ["dateformat"].." "..table_sets ["timeformat"], tm)..": ["..prezero (2, ucl).."] <"..usr.."> "..cmd.."\r\n"
 	end
 
-	commandanswer (nick, string.format (gettext ("Showing %s entries from command logger"), rows)..":\r\n\r\n"..list)
+	commandanswer (nick, string.format (gettext ("Showing %d entries from command logger"), rows)..":\r\n\r\n"..list)
 else
 	commandanswer (nick, gettext ("Command logger is empty."))
 end
@@ -8153,7 +8143,7 @@ function showuserlog (nick, line)
 					res = res .. "\r\n"
 				end
 
-				commandanswer (nick, gettext ("Showing %s user log results"):format (rows) .. ":\r\n\r\n" .. res)
+				commandanswer (nick, gettext ("Showing %d user log results"):format (rows) .. ":\r\n\r\n" .. res)
 			else
 				commandanswer (nick, gettext ("No user results found."))
 			end
@@ -8197,7 +8187,7 @@ function showuserlog (nick, line)
 					res = res .. "\r\n"
 				end
 
-				commandanswer (nick, gettext ("Showing %s user log results"):format (rows) .. ":\r\n\r\n" .. res)
+				commandanswer (nick, gettext ("Showing %d user log results"):format (rows) .. ":\r\n\r\n" .. res)
 			else
 				commandanswer (nick, gettext ("No user results found."))
 			end
@@ -8431,7 +8421,7 @@ function modauthentry (nick, item)
 		VH:SQLQuery ("update `"..tbl_sql ["auth"].."` set `ip` = '"..repsqlchars (repnmdcinchars (ip)).."' where `id` = "..id.." limit 1")
 		commandanswer (nick, string.format (gettext ("Modified authorization entry: %s @ %s"), user, ip))
 	else
-		commandanswer (nick, string.format (gettext ("Couldn't modify authorization entry because not found: %s"), id))
+		commandanswer (nick, string.format (gettext ("Couldn't modify authorization entry because not found: %d"), id))
 	end
 end
 
@@ -8487,7 +8477,7 @@ function authcheck (nick, cls, uip)
 
 		if string.find (uip, ip) then -- match
 			VH:SQLQuery ("update `"..tbl_sql ["auth"].."` set `good` = `good` + 1 where `id` = "..id.." limit 1")
-			opsnotify (table_sets ["classnotiauth"], string.format (gettext ("%s with IP %s and class %s authorized."), nick, uip .. tryipcc (uip, nick), cls))
+			opsnotify (table_sets ["classnotiauth"], string.format (gettext ("%s with IP %s and class %d authorized."), nick, uip .. tryipcc (uip, nick), cls))
 			return false
 		end
 	end
@@ -8495,7 +8485,7 @@ function authcheck (nick, cls, uip)
 	maintouser (nick, table_sets ["authmessage"])
 	VH:SQLQuery ("update `"..tbl_sql ["auth"].."` set `badip` = '"..repsqlchars (uip).."', `bad` = `bad` + 1 where `nick` = '"..user.."'")
 	VH:Disconnect (nick) -- drop user
-	opsnotify (table_sets ["classnotiauth"], string.format (gettext ("%s with IP %s and class %s failed authorization and disconnected."), nick, uip .. tryipcc (uip, nick), cls))
+	opsnotify (table_sets ["classnotiauth"], string.format (gettext ("%s with IP %s and class %d failed authorization and disconnected."), nick, uip .. tryipcc (uip, nick), cls))
 	return true
 end
 
@@ -8508,11 +8498,11 @@ function checkregmecmd (nick, ucl)
 	if table_sets ["regmechatcnt"] > 0 then
 		if table_regm [nick] then
 			if table_regm [nick] < table_sets ["regmechatcnt"] then
-				commandanswer (nick, string.format (gettext ("You need to send another %s main chat messages in order to use hub registration."), (table_sets ["regmechatcnt"] - table_regm [nick])))
+				commandanswer (nick, string.format (gettext ("You need to send another %d main chat messages in order to use hub registration."), (table_sets ["regmechatcnt"] - table_regm [nick])))
 				return 0
 			end
 		else
-			commandanswer (nick, string.format (gettext ("You need to send another %s main chat messages in order to use hub registration."), table_sets ["regmechatcnt"]))
+			commandanswer (nick, string.format (gettext ("You need to send another %d main chat messages in order to use hub registration."), table_sets ["regmechatcnt"]))
 			return 0
 		end
 	end
@@ -8522,11 +8512,11 @@ function checkregmecmd (nick, ucl)
 			local dif = os.time () - table_usup [nick]
 
 			if (dif / 60) < table_sets ["regmeuptime"] then
-				commandanswer (nick, string.format (gettext ("Please wait another %s minutes before using hub registration."), roundint ((table_sets ["regmeuptime"] - (dif / 60)), 1)))
+				commandanswer (nick, string.format (gettext ("Please wait another %.1f minutes before using hub registration."), roundint ((table_sets ["regmeuptime"] - (dif / 60)), 1)))
 				return 0
 			end
 		--else
-			--commandanswer (nick, string.format (gettext ("Please reconnect to gain %s minutes of uptime in order to use hub registration."), table_sets ["regmeuptime"]))
+			--commandanswer (nick, string.format (gettext ("Please reconnect to gain %d minutes of uptime in order to use hub registration."), table_sets ["regmeuptime"]))
 			--return 0
 		end
 	end
@@ -8670,8 +8660,8 @@ VH:SQLQuery ("delete from `"..tbl_sql ["mchist"].."` order by `date` asc limit "
 end
 
 if (limt == 0) or (rows > limt) then
-commandanswer (nick, string.format (gettext ("Deleted %s main chat history messages."), rows))
-opsnotify (table_sets ["classnotiledoact"], string.format (gettext ("%s with class %s deleted %s main chat history messages."), nick, cls, rows))
+commandanswer (nick, string.format (gettext ("Deleted %d main chat history messages."), rows))
+opsnotify (table_sets ["classnotiledoact"], string.format (gettext ("%s with class %d deleted %d main chat history messages."), nick, cls, rows))
 end
 
 else
@@ -8692,8 +8682,8 @@ VH:SQLQuery ("delete from `"..tbl_sql ["ophist"].."` order by `date` asc limit "
 end
 
 if (limt == 0) or (rows > limt) then
-commandanswer (nick, string.format (gettext ("Deleted %s operator chat history messages."), rows))
-opsnotify (table_sets ["classnotiledoact"], string.format (gettext ("%s with class %s deleted %s operator chat history messages."), nick, cls, rows))
+commandanswer (nick, string.format (gettext ("Deleted %d operator chat history messages."), rows))
+opsnotify (table_sets ["classnotiledoact"], string.format (gettext ("%s with class %d deleted %d operator chat history messages."), nick, cls, rows))
 end
 
 else
@@ -8737,9 +8727,9 @@ aentry = " "..os.date (table_sets ["dateformat"].." "..table_sets ["timeformat"]
 end
 
 if autosend == 0 then
-commandanswer (nick, string.format (gettext ("Last %s main chat messages"), rows)..":\r\n\r\n"..aentry)
+commandanswer (nick, string.format (gettext ("Last %d main chat messages"), rows)..":\r\n\r\n"..aentry)
 else
-maintouser (nick, string.format (gettext ("Last %s main chat messages"), rows)..":\r\n\r\n"..aentry)
+maintouser (nick, string.format (gettext ("Last %d main chat messages"), rows)..":\r\n\r\n"..aentry)
 end
 
 else
@@ -8784,13 +8774,13 @@ end
 
 if autosend == 0 then
 if inopchat == true then
-pmtouser (nick, table_othsets ["opchatnick"], string.format (gettext ("Last %s operator chat messages"), rows)..":\r\n\r\n"..aentry)
+pmtouser (nick, table_othsets ["opchatnick"], string.format (gettext ("Last %d operator chat messages"), rows)..":\r\n\r\n"..aentry)
 else
-commandanswer (nick, string.format (gettext ("Last %s operator chat messages"), rows)..":\r\n\r\n"..aentry)
+commandanswer (nick, string.format (gettext ("Last %d operator chat messages"), rows)..":\r\n\r\n"..aentry)
 end
 
 else
-maintouser (nick, string.format (gettext ("Last %s operator chat messages"), rows)..":\r\n\r\n"..aentry)
+maintouser (nick, string.format (gettext ("Last %d operator chat messages"), rows)..":\r\n\r\n"..aentry)
 end
 
 else
@@ -8826,7 +8816,7 @@ local _, user, adate, msg = VH:SQLFetch (x)
 aentry = " "..os.date (table_sets ["dateformat"].." "..table_sets ["timeformat"], adate)..": <"..user.."> "..msg.."\r\n"..aentry
 end
 
-commandanswer (nick, string.format (gettext ("Last %s main chat messages written by you"), rows)..":\r\n\r\n"..aentry)
+commandanswer (nick, string.format (gettext ("Last %d main chat messages written by you"), rows)..":\r\n\r\n"..aentry)
 else
 commandanswer (nick, gettext ("There are no main chat history messages written by you."))
 end
@@ -9165,7 +9155,7 @@ function sendoffmsg (from, line, ucls)
 				local ndate = os.time () + table_sets ["srvtimediff"] -- current time
 				VH:SQLQuery ("insert into `"..tbl_sql ["off"].."` (`from`, `ip`, `to`, `date`, `message`) values ('"..repsqlchars (from).."', '"..uip.."', '"..repsqlchars (to).."', "..ndate..", '"..repsqlchars (msg).."')")
 				commandanswer (from, string.format (gettext ("Your offline message stored for user: %s"), to))
-				opsnotify (table_sets ["classnotioff"], string.format (gettext ("%s with IP %s and class %s sent offline message."), from, uip .. tryipcc (uip, from), ucls))
+				opsnotify (table_sets ["classnotioff"], string.format (gettext ("%s with IP %s and class %d sent offline message."), from, uip .. tryipcc (uip, from), ucls))
 			end
 		end
 	end
@@ -9193,7 +9183,7 @@ end
 offlinepm (from, to, gettext ("My current status")..": "..sts)
 end
 
-opsnotify (table_sets ["classnotioff"], string.format (gettext ("%s with IP %s and class %s received offline messages."), to, tip .. tryipcc (tip, to), ucls))
+opsnotify (table_sets ["classnotioff"], string.format (gettext ("%s with IP %s and class %d received offline messages."), to, tip .. tryipcc (tip, to), ucls))
 VH:SQLQuery ("delete from `"..tbl_sql ["off"].."` where `to` = '"..user.."'") -- remove all stored message to that user
 end
 end
@@ -9243,10 +9233,10 @@ for _, v in pairs (t) do
 	VH:SQLQuery ("delete from `"..tbl_sql ["off"].."` where `date` = "..v.." limit 1")
 end
 
-local num = table.getn (t)
+local num = # t
 
 if num > 0 then
-	commandanswer (nick, string.format (gettext ("Deleted %s offline messages."), num))
+	commandanswer (nick, string.format (gettext ("Deleted %d offline messages."), num))
 else
 	commandanswer (nick, string.format (gettext ("Couldn't delete offline messages because not found: %s"), adate))
 end
@@ -9259,8 +9249,8 @@ local rows = counttable (tbl_sql ["off"])
 
 if rows > 0 then
 VH:SQLQuery ("truncate table `"..tbl_sql ["off"].."`")
-commandanswer (nick, string.format (gettext ("Deleted %s offline messages."), rows))
-opsnotify (table_sets ["classnotiledoact"], string.format (gettext ("%s with class %s deleted all offline messages."), nick, cls))
+commandanswer (nick, string.format (gettext ("Deleted %d offline messages."), rows))
+opsnotify (table_sets ["classnotiledoact"], string.format (gettext ("%s with class %d deleted all offline messages."), nick, cls))
 else
 commandanswer (nick, gettext ("There are no offline messages to remove."))
 end
@@ -9305,7 +9295,7 @@ function checknick (nick, ucls, aip)
 							opsnotify (table_sets ["classnotiledoact"], ferr)
 						elseif fval then
 							VH:SQLQuery ("update `" .. tbl_sql ["miex"] .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (entry) .. "' limit 1")
-							opsnotify (table_sets ["classnotiex"], string.format (gettext ("%s with IP %s and class %s allowed due to forbidden nick exception: %s"), nick, aip .. tryipcc (aip, nick), ucls, nick))
+							opsnotify (table_sets ["classnotiex"], string.format (gettext ("%s with IP %s and class %d allowed due to forbidden nick exception: %s"), nick, aip .. tryipcc (aip, nick), ucls, nick))
 							return 0
 						end
 					end
@@ -9357,7 +9347,7 @@ function checkdesc (nick, desc, ucls, aip)
 							opsnotify (table_sets ["classnotiledoact"], ferr)
 						elseif fval then
 							VH:SQLQuery ("update `"..tbl_sql ["miex"].."` set `occurred` = `occurred` + 1 where `exception` = '"..repsqlchars (entry).."' limit 1")
-							opsnotify (table_sets ["classnotiex"], string.format (gettext ("%s with IP %s and class %s allowed due to forbidden description exception: %s"), nick, aip .. tryipcc (aip, nick), ucls, desc))
+							opsnotify (table_sets ["classnotiex"], string.format (gettext ("%s with IP %s and class %d allowed due to forbidden description exception: %s"), nick, aip .. tryipcc (aip, nick), ucls, desc))
 							return 0
 						end
 					end
@@ -9409,7 +9399,7 @@ function checktag (nick, tag, ucls, aip)
 							opsnotify (table_sets ["classnotiledoact"], ferr)
 						elseif fval then
 							VH:SQLQuery ("update `"..tbl_sql ["miex"].."` set `occurred` = `occurred` + 1 where `exception` = '"..(entry).."' limit 1")
-							opsnotify (table_sets ["classnotiex"], string.format (gettext ("%s with IP %s and class %s allowed due to forbidden tag exception: %s"), nick, aip .. tryipcc (aip, nick), ucls, tag))
+							opsnotify (table_sets ["classnotiex"], string.format (gettext ("%s with IP %s and class %d allowed due to forbidden tag exception: %s"), nick, aip .. tryipcc (aip, nick), ucls, tag))
 							return 0
 						end
 					end
@@ -9488,7 +9478,7 @@ function checkconn (nick, conn, ucls, aip)
 							opsnotify (table_sets ["classnotiledoact"], ferr)
 						elseif fval then
 							VH:SQLQuery ("update `"..tbl_sql ["miex"].."` set `occurred` = `occurred` + 1 where `exception` = '"..repsqlchars (entry).."' limit 1")
-							opsnotify (table_sets ["classnotiex"], string.format (gettext ("%s with IP %s and class %s allowed due to forbidden connection type exception: %s"), nick, aip .. tryipcc (aip, nick), ucls, conn))
+							opsnotify (table_sets ["classnotiex"], string.format (gettext ("%s with IP %s and class %d allowed due to forbidden connection type exception: %s"), nick, aip .. tryipcc (aip, nick), ucls, conn))
 							return 0
 						end
 					end
@@ -9540,7 +9530,7 @@ function checkemail (nick, email, ucls, aip)
 							opsnotify (table_sets ["classnotiledoact"], ferr)
 						elseif fval then
 							VH:SQLQuery ("update `"..tbl_sql ["miex"].."` set `occurred` = `occurred` + 1 where `exception` = '"..repsqlchars (entry).."' limit 1")
-							opsnotify (table_sets ["classnotiex"], string.format (gettext ("%s with IP %s and class %s allowed due to forbidden email exception: %s"), nick, aip .. tryipcc (aip, nick), ucls, email))
+							opsnotify (table_sets ["classnotiex"], string.format (gettext ("%s with IP %s and class %d allowed due to forbidden email exception: %s"), nick, aip .. tryipcc (aip, nick), ucls, email))
 							return 0
 						end
 					end
@@ -9592,7 +9582,7 @@ function checkshare (nick, share, ucls, aip)
 							opsnotify (table_sets ["classnotiledoact"], ferr)
 						elseif fval then
 							VH:SQLQuery ("update `"..tbl_sql ["miex"].."` set `occurred` = `occurred` + 1 where `exception` = '"..repsqlchars (entry).."' limit 1")
-							opsnotify (table_sets ["classnotiex"], string.format (gettext ("%s with IP %s and class %s allowed due to forbidden share size exception: %s"), nick, aip .. tryipcc (aip, nick), ucls, share))
+							opsnotify (table_sets ["classnotiex"], string.format (gettext ("%s with IP %s and class %d allowed due to forbidden share size exception: %s"), nick, aip .. tryipcc (aip, nick), ucls, share))
 							return 0
 						end
 					end
@@ -9645,7 +9635,7 @@ function checkip (nick, aip, ucls)
 							opsnotify (table_sets ["classnotiledoact"], ferr)
 						elseif fval then
 							VH:SQLQuery ("update `"..tbl_sql ["miex"].."` set `occurred` = `occurred` + 1 where `exception` = '"..repsqlchars (entry).."' limit 1")
-							opsnotify (table_sets ["classnotiex"], string.format (gettext ("%s with IP %s and class %s allowed due to forbidden IP address exception: %s"), nick, aip .. tryipcc (aip, nick), ucls, aip))
+							opsnotify (table_sets ["classnotiex"], string.format (gettext ("%s with IP %s and class %d allowed due to forbidden IP address exception: %s"), nick, aip .. tryipcc (aip, nick), ucls, aip))
 							return 0
 						end
 					end
@@ -9700,7 +9690,7 @@ function checkcc (nick, cls)
 							opsnotify (table_sets ["classnotiledoact"], ferr)
 						elseif fval then
 							VH:SQLQuery ("update `"..tbl_sql ["miex"].."` set `occurred` = `occurred` + 1 where `exception` = '"..repsqlchars (ent).."' limit 1")
-							opsnotify (table_sets ["classnotiex"], string.format (gettext ("%s with IP %s and class %s allowed due to forbidden CC exception: %s"), nick, ip .. tryipcc (ip, nick), cls, cc))
+							opsnotify (table_sets ["classnotiex"], string.format (gettext ("%s with IP %s and class %d allowed due to forbidden CC exception: %s"), nick, ip .. tryipcc (ip, nick), cls, cc))
 							return false
 						end
 					end
@@ -9755,7 +9745,7 @@ function checkdns (nick, cls, ip)
 							opsnotify (table_sets ["classnotiledoact"], ferr)
 						elseif fval then
 							VH:SQLQuery ("update `"..tbl_sql ["miex"].."` set `occurred` = `occurred` + 1 where `exception` = '"..repsqlchars (ent).."' limit 1")
-							opsnotify (table_sets ["classnotiex"], string.format (gettext ("%s with IP %s and class %s allowed due to forbidden DNS exception: %s"), nick, ip .. tryipcc (ip, nick), cls, dns))
+							opsnotify (table_sets ["classnotiex"], string.format (gettext ("%s with IP %s and class %d allowed due to forbidden DNS exception: %s"), nick, ip .. tryipcc (ip, nick), cls, dns))
 							return false
 						end
 					end
@@ -9810,7 +9800,7 @@ function checksup (nick, cls, ip)
 							opsnotify (table_sets ["classnotiledoact"], ferr)
 						elseif fval then
 							VH:SQLQuery ("update `" .. tbl_sql ["miex"] .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (ent) .. "' limit 1")
-							opsnotify (table_sets ["classnotiex"], string.format (gettext ("%s with IP %s and class %s allowed due to forbidden client supports exception: %s"), nick, ip .. tryipcc (ip, nick), cls, sup))
+							opsnotify (table_sets ["classnotiex"], string.format (gettext ("%s with IP %s and class %d allowed due to forbidden client supports exception: %s"), nick, ip .. tryipcc (ip, nick), cls, sup))
 							return false
 						end
 					end
@@ -9865,7 +9855,7 @@ function checkver (nick, cls, ip)
 							opsnotify (table_sets ["classnotiledoact"], ferr)
 						elseif fval then
 							VH:SQLQuery ("update `" .. tbl_sql ["miex"] .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (ent) .. "' limit 1")
-							opsnotify (table_sets ["classnotiex"], string.format (gettext ("%s with IP %s and class %s allowed due to forbidden NMDC version exception: %s"), nick, ip .. tryipcc (ip, nick), cls, ver))
+							opsnotify (table_sets ["classnotiex"], string.format (gettext ("%s with IP %s and class %d allowed due to forbidden NMDC version exception: %s"), nick, ip .. tryipcc (ip, nick), cls, ver))
 							return false
 						end
 					end
@@ -9913,7 +9903,7 @@ function checkfake (nick, share, ucls, aip)
 
 				if string.find (sh, entry) then
 					VH:SQLQuery ("update `"..tbl_sql ["miex"].."` set `occurred` = `occurred` + 1 where `exception` = '"..repsqlchars (entry).."' limit 1")
-					opsnotify (table_sets ["classnotiex"], string.format (gettext ("%s with IP %s and class %s allowed due to fake share exception: %s"), nick, aip .. tryipcc (aip, nick), ucls, share.." "..gettext ("B")))
+					opsnotify (table_sets ["classnotiex"], string.format (gettext ("%s with IP %s and class %d allowed due to fake share exception: %s"), nick, aip .. tryipcc (aip, nick), ucls, share.." "..gettext ("B")))
 					return 0
 				end
 			end
@@ -9943,7 +9933,7 @@ function checkclone (nick, share, aip, ucls)
 
 						if string.find (repnmdcinchars (share), entry) or string.find (repnmdcinchars (aip), entry) then
 							VH:SQLQuery ("update `"..tbl_sql ["miex"].."` set `occurred` = `occurred` + 1 where `exception` = '"..repsqlchars (entry).."' limit 1")
-							opsnotify (table_sets ["classnotiex"], string.format (gettext ("%s with IP %s and class %s allowed due to clone exception: %s"), nick, aip .. tryipcc (aip, nick), ucls, user))
+							opsnotify (table_sets ["classnotiex"], string.format (gettext ("%s with IP %s and class %d allowed due to clone exception: %s"), nick, aip .. tryipcc (aip, nick), ucls, user))
 							return 0
 						end
 					end
@@ -9953,7 +9943,7 @@ function checkclone (nick, share, aip, ucls)
 
 				if table_sets ["michclone"] == 1 then
 					maintouser (nick, rsn)
-					opsnotify (table_sets ["classnotimich"], string.format (gettext ("Dropping user due to clone detection from IP %s with class %s: %s = %s"), aip .. tryipcc (aip, nick), ucls, nick, user))
+					opsnotify (table_sets ["classnotimich"], string.format (gettext ("Dropping user due to clone detection from IP %s with class %d: %s = %s"), aip .. tryipcc (aip, nick), ucls, nick, user))
 					VH:Disconnect (nick)
 				elseif table_sets ["michclone"] == 2 then
 					if table_sets ["miclonekicktime"] ~= "" then
@@ -9987,7 +9977,7 @@ function checksameip (nick, ip, ucls)
 
 						if string.find (repnmdcinchars (ip), entry) then
 							VH:SQLQuery ("update `"..tbl_sql ["miex"].."` set `occurred` = `occurred` + 1 where `exception` = '"..repsqlchars (entry).."' limit 1")
-							opsnotify (table_sets ["classnotiex"], string.format (gettext ("%s with IP %s and class %s allowed due to same IP exception: %s"), nick, ip .. tryipcc (ip, nick), ucls, user))
+							opsnotify (table_sets ["classnotiex"], string.format (gettext ("%s with IP %s and class %d allowed due to same IP exception: %s"), nick, ip .. tryipcc (ip, nick), ucls, user))
 							return 0
 						end
 					end
@@ -10131,11 +10121,11 @@ function gagipcheck (nick, ip, class, to, data)
 		if string.find (ip, key) then
 			if to and ((value == 0) or (value == 2)) then -- pm
 				pmtouser (nick, to, gettext ("Private chat is currently disabled for you."))
-				opsnotify (table_sets ["classnotigagip"], string.format (gettext ("%s with IP %s and class %s tries to speak with IP gag in PM: %s"), nick, ip .. tryipcc (ip, nick), class, data))
+				opsnotify (table_sets ["classnotigagip"], string.format (gettext ("%s with IP %s and class %d tries to speak with IP gag in PM: %s"), nick, ip .. tryipcc (ip, nick), class, data))
 				return true
 			elseif (not to) and ((value == 0) or (value == 1)) then -- mc
 				maintouser (nick, gettext ("Main chat is currently disabled for you."))
-				opsnotify (table_sets ["classnotigagip"], string.format (gettext ("%s with IP %s and class %s tries to speak with IP gag in MC: %s"), nick, ip .. tryipcc (ip, nick), class, data))
+				opsnotify (table_sets ["classnotigagip"], string.format (gettext ("%s with IP %s and class %d tries to speak with IP gag in MC: %s"), nick, ip .. tryipcc (ip, nick), class, data))
 				return true
 			end
 
@@ -10241,11 +10231,11 @@ function gagccheck (nick, ip, class, to, data)
 
 		if to and (flag == 0 or flag == 2) then -- pm
 			pmtouser (nick, to, gettext ("Private chat is currently disabled for you."))
-			opsnotify (table_sets ["classnotigagip"], gettext ("%s with IP %s and class %s tries to speak with country code gag in PM: %s"):format (nick, ip .. tryipcc (ip, nick), class, data))
+			opsnotify (table_sets ["classnotigagip"], gettext ("%s with IP %s and class %d tries to speak with country code gag in PM: %s"):format (nick, ip .. tryipcc (ip, nick), class, data))
 			return true
 		elseif not to and (flag == 0 or flag == 1) then -- mc
 			maintouser (nick, gettext ("Main chat is currently disabled for you."))
-			opsnotify (table_sets ["classnotigagip"], gettext ("%s with IP %s and class %s tries to speak with country code gag in MC: %s"):format (nick, ip .. tryipcc (ip, nick), class, data))
+			opsnotify (table_sets ["classnotigagip"], gettext ("%s with IP %s and class %d tries to speak with country code gag in MC: %s"):format (nick, ip .. tryipcc (ip, nick), class, data))
 			return true
 		end
 	end
@@ -10279,7 +10269,7 @@ function detprotoflood (pref, prot, nick, ip, class)
 			if pref == "ctm" then -- for now use only on ctm detection, in future add to all detections
 				if table_sets ["protoflood" .. pref .. "act"] == 0 then -- drop
 					maintouser (nick, string.format (gettext ("Protocol flood detected from your client: %s"), sts))
-					opsnotify (table_sets ["classnotiprotoflood"], string.format (gettext ("Dropping %s with IP %s and class %s due to protocol flood detection: %s"), nick, ip .. tryipcc (ip, nick), class, sts))
+					opsnotify (table_sets ["classnotiprotoflood"], string.format (gettext ("Dropping %s with IP %s and class %d due to protocol flood detection: %s"), nick, ip .. tryipcc (ip, nick), class, sts))
 					VH:Disconnect (nick)
 				elseif table_sets ["protoflood" .. pref .. "act"] == 1 then -- kick
 					VH:KickUser (table_othsets ["sendfrom"], nick, string.format (gettext ("Protocol flood detected from your client: %s"), sts))
@@ -10290,7 +10280,7 @@ function detprotoflood (pref, prot, nick, ip, class)
 				end
 			else
 				maintouser (nick, string.format (gettext ("Protocol flood detected from your client: %s"), sts))
-				opsnotify (table_sets ["classnotiprotoflood"], string.format (gettext ("Dropping %s with IP %s and class %s due to protocol flood detection: %s"), nick, ip .. tryipcc (ip, nick), class, sts))
+				opsnotify (table_sets ["classnotiprotoflood"], string.format (gettext ("Dropping %s with IP %s and class %d due to protocol flood detection: %s"), nick, ip .. tryipcc (ip, nick), class, sts))
 				VH:Disconnect (nick) -- drop
 			end
 
@@ -10340,7 +10330,7 @@ function detchatflood (nick, class, ip, msg, to)
 		local dif = os.difftime (tm, table_othsets ["chflalltime"])
 
 		if table_othsets ["chflallcount"] >= table_sets ["chatfloodallcount"] and dif <= table_sets ["chatfloodallint"] then
-			opsnotify (table_sets ["classnotiflood"], string.format (gettext ("Message ignored due to flood detection from %s with IP %s and class %s in MC: %s"), nick, ip .. tryipcc (ip, nick), class, msg))
+			opsnotify (table_sets ["classnotiflood"], string.format (gettext ("Message ignored due to flood detection from %s with IP %s and class %d in MC: %s"), nick, ip .. tryipcc (ip, nick), class, msg))
 			return true
 		elseif dif > table_sets ["chatfloodallint"] then
 			table_othsets ["chflallcount"] = 1
@@ -10356,13 +10346,13 @@ function detchatflood (nick, class, ip, msg, to)
 		if table_flod [ip]["cnt"] >= table_sets ["chatfloodcount"] and dif <= table_sets ["chatfloodint"] then -- match
 			if to then -- pm
 				if table_flod [ip]["fst"] == true then -- notify only first time
-					opsnotify (table_sets ["classnotiflood"], string.format (gettext ("Flood detected from IP %s last known as %s with class %s in PM: %s"), ip .. tryipcc (ip, nick), nick, class, msg))
+					opsnotify (table_sets ["classnotiflood"], string.format (gettext ("Flood detected from IP %s last known as %s with class %d in PM: %s"), ip .. tryipcc (ip, nick), nick, class, msg))
 				end
 
 				pmtouser (nick, to, gettext ("Flood detected from your IP."))
 			else -- mc
 				if table_flod [ip]["fst"] == true then -- notify only first time
-					opsnotify (table_sets ["classnotiflood"], string.format (gettext ("Flood detected from IP %s last known as %s with class %s in MC: %s"), ip .. tryipcc (ip, nick), nick, class, msg))
+					opsnotify (table_sets ["classnotiflood"], string.format (gettext ("Flood detected from IP %s last known as %s with class %d in MC: %s"), ip .. tryipcc (ip, nick), nick, class, msg))
 				end
 
 				maintouser (nick, gettext ("Flood detected from your IP."))
@@ -10376,14 +10366,14 @@ function detchatflood (nick, class, ip, msg, to)
 				end
 
 				if table_flod [ip]["fst"] == true then -- notify only first time
-					opsnotify (table_sets ["classnotiflood"], string.format (gettext ("Added %s to IP gag list, %s users in total."), ip .. tryipcc (ip, nick), table.getn (getusersbyip (ip, table_sets ["scanbelowclass"]))))
+					opsnotify (table_sets ["classnotiflood"], string.format (gettext ("Added %s to IP gag list, %d users in total."), ip .. tryipcc (ip, nick), # getusersbyip (ip, table_sets ["scanbelowclass"])))
 				end
 
 			elseif table_sets ["chatfloodaction"] == 2 then -- drop
 				local res = dropallbyip (ip)
 
 				if table_flod [ip]["fst"] == true then -- notify only first time
-					opsnotify (table_sets ["classnotiflood"], string.format (gettext ("%s users with IP %s dropped due to flood."), res, ip .. tryipcc (ip, nick)))
+					opsnotify (table_sets ["classnotiflood"], string.format (gettext ("%d users with IP %s dropped due to flood."), res, ip .. tryipcc (ip, nick)))
 				end
 
 			elseif table_sets ["chatfloodaction"] == 3 then -- kick
@@ -10873,8 +10863,8 @@ function cleanuptable (nick, line, cls)
 
 		if rows > 0 then
 			VH:SQLQuery ("delete from `kicklist` where `time` < "..seconds)
-			commandanswer (nick, string.format (gettext ("Deleted %s rows: %s"), rows, ctype))
-			opsnotify (table_sets ["classnotiledoact"], string.format (gettext ("%s with class %s deleted %s kicks older than %s days."), nick, cls, rows, cdays))
+			commandanswer (nick, string.format (gettext ("Deleted %d rows: %s"), rows, ctype))
+			opsnotify (table_sets ["classnotiledoact"], string.format (gettext ("%s with class %d deleted %d kicks older than %d days."), nick, cls, rows, cdays))
 			VH:SQLQuery ("insert into `"..tbl_sql ["conf"].."` (`variable`, `value`) values ('lastcleankick', "..tm..") on duplicate key update `value` = "..tm)
 			VH:SQLQuery ("insert into `"..tbl_sql ["conf"].."` (`variable`, `value`) values ('limcleankick', "..cdays..") on duplicate key update `value` = "..cdays)
 		else
@@ -10887,8 +10877,8 @@ function cleanuptable (nick, line, cls)
 
 		if rows > 0 then
 			VH:SQLQuery ("delete from `banlist` where `date_start` < "..seconds)
-			commandanswer (nick, string.format (gettext ("Deleted %s rows: %s"), rows, ctype))
-			opsnotify (table_sets ["classnotiledoact"], string.format (gettext ("%s with class %s deleted %s bans older than %s days."), nick, cls, rows, cdays))
+			commandanswer (nick, string.format (gettext ("Deleted %d rows: %s"), rows, ctype))
+			opsnotify (table_sets ["classnotiledoact"], string.format (gettext ("%s with class %d deleted %d bans older than %d days."), nick, cls, rows, cdays))
 			VH:SQLQuery ("insert into `"..tbl_sql ["conf"].."` (`variable`, `value`) values ('lastcleanban', "..tm..") on duplicate key update `value` = "..tm)
 			VH:SQLQuery ("insert into `"..tbl_sql ["conf"].."` (`variable`, `value`) values ('limcleanban', "..cdays..") on duplicate key update `value` = "..cdays)
 		else
@@ -10901,8 +10891,8 @@ function cleanuptable (nick, line, cls)
 
 		if rows > 0 then
 			VH:SQLQuery ("delete from `unbanlist` where `date_start` < "..seconds)
-			commandanswer (nick, string.format (gettext ("Deleted %s rows: %s"), rows, ctype))
-			opsnotify (table_sets ["classnotiledoact"], string.format (gettext ("%s with class %s deleted %s unbans older than %s days."), nick, cls, rows, cdays))
+			commandanswer (nick, string.format (gettext ("Deleted %d rows: %s"), rows, ctype))
+			opsnotify (table_sets ["classnotiledoact"], string.format (gettext ("%s with class %d deleted %d unbans older than %d days."), nick, cls, rows, cdays))
 			VH:SQLQuery ("insert into `"..tbl_sql ["conf"].."` (`variable`, `value`) values ('lastcleanunban', "..tm..") on duplicate key update `value` = "..tm)
 			VH:SQLQuery ("insert into `"..tbl_sql ["conf"].."` (`variable`, `value`) values ('limcleanunban', "..cdays..") on duplicate key update `value` = "..cdays)
 		else
@@ -10918,8 +10908,8 @@ function cleanuptable (nick, line, cls)
 
 		if rows > 0 then
 			VH:SQLQuery ("delete from `pi_iplog` where `date` < "..seconds)
-			commandanswer (nick, string.format (gettext ("Deleted %s rows: %s"), rows, ctype))
-			opsnotify (table_sets ["classnotiledoact"], string.format (gettext ("%s with class %s deleted %s IP logger plugin entries older than %s days."), nick, cls, rows, cdays))
+			commandanswer (nick, string.format (gettext ("Deleted %d rows: %s"), rows, ctype))
+			opsnotify (table_sets ["classnotiledoact"], string.format (gettext ("%s with class %d deleted %d IP logger plugin entries older than %d days."), nick, cls, rows, cdays))
 			VH:SQLQuery ("insert into `"..tbl_sql ["conf"].."` (`variable`, `value`) values ('lastcleaniplog', "..tm..") on duplicate key update `value` = "..tm)
 			VH:SQLQuery ("insert into `"..tbl_sql ["conf"].."` (`variable`, `value`) values ('limcleaniplog', "..cdays..") on duplicate key update `value` = "..cdays)
 		else
@@ -10932,8 +10922,8 @@ function cleanuptable (nick, line, cls)
 
 		if rows > 0 then
 			VH:SQLQuery ("delete from `pi_stats` where `realtime` < "..seconds)
-			commandanswer (nick, string.format (gettext ("Deleted %s rows: %s"), rows, ctype))
-			opsnotify (table_sets ["classnotiledoact"], string.format (gettext ("%s with class %s deleted %s statistics plugin entries older than %s days."), nick, cls, rows, cdays))
+			commandanswer (nick, string.format (gettext ("Deleted %d rows: %s"), rows, ctype))
+			opsnotify (table_sets ["classnotiledoact"], string.format (gettext ("%s with class %d deleted %d statistics plugin entries older than %d days."), nick, cls, rows, cdays))
 			VH:SQLQuery ("insert into `"..tbl_sql ["conf"].."` (`variable`, `value`) values ('lastcleanstats', "..tm..") on duplicate key update `value` = "..tm)
 			VH:SQLQuery ("insert into `"..tbl_sql ["conf"].."` (`variable`, `value`) values ('limcleanstats', "..cdays..") on duplicate key update `value` = "..cdays)
 		else
@@ -10946,8 +10936,8 @@ function cleanuptable (nick, line, cls)
 
 		if rows > 0 then
 			VH:SQLQuery ("delete from `"..tbl_sql ["ulog"].."` where `time` < "..seconds)
-			commandanswer (nick, string.format (gettext ("Deleted %s rows: %s"), rows, ctype))
-			opsnotify (table_sets ["classnotiledoact"], string.format (gettext ("%s with class %s deleted %s user log entries older than %s days."), nick, cls, rows, cdays))
+			commandanswer (nick, string.format (gettext ("Deleted %d rows: %s"), rows, ctype))
+			opsnotify (table_sets ["classnotiledoact"], string.format (gettext ("%s with class %d deleted %d user log entries older than %d days."), nick, cls, rows, cdays))
 			VH:SQLQuery ("insert into `"..tbl_sql ["conf"].."` (`variable`, `value`) values ('lastcleanulog', "..tm..") on duplicate key update `value` = "..tm)
 			VH:SQLQuery ("insert into `"..tbl_sql ["conf"].."` (`variable`, `value`) values ('limcleanulog', "..cdays..") on duplicate key update `value` = "..cdays)
 		else
@@ -10960,8 +10950,8 @@ function cleanuptable (nick, line, cls)
 
 		if rows > 0 then
 			VH:SQLQuery ("delete from `"..tbl_sql ["clog"].."` where `time` < "..seconds)
-			commandanswer (nick, string.format (gettext ("Deleted %s rows: %s"), rows, ctype))
-			opsnotify (table_sets ["classnotiledoact"], string.format (gettext ("%s with class %s deleted %s command log entries older than %s days."), nick, cls, rows, cdays))
+			commandanswer (nick, string.format (gettext ("Deleted %d rows: %s"), rows, ctype))
+			opsnotify (table_sets ["classnotiledoact"], string.format (gettext ("%s with class %d deleted %d command log entries older than %d days."), nick, cls, rows, cdays))
 			VH:SQLQuery ("insert into `"..tbl_sql ["conf"].."` (`variable`, `value`) values ('lastcleanclog', "..tm..") on duplicate key update `value` = "..tm)
 			VH:SQLQuery ("insert into `"..tbl_sql ["conf"].."` (`variable`, `value`) values ('limcleanclog', "..cdays..") on duplicate key update `value` = "..cdays)
 		else
@@ -10974,8 +10964,8 @@ function cleanuptable (nick, line, cls)
 
 		if rows > 0 then
 			VH:SQLQuery ("delete from `"..tbl_sql ["anti"].."` where `occurred` < "..cdays)
-			commandanswer (nick, string.format (gettext ("Deleted %s rows: %s"), rows, ctype))
-			opsnotify (table_sets ["classnotiledoact"], string.format (gettext ("%s with class %s deleted %s antispam entries with occurrence less than %s."), nick, cls, rows, cdays))
+			commandanswer (nick, string.format (gettext ("Deleted %d rows: %s"), rows, ctype))
+			opsnotify (table_sets ["classnotiledoact"], string.format (gettext ("%s with class %d deleted %d antispam entries with occurrence less than %d."), nick, cls, rows, cdays))
 		else
 			commandanswer (nick, string.format (gettext ("No rows to remove: %s"), ctype))
 		end
@@ -10986,8 +10976,8 @@ function cleanuptable (nick, line, cls)
 
 		if rows > 0 then
 			VH:SQLQuery ("delete from `"..tbl_sql ["sefi"].."` where `occurred` < "..cdays)
-			commandanswer (nick, string.format (gettext ("Deleted %s rows: %s"), rows, ctype))
-			opsnotify (table_sets ["classnotiledoact"], string.format (gettext ("%s with class %s deleted %s search filter entries with occurrence less than %s."), nick, cls, rows, cdays))
+			commandanswer (nick, string.format (gettext ("Deleted %d rows: %s"), rows, ctype))
+			opsnotify (table_sets ["classnotiledoact"], string.format (gettext ("%s with class %d deleted %d search filter entries with occurrence less than %d."), nick, cls, rows, cdays))
 		else
 			commandanswer (nick, string.format (gettext ("No rows to remove: %s"), ctype))
 		end
@@ -10998,8 +10988,8 @@ function cleanuptable (nick, line, cls)
 
 		if rows > 0 then
 			VH:SQLQuery ("delete from `"..tbl_sql ["rel"].."` where `date` < "..seconds)
-			commandanswer (nick, string.format (gettext ("Deleted %s rows: %s"), rows, ctype))
-			opsnotify (table_sets ["classnotiledoact"], string.format (gettext ("%s with class %s deleted %s releases older than %s days."), nick, cls, rows, cdays))
+			commandanswer (nick, string.format (gettext ("Deleted %d rows: %s"), rows, ctype))
+			opsnotify (table_sets ["classnotiledoact"], string.format (gettext ("%s with class %d deleted %d releases older than %d days."), nick, cls, rows, cdays))
 			VH:SQLQuery ("insert into `"..tbl_sql ["conf"].."` (`variable`, `value`) values ('lastcleanrel', "..tm..") on duplicate key update `value` = "..tm)
 			VH:SQLQuery ("insert into `"..tbl_sql ["conf"].."` (`variable`, `value`) values ('limcleanrel', "..cdays..") on duplicate key update `value` = "..cdays)
 		else
@@ -11062,8 +11052,8 @@ function altcleanuptable (nick, line, cls)
 					VH:SQLQuery ("delete from `reglist` where `login_last` is not null and `login_last` < " .. seconds .. " and `class` = " .. altvar)
 				end
 
-				commandanswer (nick, string.format (gettext ("Deleted %s accounts with class %s"), rows, altvar) .. ":\r\n\r\n" .. anick)
-				opsnotify (table_sets ["classnotiledoact"], string.format (gettext ("%s with class %s deleted %s accounts with class %s that has been inactive for %s days."), nick, cls, rows, altvar, cdays))
+				commandanswer (nick, string.format (gettext ("Deleted %d accounts with class %d"), rows, altvar) .. ":\r\n\r\n" .. anick)
+				opsnotify (table_sets ["classnotiledoact"], string.format (gettext ("%s with class %d deleted %d accounts with class %d that has been inactive for %d days."), nick, cls, rows, altvar, cdays))
 				local tm = os.time () + table_sets ["srvtimediff"]
 				VH:SQLQuery ("insert into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('lastcleanreg', " .. tm .. ") on duplicate key update `value` = " .. tm)
 				VH:SQLQuery ("insert into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('limcleanreg', '" .. cdays .. "') on duplicate key update `value` = '" .. cdays .. "'")
@@ -11176,7 +11166,7 @@ if rows > 0 then
 		arank = arank.." "..prezero (string.len (rows), (x + 1))..". [ R: "..prezero (len, rank).." ] "..repnmdcoutchars (user).."\r\n"
 	end
 
-	commandanswer (nick, string.format (gettext ("Top %s search requests"), rows)..":\r\n\r\n"..arank)
+	commandanswer (nick, string.format (gettext ("Top %d search requests"), rows)..":\r\n\r\n"..arank)
 else
 	commandanswer (nick, gettext ("Search rank list is empty."))
 end
@@ -11299,7 +11289,7 @@ local _, rows = VH:SQLQuery ("select `cc` from `"..tbl_sql ["ccstat"].."` where 
 
 if rows > 0 then
 VH:SQLQuery ("delete from `"..tbl_sql ["ccstat"].."` where `cc` = '"..auser.."'")
-commandanswer (nick, string.format (gettext ("Deleted %s rows from country code statistics table: %s"), rows, cuser))
+commandanswer (nick, string.format (gettext ("Deleted %d rows from country code statistics table: %s"), rows, cuser))
 else
 commandanswer (nick, string.format (gettext ("Not found in country code statistics table: %s"), cuser))
 end
@@ -11341,8 +11331,8 @@ else
 VH:SQLQuery ("delete from `"..tbl_sql ["chran"].."` where `rank` < "..climt)
 end
 
-commandanswer (nick, string.format (gettext ("Deleted %s rows: %s"), rows, ctype))
-opsnotify (table_sets ["classnotiledoact"], string.format (gettext ("%s with class %s deleted %s chat ranks lower than %s."), nick, cls, rows, climt))
+commandanswer (nick, string.format (gettext ("Deleted %d rows: %s"), rows, ctype))
+opsnotify (table_sets ["classnotiledoact"], string.format (gettext ("%s with class %d deleted %d chat ranks lower than %d."), nick, cls, rows, climt))
 VH:SQLQuery ("insert into `"..tbl_sql ["conf"].."` (`variable`, `value`) values ('lastcleanchran', "..tm..") on duplicate key update `value` = "..tm)
 VH:SQLQuery ("insert into `"..tbl_sql ["conf"].."` (`variable`, `value`) values ('limcleanchran', "..climt..") on duplicate key update `value` = "..climt)
 else
@@ -11367,8 +11357,8 @@ else
 VH:SQLQuery ("delete from `"..tbl_sql ["shran"].."` where `rank` < "..cbytes)
 end
 
-commandanswer (nick, string.format (gettext ("Deleted %s rows: %s"), rows, ctype))
-opsnotify (table_sets ["classnotiledoact"], string.format (gettext ("%s with class %s deleted %s share ranks lower than %s GiB."), nick, cls, rows, climt))
+commandanswer (nick, string.format (gettext ("Deleted %d rows: %s"), rows, ctype))
+opsnotify (table_sets ["classnotiledoact"], string.format (gettext ("%s with class %d deleted %d share ranks lower than %s."), nick, cls, rows, tostring (climt) .. " " .. gettext ("GiB")))
 VH:SQLQuery ("insert into `"..tbl_sql ["conf"].."` (`variable`, `value`) values ('lastcleanshran', "..tm..") on duplicate key update `value` = "..tm)
 VH:SQLQuery ("insert into `"..tbl_sql ["conf"].."` (`variable`, `value`) values ('limcleanshran', "..climt..") on duplicate key update `value` = "..climt)
 else
@@ -11392,8 +11382,8 @@ else
 VH:SQLQuery ("delete from `"..tbl_sql ["opran"].."` where `rank` < "..climt)
 end
 
-commandanswer (nick, string.format (gettext ("Deleted %s rows: %s"), rows, ctype))
-opsnotify (table_sets ["classnotiledoact"], string.format (gettext ("%s with class %s deleted %s operator ranks lower than %s."), nick, cls, rows, climt))
+commandanswer (nick, string.format (gettext ("Deleted %d rows: %s"), rows, ctype))
+opsnotify (table_sets ["classnotiledoact"], string.format (gettext ("%s with class %d deleted %d operator ranks lower than %d."), nick, cls, rows, climt))
 VH:SQLQuery ("insert into `"..tbl_sql ["conf"].."` (`variable`, `value`) values ('lastcleanopran', "..tm..") on duplicate key update `value` = "..tm)
 VH:SQLQuery ("insert into `"..tbl_sql ["conf"].."` (`variable`, `value`) values ('limcleanopran', "..climt..") on duplicate key update `value` = "..climt)
 else
@@ -11417,8 +11407,8 @@ elseif ctype == "sear" then
 			VH:SQLQuery ("delete from `"..tbl_sql ["srran"].."` where `rank` < "..climt)
 		end
 
-		commandanswer (nick, string.format (gettext ("Deleted %s rows: %s"), rows, ctype))
-		opsnotify (table_sets ["classnotiledoact"], string.format (gettext ("%s with class %s deleted %s search ranks lower than %s."), nick, cls, rows, climt))
+		commandanswer (nick, string.format (gettext ("Deleted %d rows: %s"), rows, ctype))
+		opsnotify (table_sets ["classnotiledoact"], string.format (gettext ("%s with class %d deleted %d search ranks lower than %d."), nick, cls, rows, climt))
 		VH:SQLQuery ("insert into `"..tbl_sql ["conf"].."` (`variable`, `value`) values ('lastcleansrran', "..tm..") on duplicate key update `value` = "..tm)
 		VH:SQLQuery ("insert into `"..tbl_sql ["conf"].."` (`variable`, `value`) values ('limcleansrran', "..climt..") on duplicate key update `value` = "..climt)
 	else
@@ -11442,8 +11432,8 @@ else
 VH:SQLQuery ("delete from `"..tbl_sql ["wdran"].."` where `rank` < "..climt)
 end
 
-commandanswer (nick, string.format (gettext ("Deleted %s rows: %s"), rows, ctype))
-opsnotify (table_sets ["classnotiledoact"], string.format (gettext ("%s with class %s deleted %s word ranks lower than %s."), nick, cls, rows, climt))
+commandanswer (nick, string.format (gettext ("Deleted %d rows: %s"), rows, ctype))
+opsnotify (table_sets ["classnotiledoact"], string.format (gettext ("%s with class %d deleted %d word ranks lower than %d."), nick, cls, rows, climt))
 VH:SQLQuery ("insert into `"..tbl_sql ["conf"].."` (`variable`, `value`) values ('lastcleanwdran', "..tm..") on duplicate key update `value` = "..tm)
 VH:SQLQuery ("insert into `"..tbl_sql ["conf"].."` (`variable`, `value`) values ('limcleanwdran', "..climt..") on duplicate key update `value` = "..climt)
 else
@@ -11454,7 +11444,7 @@ elseif ctype == "cc" then
 VH:SQLQuery ("truncate table `"..tbl_sql ["ccstat"].."`")
 VH:SQLQuery ("update ignore `"..tbl_sql ["conf"].."` set `value` = '"..(os.time () + table_sets ["srvtimediff"]).."' where `variable` = 'date_ccstats' limit 1")
 commandanswer (nick, string.format (gettext ("Deleted all rows: %s"), ctype))
-opsnotify (table_sets ["classnotiledoact"], string.format (gettext ("%s with class %s deleted all user location entries."), nick, cls))
+opsnotify (table_sets ["classnotiledoact"], string.format (gettext ("%s with class %d deleted all user location entries."), nick, cls))
 
 else -- unknown type
 	commandanswer (nick, string.format (gettext ("Known types are: %s"), "chat, share, op, sear, word "..gettext ("and").." cc"))
@@ -11468,7 +11458,7 @@ local _, rows = VH:SQLQuery ("select `rank` from `"..tbl_sql ["chran"].."` where
 
 if rows > 0 then
 local _, rank = VH:SQLFetch (0)
-commandanswer (nick, string.format (gettext ("Your chat rank is: %s"), rank))
+commandanswer (nick, string.format (gettext ("Your chat rank is: %d"), rank))
 else
 commandanswer (nick, gettext ("You have to write something in main chat to get started."))
 end
@@ -11483,7 +11473,7 @@ if rows > 0 then
 local _, rank = VH:SQLFetch (0)
 commandanswer (nick, string.format (gettext ("Your share rank is: %s"), makesize (rank)))
 else
-commandanswer (nick, string.format (gettext ("You have to share %s and reconnect to get started."), table_sets ["shareranmin"].." "..gettext ("GiB")))
+commandanswer (nick, string.format (gettext ("You have to share %s and reconnect to get started."), tostring (table_sets ["shareranmin"]) .. " " .. gettext ("GiB")))
 end
 end
 
@@ -11494,7 +11484,7 @@ local _, rows = VH:SQLQuery ("select `rank` from `"..tbl_sql ["opran"].."` where
 
 if rows > 0 then
 local _, rank = VH:SQLFetch (0)
-commandanswer (nick, string.format (gettext ("Your operator rank is: %s"), rank))
+commandanswer (nick, string.format (gettext ("Your operator rank is: %d"), rank))
 else
 commandanswer (nick, gettext ("You have to do some operator actions to get started."))
 end
@@ -11514,7 +11504,7 @@ if x == 0 then len = string.len (rank) end
 arank = arank.." "..prezero (string.len (rows), (x + 1))..". [ R: "..prezero (len, rank).." ] "..user.."\r\n"
 end
 
-commandanswer (nick, string.format (gettext ("Top %s chat rankers"), rows)..":\r\n\r\n"..arank)
+commandanswer (nick, string.format (gettext ("Top %d chat rankers"), rows)..":\r\n\r\n"..arank)
 else
 commandanswer (nick, gettext ("Chat rank list is empty."))
 end
@@ -11533,7 +11523,7 @@ local _, user, rank = VH:SQLFetch (x)
 arank = arank.." "..prezero (string.len (rows), (x + 1))..". "..user.." @ "..makesize (rank).."\r\n"
 end
 
-commandanswer (nick, string.format (gettext ("Top %s share rankers"), rows)..":\r\n\r\n"..arank)
+commandanswer (nick, string.format (gettext ("Top %d share rankers"), rows)..":\r\n\r\n"..arank)
 else
 commandanswer (nick, gettext ("Share rank list is empty."))
 end
@@ -11553,7 +11543,7 @@ if x == 0 then len = string.len (rank) end
 arank = arank.." "..prezero (string.len (rows), (x + 1))..". [ R: "..prezero (len, rank).." ] "..user.."\r\n"
 end
 
-commandanswer (nick, string.format (gettext ("Top %s operator rankers"), rows)..":\r\n\r\n"..arank)
+commandanswer (nick, string.format (gettext ("Top %d operator rankers"), rows)..":\r\n\r\n"..arank)
 else
 commandanswer (nick, gettext ("Operator rank list is empty."))
 end
@@ -11573,7 +11563,7 @@ if rows > 0 then
 		arank = arank.." "..prezero (string.len (rows), (x + 1))..". [ R: "..prezero (len, rank).." ] "..repnmdcoutchars (user).."\r\n"
 	end
 
-	commandanswer (nick, string.format (gettext ("Top %s used words"), rows)..":\r\n\r\n"..arank)
+	commandanswer (nick, string.format (gettext ("Top %d used words"), rows)..":\r\n\r\n"..arank)
 else
 	commandanswer (nick, gettext ("Word rank list is empty."))
 end
@@ -11655,7 +11645,7 @@ stype = tonumber (stype)
 if (aaction < 0) or (aaction > 7) then -- invalid action
 commandanswer (nick, string.format (gettext ("Known actions are: %s"), "0, 1, 2, 3, 4, 5, 6 "..gettext ("and").." 7"))
 elseif (prio < 0) or (prio > 9) then -- invalid priority
-commandanswer (nick, string.format (gettext ("Valid priority is a number from %s to %s."), 0, 9))
+commandanswer (nick, string.format (gettext ("Valid priority is a number from %d to %d."), 0, 9))
 elseif (stype < 1) or (stype > 9) then -- invalid search type
 commandanswer (nick, string.format (gettext ("Known search types are: %s"), "1, 2, 3, 4, 5, 6, 7, 8 "..gettext ("and").." 9"))
 else
@@ -11665,31 +11655,31 @@ local _, rows = VH:SQLQuery ("select `action` from `"..tbl_sql ["sefi"].."` wher
 
 if rows > 0 then
 VH:SQLQuery ("update `"..tbl_sql ["sefi"].."` set `priority` = "..prio..", `action` = "..aaction..", `type` = "..stype.." where `filter` = '"..entry.."' limit 1")
-local note = "Modified search filter with action %s and priority %s as any file: %s"
+local note = "Modified search filter with action %d and priority %d as any file: %s"
 
-if stype == 2 then note = "Modified search filter with action %s and priority %s as audio file: %s"
-elseif stype == 3 then note = "Modified search filter with action %s and priority %s as compressed file: %s"
-elseif stype == 4 then note = "Modified search filter with action %s and priority %s as document: %s"
-elseif stype == 5 then note = "Modified search filter with action %s and priority %s as executable: %s"
-elseif stype == 6 then note = "Modified search filter with action %s and priority %s as picture: %s"
-elseif stype == 7 then note = "Modified search filter with action %s and priority %s as video: %s"
-elseif stype == 8 then note = "Modified search filter with action %s and priority %s as folder: %s"
-elseif stype == 9 then note = "Modified search filter with action %s and priority %s as TTH: %s"
+if stype == 2 then note = "Modified search filter with action %d and priority %d as audio file: %s"
+elseif stype == 3 then note = "Modified search filter with action %d and priority %d as compressed file: %s"
+elseif stype == 4 then note = "Modified search filter with action %d and priority %d as document: %s"
+elseif stype == 5 then note = "Modified search filter with action %d and priority %d as executable: %s"
+elseif stype == 6 then note = "Modified search filter with action %d and priority %d as picture: %s"
+elseif stype == 7 then note = "Modified search filter with action %d and priority %d as video: %s"
+elseif stype == 8 then note = "Modified search filter with action %d and priority %d as folder: %s"
+elseif stype == 9 then note = "Modified search filter with action %d and priority %d as TTH: %s"
 end
 
 commandanswer (nick, string.format (gettext (note), aaction, prio, aitem))
 else
 VH:SQLQuery ("insert into `"..tbl_sql ["sefi"].."` (`filter`, `priority`, `action`, `type`) values ('"..entry.."', "..prio..", "..aaction..", "..stype..")")
-local note = "Added search filter with action %s and priority %s as any file: %s"
+local note = "Added search filter with action %d and priority %d as any file: %s"
 
-if stype == 2 then note = "Added search filter with action %s and priority %s as audio file: %s"
-elseif stype == 3 then note = "Added search filter with action %s and priority %s as compressed file: %s"
-elseif stype == 4 then note = "Added search filter with action %s and priority %s as document: %s"
-elseif stype == 5 then note = "Added search filter with action %s and priority %s as executable: %s"
-elseif stype == 6 then note = "Added search filter with action %s and priority %s as picture: %s"
-elseif stype == 7 then note = "Added search filter with action %s and priority %s as video: %s"
-elseif stype == 8 then note = "Added search filter with action %s and priority %s as folder: %s"
-elseif stype == 9 then note = "Added search filter with action %s and priority %s as TTH: %s"
+if stype == 2 then note = "Added search filter with action %d and priority %d as audio file: %s"
+elseif stype == 3 then note = "Added search filter with action %d and priority %d as compressed file: %s"
+elseif stype == 4 then note = "Added search filter with action %d and priority %d as document: %s"
+elseif stype == 5 then note = "Added search filter with action %d and priority %d as executable: %s"
+elseif stype == 6 then note = "Added search filter with action %d and priority %d as picture: %s"
+elseif stype == 7 then note = "Added search filter with action %d and priority %d as video: %s"
+elseif stype == 8 then note = "Added search filter with action %d and priority %d as folder: %s"
+elseif stype == 9 then note = "Added search filter with action %d and priority %d as TTH: %s"
 end
 
 commandanswer (nick, string.format (gettext (note), aaction, prio, aitem))
@@ -11790,30 +11780,30 @@ function addantientry (nick, item)
 	elseif (flags < 1) or (flags > 3) then -- invalid flag
 		commandanswer (nick, string.format (gettext ("Known flags are: %s"), "1, 2 " .. gettext ("and") .. " 3"))
 	elseif (prio < 0) or (prio > 9) then -- invalid priority
-		commandanswer (nick, string.format (gettext ("Valid priority is a number from %s to %s."), 0, 9))
+		commandanswer (nick, string.format (gettext ("Valid priority is a number from %d to %d."), 0, 9))
 	else
 		local entry = repsqlchars (repnmdcinchars (aitem))
 		local _, rows = VH:SQLQuery ("select `action` from `" .. tbl_sql ["anti"] .. "` where `antispam` = '" .. entry .. "' limit 1")
 
 		if rows > 0 then
 			VH:SQLQuery ("update `" .. tbl_sql ["anti"] .. "` set `priority` = " .. tostring (prio) .. ", `action` = " .. tostring (aaction) .. ", `flags` = " .. tostring (flags) .. " where `antispam` = '" .. entry .. "' limit 1")
-			local note = "Modified antispam entry with action %s and priority %s to scan in MC and PM: %s"
+			local note = "Modified antispam entry with action %d and priority %d to scan in MC and PM: %s"
 
 			if flags == 1 then
-				note = "Modified antispam entry with action %s and priority %s to scan in MC: %s"
+				note = "Modified antispam entry with action %d and priority %d to scan in MC: %s"
 			elseif flags == 2 then
-				note = "Modified antispam entry with action %s and priority %s to scan in PM: %s"
+				note = "Modified antispam entry with action %d and priority %d to scan in PM: %s"
 			end
 
 			commandanswer (nick, string.format (gettext (note), aaction, prio, aitem))
 		else
 			VH:SQLQuery ("insert into `" .. tbl_sql ["anti"] .. "` (`antispam`, `priority`, `action`, `flags`) values ('" .. entry .. "', " .. tostring (prio) .. ", " .. tostring (aaction) .. ", " .. tostring (flags) .. ")")
-			local note = "Added antispam entry with action %s and priority %s to scan in MC and PM: %s"
+			local note = "Added antispam entry with action %d and priority %d to scan in MC and PM: %s"
 
 			if flags == 1 then
-				note = "Added antispam entry with action %s and priority %s to scan in MC: %s"
+				note = "Added antispam entry with action %d and priority %d to scan in MC: %s"
 			elseif flags == 2 then
-				note = "Added antispam entry with action %s and priority %s to scan in PM: %s"
+				note = "Added antispam entry with action %d and priority %d to scan in PM: %s"
 			end
 
 			commandanswer (nick, string.format (gettext (note), aaction, prio, aitem))
@@ -11928,7 +11918,7 @@ function votekickuser (nick, user)
 					}
 				end
 
-				maintoall (string.format (gettext ("%s added vote %s of %s for kicking user with class %s: %s"), nick, table_voki [user]["c"], table_sets ["votekickcount"], class, user), 0, 10) -- notify all users
+				maintoall (string.format (gettext ("%s added vote %d of %d for kicking user with class %d: %s"), nick, table_voki [user]["c"], table_sets ["votekickcount"], class, user), 0, 10) -- notify all users
 
 				if table_voki [user]["c"] >= table_sets ["votekickcount"] then -- kick user
 					table_voki [user] = nil
@@ -12049,7 +12039,7 @@ VH:SQLQuery ("update `"..tbl_sql ["rel"].."` set `by` = '"..rnewn.."' where `by`
 VH:SQLQuery ("update `"..tbl_sql ["mchist"].."` set `realnick` = '"..rnewn.."' where `realnick` = '"..roldn.."'") -- no limit
 VH:SQLQuery ("update `"..tbl_sql ["ophist"].."` set `nick` = '"..rnewn.."' where `nick` = '"..roldn.."'") -- no limit
 commandanswer (nick, string.format (gettext ("Renamed account %s: %s"), oldn, newn))
-opsnotify (table_sets ["classnotireg"], string.format (gettext ("%s with class %s renamed account %s: %s"), nick, cls, oldn, newn))
+opsnotify (table_sets ["classnotireg"], string.format (gettext ("%s with class %d renamed account %s: %s"), nick, cls, oldn, newn))
 end
 end
 
@@ -12094,11 +12084,11 @@ function statsreglist (nick)
 		table.sort (tmp, function (a, b) return a.val > b.val end)
 
 		for _, v in pairs (tmp) do
-			list = list.." "..string.format (gettext ("Class %s: %s"), v.key, v.val).."\r\n"
+			list = list.." "..string.format (gettext ("Class %d: %d"), v.key, v.val).."\r\n"
 			tot = tot + v.val
 		end
 
-		commandanswer (nick, gettext ("Registered users list statistics")..":\r\n\r\n"..list.."\r\n "..string.format (gettext ("Total count: %s"), tot).."\r\n")
+		commandanswer (nick, gettext ("Registered users list statistics")..":\r\n\r\n"..list.."\r\n "..string.format (gettext ("Total count: %d"), tot).."\r\n")
 	else
 		commandanswer (nick, gettext ("Registered users list is empty."))
 	end
@@ -12125,7 +12115,7 @@ local _, trows = VH:SQLQuery ("select `class` from `reglist` where `class` = "..
 
 if trows > 0 then
 if (sfrom <= 0) or (sfrom > trows) then
-commandanswer (nick, string.format (gettext ("You can't start at user number %s when you only have %s accounts with class %s."), sfrom, trows, class))
+commandanswer (nick, string.format (gettext ("You can't start at user number %d when you only have %d accounts with class %d."), sfrom, trows, class))
 else
 local _, rows = VH:SQLQuery ("select `nick`, `reg_date`, `pwd_change`, `login_last`, `enabled` from `reglist` where `class` = "..class.." order by `login_last` desc limit "..(sfrom - 1)..", "..hmany)
 
@@ -12137,12 +12127,12 @@ local _, user, rgdate, pwdc, lastlog, enacc = VH:SQLFetch (x)
 areg = areg.." "..prezero (string.len (rows), (x + 1))..". [ R: "..fromunixtime (rgdate, true, table_sets ["longdateformat"]).." ] [ L: "..fromunixtime (lastlog, false, table_sets ["longdateformat"]).." ] [ P: "..pwdc.." ] [ E: "..enacc.." ] [ O: "..getstatus (user).." ] "..user.."\r\n"
 end
 
-commandanswer (nick, string.format (gettext ("Showing %s out of total %s accounts with class %s starting at user number %s"), rows, trows, class, sfrom)..":\r\n\r\n"..areg)
+commandanswer (nick, string.format (gettext ("Showing %d out of total %d accounts with class %d starting at user number %d"), rows, trows, class, sfrom)..":\r\n\r\n"..areg)
 end
 end
 
 else
-commandanswer (nick, string.format (gettext ("There are no accounts with class: %s"), class))
+commandanswer (nick, string.format (gettext ("There are no accounts with class: %d"), class))
 end
 
 else
@@ -12169,11 +12159,11 @@ function sendsay (nick, message, ucl)
 	local _, _, user, message = string.find (message, "^(%S*) (.*)$")
 
 	if ((user == table_sets ["ledobotnick"]) or (user == table_othsets ["botnick"]) or (user == table_othsets ["opchatnick"]) or (user == nick)) or (getclass (user) < ucl) then
-		opsnotify (table_sets ["classnotisay"], string.format (gettext ("%s with class %s sent say message: <%s> %s"), nick, ucl, user, message))
+		opsnotify (table_sets ["classnotisay"], string.format (gettext ("%s with class %d sent say message: <%s> %s"), nick, ucl, user, message))
 		VH:SendToClass ("<"..user.."> "..message.."|", 0, 10)
 		addmchistoryline (user, nick, message)
 	else
-		opsnotify (table_sets ["classnotisay"], string.format (gettext ("%s with class %s had bad luck sending say message: <%s> %s"), nick, ucl, user, message))
+		opsnotify (table_sets ["classnotisay"], string.format (gettext ("%s with class %d had bad luck sending say message: <%s> %s"), nick, ucl, user, message))
 		commandanswer (nick, gettext ("You can't talk from nick whose class is higher or equals your own."))
 	end
 end
@@ -12200,7 +12190,7 @@ end
 if (ucls < 10) and (class > ucls - getconfig ("classdif_reg")) then return nil end -- check verlihub configuration
 
 if not getregclass (user) then -- only if not registered
-opsnotify (table_sets ["classnotireg"], string.format (gettext ("%s with class %s registered new user with class %s: %s"), nick, ucls, class, user))
+opsnotify (table_sets ["classnotireg"], string.format (gettext ("%s with class %d registered new user with class %d: %s"), nick, ucls, class, user))
 oprankaccept (nick, ucls)
 end
 end
@@ -12212,7 +12202,7 @@ function donotifyregdel (nick, ucls, line)
 	local _, _, user = string.find (line, "^%s*(%S+)%s*.*$")
 	local class = getregclass (user)
 	if (not class) or ((ucls < 10) and (class > ucls - getconfig ("classdif_reg"))) then return nil end -- only if registered
-	opsnotify (table_sets ["classnotireg"], string.format (gettext ("%s with class %s deleted registered user with class %s: %s"), nick, ucls, class, user))
+	opsnotify (table_sets ["classnotireg"], string.format (gettext ("%s with class %d deleted registered user with class %d: %s"), nick, ucls, class, user))
 	oprankaccept (nick, ucls)
 	delledouser (user) -- remove user from ledokol tables aswell
 end
@@ -12231,7 +12221,7 @@ function donotifyregclass (nick, ucls, line)
 		VH:SQLQuery ("delete from `"..tbl_sql ["opran"].."` where `nick` = '"..repsqlchars (user).."' limit 1")
 	end
 
-	opsnotify (table_sets ["classnotireg"], string.format (gettext ("%s with class %s changed user class from %s to %s: %s"), nick, ucls, uclass, class, user))
+	opsnotify (table_sets ["classnotireg"], string.format (gettext ("%s with class %d changed user class from %d to %d: %s"), nick, ucls, uclass, class, user))
 	oprankaccept (nick, ucls)
 end
 
@@ -12296,7 +12286,7 @@ function donotifyconfig (nick, line, cls)
 	--local _, rows = VH:SQLQuery ("select `var` from `SetupList` where `file` = 'config' and `var` = '"..repsqlchars (var).."' limit 1")
 
 	if oval then
-		opsnotify (table_sets ["classnoticonfig"], string.format (gettext ("%s with class %s changed configuration variable %s: %s => %s"), nick, cls, var, oval, val))
+		opsnotify (table_sets ["classnoticonfig"], string.format (gettext ("%s with class %d changed configuration variable %s: %s => %s"), nick, cls, var, oval, val))
 		oprankaccept (nick, cls)
 	end
 end
@@ -12305,7 +12295,7 @@ end
 
 function donotifyextconfig (nick, line, cls)
 	local _, _, cfg, var, val = string.find (line, "^%s*%[(%S+)%]%s+(%S+) (.*)$")
-	opsnotify (table_sets ["classnoticonfig"], string.format (gettext ("%s with class %s changed configuration variable %s: %s => %s"), nick, cls, var.." @ "..cfg, (getextconfig (cfg, var) or ""), val))
+	opsnotify (table_sets ["classnoticonfig"], string.format (gettext ("%s with class %d changed configuration variable %s: %s => %s"), nick, cls, var.." @ "..cfg, (getextconfig (cfg, var) or ""), val))
 	oprankaccept (nick, cls)
 end
 
@@ -12326,7 +12316,7 @@ if rows > 0 then
 	end
 end
 
-local cmsg = string.format (gettext ("%s with class %s used command: %s"), nick, cls, cmd)
+local cmsg = string.format (gettext ("%s with class %d used command: %s"), nick, cls, cmd)
 
 if limited == 0 then
 	VH:SendPMToAll ("["..prezero (2, table_sets ["classnoticom"]).."] "..cmsg, table_othsets ["feednick"], table_sets ["classnoticom"], 10)
@@ -12401,7 +12391,7 @@ else
 	end
 
 	if cnt > 0 then
-		commandanswer (nick, gettext ("Live user location statistics by country")..":\r\n\r\n"..genccstats (ccs, cnt).."\r\n\t"..string.format (gettext ("Total count: %s"), cnt).."\r\n")
+		commandanswer (nick, gettext ("Live user location statistics by country")..":\r\n\r\n"..genccstats (ccs, cnt).."\r\n\t"..string.format (gettext ("Total count: %d"), cnt).."\r\n")
 	else -- empty
 		commandanswer (nick, gettext ("No users in the hub."))
 	end
@@ -12412,7 +12402,7 @@ end
 
 function sendlivecity (nick, cc)
 	if (table_othsets ["func_getcc"] == false) or (table_othsets ["func_getusercity"] == false) then
-		commandanswer (nick, string.format (gettext ("This feature requires %s or later installed on your system."), "Verlihub 1.0"))
+		commandanswer (nick, string.format (gettext ("This feature requires %s or later installed on your system."), "Verlihub 1.0.0"))
 	else
 		local list, count, ucc = {}, 0, string.upper (cc)
 
@@ -12433,7 +12423,7 @@ function sendlivecity (nick, cc)
 		end
 
 		if count > 0 then
-			commandanswer (nick, string.format (gettext ("Live user location statistics by city from %s=%s"), ucc, cc_names [ucc] or gettext ("Unknown country")) .. ":\r\n\r\n" .. gencitystats (list, count) .. "\r\n\t" .. string.format (gettext ("Total count: %s"), count) .. "\r\n")
+			commandanswer (nick, string.format (gettext ("Live user location statistics by city from %s=%s"), ucc, cc_names [ucc] or gettext ("Unknown country")) .. ":\r\n\r\n" .. gencitystats (list, count) .. "\r\n\t" .. string.format (gettext ("Total count: %d"), count) .. "\r\n")
 		else -- empty
 			commandanswer (nick, string.format (gettext ("No users in the hub from: %s=%s"), ucc, cc_names [ucc] or gettext ("Unknown country")))
 		end
@@ -12457,7 +12447,7 @@ else
 			ccs [cc] = (ccs [cc] or 0) + 1
 		end
 
-		commandanswer (nick, gettext ("All time user location statistics")..":\r\n\r\n"..genccstats (ccs, rows).."\r\n\t"..string.format (gettext ("Total count since %s: %s"), fromunixtime ((getledoconf ("date_ccstats") or os.time () + table_sets ["srvtimediff"]), true), rows).."\r\n")
+		commandanswer (nick, gettext ("All time user location statistics")..":\r\n\r\n"..genccstats (ccs, rows).."\r\n\t"..string.format (gettext ("Total count since %s: %d"), fromunixtime ((getledoconf ("date_ccstats") or os.time () + table_sets ["srvtimediff"]), true), rows).."\r\n")
 	else -- empty
 		commandanswer (nick, gettext ("User location statistics table is empty."))
 	end
@@ -12575,19 +12565,19 @@ end
 -- ranks
 
 if ucl >= table_sets ["chatrankclass"] then
-susmenitm (usr, gettext ("Ranks").."\\"..string.format (gettext ("Top %s chat rankers"), table_sets ["ranklimit"]), table_cmnds ["chatranks"])
+susmenitm (usr, gettext ("Ranks").."\\"..string.format (gettext ("Top %d chat rankers"), table_sets ["ranklimit"]), table_cmnds ["chatranks"])
 susmenitm (usr, gettext ("Ranks").."\\"..gettext ("Your chat rank"), table_cmnds ["mychatrank"])
 smensep (usr)
 end
 
 if ucl >= table_sets ["sharerankclass"] then
-susmenitm (usr, gettext ("Ranks").."\\"..string.format (gettext ("Top %s share rankers"), table_sets ["ranklimit"]), table_cmnds ["shareranks"])
+susmenitm (usr, gettext ("Ranks").."\\"..string.format (gettext ("Top %d share rankers"), table_sets ["ranklimit"]), table_cmnds ["shareranks"])
 susmenitm (usr, gettext ("Ranks").."\\"..gettext ("Your share rank"), table_cmnds ["mysharerank"])
 smensep (usr)
 end
 
 if ucl >= table_sets ["oprankclass"] then
-susmenitm (usr, gettext ("Ranks").."\\"..string.format (gettext ("Top %s operator rankers"), table_sets ["ranklimit"]), table_cmnds ["opranks"])
+susmenitm (usr, gettext ("Ranks").."\\"..string.format (gettext ("Top %d operator rankers"), table_sets ["ranklimit"]), table_cmnds ["opranks"])
 
 if ucl >= 3 then
 sopmenitm (usr, gettext ("Ranks").."\\"..gettext ("Your operator rank"), table_cmnds ["myoprank"])
@@ -12597,12 +12587,12 @@ smensep (usr)
 end
 
 if ucl >= table_sets ["searrankclass"] then
-susmenitm (usr, gettext ("Ranks").."\\"..string.format (gettext ("Top %s search requests"), table_sets ["ranklimit"]), table_cmnds ["searranks"])
+susmenitm (usr, gettext ("Ranks").."\\"..string.format (gettext ("Top %d search requests"), table_sets ["ranklimit"]), table_cmnds ["searranks"])
 smensep (usr)
 end
 
 if ucl >= table_sets ["wordrankclass"] then
-susmenitm (usr, gettext ("Ranks").."\\"..string.format (gettext ("Top %s used words"), table_sets ["ranklimit"]), table_cmnds ["wordranks"])
+susmenitm (usr, gettext ("Ranks").."\\"..string.format (gettext ("Top %d used words"), table_sets ["ranklimit"]), table_cmnds ["wordranks"])
 smensep (usr)
 end
 
@@ -12996,7 +12986,7 @@ else
 	table_cmnds [orig] = cnew
 	VH:SQLQuery ("update `"..tbl_sql ["ledocmd"].."` set `new` = '"..repsqlchars (cnew).."' where `original` = '"..repsqlchars (orig).."' limit 1")
 	commandanswer (nick, string.format (gettext ("Customized script command: %s => %s"), orig, cnew))
-	opsnotify (table_sets ["classnoticom"], string.format (gettext ("%s with class %s customized script command: %s => %s"), nick, ucls, orig, cnew))
+	opsnotify (table_sets ["classnoticom"], string.format (gettext ("%s with class %d customized script command: %s => %s"), nick, ucls, orig, cnew))
 end
 end
 
@@ -13034,7 +13024,7 @@ for k, v in pairs (table_cmnds) do
 	end
 end
 
-commandanswer (nick, string.format (gettext ("%s custom commands were reset."), cnum))
+commandanswer (nick, string.format (gettext ("%d custom commands were reset."), cnum))
 end
 
 ----- ---- --- -- -
@@ -13491,7 +13481,7 @@ end
 		if num == true then
 			if (setto >= 0) and (setto <= 1440) then
 				if (setto > 0) and (table_sets ["showuseruptime"] == 0) then
-					commandanswer (nick, string.format (gettext ("In order to use this feature you need to set %s to: %s"), "showuseruptime", 1))
+					commandanswer (nick, string.format (gettext ("In order to use this feature you need to set %s to: %d"), "showuseruptime", 1))
 				end
 
 				ok = true
@@ -13508,7 +13498,7 @@ end
 		if num == true then
 			if (setto >= 0) and (setto <= 86400) then
 				if (setto > 0) and (table_sets ["showuseruptime"] == 0) then
-					commandanswer (nick, string.format (gettext ("In order to use this feature you need to set %s to: %s"), "showuseruptime", 1))
+					commandanswer (nick, string.format (gettext ("In order to use this feature you need to set %s to: %d"), "showuseruptime", 1))
 				end
 
 				ok = true
@@ -14143,7 +14133,7 @@ end
 					end
 
 					if table_othsets ["func_getusercity"] == false then
-						commandanswer (nick, string.format (gettext ("This feature requires %s or later installed on your system."), "Verlihub 1.0"))
+						commandanswer (nick, string.format (gettext ("This feature requires %s or later installed on your system."), "Verlihub 1.0.0"))
 					end
 				end
 
@@ -15070,7 +15060,7 @@ end
 		if num == true then
 			if (setto == 0) or (setto == 1) then
 				if (setto == 1) and (getconfig ("dns_lookup") == 0) then
-					commandanswer (nick, string.format (gettext ("In order to use this feature you need to enable DNS lookup. Do it by setting hub configuration variable %s to %s. Please note: Enabling DNS lookup might slow your hub performance down."), "dns_lookup", 1))
+					commandanswer (nick, string.format (gettext ("In order to use this feature you need to enable DNS lookup. Do it by setting hub configuration variable %s to %d. Please note: Enabling DNS lookup might slow your hub performance down."), "dns_lookup", 1))
 				end
 
 				ok = true
@@ -15873,7 +15863,7 @@ end
 
 if ok == true then -- finalize
 commandanswer (nick, string.format (gettext ("Changed configuration variable %s: %s => %s"), tvar, table_sets [tvar], setto))
-opsnotify (table_sets ["classnoticonfig"], string.format (gettext ("%s with class %s changed configuration variable %s: %s => %s"), nick, ucls, tvar, table_sets [tvar], setto))
+opsnotify (table_sets ["classnoticonfig"], string.format (gettext ("%s with class %d changed configuration variable %s: %s => %s"), nick, ucls, tvar, table_sets [tvar], setto))
 VH:SQLQuery ("update `"..tbl_sql ["conf"].."` set `value` = '"..repsqlchars (setto).."' where `variable` = '"..tvar.."' limit 1")
 table_sets [tvar] = setto
 oprankaccept (nick, ucls)
@@ -16110,11 +16100,11 @@ help = help.." "..optrig..table_cmnds ["ledostats"].." - "..gettext ("Ledokol st
 -- ranks
 help = help.." "..ustrig..table_cmnds ["mychatrank"].." - "..gettext ("Your chat rank").."\r\n"
 help = help.." "..ustrig..table_cmnds ["mysharerank"].." - "..gettext ("Your share rank").."\r\n"
-help = help.." "..ustrig..table_cmnds ["chatranks"].." - "..string.format (gettext ("Top %s chat rankers"), table_sets ["ranklimit"]).."\r\n"
-help = help.." "..ustrig..table_cmnds ["shareranks"].." - "..string.format (gettext ("Top %s share rankers"), table_sets ["ranklimit"]).."\r\n"
-help = help.." "..ustrig..table_cmnds ["opranks"].." - "..string.format (gettext ("Top %s operator rankers"), table_sets ["ranklimit"]).."\r\n"
-help = help.." "..ustrig..table_cmnds ["searranks"].." - "..string.format (gettext ("Top %s search requests"), table_sets ["ranklimit"]).."\r\n"
-help = help.." "..ustrig..table_cmnds ["wordranks"].." - "..string.format (gettext ("Top %s used words"), table_sets ["ranklimit"]).."\r\n"
+help = help.." "..ustrig..table_cmnds ["chatranks"].." - "..string.format (gettext ("Top %d chat rankers"), table_sets ["ranklimit"]).."\r\n"
+help = help.." "..ustrig..table_cmnds ["shareranks"].." - "..string.format (gettext ("Top %d share rankers"), table_sets ["ranklimit"]).."\r\n"
+help = help.." "..ustrig..table_cmnds ["opranks"].." - "..string.format (gettext ("Top %d operator rankers"), table_sets ["ranklimit"]).."\r\n"
+help = help.." "..ustrig..table_cmnds ["searranks"].." - "..string.format (gettext ("Top %d search requests"), table_sets ["ranklimit"]).."\r\n"
+help = help.." "..ustrig..table_cmnds ["wordranks"].." - "..string.format (gettext ("Top %d used words"), table_sets ["ranklimit"]).."\r\n"
 	help = help .. " " .. ustrig .. table_cmnds ["cclive"] .. " - " .. gettext ("Live user location statistics by country") .. "\r\n"
 	help = help .. " " .. ustrig .. table_cmnds ["citylive"] .. " <" .. gettext ("cc") .. "> - " .. gettext ("Live user location statistics by city") .. "\r\n"
 	help = help .. " " .. ustrig .. table_cmnds ["cchist"] .. " - " .. gettext ("All time user location statistics") .. "\r\n\r\n"
@@ -16202,7 +16192,7 @@ if table_sets ["statscollint"] > 0 then
 end
 
 stats = stats.."\r\n "..string.format (gettext ("Script memory usage: %s"), mu)
-stats = stats.."\r\n "..string.format (gettext ("Script size: %s lines in %s"), getownlinecnt (), makesize (getownsize (false, nil)))
+stats = stats.."\r\n "..string.format (gettext ("Script size: %d lines in %s"), getownlinecnt (), makesize (getownsize (false, nil)))
 
 if table_othsets ["func_getuptime"] == true then -- hub uptime
 	local ut = formatuptime ((os.time () - getuptime ()), true)
@@ -16222,7 +16212,7 @@ end
 	-- users
 
 	local uc = getusercount ()
-	local val = uc
+	local val = tostring (uc)
 
 	if table_sets ["statscollint"] > 0 then
 		local _, rows = VH:SQLQuery ("select `count` from `" .. tbl_sql ["stat"] .. "` where `type` = 'users_peak' limit 1")
@@ -16230,7 +16220,7 @@ end
 		if rows > 0 then
 			local _, puc = VH:SQLFetch (0)
 			puc = tonumber (puc) or 0
-			val = uc .. " ][ " .. puc
+			val = val .. " ][ " .. tostring (puc)
 		end
 	end
 
@@ -16271,30 +16261,30 @@ end
 	end
 
 stats = stats.."\r\n "..string.format (gettext ("Configuration directory: %s"), table_othsets ["cfgdir"])
-stats = stats.."\r\n "..string.format (gettext ("Open files limit: %s"), (getulimit () or gettext ("Unknown")))
+stats = stats.."\r\n "..string.format (gettext ("Open files limit: %d"), (getulimit () or 0))
 stats = stats.."\r\n"
-stats = stats.."\r\n "..string.format (gettext ("Total chat rank points: %s"), cntchatran)
+stats = stats.."\r\n "..string.format (gettext ("Total chat rank points: %d"), cntchatran)
 stats = stats.."\r\n "..string.format (gettext ("Total share rank size: %s"), makesize (countranks (tbl_sql ["shran"])))
-stats = stats.."\r\n "..string.format (gettext ("Total operator rank points: %s"), countranks (tbl_sql ["opran"]))
-stats = stats.."\r\n "..string.format (gettext ("Total search rank points: %s"), countranks (tbl_sql ["srran"]))
-stats = stats.."\r\n "..string.format (gettext ("Total word rank points: %s"), countranks (tbl_sql ["wdran"]))
-stats = stats.."\r\n "..string.format (gettext ("Average message count per user: %s"), roundint (mesperuser, 2))
+stats = stats.."\r\n "..string.format (gettext ("Total operator rank points: %d"), countranks (tbl_sql ["opran"]))
+stats = stats.."\r\n "..string.format (gettext ("Total search rank points: %d"), countranks (tbl_sql ["srran"]))
+stats = stats.."\r\n "..string.format (gettext ("Total word rank points: %d"), countranks (tbl_sql ["wdran"]))
+stats = stats.."\r\n "..string.format (gettext ("Average message count per user: %.2f"), roundint (mesperuser, 2))
 stats = stats.."\r\n"
-stats = stats.."\r\n "..string.format (gettext ("Size of kicks table: %s [ %s: %s @ %s ]"), counttable ("kicklist"), "C", (getledoconf ("limcleankick") or 0), fromunixtime ((getledoconf ("lastcleankick") or 0), true))
-stats = stats.."\r\n "..string.format (gettext ("Size of bans table: %s [ %s: %s @ %s ]"), counttable ("banlist"), "C", (getledoconf ("limcleanban") or 0), fromunixtime ((getledoconf ("lastcleanban") or 0), true))
-stats = stats.."\r\n "..string.format (gettext ("Size of unbans table: %s [ %s: %s @ %s ]"), counttable ("unbanlist"), "C", (getledoconf ("limcleanunban") or 0), fromunixtime ((getledoconf ("lastcleanunban") or 0), true))
-stats = stats.."\r\n "..string.format (gettext ("Size of registered users table: %s [ %s: %s @ %s ]"), counttable ("reglist"), "C", (getledoconf ("limcleanreg") or 0), fromunixtime ((getledoconf ("lastcleanreg") or 0), true))
-stats = stats.."\r\n "..string.format (gettext ("Size of user log table: %s [ %s: %s @ %s ]"), counttable (tbl_sql ["ulog"]), "C", (getledoconf ("limcleanulog") or 0), fromunixtime ((getledoconf ("lastcleanulog") or 0), true))
-stats = stats.."\r\n "..string.format (gettext ("Size of command log table: %s [ %s: %s @ %s ]"), counttable (tbl_sql ["clog"]), "C", (getledoconf ("limcleanclog") or 0), fromunixtime ((getledoconf ("lastcleanclog") or 0), true))
-stats = stats.."\r\n "..string.format (gettext ("Size of release table: %s [ %s: %s @ %s ]"), counttable (tbl_sql ["rel"]), "C", (getledoconf ("limcleanrel") or 0), fromunixtime ((getledoconf ("lastcleanrel") or 0), true))
-stats = stats.."\r\n "..string.format (gettext ("Size of chat ranks table: %s [ %s: %s @ %s ]"), counttable (tbl_sql ["chran"]), "C", (getledoconf ("limcleanchran") or 0), fromunixtime ((getledoconf ("lastcleanchran") or 0), true))
-stats = stats.."\r\n "..string.format (gettext ("Size of share ranks table: %s [ %s: %s @ %s ]"), counttable (tbl_sql ["shran"]), "C", (getledoconf ("limcleanshran") or 0), fromunixtime ((getledoconf ("lastcleanshran") or 0), true))
-stats = stats.."\r\n "..string.format (gettext ("Size of operator ranks table: %s [ %s: %s @ %s ]"), counttable (tbl_sql ["opran"]), "C", (getledoconf ("limcleanopran") or 0), fromunixtime ((getledoconf ("lastcleanopran") or 0), true))
-stats = stats.."\r\n "..string.format (gettext ("Size of search ranks table: %s [ %s: %s @ %s ]"), counttable (tbl_sql ["srran"]), "C", (getledoconf ("limcleansrran") or 0), fromunixtime ((getledoconf ("lastcleansrran") or 0), true))
-stats = stats.."\r\n "..string.format (gettext ("Size of word ranks table: %s [ %s: %s @ %s ]"), counttable (tbl_sql ["wdran"]), "C", (getledoconf ("limcleanwdran") or 0), fromunixtime ((getledoconf ("lastcleanwdran") or 0), true))
-stats = stats.."\r\n "..string.format (gettext ("Size of user location statistics table: %s [ %s: %s ]"), counttable (tbl_sql ["ccstat"]), "C", fromunixtime ((getledoconf ("date_ccstats") or 0), true))
-stats = stats.."\r\n "..string.format (gettext ("Size of IP logger plugin table: %s [ %s: %s @ %s ]"), counttable ("pi_iplog"), "C", (getledoconf ("limcleaniplog") or 0), fromunixtime ((getledoconf ("lastcleaniplog") or 0), true))
-stats = stats.."\r\n "..string.format (gettext ("Size of statistics plugin table: %s [ %s: %s @ %s ]"), counttable ("pi_stats"), "C", (getledoconf ("limcleanstats") or 0), fromunixtime ((getledoconf ("lastcleanstats") or 0), true)).."\r\n"
+stats = stats.."\r\n "..string.format (gettext ("Size of kicks table: %d [ %s: %d @ %s ]"), counttable ("kicklist"), "C", (getledoconf ("limcleankick") or 0), fromunixtime ((getledoconf ("lastcleankick") or 0), true))
+stats = stats.."\r\n "..string.format (gettext ("Size of bans table: %d [ %s: %d @ %s ]"), counttable ("banlist"), "C", (getledoconf ("limcleanban") or 0), fromunixtime ((getledoconf ("lastcleanban") or 0), true))
+stats = stats.."\r\n "..string.format (gettext ("Size of unbans table: %d [ %s: %d @ %s ]"), counttable ("unbanlist"), "C", (getledoconf ("limcleanunban") or 0), fromunixtime ((getledoconf ("lastcleanunban") or 0), true))
+stats = stats.."\r\n "..string.format (gettext ("Size of registered users table: %d [ %s: %d @ %s ]"), counttable ("reglist"), "C", (getledoconf ("limcleanreg") or 0), fromunixtime ((getledoconf ("lastcleanreg") or 0), true))
+stats = stats.."\r\n "..string.format (gettext ("Size of user log table: %d [ %s: %d @ %s ]"), counttable (tbl_sql ["ulog"]), "C", (getledoconf ("limcleanulog") or 0), fromunixtime ((getledoconf ("lastcleanulog") or 0), true))
+stats = stats.."\r\n "..string.format (gettext ("Size of command log table: %d [ %s: %d @ %s ]"), counttable (tbl_sql ["clog"]), "C", (getledoconf ("limcleanclog") or 0), fromunixtime ((getledoconf ("lastcleanclog") or 0), true))
+stats = stats.."\r\n "..string.format (gettext ("Size of release table: %d [ %s: %d @ %s ]"), counttable (tbl_sql ["rel"]), "C", (getledoconf ("limcleanrel") or 0), fromunixtime ((getledoconf ("lastcleanrel") or 0), true))
+stats = stats.."\r\n "..string.format (gettext ("Size of chat ranks table: %d [ %s: %d @ %s ]"), counttable (tbl_sql ["chran"]), "C", (getledoconf ("limcleanchran") or 0), fromunixtime ((getledoconf ("lastcleanchran") or 0), true))
+stats = stats.."\r\n "..string.format (gettext ("Size of share ranks table: %d [ %s: %d @ %s ]"), counttable (tbl_sql ["shran"]), "C", (getledoconf ("limcleanshran") or 0), fromunixtime ((getledoconf ("lastcleanshran") or 0), true))
+stats = stats.."\r\n "..string.format (gettext ("Size of operator ranks table: %d [ %s: %d @ %s ]"), counttable (tbl_sql ["opran"]), "C", (getledoconf ("limcleanopran") or 0), fromunixtime ((getledoconf ("lastcleanopran") or 0), true))
+stats = stats.."\r\n "..string.format (gettext ("Size of search ranks table: %d [ %s: %d @ %s ]"), counttable (tbl_sql ["srran"]), "C", (getledoconf ("limcleansrran") or 0), fromunixtime ((getledoconf ("lastcleansrran") or 0), true))
+stats = stats.."\r\n "..string.format (gettext ("Size of word ranks table: %d [ %s: %d @ %s ]"), counttable (tbl_sql ["wdran"]), "C", (getledoconf ("limcleanwdran") or 0), fromunixtime ((getledoconf ("lastcleanwdran") or 0), true))
+stats = stats.."\r\n "..string.format (gettext ("Size of user location statistics table: %d [ %s: %s ]"), counttable (tbl_sql ["ccstat"]), "C", fromunixtime ((getledoconf ("date_ccstats") or 0), true))
+stats = stats.."\r\n "..string.format (gettext ("Size of IP logger plugin table: %d [ %s: %d @ %s ]"), counttable ("pi_iplog"), "C", (getledoconf ("limcleaniplog") or 0), fromunixtime ((getledoconf ("lastcleaniplog") or 0), true))
+stats = stats.."\r\n "..string.format (gettext ("Size of statistics plugin table: %d [ %s: %d @ %s ]"), counttable ("pi_stats"), "C", (getledoconf ("limcleanstats") or 0), fromunixtime ((getledoconf ("lastcleanstats") or 0), true)).."\r\n"
 
 commandanswer (nick, stats)
 end
@@ -17074,8 +17064,8 @@ function gettext (data)
 
 				if orig and tran and orig == data then
 					if # tran > 0 then
-						local _, cori = orig:gsub ("%%[sdf]", "")
-						local _, ctra = tran:gsub ("%%[sdf]", "")
+						local _, cori = orig:gsub ("%%[%.%dsdf]+", "")
+						local _, ctra = tran:gsub ("%%[%.%dsdf]+", "")
 
 						if cori == ctra then
 							return repnmdcoutchars (tran)
@@ -17300,7 +17290,7 @@ function loadavdb ()
 			os.remove (table_othsets ["cfgdir"] .. table_othsets ["tmpfile"])
 
 			if table_sets ["avfeedverb"] == 3 then
-				opsnotify (table_sets ["classnotiav"], gettext ("Successfully loaded %s items: %s"):format (lint, "AVDB"))
+				opsnotify (table_sets ["classnotiav"], gettext ("Successfully loaded %d items: %s"):format (lint, "AVDB"))
 			end
 		elseif table_sets ["avfeedverb"] == 3 then
 			opsnotify (table_sets ["classnotiav"], gettext ("Failed to load information from %s: %s"):format ("AVDB", gettext ("Error on connecting.")))
@@ -17729,7 +17719,7 @@ function getrandomnick ()
 		table.insert (users, user)
 	end
 
-	return users [math.random (table.getn (users))]
+	return users [math.random (# users)]
 end
 
 ----- ---- --- -- -
@@ -17857,7 +17847,7 @@ function dropallbyip (ip)
 		VH:Disconnect (u)
 	end
 
-	return table.getn (ul)
+	return # ul
 end
 
 ----- ---- --- -- -
@@ -17869,7 +17859,7 @@ function kickallbyip (ip, rsn)
 		VH:KickUser (table_othsets ["sendfrom"], u, rsn)
 	end
 
-	return table.getn (ul)
+	return ul
 end
 
 ----- ---- --- -- -
@@ -18756,14 +18746,14 @@ function antiscan (nick, class, data, where, to, status)
 						opsnotify (table_sets ["classnotiledoact"], ferr)
 					elseif fval then
 						VH:SQLQuery ("update `" .. tbl_sql ["antiex"] .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (value) .. "' limit 1")
-						local note = "Spam exception from %s with IP %s and class %s in MC: %s"
+						local note = "Spam exception from %s with IP %s and class %d in MC: %s"
 
 						if where == 2 then
-							note = "Spam exception from %s with IP %s and class %s in PM: %s"
+							note = "Spam exception from %s with IP %s and class %d in PM: %s"
 						elseif where == 3 then
-							note = "Spam exception from %s with IP %s and class %s in offline message: %s"
+							note = "Spam exception from %s with IP %s and class %d in offline message: %s"
 						elseif where == 4 then
-							note = "Spam exception from %s with IP %s and class %s in report: %s"
+							note = "Spam exception from %s with IP %s and class %d in report: %s"
 						end
 
 						local mtip = getip (nick)
@@ -18776,14 +18766,14 @@ function antiscan (nick, class, data, where, to, status)
 			action = tonumber (action)
 
 			if action == 5 then
-				local note = "Spam notification from %s with IP %s and class %s in MC: %s"
+				local note = "Spam notification from %s with IP %s and class %d in MC: %s"
 
 				if where == 2 then
-					note = "Spam notification from %s with IP %s and class %s in PM: %s"
+					note = "Spam notification from %s with IP %s and class %d in PM: %s"
 				elseif where == 3 then
-					note = "Spam notification from %s with IP %s and class %s in offline message: %s"
+					note = "Spam notification from %s with IP %s and class %d in offline message: %s"
 				elseif where == 4 then
-					note = "Spam notification from %s with IP %s and class %s in report: %s"
+					note = "Spam notification from %s with IP %s and class %d in report: %s"
 				end
 
 				local mtip = getip (nick)
@@ -18832,14 +18822,14 @@ function antiscan (nick, class, data, where, to, status)
 				end
 			end
 
-			local note = "Spam from %s with IP %s and class %s in MC: %s"
+			local note = "Spam from %s with IP %s and class %d in MC: %s"
 
 			if where == 2 then
-				note = "Spam from %s with IP %s and class %s in PM: %s"
+				note = "Spam from %s with IP %s and class %d in PM: %s"
 			elseif where == 3 then
-				note = "Spam from %s with IP %s and class %s in offline message: %s"
+				note = "Spam from %s with IP %s and class %d in offline message: %s"
 			elseif where == 4 then
-				note = "Spam from %s with IP %s and class %s in report: %s"
+				note = "Spam from %s with IP %s and class %d in report: %s"
 			end
 
 			local ip = getip (nick)
@@ -18865,7 +18855,7 @@ function antiscan (nick, class, data, where, to, status)
 				VH:KickUser (table_othsets ["sendfrom"], nick, reason .. "     #_ban_" .. table_sets ["seventhacttime"])
 			elseif action == 8 then -- gag ip
 				gagipadd (nil, ip .. " " .. tostring (where))
-				opsnotify (table_sets ["classnotianti"], string.format (gettext ("Added %s to IP gag list, %s users in total."), ip .. tryipcc (ip, nick), table.getn (getusersbyip (ip, table_sets ["scanbelowclass"]))))
+				opsnotify (table_sets ["classnotianti"], string.format (gettext ("Added %s to IP gag list, %d users in total."), ip .. tryipcc (ip, nick), # getusersbyip (ip, table_sets ["scanbelowclass"])))
 			elseif action == 9 then -- replace
 				if where == 1 then -- mc
 					opsnotify (table_sets ["classnotianti"], string.format (gettext ("Main chat message replaced for user: %s"), nick))
@@ -18874,7 +18864,7 @@ function antiscan (nick, class, data, where, to, status)
 				end
 			elseif action == 10 then -- hard ban
 				addhban (nil, repexdots (ip) .. "$ \"" .. entry .. "\"")
-				opsnotify (table_sets ["classnotianti"], string.format (gettext ("Added %s to hard ban list, %s users in total."), ip, table.getn (getusersbyip (ip, table_sets ["scanbelowclass"]))))
+				opsnotify (table_sets ["classnotianti"], string.format (gettext ("Added %s to hard ban list, %d users in total."), ip, # getusersbyip (ip, table_sets ["scanbelowclass"])))
 				VH:Disconnect (nick)
 			end
 
@@ -18946,24 +18936,24 @@ function sefiscan (nick, srch, cls, ip)
 						opsnotify (table_sets ["classnotiledoact"], ferr)
 					elseif fval then
 						VH:SQLQuery ("update `" .. tbl_sql ["sefiex"] .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (v) .. "' limit 1")
-						local note = "Search request exception from %s with IP %s and class %s as any file: %s"
+						local note = "Search request exception from %s with IP %s and class %d as any file: %s"
 
 						if tp == 2 then
-							note = "Search request exception from %s with IP %s and class %s as audio file: %s"
+							note = "Search request exception from %s with IP %s and class %d as audio file: %s"
 						elseif tp == 3 then
-							note = "Search request exception from %s with IP %s and class %s as compressed file: %s"
+							note = "Search request exception from %s with IP %s and class %d as compressed file: %s"
 						elseif tp == 4 then
-							note = "Search request exception from %s with IP %s and class %s as document: %s"
+							note = "Search request exception from %s with IP %s and class %d as document: %s"
 						elseif tp == 5 then
-							note = "Search request exception from %s with IP %s and class %s as executable: %s"
+							note = "Search request exception from %s with IP %s and class %d as executable: %s"
 						elseif tp == 6 then
-							note = "Search request exception from %s with IP %s and class %s as picture: %s"
+							note = "Search request exception from %s with IP %s and class %d as picture: %s"
 						elseif tp == 7 then
-							note = "Search request exception from %s with IP %s and class %s as video: %s"
+							note = "Search request exception from %s with IP %s and class %d as video: %s"
 						elseif tp == 8 then
-							note = "Search request exception from %s with IP %s and class %s as folder: %s"
+							note = "Search request exception from %s with IP %s and class %d as folder: %s"
 						elseif tp == 9 then
-							note = "Search request exception from %s with IP %s and class %s as TTH: %s"
+							note = "Search request exception from %s with IP %s and class %d as TTH: %s"
 						end
 
 						opsnotify (table_sets ["classnotiex"], string.format (gettext (note), nick, ip .. tryipcc (ip, nick), cls, str))
@@ -18975,24 +18965,24 @@ function sefiscan (nick, srch, cls, ip)
 			act = tonumber (act)
 
 			if act == 5 then
-				local note = "Search request notification from %s with IP %s and class %s as any file: %s"
+				local note = "Search request notification from %s with IP %s and class %d as any file: %s"
 
 				if tp == 2 then
-					note = "Search request notification from %s with IP %s and class %s as audio file: %s"
+					note = "Search request notification from %s with IP %s and class %d as audio file: %s"
 				elseif tp == 3 then
-					note = "Search request notification from %s with IP %s and class %s as compressed file: %s"
+					note = "Search request notification from %s with IP %s and class %d as compressed file: %s"
 				elseif tp == 4 then
-					note = "Search request notification from %s with IP %s and class %s as document: %s"
+					note = "Search request notification from %s with IP %s and class %d as document: %s"
 				elseif tp == 5 then
-					note = "Search request notification from %s with IP %s and class %s as executable: %s"
+					note = "Search request notification from %s with IP %s and class %d as executable: %s"
 				elseif tp == 6 then
-					note = "Search request notification from %s with IP %s and class %s as picture: %s"
+					note = "Search request notification from %s with IP %s and class %d as picture: %s"
 				elseif tp == 7 then
-					note = "Search request notification from %s with IP %s and class %s as video: %s"
+					note = "Search request notification from %s with IP %s and class %d as video: %s"
 				elseif tp == 8 then
-					note = "Search request notification from %s with IP %s and class %s as folder: %s"
+					note = "Search request notification from %s with IP %s and class %d as folder: %s"
 				elseif tp == 9 then
-					note = "Search request notification from %s with IP %s and class %s as TTH: %s"
+					note = "Search request notification from %s with IP %s and class %d as TTH: %s"
 				end
 
 				opsnotify (table_sets ["classnotisefi"], string.format (gettext (note), nick, ip .. tryipcc (ip, nick), cls, str))
@@ -19004,24 +18994,24 @@ function sefiscan (nick, srch, cls, ip)
 				commandanswer (nick, rsn)
 			end
 
-			local note = "Bad search request from %s with IP %s and class %s as any file: %s"
+			local note = "Bad search request from %s with IP %s and class %d as any file: %s"
 
 			if tp == 2 then
-				note = "Bad search request from %s with IP %s and class %s as audio file: %s"
+				note = "Bad search request from %s with IP %s and class %d as audio file: %s"
 			elseif tp == 3 then
-				note = "Bad search request from %s with IP %s and class %s as compressed file: %s"
+				note = "Bad search request from %s with IP %s and class %d as compressed file: %s"
 			elseif tp == 4 then
-				note = "Bad search request from %s with IP %s and class %s as document: %s"
+				note = "Bad search request from %s with IP %s and class %d as document: %s"
 			elseif tp == 5 then
-				note = "Bad search request from %s with IP %s and class %s as executable: %s"
+				note = "Bad search request from %s with IP %s and class %d as executable: %s"
 			elseif tp == 6 then
-				note = "Bad search request from %s with IP %s and class %s as picture: %s"
+				note = "Bad search request from %s with IP %s and class %d as picture: %s"
 			elseif tp == 7 then
-				note = "Bad search request from %s with IP %s and class %s as video: %s"
+				note = "Bad search request from %s with IP %s and class %d as video: %s"
 			elseif tp == 8 then
-				note = "Bad search request from %s with IP %s and class %s as folder: %s"
+				note = "Bad search request from %s with IP %s and class %d as folder: %s"
 			elseif tp == 9 then
-				note = "Bad search request from %s with IP %s and class %s as TTH: %s"
+				note = "Bad search request from %s with IP %s and class %d as TTH: %s"
 			end
 
 			opsnotify (table_sets ["classnotisefi"], string.format (gettext (note), nick, ip .. tryipcc (ip, nick), cls, str))
