@@ -4085,7 +4085,7 @@ end
 
 		if size > 0 then
 			for _, data in pairs (table_avlo) do
-				if nick == data ["nick"] and ip == data ["addr"] and data ["size"] == size then
+				if nick == data ["nick"] and ip == data ["addr"] and size == data ["size"] then
 					opsnotify (table_sets ["classnotiav"], gettext ("Infected user logged in with IP %s and share %s: %s"):format (ip .. tryipcc (ip, nick), makesize (size), nick))
 					VH:KickUser (table_othsets ["sendfrom"], nick, table_sets ["avkicktext"])
 
@@ -17290,13 +17290,45 @@ function loadavdb ()
 			os.remove (table_othsets ["cfgdir"] .. table_othsets ["tmpfile"])
 
 			if table_sets ["avfeedverb"] == 3 then
-				opsnotify (table_sets ["classnotiav"], gettext ("Successfully loaded %d items: %s"):format (lint, "AVDB"))
+				if lint > 0 then
+					opsnotify (table_sets ["classnotiav"], gettext ("Successfully loaded %d items: %s"):format (lint, "AVDB"))
+					avdbcheckall () -- check all users when we get fresh db
+				else
+					opsnotify (table_sets ["classnotiav"], gettext ("No items were loaded: %s"):format ("AVDB"))
+				end
 			end
 		elseif table_sets ["avfeedverb"] == 3 then
 			opsnotify (table_sets ["classnotiav"], gettext ("Failed to load information from %s: %s"):format ("AVDB", gettext ("Error on connecting.")))
 		end
 	elseif table_sets ["avfeedverb"] == 3 then
 		opsnotify (table_sets ["classnotiav"], gettext ("Failed to load information from %s: %s"):format ("AVDB", gettext ("Error on executing %s: %s"):format ("cURL", repnmdcoutchars (err or gettext ("No error message specified.")))))
+	end
+end
+
+----- ---- --- -- -
+
+function avdbcheckall ()
+	for nick in getnicklist ():gmatch ("([^%$ ]+)") do
+		if not isbot (nick) then
+			local class = getclass (nick)
+
+			if class >= 0 and class < table_sets ["scanbelowclass"] then
+				local addr = getip (nick)
+
+				if not isprotected (nick, addr) then
+					local size = parsemyinfoshare (getmyinfo (nick))
+
+					if size > 0 then
+						for _, data in pairs (table_avlo) do
+							if nick == data ["nick"] and addr == data ["addr"] and size == data ["size"] then
+								opsnotify (table_sets ["classnotiav"], gettext ("Infected user found with IP %s and share %s: %s"):format (addr .. tryipcc (addr, nick), makesize (size), nick))
+								VH:KickUser (table_othsets ["sendfrom"], nick, table_sets ["avkicktext"])
+							end
+						end
+					end
+				end
+			end
+		end
 	end
 end
 
