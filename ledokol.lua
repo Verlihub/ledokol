@@ -4085,7 +4085,7 @@ end
 
 		if size > 0 then
 			for _, data in pairs (table_avlo) do
-				if nick == data ["nick"] and ip == data ["addr"] and size == data ["size"] then
+				if nick == data ["nick"] and ip == data ["addr"] then
 					opsnotify (table_sets ["classnotiav"], gettext ("Infected user logged in with IP %s and share %s: %s"):format (ip .. tryipcc (ip, nick), makesize (size), nick))
 					VH:KickUser (table_othsets ["sendfrom"], nick, table_sets ["avkicktext"])
 
@@ -4414,12 +4414,18 @@ function VH_OnParsedMsgSR (nick, data)
 															avfi:close ()
 
 															if avre then
-																if tostring (avre) == "0" then
+																avre = tostring (avre)
+
+																if avre == "1" then
+																	if table_sets ["avfeedverb"] == 3 then
+																		opsnotify (table_sets ["classnotiav"], gettext ("Successfully sent infected user information to %s: %s"):format ("AVDB", nick))
+																	end
+																elseif avre == "0" then
 																	table_sets ["avsendtodb"] = 0
 																	VH:SQLQuery ("update `" .. tbl_sql ["conf"] .. "` set `value` = '0' where `variable` = 'avsendtodb'")
 																	opsnotify (table_sets ["classnotiav"], gettext ("Sadly I don't have access to send infected user information to AVDB, please ask maintainer of this script to add your server IP address to access list. AVDB reporting feature has been automatically disabled."))
 																elseif table_sets ["avfeedverb"] == 3 then
-																	opsnotify (table_sets ["classnotiav"], gettext ("Successfully sent infected user information to %s: %s"):format ("AVDB", nick))
+																	opsnotify (table_sets ["classnotiav"], gettext ("Failed to send information to %s: %s"):format ("AVDB", gettext ("Server didn't reply with expected status code.")))
 																end
 															elseif table_sets ["avfeedverb"] == 3 then
 																opsnotify (table_sets ["classnotiav"], gettext ("Failed to send information to %s: %s"):format ("AVDB", gettext ("Error on reading temporary file: %s"):format (repnmdcoutchars (err or gettext ("No error message specified.")))))
@@ -17272,14 +17278,12 @@ function loadavdb ()
 			local lint = 0
 
 			for avli in avfi:lines () do
-				local _, _, avni, avip, avsi, avti = avli:find ("^([^ ]+)|(%d+%.%d+%.%d+%.%d+)|(%d+)|(%d+)$")
+				local _, _, avni, avip = avli:find ("^([^ ]+)|(%d+%.%d+%.%d+%.%d+)|%d+|%d+$")
 
-				if avni and avip and avsi and avti then
+				if avni and avip then
 					table.insert (table_avlo, {
 						["nick"] = avni,
-						["addr"] = avip,
-						["size"] = tonumber (avsi),
-						["time"] = tonumber (avti)
+						["addr"] = avip
 					})
 
 					lint = lint + 1
@@ -17309,21 +17313,19 @@ end
 
 function avdbcheckall ()
 	for nick in getnicklist ():gmatch ("([^%$ ]+)") do
-		if not isbot (nick) then
-			local class = getclass (nick)
+		local class = getclass (nick)
 
-			if class >= 0 and class < table_sets ["scanbelowclass"] then
-				local addr = getip (nick)
+		if class >= 0 and class < table_sets ["scanbelowclass"] then
+			local addr = getip (nick)
 
-				if not isprotected (nick, addr) then
-					local size = parsemyinfoshare (getmyinfo (nick))
+			if addr ~= "0.0.0.0" and not isprotected (nick, addr) then
+				local size = parsemyinfoshare (getmyinfo (nick))
 
-					if size > 0 then
-						for _, data in pairs (table_avlo) do
-							if nick == data ["nick"] and addr == data ["addr"] and size == data ["size"] then
-								opsnotify (table_sets ["classnotiav"], gettext ("Infected user found with IP %s and share %s: %s"):format (addr .. tryipcc (addr, nick), makesize (size), nick))
-								VH:KickUser (table_othsets ["sendfrom"], nick, table_sets ["avkicktext"])
-							end
+				if size > 0 then
+					for _, data in pairs (table_avlo) do
+						if nick == data ["nick"] and addr == data ["addr"] then
+							opsnotify (table_sets ["classnotiav"], gettext ("Infected user found with IP %s and share %s: %s"):format (addr .. tryipcc (addr, nick), makesize (size), nick))
+							VH:KickUser (table_othsets ["sendfrom"], nick, table_sets ["avkicktext"])
 						end
 					end
 				end
