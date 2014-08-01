@@ -1015,3 +1015,4 @@ Error on reading temporary file: %s|
 Error on connecting.|
 No items were loaded: %s|
 Infected user found with IP %s and share %s: %s|
+Server didn't reply with expected status code.|
