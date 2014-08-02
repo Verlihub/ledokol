@@ -48,7 +48,7 @@ over sixty different features for Verlihub.
 
 Neolo, Uhlik, Astronomik, LadyStardust, Seth, Molotov, burek,
 Hungarista, Stefani, Aethra, netcelli, TheBoss, Maximum, BulleT,
-Doxtur, chaos, sphinx, Zorro, W1ZaRd, S0RiN, MaxFox
+Doxtur, chaos, sphinx, Zorro, W1ZaRd, S0RiN, MaxFox, Krzychu
 
 ---------------------------------------------------------------------
 ]]-- special thanks to <<
@@ -18551,17 +18551,17 @@ end
 function prezero (ml, cl)
 	local zr = ""
 
-	for x = 1, ml - string.len (cl) do
-		zr = zr.."0"
+	for x = 1, ml - # tostring (cl) do
+		zr = zr .. "0"
 	end
 
-	return zr..cl
+	return zr .. cl
 end
 
 ----- ---- --- -- -
 
-function roundint (int, len)
-	local nint = tonumber (string.format ("%."..(len or 0).."f", int))
+function roundint (int, num)
+	local nint = tonumber (string.format ("%." .. (num or 0) .. "f", int))
 	return nint
 end
 
@@ -18578,33 +18578,33 @@ end
 ----- ---- --- -- -
 
 function makesize (bytes)
-local b = tonumber (bytes) or 0
+	local b = tonumber (bytes) or 0
 
-if b >= 1152921504606846976 then -- eib
-	return roundint (b / 1152921504606846976, 2).." "..gettext ("EiB")
-end
+	if b >= 1152921504606846976 then -- eib
+		return roundint (b / 1152921504606846976, 2) .. " " .. gettext ("EiB")
+	end
 
-if b >= 1125899906842624 then -- pib
-	return roundint (b / 1125899906842624, 2).." "..gettext ("PiB")
-end
+	if b >= 1125899906842624 then -- pib
+		return roundint (b / 1125899906842624, 2) .. " " .. gettext ("PiB")
+	end
 
-if b >= 1099511627776 then -- tib
-	return roundint (b / 1099511627776, 2).." "..gettext ("TiB")
-end
+	if b >= 1099511627776 then -- tib
+		return roundint (b / 1099511627776, 2) .. " " .. gettext ("TiB")
+	end
 
-if b >= 1073741824 then -- gib
-	return roundint (b / 1073741824, 2).." "..gettext ("GiB")
-end
+	if b >= 1073741824 then -- gib
+		return roundint (b / 1073741824, 2) .. " " .. gettext ("GiB")
+	end
 
-if b >= 1048576 then -- mib
-	return roundint (b / 1048576, 2).." "..gettext ("MiB")
-end
+	if b >= 1048576 then -- mib
+		return roundint (b / 1048576, 2) .. " " .. gettext ("MiB")
+	end
 
-if b >= 1024 then -- kib
-	return roundint (b / 1024, 2).." "..gettext ("KiB")
-end
+	if b >= 1024 then -- kib
+		return roundint (b / 1024, 2) .. " " .. gettext ("KiB")
+	end
 
-return b.." "..gettext ("B")
+	return tostring (b) .. " " .. gettext ("B")
 end
 
 ----- ---- --- -- -
@@ -18620,40 +18620,42 @@ function formatuptime (uptime, fmt)
 	else -- long
 		if t.month > 0 then
 			if t.month == 1 then
-				ret = ret .. t.month .. " " .. gettext ("month") .. " "
+				ret = ret .. tostring (t.month) .. " " .. gettext ("month") .. " "
 			else
-				ret = ret .. t.month .. " " .. gettext ("months") .. " "
+				ret = ret .. tostring (t.month) .. " " .. gettext ("months") .. " "
 			end
 		end
 
 		if t.day > 0 then
 			if t.day == 1 then
-				ret = ret .. t.day .. " " .. gettext ("day") .. " "
+				ret = ret .. tostring (t.day) .. " " .. gettext ("day") .. " "
 			else
-				ret = ret .. t.day .. " " .. gettext ("days") .. " "
+				ret = ret .. tostring (t.day) .. " " .. gettext ("days") .. " "
 			end
 		end
 
 		if t.hour > 0 then
 			if t.hour == 1 then
-				ret = ret .. t.hour .. " " .. gettext ("hour") .. " "
+				ret = ret .. tostring (t.hour) .. " " .. gettext ("hour") .. " "
 			else
-				ret = ret .. t.hour .. " " .. gettext ("hours") .. " "
+				ret = ret .. tostring (t.hour) .. " " .. gettext ("hours") .. " "
 			end
 		end
 
 		if t.min > 0 then
 			if t.min == 1 then
-				ret = ret .. t.min .. " " .. gettext ("minute") .. " "
+				ret = ret .. tostring (t.min) .. " " .. gettext ("minute") .. " "
 			else
-				ret = ret .. t.min .. " " .. gettext ("minutes") .. " "
+				ret = ret .. tostring (t.min) .. " " .. gettext ("minutes") .. " "
 			end
 		end
 
-		if t.sec == 1 then
-			ret = ret .. t.sec .. " " .. gettext ("second")
-		else
-			ret = ret .. t.sec .. " " .. gettext ("seconds")
+		if # ret == 0 or t.sec > 0 then
+			if t.sec == 1 then
+				ret = ret .. tostring (t.sec) .. " " .. gettext ("second")
+			else
+				ret = ret .. tostring (t.sec) .. " " .. gettext ("seconds")
+			end
 		end
 	end
 
