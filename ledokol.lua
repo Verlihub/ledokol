@@ -18650,12 +18650,16 @@ function formatuptime (uptime, fmt)
 			end
 		end
 
-		if # ret == 0 or t.sec > 0 then
+		local ren = # ret
+
+		if ren == 0 or t.sec > 0 then
 			if t.sec == 1 then
 				ret = ret .. tostring (t.sec) .. " " .. gettext ("second")
 			else
 				ret = ret .. tostring (t.sec) .. " " .. gettext ("seconds")
 			end
+		elseif ren > 0 then
+			ret = ret:sub (1, -2) -- get rid of the space
 		end
 	end
 
