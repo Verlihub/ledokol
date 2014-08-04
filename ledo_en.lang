@@ -1017,3 +1017,5 @@ No items were loaded: %s|
 Infected user found with IP %s and share %s: %s|
 Server didn't reply with expected status code.|
 Size of %s: %d @ %s|
+Clear kick votes for user|
+%s cleared %d of %d votes for kicking user with class %d: %s|
