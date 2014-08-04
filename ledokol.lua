@@ -536,6 +536,7 @@ table_cmnds = {
 	["clog"] = "clog",
 	["dropip"] = "dropip",
 	["votekick"] = "votekick",
+	["votekickdel"] = "votekickdel",
 	["gagipadd"] = "gagipadd",
 	["gagipdel"] = "gagipdel",
 	["gagiplist"] = "gagiplist",
@@ -1059,6 +1060,7 @@ function Main (file)
 						VH:SQLQuery ("create table if not exists `" .. tbl_sql ["ccgag"] .. "` (`cc` varchar(2) not null, `flag` tinyint(1) unsigned not null default 0, primary key (`cc`)) engine = myisam default character set utf8 collate utf8_unicode_ci")
 
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["ledocmd"] .. "` (`original`, `new`) values ('" .. repsqlchars ("avstats") .. "', '" .. repsqlchars (table_cmnds ["avstats"]) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["ledocmd"] .. "` (`original`, `new`) values ('" .. repsqlchars ("votekickdel") .. "', '" .. repsqlchars (table_cmnds ["votekickdel"]) .. "')")
 						VH:SQLQuery ("update `" .. tbl_sql ["ledocmd"] .. "` set `original` = 'oldclean', `new` = '" .. repsqlchars (table_cmnds ["oldclean"]) .. "' where `original` = 'cleanup'")
 
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('avsearchint', '" .. repsqlchars (table_sets ["avsearchint"]) .. "')")
@@ -2691,6 +2693,18 @@ elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["mode"].."
 		if ucl >= table_sets ["votekickclass"] then
 			-- donotifycmd (nick, data, 0, ucl)
 			votekickuser (nick, string.sub (data, string.len (table_cmnds ["votekick"]) + 3))
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
+
+		return 0
+
+	----- ---- --- -- -
+
+	elseif data:find ("^" .. table_othsets ["optrig"] .. table_cmnds ["votekickdel"] .. " %S+$") then
+		if ucl >= table_sets ["mincommandclass"] then
+			-- donotifycmd (nick, data, 0, ucl)
+			votekickdel (nick, data:sub (# table_cmnds ["votekickdel"] + 3))
 		else
 			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
@@ -11901,8 +11915,9 @@ end
 
 ----- ---- --- -- -
 
-function votekickuser (nick, user)
-	if getstatus (user) == 1 then
+function votekickuser (nick, usni)
+	if getstatus (usni) == 1 then
+		local user = getcsnick (usni) or usni
 		local class = getclass (user)
 
 		if class < 3 then
@@ -11937,7 +11952,24 @@ function votekickuser (nick, user)
 			commandanswer (nick, gettext ("You don't want to vote for kicking an operator."))
 		end
 	else -- not in list
-		commandanswer (nick, string.format (gettext ("User not in list: %s"), user))
+		commandanswer (nick, string.format (gettext ("User not in list: %s"), usni))
+	end
+end
+
+----- ---- --- -- -
+
+function votekickdel (nick, usni)
+	if getstatus (usni) == 1 then
+		local user = getcsnick (usni) or usni
+
+		if table_voki [user] then
+			maintoall (gettext ("%s cleared %d of %d votes for kicking user with class %d: %s"):format (nick, table_voki [user]["c"], table_sets ["votekickcount"], getclass (user), user), 0, 10) -- notify all users
+			table_voki [user] = nil
+		else -- not in list
+			commandanswer (nick, gettext ("User not in list: %s"):format (user))
+		end
+	else -- not in list
+		commandanswer (nick, gettext ("User not in list: %s"):format (usni))
 	end
 end
 
@@ -16072,6 +16104,7 @@ help = help.." "..optrig..table_cmnds ["clear"].." - "..gettext ("Clear main cha
 	help = help .. " " .. optrig .. table_cmnds ["seen"] .. " <" .. gettext ("nick") .. "> - " .. string.format (gettext ("%s user lookup"), "http://www.te-home.net/?do=hublist") .. "\r\n\r\n"
 
 	-- other
+	help = help .. " " .. optrig .. table_cmnds ["votekickdel"] .. " <" .. gettext ("nick") .. "> - " .. gettext ("Clear kick votes for user") .. "\r\n"
 	help = help .. " " .. optrig .. table_cmnds ["dropip"] .. " <" .. gettext ("ip") .. "> - " .. gettext ("Drop users with IP") .. "\r\n"
 	help = help .. " " .. optrig .. table_cmnds ["oldclean"] .. " <" .. gettext ("type") .. "> <" .. gettext ("days") .. " " .. gettext ("or") .. " *> [" .. gettext ("class") .. "] - " .. gettext ("Clean up tables") .. "\r\n"
 	help = help .. " " .. optrig .. table_cmnds ["readlog"] .. " <" .. gettext ("file") .. "> <" .. gettext ("lines") .. "> - " .. gettext ("Read hub logs") .. "\r\n"
@@ -17723,10 +17756,10 @@ end
 ----- ---- --- -- -
 
 function getstatus (nick)
-	local lusr = string.lower (nick)
+	local lusr = nick:lower ()
 
-	for user in string.gmatch (getnicklist (), "([^$]+)%$%$") do
-		if string.lower (user) == lusr then
+	for user in getnicklist ():gmatch ("([^%$ ]+)") do
+		if user:lower () == lusr then
 			return 1
 		end
 	end
@@ -17739,9 +17772,9 @@ end
 function getcsnick (nick)
 	local lusr = tolow (nick)
 
-	for usr in string.gmatch (getnicklist (), "([^$]+)%$%$") do
-		if tolow (usr) == lusr then
-			return usr
+	for user in getnicklist ():gmatch ("([^%$ ]+)") do
+		if tolow (user) == lusr then
+			return user
 		end
 	end
 
