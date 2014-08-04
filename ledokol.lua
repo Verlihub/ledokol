@@ -17406,6 +17406,10 @@ function showavstats (nick, user)
 			stats = stats .. "\r\n " .. gettext ("Possibly infected users") .. ":\r\n\r\n" .. usli
 		end
 
+		if table_sets ["avdbloadint"] > 0 then
+			stats = stats .. "\r\n " .. gettext ("Size of %s: %d @ %s"):format ("AVDB", # table_avlo, os.date (table_sets ["timeformat"], table_othsets ["avlastloadtick"] + table_sets ["srvtimediff"])) .. "\r\n"
+		end
+
 	elseif table_avus [user] then -- user mode
 		if getstatus (user) == 0 then
 			table_avus [user] = nil
