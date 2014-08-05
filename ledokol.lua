@@ -537,6 +537,7 @@ table_cmnds = {
 	["dropip"] = "dropip",
 	["votekick"] = "votekick",
 	["votekickdel"] = "votekickdel",
+	["votekicklist"] = "votekicklist",
 	["gagipadd"] = "gagipadd",
 	["gagipdel"] = "gagipdel",
 	["gagiplist"] = "gagiplist",
@@ -1061,6 +1062,7 @@ function Main (file)
 
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["ledocmd"] .. "` (`original`, `new`) values ('" .. repsqlchars ("avstats") .. "', '" .. repsqlchars (table_cmnds ["avstats"]) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["ledocmd"] .. "` (`original`, `new`) values ('" .. repsqlchars ("votekickdel") .. "', '" .. repsqlchars (table_cmnds ["votekickdel"]) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["ledocmd"] .. "` (`original`, `new`) values ('" .. repsqlchars ("votekicklist") .. "', '" .. repsqlchars (table_cmnds ["votekicklist"]) .. "')")
 						VH:SQLQuery ("update `" .. tbl_sql ["ledocmd"] .. "` set `original` = 'oldclean', `new` = '" .. repsqlchars (table_cmnds ["oldclean"]) .. "' where `original` = 'cleanup'")
 
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('avsearchint', '" .. repsqlchars (table_sets ["avsearchint"]) .. "')")
@@ -2702,9 +2704,21 @@ elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["mode"].."
 	----- ---- --- -- -
 
 	elseif data:find ("^" .. table_othsets ["optrig"] .. table_cmnds ["votekickdel"] .. " %S+$") then
-		if ucl >= table_sets ["mincommandclass"] then
+		if table_sets ["votekickclass"] < 11 and ucl >= table_sets ["mincommandclass"] then
 			-- donotifycmd (nick, data, 0, ucl)
 			votekickdel (nick, data:sub (# table_cmnds ["votekickdel"] + 3))
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
+
+		return 0
+
+	----- ---- --- -- -
+
+	elseif data:find ("^" .. table_othsets ["optrig"] .. table_cmnds ["votekicklist"] .. "$") then
+		if table_sets ["votekickclass"] < 11 and ucl >= table_sets ["mincommandclass"] then
+			donotifycmd (nick, data, 0, ucl)
+			votekicklist (nick)
 		else
 			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
@@ -11975,6 +11989,22 @@ end
 
 ----- ---- --- -- -
 
+function votekicklist (nick)
+	local list = ""
+
+	for user, data in pairs (table_voki) do
+		list = list .. " " .. gettext ("Nick: %s"):format (user) .. " &#124; " .. gettext ("Class: %d"):format (getclass (user)) .. " &#124; " .. gettext ("Votes: %d of %d"):format (data ["c"], table_sets ["votekickcount"]) .. " &#124; " .. gettext ("Voters: %s"):format (table.concat (data ["u"], " ")) .. "\r\n"
+	end
+
+	if # list > 0 then
+		commandanswer (nick, gettext ("Vote kick list") .. ":\r\n\r\n" .. list)
+	else
+		commandanswer (nick, gettext ("Vote kick list is empty."))
+	end
+end
+
+----- ---- --- -- -
+
 function savetopic (owner, topic, ucls)
 	if ucls < getconfig ("topic_mod_class") then return nil end
 	table_othsets ["topicowner"] = owner
@@ -16103,8 +16133,11 @@ help = help.." "..optrig..table_cmnds ["clear"].." - "..gettext ("Clear main cha
 	help = help .. " " .. optrig .. table_cmnds ["ulog"] .. " <" .. gettext ("type") .. "> <" .. gettext ("string") .. "> <" .. gettext ("lines") .. "> - " .. gettext ("Search in user log") .. "\r\n"
 	help = help .. " " .. optrig .. table_cmnds ["seen"] .. " <" .. gettext ("nick") .. "> - " .. string.format (gettext ("%s user lookup"), "http://www.te-home.net/?do=hublist") .. "\r\n\r\n"
 
-	-- other
+	-- vote kick
 	help = help .. " " .. optrig .. table_cmnds ["votekickdel"] .. " <" .. gettext ("nick") .. "> - " .. gettext ("Clear kick votes for user") .. "\r\n"
+	help = help .. " " .. optrig .. table_cmnds ["votekicklist"] .. " - " .. gettext ("Vote kick list") .. "\r\n\r\n"
+
+	-- other
 	help = help .. " " .. optrig .. table_cmnds ["dropip"] .. " <" .. gettext ("ip") .. "> - " .. gettext ("Drop users with IP") .. "\r\n"
 	help = help .. " " .. optrig .. table_cmnds ["oldclean"] .. " <" .. gettext ("type") .. "> <" .. gettext ("days") .. " " .. gettext ("or") .. " *> [" .. gettext ("class") .. "] - " .. gettext ("Clean up tables") .. "\r\n"
 	help = help .. " " .. optrig .. table_cmnds ["readlog"] .. " <" .. gettext ("file") .. "> <" .. gettext ("lines") .. "> - " .. gettext ("Read hub logs") .. "\r\n"
