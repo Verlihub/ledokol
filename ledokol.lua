@@ -4285,7 +4285,11 @@ function VH_OnUserLogout (nick, uip)
 	end
 
 	table_opks [nick] = nil -- operator keys
-	table_voki [nick] = nil -- vote kicks
+
+	if table_sets ["votekickclass"] < 11 then
+		table_voki [nick] = nil -- vote kicks
+	end
+
 	return 1
 end
 
@@ -15263,6 +15267,10 @@ end
 	elseif tvar == "votekickclass" then
 		if num == true then
 			if (setto >= 0 and setto <= 5) or setto == 10 or setto == 11 then
+				if setto == 11 then
+					table_voki = {} -- clear
+				end
+
 				ok = true
 			else
 				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0, 1, 2, 3, 4, 5, 10 " .. gettext ("or") .. " 11"))
