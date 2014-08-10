@@ -4113,15 +4113,27 @@ end
 
 		if size > 0 then
 			for _, data in pairs (table_avlo) do
-				if nick == data ["nick"] and ip == data ["addr"] then
-					opsnotify (table_sets ["classnotiav"], gettext ("Infected user logged in with IP %s and share %s: %s"):format (ip .. tryipcc (ip, nick), makesize (size), nick))
-					VH:KickUser (table_othsets ["sendfrom"], nick, table_sets ["avkicktext"])
+				if nick == data ["nick"] then
+					if ip == data ["addr"] then
+						opsnotify (table_sets ["classnotiav"], gettext ("Infected user logged in with IP %s and share %s: %s"):format (ip .. tryipcc (ip, nick), makesize (size), nick))
+						VH:KickUser (table_othsets ["sendfrom"], nick, table_sets ["avkicktext"])
 
-					if cls >= table_sets ["welcomeclass"] then -- dont send logout message
-						table_faau [nick] = 1
+						if cls >= table_sets ["welcomeclass"] then -- dont send logout message
+							table_faau [nick] = 1
+						end
+
+						return 0
+					elseif size == data ["size"] then
+						avdbreport (nick, ip, size, true) -- antivirus database
+						opsnotify (table_sets ["classnotiav"], gettext ("Infected user logged in with IP %s and share %s: %s"):format (ip .. tryipcc (ip, nick), makesize (size), nick))
+						VH:KickUser (table_othsets ["sendfrom"], nick, table_sets ["avkicktext"])
+
+						if cls >= table_sets ["welcomeclass"] then -- dont send logout message
+							table_faau [nick] = 1
+						end
+
+						return 0
 					end
-
-					return 0
 				end
 			end
 		end
@@ -4429,49 +4441,7 @@ function VH_OnParsedMsgSR (nick, data)
 												opsnotify (table_sets ["classnotiav"], gettext ("Infected user detected with nick %s and IP %s and share %s and spent time: %s"):format (nick, usip .. tryipcc (usip, nick), makesize (shar), formatuptime (table_avus [nick][""], false)))
 											end
 
-											if table_sets ["avsendtodb"] == 1 then -- antivirus database
-												if not haveshar then
-													shar = parsemyinfoshare (getmyinfo (nick))
-													haveshar = true
-												end
-
-												if shar > 0 and table_othsets ["ver_curl"] then
-													local res, err = os.execute ("curl -G -L --retry 3 --connect-timeout 5 -m 30 -s -o \"" .. table_othsets ["cfgdir"] .. table_othsets ["tmpfile"] .. "\" --data-urlencode \"nick=" .. repurlchars (nick) .. "\" \"" .. table_othsets ["avdbsendurl"] .. "&size=" .. tostring (shar) .. "&addr=" .. usip .. "\"")
-
-													if res then
-														local avfi, _ = io.open (table_othsets ["cfgdir"] .. table_othsets ["tmpfile"], "r")
-
-														if avfi then
-															local avre, err = avfi:read ("*all")
-															avfi:close ()
-
-															if avre then
-																avre = tostring (avre)
-
-																if avre == "1" then
-																	if table_sets ["avfeedverb"] == 3 then
-																		opsnotify (table_sets ["classnotiav"], gettext ("Successfully sent infected user information to %s: %s"):format ("AVDB", nick))
-																	end
-																elseif avre == "0" then
-																	table_sets ["avsendtodb"] = 0
-																	VH:SQLQuery ("update `" .. tbl_sql ["conf"] .. "` set `value` = '0' where `variable` = 'avsendtodb'")
-																	opsnotify (table_sets ["classnotiav"], gettext ("Sadly I don't have access to send infected user information to AVDB, please ask maintainer of this script to add your server IP address to access list. AVDB reporting feature has been automatically disabled."))
-																elseif table_sets ["avfeedverb"] == 3 then
-																	opsnotify (table_sets ["classnotiav"], gettext ("Failed to send information to %s: %s"):format ("AVDB", gettext ("Server didn't reply with expected status code.")))
-																end
-															elseif table_sets ["avfeedverb"] == 3 then
-																opsnotify (table_sets ["classnotiav"], gettext ("Failed to send information to %s: %s"):format ("AVDB", gettext ("Error on reading temporary file: %s"):format (repnmdcoutchars (err or gettext ("No error message specified.")))))
-															end
-
-															os.remove (table_othsets ["cfgdir"] .. table_othsets ["tmpfile"])
-														elseif table_sets ["avfeedverb"] == 3 then
-															opsnotify (table_sets ["classnotiav"], gettext ("Failed to send information to %s: %s"):format ("AVDB", gettext ("Error on connecting.")))
-														end
-													elseif table_sets ["avfeedverb"] == 3 then
-														opsnotify (table_sets ["classnotiav"], gettext ("Failed to send information to %s: %s"):format ("AVDB", gettext ("Error on executing %s: %s"):format ("cURL", repnmdcoutchars (err or gettext ("No error message specified.")))))
-													end
-												end
-											end
+											avdbreport (nick, usip, shar, haveshar) -- antivirus database
 
 											if table_sets ["enableipwatch"] == 1 then -- ip watch
 												checkipwat (nick, usip, data)
@@ -17352,12 +17322,13 @@ function loadavdb ()
 			local lint = 0
 
 			for avli in avfi:lines () do
-				local _, _, avni, avip = avli:find ("^([^ ]+)|(%d+%.%d+%.%d+%.%d+)|%d+|%d+$")
+				local _, _, avni, avip, avsi = avli:find ("^([^ ]+)|(%d+%.%d+%.%d+%.%d+)|(%d+)|%d+$")
 
-				if avni and avip then
+				if avni and avip and avsi then
 					table.insert (table_avlo, {
 						["nick"] = avni,
-						["addr"] = avip
+						["addr"] = avip,
+						["size"] = tonumber (avsi)
 					})
 
 					lint = lint + 1
@@ -17385,6 +17356,57 @@ end
 
 ----- ---- --- -- -
 
+function avdbreport (nick, addr, size, info)
+	if table_sets ["avsendtodb"] == 0 or not table_othsets ["ver_curl"] then
+		return
+	end
+
+	local shar = size
+
+	if not info then
+		shar = parsemyinfoshare (getmyinfo (nick))
+	end
+
+	if shar > 0 then
+		local res, err = os.execute ("curl -G -L --retry 3 --connect-timeout 5 -m 30 -s -o \"" .. table_othsets ["cfgdir"] .. table_othsets ["tmpfile"] .. "\" --data-urlencode \"nick=" .. repurlchars (nick) .. "\" \"" .. table_othsets ["avdbsendurl"] .. "&size=" .. tostring (shar) .. "&addr=" .. addr .. "\"")
+
+		if res then
+			local avfi, _ = io.open (table_othsets ["cfgdir"] .. table_othsets ["tmpfile"], "r")
+
+			if avfi then
+				local avre, err = avfi:read ("*all")
+				avfi:close ()
+
+				if avre then
+					avre = tostring (avre)
+
+					if avre == "1" then
+						if table_sets ["avfeedverb"] == 3 then
+							opsnotify (table_sets ["classnotiav"], gettext ("Successfully sent infected user information to %s: %s"):format ("AVDB", nick))
+						end
+					elseif avre == "0" then
+						table_sets ["avsendtodb"] = 0
+						VH:SQLQuery ("update `" .. tbl_sql ["conf"] .. "` set `value` = '0' where `variable` = 'avsendtodb'")
+						opsnotify (table_sets ["classnotiav"], gettext ("Sadly I don't have access to send infected user information to AVDB, please ask maintainer of this script to add your server IP address to access list. AVDB reporting feature has been automatically disabled."))
+					elseif table_sets ["avfeedverb"] == 3 then
+						opsnotify (table_sets ["classnotiav"], gettext ("Failed to send information to %s: %s"):format ("AVDB", gettext ("Server didn't reply with expected status code.")))
+					end
+				elseif table_sets ["avfeedverb"] == 3 then
+					opsnotify (table_sets ["classnotiav"], gettext ("Failed to send information to %s: %s"):format ("AVDB", gettext ("Error on reading temporary file: %s"):format (repnmdcoutchars (err or gettext ("No error message specified.")))))
+				end
+
+				os.remove (table_othsets ["cfgdir"] .. table_othsets ["tmpfile"])
+			elseif table_sets ["avfeedverb"] == 3 then
+				opsnotify (table_sets ["classnotiav"], gettext ("Failed to send information to %s: %s"):format ("AVDB", gettext ("Error on connecting.")))
+			end
+		elseif table_sets ["avfeedverb"] == 3 then
+			opsnotify (table_sets ["classnotiav"], gettext ("Failed to send information to %s: %s"):format ("AVDB", gettext ("Error on executing %s: %s"):format ("cURL", repnmdcoutchars (err or gettext ("No error message specified.")))))
+		end
+	end
+end
+
+----- ---- --- -- -
+
 function avdbcheckall ()
 	for nick in getnicklist ():gmatch ("([^%$ ]+)") do
 		local class = getclass (nick)
@@ -17397,9 +17419,15 @@ function avdbcheckall ()
 
 				if size > 0 then
 					for _, data in pairs (table_avlo) do
-						if nick == data ["nick"] and addr == data ["addr"] then
-							opsnotify (table_sets ["classnotiav"], gettext ("Infected user found with IP %s and share %s: %s"):format (addr .. tryipcc (addr, nick), makesize (size), nick))
-							VH:KickUser (table_othsets ["sendfrom"], nick, table_sets ["avkicktext"])
+						if nick == data ["nick"] then
+							if addr == data ["addr"] then
+								opsnotify (table_sets ["classnotiav"], gettext ("Infected user found with IP %s and share %s: %s"):format (addr .. tryipcc (addr, nick), makesize (size), nick))
+								VH:KickUser (table_othsets ["sendfrom"], nick, table_sets ["avkicktext"])
+							elseif size == data ["size"] then
+								avdbreport (nick, addr, size, true) -- antivirus database
+								opsnotify (table_sets ["classnotiav"], gettext ("Infected user found with IP %s and share %s: %s"):format (addr .. tryipcc (addr, nick), makesize (size), nick))
+								VH:KickUser (table_othsets ["sendfrom"], nick, table_sets ["avkicktext"])
+							end
 						end
 					end
 				end
