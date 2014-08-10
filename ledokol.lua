@@ -4124,8 +4124,8 @@ end
 
 						return 0
 					elseif size == data ["size"] then
-						avdbreport (nick, ip, size, true) -- antivirus database
 						opsnotify (table_sets ["classnotiav"], gettext ("Infected user logged in with IP %s and share %s: %s"):format (ip .. tryipcc (ip, nick), makesize (size), nick))
+						avdbreport (nick, ip, size, true) -- antivirus database
 						VH:KickUser (table_othsets ["sendfrom"], nick, table_sets ["avkicktext"])
 
 						if cls >= table_sets ["welcomeclass"] then -- dont send logout message
@@ -17424,8 +17424,8 @@ function avdbcheckall ()
 								opsnotify (table_sets ["classnotiav"], gettext ("Infected user found with IP %s and share %s: %s"):format (addr .. tryipcc (addr, nick), makesize (size), nick))
 								VH:KickUser (table_othsets ["sendfrom"], nick, table_sets ["avkicktext"])
 							elseif size == data ["size"] then
-								avdbreport (nick, addr, size, true) -- antivirus database
 								opsnotify (table_sets ["classnotiav"], gettext ("Infected user found with IP %s and share %s: %s"):format (addr .. tryipcc (addr, nick), makesize (size), nick))
+								avdbreport (nick, addr, size, true) -- antivirus database
 								VH:KickUser (table_othsets ["sendfrom"], nick, table_sets ["avkicktext"])
 							end
 						end
