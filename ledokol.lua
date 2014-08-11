@@ -951,7 +951,29 @@ table_avex = {
 -- backward compatibility >>
 ---------------------------------------------------------------------
 
--- nothing here
+if not VH.SendToUser then
+	VH.SendToUser = VH.SendDataToUser
+end
+
+if not VH.SendToClass then
+	VH.SendToClass = VH.SendDataToAll
+end
+
+if not VH.Disconnect then
+	VH.Disconnect = VH.CloseConnection
+end
+
+if not VH.RegBot then
+	VH.RegBot = VH.AddRobot
+end
+
+if not VH.UnRegBot then
+	VH.UnRegBot = VH.DelRobot
+end
+
+if not VH.GetLuaBots then
+	VH.GetLuaBots = VH.GetBots
+end
 
 ---------------------------------------------------------------------
 -- backward compatibility <<
