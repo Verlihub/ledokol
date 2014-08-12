@@ -1023,3 +1023,21 @@ Vote kick list|
 Vote kick list is empty.|
 Votes: %d of %d|
 Voters: %s|
+Triggers|
+Add trigger|
+Trigger list|
+Delete trigger|
+Modified trigger: %s|
+Added trigger: %s|
+Deleted trigger: %s|
+Trigger not found: %s|
+Trigger list is empty.|
+Class range: %d to %d|
+Pinger|
+Guest|
+Registered|
+VIP|
+Operator|
+Cheef|
+Administrator|
+Master|
