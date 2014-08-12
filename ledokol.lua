@@ -187,6 +187,7 @@ table_sets = {
 	["roomusernotify"] = 1,
 	["ccroomstyle"] = "#" .. string.char (160) .. "<cc>",
 	["remrunning"] = 1,
+	["trigrunning"] = 0,
 	["replrunning"] = 1,
 	["resprunning"] = 1,
 	["respdelay"] = 3,
@@ -371,6 +372,7 @@ tbl_sql = {
 	["cust"] = "lua_ledo_cust",
 	["chat"] = "lua_ledo_chat",
 	["rem"] = "lua_ledo_rem",
+	["trig"] = "lua_ledo_trig",
 	["news"] = "lua_ledo_news",
 	["chatrepl"] = "lua_ledo_chatrepl",
 	["replex"] = "lua_ledo_replex",
@@ -456,6 +458,9 @@ table_cmnds = {
 	["remdel"] = "remdel",
 	["remlist"] = "remlist",
 	["remshow"] = "remshow",
+	["trigadd"] = "trigadd",
+	["trigdel"] = "trigdel",
+	["triglist"] = "triglist",
 	["nopmadd"] = "nopmadd",
 	["nopmdel"] = "nopmdel",
 	["nopmlist"] = "nopmlist",
@@ -1081,10 +1086,14 @@ function Main (file)
 
 					if ver <= 280 then
 						VH:SQLQuery ("create table if not exists `" .. tbl_sql ["ccgag"] .. "` (`cc` varchar(2) not null, `flag` tinyint(1) unsigned not null default 0, primary key (`cc`)) engine = myisam default character set utf8 collate utf8_unicode_ci")
+						VH:SQLQuery ("create table if not exists `" .. tbl_sql ["trig"] .. "` (`id` varchar(255) not null primary key, `content` text not null, `minclass` tinyint(2) unsigned not null default 0, `maxclass` tinyint(2) unsigned not null default 10) engine = myisam default character set utf8 collate utf8_unicode_ci")
 
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["ledocmd"] .. "` (`original`, `new`) values ('" .. repsqlchars ("avstats") .. "', '" .. repsqlchars (table_cmnds ["avstats"]) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["ledocmd"] .. "` (`original`, `new`) values ('" .. repsqlchars ("votekickdel") .. "', '" .. repsqlchars (table_cmnds ["votekickdel"]) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["ledocmd"] .. "` (`original`, `new`) values ('" .. repsqlchars ("votekicklist") .. "', '" .. repsqlchars (table_cmnds ["votekicklist"]) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["ledocmd"] .. "` (`original`, `new`) values ('" .. repsqlchars ("trigadd") .. "', '" .. repsqlchars (table_cmnds ["trigadd"]) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["ledocmd"] .. "` (`original`, `new`) values ('" .. repsqlchars ("trigdel") .. "', '" .. repsqlchars (table_cmnds ["trigdel"]) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["ledocmd"] .. "` (`original`, `new`) values ('" .. repsqlchars ("triglist") .. "', '" .. repsqlchars (table_cmnds ["triglist"]) .. "')")
 						VH:SQLQuery ("update `" .. tbl_sql ["ledocmd"] .. "` set `original` = 'oldclean', `new` = '" .. repsqlchars (table_cmnds ["oldclean"]) .. "' where `original` = 'cleanup'")
 
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('avsearchint', '" .. repsqlchars (table_sets ["avsearchint"]) .. "')")
@@ -1097,6 +1106,7 @@ function Main (file)
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('avdbloadlim', '" .. repsqlchars (table_sets ["avdbloadlim"]) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('avkicktext', '" .. repsqlchars (table_sets ["avkicktext"]) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('classnotiav', '" .. repsqlchars (table_sets ["classnotiav"]) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('trigrunning', '" .. repsqlchars (table_sets ["trigrunning"]) .. "')")
 					end
 
 					if ver <= 281 then
@@ -1360,7 +1370,43 @@ end
 
 return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
+
+	elseif data:find ("^" .. table_othsets ["optrig"] .. table_cmnds ["trigadd"] .. " %S+ \".+\" %d+ %d+$") then
+		if ucl >= table_sets ["mincommandclass"] then
+			donotifycmd (nick, data, 0, ucl)
+			addtrigger (nick, data:sub (# table_cmnds ["trigadd"] + 3))
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
+
+		return 0
+
+	----- ---- --- -- -
+
+	elseif data:find ("^" .. table_othsets ["optrig"] .. table_cmnds ["trigdel"] .. " %S+$") then
+		if ucl >= table_sets ["mincommandclass"] then
+			donotifycmd (nick, data, 0, ucl)
+			deltrigger (nick, data:sub (# table_cmnds ["trigdel"] + 3))
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
+
+		return 0
+
+	----- ---- --- -- -
+
+	elseif data:find ("^" .. table_othsets ["optrig"] .. table_cmnds ["triglist"] .. "$") then
+		if ucl >= table_sets ["mincommandclass"] then
+			donotifycmd (nick, data, 0, ucl)
+			listtrigger (nick)
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
+
+		return 0
+
+	----- ---- --- -- -
 
 	elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["nopmadd"].." %S+ %d %d+ .+$") then
 		if ucl >= table_sets ["mincommandclass"] then
@@ -4022,6 +4068,20 @@ elseif string.find (data, "^"..table_othsets ["ustrig"]..table_cmnds ["mode"].."
 
 	else -- unknown command
 		donotifycmd (nick, data, 0, ucl)
+	end
+
+	return 1
+end
+
+----- ---- --- -- -
+
+function VH_OnHubCommand (nick, data, op, pm)
+	if table_othsets ["locked"] == true then
+		return 1
+	end
+
+	if checktrigger (nick, data, pm) then
+		return 0
 	end
 
 	return 1
@@ -6791,6 +6851,105 @@ function sendreminder ()
 
 		VH:SQLQuery ("update `"..tbl_sql ["rem"].."` set `timer` = "..v.." where `id` = '"..repk.."' limit 1")
 	end
+end
+
+----- ---- --- -- -
+
+function addtrigger (nick, data)
+	local _, _, id, cont, minc, maxc = data:find ("^(%S+) \"(.+)\" (%d+) (%d+)$")
+	minc, maxc = tonumber (minc), tonumber (maxc)
+
+	if (minc > 5 and minc < 10) or minc > 10 or (maxc > 5 and maxc < 10) or maxc > 10 then -- invalid class
+		commandanswer (nick, gettext ("Known classes are: %s"):format ("0, 1, 2, 3, 4, 5 " .. gettext ("and") .. " 10"))
+	else
+		local entry = repsqlchars (id)
+		local _, rows = VH:SQLQuery ("select `minclass` from `" .. tbl_sql ["trig"] .. "` where `id` = '" .. entry .. "' limit 1")
+
+		if rows > 0 then
+			VH:SQLQuery ("update `" .. tbl_sql ["trig"] .. "` set `content` = '" .. repsqlchars (cont) .. "', `minclass` = " .. tostring (minc) .. ", `maxclass` = " .. tostring (maxc) .. " where `id` = '" .. entry .. "' limit 1")
+			commandanswer (nick, gettext ("Modified trigger: %s"):format (id))
+		else
+			VH:SQLQuery ("insert into `" .. tbl_sql ["trig"] .. "` (`id`, `content`, `minclass`, `maxclass`) values ('" .. entry .. "', '" .. repsqlchars (cont) .. "', " .. tostring (minc) .. ", " .. tostring (maxc) .. ")")
+			commandanswer (nick, gettext ("Added trigger: %s"):format (id))
+		end
+	end
+end
+
+----- ---- --- -- -
+
+function deltrigger (nick, id)
+	local entry = repsqlchars (id)
+	local _, rows = VH:SQLQuery ("select `minclass` from `" .. tbl_sql ["trig"] .. "` where `id` = '" .. entry .. "' limit 1")
+
+	if rows > 0 then
+		VH:SQLQuery ("delete from `" .. tbl_sql ["trig"] .. "` where `id` = '" .. entry .. "' limit 1")
+		commandanswer (nick, gettext ("Deleted trigger: %s"):format (id))
+	else
+		commandanswer (nick, gettext ("Trigger not found: %s"):format (id))
+	end
+end
+
+----- ---- --- -- -
+
+function listtrigger (nick)
+	local _, rows = VH:SQLQuery ("select `id`, `content`, `minclass`, `maxclass` from `" .. tbl_sql ["trig"] .. "` order by `minclass` asc, `maxclass` desc")
+
+	if rows > 0 then
+		local list = ""
+
+		for x = 0, rows - 1 do
+			local _, id, cont, minc, maxc = VH:SQLFetch (x)
+			local data = cont:gsub ("[\r\n]", "")
+			local dale = # data
+
+			if dale > 100 then
+				data = data:sub (1, dale) .. " [...]"
+			end
+
+			list = list .. "\r\n " .. gettext ("Identifier: %s"):format (id) .. "\r\n " .. gettext ("Class range: %d to %d"):format (minc, maxc) .. "\r\n " .. gettext ("Content: %s"):format (repnmdcoutchars (data)) .. "\r\n"
+		end
+
+		commandanswer (nick, gettext ("Trigger list") .. ":\r\n" .. list)
+	else
+		commandanswer (nick, gettext ("Trigger list is empty."))
+	end
+end
+
+----- ---- --- -- -
+
+function checktrigger (nick, data, pm)
+	if table_sets ["trigrunning"] == 0 then
+		return false
+	end
+
+	local _, _, id = data:find ("^" .. table_othsets ["ustrig"] .. "(%S+)")
+
+	if id then
+		local _, rows = VH:SQLQuery ("select `content`, `minclass`, `maxclass` from `" .. tbl_sql ["trig"] .. "` where `id` = '" .. repsqlchars (id) .. "' limit 1")
+
+		if rows > 0 then
+			local _, cont, minc, maxc = VH:SQLFetch (0)
+			local class = getclass (nick)
+
+			if tonumber (pm) == 1 then
+				if class >= tonumber (minc) and class <= tonumber (maxc) then
+					pmtouser (nick, nil, repnmdcoutchars (reptextvars (cont, nick)))
+				else
+					pmtouser (nick, nil, gettext ("This command is either disabled or you don't have access to it."))
+				end
+			else
+				if class >= tonumber (minc) and class <= tonumber (maxc) then
+					maintouser (nick, repnmdcoutchars (reptextvars (cont, nick)))
+				else
+					maintouser (nick, gettext ("This command is either disabled or you don't have access to it."))
+				end
+			end
+
+			return true
+		end
+	end
+
+	return false
 end
 
 ----- ---- --- -- -
@@ -12716,6 +12875,15 @@ smensep (usr)
 sopmenitm (usr, gettext ("Reminders").."\\"..gettext ("Delete reminder"), table_cmnds ["remdel"].." %[line:<"..gettext ("identifier")..">]")
 end
 
+	-- triggers
+
+	if ucl >= table_sets ["mincommandclass"] then
+		sopmenitm (usr, gettext ("Triggers") .. "\\" .. gettext ("Add trigger"), table_cmnds ["trigadd"] .. " %[line:<" .. gettext ("identifier") .. ">] \"%[line:<" .. gettext ("content") .. ">]\" %[line:<" .. gettext ("minclass") .. ">] %[line:<" .. gettext ("maxclass") .. ">]")
+		sopmenitm (usr, gettext ("Triggers") .. "\\" .. gettext ("Trigger list"), table_cmnds ["triglist"])
+		smensep (usr)
+		sopmenitm (usr, gettext ("Triggers") .. "\\" .. gettext ("Delete trigger"), table_cmnds ["trigdel"] .. " %[line:<" .. gettext ("identifier") .. ">]")
+	end
+
 -- hub news
 
 if ucl >= table_sets ["mincommandclass"] then
@@ -14922,7 +15090,7 @@ else
 commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 end
 
------ ---- --- -- -
+	----- ---- --- -- -
 
 	elseif tvar == "remrunning" then
 		if num == true then
@@ -14933,6 +15101,19 @@ end
 			end
 		else
 			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
+		end
+
+	----- ---- --- -- -
+
+	elseif tvar == "trigrunning" then
+		if num == true then
+			if setto == 0 or setto == 1 then
+				ok = true
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0 " .. gettext ("or") .. " 1"))
+			end
+		else
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
 		end
 
 ----- ---- --- -- -
@@ -16035,6 +16216,11 @@ help = help.." "..optrig..table_cmnds ["remlist"].." - "..gettext ("Reminder lis
 help = help.." "..optrig..table_cmnds ["remshow"].." <"..gettext ("identifier").."> - "..gettext ("Reminder preview").."\r\n"
 help = help.." "..optrig..table_cmnds ["remdel"].." <"..gettext ("identifier").."> - "..gettext ("Delete reminder").."\r\n\r\n"
 
+	-- triggers
+	help = help .. " " .. optrig .. table_cmnds ["trigadd"] .. " <" .. gettext ("identifier") .. "> <\"" .. gettext ("content") .. "\"> <" .. gettext ("minclass") .. "> <" .. gettext ("maxclass") .. "> - " .. gettext ("Add trigger") .. "\r\n"
+	help = help .. " " .. optrig .. table_cmnds ["triglist"] .. " - " .. gettext ("Trigger list") .. "\r\n"
+	help = help .. " " .. optrig .. table_cmnds ["trigdel"] .. " <" .. gettext ("identifier") .. "> - " .. gettext ("Delete trigger") .. "\r\n\r\n"
+
 	-- no pm
 	help = help.." "..optrig..table_cmnds ["nopmadd"].." <"..gettext ("nick").."> <"..gettext ("action").."> <"..gettext ("maxclass").."> <"..gettext ("reason").."> - "..gettext ("Add blocked PM entry").."\r\n"
 	help = help.." "..optrig..table_cmnds ["nopmlist"].." - "..gettext ("List of blocked PM entries").."\r\n"
@@ -16503,7 +16689,8 @@ conf = conf.."\r\n [::] ccroomautocls = "..table_sets ["ccroomautocls"]
 conf = conf.."\r\n [::] ccroommancls = "..table_sets ["ccroommancls"]
 conf = conf.."\r\n [::] roomusernotify = "..table_sets ["roomusernotify"]
 conf = conf.."\r\n"
-conf = conf.."\r\n [::] remrunning = "..table_sets ["remrunning"]
+	conf = conf .. "\r\n [::] remrunning = " .. table_sets ["remrunning"]
+	conf = conf .. "\r\n [::] trigrunning = " .. table_sets ["trigrunning"]
 conf = conf.."\r\n [::] replrunning = "..table_sets ["replrunning"]
 conf = conf.."\r\n [::] resprunning = "..table_sets ["resprunning"]
 conf = conf.."\r\n [::] respdelay = "..table_sets ["respdelay"]
@@ -16647,6 +16834,9 @@ VH:SQLQuery ("create table if not exists `"..tbl_sql ["chat"].."` (`room` varcha
 
 -- reminders
 VH:SQLQuery ("create table if not exists `"..tbl_sql ["rem"].."` (`id` varchar(255) not null, `content` text not null, `minclass` tinyint(2) unsigned not null default 0, `maxclass` tinyint(2) unsigned not null default 10, `dest` tinyint(1) unsigned not null default 0, `interval` smallint(5) unsigned not null default 10080, `timer` smallint(5) unsigned not null default 0, primary key (`id`)) engine = myisam default character set utf8 collate utf8_unicode_ci")
+
+	-- triggers
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql ["trig"] .. "` (`id` varchar(255) not null primary key, `content` text not null, `minclass` tinyint(2) unsigned not null default 0, `maxclass` tinyint(2) unsigned not null default 10) engine = myisam default character set utf8 collate utf8_unicode_ci")
 
 -- news
 VH:SQLQuery ("create table if not exists `"..tbl_sql ["news"].."` (`id` bigint(20) unsigned not null auto_increment, `date` int(10) unsigned not null, `by` varchar(255) not null, `item` text not null, primary key (`id`)) engine = myisam default character set utf8 collate utf8_unicode_ci")
@@ -17911,6 +18101,30 @@ end
 
 ----- ---- --- -- -
 
+function getclassname (class)
+	if class == -1 then
+		return gettext ("Pinger")
+	elseif class == 0 then
+		return gettext ("Guest")
+	elseif class == 1 then
+		return gettext ("Registered")
+	elseif class == 2 then
+		return gettext ("VIP")
+	elseif class == 3 then
+		return gettext ("Operator")
+	elseif class == 4 then
+		return gettext ("Cheef")
+	elseif class == 5 then
+		return gettext ("Administrator")
+	elseif class == 10 then
+		return gettext ("Master")
+	else
+		return gettext ("Unknown")
+	end
+end
+
+----- ---- --- -- -
+
 function getmyinfo (nick)
 	local _, info = VH:GetMyINFO (nick)
 
@@ -18187,7 +18401,8 @@ end
 ----- ---- --- -- -
 
 function repsqlchars (txt)
-	local ret = string.gsub (txt, string.char (92), string.char (92, 92)) -- backslash
+	local ret = tostring (txt)
+	ret = string.gsub (ret, string.char (92), string.char (92, 92)) -- backslash
 	ret = string.gsub (ret, string.char (34), string.char (92, 34)) -- double quote
 	ret = string.gsub (ret, string.char (39), string.char (92, 39)) -- single quote
 	return ret
@@ -18341,19 +18556,205 @@ end
 
 ----- ---- --- -- -
 
-function reptextvars (str, var_nick, var_message)
-local ntime = os.time () + table_sets ["srvtimediff"] -- current time
-local txt = str
+function reptextvars (str, vick, vata)
+	local ntime = os.time () + table_sets ["srvtimediff"] -- current time
+	local txt = str
 
-if var_nick then -- skip for reminder
-	if string.find (txt, "<nick>") then
-		txt = string.gsub (txt, "<nick>", reprexpchars (var_nick))
-	end
+	if vick then -- user data is available
+		local vlass = getclass (vick)
 
-	if string.find (txt, "<message>") then
-		txt = string.gsub (txt, "<message>", reprexpchars (var_message))
+		if txt:find ("<nick>", 1, true) then
+			txt = txt:gsub ("<nick>", reprexpchars (vick))
+		end
+
+		if txt:find ("<custnick>", 1, true) and table_sets ["custnickclass"] < 11 then
+			txt = txt:gsub ("<custnick>", reprexpchars (getcustnick (vick) or vick))
+		end
+
+		if txt:find ("<class>", 1, true) then
+			txt = txt:gsub ("<class>", reprexpchars (tostring (vlass)))
+		end
+
+		if txt:find ("<classname>", 1, true) then
+			txt = txt:gsub ("<classname>", reprexpchars (getclassname (vlass)))
+		end
+
+		if txt:find ("<uuptshrt>", 1, true) and table_sets ["showuseruptime"] == 1 and table_usup [vick] then
+			txt = txt:gsub ("<uuptshrt>", reprexpchars (formatuptime (table_usup [vick], true)))
+		end
+
+		if txt:find ("<uuptlong>", 1, true) and table_sets ["showuseruptime"] == 1 and table_usup [vick] then
+			txt = txt:gsub ("<uuptlong>", reprexpchars (formatuptime (table_usup [vick], false)))
+		end
+
+		if txt:find ("<userhost>", 1, true) and getconfig ("dns_lookup") == 1 then
+			txt = txt:gsub ("<userhost>", reprexpchars (gethost (vick)))
+		end
+
+		if txt:find ("<userip>", 1, true) then
+			txt = txt:gsub ("<userip>", reprexpchars (getip (vick)))
+		end
+
+		local nogeo = true
+
+		if table_othsets ["func_getusergeoip"] == true then
+			local on, geoip = VH:GetUserGeoIP (vick)
+
+			if on and geoip and geoip ["host"] then
+				nogeo = false
+
+				if txt:find ("<geoiprange>", 1, true) and geoip ["range_low"] and geoip ["range_high"] then
+					txt = txt:gsub ("<geoiprange>", reprexpchars (string.format ("%s - %s", geoip ["range_low"], geoip ["range_high"])))
+				end
+
+				if txt:find ("<geoipcity>", 1, true) and geoip ["city"] then
+					txt = txt:gsub ("<geoipcity>", reprexpchars (geoip ["city"]))
+				end
+
+				if txt:find ("<geoipregcode>", 1, true) and geoip ["region_code"] then
+					txt = txt:gsub ("<geoipregcode>", reprexpchars (geoip ["region_code"]))
+				end
+
+				if txt:find ("<geoipregname>", 1, true) and geoip ["region"] then
+					txt = txt:gsub ("<geoipregname>", reprexpchars (geoip ["region"]))
+				end
+
+				if txt:find ("<geoipcc>", 1, true) and geoip ["country_code"] then
+					txt = txt:gsub ("<geoipcc>", reprexpchars (geoip ["country_code"]))
+				end
+
+				if txt:find ("<geoipcn>", 1, true) and geoip ["country"] then
+					txt = txt:gsub ("<geoipcn>", reprexpchars (geoip ["country"]))
+				end
+
+				if txt:find ("<geoipconcode>", 1, true) and geoip ["continent_code"] then
+					txt = txt:gsub ("<geoipconcode>", reprexpchars (geoip ["continent_code"]))
+				end
+
+				if txt:find ("<geoipconname>", 1, true) and geoip ["continent"] then
+					txt = txt:gsub ("<geoipconname>", reprexpchars (geoip ["continent"]))
+				end
+
+				if txt:find ("<geoiptz>", 1, true) and geoip ["time_zone"] then
+					txt = txt:gsub ("<geoiptz>", reprexpchars (geoip ["time_zone"]))
+				end
+
+				if txt:find ("<geoipcoord>", 1, true) and geoip ["latitude"] and geoip ["latitude"] > 0 and geoip ["longitude"] and geoip ["longitude"] > 0 then
+					txt = txt:gsub ("<geoipcoord>", reprexpchars (string.format ("%f %f", geoip ["latitude"], geoip ["longitude"])))
+				end
+
+				if txt:find ("<geoippost>", 1, true) and geoip ["postal_code"] then
+					txt = txt:gsub ("<geoippost>", reprexpchars (geoip ["postal_code"]))
+				end
+
+				if txt:find ("<geoipmetro>", 1, true) and geoip ["metro_code"] and geoip ["metro_code"] > 0 then
+					txt = txt:gsub ("<geoipmetro>", reprexpchars (geoip ["metro_code"]))
+				end
+
+				if txt:find ("<geoiparea>", 1, true) and geoip ["area_code"] and geoip ["area_code"] > 0 then
+					txt = txt:gsub ("<geoiparea>", reprexpchars (geoip ["area_code"]))
+				end
+			end
+		end
+
+		if nogeo and table_othsets ["func_getcc"] then
+			local cc = getcc (vick)
+
+			if txt:find ("<geoipcc>", 1, true) then
+				txt = txt:gsub ("<geoipcc>", reprexpchars (cc))
+			end
+
+			if txt:find ("<geoipcn>", 1, true) then
+				txt = txt:gsub ("<geoipcn>", reprexpchars (cc_names [cc] or gettext ("Unknown country")))
+			end
+
+			if txt:find ("<geoipcity>", 1, true) and table_othsets ["func_getusercity"] then
+				txt = txt:gsub ("<geoipcity>", reprexpchars (getusercity (vick)))
+			end
+		end
+
+		local myinfo = getmyinfo (vick)
+
+		if myinfo then
+			local desc, tag, conn, sts, email, share = parsemyinfo (vick, myinfo)
+
+			if txt:find ("<myinfodesc>", 1, true) then
+				txt = txt:gsub ("<myinfodesc>", reprexpchars (desc))
+			end
+
+			if txt:find ("<myinfotag>", 1, true) then
+				txt = txt:gsub ("<myinfotag>", reprexpchars (tag))
+			end
+
+			if # tag > 0 then
+				local res = parsetag (tag)
+
+				if txt:find ("<tagclient>", 1, true) and res ["cl"] then
+					txt = txt:gsub ("<tagclient>", reprexpchars (res ["cl"]))
+				end
+
+				if txt:find ("<tagversion>", 1, true) and res ["ve"] then
+					txt = txt:gsub ("<tagversion>", reprexpchars (res ["ve"]))
+				end
+
+				if txt:find ("<tagmode>", 1, true) and res ["mo"] then
+					txt = txt:gsub ("<tagmode>", reprexpchars (res ["mo"]))
+				end
+
+				if txt:find ("<taghubs>", 1, true) and res ["hu"] then
+					txt = txt:gsub ("<taghubs>", reprexpchars (res ["hu"]))
+				end
+
+				if txt:find ("<tagslots>", 1, true) and res ["sl"] then
+					txt = txt:gsub ("<tagslots>", reprexpchars (res ["sl"]))
+				end
+
+				if txt:find ("<taglimit>", 1, true) and res ["li"] then
+					txt = txt:gsub ("<taglimit>", reprexpchars (res ["li"]))
+				end
+			end
+
+			if txt:find ("<myinfoconn>", 1, true) then
+				txt = txt:gsub ("<myinfoconn>", reprexpchars (conn))
+			end
+
+			if txt:find ("<myinfostat>", 1, true) then
+				txt = txt:gsub ("<myinfostat>", reprexpchars (statustostr (sts)))
+			end
+
+			if txt:find ("<myinfomail>", 1, true) then
+				txt = txt:gsub ("<myinfomail>", reprexpchars (email))
+			end
+
+			if txt:find ("<myinfoshare>", 1, true) then
+				txt = txt:gsub ("<myinfoshare>", reprexpchars (makesize (share)))
+			end
+
+			if txt:find ("<myinfoexshar>", 1, true) then
+				txt = txt:gsub ("<myinfoexshar>", reprexpchars (tostring (share)))
+			end
+		end
+
+		if txt:find ("<myinfosupport>", 1, true) and table_othsets ["func_getusersupports"] then
+			local on, sup = VH:GetUserSupports (vick)
+
+			if on and sup then
+				txt = txt:gsub ("<myinfosupport>", reprexpchars (sup))
+			end
+		end
+
+		if txt:find ("<myinfonmdcver>", 1, true) and table_othsets ["func_getuserversion"] then
+			local on, ver = VH:GetUserVersion (vick)
+
+			if on and ver then
+				txt = txt:gsub ("<myinfonmdcver>", reprexpchars (ver))
+			end
+		end
+
+		if txt:find ("<message>", 1, true) then
+			txt = txt:gsub ("<message>", reprexpchars (vata or ""))
+		end
 	end
-end
 
 if string.find (txt, "<randnick>") then
 	local rnick = getrandomnick ()
@@ -19225,14 +19626,14 @@ end
 
 ----- ---- --- -- -
 
-function pmtouser (to, from, message)
-	VH:SendToUser ("$To: "..to.." From: "..from.." $<"..table_othsets ["sendfrom"].."> "..message.."|", to)
+function pmtouser (to, from, data)
+	VH:SendToUser ("$To: " .. to .. " From: " .. (from or table_othsets ["sendfrom"]) .. " $<" .. table_othsets ["sendfrom"] .. "> " .. data .. "|", to)
 end
 
 ----- ---- --- -- -
 
-function maintouser (to, message)
-	VH:SendToUser ("<"..table_othsets ["sendfrom"].."> "..message.."|", to)
+function maintouser (to, data)
+	VH:SendToUser ("<" .. table_othsets ["sendfrom"] .. "> " .. data .. "|", to)
 end
 
 ----- ---- --- -- -
