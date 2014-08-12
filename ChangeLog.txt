@@ -14,6 +14,8 @@ Added: Virus spreader detection with AVDB support, requires cURL
 Added: Antivirus statistics, general and for each user separately
 Added: Load infected user list from AVDB and kick them when they log in, disabled by default
 Added: Commands to clear kick votes for user and list all current votes, request by Uhlik
+Added: Triggers with Ledokol replace variables support, request by S0RiN
+Added: More replace variables: custnick class classname uuptshrt uuptlong userhost userip geoiprange geoipcity geoipregcode geoipregname geoipcc geoipcn geoipconcode geoipconname geoiptz geoipcoord geoippost geoipmetro geoiparea myinfodesc myinfotag tagclient tagversion tagmode taghubs tagslots taglimit myinfoconn myinfostat myinfomail myinfoshare myinfoexshar myinfosupport myinfonmdcver
 
 [ 2.7.9 :: 2014-06-25 ]
 
