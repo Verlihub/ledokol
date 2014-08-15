@@ -15811,6 +15811,7 @@ elseif tvar == "tolowcharcase" then
 
 	elseif tvar == "langfileprefix" then
 		ok = true
+		setto = setto:lower ()
 		loadlangfile (nick, setto)
 
 ----- ---- --- -- -
@@ -17288,7 +17289,9 @@ end
 function loadlangfile (nick, pref)
 	local lang = pref or table_sets ["langfileprefix"]
 
-	if # lang == 0 then
+	if # lang == 0 or lang == "en" then
+		table_lang = ""
+		table_othsets ["langver"] = "EN"
 		return
 	end
 
@@ -17312,6 +17315,7 @@ function loadlangfile (nick, pref)
 			commandanswer (nick, gettext ("Couldn't load language file %s: %s"):format ("ledo_" .. lang .. ".lang", (err or gettext ("No error message specified."))))
 		end
 
+		table_lang = ""
 		table_othsets ["langver"] = "EN"
 	end
 end
