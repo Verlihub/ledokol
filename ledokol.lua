@@ -337,6 +337,7 @@ table_othsets = {
 	["func_getuserversion"] = false,
 	["func_getusersupports"] = false,
 	["func_sendtoactiveclass"] = false,
+	["func_inusersupports"] = false,
 	["langver"] = "EN",
 	["locked"] = false,
 	["restart"] = false
@@ -7171,6 +7172,14 @@ function sendrcmenu (nick, class)
 		return
 	end
 
+	if table_othsets ["func_inusersupports"] then -- check if client supports user commands
+		local on, has = VH:InUserSupports (nick, "UserCommand")
+
+		if on and has and tonumber (has) == 0 then
+			return
+		end
+	end
+
 	local _, rows = VH:SQLQuery ("select `menu`, `command`, `type`, `cont` from `" .. tbl_sql ["rcmenu"] .. "` where `minclass` <= " .. tostring (class) .. " and `maxclass` >= " .. tonumber (class) .. " order by `order` asc, `id` asc")
 
 	if rows > 0 then
@@ -12730,6 +12739,14 @@ function installusermenu (usr)
 		return
 	end
 
+	if table_othsets ["func_inusersupports"] then -- check if client supports user commands
+		local on, has = VH:InUserSupports (usr, "UserCommand")
+
+		if on and has and tonumber (has) == 0 then
+			return
+		end
+	end
+
 -- antispam
 
 if ucl >= table_sets ["mincommandclass"] then
@@ -18033,6 +18050,12 @@ function loadcomponents ()
 		table_othsets ["func_sendtoactiveclass"] = true
 	else
 		VH:SendToClass ("<" .. table_sets ["ledobotnick"] .. "> Warning: Unable to run VH:SendToActiveClass|", 5, 10)
+	end
+
+	if VH.InUserSupports then -- inusersupports function
+		table_othsets ["func_inusersupports"] = true
+	else
+		VH:SendToClass ("<" .. table_sets ["ledobotnick"] .. "> Warning: Unable to run VH:InUserSupports|", 5, 10)
 	end
 
 	return false
