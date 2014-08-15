@@ -9888,14 +9888,14 @@ function checkcc (nick, cls)
 							opsnotify (table_sets ["classnotiledoact"], ferr)
 						elseif fval then
 							VH:SQLQuery ("update `"..tbl_sql ["miex"].."` set `occurred` = `occurred` + 1 where `exception` = '"..repsqlchars (ent).."' limit 1")
-							opsnotify (table_sets ["classnotiex"], string.format (gettext ("%s with IP %s and class %d allowed due to forbidden country code exception: %s"), nick, ip .. tryipcc (ip, nick), cls, cc))
+							opsnotify (table_sets ["classnotiex"], gettext ("%s with IP %s and class %d allowed due to forbidden country code exception: %s"):format (nick, ip .. tryipcc (ip, nick), cls, cc .. "=" .. (cc_names [cc] or gettext ("Unknown country"))))
 							return false
 						end
 					end
 				end
 
-				local rsn = string.gsub (table_sets ["miccmessage"], "%*", reprexpchars (cc))
-				VH:KickUser (table_othsets ["sendfrom"], nick, rsn.."     #_ban_"..btime)
+				local rsn = table_sets ["miccmessage"]:gsub ("%*", reprexpchars (cc .. "=" .. (cc_names [cc] or gettext ("Unknown country"))))
+				VH:KickUser (table_othsets ["sendfrom"], nick, rsn .. "     #_ban_" .. btime)
 				return true
 			end
 		end
@@ -12655,7 +12655,7 @@ function sendlivecity (nick, cc)
 		end
 
 		if count > 0 then
-			commandanswer (nick, string.format (gettext ("Live user location statistics by city from %s=%s"), ucc, cc_names [ucc] or gettext ("Unknown country")) .. ":\r\n\r\n" .. gencitystats (list, count) .. "\r\n\t" .. string.format (gettext ("Total count: %d"), count) .. "\r\n")
+			commandanswer (nick, string.format (gettext ("Live user location statistics by city from %s=%s"), ucc, (cc_names [ucc] or gettext ("Unknown country"))) .. ":\r\n\r\n" .. gencitystats (list, count) .. "\r\n\t" .. string.format (gettext ("Total count: %d"), count) .. "\r\n")
 		else -- empty
 			commandanswer (nick, string.format (gettext ("No users in the hub from: %s=%s"), ucc, cc_names [ucc] or gettext ("Unknown country")))
 		end
