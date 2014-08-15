@@ -791,13 +791,13 @@ Couldn't modify authorization entry because not found: %d|
 Uptime: %s|
 Enable requested feature and try again.|
 cc|
-Couldn't add forbidden CC because already exists: %s|
-Added forbidden CC: %s|
-Deleted forbidden CC: %s|
-Couldn't delete forbidden CC because not found: %s|
-Forbidden CC list|
-Forbidden CC list is empty.|
-%s with IP %s and class %d allowed due to forbidden CC exception: %s|
+Couldn't add forbidden country code because already exists: %s|
+Added forbidden country code: %s|
+Deleted forbidden country code: %s|
+Couldn't delete forbidden country code because not found: %s|
+Forbidden country code list|
+Forbidden country code list is empty.|
+%s with IP %s and class %d allowed due to forbidden country code exception: %s|
 I'm staying idle due to confusion.|
 Added replacer in MC: %s|
 Deleted chat replacer with ID: %d|
@@ -985,7 +985,7 @@ There is an error in following forbidden connection type pattern|
 There is an error in following forbidden email pattern|
 There is an error in following forbidden share size pattern|
 There is an error in following forbidden IP address pattern|
-There is an error in following forbidden CC pattern|
+There is an error in following forbidden country code pattern|
 There is an error in following forbidden DNS pattern|
 There is an error in following forbidden client supports pattern|
 There is an error in following forbidden NMDC version pattern|
