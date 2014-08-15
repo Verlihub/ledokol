@@ -5,6 +5,7 @@ Fixed: Renamed "cleanup" command to "oldclean" since Verlihub has got "clean*" p
 Fixed: Pattern of "oldclean" command parameters
 Fixed: Correctly encode nick with cURL on user lookup
 Fixed: Case sensitivity in vote kicks, report by Uhlik
+Fixed: Don't send user commands to clients that don't support them
 Changed: Allow pingers to use +report command, required for AVDB
 Changed: Store country code gags permanently, request by MaxFox
 Added: Custom orderless gettext() format for translations, strings must be in format "english|translation\n" with each string on new line, comment with # character
