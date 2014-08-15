@@ -144,7 +144,7 @@ table_sets = {
 	["miemailmessage"] = "Forbidden email detected: *",
 	["misharemessage"] = "Forbidden share size detected: *",
 	["miipmessage"] = "Forbidden IP address detected: *",
-	["miccmessage"] = "Forbidden CC detected: *",
+	["miccmessage"] = "Forbidden country code detected: *",
 	["midnsmessage"] = "Forbidden DNS detected: *",
 	["misupmessage"] = "Forbidden client supports detected: *",
 	["mivermessage"] = "Forbidden NMDC version detected: *",
@@ -9857,7 +9857,7 @@ function checkcc (nick, cls)
 			local fres, fval = pcall (string.find, lcc, ent)
 
 			if not fres then
-				local ferr = gettext ("There is an error in following forbidden CC pattern") .. ":\r\n\r\n"
+				local ferr = gettext ("There is an error in following forbidden country code pattern") .. ":\r\n\r\n"
 				ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (ent) .. "\r\n"
 				ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
 				ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
@@ -9879,7 +9879,7 @@ function checkcc (nick, cls)
 							opsnotify (table_sets ["classnotiledoact"], ferr)
 						elseif fval then
 							VH:SQLQuery ("update `"..tbl_sql ["miex"].."` set `occurred` = `occurred` + 1 where `exception` = '"..repsqlchars (ent).."' limit 1")
-							opsnotify (table_sets ["classnotiex"], string.format (gettext ("%s with IP %s and class %d allowed due to forbidden CC exception: %s"), nick, ip .. tryipcc (ip, nick), cls, cc))
+							opsnotify (table_sets ["classnotiex"], string.format (gettext ("%s with IP %s and class %d allowed due to forbidden country code exception: %s"), nick, ip .. tryipcc (ip, nick), cls, cc))
 							return false
 						end
 					end
@@ -10765,10 +10765,10 @@ function addmyinfoentry (nick, line)
 		local _, rows = VH:SQLQuery ("select `occurred` from `"..tbl_sql ["micc"].."` where `cc` = '"..entry.."' limit 1")
 
 		if rows > 0 then
-			commandanswer (nick, string.format (gettext ("Couldn't add forbidden CC because already exists: %s"), item))
+			commandanswer (nick, string.format (gettext ("Couldn't add forbidden country code because already exists: %s"), item))
 		else
 			VH:SQLQuery ("insert into `"..tbl_sql ["micc"].."` (`cc`, `time`) values ('"..entry.."', '"..repsqlchars (btime).."')")
-			commandanswer (nick, string.format (gettext ("Added forbidden CC: %s"), item))
+			commandanswer (nick, string.format (gettext ("Added forbidden country code: %s"), item))
 		end
 
 	elseif part == "dns" then
@@ -10897,9 +10897,9 @@ function delmyinfoentry (nick, line)
 
 		if rows > 0 then
 			VH:SQLQuery ("delete from `"..tbl_sql ["micc"].."` where `cc` = '"..entry.."' limit 1")
-			commandanswer (nick, string.format (gettext ("Deleted forbidden CC: %s"), item))
+			commandanswer (nick, string.format (gettext ("Deleted forbidden country code: %s"), item))
 		else
-			commandanswer (nick, string.format (gettext ("Couldn't delete forbidden CC because not found: %s"), item))
+			commandanswer (nick, string.format (gettext ("Couldn't delete forbidden country code because not found: %s"), item))
 		end
 
 	elseif part == "dns" then
@@ -10989,8 +10989,8 @@ function listmyinfoentry (nick, part)
 
 	elseif part == "cc" then
 		_, rows = VH:SQLQuery ("select `cc`, `time`, `occurred` from `"..tbl_sql ["micc"].."` order by `occurred` desc")
-		lsttxt = gettext ("Forbidden CC list")
-		nolsttxt = gettext ("Forbidden CC list is empty.")
+		lsttxt = gettext ("Forbidden country code list")
+		nolsttxt = gettext ("Forbidden country code list is empty.")
 
 	elseif part == "dns" then
 		_, rows = VH:SQLQuery ("select `dns`, `time`, `occurred` from `"..tbl_sql ["midns"].."` order by `occurred` desc")
