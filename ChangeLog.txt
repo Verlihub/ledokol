@@ -1,4 +1,4 @@
-[ 2.8.0 :: 2014-##-## ]
+[ 2.8.0 :: 2014-08-16 ]
 
 Fixed: +me command triggered by operator did not perform any operations
 Fixed: Renamed "cleanup" command to "oldclean" since Verlihub has got "clean*" prefix reserver for some of its own commands
