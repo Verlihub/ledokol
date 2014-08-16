@@ -17,6 +17,7 @@ Added: Load infected user list from AVDB and kick them when they log in, disable
 Added: Commands to clear kick votes for user and list all current votes, request by Uhlik
 Added: Triggers with Ledokol replace variables support, request by S0RiN
 Added: More replace variables: custnick class classname uuptshrt uuptlong userhost userip geoiprange geoipcity geoipregcode geoipregname geoipcc geoipcn geoipconcode geoipconname geoiptz geoipcoord geoippost geoipmetro geoiparea myinfodesc myinfotag tagclient tagversion tagmode taghubs tagslots taglimit myinfoconn myinfostat myinfomail myinfoshare myinfoexshar myinfosupport myinfonmdcver
+Added: Support for L1=Local Network and P1=Private Network country codes
 
 [ 2.7.9 :: 2014-06-25 ]
 
