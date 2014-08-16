@@ -653,6 +653,8 @@ tbl_cyrlet = {
 ---------------------------------------------------------------------
 
 cc_names = {
+	["L1"] = "Local Network",
+	["P1"] = "Private Network",
 	["A1"] = "Anonymous Proxy",
 	["A2"] = "Satellite Provider",
 	["O1"] = "Other Country",
