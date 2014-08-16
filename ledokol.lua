@@ -8057,6 +8057,16 @@ else -- user
 				info = info .. " " .. string.format (gettext ("IP range: %s - %s"), geoip ["range_low"], geoip ["range_high"]) .. "\r\n" -- range
 			end
 
+			if geoip ["country_code"] then
+				local extra = ""
+
+				if geoip ["country"] then
+					extra = "=" .. geoip ["country"]
+				end
+
+				info = info .. " " .. gettext ("Country: %s"):format (geoip ["country_code"] .. extra) .. "\r\n" -- country code and country
+			end
+
 			if geoip ["city"] then
 				info = info .. " " .. string.format (gettext ("City: %s"), geoip ["city"]) .. "\r\n" -- city
 			end
@@ -8069,16 +8079,6 @@ else -- user
 				end
 
 				info = info .. " " .. string.format (gettext ("Region: %s"), geoip ["region_code"] .. extra) .. "\r\n" -- region code and region
-			end
-
-			if geoip ["country_code"] then
-				local extra = ""
-
-				if geoip ["country"] then
-					extra = "=" .. geoip ["country"]
-				end
-
-				info = info .. " " .. string.format (gettext ("Country: %s"), geoip ["country_code"] .. extra) .. "\r\n" -- country code and country
 			end
 
 			if geoip ["continent_code"] then
@@ -8204,6 +8204,16 @@ function showipinfo (nick, ip)
 				info = info .. " " .. string.format (gettext ("IP range: %s - %s"), geoip ["range_low"], geoip ["range_high"]) .. "\r\n" -- range
 			end
 
+			if geoip ["country_code"] then
+				local extra = ""
+
+				if geoip ["country"] then
+					extra = "=" .. geoip ["country"]
+				end
+
+				info = info .. " " .. gettext ("Country: %s"):format (geoip ["country_code"] .. extra) .. "\r\n" -- country code and country
+			end
+
 			if geoip ["city"] then
 				info = info .. " " .. string.format (gettext ("City: %s"), geoip ["city"]) .. "\r\n" -- city
 			end
@@ -8216,16 +8226,6 @@ function showipinfo (nick, ip)
 				end
 
 				info = info .. " " .. string.format (gettext ("Region: %s"), geoip ["region_code"] .. extra) .. "\r\n" -- region code and region
-			end
-
-			if geoip ["country_code"] then
-				local extra = ""
-
-				if geoip ["country"] then
-					extra = "=" .. geoip ["country"]
-				end
-
-				info = info .. " " .. string.format (gettext ("Country: %s"), geoip ["country_code"] .. extra) .. "\r\n" -- country code and country
 			end
 
 			if geoip ["continent_code"] then
