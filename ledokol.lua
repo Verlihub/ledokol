@@ -58,7 +58,7 @@ Doxtur, chaos, sphinx, Zorro, W1ZaRd, S0RiN, MaxFox, Krzychu
 -- global storage variables and tables >>
 ---------------------------------------------------------------------
 
-ver_ledo = "2.8.0" -- ledokol version
+ver_ledo = "2.8.1" -- ledokol version
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -1113,6 +1113,10 @@ function Main (file)
 					end
 
 					if ver <= 281 then
+						VH:SQLQuery ("update `" .. tbl_sql ["conf"] .. "` set `value` = 'Forbidden country code detected: *' where `variable` = 'miccmessage' and `value` = 'Forbidden CC detected: *'")
+					end
+
+					if ver <= 282 then
 						-- todo
 					end
 
@@ -8400,47 +8404,49 @@ end
 ----- ---- --- -- -
 
 function collectstats ()
-local tm = os.time () + table_sets ["srvtimediff"] -- current time
+	local tm = os.time () + table_sets ["srvtimediff"] -- current time
 
--- users
-local uc = getusercount ()
-VH:SQLQuery ("insert into `"..tbl_sql ["stat"].."` (`type`, `time`, `count`) values ('users_now', "..tm..", "..uc..") on duplicate key update `time` = "..tm..", `count` = "..uc)
-local _, rows = VH:SQLQuery ("select `time`, `count` from `"..tbl_sql ["stat"].."` where `type` = 'users_peak' limit 1")
+	-- users and peak
 
-if rows > 0 then
-	local _, ptm, puc = VH:SQLFetch (0)
+	local uc = getusercount ()
+	VH:SQLQuery ("insert into `" .. tbl_sql ["stat"] .. "` (`type`, `time`, `count`) values ('users_now', " .. tostring (tm) .. ", " .. tostring (uc) .. ") on duplicate key update `time` = " .. tostring (tm) .. ", `count` = " .. tostring (uc))
+	local _, rows = VH:SQLQuery ("select `time`, `count` from `" .. tbl_sql ["stat"] .. "` where `type` = 'users_peak' limit 1")
 
-	if uc > tonumber (puc) then
-		VH:SQLQuery ("update `"..tbl_sql ["stat"].."` set `time` = "..tm..", `count` = "..uc.." where `type` = 'users_peak' limit 1")
+	if rows > 0 then
+		local _, ptm, puc = VH:SQLFetch (0)
+		ptm = tonumber (ptm) or 0
+		puc = tonumber (puc) or 0
 
-		if table_sets ["classnotipeakuc"] < 11 then
-			local msg = table_sets ["userrecmsg"]
+		if uc > puc then
+			VH:SQLQuery ("update `" .. tbl_sql ["stat"] .. "` set `time` = " .. tostring (tm) .. ", `count` = " .. tostring (uc) .. " where `type` = 'users_peak' limit 1")
 
-			if string.find (msg, "<longdate>") then
-				msg = string.gsub (msg, "<longdate>", reprexpchars (fromunixtime (ptm, false)))
+			if table_sets ["classnotipeakuc"] < 11 then
+				local msg = table_sets ["userrecmsg"]
+
+				if msg:find ("<longdate>", 1, true) then
+					msg = msg:gsub ("<longdate>", reprexpchars (fromunixtime (ptm, false)))
+				end
+
+				if msg:find ("<shortdate>", 1, true) then
+					msg = msg:gsub ("<shortdate>", reprexpchars (fromunixtime (ptm, true)))
+				end
+
+				if msg:find ("<old>", 1, true) then
+					msg = msg:gsub ("<old>", reprexpchars (puc))
+				end
+
+				if msg:find ("<new>", 1, true) then
+					msg = msg:gsub ("<new>", reprexpchars (uc))
+				end
+
+				maintoall (msg, table_sets ["classnotipeakuc"], 10)
 			end
-
-			if string.find (msg, "<shortdate>") then
-				msg = string.gsub (msg, "<shortdate>", reprexpchars (fromunixtime (ptm, true)))
-			end
-
-			if string.find (msg, "<old>") then
-				msg = string.gsub (msg, "<old>", reprexpchars (puc))
-			end
-
-			if string.find (msg, "<new>") then
-				msg = string.gsub (msg, "<new>", reprexpchars (uc))
-			end
-
-			maintoall (msg, table_sets ["classnotipeakuc"], 10)
 		end
+	else
+		VH:SQLQuery ("insert into `" .. tbl_sql ["stat"] .. "` (`type`, `time`, `count`) values ('users_peak', " .. tostring (tm) .. ", " .. tostring (uc) .. ")")
 	end
 
-else
-	VH:SQLQuery ("insert into `"..tbl_sql ["stat"].."` (`type`, `time`, `count`) values ('users_peak', "..tm..", "..uc..")")
-end
-
-	-- total share
+	-- total share and peak
 
 	local ts = gettotsharesize ()
 	VH:SQLQuery ("insert into `" .. tbl_sql ["stat"] .. "` (`type`, `time`, `count`) values ('share_now', " .. tostring (tm) .. ", '" .. tostring (ts) .. "') on duplicate key update `time` = " .. tostring (tm) .. ", `count` = '" .. tostring (ts) .. "'")
@@ -8448,8 +8454,8 @@ end
 
 	if rows > 0 then
 		local _, ptm, pts = VH:SQLFetch (0)
-		pts = tonumber (pts) or 0
 		ptm = tonumber (ptm) or 0
+		pts = tonumber (pts) or 0
 
 		if ts > pts then
 			VH:SQLQuery ("update `" .. tbl_sql ["stat"] .. "` set `time` = " .. tostring (tm) .. ", `count` = '" .. tostring (ts) .. "' where `type` = 'share_peak' limit 1")
@@ -8457,19 +8463,19 @@ end
 			if table_sets ["classnotipeakts"] < 11 then
 				local msg = table_sets ["sharerecmsg"]
 
-				if msg:find ("<longdate>") then
+				if msg:find ("<longdate>", 1, true) then
 					msg = msg:gsub ("<longdate>", reprexpchars (fromunixtime (ptm, false)))
 				end
 
-				if msg:find ("<shortdate>") then
+				if msg:find ("<shortdate>", 1, true) then
 					msg = msg:gsub ("<shortdate>", reprexpchars (fromunixtime (ptm, true)))
 				end
 
-				if msg:find ("<old>") then
+				if msg:find ("<old>", 1, true) then
 					msg = msg:gsub ("<old>", reprexpchars (makesize (pts)))
 				end
 
-				if msg:find ("<new>") then
+				if msg:find ("<new>", 1, true) then
 					msg = msg:gsub ("<new>", reprexpchars (makesize (ts)))
 				end
 
@@ -8480,7 +8486,7 @@ end
 		VH:SQLQuery ("insert into `" .. tbl_sql ["stat"] .. "` (`type`, `time`, `count`) values ('share_peak', " .. tostring (tm) .. ", '" .. tostring (ts) .. "')")
 	end
 
-	-- average share per user
+	-- average share and peak
 
 	if uc > 0 and ts > 0 then
 		local avg = roundint ((ts / uc), 0)
@@ -8499,56 +8505,60 @@ end
 		end
 	end
 
--- uptime
-if table_othsets ["func_getuptime"] == true then
-	local ut = getuptime ()
-	VH:SQLQuery ("insert into `"..tbl_sql ["stat"].."` (`type`, `time`, `count`) values ('uptime_now', "..tm..", "..ut..") on duplicate key update `time` = "..tm..", `count` = "..ut)
-	local _, rows = VH:SQLQuery ("select `count` from `"..tbl_sql ["stat"].."` where `type` = 'uptime_peak' limit 1")
+	-- uptime and peak
+
+	if table_othsets ["func_getuptime"] then
+		local ut = getuptime ()
+		VH:SQLQuery ("insert into `" .. tbl_sql ["stat"] .. "` (`type`, `time`, `count`) values ('uptime_now', " .. tostring (tm) .. ", " .. tostring (ut) .. ") on duplicate key update `time` = " .. tostring (tm) .. ", `count` = " .. tostring (ut))
+		local _, rows = VH:SQLQuery ("select `count` from `" .. tbl_sql ["stat"] .. "` where `type` = 'uptime_peak' limit 1")
+
+		if rows > 0 then
+			local _, put = VH:SQLFetch (0)
+			put = tonumber (put) or 0
+
+			if ut > put then
+				VH:SQLQuery ("update `" .. tbl_sql ["stat"] .. "` set `time` = " .. tostring (tm) .. ", `count` = " .. tostring (ut) .. " where `type` = 'uptime_peak' limit 1")
+			end
+		else
+			VH:SQLQuery ("insert into `" .. tbl_sql ["stat"] .. "` (`type`, `time`, `count`) values ('uptime_peak', " .. tostring (tm) .. ", " .. tostring (ut) .. ")")
+		end
+	end
+
+	-- memory and peak
+
+	local mu = getmemusg ()
+	VH:SQLQuery ("insert into `" .. tbl_sql ["stat"] .. "` (`type`, `time`, `count`) values ('memory_now', " .. tostring (tm) .. ", " .. tostring (mu) .. ") on duplicate key update `time` = " .. tostring (tm) .. ", `count` = " .. tostring (mu))
+	local _, rows = VH:SQLQuery ("select `count` from `" .. tbl_sql ["stat"] .. "` where `type` = 'memory_peak' limit 1")
 
 	if rows > 0 then
-		local _, put = VH:SQLFetch (0)
+		local _, pmu = VH:SQLFetch (0)
+		pmu = tonumber (pmu) or 0
 
-		if ut > tonumber (put) then
-			VH:SQLQuery ("update `"..tbl_sql ["stat"].."` set `time` = "..tm..", `count` = "..ut.." where `type` = 'uptime_peak' limit 1")
+		if mu > pmu then
+			VH:SQLQuery ("update `" .. tbl_sql ["stat"] .. "` set `time` = " .. tostring (tm) .. ", `count` = " .. tostring (mu) .. " where `type` = 'memory_peak' limit 1")
 		end
-
 	else
-		VH:SQLQuery ("insert into `"..tbl_sql ["stat"].."` (`type`, `time`, `count`) values ('uptime_peak', "..tm..", "..ut..")")
-	end
-end
-
--- memory
-local mu = getmemusg ()
-VH:SQLQuery ("insert into `"..tbl_sql ["stat"].."` (`type`, `time`, `count`) values ('memory_now', "..tm..", "..mu..") on duplicate key update `time` = "..tm..", `count` = "..mu)
-local _, rows = VH:SQLQuery ("select `time`, `count` from `"..tbl_sql ["stat"].."` where `type` = 'memory_peak' limit 1")
-
-if rows > 0 then
-	local _, ptm, pmu = VH:SQLFetch (0)
-
-	if mu > tonumber (pmu) then
-		VH:SQLQuery ("update `"..tbl_sql ["stat"].."` set `time` = "..tm..", `count` = "..mu.." where `type` = 'memory_peak' limit 1")
+		VH:SQLQuery ("insert into `" .. tbl_sql ["stat"] .. "` (`type`, `time`, `count`) values ('memory_peak', " .. tostring (tm) .. ", " .. tostring (mu) .. ")")
 	end
 
-else
-	VH:SQLQuery ("insert into `"..tbl_sql ["stat"].."` (`type`, `time`, `count`) values ('memory_peak', "..tm..", "..mu..")")
-end
+	-- nick lists
 
--- nick lists
-local nl, ol = "", ""
+	local nl, ol, bl = "", "", ""
 
-for usr in string.gmatch (getnicklist (), "([^$]+)%$%$") do
-	if isbot (usr) == false then
-		if (getclass (usr) >= 3) or table_opks [usr] then
-			ol = ol..usr.."$$"
+	for usr in getnicklist ():gmatch ("([^%$ ]+)") do
+		if isbot (usr) then
+			bl = bl .. usr .. "$$"
+		elseif getclass (usr) >= 3 or table_opks [usr] then
+			ol = ol .. usr .. "$$"
 		else
-			nl = nl..usr.."$$"
+			nl = nl .. usr .. "$$"
 		end
 	end
-end
 
-nl, ol = repsqlchars (nl), repsqlchars (ol)
-VH:SQLQuery ("insert into `"..tbl_sql ["stat"].."` (`type`, `time`, `count`) values ('user_list', "..tm..", '"..nl.."') on duplicate key update `time` = "..tm..", `count` = '"..nl.."'")
-VH:SQLQuery ("insert into `"..tbl_sql ["stat"].."` (`type`, `time`, `count`) values ('operator_list', "..tm..", '"..ol.."') on duplicate key update `time` = "..tm..", `count` = '"..ol.."'")
+	nl, ol, bl = repsqlchars (nl), repsqlchars (ol), repsqlchars (bl)
+	VH:SQLQuery ("insert into `" .. tbl_sql ["stat"] .. "` (`type`, `time`, `count`) values ('user_list', " .. tostring (tm) .. ", '" .. nl .. "') on duplicate key update `time` = " .. tostring (tm) .. ", `count` = '" .. nl .. "'")
+	VH:SQLQuery ("insert into `" .. tbl_sql ["stat"] .. "` (`type`, `time`, `count`) values ('operator_list', " .. tostring (tm) .. ", '" .. ol .. "') on duplicate key update `time` = " .. tostring (tm) .. ", `count` = '" .. ol .. "'")
+	VH:SQLQuery ("insert into `" .. tbl_sql ["stat"] .. "` (`type`, `time`, `count`) values ('bot_list', " .. tostring (tm) .. ", '" .. bl .. "') on duplicate key update `time` = " .. tostring (tm) .. ", `count` = '" .. bl .. "'")
 end
 
 ----- ---- --- -- -
