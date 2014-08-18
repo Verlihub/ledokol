@@ -1,3 +1,7 @@
+[ 2.8.1 :: 2014-##-## ]
+
+Added: Bot list to statistics collection
+
 [ 2.8.0 :: 2014-08-16 ]
 
 Fixed: +me command triggered by operator did not perform any operations
@@ -9,7 +13,7 @@ Fixed: Don't send user commands to clients that don't support them
 Changed: Allow pingers to use +report command, required for AVDB
 Changed: Store country code gags permanently, request by MaxFox
 Added: Custom orderless gettext() format for translations, strings must be in format "english|translation\n" with each string on new line, comment with # character
-Added: Detection of paramenter count mismatch in translation strings, this helps to detect errors in translation files
+Added: Detection of parameter count mismatch in translation strings, this helps to detect errors in translation files
 Added: Support for replace variables in mitagmessage, <cl> = client, <ve> = version, <mo> = mode, <hu> = hubs, <sl> = slots, <li> = limiter
 Added: Virus spreader detection with AVDB support, requires cURL
 Added: Antivirus statistics, general and for each user separately
