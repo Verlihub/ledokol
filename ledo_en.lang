@@ -1,4 +1,5 @@
-# Language: English
+# Language: en_GB
+# Charset: CP1252
 # Version: 2.8.1
 # Author: RoLex
 # Email: webmaster@feardc.net
@@ -1041,3 +1042,4 @@ Operator|
 Cheef|
 Administrator|
 Master|
+News item added by %s: %s|
