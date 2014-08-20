@@ -7350,8 +7350,13 @@ end
 
 function addnews (nick, item)
 	local ndate = os.time () + table_sets ["srvtimediff"] -- current time
-	VH:SQLQuery ("insert into `"..tbl_sql ["news"].."` (`date`, `by`, `item`) values ("..ndate..", '"..repsqlchars (nick).."', '"..repsqlchars (item).."')")
-	commandanswer (nick, string.format (gettext ("Added news item: %s"), os.date (table_sets ["dateformat"].." "..table_sets ["timeformat"], ndate)))
+	VH:SQLQuery ("insert into `" .. tbl_sql ["news"] .. "` (`date`, `by`, `item`) values (" .. tostring (ndate) .. ", '" .. repsqlchars (nick) .. "', '" .. repsqlchars (item) .. "')")
+
+	if table_sets ["newsclass"] < 11 then
+		maintoall (gettext ("News item added by %s: %s"):format (nick, item), table_sets ["newsclass"], 10)
+	else
+		commandanswer (nick, gettext ("Added news item: %s"):format (os.date (table_sets ["dateformat"] .. " " .. table_sets ["timeformat"], ndate)))
+	end
 end
 
 ----- ---- --- -- -
