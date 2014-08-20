@@ -1,6 +1,7 @@
 [ 2.8.1 :: 2014-##-## ]
 
 Added: Bot list to statistics collection
+Added: Chat notification when news item is added, idea by Uhlik
 
 [ 2.8.0 :: 2014-08-16 ]
 
