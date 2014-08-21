@@ -2,6 +2,7 @@
 
 Added: Bot list to statistics collection
 Added: Chat notification when news item is added, idea by Uhlik
+Fixed: Negative GeoIP coordinates
 
 [ 2.8.0 :: 2014-08-16 ]
 
