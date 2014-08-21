@@ -8104,8 +8104,8 @@ else -- user
 				info = info .. " " .. string.format (gettext ("Time zone: %s"), geoip ["time_zone"]) .. "\r\n" -- time zone
 			end
 
-			if geoip ["latitude"] and geoip ["latitude"] > 0 and geoip ["longitude"] and geoip ["longitude"] > 0 then
-				info = info .. " " .. string.format (gettext ("Coordinates: %f %f"), geoip ["latitude"], geoip ["longitude"]) .. "\r\n" -- latitude and longitude
+			if geoip ["latitude"] and geoip ["longitude"] then
+				info = info .. " " .. gettext ("Coordinates: %f %f"):format (geoip ["latitude"], geoip ["longitude"]) .. "\r\n" -- latitude and longitude
 			end
 
 			if geoip ["postal_code"] then
@@ -8251,8 +8251,8 @@ function showipinfo (nick, ip)
 				info = info .. " " .. string.format (gettext ("Time zone: %s"), geoip ["time_zone"]) .. "\r\n" -- time zone
 			end
 
-			if geoip ["latitude"] and geoip ["latitude"] > 0 and geoip ["longitude"] and geoip ["longitude"] > 0 then
-				info = info .. " " .. string.format (gettext ("Coordinates: %f %f"), geoip ["latitude"], geoip ["longitude"]) .. "\r\n" -- latitude and longitude
+			if geoip ["latitude"] and geoip ["longitude"] then
+				info = info .. " " .. gettext ("Coordinates: %f %f"):format (geoip ["latitude"], geoip ["longitude"]) .. "\r\n" -- latitude and longitude
 			end
 
 			if geoip ["postal_code"] then
@@ -18683,7 +18683,7 @@ function reptextvars (str, vick, vata)
 					txt = txt:gsub ("<geoiptz>", reprexpchars (geoip ["time_zone"]))
 				end
 
-				if txt:find ("<geoipcoord>", 1, true) and geoip ["latitude"] and geoip ["latitude"] > 0 and geoip ["longitude"] and geoip ["longitude"] > 0 then
+				if txt:find ("<geoipcoord>", 1, true) and geoip ["latitude"] and geoip ["longitude"] then
 					txt = txt:gsub ("<geoipcoord>", reprexpchars (string.format ("%f %f", geoip ["latitude"], geoip ["longitude"])))
 				end
 
