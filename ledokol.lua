@@ -90,6 +90,7 @@ table_sets = {
 	["avsendtodb"] = 0,
 	["avdbloadint"] = 0,
 	["avdbloadlim"] = 1000,
+	["avdetaction"] = 0,
 	["avkicktext"] = "Virus spreaders are not welcome here _ban_",
 	["classnotianti"] = 3,
 	["classnotiex"] = 3,
@@ -938,6 +939,7 @@ table_prfl = {["ctm"] = {}}
 table_avlo = {}
 table_avus = {}
 table_avse = {}
+table_avbl = {}
 
 table_avfi = {
 	"download", "free", "driver", "100 best", "top 100", "top girl", "18 girl", "sexy girl",
@@ -1114,6 +1116,8 @@ function Main (file)
 
 					if ver <= 281 then
 						VH:SQLQuery ("update `" .. tbl_sql ["conf"] .. "` set `value` = 'Forbidden country code detected: *' where `variable` = 'miccmessage' and `value` = 'Forbidden CC detected: *'")
+
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('avdetaction', '" .. repsqlchars (table_sets ["avdetaction"]) .. "')")
 					end
 
 					if ver <= 282 then
@@ -4100,11 +4104,6 @@ function VH_OnParsedMsgMyINFO (nick, data)
 	if table_othsets ["locked"] == true then return 1 end
 	local _, ip, desc, tag, conn, email, size, hasinfo, gotip = "", "", "", "", "", "", 0, false, false
 
-	--if table_sets ["enableipwatch"] == 1 then -- ip watch, moved to VH_OnUserLogin due to verlihub bug
-		--ip, gotip = getip (nick), true
-		--checkipwat (nick, ip, data) -- do not return 0, can be a login sequence
-	--end
-
 	if (table_sets ["enableuserlog"] == 1) and (table_sets ["logallmyinfos"] == 1) then -- user logger
 		if gotip == false then ip, gotip = getip (nick), true end
 		desc, tag, conn, _, email, size = parsemyinfo (nick, data)
@@ -4171,12 +4170,12 @@ if (table_sets ["ipconantiflint"] > 0) and (cls < table_sets ["scanbelowclass"])
 				table_rcnn [ip] = nil -- delete
 			else
 				maintouser (nick, string.format (gettext ("Connections from your IP aren't allowed for another %d seconds."), table_sets ["ipconantiflint"] - dif))
-				VH:Disconnect (nick) -- drop user
 
 				if cls >= table_sets ["welcomeclass"] then -- dont send logout message
 					table_faau [nick] = 1
 				end
 
+				VH:Disconnect (nick) -- drop user
 				return 0
 			end
 
@@ -4205,23 +4204,33 @@ end
 				if nick == data ["nick"] then
 					if ip == data ["addr"] then
 						opsnotify (table_sets ["classnotiav"], gettext ("Infected user logged in with IP %s and share %s: %s"):format (ip .. tryipcc (ip, nick), makesize (size), nick))
-						VH:KickUser (table_othsets ["sendfrom"], nick, table_sets ["avkicktext"])
 
-						if cls >= table_sets ["welcomeclass"] then -- dont send logout message
-							table_faau [nick] = 1
+						if table_sets ["avdetaction"] == 0 then
+							table_avbl [nick] = true
+							opsnotify (table_sets ["classnotiav"], gettext ("Connection requests to following user will be blocked: %s"):format (nick))
+						else
+							if cls >= table_sets ["welcomeclass"] then -- dont send logout message
+								table_faau [nick] = 1
+							end
+
+							VH:KickUser (table_othsets ["sendfrom"], nick, table_sets ["avkicktext"])
+							return 0
 						end
-
-						return 0
 					elseif size == data ["size"] then
 						opsnotify (table_sets ["classnotiav"], gettext ("Infected user logged in with IP %s and share %s: %s"):format (ip .. tryipcc (ip, nick), makesize (size), nick))
 						avdbreport (nick, ip, size, true) -- antivirus database
-						VH:KickUser (table_othsets ["sendfrom"], nick, table_sets ["avkicktext"])
 
-						if cls >= table_sets ["welcomeclass"] then -- dont send logout message
-							table_faau [nick] = 1
+						if table_sets ["avdetaction"] == 0 then
+							table_avbl [nick] = true
+							opsnotify (table_sets ["classnotiav"], gettext ("Connection requests to following user will be blocked: %s"):format (nick))
+						else
+							if cls >= table_sets ["welcomeclass"] then -- dont send logout message
+								table_faau [nick] = 1
+							end
+
+							VH:KickUser (table_othsets ["sendfrom"], nick, table_sets ["avkicktext"])
+							return 0
 						end
-
-						return 0
 					end
 				end
 			end
@@ -4340,9 +4349,19 @@ end
 ----- ---- --- -- -
 
 function VH_OnUserLogout (nick, uip)
-	if table_othsets ["locked"] == true then return 1 end
-	if table_othsets ["restart"] == true then return 1 end -- restart mode
+	if table_othsets ["locked"] then
+		return 1
+	end
+
+	if table_othsets ["restart"] then -- restart mode
+		return 1
+	end
+
 	local cls = getclass (nick)
+
+	if table_sets ["avdetaction"] == 0 then
+		table_avbl [nick] = nil
+	end
 
 	if table_sets ["showuseruptime"] == 1 then -- user uptime
 		table_usup [nick] = nil
@@ -4385,7 +4404,9 @@ function VH_OnUserLogout (nick, uip)
 		table_ctmb [nick] = nil
 	end
 
-	table_opks [nick] = nil -- operator keys
+	if cls >= table_sets ["opkeyclass"] or table_sets ["opkeyshare"] > 0 then
+		table_opks [nick] = nil -- operator keys
+	end
 
 	if table_sets ["votekickclass"] < 11 then
 		table_voki [nick] = nil -- vote kicks
@@ -4402,7 +4423,10 @@ function VH_OnParsedMsgSearch (nick, data)
 
 	if table_sets ["enableipwatch"] == 1 then -- ip watch
 		ip, gotip = getip (nick), true
-		if checkipwat (nick, ip, data) == true then return 0 end
+
+		if checkipwat (nick, ip, data) then
+			return 0
+		end
 	end
 
 	if (table_sets ["searchuptime"] > 0) and (table_sets ["showuseruptime"] == 1) then
@@ -4449,7 +4473,7 @@ end
 ----- ---- --- -- -
 
 function VH_OnParsedMsgSR (nick, data)
-	if table_othsets ["locked"] == true then
+	if table_othsets ["locked"] then
 		return 1
 	end
 
@@ -4459,13 +4483,17 @@ function VH_OnParsedMsgSR (nick, data)
 		local class = getclass (nick)
 
 		if class >= table_sets ["scanbelowclass"] then
-			if table_sets ["enableipwatch"] == 1 then -- ip watch
-				if checkipwat (nick, usip, data) == true then
-					return 0
-				end
+			if table_sets ["enableipwatch"] == 1 and checkipwat (nick, usip, data) then -- ip watch
+				return 0
 			end
 
 			return 1
+		elseif table_sets ["avdetaction"] == 0 and table_avbl [nick] then -- block infected user
+			if table_sets ["enableipwatch"] == 1 then -- ip watch
+				checkipwat (nick, usip, data) -- we will return 0 anyway
+			end
+
+			return 0
 		end
 
 		local _, _, path, name, size = data:find ("^%$SR [^ ]+ (.-)([^\\]-)" .. string.char (5) .. "(%d+) .+")
@@ -4476,10 +4504,8 @@ function VH_OnParsedMsgSR (nick, data)
 			for _, ext in pairs (table_avex) do
 				if lame:sub (-# ext) == ext then
 					if ext == ".rar" and lame:find ("part%d+%.rar$") then
-						if table_sets ["enableipwatch"] == 1 then -- ip watch
-							if checkipwat (nick, usip, data) == true then
-								return 0
-							end
+						if table_sets ["enableipwatch"] == 1 and checkipwat (nick, usip, data) then -- ip watch
+							return 0
 						end
 
 						return 1
@@ -4532,11 +4558,21 @@ function VH_OnParsedMsgSR (nick, data)
 
 											avdbreport (nick, usip, shar, haveshar) -- antivirus database
 
-											if table_sets ["enableipwatch"] == 1 then -- ip watch
-												checkipwat (nick, usip, data)
+											if table_sets ["avdetaction"] == 0 then
+												table_avbl [nick] = true
+												opsnotify (table_sets ["classnotiav"], gettext ("Connection requests to following user will be blocked: %s"):format (nick))
+
+												if table_sets ["enableipwatch"] == 1 then -- ip watch
+													checkipwat (nick, usip, data) -- we will return 0 anyway
+												end
+											else
+												if table_sets ["enableipwatch"] == 1 then -- ip watch
+													checkipwat (nick, usip, data) -- we will return 0 anyway
+												end
+
+												VH:KickUser (table_othsets ["sendfrom"], nick, table_sets ["avkicktext"])
 											end
 
-											VH:KickUser (table_othsets ["sendfrom"], nick, table_sets ["avkicktext"])
 											table_avus [nick] = nil
 											return 0
 										end
@@ -4559,10 +4595,8 @@ function VH_OnParsedMsgSR (nick, data)
 								}
 							end
 
-							if table_sets ["enableipwatch"] == 1 then -- ip watch
-								if checkipwat (nick, usip, data) == true then
-									return 0
-								end
+							if table_sets ["enableipwatch"] == 1 and checkipwat (nick, usip, data) then -- ip watch
+								return 0
 							end
 
 							return 1
@@ -4573,13 +4607,11 @@ function VH_OnParsedMsgSR (nick, data)
 		end
 	end
 
-	if table_sets ["enableipwatch"] == 1 then -- ip watch
-		if checkipwat (nick, usip, data) == true then
-			return 0
-		end
+	if table_sets ["enableipwatch"] == 1 and checkipwat (nick, usip, data) then -- ip watch
+		return 0
 	end
 
-	-- todo: add srfi = search result filter
+	-- todo: add srfi = search results filter
 	return 1
 end
 
@@ -4923,10 +4955,17 @@ end
 ----- ---- --- -- -
 
 function VH_OnParsedMsgConnectToMe (nick, othernick, ip, port)
-	if table_othsets ["locked"] == true then return 1 end
+	if table_othsets ["locked"] then
+		return 1
+	end
 
-	if table_sets ["enableipwatch"] == 1 then -- ip watch
-		if checkipwat (nick, getip (nick), "$ConnectToMe "..othernick.." "..ip..":"..port) == true then return 0 end
+	if table_sets ["enableipwatch"] == 1 and checkipwat (nick, getip (nick), "$ConnectToMe " .. othernick .. " " .. ip .. ":" .. port) then -- ip watch
+		return 0
+	end
+
+	if table_sets ["avdetaction"] == 0 and table_avbl [othernick] then
+		maintouser (nick, gettext ("Your connection request is blocked because user that you're trying connect to was detected as virus spreader: %s"): format (othernick))
+		return 0
 	end
 
 	--if (table_sets ["addledobot"] == 1) and (othernick == table_sets ["ledobotnick"]) then
@@ -4954,10 +4993,17 @@ end
 ----- ---- --- -- -
 
 function VH_OnParsedMsgRevConnectToMe (nick, othernick)
-	if table_othsets ["locked"] == true then return 1 end
+	if table_othsets ["locked"] then
+		return 1
+	end
 
-	if table_sets ["enableipwatch"] == 1 then -- ip watch
-		if checkipwat (nick, getip (nick), "$RevConnectToMe "..othernick.." "..nick) == true then return 0 end
+	if table_sets ["enableipwatch"] == 1 and checkipwat (nick, getip (nick), "$RevConnectToMe " .. othernick .. " " .. nick) then -- ip watch
+		return 0
+	end
+
+	if table_sets ["avdetaction"] == 0 and table_avbl [othernick] then
+		maintouser (nick, gettext ("Your connection request is blocked because user that you're trying connect to was detected as virus spreader: %s"): format (othernick))
+		return 0
 	end
 
 	--if (table_sets ["addledobot"] == 1) and (othernick == table_sets ["ledobotnick"]) then
@@ -8105,7 +8151,7 @@ else -- user
 			end
 
 			if geoip ["latitude"] and geoip ["longitude"] then
-				info = info .. " " .. gettext ("Coordinates: %f %f"):format (geoip ["latitude"], geoip ["longitude"]) .. "\r\n" -- latitude and longitude
+				info = info .. " " .. gettext ("Coordinates: %.4f %.4f"):format (geoip ["latitude"], geoip ["longitude"]) .. "\r\n" -- latitude and longitude
 			end
 
 			if geoip ["postal_code"] then
@@ -8252,7 +8298,7 @@ function showipinfo (nick, ip)
 			end
 
 			if geoip ["latitude"] and geoip ["longitude"] then
-				info = info .. " " .. gettext ("Coordinates: %f %f"):format (geoip ["latitude"], geoip ["longitude"]) .. "\r\n" -- latitude and longitude
+				info = info .. " " .. gettext ("Coordinates: %.4f %.4f"):format (geoip ["latitude"], geoip ["longitude"]) .. "\r\n" -- latitude and longitude
 			end
 
 			if geoip ["postal_code"] then
@@ -13595,6 +13641,7 @@ end
 				if setto == 0 then
 					table_avse = {} -- clear
 					table_avus = {}
+					table_avbl = {}
 					table_othsets ["avnextitem"] = 1
 				else
 					loadavstr ()
@@ -13676,6 +13723,22 @@ end
 			end
 		else
 			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
+		end
+
+	----- ---- --- -- -
+
+	elseif tvar == "avdetaction" then
+		if num == true then
+			if setto == 0 then
+				ok = true
+			elseif setto == 1 then
+				table_avbl = {} -- clear
+				ok = true
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0 " .. gettext ("or") .. " 1"))
+			end
+		else
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
 		end
 
 	----- ---- --- -- -
@@ -16616,6 +16679,7 @@ conf = conf.."\r\n [::] searfiltmsg = "..table_sets ["searfiltmsg"]
 	conf = conf .. "\r\n [::] avsendtodb = " .. table_sets ["avsendtodb"]
 	conf = conf .. "\r\n [::] avdbloadint = " .. table_sets ["avdbloadint"]
 	conf = conf .. "\r\n [::] avdbloadlim = " .. table_sets ["avdbloadlim"]
+	conf = conf .. "\r\n [::] avdetaction = " .. table_sets ["avdetaction"]
 	conf = conf .. "\r\n [::] avkicktext = " .. table_sets ["avkicktext"]
 	conf = conf .. "\r\n"
 conf = conf.."\r\n [::] classnotianti = "..table_sets ["classnotianti"]
@@ -17672,11 +17736,23 @@ function avdbcheckall ()
 						if nick == data ["nick"] then
 							if addr == data ["addr"] then
 								opsnotify (table_sets ["classnotiav"], gettext ("Infected user found with IP %s and share %s: %s"):format (addr .. tryipcc (addr, nick), makesize (size), nick))
-								VH:KickUser (table_othsets ["sendfrom"], nick, table_sets ["avkicktext"])
+
+								if table_sets ["avdetaction"] == 0 then
+									table_avbl [nick] = true
+									opsnotify (table_sets ["classnotiav"], gettext ("Connection requests to following user will be blocked: %s"):format (nick))
+								else
+									VH:KickUser (table_othsets ["sendfrom"], nick, table_sets ["avkicktext"])
+								end
 							elseif size == data ["size"] then
 								opsnotify (table_sets ["classnotiav"], gettext ("Infected user found with IP %s and share %s: %s"):format (addr .. tryipcc (addr, nick), makesize (size), nick))
 								avdbreport (nick, addr, size, true) -- antivirus database
-								VH:KickUser (table_othsets ["sendfrom"], nick, table_sets ["avkicktext"])
+
+								if table_sets ["avdetaction"] == 0 then
+									table_avbl [nick] = true
+									opsnotify (table_sets ["classnotiav"], gettext ("Connection requests to following user will be blocked: %s"):format (nick))
+								else
+									VH:KickUser (table_othsets ["sendfrom"], nick, table_sets ["avkicktext"])
+								end
 							end
 						end
 					end
