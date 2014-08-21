@@ -4959,21 +4959,35 @@ function VH_OnParsedMsgConnectToMe (nick, othernick, ip, port)
 		return 1
 	end
 
+	local class, haveclass = 0, false
+
 	if table_sets ["enableipwatch"] == 1 and checkipwat (nick, getip (nick), "$ConnectToMe " .. othernick .. " " .. ip .. ":" .. port) then -- ip watch
 		return 0
 	end
 
 	if table_sets ["avdetaction"] == 0 and table_avbl [othernick] then
-		maintouser (nick, gettext ("Your connection request is blocked because user that you're trying connect to was detected as virus spreader: %s"): format (othernick))
-		return 0
+		if not haveclass then
+			class = getclass (nick)
+			haveclass = true
+		end
+
+		if class < 3 then
+			maintouser (nick, gettext ("Your connection request is blocked because user that you're trying connect to was detected as virus spreader: %s"): format (othernick))
+			return 0
+		end
 	end
 
-	--if (table_sets ["addledobot"] == 1) and (othernick == table_sets ["ledobotnick"]) then
-		--maintouser (nick, string.format (gettext ("You can download me from: %s"), "http://ledo.feardc.net/"))
+	--if table_sets ["addledobot"] == 1 and othernick == table_sets ["ledobotnick"] then -- hub doesnt allow this request
+		--maintouser (nick, gettext ("You can download me from: %s"):format ("http://ledo.feardc.net/"))
 		--return 0
-	--else
+	--end
 
-	if table_sets ["ctmminclass"] > getclass (nick) then
+	if not haveclass then
+		class = getclass (nick)
+		haveclass = true
+	end
+
+	if table_sets ["ctmminclass"] > class then
 		if table_ctmb [nick] then
 			if os.difftime (os.time (), table_ctmb [nick]) >= table_sets ["ctmmsginterval"] then
 				table_ctmb [nick] = os.time () -- reset
@@ -4997,21 +5011,35 @@ function VH_OnParsedMsgRevConnectToMe (nick, othernick)
 		return 1
 	end
 
+	local class, haveclass = 0, false
+
 	if table_sets ["enableipwatch"] == 1 and checkipwat (nick, getip (nick), "$RevConnectToMe " .. othernick .. " " .. nick) then -- ip watch
 		return 0
 	end
 
 	if table_sets ["avdetaction"] == 0 and table_avbl [othernick] then
-		maintouser (nick, gettext ("Your connection request is blocked because user that you're trying connect to was detected as virus spreader: %s"): format (othernick))
-		return 0
+		if not haveclass then
+			class = getclass (nick)
+			haveclass = true
+		end
+
+		if class < 3 then
+			maintouser (nick, gettext ("Your connection request is blocked because user that you're trying connect to was detected as virus spreader: %s"): format (othernick))
+			return 0
+		end
 	end
 
-	--if (table_sets ["addledobot"] == 1) and (othernick == table_sets ["ledobotnick"]) then
-		--maintouser (nick, string.format (gettext ("You can download me from: %s"), "http://ledo.feardc.net/"))
+	--if table_sets ["addledobot"] == 1 and othernick == table_sets ["ledobotnick"] then -- hub doesnt allow this request
+		--maintouser (nick, gettext ("You can download me from: %s"):format ("http://ledo.feardc.net/"))
 		--return 0
-	--else
+	--end
 
-	if table_sets ["ctmminclass"] > getclass (nick) then
+	if not haveclass then
+		class = getclass (nick)
+		haveclass = true
+	end
+
+	if table_sets ["ctmminclass"] > class then
 		if table_ctmb [nick] then
 			if os.difftime (os.time (), table_ctmb [nick]) >= table_sets ["ctmmsginterval"] then
 				table_ctmb [nick] = os.time () -- reset
