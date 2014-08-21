@@ -918,7 +918,7 @@ Region: %s|
 Time zone: %s|
 Continent: %s|
 Postal code: %s|
-Coordinates: %f %f|
+Coordinates: %.4f %.4f|
 Metro code: %d|
 Area code: %d|
 Drop users with IP|
@@ -1043,3 +1043,5 @@ Cheef|
 Administrator|
 Master|
 News item added by %s: %s|
+Your connection request is blocked because user that you're trying connect to was detected as virus spreader: %s|
+Connection requests to following user will be blocked: %s|
