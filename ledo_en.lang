@@ -27,7 +27,6 @@ Requested file %s not found on target server. Please try again later.|
 Last %d operator chat messages|
 Operator chat history is empty.|
 Valid priority is a number from %d to %d.|
-Ledokol version %s released. Downloading script files...|
 You are currently running latest version of Ledokol. No update is required.|
 Why would you send offline message to yourself?|
 User %s is online. Sending message directly.|
@@ -1045,3 +1044,8 @@ Master|
 News item added by %s: %s|
 Your connection request is blocked because user that you're trying connect to was detected as virus spreader: %s|
 Connection requests to following user will be blocked: %s|
+Downloading script files...|
+Moving files...|
+Ledokol development version %s is available.|
+Ledokol stable version %s is available.|
+Language file %s successfully downloaded and loaded.|
