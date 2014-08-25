@@ -288,6 +288,8 @@ table_othsets = {
 	["ledobotdesc"] = "Security and entertainment bot",
 	["timebotdesc"] = "Ledokol time bot",
 	["updserv"] = "http://ledo.feardc.net/",
+	["updservdev"] = "http://ledo.feardc.net/dev/",
+	["updservlang"] = "http://ledo.feardc.net/lang/",
 	["vazhub"] = "dchub://hub.verlihub.net:7777/",
 	["tmpfile"] = "ledokol.tmp",
 	["verfile"] = "ledokol.ver",
@@ -2840,19 +2842,43 @@ elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["ledostats
 
 	return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
 
-elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["ledover"].."$") then
-	if ucl >= table_sets ["mincommandclass"] then
-		donotifycmd (nick, data, 0, ucl)
-		updatescript (nick)
-	else
-		commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
-	end
+	elseif data:find ("^" .. table_othsets ["optrig"] .. table_cmnds ["ledover"] .. "$") then
+		if ucl >= table_sets ["mincommandclass"] then
+			donotifycmd (nick, data, 0, ucl)
+			updatescript (nick)
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
 
-	return 0
+		return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
+
+	elseif data:find ("^" .. table_othsets ["optrig"] .. table_cmnds ["ledover"] .. " dev$") then
+		if ucl >= 10 then
+			donotifycmd (nick, data, 0, ucl)
+			updatescriptdev (nick)
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
+
+		return 0
+
+	----- ---- --- -- -
+
+	elseif data:find ("^" .. table_othsets ["optrig"] .. table_cmnds ["ledover"] .. " force$") then
+		if ucl >= 10 then
+			donotifycmd (nick, data, 0, ucl)
+			updatescriptforce (nick)
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
+
+		return 0
+
+	----- ---- --- -- -
 
 elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["ledokoluninstallisconfirmed"].."$") then
 
@@ -2888,8 +2914,12 @@ elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["ledokolun
 
 		if f then
 			f:close ()
-			os.remove (table_othsets ["cfgdir"].."scripts/ledokol.lua") -- delete script file
-			os.remove (table_othsets ["cfgdir"].."scripts/ledo_en.lang") -- delete language files
+			os.remove (table_othsets ["cfgdir"] .. "scripts/ledokol.lua") -- delete script file
+
+			if table_sets ["langfileprefix"] ~= "" then -- delete language files
+				os.remove (table_othsets ["cfgdir"] .. "scripts/ledo_" .. table_sets ["langfileprefix"] .. ".lang")
+			end
+
 			commandanswer (nick, gettext ("Ledokol tables are now deleted and script is locked.").." "..gettext ("Please unload the script to finish.").." "..gettext ("Good luck.")) -- finish
 		else
 			commandanswer (nick, gettext ("Ledokol tables are now deleted and script is locked.").." "..gettext ("Please unload the script and remove it from scripts directory.").." "..gettext ("Good luck.")) -- finish
@@ -8825,12 +8855,12 @@ function autoupdatecheck ()
 			local ver, _ = f:read ("*line") -- read first line
 			f:close ()
 
-			if ver and string.find (ver, "^%d+%.%d+%.%d+$") then
+			if ver and ver:find ("^%d+%.%d+%.%d+$") then
 				local vernum = ver:gsub ("%.", "")
 				local verledonum = ver_ledo:gsub ("%.", "")
 
 				if tonumber (vernum) > tonumber (verledonum) then -- version number is higher
-					opsnotify (table_sets ["classnotiledoact"], string.format (gettext ("Automatic update detected Ledokol version %s released, to upgrade use: %s"), ver, string.sub (getconfig ("cmd_start_op"), 1, 1) .. table_cmnds ["ledover"]))
+					opsnotify (table_sets ["classnotiledoact"], gettext ("Automatic update detected Ledokol version %s released, to upgrade use: %s"):format (ver, getconfig ("cmd_start_op"):sub (1, 1) .. table_cmnds ["ledover"]))
 				end
 			end
 		end
@@ -8843,95 +8873,234 @@ end
 
 function updatescript (nick)
 	if not table_othsets ["ver_curl"] then
-		commandanswer (nick, string.format (gettext ("This feature requires any version of %s installed on your system."), "cURL"))
-	else
-		commandanswer (nick, gettext ("Downloading version file..."))
-		local res, err = os.execute ("curl -L --retry 3 --connect-timeout 5 -m 15 -A \"Verlihub\" -s -o \"" .. table_othsets ["cfgdir"] .. table_othsets ["tmpfile"] .. "\" \"" .. table_othsets ["updserv"] .. table_othsets ["verfile"] .. "\"")
+		commandanswer (nick, gettext ("This feature requires any version of %s installed on your system."):format ("cURL"))
+		return
+	end
 
-		if res then
-			local f = io.open (table_othsets ["cfgdir"] .. table_othsets ["tmpfile"], "r")
+	commandanswer (nick, gettext ("Downloading version file..."))
+	local res, err = os.execute ("curl -L --retry 3 --connect-timeout 5 -m 15 -A \"Verlihub\" -s -o \"" .. table_othsets ["cfgdir"] .. table_othsets ["tmpfile"] .. "\" \"" .. table_othsets ["updserv"] .. table_othsets ["verfile"] .. "\"")
 
-			if f then
-				local ver, err = f:read ("*line") -- read first line
-				f:close ()
-				os.remove (table_othsets ["cfgdir"] .. table_othsets ["tmpfile"])
+	if res then
+		local file = io.open (table_othsets ["cfgdir"] .. table_othsets ["tmpfile"], "r")
 
-				if ver then
-					if not string.find (ver, "^%d+%.%d+%.%d+$") then -- unexpected content
-						commandanswer (nick, string.format (gettext ("Requested file %s not found on target server. Please try again later."), table_othsets ["verfile"]))
-					else -- expected content
-						local vernum = ver:gsub ("%.", "")
-						local verledonum = ver_ledo:gsub ("%.", "")
+		if file then
+			local ver, err = file:read ("*line") -- read first line
+			file:close ()
+			os.remove (table_othsets ["cfgdir"] .. table_othsets ["tmpfile"])
 
-						if tonumber (vernum) > tonumber (verledonum) then -- version number is higher
-							commandanswer (nick, string.format (gettext ("Ledokol version %s released. Downloading script files..."), ver))
-							local res, err = os.execute ("curl -L --retry 3 --connect-timeout 5 -m 15 -A \"Verlihub\" -s -o \"" .. table_othsets ["cfgdir"] .. "ledokol.lua\" \"" .. table_othsets ["updserv"] .. "ledokol.lua\"")
+			if ver then
+				if not ver:find ("^%d+%.%d+%.%d+$") then -- unexpected content
+					commandanswer (nick, gettext ("Requested file %s not found on target server. Please try again later."):format (table_othsets ["verfile"]))
+				else -- expected content
+					local vernum = ver:gsub ("%.", "")
+					local verledonum = ver_ledo:gsub ("%.", "")
 
-							if res then
-								local f = io.open (table_othsets ["cfgdir"] .. "ledokol.lua", "r")
+					if tonumber (vernum) > tonumber (verledonum) then -- version number is higher
+						commandanswer (nick, gettext ("Ledokol stable version %s is available."):format (ver))
+						commandanswer (nick, gettext ("Downloading script files..."))
+						local res, err = os.execute ("curl -L --retry 3 --connect-timeout 5 -m 15 -A \"Verlihub\" -s -o \"" .. table_othsets ["cfgdir"] .. "ledokol.lua\" \"" .. table_othsets ["updserv"] .. "ledokol.lua\"")
 
-								if f then
-									local ledo, err = f:read ("*all") -- read the file
-									f:close ()
+						if res then
+							local file = io.open (table_othsets ["cfgdir"] .. "ledokol.lua", "r")
 
-									if ledo then
-										if not string.find (ledo, "ver_ledo = \"" .. ver .. "\" %-%- ledokol version") then -- unexpected content
-											os.remove (table_othsets ["cfgdir"] .. "ledokol.lua")
-											commandanswer (nick, string.format (gettext ("Requested file %s not found on target server. Please try again later."), "ledokol.lua"))
-										else -- expected content
-											commandanswer (nick, gettext ("Moving files..."))
-											local res, err = os.execute ("mv -f \"" .. table_othsets ["cfgdir"] .. "ledokol.lua\" \"" .. table_othsets ["cfgdir"] .. "scripts/ledokol.lua\"")
+							if file then
+								local cont, err = file:read ("*all") -- read the file
+								file:close ()
 
-											if res then
-												if os.execute ("curl -L --retry 3 --connect-timeout 5 -m 15 -A \"Verlihub\" -s -o \"" .. table_othsets ["cfgdir"] .. "ledo_en.lang\" \"" .. table_othsets ["updserv"] .. "ledo_en.lang\"") then
-													local f = io.open (table_othsets ["cfgdir"] .. "ledo_en.lang", "r")
+								if cont then
+									if cont:find ("ver_ledo = \"" .. ver .. "\" -- ledokol version", 1, true) then -- expected content
+										commandanswer (nick, gettext ("Moving files..."))
+										local res, err = os.execute ("mv -f \"" .. table_othsets ["cfgdir"] .. "ledokol.lua\" \"" .. table_othsets ["cfgdir"] .. "scripts/ledokol.lua\"")
 
-													if f then
-														local ledo = f:read ("*all") -- read the file
-														f:close ()
+										if res then
+											if table_sets ["langfileprefix"] ~= "" and os.execute ("curl -L --retry 3 --connect-timeout 5 -m 15 -A \"Verlihub\" -s -o \"" .. table_othsets ["cfgdir"] .. "ledo_" .. table_sets ["langfileprefix"] .. ".lang\" \"" .. table_othsets ["updservlang"] .. "ledo_" .. table_sets ["langfileprefix"] .. ".lang\"") then
+												local file = io.open (table_othsets ["cfgdir"] .. "ledo_" .. table_sets ["langfileprefix"] .. ".lang", "r")
 
-														if ledo then
-															if not string.find (ledo, "Version: " .. ver) then -- unexpected content
-																os.remove (table_othsets ["cfgdir"] .. "ledo_en.lang")
-															elseif not os.execute ("mv -f \"" .. table_othsets ["cfgdir"] .. "ledo_en.lang\" \"" .. table_othsets ["cfgdir"] .. "scripts/ledo_en.lang\"") then -- expected content
-																os.remove (table_othsets ["cfgdir"] .. "ledo_en.lang")
-															end
-														else -- unable to read ledo_en.lang
-															os.remove (table_othsets ["cfgdir"] .. "ledo_en.lang")
+												if file then
+													local cont = file:read ("*all") -- read the file
+													file:close ()
+
+													if cont then
+														if not cont:find ("# Version: " .. ver, 1, true) then -- unexpected content
+															os.remove (table_othsets ["cfgdir"] .. "ledo_" .. table_sets ["langfileprefix"] .. ".lang")
+														elseif not os.execute ("mv -f \"" .. table_othsets ["cfgdir"] .. "ledo_" .. table_sets ["langfileprefix"] .. ".lang\" \"" .. table_othsets ["cfgdir"] .. "scripts/ledo_" .. table_sets ["langfileprefix"] .. ".lang\"") then -- expected content and file moved
+															os.remove (table_othsets ["cfgdir"] .. "ledo_" .. table_sets ["langfileprefix"] .. ".lang")
 														end
+													else -- unable to read language file
+														os.remove (table_othsets ["cfgdir"] .. "ledo_" .. table_sets ["langfileprefix"] .. ".lang")
 													end
 												end
-
-												commandanswer (nick, gettext ("Please use following commands to finish update process.") .. "\r\n\r\n !luaunload " .. table_othsets ["cfgdir"] .. "scripts/ledokol.lua\r\n !luaload " .. table_othsets ["cfgdir"] .. "scripts/ledokol.lua\r\n")
-											else -- unable to execute shell command
-												os.remove (table_othsets ["cfgdir"] .. "ledokol.lua")
-												commandanswer (nick, string.format (gettext ("Unable to proceed: %s"), (err or gettext ("No error message specified."))))
 											end
+
+											commandanswer (nick, gettext ("Please use following commands to finish update process.") .. "\r\n\r\n !luaunload " .. table_othsets ["cfgdir"] .. "scripts/ledokol.lua\r\n !luaload " .. table_othsets ["cfgdir"] .. "scripts/ledokol.lua\r\n")
+										else -- unable to execute shell command
+											os.remove (table_othsets ["cfgdir"] .. "ledokol.lua")
+											commandanswer (nick, gettext ("Unable to proceed: %s"):format (err or gettext ("No error message specified.")))
 										end
-									else -- unable to read ledokol.lua
-										commandanswer (nick, string.format (gettext ("Unable to proceed: %s"), (err or gettext ("No error message specified."))))
+									else -- unexpected content
+										os.remove (table_othsets ["cfgdir"] .. "ledokol.lua")
+										commandanswer (nick, gettext ("Requested file %s not found on target server. Please try again later."):format ("ledokol.lua"))
 									end
-								else -- unable to open ledokol.lua
-									--commandanswer (nick, string.format (gettext ("Unable to proceed: %s"), (err or gettext ("No error message specified."))))
-									commandanswer (nick, gettext ("Unable to connect to target server. Please try again later."))
+								else -- unable to read ledokol.lua
+									os.remove (table_othsets ["cfgdir"] .. "ledokol.lua")
+									commandanswer (nick, gettext ("Unable to proceed: %s"):format (err or gettext ("No error message specified.")))
 								end
-							else -- unable to execute shell command
-								commandanswer (nick, string.format (gettext ("Unable to proceed: %s"), (err or gettext ("No error message specified."))))
+							else -- unable to open ledokol.lua
+								--commandanswer (nick, gettext ("Unable to proceed: %s"):format (err or gettext ("No error message specified.")))
+								commandanswer (nick, gettext ("Unable to connect to target server. Please try again later."))
 							end
-						else -- version number is same or lower
-							commandanswer (nick, gettext ("You are currently running latest version of Ledokol. No update is required."))
+						else -- unable to execute shell command
+							commandanswer (nick, gettext ("Unable to proceed: %s"):format (err or gettext ("No error message specified.")))
 						end
+					else -- version number is same or lower
+						commandanswer (nick, gettext ("You are currently running latest version of Ledokol. No update is required."))
 					end
-				else -- unable to read ledokol.ver
-					commandanswer (nick, string.format (gettext ("Unable to proceed: %s"), (err or gettext ("No error message specified."))))
 				end
-			else -- unable to open ledokol.ver
-				--commandanswer (nick, string.format (gettext ("Unable to proceed: %s"), (err or gettext ("No error message specified."))))
-				commandanswer (nick, gettext ("Unable to connect to target server. Please try again later."))
+			else -- unable to read ledokol.ver
+				commandanswer (nick, gettext ("Unable to proceed: %s"):format (err or gettext ("No error message specified.")))
 			end
-		else -- unable to execute shell command
-			commandanswer (nick, string.format (gettext ("Unable to proceed: %s"), (err or gettext ("No error message specified."))))
+		else -- unable to open ledokol.ver
+			--commandanswer (nick, gettext ("Unable to proceed: %s"):format (err or gettext ("No error message specified.")))
+			commandanswer (nick, gettext ("Unable to connect to target server. Please try again later."))
 		end
+	else -- unable to execute shell command
+		commandanswer (nick, gettext ("Unable to proceed: %s"):format (err or gettext ("No error message specified.")))
+	end
+end
+
+----- ---- --- -- -
+
+function updatescriptdev (nick)
+	if not table_othsets ["ver_curl"] then
+		commandanswer (nick, gettext ("This feature requires any version of %s installed on your system."):format ("cURL"))
+		return
+	end
+
+	commandanswer (nick, gettext ("Downloading script files..."))
+	local res, err = os.execute ("curl -L --retry 3 --connect-timeout 5 -m 15 -A \"Verlihub\" -s -o \"" .. table_othsets ["cfgdir"] .. "ledokol.lua\" \"" .. table_othsets ["updservdev"] .. "ledokol.lua\"")
+
+	if res then
+		local file = io.open (table_othsets ["cfgdir"] .. "ledokol.lua", "r")
+
+		if file then
+			local cont, err = file:read ("*all") -- read the file
+			file:close ()
+
+			if cont then
+				local _, _, ver = cont:find ("ver_ledo = \"(%d+%.%d+%.%d+)\" %-%- ledokol version")
+
+				if ver then -- expected content
+					commandanswer (nick, gettext ("Ledokol development version %s is available."):format (ver))
+					commandanswer (nick, gettext ("Moving files..."))
+					local res, err = os.execute ("mv -f \"" .. table_othsets ["cfgdir"] .. "ledokol.lua\" \"" .. table_othsets ["cfgdir"] .. "scripts/ledokol.lua\"")
+
+					if res then
+						if table_sets ["langfileprefix"] ~= "" and os.execute ("curl -L --retry 3 --connect-timeout 5 -m 15 -A \"Verlihub\" -s -o \"" .. table_othsets ["cfgdir"] .. "ledo_" .. table_sets ["langfileprefix"] .. ".lang\" \"" .. table_othsets ["updservdev"] .. "ledo_" .. table_sets ["langfileprefix"] .. ".lang\"") then
+							local file = io.open (table_othsets ["cfgdir"] .. "ledo_" .. table_sets ["langfileprefix"] .. ".lang", "r")
+
+							if file then
+								local cont = file:read ("*all") -- read the file
+								file:close ()
+
+								if cont then
+									if not cont:find ("# Version: " .. ver, 1, true) then -- unexpected content
+										os.remove (table_othsets ["cfgdir"] .. "ledo_" .. table_sets ["langfileprefix"] .. ".lang")
+									elseif not os.execute ("mv -f \"" .. table_othsets ["cfgdir"] .. "ledo_" .. table_sets ["langfileprefix"] .. ".lang\" \"" .. table_othsets ["cfgdir"] .. "scripts/ledo_" .. table_sets ["langfileprefix"] .. ".lang\"") then -- expected content and file moved
+										os.remove (table_othsets ["cfgdir"] .. "ledo_" .. table_sets ["langfileprefix"] .. ".lang")
+									end
+								else -- unable to read language file
+									os.remove (table_othsets ["cfgdir"] .. "ledo_" .. table_sets ["langfileprefix"] .. ".lang")
+								end
+							end
+						end
+
+						commandanswer (nick, gettext ("Please use following commands to finish update process.") .. "\r\n\r\n !luaunload " .. table_othsets ["cfgdir"] .. "scripts/ledokol.lua\r\n !luaload " .. table_othsets ["cfgdir"] .. "scripts/ledokol.lua\r\n")
+					else -- unable to execute shell command
+						os.remove (table_othsets ["cfgdir"] .. "ledokol.lua")
+						commandanswer (nick, gettext ("Unable to proceed: %s"):format (err or gettext ("No error message specified.")))
+					end
+				else -- unexpected content
+					os.remove (table_othsets ["cfgdir"] .. "ledokol.lua")
+					commandanswer (nick, gettext ("Requested file %s not found on target server. Please try again later."):format ("ledokol.lua"))
+				end
+			else -- unable to read ledokol.lua
+				os.remove (table_othsets ["cfgdir"] .. "ledokol.lua")
+				commandanswer (nick, gettext ("Unable to proceed: %s"):format (err or gettext ("No error message specified.")))
+			end
+		else -- unable to open ledokol.lua
+			--commandanswer (nick, gettext ("Unable to proceed: %s"):format (err or gettext ("No error message specified.")))
+			commandanswer (nick, gettext ("Unable to connect to target server. Please try again later."))
+		end
+	else -- unable to execute shell command
+		commandanswer (nick, gettext ("Unable to proceed: %s"):format (err or gettext ("No error message specified.")))
+	end
+end
+
+----- ---- --- -- -
+
+function updatescriptforce (nick)
+	if not table_othsets ["ver_curl"] then
+		commandanswer (nick, gettext ("This feature requires any version of %s installed on your system."):format ("cURL"))
+		return
+	end
+
+	commandanswer (nick, gettext ("Downloading script files..."))
+	local res, err = os.execute ("curl -L --retry 3 --connect-timeout 5 -m 15 -A \"Verlihub\" -s -o \"" .. table_othsets ["cfgdir"] .. "ledokol.lua\" \"" .. table_othsets ["updserv"] .. "ledokol.lua\"")
+
+	if res then
+		local file = io.open (table_othsets ["cfgdir"] .. "ledokol.lua", "r")
+
+		if file then
+			local cont, err = file:read ("*all") -- read the file
+			file:close ()
+
+			if cont then
+				local _, _, ver = cont:find ("ver_ledo = \"(%d+%.%d+%.%d+)\" %-%- ledokol version")
+
+				if ver then -- expected content
+					commandanswer (nick, gettext ("Ledokol stable version %s is available."):format (ver))
+					commandanswer (nick, gettext ("Moving files..."))
+					local res, err = os.execute ("mv -f \"" .. table_othsets ["cfgdir"] .. "ledokol.lua\" \"" .. table_othsets ["cfgdir"] .. "scripts/ledokol.lua\"")
+
+					if res then
+						if table_sets ["langfileprefix"] ~= "" and os.execute ("curl -L --retry 3 --connect-timeout 5 -m 15 -A \"Verlihub\" -s -o \"" .. table_othsets ["cfgdir"] .. "ledo_" .. table_sets ["langfileprefix"] .. ".lang\" \"" .. table_othsets ["updservlang"] .. "ledo_" .. table_sets ["langfileprefix"] .. ".lang\"") then
+							local file = io.open (table_othsets ["cfgdir"] .. "ledo_" .. table_sets ["langfileprefix"] .. ".lang", "r")
+
+							if file then
+								local cont = file:read ("*all") -- read the file
+								file:close ()
+
+								if cont then
+									if not cont:find ("# Version: " .. ver, 1, true) then -- unexpected content
+										os.remove (table_othsets ["cfgdir"] .. "ledo_" .. table_sets ["langfileprefix"] .. ".lang")
+									elseif not os.execute ("mv -f \"" .. table_othsets ["cfgdir"] .. "ledo_" .. table_sets ["langfileprefix"] .. ".lang\" \"" .. table_othsets ["cfgdir"] .. "scripts/ledo_" .. table_sets ["langfileprefix"] .. ".lang\"") then -- expected content and file moved
+										os.remove (table_othsets ["cfgdir"] .. "ledo_" .. table_sets ["langfileprefix"] .. ".lang")
+									end
+								else -- unable to read language file
+									os.remove (table_othsets ["cfgdir"] .. "ledo_" .. table_sets ["langfileprefix"] .. ".lang")
+								end
+							end
+						end
+
+						commandanswer (nick, gettext ("Please use following commands to finish update process.") .. "\r\n\r\n !luaunload " .. table_othsets ["cfgdir"] .. "scripts/ledokol.lua\r\n !luaload " .. table_othsets ["cfgdir"] .. "scripts/ledokol.lua\r\n")
+					else -- unable to execute shell command
+						os.remove (table_othsets ["cfgdir"] .. "ledokol.lua")
+						commandanswer (nick, gettext ("Unable to proceed: %s"):format (err or gettext ("No error message specified.")))
+					end
+				else -- unexpected content
+					os.remove (table_othsets ["cfgdir"] .. "ledokol.lua")
+					commandanswer (nick, gettext ("Requested file %s not found on target server. Please try again later."):format ("ledokol.lua"))
+				end
+			else -- unable to read ledokol.lua
+				os.remove (table_othsets ["cfgdir"] .. "ledokol.lua")
+				commandanswer (nick, gettext ("Unable to proceed: %s"):format (err or gettext ("No error message specified.")))
+			end
+		else -- unable to open ledokol.lua
+			--commandanswer (nick, gettext ("Unable to proceed: %s"):format (err or gettext ("No error message specified.")))
+			commandanswer (nick, gettext ("Unable to connect to target server. Please try again later."))
+		end
+	else -- unable to execute shell command
+		commandanswer (nick, gettext ("Unable to proceed: %s"):format (err or gettext ("No error message specified.")))
 	end
 end
 
@@ -15932,14 +16101,14 @@ elseif tvar == "tolowcharcase" then
 		commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 	end
 
------ ---- --- -- -
+	----- ---- --- -- -
 
 	elseif tvar == "langfileprefix" then
 		ok = true
 		setto = setto:lower ()
 		loadlangfile (nick, setto)
 
------ ---- --- -- -
+	----- ---- --- -- -
 
 elseif tvar == "srvtimediff" then
 if num == true then
@@ -16917,7 +17086,7 @@ conf = conf .. "\r\n [::] useripsupport = " .. table_sets ["useripsupport"]
 conf = conf.."\r\n [::] useripinchat = "..table_sets ["useripinchat"]
 conf = conf.."\r\n [::] tolowcharcase = "..table_sets ["tolowcharcase"]
 conf = conf.."\r\n [::] translitmode = "..table_sets ["translitmode"]
-conf = conf.."\r\n [::] langfileprefix = "..table_sets ["langfileprefix"].."\r\n"
+	conf = conf .. "\r\n [::] langfileprefix = " .. table_sets ["langfileprefix"] .. "\r\n"
 
 commandanswer (nick, conf)
 end
@@ -17427,22 +17596,50 @@ function loadlangfile (nick, pref)
 		table_lang = file:read ("*all")
 		file:close ()
 
-		if # table_lang > 0 then
+		if table_lang and # table_lang > 0 then
 			table_othsets ["langver"] = lang:upper ()
 		else
 			if nick then
 				commandanswer (nick, gettext ("Couldn't load language file %s: %s"):format ("ledo_" .. lang .. ".lang", gettext ("No error message specified.")))
 			end
 
+			table_lang = ""
 			table_othsets ["langver"] = "EN"
 		end
-	else
-		if nick then
-			commandanswer (nick, gettext ("Couldn't load language file %s: %s"):format ("ledo_" .. lang .. ".lang", (err or gettext ("No error message specified."))))
+	else -- try to download
+		local ok = false
+
+		if table_othsets ["ver_curl"] and os.execute ("curl -L --retry 3 --connect-timeout 5 -m 15 -A \"Verlihub\" -s -o \"" .. table_othsets ["cfgdir"] .. "ledo_" .. lang .. ".lang\" \"" .. table_othsets ["updservlang"] .. "ledo_" .. lang .. ".lang\"") then
+			local file = io.open (table_othsets ["cfgdir"] .. "ledo_" .. lang .. ".lang", "r")
+
+			if file then
+				local cont = file:read ("*all")
+				file:close ()
+
+				if cont and # cont > 0 then
+					table_lang = cont
+					table_othsets ["langver"] = lang:upper ()
+					ok = true
+
+					if not os.execute ("mv -f \"" .. table_othsets ["cfgdir"] .. "ledo_" .. lang .. ".lang\" \"" .. table_othsets ["cfgdir"] .. "scripts/ledo_" .. lang .. ".lang\"") then -- try to move
+						os.remove (table_othsets ["cfgdir"] .. "ledo_" .. lang .. ".lang")
+					end
+				else
+					os.remove (table_othsets ["cfgdir"] .. "ledo_" .. lang .. ".lang")
+				end
+			end
 		end
 
-		table_lang = ""
-		table_othsets ["langver"] = "EN"
+		if not ok then
+			if nick then
+				commandanswer (nick, gettext ("Couldn't load language file %s: %s"):format ("ledo_" .. lang .. ".lang", (err or gettext ("No error message specified."))))
+			end
+
+			table_lang = ""
+			table_othsets ["langver"] = "EN"
+		elseif nick then
+			commandanswer (nick, gettext ("Language file %s successfully downloaded and loaded."):format ("ledo_" .. lang .. ".lang"))
+		end
 	end
 end
 
