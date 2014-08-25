@@ -3,7 +3,10 @@
 Added: Bot list to statistics collection
 Added: Chat notification when news item is added, idea by Uhlik
 Added: Virus spreader detection action to block connection requests to user, used by default, request by Ger
+Added: "dev" and "force" parameters for "ledover" command available for class 10 to force update to last development and stable versions
+Added: Try to download language file when changing configuration "langfileprefix" and file not already exists
 Fixed: Negative GeoIP coordinates are valid
+Fixed: Download correct language file on script update
 
 [ 2.8.0 :: 2014-08-16 ]
 
