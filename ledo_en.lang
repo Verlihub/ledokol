@@ -1045,7 +1045,6 @@ News item added by %s: %s|
 Your connection request is blocked because user that you're trying connect to was detected as virus spreader: %s|
 Connection requests to following user will be blocked: %s|
 Downloading script files...|
-Moving files...|
 Ledokol development version %s is available.|
 Ledokol stable version %s is available.|
 Language file %s successfully downloaded and loaded.|
