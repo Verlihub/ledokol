@@ -6,6 +6,7 @@ Added: Virus spreader detection action to block connection requests to user, use
 Added: "dev" and "force" parameters for "ledover" command available for class 10 to force update to last development and stable versions
 Added: Try to download language file when changing configuration "langfileprefix" and file not already exists
 Added: Missing user agent on AVDB load
+Changed: Load AVDB using timestamp to reduce data transfer
 Fixed: Negative GeoIP coordinates are valid
 Fixed: Download correct language file on script update
 
