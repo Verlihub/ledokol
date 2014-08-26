@@ -17851,7 +17851,7 @@ end
 ----- ---- --- -- -
 
 function loadavdb ()
-	local res, err = os.execute ("curl -G -L --retry 3 --connect-timeout 5 -m 30 -s -o \"" .. table_othsets ["cfgdir"] .. table_othsets ["tmpfile"] .. "\" \"" .. table_othsets ["avdbloadurl"] .. "&limit=" .. tostring (table_sets ["avdbloadlim"]) .. "\"")
+	local res, err = os.execute ("curl -G -L --retry 3 --connect-timeout 5 -m 30 -A \"Verlihub\" -s -o \"" .. table_othsets ["cfgdir"] .. table_othsets ["tmpfile"] .. "\" \"" .. table_othsets ["avdbloadurl"] .. "&limit=" .. tostring (table_sets ["avdbloadlim"]) .. "\"")
 
 	if res then
 		local avfi = io.open (table_othsets ["cfgdir"] .. table_othsets ["tmpfile"], "r")
@@ -17907,7 +17907,7 @@ function avdbreport (nick, addr, size, info)
 	end
 
 	if shar > 0 then
-		local res, err = os.execute ("curl -G -L --retry 3 --connect-timeout 5 -m 30 -s -o \"" .. table_othsets ["cfgdir"] .. table_othsets ["tmpfile"] .. "\" --data-urlencode \"nick=" .. repurlchars (nick) .. "\" \"" .. table_othsets ["avdbsendurl"] .. "&size=" .. tostring (shar) .. "&addr=" .. addr .. "\"")
+		local res, err = os.execute ("curl -G -L --retry 3 --connect-timeout 5 -m 30 -A \"Verlihub\" -s -o \"" .. table_othsets ["cfgdir"] .. table_othsets ["tmpfile"] .. "\" --data-urlencode \"nick=" .. repurlchars (nick) .. "\" \"" .. table_othsets ["avdbsendurl"] .. "&size=" .. tostring (shar) .. "&addr=" .. addr .. "\"")
 
 		if res then
 			local avfi, _ = io.open (table_othsets ["cfgdir"] .. table_othsets ["tmpfile"], "r")
