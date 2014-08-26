@@ -89,7 +89,6 @@ table_sets = {
 	["avfeedverb"] = 2,
 	["avsendtodb"] = 0,
 	["avdbloadint"] = 0,
-	["avdbloadlim"] = 1000,
 	["avdetaction"] = 0,
 	["avkicktext"] = "Virus spreaders are not welcome here _ban_",
 	["classnotianti"] = 3,
@@ -306,7 +305,7 @@ table_othsets = {
 	["topicowner"] = nil,
 	["topicvalue"] = nil,
 	["avlastseartick"] = os.time (),
-	["avlastloadtick"] = os.time (),
+	["avlastloadtick"] = 0,
 	["avnextitem"] = 1,
 	["chflallcount"] = 0,
 	["chflalltime"] = os.time (),
@@ -1110,7 +1109,6 @@ function Main (file)
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('avfeedverb', '" .. repsqlchars (table_sets ["avfeedverb"]) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('avsendtodb', '" .. repsqlchars (table_sets ["avsendtodb"]) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('avdbloadint', '" .. repsqlchars (table_sets ["avdbloadint"]) .. "')")
-						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('avdbloadlim', '" .. repsqlchars (table_sets ["avdbloadlim"]) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('avkicktext', '" .. repsqlchars (table_sets ["avkicktext"]) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('classnotiav', '" .. repsqlchars (table_sets ["classnotiav"]) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('trigrunning', '" .. repsqlchars (table_sets ["trigrunning"]) .. "')")
@@ -1197,10 +1195,6 @@ function Main (file)
 
 	if table_sets ["avsearchint"] > 0 then -- antivirus search
 		loadavstr ()
-	end
-
-	if table_sets ["avdbloadint"] > 0 and table_othsets ["ver_curl"] then -- antivirus load
-		loadavdb ()
 	end
 
 	math.randomseed (os.time ()) -- randomize
@@ -13894,6 +13888,7 @@ end
 			if setto == 0 or (setto >= 30 and setto <= 1440) then
 				if setto == 0 then
 					table_avlo = {} -- clear
+					table_othsets ["avlastloadtick"] = 0
 					ok = true
 				else
 					if not table_othsets ["ver_curl"] then
@@ -13904,19 +13899,6 @@ end
 				end
 			else
 				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 " .. gettext ("or") .. " 30 " .. gettext ("to") .. " 1440"))
-			end
-		else
-			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
-		end
-
-	----- ---- --- -- -
-
-	elseif tvar == "avdbloadlim" then
-		if num == true then
-			if setto >= 1 and setto <= 1000 then
-				ok = true
-			else
-				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "1 " .. gettext ("to") .. " 1000"))
 			end
 		else
 			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
@@ -16875,7 +16857,6 @@ conf = conf.."\r\n [::] searfiltmsg = "..table_sets ["searfiltmsg"]
 	conf = conf .. "\r\n [::] avfeedverb = " .. table_sets ["avfeedverb"]
 	conf = conf .. "\r\n [::] avsendtodb = " .. table_sets ["avsendtodb"]
 	conf = conf .. "\r\n [::] avdbloadint = " .. table_sets ["avdbloadint"]
-	conf = conf .. "\r\n [::] avdbloadlim = " .. table_sets ["avdbloadlim"]
 	conf = conf .. "\r\n [::] avdetaction = " .. table_sets ["avdetaction"]
 	conf = conf .. "\r\n [::] avkicktext = " .. table_sets ["avkicktext"]
 	conf = conf .. "\r\n"
@@ -17638,7 +17619,7 @@ function loadlangfile (nick, pref)
 			table_lang = ""
 			table_othsets ["langver"] = "EN"
 		elseif nick then
-			commandanswer (nick, gettext ("Language file %s successfully downloaded and loaded."):format ("ledo_" .. lang .. ".lang"))
+			commandanswer (nick, gettext ("Language file %s downloaded and loaded."):format ("ledo_" .. lang .. ".lang"))
 		end
 	end
 end
@@ -17851,26 +17832,44 @@ end
 ----- ---- --- -- -
 
 function loadavdb ()
-	local res, err = os.execute ("curl -G -L --retry 3 --connect-timeout 5 -m 30 -A \"Verlihub\" -s -o \"" .. table_othsets ["cfgdir"] .. table_othsets ["tmpfile"] .. "\" \"" .. table_othsets ["avdbloadurl"] .. "&limit=" .. tostring (table_sets ["avdbloadlim"]) .. "\"")
+	local res, err = os.execute ("curl -G -L --retry 3 --connect-timeout 5 -m 30 -A \"Verlihub\" -s -o \"" .. table_othsets ["cfgdir"] .. table_othsets ["tmpfile"] .. "\" \"" .. table_othsets ["avdbloadurl"] .. "&time=" .. tostring (table_othsets ["avlastloadtick"]) .. "\"")
 
 	if res then
 		local avfi = io.open (table_othsets ["cfgdir"] .. table_othsets ["tmpfile"], "r")
 
 		if avfi then
-			table_avlo = {}
-			local lint = 0
+			local lint, ltot = 0, 0
 
 			for avli in avfi:lines () do
 				local _, _, avni, avip, avsi = avli:find ("^([^ ]+)|(%d+%.%d+%.%d+%.%d+)|(%d+)|%d+$")
 
 				if avni and avip and avsi then
-					table.insert (table_avlo, {
-						["nick"] = avni,
-						["addr"] = avip,
-						["size"] = tonumber (avsi)
-					})
+					avsi = tonumber (avsi)
+					local ok = true
 
-					lint = lint + 1
+					for id, data in pairs (table_avlo) do
+						if data ["nick"] == avni and data ["addr"] == avip then -- update if already exists
+							if data ["size"] ~= avsi then
+								table_avlo [id]["size"] = avsi
+								lint = lint + 1
+							end
+
+							ok = false
+							break
+						end
+					end
+
+					if ok then -- add if doesnt exist
+						table.insert (table_avlo, {
+							["nick"] = avni,
+							["addr"] = avip,
+							["size"] = avsi
+						})
+
+						lint = lint + 1
+					end
+
+					ltot = ltot + 1
 				end
 			end
 
@@ -17879,8 +17878,10 @@ function loadavdb ()
 
 			if table_sets ["avfeedverb"] == 3 then
 				if lint > 0 then
-					opsnotify (table_sets ["classnotiav"], gettext ("Successfully loaded %d items: %s"):format (lint, "AVDB"))
+					opsnotify (table_sets ["classnotiav"], gettext ("Loaded %d of %d items: %s"):format (lint, ltot, "AVDB"))
 					avdbcheckall () -- check all users when we get fresh db
+				elseif ltot > 0 then
+					opsnotify (table_sets ["classnotiav"], gettext ("No new of %d items were loaded: %s"):format (ltot, "AVDB"))
 				else
 					opsnotify (table_sets ["classnotiav"], gettext ("No items were loaded: %s"):format ("AVDB"))
 				end
@@ -17921,7 +17922,7 @@ function avdbreport (nick, addr, size, info)
 
 					if avre == "1" then
 						if table_sets ["avfeedverb"] == 3 then
-							opsnotify (table_sets ["classnotiav"], gettext ("Successfully sent infected user information to %s: %s"):format ("AVDB", nick))
+							opsnotify (table_sets ["classnotiav"], gettext ("Infected user information sent to %s: %s"):format ("AVDB", nick))
 						end
 					elseif avre == "0" then
 						table_sets ["avsendtodb"] = 0
