@@ -306,6 +306,7 @@ table_othsets = {
 	["topicvalue"] = nil,
 	["avlastseartick"] = os.time (),
 	["avlastloadtick"] = 0,
+	["avlastloadtime"] = 0,
 	["avnextitem"] = 1,
 	["chflallcount"] = 0,
 	["chflalltime"] = os.time (),
@@ -3018,7 +3019,7 @@ elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["ledoshell
 
 			commandanswer (nick, string.format (gettext ("Returned status code: %s"), res))
 		else
-			commandanswer (nick, string.format (gettext ("Executed shell command didn't return any status code: %s"), (err or gettext ("No error message specified."))))
+			commandanswer (nick, string.format (gettext ("Executed shell command didn't return any status code: %s"), repnmdcoutchars (err or gettext ("No error message specified."))))
 		end
 
 	else
@@ -4730,7 +4731,7 @@ function VH_OnTimer (msec)
 	end
 
 	if table_sets ["avdbloadint"] > 0 and table_othsets ["ver_curl"] and os.difftime (st, table_othsets ["avlastloadtick"]) >= (table_sets ["avdbloadint"] * 60) then -- antivirus load
-		loadavdb ()
+		loadavdb (st)
 		table_othsets ["avlastloadtick"] = st
 	end
 
@@ -8025,7 +8026,7 @@ function seenlookup (nick, user)
 				commandanswer (nick, string.format (gettext ("Either user %s wasn't found in any hubs or target server is down. Please try again later."), user))
 			end
 		else
-			commandanswer (nick, string.format (gettext ("Unable to proceed: %s"), (err or gettext ("No error message specified."))))
+			commandanswer (nick, string.format (gettext ("Unable to proceed: %s"), repnmdcoutchars (err or gettext ("No error message specified."))))
 		end
 	end
 end
@@ -8929,7 +8930,7 @@ function updatescript (nick)
 											commandanswer (nick, gettext ("Please use following commands to finish update process.") .. "\r\n\r\n !luaunload " .. table_othsets ["cfgdir"] .. "scripts/ledokol.lua\r\n !luaload " .. table_othsets ["cfgdir"] .. "scripts/ledokol.lua\r\n")
 										else -- unable to execute shell command
 											os.remove (table_othsets ["cfgdir"] .. "ledokol.lua")
-											commandanswer (nick, gettext ("Unable to proceed: %s"):format (err or gettext ("No error message specified.")))
+											commandanswer (nick, gettext ("Unable to proceed: %s"):format (repnmdcoutchars (err or gettext ("No error message specified."))))
 										end
 									else -- unexpected content
 										os.remove (table_othsets ["cfgdir"] .. "ledokol.lua")
@@ -8937,28 +8938,28 @@ function updatescript (nick)
 									end
 								else -- unable to read ledokol.lua
 									os.remove (table_othsets ["cfgdir"] .. "ledokol.lua")
-									commandanswer (nick, gettext ("Unable to proceed: %s"):format (err or gettext ("No error message specified.")))
+									commandanswer (nick, gettext ("Unable to proceed: %s"):format (repnmdcoutchars (err or gettext ("No error message specified."))))
 								end
 							else -- unable to open ledokol.lua
-								--commandanswer (nick, gettext ("Unable to proceed: %s"):format (err or gettext ("No error message specified.")))
+								--commandanswer (nick, gettext ("Unable to proceed: %s"):format (repnmdcoutchars (err or gettext ("No error message specified."))))
 								commandanswer (nick, gettext ("Unable to connect to target server. Please try again later."))
 							end
 						else -- unable to execute shell command
-							commandanswer (nick, gettext ("Unable to proceed: %s"):format (err or gettext ("No error message specified.")))
+							commandanswer (nick, gettext ("Unable to proceed: %s"):format (repnmdcoutchars (err or gettext ("No error message specified."))))
 						end
 					else -- version number is same or lower
 						commandanswer (nick, gettext ("You are currently running latest version of Ledokol. No update is required."))
 					end
 				end
 			else -- unable to read ledokol.ver
-				commandanswer (nick, gettext ("Unable to proceed: %s"):format (err or gettext ("No error message specified.")))
+				commandanswer (nick, gettext ("Unable to proceed: %s"):format (repnmdcoutchars (err or gettext ("No error message specified."))))
 			end
 		else -- unable to open ledokol.ver
-			--commandanswer (nick, gettext ("Unable to proceed: %s"):format (err or gettext ("No error message specified.")))
+			--commandanswer (nick, gettext ("Unable to proceed: %s"):format (repnmdcoutchars (err or gettext ("No error message specified."))))
 			commandanswer (nick, gettext ("Unable to connect to target server. Please try again later."))
 		end
 	else -- unable to execute shell command
-		commandanswer (nick, gettext ("Unable to proceed: %s"):format (err or gettext ("No error message specified.")))
+		commandanswer (nick, gettext ("Unable to proceed: %s"):format (repnmdcoutchars (err or gettext ("No error message specified."))))
 	end
 end
 
@@ -9011,7 +9012,7 @@ function updatescriptdev (nick)
 						commandanswer (nick, gettext ("Please use following commands to finish update process.") .. "\r\n\r\n !luaunload " .. table_othsets ["cfgdir"] .. "scripts/ledokol.lua\r\n !luaload " .. table_othsets ["cfgdir"] .. "scripts/ledokol.lua\r\n")
 					else -- unable to execute shell command
 						os.remove (table_othsets ["cfgdir"] .. "ledokol.lua")
-						commandanswer (nick, gettext ("Unable to proceed: %s"):format (err or gettext ("No error message specified.")))
+						commandanswer (nick, gettext ("Unable to proceed: %s"):format (repnmdcoutchars (err or gettext ("No error message specified."))))
 					end
 				else -- unexpected content
 					os.remove (table_othsets ["cfgdir"] .. "ledokol.lua")
@@ -9019,14 +9020,14 @@ function updatescriptdev (nick)
 				end
 			else -- unable to read ledokol.lua
 				os.remove (table_othsets ["cfgdir"] .. "ledokol.lua")
-				commandanswer (nick, gettext ("Unable to proceed: %s"):format (err or gettext ("No error message specified.")))
+				commandanswer (nick, gettext ("Unable to proceed: %s"):format (repnmdcoutchars (err or gettext ("No error message specified."))))
 			end
 		else -- unable to open ledokol.lua
-			--commandanswer (nick, gettext ("Unable to proceed: %s"):format (err or gettext ("No error message specified.")))
+			--commandanswer (nick, gettext ("Unable to proceed: %s"):format (repnmdcoutchars (err or gettext ("No error message specified."))))
 			commandanswer (nick, gettext ("Unable to connect to target server. Please try again later."))
 		end
 	else -- unable to execute shell command
-		commandanswer (nick, gettext ("Unable to proceed: %s"):format (err or gettext ("No error message specified.")))
+		commandanswer (nick, gettext ("Unable to proceed: %s"):format (repnmdcoutchars (err or gettext ("No error message specified."))))
 	end
 end
 
@@ -9079,7 +9080,7 @@ function updatescriptforce (nick)
 						commandanswer (nick, gettext ("Please use following commands to finish update process.") .. "\r\n\r\n !luaunload " .. table_othsets ["cfgdir"] .. "scripts/ledokol.lua\r\n !luaload " .. table_othsets ["cfgdir"] .. "scripts/ledokol.lua\r\n")
 					else -- unable to execute shell command
 						os.remove (table_othsets ["cfgdir"] .. "ledokol.lua")
-						commandanswer (nick, gettext ("Unable to proceed: %s"):format (err or gettext ("No error message specified.")))
+						commandanswer (nick, gettext ("Unable to proceed: %s"):format (repnmdcoutchars (err or gettext ("No error message specified."))))
 					end
 				else -- unexpected content
 					os.remove (table_othsets ["cfgdir"] .. "ledokol.lua")
@@ -9087,14 +9088,14 @@ function updatescriptforce (nick)
 				end
 			else -- unable to read ledokol.lua
 				os.remove (table_othsets ["cfgdir"] .. "ledokol.lua")
-				commandanswer (nick, gettext ("Unable to proceed: %s"):format (err or gettext ("No error message specified.")))
+				commandanswer (nick, gettext ("Unable to proceed: %s"):format (repnmdcoutchars (err or gettext ("No error message specified."))))
 			end
 		else -- unable to open ledokol.lua
-			--commandanswer (nick, gettext ("Unable to proceed: %s"):format (err or gettext ("No error message specified.")))
+			--commandanswer (nick, gettext ("Unable to proceed: %s"):format (repnmdcoutchars (err or gettext ("No error message specified."))))
 			commandanswer (nick, gettext ("Unable to connect to target server. Please try again later."))
 		end
 	else -- unable to execute shell command
-		commandanswer (nick, gettext ("Unable to proceed: %s"):format (err or gettext ("No error message specified.")))
+		commandanswer (nick, gettext ("Unable to proceed: %s"):format (repnmdcoutchars (err or gettext ("No error message specified."))))
 	end
 end
 
@@ -13888,7 +13889,7 @@ end
 			if setto == 0 or (setto >= 30 and setto <= 1440) then
 				if setto == 0 then
 					table_avlo = {} -- clear
-					table_othsets ["avlastloadtick"] = 0
+					table_othsets ["avlastloadtime"] = 0
 					ok = true
 				else
 					if not table_othsets ["ver_curl"] then
@@ -17613,7 +17614,7 @@ function loadlangfile (nick, pref)
 
 		if not ok then
 			if nick then
-				commandanswer (nick, gettext ("Couldn't load language file %s: %s"):format ("ledo_" .. lang .. ".lang", (err or gettext ("No error message specified."))))
+				commandanswer (nick, gettext ("Couldn't load language file %s: %s"):format ("ledo_" .. lang .. ".lang", repnmdcoutchars (err or gettext ("No error message specified."))))
 			end
 
 			table_lang = ""
@@ -17831,11 +17832,11 @@ end
 
 ----- ---- --- -- -
 
-function loadavdb ()
-	local res, err = os.execute ("curl -G -L --retry 3 --connect-timeout 5 -m 30 -A \"Verlihub\" -s -o \"" .. table_othsets ["cfgdir"] .. table_othsets ["tmpfile"] .. "\" \"" .. table_othsets ["avdbloadurl"] .. "&time=" .. tostring (table_othsets ["avlastloadtick"]) .. "\"")
+function loadavdb (st)
+	local res, err = os.execute ("curl -G -L --retry 3 --connect-timeout 5 -m 30 -A \"Verlihub\" -s -o \"" .. table_othsets ["cfgdir"] .. table_othsets ["tmpfile"] .. "\" \"" .. table_othsets ["avdbloadurl"] .. "&time=" .. tostring (table_othsets ["avlastloadtime"]) .. "\"")
 
 	if res then
-		local avfi = io.open (table_othsets ["cfgdir"] .. table_othsets ["tmpfile"], "r")
+		local avfi, _ = io.open (table_othsets ["cfgdir"] .. table_othsets ["tmpfile"], "r")
 
 		if avfi then
 			local lint, ltot = 0, 0
@@ -17886,6 +17887,8 @@ function loadavdb ()
 					opsnotify (table_sets ["classnotiav"], gettext ("No items were loaded: %s"):format ("AVDB"))
 				end
 			end
+
+			table_othsets ["avlastloadtime"] = st
 		elseif table_sets ["avfeedverb"] == 3 then
 			opsnotify (table_sets ["classnotiav"], gettext ("Failed to load information from %s: %s"):format ("AVDB", gettext ("Error on connecting.")))
 		end
@@ -19991,7 +19994,7 @@ end
 
 ----- ---- --- -- -
 
-function commandanswer (to, message) -- todo: do we need to replace nmdc characters here? i think its better here than in every function
+function commandanswer (to, message) -- todo: replace nmdc characters here
 	if table_sets ["commandstopm"] == 0 then
 		VH:SendToUser ("<" .. table_othsets ["sendfrom"] .. "> " .. message .. "|", to)
 	else
@@ -20007,7 +20010,7 @@ end
 
 ----- ---- --- -- -
 
-function opsnotify (mincls, msg) -- todo: do we need to replace nmdc characters here? i think its better here than in every function
+function opsnotify (mincls, msg) -- todo: replace nmdc characters here
 	if mincls == 11 then return nil end
 	VH:SendPMToAll ("[" .. prezero (2, mincls) .. "] " .. msg, table_othsets ["feednick"], mincls, 10)
 
