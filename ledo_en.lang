@@ -1006,8 +1006,8 @@ File extensions used for search|
 Possibly infected users|
 Spent time: %s|
 Infected user logged in with IP %s and share %s: %s|
-Successfully loaded %d items: %s|
-Successfully sent infected user information to %s: %s|
+Loaded %d of %d items: %s|
+Infected user information sent to %s: %s|
 Failed to load information from %s: %s|
 Failed to send information to %s: %s|
 Error on executing %s: %s|
@@ -1047,4 +1047,5 @@ Connection requests to following user will be blocked: %s|
 Downloading script files...|
 Ledokol development version %s is available.|
 Ledokol stable version %s is available.|
-Language file %s successfully downloaded and loaded.|
+Language file %s downloaded and loaded.|
+No new of %d items were loaded: %s|
