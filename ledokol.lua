@@ -7998,7 +7998,7 @@ function seenlookup (nick, user)
 
 				if not seen then
 					commandanswer (nick, string.format (gettext ("Requested file %s not found on target server. Please try again later."), "index.php"))
-				elseif seen == "" then
+				elseif seen == "" or seen == "0" then
 					commandanswer (nick, string.format (gettext ("User %s wasn't found in any hubs."), user))
 				else
 					local list, c = "", 1
@@ -8023,7 +8023,7 @@ function seenlookup (nick, user)
 
 				os.remove (table_othsets ["cfgdir"]..table_othsets ["tmpfile"])
 			else
-				commandanswer (nick, string.format (gettext ("Either user %s wasn't found in any hubs or target server is down. Please try again later."), user))
+				commandanswer (nick, gettext ("Target server is down, please try again later."))
 			end
 		else
 			commandanswer (nick, string.format (gettext ("Unable to proceed: %s"), repnmdcoutchars (err or gettext ("No error message specified."))))
@@ -17839,56 +17839,68 @@ function loadavdb (st)
 		local avfi, _ = io.open (table_othsets ["cfgdir"] .. table_othsets ["tmpfile"], "r")
 
 		if avfi then
-			local lint, ltot = 0, 0
-
-			for avli in avfi:lines () do
-				local _, _, avni, avip, avsi = avli:find ("^([^ ]+)|(%d+%.%d+%.%d+%.%d+)|(%d+)|%d+$")
-
-				if avni and avip and avsi then
-					avsi = tonumber (avsi)
-					local ok = true
-
-					for id, data in pairs (table_avlo) do
-						if data ["nick"] == avni and data ["addr"] == avip then -- update if already exists
-							if data ["size"] ~= avsi then
-								table_avlo [id]["size"] = avsi
-								lint = lint + 1
-							end
-
-							ok = false
-							break
-						end
-					end
-
-					if ok then -- add if doesnt exist
-						table.insert (table_avlo, {
-							["nick"] = avni,
-							["addr"] = avip,
-							["size"] = avsi
-						})
-
-						lint = lint + 1
-					end
-
-					ltot = ltot + 1
-				end
-			end
-
+			local avdb = avfi:read ("*all")
 			avfi:close ()
 			os.remove (table_othsets ["cfgdir"] .. table_othsets ["tmpfile"])
 
-			if table_sets ["avfeedverb"] == 3 then
-				if lint > 0 then
-					opsnotify (table_sets ["classnotiav"], gettext ("Loaded %d of %d items: %s"):format (lint, ltot, "AVDB"))
-					avdbcheckall () -- check all users when we get fresh db
-				elseif ltot > 0 then
-					opsnotify (table_sets ["classnotiav"], gettext ("No new of %d items were loaded: %s"):format (ltot, "AVDB"))
-				else
+			if not avdb then
+				commandanswer (nick, gettext ("Requested file %s not found on target server. Please try again later."):format ("index.php"))
+			elseif avdb == "" or avdb == "0" then
+				if table_sets ["avfeedverb"] == 3 then
 					opsnotify (table_sets ["classnotiav"], gettext ("No items were loaded: %s"):format ("AVDB"))
 				end
-			end
 
-			table_othsets ["avlastloadtime"] = st
+				table_othsets ["avlastloadtime"] = st
+			else
+				local lint, ltot = 0, 0
+
+				--for avli in avfi:lines () do
+				for avli in avdb:gmatch ("[^\r\n]+") do
+					local _, _, avni, avip, avsi = avli:find ("^([^ ]+)|(%d+%.%d+%.%d+%.%d+)|(%d+)|%d+$")
+
+					if avni and avip and avsi then
+						avsi = tonumber (avsi)
+						local ok = true
+
+						for id, data in pairs (table_avlo) do
+							if data ["nick"] == avni and data ["addr"] == avip then -- update if already exists
+								if data ["size"] ~= avsi then
+									table_avlo [id]["size"] = avsi
+									lint = lint + 1
+								end
+
+								ok = false
+								break
+							end
+						end
+
+						if ok then -- add if doesnt exist
+							table.insert (table_avlo, {
+								["nick"] = avni,
+								["addr"] = avip,
+								["size"] = avsi
+							})
+
+							lint = lint + 1
+						end
+
+						ltot = ltot + 1
+					end
+				end
+
+				if table_sets ["avfeedverb"] == 3 then
+					if lint > 0 then
+						opsnotify (table_sets ["classnotiav"], gettext ("Loaded %d of %d items: %s"):format (lint, ltot, "AVDB"))
+						avdbcheckall () -- check all users when we get fresh db
+					elseif ltot > 0 then
+						opsnotify (table_sets ["classnotiav"], gettext ("No new of %d items were loaded: %s"):format (ltot, "AVDB"))
+					else
+						opsnotify (table_sets ["classnotiav"], gettext ("No items were loaded: %s"):format ("AVDB"))
+					end
+				end
+
+				table_othsets ["avlastloadtime"] = st
+			end
 		elseif table_sets ["avfeedverb"] == 3 then
 			opsnotify (table_sets ["classnotiav"], gettext ("Failed to load information from %s: %s"):format ("AVDB", gettext ("Error on connecting.")))
 		end
