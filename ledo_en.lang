@@ -876,7 +876,7 @@ IP watch list is empty.|
 Couldn't delete IP watch entry because not found: %s|
 IP watch notification from %s with IP %s: %s|
 unknown nick|
-Either user %s wasn't found in any hubs or target server is down. Please try again later.|
+Target server is down, please try again later.|
 Country code gag|
 Add country code gag|
 Added country code gag: %s|
