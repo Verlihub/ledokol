@@ -10,6 +10,7 @@ Changed: Load AVDB using timestamp to reduce data transfer
 Fixed: Negative GeoIP coordinates are valid
 Fixed: Download correct language file on script update
 Fixed: Special NMDC characters in shell error messages were never escaped
+Fixed: Show correct result of user lookup, either user is not found or server is down
 
 [ 2.8.0 :: 2014-08-16 ]
 
