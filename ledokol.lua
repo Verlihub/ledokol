@@ -222,7 +222,7 @@ table_sets = {
 	["timebotnick"] = "#" .. string.char (160) .. "%d/%m" .. string.char (160) .. "%H:%M",
 	["fasttimebot"] = 0,
 	["srvtimediff"] = 0,
-	["longdateformat"] = "%d/%m -%y",
+	["longdateformat"] = "%Y-%m-%d",
 	["dateformat"] = "%d/%m",
 	["timeformat"] = "%H:%M",
 	["shrtuptimefmt"] = "%s:%s:%s:%s:%s",
@@ -18644,7 +18644,7 @@ function getcurl (url, enc, del)
 	end
 
 	os.remove (table_othsets ["cfgdir"] .. table_othsets ["tmpfile"]) -- remove old temporary file in case it exists
-	local res, err, code = os.execute ("curl -G -L --retry 3 --connect-timeout 5 -m 30 -A \"Verlihub\" -s -o \"" .. table_othsets ["cfgdir"] .. table_othsets ["tmpfile"] .. "\"" .. urlenc .. " \"" .. url .. "\"")
+	local res, err, code = os.execute ("curl -G -L --retry 3 --connect-timeout 5 -m 30 -A \"Ledokol/" .. ver_ledo .. "\" -s -o \"" .. table_othsets ["cfgdir"] .. table_othsets ["tmpfile"] .. "\"" .. urlenc .. " \"" .. url .. "\"")
 
 	if res then
 		local file, err = io.open (table_othsets ["cfgdir"] .. table_othsets ["tmpfile"], "r") -- make use of err, it could be permission
