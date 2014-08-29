@@ -2907,14 +2907,14 @@ elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["ledokolun
 		end
 
 		droptables () -- drop all tables
-		local f = io.open (table_othsets ["cfgdir"].."scripts/ledokol.lua", "r") -- open script file
+		local f = io.open (table_othsets ["cfgdir"].."scripts/" .. table_othsets ["luafile"], "r") -- open script file
 
 		if f then
 			f:close ()
-			os.remove (table_othsets ["cfgdir"] .. "scripts/ledokol.lua") -- delete script file
+			os.remove (table_othsets ["cfgdir"] .. "scripts/" .. table_othsets ["luafile"]) -- delete script file
 
 			if table_sets ["langfileprefix"] ~= "" then -- delete language files
-				os.remove (table_othsets ["cfgdir"] .. "scripts/ledo_" .. table_sets ["langfileprefix"] .. ".lang")
+				os.remove (table_othsets ["cfgdir"] .. "scripts/" .. table_othsets ["langfilefmt"]:format (table_sets ["langfileprefix"]))
 			end
 
 			commandanswer (nick, gettext ("%s tables are now deleted and script is locked."):format ("Ledokol") .. " " .. gettext ("Please unload the script to finish.") .. " " .. gettext ("Good luck.")) -- finish
@@ -17675,7 +17675,7 @@ function getownsize (bm, bs)
 		return bs
 	else
 		local sz = 0
-		local f = io.open (table_othsets ["cfgdir"].."scripts/ledokol.lua", "r")
+		local f = io.open (table_othsets ["cfgdir"].."scripts/" .. table_othsets ["luafile"], "r")
 
 		if f then
 			sz = f:seek ("end")
@@ -17689,13 +17689,13 @@ end
 ----- ---- --- -- -
 
 function getownlinecnt ()
-local f = io.open (table_othsets ["cfgdir"].."scripts/ledokol.lua", "r")
+local f = io.open (table_othsets ["cfgdir"].."scripts/" .. table_othsets ["luafile"], "r")
 local ln = 0
 
 if f then
 	f:close ()
 
-	for x in io.lines (table_othsets ["cfgdir"].."scripts/ledokol.lua") do
+	for x in io.lines (table_othsets ["cfgdir"].."scripts/" .. table_othsets ["luafile"]) do
 		ln = ln + 1
 	end
 end
