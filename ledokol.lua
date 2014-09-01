@@ -58,7 +58,7 @@ Doxtur, chaos, sphinx, Zorro, W1ZaRd, S0RiN, MaxFox, Krzychu
 -- global storage variables and tables >>
 ---------------------------------------------------------------------
 
-ver_ledo = "2.8.1" -- ledokol version
+ver_ledo = "2.8.2" -- ledokol version
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -4127,35 +4127,91 @@ end
 
 ----- ---- --- -- -
 
+function VH_OnFirstMyINFO (nick, desc, speed, mail, size)
+	if table_othsets ["locked"] then
+		return 1
+	end
+
+	if (table_sets ["avdbloadint"] > 0 or table_sets ["avsearchint"] > 0) and table_sets ["avdetaction"] == 0 then
+		local class = getclass (nick)
+
+		if class == -1 then -- ask pinger to not send +report
+			VH:SendToUser ("$NoReport|", nick)
+		end
+	end
+
+	return 1
+end
+
+----- ---- --- -- -
+
 function VH_OnParsedMsgMyINFO (nick, data)
-	if table_othsets ["locked"] == true then return 1 end
+	if table_othsets ["locked"] then
+		return 1
+	end
+
 	local _, ip, desc, tag, conn, email, size, hasinfo, gotip = "", "", "", "", "", "", 0, false, false
 
-	if (table_sets ["enableuserlog"] == 1) and (table_sets ["logallmyinfos"] == 1) then -- user logger
-		if gotip == false then ip, gotip = getip (nick), true end
+	if table_sets ["enableuserlog"] == 1 and table_sets ["logallmyinfos"] == 1 then -- user logger
+		if not gotip then
+			ip, gotip = getip (nick), true
+		end
+
 		desc, tag, conn, _, email, size = parsemyinfo (nick, data)
 		hasinfo = true
-		VH:SQLQuery ("insert into `"..tbl_sql ["ulog"].."` (`time`, `nick`, `ip`, `desc`, `tag`, `conn`, `email`, `share`) values ("..(os.time () + table_sets ["srvtimediff"])..", '"..repsqlchars (nick).."', '"..repsqlchars (ip).."', '"..repsqlchars (desc).."', '"..repsqlchars (tag).."', '"..repsqlchars (conn).."', '"..repsqlchars (email).."', "..repsqlchars (size)..")")
+		VH:SQLQuery ("insert into `" .. tbl_sql ["ulog"] .. "` (`time`, `nick`, `ip`, `desc`, `tag`, `conn`, `email`, `share`) values (" .. tostring (os.time () + table_sets ["srvtimediff"]) .. ", '" .. repsqlchars (nick) .. "', '" .. repsqlchars (ip) .. "', '" .. repsqlchars (desc) .. "', '" .. repsqlchars (tag) .. "', '" .. repsqlchars (conn) .. "', '" .. repsqlchars (email) .. "', " .. repsqlchars (size) .. ")")
 	end
 
-	if (table_sets ["micheck"] == 0) or (table_sets ["micallall"] == 0) then return 1 end
+	if table_sets ["micheck"] == 0 or table_sets ["micallall"] == 0 then
+		return 1
+	end
+
 	local cls = getclass (nick)
-	if (cls == -1) or (cls >= table_sets ["scanbelowclass"]) then return 1 end -- dont check pingers but check unknown class -2
 
-	if gotip == false then ip = getip (nick) end
-	if isprotected (nick, ip) == true then return 1 end -- skip all checks
+	if cls == -1 or cls >= table_sets ["scanbelowclass"] then -- dont check pingers but check unknown class -2
+		return 1
+	end
 
-	if hasinfo == false then -- prepare
+	if not gotip then
+		ip = getip (nick)
+	end
+
+	if isprotected (nick, ip) then -- skip all checks
+		return 1
+	end
+
+	if not hasinfo then -- prepare
 		desc, tag, conn, _, email, size = parsemyinfo (nick, data)
 	end
 
-	if checkdesc (nick, desc, cls, ip) == 1 then return 0 end
-	if checktag (nick, tag, cls, ip) == 1 then return 0 end
-	if checkconn (nick, conn, cls, ip) == 1 then return 0 end
-	if checkemail (nick, email, cls, ip) == 1 then return 0 end
-	if checkshare (nick, size, cls, ip) == 1 then return 0 end
-	if checkfake (nick, size, cls, ip) == 1 then return 0 end
-	if checkclone (nick, size, ip, cls) == 1 then return 0 end
+	if checkdesc (nick, desc, cls, ip) == 1 then
+		return 0
+	end
+
+	if checktag (nick, tag, cls, ip) == 1 then
+		return 0
+	end
+
+	if checkconn (nick, conn, cls, ip) == 1 then
+		return 0
+	end
+
+	if checkemail (nick, email, cls, ip) == 1 then
+		return 0
+	end
+
+	if checkshare (nick, size, cls, ip) == 1 then
+		return 0
+	end
+
+	if checkfake (nick, size, cls, ip) == 1 then
+		return 0
+	end
+
+	if checkclone (nick, size, ip, cls) == 1 then
+		return 0
+	end
+
 	return 1
 end
 
@@ -4386,7 +4442,7 @@ function VH_OnUserLogout (nick, uip)
 
 	local cls = getclass (nick)
 
-	if table_sets ["avdetaction"] == 0 then
+	if (table_sets ["avdbloadint"] > 0 or table_sets ["avsearchint"] > 0) and table_sets ["avdetaction"] == 0 then
 		table_avbl [nick] = nil
 	end
 
@@ -4992,7 +5048,7 @@ function VH_OnParsedMsgConnectToMe (nick, othernick, ip, port)
 		return 0
 	end
 
-	if table_sets ["avdetaction"] == 0 and table_avbl [othernick] then
+	if (table_sets ["avdbloadint"] > 0 or table_sets ["avsearchint"] > 0) and table_sets ["avdetaction"] == 0 and table_avbl [othernick] then
 		if not haveclass then
 			class = getclass (nick)
 			haveclass = true
@@ -5044,7 +5100,7 @@ function VH_OnParsedMsgRevConnectToMe (nick, othernick)
 		return 0
 	end
 
-	if table_sets ["avdetaction"] == 0 and table_avbl [othernick] then
+	if (table_sets ["avdbloadint"] > 0 or table_sets ["avsearchint"] > 0) and table_sets ["avdetaction"] == 0 and table_avbl [othernick] then
 		if not haveclass then
 			class = getclass (nick)
 			haveclass = true
