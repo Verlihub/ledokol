@@ -1,3 +1,7 @@
+[ 2.8.2 :: 2014-##-## ]
+
+Added: When blocking infected users ask pingers to not send +report, idea by S0RiN
+
 [ 2.8.1 :: 2014-08-30 ]
 
 Added: Bot list to statistics collection
