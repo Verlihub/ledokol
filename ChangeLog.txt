@@ -1,6 +1,7 @@
 [ 2.8.2 :: 2014-##-## ]
 
 Fixed: Check if user is protected before running antivirus scan on him
+Fixed: Ignore translation file version number when updating to last development version, report by S0RiN
 Added: When blocking infected users ask pingers to not send +report, idea by S0RiN
 Added: Command to force infected user detection
 
