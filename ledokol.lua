@@ -9012,7 +9012,7 @@ function updatescriptdev (nick)
 						local res, err, data = getcurl (table_othsets ["updservdev"] .. lafi, nil, true)
 
 						if res then
-							if data ~= "" and data:find ("# Version: " .. veda, 1, true) then
+							if data ~= "" and data:find ("# Version: %d+%.%d+%.%d+") then
 								commandanswer (nick, gettext ("Moving file: %s"):format (lafi))
 								local res, err = os.execute ("mv -f \"" .. table_othsets ["cfgdir"] .. table_othsets ["tmpfile"] .. "\" \"" .. table_othsets ["cfgdir"] .. "scripts/" .. lafi .. "\"")
 
