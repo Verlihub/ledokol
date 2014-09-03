@@ -47,7 +47,7 @@ No topic is set.|
 %s with IP %s and class %d allowed due to forbidden nick exception: %s|
 message|
 %s with IP %s and class %d allowed due to forbidden description exception: %s|
-User you're trying to kick or redirect is protected.|
+User you're trying to kick or redirect is protected: %s|
 %s with IP %s and class %d allowed due to forbidden tag exception: %s|
 type|
 %s with IP %s and class %d allowed due to forbidden connection type exception: %s|
@@ -469,7 +469,6 @@ Your main chat history|
 Script memory usage: %s|
 Failed to load translation file %s: %s|
 Force custom nick for user|
-User is not in userlist: %s|
 Either the feature is disabled or user that you're trying to set welcome message for doesn't have access to it.|
 name|
 category|
@@ -770,7 +769,7 @@ Open files limit set to %d is smaller than maximum users configuration which is 
 Additional help|
 Remove all %s tables and files|
 No reason specified.|
-You can't kick a user whose class is higher or equals your own.|
+You can't kick user whose class is higher or equals your own: %s|
 Your topic contains forbidden characters which can't be used for security reason: %s|
 Hub uptime: %s|
 User count: %s|
@@ -1053,3 +1052,6 @@ Downloading translation file: %s|
 File not found on update server: %s|
 File not found on remote server: %s|
 File is empty.|
+Force infected user detection|
+You can't block user whose class is higher or equals your own: %s|
+User already blocked: %s|
