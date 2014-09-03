@@ -497,6 +497,7 @@ table_cmnds = {
 	["regstats"] = "regstats",
 	["readlog"] = "readlog",
 	["avstats"] = "avstats",
+	["avdetforce"] = "avdetforce",
 	["cmndset"] = "cmndset",
 	["cmndshow"] = "cmndshow",
 	["cmndreset"] = "cmndreset",
@@ -1124,6 +1125,10 @@ function Main (file)
 					end
 
 					if ver <= 282 then
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["ledocmd"] .. "` (`original`, `new`) values ('avdetforce', '" .. repsqlchars (table_cmnds ["avdetforce"]) .. "')")
+					end
+
+					if ver <= 283 then
 						-- todo
 					end
 
@@ -2643,6 +2648,18 @@ return 0
 
 	----- ---- --- -- -
 
+	elseif data:find ("^" .. table_othsets ["optrig"] .. table_cmnds ["avdetforce"] .. " [^ ]+$") then
+		if ucl >= table_sets ["mincommandclass"] then
+			donotifycmd (nick, data, 0, ucl)
+			avdetforce (nick, data:sub (# table_cmnds ["avdetforce"] + 3))
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
+
+		return 0
+
+	----- ---- --- -- -
+
 elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["randel"].." %S+ %S+$") then
 if ucl >= table_sets ["mincommandclass"] then
 donotifycmd (nick, data, 0, ucl)
@@ -3541,10 +3558,10 @@ function VH_OnUserCommand (nick, data)
 					commandanswer (nick, string.format (gettext ("%s with IP %s and class %d kicked: <%s> %s"), usr, uip .. tryipcc (uip, usr), ucls, nick, rsn))
 					VH:KickUser (nick, usr, rsn) -- kick using vips nick
 				else -- protected
-					commandanswer (nick, gettext ("User you're trying to kick or redirect is protected."))
+					commandanswer (nick, gettext ("User you're trying to kick or redirect is protected: %s"):format (usr))
 				end
 			else
-				commandanswer (nick, gettext ("You can't kick a user whose class is higher or equals your own."))
+				commandanswer (nick, gettext ("You can't kick user whose class is higher or equals your own: %s"):format (usr))
 			end
 		else -- not in list
 			commandanswer (nick, string.format (gettext ("User not in list: %s"), usr))
@@ -4269,50 +4286,56 @@ if (table_sets ["ipconantiflint"] > 0) and (cls < table_sets ["scanbelowclass"])
 end
 
 	if table_sets ["avdbloadint"] > 0 and cls < table_sets ["scanbelowclass"] then -- antivirus load
-		if hasip == false then
-			ip, hasip = getip (nick), true
+		if not hasprot then
+			prot, hasprot = isprotected (nick, ip), true
 		end
 
-		if not hasinfo then
-			if hasmistr == false then
-				mistr, hasmistr = getmyinfo (nick), true
+		if not prot then
+			if not hasip then
+				ip, hasip = getip (nick), true
 			end
 
-			desc, tag, conn, _, email, size = parsemyinfo (nick, mistr)
-			hasinfo = true
-		end
+			if not hasinfo then
+				if not hasmistr then
+					mistr, hasmistr = getmyinfo (nick), true
+				end
 
-		if size > 0 then
-			for _, data in pairs (table_avlo) do
-				if nick == data ["nick"] then
-					if ip == data ["addr"] then
-						opsnotify (table_sets ["classnotiav"], gettext ("Infected user logged in with IP %s and share %s: %s"):format (ip .. tryipcc (ip, nick), makesize (size), nick))
+				desc, tag, conn, _, email, size = parsemyinfo (nick, mistr)
+				hasinfo = true
+			end
 
-						if table_sets ["avdetaction"] == 0 then
-							table_avbl [nick] = true
-							opsnotify (table_sets ["classnotiav"], gettext ("Connection requests to following user will be blocked: %s"):format (nick))
-						else
-							if cls >= table_sets ["welcomeclass"] then -- dont send logout message
-								table_faau [nick] = 1
+			if size > 0 then
+				for _, data in pairs (table_avlo) do
+					if nick == data ["nick"] then
+						if ip == data ["addr"] then
+							opsnotify (table_sets ["classnotiav"], gettext ("Infected user logged in with IP %s and share %s: %s"):format (ip .. tryipcc (ip, nick), makesize (size), nick))
+
+							if table_sets ["avdetaction"] == 0 then
+								table_avbl [nick] = true
+								opsnotify (table_sets ["classnotiav"], gettext ("Connection requests to following user will be blocked: %s"):format (nick))
+							else
+								if cls >= table_sets ["welcomeclass"] then -- dont send logout message
+									table_faau [nick] = 1
+								end
+
+								VH:KickUser (table_othsets ["sendfrom"], nick, table_sets ["avkicktext"])
+								return 0
 							end
+						elseif size == data ["size"] then
+							opsnotify (table_sets ["classnotiav"], gettext ("Infected user logged in with IP %s and share %s: %s"):format (ip .. tryipcc (ip, nick), makesize (size), nick))
+							avdbreport (nick, ip, size, true) -- antivirus database
 
-							VH:KickUser (table_othsets ["sendfrom"], nick, table_sets ["avkicktext"])
-							return 0
-						end
-					elseif size == data ["size"] then
-						opsnotify (table_sets ["classnotiav"], gettext ("Infected user logged in with IP %s and share %s: %s"):format (ip .. tryipcc (ip, nick), makesize (size), nick))
-						avdbreport (nick, ip, size, true) -- antivirus database
+							if table_sets ["avdetaction"] == 0 then
+								table_avbl [nick] = true
+								opsnotify (table_sets ["classnotiav"], gettext ("Connection requests to following user will be blocked: %s"):format (nick))
+							else
+								if cls >= table_sets ["welcomeclass"] then -- dont send logout message
+									table_faau [nick] = 1
+								end
 
-						if table_sets ["avdetaction"] == 0 then
-							table_avbl [nick] = true
-							opsnotify (table_sets ["classnotiav"], gettext ("Connection requests to following user will be blocked: %s"):format (nick))
-						else
-							if cls >= table_sets ["welcomeclass"] then -- dont send logout message
-								table_faau [nick] = 1
+								VH:KickUser (table_othsets ["sendfrom"], nick, table_sets ["avkicktext"])
+								return 0
 							end
-
-							VH:KickUser (table_othsets ["sendfrom"], nick, table_sets ["avkicktext"])
-							return 0
 						end
 					end
 				end
@@ -4566,6 +4589,12 @@ function VH_OnParsedMsgSR (nick, data)
 		local class = getclass (nick)
 
 		if class >= table_sets ["scanbelowclass"] then
+			if table_sets ["enableipwatch"] == 1 and checkipwat (nick, usip, data) then -- ip watch
+				return 0
+			end
+
+			return 1
+		elseif isprotected (nick, usip) then
 			if table_sets ["enableipwatch"] == 1 and checkipwat (nick, usip, data) then -- ip watch
 				return 0
 			end
@@ -4999,7 +5028,7 @@ function VH_OnParsedMsgAny (nick, data)
 		local ip = getip (who)
 
 		if isprotected (who, ip) == true then
-			commandanswer (nick, gettext ("User you're trying to kick or redirect is protected."))
+			commandanswer (nick, gettext ("User you're trying to kick or redirect is protected: %s"):format (who))
 			return 0
 		else
 			opsnotify (table_sets ["classnotiredir"], string.format (gettext ("Redirected %s with IP %s and class %d to %s: <%s> %s"), who, ip .. tryipcc (ip, who), getclass (who), where, nick, msg))
@@ -5259,7 +5288,7 @@ if table_othsets ["locked"] == true then return 1 end
 local ip = getip (nick)
 
 if isprotected (nick, ip) == true then -- protected
-	commandanswer (op, gettext ("User you're trying to kick or redirect is protected."))
+	commandanswer (op, gettext ("User you're trying to kick or redirect is protected: %s"):format (nick))
 	return 0
 end
 
@@ -5295,7 +5324,7 @@ function VH_OnOperatorDrops (op, nick)
 if table_othsets ["locked"] == true then return 1 end
 
 if isprotected (nick, getip (nick)) == true then -- protected
-	commandanswer (op, gettext ("User you're trying to kick or redirect is protected."))
+	commandanswer (op, gettext ("User you're trying to kick or redirect is protected: %s"):format (nick))
 	return 0
 end
 
@@ -6477,7 +6506,7 @@ function opforcecustnick (nick, line)
 	if table_sets ["custnickclass"] == 11 then
 		commandanswer (nick, gettext ("Enable requested feature and try again."))
 	elseif getstatus (onick) == 0 then
-		commandanswer (nick, string.format (gettext ("User is not in userlist: %s"), onick))
+		commandanswer (nick, string.format (gettext ("User not in list: %s"), onick))
 	elseif string.len (ncust) > table_sets ["custmaxlen"] then
 		commandanswer (nick, string.format (gettext ("Custom nick can't be longer than %d characters."), table_sets ["custmaxlen"]))
 	else
@@ -9388,7 +9417,7 @@ local _, _, usr, tp = string.find (line, "^(.+) (%S+)$")
 		commandanswer (nick, string.format (gettext ("Known chat modes are: %s"), "rev, cyr, lat, cap, low, pwd, num "..gettext ("and").." norm"))
 	end
 --else
-	--commandanswer (nick, string.format (gettext ("User is not in userlist: %s"), usr))
+	--commandanswer (nick, string.format (gettext ("User not in list: %s"), usr))
 --end
 end
 
@@ -12355,7 +12384,7 @@ function votekickuser (nick, usni)
 					VH:KickUser (table_othsets ["sendfrom"], user, gettext ("User voted kick"))
 				end
 			else -- user or ip is protected
-				commandanswer (nick, gettext ("User you're trying to kick or redirect is protected."))
+				commandanswer (nick, gettext ("User you're trying to kick or redirect is protected: %s"):format (user))
 			end
 		else -- dont allow to kick operators
 			commandanswer (nick, gettext ("You don't want to vote for kicking an operator."))
@@ -13361,7 +13390,8 @@ end
 		sopmenitm (usr, gettext ("Other") .. "\\" .. gettext ("Clean up tables"), table_cmnds ["oldclean"] .. " %[line:<" .. gettext ("type") .. ">] %[line:<" .. gettext ("days") .. " " .. gettext ("or") .. " *>] %[line:<" .. gettext ("class") .. ">]")
 		--sopmenitm (usr, gettext ("Other") .. "\\" .. gettext ("Clean up tables"), table_cmnds ["oldclean"] .. " %[line:<" .. gettext ("type") .. ">] %[line:<" .. gettext ("days") .. ">]")
 		sopmenitm (usr, gettext ("Other") .. "\\" .. gettext ("Read hub logs"), table_cmnds ["readlog"] .. " %[line:<" .. gettext ("file") .. ">] %[line:<" .. gettext ("lines") .. ">]")
-		sopmenitm (usr, gettext ("Other") .. "\\" .. gettext ("Antivirus statistics"), table_cmnds ["avstats"] .. " %[line:<" .. gettext ("nick") .. ">]")
+		sopmenitm (usr, gettext ("Other") .. "\\" .. gettext ("Antivirus statistics"), table_cmnds ["avstats"])
+		sopmenitm (usr, gettext ("Other") .. "\\" .. gettext ("Force infected user detection"), table_cmnds ["avdetforce"] .. " %[line:<" .. gettext ("nick") .. ">]")
 	end
 
 if ucl >= table_sets ["minusrcommandclass"] then
@@ -16581,7 +16611,8 @@ help = help.." "..optrig..table_cmnds ["clear"].." - "..gettext ("Clear main cha
 	help = help .. " " .. optrig .. table_cmnds ["dropip"] .. " <" .. gettext ("ip") .. "> - " .. gettext ("Drop users with IP") .. "\r\n"
 	help = help .. " " .. optrig .. table_cmnds ["oldclean"] .. " <" .. gettext ("type") .. "> <" .. gettext ("days") .. " " .. gettext ("or") .. " *> [" .. gettext ("class") .. "] - " .. gettext ("Clean up tables") .. "\r\n"
 	help = help .. " " .. optrig .. table_cmnds ["readlog"] .. " <" .. gettext ("file") .. "> <" .. gettext ("lines") .. "> - " .. gettext ("Read hub logs") .. "\r\n"
-	help = help .. " " .. optrig .. table_cmnds ["avstats"] .. " [" .. gettext ("nick") .. "] - " .. gettext ("Antivirus statistics") .. "\r\n\r\n"
+	help = help .. " " .. optrig .. table_cmnds ["avstats"] .. " [" .. gettext ("nick") .. "] - " .. gettext ("Antivirus statistics") .. "\r\n"
+	help = help .. " " .. optrig .. table_cmnds ["avdetforce"] .. " <" .. gettext ("nick") .. "> - " .. gettext ("Force infected user detection") .. "\r\n\r\n"
 
 -- ledokol commands
 help = help.." "..optrig..table_cmnds ["ledoconf"].." - "..gettext ("Script configuration variables").."\r\n"
@@ -18072,6 +18103,49 @@ function showavstats (nick, user)
 	end
 
 	commandanswer (nick, stats)
+end
+
+----- ---- --- -- -
+
+function avdetforce (nick, user)
+	if getstatus (user) == 0 then
+		commandanswer (nick, gettext ("User not in list: %s"):format (user))
+	elseif getclass (user) >= getclass (nick) then
+		if table_sets ["avdetaction"] == 0 then
+			commandanswer (nick, gettext ("You can't block user whose class is higher or equals your own: %s"):format (user))
+		else
+			commandanswer (nick, gettext ("You can't kick user whose class is higher or equals your own: %s"):format (user))
+		end
+	else
+		local addr = getip (user)
+
+		if isprotected (user, addr) then
+			commandanswer (nick, gettext ("User you're trying to kick or redirect is protected: %s"):format (user))
+		elseif table_sets ["avdetaction"] == 0 and table_avbl [user] then
+			commandanswer (nick, gettext ("User already blocked: %s"):format (user))
+		else
+			local size = parsemyinfoshare (getmyinfo (user))
+			local spent = os.time ()
+
+			if table_sets ["avsearchint"] > 0 and table_avus [user] then
+				spent = table_avus [user][""]
+			end
+
+			opsnotify (table_sets ["classnotiav"], gettext ("Infected user detected with nick %s and IP %s and share %s and spent time: %s"):format (user, addr .. tryipcc (addr, user), makesize (size), formatuptime (spent, false)))
+			avdbreport (user, addr, size, true) -- report
+
+			if table_sets ["avdetaction"] == 0 then
+				table_avbl [user] = true
+				opsnotify (table_sets ["classnotiav"], gettext ("Connection requests to following user will be blocked: %s"):format (user))
+			else
+				VH:KickUser (nick, user, table_sets ["avkicktext"])
+			end
+
+			if table_sets ["avsearchint"] > 0 then
+				table_avus [user] = nil
+			end
+		end
+	end
 end
 
 ----- ---- --- -- -
