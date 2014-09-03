@@ -1,9 +1,16 @@
 [ 2.8.2 :: 2014-##-## ]
 
+Fixed: Check if user is protected before running antivirus scan on him
 Added: When blocking infected users ask pingers to not send +report, idea by S0RiN
+Added: Command to force infected user detection
 
 [ 2.8.1 :: 2014-08-30 ]
 
+Fixed: Negative GeoIP coordinates are valid
+Fixed: Download correct translation file on script update
+Fixed: Special NMDC characters in shell error messages were never escaped
+Fixed: Show correct result on user lookup, either user is not found or server is down
+Changed: Load AVDB using timestamp to reduce data transfer
 Added: Bot list to statistics collection
 Added: Chat notification when news item is added, idea by Uhlik
 Added: Virus spreader detection action to block connection requests to user, used by default, request by Ger
@@ -11,11 +18,6 @@ Added: "dev" and "force" parameters for "ledover" command available for class 10
 Added: Try to download translation file when it doesn't exist
 Added: Missing user agent on AVDB load
 Added: Support for cURL exit codes to identify usage problems
-Changed: Load AVDB using timestamp to reduce data transfer
-Fixed: Negative GeoIP coordinates are valid
-Fixed: Download correct translation file on script update
-Fixed: Special NMDC characters in shell error messages were never escaped
-Fixed: Show correct result on user lookup, either user is not found or server is down
 
 [ 2.8.0 :: 2014-08-16 ]
 
