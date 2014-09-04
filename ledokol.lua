@@ -3685,9 +3685,9 @@ else -- no ip
 	end
 end
 
-addmchistoryline (fakenick, nick, string.sub (getconfig ("cmd_start_user"), 1, 1).."me "..cvdat)
-replyresponder (fakenick, ucl, cvdat)
-chatrankaccept (nick, ucl)
+	addmchistoryline (fakenick, nick, getconfig ("cmd_start_user"):sub (1, 1) .. "me " .. cvdat)
+	replyresponder (fakenick, ucl, cvdat)
+	chatrankaccept (nick, ucl)
 	wordrankaccept (nick, ucl, cvdat)
 	return retval
 
@@ -3758,10 +3758,9 @@ else -- no ip
 	end
 end
 
-addmchistoryline (fakenick, nick, data)
-chatrankaccept (nick, ucl)
-
-return retval
+	addmchistoryline (fakenick, nick, data)
+	chatrankaccept (nick, ucl)
+	return retval
 end
 
 ---------------------------------------------------------------------
@@ -5649,9 +5648,9 @@ else -- no ip
 	end
 end
 
-addmchistoryline (fakenick, nick, cvdat)
-replyresponder (fakenick, ucl, cvdat)
-chatrankaccept (nick, ucl)
+	addmchistoryline (fakenick, nick, cvdat)
+	replyresponder (fakenick, ucl, cvdat)
+	chatrankaccept (nick, ucl)
 	wordrankaccept (nick, ucl, cvdat)
 	return retval
 end
@@ -7030,13 +7029,13 @@ function sendreminder ()
 				pmf = tonumber (pmf)
 
 				if pmf == 0 then -- mc
-					maintoall (repdvars, mincl, maxcl)
+					maintoall (repdvars, mincl, maxcl, true)
 				elseif pmf == 1 then -- pm
 					VH:SendPMToAll (repdvars, table_othsets ["sendfrom"], mincl, maxcl)
 				elseif pmf == 3 then -- raw
 					VH:SendToClass (repnmdcinchars (repdvars), mincl, maxcl)
 				else -- 2, mc + pm
-					maintoall (repdvars, mincl, maxcl)
+					maintoall (repdvars, mincl, maxcl, true)
 					VH:SendPMToAll (repdvars, table_othsets ["sendfrom"], mincl, maxcl)
 				end
 			end
@@ -9282,50 +9281,57 @@ end
 
 ----- ---- --- -- -
 
-function addmchistoryline (nick, realnick, line)
-if table_sets ["histlimit"] == 0 then return nil end
-if (nick == table_othsets ["sendfrom"]) and (table_sets ["histbotmsg"] == 0) then return nil end
-local _, rows = VH:SQLQuery ("select `date` from `"..tbl_sql ["mchist"].."` order by `date` asc")
-local ndate = os.time () + table_sets ["srvtimediff"] -- current time
-local rnick = repsqlchars (nick)
-local repnick = repsqlchars (realnick)
-local str = string.gsub (line, "is kicking", reprexpchars ("is"..string.char (160).."kicking"))
-str = repsqlchars (str)
+function addmchistoryline (nick, real, line, refl)
+	if table_sets ["histlimit"] == 0 then
+		return
+	end
 
-if rows > 0 then
-if rows >= table_sets ["histlimit"] then
-local _, adate = VH:SQLFetch (0)
-VH:SQLQuery ("update `"..tbl_sql ["mchist"].."` set `realnick` = '"..repnick.."', `nick` = '"..rnick.."', `date` = '"..ndate.."', `message` = '"..str.."' where `date` = '"..adate.."' limit 1")
-else
-VH:SQLQuery ("insert into `"..tbl_sql ["mchist"].."` (`realnick`, `nick`, `date`, `message`) values ('"..repnick.."', '"..rnick.."', '"..ndate.."', '"..str.."')")
-end
+	if nick == table_othsets ["sendfrom"] then
+		if table_sets ["histbotmsg"] == 0 then
+			return
+		elseif refl and table_sets ["histbotmsg"] == 1 then
+			return
+		end
+	end
 
-else
-VH:SQLQuery ("insert into `"..tbl_sql ["mchist"].."` (`realnick`, `nick`, `date`, `message`) values ('"..repnick.."', '"..rnick.."', '"..ndate.."', '"..str.."')")
-end
+	local data = line:gsub ("is kicking", reprexpchars ("is" .. string.char (160) .. "kicking"))
+	local _, rows = VH:SQLQuery ("select `date` from `" .. tbl_sql ["mchist"] .. "` order by `date` asc")
+
+	if rows > 0 then
+		if rows >= table_sets ["histlimit"] then
+			local _, adate = VH:SQLFetch (0)
+			VH:SQLQuery ("update `" .. tbl_sql ["mchist"] .. "` set `realnick` = '" .. repsqlchars (real) .. "', `nick` = '" .. repsqlchars (nick) .. "', `date` = " .. tostring (os.time () + table_sets ["srvtimediff"]) .. ", `message` = '" .. repsqlchars (data) .. "' where `date` = " .. tostring (adate) .. " limit 1")
+		else
+			VH:SQLQuery ("insert into `" .. tbl_sql ["mchist"] .. "` (`realnick`, `nick`, `date`, `message`) values ('" .. repsqlchars (real) .. "', '" .. repsqlchars (nick) .. "', " .. tostring (os.time () + table_sets ["srvtimediff"]) .. ", '" .. repsqlchars (data) .. "')")
+		end
+	else
+		VH:SQLQuery ("insert into `" .. tbl_sql ["mchist"] .. "` (`realnick`, `nick`, `date`, `message`) values ('" .. repsqlchars (real) .. "', '" .. repsqlchars (nick) .. "', " .. tostring (os.time () + table_sets ["srvtimediff"]) .. ", '" .. repsqlchars (data) .. "')")
+	end
 end
 
 ----- ---- --- -- -
 
 function addophistoryline (nick, line)
-if table_sets ["histlimit"] == 0 then return nil end
-if string.sub (line, 1, 1) == "+" then return nil end -- skip a chatroom command
-local _, rows = VH:SQLQuery ("select `date` from `"..tbl_sql ["ophist"].."` order by `date` asc")
-local ndate = os.time () + table_sets ["srvtimediff"] -- current time
-local rnick = repsqlchars (nick)
-local str = repsqlchars (line)
+	if table_sets ["histlimit"] == 0 then
+		return
+	end
 
-if rows > 0 then
-if rows >= table_sets ["histlimit"] then
-local _, adate = VH:SQLFetch (0)
-VH:SQLQuery ("update `"..tbl_sql ["ophist"].."` set `nick` = '"..rnick.."', `date` = '"..ndate.."', `message` = '"..str.."' where `date` = '"..adate.."' limit 1")
-else
-VH:SQLQuery ("insert into `"..tbl_sql ["ophist"].."` (`nick`, `date`, `message`) values ('"..rnick.."', '"..ndate.."', '"..str.."')")
-end
+	if line:sub (1, 1) == "+" then -- skip chatroom commands
+		return
+	end
 
-else
-VH:SQLQuery ("insert into `"..tbl_sql ["ophist"].."` (`nick`, `date`, `message`) values ('"..rnick.."', '"..ndate.."', '"..str.."')")
-end
+	local _, rows = VH:SQLQuery ("select `date` from `" .. tbl_sql ["ophist"] .. "` order by `date` asc")
+
+	if rows > 0 then
+		if rows >= table_sets ["histlimit"] then
+			local _, adate = VH:SQLFetch (0)
+			VH:SQLQuery ("update `" .. tbl_sql ["ophist"] .. "` set `nick` = '" .. repsqlchars (nick) .. "', `date` = " .. tostring (os.time () + table_sets ["srvtimediff"]) .. ", `message` = '" .. repsqlchars (line) .. "' where `date` = " .. tostring (adate) .. " limit 1")
+		else
+			VH:SQLQuery ("insert into `" .. tbl_sql ["ophist"] .. "` (`nick`, `date`, `message`) values ('" .. repsqlchars (nick) .. "', " .. tostring (os.time () + table_sets ["srvtimediff"]) .. ", '" .. repsqlchars (line) .. "')")
+		end
+	else
+		VH:SQLQuery ("insert into `" .. tbl_sql ["ophist"] .. "` (`nick`, `date`, `message`) values ('" .. repsqlchars (nick) .. "', " .. tostring (os.time () + table_sets ["srvtimediff"]) .. ", '" .. repsqlchars (line) .. "')")
+	end
 end
 
 ----- ---- --- -- -
@@ -12793,32 +12799,35 @@ end
 
 ----- ---- --- -- -
 
-function donotifycmd (nick, cmd, limited, cls)
-if table_sets ["classnoticom"] == 11 then return nil end
-local _, rows = VH:SQLQuery ("select `exception` from `"..tbl_sql ["cmdex"].."`")
+function donotifycmd (nick, data, micl, class)
+	if table_sets ["classnoticom"] == 11 then
+		return
+	end
 
-if rows > 0 then
-	for x = 0, rows - 1 do
-		local _, entry = VH:SQLFetch (x)
+	local _, rows = VH:SQLQuery ("select `exception` from `" .. tbl_sql ["cmdex"] .. "`")
 
-		if string.find (repnmdcinchars (cmd), entry) then
-			VH:SQLQuery ("update `"..tbl_sql ["cmdex"].."` set `occurred` = `occurred` + 1 where `exception` = '"..repsqlchars (entry).."' limit 1")
-			return nil
+	if rows > 0 then
+		for x = 0, rows - 1 do
+			local _, lre = VH:SQLFetch (x)
+
+			if repnmdcinchars (data):find (lre) then
+				VH:SQLQuery ("update `" .. tbl_sql ["cmdex"] .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (lre) .. "' limit 1")
+				return
+			end
 		end
 	end
-end
 
-local cmsg = string.format (gettext ("%s with class %d used command: %s"), nick, cls, cmd)
+	local send = gettext ("%s with class %d used command: %s"):format (nick, class, data)
 
-if limited == 0 then
-	VH:SendPMToAll ("["..prezero (2, table_sets ["classnoticom"]).."] "..cmsg, table_othsets ["feednick"], table_sets ["classnoticom"], 10)
-else
-	VH:SendPMToAll ("["..prezero (2, limited).."] "..cmsg, table_othsets ["feednick"], limited, 10)
-end
+	if micl == 0 then
+		VH:SendPMToAll ("[" .. prezero (2, table_sets ["classnoticom"]) .. "] " .. send, table_othsets ["feednick"], table_sets ["classnoticom"], 10)
+	else
+		VH:SendPMToAll ("[" .. prezero (2, micl) .. "] " .. send, table_othsets ["feednick"], micl, 10)
+	end
 
-if (table_sets ["histbotmsg"] == 1) and (table_sets ["addledobot"] == 0) and (table_sets ["useextrafeed"] == 0) then
-	addophistoryline (table_othsets ["opchatnick"], cmsg)
-end
+	if table_sets ["histbotmsg"] >= 1 and table_sets ["addledobot"] == 0 and table_sets ["useextrafeed"] == 0 then
+		addophistoryline (table_othsets ["opchatnick"], send)
+	end
 end
 
 ----- ---- --- -- -
@@ -15952,21 +15961,20 @@ else
 commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 end
 
------ ---- --- -- -
+	----- ---- --- -- -
 
-elseif tvar == "histbotmsg" then
-if num == true then
-if (setto == 0) or (setto == 1) then
-ok = true
-else
-commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 "..gettext ("or").." 1"))
-end
+	elseif tvar == "histbotmsg" then
+		if num == true then
+			if setto >= 0 and setto <= 2 then
+				ok = true
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0, 1 " .. gettext ("or") .. " 2"))
+			end
+		else
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
+		end
 
-else
-commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
-end
-
------ ---- --- -- -
+	----- ---- --- -- -
 
 elseif tvar == "histautolines" then
 if num == true then
@@ -16994,14 +17002,14 @@ conf = conf.."\r\n [::] wordranmax = "..table_sets ["wordranmax"]
 conf = conf.."\r\n [::] ranklimit = "..table_sets ["ranklimit"]
 conf = conf.."\r\n [::] ccstatsclass = "..table_sets ["ccstatsclass"]
 conf = conf.."\r\n [::] savecchistory = "..table_sets ["savecchistory"]
-conf = conf.."\r\n"
-conf = conf.."\r\n [::] histlimit = "..table_sets ["histlimit"]
-conf = conf.."\r\n [::] histbotmsg = "..table_sets ["histbotmsg"]
-conf = conf.."\r\n [::] histautolines = "..table_sets ["histautolines"]
-conf = conf.."\r\n [::] ophistautolines = "..table_sets ["ophistautolines"]
+	conf = conf .. "\r\n"
+	conf = conf .. "\r\n [::] histlimit = " .. table_sets ["histlimit"]
+	conf = conf .. "\r\n [::] histbotmsg = " .. table_sets ["histbotmsg"]
+	conf = conf .. "\r\n [::] histautolines = " .. table_sets ["histautolines"]
+	conf = conf .. "\r\n [::] ophistautolines = " .. table_sets ["ophistautolines"]
 	conf = conf .. "\r\n [::] histautolinemax = " .. table_sets ["histautolinemax"]
 	conf = conf .. "\r\n [::] histautonewlinedel = " .. table_sets ["histautonewlinedel"]
-conf = conf.."\r\n"
+	conf = conf .. "\r\n"
 conf = conf.."\r\n [::] autoupdcheck = "..table_sets ["autoupdcheck"]
 conf = conf.."\r\n [::] addspecialver = "..table_sets ["addspecialver"]
 conf = conf.."\r\n [::] addledobot = "..table_sets ["addledobot"]
@@ -20058,14 +20066,14 @@ end
 
 ----- ---- --- -- -
 
-function maintoself (nick, message)
-	VH:SendToUser ("<"..nick.."> "..message.."|", nick)
+function maintoself (nick, data)
+	VH:SendToUser ("<" .. nick .. "> " .. data .. "|", nick)
 end
 
 ----- ---- --- -- -
 
-function offlinepm (from, to, message)
-	VH:SendToUser ("$To: "..to.." From: "..from.." $<"..from.."> "..message.."|", to)
+function offlinepm (from, to, data)
+	VH:SendToUser ("$To: " .. to .. " From: " .. from .. " $<" .. from .. "> " .. data .. "|", to)
 end
 
 ----- ---- --- -- -
@@ -20082,35 +20090,32 @@ end
 
 ----- ---- --- -- -
 
-function maintoall (message, mincl, maxcl)
-	VH:SendToClass ("<"..table_othsets ["sendfrom"].."> "..message.."|", mincl, maxcl)
-	addmchistoryline (table_othsets ["sendfrom"], table_othsets ["sendfrom"], message)
+function maintoall (data, micl, macl, refl)
+	VH:SendToClass ("<" .. table_othsets ["sendfrom"] .. "> " .. data .. "|", micl, macl)
+	addmchistoryline (table_othsets ["sendfrom"], table_othsets ["sendfrom"], data, refl)
 end
 
 ----- ---- --- -- -
 
-function commandanswer (to, message) -- todo: replace nmdc characters here
+function commandanswer (to, data) -- todo: replace nmdc characters here
 	if table_sets ["commandstopm"] == 0 then
-		VH:SendToUser ("<" .. table_othsets ["sendfrom"] .. "> " .. message .. "|", to)
+		VH:SendToUser ("<" .. table_othsets ["sendfrom"] .. "> " .. data .. "|", to)
 	else
-		VH:SendToUser ("$To: " .. to .. " From: " .. table_othsets ["botnick"] .. " $<" .. table_othsets ["sendfrom"] .. "> " .. message .. "|", to)
+		VH:SendToUser ("$To: " .. to .. " From: " .. table_othsets ["botnick"] .. " $<" .. table_othsets ["sendfrom"] .. "> " .. data .. "|", to)
 	end
 end
 
 ----- ---- --- -- -
 
-function ledodbg (msg)
-	VH:SendToClass ("<Debugger> "..repnmdcoutchars (msg).."|", 10, 10)
-end
+function opsnotify (micl, data) -- todo: replace nmdc characters here
+	if micl == 11 then
+		return
+	end
 
------ ---- --- -- -
+	VH:SendPMToAll ("[" .. prezero (2, micl) .. "] " .. data, table_othsets ["feednick"], micl, 10)
 
-function opsnotify (mincls, msg) -- todo: replace nmdc characters here
-	if mincls == 11 then return nil end
-	VH:SendPMToAll ("[" .. prezero (2, mincls) .. "] " .. msg, table_othsets ["feednick"], mincls, 10)
-
-	if (table_sets ["histbotmsg"] == 1) and (table_sets ["addledobot"] == 0) and (table_sets ["useextrafeed"] == 0) then
-		addophistoryline (table_othsets ["opchatnick"], msg)
+	if table_sets ["histbotmsg"] >= 1 and table_sets ["addledobot"] == 0 and table_sets ["useextrafeed"] == 0 then
+		addophistoryline (table_othsets ["opchatnick"], data)
 	end
 end
 
