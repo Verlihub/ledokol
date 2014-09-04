@@ -2,7 +2,8 @@
 
 Fixed: Check if user is protected before running antivirus scan on him
 Fixed: Ignore translation file version number when updating to last development version, report by S0RiN
-Added: When blocking infected users ask pingers to not send +report, idea by S0RiN
+Changed: histbotmsg value 0 = don't save bot messages, 1 = save all except main chat reminders, 2 = save all, idea by Uhlik
+Added: When blocking infected users tell pingers to not send report, idea by S0RiN
 Added: Command to force infected user detection
 
 [ 2.8.1 :: 2014-08-30 ]
