@@ -17865,7 +17865,7 @@ end
 ----- ---- --- -- -
 
 function loadavdb (st)
-	local res, err, avdb = getcurl (table_othsets ["avdbloadurl"] .. "&time=" .. tostring (table_othsets ["avlastloadtime"]))
+	local res, err, avdb = getcurl (table_othsets ["avdbloadurl"] .. "&time=" .. tostring (table_othsets ["avlastloadtime"]) .. "&notime=1")
 
 	if res then
 		table_othsets ["avlastloadtime"] = st
@@ -17874,7 +17874,7 @@ function loadavdb (st)
 			local loco, loal = 0, 0
 
 			for avli in avdb:gmatch ("[^\r\n]+") do
-				local _, _, avni, avip, avsi = avli:find ("^([^ ]+)|(%d+%.%d+%.%d+%.%d+)|(%d+)|%d+$")
+				local _, _, avni, avip, avsi = avli:find ("^([^ ]+)|(%d+%.%d+%.%d+%.%d+)|(%d+)$")
 
 				if avni and avip and avsi then
 					avsi = tonumber (avsi)
