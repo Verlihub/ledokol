@@ -5,6 +5,7 @@ Fixed: Ignore translation file version number when updating to last development 
 Changed: histbotmsg value 0 = don't save bot messages, 1 = save all except main chat reminders, 2 = save all, idea by Uhlik
 Added: When blocking infected users tell pingers to not send report, idea by S0RiN
 Added: Command to force infected user detection
+Added: Reduce size of AVDB to download by using "notime" parameter, idea by FlylinkDC
 
 [ 2.8.1 :: 2014-08-30 ]
 
