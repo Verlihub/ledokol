@@ -89,6 +89,7 @@ table_sets = {
 	["avfeedverb"] = 2,
 	["avsendtodb"] = 0,
 	["avdbloadint"] = 0,
+	["avrandrequest"] = 1,
 	["avdetaction"] = 0,
 	["avkicktext"] = "Virus spreaders are not welcome here _ban_",
 	["classnotianti"] = 3,
@@ -310,6 +311,7 @@ table_othsets = {
 	["avlastloadtick"] = 0,
 	["avlastloadtime"] = 0,
 	["avnextitem"] = 1,
+	["avrandstr"] = "",
 	["chflallcount"] = 0,
 	["chflalltime"] = os.time (),
 	["lastupdcheck"] = 0,
@@ -1126,6 +1128,8 @@ function Main (file)
 
 					if ver <= 282 then
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["ledocmd"] .. "` (`original`, `new`) values ('avdetforce', '" .. repsqlchars (table_cmnds ["avdetforce"]) .. "')")
+
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('avrandrequest', '" .. repsqlchars (table_sets ["avrandrequest"]) .. "')")
 					end
 
 					if ver <= 283 then
@@ -4610,6 +4614,49 @@ function VH_OnParsedMsgSR (nick, data)
 		local _, _, path, name, size = data:find ("^%$SR [^ ]+ (.-)([^\\]-)" .. string.char (5) .. "(%d+) .+")
 
 		if path and name and size and # path > 0 and # name > 0 and tonumber (size) > 0 then
+			size = tonumber (size)
+
+			if table_sets ["avrandrequest"] == 1 and table_othsets ["avrandstr"] ~= "" and name == table_othsets ["avrandstr"] .. ".exe" then -- check special random request
+				local shar = parsemyinfoshare (getmyinfo (nick))
+
+				if table_sets ["avfeedverb"] >= 2 then
+					local feed = gettext ("Infected user detected") .. ":\r\n\r\n"
+					feed = feed .. " " .. gettext ("Nick: %s"):format (nick) .. "\r\n"
+					feed = feed .. " " .. gettext ("IP: %s"):format (usip .. tryipcc (usip, nick)) .. "\r\n"
+					feed = feed .. " " .. gettext ("Share: %s"):format (makesize (shar)) .. "\r\n"
+					feed = feed .. " " .. gettext ("Spent time: %s"):format (formatuptime (0, false)) .. "\r\n"
+					feed = feed .. " " .. gettext ("Found files") .. ":\r\n\r\n"
+					feed = feed .. " " .. repnmdcoutchars (path) .. "\r\n " .. string.rep (" ", # path) .. repnmdcoutchars (name) .. " &#124; " .. makesize (size) .. "\r\n"
+
+					opsnotify (table_sets ["classnotiav"], feed)
+				elseif table_sets ["avfeedverb"] == 1 then
+					opsnotify (table_sets ["classnotiav"], gettext ("Infected user detected with nick %s and IP %s and share %s and spent time: %s"):format (nick, usip .. tryipcc (usip, nick), makesize (shar), formatuptime (0, false)))
+				end
+
+				avdbreport (nick, usip, shar, true) -- antivirus database
+
+				if table_sets ["avdetaction"] == 0 then
+					table_avbl [nick] = true
+					opsnotify (table_sets ["classnotiav"], gettext ("Connection requests to following user will be blocked: %s"):format (nick))
+
+					if table_sets ["enableipwatch"] == 1 then -- ip watch
+						checkipwat (nick, usip, data) -- we will return 0 anyway
+					end
+				else
+					if table_sets ["enableipwatch"] == 1 then -- ip watch
+						checkipwat (nick, usip, data) -- we will return 0 anyway
+					end
+
+					VH:KickUser (table_othsets ["sendfrom"], nick, table_sets ["avkicktext"])
+				end
+
+				if table_avus [nick] then
+					table_avus [nick] = nil
+				end
+
+				return 0
+			end
+
 			local lame = name:lower ()
 
 			for _, ext in pairs (table_avex) do
@@ -4624,8 +4671,6 @@ function VH_OnParsedMsgSR (nick, data)
 
 					for _, file in pairs (table_avfi) do
 						if getstrpart (lame, file) then
-							size = tonumber (size)
-
 							if table_avus [nick] then
 								if table_avus [nick][path] then
 									if not table_avus [nick][path][name] and math.abs (table_avus [nick][path][""] - size) <= table_sets ["avfilediff"] then
@@ -4807,9 +4852,23 @@ function VH_OnTimer (msec)
 			VH:SendToClass ("$Search Hub:" .. table_othsets ["sendfrom"] .. " F?F?0?1?" .. table_avse [table_othsets ["avnextitem"]] .. "|", 0, table_sets ["scanbelowclass"] - 1)
 		end
 
-		if table_othsets ["avnextitem"] == # table_avse then
+		if table_othsets ["avnextitem"] >= # table_avse then
+			if table_sets ["avrandrequest"] == 1 then -- generate and send special random request
+				table_othsets ["avrandstr"] = genrandstr (30)
+
+				if table_othsets ["func_sendtoactiveclass"] then
+					VH:SendToActiveClass ("$Search Hub:" .. table_othsets ["sendfrom"] .. " F?F?0?1?" .. table_othsets ["avrandstr"] .. "|", 0, table_sets ["scanbelowclass"] - 1)
+				else
+					VH:SendToClass ("$Search Hub:" .. table_othsets ["sendfrom"] .. " F?F?0?1?" .. table_othsets ["avrandstr"] .. "|", 0, table_sets ["scanbelowclass"] - 1)
+				end
+			end
+
 			table_othsets ["avnextitem"] = 1
 		else
+			if table_sets ["avrandrequest"] == 1 and table_othsets ["avrandstr"] ~= "" then -- clear special random request
+				table_othsets ["avrandstr"] = ""
+			end
+
 			table_othsets ["avnextitem"] = table_othsets ["avnextitem"] + 1
 		end
 
@@ -13850,6 +13909,7 @@ end
 					table_avus = {}
 					table_avbl = {}
 					table_othsets ["avnextitem"] = 1
+					table_othsets ["avrandstr"] = ""
 				else
 					loadavstr ()
 				end
@@ -13915,6 +13975,23 @@ end
 				end
 			else
 				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 " .. gettext ("or") .. " 30 " .. gettext ("to") .. " 1440"))
+			end
+		else
+			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
+		end
+
+	----- ---- --- -- -
+
+	elseif tvar == "avrandrequest" then
+		if num == true then
+			if setto == 0 or setto == 1 then
+				if setto == 0 then
+					table_othsets ["avrandstr"] = ""
+				end
+
+				ok = true
+			else
+				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 " .. gettext ("or") .. " 1"))
 			end
 		else
 			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
@@ -16873,6 +16950,7 @@ conf = conf.."\r\n [::] searfiltmsg = "..table_sets ["searfiltmsg"]
 	conf = conf .. "\r\n [::] avfeedverb = " .. table_sets ["avfeedverb"]
 	conf = conf .. "\r\n [::] avsendtodb = " .. table_sets ["avsendtodb"]
 	conf = conf .. "\r\n [::] avdbloadint = " .. table_sets ["avdbloadint"]
+	conf = conf .. "\r\n [::] avrandrequest = " .. table_sets ["avrandrequest"]
 	conf = conf .. "\r\n [::] avdetaction = " .. table_sets ["avdetaction"]
 	conf = conf .. "\r\n [::] avkicktext = " .. table_sets ["avkicktext"]
 	conf = conf .. "\r\n"
@@ -18840,6 +18918,20 @@ function genchatcode ()
 	end
 
 	return vcode, code
+end
+
+----- ---- --- -- -
+
+function genrandstr (size)
+	local list = "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz123456789"
+	local data = ""
+
+	for x = 1, size do
+		local rand = math.random (1, # list)
+		data = data .. list:sub (rand, rand)
+	end
+
+	return data
 end
 
 ----- ---- --- -- -
