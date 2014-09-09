@@ -2874,10 +2874,10 @@ elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["ledostats
 
 	----- ---- --- -- -
 
-	elseif data:find ("^" .. table_othsets ["optrig"] .. table_cmnds ["ledover"] .. " dev$") then
+	elseif data:find ("^" .. table_othsets ["optrig"] .. table_cmnds ["ledover"] .. " force$") then
 		if ucl >= 10 then
 			donotifycmd (nick, data, 0, ucl)
-			updatescriptdev (nick)
+			updatescriptforce (nick)
 		else
 			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
@@ -2886,10 +2886,10 @@ elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["ledostats
 
 	----- ---- --- -- -
 
-	elseif data:find ("^" .. table_othsets ["optrig"] .. table_cmnds ["ledover"] .. " force$") then
+	elseif data:find ("^" .. table_othsets ["optrig"] .. table_cmnds ["ledover"] .. " dev$") then
 		if ucl >= 10 then
 			donotifycmd (nick, data, 0, ucl)
-			updatescriptforce (nick)
+			updatescriptdev (nick)
 		else
 			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
@@ -4624,13 +4624,13 @@ function VH_OnParsedMsgSR (nick, data)
 					feed = feed .. " " .. gettext ("Nick: %s"):format (nick) .. "\r\n"
 					feed = feed .. " " .. gettext ("IP: %s"):format (usip .. tryipcc (usip, nick)) .. "\r\n"
 					feed = feed .. " " .. gettext ("Share: %s"):format (makesize (shar)) .. "\r\n"
-					feed = feed .. " " .. gettext ("Spent time: %s"):format (formatuptime (0, false)) .. "\r\n"
+					feed = feed .. " " .. gettext ("Spent time: %s"):format (formatuptime (table_othsets ["avlastseartick"], false)) .. "\r\n"
 					feed = feed .. " " .. gettext ("Found files") .. ":\r\n\r\n"
 					feed = feed .. " " .. repnmdcoutchars (path) .. "\r\n " .. string.rep (" ", # path) .. repnmdcoutchars (name) .. " &#124; " .. makesize (size) .. "\r\n"
 
 					opsnotify (table_sets ["classnotiav"], feed)
 				elseif table_sets ["avfeedverb"] == 1 then
-					opsnotify (table_sets ["classnotiav"], gettext ("Infected user detected with nick %s and IP %s and share %s and spent time: %s"):format (nick, usip .. tryipcc (usip, nick), makesize (shar), formatuptime (0, false)))
+					opsnotify (table_sets ["classnotiav"], gettext ("Infected user detected with nick %s and IP %s and share %s and spent time: %s"):format (nick, usip .. tryipcc (usip, nick), makesize (shar), formatuptime (table_othsets ["avlastseartick"], false)))
 				end
 
 				avdbreport (nick, usip, shar, true) -- antivirus database
@@ -16699,11 +16699,11 @@ help = help.." "..optrig..table_cmnds ["clear"].." - "..gettext ("Clear main cha
 	help = help .. " " .. optrig .. table_cmnds ["avstats"] .. " [" .. gettext ("nick") .. "] - " .. gettext ("Antivirus statistics") .. "\r\n"
 	help = help .. " " .. optrig .. table_cmnds ["avdetforce"] .. " <" .. gettext ("nick") .. "> - " .. gettext ("Force infected user detection") .. "\r\n\r\n"
 
--- ledokol commands
-help = help.." "..optrig..table_cmnds ["ledoconf"].." - "..gettext ("Script configuration variables").."\r\n"
-help = help.." "..optrig..table_cmnds ["ledoset"].." <"..gettext ("variable").."> <"..gettext ("value").."> - "..gettext ("Change configuration variable").."\r\n"
-help = help.." "..optrig..table_cmnds ["ledover"].." - "..gettext ("Perform script update").."\r\n"
-help = help.." "..optrig..table_cmnds ["ledohelp"].." - "..gettext ("This list of commands").."\r\n"
+	-- ledokol commands
+	help = help .. " " .. optrig .. table_cmnds ["ledoconf"] .. " - " .. gettext ("Script configuration variables") .. "\r\n"
+	help = help .. " " .. optrig .. table_cmnds ["ledoset"] .. " <" .. gettext ("variable") .. "> <" .. gettext ("value") .. "> - " .. gettext ("Change configuration variable") .. "\r\n"
+	help = help .. " " .. optrig .. table_cmnds ["ledover"] .. " [force&#124;dev] - " .. gettext ("Perform script update") .. "\r\n"
+	help = help .. " " .. optrig .. table_cmnds ["ledohelp"] .. " - " .. gettext ("This list of commands") .. "\r\n"
 	help = help .. " " .. optrig .. table_cmnds ["ledostats"] .. " - " .. gettext ("%s statistics"):format ("Ledokol") .. "\r\n\r\n"
 
 	-- experts only commands
