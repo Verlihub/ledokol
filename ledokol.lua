@@ -4633,7 +4633,7 @@ function VH_OnParsedMsgSR (nick, data)
 					opsnotify (table_sets ["classnotiav"], gettext ("Infected user detected with nick %s and IP %s and share %s and spent time: %s"):format (nick, usip .. tryipcc (usip, nick), makesize (shar), formatuptime (table_othsets ["avlastseartick"], false)))
 				end
 
-				avdbreport (nick, usip, shar, true) -- antivirus database
+				avdbreport (nick, usip, shar, true, path) -- antivirus database
 
 				if table_sets ["avdetaction"] == 0 then
 					table_avbl [nick] = true
@@ -4712,7 +4712,7 @@ function VH_OnParsedMsgSR (nick, data)
 												opsnotify (table_sets ["classnotiav"], gettext ("Infected user detected with nick %s and IP %s and share %s and spent time: %s"):format (nick, usip .. tryipcc (usip, nick), makesize (shar), formatuptime (table_avus [nick][""], false)))
 											end
 
-											avdbreport (nick, usip, shar, haveshar) -- antivirus database
+											avdbreport (nick, usip, shar, haveshar, path) -- antivirus database
 
 											if table_sets ["avdetaction"] == 0 then
 												table_avbl [nick] = true
@@ -18004,7 +18004,7 @@ end
 
 ----- ---- --- -- -
 
-function avdbreport (nick, addr, size, info)
+function avdbreport (nick, addr, size, info, path)
 	if table_sets ["avsendtodb"] == 0 or not table_othsets ["ver_curl"] then
 		return
 	end
@@ -18016,7 +18016,15 @@ function avdbreport (nick, addr, size, info)
 	end
 
 	if shar > 0 then
-		local res, err, avre = getcurl (table_othsets ["avdbsendurl"] .. "&size=" .. tostring (shar) .. "&addr=" .. addr, {["nick"] = nick})
+		local uren = {
+			["nick"] = nick
+		}
+
+		if path and # path > 0 then
+			uren ["path"] = path
+		end
+
+		local res, err, avre = getcurl (table_othsets ["avdbsendurl"] .. "&size=" .. tostring (shar) .. "&addr=" .. addr, uren)
 
 		if res then
 			if avre == "0" or avre == "1" then
