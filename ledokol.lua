@@ -17944,7 +17944,7 @@ end
 ----- ---- --- -- -
 
 function loadavdb (st)
-	local res, err, avdb = getcurl (table_othsets ["avdbloadurl"] .. "&time=" .. tostring (table_othsets ["avlastloadtime"]) .. "&notime=1")
+	local res, err, avdb = getcurl (table_othsets ["avdbloadurl"] .. "&time=" .. tostring (table_othsets ["avlastloadtime"]) .. "&cotime=0")
 
 	if res then
 		table_othsets ["avlastloadtime"] = st
