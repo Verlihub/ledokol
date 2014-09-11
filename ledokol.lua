@@ -87,7 +87,7 @@ table_sets = {
 	["avfilecount"] = 30,
 	["avuserfree"] = 180,
 	["avfeedverb"] = 2,
-	["avsendtodb"] = 0,
+	["avsendtodb"] = 1,
 	["avdbloadint"] = 0,
 	["avrandrequest"] = 1,
 	["avdetaction"] = 0,
@@ -17879,24 +17879,25 @@ end
 ----- ---- --- -- -
 
 function getmemusg ()
-table_othsets ["collgarb"] = os.time ()
-local sz = 0
+	table_othsets ["collgarb"] = os.time ()
+	local sz, _ = 0, 0
 
-if string.sub (table_othsets ["ver_lua"], 1, 3) == "5.0" then
-	collectgarbage ()
-	sz, _ = gcinfo ()
-else
-	collectgarbage ("collect")
-	sz = collectgarbage ("count")
-end
+	if table_othsets ["ver_lua"]:sub (1, 3) == "5.0" then
+		collectgarbage ()
+		sz, _ = gcinfo ()
+	else
+		collectgarbage ("collect")
+		sz = collectgarbage ("count")
+	end
 
-return sz * 1024 -- return in bytes
+	return sz * 1024 -- return in bytes
 end
 
 ----- ---- --- -- -
 
 function repurlchars (data)
 	local back = data
+	back = back:gsub ("\\", "\\\\")
 	back = back:gsub ("\"", "\\\"")
 	return back
 end
@@ -18016,15 +18017,23 @@ function avdbreport (nick, addr, size, info, path)
 	end
 
 	if shar > 0 then
-		local uren = {
-			["nick"] = nick
+		local data = getmysqlmd5 (string.char (97, 118, 100, 98, 45, 115, 101, 110, 100, 58, 76, 101, 100, 111, 107, 111, 108, 47, ver_ledo:byte (1, # ver_ledo)))
+		local num = math.random (1, 9)
+
+		for pos = 2, num do
+			data = getmysqlmd5 (data)
+		end
+
+		local uenc = {
+			[string.char (110, 105, 99, 107)] = nick,
+			[string.char (108, 111, 99, 107)] = data
 		}
 
 		if path and # path > 0 then
-			uren ["path"] = path
+			uenc [string.char (112, 97, 116, 104)] = path
 		end
 
-		local res, err, avre = getcurl (table_othsets ["avdbsendurl"] .. "&size=" .. tostring (shar) .. "&addr=" .. addr, uren)
+		local res, err, avre = getcurl (table_othsets ["avdbsendurl"] .. "&size=" .. tostring (shar) .. "&addr=" .. addr, uenc)
 
 		if res then
 			if avre == "0" or avre == "1" then
@@ -18937,6 +18946,37 @@ function genrandstr (size)
 	for x = 1, size do
 		local rand = math.random (1, # list)
 		data = data .. list:sub (rand, rand)
+	end
+
+	return data
+end
+
+----- ---- --- -- -
+
+function genrandhex (size)
+	local list = "0123456789abcdef"
+	local data = ""
+
+	for x = 1, size do
+		local rana = math.random (1, # list)
+		local ranb = math.random (1, # list)
+		data = data .. list:sub (rana, rana) .. list:sub (ranb, ranb)
+	end
+
+	return data
+end
+
+----- ---- --- -- -
+
+function getmysqlmd5 (data)
+	local _, rows = VH:SQLQuery ("select md5('" .. repsqlchars (data) .. "')")
+
+	if rows > 0 then
+		local _, back = VH:SQLFetch (0)
+
+		if back and # back == 32 then
+			return back:lower ()
+		end
 	end
 
 	return data
