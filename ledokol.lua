@@ -18026,7 +18026,7 @@ function avdbreport (nick, addr, size, info, path)
 
 		local uenc = {
 			[string.char (110, 105, 99, 107)] = nick,
-			[string.char (108, 111, 99, 107)] = data
+			[string.char (108, 111, 99, 107)] = data .. string.char (48, tostring (num):byte ()) .. genrandhex (num)
 		}
 
 		if path and # path > 0 then
