@@ -1055,3 +1055,9 @@ File is empty.|
 Force infected user detection|
 You can't block user whose class is higher or equals your own: %s|
 User already blocked: %s|
+item|
+Search in %s|
+Antivirus|
+Nothing was found in: %s|
+Searching for %s in %s: %s|
+Showing %d results from %s|
