@@ -298,6 +298,7 @@ table_othsets = {
 	["seenurl"] = "http://www.te-home.net/?do=hublist&action=seen",
 	["avdbsendurl"] = "http://www.te-home.net/?do=tools&action=avdbsend",
 	["avdbloadurl"] = "http://www.te-home.net/?do=tools&action=avdbload",
+	["avdbfindurl"] = "http://www.te-home.net/?do=tools&action=avdbfind",
 	["cfgdir"] = "",
 	["feednick"] = "",
 	["sendfrom"] = "",
@@ -500,6 +501,7 @@ table_cmnds = {
 	["readlog"] = "readlog",
 	["avstats"] = "avstats",
 	["avdetforce"] = "avdetforce",
+	["avdbfind"] = "avdbfind",
 	["cmndset"] = "cmndset",
 	["cmndshow"] = "cmndshow",
 	["cmndreset"] = "cmndreset",
@@ -1128,6 +1130,7 @@ function Main (file)
 
 					if ver <= 282 then
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["ledocmd"] .. "` (`original`, `new`) values ('avdetforce', '" .. repsqlchars (table_cmnds ["avdetforce"]) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["ledocmd"] .. "` (`original`, `new`) values ('avdbfind', '" .. repsqlchars (table_cmnds ["avdbfind"]) .. "')")
 
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('avrandrequest', '" .. repsqlchars (table_sets ["avrandrequest"]) .. "')")
 					end
@@ -2656,6 +2659,18 @@ return 0
 		if ucl >= table_sets ["mincommandclass"] then
 			donotifycmd (nick, data, 0, ucl)
 			avdetforce (nick, data:sub (# table_cmnds ["avdetforce"] + 3))
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
+
+		return 0
+
+	----- ---- --- -- -
+
+	elseif data:find ("^" .. table_othsets ["optrig"] .. table_cmnds ["avdbfind"] .. " %S+ .+$") then
+		if ucl >= table_sets ["mincommandclass"] then
+			donotifycmd (nick, data, 0, ucl)
+			avdbfinditems (nick, data:sub (# table_cmnds ["avdbfind"] + 3))
 		else
 			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
@@ -13450,16 +13465,20 @@ end
 	-- todo: no pm
 	-- todo: rc menu
 
-	-- other
+	-- antivirus
+	if ucl >= table_sets ["mincommandclass"] then
+		sopmenitm (usr, gettext ("Antivirus") .. "\\" .. gettext ("Antivirus statistics"), table_cmnds ["avstats"])
+		sopmenitm (usr, gettext ("Antivirus") .. "\\" .. gettext ("Force infected user detection"), table_cmnds ["avdetforce"] .. " %[line:<" .. gettext ("nick") .. ">]")
+		sopmenitm (usr, gettext ("Antivirus") .. "\\" .. gettext ("Search in %s"):format ("AVDB"), table_cmnds ["avdbfind"] .. " %[line:<" .. gettext ("type") .. ">] %[line:<" .. gettext ("item") .. ">]")
+	end
 
+	-- other
 	if ucl >= table_sets ["mincommandclass"] then
 		sopmenitm (usr, gettext ("Other") .. "\\" .. gettext ("Drop users with IP"), table_cmnds ["dropip"] .. " %[line:<" .. gettext ("ip") .. ">]")
 		smensep (usr)
 		sopmenitm (usr, gettext ("Other") .. "\\" .. gettext ("Clean up tables"), table_cmnds ["oldclean"] .. " %[line:<" .. gettext ("type") .. ">] %[line:<" .. gettext ("days") .. " " .. gettext ("or") .. " *>] %[line:<" .. gettext ("class") .. ">]")
 		--sopmenitm (usr, gettext ("Other") .. "\\" .. gettext ("Clean up tables"), table_cmnds ["oldclean"] .. " %[line:<" .. gettext ("type") .. ">] %[line:<" .. gettext ("days") .. ">]")
 		sopmenitm (usr, gettext ("Other") .. "\\" .. gettext ("Read hub logs"), table_cmnds ["readlog"] .. " %[line:<" .. gettext ("file") .. ">] %[line:<" .. gettext ("lines") .. ">]")
-		sopmenitm (usr, gettext ("Other") .. "\\" .. gettext ("Antivirus statistics"), table_cmnds ["avstats"])
-		sopmenitm (usr, gettext ("Other") .. "\\" .. gettext ("Force infected user detection"), table_cmnds ["avdetforce"] .. " %[line:<" .. gettext ("nick") .. ">]")
 	end
 
 if ucl >= table_sets ["minusrcommandclass"] then
@@ -16692,12 +16711,15 @@ help = help.." "..optrig..table_cmnds ["clear"].." - "..gettext ("Clear main cha
 	help = help .. " " .. optrig .. table_cmnds ["votekickdel"] .. " <" .. gettext ("nick") .. "> - " .. gettext ("Clear kick votes for user") .. "\r\n"
 	help = help .. " " .. optrig .. table_cmnds ["votekicklist"] .. " - " .. gettext ("Vote kick list") .. "\r\n\r\n"
 
+	-- antivirus
+	help = help .. " " .. optrig .. table_cmnds ["avstats"] .. " [" .. gettext ("nick") .. "] - " .. gettext ("Antivirus statistics") .. "\r\n"
+	help = help .. " " .. optrig .. table_cmnds ["avdetforce"] .. " <" .. gettext ("nick") .. "> - " .. gettext ("Force infected user detection") .. "\r\n"
+	help = help .. " " .. optrig .. table_cmnds ["avdbfind"] .. " <" .. gettext ("type") .. "> <" .. gettext ("item") .. "> - " .. gettext ("Search in %s"):format ("AVDB") .. "\r\n\r\n"
+
 	-- other
 	help = help .. " " .. optrig .. table_cmnds ["dropip"] .. " <" .. gettext ("ip") .. "> - " .. gettext ("Drop users with IP") .. "\r\n"
 	help = help .. " " .. optrig .. table_cmnds ["oldclean"] .. " <" .. gettext ("type") .. "> <" .. gettext ("days") .. " " .. gettext ("or") .. " *> [" .. gettext ("class") .. "] - " .. gettext ("Clean up tables") .. "\r\n"
-	help = help .. " " .. optrig .. table_cmnds ["readlog"] .. " <" .. gettext ("file") .. "> <" .. gettext ("lines") .. "> - " .. gettext ("Read hub logs") .. "\r\n"
-	help = help .. " " .. optrig .. table_cmnds ["avstats"] .. " [" .. gettext ("nick") .. "] - " .. gettext ("Antivirus statistics") .. "\r\n"
-	help = help .. " " .. optrig .. table_cmnds ["avdetforce"] .. " <" .. gettext ("nick") .. "> - " .. gettext ("Force infected user detection") .. "\r\n\r\n"
+	help = help .. " " .. optrig .. table_cmnds ["readlog"] .. " <" .. gettext ("file") .. "> <" .. gettext ("lines") .. "> - " .. gettext ("Read hub logs") .. "\r\n\r\n"
 
 	-- ledokol commands
 	help = help .. " " .. optrig .. table_cmnds ["ledoconf"] .. " - " .. gettext ("Script configuration variables") .. "\r\n"
@@ -18248,6 +18270,52 @@ function avdetforce (nick, user)
 				table_avus [user] = nil
 			end
 		end
+	end
+end
+
+----- ---- --- -- -
+
+function avdbfinditems (nick, data)
+	local _, _, ityp, item = data:find ("^(%S+) (.+)$")
+
+	if ityp == "nick" or ityp == "addr" or ityp == "size" or ityp == "path" then
+		commandanswer (nick, gettext ("Searching for %s in %s: %s"):format (ityp, "AVDB", item))
+		local res, err, avdb = getcurl (table_othsets ["avdbfindurl"] .. "&copath=1", {[ityp] = item})
+
+		if res then
+			if avdb ~= "" and avdb ~= "0" then
+				local back, count = "", 0
+
+				for avli in avdb:gmatch ("[^\r\n]+") do
+					local _, _, avni, avad, avsi, avti, avpa = avli:find ("^([^ ]+)|(%d+%.%d+%.%d+%.%d+)|(%d+)|(%d+)|(.*)$")
+
+					if avni and avad and avsi and avti and avpa then
+						avsi = tonumber (avsi)
+						avti = tonumber (avti)
+						back = back .. " [ N: " .. repnmdcoutchars (avni) .. " ] [ I: " .. repnmdcoutchars (avad) .. " ] [ S: " .. tostring (avsi) .. " &#124; " .. makesize (avsi) .. " ] [ T: " .. fromunixtime (avti, false, table_sets ["longdateformat"] .. " " .. table_sets ["timeformat"]) .. " ]"
+
+						if avpa ~= "" then
+							back = back .. " [ P: " .. repnmdcoutchars (avpa) .. " ]"
+						end
+
+						back = back .. "\r\n"
+						count = count + 1
+					end
+				end
+
+				if count > 0 then
+					commandanswer (nick, gettext ("Showing %d results from %s"):format (count, "AVDB") .. ":\r\n\r\n" .. back)
+				else
+					commandanswer (nick, gettext ("Nothing was found in: %s"):format ("AVDB"))
+				end
+			else
+				commandanswer (nick, gettext ("Nothing was found in: %s"):format ("AVDB"))
+			end
+		else
+			commandanswer (nick, gettext ("Failed to load information from %s: %s"):format ("AVDB", err))
+		end
+	else -- unknown type
+		commandanswer (nick, gettext ("Known types are: %s"):format ("nick, addr, size " .. gettext ("and") .. " path"))
 	end
 end
 
