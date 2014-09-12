@@ -9,6 +9,7 @@ Added: Command to force infected user detection
 Added: Reduce size of AVDB to download by using "notime" parameter, idea by FlylinkDC
 Added: Detection of special virus spreaders who reply to any random search request, enabled by default, idea by Lord_Zero and MaxFox
 Added: Report path of infected files to AVDB
+Added: Command to search in AVDB, known types are nick, addr, size and path
 
 [ 2.8.1 :: 2014-08-30 ]
 
