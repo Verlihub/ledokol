@@ -58,7 +58,7 @@ Doxtur, chaos, sphinx, Zorro, W1ZaRd, S0RiN, MaxFox, Krzychu
 -- global storage variables and tables >>
 ---------------------------------------------------------------------
 
-ver_ledo = "2.8.2" -- ledokol version
+ver_ledo = "2.8.3" -- ledokol version
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -1778,10 +1778,10 @@ return 0
 
 	----- ---- --- -- -
 
-	elseif string.find (data, "^" .. table_othsets ["optrig"] .. table_cmnds ["antiadd"] .. " .+ %d %d+ %d$") then
+	elseif data:find ("^" .. table_othsets ["optrig"] .. table_cmnds ["antiadd"] .. " .+ %d %d+ %d$") then
 		if ucl >= table_sets ["mincommandclass"] then
 			donotifycmd (nick, data, 0, ucl)
-			addantientry (nick, string.sub (data, string.len (table_cmnds ["antiadd"]) + 3))
+			addantientry (nick, data:sub (# table_cmnds ["antiadd"] + 3))
 		else
 			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
@@ -1812,19 +1812,19 @@ end
 
 return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
 
-elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["antiexadd"].." .+$") then
-if ucl >= table_sets ["mincommandclass"] then
-donotifycmd (nick, data, 0, ucl)
-addexentry (nick, string.sub (data, string.len (table_cmnds ["antiexadd"]) + 3, -1))
-else
-commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
-end
+	elseif data:find ("^" .. table_othsets ["optrig"] .. table_cmnds ["antiexadd"] .. " .+$") then
+		if ucl >= table_sets ["mincommandclass"] then
+			donotifycmd (nick, data, 0, ucl)
+			addexentry (nick, data:sub (# table_cmnds ["antiexadd"] + 3))
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
 
-return 0
+		return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
 
 elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["antiexdel"].." .+$") then
 if ucl >= table_sets ["mincommandclass"] then
@@ -1848,19 +1848,19 @@ end
 
 return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
 
-elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["sefiadd"].." .+ %d %d %d$") then
-if ucl >= table_sets ["mincommandclass"] then
-donotifycmd (nick, data, 0, ucl)
-addsefientry (nick, string.sub (data, string.len (table_cmnds ["sefiadd"]) + 3, -1))
-else
-commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
-end
+	elseif data:find ("^" .. table_othsets ["optrig"] .. table_cmnds ["sefiadd"] .. " .+ %d %d %d$") then
+		if ucl >= table_sets ["mincommandclass"] then
+			donotifycmd (nick, data, 0, ucl)
+			addsefientry (nick, data:sub (# table_cmnds ["sefiadd"] + 3))
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
 
-return 0
+		return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
 
 elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["sefidel"].." .+$") then
 if ucl >= table_sets ["mincommandclass"] then
@@ -1884,19 +1884,19 @@ end
 
 return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
 
-elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["sefiexadd"].." .+$") then
-if ucl >= table_sets ["mincommandclass"] then
-donotifycmd (nick, data, 0, ucl)
-addsefiexentry (nick, string.sub (data, string.len (table_cmnds ["sefiexadd"]) + 3, -1))
-else
-commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
-end
+	elseif data:find ("^" .. table_othsets ["optrig"] .. table_cmnds ["sefiexadd"] .. " .+$") then
+		if ucl >= table_sets ["mincommandclass"] then
+			donotifycmd (nick, data, 0, ucl)
+			addsefiexentry (nick, data:sub (# table_cmnds ["sefiexadd"] + 3))
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
 
-return 0
+		return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
 
 elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["sefiexdel"].." .+$") then
 if ucl >= table_sets ["mincommandclass"] then
@@ -3098,10 +3098,10 @@ elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["ledoshell
 
 	----- ---- --- -- -
 
-	elseif string.find (data, "^" .. table_othsets ["optrig"] .. table_cmnds ["myinfadd"] .. " %S+ .+$")--[[ or string.find (data, "^" .. table_othsets ["optrig"] .. table_cmnds ["myinfadd"] .. " %S+ .+ %d+[%u%l]$")]] then
+	elseif data:find ("^" .. table_othsets ["optrig"] .. table_cmnds ["myinfadd"] .. " %S+ .+$")--[[ or data:find ("^" .. table_othsets ["optrig"] .. table_cmnds ["myinfadd"] .. " %S+ .+ %d+[%u%l]$")]] then
 		if ucl >= table_sets ["mincommandclass"] then
 			donotifycmd (nick, data, 0, ucl)
-			addmyinfoentry (nick, string.sub (data, string.len (table_cmnds ["myinfadd"]) + 3, -1))
+			addmyinfoentry (nick, data:sub (# table_cmnds ["myinfadd"] + 3))
 		else
 			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
@@ -9808,7 +9808,7 @@ function checknick (nick, ucls, aip)
 
 		for x = 0, rows - 1 do
 			local _, entry, btime = VH:SQLFetch (x)
-			local fres, fval = pcall (string.find, lowtxt, entry)
+			local fres, fval = catchfinderror (lowtxt, entry)
 
 			if not fres then
 				local ferr = gettext ("There is an error in following forbidden nick pattern") .. ":\r\n\r\n"
@@ -9823,7 +9823,7 @@ function checknick (nick, ucls, aip)
 				if rows > 0 then
 					for x = 0, rows - 1 do
 						local _, entry = VH:SQLFetch (x)
-						local fres, fval = pcall (string.find, lowtxt, entry)
+						local fres, fval = catchfinderror (lowtxt, entry)
 
 						if not fres then
 							local ferr = gettext ("There is an error in following MyINFO exception pattern") .. ":\r\n\r\n"
@@ -9860,7 +9860,7 @@ function checkdesc (nick, desc, ucls, aip)
 
 		for x = 0, rows - 1 do
 			local _, entry, btime = VH:SQLFetch (x)
-			local fres, fval = pcall (string.find, lowtxt, entry)
+			local fres, fval = catchfinderror (lowtxt, entry)
 
 			if not fres then
 				local ferr = gettext ("There is an error in following forbidden description pattern") .. ":\r\n\r\n"
@@ -9875,7 +9875,7 @@ function checkdesc (nick, desc, ucls, aip)
 				if rows > 0 then
 					for x = 0, rows - 1 do
 						local _, entry = VH:SQLFetch (x)
-						local fres, fval = pcall (string.find, lowtxt, entry)
+						local fres, fval = catchfinderror (lowtxt, entry)
 
 						if not fres then
 							local ferr = gettext ("There is an error in following MyINFO exception pattern") .. ":\r\n\r\n"
@@ -9912,7 +9912,7 @@ function checktag (nick, tag, ucls, aip)
 
 		for x = 0, rows - 1 do
 			local _, entry, btime = VH:SQLFetch (x)
-			local fres, fval = pcall (string.find, lowtxt, entry)
+			local fres, fval = catchfinderror (lowtxt, entry)
 
 			if not fres then
 				local ferr = gettext ("There is an error in following forbidden tag pattern") .. ":\r\n\r\n"
@@ -9927,7 +9927,7 @@ function checktag (nick, tag, ucls, aip)
 				if rows > 0 then
 					for x = 0, rows - 1 do
 						local _, entry = VH:SQLFetch (x)
-						local fres, fval = pcall (string.find, lowtxt, entry)
+						local fres, fval = catchfinderror (lowtxt, entry)
 
 						if not fres then
 							local ferr = gettext ("There is an error in following MyINFO exception pattern") .. ":\r\n\r\n"
@@ -9991,7 +9991,7 @@ function checkconn (nick, conn, ucls, aip)
 
 		for x = 0, rows - 1 do
 			local _, entry, btime = VH:SQLFetch (x)
-			local fres, fval = pcall (string.find, lowtxt, entry)
+			local fres, fval = catchfinderror (lowtxt, entry)
 
 			if not fres then
 				local ferr = gettext ("There is an error in following forbidden connection type pattern") .. ":\r\n\r\n"
@@ -10006,7 +10006,7 @@ function checkconn (nick, conn, ucls, aip)
 				if rows > 0 then
 					for x = 0, rows - 1 do
 						local _, entry = VH:SQLFetch (x)
-						local fres, fval = pcall (string.find, lowtxt, entry)
+						local fres, fval = catchfinderror (lowtxt, entry)
 
 						if not fres then
 							local ferr = gettext ("There is an error in following MyINFO exception pattern") .. ":\r\n\r\n"
@@ -10043,7 +10043,7 @@ function checkemail (nick, email, ucls, aip)
 
 		for x = 0, rows - 1 do
 			local _, entry, btime = VH:SQLFetch (x)
-			local fres, fval = pcall (string.find, lowtxt, entry)
+			local fres, fval = catchfinderror (lowtxt, entry)
 
 			if not fres then
 				local ferr = gettext ("There is an error in following forbidden email pattern") .. ":\r\n\r\n"
@@ -10058,7 +10058,7 @@ function checkemail (nick, email, ucls, aip)
 				if rows > 0 then
 					for x = 0, rows - 1 do
 						local _, entry = VH:SQLFetch (x)
-						local fres, fval = pcall (string.find, lowtxt, entry)
+						local fres, fval = catchfinderror (lowtxt, entry)
 
 						if not fres then
 							local ferr = gettext ("There is an error in following MyINFO exception pattern") .. ":\r\n\r\n"
@@ -10095,7 +10095,7 @@ function checkshare (nick, share, ucls, aip)
 
 		for x = 0, rows - 1 do
 			local _, entry, btime = VH:SQLFetch (x)
-			local fres, fval = pcall (string.find, lowtxt, entry)
+			local fres, fval = catchfinderror (lowtxt, entry)
 
 			if not fres then
 				local ferr = gettext ("There is an error in following forbidden share size pattern") .. ":\r\n\r\n"
@@ -10110,7 +10110,7 @@ function checkshare (nick, share, ucls, aip)
 				if rows > 0 then
 					for x = 0, rows - 1 do
 						local _, entry = VH:SQLFetch (x)
-						local fres, fval = pcall (string.find, lowtxt, entry)
+						local fres, fval = catchfinderror (lowtxt, entry)
 
 						if not fres then
 							local ferr = gettext ("There is an error in following MyINFO exception pattern") .. ":\r\n\r\n"
@@ -10148,7 +10148,7 @@ function checkip (nick, aip, ucls)
 
 		for x = 0, rows - 1 do
 			local _, entry, btime = VH:SQLFetch (x)
-			local fres, fval = pcall (string.find, lowtxt, entry)
+			local fres, fval = catchfinderror (lowtxt, entry)
 
 			if not fres then
 				local ferr = gettext ("There is an error in following forbidden IP address pattern") .. ":\r\n\r\n"
@@ -10163,7 +10163,7 @@ function checkip (nick, aip, ucls)
 				if rows > 0 then
 					for x = 0, rows - 1 do
 						local _, entry = VH:SQLFetch (x)
-						local fres, fval = pcall (string.find, lowtxt, entry)
+						local fres, fval = catchfinderror (lowtxt, entry)
 
 						if not fres then
 							local ferr = gettext ("There is an error in following MyINFO exception pattern") .. ":\r\n\r\n"
@@ -10203,7 +10203,7 @@ function checkcc (nick, cls)
 
 		for x = 0, rows - 1 do
 			local _, ent, btime = VH:SQLFetch (x)
-			local fres, fval = pcall (string.find, lcc, ent)
+			local fres, fval = catchfinderror (lcc, ent)
 
 			if not fres then
 				local ferr = gettext ("There is an error in following forbidden country code pattern") .. ":\r\n\r\n"
@@ -10218,7 +10218,7 @@ function checkcc (nick, cls)
 				if rows > 0 then
 					for x = 0, rows - 1 do
 						local _, ent = VH:SQLFetch (x)
-						local fres, fval = pcall (string.find, lcc, ent)
+						local fres, fval = catchfinderror (lcc, ent)
 
 						if not fres then
 							local ferr = gettext ("There is an error in following MyINFO exception pattern") .. ":\r\n\r\n"
@@ -10258,7 +10258,7 @@ function checkdns (nick, cls, ip)
 
 		for x = 0, rows - 1 do
 			local _, ent, btime = VH:SQLFetch (x)
-			local fres, fval = pcall (string.find, ldns, ent)
+			local fres, fval = catchfinderror (ldns, ent)
 
 			if not fres then
 				local ferr = gettext ("There is an error in following forbidden DNS pattern") .. ":\r\n\r\n"
@@ -10273,7 +10273,7 @@ function checkdns (nick, cls, ip)
 				if rows > 0 then
 					for x = 0, rows - 1 do
 						local _, ent = VH:SQLFetch (x)
-						local fres, fval = pcall (string.find, ldns, ent)
+						local fres, fval = catchfinderror (ldns, ent)
 
 						if not fres then
 							local ferr = gettext ("There is an error in following MyINFO exception pattern") .. ":\r\n\r\n"
@@ -10313,7 +10313,7 @@ function checksup (nick, cls, ip)
 
 		for x = 0, rows - 1 do
 			local _, ent, btime = VH:SQLFetch (x)
-			local fres, fval = pcall (string.find, lsup, ent)
+			local fres, fval = catchfinderror (lsup, ent)
 
 			if not fres then
 				local ferr = gettext ("There is an error in following forbidden client supports pattern") .. ":\r\n\r\n"
@@ -10328,7 +10328,7 @@ function checksup (nick, cls, ip)
 				if rows > 0 then
 					for x = 0, rows - 1 do
 						local _, ent = VH:SQLFetch (x)
-						local fres, fval = pcall (string.find, lsup, ent)
+						local fres, fval = catchfinderror (lsup, ent)
 
 						if not fres then
 							local ferr = gettext ("There is an error in following MyINFO exception pattern") .. ":\r\n\r\n"
@@ -10368,7 +10368,7 @@ function checkver (nick, cls, ip)
 
 		for x = 0, rows - 1 do
 			local _, ent, btime = VH:SQLFetch (x)
-			local fres, fval = pcall (string.find, lver, ent)
+			local fres, fval = catchfinderror (lver, ent)
 
 			if not fres then
 				local ferr = gettext ("There is an error in following forbidden NMDC version pattern") .. ":\r\n\r\n"
@@ -10383,7 +10383,7 @@ function checkver (nick, cls, ip)
 				if rows > 0 then
 					for x = 0, rows - 1 do
 						local _, ent = VH:SQLFetch (x)
-						local fres, fval = pcall (string.find, lver, ent)
+						local fres, fval = catchfinderror (lver, ent)
 
 						if not fres then
 							local ferr = gettext ("There is an error in following MyINFO exception pattern") .. ":\r\n\r\n"
@@ -11030,138 +11030,235 @@ end
 ----- ---- --- -- -
 
 function addmyinfoentry (nick, line)
-	local part, item, btime = "", "", table_sets ["mitbantime"]
+	local part, item, btime, _ = "", "", table_sets ["mitbantime"], 0
 
-	if string.find (line, "^(%S+) (.+) (%d+[%u%l])$") then
-		_, _, part, item, btime = string.find (line, "^(%S+) (.+) (%d+[%u%l])$")
+	if line:find ("^%S+ .+ %d+[%u%l]$") then -- todo: must be separated with quotes most likely
+		_, _, part, item, btime = line:find ("^(%S+) (.+) (%d+[%u%l])$")
 	else
-		_, _, part, item = string.find (line, "^(%S+) (.+)$")
+		_, _, part, item = line:find ("^(%S+) (.+)$")
 	end
 
+	local fres, fval = catchfinderror ("", repnmdcinchars (item))
 	local entry = repsqlchars (repnmdcinchars (item))
 
 	if part == "nick" then
-		local _, rows = VH:SQLQuery ("select `occurred` from `"..tbl_sql ["minick"].."` where `nick` = '"..entry.."' limit 1")
-
-		if rows > 0 then
-			commandanswer (nick, string.format (gettext ("Couldn't add forbidden nick because already exists: %s"), item))
+		if not fres then
+			local ferr = gettext ("There is an error in following forbidden nick pattern") .. ":\r\n\r\n"
+			ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. item .. "\r\n"
+			ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
+			ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+			commandanswer (nick, ferr)
 		else
-			VH:SQLQuery ("insert into `"..tbl_sql ["minick"].."` (`nick`, `time`) values ('"..entry.."', '"..repsqlchars (btime).."')")
-			commandanswer (nick, string.format (gettext ("Added forbidden nick: %s"), item))
+			local _, rows = VH:SQLQuery ("select `occurred` from `" .. tbl_sql ["minick"] .. "` where `nick` = '" .. entry .. "' limit 1")
+
+			if rows > 0 then
+				commandanswer (nick, gettext ("Couldn't add forbidden nick because already exists: %s"):format (item))
+			else
+				VH:SQLQuery ("insert into `" .. tbl_sql ["minick"] .. "` (`nick`, `time`) values ('" .. entry .. "', '" .. repsqlchars (btime) .. "')")
+				commandanswer (nick, gettext ("Added forbidden nick: %s"):format (item))
+			end
 		end
 
 	elseif part == "desc" then
-		local _, rows = VH:SQLQuery ("select `occurred` from `"..tbl_sql ["midesc"].."` where `description` = '"..entry.."' limit 1")
-
-		if rows > 0 then
-			commandanswer (nick, string.format (gettext ("Couldn't add forbidden description because already exists: %s"), item))
+		if not fres then
+			local ferr = gettext ("There is an error in following forbidden description pattern") .. ":\r\n\r\n"
+			ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. item .. "\r\n"
+			ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
+			ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+			commandanswer (nick, ferr)
 		else
-			VH:SQLQuery ("insert into `"..tbl_sql ["midesc"].."` (`description`, `time`) values ('"..entry.."', '"..repsqlchars (btime).."')")
-			commandanswer (nick, string.format (gettext ("Added forbidden description: %s"), item))
+			local _, rows = VH:SQLQuery ("select `occurred` from `" .. tbl_sql ["midesc"] .. "` where `description` = '" .. entry .. "' limit 1")
+
+			if rows > 0 then
+				commandanswer (nick, gettext ("Couldn't add forbidden description because already exists: %s"):format (item))
+			else
+				VH:SQLQuery ("insert into `" .. tbl_sql ["midesc"] .. "` (`description`, `time`) values ('" .. entry .. "', '" .. repsqlchars (btime) .. "')")
+				commandanswer (nick, gettext ("Added forbidden description: %s"):format (item))
+			end
 		end
 
 	elseif part == "tag" then
-		local _, rows = VH:SQLQuery ("select `occurred` from `"..tbl_sql ["mitag"].."` where `tag` = '"..entry.."' limit 1")
-
-		if rows > 0 then
-			commandanswer (nick, string.format (gettext ("Couldn't add forbidden tag because already exists: %s"), item))
+		if not fres then
+			local ferr = gettext ("There is an error in following forbidden tag pattern") .. ":\r\n\r\n"
+			ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. item .. "\r\n"
+			ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
+			ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+			commandanswer (nick, ferr)
 		else
-			VH:SQLQuery ("insert into `"..tbl_sql ["mitag"].."` (`tag`, `time`) values ('"..entry.."', '"..repsqlchars (btime).."')")
-			commandanswer (nick, string.format (gettext ("Added forbidden tag: %s"), item))
+			local _, rows = VH:SQLQuery ("select `occurred` from `" .. tbl_sql ["mitag"] .. "` where `tag` = '" .. entry .. "' limit 1")
+
+			if rows > 0 then
+				commandanswer (nick, gettext ("Couldn't add forbidden tag because already exists: %s"):format (item))
+			else
+				VH:SQLQuery ("insert into `" .. tbl_sql ["mitag"] .. "` (`tag`, `time`) values ('" .. entry .. "', '" .. repsqlchars (btime) .. "')")
+				commandanswer (nick, gettext ("Added forbidden tag: %s"):format (item))
+			end
 		end
 
 	elseif part == "conn" then
-		local _, rows = VH:SQLQuery ("select `occurred` from `"..tbl_sql ["miconn"].."` where `connection` = '"..entry.."' limit 1")
-
-		if rows > 0 then
-			commandanswer (nick, string.format (gettext ("Couldn't add forbidden connection type because already exists: %s"), item))
+		if not fres then
+			local ferr = gettext ("There is an error in following forbidden connection type pattern") .. ":\r\n\r\n"
+			ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. item .. "\r\n"
+			ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
+			ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+			commandanswer (nick, ferr)
 		else
-			VH:SQLQuery ("insert into `"..tbl_sql ["miconn"].."` (`connection`, `time`) values ('"..entry.."', '"..repsqlchars (btime).."')")
-			commandanswer (nick, string.format (gettext ("Added forbidden connection type: %s"), item))
+			local _, rows = VH:SQLQuery ("select `occurred` from `" .. tbl_sql ["miconn"] .. "` where `connection` = '" .. entry .. "' limit 1")
+
+			if rows > 0 then
+				commandanswer (nick, gettext ("Couldn't add forbidden connection type because already exists: %s"):format (item))
+			else
+				VH:SQLQuery ("insert into `" .. tbl_sql ["miconn"] .. "` (`connection`, `time`) values ('" .. entry .. "', '" .. repsqlchars (btime) .. "')")
+				commandanswer (nick, gettext ("Added forbidden connection type: %s"):format (item))
+			end
 		end
 
 	elseif part == "email" then
-		local _, rows = VH:SQLQuery ("select `occurred` from `"..tbl_sql ["miemail"].."` where `email` = '"..entry.."' limit 1")
-
-		if rows > 0 then
-			commandanswer (nick, string.format (gettext ("Couldn't add forbidden email because already exists: %s"), item))
+		if not fres then
+			local ferr = gettext ("There is an error in following forbidden email pattern") .. ":\r\n\r\n"
+			ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. item .. "\r\n"
+			ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
+			ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+			commandanswer (nick, ferr)
 		else
-			VH:SQLQuery ("insert into `"..tbl_sql ["miemail"].."` (`email`, `time`) values ('"..entry.."', '"..repsqlchars (btime).."')")
-			commandanswer (nick, string.format (gettext ("Added forbidden email: %s"), item))
+			local _, rows = VH:SQLQuery ("select `occurred` from `" .. tbl_sql ["miemail"] .. "` where `email` = '" .. entry .. "' limit 1")
+
+			if rows > 0 then
+				commandanswer (nick, gettext ("Couldn't add forbidden email because already exists: %s"):format (item))
+			else
+				VH:SQLQuery ("insert into `" .. tbl_sql ["miemail"] .. "` (`email`, `time`) values ('" .. entry .. "', '" .. repsqlchars (btime) .. "')")
+				commandanswer (nick, gettext ("Added forbidden email: %s"):format (item))
+			end
 		end
 
 	elseif part == "share" then
-		local _, rows = VH:SQLQuery ("select `occurred` from `"..tbl_sql ["mishare"].."` where `share` = '"..entry.."' limit 1")
-
-		if rows > 0 then
-			commandanswer (nick, string.format (gettext ("Couldn't add forbidden share size because already exists: %s"), item))
+		if not fres then
+			local ferr = gettext ("There is an error in following forbidden share size pattern") .. ":\r\n\r\n"
+			ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. item .. "\r\n"
+			ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
+			ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+			commandanswer (nick, ferr)
 		else
-			VH:SQLQuery ("insert into `"..tbl_sql ["mishare"].."` (`share`, `time`) values ('"..entry.."', '"..repsqlchars (btime).."')")
-			commandanswer (nick, string.format (gettext ("Added forbidden share size: %s"), item))
+			local _, rows = VH:SQLQuery ("select `occurred` from `" .. tbl_sql ["mishare"] .. "` where `share` = '" .. entry .. "' limit 1")
+
+			if rows > 0 then
+				commandanswer (nick, gettext ("Couldn't add forbidden share size because already exists: %s"):format (item))
+			else
+				VH:SQLQuery ("insert into `" .. tbl_sql ["mishare"] .. "` (`share`, `time`) values ('" .. entry .. "', '" .. repsqlchars (btime) .. "')")
+				commandanswer (nick, gettext ("Added forbidden share size: %s"):format (item))
+			end
 		end
 
 	elseif part == "ip" then
-		local _, rows = VH:SQLQuery ("select `occurred` from `"..tbl_sql ["miip"].."` where `ip` = '"..entry.."' limit 1")
-
-		if rows > 0 then
-			commandanswer (nick, string.format (gettext ("Couldn't add forbidden IP address because already exists: %s"), item))
+		if not fres then
+			local ferr = gettext ("There is an error in following forbidden IP address pattern") .. ":\r\n\r\n"
+			ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. item .. "\r\n"
+			ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
+			ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+			commandanswer (nick, ferr)
 		else
-			VH:SQLQuery ("insert into `"..tbl_sql ["miip"].."` (`ip`, `time`) values ('"..entry.."', '"..repsqlchars (btime).."')")
-			commandanswer (nick, string.format (gettext ("Added forbidden IP address: %s"), item))
+			local _, rows = VH:SQLQuery ("select `occurred` from `" .. tbl_sql ["miip"] .. "` where `ip` = '" .. entry .. "' limit 1")
+
+			if rows > 0 then
+				commandanswer (nick, gettext ("Couldn't add forbidden IP address because already exists: %s"):format (item))
+			else
+				VH:SQLQuery ("insert into `" .. tbl_sql ["miip"] .. "` (`ip`, `time`) values ('" .. entry .. "', '" .. repsqlchars (btime) .. "')")
+				commandanswer (nick, gettext ("Added forbidden IP address: %s"):format (item))
+			end
 		end
 
 	elseif part == "cc" then
-		local _, rows = VH:SQLQuery ("select `occurred` from `"..tbl_sql ["micc"].."` where `cc` = '"..entry.."' limit 1")
-
-		if rows > 0 then
-			commandanswer (nick, string.format (gettext ("Couldn't add forbidden country code because already exists: %s"), item))
+		if not fres then
+			local ferr = gettext ("There is an error in following forbidden country code pattern") .. ":\r\n\r\n"
+			ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. item .. "\r\n"
+			ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
+			ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+			commandanswer (nick, ferr)
 		else
-			VH:SQLQuery ("insert into `"..tbl_sql ["micc"].."` (`cc`, `time`) values ('"..entry.."', '"..repsqlchars (btime).."')")
-			commandanswer (nick, string.format (gettext ("Added forbidden country code: %s"), item))
+			local _, rows = VH:SQLQuery ("select `occurred` from `" .. tbl_sql ["micc"] .. "` where `cc` = '" .. entry .. "' limit 1")
+
+			if rows > 0 then
+				commandanswer (nick, gettext ("Couldn't add forbidden country code because already exists: %s"):format (item))
+			else
+				VH:SQLQuery ("insert into `" .. tbl_sql ["micc"] .. "` (`cc`, `time`) values ('" .. entry .. "', '" .. repsqlchars (btime) .. "')")
+				commandanswer (nick, gettext ("Added forbidden country code: %s"):format (item))
+			end
 		end
 
 	elseif part == "dns" then
-		local _, rows = VH:SQLQuery ("select `occurred` from `"..tbl_sql ["midns"].."` where `dns` = '"..entry.."' limit 1")
-
-		if rows > 0 then
-			commandanswer (nick, string.format (gettext ("Couldn't add forbidden DNS because already exists: %s"), item))
+		if not fres then
+			local ferr = gettext ("There is an error in following forbidden DNS pattern") .. ":\r\n\r\n"
+			ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. item .. "\r\n"
+			ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
+			ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+			commandanswer (nick, ferr)
 		else
-			VH:SQLQuery ("insert into `"..tbl_sql ["midns"].."` (`dns`, `time`) values ('"..entry.."', '"..repsqlchars (btime).."')")
-			commandanswer (nick, string.format (gettext ("Added forbidden DNS: %s"), item))
+			local _, rows = VH:SQLQuery ("select `occurred` from `" .. tbl_sql ["midns"] .. "` where `dns` = '" .. entry .. "' limit 1")
+
+			if rows > 0 then
+				commandanswer (nick, gettext ("Couldn't add forbidden DNS because already exists: %s"):format (item))
+			else
+				VH:SQLQuery ("insert into `" .. tbl_sql ["midns"] .. "` (`dns`, `time`) values ('" .. entry .. "', '" .. repsqlchars (btime) .. "')")
+				commandanswer (nick, gettext ("Added forbidden DNS: %s"):format (item))
+			end
 		end
 
 	elseif part == "sup" then
-		local _, rows = VH:SQLQuery ("select `occurred` from `" .. tbl_sql ["misup"] .. "` where `supports` = '" .. entry .. "' limit 1")
-
-		if rows > 0 then
-			commandanswer (nick, string.format (gettext ("Couldn't add forbidden client supports because already exists: %s"), item))
+		if not fres then
+			local ferr = gettext ("There is an error in following forbidden client supports pattern") .. ":\r\n\r\n"
+			ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. item .. "\r\n"
+			ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
+			ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+			commandanswer (nick, ferr)
 		else
-			VH:SQLQuery ("insert into `" .. tbl_sql ["misup"] .. "` (`supports`, `time`) values ('" .. entry .. "', '" .. repsqlchars (btime) .. "')")
-			commandanswer (nick, string.format (gettext ("Added forbidden client supports: %s"), item))
+			local _, rows = VH:SQLQuery ("select `occurred` from `" .. tbl_sql ["misup"] .. "` where `supports` = '" .. entry .. "' limit 1")
+
+			if rows > 0 then
+				commandanswer (nick, gettext ("Couldn't add forbidden client supports because already exists: %s"):format (item))
+			else
+				VH:SQLQuery ("insert into `" .. tbl_sql ["misup"] .. "` (`supports`, `time`) values ('" .. entry .. "', '" .. repsqlchars (btime) .. "')")
+				commandanswer (nick, gettext ("Added forbidden client supports: %s"):format (item))
+			end
 		end
 
 	elseif part == "ver" then
-		local _, rows = VH:SQLQuery ("select `occurred` from `" .. tbl_sql ["miver"] .. "` where `version` = '" .. entry .. "' limit 1")
-
-		if rows > 0 then
-			commandanswer (nick, string.format (gettext ("Couldn't add forbidden NMDC version because already exists: %s"), item))
+		if not fres then
+			local ferr = gettext ("There is an error in following forbidden NMDC version pattern") .. ":\r\n\r\n"
+			ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. item .. "\r\n"
+			ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
+			ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+			commandanswer (nick, ferr)
 		else
-			VH:SQLQuery ("insert into `" .. tbl_sql ["miver"] .. "` (`version`, `time`) values ('" .. entry .. "', '" .. repsqlchars (btime) .. "')")
-			commandanswer (nick, string.format (gettext ("Added forbidden NMDC version: %s"), item))
+			local _, rows = VH:SQLQuery ("select `occurred` from `" .. tbl_sql ["miver"] .. "` where `version` = '" .. entry .. "' limit 1")
+
+			if rows > 0 then
+				commandanswer (nick, gettext ("Couldn't add forbidden NMDC version because already exists: %s"):format (item))
+			else
+				VH:SQLQuery ("insert into `" .. tbl_sql ["miver"] .. "` (`version`, `time`) values ('" .. entry .. "', '" .. repsqlchars (btime) .. "')")
+				commandanswer (nick, gettext ("Added forbidden NMDC version: %s"):format (item))
+			end
 		end
 
 	elseif part == "ex" then
-		local _, rows = VH:SQLQuery ("select `occurred` from `"..tbl_sql ["miex"].."` where `exception` = '"..entry.."' limit 1")
-
-		if rows > 0 then
-			commandanswer (nick, string.format (gettext ("Couldn't add MyINFO exception because already exists: %s"), item))
+		if not fres then
+			local ferr = gettext ("There is an error in following MyINFO exception pattern") .. ":\r\n\r\n"
+			ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. item .. "\r\n"
+			ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
+			ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+			commandanswer (nick, ferr)
 		else
-			VH:SQLQuery ("insert into `"..tbl_sql ["miex"].."` (`exception`) values ('"..entry.."')")
-			commandanswer (nick, string.format (gettext ("Added MyINFO exception: %s"), item))
+			local _, rows = VH:SQLQuery ("select `occurred` from `" .. tbl_sql ["miex"] .. "` where `exception` = '" .. entry .. "' limit 1")
+
+			if rows > 0 then
+				commandanswer (nick, gettext ("Couldn't add MyINFO exception because already exists: %s"):format (item))
+			else
+				VH:SQLQuery ("insert into `" .. tbl_sql ["miex"] .. "` (`exception`) values ('" .. entry .. "')")
+				commandanswer (nick, gettext ("Added MyINFO exception: %s"):format (item))
+			end
 		end
 
 	else -- unknown
-		commandanswer (nick, string.format (gettext ("Known types are: %s"), "nick, desc, tag, conn, email, share, ip, cc, dns, sup, ver " .. gettext ("and") .. " ex"))
+		commandanswer (nick, gettext ("Known types are: %s"):format ("nick, desc, tag, conn, email, share, ip, cc, dns, sup, ver " .. gettext ("and") .. " ex"))
 	end
 end
 
@@ -12175,54 +12272,77 @@ end
 ----- ---- --- -- -
 
 function addsefientry (nick, item)
-local _, _, prio, aaction, stype = string.find (item, "^.+ (%d) (%d) (%d)$")
-prio = tonumber (prio)
-aaction = tonumber (aaction)
-stype = tonumber (stype)
+	local _, _, aitem, prio, aaction, stype = item:find ("^(.+) (%d) (%d) (%d)$")
+	prio, aaction, stype = tonumber (prio), tonumber (aaction), tonumber (stype)
 
-if (aaction < 0) or (aaction > 7) then -- invalid action
-commandanswer (nick, string.format (gettext ("Known actions are: %s"), "0, 1, 2, 3, 4, 5, 6 "..gettext ("and").." 7"))
-elseif (prio < 0) or (prio > 9) then -- invalid priority
-commandanswer (nick, string.format (gettext ("Valid priority is a number from %d to %d."), 0, 9))
-elseif (stype < 1) or (stype > 9) then -- invalid search type
-commandanswer (nick, string.format (gettext ("Known search types are: %s"), "1, 2, 3, 4, 5, 6, 7, 8 "..gettext ("and").." 9"))
-else
-local _, _, aitem = string.find (item, "^(.+) %d %d %d$")
-local entry = repsqlchars (repnmdcinchars (aitem))
-local _, rows = VH:SQLQuery ("select `action` from `"..tbl_sql ["sefi"].."` where `filter` = '"..entry.."' limit 1")
+	if aaction < 0 or aaction > 7 then -- invalid action
+		commandanswer (nick, gettext ("Known actions are: %s"):format ("0, 1, 2, 3, 4, 5, 6 " .. gettext ("and") .. " 7"))
+	elseif prio < 0 or prio > 9 then -- invalid priority
+		commandanswer (nick, gettext ("Valid priority is a number from %d to %d."):format (0, 9))
+	elseif stype < 1 or stype > 9 then -- invalid search type
+		commandanswer (nick, gettext ("Known search types are: %s"):format ("1, 2, 3, 4, 5, 6, 7, 8 " .. gettext ("and") .. " 9"))
+	else
+		local fres, fval = catchfinderror ("", repnmdcinchars (aitem))
 
-if rows > 0 then
-VH:SQLQuery ("update `"..tbl_sql ["sefi"].."` set `priority` = "..prio..", `action` = "..aaction..", `type` = "..stype.." where `filter` = '"..entry.."' limit 1")
-local note = "Modified search filter with action %d and priority %d as any file: %s"
+		if not fres then
+			local ferr = gettext ("There is an error in following search filter pattern") .. ":\r\n\r\n"
+			ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. aitem .. "\r\n"
+			ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
+			ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+			commandanswer (nick, ferr)
+		else
+			local entry = repsqlchars (repnmdcinchars (aitem))
+			local _, rows = VH:SQLQuery ("select `action` from `" .. tbl_sql ["sefi"] .. "` where `filter` = '" .. entry .. "' limit 1")
 
-if stype == 2 then note = "Modified search filter with action %d and priority %d as audio file: %s"
-elseif stype == 3 then note = "Modified search filter with action %d and priority %d as compressed file: %s"
-elseif stype == 4 then note = "Modified search filter with action %d and priority %d as document: %s"
-elseif stype == 5 then note = "Modified search filter with action %d and priority %d as executable: %s"
-elseif stype == 6 then note = "Modified search filter with action %d and priority %d as picture: %s"
-elseif stype == 7 then note = "Modified search filter with action %d and priority %d as video: %s"
-elseif stype == 8 then note = "Modified search filter with action %d and priority %d as folder: %s"
-elseif stype == 9 then note = "Modified search filter with action %d and priority %d as TTH: %s"
-end
+			if rows > 0 then
+				VH:SQLQuery ("update `" .. tbl_sql ["sefi"] .. "` set `priority` = " .. tostring (prio) .. ", `action` = " .. tostring (aaction) .. ", `type` = " .. tostring (stype) .. " where `filter` = '" .. entry .. "' limit 1")
+				local note = "Modified search filter with action %d and priority %d as any file: %s"
 
-commandanswer (nick, string.format (gettext (note), aaction, prio, aitem))
-else
-VH:SQLQuery ("insert into `"..tbl_sql ["sefi"].."` (`filter`, `priority`, `action`, `type`) values ('"..entry.."', "..prio..", "..aaction..", "..stype..")")
-local note = "Added search filter with action %d and priority %d as any file: %s"
+				if stype == 2 then
+					note = "Modified search filter with action %d and priority %d as audio file: %s"
+				elseif stype == 3 then
+					note = "Modified search filter with action %d and priority %d as compressed file: %s"
+				elseif stype == 4 then
+					note = "Modified search filter with action %d and priority %d as document: %s"
+				elseif stype == 5 then
+					note = "Modified search filter with action %d and priority %d as executable: %s"
+				elseif stype == 6 then
+					note = "Modified search filter with action %d and priority %d as picture: %s"
+				elseif stype == 7 then
+					note = "Modified search filter with action %d and priority %d as video: %s"
+				elseif stype == 8 then
+					note = "Modified search filter with action %d and priority %d as folder: %s"
+				elseif stype == 9 then
+					note = "Modified search filter with action %d and priority %d as TTH: %s"
+				end
 
-if stype == 2 then note = "Added search filter with action %d and priority %d as audio file: %s"
-elseif stype == 3 then note = "Added search filter with action %d and priority %d as compressed file: %s"
-elseif stype == 4 then note = "Added search filter with action %d and priority %d as document: %s"
-elseif stype == 5 then note = "Added search filter with action %d and priority %d as executable: %s"
-elseif stype == 6 then note = "Added search filter with action %d and priority %d as picture: %s"
-elseif stype == 7 then note = "Added search filter with action %d and priority %d as video: %s"
-elseif stype == 8 then note = "Added search filter with action %d and priority %d as folder: %s"
-elseif stype == 9 then note = "Added search filter with action %d and priority %d as TTH: %s"
-end
+				commandanswer (nick, gettext (note):format (aaction, prio, aitem))
+			else
+				VH:SQLQuery ("insert into `" .. tbl_sql ["sefi"] .. "` (`filter`, `priority`, `action`, `type`) values ('" .. entry .. "', " .. tostring (prio) .. ", " .. tostring (aaction) .. ", " .. tostring (stype) .. ")")
+				local note = "Added search filter with action %d and priority %d as any file: %s"
 
-commandanswer (nick, string.format (gettext (note), aaction, prio, aitem))
-end
-end
+				if stype == 2 then
+					note = "Added search filter with action %d and priority %d as audio file: %s"
+				elseif stype == 3 then
+					note = "Added search filter with action %d and priority %d as compressed file: %s"
+				elseif stype == 4 then
+					note = "Added search filter with action %d and priority %d as document: %s"
+				elseif stype == 5 then
+					note = "Added search filter with action %d and priority %d as executable: %s"
+				elseif stype == 6 then
+					note = "Added search filter with action %d and priority %d as picture: %s"
+				elseif stype == 7 then
+					note = "Added search filter with action %d and priority %d as video: %s"
+				elseif stype == 8 then
+					note = "Added search filter with action %d and priority %d as folder: %s"
+				elseif stype == 9 then
+					note = "Added search filter with action %d and priority %d as TTH: %s"
+				end
+
+				commandanswer (nick, gettext (note):format (aaction, prio, aitem))
+			end
+		end
+	end
 end
 
 ----- ---- --- -- -
@@ -12262,15 +12382,25 @@ end
 ----- ---- --- -- -
 
 function addsefiexentry (nick, item)
-local entry = repsqlchars (repnmdcinchars (item))
-local _, rows = VH:SQLQuery ("select `occurred` from `"..tbl_sql ["sefiex"].."` where `exception` = '"..entry.."' limit 1")
+	local fres, fval = catchfinderror ("", repnmdcinchars (item))
 
-if rows > 0 then
-commandanswer (nick, string.format (gettext ("Couldn't add search filter exception entry because already exists: %s"), item))
-else
-VH:SQLQuery ("insert into `"..tbl_sql ["sefiex"].."` (`exception`) values ('"..entry.."')")
-commandanswer (nick, string.format (gettext ("Added search filter exception entry: %s"), item))
-end
+	if not fres then
+		local ferr = gettext ("There is an error in following search filter exception pattern") .. ":\r\n\r\n"
+		ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. item .. "\r\n"
+		ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
+		ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+		commandanswer (nick, ferr)
+	else
+		local entry = repsqlchars (repnmdcinchars (item))
+		local _, rows = VH:SQLQuery ("select `occurred` from `" .. tbl_sql ["sefiex"] .. "` where `exception` = '" .. entry .. "' limit 1")
+
+		if rows > 0 then
+			commandanswer (nick, gettext ("Couldn't add search filter exception entry because already exists: %s"):format (item))
+		else
+			VH:SQLQuery ("insert into `" .. tbl_sql ["sefiex"] .. "` (`exception`) values ('" .. entry .. "')")
+			commandanswer (nick, gettext ("Added search filter exception entry: %s"):format (item))
+		end
+	end
 end
 
 ----- ---- --- -- -
@@ -12310,41 +12440,51 @@ end
 ----- ---- --- -- -
 
 function addantientry (nick, item)
-	local _, _, aitem, prio, aaction, flags = string.find (item, "^(.+) (%d) (%d+) (%d)$")
+	local _, _, aitem, prio, aaction, flags = item:find ("^(.+) (%d) (%d+) (%d)$")
 	prio, aaction, flags = tonumber (prio), tonumber (aaction), tonumber (flags)
 
-	if (aaction < 0) or (aaction > 10) then -- invalid action
-		commandanswer (nick, string.format (gettext ("Known actions are: %s"), "0, 1, 2, 3, 4, 5, 6, 7, 8, 9 " .. gettext ("and") .. " 10"))
-	elseif (flags < 1) or (flags > 3) then -- invalid flag
-		commandanswer (nick, string.format (gettext ("Known flags are: %s"), "1, 2 " .. gettext ("and") .. " 3"))
-	elseif (prio < 0) or (prio > 9) then -- invalid priority
-		commandanswer (nick, string.format (gettext ("Valid priority is a number from %d to %d."), 0, 9))
+	if aaction < 0 or aaction > 10 then -- invalid action
+		commandanswer (nick, gettext ("Known actions are: %s"):format ("0, 1, 2, 3, 4, 5, 6, 7, 8, 9 " .. gettext ("and") .. " 10"))
+	elseif flags < 1 or flags > 3 then -- invalid flag
+		commandanswer (nick, gettext ("Known flags are: %s"):format ("1, 2 " .. gettext ("and") .. " 3"))
+	elseif prio < 0 or prio > 9 then -- invalid priority
+		commandanswer (nick, gettext ("Valid priority is a number from %d to %d."):format (0, 9))
 	else
-		local entry = repsqlchars (repnmdcinchars (aitem))
-		local _, rows = VH:SQLQuery ("select `action` from `" .. tbl_sql ["anti"] .. "` where `antispam` = '" .. entry .. "' limit 1")
+		local fres, fval = catchfinderror ("", repnmdcinchars (aitem))
 
-		if rows > 0 then
-			VH:SQLQuery ("update `" .. tbl_sql ["anti"] .. "` set `priority` = " .. tostring (prio) .. ", `action` = " .. tostring (aaction) .. ", `flags` = " .. tostring (flags) .. " where `antispam` = '" .. entry .. "' limit 1")
-			local note = "Modified antispam entry with action %d and priority %d to scan in MC and PM: %s"
-
-			if flags == 1 then
-				note = "Modified antispam entry with action %d and priority %d to scan in MC: %s"
-			elseif flags == 2 then
-				note = "Modified antispam entry with action %d and priority %d to scan in PM: %s"
-			end
-
-			commandanswer (nick, string.format (gettext (note), aaction, prio, aitem))
+		if not fres then
+			local ferr = gettext ("There is an error in following antispam entry pattern") .. ":\r\n\r\n"
+			ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. aitem .. "\r\n"
+			ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
+			ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+			commandanswer (nick, ferr)
 		else
-			VH:SQLQuery ("insert into `" .. tbl_sql ["anti"] .. "` (`antispam`, `priority`, `action`, `flags`) values ('" .. entry .. "', " .. tostring (prio) .. ", " .. tostring (aaction) .. ", " .. tostring (flags) .. ")")
-			local note = "Added antispam entry with action %d and priority %d to scan in MC and PM: %s"
+			local entry = repsqlchars (repnmdcinchars (aitem))
+			local _, rows = VH:SQLQuery ("select `action` from `" .. tbl_sql ["anti"] .. "` where `antispam` = '" .. entry .. "' limit 1")
 
-			if flags == 1 then
-				note = "Added antispam entry with action %d and priority %d to scan in MC: %s"
-			elseif flags == 2 then
-				note = "Added antispam entry with action %d and priority %d to scan in PM: %s"
+			if rows > 0 then
+				VH:SQLQuery ("update `" .. tbl_sql ["anti"] .. "` set `priority` = " .. tostring (prio) .. ", `action` = " .. tostring (aaction) .. ", `flags` = " .. tostring (flags) .. " where `antispam` = '" .. entry .. "' limit 1")
+				local note = "Modified antispam entry with action %d and priority %d to scan in MC and PM: %s"
+
+				if flags == 1 then
+					note = "Modified antispam entry with action %d and priority %d to scan in MC: %s"
+				elseif flags == 2 then
+					note = "Modified antispam entry with action %d and priority %d to scan in PM: %s"
+				end
+
+				commandanswer (nick, gettext (note):format (aaction, prio, aitem))
+			else
+				VH:SQLQuery ("insert into `" .. tbl_sql ["anti"] .. "` (`antispam`, `priority`, `action`, `flags`) values ('" .. entry .. "', " .. tostring (prio) .. ", " .. tostring (aaction) .. ", " .. tostring (flags) .. ")")
+				local note = "Added antispam entry with action %d and priority %d to scan in MC and PM: %s"
+
+				if flags == 1 then
+					note = "Added antispam entry with action %d and priority %d to scan in MC: %s"
+				elseif flags == 2 then
+					note = "Added antispam entry with action %d and priority %d to scan in PM: %s"
+				end
+
+				commandanswer (nick, gettext (note):format (aaction, prio, aitem))
 			end
-
-			commandanswer (nick, string.format (gettext (note), aaction, prio, aitem))
 		end
 	end
 end
@@ -12386,15 +12526,25 @@ end
 ----- ---- --- -- -
 
 function addexentry (nick, item)
-local entry = repsqlchars (repnmdcinchars (item))
-local _, rows = VH:SQLQuery ("select `occurred` from `"..tbl_sql ["antiex"].."` where `exception` = '"..entry.."' limit 1")
+	local fres, fval = catchfinderror ("", repnmdcinchars (item))
 
-if rows > 0 then
-commandanswer (nick, string.format (gettext ("Couldn't add antispam exception entry because already exists: %s"), item))
-else
-VH:SQLQuery ("insert into `"..tbl_sql ["antiex"].."` (`exception`) values ('"..entry.."')")
-commandanswer (nick, string.format (gettext ("Added antispam exception entry: %s"), item))
-end
+	if not fres then
+		local ferr = gettext ("There is an error in following antispam exception entry pattern") .. ":\r\n\r\n"
+		ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. item .. "\r\n"
+		ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
+		ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+		commandanswer (nick, ferr)
+	else
+		local entry = repsqlchars (repnmdcinchars (item))
+		local _, rows = VH:SQLQuery ("select `occurred` from `" .. tbl_sql ["antiex"] .. "` where `exception` = '" .. entry .. "' limit 1")
+
+		if rows > 0 then
+			commandanswer (nick, gettext ("Couldn't add antispam exception entry because already exists: %s"):format (item))
+		else
+			VH:SQLQuery ("insert into `" .. tbl_sql ["antiex"] .. "` (`exception`) values ('" .. entry .. "')")
+			commandanswer (nick, gettext ("Added antispam exception entry: %s"):format (item))
+		end
+	end
 end
 
 ----- ---- --- -- -
@@ -18603,6 +18753,12 @@ end
 
 ----- ---- --- -- -
 
+function catchfinderror (data, lre)
+	return pcall (string.find, data, lre)
+end
+
+----- ---- --- -- -
+
 function getstatus (nick)
 	local lusr = nick:lower ()
 
@@ -19952,7 +20108,7 @@ function antiscan (nick, class, data, where, to, status)
 
 	for x = 0, rows - 1 do
 		local _, entry, priority, action = VH:SQLFetch (x)
-		local fres, fval = pcall (string.find, lowdata, entry)
+		local fres, fval = catchfinderror (lowdata, entry)
 
 		if not fres then
 			local ferr = gettext ("There is an error in following antispam entry pattern") .. ":\r\n\r\n"
@@ -19965,7 +20121,7 @@ function antiscan (nick, class, data, where, to, status)
 
 			if tonumber (priority) < 7 then -- skip exlist for 7, 8 and 9
 				for _, value in pairs (exlist) do
-					local fres, fval = pcall (string.find, lowdata, value)
+					local fres, fval = catchfinderror (lowdata, value)
 
 					if not fres then
 						local ferr = gettext ("There is an error in following antispam exception entry pattern") .. ":\r\n\r\n"
@@ -20142,7 +20298,7 @@ function sefiscan (nick, srch, cls, ip)
 
 	for x = 0, rows - 1 do
 		local _, ent, prio, act = VH:SQLFetch (x)
-		local fres, fval = pcall (string.find, lsr, ent)
+		local fres, fval = catchfinderror (lsr, ent)
 
 		if not fres then
 			local ferr = gettext ("There is an error in following search filter pattern") .. ":\r\n\r\n"
@@ -20155,7 +20311,7 @@ function sefiscan (nick, srch, cls, ip)
 
 			if tonumber (prio) < 7 then -- skip for 7, 8 and 9
 				for _, v in pairs (exlist) do
-					local fres, fval = pcall (string.find, lsr, v)
+					local fres, fval = catchfinderror (lsr, v)
 
 					if not fres then
 						local ferr = gettext ("There is an error in following search filter exception pattern") .. ":\r\n\r\n"
