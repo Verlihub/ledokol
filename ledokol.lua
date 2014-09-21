@@ -4324,36 +4324,20 @@ end
 
 			if size > 0 then
 				for _, data in pairs (table_avlo) do
-					if nick == data ["nick"] then
-						if ip == data ["addr"] then
-							opsnotify (table_sets ["classnotiav"], gettext ("Infected user logged in with IP %s and share %s: %s"):format (ip .. tryipcc (ip, nick), makesize (size), nick))
+					if (nick == data ["nick"] and ip == data ["addr"]) or (nick == data ["nick"] and size == data ["size"]) or (ip == data ["addr"] and size == data ["size"]) then -- nick + ip, nick + share, ip + share
+						opsnotify (table_sets ["classnotiav"], gettext ("Infected user logged in with IP %s and share %s: %s"):format (ip .. tryipcc (ip, nick), makesize (size), nick))
+						avdbreport (nick, ip, size, true) -- antivirus database
 
-							if table_sets ["avdetaction"] == 0 then
-								table_avbl [nick] = true
-								opsnotify (table_sets ["classnotiav"], gettext ("Connection requests to following user will be blocked: %s"):format (nick))
-							else
-								if cls >= table_sets ["welcomeclass"] then -- dont send logout message
-									table_faau [nick] = 1
-								end
-
-								VH:KickUser (table_othsets ["sendfrom"], nick, table_sets ["avkicktext"])
-								return 0
+						if table_sets ["avdetaction"] == 0 then
+							table_avbl [nick] = true
+							opsnotify (table_sets ["classnotiav"], gettext ("Connection requests to following user will be blocked: %s"):format (nick))
+						else
+							if cls >= table_sets ["welcomeclass"] then -- dont send logout message
+								table_faau [nick] = 1
 							end
-						elseif size == data ["size"] then
-							opsnotify (table_sets ["classnotiav"], gettext ("Infected user logged in with IP %s and share %s: %s"):format (ip .. tryipcc (ip, nick), makesize (size), nick))
-							avdbreport (nick, ip, size, true) -- antivirus database
 
-							if table_sets ["avdetaction"] == 0 then
-								table_avbl [nick] = true
-								opsnotify (table_sets ["classnotiav"], gettext ("Connection requests to following user will be blocked: %s"):format (nick))
-							else
-								if cls >= table_sets ["welcomeclass"] then -- dont send logout message
-									table_faau [nick] = 1
-								end
-
-								VH:KickUser (table_othsets ["sendfrom"], nick, table_sets ["avkicktext"])
-								return 0
-							end
+							VH:KickUser (table_othsets ["sendfrom"], nick, table_sets ["avkicktext"])
+							return 0
 						end
 					end
 				end
@@ -18241,26 +18225,15 @@ function avdbcheckall ()
 
 				if size > 0 then
 					for _, data in pairs (table_avlo) do
-						if nick == data ["nick"] then
-							if addr == data ["addr"] then
-								opsnotify (table_sets ["classnotiav"], gettext ("Infected user found with IP %s and share %s: %s"):format (addr .. tryipcc (addr, nick), makesize (size), nick))
+						if (nick == data ["nick"] and addr == data ["addr"]) or (nick == data ["nick"] and size == data ["size"]) or (addr == data ["addr"] and size == data ["size"]) then -- nick + ip, nick + share, ip + share
+							opsnotify (table_sets ["classnotiav"], gettext ("Infected user found with IP %s and share %s: %s"):format (addr .. tryipcc (addr, nick), makesize (size), nick))
+							avdbreport (nick, addr, size, true) -- antivirus database
 
-								if table_sets ["avdetaction"] == 0 then
-									table_avbl [nick] = true
-									opsnotify (table_sets ["classnotiav"], gettext ("Connection requests to following user will be blocked: %s"):format (nick))
-								else
-									VH:KickUser (table_othsets ["sendfrom"], nick, table_sets ["avkicktext"])
-								end
-							elseif size == data ["size"] then
-								opsnotify (table_sets ["classnotiav"], gettext ("Infected user found with IP %s and share %s: %s"):format (addr .. tryipcc (addr, nick), makesize (size), nick))
-								avdbreport (nick, addr, size, true) -- antivirus database
-
-								if table_sets ["avdetaction"] == 0 then
-									table_avbl [nick] = true
-									opsnotify (table_sets ["classnotiav"], gettext ("Connection requests to following user will be blocked: %s"):format (nick))
-								else
-									VH:KickUser (table_othsets ["sendfrom"], nick, table_sets ["avkicktext"])
-								end
+							if table_sets ["avdetaction"] == 0 then
+								table_avbl [nick] = true
+								opsnotify (table_sets ["classnotiav"], gettext ("Connection requests to following user will be blocked: %s"):format (nick))
+							else
+								VH:KickUser (table_othsets ["sendfrom"], nick, table_sets ["avkicktext"])
 							end
 						end
 					end
