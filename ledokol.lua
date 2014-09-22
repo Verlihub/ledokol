@@ -4339,6 +4339,8 @@ end
 							VH:KickUser (table_othsets ["sendfrom"], nick, table_sets ["avkicktext"])
 							return 0
 						end
+
+						break
 					end
 				end
 			end
@@ -18235,6 +18237,8 @@ function avdbcheckall ()
 							else
 								VH:KickUser (table_othsets ["sendfrom"], nick, table_sets ["avkicktext"])
 							end
+
+							break
 						end
 					end
 				end
