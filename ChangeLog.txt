@@ -1,5 +1,6 @@
 [ 2.8.3 :: 2014-##-## ]
 
+Fixed: Break the loop when infected user is found
 Added: Detect invalid patterns before they are added, idea by Lord_Zero
 Added: Detect virus spreaders by IP address and share aswell
 
