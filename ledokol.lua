@@ -14682,7 +14682,7 @@ elseif tvar == "enablecmdlog" then
 				ok = true
 
 				if (setto > 0) and (not table_othsets ["mod_sock"]) then
-					commandanswer (nick, string.format (gettext ("This feature requires %s module installed on your system."), "LuaSocket"))
+					commandanswer (nick, string.format (gettext ("This feature requires following module installed on your system: %s"), "LuaSocket"))
 				end
 
 				if setto == 0 then -- reset
