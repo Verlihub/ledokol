@@ -18014,7 +18014,7 @@ function loadavdb (st)
 	if res then
 		table_othsets ["avlastloadtime"] = st
 
-		if avdb ~= "" and avdb ~= "0" then
+		if avdb ~= "" and avdb ~= "0" and avdb ~= "-" then
 			local loco, loal = 0, 0
 
 			for avli in avdb:gmatch ("[^\r\n]+") do
@@ -18453,10 +18453,12 @@ function avsearservread ()
 
 					break
 				end
+
+				table_othsets ["mod_sock"].sleep (0.001) -- sleep for 1 ms to minimize cpu load
 			end
 		end
 
-		--table_othsets ["mod_sock"].sleep (0.01) -- todo: do we need to sleep?
+		table_othsets ["mod_sock"].sleep (0.005) -- sleep for 5 ms to minimize cpu load
 	end
 end
 
