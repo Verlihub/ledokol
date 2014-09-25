@@ -625,7 +625,6 @@ Chatroom member list|
 Chatroom is empty.|
 You're already member of this chatroom.|
 Chatroom user commands|
-This feature requires %s module installed on your system.|
 Unknown chatroom command. Use %s for help.|
 Enter the chatroom|
 Leave the chatroom|
