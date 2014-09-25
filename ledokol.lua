@@ -90,6 +90,8 @@ table_sets = {
 	["avsendtodb"] = 1,
 	["avdbloadint"] = 0,
 	["avrandrequest"] = 1,
+	["avsearservaddr"] = "",
+	["avsearservport"] = 4112,
 	["avdetaction"] = 0,
 	["avkicktext"] = "Virus spreaders are not welcome here _ban_30d",
 	["classnotianti"] = 3,
@@ -328,11 +330,15 @@ table_othsets = {
 	["lasttimenick"] = nil,
 	["ver_lua"] = nil,
 	["ver_luaplug"] = nil,
-	--["ver_sock"] = nil,
-	--["ver_ltn12"] = nil,
 	["ver_sql"] = nil,
 	["ver_curl"] = nil,
 	--["ver_iconv"] = nil,
+	["ver_sock"] = nil,
+	["mod_sock"] = nil,
+	--["mod_http"] = nil,
+	--["ver_ltn12"] = nil,
+	--["mod_ltn12"] = nil,
+	["serv_udp"] = nil,
 	["func_getcc"] = false,
 	["func_getusercity"] = false,
 	["func_getipcc"] = false,
@@ -949,6 +955,7 @@ table_avlo = {}
 table_avus = {}
 table_avse = {}
 table_avbl = {}
+table_avss = {}
 
 table_avfi = {
 	"download", "free", "driver", "100 best", "top 100", "top girl", "18 girl", "sexy girl",
@@ -1136,6 +1143,11 @@ function Main (file)
 					end
 
 					if ver <= 283 then
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('avsearservaddr', '" .. repsqlchars (table_sets ["avsearservaddr"]) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('avsearservport', '" .. repsqlchars (table_sets ["avsearservport"]) .. "')")
+					end
+
+					if ver <= 284 then
 						-- todo
 					end
 
@@ -1190,7 +1202,7 @@ function Main (file)
 		installtimebot ()
 	end
 
-	--if lsock and (table_sets ["hublistpingint"] > 0) then -- hublist pinger
+	--if table_othsets ["mod_sock"] and (table_sets ["hublistpingint"] > 0) then -- hublist pinger
 		--hublistping ()
 	--end
 
@@ -1209,6 +1221,10 @@ function Main (file)
 	end
 
 	if table_sets ["avsearchint"] > 0 then -- antivirus search
+		if table_sets ["avsearservaddr"] ~= "" then -- server
+			avsearservstart ()
+		end
+
 		loadavstr ()
 	end
 
@@ -1225,6 +1241,10 @@ function UnLoad ()
 
 	if table_othsets ["restart"] == true then -- restart mode
 		return 1
+	end
+
+	if table_sets ["avsearchint"] > 0 and table_sets ["avsearservaddr"] ~= "" then -- antivirus search server
+		avsearservstop ()
 	end
 
 	resetcustnicks ()
@@ -4587,188 +4607,11 @@ function VH_OnParsedMsgSR (nick, data)
 		return 1
 	end
 
-	local usip = getip (nick)
-
-	if table_sets ["avsearchint"] > 0 then -- antivirus
-		local class = getclass (nick)
-
-		if class >= table_sets ["scanbelowclass"] then
-			if table_sets ["enableipwatch"] == 1 and checkipwat (nick, usip, data) then -- ip watch
-				return 0
-			end
-
-			return 1
-		elseif isprotected (nick, usip) then
-			if table_sets ["enableipwatch"] == 1 and checkipwat (nick, usip, data) then -- ip watch
-				return 0
-			end
-
-			return 1
-		elseif table_sets ["avdetaction"] == 0 and table_avbl [nick] then -- block infected user
-			if table_sets ["enableipwatch"] == 1 then -- ip watch
-				checkipwat (nick, usip, data) -- we will return 0 anyway
-			end
-
-			return 0
-		end
-
-		local _, _, path, name, size = data:find ("^%$SR [^ ]+ (.-)([^\\]-)" .. string.char (5) .. "(%d+) .+")
-
-		if path and name and size and # path > 0 and # name > 0 and tonumber (size) > 0 then
-			size = tonumber (size)
-
-			if table_sets ["avrandrequest"] == 1 and table_othsets ["avrandstr"] ~= "" and name == table_othsets ["avrandstr"] .. ".exe" then -- check special random request
-				local shar = parsemyinfoshare (getmyinfo (nick))
-
-				if table_sets ["avfeedverb"] >= 2 then
-					local feed = gettext ("Infected user detected") .. ":\r\n\r\n"
-					feed = feed .. " " .. gettext ("Nick: %s"):format (nick) .. "\r\n"
-					feed = feed .. " " .. gettext ("IP: %s"):format (usip .. tryipcc (usip, nick)) .. "\r\n"
-					feed = feed .. " " .. gettext ("Share: %s"):format (makesize (shar)) .. "\r\n"
-					feed = feed .. " " .. gettext ("Spent time: %s"):format (formatuptime (table_othsets ["avlastseartick"], false)) .. "\r\n"
-					feed = feed .. " " .. gettext ("Found files") .. ":\r\n\r\n"
-					feed = feed .. " " .. repnmdcoutchars (path) .. "\r\n " .. string.rep (" ", # path) .. repnmdcoutchars (name) .. " &#124; " .. makesize (size) .. "\r\n"
-
-					opsnotify (table_sets ["classnotiav"], feed)
-				elseif table_sets ["avfeedverb"] == 1 then
-					opsnotify (table_sets ["classnotiav"], gettext ("Infected user detected with nick %s and IP %s and share %s and spent time: %s"):format (nick, usip .. tryipcc (usip, nick), makesize (shar), formatuptime (table_othsets ["avlastseartick"], false)))
-				end
-
-				avdbreport (nick, usip, shar, true, path) -- antivirus database
-
-				if table_sets ["avdetaction"] == 0 then
-					table_avbl [nick] = true
-					opsnotify (table_sets ["classnotiav"], gettext ("Connection requests to following user will be blocked: %s"):format (nick))
-
-					if table_sets ["enableipwatch"] == 1 then -- ip watch
-						checkipwat (nick, usip, data) -- we will return 0 anyway
-					end
-				else
-					if table_sets ["enableipwatch"] == 1 then -- ip watch
-						checkipwat (nick, usip, data) -- we will return 0 anyway
-					end
-
-					VH:KickUser (table_othsets ["sendfrom"], nick, table_sets ["avkicktext"])
-				end
-
-				if table_avus [nick] then
-					table_avus [nick] = nil
-				end
-
-				return 0
-			end
-
-			local lame = name:lower ()
-
-			for _, ext in pairs (table_avex) do
-				if lame:sub (-# ext) == ext then
-					if ext == ".rar" and lame:find ("part%d+%.rar$") then
-						if table_sets ["enableipwatch"] == 1 and checkipwat (nick, usip, data) then -- ip watch
-							return 0
-						end
-
-						return 1
-					end
-
-					for _, file in pairs (table_avfi) do
-						if getstrpart (lame, file) then
-							if table_avus [nick] then
-								if table_avus [nick][path] then
-									if not table_avus [nick][path][name] and math.abs (table_avus [nick][path][""] - size) <= table_sets ["avfilediff"] then
-										table_avus [nick][path][name] = size
-
-										if getitemcount (table_avus [nick][path]) >= table_sets ["avfilecount"] then
-											local shar, haveshar = 0, false
-
-											if table_sets ["avfeedverb"] >= 2 then
-												local feed, list = "", " " .. repnmdcoutchars (path) .. "\r\n"
-												local plen = # path
-
-												for fame, fize in pairs (table_avus [nick][path]) do
-													if # fame > 0 then
-														list = list .. " " .. string.rep (" ", plen) .. repnmdcoutchars (fame) .. " &#124; " .. makesize (fize) .. "\r\n"
-													end
-												end
-
-												if not haveshar then
-													shar = parsemyinfoshare (getmyinfo (nick))
-													haveshar = true
-												end
-
-												feed = gettext ("Infected user detected") .. ":\r\n\r\n"
-												feed = feed .. " " .. gettext ("Nick: %s"):format (nick) .. "\r\n"
-												feed = feed .. " " .. gettext ("IP: %s"):format (usip .. tryipcc (usip, nick)) .. "\r\n"
-												feed = feed .. " " .. gettext ("Share: %s"):format (makesize (shar)) .. "\r\n"
-												feed = feed .. " " .. gettext ("Spent time: %s"):format (formatuptime (table_avus [nick][""], false)) .. "\r\n"
-												feed = feed .. " " .. gettext ("Found files") .. ":\r\n\r\n"
-												feed = feed .. list
-
-												opsnotify (table_sets ["classnotiav"], feed)
-											elseif table_sets ["avfeedverb"] == 1 then
-												if not haveshar then
-													shar = parsemyinfoshare (getmyinfo (nick))
-													haveshar = true
-												end
-
-												opsnotify (table_sets ["classnotiav"], gettext ("Infected user detected with nick %s and IP %s and share %s and spent time: %s"):format (nick, usip .. tryipcc (usip, nick), makesize (shar), formatuptime (table_avus [nick][""], false)))
-											end
-
-											avdbreport (nick, usip, shar, haveshar, path) -- antivirus database
-
-											if table_sets ["avdetaction"] == 0 then
-												table_avbl [nick] = true
-												opsnotify (table_sets ["classnotiav"], gettext ("Connection requests to following user will be blocked: %s"):format (nick))
-
-												if table_sets ["enableipwatch"] == 1 then -- ip watch
-													checkipwat (nick, usip, data) -- we will return 0 anyway
-												end
-											else
-												if table_sets ["enableipwatch"] == 1 then -- ip watch
-													checkipwat (nick, usip, data) -- we will return 0 anyway
-												end
-
-												VH:KickUser (table_othsets ["sendfrom"], nick, table_sets ["avkicktext"])
-											end
-
-											table_avus [nick] = nil
-											return 0
-										end
-									end
-
-									table_avus [nick][path][""] = size
-								else
-									table_avus [nick][path] = {
-										[""] = size,
-										[name] = size
-									}
-								end
-							else
-								table_avus [nick] = {
-									[""] = os.time (),
-									[path] = {
-										[""] = size,
-										[name] = size
-									}
-								}
-							end
-
-							if table_sets ["enableipwatch"] == 1 and checkipwat (nick, usip, data) then -- ip watch
-								return 0
-							end
-
-							return 1
-						end
-					end
-				end
-			end
-		end
-	end
-
-	if table_sets ["enableipwatch"] == 1 and checkipwat (nick, usip, data) then -- ip watch
+	if avparsesr (data, nick) == 0 then
 		return 0
 	end
 
-	-- todo: add srfi = search results filter
+	-- todo: add search results filter
 	return 1
 end
 
@@ -4840,6 +4683,10 @@ function VH_OnTimer (msec)
 
 	local st = os.time () -- current time
 
+	if table_sets ["avsearchint"] > 0 and table_sets ["avsearservaddr"] ~= "" then -- antivirus search server
+		avsearservread () -- todo: read every second?
+	end
+
 	if table_sets ["avsearchint"] > 0 and os.difftime (st, table_othsets ["avlastseartick"]) >= table_sets ["avsearchint"] then -- antivirus search
 		for nick, data in pairs (table_avus) do
 			if os.difftime (st, data [""]) >= table_sets ["avuserfree"] * 60 then
@@ -4847,9 +4694,16 @@ function VH_OnTimer (msec)
 			end
 		end
 
-		if table_othsets ["func_sendtoactiveclass"] then
+		if table_sets ["avsearservaddr"] ~= "" and table_othsets ["serv_udp"] then -- we have search server
+			if table_othsets ["func_sendtoactiveclass"] then -- active request to passive users and passive request to active users
+				VH:SendToPassiveClass ("$Search " .. table_sets ["avsearservaddr"] .. ":" .. tostring (table_sets ["avsearservport"]) .. " F?F?0?1?" .. table_avse [table_othsets ["avnextitem"]] .. "|", 0, table_sets ["scanbelowclass"] - 1)
+				VH:SendToActiveClass ("$Search Hub:" .. table_othsets ["sendfrom"] .. " F?F?0?1?" .. table_avse [table_othsets ["avnextitem"]] .. "|", 0, table_sets ["scanbelowclass"] - 1)
+			else -- active request to all users
+				VH:SendToClass ("$Search " .. table_sets ["avsearservaddr"] .. ":" .. tostring (table_sets ["avsearservport"]) .. " F?F?0?1?" .. table_avse [table_othsets ["avnextitem"]] .. "|", 0, table_sets ["scanbelowclass"] - 1)
+			end
+		elseif table_othsets ["func_sendtoactiveclass"] then -- we dont have server
 			VH:SendToActiveClass ("$Search Hub:" .. table_othsets ["sendfrom"] .. " F?F?0?1?" .. table_avse [table_othsets ["avnextitem"]] .. "|", 0, table_sets ["scanbelowclass"] - 1)
-		else
+		else -- we have nothing
 			VH:SendToClass ("$Search Hub:" .. table_othsets ["sendfrom"] .. " F?F?0?1?" .. table_avse [table_othsets ["avnextitem"]] .. "|", 0, table_sets ["scanbelowclass"] - 1)
 		end
 
@@ -4857,9 +4711,16 @@ function VH_OnTimer (msec)
 			if table_sets ["avrandrequest"] == 1 then -- generate and send special random request
 				table_othsets ["avrandstr"] = genrandstr (30)
 
-				if table_othsets ["func_sendtoactiveclass"] then
+				if table_sets ["avsearservaddr"] ~= "" and table_othsets ["serv_udp"] then -- we have search server
+					if table_othsets ["func_sendtoactiveclass"] then -- active request to passive users and passive request to active users
+						VH:SendToPassiveClass ("$Search " .. table_sets ["avsearservaddr"] .. ":" .. tostring (table_sets ["avsearservport"]) .. " F?F?0?1?" .. table_othsets ["avrandstr"] .. "|", 0, table_sets ["scanbelowclass"] - 1)
+						VH:SendToActiveClass ("$Search Hub:" .. table_othsets ["sendfrom"] .. " F?F?0?1?" .. table_othsets ["avrandstr"] .. "|", 0, table_sets ["scanbelowclass"] - 1)
+					else -- active request to all users
+						VH:SendToClass ("$Search " .. table_sets ["avsearservaddr"] .. ":" .. tostring (table_sets ["avsearservport"]) .. " F?F?0?1?" .. table_othsets ["avrandstr"] .. "|", 0, table_sets ["scanbelowclass"] - 1)
+					end
+				elseif table_othsets ["func_sendtoactiveclass"] then -- we dont have server
 					VH:SendToActiveClass ("$Search Hub:" .. table_othsets ["sendfrom"] .. " F?F?0?1?" .. table_othsets ["avrandstr"] .. "|", 0, table_sets ["scanbelowclass"] - 1)
-				else
+				else -- we have nothing
 					VH:SendToClass ("$Search Hub:" .. table_othsets ["sendfrom"] .. " F?F?0?1?" .. table_othsets ["avrandstr"] .. "|", 0, table_sets ["scanbelowclass"] - 1)
 				end
 			end
@@ -4916,7 +4777,7 @@ function VH_OnTimer (msec)
 		end
 	end
 
-	--if lsock and (table_sets ["hublistpingint"] > 0) then -- hublist pinger
+	--if table_othsets ["mod_sock"] and (table_sets ["hublistpingint"] > 0) then -- hublist pinger
 		--if os.difftime (st, table_othsets ["hubpingmins"]) >= (table_sets ["hublistpingint"] * 60) then
 			--hublistping ()
 			--table_othsets ["hubpingmins"] = st -- reset
@@ -9595,7 +9456,7 @@ function hublistshow (nick)
 				ownr = " [ O: " .. ownr .. " ]"
 			end
 
-			--if (not lsock) or (table_sets ["hublistpingint"] == 0) then
+			--if (not table_othsets ["mod_sock"]) or (table_sets ["hublistpingint"] == 0) then
 				sts = ""
 			--else
 				--if tonumber (sts) == 1 then
@@ -9619,7 +9480,7 @@ end
 --[[
 
 function hublistping ()
-	local lsocktcp = lsock.tcp () -- prepare the socket
+	local lsocktcp = table_othsets ["mod_sock"].tcp () -- prepare the socket
 
 	if not lsocktcp then
 		return nil
@@ -14060,12 +13921,17 @@ end
 		if num == true then
 			if setto >= 0 and setto <= 900 then
 				if setto == 0 then
+					avsearservstop (nick)
 					table_avse = {} -- clear
 					table_avus = {}
 					table_avbl = {}
 					table_othsets ["avnextitem"] = 1
 					table_othsets ["avrandstr"] = ""
 				else
+					if table_sets ["avsearservaddr"] ~= "" then
+						avsearservstart (nil, nil, nick)
+					end
+
 					loadavstr ()
 				end
 
@@ -14146,10 +14012,49 @@ end
 
 				ok = true
 			else
-				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 " .. gettext ("or") .. " 1"))
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0 " .. gettext ("or") .. " 1"))
 			end
 		else
-			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
+		end
+
+	----- ---- --- -- -
+
+	elseif tvar == "avsearservaddr" then
+		if setto == "" then
+			avsearservstop (nick)
+			ok = true
+		elseif setto:find ("^%d+%.%d+%.%d+%.%d+$") then
+			if not table_othsets ["mod_sock"] then
+				commandanswer (nick, gettext ("This feature requires following module installed on your system: %s"):format ("LuaSocket"))
+			else
+				if table_sets ["avsearchint"] > 0 then
+					avsearservstop (nick)
+					avsearservstart (setto, table_sets ["avsearservport"], nick)
+				end
+
+				ok = true
+			end
+		else
+			commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "<" .. gettext ("ip") .. ">"))
+		end
+
+	----- ---- --- -- -
+
+	elseif tvar == "avsearservport" then
+		if num == true then
+			if setto >= 1 and setto <= 65535 then
+				if table_sets ["avsearchint"] > 0 and table_sets ["avsearservaddr"] ~= "" then
+					avsearservstop (nick)
+					avsearservstart (table_sets ["avsearservaddr"], setto, nick)
+				end
+
+				ok = true
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "1 " .. gettext ("to") .. " 65535"))
+			end
+		else
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
 		end
 
 	----- ---- --- -- -
@@ -14776,7 +14681,7 @@ elseif tvar == "enablecmdlog" then
 			if (setto >= 0) and (setto <= 1440) then
 				ok = true
 
-				if (setto > 0) and (not lsock) then
+				if (setto > 0) and (not table_othsets ["mod_sock"]) then
 					commandanswer (nick, string.format (gettext ("This feature requires %s module installed on your system."), "LuaSocket"))
 				end
 
@@ -16956,17 +16861,17 @@ function sendstats (nick)
 
 	local stats = "\r\n\r\n .:: " .. gettext ("%s statistics"):format ("Ledokol") .. ":\r\n"
 	stats = stats .. "\r\n " .. gettext ("Script version: %s"):format (ver_ledo) .. "-" .. table_othsets ["langver"]
-stats = stats.."\r\n "..string.format (gettext ("%s version: %s"), "Verlihub", (getconfig ("hub_version") or gettext ("Unknown")))
-stats = stats.."\r\n "..string.format (gettext ("%s plugin version: %s"), "Lua", (table_othsets ["ver_luaplug"] or gettext ("Unknown")))
-stats = stats.."\r\n "..string.format (gettext ("%s library version: %s"), "Lua", (table_othsets ["ver_lua"] or gettext ("Unknown")))
-	--stats = stats .. "\r\n " .. string.format (gettext ("%s version: %s"), "LuaSocket", (table_othsets ["ver_sock"] or gettext ("Not installed")))
-	--stats = stats .. "\r\n " .. string.format (gettext ("%s version: %s"), "LTN12", (table_othsets ["ver_ltn12"] or gettext ("Unknown")))
-stats = stats.."\r\n "..string.format (gettext ("%s version: %s"), "MySQL", (table_othsets ["ver_sql"] or gettext ("Unknown")))
+	stats = stats .. "\r\n " .. gettext ("%s version: %s"):format ("Verlihub", (getconfig ("hub_version") or gettext ("Unknown")))
+	stats = stats .. "\r\n " .. gettext ("%s plugin version: %s"):format ("Lua", (table_othsets ["ver_luaplug"] or gettext ("Unknown")))
+	stats = stats .. "\r\n " .. gettext ("%s library version: %s"):format ("Lua", (table_othsets ["ver_lua"] or gettext ("Unknown")))
+	stats = stats .. "\r\n " .. gettext ("%s module version: %s"):format ("LuaSocket", (table_othsets ["ver_sock"] or gettext ("Not installed")))
+	--stats = stats .. "\r\n " .. gettext ("%s module version: %s"):format ("LTN12", (table_othsets ["ver_ltn12"] or gettext ("Unknown")))
+	stats = stats .. "\r\n " .. gettext ("%s version: %s"):format ("MySQL", (table_othsets ["ver_sql"] or gettext ("Unknown")))
 	stats = stats .. "\r\n " .. gettext ("%s version: %s"):format ("cURL", (table_othsets ["ver_curl"] or gettext ("Unknown")))
-	--stats = stats .. "\r\n " .. string.format (gettext ("%s version: %s"), "iConv", (table_othsets ["ver_iconv"] or gettext ("Unknown")))
-stats = stats.."\r\n"
-stats = stats.."\r\n "..string.format (gettext ("Script uptime: %s"), formatuptime (table_othsets ["uptime"], false))
-local mu = makesize (getmemusg ()) -- memory
+	--stats = stats .. "\r\n " .. gettext ("%s version: %s"):format ("iConv", (table_othsets ["ver_iconv"] or gettext ("Unknown")))
+	stats = stats .. "\r\n"
+	stats = stats .. "\r\n " .. gettext ("Script uptime: %s"):format (formatuptime (table_othsets ["uptime"], false))
+	local mu = makesize (getmemusg ()) -- memory
 
 if table_sets ["statscollint"] > 0 then
 	local _, rows = VH:SQLQuery ("select `count` from `"..tbl_sql ["stat"].."` where `type` = 'memory_peak' limit 1")
@@ -17109,6 +17014,8 @@ conf = conf.."\r\n [::] searfiltmsg = "..table_sets ["searfiltmsg"]
 	conf = conf .. "\r\n [::] avsendtodb = " .. table_sets ["avsendtodb"]
 	conf = conf .. "\r\n [::] avdbloadint = " .. table_sets ["avdbloadint"]
 	conf = conf .. "\r\n [::] avrandrequest = " .. table_sets ["avrandrequest"]
+	conf = conf .. "\r\n [::] avsearservaddr = " .. table_sets ["avsearservaddr"]
+	conf = conf .. "\r\n [::] avsearservport = " .. table_sets ["avsearservport"]
 	conf = conf .. "\r\n [::] avdetaction = " .. table_sets ["avdetaction"]
 	conf = conf .. "\r\n [::] avkicktext = " .. table_sets ["avkicktext"]
 	conf = conf .. "\r\n"
@@ -18448,6 +18355,320 @@ end
 
 ----- ---- --- -- -
 
+function avsearservstart (addr, port, nick)
+	if not table_othsets ["mod_sock"] or table_othsets ["serv_udp"] then -- already running
+		return
+	end
+
+	local udp, err = table_othsets ["mod_sock"].udp ()
+
+	if not udp then
+		if nick then
+			commandanswer (nick, gettext ("Failed to start antivirus search server: %s"):format (repnmdcoutchars (err or gettext ("No error message specified."))))
+		else
+			opsnotify (table_sets ["classnotiav"], gettext ("Failed to start antivirus search server: %s"):format (repnmdcoutchars (err or gettext ("No error message specified."))))
+		end
+
+		return
+	end
+
+	udp:settimeout (0)
+	local res, err = udp:setsockname ((addr or table_sets ["avsearservaddr"]), (port or table_sets ["avsearservport"]))
+
+	if not res then
+		if nick then
+			commandanswer (nick, gettext ("Failed to start antivirus search server: %s"):format (repnmdcoutchars (err or gettext ("No error message specified."))))
+		else
+			opsnotify (table_sets ["classnotiav"], gettext ("Failed to start antivirus search server: %s"):format (repnmdcoutchars (err or gettext ("No error message specified."))))
+		end
+
+		udp:close ()
+		return
+	end
+
+	table_othsets ["serv_udp"] = udp
+
+	if nick then
+		commandanswer (nick, gettext ("Started antivirus search server: %s"):format ((addr or table_sets ["avsearservaddr"]) .. ":" .. tostring (port or table_sets ["avsearservport"])))
+	else
+		opsnotify (table_sets ["classnotiav"], gettext ("Started antivirus search server: %s"):format ((addr or table_sets ["avsearservaddr"]) .. ":" .. tostring (port or table_sets ["avsearservport"])))
+	end
+end
+
+----- ---- --- -- -
+
+function avsearservstop (nick)
+	if not table_othsets ["mod_sock"] or not table_othsets ["serv_udp"] then -- not running
+		return
+	end
+
+	table_othsets ["serv_udp"]:close ()
+	table_othsets ["serv_udp"] = nil
+
+	if nick then
+		commandanswer (nick, gettext ("Stopped antivirus search server: %s"):format (table_sets ["avsearservaddr"] .. ":" .. tostring (table_sets ["avsearservport"])))
+	else
+		opsnotify (table_sets ["classnotiav"], gettext ("Stopped antivirus search server: %s"):format (table_sets ["avsearservaddr"] .. ":" .. tostring (table_sets ["avsearservport"])))
+	end
+end
+
+----- ---- --- -- -
+
+function avsearservread ()
+	if not table_othsets ["mod_sock"] or not table_othsets ["serv_udp"] then -- not running
+		return
+	end
+
+	for x = 1, 10 do -- todo: usually dc++ sends only 10 search results
+		local data, addr, port = table_othsets ["serv_udp"]:receivefrom ()
+
+		if data and addr and port and data ~= "" and addr ~= "" and addr ~= "timeout" then
+			local id = addr .. ":" .. tostring (port)
+
+			if table_avss [id] then -- rest buffer
+				data = table_avss [id] .. data
+				table_avss [id] = nil
+			end
+
+			while true do -- parse by pipe
+				local poss, pose = data:find ("|", 1, true)
+
+				if poss then
+					local _, stop = avparsesr (data:sub (1, poss - 1), nil, addr)
+
+					if stop then -- user is not from our hub or he got detected
+						table_avss [id] = nil
+						return
+					end
+
+					data = data:sub (pose + 1)
+				else
+					local dale = # data
+
+					if dale >= 65536 then -- drop this crap
+						table_avss [id] = nil
+					elseif dale > 0 then -- save rest buffer
+						table_avss [id] = (table_avss [id] or "") .. data
+					end
+
+					break
+				end
+			end
+		end
+
+		--table_othsets ["mod_sock"].sleep (0.01) -- todo: do we need to sleep?
+	end
+end
+
+----- ---- --- -- -
+
+function avparsesr (data, user, addr)
+	local nick, usip = user, addr
+
+	if not user then -- validate source when using search server
+		if not addr then -- missing information
+			return 0, true
+		end
+
+		local _, _, usni = data:find ("^%$SR ([^ ]+) .-[^\\]-" .. string.char (5) .. "%d+ .+")
+
+		if not usni or getstatus (usni) == 0 then -- bad syntax or user not online
+			return 0, true
+		end
+
+		usip = getip (usni)
+
+		if addr ~= usip then -- ip dont match
+			return 0, true
+		end
+
+		nick = usni
+	else
+		usip = getip (nick)
+	end
+
+	if table_sets ["avsearchint"] > 0 then -- antivirus
+		local class = getclass (nick)
+
+		if class >= table_sets ["scanbelowclass"] then
+			if table_sets ["enableipwatch"] == 1 and checkipwat (nick, usip, data) then -- ip watch
+				return 0
+			end
+
+			return 1
+		elseif isprotected (nick, usip) then
+			if table_sets ["enableipwatch"] == 1 and checkipwat (nick, usip, data) then -- ip watch
+				return 0
+			end
+
+			return 1
+		elseif table_sets ["avdetaction"] == 0 and table_avbl [nick] then -- block infected user
+			if table_sets ["enableipwatch"] == 1 then -- ip watch
+				checkipwat (nick, usip, data) -- we will return 0 anyway
+			end
+
+			return 0
+		end
+
+		local _, _, path, name, size = data:find ("^%$SR [^ ]+ (.-)([^\\]-)" .. string.char (5) .. "(%d+) .+")
+
+		if path and name and size and # path > 0 and # name > 0 and tonumber (size) > 0 then
+			size = tonumber (size)
+
+			if table_sets ["avrandrequest"] == 1 and table_othsets ["avrandstr"] ~= "" and name == table_othsets ["avrandstr"] .. ".exe" then -- check special random request
+				local shar = parsemyinfoshare (getmyinfo (nick))
+
+				if table_sets ["avfeedverb"] >= 2 then
+					local feed = gettext ("Infected user detected") .. ":\r\n\r\n"
+					feed = feed .. " " .. gettext ("Nick: %s"):format (nick) .. "\r\n"
+					feed = feed .. " " .. gettext ("IP: %s"):format (usip .. tryipcc (usip, nick)) .. "\r\n"
+					feed = feed .. " " .. gettext ("Share: %s"):format (makesize (shar)) .. "\r\n"
+					feed = feed .. " " .. gettext ("Spent time: %s"):format (formatuptime (table_othsets ["avlastseartick"], false)) .. "\r\n"
+					feed = feed .. " " .. gettext ("Found files") .. ":\r\n\r\n"
+					feed = feed .. " " .. repnmdcoutchars (path) .. "\r\n " .. string.rep (" ", # path) .. repnmdcoutchars (name) .. " &#124; " .. makesize (size) .. "\r\n"
+
+					opsnotify (table_sets ["classnotiav"], feed)
+				elseif table_sets ["avfeedverb"] == 1 then
+					opsnotify (table_sets ["classnotiav"], gettext ("Infected user detected with nick %s and IP %s and share %s and spent time: %s"):format (nick, usip .. tryipcc (usip, nick), makesize (shar), formatuptime (table_othsets ["avlastseartick"], false)))
+				end
+
+				avdbreport (nick, usip, shar, true, path) -- antivirus database
+
+				if table_sets ["avdetaction"] == 0 then
+					table_avbl [nick] = true
+					opsnotify (table_sets ["classnotiav"], gettext ("Connection requests to following user will be blocked: %s"):format (nick))
+
+					if table_sets ["enableipwatch"] == 1 then -- ip watch
+						checkipwat (nick, usip, data) -- we will return 0 anyway
+					end
+				else
+					if table_sets ["enableipwatch"] == 1 then -- ip watch
+						checkipwat (nick, usip, data) -- we will return 0 anyway
+					end
+
+					VH:KickUser (table_othsets ["sendfrom"], nick, table_sets ["avkicktext"])
+				end
+
+				if table_avus [nick] then
+					table_avus [nick] = nil
+				end
+
+				return 0, true
+			end
+
+			local lame = name:lower ()
+
+			for _, ext in pairs (table_avex) do
+				if lame:sub (-# ext) == ext then
+					if ext == ".rar" and lame:find ("part%d+%.rar$") then
+						if table_sets ["enableipwatch"] == 1 and checkipwat (nick, usip, data) then -- ip watch
+							return 0
+						end
+
+						return 1
+					end
+
+					for _, file in pairs (table_avfi) do
+						if getstrpart (lame, file) then
+							if table_avus [nick] then
+								if table_avus [nick][path] then
+									if not table_avus [nick][path][name] and math.abs (table_avus [nick][path][""] - size) <= table_sets ["avfilediff"] then
+										table_avus [nick][path][name] = size
+
+										if getitemcount (table_avus [nick][path]) >= table_sets ["avfilecount"] then
+											local shar, haveshar = 0, false
+
+											if table_sets ["avfeedverb"] >= 2 then
+												local feed, list = "", " " .. repnmdcoutchars (path) .. "\r\n"
+												local plen = # path
+
+												for fame, fize in pairs (table_avus [nick][path]) do
+													if # fame > 0 then
+														list = list .. " " .. string.rep (" ", plen) .. repnmdcoutchars (fame) .. " &#124; " .. makesize (fize) .. "\r\n"
+													end
+												end
+
+												if not haveshar then
+													shar = parsemyinfoshare (getmyinfo (nick))
+													haveshar = true
+												end
+
+												feed = gettext ("Infected user detected") .. ":\r\n\r\n"
+												feed = feed .. " " .. gettext ("Nick: %s"):format (nick) .. "\r\n"
+												feed = feed .. " " .. gettext ("IP: %s"):format (usip .. tryipcc (usip, nick)) .. "\r\n"
+												feed = feed .. " " .. gettext ("Share: %s"):format (makesize (shar)) .. "\r\n"
+												feed = feed .. " " .. gettext ("Spent time: %s"):format (formatuptime (table_avus [nick][""], false)) .. "\r\n"
+												feed = feed .. " " .. gettext ("Found files") .. ":\r\n\r\n"
+												feed = feed .. list
+
+												opsnotify (table_sets ["classnotiav"], feed)
+											elseif table_sets ["avfeedverb"] == 1 then
+												if not haveshar then
+													shar = parsemyinfoshare (getmyinfo (nick))
+													haveshar = true
+												end
+
+												opsnotify (table_sets ["classnotiav"], gettext ("Infected user detected with nick %s and IP %s and share %s and spent time: %s"):format (nick, usip .. tryipcc (usip, nick), makesize (shar), formatuptime (table_avus [nick][""], false)))
+											end
+
+											avdbreport (nick, usip, shar, haveshar, path) -- antivirus database
+
+											if table_sets ["avdetaction"] == 0 then
+												table_avbl [nick] = true
+												opsnotify (table_sets ["classnotiav"], gettext ("Connection requests to following user will be blocked: %s"):format (nick))
+
+												if table_sets ["enableipwatch"] == 1 then -- ip watch
+													checkipwat (nick, usip, data) -- we will return 0 anyway
+												end
+											else
+												if table_sets ["enableipwatch"] == 1 then -- ip watch
+													checkipwat (nick, usip, data) -- we will return 0 anyway
+												end
+
+												VH:KickUser (table_othsets ["sendfrom"], nick, table_sets ["avkicktext"])
+											end
+
+											table_avus [nick] = nil
+											return 0, true
+										end
+									end
+
+									table_avus [nick][path][""] = size
+								else
+									table_avus [nick][path] = {
+										[""] = size,
+										[name] = size
+									}
+								end
+							else
+								table_avus [nick] = {
+									[""] = os.time (),
+									[path] = {
+										[""] = size,
+										[name] = size
+									}
+								}
+							end
+
+							if table_sets ["enableipwatch"] == 1 and checkipwat (nick, usip, data) then -- ip watch
+								return 0
+							end
+
+							return 1
+						end
+					end
+				end
+			end
+		end
+	end
+
+	if table_sets ["enableipwatch"] == 1 and checkipwat (nick, usip, data) then -- ip watch
+		return 0
+	end
+end
+
+----- ---- --- -- -
+
 function loadcomponents ()
 	local _, paths = 0, {"", "/usr/local/bin/", "/usr/bin/"} -- prepare
 
@@ -18595,43 +18816,53 @@ function loadcomponents ()
 		VH:SendToClass ("<" .. table_sets ["ledobotnick"] .. "> Warning: Unable to run \"iconv --version\"|", 5, 10)
 	end
 
-	-- load socket
+	]]--
 
-	local res, err = pcall (function () lsock = require ("socket") end)
+	local res, err = pcall ( -- load socket
+		function ()
+			table_othsets ["mod_sock"] = require ("socket")
+		end
+	)
 
-	if not res then
-		--VH:SendToClass ("<" .. table_sets ["ledobotnick"] .. "> Warning: Unable to load LuaSocket module: " .. repnmdcoutchars (err) .. "|", 5, 10)
+	if not res or not table_othsets ["mod_sock"] then
+		VH:SendToClass ("<" .. table_sets ["ledobotnick"] .. "> Warning: Unable to load LuaSocket module: " .. repnmdcoutchars (err or gettext ("No error message specified.")) .. "|", 5, 10)
 	else
-		-- luasocket version
-		table_othsets ["ver_sock"] = string.sub (lsock._VERSION, 11, -1)
+		table_othsets ["ver_sock"] = table_othsets ["mod_sock"]._VERSION:sub (11) -- luasocket version
 
-		if not table_othsets ["ver_sock"] then
-			VH:SendToClass ("<" .. table_sets ["ledobotnick"] .. "> Warning: Unable to detect LuaSocket version|", 5, 10)
+		if not table_othsets ["ver_sock"] or table_othsets ["ver_sock"] == "" then
+			VH:SendToClass ("<" .. table_sets ["ledobotnick"] .. "> Warning: Unable to detect LuaSocket module version|", 5, 10)
 		end
 
-		-- load socket.http
-		local res, err = pcall (function () lsockhttp = require ("socket.http") end)
+		--[[
 
-		if not res then
-			VH:SendToClass ("<" .. table_sets ["ledobotnick"] .. "> Warning: Unable to load LuaSocket HTTP module: " .. repnmdcoutchars (err) .. "|", 5, 10)
+		local res, err = pcall ( -- load socket.http
+			function ()
+				table_othsets ["mod_http"] = require ("socket.http")
+			end
+		)
+
+		if not res or not table_othsets ["mod_http"] then
+			VH:SendToClass ("<" .. table_sets ["ledobotnick"] .. "> Warning: Unable to load LuaSocket.HTTP module: " .. repnmdcoutchars (err or gettext ("No error message specified.")) .. "|", 5, 10)
 		end
 
-		-- load ltn12
-		local res, err = pcall (function () lsockltn12 = require ("ltn12") end)
+		local res, err = pcall ( -- load ltn12
+			function ()
+				table_othsets ["mod_ltn12"] = require ("ltn12")
+			end
+		)
 
-		if not res then
-			VH:SendToClass ("<" .. table_sets ["ledobotnick"] .. "> Warning: Unable to load LuaSocket LTN12 module: " .. repnmdcoutchars (err) .. "|", 5, 10)
+		if not res or not table_othsets ["mod_ltn12"] then
+			VH:SendToClass ("<" .. table_sets ["ledobotnick"] .. "> Warning: Unable to load LuaSocket.LTN12 module: " .. repnmdcoutchars (err or gettext ("No error message specified.")) .. "|", 5, 10)
 		else
-			-- ltn12 version
-			table_othsets ["ver_ltn12"] = string.sub (lsockltn12._VERSION, 7, -1)
+			table_othsets ["ver_ltn12"] = table_othsets ["mod_ltn12"]._VERSION:sub (7) -- ltn12 version
 
-			if not table_othsets ["ver_ltn12"] then
-				VH:SendToClass ("<" .. table_sets ["ledobotnick"] .. "> Warning: Unable to detect LuaSocket LTN12 version|", 5, 10)
+			if not table_othsets ["ver_ltn12"] or table_othsets ["ver_ltn12"] == "" then
+				VH:SendToClass ("<" .. table_sets ["ledobotnick"] .. "> Warning: Unable to detect LuaSocket.LTN12 module version|", 5, 10)
 			end
 		end
-	end
 
-	]]--
+		]]--
+	end
 
 	-- getusercc function
 
