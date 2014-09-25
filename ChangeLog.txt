@@ -3,6 +3,7 @@
 Fixed: Break the loop when infected user is found
 Added: Detect invalid patterns before they are added, idea by Lord_Zero
 Added: Detect virus spreaders by IP address and share aswell
+Added: Antivirus search server to detect passive virus spreaders, requires LuaSocket
 
 [ 2.8.2 :: 2014-09-15 ]
 
