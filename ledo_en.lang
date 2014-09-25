@@ -1061,3 +1061,8 @@ Antivirus|
 Nothing was found in: %s|
 Searching for %s in %s: %s|
 Showing %d results from %s|
+%s module version: %s|
+This feature requires following module installed on your system: %s|
+Failed to start antivirus search server: %s|
+Started antivirus search server: %s|
+Stopped antivirus search server: %s|
