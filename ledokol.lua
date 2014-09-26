@@ -18419,7 +18419,10 @@ function avsearservread ()
 		return
 	end
 
-	for x = 1, 10 do -- todo: usually dc++ sends only 10 search results
+	local runc, runm = 0, 10 -- dc++ sends only 10 search results
+
+	while runc < runm do
+		runc = runc + 1
 		local data, addr, port = table_othsets ["serv_udp"]:receivefrom ()
 
 		if data and addr and port and data ~= "" and addr ~= "" and addr ~= "timeout" then
@@ -18430,13 +18433,13 @@ function avsearservread ()
 				table_avss [id] = nil
 			end
 
-			while true do -- parse by pipe
-				local poss, pose = data:find ("|", 1, true)
+			while true do
+				local poss, pose = data:find ("|", 1, true) -- parse by pipe
 
 				if poss then
 					local _, stop = avparsesr (data:sub (1, poss - 1), nil, addr)
 
-					if stop then -- user is not from our hub or he got detected
+					if stop then -- bad user or he got detected
 						table_avss [id] = nil
 						return
 					end
@@ -18456,9 +18459,11 @@ function avsearservread ()
 
 				table_othsets ["mod_sock"].sleep (0.001) -- sleep for 1 ms to minimize cpu load
 			end
+		else -- no more data available
+			break
 		end
 
-		table_othsets ["mod_sock"].sleep (0.005) -- sleep for 5 ms to minimize cpu load
+		table_othsets ["mod_sock"].sleep (0.001) -- sleep for 1 ms to minimize cpu load
 	end
 end
 
