@@ -18445,6 +18445,10 @@ function avsearservread ()
 					end
 
 					data = data:sub (pose + 1)
+
+					if data == "" then -- nothing else to do
+						break
+					end
 				else
 					local dale = # data
 
