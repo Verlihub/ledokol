@@ -252,6 +252,7 @@ table_sets = {
 	["logallmyinfos"] = 0,
 	["enableipwatch"] = 0,
 	["chatcodeon"] = 0,
+	["chatcodeflag"] = 0,
 	["codemaxclass"] = 2,
 	["codelength"] = 4,
 	["codecharlist"] = "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz123456789",
@@ -1147,6 +1148,7 @@ function Main (file)
 					if ver <= 283 then
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('avsearservaddr', '" .. repsqlchars (table_sets ["avsearservaddr"]) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('avsearservport', '" .. repsqlchars (table_sets ["avsearservport"]) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('chatcodeflag', '" .. repsqlchars (table_sets ["chatcodeflag"]) .. "')")
 					end
 
 					if ver <= 284 then
@@ -3611,53 +3613,66 @@ function VH_OnUserCommand (nick, data)
 		return 0
 	end
 
----------------------------------------------------------------------
--- process +me command >>
----------------------------------------------------------------------
+	-- process +me command
 
-if string.find (data, "^"..table_othsets ["ustrig"].."me .*$") then
-if getconfig ("disable_me_cmd") ~= 0 then return 1 end
-local msg = string.sub (data, string.len ("me") + 3, -1)
+	if data:find ("^" .. table_othsets ["ustrig"] .. "me .*$") then
+		if getconfig ("disable_me_cmd") ~= 0 then
+			return 1
+		end
 
-if isprotected (nick, ip) == false then -- protection
-	if table_sets ["chatcodeon"] > 0 then -- chatcode
-		if ucl <= table_sets ["codemaxclass"] then
-			if not table_code [nick] then
-				local vcode, code = genchatcode ()
-				table_code [nick] = {["vcode"] = vcode, ["code"] = code, ["lock"] = true}
-				local txt = string.gsub (table_sets ["codetext"], "<code>", reprexpchars (vcode))
-				maintouser (nick, txt)
-				return 0
-			else
-				if table_code [nick]["lock"] == true then
+		local msg = data:sub (string.len ("me") + 3)
+
+		if not isprotected (nick, ip) then -- protection
+			if table_sets ["chatcodeon"] > 0 and (table_sets ["chatcodeflag"] == 0 or table_sets ["chatcodeflag"] == 1) and ucl <= table_sets ["codemaxclass"] then -- chatcode
+				if not table_code [nick] then
+					local vcode, code = genchatcode ()
+
+					table_code [nick] = {
+						["vcode"] = vcode,
+						["code"] = code,
+						["lock"] = true
+					}
+
+					local txt = table_sets ["codetext"]:gsub ("<code>", reprexpchars (vcode))
+					maintouser (nick, txt)
+					return 0
+				elseif table_code [nick]["lock"] then
 					local rcode = table_code [nick]["code"]
-					if table_sets ["chatcodeon"] == 2 then rcode = string.lower (rcode) end -- accept lower case
 
-					if (msg == rcode) or (msg == table_code [nick]["code"]) then
+					if table_sets ["chatcodeon"] == 2 then -- accept lower case
+						rcode = rcode:lower ()
+					end
+
+					if msg == rcode or msg == table_code [nick]["code"] then
 						table_code [nick]["lock"] = false
 						maintouser (nick, gettext ("Code accepted."))
 					else
-						local txt = string.gsub (table_sets ["codetext"], "<code>", reprexpchars (table_code [nick]["vcode"]))
+						local txt = table_sets ["codetext"]:gsub ("<code>", reprexpchars (table_code [nick]["vcode"]))
 						maintouser (nick, txt)
 					end
 
 					return 0
 				end
 			end
+
+			if detchatflood (nick, ucl, ip, msg, nil) then -- flood detection
+				return 0
+			end
+
+			if table_sets ["chatfloodcmdgag"] == 0 then -- ip gag, dont check twice
+				if gagipcheck (nick, ip, ucl, nil, msg) then
+					return 0
+				end
+
+				if gagccheck (nick, ip, ucl, nil, msg) then
+					return 0
+				end
+			end
+
+			if table_sets ["checkcmdspam"] == 0 and antiscan (nick, ucl, msg, 1, nil, nil) == 0 then -- antispam, dont check twice
+				return 0
+			end
 		end
-	end
-
-	if detchatflood (nick, ucl, ip, msg, nil) == true then return 0 end -- flood detection
-
-	if table_sets ["chatfloodcmdgag"] == 0 then -- ip gag, dont check twice
-		if gagipcheck (nick, ip, ucl, nil, msg) == true then return 0 end
-		if gagccheck (nick, ip, ucl, nil, msg) == true then return 0 end
-	end
-
-	if table_sets ["checkcmdspam"] == 0 then -- antispam, dont check twice
-		if antiscan (nick, ucl, msg, 1, nil, nil) == 0 then return 0 end
-	end
-end
 
 local fakenick = nick
 
@@ -3732,35 +3747,46 @@ end
 	wordrankaccept (nick, ucl, cvdat)
 	return retval
 
-elseif string.find (data, "^"..table_othsets ["ustrig"].."me$") then
-if getconfig ("disable_me_cmd") ~= 0 then return 1 end
+	elseif data:find ("^" .. table_othsets ["ustrig"] .. "me$") then
+		if getconfig ("disable_me_cmd") ~= 0 then
+			return 1
+		end
 
-if isprotected (nick, ip) == false then -- protection
-	if table_sets ["chatcodeon"] > 0 then -- chatcode
-		if ucl <= table_sets ["codemaxclass"] then
-			if not table_code [nick] then
-				local vcode, code = genchatcode ()
-				table_code [nick] = {["vcode"] = vcode, ["code"] = code, ["lock"] = true}
-				local txt = string.gsub (table_sets ["codetext"], "<code>", reprexpchars (vcode))
-				maintouser (nick, txt)
-				return 0
-			else
-				if table_code [nick]["lock"] == true then
-					local txt = string.gsub (table_sets ["codetext"], "<code>", reprexpchars (table_code [nick]["vcode"]))
+		if not isprotected (nick, ip) then -- protection
+			if table_sets ["chatcodeon"] > 0 and (table_sets ["chatcodeflag"] == 0 or table_sets ["chatcodeflag"] == 1) and ucl <= table_sets ["codemaxclass"] then -- chatcode
+				if not table_code [nick] then
+					local vcode, code = genchatcode ()
+
+					table_code [nick] = {
+						["vcode"] = vcode,
+						["code"] = code,
+						["lock"] = true
+					}
+
+					local txt = table_sets ["codetext"]:gsub ("<code>", reprexpchars (vcode))
+					maintouser (nick, txt)
+					return 0
+				elseif table_code [nick]["lock"] then
+					local txt = table_sets ["codetext"]:gsub ("<code>", reprexpchars (table_code [nick]["vcode"]))
 					maintouser (nick, txt)
 					return 0
 				end
 			end
+
+			if detchatflood (nick, ucl, ip, data, nil) then -- flood detection
+				return 0
+			end
+
+			if table_sets ["chatfloodcmdgag"] == 0 then -- ip gag, dont check twice
+				if gagipcheck (nick, ip, ucl, nil, data) then
+					return 0
+				end
+
+				if gagccheck (nick, ip, ucl, nil, data) then
+					return 0
+				end
+			end
 		end
-	end
-
-	if detchatflood (nick, ucl, ip, data, nil) == true then return 0 end -- flood detection
-
-	if table_sets ["chatfloodcmdgag"] == 0 then -- ip gag, dont check twice
-		if gagipcheck (nick, ip, ucl, nil, data) == true then return 0 end
-		if gagccheck (nick, ip, ucl, nil, data) == true then return 0 end
-	end
-end
 
 local fakenick = nick
 
@@ -3804,9 +3830,7 @@ end
 	return retval
 end
 
----------------------------------------------------------------------
--- process +me command <<
----------------------------------------------------------------------
+	-- process other commands
 
 	if string.find (data, "^"..table_othsets ["ustrig"].."report .+$") then -- antispam
 		if table_sets ["checkcmdspam"] == 0 then -- dont check twice
@@ -5263,7 +5287,7 @@ end
 ----- ---- --- -- -
 
 function VH_OnParsedMsgPM (from, data, to)
-	if table_othsets ["locked"] == true then
+	if table_othsets ["locked"] then
 		return 1
 	end
 
@@ -5271,51 +5295,53 @@ function VH_OnParsedMsgPM (from, data, to)
 	local prot = isprotected (from, ip)
 	local fcls = getclass (from)
 
-	if prot == false then -- protection
-		if (fcls < table_sets ["pmminclass"]) and (to ~= table_othsets ["botnick"]) then
+	if not prot then -- protection
+		if fcls < table_sets ["pmminclass"] and to ~= table_othsets ["botnick"] then
 			pmtouser (from, to, gettext ("You're not allowed to send private messages."))
 			return 0
 		end
 
-		if table_sets ["chatcodeon"] > 0 then -- chatcode
-			if fcls <= table_sets ["codemaxclass"] then
-				if not table_code [from] then
-					local vcode, code = genchatcode ()
-					table_code [from] = {["vcode"] = vcode, ["code"] = code, ["lock"] = true}
-					local txt = string.gsub (table_sets ["codetext"], "<code>", reprexpchars (vcode))
-					pmtouser (from, to, txt)
-					return 0
-				else
-					if table_code [from]["lock"] == true then
-						local rcode = table_code [from]["code"]
+		if table_sets ["chatcodeon"] > 0 and (table_sets ["chatcodeflag"] == 0 or table_sets ["chatcodeflag"] == 2) and fcls <= table_sets ["codemaxclass"] then -- chatcode
+			if not table_code [from] then
+				local vcode, code = genchatcode ()
 
-						if table_sets ["chatcodeon"] == 2 then -- accept lower case
-							rcode = string.lower (rcode)
-						end
+				table_code [from] = {
+					["vcode"] = vcode,
+					["code"] = code,
+					["lock"] = true
+				}
 
-						if (data == rcode) or (data == table_code [from]["code"]) then
-							table_code [from]["lock"] = false
-							pmtouser (from, to, gettext ("Code accepted."))
-						else
-							local txt = string.gsub (table_sets ["codetext"], "<code>", reprexpchars (table_code [from]["vcode"]))
-							pmtouser (from, to, txt)
-						end
+				local txt = table_sets ["codetext"]:gsub ("<code>", reprexpchars (vcode))
+				pmtouser (from, to, txt)
+				return 0
+			elseif table_code [from]["lock"] then
+				local rcode = table_code [from]["code"]
 
-						return 0
-					end
+				if table_sets ["chatcodeon"] == 2 then -- accept lower case
+					rcode = rcode:lower ()
 				end
+
+				if data == rcode or data == table_code [from]["code"] then
+					table_code [from]["lock"] = false
+					pmtouser (from, to, gettext ("Code accepted."))
+				else
+					local txt = table_sets ["codetext"]:gsub ("<code>", reprexpchars (table_code [from]["vcode"]))
+					pmtouser (from, to, txt)
+				end
+
+				return 0
 			end
 		end
 
-		if detchatflood (from, fcls, ip, data, to) == true then -- flood detection
+		if detchatflood (from, fcls, ip, data, to) then -- flood detection
 			return 0
 		end
 
-		if gagipcheck (from, ip, fcls, to, data) == true then
+		if gagipcheck (from, ip, fcls, to, data) then
 			return 0
 		end
 
-		if gagccheck (from, ip, fcls, to, data) == true then
+		if gagccheck (from, ip, fcls, to, data) then
 			return 0
 		end
 	end
@@ -5470,44 +5496,67 @@ end
 ----- ---- --- -- -
 
 function VH_OnParsedMsgChat (nick, data)
-if table_othsets ["locked"] == true then return 1 end
-local ucl = getclass (nick)
-if ucl < getconfig ("mainchat_class") then return 1 end
-local ip = getip (nick)
-
-if isprotected (nick, ip) == false then -- protection
-	if table_sets ["chatcodeon"] > 0 then -- chatcode
-		if ucl <= table_sets ["codemaxclass"] then
-			if not table_code [nick] then
-				local vcode, code = genchatcode ()
-				table_code [nick] = {["vcode"] = vcode, ["code"] = code, ["lock"] = true}
-				local txt = string.gsub (table_sets ["codetext"], "<code>", reprexpchars (vcode))
-				maintouser (nick, txt)
-				return 0
-			else
-				if table_code [nick]["lock"] == true then
-					local rcode = table_code [nick]["code"]
-					if table_sets ["chatcodeon"] == 2 then rcode = string.lower (rcode) end -- accept lower case
-
-					if (data == rcode) or (data == table_code [nick]["code"]) then
-						table_code [nick]["lock"] = false
-						maintouser (nick, gettext ("Code accepted."))
-					else
-						local txt = string.gsub (table_sets ["codetext"], "<code>", reprexpchars (table_code [nick]["vcode"]))
-						maintouser (nick, txt)
-					end
-
-					return 0
-				end
-			end
-		end
+	if table_othsets ["locked"] then
+		return 1
 	end
 
-	if detchatflood (nick, ucl, ip, data, nil) == true then return 0 end -- flood detection
-	if gagipcheck (nick, ip, ucl, nil, data) == true then return 0 end
-	if gagccheck (nick, ip, ucl, nil, data) == true then return 0 end
-	if antiscan (nick, ucl, data, 1, nil, nil) == 0 then return 0 end -- antispam
-end
+	local ucl = getclass (nick)
+
+	if ucl < getconfig ("mainchat_class") then
+		return 1
+	end
+
+	local ip = getip (nick)
+
+	if not isprotected (nick, ip) then -- protection
+		if table_sets ["chatcodeon"] > 0 and (table_sets ["chatcodeflag"] == 0 or table_sets ["chatcodeflag"] == 1) and ucl <= table_sets ["codemaxclass"] then -- chatcode
+			if not table_code [nick] then
+				local vcode, code = genchatcode ()
+
+				table_code [nick] = {
+					["vcode"] = vcode,
+					["code"] = code,
+					["lock"] = true
+				}
+
+				local txt = table_sets ["codetext"]:gsub ("<code>", reprexpchars (vcode))
+				maintouser (nick, txt)
+				return 0
+			elseif table_code [nick]["lock"] then
+				local rcode = table_code [nick]["code"]
+
+				if table_sets ["chatcodeon"] == 2 then -- accept lower case
+					rcode = rcode:lower ()
+				end
+
+				if data == rcode or data == table_code [nick]["code"] then
+					table_code [nick]["lock"] = false
+					maintouser (nick, gettext ("Code accepted."))
+				else
+					local txt = table_sets ["codetext"]:gsub ("<code>", reprexpchars (table_code [nick]["vcode"]))
+					maintouser (nick, txt)
+				end
+
+				return 0
+			end
+		end
+
+		if detchatflood (nick, ucl, ip, data, nil) then -- flood detection
+			return 0
+		end
+
+		if gagipcheck (nick, ip, ucl, nil, data) then
+			return 0
+		end
+
+		if gagccheck (nick, ip, ucl, nil, data) then
+			return 0
+		end
+
+		if antiscan (nick, ucl, data, 1, nil, nil) == 0 then -- antispam
+			return 0
+		end
+	end
 
 local fakenick = nick
 
@@ -6542,25 +6591,27 @@ end
 ----- ---- --- -- -
 
 function setcustnick (nick, custom, ucl)
-if isprotected (nick, getip (nick)) == false then -- protection
-	if table_sets ["chatcodeon"] > 0 then -- chatcode
-		if ucl <= table_sets ["codemaxclass"] then
+	if not isprotected (nick, getip (nick)) then -- protection
+		if table_sets ["chatcodeon"] > 0 and (table_sets ["chatcodeflag"] == 0 or table_sets ["chatcodeflag"] == 1) and ucl <= table_sets ["codemaxclass"] then -- chatcode
 			if not table_code [nick] then
 				local vcode, code = genchatcode ()
-				table_code [nick] = {["vcode"] = vcode, ["code"] = code, ["lock"] = true}
-				local txt = string.gsub (table_sets ["codetext"], "<code>", reprexpchars (vcode))
+
+				table_code [nick] = {
+					["vcode"] = vcode,
+					["code"] = code,
+					["lock"] = true
+				}
+
+				local txt = table_sets ["codetext"]:gsub ("<code>", reprexpchars (vcode))
 				maintouser (nick, txt)
 				return nil
-			else
-				if table_code [nick]["lock"] == true then
-					local txt = string.gsub (table_sets ["codetext"], "<code>", reprexpchars (table_code [nick]["vcode"]))
-					maintouser (nick, txt)
-					return nil
-				end
+			elseif table_code [nick]["lock"] then
+				local txt = table_sets ["codetext"]:gsub ("<code>", reprexpchars (table_code [nick]["vcode"]))
+				maintouser (nick, txt)
+				return nil
 			end
 		end
 	end
-end
 
 if string.len (custom) == 0 then -- user is resetting his nick
 	local oldcust = getcustnick (nick)
@@ -14430,21 +14481,37 @@ else
 commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 end
 
------ ---- --- -- -
+	----- ---- --- -- -
 
 	elseif tvar == "chatcodeon" then
 		if num == true then
-			if (setto >= 0) and (setto <= 2) then
-				if setto == 0 then table_code = {} end -- flush
+			if setto >= 0 and setto <= 2 then
+				if setto == 0 then -- clear
+					table_code = {}
+				end
+
 				ok = true
 			else
-				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 "..gettext ("to").." 2"))
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0 " .. gettext ("to") .. " 2"))
 			end
 		else
-			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
 		end
 
------ ---- --- -- -
+	----- ---- --- -- -
+
+	elseif tvar == "chatcodeflag" then
+		if num == true then
+			if setto >= 0 and setto <= 2 then
+				ok = true
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0, 1 " .. gettext ("or") .. " 2"))
+			end
+		else
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
+		end
+
+	----- ---- --- -- -
 
 elseif tvar == "codemaxclass" then
 if num == true then
@@ -17211,7 +17278,8 @@ conf = conf .. "\r\n [::] ulogautoclean = " .. table_sets ["ulogautoclean"]
 conf = conf.."\r\n [::] logallmyinfos = "..table_sets ["logallmyinfos"]
 conf = conf.."\r\n [::] enableipwatch = "..table_sets ["enableipwatch"]
 conf = conf.."\r\n"
-conf = conf.."\r\n [::] chatcodeon = "..table_sets ["chatcodeon"]
+	conf = conf .. "\r\n [::] chatcodeon = " .. table_sets ["chatcodeon"]
+	conf = conf .. "\r\n [::] chatcodeflag = " .. table_sets ["chatcodeflag"]
 conf = conf.."\r\n [::] codemaxclass = "..table_sets ["codemaxclass"]
 conf = conf.."\r\n [::] codelength = "..table_sets ["codelength"]
 conf = conf.."\r\n [::] codecharlist = "..table_sets ["codecharlist"]
@@ -18199,7 +18267,7 @@ function showavstats (nick, user)
 			stats = stats .. "\r\n"
 		end
 
-		local usli = ""
+		local usli = "" -- possibly infected users
 
 		for usni, data in pairs (table_avus) do
 			if getstatus (usni) == 0 then
@@ -18235,6 +18303,22 @@ function showavstats (nick, user)
 
 		if # usli > 0 then
 			stats = stats .. "\r\n " .. gettext ("Possibly infected users") .. ":\r\n\r\n" .. usli
+		end
+
+		if table_sets ["avdetaction"] == 0 then -- blocked infected users
+			local blli = ""
+
+			for blni, act in pairs (table_avbl) do
+				if getstatus (blni) == 0 then
+					table_avbl [blni] = nil
+				elseif act then
+					blli = blli .. "\t" .. blni .. "\r\n"
+				end
+			end
+
+			if # blli > 0 then
+				stats = stats .. "\r\n " .. gettext ("Blocked infected users") .. ":\r\n\r\n" .. blli
+			end
 		end
 
 		if table_sets ["avdbloadint"] > 0 then
