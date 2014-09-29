@@ -1065,3 +1065,4 @@ This feature requires following module installed on your system: %s|
 Failed to start antivirus search server: %s|
 Started antivirus search server: %s|
 Stopped antivirus search server: %s|
+Blocked infected users|
