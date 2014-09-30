@@ -13931,27 +13931,28 @@ else
 commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 end
 
------ ---- --- -- -
+	----- ---- --- -- -
 
-elseif tvar == "ccroomrunning" then
-if num == true then
-if (setto == 0) or (setto == 1) then
+	elseif tvar == "ccroomrunning" then
+		if num == true then
+			if setto == 0 or setto == 1 then
+				if setto == 1 and not table_refu ["GetUserCC"] then
+					commandanswer (nick, gettext ("This feature requires %s or later installed on your system."):format ("Verlihub 0.9.8e"))
+				else
+					if setto == 0 and table_sets [tvar] ~= setto then
+						uninstallccrooms ()
+					end
 
-	if setto == 1 and not table_refu ["GetUserCC"] then
-		commandanswer (nick, string.format (gettext ("This feature requires %s or later installed on your system."), "Verlihub 0.9.8e"))
-	end
+					ok = true
+				end
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0 " .. gettext ("or") .. " 1"))
+			end
+		else
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
+		end
 
-if (table_sets [tvar] ~= setto) and (setto == 0) then uninstallccrooms () end
-ok = true
-else
-commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 "..gettext ("or").." 1"))
-end
-
-else
-commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
-end
-
------ ---- --- -- -
+	----- ---- --- -- -
 
 elseif tvar == "roomusernotify" then
 if num == true then
