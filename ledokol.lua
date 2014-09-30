@@ -389,6 +389,7 @@ tbl_sql = {
 	["wm"] = "lua_ledo_wm",
 	["cust"] = "lua_ledo_cust",
 	["chat"] = "lua_ledo_chat",
+	["acre"] = "lua_ledo_acre",
 	["rem"] = "lua_ledo_rem",
 	["trig"] = "lua_ledo_trig",
 	["news"] = "lua_ledo_news",
@@ -549,6 +550,9 @@ table_cmnds = {
 	["chatadd"] = "chatadd",
 	["chatdel"] = "chatdel",
 	["chatlist"] = "chatlist",
+	["acreadd"] = "acreadd",
+	["acredel"] = "acredel",
+	["acrelist"] = "acrelist",
 	["wmforce"] = "wmforce",
 	["wmlist"] = "wmlist",
 	["wmdel"] = "wmdel",
@@ -1146,9 +1150,15 @@ function Main (file)
 					end
 
 					if ver <= 283 then
+						VH:SQLQuery ("create table if not exists `" .. tbl_sql ["acre"] .. "` (`id` bigint(20) unsigned not null auto_increment primary key, `cc` varchar(2) not null, `nick` varchar(255) not null) engine = myisam default character set utf8 collate utf8_unicode_ci")
+
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('avsearservaddr', '" .. repsqlchars (table_sets ["avsearservaddr"]) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('avsearservport', '" .. repsqlchars (table_sets ["avsearservport"]) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('chatcodeflag', '" .. repsqlchars (table_sets ["chatcodeflag"]) .. "')")
+
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["ledocmd"] .. "` (`original`, `new`) values ('acreadd', '" .. repsqlchars (table_cmnds ["acreadd"]) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["ledocmd"] .. "` (`original`, `new`) values ('acredel', '" .. repsqlchars (table_cmnds ["acredel"]) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["ledocmd"] .. "` (`original`, `new`) values ('acrelist', '" .. repsqlchars (table_cmnds ["acrelist"]) .. "')")
 					end
 
 					if ver <= 284 then
@@ -1334,10 +1344,10 @@ function VH_OnOperatorCommand (nick, data)
 
 	----- ---- --- -- -
 
-	elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["chatadd"].." %S+ .* %d+ %d+ %S+$") then
+	elseif data:find ("^" .. table_othsets ["optrig"] .. table_cmnds ["chatadd"] .. " %S+ .* %d+ %d+ %S+$") then
 		if ucl >= table_sets ["mincommandclass"] then
 			donotifycmd (nick, data, 0, ucl)
-			addchatroom (nick, string.sub (data, string.len (table_cmnds ["chatadd"]) + 3, -1))
+			addchatroom (nick, data:sub (# table_cmnds ["chatadd"] + 3))
 		else
 			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
@@ -1346,10 +1356,10 @@ function VH_OnOperatorCommand (nick, data)
 
 	----- ---- --- -- -
 
-	elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["chatdel"].." %S+$") then
+	elseif data:find ("^" .. table_othsets ["optrig"] .. table_cmnds ["chatdel"] .. " %S+$") then
 		if ucl >= table_sets ["mincommandclass"] then
 			donotifycmd (nick, data, 0, ucl)
-			delchatroom (nick, string.sub (data, string.len (table_cmnds ["chatdel"]) + 3, -1))
+			delchatroom (nick, data:sub (# table_cmnds ["chatdel"] + 3))
 		else
 			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
@@ -1358,7 +1368,7 @@ function VH_OnOperatorCommand (nick, data)
 
 	----- ---- --- -- -
 
-	elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["chatlist"].."$") then
+	elseif data:find ("^" .. table_othsets ["optrig"] .. table_cmnds ["chatlist"] .. "$") then
 		if ucl >= table_sets ["mincommandclass"] then
 			donotifycmd (nick, data, 0, ucl)
 			listchatroom (nick)
@@ -1368,7 +1378,43 @@ function VH_OnOperatorCommand (nick, data)
 
 		return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
+
+	elseif data:find ("^" .. table_othsets ["optrig"] .. table_cmnds ["acreadd"] .. " [%a][%a%d] [^ ]+$") then
+		if ucl >= table_sets ["mincommandclass"] then
+			donotifycmd (nick, data, 0, ucl)
+			addacre (nick, data:sub (# table_cmnds ["acreadd"] + 3))
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
+
+		return 0
+
+	----- ---- --- -- -
+
+	elseif data:find ("^" .. table_othsets ["optrig"] .. table_cmnds ["acredel"] .. " %d+$") then
+		if ucl >= table_sets ["mincommandclass"] then
+			donotifycmd (nick, data, 0, ucl)
+			delacre (nick, data:sub (# table_cmnds ["acredel"] + 3))
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
+
+		return 0
+
+	----- ---- --- -- -
+
+	elseif data:find ("^" .. table_othsets ["optrig"] .. table_cmnds ["acrelist"] .. "$") then
+		if ucl >= table_sets ["mincommandclass"] then
+			donotifycmd (nick, data, 0, ucl)
+			listacre (nick)
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
+
+		return 0
+
+	----- ---- --- -- -
 
 elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["remadd"].." %S+ .+ %d+ %d+ %d %d+$") then
 if ucl >= table_sets ["mincommandclass"] then
@@ -4475,10 +4521,14 @@ end
 		end
 	end
 
-if hasip == false then ip = getip (nick) end
-sendwelcomein (nick, cls)
-autosendoffmsg (nick, cls, ip)
-addccroommember (nick, cls)
+	if not hasip then
+		ip = getip (nick)
+	end
+
+	sendwelcomein (nick, cls)
+	autosendoffmsg (nick, cls, ip)
+	addccroommember (nick, cls)
+	addccroomacre (nick, cls)
 
 if cls < 3 then -- operator keys
 	if cls >= table_sets ["opkeyclass"] then
@@ -4546,11 +4596,10 @@ function VH_OnUserLogout (nick, uip)
 		delcustnick (nick, cls, true)
 	end
 
-	if (table_sets ["ipconantiflint"] > 0) and (cls < table_sets ["scanbelowclass"]) then -- ip connect antiflood
+	if table_sets ["ipconantiflint"] > 0 and cls < table_sets ["scanbelowclass"] then -- ip connect antiflood
 		local ip = getip (nick)
-		if isprotected (nick, ip) == true then return 1 end
 
-		if (not table_rcnn [ip]) or (os.difftime (os.time (), table_rcnn [ip]) >= table_sets ["ipconantiflint"]) then
+		if not isprotected (nick, ip) and (not table_rcnn [ip] or os.difftime (os.time (), table_rcnn [ip]) >= table_sets ["ipconantiflint"]) then
 			table_rcnn [ip] = os.time () -- set delay
 		end
 	end
@@ -5917,8 +5966,66 @@ end
 
 ----- ---- --- -- -
 
+function addacre (nick, data)
+	local _, _, cc, us = data:find ("^([%a][%a%d]) ([^ ]+)$")
+	cc = cc:upper ()
+	local ccrep = repsqlchars (cc)
+	local usrep = repsqlchars (us)
+	local _, rows = VH:SQLQuery ("select `id` from `" .. tbl_sql ["acre"] .. "` where `cc` = '" .. ccrep .. "' and `nick` = '" .. usrep .. "' limit 1")
+
+	if rows > 0 then
+		local _, id = VH:SQLFetch (0)
+		commandanswer (nick, gettext ("Couldn't add automatic country chatroom entrance because already exists with ID: %d"):format (id))
+	else
+		VH:SQLQuery ("insert into `" .. tbl_sql ["acre"] .. "` (`cc`, `nick`) values ('" .. ccrep .. "', '" .. usrep .. "')")
+		local room = table_sets ["ccroomstyle"]:gsub ("<cc>", reprexpchars (cc)) -- code
+		room = room:gsub ("<cn>", reprexpchars (cc_names [cc] or gettext ("Unknown country"))) -- name
+		room = room:gsub (string.char (32), string.char (160)) -- space
+		commandanswer (nick, gettext ("Added automatic country chatroom entrance for %s: %s"):format (room, us))
+	end
+end
+
+----- ---- --- -- -
+
+function delacre (nick, data)
+	local id = tonumber (data) or 0
+	local _, rows = VH:SQLQuery ("select `id` from `" .. tbl_sql ["acre"] .. "` where `id` = " .. tostring (id) .. " limit 1")
+
+	if rows > 0 then
+		VH:SQLQuery ("delete from `" .. tbl_sql ["acre"] .. "` where `id` = " .. tostring (id) .. " limit 1")
+		commandanswer (nick, gettext ("Deleted automatic country chatroom entrance with ID: %d"):format (id))
+	else
+		commandanswer (nick, gettext ("Couldn't delete automatic country chatroom entrance because ID not found: %d"):format (id))
+	end
+end
+
+----- ---- --- -- -
+
+function listacre (nick)
+	local _, rows = VH:SQLQuery ("select * from `" .. tbl_sql ["acre"] .. "` order by `id` asc")
+
+	if rows > 0 then
+		local list = ""
+
+		for x = 0, rows - 1 do
+			local _, id, cc, us = VH:SQLFetch (x)
+			cc = cc:upper ()
+			local room = table_sets ["ccroomstyle"]:gsub ("<cc>", reprexpchars (cc)) -- code
+			room = room:gsub ("<cn>", reprexpchars (cc_names [cc] or gettext ("Unknown country"))) -- name
+			room = room:gsub (string.char (32), string.char (160)) -- space
+			list = list .. " [ I: " .. tostring (id) .. " ] [ C: " .. room .. " ] [ N: " .. us .. " ]\r\n"
+		end
+
+		commandanswer (nick, gettext ("Automatic country chatroom entrance list") .. ":\r\n\r\n" .. list)
+	else
+		commandanswer (nick, gettext ("Automatic country chatroom entrance list is empty."))
+	end
+end
+
+----- ---- --- -- -
+
 function installchatrooms ()
-	local _, rows = VH:SQLQuery ("select `room`, `description` from `"..tbl_sql ["chat"].."`")
+	local _, rows = VH:SQLQuery ("select `room`, `description` from `" .. tbl_sql ["chat"] .. "`")
 
 	for x = 0, rows - 1 do
 		local _, room, desc = VH:SQLFetch (x)
@@ -5929,9 +6036,9 @@ end
 ----- ---- --- -- -
 
 function uninstallchatrooms ()
-	local _, rows = VH:SQLQuery ("select `room` from `"..tbl_sql ["chat"].."`")
+	local _, rows = VH:SQLQuery ("select `room` from `" .. tbl_sql ["chat"] .. "`")
 
-	for x = 0, (tonumber (rows) or 0) - 1 do -- verlihub bug
+	for x = 0, (tonumber (rows) or 0) - 1 do
 		local _, room = VH:SQLFetch (x)
 		delhubrobot (room)
 	end
@@ -5980,25 +6087,84 @@ end
 ----- ---- --- -- -
 
 function addccroommember (nick, class)
-	if table_othsets ["func_getcc"] == false then return nil end
-	if table_sets ["ccroomrunning"] == 0 then return nil end
-	if isbot (nick) == true then return nil end
-	if class < table_sets ["ccroomautocls"] then return nil end -- auto class condition
+	if not table_othsets ["func_getcc"] or table_sets ["ccroomrunning"] == 0 or isbot (nick) or class < table_sets ["ccroomautocls"] then
+		return
+	end
+
 	local cc = getcc (nick)
-	if not cc then return nil end
-	if cc == "--" then return nil end
-	local robot = string.gsub (table_sets ["ccroomstyle"], "<cc>", reprexpchars (cc)) -- create robot nick
-	robot = string.gsub (robot, "<cn>", reprexpchars (cc_names [cc] or gettext ("Unknown country")))
-	robot = string.gsub (robot, string.char (32), string.char (160)) -- space to non-breaking space
+
+	if not cc or cc == "--" then
+		return
+	end
+
+	local room = table_sets ["ccroomstyle"]:gsub ("<cc>", reprexpchars (cc)) -- create room nick
+	room = room:gsub ("<cn>", reprexpchars (cc_names [cc] or gettext ("Unknown country")))
+	room = room:gsub (string.char (32), string.char (160)) -- space to non-breaking space
 
 	if table_room [cc] then -- room exists
 		if getccroommember (nick, cc) == 0 then -- add user to member list
 			table.insert (table_room [cc], nick)
-			edithubrobot (robot, string.format (gettext ("Chatroom: %s"), (cc_names [cc] or gettext ("Unknown country"))), 1, "", # table_room [cc])
+			edithubrobot (room, gettext ("Chatroom: %s"):format (cc_names [cc] or gettext ("Unknown country")), 1, "", # table_room [cc])
 		end
 	else -- create new room
 		table_room [cc] = {nick}
-		addhubrobot (robot, string.format (gettext ("Chatroom: %s"), (cc_names [cc] or gettext ("Unknown country"))), 1, "", 1)
+		addhubrobot (room, gettext ("Chatroom: %s"):format (cc_names [cc] or gettext ("Unknown country")), 1, "", 1)
+	end
+end
+
+----- ---- --- -- -
+
+function delccroommember (nick)
+	if not table_othsets ["func_getcc"] or table_sets ["ccroomrunning"] == 0 or isbot (nick) then
+		return
+	end
+
+	for cc, _ in pairs (table_room) do -- remove user from all rooms
+		local pos = getccroommember (nick, cc)
+
+		if pos > 0 then
+			table.remove (table_room [cc], pos)
+			local room = table_sets ["ccroomstyle"]:gsub ("<cc>", reprexpchars (cc)) -- create room nick
+			room = room:gsub ("<cn>", reprexpchars (cc_names [cc] or gettext ("Unknown country")))
+			room = room:gsub (string.char (32), string.char (160)) -- space to non-breaking space
+
+			if # table_room [cc] == 0 then -- remove the room itself when empty
+				delhubrobot (room)
+				table_room [cc] = nil
+			else -- modify room
+				edithubrobot (room, gettext ("Chatroom: %s"):format (cc_names [cc] or gettext ("Unknown country")), 1, "", # table_room [cc])
+			end
+		end
+	end
+end
+
+----- ---- --- -- -
+
+function addccroomacre (nick, class)
+	if not table_othsets ["func_getcc"] or table_sets ["ccroomrunning"] == 0 or isbot (nick) or class < table_sets ["ccroomautocls"] then
+		return
+	end
+
+	local _, rows = VH:SQLQuery ("select `cc` from `" .. tbl_sql ["acre"] .. "` where `nick` = '" .. repsqlchars (nick) .. "'")
+
+	if rows > 0 then
+		for x = 0, rows - 1 do
+			local _, cc = VH:SQLFetch (x)
+			cc = cc:upper ()
+			local room = table_sets ["ccroomstyle"]:gsub ("<cc>", reprexpchars (cc)) -- code
+			room = room:gsub ("<cn>", reprexpchars (cc_names [cc] or gettext ("Unknown country"))) -- name
+			room = room:gsub (string.char (32), string.char (160)) -- space
+
+			if table_room [cc] then -- exists
+				if getccroommember (nick, cc) == 0 then -- add
+					table.insert (table_room [cc], nick)
+					edithubrobot (room, gettext ("Chatroom: %s"):format (cc_names [cc] or gettext ("Unknown country")), 1, "", # table_room [cc])
+				end
+			else -- create
+				table_room [cc] = {nick}
+				addhubrobot (room, gettext ("Chatroom: %s"):format (cc_names [cc] or gettext ("Unknown country")), 1, "", 1)
+			end
+		end
 	end
 end
 
@@ -6249,32 +6415,6 @@ function broadcastchatroom (to, nick, data, ucl) -- class based chatroom
 	end
 
 	return false
-end
-
------ ---- --- -- -
-
-function delccroommember (nick)
-if table_othsets ["func_getcc"] == false then return nil end
-if table_sets ["ccroomrunning"] == 0 then return nil end
-if isbot (nick) == true then return nil end
-
-for k, _ in pairs (table_room) do -- remove user from all rooms
-	local mem = getccroommember (nick, k)
-
-	if mem > 0 then
-		table.remove (table_room [k], mem)
-		local robot = string.gsub (table_sets ["ccroomstyle"], "<cc>", reprexpchars (k)) -- create robot nick
-		robot = string.gsub (robot, "<cn>", reprexpchars (cc_names [k] or gettext ("Unknown country")))
-		robot = string.gsub (robot, string.char (32), string.char (160)) -- space to non-breaking space
-
-		if # table_room [k] == 0 then -- remove the room itself when empty
-			delhubrobot (robot)
-			table_room [k] = nil
-		else -- modify room
-			edithubrobot (robot, string.format (gettext ("Chatroom: %s"), (cc_names [k] or gettext ("Unknown country"))), 1, "", # table_room [k])
-		end
-	end
-end
 end
 
 ----- ---- --- -- -
@@ -13271,14 +13411,18 @@ susmenitm (usr, gettext ("Welcome messages").."\\"..gettext ("Set your welcome m
 susmenitm (usr, gettext ("Welcome messages").."\\"..gettext ("Show your welcome messages"), table_cmnds ["wmshow"])
 end
 
--- chatrooms
-
-if ucl >= table_sets ["mincommandclass"] then
-sopmenitm (usr, gettext ("Chatrooms").."\\"..gettext ("Add chatroom"), table_cmnds ["chatadd"].." %[line:<"..gettext ("nick")..">] %[line:<"..gettext ("description")..">] %[line:<"..gettext ("minclass")..">] %[line:<"..gettext ("maxclass")..">] %[line:<"..gettext ("cc")..">]")
-sopmenitm (usr, gettext ("Chatrooms").."\\"..gettext ("Chatroom list"), table_cmnds ["chatlist"])
-smensep (usr)
-sopmenitm (usr, gettext ("Chatrooms").."\\"..gettext ("Delete chatroom"), table_cmnds ["chatdel"].." %[line:<"..gettext ("nick")..">]")
-end
+	-- chatrooms
+	if ucl >= table_sets ["mincommandclass"] then
+		sopmenitm (usr, gettext ("Chatrooms") .. "\\" .. gettext ("Add chatroom"), table_cmnds ["chatadd"] .. " %[line:<" .. gettext ("nick") .. ">] %[line:<" .. gettext ("description") .. ">] %[line:<" .. gettext ("minclass") .. ">] %[line:<" .. gettext ("maxclass") .. ">] %[line:<" .. gettext ("cc") .. ">]")
+		sopmenitm (usr, gettext ("Chatrooms") .. "\\" .. gettext ("Chatroom list"), table_cmnds ["chatlist"])
+		smensep (usr)
+		sopmenitm (usr, gettext ("Chatrooms") .. "\\" .. gettext ("Delete chatroom"), table_cmnds ["chatdel"] .. " %[line:<" .. gettext ("nick") .. ">]")
+		smensep (usr)
+		sopmenitm (usr, gettext ("Chatrooms") .. "\\" .. gettext ("Add automatic country chatroom entrance"), table_cmnds ["acreadd"] .. " %[line:<" .. gettext ("cc") .. ">] %[line:<" .. gettext ("nick") .. ">]")
+		sopmenitm (usr, gettext ("Chatrooms") .. "\\" .. gettext ("Automatic country chatroom entrance list"), table_cmnds ["acrelist"])
+		smensep (usr)
+		sopmenitm (usr, gettext ("Chatrooms") .. "\\" .. gettext ("Delete automatic country chatroom entrance"), table_cmnds ["acredel"] .. " %[line:<" .. gettext ("identifier") .. ">]")
+	end
 
 -- reminders
 
@@ -16708,10 +16852,13 @@ help = help.." "..optrig..table_cmnds ["wmforce"].." <"..gettext ("type").."> <"
 help = help.." "..optrig..table_cmnds ["wmlist"].." - "..gettext ("Welcome message list").."\r\n"
 help = help.." "..optrig..table_cmnds ["wmdel"].." <"..gettext ("nick").."> - "..gettext ("Delete user and his welcome messages").."\r\n\r\n"
 
--- chatrooms
-help = help.." "..optrig..table_cmnds ["chatadd"].." <"..gettext ("nick").."> <"..gettext ("description").."> <"..gettext ("minclass").."> <"..gettext ("maxclass").."> <"..gettext ("cc").."> - "..gettext ("Add chatroom").."\r\n"
-help = help.." "..optrig..table_cmnds ["chatlist"].." - "..gettext ("Chatroom list").."\r\n"
-help = help.." "..optrig..table_cmnds ["chatdel"].." <"..gettext ("nick").."> - "..gettext ("Delete chatroom").."\r\n\r\n"
+	-- chatrooms
+	help = help .. " " .. optrig .. table_cmnds ["chatadd"] .. " <" .. gettext ("nick") .. "> <" .. gettext ("description") .. "> <" .. gettext ("minclass") .. "> <" .. gettext ("maxclass") .. "> <" .. gettext ("cc") .. "> - " .. gettext ("Add chatroom") .. "\r\n"
+	help = help .. " " .. optrig .. table_cmnds ["chatlist"] .. " - " .. gettext ("Chatroom list") .. "\r\n"
+	help = help .. " " .. optrig .. table_cmnds ["chatdel"] .. " <" .. gettext ("nick") .. "> - " .. gettext ("Delete chatroom") .. "\r\n"
+	help = help .. " " .. optrig .. table_cmnds ["acreadd"] .. " <" .. gettext ("cc") .. "> <" .. gettext ("nick") .. "> - " .. gettext ("Add automatic country chatroom entrance") .. "\r\n"
+	help = help .. " " .. optrig .. table_cmnds ["acrelist"] .. " - " .. gettext ("Automatic country chatroom entrance list") .. "\r\n"
+	help = help .. " " .. optrig .. table_cmnds ["acredel"] .. " <" .. gettext ("identifier") .. "> - " .. gettext ("Delete automatic country chatroom entrance") .. "\r\n\r\n"
 
 -- reminders
 help = help.." "..optrig..table_cmnds ["remadd"].." <"..gettext ("identifier").."> <"..gettext ("content").."> <"..gettext ("minclass").."> <"..gettext ("maxclass").."> <"..gettext ("destination").."> <"..gettext ("interval").."> - "..gettext ("Add reminder").."\r\n"
