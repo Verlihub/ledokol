@@ -341,23 +341,28 @@ table_othsets = {
 	--["ver_ltn12"] = nil,
 	--["mod_ltn12"] = nil,
 	["serv_udp"] = nil,
-	["func_getcc"] = false,
-	["func_getusercity"] = false,
-	["func_getipcc"] = false,
-	["func_getipcn"] = false,
-	["func_getusergeoip"] = false,
-	["func_gethostgeoip"] = false,
-	["func_getluabots"] = false,
-	["func_getuptime"] = false,
-	["func_gettopic"] = false,
-	["func_getuserversion"] = false,
-	["func_getusersupports"] = false,
-	["func_sendtoactiveclass"] = false,
-	["func_inusersupports"] = false,
-	["func_kickrediruser"] = false,
 	["langver"] = "EN",
 	["locked"] = false,
 	["restart"] = false
+}
+
+table_refu = {
+	["GetUserCC"] = false,
+	["GetUserCity"] = false,
+	--["GetIPCN"] = false,
+	["GetIPCC"] = false,
+	["GetUserGeoIP"] = false,
+	["GetHostGeoIP"] = false,
+	["GetLuaBots"] = false,
+	["GetUpTime"] = false,
+	["GetTopic"] = false,
+	["SetTopic"] = false,
+	["GetUserVersion"] = false,
+	["GetUserSupports"] = false,
+	["SendToActiveClass"] = false,
+	["SendToPassiveClass"] = false,
+	["InUserSupports"] = false,
+	["KickRedirUser"] = false
 }
 
 ---------------------------------------------------------------------
@@ -3769,7 +3774,7 @@ end
 if table_sets ["useripinchat"] > 0 then -- ip in chat
 	local pfx = ""
 
-	if (table_sets ["useripinchat"] == 2) and (table_othsets ["func_getcc"] == true) then
+	if table_sets ["useripinchat"] == 2 and table_refu ["GetUserCC"] then
 		local cc = getcc (nick)
 		if (not cc) or (cc == "--") then cc = "??" end
 		pfx = "[ "..ip.." &#124; "..cc.." ]"
@@ -3853,7 +3858,7 @@ local retval = 1
 if table_sets ["useripinchat"] > 0 then -- ip in chat
 	local pfx = ""
 
-	if (table_sets ["useripinchat"] == 2) and (table_othsets ["func_getcc"] == true) then
+	if table_sets ["useripinchat"] == 2 and table_refu ["GetUserCC"] then
 		local cc = getcc (nick)
 		if (not cc) or (cc == "--") then cc = "??" end
 		pfx = "[ "..ip.." &#124; "..cc.." ]"
@@ -4428,7 +4433,7 @@ end
 								table_faau [nick] = 1
 							end
 
-							if table_othsets ["func_kickrediruser"] then
+							if table_refu ["KickRedirUser"] then
 								VH:KickRedirUser (table_othsets ["sendfrom"], nick, table_sets ["avkicktext"], table_othsets ["avdbhubaddr"])
 							else
 								VH:KickUser (table_othsets ["sendfrom"], nick, table_sets ["avkicktext"])
@@ -4488,7 +4493,7 @@ end
 		table_usup [nick] = os.time ()
 	end
 
-if (table_othsets ["func_getcc"] == true) and (table_sets ["savecchistory"] == 1) and (table_sets ["ccstatsclass"] < 11) then -- cc statistics
+if table_refu ["GetUserCC"] and table_sets ["savecchistory"] == 1 and table_sets ["ccstatsclass"] < 11 then -- cc statistics
 	if isbot (nick) == false then -- callback used for bots too
 		local cc = getcc (nick)
 
@@ -4775,13 +4780,13 @@ function VH_OnTimer (msec)
 		end
 
 		if table_sets ["avsearservaddr"] ~= "" and table_othsets ["serv_udp"] then -- we have search server
-			if table_othsets ["func_sendtoactiveclass"] then -- active request to passive users and passive request to active users
+			if table_refu ["SendToActiveClass"] and table_refu ["SendToPassiveClass"] then -- active request to passive users and passive request to active users
 				VH:SendToPassiveClass ("$Search " .. table_sets ["avsearservaddr"] .. ":" .. tostring (table_sets ["avsearservport"]) .. " F?F?0?1?" .. table_avse [table_othsets ["avnextitem"]] .. "|", 0, table_sets ["scanbelowclass"] - 1)
 				VH:SendToActiveClass ("$Search Hub:" .. table_othsets ["sendfrom"] .. " F?F?0?1?" .. table_avse [table_othsets ["avnextitem"]] .. "|", 0, table_sets ["scanbelowclass"] - 1)
 			else -- active request to all users
 				VH:SendToClass ("$Search " .. table_sets ["avsearservaddr"] .. ":" .. tostring (table_sets ["avsearservport"]) .. " F?F?0?1?" .. table_avse [table_othsets ["avnextitem"]] .. "|", 0, table_sets ["scanbelowclass"] - 1)
 			end
-		elseif table_othsets ["func_sendtoactiveclass"] then -- we dont have server
+		elseif table_refu ["SendToActiveClass"] then -- we dont have server
 			VH:SendToActiveClass ("$Search Hub:" .. table_othsets ["sendfrom"] .. " F?F?0?1?" .. table_avse [table_othsets ["avnextitem"]] .. "|", 0, table_sets ["scanbelowclass"] - 1)
 		else -- we have nothing
 			VH:SendToClass ("$Search Hub:" .. table_othsets ["sendfrom"] .. " F?F?0?1?" .. table_avse [table_othsets ["avnextitem"]] .. "|", 0, table_sets ["scanbelowclass"] - 1)
@@ -4792,13 +4797,13 @@ function VH_OnTimer (msec)
 				table_othsets ["avrandstr"] = genrandstr (30)
 
 				if table_sets ["avsearservaddr"] ~= "" and table_othsets ["serv_udp"] then -- we have search server
-					if table_othsets ["func_sendtoactiveclass"] then -- active request to passive users and passive request to active users
+					if table_refu ["SendToActiveClass"] and table_refu ["SendToPassiveClass"] then -- active request to passive users and passive request to active users
 						VH:SendToPassiveClass ("$Search " .. table_sets ["avsearservaddr"] .. ":" .. tostring (table_sets ["avsearservport"]) .. " F?F?0?1?" .. table_othsets ["avrandstr"] .. "|", 0, table_sets ["scanbelowclass"] - 1)
 						VH:SendToActiveClass ("$Search Hub:" .. table_othsets ["sendfrom"] .. " F?F?0?1?" .. table_othsets ["avrandstr"] .. "|", 0, table_sets ["scanbelowclass"] - 1)
 					else -- active request to all users
 						VH:SendToClass ("$Search " .. table_sets ["avsearservaddr"] .. ":" .. tostring (table_sets ["avsearservport"]) .. " F?F?0?1?" .. table_othsets ["avrandstr"] .. "|", 0, table_sets ["scanbelowclass"] - 1)
 					end
-				elseif table_othsets ["func_sendtoactiveclass"] then -- we dont have server
+				elseif table_refu ["SendToActiveClass"] then -- we dont have server
 					VH:SendToActiveClass ("$Search Hub:" .. table_othsets ["sendfrom"] .. " F?F?0?1?" .. table_othsets ["avrandstr"] .. "|", 0, table_sets ["scanbelowclass"] - 1)
 				else -- we have nothing
 					VH:SendToClass ("$Search Hub:" .. table_othsets ["sendfrom"] .. " F?F?0?1?" .. table_othsets ["avrandstr"] .. "|", 0, table_sets ["scanbelowclass"] - 1)
@@ -4836,7 +4841,7 @@ function VH_OnTimer (msec)
 	end
 
 	if table_sets ["rolltopicint"] > 0 then -- rolling topic
-		if (not table_othsets ["topicvalue"]) and (table_othsets ["func_gettopic"] == true) then
+		if not table_othsets ["topicvalue"] and table_refu ["GetTopic"] then
 			table_othsets ["topicvalue"] = VH:GetTopic ()
 		end
 
@@ -5656,7 +5661,7 @@ end
 if table_sets ["useripinchat"] > 0 then -- ip in chat
 	local pfx = ""
 
-	if (table_sets ["useripinchat"] == 2) and (table_othsets ["func_getcc"] == true) then
+	if table_sets ["useripinchat"] == 2 and table_refu ["GetUserCC"] then
 		local cc = getcc (nick)
 		if (not cc) or (cc == "--") then cc = "??" end
 		pfx = "[ "..ip.." &#124; "..cc.." ]"
@@ -6087,7 +6092,7 @@ end
 ----- ---- --- -- -
 
 function addccroommember (nick, class)
-	if not table_othsets ["func_getcc"] or table_sets ["ccroomrunning"] == 0 or isbot (nick) or class < table_sets ["ccroomautocls"] then
+	if not table_refu ["GetUserCC"] or table_sets ["ccroomrunning"] == 0 or isbot (nick) or class < table_sets ["ccroomautocls"] then
 		return
 	end
 
@@ -6115,7 +6120,7 @@ end
 ----- ---- --- -- -
 
 function delccroommember (nick)
-	if not table_othsets ["func_getcc"] or table_sets ["ccroomrunning"] == 0 or isbot (nick) then
+	if not table_refu ["GetUserCC"] or table_sets ["ccroomrunning"] == 0 or isbot (nick) then
 		return
 	end
 
@@ -6141,7 +6146,7 @@ end
 ----- ---- --- -- -
 
 function addccroomacre (nick, class)
-	if not table_othsets ["func_getcc"] or table_sets ["ccroomrunning"] == 0 or isbot (nick) or class < table_sets ["ccroomautocls"] then
+	if not table_refu ["GetUserCC"] or table_sets ["ccroomrunning"] == 0 or isbot (nick) or class < table_sets ["ccroomautocls"] then
 		return
 	end
 
@@ -6182,8 +6187,9 @@ end
 ----- ---- --- -- -
 
 function broadcastccroom (to, nick, data, class) -- cc based chatroom
-if table_othsets ["func_getcc"] == false then return false end
-if table_sets ["ccroomrunning"] == 0 then return false end
+	if not table_refu ["GetUserCC"] or table_sets ["ccroomrunning"] == 0 then
+		return false
+	end
 
 for k, v in pairs (table_room) do
 	local robot = string.gsub (table_sets ["ccroomstyle"], "<cc>", reprexpchars (k))
@@ -6310,7 +6316,7 @@ function broadcastchatroom (to, nick, data, ucl) -- class based chatroom
 		if room == to then -- room match
 			minc, maxc = tonumber (minc), tonumber (maxc)
 
-			if (ucl >= minc) and (ucl <= maxc) and ((table_othsets ["func_getcc"] == false) or (cc == "*") or (cc == getcc (nick))) then -- is member
+			if ucl >= minc and ucl <= maxc and (not table_refu ["GetUserCC"] or cc == "*" or cc == getcc (nick)) then -- is member
 				local ign = getchatroomignore (nick, to)
 				local _, _, cmd = string.find (data, "^"..table_othsets ["ustrig"].."(%S+).*$")
 
@@ -6325,7 +6331,7 @@ function broadcastchatroom (to, nick, data, ucl) -- class based chatroom
 									if isbot (x) == false then
 										local cl = getclass (x)
 
-										if (x ~= nick) and (cl >= minc) and (cl <= maxc) and ((table_othsets ["func_getcc"] == false) or (cc == "*") or (cc == getcc (x))) and (getchatroomignore (x, to) == 0) then -- skip self
+										if x ~= nick and cl >= minc and cl <= maxc and (not table_refu ["GetUserCC"] or cc == "*" or cc == getcc (x)) and getchatroomignore (x, to) == 0 then -- skip self
 											VH:SendToUser ("$To: "..x.." From: "..to.." $<"..to.."> "..string.format (gettext ("User entered the chatroom: %s"), nick).."|", x)
 										end
 									end
@@ -6352,7 +6358,7 @@ function broadcastchatroom (to, nick, data, ucl) -- class based chatroom
 									if isbot (x) == false then
 										local cl = getclass (x)
 
-										if (x ~= nick) and (cl >= minc) and (cl <= maxc) and ((table_othsets ["func_getcc"] == false) or (cc == "*") or (cc == getcc (x))) and (getchatroomignore (x, to) == 0) then -- skip self
+										if x ~= nick and cl >= minc and cl <= maxc and (not table_refu ["GetUserCC"] or cc == "*" or cc == getcc (x)) and getchatroomignore (x, to) == 0 then -- skip self
 											VH:SendToUser ("$To: "..x.." From: "..to.." $<"..to.."> "..string.format (gettext ("User left the chatroom: %s"), nick).."|", x)
 										end
 									end
@@ -6368,7 +6374,7 @@ function broadcastchatroom (to, nick, data, ucl) -- class based chatroom
 							if isbot (x) == false then
 								local cl = getclass (x)
 
-								if (cl >= minc) and (cl <= maxc) and ((table_othsets ["func_getcc"] == false) or (cc == "*") or (cc == getcc (x))) and (getchatroomignore (x, to) == 0) then
+								if cl >= minc and cl <= maxc and (not table_refu ["GetUserCC"] or cc == "*" or cc == getcc (x)) and getchatroomignore (x, to) == 0 then
 									list = list.." "..c..". "..x.."\r\n"
 									c = c + 1
 								end
@@ -6396,7 +6402,7 @@ function broadcastchatroom (to, nick, data, ucl) -- class based chatroom
 							if isbot (x) == false then
 								local cl = getclass (x)
 
-								if (x ~= nick) and (cl >= minc) and (cl <= maxc) and ((table_othsets ["func_getcc"] == false) or (cc == "*") or (cc == getcc (x))) and (getchatroomignore (x, to) == 0) then -- skip self
+								if x ~= nick and cl >= minc and cl <= maxc and (not table_refu ["GetUserCC"] or cc == "*" or cc == getcc (x)) and getchatroomignore (x, to) == 0 then -- skip self
 									VH:SendToUser ("$To: "..x.." From: "..to.." $<"..nick.."> "..data.."|", x)
 								end
 							end
@@ -7482,7 +7488,7 @@ function sendrcmenu (nick, class)
 		return
 	end
 
-	if table_othsets ["func_inusersupports"] then -- check if client supports user commands
+	if table_refu ["InUserSupports"] then -- check if client supports user commands
 		local on, has = VH:InUserSupports (nick, "UserCommand")
 
 		if on and has and tonumber (has) == 0 then
@@ -8238,7 +8244,7 @@ local user = getcsnick (usr)
 if not user then -- not in list
 	commandanswer (nick, string.format (gettext ("User not in list: %s"), usr))
 elseif isbot (user) == true then -- bot
-	if table_othsets ["func_getluabots"] == true then
+	if table_refu ["GetLuaBots"] then
 		local bots = VH:GetLuaBots ()
 		local info = ""
 
@@ -8343,7 +8349,7 @@ else -- user
 
 	info = info .. " " .. string.format (gettext ("IP: %s"), ip) .. "\r\n" -- ip
 
-	if table_othsets ["func_getusergeoip"] == true then
+	if table_refu ["GetUserGeoIP"] then
 		local on, geoip = VH:GetUserGeoIP (user)
 
 		if on and geoip and geoip ["host"] then
@@ -8452,7 +8458,7 @@ else -- user
 		end
 	end
 
-	if table_othsets ["func_getusersupports"] == true then
+	if table_refu ["GetUserSupports"] then
 		local on, sup = VH:GetUserSupports (user)
 
 		if on and sup and sup ~= "" then
@@ -8460,7 +8466,7 @@ else -- user
 		end
 	end
 
-	if table_othsets ["func_getuserversion"] == true then
+	if table_refu ["GetUserVersion"] then
 		local on, ver = VH:GetUserVersion (user)
 
 		if on and ver and ver ~= "" then
@@ -8489,7 +8495,7 @@ end
 ----- ---- --- -- -
 
 function showipinfo (nick, ip)
-	if table_othsets ["func_gethostgeoip"] == true then
+	if table_refu ["GetHostGeoIP"] then
 		local info = ""
 		local ok, geoip = VH:GetHostGeoIP (ip)
 
@@ -8797,7 +8803,7 @@ function collectstats ()
 
 	-- uptime and peak
 
-	if table_othsets ["func_getuptime"] then
+	if table_refu ["GetUpTime"] then
 		local ut = getuptime ()
 		VH:SQLQuery ("insert into `" .. tbl_sql ["stat"] .. "` (`type`, `time`, `count`) values ('uptime_now', " .. tostring (tm) .. ", " .. tostring (ut) .. ") on duplicate key update `time` = " .. tostring (tm) .. ", `count` = " .. tostring (ut))
 		local _, rows = VH:SQLQuery ("select `count` from `" .. tbl_sql ["stat"] .. "` where `type` = 'uptime_peak' limit 1")
@@ -10237,8 +10243,10 @@ end
 ----- ---- --- -- -
 
 function checkcc (nick, cls)
-	if table_sets ["michcc"] == 0 then return false end
-	if table_othsets ["func_getcc"] == false then return false end
+	if table_sets ["michcc"] == 0 or not table_refu ["GetUserCC"] then
+		return false
+	end
+
 	local cc = getcc (nick)
 	if not cc then return false end
 	local _, rows = VH:SQLQuery ("select `cc`, `time` from `"..tbl_sql ["micc"].."` order by `occurred` desc")
@@ -10347,8 +10355,10 @@ end
 ----- ---- --- -- -
 
 function checksup (nick, cls, ip)
-	if table_sets ["michsup"] == 0 then return false end
-	if table_othsets ["func_getusersupports"] == false then return false end
+	if table_sets ["michsup"] == 0 or not table_refu ["GetUserSupports"] then
+		return false
+	end
+
 	local on, sup = VH:GetUserSupports (nick)
 	if (not on) or (not sup) or (sup == "") then return false end
 	local _, rows = VH:SQLQuery ("select `supports`, `time` from `" .. tbl_sql ["misup"] .. "` order by `occurred` desc")
@@ -10402,8 +10412,10 @@ end
 ----- ---- --- -- -
 
 function checkver (nick, cls, ip)
-	if table_sets ["michver"] == 0 then return false end
-	if table_othsets ["func_getuserversion"] == false then return false end
+	if table_sets ["michver"] == 0 or not table_refu ["GetUserVersion"] then
+		return false
+	end
+
 	local on, ver = VH:GetUserVersion (nick)
 	if (not on) or (not ver) or (ver == "") then return false end
 	local _, rows = VH:SQLQuery ("select `version`, `time` from `" .. tbl_sql ["miver"] .. "` order by `occurred` desc")
@@ -12719,7 +12731,7 @@ function savetopic (owner, topic, ucls)
 		table_othsets ["rolltopicsecs"] = os.time ()
 		table_othsets ["rolltopiclen"] = 1
 
-		if table_othsets ["func_gettopic"] == true then
+		if table_refu ["SetTopic"] then
 			VH:SetTopic (string.rep (" ", table_sets ["rolltopicspace"])..topic)
 		else
 			VH:SendToClass ("$HubName "..getconfig ("hub_name").." - "..string.rep (" ", table_sets ["rolltopicspace"])..topic.."|", 0, 10)
@@ -12730,7 +12742,7 @@ end
 ----- ---- --- -- -
 
 function sendtopic (nick)
-	if table_othsets ["func_gettopic"] == true then
+	if table_refu ["GetTopic"] then
 		local topic = VH:GetTopic ()
 
 		if topic and (topic ~= "") then
@@ -12768,7 +12780,7 @@ function rolltopic ()
 	newtopc = string.sub (newtopc, table_othsets ["rolltopiclen"] + 1, -1)..string.sub (newtopc, 1, table_othsets ["rolltopiclen"])
 	table_othsets ["rolltopiclen"] = table_othsets ["rolltopiclen"] + 1 -- steps to move
 
-	if table_othsets ["func_gettopic"] == true then
+	if table_refu ["SetTopic"] then
 		VH:SetTopic (newtopc)
 	else
 		VH:SendToClass ("$HubName "..getconfig ("hub_name").." - "..newtopc.."|", 0, 10)
@@ -13143,7 +13155,7 @@ end
 ----- ---- --- -- -
 
 function sendlivecc (nick)
-if table_othsets ["func_getcc"] == false then
+if not table_refu ["GetUserCC"] then
 	commandanswer (nick, string.format (gettext ("This feature requires %s or later installed on your system."), "Verlihub 0.9.8e"))
 else
 	local ccs, cnt = {}, 0
@@ -13171,7 +13183,7 @@ end
 ----- ---- --- -- -
 
 function sendlivecity (nick, cc)
-	if (table_othsets ["func_getcc"] == false) or (table_othsets ["func_getusercity"] == false) then
+	if not table_refu ["GetUserCC"] or not table_refu ["GetUserCity"] then
 		commandanswer (nick, string.format (gettext ("This feature requires %s or later installed on your system."), "Verlihub 1.0.0"))
 	else
 		local list, count, ucc = {}, 0, string.upper (cc)
@@ -13203,7 +13215,7 @@ end
 ----- ---- --- -- -
 
 function sendhistcc (nick)
-if table_othsets ["func_getcc"] == false then
+if not table_refu ["GetUserCC"] then
 	commandanswer (nick, string.format (gettext ("This feature requires %s or later installed on your system."), "Verlihub 0.9.8e"))
 else
 	local _, rows = VH:SQLQuery ("select `cc` from `"..tbl_sql ["ccstat"].."`")
@@ -13277,7 +13289,7 @@ function installusermenu (usr)
 		return
 	end
 
-	if table_othsets ["func_inusersupports"] then -- check if client supports user commands
+	if table_refu ["InUserSupports"] then -- check if client supports user commands
 		local on, has = VH:InUserSupports (usr, "UserCommand")
 
 		if on and has and tonumber (has) == 0 then
@@ -13924,7 +13936,11 @@ end
 elseif tvar == "ccroomrunning" then
 if num == true then
 if (setto == 0) or (setto == 1) then
-if (setto == 1) and (table_othsets ["func_getcc"] == false) then commandanswer (nick, string.format (gettext ("This feature requires %s or later installed on your system."), "Verlihub 0.9.8e")) end
+
+	if setto == 1 and not table_refu ["GetUserCC"] then
+		commandanswer (nick, string.format (gettext ("This feature requires %s or later installed on your system."), "Verlihub 0.9.8e"))
+	end
+
 if (table_sets [tvar] ~= setto) and (setto == 0) then uninstallccrooms () end
 ok = true
 else
@@ -15007,11 +15023,11 @@ end
 		if num == true then
 			if ((setto >= 0) and (setto <= 5)) or (setto == 10) or (setto == 11) then
 				if setto < 11 then
-					if table_othsets ["func_getcc"] == false then
+					if not table_refu ["GetUserCC"] then
 						commandanswer (nick, string.format (gettext ("This feature requires %s or later installed on your system."), "Verlihub 0.9.8e"))
 					end
 
-					if table_othsets ["func_getusercity"] == false then
+					if not table_refu ["GetUserCity"] then
 						commandanswer (nick, string.format (gettext ("This feature requires %s or later installed on your system."), "Verlihub 1.0.0"))
 					end
 				end
@@ -15032,7 +15048,7 @@ if (setto == 0) or (setto == 1) then
 ok = true
 
 if setto == 1 then -- set first date
-if table_othsets ["func_getcc"] == false then
+if not table_refu ["GetUserCC"] then
 commandanswer (nick, string.format (gettext ("This feature requires %s or later installed on your system."), "Verlihub 0.9.8e"))
 else
 VH:SQLQuery ("insert ignore into `"..tbl_sql ["conf"].."` (`variable`, `value`) values ('date_ccstats', "..(os.time () + table_sets ["srvtimediff"])..")")
@@ -15968,7 +15984,7 @@ end
 	elseif tvar == "michsup" then
 		if num == true then
 			if (setto == 0) or (setto == 1) then
-				if (setto == 1) and (table_othsets ["func_getusersupports"] == false) then
+				if setto == 1 and not table_refu ["GetUserSupports"] then
 					commandanswer (nick, string.format (gettext ("Latest version of %s is required in order to use this feature."), "Verlihub"))
 				end
 
@@ -15985,7 +16001,7 @@ end
 	elseif tvar == "michver" then
 		if num == true then
 			if (setto == 0) or (setto == 1) then
-				if (setto == 1) and (table_othsets ["func_getuserversion"] == false) then
+				if setto == 1 and not table_refu ["GetUserVersion"] then
 					commandanswer (nick, string.format (gettext ("Latest version of %s is required in order to use this feature."), "Verlihub"))
 				end
 
@@ -16002,7 +16018,7 @@ end
 	elseif tvar == "michcc" then
 		if num == true then
 			if (setto == 0) or (setto == 1) then
-				if (setto == 1) and (table_othsets ["func_getcc"] == false) then
+				if setto == 1 and not table_refu ["GetUserCC"] then
 					commandanswer (nick, string.format (gettext ("This feature requires %s or later installed on your system."), "Verlihub 0.9.8e"))
 				--else
 					--ok = true
@@ -17106,7 +17122,7 @@ end
 stats = stats.."\r\n "..string.format (gettext ("Script memory usage: %s"), mu)
 stats = stats.."\r\n "..string.format (gettext ("Script size: %d lines in %s"), getownlinecnt (), makesize (getownsize (false, nil)))
 
-if table_othsets ["func_getuptime"] == true then -- hub uptime
+if table_refu ["GetUpTime"] then -- hub uptime
 	local ut = formatuptime ((os.time () - getuptime ()), true)
 
 	if table_sets ["statscollint"] > 0 then
@@ -18365,7 +18381,7 @@ function avdbcheckall ()
 								table_avbl [nick] = true
 								opsnotify (table_sets ["classnotiav"], gettext ("Connection requests to following user will be blocked: %s"):format (nick))
 							else
-								if table_othsets ["func_kickrediruser"] then
+								if table_refu ["KickRedirUser"] then
 									VH:KickRedirUser (table_othsets ["sendfrom"], nick, table_sets ["avkicktext"], table_othsets ["avdbhubaddr"])
 								else
 									VH:KickUser (table_othsets ["sendfrom"], nick, table_sets ["avkicktext"])
@@ -18540,7 +18556,7 @@ function avdetforce (nick, user)
 				table_avbl [user] = true
 				opsnotify (table_sets ["classnotiav"], gettext ("Connection requests to following user will be blocked: %s"):format (user))
 			else
-				if table_othsets ["func_kickrediruser"] then
+				if table_refu ["KickRedirUser"] then
 					VH:KickRedirUser (nick, user, table_sets ["avkicktext"], table_othsets ["avdbhubaddr"])
 				else
 					VH:KickUser (nick, user, table_sets ["avkicktext"])
@@ -18804,7 +18820,7 @@ function avparsesr (data, user, addr)
 						checkipwat (nick, usip, data) -- we will return 0 anyway
 					end
 
-					if table_othsets ["func_kickrediruser"] then
+					if table_refu ["KickRedirUser"] then
 						VH:KickRedirUser (table_othsets ["sendfrom"], nick, table_sets ["avkicktext"], table_othsets ["avdbhubaddr"])
 					else
 						VH:KickUser (table_othsets ["sendfrom"], nick, table_sets ["avkicktext"])
@@ -18887,7 +18903,7 @@ function avparsesr (data, user, addr)
 													checkipwat (nick, usip, data) -- we will return 0 anyway
 												end
 
-												if table_othsets ["func_kickrediruser"] then
+												if table_refu ["KickRedirUser"] then
 													VH:KickRedirUser (table_othsets ["sendfrom"], nick, table_sets ["avkicktext"], table_othsets ["avdbhubaddr"])
 												else
 													VH:KickUser (table_othsets ["sendfrom"], nick, table_sets ["avkicktext"])
@@ -19130,102 +19146,14 @@ function loadcomponents ()
 		]]--
 	end
 
-	-- getusercc function
+	-- check required functions
 
-	if VH.GetUserCC then
-		table_othsets ["func_getcc"] = true
-	else
-		VH:SendToClass ("<" .. table_sets ["ledobotnick"] .. "> Warning: Unable to run VH:GetUserCC|", 5, 10)
-	end
-
-	-- getusercity function
-
-	if VH.GetUserCity then
-		table_othsets ["func_getusercity"] = true
-	else
-		VH:SendToClass ("<" .. table_sets ["ledobotnick"] .. "> Warning: Unable to run VH:GetUserCity|", 5, 10)
-	end
-
-	-- getipcn function
-
-	if VH.GetIPCN then
-		table_othsets ["func_getipcn"] = true
-	else
-		VH:SendToClass ("<" .. table_sets ["ledobotnick"] .. "> Warning: Unable to run VH:GetIPCN|", 5, 10)
-	end
-
-	if VH.GetIPCC then -- getipcc function
-		table_othsets ["func_getipcc"] = true
-	else
-		VH:SendToClass ("<" .. table_sets ["ledobotnick"] .. "> Warning: Unable to run VH:GetIPCC|", 5, 10)
-	end
-
-	-- getusergeoip function
-
-	if VH.GetUserGeoIP then
-		table_othsets ["func_getusergeoip"] = true
-	else
-		VH:SendToClass ("<" .. table_sets ["ledobotnick"] .. "> Warning: Unable to run VH:GetUserGeoIP|", 5, 10)
-	end
-
-	-- gethostgeoip function
-
-	if VH.GetHostGeoIP then
-		table_othsets ["func_gethostgeoip"] = true
-	else
-		VH:SendToClass ("<" .. table_sets ["ledobotnick"] .. "> Warning: Unable to run VH:GetHostGeoIP|", 5, 10)
-	end
-
-	-- getluabots function
-
-	if VH.GetLuaBots then
-		table_othsets ["func_getluabots"] = true
-	else
-		VH:SendToClass ("<" .. table_sets ["ledobotnick"] .. "> Warning: Unable to run VH:GetLuaBots|", 5, 10)
-	end
-
-	-- getuptime function
-
-	if VH.GetUpTime then
-		table_othsets ["func_getuptime"] = true
-	else
-		VH:SendToClass ("<" .. table_sets ["ledobotnick"] .. "> Warning: Unable to run VH:GetUpTime|", 5, 10)
-	end
-
-	if VH.GetTopic then -- gettopic function
-		table_othsets ["func_gettopic"] = true
-	else
-		VH:SendToClass ("<" .. table_sets ["ledobotnick"] .. "> Warning: Unable to run VH:GetTopic|", 5, 10)
-	end
-
-	if VH.GetUserVersion then -- getuserversion function
-		table_othsets ["func_getuserversion"] = true
-	else
-		VH:SendToClass ("<" .. table_sets ["ledobotnick"] .. "> Warning: Unable to run VH:GetUserVersion|", 5, 10)
-	end
-
-	if VH.GetUserSupports then -- getusersupports function
-		table_othsets ["func_getusersupports"] = true
-	else
-		VH:SendToClass ("<" .. table_sets ["ledobotnick"] .. "> Warning: Unable to run VH:GetUserSupports|", 5, 10)
-	end
-
-	if VH.SendToActiveClass then -- sendtoactiveclass function
-		table_othsets ["func_sendtoactiveclass"] = true
-	else
-		VH:SendToClass ("<" .. table_sets ["ledobotnick"] .. "> Warning: Unable to run VH:SendToActiveClass|", 5, 10)
-	end
-
-	if VH.InUserSupports then -- inusersupports function
-		table_othsets ["func_inusersupports"] = true
-	else
-		VH:SendToClass ("<" .. table_sets ["ledobotnick"] .. "> Warning: Unable to run VH:InUserSupports|", 5, 10)
-	end
-
-	if VH.KickRedirUser then -- kickrediruser function
-		table_othsets ["func_kickrediruser"] = true
-	else
-		VH:SendToClass ("<" .. table_sets ["ledobotnick"] .. "> Warning: Unable to run VH:KickRedirUser|", 5, 10)
+	for name, _ in pairs (table_refu) do
+		if VH [name] then
+			table_refu [name] = true
+		else
+			VH:SendToClass ("<" .. table_sets ["ledobotnick"] .. "> " .. gettext ("Please note, following function is required for features available in this version of %s and is currently not available in running version of %s but is available in latest update: %s"):format ("Ledokol", "Verlihub", name) .. "|", 5, 10)
+		end
 	end
 
 	return false
@@ -19470,7 +19398,7 @@ function tryipcc (addr, nick)
 		end
 	end
 
-	if table_othsets ["func_getipcc"] then
+	if table_refu ["GetIPCC"] then
 		local res, code = VH:GetIPCC (addr)
 
 		if res and code then
@@ -19893,7 +19821,7 @@ function reptextvars (str, vick, vata)
 
 		local nogeo = true
 
-		if table_othsets ["func_getusergeoip"] == true then
+		if table_refu ["GetUserGeoIP"] then
 			local on, geoip = VH:GetUserGeoIP (vick)
 
 			if on and geoip and geoip ["host"] then
@@ -19953,7 +19881,7 @@ function reptextvars (str, vick, vata)
 			end
 		end
 
-		if nogeo and table_othsets ["func_getcc"] then
+		if nogeo and table_refu ["GetUserCC"] then
 			local cc = getcc (vick)
 
 			if txt:find ("<geoipcc>", 1, true) then
@@ -19964,7 +19892,7 @@ function reptextvars (str, vick, vata)
 				txt = txt:gsub ("<geoipcn>", reprexpchars (cc_names [cc] or gettext ("Unknown country")))
 			end
 
-			if txt:find ("<geoipcity>", 1, true) and table_othsets ["func_getusercity"] then
+			if txt:find ("<geoipcity>", 1, true) and table_refu ["GetUserCity"] then
 				txt = txt:gsub ("<geoipcity>", reprexpchars (getusercity (vick)))
 			end
 		end
@@ -20031,7 +19959,7 @@ function reptextvars (str, vick, vata)
 			end
 		end
 
-		if txt:find ("<myinfosupport>", 1, true) and table_othsets ["func_getusersupports"] then
+		if txt:find ("<myinfosupport>", 1, true) and table_refu ["GetUserSupports"] then
 			local on, sup = VH:GetUserSupports (vick)
 
 			if on and sup then
@@ -20039,7 +19967,7 @@ function reptextvars (str, vick, vata)
 			end
 		end
 
-		if txt:find ("<myinfonmdcver>", 1, true) and table_othsets ["func_getuserversion"] then
+		if txt:find ("<myinfonmdcver>", 1, true) and table_refu ["GetUserVersion"] then
 			local on, ver = VH:GetUserVersion (vick)
 
 			if on and ver then
@@ -20073,7 +20001,11 @@ end
 
 	if string.find (txt, "<topic>") then
 		local topic = table_othsets ["topicvalue"]
-		if table_othsets ["func_gettopic"] == true then topic = VH:GetTopic () end
+
+		if table_refu ["GetTopic"] then
+			topic = VH:GetTopic ()
+		end
+
 		txt = string.gsub (txt, "<topic>", reprexpchars (topic or ""))
 	end
 
@@ -20141,7 +20073,7 @@ if string.find (txt, "<suptlong>") then
 	txt = string.gsub (txt, "<suptlong>", reprexpchars (formatuptime (table_othsets ["uptime"], false)))
 end
 
-if table_othsets ["func_getuptime"] == true then -- hub uptime
+if table_refu ["GetUpTime"] then -- hub uptime
 	local ut = os.time () - getuptime ()
 
 	if string.find (txt, "<huptshrt>") then
@@ -20532,7 +20464,7 @@ function isbot (nick)
 if nick == table_othsets ["botnick"] then return true end -- security bot
 if nick == table_othsets ["opchatnick"] then return true end -- operators chat
 
-if table_othsets ["func_getluabots"] == true then
+if table_refu ["GetLuaBots"] then
 	local bots = VH:GetLuaBots () -- other registered bots
 	if not bots then return false end
 
