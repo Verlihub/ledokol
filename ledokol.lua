@@ -17487,8 +17487,9 @@ VH:SQLQuery ("create table if not exists `"..tbl_sql ["wm"].."` (`nick` varchar(
 -- custom nicks
 VH:SQLQuery ("create table if not exists `"..tbl_sql ["cust"].."` (`nick` varchar(255) not null, `custom` varchar(255) not null, primary key (`nick`)) engine = myisam default character set utf8 collate utf8_unicode_ci")
 
--- chatrooms
-VH:SQLQuery ("create table if not exists `"..tbl_sql ["chat"].."` (`room` varchar(255) not null, `description` varchar(255) not null, `minclass` tinyint(2) unsigned not null default 0, `maxclass` tinyint(2) unsigned not null default 10, `cc` varchar(2) not null default '*', primary key (`room`)) engine = myisam default character set utf8 collate utf8_unicode_ci")
+	-- chatrooms
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql ["chat"] .. "` (`room` varchar(255) not null, `description` varchar(255) not null, `minclass` tinyint(2) unsigned not null default 0, `maxclass` tinyint(2) unsigned not null default 10, `cc` varchar(2) not null default '*', primary key (`room`)) engine = myisam default character set utf8 collate utf8_unicode_ci")
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql ["acre"] .. "` (`id` bigint(20) unsigned not null auto_increment primary key, `cc` varchar(2) not null, `nick` varchar(255) not null) engine = myisam default character set utf8 collate utf8_unicode_ci")
 
 -- reminders
 VH:SQLQuery ("create table if not exists `"..tbl_sql ["rem"].."` (`id` varchar(255) not null, `content` text not null, `minclass` tinyint(2) unsigned not null default 0, `maxclass` tinyint(2) unsigned not null default 10, `dest` tinyint(1) unsigned not null default 0, `interval` smallint(5) unsigned not null default 10080, `timer` smallint(5) unsigned not null default 0, primary key (`id`)) engine = myisam default character set utf8 collate utf8_unicode_ci")
