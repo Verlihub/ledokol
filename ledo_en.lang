@@ -1066,3 +1066,11 @@ Failed to start antivirus search server: %s|
 Started antivirus search server: %s|
 Stopped antivirus search server: %s|
 Blocked infected users|
+Add automatic country chatroom entrance|
+Automatic country chatroom entrance list|
+Delete automatic country chatroom entrance|
+Couldn't add automatic country chatroom entrance because already exists with ID: %d|
+Added automatic country chatroom entrance for %s: %s|
+Couldn't delete automatic country chatroom entrance because ID not found: %d|
+Deleted automatic country chatroom entrance with ID: %d|
+Automatic country chatroom entrance list is empty.|
