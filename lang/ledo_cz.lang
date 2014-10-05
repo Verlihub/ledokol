@@ -1,0 +1,1077 @@
+# Language: cs_CZ
+# Charset: CP1250
+# Version: 2.8.3
+# Author: Uhlik
+# Email: pjanos.uk@gmail.com
+
+Current topic: %s|Aktualni topic: %s
+Current topic set by %s: %s|Aktualni topic nastavil %s: %s
+This operation might take very long time depending on how much is going to be removed. Please be patient.|Tato operace muze trvat velmi dlouho, podle toho, kolik dat se bude odstranovat. Bud trpelivy.
+days|dny
+%s with class %d deleted %d IP logger plugin entries older than %d days.|%s s class %d smazal %d IP logger plugin zaznamu starsich nez %d dnu.
+%s with class %d deleted %d unbans older than %d days.|%s s class %d smazal %d unbanu starsich nez %d dnu.
+%s with class %d deleted %d bans older than %d days.|%s s class %d smazal %d banu starsich nez %d dnu.
+%s with class %d deleted %d kicks older than %d days.|%s s class %d smazal %d kicku starsich nez %d dnu.
+I'm probably away. State your business and I might answer later if you're lucky.|Nejsem tady. Pokracuj v praci a ja se mozna pozdeji ozvu.
+Perform script update|Provede aktualizaci scriptu
+Deleted %d main chat history messages.|Smazano %d zprav z chat historie.
+There are no main chat history messages to remove.|V historii chatu nejsou zadne zpravy ke smazani.
+Deleted %d operator chat history messages.|Smazano %d zprav z OP chat historie.
+There are no operator chat history messages to remove.|V historii OP chatu nejsou zadne zpravy ke smazani.
+%s with class %d deleted %d main chat history messages.|%s s class %d smazal %d zprav z historie chatu.
+Unable to connect to target server. Please try again later.|Nemohu se spojit s cilovym server. Zkus to pozdeji.
+Last %d main chat messages|Poslednich %d zprav z chatu
+Main chat history is empty.|Historie chatu je prazdna.
+%s is now known as: %s|%s je nyni znam jako: %s
+Last %d operator chat messages|Poslednich %d zprav z OP chatu
+Operator chat history is empty.|Historie OP chatu je prazdna.
+Valid priority is a number from %d to %d.|Platna priorita je cislo od %d do %d.
+You are using latest version of %s, no update is required.|Pouzivas nejnovejsi verzi %s, aktualizace neni potrebna.
+Why would you send offline message to yourself?|Proc chces poslat offline zpravu sam sobe ?
+User %s is online. Sending message directly.|Uzivatel %s je online. Odesilam zpravu primo.
+Your offline message stored for user: %s|Tvoje offline zprava pro %s byla ulozena.
+%s with IP %s and class %d sent offline message.|%s s IP %s a class %d odeslal offline zpravu.
+priority|priorita
+Offline|Offline
+Online|Online
+I sent offline message to you on %s| %s jsem ti odeslal offline zpravu.
+My current status|Muj aktualni stav
+%s with IP %s and class %d received offline messages.|%s s IP %s a class %d obdrzel offline zpravu.
+Stored offline messages|Ulozene offline zpravy
+Offline message list is empty.|Seznam offline zprav je prazdny.
+Deleted %d offline messages.|Smazano %d offline zprav.
+Couldn't delete offline messages because not found: %s|Nemohu smazat offline zpravy protoze nemuzu najit: %s
+%s with class %d deleted all offline messages.|%s s class %d smazal vsechny offline zpravy.
+There are no offline messages to remove.|Zadne offline zpravy ke smazani.
+No topic is set.|Topic neni nastaven.
+%s with IP %s and class %d allowed due to forbidden nick exception: %s|%s s IP %s a class %d vstup povolen diky vyjimce pro zakazane nicky: %s
+message|message
+%s with IP %s and class %d allowed due to forbidden description exception: %s|%s s IP %s a class %d vstup povolen diky vyjimce pro zakazany popis: %s
+User you're trying to kick or redirect is protected: %s|Uzivatel ktereho se pokousis kopnout nebo presmerovat je chranen: %s
+%s with IP %s and class %d allowed due to forbidden tag exception: %s|%s s IP %s a class %d vstup povolen diky vyjimce pro zakazany tag: %s
+type|type
+%s with IP %s and class %d allowed due to forbidden connection type exception: %s|%s s IP %s a class %d vstup povolen diky vyjimce pro zakazany typ pripojeni: %s
+%s with class %d changed configuration variable %s: %s => %s|%s s class %d zmenil nastaveni promenne %s: %s => %s
+%s with IP %s and class %d allowed due to forbidden email exception: %s|%s s IP %s a class %d vstup povolen diky vyjimce pro zakazany email: %s
+%s received own message.|%s obdrzel svoji zpravu.
+%s with IP %s and class %d allowed due to forbidden share size exception: %s|%s s IP %s a class %d vstup povolen diky vyjimce pro zakazanou velikost sdileni: %s
+Deleted %d releases from category: %s|Smazano %d releasu z kategorie: %s
+Why would you want to set empty topic?|Proc by jsi nastavoval prazdny topic?
+Couldn't add forbidden nick because already exists: %s|Nemohu vlozit zakazany nick, protoze uz existuje: %s
+Added forbidden nick: %s|Vlozen zakazany nick: %s
+Couldn't add forbidden description because already exists: %s|Nemohu vlozit zakazany popis, protoze uz existuje: %s
+Added forbidden description: %s|Vlozen zakazany popis: %s
+Couldn't add forbidden tag because already exists: %s|Nemohu vlozit zakazany tag, protoze uz existuje: %s: %s
+Added forbidden tag: %s|Vlozen zakazany tag: %s
+Couldn't add forbidden connection type because already exists: %s|Nemohu vlozit zakazany typ pripojeni, protoze uz existuje: %s
+Added forbidden connection type: %s|Vlozen zakazany typ pripojeni: %s
+Couldn't add forbidden email because already exists: %s|Nemohu vlozit zakazany email, protoze uz existuje: %s
+Added forbidden email: %s|Vlozen zakazany email: %s
+Couldn't add forbidden share size because already exists: %s|Nemohu vlozit zakazanou velikost sdileni, protoze uz existuje: %s
+Added forbidden share size: %s|Vlozena zakazana velikost sdileni: %s
+Couldn't add MyINFO exception because already exists: %s|Nemohu vlozit MyINFO vyjimku, protoze uz existuje: %s: %s
+Added MyINFO exception: %s|Vlozena MyInfo vyjimka: %s
+and|a
+Deleted forbidden nick: %s|Smazan zakazany nick: %s
+Couldn't delete forbidden nick because not found: %s|Nemohu smazat zakazany nick %s protoze nebyl nalezen.
+Deleted forbidden description: %s|Smazan zakazany popis: %s
+Couldn't delete forbidden description because not found: %s|Nemohu smazat zakazany popis %s protoze nebyl nalezen.
+Deleted forbidden tag: %s|Smazan zakazany tag: %s
+Couldn't delete forbidden tag because not found: %s|Nemohu smazat zakazany tag %s protoze nebyl nalezen.
+Deleted forbidden connection type: %s|Smazan zakazany typ pripojeni: %s
+Couldn't delete forbidden connection type because not found: %s|Nemohu smazat zakazany typ pripojeni %s protoze nebyl nalezen.
+Deleted forbidden email: %s|Smazan zakazany email: %s
+Couldn't delete forbidden email because not found: %s|Nemohu smazat zakazany email %s protoze nebyl nalezen.
+Deleted forbidden share size: %s|Smazana zakazana velikost sdileni: %s
+Couldn't delete forbidden share size because not found: %s|Nemohu smazat zakazanou velikost sdileni %s protoze nebyla nalezena.
+Deleted MyINFO exception: %s|Smazana MyINFO vyjimka: %s
+Couldn't delete MyINFO exception because not found: %s|Nemohu smazat MyINFO vyjimku %s protoze nebyla nalezena.
+Forbidden nick list|Seznam zakazanych nicku
+Forbidden nick list is empty.|Seznam zakazanych nicku je prazdny.
+Forbidden description list|Seznam zakazanych popisu
+Forbidden description list is empty.|Seznam zakazanych popisu je prazdny.
+Forbidden tag list|Seznam zakazanych tagu
+Forbidden tag list is empty.|Seznam zakazanych tagu je prazdny.
+Forbidden connection type list|Seznam zakazanych typu pripojeni
+Forbidden connection type list is empty.|Seznam zakazanych typu pripojeni je prazdny.
+Forbidden email list|Seznam zakazanych emailu
+Forbidden email list is empty.|Seznam zakazanych emailu je prazdny.
+Forbidden share size list|Seznam zakazanych velikosti sdileni
+Forbidden share size list is empty.|Seznam zakazanych velikosti sdileni je prazdny.
+MyINFO exception list|Seznam MyINFO vyjimek
+MyINFO exception list is empty.|Seznam MyINFO vyjimek je prazdny.
+Deleted %d rows: %s|Smazano %d radku: %s
+Known types are: %s|Zname typy jsou: %s
+No rows to remove: %s|Zadne radky ke smazani: %s
+date|datum
+%s with class %d used command: %s|%s s class %d pouzil prikaz: %s
+context|kontext
+Deleted from chat rank list: %s|%s smazan ze seznamu hodnoceni chatu.
+Not found in chat rank list: %s|%s nenalezen v seznamu hodnoceni chatu.
+Deleted from operator rank list: %s|%s smazan ze seznamu hodnoceni operatoru.
+Not found in operator rank list: %s|%s nenalezen v seznamu hodnoceni operatoru.
+Antispam|Antispam
+Your chat rank is: %d|Tvoje hodnoceni v chatu je: %d bodu
+You have to write something in main chat to get started.|Mel bys neco psat na chat abys mohl byt hodnocen.
+Custom nick list is empty.|Seznam volitelnych nicku.
+Total share rank size: %s|Celkove sdileni v hodnoceni: %s
+Your operator rank is: %d|Tvoje operatorske hodnoceni je: %d bodu
+You have to do some operator actions to get started.|Mel bys provadet operatorskou cinnost abys mohl byt hodnocen.
+Top %d chat rankers|Top %d ukecanych
+Chat rank list is empty.|Seznam hodnoceni chatu je prazdny.
+Top %d operator rankers|Top %d operatoru
+Operator rank list is empty.|Seznam hodnoceni operatoru je prazdny.
+string|retezec
+No user results found.|Zadne vysledky.
+Showing %d user log results|Zobrazuji %d vysledku logu uzivatele
+Size of user log table: %d [ %s: %d @ %s ]|Velikost logu uzivatelu: %d [ %s: %d @ %s ]
+Add protection entry|Vlozi protekci
+Delete protection entry|Smaze protekci
+flags|flags
+%s dropped due to bad search request.|%s odpojen pro zavadne vyhledavani.
+This command is either disabled or you don't have access to it.|Tento prikaz je vypnuty nebo nemas opravneni.
+Deleted antispam entry: %s|Smazan antispam retezec: %s
+Couldn't delete antispam entry because not found: %s|Nemohu smazat antispam retezec %s protoze nebyl nalezen.
+Antispam list|Antispam seznam
+Antispam list is empty.|Antispam seznam je prazdny.
+Couldn't add antispam exception entry because already exists: %s|Nemohu vlozit antispam vyjimku %s protoze uz existuje.
+Added antispam exception entry: %s|Vlozena antispam vyjimka: %s
+Deleted antispam exception entry: %s|Smazana antispam vyjimka: %s
+Couldn't delete antispam exception entry because not found: %s|Nemohu smazat antispam vyjimku %s protoze nebyla nalezena.
+Antispam exception list|Seznam antispam vyjimek
+Antispam exception list is empty.|Seznam antispam vyjimek je prazdny.
+The user you're trying to send offline message to is a bot. Message is discarded.|Uzivatel, kteremu se pokousis odeslat offline zpravu, je bot. Zprava je zrusena.
+You can't start at user number %d when you only have %d accounts with class %d.|Nemuzes zacit uzivatelem cislo %d kdyz mas pouze %d registraci s class %d.
+Showing %d out of total %d accounts with class %d starting at user number %d|Zobrazuji %d z celkovych %d registraci s class %d zacinajici uzivatelem cislo %d
+There are no accounts with class: %d|Nejsou zde zadne registrace s class: %d
+Known classes are: %s|Zname class jsou: %s
+%s with class %d sent say message: <%s> %s|%s s class %d odeslal !say zpravu: <%s> %s
+%s with class %d had bad luck sending say message: <%s> %s|%s s class %d neuspel pri odesilani !say zpravy: <%s> %s
+You can't talk from nick whose class is higher or equals your own.|Nemuzes mluvit jinym nickem, pokud je jeho class stejna nebo vetsi nez tvoje.
+%s with IP %s and class %d kicked: <%s> %s|%s s IP %s a class %d vykopnut: <%s> %s
+%s with class %d deleted %d statistics plugin entries older than %d days.|%s s class %d smazal %d zaznamu statistiky starsich nez %d dnu.
+offset|offset
+order|poradi
+%s didn't get any search results.|%s neobdrzel zadne vysledky hledani.
+Redirected %s with IP %s and class %d to %s: <%s> %s|%s s IP %s a class %d presmerovan na %s : <%s> %s
+Unknown protocol command from %s with IP %s and class %d: %s|Neznamy prikaz od %s s IP %s a class %d: %s
+Custom nick list|Seznam volitelnych nicku
+%s operator commands|%s operatorskych prikazu
+Add antispam entry|Vlozi antispam retezec
+Showing last %d lines out of total %d found in %s file|Zobrazuji poslednich %d radku z celkem %d nalezenych v souboru %s
+Delete antispam entry|Smaze antispam retezec
+Add antispam exception entry|Vlozi antispam vyjimku
+Delete antispam exception entry|Smaze antispam vyjimku
+Add MyINFO entry|Vlozi MyINFO retezec
+Delete MyINFO entry|Smaze MyINFO retezec
+MyINFO list|MyINFO seznam
+List of registered users by class|Seznam registrovanych uzivatelu podle class
+Speak from other nick|Mluvit za jiny nick
+Remove user or word from rank list|Odstrani uzivatele nebo slovo ze seznamu hodnoceni
+%s with class %d deleted %d user log entries older than %d days.|%s s class %d smazal %d zaznamu z logu uzivatelu starsich %d dnu.
+List stored offline messages|Seznam ulozenych offline zprav
+Delete offline messages by date|Smaze offline pravy podle data
+Delete all offline messages|Smaze vsechny offline zpravy
+class|class
+Clean up tables|Vycisti zaznamy
+Operator chat history|OP chat historie
+Delete all history messages|Smaze vsechny zpravy z historie
+Your operator rank|Tvoje operatorske hodnoceni
+Script configuration variables|Konfigurace scriptu
+Change configuration variable|Zmeni konfiguraci
+nick|nick
+This list of commands|Tento seznam prikazu
+%s user commands|%s uzivatelskych prikazu
+Current topic|Aktualni topic
+Your chat rank|Tvoje hodnoceni v chatu
+You're not allowed to send private messages.|Nemas povoleno odesilat soukrome zpravy.
+Unknown|Unknown
+identifier|identifikator
+Offline message to user|Offline zprava uzivateli
+Main chat history|Historie chatu
+%s statistics|%s statistik
+Script version: %s|Script verze: %s ( info www.crazyhub.net )
+Total chat rank points: %d|Celkove hodnoceni chatu: %d bodu
+Total operator rank points: %d|Celkove hodnoceni operatoru: %d bodu
+Average message count per user: %.2f|Prumerny pocet zprav na uzivatele: %.2f
+lre|lre
+action|akce
+Changed configuration variable %s: %s => %s|Zmenena hodnota %s: %s => %s
+Configuration variable %s can only be set to: %s|Hodnota %s muze byt nastavena pouze na: %s
+or|nebo
+Configuration variable %s must be a number.|Hodnota %s musi byt cislo.
+to|to
+Unknown configuration variable: %s|Neznama konfiguracni promenna: %s
+%s version: %s|%s verze: %s
+Not installed|Nenainstalovano
+%s dropped due to spam.|%s odpojen za spam.
+variable|promenna
+value|hodnota
+minutes|minut
+%s library version: %s|%s knihovna verze: %s
+Reorder right click menu item|Seradit right click menu polozky
+lines|radku
+Couldn't add rank exception because already exists: %s|Nemohu vlozit vyjimku v hodnoceni %s protoze uz existuje.
+Added rank exception: %s|Vlozena vyjimka v hodnoceni: %s
+Deleted rank exception: %s|Smazana vyjimka v hodnoceni: %s
+Couldn't delete rank exception because not found: %s|Nemohu smazat vyjimku v hodnoceni %s protoze nebyla nalezena.
+Rank exception list|Seznam vyjimek v hodnoceni
+Rank exception list is empty.|Seznam vyjimek v hodnoceni je prazdny.
+Add rank exception|Vlozi vyjimku v hodnoceni
+Delete rank exception|Smaze vyjimku v hodnoceni
+In order to use this feature you must turn off registered users list cache. Do it by setting hub configuration variable %s to %d and restarting the hub. Please note: Turning cache off is not recommended with large list of registered users.|Pokud chces pouzivat tuto funkci, musi byt vypnuta cache v seznamu registrovanych uzivatelu. To muzes udelat nastavenim promenne %s na %d a restartovanim hubu. Upozorneni: Vypnuti cache neni doporuceno pri velkych seznamech registrovanych uzivatelu.
+Both|Oba
+Deleted search filter: %s|Smazan filtr hledani: %s
+Couldn't delete search filter because not found: %s|Nemohu smazat filtr hledani %s protoze nebyl nalezen.
+Search filter list|Seznam filtru hledani
+Search filter list is empty.|Seznam filtru hledani je prazdny.
+Magnet link: %s|Magnet link: %s
+Add search filter|Vlozi filtr hledani
+Delete search filter|Smaze filtr hledani
+Known actions are: %s|Zname akce jsou: %s
+Known flags are: %s|Zname flagy jsou: %s
+Downloading version file: %s|Stahuji soubor verzi: %s
+Size of kicks table: %d [ %s: %d @ %s ]|Velikost zaznamu kicku: %d [ %s: %d @ %s ]
+Size of bans table: %d [ %s: %d @ %s ]|Velikost zaznamu banu: %d [ %s: %d @ %s ]
+Size of unbans table: %d [ %s: %d @ %s ]|Velikost zaznamu unbanu: %d [ %s: %d @ %s ]
+Size of IP logger plugin table: %d [ %s: %d @ %s ]|Velikost zaznamu IP loggeru: %d [ %s: %d @ %s ]
+Size of statistics plugin table: %d [ %s: %d @ %s ]|Velikost zaznamu statistickeho pluginu: %d [ %s: %d @ %s ]
+Modified authorization entry: %s @ %s|Modifikovan zaznam autorizace: %s @ %s
+Added authorization entry: %s @ %s|Vlozen zaznam autorizace: %s @ %s
+Deleted authorization entry: %s|Smazan zaznam autorizace: %s
+Couldn't delete authorization entry because not found: %s|Nemohu smazat autorizacni zaznam %s protoze nebyl nalezen.
+IP authorization list|Seznam IP autorizaci
+IP authorization list is empty.|Seznam IP autorizaci je prazdny.
+Add IP authorization entry|Vlozi zaznam IP autorizace
+Delete authorization entry|Smaze zaznam IP autorizace
+ip|ip
+%s with IP %s and class %d authorized.|%s s IP %s a class %d autorizovan.
+%s with IP %s and class %d failed authorization and disconnected.|%s s IP %s a class %d selhal pri autorizaci a byl odpojen.
+Category: %s|Kategorie: %s
+Set custom nick for yourself|Nastavi volitelny nick
+This nick is registered or in use and therefore can't be used as custom nick: %s|Tento nick je registrovan nebo pouzivan, proto nemuze byt pouzit jako volitelny nick: %s
+Set your welcome message|Nastavi vlastni uvitaci zpravu
+Division by zero is forbidden.|Deleni nulou neni povoleno
+Show your welcome messages|Zobrazi tvoji uvitaci zpravu
+Welcome message list|Seznam uvitacich zprav
+Delete user and his welcome messages|Smaze uzivatele a jeho uvitaci zpravy
+Nick|Nick
+Login message|Login zprava
+Logout message|Logout zprava
+Welcome message list is empty.|Seznam uvitacich zprav je prazdny.
+Welcome messages were deleted for user: %s|Uvitaci zpravy pro uzivatele %s byli smazany
+Couldn't delete user from welcome message list because not found: %s|Nemohu smazat uzivatele %s ze seznamu uvitacich zprav protoze nebyl nalezen.
+Your login message set: %s|Tvoje login zprava je nastavena na: %s
+%s with class %d changed his login message: %s|%s s class %d zmenil svoji login zpravu na: %s
+Your logout message set: %s|Tvoje logout zprava je nastavena na: %s
+%s with class %d changed his logout message: %s|%s s class %d zmenil svoji logout zpravu na: %s
+You don't have any welcome messages.|Nemas zadnou uvitaci zpravu.
+Your login message: %s|Tvoje login zprava: %s
+Add chatroom|Vlozi chatroom
+Chatroom list|Chatroom seznam
+Delete chatroom|Smaze chatroom
+description|popis
+minclass|minclass
+maxclass|maxclass
+Modified chatroom: %s|Modifikovan chatroom: %s
+Added chatroom: %s|Vlozen chatroom: %s
+Deleted chatroom: %s|Smazan chatroom: %s
+Couldn't delete chatroom because not found: %s|Nemohu smazat chatroom %s protoze nebyl nalezen.
+Chatroom|Chatroom
+Description|Popis
+Chatroom list is empty.|Chatroom seznam je prazdny.
+Not found in country code statistics table: %s|%s nebylo nalezeno ve statistice country code.
+Custom nick %s is now owned by real user and therefore has been reset for user: %s|Volitelny nick %s je nyni vlastnen skutecnym uzivatelem a proto byl pro uzivatele %s zrusen.
+%s is registered with class %d.|%s mel registraci s class %d.
+Query executed but didn't return any results.|Prikazy provedeny, ale nebyly obdrzeny zadne vysledky.
+Published: %s|Zverejneno: %s
+Add search filter exception entry|Vlozi vyjimku pro filtr hledani
+Delete search filter exception entry|Smaze vyjimku pro filtr hledani
+Search filter exception list|Seznam vyjimek pro filtr hledani
+Couldn't add search filter exception entry because already exists: %s|Nemohu vlozit vyjimku pro filtr hledani %s protoze uz existuje.
+Added search filter exception entry: %s|Vlozena vyjimka pro filtr hledani: %s
+Deleted search filter exception entry: %s|Smazana vyjimka pro filtr hledani: %s
+Couldn't delete search filter exception entry because not found: %s|Nemohu smazat vyjimku pro filtr hledani %s protoze nebyla nalezena.
+Search filter exception list is empty.|Seznam vyjimek pro filtr hledani je prazdny.
+file|file
+Read hub logs|Zobrazi logy hubu
+Known files are: %s|Zname soubory jsou: %s
+Log file is empty or does not exist.|Log soubor je prazdny nebo neexistuje.
+Add command notification exception|Vlozi vyjimku pro hlaseni prikazu
+Delete command notification exception|Smaze vyjimku pro hlaseni prikazu
+Command notification exception list|Seznam vyjimek pro hlaseni prikazu
+Added command notification exception entry: %s|Vlozena vyjimka pro hlaseni prikazu: %s
+Couldn't add command notification exception entry because already exists: %s|Nemohu vlozit vyjimku pro hlaseni prikazu %s protoze uz existuje.
+Deleted command notification exception entry: %s|Smazana vyjimka pro hlaseni prikazu: %s
+Couldn't delete command notification exception entry because not found: %s|Nemohu smazat vyjimku pro hlaseni prikazu %s protoze nebyla nalezena.
+Command notification exception list is empty.|Seznam vyjimek pro hlaseni prikazu je prazdny.
+Couldn't add chatroom because nick is already in use: %s|Nemohu vlozit chatroom %s protoze tento nick je uz pouzivan.
+Query results|Vysledky prikazu
+Connections from your IP aren't allowed for another %d seconds.|Pripojeni z tve IP neni povoleno dalsich %d sekund.
+Executed shell command didn't return any status code: %s|Provedeny shell prikaz %s nevratil zadny status.
+Returned status code: %s|Obdrzen status kod: %s
+Added by: %s|Pridal: %s
+publisher|publisher
+Release list is empty.|Release seznam je prazdny.
+Last %d releases|Poslednich %d releasu
+No releases by requested publisher were found: %s|Zadne releasy podle pozadovaneho publishera %s nebyly nalezeny.
+Last %d releases published by %s|Posledich %d releasu vydanych publisherem %s
+No releases by requested category were found: %s|Zadne releasy podle pozadovane kategorie %s nebyly nalezeny.
+Last %d releases by category %s|Poslednich %d releasu podle kategorie %s
+No releases by requested search string were found: %s|Nebyly nalezeny zadne releasy podle hledani retezce: %s
+time|cas
+Known search types are: %s|Zname typy hledani jsou: %s
+Configuration variable %s can't be empty.|Promenna konfigurace %s nemuze byt prazdna.
+Deleted from share rank list: %s|%s smazano ze seznamu hodnoceni sdileni.
+Not found in share rank list: %s|%s nebylo nalezeno v seznamu hodnoceni sdileni.
+Your share rank|Tvoje hodnoceni sdileni
+Top %d share rankers|Top %d nejlepsich sdilecu
+You have to share %s and reconnect to get started.|Mel bys nasdilet a znovu se pripojit k hubu, abys mohl byt hodnocen.
+Share rank list is empty.|Seznam hodnoceni sdileni je prazdny.
+Your share rank is: %s|Tvoje hodnoceni sdileni je: %s bodu
+Custom nick can't be longer than %d characters.|Volitelny nick nesmi byt delsi nez %d znaku.
+Delete custom nick|Smaze volitelny nick
+Deleted user from custom nick list: %s|Uzivatel %s smazan ze seznamu volitelnych nicku.
+Couldn't delete user from custom nick list because not found: %s|Nemohu smazat uzivatele %s ze seznamu volitelnych nicku protoze nebyl nalezen.
+Selected type requires extra parameters. Please refer to manual for more information.|Vybrany typ vyzaduje extra parametry. Precti si manual pro vice informaci.
+Size of registered users table: %d [ %s: %d @ %s ]|Velikost zaznamu registrovanych uzivatelu: %d [ %s: %d @ %s ]
+Deleted %d accounts with class %d|Smazano %d registraci s class %d
+%s with class %d deleted %d accounts with class %d that has been inactive for %d days.|%s s class %d smazal %d registraci s class %d ktere nebyly aktivni po dobu %d dnu.
+Add command permission|Prida povoleni k prikazu
+Delete command permission|Smaze povoleni k prikazu
+Command permission list|Seznam povoleni k prikazu
+Modified command permission with class %d: %s|Modifikovano povoleni k prikazu s class %d: %s
+Added command permission with class %d: %s|Vlozeno povoleni k prikazu s class %d: %s
+Deleted command permission: %s|Smazano povoleni k prikazu: %s
+Couldn't delete command permission because not found: %s|Nemohu smazat povoleni k prikazu %s protoze nebylo nalezeno.
+Command permission list is empty.|Seznam povoleni k prikazu je prazdny.
+Total search rank points: %d|Celkovy pocet bodu v hodnoceni hledani: %d bodu
+Please use following commands to finish update process|Pouzij nasedujici prikazy k dokonceni procesu aktualizace
+Moving file: %s|Presouvam soubor: %s
+Please visit %s to download the script manually.|Navstiv %s pro rucni stazeni scriptu.
+Couldn't add forbidden IP address because already exists: %s|Nemohu vlozit zakazanou IP %s protoze uz existuje.
+Added forbidden IP address: %s|Vlozena zakazana IP: %s
+Deleted forbidden IP address: %s|Smazana zakazana IP: %s
+Couldn't delete forbidden IP address because not found: %s|Nemohu smazat zakazanou IP %s protoze nebyla nalezena.
+Forbidden IP address list|Seznam zakazanych IP
+Forbidden IP address list is empty.|Seznam zakazanych IP je prazdny.
+%s with IP %s and class %d allowed due to forbidden IP address exception: %s|%s s IP %s a class %d vstup povolen diky vyjimce v zakazanych IP: %s
+Couldn't delete category because not found: %s|Nemohu smazat kategorii %s protoze nebyla nalezena.
+%s redirected due to spam.|%s presmerovan za spam.
+%s redirected due to bad search request.|%s presmerovan za nedovolene hledani.
+You can download me from: %s|Muzes me stahnout z: %s
+%s is registered with class %d and has been automatically unregistered and deleted from other tables.|%s byl zaregistrovan s class %d a byl automaticky smazan ze vsech zaznamu.
+PiB|PiB
+TiB|TiB
+GiB|GiB
+MiB|MiB
+KiB|KiB
+B|B
+EiB|EiB
+Get users real nick|Zjisti uzivateluv skutecny nick
+Requested nick wasn't found in custom nick list.|Pozadovany nick nebyl nalezen v seznamu volitelnych nicku.
+Requested nick belongs to a user who is %s: %s|Pozadovany nick nalezi uzivateli ktery je %s: %s
+offline|offline
+online|online
+Clean up ranks|Smaze hodnoceni
+limit|limit
+%s with class %d deleted %d chat ranks lower than %d.|%s s class %d smazal %d hodnoceni chatu nizsich nez %d bodu.
+%s with class %d deleted %d share ranks lower than %s.|%s s class %d smazal %d hodnoceni sdileni nizsich nez %s.
+%s with class %d deleted %d operator ranks lower than %d.|%s s class %d smazal %d hodnoceni operatoru nizsich bez %d bodu.
+Size of chat ranks table: %d [ %s: %d @ %s ]|Velikost zaznamu hodnoceni chatu: %d [ %s: %d @ %s ]
+Size of share ranks table: %d [ %s: %d @ %s ]|Velikost zaznamu hodnoceni sdileni: %d [ %s: %d @ %s ]
+Size of operator ranks table: %d [ %s: %d @ %s ]|Velikost zaznamu hodnoceni operatoru: %d [ %s: %d @ %s ]
+content|obsah
+destination|cil
+interval|interval
+Add reminder|Vlozi reminder
+Delete reminder|Smaze reminder
+Reminder list|Reminder seznam
+Reminder list is empty.|Reminder seznam je prazdny.
+Known destinanions are: %s|Zname cile jsou: %s
+Known interval is: %s|Znamy interval je: %s
+Modified reminder: %s|Modifikovan reminder: %s
+Added reminder: %s|Vlozen reminder: %s
+Deleted reminder: %s|Smazan reminder: %s
+Reminder not found: %s|Reminder %s nenalezen.
+Identifier: %s|Identifikator: %s
+Content: %s|Obsah: %s
+Interval: %d of %d|Interval: %d of %d
+Destination: %s|Cil: %s
+Raw command|Raw prikaz
+PM|PM
+MC|MC
+reply|odpoved
+Add chat responder|Vlozi chat responder
+Delete chat responder|Smaze chat responder
+Main chat responder list|Chat responder seznam
+Main chat responder list is empty.|Chat responder seznam je prazdny.
+%s with class %d deleted %d operator chat history messages.|%s s class %d smazal %d zprav z historie OP chatu.
+Search in user log|Hledani v logu uzivatele
+Added chat responder: %s|Vlozen chat responder: %s
+Deleted chat responder with ID: %d|Smazan chat responder s ID: %d
+Couldn't delete chat responder because ID not found: %d|Nemohu smazat chat responder ID %d protoze nebyl nalezen.
+Responder|Responder
+Reply|Odpoved
+Add chat responder exception|Vlozi chat responder vyjimku
+Delete chat responder exception|Smaze chat responder vyjimku
+Chat responder exception list|Seznam chat responder vyjimek
+Chat responder exception list is empty.|Seznam chat responder vyjimek je prazdny.
+Couldn't add chat responder exception because already exists: %s|Nemohu vlozit chat responder vyjimku %s protoze uz existuje.
+Added chat responder exception: %s|Vlozena chat responder vyjimka: %s
+Deleted chat responder exception: %s|Smazana chat responder vyjimka: %s
+Couldn't delete chat responder exception because not found: %s|Nemohu smazat chat responder vyjimku %s protoze nebyla nalezena.
+command|prikaz
+Customize script command|Zmeni prikaz scriptu
+Customized script command: %s => %s|Upraven script prikaz: %s => %s
+Unknown script command: %s|Neznamy prikaz scriptu: %s
+Requested nick is real.|Pozadovany nick je skutecny.
+%s with class %d customized script command: %s => %s|%s s class %d upravil script prikaz: %s => %s
+Reset all custom commands|Resetuje vsechny volitelne prikazy scriptu
+%d custom commands were reset.|%d modifikaci prikazu bylo zruseno.
+%s tables are now deleted and script is locked.|%s zaznamu bylo smazano a script byl uzamcen.
+Please unload the script and remove it from scripts directory.|Zastav script a odstran ze slozky Scripts.
+Good luck.|Hodne stesti.
+Please unload the script to finish.|Zastav script pro dokonceni.
+%s with IP %s and class %d sent message to %s: %s|%s s IP %s a class %d odeslal zpravu pro %s: %s
+Script uptime: %s|Script bezi: %s
+month|mesic
+months|mesicu
+day|den
+hour|hodina
+hours|hodin
+Top %d used words|Top %d nejpouzivanejsich slov
+Deleted from word rank list: %s|Slovo %s smazano ze seznamu hodnoceni chatu.
+Not found in word rank list: %s|Slovo %s nebylo nalezeno v hodnoceni chatu.
+%s with class %d deleted %d word ranks lower than %d.|%s s class %d smazal %d slov z hodnoceni chatu s poctem bodu nizsim nez %d.
+Size of word ranks table: %d [ %s: %d @ %s ]|Velikost zaznamu slov v hodnoceni chatu: %d [ %s: %d @ %s ]
+Total word rank points: %d|Celkovy pocet bodu v hodnoceni slov v chatu je: %d bodu
+Word rank list is empty.|Seznam slov v hodnoceni chatu je prazdny.
+%s with class %d registered new user with class %d: %s|%s s class %d zaregistroval uzivatele s class %d: %s
+%s with class %d deleted registered user with class %d: %s|%s s class %d smazal registrovaneho uzivatele s class %d: %s
+%s with class %d changed user class from %d to %d: %s|%s s class %d zmenil class z %d na %d uzivateli: %s
+%s with IP %s and class %d allowed due to fake share exception: %s|%s s IP %s a class %d vstup povolen diky vyjimce pro fake sdileni: %s
+%s with IP %s and class %d allowed due to clone exception: %s|%s s IP %s a class %d vstup povolen diky vyjimce pro dvoji pripojeni: %s
+%s with IP %s and class %d allowed due to same IP exception: %s|%s s IP %s a class %d vstup povolen diky vyjimce pro pripojeni ze stejne IP: %s
+seconds|sekund
+Add news item|Vlozi novinku
+Delete news items|Smaze novinky
+Read hub news|Precte novinky hubu
+Added news item: %s|Vlozena novinka: %s
+Hub news list is empty.|Seznam novinek je prazdny.
+Deleted %d news items.|Smazano %d novinek.
+Couldn't delete news items because not found: %s|Nemohu smazat novinku %s protoze nebyla nalezena.
+Last %d news items|Poslednich %d novinek
+By %s on %s: %s|Pridal %s dne %s: %s
+There are no main chat history messages written by you.|Nejsou zde zadne zpravy v historii chatu, ktere jsi napsal.
+Last %d main chat messages written by you|Poslednich %d zprav v chatu od tebe
+Your main chat history|Tvoje historie chatu
+Script memory usage: %s|Vyuziti pameti scriptem: %s
+Failed to load translation file %s: %s|Nepodarilo se nahrat preklad %s: %s
+Force custom nick for user|Vnuti uzivateli volitelny nick
+Either the feature is disabled or user that you're trying to set welcome message for doesn't have access to it.|Funkce je bud vypnuta, nebo uzivatel kteremu se pokousis nastavit uvitaci zpravu nema k teto funkci opravneni.
+name|nazev
+category|kategorie
+tth|tth
+Add new release|Vlozi novy release
+Delete releases|Smaze releasy
+List of available releases|Seznam dostupnych releasu
+Find release by name or category|Najde release podle jmena nebo kategorie
+Hub is now going for a very quick restart. Please be patient.|Hub se bude restartovat. Prosim strpeni...
+Hub is now going to shut down. Please be patient.|Hub bude vypnut. Prosim strpeni...
+equation|rovnice
+Calculate an equation|Pocitani rovnice
+Both numbers must be either pi or numbers.|Obe cisla museji byt bud pi, nebo cisla.
+Known operations are: %s|Zname operace jsou: %s
+Your logout message: %s|Tvoje logout zprava je: %s
+Force welcome message for user|Vnuti uvitaci zpravu uzivateli
+Login message set for %s: %s|Login zprava pro uzivatele %s nastavena na: %s
+Change nick of an registered user|Zmeni nick registrovanemu uzivateli
+User is not registered: %s|Uzivatel %s neni regitrovan.
+You are now going to be disconnected from the hub in order for your new nick to apply: %s|Nyni budes odpojenn z hubu za ucelem zmeny tveho nicku na: %s
+Renamed account %s: %s|Registrace %s prejmenovana na: %s
+%s with class %d renamed account %s: %s|%s s class %d prejmenoval registraci %s: %s
+Your login message deleted.|Tvoje login zprava byla smazana.
+Your logout message deleted.|Tvoje logout zprava byla smazana.
+%s with class %d deleted his login message.|%s s class %d smazal svoji login zpravu.
+%s with class %d deleted his logout message.|%s s class %d smazal svoji logout zpravu.
+Logout message set for %s: %s|Logout zprava pro %s nastavena na: %s
+%s with class %d changed login message for %s: %s|%s s class %d zmenil login zpravu pro %s: %s
+%s with class %d changed logout message for %s: %s|%s s class %d zmenil logout zpravu pro %s: %s
+Login message deleted for user: %s|Login zprava pro %s smazana.
+Logout message deleted for user: %s|Logout zprava pro %s smazana.
+%s with class %d deleted login message for user: %s|%s s class %d smazal login zpravu uzivatele: %s
+%s with class %d deleted logout message for user: %s|%s s class %d smazal logout zpravu uzivatele: %s
+%s with class %d deleted welcome messages for user: %s|%s s class %d smazal uvitaci zpravy uzivatele: %s
+minute|minuta
+Last %d releases by search string %s|Poslednich %d releasu vyhledanych pomoci %s
+Modified release: %s|Modifikovan release: %s
+Added release: %s|Vlozen release: %s
+Deleted release: %s|Smazan release: %s
+Couldn't delete release because not found: %s|Nemohu smazat release %s protoze nebyl nalezen.
+Reminder preview|Reminder nahled
+Preview of %s reminder: %s|Nahled reminderu %s : %s
+Specified nick is already in use.|Specifikovany nick se pouziva.
+Live user location statistics by country|Aktualni statistika zemi uzivatelu
+All time user location statistics|Celkova statistika zemi uzivatelu
+This feature requires %s or later installed on your system.|Tato funkce vyzaduje nainstalovanou %s nebo novejsi.
+Total count since %s: %d|Celkovy pocet od %s: %d
+Unknown country|Neznama zeme
+No users in the hub.|Na hubu nejsou zadni uzivatele.
+User location statistics table is empty.|Zaznam statistiky zemi uzivatelu je prazdny.
+Total count: %d|Celkovy pocet: %d
+Deleted all rows: %s|Smazany vsechny radky: %s
+%s with class %d deleted all user location entries.|%s s class %d smazal vsechny zaznamy zemi uzivatelu.
+address|adresa
+owner|owner
+Add friendly hub|Prida sprateleny hub
+Delete friendly hub|Smaze sprateleny hub
+Show friendly hubs|Zobrazi spratelene huby
+Added friendly hub: %s|Vlozen sprateleny hub: %s
+Modified friendly hub: %s|Modifikovan sprateleny hub: %s
+Deleted friendly hub: %s|Smazan sprateleny hub: %s
+Friendly hub not found: %s|Sprateleny hub %s nebyl nalezen.
+Friendly hublist|Seznam spratelenych hubu
+Friendly hublist is empty.|Seznam spratelenych hubu je prazdny.
+Executed shell command didn't return any output.|Provedeny shell prikaz nevratil zadny vystup.
+Returned output|Prijaty vystup
+%s renamed %s to: %s|%s prejmenoval %s na: %s
+%s plugin version: %s|%s plugin verze: %s
+second|sekunda
+You are now known as: %s|Nyni jsi znam jako: %s
+You renamed %s to: %s|Byl jsi prejmenovan uzivatelem %s na: %s
+Spam exception from %s with IP %s and class %d in MC: %s|Spam vyjimka pro %s s IP %s a class %d na MC: %s
+Spam exception from %s with IP %s and class %d in PM: %s|Spam vyjimka pro %s s IP %s a class %d na PM: %s
+Spam exception from %s with IP %s and class %d in offline message: %s|Spam vyjimka pro %s s IP %s a class %d v offline zprave: %s
+Spam exception from %s with IP %s and class %d in report: %s|Spam vyjimka pro %s s IP %s a class %d v reportu: %s
+Spam notification from %s with IP %s and class %d in MC: %s|Oznameni spamu od %s with IP %s and class %d na MC: %s
+Spam notification from %s with IP %s and class %d in PM: %s|Oznameni spamu od %s with IP %s and class %d na PM: %s
+Spam notification from %s with IP %s and class %d in offline message: %s|Oznameni spamu od %s with IP %s and class %d v offline zprave: %s
+Spam notification from %s with IP %s and class %d in report: %s|Oznameni spamu od %s with IP %s and class %d v reportu: %s
+Spam from %s with IP %s and class %d in MC: %s|Spam od %s s IP %s a class %d na MC: %s
+Spam from %s with IP %s and class %d in PM: %s|Spam od %s s IP %s a class %d na PM: %s
+Spam from %s with IP %s and class %d in offline message: %s|Spam od %s s IP %s a class %d v offline zprave: %s
+Spam from %s with IP %s and class %d in report: %s|Spam od %s s IP %s a class %d v reportu: %s
+Modified antispam entry with action %d and priority %d to scan in MC: %s|Modifikovan antispam retezec s akci %d a prioritou %d pro sledovani MC: %s
+Modified antispam entry with action %d and priority %d to scan in PM: %s|Modifikovan antispam retezec s akci %d a prioritou %d pro sledovani PM: %s
+Modified antispam entry with action %d and priority %d to scan in MC and PM: %s|Modifikovan antispam retezec s akci %d a prioritou %d pro sledovani MC a PM: %s
+Added antispam entry with action %d and priority %d to scan in MC: %s|Vlozen antispam retezec s akci %d a prioritou %d pro sledovani MC: %s
+Added antispam entry with action %d and priority %d to scan in PM: %s|Vlozen antispam retezec s akci %d a prioritou %d pro sledovani PM: %s
+Added antispam entry with action %d and priority %d to scan in MC and PM: %s|Vlozen antispam retezec s akci %d a prioritou %d pro sledovani MC a PM: %s
+Search request exception from %s with IP %s and class %d as any file: %s|Vyjimka v hledani pro %s s IP %s a class %d pro jakykoliv soubor: %s
+Search request exception from %s with IP %s and class %d as audio file: %s|Vyjimka v hledani pro %s s IP %s a class %d pro audio soubor: %s
+Search request exception from %s with IP %s and class %d as compressed file: %s|Vyjimka v hledani pro %s s IP %s a class %d pro komprimovany soubor: %s
+Search request exception from %s with IP %s and class %d as document: %s|Vyjimka v hledani pro %s s IP %s a class %d pro dokument: %s
+Search request exception from %s with IP %s and class %d as executable: %s|Vyjimka v hledani pro %s s IP %s a class %d pro program: %s
+Search request exception from %s with IP %s and class %d as picture: %s|Vyjimka v hledani pro %s s IP %s a class %d pro obrazek: %s
+Search request exception from %s with IP %s and class %d as video: %s|Vyjimka v hledani pro %s s IP %s a class %d pro video: %s
+Search request exception from %s with IP %s and class %d as folder: %s|Vyjimka v hledani pro %s s IP %s a class %d pro slozku: %s
+Search request exception from %s with IP %s and class %d as TTH: %s|Vyjimka v hledani pro %s s IP %s a class %d pro TTH: %s
+Search request notification from %s with IP %s and class %d as any file: %s|Oznameni o hledani od %s s IP %s a class %d pro jakykoliv soubor: %s
+Search request notification from %s with IP %s and class %d as audio file: %s|Oznameni o hledani od %s s IP %s a class %d pro audio soubor: %s
+Search request notification from %s with IP %s and class %d as compressed file: %s|Oznameni o hledani od %s s IP %s a class %d pro komprimovany soubor: %s
+Search request notification from %s with IP %s and class %d as document: %s|Oznameni o hledani od %s s IP %s a class %d pro dokument: %s
+Search request notification from %s with IP %s and class %d as executable: %s|Oznameni o hledani od %s s IP %s a class %d pro program: %s
+Search request notification from %s with IP %s and class %d as picture: %s|Oznameni o hledani od %s s IP %s a class %d pro obrazek: %s
+Search request notification from %s with IP %s and class %d as video: %s|Oznameni o hledani od %s s IP %s a class %d pro video: %s
+Search request notification from %s with IP %s and class %d as folder: %s|Oznameni o hledani od %s s IP %s a class %d pro slozku: %s
+Search request notification from %s with IP %s and class %d as TTH: %s|Oznameni o hledani od %s s IP %s a class %d pro TTH: %s
+Bad search request from %s with IP %s and class %d as any file: %s|Zakazane hledani od %s s IP %s a class %d pro jakykoliv soubor: %s
+Bad search request from %s with IP %s and class %d as audio file: %s|Zakazane hledani od %s s IP %s a class %d pro audio soubor: %s
+Bad search request from %s with IP %s and class %d as compressed file: %s|Zakazane hledani od %s s IP %s a class %d pro komprimovany soubor: %s
+Bad search request from %s with IP %s and class %d as document: %s|Zakazane hledani od %s s IP %s a class %d pro dokument: %s
+Bad search request from %s with IP %s and class %d as executable: %s|Zakazane hledani od %s s IP %s a class %d pro program: %s
+Bad search request from %s with IP %s and class %d as picture: %s|Zakazane hledani od %s s IP %s a class %d pro obrazek: %s
+Bad search request from %s with IP %s and class %d as video: %s|Zakazane hledani od %s s IP %s a class %d pro video: %s
+Bad search request from %s with IP %s and class %d as folder: %s|Zakazane hledani od %s s IP %s a class %d pro slozku: %s
+Bad search request from %s with IP %s and class %d as TTH: %s|Zakazane hledani od %s s IP %s a class %d pro TTH: %s
+Modified search filter with action %d and priority %d as any file: %s|Modifikovan filtr hledani s akci %d a prioritou %d pro jakykoliv soubor: %s
+Modified search filter with action %d and priority %d as audio file: %s|Modifikovan filtr hledani s akci %d a prioritou %d pro audio soubor: %s
+Modified search filter with action %d and priority %d as compressed file: %s|Modifikovan filtr hledani s akci %d a prioritou %d pro komprimovany soubor: %s
+Modified search filter with action %d and priority %d as document: %s|Modifikovan filtr hledani s akci %d a prioritou %d pro dokument: %s
+Modified search filter with action %d and priority %d as executable: %s|Modifikovan filtr hledani s akci %d a prioritou %d pro program: %s
+Modified search filter with action %d and priority %d as picture: %s|Modifikovan filtr hledani s akci %d a prioritou %d pro obrazek: %s
+Modified search filter with action %d and priority %d as video: %s|Modifikovan filtr hledani s akci %d a prioritou %d pro video: %s
+Modified search filter with action %d and priority %d as folder: %s|Modifikovan filtr hledani s akci %d a prioritou %d pro slozku: %s
+Modified search filter with action %d and priority %d as TTH: %s|Modifikovan filtr hledani s akci %d a prioritou %d pro TTH: %s
+Added search filter with action %d and priority %d as any file: %s|Vlozen filtr hledani s akci %d a prioritou %d pro jakykoliv soubor: %s
+Added search filter with action %d and priority %d as audio file: %s|Vlozen filtr hledani s akci %d a prioritou %d pro audio soubor: %s
+Added search filter with action %d and priority %d as compressed file: %s|Vlozen filtr hledani s akci %d a prioritou %d pro komprimovany soubor: %s
+Added search filter with action %d and priority %d as document: %s|Vlozen filtr hledani s akci %d a prioritou %d pro dokument: %s
+Added search filter with action %d and priority %d as executable: %s|Vlozen filtr hledani s akci %d a prioritou %d pro program: %s
+Added search filter with action %d and priority %d as picture: %s|Vlozen filtr hledani s akci %d a prioritou %d pro obrazek: %s
+Added search filter with action %d and priority %d as video: %s|Vlozen filtr hledani s akci %d a prioritou %d pro video: %s
+Added search filter with action %d and priority %d as folder: %s|Vlozen filtr hledani s akci %d a prioritou %d pro slozku: %s
+Added search filter with action %d and priority %d as TTH: %s|Vlozen filtr hledani s akci %d a prioritou %d pro TTH: %s
+%s with class %d deleted %d releases older than %d days.|%s s class %d smazal %d releasu starsich nez %d dnu.
+Size of release table: %d [ %s: %d @ %s ]|Velikost zaznamu releasu: %d [ %s: %d @ %s ]
+LRE|LRE
+Code accepted.|Kod prijat.
+Protection list|Seznam protekci
+Added protection entry: %s|Vlozena protekce: %s
+Deleted protection entry: %s|Smazana protekce: %s
+Protection entry already exists: %s|Protekce %s uz existuje.
+Protection entry not found: %s|Protekce %s nenalezena.
+Protection list is empty.|Seznam protekci je prazdny.
+Missing %s in configuration variable.|Chybi %s v promenne nastaveni.
+Chatroom: %s|Chatroom: %s
+You've left the chatroom.|Opustil jsi chatroom.
+User left the chatroom: %s|Uzivatel %s opustil chatroom.
+User entered the chatroom: %s|Uzivatel %s vstoupil do chatroomu.
+You've entered %s chatroom.|Vstoupil jsi do %s chatroomu.
+You're not member of this chatroom.|Nejsi clenem tohoto chatroomu.
+You don't have access to this chatroom.|Nemas pristup do tohoto chatroomu.
+Chatroom member list|Seznam uzivatelu v chatroomu
+Chatroom is empty.|Chatroom je prazdny.
+You're already member of this chatroom.|Uz jsi clenem tohoto chatroomu.
+Chatroom user commands|Chatroom uzivatelske prikazy
+Unknown chatroom command. Use %s for help.|Neznamy chatroom prikaz. Napis %s pro napovedu.
+Enter the chatroom|Vstoupit do chatroomu
+Leave the chatroom|Opustit chatroom
+Deleted %d rows from country code statistics table: %s|Smazano %d radku ze statistiky zemi uzivatelu: %s
+Set chat mode|Nastavi mod chatu
+Known chat modes are: %s|Zname mody chatu jsou: %s
+mode|mod
+Changing chat mode for %s: %s => %s|Menim mod chatu pro %s: %s => %s
+Not found in chat mode list: %s|%s nebylo nalezeno v seznamu modu chatu.
+Chat mode user list|Seznam uzivatelu pro mod chatu
+Chat mode user list is empty.|Seznam uzivatelu pro mod chatu je prazdny.
+%s user lookup|Vyhledani uzivatele pomoci %s
+Looking for %s on: %s|Hledam %s na: %s
+User %s found in following hubs|Uzivatel %s nalezen na nasledujicich hubech
+User wasn't found in any hubs: %s|Uzivatel nebyl nalezen na zadnem hubu: %s
+Add IP gag|Vlozi IP gag
+Added IP gag: %s|Vlozen IP gag: %s
+Modified IP gag: %s|IP gag %s byl upraven.
+Deleted IP gag: %s|Smazan IP gag: %s
+IP gag not found: %s|IP gag %s nebyl nalezen.
+IP gag list|IP gag seznam
+IP gag list is empty.|IP gag seznam je prazdny.
+Delete IP gag|Smaze IP gag
+Main chat is currently disabled for you.|Chat je pro tebe uzamcen.
+Cleared temporary IP gag list.|Vycisten seznam IP gagu.
+Show custom script commands|Zobrazi upraveny script prikaz
+Custom script command list|Seznam upraveny script prikazu
+Custom script command list is empty.|Seznam upraveny script prikazu je prazdny.
+Script size: %d lines in %s|Velikost scriptu: %d radku v %s
+Added %s to IP gag list, %d users in total.|Vlozena %s do IP gag seznamu, celkem %d uzivatelu v seznamu.
+Flood detected from IP %s last known as %s with class %d in MC: %s|Detekovan flood z IP %s naposledy pripojen jako %s s class %d na MC: %s
+Flood detected from IP %s last known as %s with class %d in PM: %s|Detekovan flood z IP %s naposledy pripojen jako %s s class %d na PM: %s
+Private chat is currently disabled for you.|Soukromy chat je pro tebe zamcen
+Flood detected from your IP.|Detekovan flood z tve IP.
+%d users with IP %s dropped due to flood.|%d uzivatelu s IP %s odpojeno za flood.
+No error message specified.|Nebyla urcena zadna chybova zprava.
+Search filter|Filtr hledani
+MyINFO check|MyINFO kontrola
+Authorization|Autorizace
+Ranks|Hodnoceni
+Welcome messages|Uvitaci zpravy
+Chatrooms|Chatroomy
+Reminders|Remindery
+Hub news|Hubove novinky
+Chat responder|Chat respondery
+Releases|Releasy
+Offline messenger|Offline zpravy
+Chat history|Chat historie
+Commands|Prikazy
+Custom nicks|Volitelne nicky
+Registered users|Registrovani uzivatele
+Hublist|Hublist
+Chat|Chat
+IP gag|IP gag
+User logger|Log uzivatele
+Other|Ostatni
+Configuration|Konfigurace
+Clear main chat|Vycisti chat
+Chat cleanup performed by %s|%s vycistil chat
+Search in registered users list|Hledani v seznamu registrovanych uzivatelu
+Registered users list statistics|Statistika registrovanych uzivatelu
+Registered users list results for %s|Seznam vysledku registrovanych uzivatelu pro: %s
+Class %d: %d|Class %d: %d
+Registered users list is empty.|Seznam registrovanych uzivatelu je prezdny.
+This feature requires following binary installed on your system: %s|Tato funkce vyzaduje nainstalovane nasledujici binarky v systemu: %s
+Configuration directory: %s|Konfiguracni slozka: %s
+%s with IP %s and class %d stated incorrect IP in connect request to %s: %s|%s s IP %s a class %d uvedl nespravnou IP v zadosti o pripojeni k %s: %s
+Top %d search requests|Top %d pozadavku hledani
+Search rank list is empty.|Seznam hodnoceni hledani je prazdny.
+Deleted from search rank list: %s|%s smazano ze seznamu hodnoceni hledani.
+Not found in search rank list: %s|%s nebylo nalezeno v seznamu hodnoceni hledani.
+%s with class %d deleted %d search ranks lower than %d.|%s s class %d smazal %d hodnoceni hledani nizsich nez %d bodu.
+Size of search ranks table: %d [ %s: %d @ %s ]|Velikost zaznamu hodnoceni hledani: %d [ %s: %d @ %s ]
+Size of user location statistics table: %d [ %s: %s ]|Velikost zaznamu statistiky zemi uzivatelu: %d [ %s: %s ]
+Open files limit: %d|Ulimit: %d
+User information|Informace o uzivateli
+User not in list: %s|Uzivatel %s neni v seznamu.
+Nick: %s|Nick: %s
+Description: %s|Popis: %s
+Tag: %s|Tag: %s
+Mode: %s|Mod: %s
+Slots: %s|Sloty: %s
+Hubs: %s|Huby: %s
+Limiter: %s KiB/s|Limiter: %s KiB/s
+Connection: %s|Pripojeni: %s
+Status: %s|Status: %s
+Email: %s|Email: %s
+Share: %s|Sdileni: %s
+Exact share: %s|Presne sdileni: %s
+Class: %d|Class: %d
+IP: %s|IP: %s
+DNS: %s|DNS: %s
+Country: %s|Zeme: %s
+Client: %s|Klient: %s
+Version: %s|Verze: %s
+Normal|Normal
+Away|Away
+Normal away|Normal away
+Fileserver|Fileserver
+Normal fileserver|Normal fileserver
+Away fileserver|Away fileserver
+Normal away fileserver|Normal away fileserver
+Fireball|Fireball
+Normal fireball|Normal fireball
+Away fireball|Away fireball
+Normal away fireball|Normal away fireball
+Fileserver fireball|Fileserver fireball
+Normal fileserver fireball|Normal fileserver fireball
+Away fileserver fireball|Away fileserver fireball
+Normal away fileserver fireball|Normal away fileserver fireball
+TLS|TLS
+Normal TLS|Normal TLS
+Away TLS|Away TLS
+Normal away TLS|Normal away TLS
+Fileserver TLS|Fileserver TLS
+Normal fileserver TLS|Normal fileserver TLS
+Away fileserver TLS|Away fileserver TLS
+Normal away fileserver TLS|Normal away fileserver TLS
+Fireball TLS|Fireball TLS
+Normal fireball TLS|Normal fireball TLS
+Away fireball TLS|Away fireball TLS
+Normal away fireball TLS|Normal away fireball TLS
+Fileserver fireball TLS|Fileserver fireball TLS
+Normal fileserver fireball TLS|Normal fileserver fireball TLS
+Away fileserver fireball TLS|Away fileserver fireball TLS
+Normal away fileserver fireball TLS|Normal away fileserver fireball TLS
+Unable to get bot information: %s|Nemohu ziskat informace o botu: %s
+Bot information|Informace o botu
+Owner script: %s|Majitel scriptu: %s
+%s with IP %s and class %d allowed due to forbidden DNS exception: %s|%s s IP %s a class %d vstup povolen diky vyjimce pro zakazane DNS: %s
+In order to use this feature you need to enable DNS lookup. Do it by setting hub configuration variable %s to %d. Please note: Enabling DNS lookup might slow your hub performance down.|Pro pouziti teto funkce potrebujes mit zapnuty DNS lookup. To muzes udelat nastavenim promenne hubu %s na %d. Upozorneni: Zapnuti DNS Lookup muze snizit vykon hubu.
+Couldn't add forbidden DNS because already exists: %s|Nemohu vlozit zakazanou DNS %s protoze uz existuje.
+Added forbidden DNS: %s|Vlozena zakazana DNS: %s
+Deleted forbidden DNS: %s|Smazana zakazana DNS: %s
+Couldn't delete forbidden DNS because not found: %s|Nemohu smazat zakazanou DNS %s protoze nebyla nalezena.
+Forbidden DNS list|Seznam zakazanych DNS
+Forbidden DNS list is empty.|Seznam zakazanych DNS je prazdny.
+Powered by %s|Powered by %s with Antivirus
+Warning: %s|Varovani: %s
+Open files limit set to %d is smaller than maximum users configuration which is %d. You can correct this by setting %s to %d or higher and restarting the hub.|ulimit nastaven na %d je mensi nez nastaveni maximalniho poctu uzivatelu, ktery je %d. Muzes to napravit nastavenim %s na %d nebo vyssi a restartovanim hubu.
+Additional help|Doplnkova napoveda
+Remove all %s tables and files|Odebere vsechny %s zaznamy a soubory
+No reason specified.|Nebyl urcen duvod.
+You can't kick user whose class is higher or equals your own: %s|Nemuzes kopnout uzivatele jehoz class je vyssi nebo stejna jako je tvoje: %s
+Your topic contains forbidden characters which can't be used for security reason: %s|Tvuj topic obsahuje zakazane znaky: %s, ktere nemohou byt pouzity s bezpecnostnich duvodu.
+Hub uptime: %s|Hub bezi: %s
+User count: %s|Pocet uzivatelu: %s
+Total share: %s|Celkove sdileni: %s
+%s with IP %s and class %d tries to speak with IP gag in MC: %s|%s s IP %s a class %d se pokousi promluvit s IP gagem na MC: %s
+%s with IP %s and class %d tries to speak with IP gag in PM: %s|%s s IP %s a class %d se pokousi promluvit s IP gagem na PM: %s
+Private message replaced for user: %s|Soukroma zprava zamenena pro uzivatele: %s.
+Command logger|Log prikazu
+Showing %d entries from command logger|Zobrazuji %d zaznamu z logu prikazu
+Command logger is empty.|Log prikazu je prazdny.
+%s with class %d deleted %d command log entries older than %d days.|%s s class %d smazal %d zaznamu z logu prikazu starsich nez %d dnu.
+Size of command log table: %d [ %s: %d @ %s ]|Velikost zaznamu logu prikazu: %d [ %s: %d @ %s ]
+password|heslo
+Modify IP authorization entry|Modifikuje IP autorizaci
+Couldn't modify authorization entry because not found: %d|Nemohu modifikovat autorizaci IP %d protoze nebyla nalezena.
+Uptime: %s|Uptime: %s
+Enable requested feature and try again.|Zapni pozadovanou funkci a zkus znova.
+cc|cc
+Couldn't add forbidden country code because already exists: %s|Nemohu vlozit zakazany country code %s protoze uz existuje.
+Added forbidden country code: %s|Vlozen zakazany country code: %s
+Deleted forbidden country code: %s|Smazan zakazany country code: %s
+Couldn't delete forbidden country code because not found: %s|Nemohu smazat zakazany country code %s protoze nebyl nalezen.
+Forbidden country code list|Seznam zakazanych country code
+Forbidden country code list is empty.|Seznam zakazanych country code je prazdny.
+%s with IP %s and class %d allowed due to forbidden country code exception: %s|%s s IP %s a class %d vstup povolen diky vyjimce pro zakazane country code: %s
+I'm staying idle due to confusion.|Nechapu pozadavek.
+Added replacer in MC: %s|Vlozen chat replacer: %s
+Deleted chat replacer with ID: %d|Smazan chat replacer s ID: %d
+Couldn't delete chat replacer because ID not found: %d|Nemohu smazat chat replacer protoze ID nebylo nalezeno: %d
+Chat replacer list|Seznam pro chat replacer
+Chat replacer list is empty.|Seznam pro chat replacer je prazdny.
+Replace|Nahradit
+Couldn't add chat replacer exception because already exists: %s|Nemohu vlozit chat replacer vyjimku %s protoze uz existuje.
+Added chat replacer exception: %s|Vlozena vyjimka %s pro chat replacer.
+Deleted chat replacer exception: %s|Smazana vyjimka %s pro chat replacer.
+Couldn't delete chat replacer exception because not found: %s|Nemohu smazat vyjimku %s pro chat replacer protoze nebyla nalezena.
+Chat replacer exception list|Seznam vyjimek pro chat replacer
+Chat replacer exception list is empty.|Seznam vyjimek pro chat replacerje prazdny.
+replace|nahradit
+Add chat replacer|Vlozi chat replacer
+Delete chat replacer|Smaze chat replacer
+Add chat replacer exception|Vlozi vyjimku pro chat replacer
+Delete chat replacer exception|Smaze vyjimku pro chat replacer
+Chat replacer|Chat replacer
+You need to send another %d main chat messages in order to use hub registration.|Musis poslat aspon %d zprav na chat abys mel povolenou registraci.
+Please wait another %.1f minutes before using hub registration.|Prosim pockej jeste %.1f minut pred pouzitim registrace na hubu.
+In order to use this feature you need to set %s to: %d|Pro pouziti teto funkce musis nastavit %s na: %d
+Please reconnect to gain %d minutes of uptime in order to use hub registration.|Odpoj se a znovu pripoj k hubu (pouzij CTRL+R) a po %d minutach budes mit povolenou registraci.
+Dropping %s with IP %s and class %d due to protocol flood detection: %s|Odpojuji %s s IP %s a class %d za flood protokolem: %s
+Protocol flood detected from your client: %s|Bylo detekovano floodovani protokolem z tveho klienta: %s
+Automatic update check detected stable version of %s available, use following command to update: %s|Automaticky update check nalezl novou stabilni verzi %s, pro upgrade pouzij: %s
+menu|menu
+Dropping user due to clone detection from IP %s with class %d: %s = %s|Odpojuji uzivatele pro nalezeni dvojiho pripojeni z IP %s s class %d: %s = %s
+Configuration variable %s must be a valid IP address.|Hodnota nastaveni %s musi byt platna IP adresa.
+Average share per user: %s|Prumerne sdileni na jednoho uzivatele: %s
+Don't be stupid.|Nedelej hlouposti.
+reason|duvod
+Add blocked PM entry|Vlozi uzivatele s blokovanym PM
+Delete blocked PM entry|Smaze uzivatele z blokovani PM
+List of blocked PM entries|Seznam uzivatelu se zablokovanym PM
+Modified blocked PM entry: %s|Upraven uzivatel se zablokovanym PM: %s
+Added blocked PM entry: %s|Vlozen uzivatel se zablokovanym PM: %s
+Deleted blocked PM entry: %s|Smazan uzivatel ze seznamu blokovanych PM: %s
+Blocked PM list is empty.|Seznam blokovanych PM je prazdny.
+Couldn't delete blocked PM entry because not found: %s|Nemohu smazat uzivatele ze seznamu blokovanych PM, protoze nebyl nalezen: %s
+Reason: %s|Duvod: %s
+You're not allowed to send PM to this user because: %s|Nemate povoleni odesilat PM tomuto uzivateli protoze: %s
+%s with class %d deleted %d antispam entries with occurrence less than %d.|%s s class %d smazal %d antispam zaznamu s vyskytem nizsim nez %d.
+%s with class %d deleted %d search filter entries with occurrence less than %d.|%s s class %d smazal %d zaznamu z filtru hledani s vyskytem mensim nez %d.
+query|prikaz
+Execute MySQL query|Provede prikaz pro MySQL 
+Execute shell command|Provede prikaz pro shell
+Experts only|Pouze pro zkusene uzivatele
+Add hard IP ban entry|Vlozi hard IP ban polozku
+Delete hard IP ban entry|Smaze hard IP ban polozku
+List of hard IP ban entries|Seznam hard IP ban polozek
+Modified hard IP ban entry: %s|Upravena hard IP ban polozka: %s
+Added hard IP ban entry: %s|Vlozena hard IP ban polozka: %s
+Deleted hard IP ban entry: %s|Smazana hard IP ban polozka: %s
+Hard IP ban list is empty.|Seznam hard IP ban je prazdny.
+Couldn't delete hard IP ban entry because not found: %s|Nemohu smazat hard IP ban polozku protoze nebyla nalezena: %s
+Hard IP ban refused connection from IP %s: %s|Hard IP ban odmitlo pripojeni z IP %s: %s
+Please wait another %d seconds before using hub search engine.|Prosim pockej jeste %d sekund pred zapocetim pouzivani vyhledavani na hubu.
+Loading %s in memory...|Nahravam %s do pameti...
+Finished loading %s in memory.|Dokonceno nahravani %s do pameti.
+Unable to locate %s in hub configuration directory.|Nemohu nalezt %s v konfiguracni slozce.
+Add right click menu item|Vlozit polozku do menu pod pravym tlacitkem mysi
+Delete right click menu item|Smazat polozku z menu pod pravym tlacitkem mysi
+List of right click menu items|Seznam polozek v menu pod pravym tlacitkem mysi
+Blacklisted connection from IP %s dropped: %s|Odpojeno spojeni z IP %s uvedene v Blacklist seznamu: %s
+To add multiple entries with this command you need to separate every entry by space.|Pro vlozeni vice polozek timto prikazem musis oddelit kazdou polozku mezerou.
+Add IP watch entry|Vlozit IP watch polozku
+Delete IP watch entry|Smazat IP watch polozku
+List of IP watch entries|Seznam IP watch polozek
+result|vysledek
+Modified IP watch entry: %s|Modifikovana IP watch polozka: %s
+Added IP watch entry: %s|Vlozena IP watch polozka: %s
+Known results are: %s|Zname vysledky jsou: %s
+Deleted IP watch entry: %s|Smazana IP watch polozka: %s
+IP watch list is empty.|IP watch seznam je prazdny.
+Couldn't delete IP watch entry because not found: %s|Nemohu smazat polozku z IP watch protoze nebyla nalezena: %s
+IP watch notification from %s with IP %s: %s|IP watch oznameni od %s s IP %s: %s
+unknown nick|neznamy nick
+Country code gag|Country code gag
+Add country code gag|Vlozi country code gag
+Added country code gag: %s|Vlozen country code gag: %s
+Modified country code gag: %s|Upraven country code gag: %s
+Deleted country code gag: %s|Smazan country code gag: %s
+Country code gag not found: %s|Country code gag %s nenalezen
+Country code gag list|Country code gag seznam
+Country code gag list is empty.|Country code gag seznam je prazdny.
+Delete country code gag|Smaze country code gag
+Cleared country code gag list.|Country code gag seznam byl vycisten.
+%s with IP %s and class %d tries to speak with country code gag in MC: %s|%s s IP %s a class %d se pokousi promluvit s country code gag na MC: %s
+%s with IP %s and class %d tries to speak with country code gag in PM: %s|%s s IP %s a class %d se pokousi promluvit s country code gag na PM: %s
+No reason specified|Nebyl zadan duvod
+Automatically deleted %d user log entries older than %d days.|Automaticky bylo smazano %d zaznamu z logu uzivatelu starsich nez %d dnu.
+Main chat message replaced for user: %s|Zprava v hlavnim chatu zamenena pro uzivatele: %s.
+Unknown protocol command from IP %s before login: %s|Neznamy prikaz protokolu z IP %s pred prihlasenim: %s
+Added %s to hard ban list, %d users in total.|Pridan %s do hard ban seznamu, %d celkem uzivatelu.
+NMDC version: %s|NMDC verze: %s
+Client supports: %s|Client supports: %s
+Couldn't add forbidden client supports because already exists: %s|Nemohu pridat zakazany client supports protoze uz existuje: %s
+Added forbidden client supports: %s|Pridan zakazany client supports: %s
+Couldn't add forbidden NMDC version because already exists: %s|Nemohu pridat zakazanou NMDC verzi protoze uz existuje: %s
+Added forbidden NMDC version: %s|Vlozena zakazana NMDC verze: %s
+Latest version of %s is required in order to use this feature.|Nejnovejsi verze %s je nutna pro pouzivani tet funkce.
+Deleted forbidden client supports: %s|Smazan zakazany client supports: %s
+Couldn't delete forbidden client supports because not found: %s|Nemohu smazat zakazany client supports protoze nebyl nalezen: %s
+Deleted forbidden NMDC version: %s|Smazana zakazana NMDC verze: %s
+Couldn't delete forbidden NMDC version because not found: %s|Nemohu smazat zakazanou NMDC verzi protoze nebyla nalezena: %s
+Forbidden client supports list|Seznam zakazanych client supports
+Forbidden client supports list is empty.|Seznam zakazanych client supports je prazdny.
+Forbidden NMDC version list|Seznam zakazanych NMDC verzi
+Forbidden NMDC version list is empty.|Seznam zakazanych NMDC verzi je prazdny.
+%s with IP %s and class %d allowed due to forbidden client supports exception: %s|%s s IP %s a class %d byl vpusten s vyjimkou pro zakazane client supports: %s
+%s with IP %s and class %d allowed due to forbidden NMDC version exception: %s|%s s IP %s a class %d byl vpusten s vyjimkou pro zakazanou NMDC verzi: %s
+City: %s|Mesto: %s
+IP range: %s - %s|IP rozsah: %s - %s
+Region: %s|Region: %s
+Time zone: %s|Casova zona: %s
+Continent: %s|Kontinent: %s
+Postal code: %s|Postovni kod: %s
+Coordinates: %.4f %.4f|Souradnice: %.4f %.4f
+Metro code: %d|Kod mesta: %d
+Area code: %d|Kod oblasti: %d
+Drop users with IP|Odpojit vsechny uzivatele s IP
+No users found with IP: %s|Zadni uzivatele s IP %s nebyli nalezeni
+Dropped %d users with IP: %s|Odpojeno %d uzivatelu s IP: %s
+%s dropped %d users with IP: %s|%s odpojil %d uzivatelu s IP: %s
+Live user location statistics by city|Statistika pripojenych uzivatelu podle mesta
+Live user location statistics by city from %s=%s|Statistika pripojenych uzivatelu podle mesta v %s=%s
+No users in the hub from: %s=%s|Zadni uzivatele na hubu z: %s=%s
+Help notes|Poznamky
+parameter|parametr
+Command parameters %s are always required, while %s are optional.|Parametry prikazu %s jsou vzdy nutne, zatimco %s jsou nepovinne.
+Quoted parameters %s or %s must be used with quotes.|Parametry v uvozovkach %s nebo %s musi byt vzdy pouzity s uvozovkami.
+IP information|Informace o IP
+IP information not available: %s|Informace o IP %s nejsou dostupne
+Message replaced for user with class %d in MC: <%s> %s|Chat zprava uzivatele s class %d byla zmenena: <%s> %s
+IP %s permanently banned: <%s> %s|IP %s byla permanetne zabanovana: <%s> %s
+Nick %s permanently banned: <%s> %s|Nick %s byl permanetne zabanovan: <%s> %s
+Range %s permanently banned: <%s> %s|IP rozsah %s byl permanetne zabanovan: <%s> %s
+Host %s permanently banned: <%s> %s|Host %s byl permanetne zabanovan: <%s> %s
+Share %s permanently banned: <%s> %s|Sdileni %s bylo permanetne zabanovano: <%s> %s
+Prefix %s permanently banned: <%s> %s|Prefix %s byl permanetne zabanovan: <%s> %s
+IP %s temporarily banned until %s: <%s> %s|IP %s byla docasne zabanovana do %s: <%s> %s
+Nick %s temporarily banned until %s: <%s> %s|Nick %s byl docasne zabanovan do %s: <%s> %s
+Range %s temporarily banned until %s: <%s> %s|IP rozsah %s byl docasne zabanovan do %s: <%s> %s
+Host %s temporarily banned until %s: <%s> %s|Host %s byl docasne zabanovan do %s: <%s> %s
+Share %s temporarily banned until %s: <%s> %s|Sdileni %s bylo docasne zabanovano do %s: <%s> %s
+Prefix %s temporarily banned until %s: <%s> %s|Prefix %s byl docasne zabanovan do %s: <%s> %s
+IP %s unbanned: <%s> %s|IP %s odbanovana: <%s> %s
+Nick %s unbanned: <%s> %s|Nick %s odbanovan: <%s> %s
+Range %s unbanned: <%s> %s|IP rozsah %s odbanovan: <%s> %s
+Host %s unbanned: <%s> %s|Host %s odbanovan: <%s> %s
+Share %s unbanned: <%s> %s|Sdileni %s odbanovano: <%s> %s
+Prefix %s unbanned: <%s> %s|Prefix %s odbanovan: <%s> %s
+Known contexts are: %s|Zname typy konextu jsou: %s
+Known orders are: %s|Znama poradi jsou: %s
+Modified right click menu item: %s|Modifikovana right click menu polozka: %s
+Added right click menu item: %s|Vlozena right click menu polozka: %s
+Deleted right click menu item: %s|Smazana right click menu polozka: %s
+Right click menu item not found: %s|Right click menu polozka nebyla nalezena: %s
+Right click menu item list is empty.|Right click menu seznam je prazdny.
+Menu item|Polozka menu
+Menu command|Prikazove menu
+Changed right click menu item order: %s|Zmeneno poradi right click menu polozky: %s
+Separator or eraser|Oddelovac nebo smazani polozky
+Nick and IP %s unbanned: <%s> %s|Nick a IP %s odbanovano: <%s> %s
+Other %s unbanned: <%s> %s|Other %s unbanned: <%s> %s
+Vote for user to be kicked|Hlasuj pro vykopnuti uzivatele
+You don't want to vote for kicking an operator.|Opravdu nechces hlasovat pro vykoputi operatora.
+User voted kick|Uzivatel hlasoval pro vykopnuti
+You have already voted for kicking that user.|Pro vykopnuti tohoto uzivatele jsi uz hlasoval.
+%s added vote %d of %d for kicking user with class %d: %s|%s pridal %d. hlas z %d pro vykopnuti uzivatele s class %d: %s
+There is an error in following antispam entry pattern|V nasledujicim antispam retezci je chyba
+Pattern|Retezec
+Error|Chyba
+Solution|Reseni
+There is an error in following search filter pattern|V nasledujicim retezci pro search filter je chyba
+There is an error in following search filter exception pattern|V nasledujicim retezci pro vyjimku v search filter je chyba
+There is an error in following antispam exception entry pattern|V nasledujicim retezci pro vyjimku v antispamu je chyba
+There is an error in following forbidden nick pattern|V nasledujicim retezci pro zakazany nick je chyba
+There is an error in following MyINFO exception pattern|V nasledujicim retezci pro vyjimku MyINFO je chyba
+There is an error in following forbidden description pattern|V nasledujicim retezci pro zakazany popis je chyba
+There is an error in following forbidden tag pattern|V nasledujicim retezci pro zakazany tag je chyba
+There is an error in following forbidden connection type pattern|V nasledujicim retezci pro zakazany typ pripojeni je chyba
+There is an error in following forbidden email pattern|V nasledujicim retezci pro zakazany email je chyba
+There is an error in following forbidden share size pattern|V nasledujicim retezci pro zakazanou velikost sdileni je chyba
+There is an error in following forbidden IP address pattern|V nasledujicim retezci pro zakazanou IP je chyba
+There is an error in following forbidden country code pattern|V nasledujicim retezci pro zakazany country code je chyba
+There is an error in following forbidden DNS pattern|V nasledujicim retezci pro zakazanou DNS je chyba
+There is an error in following forbidden client supports pattern|V nasledujicim retezci pro zakazany client support je chyba
+There is an error in following forbidden NMDC version pattern|V nasledujicim retezci pro zakazanou verzi NMDC je chyba
+Added replacer in PM: %s|Vlozen replacer na PM: %s
+Added replacer in MC and PM: %s|Vlozen replacer na MC a PM: %s
+Message replaced for user with class %d in PM: <%s> %s|PM zprava uzivatele s class %d byla zmenena: <%s> %s
+Message ignored due to flood detection from %s with IP %s and class %d in MC: %s|Zprava ignorovana pro detekci floodu od %s s IP %s a class %d na chatu: %s
+Users with same IP|Uzivatele se stejnou IP
+Parameter count mismatch detected in following translation string: %s|Nalezen nesouhlasici soucet parametru v nasledujicim prekladu: %s
+Infected user detected|Detekovan nakazeny uzivatel
+Found files|Nalezene soubory
+Infected user detected with nick %s and IP %s and share %s and spent time: %s|Detekovan infikovany uzivatel %s s IP %s a share %s, pouzity cas: %s
+Sadly I don't have access to send infected user information to AVDB, please ask maintainer of this script to add your server IP address to access list. AVDB reporting feature has been automatically disabled.|Bohuzel nemam opravneni k odesilani informaci o nakazenych uzivatelich do AVDB, pozadejte vyvojare tohoto scriptu o pridani IP tohoto serveru na seznam. AVDB oznamovaci funkce byla automaticky vypnuta.
+In order to send infected user information to AVDB you need to ask maintainer of this script to add your server IP address to AVDB access list.|Pro odesilani informaci o nakazenych uzivatelich do AVDB musite pozadat vyvojare tohoto scriptu o pridani IP vaseho serveru na seznam.
+Antivirus statistics|Statistika Antiviru
+File names used for search|Nazvy souboru pouzite pri hledani
+File extensions used for search|Pripony souboru pouzite pri hledani
+Possibly infected users|Pravdepodobne nakazeni uzivatele
+Spent time: %s|Pouzity cas: %s
+Infected user logged in with IP %s and share %s: %s|Infikovany uzivatel prihlasen s IP %s a sdilenim %s: %s
+Loaded %d of %d with totally %d items: %s|Nahrano %d z %d z celkove %d polozek: %s
+Infected user information sent to %s: %s|Informace o infikovanem uzivateli odeslany na %s: %s
+Failed to load information from %s: %s|Nepodarilo se nahrat informace z %s: %s
+Failed to send information to %s: %s|Nepodarilo se odeslat informace na %s: %s
+Error on executing %s: %s|Chyba pri provadeni %s: %s
+Error on connecting.|Chyba pri pripojovani.
+Loaded none with totally %d items: %s|Nenahrano nic z celkem %d polozek: %s
+Infected user found with IP %s and share %s: %s|Nalezen infikovany uzivatel s IP %s a sdilenim %s: %s
+Server didn't reply with expected status code.|Server neodpovedel ocekavanym stavovym kodem.
+Size of %s: %d @ %s|Velikost %s: %d @ %s
+Clear kick votes for user|Smazat hlasy pro kopnuti uzivatele
+%s cleared %d of %d votes for kicking user with class %d: %s|%s smazal %d z %d hlasu pro vykopnuti uzivatele s class %d: %s
+Vote kick list|Vote kick seznam
+Vote kick list is empty.|Vote kick seznam je prazdny
+Votes: %d of %d|Hlasu: %d z %d
+Voters: %s|Hlasujici: %s
+Triggers|Triggers
+Add trigger|Vlozit trigger
+Trigger list|Seznam triggeru
+Delete trigger|Smazat trigger
+Modified trigger: %s|Modifikovan trigger: %s
+Added trigger: %s|Pridan trigger: %s
+Deleted trigger: %s|Smazan trigger: s%
+Trigger not found: %s|Trigger nenalezen: %s
+Trigger list is empty.|Seznam triggeru je prazdny.
+Class range: %d to %d|Rozsah class: %d az %d
+Pinger|Pinger
+Guest|Host
+Registered|Registrovano
+VIP|VIP
+Operator|Operator
+Cheef|Cheef
+Administrator|Administrator
+Master|Master
+News item added by %s: %s|%s pridal novinku: %s
+Your connection request is blocked because user that you're trying connect to was detected as virus spreader: %s|Tvuj pozadavek na spojeni byl zablokovan protoze uzivatel ke kteremu se pokousis pripojit byl detekovan jako siritel viru: %s
+Connection requests to following user will be blocked: %s|Pozadavky na pripojeni k tomuto uzivateli budou zablokovany: %s
+Downloading script file: %s|Stahuji soubor: %s
+Stable version of %s is available: %s|Je dostupna stabilni verze %s: %s
+Development version of %s is available: %s|Je dostupna dev verze %s: %s
+Translation file loaded: %s|Soubor prekladu byl nahran: %s
+Loaded none of %d with totally %d items: %s|Nic nenahrano z %d z celkem %d polozek: %s
+Failed to execute %s with code: %d|Selhani pri provadeni %s s kodem: %d
+Failed to execute %s with error: %s|Selhani pri provadeni %s s chybou: %s
+Failed to execute %s without code and error.|Selhani pri provadeni %s bez chyby a bez kodu.
+Failed to move file: %s|Nepodarilo se presunout soubor: %s
+Downloading translation file: %s|Stahuji soubor prekladu: %s
+File not found on update server: %s|Soubor nenalezen na aktualizacnim serveru: %s
+File not found on remote server: %s|Soubor nenalezen na vzdalenem serveru: %s
+File is empty.|Soubor je prazdny.
+Force infected user detection|Vynutit detekci infikovanych uzivatelu
+You can't block user whose class is higher or equals your own: %s|Nemuzes blokovat uzivatele jehoz class je vyssi nebo stejna jako je tvoje: %s
+User already blocked: %s|Uzivatel je uz zablokovan: %s
+item|polozka
+Search in %s|Hledat v %s
+Antivirus|Antivirus
+Nothing was found in: %s|V %s nic nenalezeno
+Searching for %s in %s: %s|Hledam %s v %s: %s
+Showing %d results from %s|Zobrazuji %d vysledku z %s
+%s module version: %s|%s modul verze: %s
+This feature requires following module installed on your system: %s|Tato funkce vyzaduje nainstalovany %s modul v tvem systemu.
+Failed to start antivirus search server: %s|Selhalo spusteni antivirus search serveru: %s
+Started antivirus search server: %s|Spusten antivirus search server: %s
+Stopped antivirus search server: %s|Zastaven antivirus search server: %s
+Blocked infected users|Zablokovani infikovani uzivatele
+Add automatic country chatroom entrance|Vlozit automaticky vstup do country chatroom
+Automatic country chatroom entrance list|Seznam pro automaticky vstup do country chatroom
+Delete automatic country chatroom entrance|Smazat automaticky vstup do country chatroom
+Couldn't add automatic country chatroom entrance because already exists with ID: %d|Nelze vlozit automaticky vstup do country chatroom protoze uz existuje s ID: %d
+Added automatic country chatroom entrance for %s: %s|Vlozen automaticky vstup do country chatroom pro %s: %s
+Couldn't delete automatic country chatroom entrance because ID not found: %d|Nelze smazat automaticky vstup do country chatroom protoze ID nebylo nalezeno: %d
+Deleted automatic country chatroom entrance with ID: %d|Smazan automaticky vstup do country chatroom s ID: %d
+Automatic country chatroom entrance list is empty.|Seznam pro automaticky vstup do country chatroom je prazdny
+Please note, following function is required for features available in this version of %s and is currently not available in running version of %s but is available in latest update: %s|Upozorneni, nasledujici funkce je vyzadovana pro funkce dostupne v teto verzi %s a neni dostupna v aktualne bezici verzi %s ale je dostupna v poslednim update: %s
