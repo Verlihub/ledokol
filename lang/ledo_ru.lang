@@ -1,0 +1,1077 @@
+# Language: ru_RU
+# Charset: CP1251
+# Version: 2.8.3
+# Author: MaxFox
+# Email: maxfox@inbox.ru
+
+Current topic: %s|Данная тема: %s
+Current topic set by %s: %s|Данная тема установленная %s: %s
+This operation might take very long time depending on how much is going to be removed. Please be patient.|Время выполнения данной операции зависит от количества удаляемых данных. Пожалуйста, дождитесь выполнения данной команды.
+days|дней
+%s with class %d deleted %d IP logger plugin entries older than %d days.|Пользователь %s с классом %d удалил %d записей плагина IP logger которые являлись старше %d дней.
+%s with class %d deleted %d unbans older than %d days.|Пользователь %s %d-го класса удалил %d записей о снятых банах. Удалялись записи старше %d дней.
+%s with class %d deleted %d bans older than %d days.|Пользователь %s %d-го класса удалил %d записей о банах. Удалялись записи старше %d дней.
+%s with class %d deleted %d kicks older than %d days.|Пользователь %s %d-го класса удалил %d записей о киках. Удалялись записи старше %d дней.
+I'm probably away. State your business and I might answer later if you're lucky.|Гм... Меня вероятно нет на месте). Пожалуйста, оставте ваше сообщение, и если Вам очень повезет, я вам отвечу
+Perform script update|Произвести обновление скрипта
+Deleted %d main chat history messages.|Удалено %d сообщений из истории основного чата.
+There are no main chat history messages to remove.|Нету сообщений для удаления из истории основного чата.
+Deleted %d operator chat history messages.|Удалено %d сообщений из истории чата операторов.
+There are no operator chat history messages to remove.|Нету сообщений для удаления из истории чата операторов.
+%s with class %d deleted %d main chat history messages.|Пользователь %s %d-го класса удалил %d записей из истории основного чата.
+Unable to connect to target server. Please try again later.|Невозможно подключится к серверу. Попробуйте повторить попытку позже.
+Last %d main chat messages|Последние %d сообщений из истории основного чата
+Main chat history is empty.|Нет ни одного сообщения в истории основного чата.
+%s is now known as: %s|%s теперь известен как: %s
+Last %d operator chat messages|Последние %d сообщений из чата операторов
+Operator chat history is empty.|Нет ни одного сообщения в истории чата операторов.
+Valid priority is a number from %d to %d.|Действующие приоритеты это числа от %d до %d.
+You are using latest version of %s, no update is required.|Вы используете последнюю версию %s, обновлений не требуется.
+Why would you send offline message to yourself?|Почему вы хотите послать офф-лайн сообщение самому себе???
+User %s is online. Sending message directly.|Пользователь %s в сети. Сообщение доставлено ему в приват.
+Your offline message stored for user: %s|Ваше офф-лайн сообщение для пользователя %s сохранено
+%s with IP %s and class %d sent offline message.|Пользователь %s с IP-адресом %s и классом %d отправил офф-лайн сообщение.
+priority|приоритет
+Offline|Оффлайн
+Online|Онлайн
+I sent offline message to you on %s|Я послал вам оффлайн сообщение на %s
+My current status|Мой текущий статус
+%s with IP %s and class %d received offline messages.|Пользователь %s с IP-адресом %s и классом %d получил оффлайн сообщение.
+Stored offline messages|Сохраненные оффлайн сообщения
+Offline message list is empty.|Нет сохраненных оффлайн сообщений.
+Deleted %d offline messages.|Удалено %d оффлайн сообщений.
+Couldn't delete offline messages because not found: %s|Не могу удалить оффлайн сообщения. Сообщений пользователя на дату %s не найдено.
+%s with class %d deleted all offline messages.|Пользователь %d %s-го класса удалил все оффлайн сообщения.
+There are no offline messages to remove.|Нет оффлайн сообщений для удаления.
+No topic is set.|Тема не установлена.
+%s with IP %s and class %d allowed due to forbidden nick exception: %s|Пользователь %s с IP-адресом %s и классом %d пропущен с исключением по нику: %s
+message|сообщение
+%s with IP %s and class %d allowed due to forbidden description exception: %s|Пользователь %s с IP-адресом %s и классом %d пропущен с исключением по описанию: %s
+User you're trying to kick or redirect is protected: %s|Пользователь которого вы пытаетесь кикнуть или перенаправить защищен от подобных действий: %s
+%s with IP %s and class %d allowed due to forbidden tag exception: %s|Пользователь %s с IP-адресом %s и классом %d пропущен с исключением по тегу: %s
+type|тип
+%s with IP %s and class %d allowed due to forbidden connection type exception: %s|Пользователь %s с IP-адресом %s и классом %d пропущен с исключением по типу подключения: %s
+%s with class %d changed configuration variable %s: %s => %s|Пользователь %s %d-го класса изменил конфигурационную переменную %s: %s => %s
+%s with IP %s and class %d allowed due to forbidden email exception: %s|Пользователь %s с IP-адресом %s и классом %d пропущен с исключением по e-mail: %s
+%s received own message.|%s наивно полагает, что его сообщение прочитали. Удачи ему в нелегком деле - беседе самим с собой..
+%s with IP %s and class %d allowed due to forbidden share size exception: %s|Пользователь %s с IP-адресом %s и классом %d пропущен с исключением по размеру шары: %s
+Deleted %d releases from category: %s|Удалены %d релизов из категории %s
+Why would you want to set empty topic?|Почему вы хотите установить пустую тему?
+Couldn't add forbidden nick because already exists: %s|Не могу добавить ник в запрещенне поскольку такой ник уже существует: %s
+Added forbidden nick: %s|Добавлен запрещенный ник: %s
+Couldn't add forbidden description because already exists: %s|Не могу добавить описание в запрещенные поскольку такое описание уже существеут: %s
+Added forbidden description: %s|Добавлено запрещенное описание: %s
+Couldn't add forbidden tag because already exists: %s|Не могу добавить тег в запрещенные поскольку такой тег уже существует: %s
+Added forbidden tag: %s|Добавлен запрещенный тег: %s
+Couldn't add forbidden connection type because already exists: %s|Не могу добавить тип соединения в запрещенные поскольку такой тип уже существует: %s
+Added forbidden connection type: %s|Добавлен запрещенный тип соединения: %s
+Couldn't add forbidden email because already exists: %s|Не могу добавить e-mail в запрещенные поскольку такой e-mail уже существует: %s
+Added forbidden email: %s|Добавлен запрещенный e-mail: %s
+Couldn't add forbidden share size because already exists: %s|Не могу добавить размер шары в запрещенные поскольку такой размер уже существует: %s
+Added forbidden share size: %s|Добавлен запрещенный размер шары: %s
+Couldn't add MyINFO exception because already exists: %s|Не могу добавить исключение в MyINFO сканера, поскольку оно уже существует: %s
+Added MyINFO exception: %s|Добавлено исключение MyINFO сканера: %s
+and|и
+Deleted forbidden nick: %s|Удалены ранее запрещенные ники: %s
+Couldn't delete forbidden nick because not found: %s|Не могу удалить запрещенный ник. Не найден в базе: %s
+Deleted forbidden description: %s|Удалено ранее запрещенное описание: %s
+Couldn't delete forbidden description because not found: %s|Не могу удалить запрещенное описание. Не найдено в базе: %s
+Deleted forbidden tag: %s|Удален ранее запрещенный тег: %s
+Couldn't delete forbidden tag because not found: %s|Не могу удалить запрещенный тег. Не найден в базе: %s
+Deleted forbidden connection type: %s|Удален ранее запрещенный тип соединения: %s
+Couldn't delete forbidden connection type because not found: %s|Не могу удалить запрещенный тип соединения. Не найден в базе: %s
+Deleted forbidden email: %s|Удален ранее запрещенный e-mail: %s
+Couldn't delete forbidden email because not found: %s|Не могу удалить запрещенный e-mail. Не найден в базе: %s
+Deleted forbidden share size: %s|Удален ранее запрещенный размер шары: %s
+Couldn't delete forbidden share size because not found: %s|Не могу удалить запрещенный размер шары. Не найден в базе: %s
+Deleted MyINFO exception: %s|Удалено исключение из базы MyINFO сканера: %s
+Couldn't delete MyINFO exception because not found: %s|Не могу исключение из базы MyINFO сканера. Не найдено в базе: %s
+Forbidden nick list|Список запрещенных ников
+Forbidden nick list is empty.|Список запрещенных ников пуст.
+Forbidden description list|Список запрещенных описаний
+Forbidden description list is empty.|Список запрещенных описаний пуст.
+Forbidden tag list|Список запрещенных тегов
+Forbidden tag list is empty.|Список запрещенных тегов пуст.
+Forbidden connection type list|Список запрещенных типов соединений
+Forbidden connection type list is empty.|Список запрещенных типов соединений пуст.
+Forbidden email list|Список запрещенных e-mail
+Forbidden email list is empty.|Список запрещенных e-mail пуст.
+Forbidden share size list|Список запрещенных размеров шары
+Forbidden share size list is empty.|Список запрещенных размеров шары пуст.
+MyINFO exception list|Список исключений MyINFO сканера
+MyINFO exception list is empty.|Список исключений MyINFO сканера пуст.
+Deleted %d rows: %s|Удалено %d рядов: %s
+Known types are: %s|Известные типы: %s
+No rows to remove: %s|Нет рядов для удаления: %s
+date|дата
+%s with class %d used command: %s|Пользователь %s %d-го класса использовал команду: %s
+context|контекст
+Deleted from chat rank list: %s|Из списка рангов в чате удалено: %s
+Not found in chat rank list: %s|Не найдено в списке ранга в чате: %s
+Deleted from operator rank list: %s|Из списка рангов операторов удалено: %s
+Not found in operator rank list: %s|Не найдено в списке рангов операторов: %s
+Antispam|Антиспам
+Your chat rank is: %d|Ваш ранг в чате: %d
+You have to write something in main chat to get started.|Вы должны написать что-нибудь в основной чат чтобы начать.
+Custom nick list is empty.|Список временных ников пуст.
+Total share rank size: %s|Общий размер файлов, расшаренный лидерами: %s
+Your operator rank is: %d|Ваш операторский ранг: %d
+You have to do some operator actions to get started.|Отдайте любую команду как оператор чтобы начать.
+Top %d chat rankers|Список %d лидеров чата
+Chat rank list is empty.|Список рангов в чате пуст.
+Top %d operator rankers|Список из %d наиболее активных операторов
+Operator rank list is empty.|Список наиболее активных операторов пуст.
+string|строка
+No user results found.|Пользователей не найдено.
+Showing %d user log results|Отображено %d результатов
+Size of user log table: %d [ %s: %d @ %s ]|Размер таблицы логов пользователя: %d [ %s: %d @ %s ]
+Add protection entry|Добавить пользователя в список защищенных пользователей
+Delete protection entry|Удалить пользователя из список защищенных пользователей
+flags|флаги
+%s dropped due to bad search request.|Пользователь %s отключен за попытку поиска запрещенной информации.
+This command is either disabled or you don't have access to it.|Команда отключена либо вы не имеете достаточно прав на ее использование.
+Deleted antispam entry: %s|Удалена ранее установленая запись антиспама: %s
+Couldn't delete antispam entry because not found: %s|Не могу удалить запись антиспама. Не найдено в базе: %s
+Antispam list|Список антиспама
+Antispam list is empty.|Список антиспама пуст.
+Couldn't add antispam exception entry because already exists: %s|Не могу добавить запись в ислючения антиспама поскольку такая запись уже существует: %s
+Added antispam exception entry: %s|Добавлена запись в исключения для антиспама: %s
+Deleted antispam exception entry: %s|Удалена запись из исключений для антиспама: %s
+Couldn't delete antispam exception entry because not found: %s|Невозможно удалить запись из исключений для антиспама. Не найдена в базе: %s
+Antispam exception list|Список исключений для антиспама
+Antispam exception list is empty.|Список исключений для антиспама пуст.
+The user you're trying to send offline message to is a bot. Message is discarded.|Пользователь попытался отправить оффлайн сообщение боту. Действие отменено.
+You can't start at user number %d when you only have %d accounts with class %d.|Пользователя номер %d не сушествует, так как в списке регов всего %d пользователей с классом %d.
+Showing %d out of total %d accounts with class %d starting at user number %d|Показываю %d из %d пользователей с %d-м классом начиная с позиции %d
+There are no accounts with class: %d|На хабе нет зарегистрированных пользователей с классом: %d
+Known classes are: %s|Известные классы: %s
+%s with class %d sent say message: <%s> %s|Пользователь %s %d-го класса послал следующее сообщение от другого ника(say message): <%s> %s
+%s with class %d had bad luck sending say message: <%s> %s|Пользователю %s %d-го не удалось послать сообщение от другого ника (say message): <%s> %s
+You can't talk from nick whose class is higher or equals your own.|Вы не можете писать от ника человека, класс которого равен или выше вашего.
+%s with IP %s and class %d kicked: <%s> %s|Пользователь %s с IP-адресом %s %d-го класса был кикнут: <%s> %s
+%s with class %d deleted %d statistics plugin entries older than %d days.|Пользователь %s %d-го класса удалил %d записей планига статистики. Удалялись записи старше %d дней.
+offset|позиция
+order|порядок
+%s didn't get any search results.|Поиск %s не дал результатов.
+Redirected %s with IP %s and class %d to %s: <%s> %s|Пользователь %s с IP-адресом %s %d-го класса перенаправлен на %s: <%s> %s
+Unknown protocol command from %s with IP %s and class %d: %s|Неизвестная команда протокола получена от пользователя %s с IP-адресом %s и классом %d: %s
+Custom nick list|Список временных ников
+%s operator commands|Команды %s для операторов
+Add antispam entry|Добавить запись антиспама
+Showing last %d lines out of total %d found in %s file|Показано %d из %d строк, найденных в файле %s
+Delete antispam entry|Удалить запись антиспама
+Add antispam exception entry|Добавить запись исключения для антиспама
+Delete antispam exception entry|Удалить запись исключения для антиспама
+Add MyINFO entry|Добавить запись MyINFO
+Delete MyINFO entry|Удалить запись MyINFO
+MyINFO list|Список MyINFO
+List of registered users by class|Список зарегистрированных пользователей согласно классу
+Speak from other nick|Писать от другого ника
+Remove user or word from rank list|Удалить пользователя или слово из статистики
+%s with class %d deleted %d user log entries older than %d days.|Пользователь %s %d-го класса удалил %d записей лога пользователя. Удалялись записи старше %d ней.
+List stored offline messages|Список сохраненных оффлайн-сообщений
+Delete offline messages by date|Удалить оффлайн-сообщения по дате
+Delete all offline messages|Удалить все оффлайн-сообщения
+class|класс
+Clean up tables|Очистить табилцы
+Operator chat history|История чата операторов
+Delete all history messages|Удалить все сообщения из истории всех чатов
+Your operator rank|Ваш операторский рейтинг
+Script configuration variables|Конфигруационные переменные скрипта
+Change configuration variable|Изменить конфигурационную переменную
+nick|ник
+This list of commands|Список команд
+%s user commands|Команды %s для пользователей
+Current topic|Текущая тема
+Your chat rank|Ваш рейтинг в чате
+You're not allowed to send private messages.|Вам запрещено посылать приватные сообщения.
+Unknown|Неизвестно
+identifier|идентификатор
+Offline message to user|Оффлайн сообщение пользователю
+Main chat history|История основного чата
+%s statistics|Статистика %s
+Script version: %s|Версия скрипта: %s
+Total chat rank points: %d|Общее количество очков в чате: %d
+Total operator rank points: %d|Общее количество очков операторов: %d
+Average message count per user: %.2f|Среднее количество сообщений в расчете на одного пользователя: %.2f
+lre|lre
+action|действие
+Changed configuration variable %s: %s => %s|Изменена конфигурационная переменная %s: %s => %s
+Configuration variable %s can only be set to: %s|Конфигурационная переменная %s может принимать значения, равные: %s
+or|или
+Configuration variable %s must be a number.|Конфигурационная переменная %s должна быть числом.
+to|до
+Unknown configuration variable: %s|Неизвестная конфигурационная переменная: %s
+%s version: %s|Версия %s: %s
+Not installed|Не установлено
+%s dropped due to spam.|Пользователь %s выкинут за спам.
+variable|переменная
+value|значение
+minutes|минуты
+%s library version: %s|Версия библиотек %s: %s
+Reorder right click menu item|Изменить порядок пункта из меню хаба
+lines|количество
+Couldn't add rank exception because already exists: %s|Невозможно добавить исключение пользователя из списка рангов потому что такая запись уже существует: %s
+Added rank exception: %s|Добавлено исключение для списка рангов: %s
+Deleted rank exception: %s|Удалено исключение из списка рангов: %s
+Couldn't delete rank exception because not found: %s|Невозможно удалить исключение пользователя из списка рангов. Не найдено в базе: %s
+Rank exception list|Список исключений для подсчета рейтинга
+Rank exception list is empty.|Список исключений для подсчета рейтинга пуст.
+Add rank exception|Добавить исключение из подсчета рейтинга
+Delete rank exception|Удалить исключение из подсчета рейтинга
+In order to use this feature you must turn off registered users list cache. Do it by setting hub configuration variable %s to %d and restarting the hub. Please note: Turning cache off is not recommended with large list of registered users.|Чтобы использовать эту функцию вы должны отключить кеширование списка пользователей. Сделайте это, выставив конфигурационную переменную хаба %s в %d и перезапустите хаб. Пожалуйста, помните: отключение кеширования списка пользователей нежелательно при большом количестве пользователей.
+Both|Оба
+Deleted search filter: %s|Удален фильтр поиска: %s
+Couldn't delete search filter because not found: %s|Невозможно удалить фильтр поиска. Не найдено в базе: %s
+Search filter list|Список фильтров поиска
+Search filter list is empty.|Список фильтров поиска пуст.
+Magnet link: %s|Магнет-ссылка: %s
+Add search filter|Добавить фильтр поиска
+Delete search filter|Удалить фильтр поиска
+Known actions are: %s|Известные действия: %s
+Known flags are: %s|Известные флаги: %s
+Downloading version file: %s|Загружаю файл версии: %s
+Size of kicks table: %d [ %s: %d @ %s ]|Размер таблицы киков: %d [ %s: %d @ %s ]
+Size of bans table: %d [ %s: %d @ %s ]|Размер таблицы банов: %d [ %s: %d @ %s ]
+Size of unbans table: %d [ %s: %d @ %s ]|Размер таблицы снятых банов: %d [ %s: %d @ %s ]
+Size of IP logger plugin table: %d [ %s: %d @ %s ]|Размер таблицы плагина IP logger: %d [ %s: %d @ %s ]
+Size of statistics plugin table: %d [ %s: %d @ %s ]|Размер таблицы плагина statistics: %d [ %s: %d @ %s ]
+Modified authorization entry: %s @ %s|Изменить запись авторизации: %s @ %s
+Added authorization entry: %s @ %s|Добавить запись авторизации: %s @ %s
+Deleted authorization entry: %s|Удалить запись авторизации: %s
+Couldn't delete authorization entry because not found: %s|Невозможно удалить запись авторизации. Не найдено в базе: %s
+IP authorization list|Список авторизаций по IP
+IP authorization list is empty.|Список авторизаций по IP пуст.
+Add IP authorization entry|Добавить запись авторизации по IP
+Delete authorization entry|Удалить запись авторизации
+ip|ip
+%s with IP %s and class %d authorized.|Пользователь %s с IP-адресом %s-го класса %d авторизирован.
+%s with IP %s and class %d failed authorization and disconnected.|Пользователь %s с IP-адресом %s-го класса %d не прошел авторизацию и был отключен.
+Category: %s|Категория: %s
+Set custom nick for yourself|Установить временный ник для себя
+This nick is registered or in use and therefore can't be used as custom nick: %s|Данный ник зарегистрирован или используется, поэтому вы не можете использовать его в качестве вашего временного: %s
+Set your welcome message|Установка вашего приветсвенного сообщения
+Division by zero is forbidden.|Деление на ноль запрещено.
+Show your welcome messages|Показать ваши приветсвенные сообщения
+Welcome message list|Список приветственных сообщений
+Delete user and his welcome messages|Удалить пользвателя и его приветсвенные сообщения
+Nick|Ник
+Login message|Сообщение при входе
+Logout message|Сообщение при выходе
+Welcome message list is empty.|Список приветственных сообщений пуст.
+Welcome messages were deleted for user: %s|Приветсвенное сообщение пользователя было удалено: %s
+Couldn't delete user from welcome message list because not found: %s|Невозможно удалть пользователя из списка приветственных сообщений. Не найден в базе: %s
+Your login message set: %s|Ваше сообщение при входе установлено: %s
+%s with class %d changed his login message: %s|Пользователь %s %d-го класса изменил свое сообщение при входе: %s
+Your logout message set: %s|Ваше сообщение при выходе установлено: %s
+%s with class %d changed his logout message: %s|Пользователь %s %d-го класса изменил свое сообщение при выходе: %s
+You don't have any welcome messages.|У вас нету ни одного приветсвенного сообщения.
+Your login message: %s|Ваше сообщение при входе: %s
+Add chatroom|Добавить чатрум
+Chatroom list|Список чатрумов
+Delete chatroom|Удалить чатрум
+description|описание
+minclass|минимальный класс
+maxclass|максимальный класс
+Modified chatroom: %s|Изменен чатрум: %s
+Added chatroom: %s|Добавлен чатрум: %s
+Deleted chatroom: %s|Удален чатрум: %s
+Couldn't delete chatroom because not found: %s|Чатрум не может быть удален. Не найден в базе: %s
+Chatroom|Чатрум
+Description|Описание
+Chatroom list is empty.|Список чатрумов пуст.
+Not found in country code statistics table: %s|Не найден код страны с таблице statistics: %s
+Custom nick %s is now owned by real user and therefore has been reset for user: %s|Временый ник %s сейчас используется реальным пользователем и сброшен для пользователя: %s
+%s is registered with class %d.|Зарегистрированный пользователь %s %d-го класса.
+Query executed but didn't return any results.|Запрос был выполнен однако не возвратил никаких результатов.
+Published: %s|Опубликовано: %s
+Add search filter exception entry|Добавить исключение для фильтра поиска
+Delete search filter exception entry|Удалить исключение для фильтра поиска
+Search filter exception list|Список исключений для фильтра поиска
+Couldn't add search filter exception entry because already exists: %s|Невозможно добавить существующее исключение в фильтр посика: %s
+Added search filter exception entry: %s|Добавлено исключение в фильтр поиска: %s
+Deleted search filter exception entry: %s|Удалено исключение из фильтра поиска: %s
+Couldn't delete search filter exception entry because not found: %s|Невозможно удалить исключение из фильтра поиска. Не найдено в базе: %s
+Search filter exception list is empty.|Список исключений для фильтра поиска пуст.
+file|файл
+Read hub logs|Прочитать логи хаба
+Known files are: %s|Известные файлы: %s
+Log file is empty or does not exist.|Файл с логом пуст или не существует.
+Add command notification exception|Добавить команду в список команд, информация о использовании которых не выводится
+Delete command notification exception|Удалить команду из списка команд, информация о использовании которых не выводится
+Command notification exception list|Список команд, информация о использовании которых не выводится
+Added command notification exception entry: %s|Добавлена команда в список команд, информация о использовании которых не выводится: %s
+Couldn't add command notification exception entry because already exists: %s|Невозможно добавить существующую команду в список команд, информация о использовании которых не выводится: %s
+Deleted command notification exception entry: %s|Удалена команда из списка команд, информация о использовании которых не выводится: %s
+Couldn't delete command notification exception entry because not found: %s|Невозможно удалить команду из списка команд, информация о использовании которых не выводится. Не найдено в базе: %s
+Command notification exception list is empty.|Список команд, информация о использовании которых не выводится пуст.
+Couldn't add chatroom because nick is already in use: %s|Невозможно добавить чатрум с данным ником, т.к. ник уже используется: %s
+Query results|Результаты запроса
+Connections from your IP aren't allowed for another %d seconds.|Соединения с IP-адреса запрещены в течение следующих %d секунд.
+Executed shell command didn't return any status code: %s|Выполненая консольная команда не возвратила данных статус-кода: %s
+Returned status code: %s|Возвращенный статус-код: %s
+Added by: %s|Добавлено: %s
+publisher|автор
+Release list is empty.|Список релизов пуст.
+Last %d releases|Последние %d релизов
+No releases by requested publisher were found: %s|Ни одного релиза от запрашиваемого автора не найдено: %s
+Last %d releases published by %s|Последние %d релизов данного автора %s
+No releases by requested category were found: %s|Ни одного релиза в запрашиваемой категории не найдено: %s
+Last %d releases by category %s|Последние %d релизов в данной категории %s
+No releases by requested search string were found: %s|Ни одного релиза по запрашиваемой строке не найдено: %s
+time|время
+Known search types are: %s|Известные типы поиска: %s
+Configuration variable %s can't be empty.|Конфигурационная переменная %s не может быть пустой.
+Deleted from share rank list: %s|Пользователь удален из списка пользователей с наибольшей шарой: %s
+Not found in share rank list: %s|Пользователь не найден в списке пользователей с наибольшей шарой: %s
+Your share rank|Ваш рейтинг по шаре
+Top %d share rankers|Топ-%d пользователей с наибольшей шарой
+You have to share %s and reconnect to get started.|Вам необходимо расшарить %s байт и переподключиться для начала.
+Share rank list is empty.|Список пользователей с наибольшей шарой пуст.
+Your share rank is: %s|Ваш рейтинг в списке лидеров по шаре: %s
+Custom nick can't be longer than %d characters.|Временный ник не может быть длинее %d символов.
+Delete custom nick|Удалить временный ник
+Deleted user from custom nick list: %s|Пользователь удален из списка временных ников: %s
+Couldn't delete user from custom nick list because not found: %s|Невозможно удалить пользователя из списка временных ников. Не найден в базе: %s
+Selected type requires extra parameters. Please refer to manual for more information.|Выбранный тип требует дополнительных параметров. Пожалуйста, почитайте инструкицю для получения дополнительной информации.
+Size of registered users table: %d [ %s: %d @ %s ]|Размер таблицы регистраций пользователей: %d [ %s: %d @ %s ]
+Deleted %d accounts with class %d|Удалено %d учетных записей с классом %d
+%s with class %d deleted %d accounts with class %d that has been inactive for %d days.|Пользователь %s %d-го класса был удален %d из таблицы регистраций пользователей %d-го класса в результате неактивности в течение %d дней.
+Add command permission|Добавить команду в запрещенные
+Delete command permission|Удалить команду из запрещенных
+Command permission list|Список запрещенных команд
+Modified command permission with class %d: %s|Изменена запрещенная команда класса %d: %s
+Added command permission with class %d: %s|Добалена запрещенная команда класса %d: %s
+Deleted command permission: %s|Удалена запрещенная команда: %s
+Couldn't delete command permission because not found: %s|Невозможно удалить запрещенную команду. Не найдена в базе: %s
+Command permission list is empty.|Список запрещенных команд пуст.
+Total search rank points: %d|Итоговое количество очков в таблице популярности поисковых запросов: %d
+Please use following commands to finish update process|Используйте следующие команды для завершения процесса обновления
+Moving file: %s|Перемещаю файл: %s
+Please visit %s to download the script manually.|Пожалуйста посетите %s чтобы загрузить скрипт вручную.
+Couldn't add forbidden IP address because already exists: %s|Не могу добавить уже существующий IP-адрес в запрещенные: %s
+Added forbidden IP address: %s|Добавлен IP-адрес в запрещенные: %s
+Deleted forbidden IP address: %s|Удален IP-адрес из запрещенных: %s
+Couldn't delete forbidden IP address because not found: %s|Не могу удалить IP-адрес из запрещенных. Не найден в базе: %s
+Forbidden IP address list|Список запрещенных IP-адресов
+Forbidden IP address list is empty.|Список запрещенных IP-адресов пуст.
+%s with IP %s and class %d allowed due to forbidden IP address exception: %s|Пользователь %s с IP-адресом %s и классом %d пропущен с исключением по IP-адресу: %s
+Couldn't delete category because not found: %s|Невозможно удалить категорию. Не найдена в базе: %s
+%s redirected due to spam.|Пользователь %s перенаправлен за спам.
+%s redirected due to bad search request.|Пользователь %s перенаправлен за поиск запрещенной информации.
+You can download me from: %s|Вы можете скачать меня с: %s
+%s is registered with class %d and has been automatically unregistered and deleted from other tables.|Пользователь %s %d-го класса автоматически удален из списка зарегистрированных пользователей и других таблиц скрипта.
+PiB|Пб
+TiB|Тб
+GiB|Гб
+MiB|Мб
+KiB|Кб
+B|Б
+EiB|ЕБ
+Get users real nick|Узнать настоящий ник пользователя
+Requested nick wasn't found in custom nick list.|Запрашиваемый ник не найден в таблице временных ников.
+Requested nick belongs to a user who is %s: %s|Запрашиваемые ник принадлежит пользователю, который %s: %s
+offline|оффлайн
+online|онлайн
+Clean up ranks|Очистить рейтинги
+limit|предел
+%s with class %d deleted %d chat ranks lower than %d.|Пользователь %s %d-го класса удалил %d пользователей из таблицы рангов в чате с рангом ниже %d.
+%s with class %d deleted %d share ranks lower than %s.|Пользователь %s %d-го класса удалил %d пользователей из таблицы рангов шары с шарой ниже %s.
+%s with class %d deleted %d operator ranks lower than %d.|Пользователь %s %d-го класса удалил %d операторов из таблицы рангов операторов с рангом ниже %d.
+Size of chat ranks table: %d [ %s: %d @ %s ]|Размер таблицы рангов в чате: %d [ %s: %d @ %s ]
+Size of share ranks table: %d [ %s: %d @ %s ]|Размер таблицы рангов шары: %d [ %s: %d @ %s ]
+Size of operator ranks table: %d [ %s: %d @ %s ]|Размер таблицы рангов операторов: %d [ %s: %d @ %s ]
+content|содержимое
+destination|назначение
+interval|интревал
+Add reminder|Добавить напоминание
+Delete reminder|Удалить напоминание
+Reminder list|Список напоминаний
+Reminder list is empty.|Список напоминаний пуст.
+Known destinanions are: %s|Изветные назначения: %s
+Known interval is: %s|Изветные промежутки: %s
+Modified reminder: %s|Напоминание изменено: %s
+Added reminder: %s|Добавлено напоминание: %s
+Deleted reminder: %s|Удалено напоминание: %s
+Reminder not found: %s|Напоминание не найдено: %s
+Identifier: %s|Идентификатор: %s
+Content: %s|Содержимое: %s
+Interval: %d of %d|Интревал: от %d до %d
+Destination: %s|Назначение: %s
+Raw command|Протокольная команда
+PM|PM
+MC|MC
+reply|ответ
+Add chat responder|Добавить автоответ в чате
+Delete chat responder|Удалить автоответ в чате
+Main chat responder list|Список автоответов в основном чате
+Main chat responder list is empty.|Список автоответов в основном чате пуст.
+%s with class %d deleted %d operator chat history messages.|Пользователь %s %d-го класса удалил %d сообщений из истории сообщений операторов.
+Search in user log|Поиск в логе пользователя
+Added chat responder: %s|Добавлен автоответ: %s
+Deleted chat responder with ID: %d|Удален автоответ с ID: %d
+Couldn't delete chat responder because ID not found: %d|Невозможно удалить автоответ с ID. Не найдено в базе: %d
+Responder|Автответчик
+Reply|Ответ
+Add chat responder exception|Добавить исключение для списка автоответов
+Delete chat responder exception|Удалить исключение из списка автоответов
+Chat responder exception list|Список исключений для автоответов
+Chat responder exception list is empty.|Список исключений для автоответов пуст.
+Couldn't add chat responder exception because already exists: %s|Невозможно добавть существующее исключение в список автоответов: %s
+Added chat responder exception: %s|Добавлено исключение в список автоответов: %s
+Deleted chat responder exception: %s|Удалено исключение из списка автоответов: %s
+Couldn't delete chat responder exception because not found: %s|Невозможно удалить исключение из списка автответов. Не найдено в базе: %s
+command|команда
+Customize script command|Изменить команду скрипта
+Customized script command: %s => %s|Изменена команда скрипта: %s => %s
+Unknown script command: %s|Неизветсная команда скрипта: %s
+Requested nick is real.|Запрашиваемый ник реальный.
+%s with class %d customized script command: %s => %s|Пользователь %s %d-го класса изменил команду скрипта: %s => %s
+Reset all custom commands|Установить все команды по умолчанию
+%d custom commands were reset.|%d команд сброшено на стандартные.
+%s tables are now deleted and script is locked.|Таблицы %s были удалены и скрипт заблокирован.
+Please unload the script and remove it from scripts directory.|Пожалуйста выгрузите скрипт и удалите его из директории скриптов.
+Good luck.|Удачи.
+Please unload the script to finish.|Пожалуйста, выгрузите скрипт для завершения операции.
+%s with IP %s and class %d sent message to %s: %s|Пользователь %s с IP-адресом %s и классом %d послал сообщение %s: %s
+Script uptime: %s|Время работы скрипта: %s
+month|месяц
+months|месяцы
+day|день
+hour|час
+hours|часы
+Top %d used words|Список %d наиболее употребляемых слов
+Deleted from word rank list: %s|Удалено из списка наиболее употребляемых слов: %s
+Not found in word rank list: %s|Слово не найдено в списке наиболее употребляемых слов: %s
+%s with class %d deleted %d word ranks lower than %d.|Пользователь %s %d-го класса удалил %d слов с частотой употребления меньше %d.
+Size of word ranks table: %d [ %s: %d @ %s ]|Размер таблицы наиболее употребляемых слов: %d [ %s: %d @ %s ]
+Total word rank points: %d|Общее количество использованных слов: %d
+Word rank list is empty.|Список наиболее употребляемых слов пуст.
+%s with class %d registered new user with class %d: %s|Пользователь %s %d-го класса зарегистрировал нового пользователя %d-го класса: %s
+%s with class %d deleted registered user with class %d: %s|Пользователь %s %d-го класса удалил зарегистрированного пользователя %d-го класса: %s
+%s with class %d changed user class from %d to %d: %s|Пользователь %s, с классом %d, изменил класс пользователя с %d-го на %d-й: %s
+%s with IP %s and class %d allowed due to fake share exception: %s|Пользователь %s с IP-адресом %s и классом %d пропущен с исключением поддельной шаре: %s
+%s with IP %s and class %d allowed due to clone exception: %s|Пользователь %s с IP-адресом %s и классом %d пропущен с исключением по дублированию: %s
+%s with IP %s and class %d allowed due to same IP exception: %s|Пользователь %s с IP-адресом %s и классом %d пропущен с исключением дублирующемуся IP: %s
+seconds|секунды
+Add news item|Добавить новость
+Delete news items|Удалить новость
+Read hub news|Прочитать новости хаба
+Added news item: %s|Добавлена новость: %s
+Hub news list is empty.|Список новостей хаба пуст.
+Deleted %d news items.|Удалено %d новостей.
+Couldn't delete news items because not found: %s|Невозможно удалить новость. Не найдена в базе: %s
+Last %d news items|Последние %d новостей
+By %s on %s: %s|Писал %s %s: %s
+There are no main chat history messages written by you.|Вы не написали ни одного сообщения в главный чат.
+Last %d main chat messages written by you|Последние %d написанные вами в главном чате
+Your main chat history|История ваших сообщений основного чата
+Script memory usage: %s|Память, используемая скриптом: %s
+Failed to load translation file %s: %s|Не удалось загрузить файл с переводом %s: %s
+Force custom nick for user|Принудительно сменить ник пользователю
+Either the feature is disabled or user that you're trying to set welcome message for doesn't have access to it.|Данная функция либо отключена, либо пользователь, к которому вы хотите ее применить, не имеет к ней доступа.
+name|имя
+category|категория
+tth|tth
+Add new release|Добавлен новый релиз
+Delete releases|Удалить релизы
+List of available releases|Список доступных релизов
+Find release by name or category|Найти релизы по имени или категории
+Hub is now going for a very quick restart. Please be patient.|Хаб уходит в быструю перезагрузку. Пожалуйста, подождите.
+Hub is now going to shut down. Please be patient.|Хаб выключается. Пожалуйста, подождите.
+equation|формула
+Calculate an equation|Посчитать формулу
+Both numbers must be either pi or numbers.|Оба введенных значения должны быть или pi или цифрами.
+Known operations are: %s|Известные операции: %s
+Your logout message: %s|Ваше сообщение при выходе: %s
+Force welcome message for user|Принудительно установить приветственное сообщение пользователю
+Login message set for %s: %s|Сообщение при выходе установлено пользователем %s: %s
+Change nick of an registered user|Изменить ник зарегистрированному пользователю
+User is not registered: %s|Пользователь не зарегистрирован: %s
+You are now going to be disconnected from the hub in order for your new nick to apply: %s|Теперь вам нужно переподключиться к хабу, чтобы использовать ваш новый ник: %s
+Renamed account %s: %s|Переименован аккаунт %s: %s
+%s with class %d renamed account %s: %s|Пользователь %s %d-го класса переименовал аккаунт %s: %s
+Your login message deleted.|Ваше сообщение при входе удалено.
+Your logout message deleted.|Ваше сообщение при выходе удалено.
+%s with class %d deleted his login message.|Пользователь %s %d-го класса удалил свое сообщение при входе.
+%s with class %d deleted his logout message.|Пользователь %s %d-го класса удалил свое сообщение при выходе.
+Logout message set for %s: %s|Сообщение при выходе установлено для пользователя %s: %s
+%s with class %d changed login message for %s: %s|Пользователь %s %d-го класса изменил свое сообщение при входе %s: %s
+%s with class %d changed logout message for %s: %s|Пользователь %s %d-го класса изменил свое сообщение при выходе %s: %s
+Login message deleted for user: %s|Сообщение при входе удалено для пользователя: %s
+Logout message deleted for user: %s|Сообщение при выходе удалено для пользователя: %s
+%s with class %d deleted login message for user: %s|Пользователь %s %d-го класса удалил входное сообщение пользователя: %s
+%s with class %d deleted logout message for user: %s|Пользователь %s %d-го класса удалил выходное сообщение пользователя: %s
+%s with class %d deleted welcome messages for user: %s|Пользователь %s %d-го класса удалил приветственные сообщения пользователя: %s
+minute|минута
+Last %d releases by search string %s|Последние %d релизов с ключевыми словами %s
+Modified release: %s|Изменен релиз: %s
+Added release: %s|Добавлен релиз: %s
+Deleted release: %s|Удален релиз: %s
+Couldn't delete release because not found: %s|Невозможно удалить релиз. Не найден в базе: %s
+Reminder preview|Предпросмотр напоминания
+Preview of %s reminder: %s|Предпросмотр %s напоминания: %s
+Specified nick is already in use.|Указанный ник уже используется.
+Live user location statistics by country|Текущее распределение пользователей по странам
+All time user location statistics|Статистика посещений хаба уникальными пользователями из разных стран
+This feature requires %s or later installed on your system.|Эта опция требует %s или более новой версии, установленной в вашей системе.
+Total count since %s: %d|Общее количество начиная с %s: %d
+Unknown country|Неизвестная страна
+No users in the hub.|Нет пользователей на хабе.
+User location statistics table is empty.|Таблица посещений пользователями хаба пуста.
+Total count: %d|Общее количество: %d
+Deleted all rows: %s|Удалены все строки: %s
+%s with class %d deleted all user location entries.|Пользователь %s %d-го класса удалил все записи из таблицы о размещении пользователей.
+address|адрес
+owner|владелец
+Add friendly hub|Добавить дружественный хаб
+Delete friendly hub|Удалить дружественный хаб
+Show friendly hubs|Показать дружественные хабы
+Added friendly hub: %s|Добавлен дружественный хаб: %s
+Modified friendly hub: %s|Изменен дружественный хаб: %s
+Deleted friendly hub: %s|Удален дружественный хаб: %s
+Friendly hub not found: %s|Дружестевнный хаб не найден: %s
+Friendly hublist|Список дружественных хабов
+Friendly hublist is empty.|Список дружественных хабов пуст.
+Executed shell command didn't return any output.|Выполненая консольная команда не возвартила данных.
+Returned output|Возвращенные данные
+%s renamed %s to: %s|%s переименовал %s в: %s
+%s plugin version: %s|Версия плагина %s: %s
+second|секунда
+You are now known as: %s|Вы известны как: %s
+You renamed %s to: %s|%s переименован в: %s
+Spam exception from %s with IP %s and class %d in MC: %s|Обнаружено исключение для антисапама. Писал пользователь %s с IP-адреса %s. Класс пользователя %d, исключение обнаружено в MC: %s
+Spam exception from %s with IP %s and class %d in PM: %s|Обнаружено исключение для антисапама. Писал пользователь %s с IP-адреса %s. Класс пользователя %d, исключение обнаружено в PM: %s
+Spam exception from %s with IP %s and class %d in offline message: %s|Обнаружено исключение для антисапама. Писал пользователь %s с IP-адреса %s. Класс пользователя %d, исключение обнаружено в оффлайн сообщении: %s
+Spam exception from %s with IP %s and class %d in report: %s|Обнаружено исключение для антисапама. Писал пользователь %s с IP-адреса %s. Класс пользователя %d, исключение докладе в MC: %s
+Spam notification from %s with IP %s and class %d in MC: %s|Предупреждение о спаме от пользователя %s с IP %s и классом %d в MC: %s
+Spam notification from %s with IP %s and class %d in PM: %s|Предупреждение о спаме от пользователя %s с IP %s и классом %d в PM: %s
+Spam notification from %s with IP %s and class %d in offline message: %s|Предупреждение о спаме от пользователя %s с IP %s и классом %d в оффлайн сообщении: %s
+Spam notification from %s with IP %s and class %d in report: %s|Предупреждение о спаме от пользователя %s с IP %s и классом %d в докладе: %s
+Spam from %s with IP %s and class %d in MC: %s|Спам от пользователя %s с IP-адреса %s. Класс пользователя %d, спамил в MC: %s
+Spam from %s with IP %s and class %d in PM: %s|Спам от пользователя %s с IP-адреса %s. Класс пользователя %d, спамил в PM: %s
+Spam from %s with IP %s and class %d in offline message: %s|Спам от пользователя %s с IP-адреса %s. Класс пользователя %d, спамил в оффлайн-сообщении: %s
+Spam from %s with IP %s and class %d in report: %s|Спам от пользователя %s с IP-адреса %s. Класс пользователя %d, спамил в докладе: %s
+Modified antispam entry with action %d and priority %d to scan in MC: %s|Изменена запись антиспама. Дествие: \"%d\", приоритет действия: \"%d\", MC сканируется на предмет появления: %s
+Modified antispam entry with action %d and priority %d to scan in PM: %s|Изменена запись антиспама. Дествие: \"%d\", приоритет действия: \"%d\", PM сканируются на предмет появления: %s
+Modified antispam entry with action %d and priority %d to scan in MC and PM: %s|Изменена запись антиспама. Дествие: \"%d\", приоритет действия: \"%d\", MC и PM сканируются на предмет появления: %s
+Added antispam entry with action %d and priority %d to scan in MC: %s|Добавлена запись в таблицу антисапама. Дествие: \"%d\", приоритет действия: \"%d\", MC сканируется на предмет появления: %s
+Added antispam entry with action %d and priority %d to scan in PM: %s|Добавлена запись в таблицу антисапама. Дествие: \"%d\", приоритет действия: \"%d\", PM сканируются на предмет появления: %s
+Added antispam entry with action %d and priority %d to scan in MC and PM: %s|Добавлена запись в таблицу антисапама. Дествие: \"%d\", приоритет действия: \"%d\", MC и PM сканируются на предмет появления: %s
+Search request exception from %s with IP %s and class %d as any file: %s|Обнаружено исключение в поисковом запросе. Запрос создал пользователь %s с IP-адреса %s. Класс пользователя %d, исключение обнаружено в категории \"любые файлы\": %s
+Search request exception from %s with IP %s and class %d as audio file: %s|Обнаружено исключение в поисковом запросе. Запрос создал пользователь %s с IP-адреса %s. Класс пользователя %d, исключение обнаружено в категории \"аудио файлы\": %s
+Search request exception from %s with IP %s and class %d as compressed file: %s|Обнаружено исключение в поисковом запросе. Запрос создал пользователь %s с IP-адреса %s. Класс пользователя %d, исключение обнаружено в категории \"архивы\": %s
+Search request exception from %s with IP %s and class %d as document: %s|Обнаружено исключение в поисковом запросе. Запрос создал пользователь %s с IP-адреса %s. Класс пользователя %d, исключение обнаружено в категории \"документы\": %s
+Search request exception from %s with IP %s and class %d as executable: %s|Обнаружено исключение в поисковом запросе. Запрос создал пользователь %s с IP-адреса %s. Класс пользователя %d, исключение обнаружено в категории \"программы\": %s
+Search request exception from %s with IP %s and class %d as picture: %s|Обнаружено исключение в поисковом запросе. Запрос создал пользователь %s с IP-адреса %s. Класс пользователя %d, исключение обнаружено в категории \"картинки\": %s
+Search request exception from %s with IP %s and class %d as video: %s|Обнаружено исключение в поисковом запросе. Запрос создал пользователь %s с IP-адреса %s. Класс пользователя %d, исключение обнаружено в категории \"видео\": %s
+Search request exception from %s with IP %s and class %d as folder: %s|Обнаружено исключение в поисковом запросе. Запрос создал пользователь %s с IP-адреса %s. Класс пользователя %d, исключение обнаружено в категории \"папки\": %s
+Search request exception from %s with IP %s and class %d as TTH: %s|Обнаружено исключение в поисковом запросе. Запрос создал пользователь %s с IP-адреса %s. Класс пользователя %d, исключение обнаружено в категории \"TTH\": %s
+Search request notification from %s with IP %s and class %d as any file: %s|Предупреждение о поиске со стороны пользователя %s с IP-адреса %s (класс пользователя - %d) в категории \"любые файлы\": %s
+Search request notification from %s with IP %s and class %d as audio file: %s|Предупреждение о поиске со стороны пользователя %s с IP-адреса %s (класс пользователя - %d) в категории \"аудио файлы\": %s
+Search request notification from %s with IP %s and class %d as compressed file: %s|Предупреждение о поиске со стороны пользователя %s с IP-адреса %s (класс пользователя - %d) в категории \"архивы\": %s
+Search request notification from %s with IP %s and class %d as document: %s|Предупреждение о поиске со стороны пользователя %s с IP-адреса %s (класс пользователя - %d) в категории \"документы\": %s
+Search request notification from %s with IP %s and class %d as executable: %s|Предупреждение о поиске со стороны пользователя %s с IP-адреса %s (класс пользователя - %d) в категории \"программы\": %s
+Search request notification from %s with IP %s and class %d as picture: %s|Предупреждение о поиске со стороны пользователя %s с IP-адреса %s (класс пользователя - %d) в категории \"картинки\": %s
+Search request notification from %s with IP %s and class %d as video: %s|Предупреждение о поиске со стороны пользователя %s с IP-адреса %s (класс пользователя - %d) в категории \"видео\": %s
+Search request notification from %s with IP %s and class %d as folder: %s|Предупреждение о поиске со стороны пользователя %s с IP-адреса %s (класс пользователя - %d) в категории \"папки\": %s
+Search request notification from %s with IP %s and class %d as TTH: %s|Предупреждение о поиске со стороны пользователя %s с IP-адреса %s (класс пользователя - %d) в категории \"TTH\": %s
+Bad search request from %s with IP %s and class %d as any file: %s|Запрос поиска запрещенной информации со стороны пользователя %s с IP-адреса %s (класс пользователя - %d) в категории \"любые файлы\": %s
+Bad search request from %s with IP %s and class %d as audio file: %s|Запрос поиска запрещенной информации со стороны пользователя %s с IP-адреса %s (класс пользователя - %d) в категории \"аудио файлы\": %s
+Bad search request from %s with IP %s and class %d as compressed file: %s|Запрос поиска запрещенной информации со стороны пользователя %s с IP-адреса %s (класс пользователя - %d) в категории \"архивы\": %s
+Bad search request from %s with IP %s and class %d as document: %s|Запрос поиска запрещенной информации со стороны пользователя %s с IP-адреса %s (класс пользователя - %d) в категории \"документы\": %s
+Bad search request from %s with IP %s and class %d as executable: %s|Запрос поиска запрещенной информации со стороны пользователя %s с IP-адреса %s (класс пользователя - %d) в категории \"программы\": %s
+Bad search request from %s with IP %s and class %d as picture: %s|Запрос поиска запрещенной информации со стороны пользователя %s с IP-адреса %s (класс пользователя - %d) в категории \"картинки\": %s
+Bad search request from %s with IP %s and class %d as video: %s|Запрос поиска запрещенной информации со стороны пользователя %s с IP-адреса %s (класс пользователя - %d) в категории \"видео\": %s
+Bad search request from %s with IP %s and class %d as folder: %s|Запрос поиска запрещенной информации со стороны пользователя %s с IP-адреса %s (класс пользователя - %d) в категории \"папки\": %s
+Bad search request from %s with IP %s and class %d as TTH: %s|Запрос поиска запрещенной информации со стороны пользователя %s с IP-адреса %s (класс пользователя - %d) в категории \"TTH\": %s
+Modified search filter with action %d and priority %d as any file: %s|Изменена запись в поисковом фильтре. Дествие: \"%d\", приоритет действия: \"%d\", Сканируются запросы в категории \"любые файлы\": %s
+Modified search filter with action %d and priority %d as audio file: %s|Изменена запись в поисковом фильтре. Дествие: \"%d\", приоритет действия: \"%d\", Сканируются запросы в категории \"аудио файлы\": %s
+Modified search filter with action %d and priority %d as compressed file: %s|Изменена запись в поисковом фильтре. Дествие: \"%d\", приоритет действия: \"%d\", Сканируются запросы в категории \"архивы\": %s
+Modified search filter with action %d and priority %d as document: %s|Изменена запись в поисковом фильтре. Дествие: \"%d\", приоритет действия: \"%d\", Сканируются запросы в категории \"документы\": %s
+Modified search filter with action %d and priority %d as executable: %s|Изменена запись в поисковом фильтре. Дествие: \"%d\", приоритет действия: \"%d\", Сканируются запросы в категории \"программы\": %s
+Modified search filter with action %d and priority %d as picture: %s|Изменена запись в поисковом фильтре. Дествие: \"%d\", приоритет действия: \"%d\", Сканируются запросы в категории \"картинки\": %s
+Modified search filter with action %d and priority %d as video: %s|Изменена запись в поисковом фильтре. Дествие: \"%d\", приоритет действия: \"%d\", Сканируются запросы в категории \"видео\": %s
+Modified search filter with action %d and priority %d as folder: %s|Изменена запись в поисковом фильтре. Дествие: \"%d\", приоритет действия: \"%d\", Сканируются запросы в категории \"папки\": %s
+Modified search filter with action %d and priority %d as TTH: %s|Изменена запись в поисковом фильтре. Дествие: \"%d\", приоритет действия: \"%d\", Сканируются запросы в категории \"TTH\": %s
+Added search filter with action %d and priority %d as any file: %s|Добавлен фильтр поиска. Дествие: \"%d\", приоритет действия: \"%d\", Сканируются запросы в категории \"любые файлы\": %s
+Added search filter with action %d and priority %d as audio file: %s|Добавлен фильтр поиска. Дествие: \"%d\", приоритет действия: \"%d\", Сканируются запросы в категории \"аудио файлы\": %s
+Added search filter with action %d and priority %d as compressed file: %s|Добавлен фильтр поиска. Дествие: \"%d\", приоритет действия: \"%d\", Сканируются запросы в категории \"архивы\": %s
+Added search filter with action %d and priority %d as document: %s|Добавлен фильтр поиска. Дествие: \"%d\", приоритет действия: \"%d\", Сканируются запросы в категории \"документы\": %s
+Added search filter with action %d and priority %d as executable: %s|Добавлен фильтр поиска. Дествие: \"%d\", приоритет действия: \"%d\", Сканируются запросы в категории \"программы\": %s
+Added search filter with action %d and priority %d as picture: %s|Добавлен фильтр поиска. Дествие: \"%d\", приоритет действия: \"%d\", Сканируются запросы в категории \"картинки\": %s
+Added search filter with action %d and priority %d as video: %s|Добавлен фильтр поиска. Дествие: \"%d\", приоритет действия: \"%d\", Сканируются запросы в категории \"видео\": %s
+Added search filter with action %d and priority %d as folder: %s|Добавлен фильтр поиска. Дествие: \"%d\", приоритет действия: \"%d\", Сканируются запросы в категории \"папки\": %s
+Added search filter with action %d and priority %d as TTH: %s|Добавлен фильтр поиска. Дествие: \"%d\", приоритет действия: \"%d\", Сканируются запросы в категории \"TTH\": %s
+%s with class %d deleted %d releases older than %d days.|Пользователь %s %d-го класса удалил %d релизов. Удалялись записи о релизах старше %d дней.
+Size of release table: %d [ %s: %d @ %s ]|Размер таблицы релизов: %d [ %s: %d @ %s ]
+LRE|LRE
+Code accepted.|Код принят.
+Protection list|Список защищенных пользователей
+Added protection entry: %s|Добавлена запись в список защищенных пользователей: %s
+Deleted protection entry: %s|Удалена запись в списке защищенных пользователей: %s
+Protection entry already exists: %s|Запись в списке защищенных пользователей уже существует: %s
+Protection entry not found: %s|Запись в списке защащенных пользователей не найдена: %s
+Protection list is empty.|Список защищенных пользователей пуст.
+Missing %s in configuration variable.|Пропущена %s в конфигурационной переменной.
+Chatroom: %s|Чат-рум: %s
+You've left the chatroom.|Вы покинули чат-рум.
+User left the chatroom: %s|Пользователь %s покинул чат-рум
+User entered the chatroom: %s|Пользователь %s подключился к чат-руму
+You've entered %s chatroom.|Вы подключились к чат-руму %s.
+You're not member of this chatroom.|Вы не являетесь пользователем данного чат-рума.
+You don't have access to this chatroom.|У вас недостаточно прав чтобы пользоваться данным чат-румом.
+Chatroom member list|Список пользователей чат-рума
+Chatroom is empty.|В чартуме никого нету.
+You're already member of this chatroom.|Вы уже являетесь пользователем данного чат-рума.
+Chatroom user commands|Команды чатрумов
+Unknown chatroom command. Use %s for help.|Неизвестная команда чат-рума. Используйте %s для получения помощи.
+Enter the chatroom|Подключить чат-рум
+Leave the chatroom|Покинуть чат-рум
+Deleted %d rows from country code statistics table: %s|Удалено %d записей из таблицы статистики кодов стран: %s
+Set chat mode|Установить режим чата
+Known chat modes are: %s|Известные режимы чата: %s
+mode|режим
+Changing chat mode for %s: %s => %s|Изменен режим чата %s: %s => %s
+Not found in chat mode list: %s|Не найдено в списке режимов чата для пользователей: %s
+Chat mode user list|Список пользователей с установленным или измененным режимом
+Chat mode user list is empty.|Список пользователей с установленным или измененным режимом пуст.
+%s user lookup|Поиск пользователя по %s
+Looking for %s on: %s|Выполняю поиск пользователя %s на: %s
+User %s found in following hubs|Пользователь %s найден на следующих хабах
+User wasn't found in any hubs: %s|Пользователь не обнаружен ни на одном хабе: %s
+Add IP gag|Добавить заглушку по IP
+Added IP gag: %s|Добавлена заглушка по IP: %s
+Modified IP gag: %s|Изменена заглушка по IP: %s
+Deleted IP gag: %s|Удалена заглушка по IP: %s
+IP gag not found: %s|Заглушка по IP не найдена: %s
+IP gag list|Список зазлушек по IP
+IP gag list is empty.|Список заглушек по IP пуст.
+Delete IP gag|Удалить заглушку по IP
+Main chat is currently disabled for you.|В данный момен основной чат для вас отключен.
+Cleared temporary IP gag list.|Список временных заглушек по IP очищен.
+Show custom script commands|Показать команды скрипта
+Custom script command list|Список переопределенных пользователем команд скрипта
+Custom script command list is empty.|Список переопределенных пользователем команд скрипта пуст.
+Script size: %d lines in %s|Размер скрипта: %d строк в %s
+Added %s to IP gag list, %d users in total.|Адрес %s добавлен в список заглушек по IP, %d пользователей всего.
+Flood detected from IP %s last known as %s with class %d in MC: %s|Обнаружен флуд с IP адреса %s. Текущий пользователь адреса - %s %d-го класса, флудил в MC: %s
+Flood detected from IP %s last known as %s with class %d in PM: %s|Обнаружен флуд с IP адреса %s. Текущий пользователь адреса - %s %d-го класса, флудил в PM: %s
+Private chat is currently disabled for you.|Личные сообщения для вас отключены.
+Flood detected from your IP.|С вашего IP ведется рассылка флуда.
+%d users with IP %s dropped due to flood.|Пользователь %d with IP %s выкинут за флуд.
+No error message specified.|Сообщений об ошибках не обнаружено.
+Search filter|Фильтр поиска
+MyINFO check|Проверка MyINFO
+Authorization|Авторизация
+Ranks|Ранги
+Welcome messages|Приветственные сообщения
+Chatrooms|Чат-румы
+Reminders|Напоминания
+Hub news|Новости хаба
+Chat responder|Автоответчик в чате
+Releases|Релизы
+Offline messenger|Отправка сообщений оффлайн
+Chat history|История чата
+Commands|Команды
+Custom nicks|Временные ники
+Registered users|Зарегистрированные пользователи
+Hublist|Дружественные хабы
+Chat|Чат
+IP gag|Заглушка по IP
+User logger|Лог пользователей
+Other|Другие
+Configuration|Настройки
+Clear main chat|Очистить главный чат
+Chat cleanup performed by %s|Зачистку чата проводил %s
+Search in registered users list|Поиск в таблице регистраций
+Registered users list statistics|Статистика пользователей в таблице регистрации
+Registered users list results for %s|Запрошенный список пользователей для %s
+Class %d: %d|Класс %d: %d
+Registered users list is empty.|Список зарегистрированных пользователей пуст.
+This feature requires following binary installed on your system: %s|Данная функция требует следующий установленный файл выполнения в вашей системе: %s
+Configuration directory: %s|Конфигурационная директория: %s
+%s with IP %s and class %d stated incorrect IP in connect request to %s: %s|Пользователь %s с IP-адресом %s %d-го класса передал неккоректный IP-адрес при запросе подключения к %s: %s
+Top %d search requests|Топ-%d самых популярных поисковых запросов
+Search rank list is empty.|Список популярности запросов пуст.
+Deleted from search rank list: %s|Удалено из списка популярности запросов: %s
+Not found in search rank list: %s|Не найдено в списке популяности поисковых запросов: %s
+%s with class %d deleted %d search ranks lower than %d.|Пользователь %s %d-го класса удалил %d записей из таблицы популярности запросов. Удалялись записи старше %d дней.
+Size of search ranks table: %d [ %s: %d @ %s ]|Размер таблицы популярности поисковых запросов: %d [ %s: %d @ %s ]
+Size of user location statistics table: %d [ %s: %s ]|Размер таблицы с данными о географическом положении пользователей: %d [ %s: %s ]
+Open files limit: %d|Лимит откртых файлов: %d
+User information|Информация пользователя
+User not in list: %s|Пользователь не обнаружен: %s
+Nick: %s|Ник: %s
+Description: %s|Описание: %s
+Tag: %s|Тэг: %s
+Mode: %s|Режим: %s
+Slots: %s|Слоты: %s
+Hubs: %s|Хабы: %s
+Limiter: %s KiB/s|Ограничения скорости: %s Кб/с
+Connection: %s|Соединение: %s
+Status: %s|Статус: %s
+Email: %s|Email: %s
+Share: %s|Шара: %s
+Exact share: %s|Точный размер шары: %s
+Class: %d|Класс: %d
+IP: %s|IP: %s
+DNS: %s|DNS: %s
+Country: %s|Код страны: %s
+Client: %s|Клиент: %s
+Version: %s|Версия: %s
+Normal|Normal
+Away|Away
+Normal away|Normal away
+Fileserver|Fileserver
+Normal fileserver|Normal fileserver
+Away fileserver|Away fileserver
+Normal away fileserver|Normal away fileserver
+Fireball|Fireball
+Normal fireball|Normal fireball
+Away fireball|Away fireball
+Normal away fireball|Normal away fireball
+Fileserver fireball|Fileserver fireball
+Normal fileserver fireball|Normal fileserver fireball
+Away fileserver fireball|Away fileserver fireball
+Normal away fileserver fireball|Normal away fileserver fireball
+TLS|TLS
+Normal TLS|Normal TLS
+Away TLS|Away TLS
+Normal away TLS|Normal away TLS
+Fileserver TLS|Fileserver TLS
+Normal fileserver TLS|Normal fileserver TLS
+Away fileserver TLS|Away fileserver TLS
+Normal away fileserver TLS|Normal away fileserver TLS
+Fireball TLS|Fireball TLS
+Normal fireball TLS|Normal fireball TLS
+Away fireball TLS|Away fireball TLS
+Normal away fireball TLS|Normal away fireball TLS
+Fileserver fireball TLS|Fileserver fireball TLS
+Normal fileserver fireball TLS|Normal fileserver fireball TLS
+Away fileserver fireball TLS|Away fileserver fireball TLS
+Normal away fileserver fireball TLS|Normal away fileserver fireball TLS
+Unable to get bot information: %s|Невозможно получить данные бота: %s
+Bot information|Описание бота
+Owner script: %s|Родительский скрипт: %s
+%s with IP %s and class %d allowed due to forbidden DNS exception: %s|Пользователь %s с IP-адресом %s и классом %d пропущен с исключением по запрещенному DNS-имени: %s
+In order to use this feature you need to enable DNS lookup. Do it by setting hub configuration variable %s to %d. Please note: Enabling DNS lookup might slow your hub performance down.|Если вы хотите использовать данную функцию вы должны включить DNS lookup. Сделайте это установив конфигурационную переменную хаба %s в значение %d. Однако помните. Включение DNS-lookup может понизить производительность вашего хаба.
+Couldn't add forbidden DNS because already exists: %s|Невозможно добавить существующее DNS-имя: %s
+Added forbidden DNS: %s|Добавлено запрещенное DNS-имя: %s
+Deleted forbidden DNS: %s|Удалено запрещенное DNS-имя: %s
+Couldn't delete forbidden DNS because not found: %s|Невозможно удалить запрещенное DNS-имя. Не найдено в базе: %s
+Forbidden DNS list|Список запрещенных DNS-имен
+Forbidden DNS list is empty.|Список запрещенных DNS-имен пуст.
+Powered by %s|Усилено %s
+Warning: %s|Внимание: %s
+Open files limit set to %d is smaller than maximum users configuration which is %d. You can correct this by setting %s to %d or higher and restarting the hub.|Количество разрешенных открытых файлов в системе равно %d, что является меньше количества пользователей разрешенных в хабе %d. Вы можете исправить это, выставив %s на %d или выше и перезапустив хаб.
+Additional help|Дополнительная помощь и информация
+Remove all %s tables and files|Удалить таблицы и файлы %s
+No reason specified.|Причина не указана.
+You can't kick user whose class is higher or equals your own: %s|Вы не можете кикнуть пользователя чей класс равен или выше вашего: %s
+Your topic contains forbidden characters which can't be used for security reason: %s|Устанавливаемая вами тема содержит символы, которые могут являться проблемой безопасности: %s. Тема не установлена.
+Hub uptime: %s|Время работы хаба: %s
+User count: %s|Количество пользователей: %s
+Total share: %s|Общий размер шары хаба: %s
+%s with IP %s and class %d tries to speak with IP gag in MC: %s|Пользователь %s с IP-адресом %s и классом %d пытался послать сообщение несмотря на заглушку по IP в MC: %s
+%s with IP %s and class %d tries to speak with IP gag in PM: %s|Пользователь %s с IP-адресом %s и классом %d пытался послать сообщение несмотря на заглушку по IP в РМ: %s
+Private message replaced for user: %s|Сообщение заменено для %s.
+Command logger|Лог команд
+Showing %d entries from command logger|Показаны %d записей из лога команд
+Command logger is empty.|Лог команд пуст.
+%s with class %d deleted %d command log entries older than %d days.|Пользователь %s %d-го класса удалил %d записей из лога команд. Удалялись записи старше %d дней.
+Size of command log table: %d [ %s: %d @ %s ]|Размер таблицы логов команд: %d [ %s: %d @ %s ]
+password|пароль
+Modify IP authorization entry|Изменить запись авторизации по IP
+Couldn't modify authorization entry because not found: %d|Невозможно изменить запись авторизации по IP. Не найдно в базе: %d
+Uptime: %s|Время работы: %s
+Enable requested feature and try again.|Пожалуйста, включите функцию и попробуйте снова.
+cc|cc
+Couldn't add forbidden country code because already exists: %s|Невозможно повторно добавить уже существующую запись кода страны: %s
+Added forbidden country code: %s|Добавлен запрещенный код страны: %s
+Deleted forbidden country code: %s|Удален запрещенный код страны: %s
+Couldn't delete forbidden country code because not found: %s|Запрещенный код страны не удален потому что не найден: %s
+Forbidden country code list|Список запрещенных кодов страны
+Forbidden country code list is empty.|Список запрещенных кодов страны пуст.
+%s with IP %s and class %d allowed due to forbidden country code exception: %s|Пользователь %s с IP адресом %s и классом %d пропущен с исключением по запрещенному коду страны: %s
+I'm staying idle due to confusion.|Я простаиваю из-за путаницы.
+Added replacer in MC: %s|Замена выражений в главный чат добавлена: %s
+Deleted chat replacer with ID: %d|Удалена замена для выражения в чате с ID: %d
+Couldn't delete chat replacer because ID not found: %d|Невозможно удалить замену для выраженя в чате с ID. Не найдено в базе: %d
+Chat replacer list|Список замен выражений
+Chat replacer list is empty.|Список замен выражений пуст.
+Replace|Замена для выражения
+Couldn't add chat replacer exception because already exists: %s|Невозможно добавить существующее исключение из выражений для замены в чате: %s
+Added chat replacer exception: %s|Добавлено исключение для замены выражений: %s
+Deleted chat replacer exception: %s|Удалено исключение для замены выражений: %s
+Couldn't delete chat replacer exception because not found: %s|Невозможно удалить исключение для замены выражения. Не найдено в базе: %s
+Chat replacer exception list|Список исключений для замены выражений
+Chat replacer exception list is empty.|Список исключений для замены выражений пуст.
+replace|замена для выражения
+Add chat replacer|Добавить замену для выражения
+Delete chat replacer|Удалить замену для выражения
+Add chat replacer exception|Добавить исключение для замены для выражений
+Delete chat replacer exception|Удалить исключение для замены для выражений
+Chat replacer|Замена выражений в чате
+You need to send another %d main chat messages in order to use hub registration.|Вам необходимо отправить еще %d сообщений в главный чат для проведения регистрации.
+Please wait another %.1f minutes before using hub registration.|Вам необходимо отправить еще %.1f минут в главный чат для разрешения проведения регистрации.
+In order to use this feature you need to set %s to: %d|Для использования данной функции необходимо установить переменную %s в значение: %d
+Please reconnect to gain %d minutes of uptime in order to use hub registration.|Пожалуйста, переподключитесь после %d минут работы, для возможности регистрации на хабе.
+Dropping %s with IP %s and class %d due to protocol flood detection: %s|Отключен пользователь %s с IP %s и классом %d в связи с обнаружение флуда: %s
+Protocol flood detected from your client: %s|С вашего клиента обнаружен флуд: %s
+Automatic update check detected stable version of %s available, use following command to update: %s|Автоматическая проверка обновлений обнаружила стабильную версию %s, для обновления используйте: %s
+menu|Меню
+Dropping user due to clone detection from IP %s with class %d: %s = %s|Отключен пользователь в связи с обнаружением клона с IP %s с классом %d: %s = %s
+Configuration variable %s must be a valid IP address.|Переменная %s должна быть действительным IP-адресом.
+Average share per user: %s|Среднее количество расшаренного в пересчете на одного пользователя: %s
+Don't be stupid.|Не будь идиотом
+reason|причина
+Add blocked PM entry|Добавить заблокированное личное сообщение
+Delete blocked PM entry|Удалить заблокированное личное сообщение
+List of blocked PM entries|Список заблокированных личных сообщений
+Modified blocked PM entry: %s|Изменить заблокированное личное сообщение: %s
+Added blocked PM entry: %s|Добавлено заблокированное личное сообщение: %s
+Deleted blocked PM entry: %s|Удалено заблокированное личное сообщение: %s
+Blocked PM list is empty.|Список заблокированных личных сообщений пуст
+Couldn't delete blocked PM entry because not found: %s|Невозможно удалить заблокированное личное сообщение, оно не найдено: %s
+Reason: %s|Причина: %s
+You're not allowed to send PM to this user because: %s|Вы не можете отправлять личные сообщения этому пользователю, потому что: %s
+%s with class %d deleted %d antispam entries with occurrence less than %d.|Пользователь %s с %d классом удалил %d запись антиспама с попаданием меньше чем %d.
+%s with class %d deleted %d search filter entries with occurrence less than %d.|Пользователь %s с %d классом удалил %d запись фильтра поиска с попаданием меньше чем %d.
+query|запрос
+Execute MySQL query|Выполнить MySQL запрос
+Execute shell command|Выполнить команду оболочки
+Experts only|Только для экспертов
+Add hard IP ban entry|Добавить жесткий бан IP на вход
+Delete hard IP ban entry|Удалить жесткий бан IP на вход
+List of hard IP ban entries|Список жестких банов IP на вход
+Modified hard IP ban entry: %s|Изменить жесткий бан IP на вход: %s
+Added hard IP ban entry: %s|Добавлен жесткий бан IP на вход: %s
+Deleted hard IP ban entry: %s|Удален жесткий бан IP на вход: %s
+Hard IP ban list is empty.|Список жестких банов IP пуст.
+Couldn't delete hard IP ban entry because not found: %s|Невозможно удалить жесткий бан IP на вход, не найден: %s
+Hard IP ban refused connection from IP %s: %s|Жесткий бан IP, сброс соединения с IP %s: %s
+Please wait another %d seconds before using hub search engine.|Пожалуйста подождите %d секунд, перед тем как использовать поиск.
+Loading %s in memory...|Загрузка %s в память...
+Finished loading %s in memory.|Загрузка %s в память закончена.
+Unable to locate %s in hub configuration directory.|Не удалось найти %s в каталоге хаба.
+Add right click menu item|Добавить пункт всплывающего меню
+Delete right click menu item|Удалить пункт всплывающего меню
+List of right click menu items|Список пунктов всплывающего меню
+Blacklisted connection from IP %s dropped: %s|Заблокированное соединение с IP %s отключено: %s
+To add multiple entries with this command you need to separate every entry by space.|Для добавление сразу нескольких записей их необходимо разделить пробелами.
+Add IP watch entry|Добавить IP для отслеживания ввода
+Delete IP watch entry|Удалить IP отслеживаемого ввода
+List of IP watch entries|Список IP с отслеживаемым вводом
+result|результат
+Modified IP watch entry: %s|Изменен IP отслеживаемого ввода: %s
+Added IP watch entry: %s|Добавлен IP отслеживаемого ввода: %s
+Known results are: %s|Известный результат: %s
+Deleted IP watch entry: %s|Удалить IP отслеживаемого ввода: %s
+IP watch list is empty.|Список IP отслеживаемого ввода пуст.
+Couldn't delete IP watch entry because not found: %s|Невозможно удалить IP отслеживаемого ввода, не найден: %s
+IP watch notification from %s with IP %s: %s|Уведомление о слежке по IP от %s с адресом %s: %s
+unknown nick|Неизвестный ник
+Country code gag|Гаг по коду страны
+Add country code gag|Добавить гаг по коду страны
+Added country code gag: %s|Добавлен гаг по коду страны: %s
+Modified country code gag: %s|Изменен гаг по коду страны: %s
+Deleted country code gag: %s|Удален гаг по коду страны: %s
+Country code gag not found: %s|Гаг по коду страны не найден: %s
+Country code gag list|Список гагов по коду страны
+Country code gag list is empty.|Список гагов по коду страны пуст.
+Delete country code gag|Удалить гаг по коду страны
+Cleared country code gag list.|Очистка списка гагов по коду страны
+%s with IP %s and class %d tries to speak with country code gag in MC: %s|Пользователь %s с IP %s и классом %d с гагом по коду страны пытается говорить в общий чат: %s
+%s with IP %s and class %d tries to speak with country code gag in PM: %s|Пользователь %s с IP %s и классом %d с гагом по коду страны пытается отправить личное сообщение: %s
+No reason specified|Нет указанных причин
+Automatically deleted %d user log entries older than %d days.|Автоматически удалять лог пользователя %d старее чем %d дней.
+Main chat message replaced for user: %s|Сообщение главного чата заменяются, для пользователя: %s
+Unknown protocol command from IP %s before login: %s|Неизвестная команда протокола с IP %s до логина: %s
+Added %s to hard ban list, %d users in total.|Добавлен %s жесткий банлист, всего пользователей - %d.
+NMDC version: %s|NMDC версия: %s
+Client supports: %s|Клиент поддерживает: %s
+Couldn't add forbidden client supports because already exists: %s|Невозможно заблокировать поддержку клиента, уже существует: %s
+Added forbidden client supports: %s|Добавлена блокировка поддержки клиента: %s
+Couldn't add forbidden NMDC version because already exists: %s|Невозможно заблокировать NMDC версию, уже существует: %s
+Added forbidden NMDC version: %s|Добавлена блокировка NMDC версии: %s
+Latest version of %s is required in order to use this feature.|Последняя версия %s требуется для использования данной функции.
+Deleted forbidden client supports: %s|Удалена блокировка поддержки клиента: %s
+Couldn't delete forbidden client supports because not found: %s|Невозможно удалить блокировку поддержки клиента, не найдено: %s
+Deleted forbidden NMDC version: %s|Удалена поддержка NMDC версии: %s
+Couldn't delete forbidden NMDC version because not found: %s|Невозможно удалить поддержку NMDC версии, не найдено: %s
+Forbidden client supports list|Список заблокированных поддерживаемых клиентов
+Forbidden client supports list is empty.|Список заблокированных поддерживаемых клиентов пуст.
+Forbidden NMDC version list|Список заблокированных NMDC версий
+Forbidden NMDC version list is empty.|Список заблокированных NMDC версий пуст.
+%s with IP %s and class %d allowed due to forbidden client supports exception: %s|Пользователь %s с IP %s и классом %d разрешен, из-за запрещенного клиента, исключение: %s
+%s with IP %s and class %d allowed due to forbidden NMDC version exception: %s|Пользователь %s с IP %s и классом %d разрешен, из-за запрещенной NMDC версии, исключение: %s
+City: %s|Город: %s
+IP range: %s - %s|Диапазон IP: %s - %s
+Region: %s|Регион: %s
+Time zone: %s|Временная зона: %s
+Continent: %s|Континент: %s
+Postal code: %s|Почтовый код: %s
+Coordinates: %.4f %.4f|Координаты: %.4f %.4f
+Metro code: %d|Код метро: %d
+Area code: %d|Телефонный код: %d
+Drop users with IP|Отключить пользователя с IP
+No users found with IP: %s|Не найден пользователь с IP: %s
+Dropped %d users with IP: %s|Отключено %d пользователей с IP: %s
+%s dropped %d users with IP: %s|Пользователь %s отключил %d пользователей с IP: %s
+Live user location statistics by city|Статистика, в реальном времени, расположения пользователей по городам
+Live user location statistics by city from %s=%s|Статистика, в реальном времени, расположения пользователей по городам из %s=%s
+No users in the hub from: %s=%s|На хабе нет пользователей из: %s=%s
+Help notes|Вспомогательные примечания
+parameter|параметр
+Command parameters %s are always required, while %s are optional.|Параметры команды %s  требуются всегда, в то время как для %s не обязательны.
+Quoted parameters %s or %s must be used with quotes.|Цитируемые параметры %s или %s должны быть в кавычках.
+IP information|Информация по IP
+IP information not available: %s|Информации по IP не обнаружено: %s
+Message replaced for user with class %d in MC: <%s> %s|Для пользователя с классом %d, заменено сообщение в главном чате: <%s> %s
+IP %s permanently banned: <%s> %s|IP %s напостоянно забанен: <%s> %s
+Nick %s permanently banned: <%s> %s|Ник %s напостоянно забанен: <%s> %s
+Range %s permanently banned: <%s> %s|IP диапазон %s напостоянно забанен: <%s> %s
+Host %s permanently banned: <%s> %s|Хост %s напостоянно забанен: <%s> %s
+Share %s permanently banned: <%s> %s|Размер шары %s напостоянно забанен: <%s> %s
+Prefix %s permanently banned: <%s> %s|Префикс ника %s напостоянно забанен: <%s> %s
+IP %s temporarily banned until %s: <%s> %s|IP %s временно забанен до %s: <%s> %s
+Nick %s temporarily banned until %s: <%s> %s|Ник %s временно забанен до %s: <%s> %s
+Range %s temporarily banned until %s: <%s> %s|IP диапазон %s временно забанен до %s: <%s> %s
+Host %s temporarily banned until %s: <%s> %s|Хост %s временно забанен до %s: <%s> %s
+Share %s temporarily banned until %s: <%s> %s|Размер шары %s временно забанен до %s: <%s> %s
+Prefix %s temporarily banned until %s: <%s> %s|Префикс ника %s временно забанен до %s: <%s> %s
+IP %s unbanned: <%s> %s|Бан по IP %s снят: <%s> %s
+Nick %s unbanned: <%s> %s|Бан по нику %s снят: <%s> %s
+Range %s unbanned: <%s> %s|Бан по IP диапазону %s снят: <%s> %s
+Host %s unbanned: <%s> %s|Бан по хосту %s снят: <%s> %s
+Share %s unbanned: <%s> %s|Бан по размеру шары %s снят: <%s> %s
+Prefix %s unbanned: <%s> %s|Бан по префиксу ника %s снят: <%s> %s
+Known contexts are: %s|Варианты контекста: %s
+Known orders are: %s|Варианты порядка: %s
+Modified right click menu item: %s|Изменен пункт меню правой кнопки мыши: %s\"
+Added right click menu item: %s|Добавлен пункт меню правой кнопки мыши: %s
+Deleted right click menu item: %s|Удален пункт меню правой кнопки мыши: %s
+Right click menu item not found: %s|Пункт меню правой кнопки мыши не найден: %s
+Right click menu item list is empty.|Список пунктов меню правой кнопки мыши пуст.
+Menu item|Пункт меню
+Menu command|Команда меню
+Changed right click menu item order: %s|Изменен пункт меню правой кнопки мыши: %s
+Separator or eraser|Разделитель или стиратель
+Nick and IP %s unbanned: <%s> %s|Бан по нику с IP %s снят: <%s> %s
+Other %s unbanned: <%s> %s|Бан неизвестного типа %s снят: <%s> %s
+Vote for user to be kicked|Голосовать за кик пользователя
+You don't want to vote for kicking an operator.|Не думаю что вы хотите голосовать за кик оператора.
+User voted kick|Кик по голосованию пользователей
+You have already voted for kicking that user.|Вы уже проголосовали за кик этого юзера.
+%s added vote %d of %d for kicking user with class %d: %s|%s добавил голосование %d из %d за кик юзера с классом %d: %s
+There is an error in following antispam entry pattern|Существует ошибка в следующем шаблоне антиспама
+Pattern|Шаблон
+Error|Ошибка
+Solution|Решение
+There is an error in following search filter pattern|Существует ошибка в следующей шаблоне фильтра поиска
+There is an error in following search filter exception pattern|Существует ошибка в следующем шаблоне исключений фильтра поиска
+There is an error in following antispam exception entry pattern|Существует ошибка в следующем шаблоне исключений антиспама
+There is an error in following forbidden nick pattern|Существует ошибка в следующем шаблоне запрещенных ников
+There is an error in following MyINFO exception pattern|Существует ошибка в следующем шаблоне исключений MyINFO
+There is an error in following forbidden description pattern|Существует ошибка в следующем шаблоне запрещенных описаний
+There is an error in following forbidden tag pattern|Существует ошибка в следующем шаблоне запрещенных тегов
+There is an error in following forbidden connection type pattern|Существует ошибка в следующем шаблоне запрещенных типов подключений
+There is an error in following forbidden email pattern|Существует ошибка в следующем шаблоне запрещенных email
+There is an error in following forbidden share size pattern|Существует ошибка в следующем шаблоне запрещенных размеров шар
+There is an error in following forbidden IP address pattern|Существует ошибка в следующем шаблоне запрещенных IP адресов
+There is an error in following forbidden country code pattern|Существует ошибка в следующем шаблоне запрещеных кодов стран
+There is an error in following forbidden DNS pattern|Существует ошибка в следующем шаблоне запрещенных DNS
+There is an error in following forbidden client supports pattern|Существует ошибка в следующем шаблоне запрещенных поддерживаемых клиентов
+There is an error in following forbidden NMDC version pattern|Существует ошибка в следующем шаблоне запрещенных NMDC версий
+Added replacer in PM: %s|Замена выражений в личный чат добавлена: %s
+Added replacer in MC and PM: %s|Замена выражений в главный и личный чат добавлена: %s
+Message replaced for user with class %d in PM: <%s> %s|Сообщение заменено, для юзера с класом %d в ЛС: <%s> %s
+Message ignored due to flood detection from %s with IP %s and class %d in MC: %s|Сообщение игнорируется, определено как спам от %s с IP %s и классом %d в главный чат: %s
+Users with same IP|Пользователи с данным IP
+Parameter count mismatch detected in following translation string: %s|Количество параметров в данной строке перевода отличается от оригинала: %s
+Infected user detected|Обнаружен зараженный пользователь
+Found files|Найденные файлы
+Infected user detected with nick %s and IP %s and share %s and spent time: %s|Обнаружен зараженный пользователь с ником %s и IP адресом %s и шарой %s и проведенным временем: %s
+Sadly I don't have access to send infected user information to AVDB, please ask maintainer of this script to add your server IP address to access list. AVDB reporting feature has been automatically disabled.|К сожалению у меня нет доступа для отправки информации о зараженном пользователе в AVDB, пожалуйста попросите разработчика этого скрипта добавить IP адрес вашего сервера в список доступа. Отправка в AVDB была автоматически отключена.
+In order to send infected user information to AVDB you need to ask maintainer of this script to add your server IP address to AVDB access list.|Для отправки информации о зараженном пользователе в AVDB вам требуется попросить разработчика этого скрипта добавить IP адрес вашего сервера в список доступа AVDB.
+Antivirus statistics|Статистика антивируса
+File names used for search|Названия файлов используемые для поиска
+File extensions used for search|Расширения файлов используемые для поиска
+Possibly infected users|Возможно зараженные пользователи
+Spent time: %s|Проведенное время: %s
+Infected user logged in with IP %s and share %s: %s|Зараженный пользователь вошел с IP адресом %s и шарой %s: %s
+Loaded %d of %d with totally %d items: %s|Загружено %d из %d итого %d пунктов: %s
+Infected user information sent to %s: %s|Информация о зараженном пользователе отправлена в %s: %s
+Failed to load information from %s: %s|Не удалось загрузить информацию из %s: %s
+Failed to send information to %s: %s|Не удалось отправить информацию в %s: %s
+Error on executing %s: %s|Ошибка при выполнении %s: %s
+Error on connecting.|Ошибка при подключении.
+Loaded none with totally %d items: %s|Не загружено ни одного итого %d пунктов: %s
+Infected user found with IP %s and share %s: %s|Зараженный пользователь найден с IP адресом %s и шарой %s: %s
+Server didn't reply with expected status code.|Сервер не ответил ожидаемым кодом статуса.
+Size of %s: %d @ %s|Размер %s: %d @ %s
+Clear kick votes for user|Очистить голоса для кика пользователя
+%s cleared %d of %d votes for kicking user with class %d: %s|%s очистил %d из %d голосов для кика пользователя с %d классом: %s
+Vote kick list|Список голосов за кик
+Vote kick list is empty.|Список голосов за кик пуст.
+Votes: %d of %d|Голосов: %d из %d
+Voters: %s|Голосователи: %s
+Triggers|Триггеры
+Add trigger|Добавить триггер
+Trigger list|Список триггеров
+Delete trigger|Удалить триггер
+Modified trigger: %s|Триггер изменен: %s
+Added trigger: %s|Триггер добавлен: %s
+Deleted trigger: %s|Триггер удален: %s
+Trigger not found: %s|Триггер не найден: %s
+Trigger list is empty.|Список триггеров пуст.
+Class range: %d to %d|Диапазон классов: %d до %d
+Pinger|Пингер
+Guest|Гость
+Registered|Зарегистрованный
+VIP|VIP
+Operator|Оператор
+Cheef|Шеф
+Administrator|Администратор
+Master|Мастер
+News item added by %s: %s|Добавлена новость пользователем %s: %s
+Your connection request is blocked because user that you're trying connect to was detected as virus spreader: %s|Ваш запрос на подключение был отклонен потому что пользователь к которому вы пытаетесь подключиться был отмечен как зараженный вирусами: %s
+Connection requests to following user will be blocked: %s|Запросы на подключение к данному пользователю будут отклонены: %s
+Downloading script file: %s|Загружаю файл скрипта: %s
+Stable version of %s is available: %s|Стабильная версия %s доступна: %s
+Development version of %s is available: %s|Разрабатываемая версия %s доступна: %s
+Translation file loaded: %s|Файл с переводом загружен: %s
+Loaded none of %d with totally %d items: %s|Не загружено ни одного из %d итого %d пунктов: %s
+Failed to execute %s with code: %d|Не удалось выполнить %s с кодом: %d
+Failed to execute %s with error: %s|Не удалось выполнить %s с ошибкой: %d
+Failed to execute %s without code and error.|Не удалось выполнить %s без кода и сообщения.
+Failed to move file: %s|Не удалось переместить файл: %s
+Downloading translation file: %s|Загружаю файл с переводом: %s
+File not found on update server: %s|Файл не найден на сервере с обновлениями: %s
+File not found on remote server: %s|Файл не найден на удаленном сервере: %s
+File is empty.|Файл пуст.
+Force infected user detection|Принудительное обнаружение зараженного пользователя
+You can't block user whose class is higher or equals your own: %s|Вы не можете заблокировать пользователя чей класс равен или выше вашего: %s
+User already blocked: %s|Пользователь уже заблокирован: %s
+item|пункт
+Search in %s|Поиск в %s
+Antivirus|Антивирус
+Nothing was found in: %s|Ничего не найдено в: %s
+Searching for %s in %s: %s|Поиск %s в %s: %s
+Showing %d results from %s|Показываю %d результатов из %s
+%s module version: %s|Версия модуля %s: %s
+This feature requires following module installed on your system: %s|Эта функция требует слудеющий модуль установленный на вашей системе: %s
+Failed to start antivirus search server: %s|Ошибка при запуске антивирусного поискового сервера: %s
+Started antivirus search server: %s|Запущен антивирусный поисковой сервер: %s
+Stopped antivirus search server: %s|Остановлен антивирусный поисковой сервер: %s
+Blocked infected users|Заблокированные зараженные пользователи
+Add automatic country chatroom entrance|Добавить автоматический вход в чат комнату по стране
+Automatic country chatroom entrance list|Список автоматических входов в чат комнаты по стране
+Delete automatic country chatroom entrance|Удалить автоматический вход в чат комнату по стране
+Couldn't add automatic country chatroom entrance because already exists with ID: %d|Не удалось добавить автоматический вход в чат комнату по стране потому что уже существует с ID: %d
+Added automatic country chatroom entrance for %s: %s|Добавлен автоматический вход в чат комнату по стране для %s: %s
+Couldn't delete automatic country chatroom entrance because ID not found: %d|Не удалось удалить автоматический вход в чат комнату по стране потому что ID не найден: %d
+Deleted automatic country chatroom entrance with ID: %d|Удален автоматический вход в чат комнату по стране с ID: %d
+Automatic country chatroom entrance list is empty.|Список автоматических входов в чат комнаты по стране пуст.
+Please note, following function is required for features available in this version of %s and is currently not available in running version of %s but is available in latest update: %s|Внимание, следующая функция требуется для полноценной работы данной версии %s и является не доступной в данной версии %s но доступна в последнем обновлении: %s
