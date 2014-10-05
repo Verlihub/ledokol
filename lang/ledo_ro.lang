@@ -1,0 +1,1077 @@
+# Language: ro_RO
+# Charset: CP1250
+# Version: 2.8.3
+# Author: S0RiN
+# Email: rusu_sorin_con@yahoo.com
+
+Current topic: %s|Topicul actual: %s
+Current topic set by %s: %s|Topicul actual setat de %s: %s
+This operation might take very long time depending on how much is going to be removed. Please be patient.|Aceastг operaюiune poate dura un timp оndelungat, depinde cвt de mare este cantitatea de date ce trebuie єtearsг. Te rog sг ai rгbdare.
+days|zile
+%s with class %d deleted %d IP logger plugin entries older than %d days.|%s cu clasa %d a єters %d intrгri оn logul IP-urilor mai vechi de %d zile.
+%s with class %d deleted %d unbans older than %d days.|%s cu clasa %d a єters %d unban-uri mai vechi de %d zile.
+%s with class %d deleted %d bans older than %d days.|%s cu clasa %d a єters %d ban-uri mai vechi de %d zile.
+%s with class %d deleted %d kicks older than %d days.|%s cu clasa %d a єters %d kick-uri mai vechi de %d zile.
+I'm probably away. State your business and I might answer later if you're lucky.|Probabil nu sunt оn apropiere. Vezi de treburi єi poate оюi rгspund cвnd voi reveni.
+Perform script update|Se deruleazг actualizarea scriptului
+Deleted %d main chat history messages.|S-au єters %d linii ale istoricului de main chat.
+There are no main chat history messages to remove.|Nu mai sunt mesaje ale istoricului de main chat de єters.
+Deleted %d operator chat history messages.|S-au єters %d mesaje ale istoricului chat-ului operatorilor.
+There are no operator chat history messages to remove.|Nu mai sunt mesaje ale chat-ului operatorilor de єters.
+%s with class %d deleted %d main chat history messages.|%s cu clasa %d a єters %d linii ale istoricului de main chat.
+Unable to connect to target server. Please try again later.|Nu te poюi conecta la serverul юintг. Te rog sг оncerci ceva mai tвrziu.
+Last %d main chat messages|Ultimele %d mesaje de main chat
+Main chat history is empty.|Istoricul de main chat este gol.
+%s is now known as: %s|%s apare acum cu nick: %s
+Last %d operator chat messages|Ultimele %d mesaje ale chat-ului operatorilor.
+Operator chat history is empty.|Istoricul chat-ului operatorilor, este gol.
+Valid priority is a number from %d to %d.|Prioritatea validг este un numгr de la %d pвnг la %d
+You are using latest version of %s, no update is required.|Acum foloseєti ultima versiune de %s, nu mai este necesarг o reоnnoire a datelor.
+Why would you send offline message to yourself?|De ce ai dori sг-юi trimiюi un mesaj offline?
+User %s is online. Sending message directly.|Utilizatorul %s este online. Scrie-i mesajul direct оn privat.
+Your offline message stored for user: %s|Mesajul tгu offline a fost stocat pentru utilizatorul: %s
+%s with IP %s and class %d sent offline message.|%s cu IP %s єi clasa %d a trimis un mesaj offline.
+priority|prioritate
+Offline|Offline
+Online|Online
+I sent offline message to you on %s|Юi-am trimis un mesaj offline la %s
+My current status|Starea mea actualг
+%s with IP %s and class %d received offline messages.|%s cu IP %s єi clasa %d a primit un mesaj offline.
+Stored offline messages|Mesaje offline stocate
+Offline message list is empty.|Lista de mesaje stocate, este goalг.
+Deleted %d offline messages.|S-au єters %d mesaje offline.
+Couldn't delete offline messages because not found: %s|Nu pot fi єterse mesajele offline %s pentru cг nu s-au gгsit.
+%s with class %d deleted all offline messages.|%s cu clasa %d a єters toate mesajele offline.
+There are no offline messages to remove.|Nu mai sunt mesaje offline de єters.
+No topic is set.|Nu este setat topic.
+%s with IP %s and class %d allowed due to forbidden nick exception: %s|%s cu IP %s єi clasa %d are permis accesul pe hub, datoritг excepюiei de la interzicere pe nick-ul: %s
+message|mesaj
+%s with IP %s and class %d allowed due to forbidden description exception: %s|%s cu IP %s єi clasa %d are permis accesul pe hub, datoritг excepюiei de la interzicere pe descrierea: %s
+User you're trying to kick or redirect is protected: %s|Utilizatorul cгruia оncerci sг-i dai kick sau redirect, este protejat: %s
+%s with IP %s and class %d allowed due to forbidden tag exception: %s|%s cu IP %s єi clasa %d are permis accesul pe hub, datoritг excepюiei de la interzicere pe tag-ul: %s
+type|tip
+%s with IP %s and class %d allowed due to forbidden connection type exception: %s|%s cu IP %s єi clasa %d are permis accesul pe hub, datoritг excepюiei de la interzicere pe tipul de conexiune: %s
+%s with class %d changed configuration variable %s: %s => %s|%s cu clasa %d a schimbat configuraюia variabilei %s: %s => %s
+%s with IP %s and class %d allowed due to forbidden email exception: %s|%s cu IP %s єi clasa %d are permis accesul pe hub, datoritг excepюiei de la interzicere pe email-ul: %s
+%s received own message.|%s primeєte propriul mesaj.
+%s with IP %s and class %d allowed due to forbidden share size exception: %s|%s cu IP %s єi clasa %d are permis accesul pe hub, datoritг excepюiei de la interzicere pe aceasta dimensiune de share: %s
+Deleted %d releases from category: %s|S-au єters %d lansгrile din categoria %s
+Why would you want to set empty topic?|De ce ai dori sг setezi un spaюiu gol ca єi topic?
+Couldn't add forbidden nick because already exists: %s|Nu poюi adгuga aceastг interdicюie pe nick pentru cг: %s deja existг.
+Added forbidden nick: %s|Ai adгugat interdicюie pe nick: %s
+Couldn't add forbidden description because already exists: %s|Nu poюi adгuga aceastг interdicюie pe descriere pentru cг deja existг: %s
+Added forbidden description: %s|Ai adгugat interdicюie pe descrierea: %s
+Couldn't add forbidden tag because already exists: %s|Nu poюi adгuga aceastг interdicюie pe tag pentru cг deja existг: %s
+Added forbidden tag: %s|Ai adгugat interdicюie pe tag-ul: %s
+Couldn't add forbidden connection type because already exists: %s|Nu poюi adгuga aceastг interdicюie pe tipul de conexiune pentru cг deja existг: %s
+Added forbidden connection type: %s|Ai adгugat interdicюie pe tipul de conexiune: %s
+Couldn't add forbidden email because already exists: %s|Nu poюi adгuga aceastг interdicюie pe email pentru cг deja existг: %s
+Added forbidden email: %s|Ai adгugat interdicюie pe email: %s
+Couldn't add forbidden share size because already exists: %s|Nu poюi adгuga aceastг cifrг de share la interdicюii pentru cг deja existг: %s
+Added forbidden share size: %s|Ai adгugat interdicюie pe cifra de share: %s
+Couldn't add MyINFO exception because already exists: %s|Nu poюi adгuga aceastг excepюie de la MyINFO pentru cг deja existг: %s
+Added MyINFO exception: %s|Ai adгugat excepюie de la MyINFO: %s
+and|єi
+Deleted forbidden nick: %s|S-a єters interdicюia pe nick: %s
+Couldn't delete forbidden nick because not found: %s|Nu se poate єterge aceastг interdicюie pe nick pentru cг nu a fost gгsit: %s
+Deleted forbidden description: %s|S-a єters interdicюia pe descriere: %s
+Couldn't delete forbidden description because not found: %s|Nu se poate єterge aceastг interdicюie pe descriere pentru cг nu a fost gгsitг: %s
+Deleted forbidden tag: %s|S-a єters interdicюia pe tag: %s
+Couldn't delete forbidden tag because not found: %s|Nu se poate єterge aceastг interdicюie pe tag pentru cг nu a fost gгsit: %s
+Deleted forbidden connection type: %s|S-a єters interdicюia pe tipul de conexiune: %s
+Couldn't delete forbidden connection type because not found: %s|Nu se poate єterge aceastг interdicюie pe tipul de conexiune pentru cг nu a fost gгsit: %s
+Deleted forbidden email: %s|S-a єters interdicюia pe email: %s
+Couldn't delete forbidden email because not found: %s|Nu se poate єterge interdicюia pe email pentru cг nu a fost gгsit: %s
+Deleted forbidden share size: %s|S-a єters interdicюia pe cifra de share: %s
+Couldn't delete forbidden share size because not found: %s|Nu se poate єterge interdicюia pe cifra de share pentru cг nu a fost gгsit: %s
+Deleted MyINFO exception: %s|S-a єters excepюia MyINFO: %s
+Couldn't delete MyINFO exception because not found: %s|Nu se poate єterge excepюia MyINFO pentru cг nu a fost gгsit: %s
+Forbidden nick list|Lista de interdicюii pe nick
+Forbidden nick list is empty.|Lista de interdicюii pe nick, este goalг.
+Forbidden description list|Lista de interdicюii pe descriere
+Forbidden description list is empty.|Lista de interdicюii pe descriere, este goalг.
+Forbidden tag list|Lista de interdicюii pe tag
+Forbidden tag list is empty.|Lista de interdicюii pe tag, este goalг.
+Forbidden connection type list|Lista de interdicюii pe tipul de conexiune
+Forbidden connection type list is empty.|Lista de interdicюii pe tipul de conexiune, este goalг.
+Forbidden email list|Lista de interdicюii pe email
+Forbidden email list is empty.|Lista de interdicюii pe email, este goalг.
+Forbidden share size list|Lista de interdicюii pe cifra de share
+Forbidden share size list is empty.|Lista de interdicюii pe cifra de share, este goalг.
+MyINFO exception list|Lista de excepюii MyINFO
+MyINFO exception list is empty.|Lista de excepюii MyINFO, este goalг.
+Deleted %d rows: %s|S-au єters %d rвnduri: %s
+Known types are: %s|Tipurile cunoscute sunt: %s
+No rows to remove: %s|Nu mai sunt rвnduri de єters: %s
+date|data
+%s with class %d used command: %s|%s cu clasa %d a folosit comanda: %s
+context|context
+Deleted from chat rank list: %s|S-a єters din lista Cei mai... activi pe chat: %s
+Not found in chat rank list: %s|Nu s-a gгsit оn lista de Cei mai... activi pe chat: %s
+Deleted from operator rank list: %s|S-a єters din lista Cei mai... activi operatori: %s
+Not found in operator rank list: %s|Nu s-a gгsit оn lista Cei mai... operatori: %s
+Antispam|Antispam
+Your chat rank is: %d|Gradul tгu de Cel mai... activ pe chat, este: %d
+You have to write something in main chat to get started.|Trebuie sг scrii ceva оn main chat pentru a оncepe.
+Custom nick list is empty.|Lista de nick-uri predefinite, este goalг.
+Total share rank size: %s|Cel mai... mare total share: %s
+Your operator rank is: %d|Gradul tгu de Cel mai... activ operator, este: %d
+You have to do some operator actions to get started.|Pentru a оncepe, trebuie sг ai cвteva activitгюi de operator.
+Top %d chat rankers|Top %d Cei mai... activi pe chat
+Chat rank list is empty.|Lista Cei mai... activi pe chat, este goala.
+Top %d operator rankers|Top %d Cei mai... activi operatori
+Operator rank list is empty.|Lista Cei mai... activi operatori, este goalг.
+string|serie
+No user results found.|Nu s-a gгsit nici un utilizator.
+Showing %d user log results|Aratг %d rezultate оn logul de useri
+Size of user log table: %d [ %s: %d @ %s ]|Mгrimea tabelei log de utilizatori %d [ %s %d @ %s ]
+Add protection entry|Adгugare intrare protecюie
+Delete protection entry|Єtergere intrare protecюie
+flags|steaguri
+%s dropped due to bad search request.|%s scos pentru cгutare interzisг.
+This command is either disabled or you don't have access to it.|Aceastг comandг este dezactivatг ori nu ai acces la ea.
+Deleted antispam entry: %s|A fost єtearsг aceastг: %s intrare antispam.
+Couldn't delete antispam entry because not found: %s|Nu poюi єterge aceastг: %s intrare antispam, pentru cг nu s-a gгsit.
+Antispam list|Lista de antispam.
+Antispam list is empty.|Lista de antispam este goalг.
+Couldn't add antispam exception entry because already exists: %s|Nu poюi adauga aceastг: %s intrare antispam, pentru cг ea deja existг.
+Added antispam exception entry: %s|Ai adгugat aceastг: %s excepюie de la antispam.
+Deleted antispam exception entry: %s|Ai єters aceastг: %s excepюie la antispam.
+Couldn't delete antispam exception entry because not found: %s|Nu poюi єterge aceastг: %s excepюie la antispam, pentru cг nu s-a gгsit.
+Antispam exception list|Lista de excepюii de la antispam
+Antispam exception list is empty.|Lista de excepюii de la antispam, este goalг.
+The user you're trying to send offline message to is a bot. Message is discarded.|Utilizatorul cгruia оncerci sг-i trimiюi mesaj offline, este un bot. Mesajul a fost eliminat.
+You can't start at user number %d when you only have %d accounts with class %d.|Nu poюi оncepe ca utilizator numгrul %d cвnd tu ai doar %d cont cu clasa %d
+Showing %d out of total %d accounts with class %d starting at user number %d|Aratг %d din totalul de %d conturi cu clasa %d оncepвnd de la userul numгrul %d
+There are no accounts with class: %d|Nu sunt aici conturi cu clasa: %d
+Known classes are: %s|Clasele cunoscute sunt: %s
+%s with class %d sent say message: <%s> %s|%s cu clasa %d a trimis cu comanda say оn main chat mesajul: <%s> %s
+%s with class %d had bad luck sending say message: <%s> %s|%s cu clasa %d a scrвntit-o trimiювnd cu comanda say, оn main chat, mesajul: <%s> %s
+You can't talk from nick whose class is higher or equals your own.|Nu poюi discuta cu un nick a cгrui clasг este mai mare sau egalг cu propria ta clasг.
+%s with IP %s and class %d kicked: <%s> %s|%s cu IP %s єi clasa %d a primit kick de la: <%s> %s
+%s with class %d deleted %d statistics plugin entries older than %d days.|%s cu clasa %d a єters %d intrгrile din puginul statistic mai vechi de %d zile.
+offset|echilibrare
+order|ordine
+%s didn't get any search results.|%s nu a avut nici un rezultat al cгutгrii.
+Redirected %s with IP %s and class %d to %s: <%s> %s|A fost redirecюionat %s cu IP %s єi clasa %d cгtre %s: <%s> %s
+Unknown protocol command from %s with IP %s and class %d: %s|Comandг cu protocol necunoscut de la %s cu IP %s єi clasa %d: %s
+Custom nick list|Lista de nick-uri predefinite
+%s operator commands|%s comenzi de operator
+Add antispam entry|Adaugг intrare antispam
+Showing last %d lines out of total %d found in %s file|Aratг ultimele %d linii din totalul de %d gгsite оn fila: %s
+Delete antispam entry|S-a єters intrarea antispam
+Add antispam exception entry|S-a adгugat excepюia antispam
+Delete antispam exception entry|S-a єters excepюia antispam
+Add MyINFO entry|S-a adгugat intrare MyINFO
+Delete MyINFO entry|S-a єters intrare MyINFO
+MyINFO list|Lista MyINFO
+List of registered users by class|Lista utilizatorilor оnregistraюi dupг clase
+Speak from other nick|Vorbeєte de pe alt nick
+Remove user or word from rank list|Оndepгrteazг utilizator sau cuvвnt din lista Cele mai...
+%s with class %d deleted %d user log entries older than %d days.|%s cu clasa %d a єters %d intrгrile оn logul userilor, mai vechi de %d zile.
+List stored offline messages|Lista mesajelor offline stocate
+Delete offline messages by date|Єterge mesajele offline dupг datг
+Delete all offline messages|Єterge toate mesajele offline
+class|clasг
+Clean up tables|Curгюг tabelele
+Operator chat history|Istoricul chatului operatorilor
+Delete all history messages|Єterge tot istoricul mesajelor
+Your operator rank|Gradul tгu Cel mai... activ operator
+Script configuration variables|Variabilele de configurare a scriptului
+Change configuration variable|Schimbг variabilele de configurare
+nick|nick
+This list of commands|Aceastг listг de comenzi
+%s user commands|%s comenzi de utilizator
+Current topic|Topicul actual
+Your chat rank|Gradul tгu Cel mai... activ pe chat
+You're not allowed to send private messages.|Nu eєti autorizat sг trimiюi mesaje private.
+Unknown|Necunoscut
+identifier|identificator
+Offline message to user|Mesaj offline cгtre utilizator
+Main chat history|Istoricul main chat-ului
+%s statistics|%s statistici
+Script version: %s|Versiunea de script: %s
+Total chat rank points: %d|Punctaj total Cei mai... activi pe chat: %d
+Total operator rank points: %d|Punctaj total Cei mai... activi operatori: %d
+Average message count per user: %.2f|Media mesajelor contorizate pentru utilizator: %.2f
+lre|cc
+action|acюiune
+Changed configuration variable %s: %s => %s|Schimbi configurarea variabilelor %s: %s => %s
+Configuration variable %s can only be set to: %s|Configurarea variabilei %s poate fi setatг doar оn: %s
+or|sau
+Configuration variable %s must be a number.|Configurarea variabilei %s trebuie sг fie un numгr.
+to|cгtre
+Unknown configuration variable: %s|Configurare necunoscutг a variabilei: %s
+%s version: %s|%s versiune: %s
+Not installed|Neinstalat
+%s dropped due to spam.|%s scos afarг pentru cг a fгcut spam.
+variable|variabilг
+value|valoare
+minutes|minute
+%s library version: %s|%s versiune a bibliotecii: %s
+Reorder right click menu item|Reearanjeazг articolele meniului de click dreapta
+lines|linii
+Couldn't add rank exception because already exists: %s|Nu poюi adгuga excepюie la Cei mai... pentru cг deja existг: %s.
+Added rank exception: %s|Adгugat excepюie la Cei mai...: %s
+Deleted rank exception: %s|Єtergere excepюie la Cei mai...: %s
+Couldn't delete rank exception because not found: %s|Nu se poate єterge excepюia de la Cei mai... %s pentru cг nu a fost gгsitг.
+Rank exception list|Lista de excepюii la Cei mai...
+Rank exception list is empty.|Lista de excepюii la Cei mai... este goalг.
+Add rank exception|Adaugг excepюie la Cei mai...
+Delete rank exception|Єterge excepюia la Cei mai...
+In order to use this feature you must turn off registered users list cache. Do it by setting hub configuration variable %s to %d and restarting the hub. Please note: Turning cache off is not recommended with large list of registered users.|Pentru a utiliza aceastг funcюie, trebuie sг opreєti caєe-ul listei de utilizatori. Fг-o setвnd variabila configuraюiei de hub %s la %d єi dвnd restart la hub. Te rog sг iei aminte: Оnchiderea caєe-ului nu este recomandatг dacг lista de useri este foarte mare.
+Both|Ambele
+Deleted search filter: %s|Filtrul de cгutare: %s a fost єters.
+Couldn't delete search filter because not found: %s|Nu poюi єterge filtrul de cгutare: %s pentru cг nu a fost gгsit.
+Search filter list|Lista de filtre de cгutare
+Search filter list is empty.|Lista de filtre de cгutare este goalг.
+Magnet link: %s|Magnet link: %s
+Add search filter|Filtru de cгutare adгugat
+Delete search filter|Filtru de cгutare єters
+Known actions are: %s|Acюiunea cunoscutг este: %s
+Known flags are: %s|Steagul cunoscut este: %s
+Downloading version file: %s|Se descarcг fila versiunii: %s
+Size of kicks table: %d [ %s: %d @ %s ]|Mгrimea tabelei de kick-uri: %d [ %s: %d @ %s ]
+Size of bans table: %d [ %s: %d @ %s ]|Mгrimea tabelei de ban-uri: %d [ %s: %d @ %s ]
+Size of unbans table: %d [ %s: %d @ %s ]|Mгrimea tabelei de ban-uri scoase: %d [ %s: %d @ %s ]
+Size of IP logger plugin table: %d [ %s: %d @ %s ]|Mгrimea tabelei pluginului de log-IP: %d [ %s: %d @ %s ]
+Size of statistics plugin table: %d [ %s: %d @ %s ]|Mгrimea tabelei pluginului de statistici: %d [ %s: %d @ %s ]
+Modified authorization entry: %s @ %s|Modificat autorizarea intrгrii: %s @ %s
+Added authorization entry: %s @ %s|Adгugat autorizarea intrгrii: %s @ %s
+Deleted authorization entry: %s|S-a єters autorizarea intrгrii: %s
+Couldn't delete authorization entry because not found: %s|Nu se poate єterge au autorizarea de intrare: %s pentru cг nu a fost gгsitг.
+IP authorization list|Lista de IP-uri autorizate
+IP authorization list is empty.|Lista de IP-uri autorizate este goalг.
+Add IP authorization entry|Adгugare intrare autorizare IP
+Delete authorization entry|Єtergere autorizare intrare
+ip|ip
+%s with IP %s and class %d authorized.|%s cu IP %s єi clasa %d autorizat.
+%s with IP %s and class %d failed authorization and disconnected.|%s cu IP %s єi clasa %d a eєuat la autorizare єi a fost deconectat.
+Category: %s|Categoria: %s
+Set custom nick for yourself|Оюi setezi nick predefinit
+This nick is registered or in use and therefore can't be used as custom nick: %s|Acest nick: %s este оnregistrat sau este оn listг єi nu poate fi folosit ca єi nick predefinit.
+Set your welcome message|Seteazг-юi mesajul de оntвmpinare
+Division by zero is forbidden.|Оmpгrюirea la zero este interzisг.
+Show your welcome messages|Aratг mesajul tгu de оntвmpinare
+Welcome message list|Lista cu mesaje de оntвmpinare
+Delete user and his welcome messages|Єterge utilizatorul єi mesajul sгu de оntвmpinare
+Nick|Nick
+Login message|Mesaj de intrare
+Logout message|Mesaj de ieєire
+Welcome message list is empty.|Lista cu mesaje de оntвmpinare este goalг.
+Welcome messages were deleted for user: %s|Mesajul de оntвmpinare pentru utilizatorul: %s a fost єters
+Couldn't delete user from welcome message list because not found: %s|Nu se poate єterge utilizatorul: %s din lista de mesaje de оntвmpinare, pentru cг nu a fost gгsit.
+Your login message set: %s|Mesajul tгu de intrare setat: %s
+%s with class %d changed his login message: %s|%s cu clasa %d a schimbat mesajul sгu de intrare: %s
+Your logout message set: %s|Mesajul tгu de ieєire setat: %s
+%s with class %d changed his logout message: %s|%s cu clasa %d a schimbat mesajul sгu de ieєire: %s
+You don't have any welcome messages.|Tu nu ai mesaj de оntвmpinare.
+Your login message: %s|Mesajul tгu de intrare: %s
+Add chatroom|Adaugг camerг de chat
+Chatroom list|Lista cu camere de chat
+Delete chatroom|Єtergere camerг de chat
+description|descriere
+minclass|clasa minimг
+maxclass|clasa maximг
+Modified chatroom: %s|Modificare camerг de chat: %s
+Added chatroom: %s|Adгugare camerг de chat: %s
+Deleted chatroom: %s|Camerг de chat єtearsг: %s
+Couldn't delete chatroom because not found: %s|Nu se poate єterge camera de chat: %s pentru cг nu a fost gгsitг.
+Chatroom|Camerг de chat
+Description|Descriere
+Chatroom list is empty.|Lista camerelor de chat este goalг.
+Not found in country code statistics table: %s|Nu s-a gгsit: %s оn tabelul statistic al codurilor de юarг.
+Custom nick %s is now owned by real user and therefore has been reset for user: %s|Nick-ul predefinit %s este acum preluat de utilizatorul real єi a fost resetat de utilizatorul: %s
+%s is registered with class %d.|%s este оnregistrat cu clasa %d
+Query executed but didn't return any results.|Cгutarea executatг nu a dat rezultate.
+Published: %s|Publicat: %s
+Add search filter exception entry|Adгugare excepюie de la filtrul de cгutare
+Delete search filter exception entry|Єtergere excepюie de la filtrul de cгutare
+Search filter exception list|Lista cu excepюii de la filtrul de cгutare
+Couldn't add search filter exception entry because already exists: %s|Nu se poate adгuga excepюia de la filtrul de cгutare: %s pentru cг deja existг
+Added search filter exception entry: %s|Adгugare intrare excepюie la filtrul de cгutare: %s
+Deleted search filter exception entry: %s|Єtergere intrare excepюie la filtrul de cгutare: %s
+Couldn't delete search filter exception entry because not found: %s|Nu se poate єterge intrarea excepюiei la filtrul de cгutare pentru cг intrarea: %s nu a fost gгsitг
+Search filter exception list is empty.|Lista cu excepюii la filtrul de cгutare, este goalг.
+file|fiєiere
+Read hub logs|Citeєte log-urile hubului
+Known files are: %s|Fiєierul cunoscut este: %s
+Log file is empty or does not exist.|Fila log este goalг sau inexistentг.
+Add command notification exception|Adгugare excepюie de la notificгrile comenzilor
+Delete command notification exception|Єtergere excepюie de la notificгrile comenzilor
+Command notification exception list|Lista excepюiilor de la notificгrile comenzilor
+Added command notification exception entry: %s|Adгugare intrare excepюie la notificarea comenzilor: %s
+Couldn't add command notification exception entry because already exists: %s|Nu poюi adгuga intrare excepюie la notificarea comenzilor: %s pentru cг ea deja existг.
+Deleted command notification exception entry: %s|S-a єters intrarea excepюiei la notificarea comenzilor: %s
+Couldn't delete command notification exception entry because not found: %s|Nu se poate єterge intrarea excepюiei la notificarea comenzilor: %s pentru cг nu s-a gгsit.
+Command notification exception list is empty.|Lista excepюiilor de la notificarea comenzilor, este goalг.
+Couldn't add chatroom because nick is already in use: %s|Nu poюi adгuga camera de chat: %s pentru cг nick-ul este deja folosit.
+Query results|Rezultatul cгutгrii
+Connections from your IP aren't allowed for another %d seconds.|Conectarea de pe IP-ul tгu, nu este permisг pentru оncг %d secunde.
+Executed shell command didn't return any status code: %s|Comanda cochilie executatг, nu a returnat codul status: %s
+Returned status code: %s|Returnarea codului status: %s
+Added by: %s|Adгugat de: %s
+publisher|publicist
+Release list is empty.|Lista cu eliberгri este goalг.
+Last %d releases|Ultimele %d lansгri
+No releases by requested publisher were found: %s|Nu s-au gгsit lansгri de la publicistul: %s de care vг interesaюi.
+Last %d releases published by %s|Ultimele %d lansгri publicate de %s
+No releases by requested category were found: %s|Nu s-au gгsit lansгri din categoria: %s de care vг intereseazг.
+Last %d releases by category %s|Ultimele %d lansгri din categoria %s
+No releases by requested search string were found: %s|Nu s-au gгsit lansгri din єirul: %s ce vг intereseazг.
+time|timp
+Known search types are: %s|Tipurile de cгutare cunoscute sunt: %s
+Configuration variable %s can't be empty.|Configurarea variabilei %s nu poate fi un spaюiu gol.
+Deleted from share rank list: %s|Єters din lista Celor mai... activi shareri: %s
+Not found in share rank list: %s|Nu s-a gгsit оn lista Celor mai... shareri: %s
+Your share rank|Cвt de sharer ai fost
+Top %d share rankers|Top %d Cei mai... shareri
+You have to share %s and reconnect to get started.|Tu trebuie sг sharezi %s єi sг te reconectezi pentru a оncepe.
+Share rank list is empty.|Lista Celor mai... shareri, este goalг.
+Your share rank is: %s|Gradul tгu Cel mai... sharer, este: %s
+Custom nick can't be longer than %d characters.|Nick-ul predefinit nu poate fi mai lung de %d caractere.
+Delete custom nick|Єtergere nick predefinit
+Deleted user from custom nick list: %s|S-a єters din lista de nick-uri predefinite: %s
+Couldn't delete user from custom nick list because not found: %s|Nu poюi єterge userul %s din lista de nick-uri predefinite, pentru cг nu e de gгsit.
+Selected type requires extra parameters. Please refer to manual for more information.|Tipul selectat necesitг extra parametri. Rog sг cauюi instrucюiuni pentru mai multe informaюii.
+Size of registered users table: %d [ %s: %d @ %s ]|Mгrimea tabelului cu useri оnregistraюi: %d [ %s: %d @ %s ]
+Deleted %d accounts with class %d|S-au єters %d conturi cu clasa %d
+%s with class %d deleted %d accounts with class %d that has been inactive for %d days.|%s cu clasa %d a єters %d aconturi cu clasa %d care au fost inactive pentru %d zile.
+Add command permission|Adгugare permisiune comenzi
+Delete command permission|Єtergere permisiune comenzi
+Command permission list|Lista cu permisiuni pentru comenzi
+Modified command permission with class %d: %s|Modificare permisiune comenzi cu clasa %d: %s
+Added command permission with class %d: %s|Adгugare permisiune comenzi de clasa %d lui: %s
+Deleted command permission: %s|Єtergere permisiune comenzi: %s
+Couldn't delete command permission because not found: %s|Nu se poate єterge permisiune comenzi %s pentru cг nu s-a gгsit.
+Command permission list is empty.|Lista de permisiune comenzi, este goalг.
+Total search rank points: %d|Totalul punctajului gradelor: %d
+Please use following commands to finish update process|Te rog sг foloseєti urmгtoarele comenzi pentru a finaliza procesul de оnnoire a datelor
+Moving file: %s|Se mutг filele: %s
+Please visit %s to download the script manually.|Rog sг vizitezi %s pentru a descгrca scriptul manual.
+Couldn't add forbidden IP address because already exists: %s|Nu poюi adгuga interdicюie pe IP %s pentru cг existг deja.
+Added forbidden IP address: %s|Adгugare interdicюie pe IP: %s
+Deleted forbidden IP address: %s|Єtergere interdicюie IP: %s
+Couldn't delete forbidden IP address because not found: %s|Nu se poate єterge interdicюia pe IP %s pentru cг nu s-a gгsit.
+Forbidden IP address list|Lista cu interdicюii pe IP
+Forbidden IP address list is empty.|Lista cu interdicюii pe IP este goalг.
+%s with IP %s and class %d allowed due to forbidden IP address exception: %s|%s cu IP %s єi clasa %d are permisiunea de a pune excepюie la interdicюia pe IP: %s
+Couldn't delete category because not found: %s|Nu se poate єterge categoria %s pentru cг nu a fost gгsitг.
+%s redirected due to spam.|% a fost redirectat pentru cг a fгcut spam.
+%s redirected due to bad search request.|%s a fost redirectat pentru cг a cгutat lucruri rele.
+You can download me from: %s|Poюi descгrca de la mine din: %s
+%s is registered with class %d and has been automatically unregistered and deleted from other tables.|%s este оnregistrat cu clasa %d єi i-a fost automat єtearsг оnregistrarea din alte tabele.
+PiB|PiB
+TiB|TiB
+GiB|GiB
+MiB|MiB
+KiB|KiB
+B|B
+EiB|EiB
+Get users real nick|Aflг nick-ul real al utilizatorului
+Requested nick wasn't found in custom nick list.|Nu a fost gгsit nick-ul cгutat, оn lista de nick-uri predefinite.
+Requested nick belongs to a user who is %s: %s|Nick-ul cerut aparюine utilizatorului care este: %s: %s
+offline|offline
+online|online
+Clean up ranks|Curгюare Cei mai...
+limit|limitг
+%s with class %d deleted %d chat ranks lower than %d.|%s cu clasa %d a єters %d Cei mai... activi pe chat cu activitate mai slabг de %d.
+%s with class %d deleted %d share ranks lower than %s.|%s cu clasa %d a єters %d Cei mai... activi shareri cu cantitгюi mai mici de %s
+%s with class %d deleted %d operator ranks lower than %d.|%s cu clasa %d a єters %d din Cei mai... activi operatori, activitгюile mai scгzute decвt %d
+Size of chat ranks table: %d [ %s: %d @ %s ]|Mгrimea tabelei Cei mai... activi pe chat: %d [ %s: %d @ %s ]
+Size of share ranks table: %d [ %s: %d @ %s ]|Mгrimea tabelei Cei mai... activi shareri: %d [ %s: %d @ %s ]
+Size of operator ranks table: %d [ %s: %d @ %s ]|Mгrimea tabelei Cei mai... activi operatori: %d [ %s: %d @ %s ]
+content|conюinut
+destination|destinaюie
+interval|interval
+Add reminder|Adгugare reminder
+Delete reminder|Єtergere reminder
+Reminder list|Lista cu remindere
+Reminder list is empty.|Lista cu remindere, este goalг.
+Known destinanions are: %s|Destinaюia cunoscutг este: %s
+Known interval is: %s|Intervalul cunoscut este: %s
+Modified reminder: %s|Modificare reminder: %s
+Added reminder: %s|Adгugare reminder: %s
+Deleted reminder: %s|Єtergere reminder: %s
+Reminder not found: %s|Nu s-a gгsit reminder: %s
+Identifier: %s|Identificator: %s
+Content: %s|Conюinut: %s
+Interval: %d of %d|Interval: %d din %d
+Destination: %s|Destinaюia: %s
+Raw command|Comandг raw
+PM|PM
+MC|MC
+reply|rгspuns
+Add chat responder|Adгugare responder de chat
+Delete chat responder|Єtergere responder de chat
+Main chat responder list|Lista cu respondere de main chat
+Main chat responder list is empty.|Lista cu respondere de main chat este goalг.
+%s with class %d deleted %d operator chat history messages.|%s cu clasa %d a єters %d istoric al mesajelor chatului operatorilor.
+Search in user log|Cгutare оn log-ul utilizatorilor
+Added chat responder: %s|Adгugare responder de chat: %s
+Deleted chat responder with ID: %d|S-a єters responderul de chat cu ID: %d
+Couldn't delete chat responder because ID not found: %d|Nu se poate єterge responderul de chat cu ID %d pentru cг nu a fost gгsit.
+Responder|Responder
+Reply|Rгspuns
+Add chat responder exception|Adгugare excepюie de la responderul de chat
+Delete chat responder exception|Єtergere excepюie de la responderul de chat
+Chat responder exception list|Lista cu excepюii la responderele de chat
+Chat responder exception list is empty.|Lista cu excepюii la responderele de chat, este goalг.
+Couldn't add chat responder exception because already exists: %s|Nu poюi adгuga excepюie la responderul de chat %s pentru cг existг deja.
+Added chat responder exception: %s|Adгugare excepюie la responder de chat: %s
+Deleted chat responder exception: %s|Єtergere excepюie la responder de chat: %s
+Couldn't delete chat responder exception because not found: %s|Nu s-a putut єterge excepюia la responder de chat %s pentru cг nu s-a gгsit.
+command|comanda
+Customize script command|Personalizare script comenzi
+Customized script command: %s => %s|Personalizarea comenzii de script: %s => %s
+Unknown script command: %s|Comandг de script necunoscutг: %s
+Requested nick is real.|Nick-ul cerut este cel real.
+%s with class %d customized script command: %s => %s|%s cu clasa %d a personalizat comanda de script: %s => %s
+Reset all custom commands|Resetarea tuturor comenzilor personalizate
+%d custom commands were reset.|%s comenzi personalizate au fost resetate.
+%s tables are now deleted and script is locked.|%s tabele sunt acum єterse єi scriptul оncuiat.
+Please unload the script and remove it from scripts directory.|Rog sг dai unload scriptului єi sг-l оndepгrtezi din folderul de scripte.
+Good luck.|Succes.
+Please unload the script to finish.|Rog sг dai unload scriptului pentru a finaliza.
+%s with IP %s and class %d sent message to %s: %s|%s cu IP %s єi clasa %d a trimis mesaj cгtre %s: %s
+Script uptime: %s|Timpul cвnd a pornit scriptul: %s
+month|lunг
+months|luni
+day|zi
+hour|orг
+hours|ore
+Top %d used words|Top %d cuvinte folosite
+Deleted from word rank list: %s|S-a єters din lista Cele mai... utilizate cuvinte: %s
+Not found in word rank list: %s|Nu s-a gгsit in lista de Cele mai... utilizate cuvinte: %s
+%s with class %d deleted %d word ranks lower than %d.|%s cu clasa %d a єters %d Cele mai... utilizate cuvinte, pe cele ce au fost utilizate mai puюin de %d
+Size of word ranks table: %d [ %s: %d @ %s ]|Mгrimea tabelei Cele mai... utilizate cuvinte: %d [ %s: %d @ %s ]
+Total word rank points: %d|Total punctaj al Celor mai... utilizate cuvinte: %d
+Word rank list is empty.|Lista Celor mai... utilizate cuvinte, este goalг.
+%s with class %d registered new user with class %d: %s|%s cu clasa %d a оnregistrat un nou utilizator cu clasa %d: %s
+%s with class %d deleted registered user with class %d: %s|%s cu clasa %d a єters utilizatorul оnregistrat cu clasa %d: %s
+%s with class %d changed user class from %d to %d: %s|%s cu clasa %d a executat utilizatorului modificare de clasг din %d оn %d: %s
+%s with IP %s and class %d allowed due to fake share exception: %s|%s cu IP %s єi clasa %d are permisiunea de a pune excepюie de share fals: %s
+%s with IP %s and class %d allowed due to clone exception: %s|%s cu IP %s єi clasa %d are permisiunea de a pune excepюie la detectarea clonelor: %s
+%s with IP %s and class %d allowed due to same IP exception: %s|%s cu IP %s єi clasa %d are permisiunea de a pune excepюie la detectarea intrгrilor multiple pe acelaєi IP: %s
+seconds|secunde
+Add news item|Adгugare articol єtiri
+Delete news items|Єtergere articol єtiri
+Read hub news|Citeєte єtirile hubului
+Added news item: %s|Articol єtire %s adгugat.
+Hub news list is empty.|Lista cu єtirile hubului este goalг.
+Deleted %d news items.|Єtergere %d articol єtire.
+Couldn't delete news items because not found: %s|Nu se poate єterge articolul єtire %s pentru cг nu a fost gгsit.
+Last %d news items|Ultimul articol єtire: %d
+By %s on %s: %s|De %s la %s: %s
+There are no main chat history messages written by you.|Оn acest istoric de main chat, nu sunt mesaje scrise de tine.
+Last %d main chat messages written by you|Ultimele %d mesaje de main chat scrise de tine
+Your main chat history|Istoricul tгu de main chat
+Script memory usage: %s|Memorie script utilizatг: %s
+Failed to load translation file %s: %s|Procesul de оncгrcare a eєuat pentru fila de traducere %s: %s
+Force custom nick for user|Forюare personalizare nick pentru utilizator
+Either the feature is disabled or user that you're trying to set welcome message for doesn't have access to it.|Caracteristica pe care vrei sг o utilizezi pentru a seta mesaj de оntвmpinare utilizator, este dezactivatг sau nu ai acces la ea.
+name|nume
+category|categorie
+tth|tth
+Add new release|Adaugг noi realizгri
+Delete releases|Єterge lansгri
+List of available releases|Lista de lansгri disponibile
+Find release by name or category|Gгseєte realizгri dupг nume sau categorie
+Hub is now going for a very quick restart. Please be patient.|Hubul va avea un foarte scurt restart. Оncearcг un reconnect peste 20, 30 secunde.
+Hub is now going to shut down. Please be patient.|Hubul acum se оnchide. Te rog sг ai rгbdare.
+equation|ecuaюie
+Calculate an equation|Calculeazг o ecuaюie
+Both numbers must be either pi or numbers.|Ambele numere trebuie sг fie pi sau numere.
+Known operations are: %s|Operaюiunea cunoscutг este: %s
+Your logout message: %s|Mesajul tгu de ieєire este: %s
+Force welcome message for user|Forюeazг mesaj de оntвmpinare pentru utilizator
+Login message set for %s: %s|Mesaj de intrare setat pentru %s: %s
+Change nick of an registered user|Schimbг nick-ul utilizatorului оnregistrat
+User is not registered: %s|Userul %s nu este оnregistrat
+You are now going to be disconnected from the hub in order for your new nick to apply: %s|Acum va trebui sг dai un reconnect la hub, pentru ca noul nick %s sг poatг fi aplicat.
+Renamed account %s: %s|Redenumirea contului %s: %s
+%s with class %d renamed account %s: %s|%s cu clasa %d redenumeєte contul %s: %s
+Your login message deleted.|Mesajul tгu de intrare a fost єters.
+Your logout message deleted.|Mesajul tгu de ieєire a fost єters.
+%s with class %d deleted his login message.|%s cu clasa %d єi-a єters mesajul de intrare.
+%s with class %d deleted his logout message.|%s cu clasa %d єi-a єters mesajul de ieєire.
+Logout message set for %s: %s|Mesaj de ieєire setat pentru %s: %s
+%s with class %d changed login message for %s: %s|%s cu clasa %d schimbг mesajul de intrare pentru %s: %s
+%s with class %d changed logout message for %s: %s|%s cu clasa %d schimbг mesajul de ieєire pentru %s: %s
+Login message deleted for user: %s|Mesaj de intrare pentru utilizatorul %s єters.
+Logout message deleted for user: %s|Mesaj de ieєire pentru utilizatorul %s єters.
+%s with class %d deleted login message for user: %s|%s cu clasa %d a єters mesajul de intrare pentru utilizatorul: %s
+%s with class %d deleted logout message for user: %s|%s cu clasa %d a єters mesajul de ieєire pentru utilizatorul: %s
+%s with class %d deleted welcome messages for user: %s|%s cu clasa %d a єters mesajul de оntвmpinare pentru utilizatorul: %s
+minute|minut
+Last %d releases by search string %s|Ultimele %d lansгri cгutate dupг єirul %s
+Modified release: %s|Modificarea realizгrii: %s
+Added release: %s|Adгugare realizare: %s
+Deleted release: %s|Єtergere realizare: %s
+Couldn't delete release because not found: %s|Nu se poate єterge realizarea %s pentru cг nu s-a gгsit.
+Reminder preview|Previzualizare reminder
+Preview of %s reminder: %s|Previzualizarea %s a reminderului: %s
+Specified nick is already in use.|Nick-ul specificat este deja folosit.
+Live user location statistics by country|Statistica actualг a locaюiei utilizatorilor dupг югri
+All time user location statistics|Statistica locaюiei utilizatorilor de pe оntreaga duratг de funcюionare a hubului
+This feature requires %s or later installed on your system.|Aceastг funcюie cere %s ori o instalare ulterioarг оn sistemul tгu.
+Total count since %s: %d|Totalul conturilor pвnг la %s: %d
+Unknown country|Юarг necunoscutг
+No users in the hub.|Nici un utilizator pe hub.
+User location statistics table is empty.|Tabelul statistic al locaюiei utilizatorilor, este goalг.
+Total count: %d|Total conturi: %d
+Deleted all rows: %s|Єtergere toate rвndurile: %s
+%s with class %d deleted all user location entries.|%s cu clasa %d a єters toate intrгrile оn tabelul locaюiei utilizatorilor.
+address|adresг
+owner|proprietar
+Add friendly hub|Adгugare hub prieten
+Delete friendly hub|Єtergere hub prieten
+Show friendly hubs|Aratг huburile prietene
+Added friendly hub: %s|Hub prieten adгugat: %s
+Modified friendly hub: %s|Hub prieten modificat: %s
+Deleted friendly hub: %s|Hub prieten єters: %s
+Friendly hub not found: %s|Hub prieten de negгsit: %s
+Friendly hublist|Lista de huburi prietene
+Friendly hublist is empty.|Lista de huburi prietene, este goalг.
+Executed shell command didn't return any output.|Executarea comenzii cochilie a revenit fгrг nici o ieєire.
+Returned output|Revenire fгrг ieєire
+%s renamed %s to: %s|%s redenumit %s оn: %s
+%s plugin version: %s|%s versiune de plugin: %s
+second|secundг
+You are now known as: %s|Eєti acum cunoscut ca: %s
+You renamed %s to: %s|Ai redenumit %s оn: %s
+Spam exception from %s with IP %s and class %d in MC: %s|Excepюie de la spam pentru %s cu IP %s єi clasa %d оn MC: %s
+Spam exception from %s with IP %s and class %d in PM: %s|Excepюie de la spam pentru %s cu IP %s єi clasa %d оn PM: %s
+Spam exception from %s with IP %s and class %d in offline message: %s|Excepюie de la spam pentru %s cu IP %s єi clasa %d оn mesaj offline: %s
+Spam exception from %s with IP %s and class %d in report: %s|Excepюie de la spam pentru %s cu IP %s єi clasa %d оn report: %s
+Spam notification from %s with IP %s and class %d in MC: %s|Notificare de spam de la %s cu IP %s єi clasa %d оn MC: %s
+Spam notification from %s with IP %s and class %d in PM: %s|Notificare de spam de la %s cu IP %s єi clasa %d оn PM: %s
+Spam notification from %s with IP %s and class %d in offline message: %s|Notificare de spam de la %s cu IP %s єi clasa %d оn mesaj offline: %s
+Spam notification from %s with IP %s and class %d in report: %s|Notificare de spam de la %s cu IP %s єi clasa %d оn report: %s
+Spam from %s with IP %s and class %d in MC: %s|Spam de la %s cu IP %s єi clasa %d оn MC: %s
+Spam from %s with IP %s and class %d in PM: %s|Spam de la %s cu IP %s єi clasa %d оn PM: %s
+Spam from %s with IP %s and class %d in offline message: %s|Spam de la %s cu IP %s єi clasa %d оn mesaj offline: %s
+Spam from %s with IP %s and class %d in report: %s|Spam de la %s cu IP %s єi clasa %d оn report: %s
+Modified antispam entry with action %d and priority %d to scan in MC: %s|Modificare intrare antispam cu accюiunea %d єi prioritate %d pentru scanare оn MC: %s
+Modified antispam entry with action %d and priority %d to scan in PM: %s|Modificare intrare antispam cu accюiunea %d єi prioritate %d pentru scanare оn PM: %s
+Modified antispam entry with action %d and priority %d to scan in MC and PM: %s|Modificare intrare antispam cu accюiunea %d єi prioritate %d pentru scanare оn MC єi PM: %s
+Added antispam entry with action %d and priority %d to scan in MC: %s|Adгugare intrare antispam cu accюiunea %d єi prioritate %d pentru scanare оn MC: %s
+Added antispam entry with action %d and priority %d to scan in PM: %s|Adгugare intrare antispam cu accюiunea %d єi prioritate %d pentru scanare оn PM: %s
+Added antispam entry with action %d and priority %d to scan in MC and PM: %s|Adгugare intrare antispam cu accюiunea %d єi prioritate %d pentru scanare оn MC єi PM: %s
+Search request exception from %s with IP %s and class %d as any file: %s|Excepюie pe cerere de cгutare de la %s cu IP %s єi clasa %d pe orice fel de fiєier: %s
+Search request exception from %s with IP %s and class %d as audio file: %s|Excepюie pe cerere de cгutare de la %s cu IP %s єi clasa %d pe fiєier audio: %s
+Search request exception from %s with IP %s and class %d as compressed file: %s|Excepюie pe cerere de cгutare de la %s cu IP %s єi clasa %d pe fiєier compresat: %s
+Search request exception from %s with IP %s and class %d as document: %s|Excepюie pe cerere de cгutare de la %s cu IP %s єi clasa %d pe fiєier document: %s
+Search request exception from %s with IP %s and class %d as executable: %s|Excepюie pe cerere de cгutare de la %s cu IP %s єi clasa %d pe fiєier executabil: %s
+Search request exception from %s with IP %s and class %d as picture: %s|Excepюie pe cerere de cгutare de la %s cu IP %s єi clasa %d pe fiєier foto: %s
+Search request exception from %s with IP %s and class %d as video: %s|Excepюie pe cerere de cгutare de la %s cu IP %s єi clasa %d pe fiєier video: %s
+Search request exception from %s with IP %s and class %d as folder: %s|Excepюie pe cerere de cгutare de la %s cu IP %s єi clasa %d pe dosar: %s
+Search request exception from %s with IP %s and class %d as TTH: %s|Excepюie pe cerere de cгutare de la %s cu IP %s єi clasa %d pe TTH: %s
+Search request notification from %s with IP %s and class %d as any file: %s|Notificare cerere de cгutare de la %s cu IP %s єi clasa %d pentru orice fiєier: %s
+Search request notification from %s with IP %s and class %d as audio file: %s|Notificare cerere de cгutare de la %s cu IP %s єi clasa %d pentru fiєier audio: %s
+Search request notification from %s with IP %s and class %d as compressed file: %s|Notificare cerere de cгutare de la %s cu IP %s єi clasa %d pentru fiєier compresat: %s
+Search request notification from %s with IP %s and class %d as document: %s|Notificare cerere de cгutare de la %s cu IP %s єi clasa %d pentru fiєier document: %s
+Search request notification from %s with IP %s and class %d as executable: %s|Notificare cerere de cгutare de la %s cu IP %s єi clasa %d pentru fiєier executabil: %s
+Search request notification from %s with IP %s and class %d as picture: %s|Notificare cerere de cгutare de la %s cu IP %s єi clasa %d pentru fiєier foto: %s
+Search request notification from %s with IP %s and class %d as video: %s|Notificare cerere de cгutare de la %s cu IP %s єi clasa %d pentru fiєier video: %s
+Search request notification from %s with IP %s and class %d as folder: %s|Notificare cerere de cгutare de la %s cu IP %s єi clasa %d pentru dosar: %s
+Search request notification from %s with IP %s and class %d as TTH: %s|Notificare cerere de cгutare de la %s cu IP %s єi clasa %d pentru TTH: %s
+Bad search request from %s with IP %s and class %d as any file: %s|Cerere cгutare rea de la %s cu IP %s єi clasa %d pe orice fiєier: %s
+Bad search request from %s with IP %s and class %d as audio file: %s|Cerere cгutare rea de la %s cu IP %s єi clasa %d pe fiєier audio: %s
+Bad search request from %s with IP %s and class %d as compressed file: %s|Cerere cгutare rea de la %s cu IP %s єi clasa %d pe fiєier compresat: %s
+Bad search request from %s with IP %s and class %d as document: %s|Cerere cгutare rea de la %s cu IP %s єi clasa %d pe fiєier document: %s
+Bad search request from %s with IP %s and class %d as executable: %s|Cerere cгutare rea de la %s cu IP %s єi clasa %d pe fiєier executabil: %s
+Bad search request from %s with IP %s and class %d as picture: %s|Cerere cгutare rea de la %s cu IP %s єi clasa %d pe fiєier foto: %s
+Bad search request from %s with IP %s and class %d as video: %s|Cerere cгutare rea de la %s cu IP %s єi clasa %d pe fiєier video: %s
+Bad search request from %s with IP %s and class %d as folder: %s|Cerere cгutare rea de la %s cu IP %s єi clasa %d pe dosar: %s
+Bad search request from %s with IP %s and class %d as TTH: %s|Cerere cгutare rea de la %s cu IP %s єi clasa %d pe TTH: %s
+Modified search filter with action %d and priority %d as any file: %s|Modificare filtru de cгutare cu accюiunea %d єi prioritate %d pentru orice fiєier: %s
+Modified search filter with action %d and priority %d as audio file: %s|Modificare filtru de cгutare cu accюiunea %d єi prioritate %d pentru fiєier audio: %s
+Modified search filter with action %d and priority %d as compressed file: %s|Modificare filtru de cгutare cu accюiunea %d єi prioritate %d pentru fiєier compresat: %s
+Modified search filter with action %d and priority %d as document: %s|Modificare filtru de cгutare cu accюiunea %d єi prioritate %d pentru fiєier document: %s
+Modified search filter with action %d and priority %d as executable: %s|Modificare filtru de cгutare cu accюiunea %d єi prioritate %d pentru fiєier executabil: %s
+Modified search filter with action %d and priority %d as picture: %s|Modificare filtru de cгutare cu accюiunea %d єi prioritate %d pentru fiєier foto: %s
+Modified search filter with action %d and priority %d as video: %s|Modificare filtru de cгutare cu accюiunea %d єi prioritate %d pentru fiєier video: %s
+Modified search filter with action %d and priority %d as folder: %s|Modificare filtru de cгutare cu accюiunea %d єi prioritate %d pentru dosar: %s
+Modified search filter with action %d and priority %d as TTH: %s|Modificare filtru de cгutare cu accюiunea %d єi prioritate %d pentru TTH: %s
+Added search filter with action %d and priority %d as any file: %s|Adгugat filtru pe cгutare cu accюiunea %d єi prioritate %d pentru orice fiєier: %s
+Added search filter with action %d and priority %d as audio file: %s|Adгugat filtru pe cгutare cu accюiunea %d єi prioritate %d pentru fiєier audio: %s
+Added search filter with action %d and priority %d as compressed file: %s|Adгugat filtru pe cгutare cu accюiunea %d єi prioritate %d pentru fiєier compresat: %s
+Added search filter with action %d and priority %d as document: %s|Adгugat filtru pe cгutare cu accюiunea %d єi prioritate %d pentru fiєier document: %s
+Added search filter with action %d and priority %d as executable: %s|Adгugat filtru pe cгutare cu accюiunea %d єi prioritate %d pentru fiєier executabil: %s
+Added search filter with action %d and priority %d as picture: %s|Adгugat filtru pe cгutare cu accюiunea %d єi prioritate %d pentru fiєier foto: %s
+Added search filter with action %d and priority %d as video: %s|Adгugat filtru pe cгutare cu accюiunea %d єi prioritate %d pentru fiєier video: %s
+Added search filter with action %d and priority %d as folder: %s|Adгugat filtru pe cгutare cu accюiunea %d єi prioritate %d pentru dosar: %s
+Added search filter with action %d and priority %d as TTH: %s|Adгugat filtru pe cгutare cu accюiunea %d єi prioritate %d pentru TTH: %s
+%s with class %d deleted %d releases older than %d days.|% cu clasa %d a єters %d lansгri mai vechi de %d zile.
+Size of release table: %d [ %s: %d @ %s ]|Mгrimea tabelei de realizгri: %d [ %s: %d @ %s ]
+LRE|LRE
+Code accepted.|Cod acceptat.
+Protection list|Lista de protejгri
+Added protection entry: %s|Adгugare intrare protejat: %s
+Deleted protection entry: %s|Єtergere intrare protejat: %s
+Protection entry already exists: %s|Intrare protejat %s, existг deja.
+Protection entry not found: %s|Intrare protejat %s nu a fost gгsitг.
+Protection list is empty.|Lista de protejгri, este goalг.
+Missing %s in configuration variable.|Lipseєte %s оn configurarea variabilei.
+Chatroom: %s|Camerг de chat: %s
+You've left the chatroom.|Ai pгrгsit camera de chat.
+User left the chatroom: %s|Utilizatorul %s a pгrгsit camera de chat.
+User entered the chatroom: %s|Utilizatorul %s a intrat оn camera de chat.
+You've entered %s chatroom.|%s ai intrat оn camera de chat.
+You're not member of this chatroom.|Nu eєti membru al acestei camere de chat.
+You don't have access to this chatroom.|Nu ai acces la aceastг camerг de chat.
+Chatroom member list|Lista membrilor camerei de chat
+Chatroom is empty.|Camera de chat este goalг.
+You're already member of this chatroom.|Eєti deja membru al acestei camere de chat.
+Chatroom user commands|Comenzi pentru utilizatorul camerei de chat
+Unknown chatroom command. Use %s for help.|Comandг necunoscutг pentru camera de chat. Foloseєte %s pentru ajutor.
+Enter the chatroom|Intrare camerг de chat
+Leave the chatroom|Pгrгsire camerг de chat
+Deleted %d rows from country code statistics table: %s|S-au єters %d rвnduri din tabelul statistic al codurilor de юarг: %s
+Set chat mode|Setare mod de chat
+Known chat modes are: %s|Modul de chat cunoscut este: %s
+mode|mod
+Changing chat mode for %s: %s => %s|Schimbare mod de chat pentru %s: %s => %s
+Not found in chat mode list: %s|Nu a fost gгsit %s оn lista cu moduri de chat.
+Chat mode user list|Lista cu moduri de chat a utilizatorilor
+Chat mode user list is empty.|Lista cu moduri de chat a utilizatorilor, este goalг.
+%s user lookup|Utilizator cгutat: %s
+Looking for %s on: %s|Cгutare pentru %s оn: %s
+User %s found in following hubs|Utilizatorul %s a fost gгsit pe urmгtoarele huburi
+User wasn't found in any hubs: %s|Utilizatorul %s n-a fost gгsit pe nici un hub.
+Add IP gag|Adгugare gag pe IP
+Added IP gag: %s|Gag adгugat pe IP: %s
+Modified IP gag: %s|Gag modificat pentru IP: %s
+Deleted IP gag: %s|Єtergere gag pe IP: %s
+IP gag not found: %s|Nu a fost gгsit gag pe IP: %s
+IP gag list|Lista de gag-uri pe IP
+IP gag list is empty.|Lista de gag-uri pe IP, este goalг.
+Delete IP gag|Єtergere gag pe IP
+Main chat is currently disabled for you.|Main chat-ul este dezactivat pentru tine.
+Cleared temporary IP gag list.|Curгюirea listei de gag-uri temporare pe IP.
+Show custom script commands|Aratг scriptul cu comenzi personalizate
+Custom script command list|Lista de comenzi personalizate
+Custom script command list is empty.|Lista de comenzi personalizate, este goalг.
+Script size: %d lines in %s|Mгrimea scriptului: %d avвnd %s linii
+Added %s to IP gag list, %d users in total.|Adгugare %s la lista de gag-гri pe IP, %d useri оn total.
+Flood detected from IP %s last known as %s with class %d in MC: %s|Flood detectat de pe IP %s ultima datг cunoscut ca %s cu clasa %d оn MC: %s
+Flood detected from IP %s last known as %s with class %d in PM: %s|Flood detectat de pe IP %s ultima datг cunoscut ca %s cu clasa %d оn PM: %s
+Private chat is currently disabled for you.|Chatul privat este momentan dezactivat pentru tine.
+Flood detected from your IP.|Flood detectat de pe IP-ul tгu.
+%d users with IP %s dropped due to flood.|Utilizatorii %d cu IP %s au fost deconectaюi pentru cг au fгcut flood.
+No error message specified.|Nu s-a specificat vre-un mesaj de eroare.
+Search filter|Filtru de cгutare
+MyINFO check|Verificare MyINFO
+Authorization|Autorizare
+Ranks|Cel mai...
+Welcome messages|Mesaj de оntвmpinare
+Chatrooms|Camere de chat
+Reminders|Remindere
+Hub news|Noutгюile hubului
+Chat responder|Responder de chat
+Releases|Lansгri
+Offline messenger|Messenger offline
+Chat history|Istoric de chat
+Commands|Comenzi
+Custom nicks|Nick-uri personalizate
+Registered users|Utilizatori оnregistraюi
+Hublist|Hublist
+Chat|Chat
+IP gag|Gag pe IP
+User logger|Logger utilizator
+Other|Altul
+Configuration|Configurare
+Clear main chat|Curгюare main chat
+Chat cleanup performed by %s|Curгюare chat iniюiatг de %s
+Search in registered users list|Cautг оn lista cu utilizatori оnregistraюi
+Registered users list statistics|Lista cu statistica utilizatorilor оnregistraюi
+Registered users list results for %s|Rezultat din lista de utilizatori оnregistraюi, pentru %s
+Class %d: %d|Clasa %d: %d
+Registered users list is empty.|Lista cu utilizatori оnregistraюi, este goalг.
+This feature requires following binary installed on your system: %s|Aceastг caracteristicг necesitг urmгtoarele fiєiere binare %s instalate pe sistemul dumneavoastrг
+Configuration directory: %s|Dosarul de configurгri: %s
+%s with IP %s and class %d stated incorrect IP in connect request to %s: %s|%s cu IP %s єi clasa %d a declarat un IP incorect in cererea de conectare la %s: %s
+Top %d search requests|Top %d cereri de cгutare
+Search rank list is empty.|Lista Celor mai... cгutгri, este goalг.
+Deleted from search rank list: %s|S-a єters din lista Celor mai... cгutгri: %s
+Not found in search rank list: %s|Nu s-a gгsit оn lista Celor mai... cгutгri: %s
+%s with class %d deleted %d search ranks lower than %d.|%s cu clasa %d a єters %d Cele mai... cгutгri cele mai puюin cгutate decвt %d
+Size of search ranks table: %d [ %s: %d @ %s ]|Mгrimea tabelei Celor mai... utilizate cгutгri: %d [ %s: %d @ %s ]
+Size of user location statistics table: %d [ %s: %s ]|Mгrimea tabelei statistice a locaюiei utilizatorilor: %d [ %s: %s ]
+Open files limit: %d|Limita de deschidere a filelor: %d
+User information|Informaюiile utilizatorului
+User not in list: %s|Utilizatorul %s nu este оn listг.
+Nick: %s|Nick: %s
+Description: %s|Descriere: %s
+Tag: %s|Tag: %s
+Mode: %s|Mod: %s
+Slots: %s|Sloturi: %s
+Hubs: %s|Huburi: %s
+Limiter: %s KiB/s|Limitare: %s KiB/s
+Connection: %s|Conexiune: %s
+Status: %s|Status: %s
+Email: %s|Email: %s
+Share: %s|Share: %s
+Exact share: %s|Exact share: %s
+Class: %d|Clasa: %d
+IP: %s|IP: %s
+DNS: %s|DNS: %s
+Country: %s|Юara: %s
+Client: %s|ClientDC: %s
+Version: %s|Versiune: %s
+Normal|Normal
+Away|Departe
+Normal away|Normal depгrtat de taste
+Fileserver|Server de fiєiere
+Normal fileserver|Server normal de fiєiere
+Away fileserver|Server de fiєiere оndepгrtat de taste
+Normal away fileserver|Server normal de fiєiere оndepгrtat de taste
+Fireball|Minge de foc
+Normal fireball|Minge de foc normalг
+Away fireball|Minge de foc оndepгrtat de taste
+Normal away fireball|Minge de foc normalг оndepгrtat de taste
+Fileserver fireball|Server de fiєiere minge de foc
+Normal fileserver fireball|Server de fiєiere normal minge de foc
+Away fileserver fireball|Server de fiєiere minge de foc оndepгrtat de taste
+Normal away fileserver fireball|Server de fiєiere normal minge de foc оndepгrtat de taste
+TLS|TLS
+Normal TLS|TLS normal
+Away TLS|TLS оndepгrtat de taste
+Normal away TLS|TLS normal оndepгrtat de taste
+Fileserver TLS|TLS server de fiєiere
+Normal fileserver TLS|TLS normal server de fiєiere
+Away fileserver TLS|TLS server de fiєiere оndepгrtat de taste
+Normal away fileserver TLS|TLS normal server de fiєiere оndepгrtat de taste
+Fireball TLS|TLS minge de foc
+Normal fireball TLS|TLS normal minge de foc
+Away fireball TLS|TLS minge de foc оndepгrtat de taste
+Normal away fireball TLS|TLS normal minge de foc оndepгrtat de taste
+Fileserver fireball TLS|TLS minge de foc server de fiєiere
+Normal fileserver fireball TLS|TLS normal minge de foc server de fiєiere
+Away fileserver fireball TLS|TLS minge de foc server de fiєiere оndepгrtat de taste
+Normal away fileserver fireball TLS|TLS normal minge de foc server de fiєiere оndepгrtat de taste
+Unable to get bot information: %s|Nu eєti abilitat sг iei informaюii despre bot: %s
+Bot information|Informaюiile botului
+Owner script: %s|Script de proprietar: %s
+%s with IP %s and class %d allowed due to forbidden DNS exception: %s|%s cu IP %s are permisiune datoritг excepюiei la interdicюia pe DNS: %s
+In order to use this feature you need to enable DNS lookup. Do it by setting hub configuration variable %s to %d. Please note: Enabling DNS lookup might slow your hub performance down.|Pentru a utiliza aceastг funcюie este nevoie sг activezi cercetarea DNS. Fг-o setвnd configuraюia variabilг a hubului de la %s la %d. Rog sг iei aminte: Activarea cercetгrii DNS poate provoca оncetinirea performanюelor hubului.
+Couldn't add forbidden DNS because already exists: %s|Nu poюi adгuga interdicюie pe DNS %s pentru cг deja existг.
+Added forbidden DNS: %s|Adгugare interdicюie DNS: %s
+Deleted forbidden DNS: %s|Єtergere interdicюie DNS: %s
+Couldn't delete forbidden DNS because not found: %s|Nu poate fi єtearsг interzicerea pe DNS %s pentru cг nu a fost gгsitг.
+Forbidden DNS list|Lista de interdicюii pe DNS
+Forbidden DNS list is empty.|Lista de interdicюii pe DNS, este goalг.
+Powered by %s|Creeat de %s
+Warning: %s|Avertizare: %s
+Open files limit set to %d is smaller than maximum users configuration which is %d. You can correct this by setting %s to %d or higher and restarting the hub.|Limita de deschidere a filelor setatг %d este mai micг decвt maximul de utilizatori configurat care este %d. Poюi corecta setвnd %s оn %d ori mai mult єi apoi restart la hub.
+Additional help|Ajutor suplimentar
+Remove all %s tables and files|Оnlгturг toate %s tabelele єi filele
+No reason specified.|Nici un motiv menюionat.
+You can't kick user whose class is higher or equals your own: %s|Nu poюi da kick unui utilizator a cгrui clasг este mai mare sau egalг cu a ta: %s
+Your topic contains forbidden characters which can't be used for security reason: %s|Topicul tгu conюine caractere interzise %s care nu pot fi folosite din motive de securitate.
+Hub uptime: %s|Timpul de pornire a hubului: %s
+User count: %s|Contul utilizatorului: %s
+Total share: %s|Share total: %s
+%s with IP %s and class %d tries to speak with IP gag in MC: %s|%s cu IP %s єi clasa %d оncearcг sг scrie оn MC: %s оnsг are gag.
+%s with IP %s and class %d tries to speak with IP gag in PM: %s|%s cu IP %s єi clasa %d оncearcг sг scrie оn PM: %s оnsг are gag.
+Private message replaced for user: %s|Mesaj privat оnlocuit pentru utilizatorul: %s
+Command logger|Loggerul comenzilor
+Showing %d entries from command logger|Aratг %d intrгri din logger-ul comenzilor
+Command logger is empty.|Loggerul comenzilor, este gol.
+%s with class %d deleted %d command log entries older than %d days.|%s cu clasa %d єterge %d intrгrile оn logul comenzilor mai vechi de %d zile.
+Size of command log table: %d [ %s: %d @ %s ]|Mгrimea tabelei logului comenzilor: %d [ %s: %d @ %s ]
+password|parola
+Modify IP authorization entry|Modificare intrare autorizare IP
+Couldn't modify authorization entry because not found: %d|Nu se poate modifica intrarea pe autorizare IP, pentru cг nu s-a gгsit: %d
+Uptime: %s|Timp de pornire: %s
+Enable requested feature and try again.|Dezactiveazг caracteristica solicitatг єi оncearcг din nou.
+cc|cc
+Couldn't add forbidden country code because already exists: %s|Nu poюi adгuga interzicere pe cod de юarг pentru cг deja existг: %s
+Added forbidden country code: %s|Adгugare interzicere cod de юarг: %s
+Deleted forbidden country code: %s|Єtergere interzicere cod de юarг: %s
+Couldn't delete forbidden country code because not found: %s|Nu se poate єterge interzicerea pe cod de юarг, pentru cг n-a fost gгsit: %s
+Forbidden country code list|Lista cu interziceri pe cod de юarг
+Forbidden country code list is empty.|Lista cu interziceri pe cod de юarг este goalг.
+%s with IP %s and class %d allowed due to forbidden country code exception: %s|%s cu IP %s єi clasa %d are permisiune datoritг excepюiei la interzicere pe cod de юarг: %s
+I'm staying idle due to confusion.|Sunt inactiv datoritг unei confuzii a clientului DC.
+Added replacer in MC: %s|Replacer adгugat pentru MC: %s
+Deleted chat replacer with ID: %d|Єtergere replacer de chat cu ID: %d
+Couldn't delete chat replacer because ID not found: %d|Nu se poate єterge replacerul de chat pentru cг nu s-a gгsit ID: %d
+Chat replacer list|Lista cu replacere de chat
+Chat replacer list is empty.|Lista cu replacere de chat, este goalг.
+Replace|Schimb
+Couldn't add chat replacer exception because already exists: %s|Nu se poate adгuga excepюie la replacerul de chat, pentru cг deja existг: %s
+Added chat replacer exception: %s|Adгugare excepюie la replacer de chat: %s
+Deleted chat replacer exception: %s|Єtergere excepюie la replacer de chat: %s
+Couldn't delete chat replacer exception because not found: %s|Nu se poate єterge excepюia la replacerul de chat, pentru cг nu s-a gгsit: %s
+Chat replacer exception list|Lista cu excepюii la replacer de chat
+Chat replacer exception list is empty.|Lista cu excepюii la replacer de chat, este goalг.
+replace|schimb
+Add chat replacer|Adгugare replacer de chat
+Delete chat replacer|Єtergere replacer de chat
+Add chat replacer exception|Adгugare excepюie la replacerul de chat
+Delete chat replacer exception|Єtergere excepюie la replacerul de chat
+Chat replacer|Replacer de chat
+You need to send another %d main chat messages in order to use hub registration.|Este necesar sг trimiюi alt %d mesaj оn main chat pentru a te folosi de оnregistrarea pe hub.
+Please wait another %.1f minutes before using hub registration.|Te rog sг aєtepюi оncг %.1f minute оnainte de a utiliza оnregistrarea pe hub.
+In order to use this feature you need to set %s to: %d|Pentru a utiliza aceastг funcюie trebue sг setaюi %s оn: %d
+Please reconnect to gain %d minutes of uptime in order to use hub registration.|Te rog sг te conectezi din nou pentru a cвєtiga %d momente de la pornire pentru a folosi оnregistrarea pe hub.
+Dropping %s with IP %s and class %d due to protocol flood detection: %s|Deconectare %s cu IP %s єi clasa %d pentru detectarea unui flood de protocol: %s
+Protocol flood detected from your client: %s|Flood de protocol detectat de la clientul tгu DC: %s
+Automatic update check detected stable version of %s available, use following command to update: %s|Verificarea automatг a detectat versiunea stabilг a %s disponibilг, pentru оnnoirea datelor utilizaюi urmгtoarea comandг: %s
+menu|meniu
+Dropping user due to clone detection from IP %s with class %d: %s = %s|Deconectare utilizator pentru detectare clonг pe IP %s cu clasa %d: %s = %s
+Configuration variable %s must be a valid IP address.|Variabila de configurare %s trebuie sг fie un IP valid.
+Average share per user: %s|Share mediu estimat pe utilizator: %s
+Don't be stupid.|Nu fi prost.
+reason|motiv
+Add blocked PM entry|Adгugare blocare intrare PM
+Delete blocked PM entry|Єtergere blocare intrare PM
+List of blocked PM entries|Lista blocгrilor de intrari оn PM
+Modified blocked PM entry: %s|Modificare intrare blocare PM: %s
+Added blocked PM entry: %s|Adгugare intrare blocare PM: %s
+Deleted blocked PM entry: %s|Єtergere intrare blocare PM: %s
+Blocked PM list is empty.|Lista de blocгri PM, este goalг.
+Couldn't delete blocked PM entry because not found: %s|Nu se poate єterge intrarea blocare PM %s pentru cг nu s-a gгsit.
+Reason: %s|Motiv: %s
+You're not allowed to send PM to this user because: %s|Nu ai permisiunea de a scrie mesaj privat acestui utilizator, pentru cг: %s
+%s with class %d deleted %d antispam entries with occurrence less than %d.|%s cu clasa %d a єters %d intrare antispam cu apariюie mai rarг de %d
+%s with class %d deleted %d search filter entries with occurrence less than %d.|%s cu clasa %d a єters %d intrare filtru de cгutare cu apariюie mai rarг de %d
+query|necesar
+Execute MySQL query|Execurarea necesarului MySQL
+Execute shell command|Executare comandг cochilie
+Experts only|Doar pentru experюi
+Add hard IP ban entry|Adгugare intrare ban greu pe IP
+Delete hard IP ban entry|Єtergere intrare ban greu pe IP
+List of hard IP ban entries|Lista de intrгri banгri grele pe IP
+Modified hard IP ban entry: %s|Modificare intrare ban greu pe IP: %s
+Added hard IP ban entry: %s|Adгugare intrare ban greu pe IP: %s
+Deleted hard IP ban entry: %s|Єtergere intrare ban greu pe IP: %s
+Hard IP ban list is empty.|Lista de banгri grele pe IP, este goalг.
+Couldn't delete hard IP ban entry because not found: %s|Nu s-a putut єterge intrare ban greu pe IP, pentru cг nu s-a gгsit: %s
+Hard IP ban refused connection from IP %s: %s|Banarea grea pe IP nu permite conectarea de pe IP %s: %s
+Please wait another %d seconds before using hub search engine.|Te rog sг aєtepюi оncг %d secunde оnainte sг utilizezi funcюia de cгutare a hubului.
+Loading %s in memory...|Оncarcг %s оn memorie...
+Finished loading %s in memory.|S-a finalizat оncгrcarea %s оn memorie.
+Unable to locate %s in hub configuration directory.|Imposibil de localizat %s оn dosarul configurгrilor hubului.
+Add right click menu item|Adгugare element pentru meniul de click dreapta
+Delete right click menu item|Єtergere element pentru meniul de click dreapta
+List of right click menu items|Lista de elemente pentru meniul de click dreapta
+Blacklisted connection from IP %s dropped: %s|Conexiune trecutг оn ListaNeagrг cu IP %s respinsг: %s
+To add multiple entries with this command you need to separate every entry by space.|Pentru a adгuga multiple intrгri cu aceastг comandг, trebuie sг separi intrгrile cu cвte un spaюiu.
+Add IP watch entry|Adгugг intrare supraveghere IP
+Delete IP watch entry|Єterge intrare supraveghere IP
+List of IP watch entries|Lista cu intrгri supraveghere IP
+result|rezultat
+Modified IP watch entry: %s|Modificat intrare supraveghere IP: %s
+Added IP watch entry: %s|Intrare supraveghere IP adгugatг: %s
+Known results are: %s|Rezultatul cunoscut este: %s
+Deleted IP watch entry: %s|Intrare supraveghere IP єtearsг: %s
+IP watch list is empty.|Lista cu supravegheri IP, este goalг.
+Couldn't delete IP watch entry because not found: %s|Nu se poate єterge intrarea supraveghere IP, pentru cг nu s-a gгsit: %s
+IP watch notification from %s with IP %s: %s|Notificare supraveghere IP de la %s cu IP %s: %s
+unknown nick|nick necunoscut
+Country code gag|Gag pe cod de юarг
+Add country code gag|Adгugare gag pe cod de юarг
+Added country code gag: %s|Gag pe cod de юarг adгugat: %s
+Modified country code gag: %s|Gag pe cod de юarг modificat: %s
+Deleted country code gag: %s|Gag pe cod de юarг єters: %s
+Country code gag not found: %s|Gag pe cod de юarг negгsit: %s
+Country code gag list|Lista de gag-uri pe cod de юarг
+Country code gag list is empty.|Lista de gag-uri pe cod de юarг, este goalг.
+Delete country code gag|Єtergere gag pe cod de юarг
+Cleared country code gag list.|Curгюare listг de gag-uri pe cod de юarг.
+%s with IP %s and class %d tries to speak with country code gag in MC: %s|%s cu IP %s єi clasa %d cu gag pe cod de юarг, оncearcг sг scrie оn MC: %s
+%s with IP %s and class %d tries to speak with country code gag in PM: %s|%s cu IP %s єi clasa %d cu gag pe cod de юarг, оncearcг sг scrie оn PM: %s
+No reason specified|Nu s-a specificat nici un motiv
+Automatically deleted %d user log entries older than %d days.|Єtergere automatг %d intrгri оn user log mai vechi de %d zile.
+Main chat message replaced for user: %s|Mesaj de main chat modificat pentru utilizatorul: %s
+Unknown protocol command from IP %s before login: %s|Comandг cu protocol necunoscut de pe IP %s оnainte de intrare: %s
+Added %s to hard ban list, %d users in total.|Adгugat %s la lista cu ban-uri grele, %d utilizatori оn total.
+NMDC version: %s|Versiune NMDC: %s
+Client supports: %s|Clienюi suport: %s
+Couldn't add forbidden client supports because already exists: %s|Nu poюi adгuga interdicюie pe client suport pentru cг deja existг: %s
+Added forbidden client supports: %s|Adгugat client suport interzis: %s
+Couldn't add forbidden NMDC version because already exists: %s|Nu poюi adгuga interdicюie pe versiunea de NMDC, pentru cг deja existг: %s
+Added forbidden NMDC version: %s|Adгugat interdicюie pe versiunea NMDC: %s
+Latest version of %s is required in order to use this feature.|Ultima versiune a %s este necesarг pentru a utiliza aceastг funcюie.
+Deleted forbidden client supports: %s|S-a єters interdicюia pe clientul suport: %s
+Couldn't delete forbidden client supports because not found: %s|Nu se poate єterge interdicюia pe clientul suport, pentru cг nu s-a gгsit: %s
+Deleted forbidden NMDC version: %s|S-a єters interdicюia pe versiunea de NMDC: %s
+Couldn't delete forbidden NMDC version because not found: %s|Nu se poate єterge interdicюia pe versiunea de NMDC, pentru cг nu s-a gгsit: %s
+Forbidden client supports list|Lista cu interdicюii pe clienюi suport
+Forbidden client supports list is empty.|Lista cu interdicюii pe clienюi suport, este goalг.
+Forbidden NMDC version list|Lista cu interdicюii pe versiuni de NMDC
+Forbidden NMDC version list is empty.|Lista cu interdicюii pe versiuni de NMDC, este goalг.
+%s with IP %s and class %d allowed due to forbidden client supports exception: %s|%s cu IP %s єi clasa %d are permisiune datoritг excepюiei de la interdicюie pe client suport: %s
+%s with IP %s and class %d allowed due to forbidden NMDC version exception: %s|%s cu IP %s єi clasa %d are permisiune datoritг excepюiei la interdicюie pe versiunea de NMDC: %s
+City: %s|Oraє: %s
+IP range: %s - %s|IP range: %s - %s
+Region: %s|Regiune: %s
+Time zone: %s|Zonг de timp: %s
+Continent: %s|Continent: %s
+Postal code: %s|Cod poєtal: %s
+Coordinates: %.4f %.4f|Coordonate: %.4f %.4f
+Metro code: %d|Cod metropolitan: %d
+Area code: %d|Codul ariei: %d
+Drop users with IP|Deconecteazг utilizatori cu IP
+No users found with IP: %s|Nu s-a gгsit nici un utilizator cu IP: %s
+Dropped %d users with IP: %s|Deconectare %d useri cu IP: %s
+%s dropped %d users with IP: %s|%s a deconectat %d utilizatori cu IP: %s
+Live user location statistics by city|Statistica la moment a locaюiei utilizatorilor dupг oraє
+Live user location statistics by city from %s=%s|Statistica la moment a locaюiei utilizatorilor dupг oraє din %s=%s
+No users in the hub from: %s=%s|Nu sunt utilizatori pe hub din: %s=%s
+Help notes|Notг de ajutor
+parameter|parametru
+Command parameters %s are always required, while %s are optional.|Parametrii comenzii %s mereu necesari, cвt timp %s este opюional.
+Quoted parameters %s or %s must be used with quotes.|Parametrii оncadraюi cu %s sau cu %s trebuie folosiюi doar cu ghilimele.
+IP information|Informaюiile IP-ului
+IP information not available: %s|Informaюiile IP-ului %s nu sunt disponibile.
+Message replaced for user with class %d in MC: <%s> %s|Mesaj modificat pentru utilizatorul cu clasa %d оn MC: <%s> %s
+IP %s permanently banned: <%s> %s|IP %s banat permanent: <%s> %s
+Nick %s permanently banned: <%s> %s|Nick %s banat permanent: <%s> %s
+Range %s permanently banned: <%s> %s|Range %s banat permanent: <%s> %s
+Host %s permanently banned: <%s> %s|Gazdг %s banat permanent: <%s> %s
+Share %s permanently banned: <%s> %s|Share %s banat permanent: <%s> %s
+Prefix %s permanently banned: <%s> %s|Prefix %s banat permanent: <%s> %s
+IP %s temporarily banned until %s: <%s> %s|IP %s banat temporar pвnг la %s: <%s> %s
+Nick %s temporarily banned until %s: <%s> %s|Nick %s banat temporar pвnг la %s: <%s> %s
+Range %s temporarily banned until %s: <%s> %s|Range %s banat temporar pвnг la %s: <%s> %s
+Host %s temporarily banned until %s: <%s> %s|Gazdг %s banat temporar pвnг la %s: <%s> %s
+Share %s temporarily banned until %s: <%s> %s|Share %s banat temporar pвnг la %s: <%s> %s
+Prefix %s temporarily banned until %s: <%s> %s|Prefix %s banat temporar pвnг la %s: <%s> %s
+IP %s unbanned: <%s> %s|IP %s єters din banгri: <%s> %s
+Nick %s unbanned: <%s> %s|Nick %s єters din banгri: <%s> %s
+Range %s unbanned: <%s> %s|Range %s єters din banгri: <%s> %s
+Host %s unbanned: <%s> %s|Gazdг %s єtearsг din banгri: <%s> %s
+Share %s unbanned: <%s> %s|Share %s єters din banгri: <%s> %s
+Prefix %s unbanned: <%s> %s|Prefix %s єters din banгri: <%s> %s
+Known contexts are: %s|Contextul cunoscut este: %s
+Known orders are: %s|Ordinea cunoscutг este: %s
+Modified right click menu item: %s|Modificare element meniu de click dreapta: %s
+Added right click menu item: %s|Adгugat element meniu de click dreapta: %s
+Deleted right click menu item: %s|Єters element meniu de click dreapta: %s
+Right click menu item not found: %s|Element meniu de click dreapta negгsit: %s
+Right click menu item list is empty.|Lista cu elemente pentru meniu de click dreapta, este goalг.
+Menu item|Element de meniu
+Menu command|Comandг de meniu
+Changed right click menu item order: %s|Schimbг ordine elemente de click dreapta: %s
+Separator or eraser|Separator sau єtergгtor
+Nick and IP %s unbanned: <%s> %s|Nick єi IP %s єterse din ban-uri: <%s> %s
+Other %s unbanned: <%s> %s|Alte %s єterse din ban-uri: <%s> %s
+Vote for user to be kicked|Vot pentru a fi kick-uit un utilizator
+You don't want to vote for kicking an operator.|Tu nu vrei sг votezi pentru a fi kick-uit un operator.
+User voted kick|Utilizatorul a votat pentru kick
+You have already voted for kicking that user.|Ai votat deja pentru a fi kick-uit acest user.
+%s added vote %d of %d for kicking user with class %d: %s|%s a adгugat votul %d din %d pentru a fi kick-uit utilizatorul %s cu clasa: %d
+There is an error in following antispam entry pattern|Aici este o eroare оn urmгrirea intrгrii antispam a bazei de adresг IP
+Pattern|Baza adresei IP
+Error|Eroare
+Solution|Soluюie
+There is an error in following search filter pattern|Aici este o eroare оn urmгtorul filtru de cгutare a bazei de adresг IP
+There is an error in following search filter exception pattern|Aici este o eroare оn urmгtoarea excepюie la filtrul de cгutare a bazei de adresг IP
+There is an error in following antispam exception entry pattern|Aici este o eroare оn urmгtoarea excepюie la intrarea bazei de adresг IP
+There is an error in following forbidden nick pattern|Aici este o eroare оn urmгtoarea interzicere a bazei de nick
+There is an error in following MyINFO exception pattern|Aici este o eroare оn urmгtoarea excepюie a bazei MyINFO 
+There is an error in following forbidden description pattern|Aici este o eroare оn urmгtoarea interdicюie pe baza unei descrieri
+There is an error in following forbidden tag pattern|Aici este o eroare оn urmгtoarea interdicюie pe baza unui tag
+There is an error in following forbidden connection type pattern|Aici este o eroare оn urmгtoarea interdicюie pe baza tipului de conexiune
+There is an error in following forbidden email pattern|Aici este o eroare оn urmгtoarea interdicюie pe baza de email
+There is an error in following forbidden share size pattern|Aici este o eroare оn urmгtoarea interdicюie pe baza cifrei de share
+There is an error in following forbidden IP address pattern|Aici este o eroare оn urmгtoarea interdicюie pe baza adresei IP
+There is an error in following forbidden country code pattern|Aici este o eroare оn urmгtoarea interdicюie pe baza de cod de юarг
+There is an error in following forbidden DNS pattern|Aici este o eroare оn urmгtoarea interdicюie pe baza DNS-ului
+There is an error in following forbidden client supports pattern|Aici este o eroare оn urmгtoarea interdicюie pe baza de client suport
+There is an error in following forbidden NMDC version pattern|Aici este o eroare оn urmгtoarea interdicюie pe baza versiunii de NMDC
+Added replacer in PM: %s|Adгugare replacer оn PM: %s
+Added replacer in MC and PM: %s|Adгugare replacer оn MC єi PM: %s
+Message replaced for user with class %d in PM: <%s> %s|Mesaj modificat pentru utilizatorul cu clasa %d оn PM: <%s> %s
+Message ignored due to flood detection from %s with IP %s and class %d in MC: %s|Mesaj ignorat datoritг detectгrii de flood de la %s cu IP %s єi clasa %d оn MC: %s
+Users with same IP|Utilizatori cu acelaєi IP
+Parameter count mismatch detected in following translation string: %s|Nepotrivire a cifrei parametru detectatг оn urmгtarul єir tradus: %s
+Infected user detected|Detectare utilizator virusat
+Found files|Fiєiere gгsite
+Infected user detected with nick %s and IP %s and share %s and spent time: %s|Utilizator virusat detectat, cu nick %s єi IP %s єi share %s timp petrecut pe hub %s
+Sadly I don't have access to send infected user information to AVDB, please ask maintainer of this script to add your server IP address to access list. AVDB reporting feature has been automatically disabled.|Din pгcate nu am acces оn a trimite diagnostic de virusare utilizator cгtre AVDB, rog sг ceri celui ce se ocupг de acest script sг adauge adresa IP a serverului tгu оn lista de acces. Caracteristica de raportare a AVDB, a fost automat dezactivatг.
+In order to send infected user information to AVDB you need to ask maintainer of this script to add your server IP address to AVDB access list.|Pentru a transmite informaюii despre un utilizator virusat cгtre AVDB, este nevoie sг ceri celui ce se ocupг de acest script sг adauge adresa IP a serverului tгu оn lista de acces.
+Antivirus statistics|Statistica antivirus
+File names used for search|Numele de fiєier utilizat pentru cгutare
+File extensions used for search|Extensie de fiєier utilizat pentru cгutare
+Possibly infected users|Utilizator suspect de infestare cu viruєi
+Spent time: %s|Timp petrecut pe hub: %s
+Infected user logged in with IP %s and share %s: %s|Utilizator infestat cu viruєi conectat pe hub cu IP %s єi share %s: %s
+Loaded %d of %d with totally %d items: %s|Оncгrcare a %d din %d cu total %d articole: %s
+Infected user information sent to %s: %s|Informaюiile despre utilizatorul infestat cu viruєi trimise la %s: %s
+Failed to load information from %s: %s|Eєuare a оncгrcгrii diagnosticului cгtre: %s: %s
+Failed to send information to %s: %s|Eєuare a trimiterii diagnosticului cгtre %s: %s
+Error on executing %s: %s|Eroare de executare %s: %s
+Error on connecting.|Eroare de conectare.
+Loaded none with totally %d items: %s|Оncгrcare nulг cu totalul %d articole: %s
+Infected user found with IP %s and share %s: %s|Detectare utilizator virusat, cu IP %s єi share %s: %s
+Server didn't reply with expected status code.|Serverul nu rгspunde cu codul status aєteptat.
+Size of %s: %d @ %s|Dimensiune a %s: %d @ %s
+Clear kick votes for user|Єtergere a voturilor pentru kick-uire utilizator
+%s cleared %d of %d votes for kicking user with class %d: %s|%s a єters %d din %d voturi pentru kick-uire utilizator cu clasa %d: %s
+Vote kick list|Lista voturilor pentru kick
+Vote kick list is empty.|Lista voturilor pentru kick, este goalг.
+Votes: %d of %d|Vot: %d din %d
+Voters: %s|Persoane care voteazг: %s
+Triggers|Triggere
+Add trigger|Adгugare trigger
+Trigger list|Lista cu triggere
+Delete trigger|Єtergere trigger
+Modified trigger: %s|Modificare trigger: %s
+Added trigger: %s|Adгugare trigger: %s
+Deleted trigger: %s|Єtergere trigger: %s
+Trigger not found: %s|Trigger negгsit: %s
+Trigger list is empty.|Lista cu triggere, este goalг.
+Class range: %d to %d|Range pe clasг: %d la %d
+Pinger|Pinger
+Guest|Invitat
+Registered|Оnregistrat
+VIP|VIP
+Operator|Operator
+Cheef|Cheef
+Administrator|Administrator
+Master|Master
+News item added by %s: %s|Articol nou adгugat de %s: %s
+Your connection request is blocked because user that you're trying connect to was detected as virus spreader: %s|Оncercarea ta de conectare a fost blocatг pentru cг utilizatorul la care оncerci sг te conectezi, a fost detectat ca fiind infestat cu viruєi: %s
+Connection requests to following user will be blocked: %s|Оncercгrile de conectare vor fi blocate pentru urmгtorul utilizator: %s
+Downloading script file: %s|Se descarcг filele script: %s
+Stable version of %s is available: %s|Versiunea stabilг a %s este disponibilг: %s
+Development version of %s is available: %s|O versiune dezvoltatг a %s este disponibilг: %s
+Translation file loaded: %s|Fila traducere оncгrcatг: %s
+Loaded none of %d with totally %d items: %s|Оncгrcare nulг a %d cu total %d articole: %s
+Failed to execute %s with code: %d|Eєuarea executгrii %s cu cod: %d
+Failed to execute %s with error: %s|Eєuarea executгrii %s cu eroarea: %s
+Failed to execute %s without code and error.|Eєuarea executгrii %s fгrг cod єi eroare.
+Failed to move file: %s|Eєuare оn mutarea filelor: %s
+Downloading translation file: %s|Descгrcare a filei traducere: %s
+File not found on update server: %s|Оn serverul de date nu s-a gгsit fila: %s
+File not found on remote server: %s|Оn serverul intermediar nu s-a gгsit fila: %s
+File is empty.|Fila este goalг.
+Force infected user detection|Detectare forюatг utilizator infectat
+You can't block user whose class is higher or equals your own: %s|Nu poюi bloca un utilizator a cгrui clasг este mai mare sau egalг cu a ta: %s
+User already blocked: %s|Utilizator deja blocat: %s
+item|articol
+Search in %s|Cгutare оn %s
+Antivirus|Antivirus
+Nothing was found in: %s|Nu a fost gгsit nimic оn: %s
+Searching for %s in %s: %s|Cгutвnd pentru %s оn %s: %s
+Showing %d results from %s|Arгtare %d rezultate pentru %s
+%s module version: %s|%s versiunea modulului: %s
+This feature requires following module installed on your system: %s|Aceastг caracteristicг necesitг instalarea pe sistemul dumneavoastrг a urmгtorului modul: %s
+Failed to start antivirus search server: %s|Eєuarea pornirii serverului pentru cгutare viruєi: %s
+Started antivirus search server: %s|Pornire server pentru cгutare viruєi: %s
+Stopped antivirus search server: %s|Oprire server pentru cгutare viruєi: %s
+Blocked infected users|Utilizatori infectaюi ce au fost blocaюi
+Add automatic country chatroom entrance|Adгugare automatг camerг de chat dupг югri
+Automatic country chatroom entrance list|Lista intrгrilor camerelor de chat dupг югri
+Delete automatic country chatroom entrance|Єtergere intrare camerг de chat dupг югri
+Couldn't add automatic country chatroom entrance because already exists with ID: %d|Nu se poate adгuga intrare automatг camerг de chat dupг югri pentru cг deja existг cu identificator: %d
+Added automatic country chatroom entrance for %s: %s|Adгugare automatг intrare camerг de chat dupг юarг pentru %s: %s
+Couldn't delete automatic country chatroom entrance because ID not found: %d|Nu se poate єterge intrare automatг camerг de chat pe юarг, pentru cг nu a fost gгsit identificatorul: %d
+Deleted automatic country chatroom entrance with ID: %d|S-a єters intrarea camerг automatг pe юarг cu identificator: %d
+Automatic country chatroom entrance list is empty.|Lista cu intrгri automate camere de chat dupг югri, este goalг.
+Please note, following function is required for features available in this version of %s and is currently not available in running version of %s but is available in latest update: %s|Te rog sг notezi, urmгtoarea funcюie este necesarг pentru caracteristici disponibile оn aceastг versiune a %s єi оn acest moment nu este disponibilг оn versiunea ce ruleazг %s dar este disponibilг оn ultimul update: %s
