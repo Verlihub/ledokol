@@ -1,4 +1,4 @@
-[ 2.8.3 :: 2014-##-## ]
+[ 2.8.3 :: 2014-10-05 ]
 
 Fixed: Break the loop when infected user is found
 Fixed: IP connect antiflood update would break the logout process when user is protected
@@ -8,6 +8,7 @@ Added: Antivirus search server to detect passive virus spreaders, requires LuaSo
 Added: List of blocked infected users in antivirus statistics, request by KCAHDEP
 Added: chatcodeflag for destination of chat secirity code, 0 = MC+PM, 1 = MC, 2 = PM, request by KCAHDEP
 Added: Automatic country chatroom entrance feature to allow users entering these chatrooms even when their country is different
+Added: French, German and Lithuanian languages, only French is complete
 
 [ 2.8.2 :: 2014-09-15 ]
 
