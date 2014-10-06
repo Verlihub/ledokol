@@ -1,3 +1,7 @@
+[ 2.8.4 :: 2014-##-## ]
+
+Added: cURL will use same local address for connections as hub itself when defined
+
 [ 2.8.3 :: 2014-10-05 ]
 
 Fixed: Break the loop when infected user is found
