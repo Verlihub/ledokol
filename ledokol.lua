@@ -58,7 +58,7 @@ Doxtur, chaos, sphinx, Zorro, W1ZaRd, S0RiN, MaxFox, Krzychu
 -- global storage variables and tables >>
 ---------------------------------------------------------------------
 
-ver_ledo = "2.8.3" -- ledokol version
+ver_ledo = "2.8.4" -- ledokol version
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -19510,7 +19510,15 @@ function getcurl (url, enc, del)
 	end
 
 	os.remove (table_othsets ["cfgdir"] .. table_othsets ["tmpfile"]) -- remove old temporary file in case it exists
-	local res, err, code = os.execute ("curl -G -L --retry 3 --connect-timeout 5 -m 30 -A \"Ledokol/" .. ver_ledo .. "\" -s -o \"" .. table_othsets ["cfgdir"] .. table_othsets ["tmpfile"] .. "\"" .. urlenc .. " \"" .. url .. "\"")
+	local face = getconfig ("listen_ip") -- use local address
+
+	if face and # face >= 7 and # face <= 15 and face ~= "0.0.0.0" then
+		face = " --interface " .. face
+	else
+		face = ""
+	end
+
+	local res, err, code = os.execute ("curl -G -L --retry 3 --connect-timeout 5 -m 30" .. face .. " -A \"Ledokol/" .. ver_ledo .. "\" -s -o \"" .. table_othsets ["cfgdir"] .. table_othsets ["tmpfile"] .. "\"" .. urlenc .. " \"" .. url .. "\"")
 
 	if res then
 		local file, err = io.open (table_othsets ["cfgdir"] .. table_othsets ["tmpfile"], "r") -- make use of err, it could be permission
