@@ -295,7 +295,8 @@ table_othsets = {
 	["updservlang"] = "http://ledo.feardc.net/lang/",
 	["vazhub"] = "dchub://hub.verlihub.net:7777/",
 	["avdbhubaddr"] = "avdb.feardc.net:12242",
-	["tmpfile"] = "ledokol.temp",
+	["tmpfile"] = "ledokol.data",
+	["headfile"] = "ledokol.head",
 	["verfile"] = "ledokol.ver",
 	["luafile"] = "ledokol.lua",
 	["langfilefmt"] = "ledo_%s.lang",
@@ -315,6 +316,8 @@ table_othsets = {
 	["avlastseartick"] = os.time (),
 	["avlastloadtick"] = 0,
 	["avlastloadtime"] = 0,
+	["avloadvercount"] = 0,
+	["avloaddelcount"] = 0,
 	["avnextitem"] = 1,
 	["avrandstr"] = "",
 	["chflallcount"] = 0,
@@ -14205,6 +14208,8 @@ end
 				if setto == 0 then
 					table_avlo = {} -- clear
 					table_othsets ["avlastloadtime"] = 0
+					table_othsets ["avloadvercount"] = 0
+					table_othsets ["avloaddelcount"] = 0
 					ok = true
 				else
 					if not table_othsets ["ver_curl"] then
@@ -18249,9 +18254,41 @@ end
 ----- ---- --- -- -
 
 function loadavdb (st)
-	local res, err, avdb = getcurl (table_othsets ["avdbloadurl"] .. "&time=" .. tostring (table_othsets ["avlastloadtime"]) .. "&cotime=0&nosort=1")
+	local res, err, avdb, head = getcurl (table_othsets ["avdbloadurl"] .. "&vers=" .. tostring (table_othsets ["avloadvercount"]) .. "&time=" .. tostring (table_othsets ["avlastloadtime"]) .. "&cotime=0&nosort=1", nil, false, true)
 
 	if res then
+		if head ~= "" then -- parse headers
+			local have = 0
+
+			for heli in head:gmatch ("[^\r\n]+") do
+				local _, _, hena, heva = heli:find ("^Avdb%-(%a+)%-Count: (%d+)$")
+
+				if hena and heva then
+					heva = tonumber (heva)
+
+					if hena == "Version" then
+						table_othsets ["avloadvercount"] = heva -- update version counter
+						have = have + 1
+					elseif hena == "Delete" then
+						if table_othsets ["avloaddelcount"] > 0 and table_othsets ["avloaddelcount"] < heva then -- only if not first time
+							table_avlo = {}
+							table_othsets ["avlastloadtime"] = 0
+							table_othsets ["avloadvercount"] = 0
+							table_othsets ["avloaddelcount"] = heva
+							return loadavdb (st) -- items were removed, get fresh list from scratch
+						end
+
+						table_othsets ["avloaddelcount"] = heva -- update delete counter
+						have = have + 1
+					end
+
+					if have >= 2 then -- we have all headers
+						break
+					end
+				end
+			end
+		end
+
 		table_othsets ["avlastloadtime"] = st
 
 		if avdb ~= "" and avdb ~= "0" and avdb ~= "-" then
@@ -19496,9 +19533,9 @@ end
 
 ----- ---- --- -- -
 
-function getcurl (url, enc, del)
+function getcurl (url, enc, del, reh)
 	if not table_othsets ["ver_curl"] then
-		return false, gettext ("This feature requires following binary installed on your system: %s"):format ("cURL"), nil
+		return false, gettext ("This feature requires following binary installed on your system: %s"):format ("cURL"), nil, nil
 	end
 
 	local urlenc = ""
@@ -19509,7 +19546,12 @@ function getcurl (url, enc, del)
 		end
 	end
 
-	os.remove (table_othsets ["cfgdir"] .. table_othsets ["tmpfile"]) -- remove old temporary file in case it exists
+	os.remove (table_othsets ["cfgdir"] .. table_othsets ["tmpfile"]) -- remove old files in case they exist, temporary file
+
+	if reh then -- header file
+		os.remove (table_othsets ["cfgdir"] .. table_othsets ["headfile"])
+	end
+
 	local face = getconfig ("listen_ip") -- use local address
 
 	if face and # face >= 7 and # face <= 15 and face ~= "0.0.0.0" then
@@ -19518,9 +19560,27 @@ function getcurl (url, enc, del)
 		face = ""
 	end
 
-	local res, err, code = os.execute ("curl -G -L --retry 3 --connect-timeout 5 -m 30" .. face .. " -A \"Ledokol/" .. ver_ledo .. "\" -s -o \"" .. table_othsets ["cfgdir"] .. table_othsets ["tmpfile"] .. "\"" .. urlenc .. " \"" .. url .. "\"")
+	local rehreq = ""
+
+	if reh then -- get response headers
+		rehreq = " -D \"" .. table_othsets ["cfgdir"] .. table_othsets ["headfile"] .. "\""
+	end
+
+	local res, err, code = os.execute ("curl -G -L --retry 3 --connect-timeout 5 -m 30" .. face .. " -A \"Ledokol/" .. ver_ledo .. "\" -s -o \"" .. table_othsets ["cfgdir"] .. table_othsets ["tmpfile"] .. "\"" .. rehreq .. urlenc .. " \"" .. url .. "\"")
 
 	if res then
+		local head = ""
+
+		if reh then -- get response headers
+			local file, err = io.open (table_othsets ["cfgdir"] .. table_othsets ["headfile"], "r") -- make use of err, it could be permission
+
+			if file then
+				head = file:read ("*all")
+				file:close ()
+				os.remove (table_othsets ["cfgdir"] .. table_othsets ["headfile"])
+			end
+		end
+
 		local file, err = io.open (table_othsets ["cfgdir"] .. table_othsets ["tmpfile"], "r") -- make use of err, it could be permission
 
 		if file then
@@ -19531,9 +19591,9 @@ function getcurl (url, enc, del)
 				os.remove (table_othsets ["cfgdir"] .. table_othsets ["tmpfile"])
 			end
 
-			return true, nil, (data or "")
+			return true, nil, (data or ""), (head or "")
 		else
-			return true, nil, ""
+			return true, nil, "", (head or "")
 		end
 	else
 		if code then
@@ -19541,11 +19601,11 @@ function getcurl (url, enc, del)
 		end
 
 		if code then -- http://curl.haxx.se/docs/manpage.html
-			return false, gettext ("Failed to execute %s with code: %d"):format ("cURL", code), nil
+			return false, gettext ("Failed to execute %s with code: %d"):format ("cURL", code), nil, nil
 		elseif err and err ~= "" then
-			return false, gettext ("Failed to execute %s with error: %s"):format ("cURL", repnmdcoutchars (err)), nil
+			return false, gettext ("Failed to execute %s with error: %s"):format ("cURL", repnmdcoutchars (err)), nil, nil
 		else
-			return false, gettext ("Failed to execute %s without code and error."):format ("cURL"), nil
+			return false, gettext ("Failed to execute %s without code and error."):format ("cURL"), nil, nil
 		end
 	end
 end
