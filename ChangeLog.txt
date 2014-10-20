@@ -1,6 +1,8 @@
 [ 2.8.4 :: 2014-##-## ]
 
 Added: cURL will use same local address for connections as hub itself when defined
+Added: cURL helper function now returns response headers if requested
+Added: Avdb-Version-Count and Avdb-Delete-Count extension headers to use with AVDB load process
 
 [ 2.8.3 :: 2014-10-05 ]
 
