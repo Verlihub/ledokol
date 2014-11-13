@@ -698,7 +698,6 @@ cc_names = {
 	["A2"] = "Satellite Provider",
 	["O1"] = "Other Country",
 	["EU"] = "European Union",
-	["AP"] = "Asia Pacific Region",
 	["AD"] = "Andorra",
 	["AE"] = "United Arab Emirates",
 	["AF"] = "Afghanistan",
