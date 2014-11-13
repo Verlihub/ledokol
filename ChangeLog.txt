@@ -1,5 +1,8 @@
-[ 2.8.4 :: 2014-##-## ]
+[ 2.8.4 :: 2014-11-## ]
 
+Fixed: Correctly remove user from operator ranks when he deletes his own registration
+Changed: User registration notification now rely on plugin callbacks instead of command scans
+Added: Public user registration notification for all classes, empty regnewpubmsg* to skip notification for that class, idea by KCAHDEP
 Added: cURL will use same local address for connections as hub itself when defined
 Added: cURL helper function now returns response headers if requested
 Added: Avdb-Version-Count and Avdb-Delete-Count extension headers to use with AVDB load process
