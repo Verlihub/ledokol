@@ -48,7 +48,8 @@ over sixty different features for Verlihub.
 
 Neolo, Uhlik, Astronomik, LadyStardust, Seth, Molotov, burek,
 Hungarista, Stefani, Aethra, netcelli, TheBoss, Maximum, BulleT,
-Doxtur, chaos, sphinx, Zorro, W1ZaRd, S0RiN, MaxFox, Krzychu
+Doxtur, chaos, sphinx, Zorro, W1ZaRd, S0RiN, MaxFox, Krzychu,
+@tlantide, Atalanttore, Trumpy
 
 ---------------------------------------------------------------------
 ]]-- special thanks to <<
@@ -162,6 +163,13 @@ table_sets = {
 	["unkkickreason"] = "Unknown protocol command detected from your client: *",
 	["authrunning"] = 0,
 	["authmessage"] = "Your IP doesn't match the authorization IP set for your nick.",
+	["regnewpubenable"] = 0,
+	["regnewpubmsgreg"] = "Please say hello to our new member: <nick>",
+	["regnewpubmsgvip"] = "Please say hello to our new VIP: <nick>",
+	["regnewpubmsgop"] = "Please say hello to our new operator: <nick>",
+	["regnewpubmsgcheef"] = "Please say hello to our new cheef: <nick>",
+	["regnewpubmsgadmin"] = "Please say hello to our new administrator: <nick>",
+	["regnewpubmsgmaster"] = "Please say hello to our new master: <nick>",
 	["regkickaction"] = 1,
 	["regmechatcnt"] = 0,
 	["regmeuptime"] = 0,
@@ -1170,6 +1178,16 @@ function Main (file)
 					end
 
 					if ver <= 284 then
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('regnewpubenable', '" .. repsqlchars (table_sets ["regnewpubenable"]) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('regnewpubmsgreg', '" .. repsqlchars (table_sets ["regnewpubmsgreg"]) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('regnewpubmsgvip', '" .. repsqlchars (table_sets ["regnewpubmsgvip"]) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('regnewpubmsgop', '" .. repsqlchars (table_sets ["regnewpubmsgop"]) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('regnewpubmsgcheef', '" .. repsqlchars (table_sets ["regnewpubmsgcheef"]) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('regnewpubmsgadmin', '" .. repsqlchars (table_sets ["regnewpubmsgadmin"]) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('regnewpubmsgmaster', '" .. repsqlchars (table_sets ["regnewpubmsgmaster"]) .. "')")
+					end
+
+					if ver <= 285 then
 						-- todo
 					end
 
@@ -3373,113 +3391,89 @@ elseif string.find (data, "^"..table_othsets ["optrig"].."topic $") or string.fi
 		return 0
 	end
 
------ ---- --- -- -
+	----- ---- --- -- -
 
-elseif string.find (data, "^"..table_othsets ["optrig"].."rn%s+%S+.*$") then
-if table_sets ["classnotireg"] == 11 then
-donotifycmd (nick, data, 0, ucl)
-end
-
-donotifyregnew (nick, ucl, string.sub (data, string.len ("rn") + 3, -1))
-
------ ---- --- -- -
-
-elseif string.find (data, "^"..table_othsets ["optrig"].."rnew%s+%S+.*$") then
-if table_sets ["classnotireg"] == 11 then
-donotifycmd (nick, data, 0, ucl)
-end
-
-donotifyregnew (nick, ucl, string.sub (data, string.len ("rnew") + 3, -1))
-
------ ---- --- -- -
-
-elseif string.find (data, "^"..table_othsets ["optrig"].."regnew%s+%S+.*$") then
-if table_sets ["classnotireg"] == 11 then
-donotifycmd (nick, data, 0, ucl)
-end
-
-donotifyregnew (nick, ucl, string.sub (data, string.len ("regnew") + 3, -1))
-
------ ---- --- -- -
-
-elseif string.find (data, "^"..table_othsets ["optrig"].."regn%s+%S+.*$") then
-if table_sets ["classnotireg"] == 11 then
-donotifycmd (nick, data, 0, ucl)
-end
-
-donotifyregnew (nick, ucl, string.sub (data, string.len ("regn") + 3, -1))
-
------ ---- --- -- -
-
-elseif string.find (data, "^"..table_othsets ["optrig"].."rdel%s+%S+.*$") then
-if table_sets ["classnotireg"] == 11 then
-donotifycmd (nick, data, 0, ucl)
-end
-
-donotifyregdel (nick, ucl, string.sub (data, string.len ("rdel") + 3, -1))
-
------ ---- --- -- -
-
-elseif string.find (data, "^"..table_othsets ["optrig"].."rdelete%s+%S+.*$") then
-if table_sets ["classnotireg"] == 11 then
-donotifycmd (nick, data, 0, ucl)
-end
-
-donotifyregdel (nick, ucl, string.sub (data, string.len ("rdelete") + 3, -1))
-
------ ---- --- -- -
-
-elseif string.find (data, "^"..table_othsets ["optrig"].."regdel%s+%S+.*$") then
-if table_sets ["classnotireg"] == 11 then
-donotifycmd (nick, data, 0, ucl)
-end
-
-donotifyregdel (nick, ucl, string.sub (data, string.len ("regdel") + 3, -1))
-
------ ---- --- -- -
-
-elseif string.find (data, "^"..table_othsets ["optrig"].."regdelete%s+%S+.*$") then
-if table_sets ["classnotireg"] == 11 then
-donotifycmd (nick, data, 0, ucl)
-end
-
-donotifyregdel (nick, ucl, string.sub (data, string.len ("regdelete") + 3, -1))
-
------ ---- --- -- -
-
-elseif string.find (data, "^"..table_othsets ["optrig"].."rclass%s+%S+%s+.+$") then
-if table_sets ["classnotireg"] == 11 then
-donotifycmd (nick, data, 0, ucl)
-end
-
-donotifyregclass (nick, ucl, string.sub (data, string.len ("rclass") + 3, -1))
-
------ ---- --- -- -
-
-elseif string.find (data, "^"..table_othsets ["optrig"].."regclass%s+%S+%s+.+$") then
-if table_sets ["classnotireg"] == 11 then
-donotifycmd (nick, data, 0, ucl)
-end
-
-donotifyregclass (nick, ucl, string.sub (data, string.len ("regclass") + 3, -1))
+	elseif data:find ("^" .. table_othsets ["optrig"] .. "rn") then
+		if table_sets ["classnotireg"] == 11 then
+			donotifycmd (nick, data, 0, ucl)
+		end
 
 	----- ---- --- -- -
 
-	elseif string.find (data, "^" .. table_othsets ["optrig"] .. "ban") then -- ban%S*%s+%S+%s*.*$
+	elseif data:find ("^" .. table_othsets ["optrig"] .. "rnew") then
+		if table_sets ["classnotireg"] == 11 then
+			donotifycmd (nick, data, 0, ucl)
+		end
+
+	----- ---- --- -- -
+
+	elseif data:find ("^" .. table_othsets ["optrig"] .. "regnew") then
+		if table_sets ["classnotireg"] == 11 then
+			donotifycmd (nick, data, 0, ucl)
+		end
+
+	----- ---- --- -- -
+
+	elseif data:find ("^" .. table_othsets ["optrig"] .. "regn") then
+		if table_sets ["classnotireg"] == 11 then
+			donotifycmd (nick, data, 0, ucl)
+		end
+
+	----- ---- --- -- -
+
+	elseif data:find ("^" .. table_othsets ["optrig"] .. "rdel") then
+		if table_sets ["classnotireg"] == 11 then
+			donotifycmd (nick, data, 0, ucl)
+		end
+
+	----- ---- --- -- -
+
+	elseif data:find ("^" .. table_othsets ["optrig"] .. "rdelete") then
+		if table_sets ["classnotireg"] == 11 then
+			donotifycmd (nick, data, 0, ucl)
+		end
+
+	----- ---- --- -- -
+
+	elseif data:find ("^" .. table_othsets ["optrig"] .. "regdel") then
+		if table_sets ["classnotireg"] == 11 then
+			donotifycmd (nick, data, 0, ucl)
+		end
+
+	----- ---- --- -- -
+
+	elseif data:find ("^" .. table_othsets ["optrig"] .. "regdelete") then
+		if table_sets ["classnotireg"] == 11 then
+			donotifycmd (nick, data, 0, ucl)
+		end
+
+	----- ---- --- -- -
+
+	elseif data:find ("^" .. table_othsets ["optrig"] .. "rclass") then
+		if table_sets ["classnotireg"] == 11 then
+			donotifycmd (nick, data, 0, ucl)
+		end
+
+	----- ---- --- -- -
+
+	elseif data:find ("^" .. table_othsets ["optrig"] .. "regclass") then
+		if table_sets ["classnotireg"] == 11 then
+			donotifycmd (nick, data, 0, ucl)
+		end
+
+	----- ---- --- -- -
+
+	elseif data:find ("^" .. table_othsets ["optrig"] .. "ban") then
 		if table_sets ["classnotiban"] == 11 then
 			donotifycmd (nick, data, 0, ucl)
 		end
 
-		--donotifyban (nick, ucl, data)
-
 	----- ---- --- -- -
 
-	elseif string.find (data, "^" .. table_othsets ["optrig"] .. "unban") then -- unban%S*%s+%S+%s*.*$
+	elseif data:find ("^" .. table_othsets ["optrig"] .. "unban") then
 		if table_sets ["classnotiban"] == 11 then
 			donotifycmd (nick, data, 0, ucl)
 		end
-
-		--donotifyunban (nick, ucl, data)
 
 ----- ---- --- -- -
 
@@ -4732,25 +4726,101 @@ end
 
 ----- ---- --- -- -
 
-function VH_OnNewReg (nick, class)
-	--if table_othsets ["locked"] == true then return 1 end
-	-- use registration notification from here in future
+function VH_OnNewReg (nick, class, op)
+	if table_othsets ["locked"] then
+		return 1
+	end
+
+	if table_sets ["regnewpubenable"] == 1 then -- public registration notification
+		local noti = ""
+
+		if tonumber (class) == 1 and table_sets ["regnewpubmsgreg"] ~= "" then
+			noti = table_sets ["regnewpubmsgreg"]:gsub ("<nick>", reprexpchars (nick))
+		elseif tonumber (class) == 2 and table_sets ["regnewpubmsgvip"] ~= "" then
+			noti = table_sets ["regnewpubmsgvip"]:gsub ("<nick>", reprexpchars (nick))
+		elseif tonumber (class) == 3 and table_sets ["regnewpubmsgop"] ~= "" then
+			noti = table_sets ["regnewpubmsgop"]:gsub ("<nick>", reprexpchars (nick))
+		elseif tonumber (class) == 4 and table_sets ["regnewpubmsgcheef"] ~= "" then
+			noti = table_sets ["regnewpubmsgcheef"]:gsub ("<nick>", reprexpchars (nick))
+		elseif tonumber (class) == 5 and table_sets ["regnewpubmsgadmin"] ~= "" then
+			noti = table_sets ["regnewpubmsgadmin"]:gsub ("<nick>", reprexpchars (nick))
+		elseif tonumber (class) == 10 and table_sets ["regnewpubmsgmaster"] ~= "" then
+			noti = table_sets ["regnewpubmsgmaster"]:gsub ("<nick>", reprexpchars (nick))
+		end
+
+		if noti ~= "" then
+			maintoall (noti, 0, 10)
+		end
+	end
+
+	if nick ~= op then -- registration notification, dont notify self registration, hub does that
+		local opclass = getclass (op)
+		opsnotify (table_sets ["classnotireg"], gettext ("%s with class %d registered new user with class %d: %s"):format (op, opclass, class, nick))
+		oprankaccept (op, opclass)
+	end
+
 	return 1
 end
 
 ----- ---- --- -- -
 
-function VH_OnDelReg (nick, class)
-	--if table_othsets ["locked"] == true then return 1 end
-	-- use registration notification from here in future
+function VH_OnDelReg (nick, class, op)
+	if table_othsets ["locked"] then
+		return 1
+	end
+
+	local opclass = getclass (op) -- registration notification
+	opsnotify (table_sets ["classnotireg"], gettext ("%s with class %d deleted registered user with class %d: %s"):format (op, opclass, class, nick))
+
+	if nick ~= op then
+		oprankaccept (op, opclass)
+	end
+
+	delledouser (nick) -- remove user from ledokol tables
+
 	return 1
 end
 
 ----- ---- --- -- -
 
-function VH_OnUpdateClass (nick, oldclass, newclass)
-	--if table_othsets ["locked"] == true then return 1 end
-	-- use registration notification from here in future
+function VH_OnUpdateClass (nick, oldclass, newclass, op)
+	if table_othsets ["locked"] then
+		return 1
+	end
+
+	if table_sets ["regnewpubenable"] == 1 and tonumber (newclass) > tonumber (oldclass) then -- public registration notification
+		local noti = ""
+
+		if tonumber (newclass) == 1 and table_sets ["regnewpubmsgreg"] ~= "" then
+			noti = table_sets ["regnewpubmsgreg"]:gsub ("<nick>", reprexpchars (nick))
+		elseif tonumber (newclass) == 2 and table_sets ["regnewpubmsgvip"] ~= "" then
+			noti = table_sets ["regnewpubmsgvip"]:gsub ("<nick>", reprexpchars (nick))
+		elseif tonumber (newclass) == 3 and table_sets ["regnewpubmsgop"] ~= "" then
+			noti = table_sets ["regnewpubmsgop"]:gsub ("<nick>", reprexpchars (nick))
+		elseif tonumber (newclass) == 4 and table_sets ["regnewpubmsgcheef"] ~= "" then
+			noti = table_sets ["regnewpubmsgcheef"]:gsub ("<nick>", reprexpchars (nick))
+		elseif tonumber (newclass) == 5 and table_sets ["regnewpubmsgadmin"] ~= "" then
+			noti = table_sets ["regnewpubmsgadmin"]:gsub ("<nick>", reprexpchars (nick))
+		elseif tonumber (newclass) == 10 and table_sets ["regnewpubmsgmaster"] ~= "" then
+			noti = table_sets ["regnewpubmsgmaster"]:gsub ("<nick>", reprexpchars (nick))
+		end
+
+		if noti ~= "" then
+			maintoall (noti, 0, 10)
+		end
+	end
+
+	local opclass = getclass (op) -- registration notification
+	opsnotify (table_sets ["classnotireg"], gettext ("%s with class %d changed user class from %d to %d: %s"):format (op, opclass, oldclass, newclass, nick))
+
+	if table_sets ["oprankclass"] ~= 11 and tonumber (oldclass) >= table_sets ["oprankclass"] and tonumber (newclass) < table_sets ["oprankclass"] then
+		if nick ~= op then
+			oprankaccept (op, opclass)
+		end
+
+		VH:SQLQuery ("delete from `" .. tbl_sql ["opran"] .. "` where `nick` = '" .. repsqlchars (nick) .. "'") -- remove user from op ranks list
+	end
+
 	return 1
 end
 
@@ -12952,116 +13022,6 @@ end
 
 ----- ---- --- -- -
 
-function donotifyregnew (nick, ucls, line)
-if ucls < getconfig ("min_class_register") then return nil end -- check verlihub configuration
-local _, user, class = 0, "", 0
-
-if string.find (line, "^%s*%S+%s+%S+%s*.*$") then
-_, _, user, class = string.find (line, "^%s*(%S+)%s+(%S+)%s*.*$")
-class = tonumber (class) or 1 -- default class when invalid number
-
-if (class == 0) or ((class >= 6) and (class <= 9)) then
-class = 1 -- default class when 0 is used
-end
-
-else
-_, _, user = string.find (line, "^%s*(%S+)%s*.*$")
-class = 1 -- default class when not specified
-end
-
-if (ucls < 10) and (class > ucls - getconfig ("classdif_reg")) then return nil end -- check verlihub configuration
-
-if not getregclass (user) then -- only if not registered
-opsnotify (table_sets ["classnotireg"], string.format (gettext ("%s with class %d registered new user with class %d: %s"), nick, ucls, class, user))
-oprankaccept (nick, ucls)
-end
-end
-
------ ---- --- -- -
-
-function donotifyregdel (nick, ucls, line)
-	if ucls < getconfig ("min_class_register") then return nil end -- check verlihub configuration
-	local _, _, user = string.find (line, "^%s*(%S+)%s*.*$")
-	local class = getregclass (user)
-	if (not class) or ((ucls < 10) and (class > ucls - getconfig ("classdif_reg"))) then return nil end -- only if registered
-	opsnotify (table_sets ["classnotireg"], string.format (gettext ("%s with class %d deleted registered user with class %d: %s"), nick, ucls, class, user))
-	oprankaccept (nick, ucls)
-	delledouser (user) -- remove user from ledokol tables aswell
-end
-
------ ---- --- -- -
-
-function donotifyregclass (nick, ucls, line)
-	if ucls < getconfig ("min_class_register") then return nil end -- check verlihub configuration
-	local _, _, user, class = string.find (line, "^%s*(%S+)%s+(%S+)%s*.*$")
-	class = tonumber (class) or 0
-	local uclass = getregclass (user)
-	if (not uclass) or ((ucls < 10) and (class > ucls - getconfig ("classdif_reg"))) then return nil end -- only if registered
-	if uclass == class then return nil end -- only if different
-
-	if class < 3 then -- remove user from op ranks list if new class is lower than op class
-		VH:SQLQuery ("delete from `"..tbl_sql ["opran"].."` where `nick` = '"..repsqlchars (user).."' limit 1")
-	end
-
-	opsnotify (table_sets ["classnotireg"], string.format (gettext ("%s with class %d changed user class from %d to %d: %s"), nick, ucls, uclass, class, user))
-	oprankaccept (nick, ucls)
-end
-
------ ---- --- -- -
-
---[[
-
-function donotifyban (nick, ucls, line)
-	local _, _, cmd, user, reason = string.find (line, "^(%S*)%s+(%S+)%s*(.*)$")
-
-	if not reason or string.len (reason) == 0 then
-		local _, rows = VH:SQLQuery ("select `reason` from `kicklist` where `ip` = '" .. repsqlchars (user) .. "' order by `time` desc limit 1")
-
-		if rows > 0 then
-			_, reason = VH:SQLFetch (0)
-		end
-	end
-
-	oprankaccept (nick, ucls)
-	local _, bantime = string.find (cmd, "_")
-
-	if not reason or string.len (reason) == 0 then -- without reason
-		reason = gettext ("No reason specified")
-	end
-
-	if not bantime then
-		opsnotify (table_sets ["classnotiban"], string.format (gettext ("context"), user, nick, reason))
-	else
-		bantime = string.sub (cmd, bantime + 1, -1) -- i dont understand this: !ban_ user test => "_" gets banned with reason "user test"
-		opsnotify (table_sets ["classnotiban"], string.format (gettext ("Reorder right click menu item"), user, bantime, nick, reason))
-	end
-end
-
-]]--
-
------ ---- --- -- -
-
---[[
-
-function donotifyunban (nick, ucls, line)
-	local _, _, user, reason = string.find (line, "^%S*%s+(%S+)%s*(.*)$")
-	local repusr = repsqlchars (user)
-	local _, rows = VH:SQLQuery ("select `ban_type` from `banlist` where `ip` = '" .. repusr .. "' or `nick` = '" .. repusr .. "' or `host` = '" .. repusr .. "' or `range_fr` = '" .. repusr .. "' or `range_to` = '" .. repusr .. "' or `share_size` = '" .. repusr .. "' limit 1")
-
-	if rows > 0 then
-		if not reason or string.len (reason) == 0 then
-			reason = gettext ("No reason specified")
-		end
-
-		opsnotify (table_sets ["classnotiban"], string.format (gettext ("order"), user, nick, reason))
-		oprankaccept (nick, ucls)
-	end
-end
-
-]]--
-
------ ---- --- -- -
-
 function donotifyconfig (nick, line, cls)
 	local _, _, var, val = string.find (line, "^%s*(%S+) (.*)$")
 	local oval = getconfig (var)
@@ -15317,19 +15277,18 @@ end
 			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 		end
 
------ ---- --- -- -
+	----- ---- --- -- -
 
-elseif tvar == "classnotireg" then
-if num == true then
-if ((setto >= 0) and (setto <= 5)) or (setto == 10) or (setto == 11) then
-ok = true
-else
-commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0, 1, 2, 3, 4, 5, 10 "..gettext ("or").." 11"))
-end
-
-else
-commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
-end
+	elseif tvar == "classnotireg" then
+		if num == true then
+			if (setto >= 0 and setto <= 5) or setto == 10 or setto == 11 then
+				ok = true
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0, 1, 2, 3, 4, 5, 10 " .. gettext ("or") .. " 11"))
+			end
+		else
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
+		end
 
 ----- ---- --- -- -
 
@@ -15704,7 +15663,65 @@ else
 commandanswer (nick, string.format (gettext ("Configuration variable %s can't be empty."), tvar))
 end
 
+
 ----- ---- --- -- -
+
+elseif tvar == "authrunning" then
+if num == true then
+if (setto == 0) or (setto == 1) then
+ok = true
+else
+commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 "..gettext ("or").." 1"))
+end
+
+else
+commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
+end
+
+	----- ---- --- -- -
+
+	elseif tvar == "regnewpubenable" then
+		if num == true then
+			if setto == 0 or setto == 1 then
+				ok = true
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0 " .. gettext ("or") .. " 1"))
+			end
+		else
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
+		end
+
+	----- ---- --- -- -
+
+	elseif tvar == "regnewpubmsgreg" then
+		ok = true
+
+	----- ---- --- -- -
+
+	elseif tvar == "regnewpubmsgvip" then
+		ok = true
+
+	----- ---- --- -- -
+
+	elseif tvar == "regnewpubmsgop" then
+		ok = true
+
+	----- ---- --- -- -
+
+	elseif tvar == "regnewpubmsgcheef" then
+		ok = true
+
+	----- ---- --- -- -
+
+	elseif tvar == "regnewpubmsgadmin" then
+		ok = true
+
+	----- ---- --- -- -
+
+	elseif tvar == "regnewpubmsgmaster" then
+		ok = true
+
+	----- ---- --- -- -
 
 elseif tvar == "searfiltmsg" then
 if string.len (setto) > 0 then
@@ -15729,20 +15746,6 @@ if string.len (setto) > 0 then
 ok = true
 else
 commandanswer (nick, string.format (gettext ("Configuration variable %s can't be empty."), tvar))
-end
-
------ ---- --- -- -
-
-elseif tvar == "authrunning" then
-if num == true then
-if (setto == 0) or (setto == 1) then
-ok = true
-else
-commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 "..gettext ("or").." 1"))
-end
-
-else
-commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 end
 
 ----- ---- --- -- -
@@ -17274,7 +17277,7 @@ conf = conf.."\r\n [::] classnotisay = "..table_sets ["classnotisay"]
 	conf = conf .. "\r\n [::] classnotirepl = " .. table_sets ["classnotirepl"]
 	conf = conf .. "\r\n [::] classnotikick = " .. table_sets ["classnotikick"]
 	conf = conf .. "\r\n [::] classnotiban = " .. table_sets ["classnotiban"]
-conf = conf.."\r\n [::] classnotireg = "..table_sets ["classnotireg"]
+	conf = conf .. "\r\n [::] classnotireg = " .. table_sets ["classnotireg"]
 conf = conf.."\r\n [::] classnoticonfig = "..table_sets ["classnoticonfig"]
 conf = conf.."\r\n [::] classnotiredir = "..table_sets ["classnotiredir"]
 conf = conf.."\r\n [::] classnotibadctm = "..table_sets ["classnotibadctm"]
@@ -17333,7 +17336,15 @@ conf = conf.."\r\n [::] unkkickreason = "..table_sets ["unkkickreason"]
 conf = conf.."\r\n"
 conf = conf.."\r\n [::] authrunning = "..table_sets ["authrunning"]
 conf = conf.."\r\n [::] authmessage = "..table_sets ["authmessage"]
-conf = conf.."\r\n"
+	conf = conf .. "\r\n"
+	conf = conf .. "\r\n [::] regnewpubenable = " .. table_sets ["regnewpubenable"]
+	conf = conf .. "\r\n [::] regnewpubmsgreg = " .. table_sets ["regnewpubmsgreg"]
+	conf = conf .. "\r\n [::] regnewpubmsgvip = " .. table_sets ["regnewpubmsgvip"]
+	conf = conf .. "\r\n [::] regnewpubmsgop = " .. table_sets ["regnewpubmsgop"]
+	conf = conf .. "\r\n [::] regnewpubmsgcheef = " .. table_sets ["regnewpubmsgcheef"]
+	conf = conf .. "\r\n [::] regnewpubmsgadmin = " .. table_sets ["regnewpubmsgadmin"]
+	conf = conf .. "\r\n [::] regnewpubmsgmaster = " .. table_sets ["regnewpubmsgmaster"]
+	conf = conf .. "\r\n"
 conf = conf.."\r\n [::] regkickaction = "..table_sets ["regkickaction"]
 conf = conf.."\r\n [::] regmechatcnt = "..table_sets ["regmechatcnt"]
 conf = conf.."\r\n [::] regmeuptime = "..table_sets ["regmeuptime"]
