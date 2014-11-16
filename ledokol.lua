@@ -18219,6 +18219,7 @@ function repurlchars (data)
 	local back = data
 	back = back:gsub ("\\", "\\\\")
 	back = back:gsub ("\"", "\\\"")
+	back = back:gsub (string.char (96), "\\" .. string.char (96))
 	return back
 end
 
