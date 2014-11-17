@@ -1,10 +1,10 @@
 # Language: pl_PL
 # Charset: CP1250
-# Version: 2.8.3
-# Author: Zorro
-# Email: zbyszekslyz@hostpl.eu
+# Version: 2.8.4
+# Author: Krzychu
+# Email: krzychulex@gmail.com
 
-Current topic: %s|Aktualny topik: %s
+Current topic: %s|Aktualny topik: %s 
 Current topic set by %s: %s|Obecny topic ustawiony przez %s: %s
 This operation might take very long time depending on how much is going to be removed. Please be patient.|Ta operacja moze dlugo potrwac w zaleznosci jak duzo zostanie usuniete. Badz cierpliwy.
 days|dni
