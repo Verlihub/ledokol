@@ -1,6 +1,6 @@
 # Language: ru_RU
 # Charset: CP1251
-# Version: 2.8.3
+# Version: 2.8.4
 # Author: MaxFox
 # Email: maxfox@inbox.ru
 
@@ -885,7 +885,7 @@ Cleared country code gag list.|Очистка списка гагов по ко�
 %s with IP %s and class %d tries to speak with country code gag in MC: %s|Пользователь %s с IP %s и классом %d с гагом по коду страны пытается говорить в общий чат: %s
 %s with IP %s and class %d tries to speak with country code gag in PM: %s|Пользователь %s с IP %s и классом %d с гагом по коду страны пытается отправить личное сообщение: %s
 No reason specified|Нет указанных причин
-Automatically deleted %d user log entries older than %d days.|Автоматически удалять лог пользователя %d старее чем %d дней.
+Automatically deleted %d user log entries older than %d days.|Автоматически удалено %d пунктов старее чем %d дней из лога пользователей.
 Main chat message replaced for user: %s|Сообщение главного чата заменяются, для пользователя: %s
 Unknown protocol command from IP %s before login: %s|Неизвестная команда протокола с IP %s до логина: %s
 Added %s to hard ban list, %d users in total.|Добавлен %s жесткий банлист, всего пользователей - %d.
