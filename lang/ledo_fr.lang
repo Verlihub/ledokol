@@ -1,11 +1,11 @@
 # Language: fr_FR
 # Charset: CP1252
-# Version: 2.8.3
+# Version: 2.8.4
 # Author: @tlantide
 # Email: chatonhubfrance@gmail.com
 
-Current topic: %s|sujet actuel: %s
-Current topic set by %s: %s|sujet actuel fixй par %s: %s
+Current topic: %s|Topic actuel: %s
+Current topic set by %s: %s|Topic actuel fixй par %s: %s
 This operation might take very long time depending on how much is going to be removed. Please be patient.|Cette opйration peut prendre quelques minutes avant d'кtre terminйe. Veuillez patienter...
 days|jours
 %s with class %d deleted %d IP logger plugin entries older than %d days.|%s de profil %d supprimйe %d  %s IP enregistrйe depuis plus de %d  jours.
@@ -106,21 +106,21 @@ No rows to remove: %s|Pas de lignes а supprimer: %s
 date|date
 %s with class %d used command: %s|%s avec le profil %d commande utilisйe: %s
 context|contexte
-Deleted from chat rank list: %s|Supprimй de la liste Frimousse du chat: %s
-Not found in chat rank list: %s|Introuvable dans la liste Frimousse du message central: %s
-Deleted from operator rank list: %s|Supprimй de la liste Frimousse des opйrateurs: %s
-Not found in operator rank list: %s|Introuvable dans la liste Frimousse des opйrateurs: %s
+Deleted from chat rank list: %s|Supprimй de la liste Top lignes du chat: %s
+Not found in chat rank list: %s|Introuvable dans la liste Top lignes du message central: %s
+Deleted from operator rank list: %s|Supprimй de la liste Top lignes des opйrateurs: %s
+Not found in operator rank list: %s|Introuvable dans la liste Top lignes des opйrateurs: %s
 Antispam|Antispam
-Your chat rank is: %d|Votre  Frimousse de message central est: %d\"
+Your chat rank is: %d|Votre  Top lignes de message central est: %d\"
 You have to write something in main chat to get started.|Tu dois йcrire quelque chose sur le chat central pour commencer.
 Custom nick list is empty.|La liste des pseudonymes personnalisйe est vide .
-Total share rank size: %s|La taille totale de Frimousse: %s
-Your operator rank is: %d|Ton Frimousse d'opйrateur est: %d
+Total share rank size: %s|La taille totale de Top lignes: %s
+Your operator rank is: %d|Ton Top lignes d'opйrateur est: %d
 You have to do some operator actions to get started.|Tu dois faire quelques actions d'opйrateur pour commencer.
-Top %d chat rankers|Top %d Frimousse du chat central
-Chat rank list is empty.|La liste de Frimousse du chat central est vide.
-Top %d operator rankers|Top %d Frimousse des opйrateurs
-Operator rank list is empty.|La liste de Frimousse des opйrateurs est vide.
+Top %d chat rankers|Top %d Top lignes du chat central
+Chat rank list is empty.|La liste de Top lignes du chat central est vide.
+Top %d operator rankers|Top %d Top lignes des opйrateurs
+Operator rank list is empty.|La liste de Top lignes des opйrateurs est vide.
 string|chaine
 No user results found.|Aucun utilisateur trouvй  .
 Showing %d user log results|Afficher %d rйsultat log de l'utilisateur
@@ -167,7 +167,7 @@ Delete MyINFO entry|Supprimer une  interdiction de MyINFO
 MyINFO list|Liste de MyINFO
 List of registered users by class|Liste des utilisateurs enregistrйs par profil
 Speak from other nick|Parler avec un autre pseudonyme
-Remove user or word from rank list|Supprimer l'utilisateur ou un mot de la liste de Frimousse
+Remove user or word from rank list|Supprimer l'utilisateur ou un mot de la liste de Top lignes
 %s with class %d deleted %d user log entries older than %d days.|%s avec le profil %d supprimй %d de l'entrйe du log utilisateur plus vieille que %d jours.
 List stored offline messages|Liste stockй messages hors ligne
 Delete offline messages by date|Supprimer les messages hors ligne par date
@@ -176,14 +176,14 @@ class|profil
 Clean up tables|Nettoyer les tables
 Operator chat history|Historique de chat central Opйrateur 
 Delete all history messages|Supprimer tous les messages d'hystorique
-Your operator rank|Votre opйrateur Frimousse
+Your operator rank|Votre opйrateur Top lignes
 Script configuration variables|Script configuration variables
 Change configuration variable|Change configuration variable
 nick|pseudonyme
 This list of commands|Liste de commandes
 %s user commands|%s commandes de l'utilisateur
 Current topic|Sujet d'actualitй
-Your chat rank|Votre chat central en Frimousse
+Your chat rank|Votre chat central en Top lignes
 You're not allowed to send private messages.|Vous n'кtes pas autorisй а envoyer des messages privйs .
 Unknown|Inconnu
 identifier|identifier
@@ -191,8 +191,8 @@ Offline message to user|Un message а l'utilisateur Hors ligne
 Main chat history|Historique du chat central
 %s statistics|%s statistiques
 Script version: %s|Script version: %s
-Total chat rank points: %d|Total des points Frimousse du chat central: %d
-Total operator rank points: %d|Total des points opйrateur de Frimousse: %d
+Total chat rank points: %d|Total des points Top lignesdu chat central: %d
+Total operator rank points: %d|Total des points Top lignes de Top lignes: %d
 Average message count per user: %.2f|Nombre moyen de messages par utilisateur: %.2f
 lre|lre
 action|action
@@ -211,14 +211,14 @@ minutes|minutes
 %s library version: %s|%s bibliothиque version: %s
 Reorder right click menu item|Rйorganiser le menu du clic droit
 lines|lignes
-Couldn't add rank exception because already exists: %s|Impossible d'ajouter une Frimousse d'exception parce existe dйjа: %s
-Added rank exception: %s|Ajoutй une Frimousse d'exception: %s
-Deleted rank exception: %s|Supprimer une Frimousse d'exception: %s
-Couldn't delete rank exception because not found: %s|Impossible de supprimer Frimousse d'exception car il es  introuvable: %s
-Rank exception list|Liste d'exception Frimousse
-Rank exception list is empty.|La liste des Frimousse d'exception est vide.
-Add rank exception|Ajoutй une Frimousse d'exception
-Delete rank exception|Supprimer Frimousse d'exception
+Couldn't add rank exception because already exists: %s|Impossible d'ajouter une Top lignes d'exception parce existe dйjа: %s
+Added rank exception: %s|Ajoutй une Top lignes d'exception: %s
+Deleted rank exception: %s|Supprimer une Top lignes d'exception: %s
+Couldn't delete rank exception because not found: %s|Impossible de supprimer Top lignes d'exception car il es  introuvable: %s
+Rank exception list|Liste d'exception Top lignes
+Rank exception list is empty.|La liste des Top lignes d'exception est vide.
+Add rank exception|Ajoutй une Top lignes d'exception
+Delete rank exception|Supprimer Top lignes d'exception
 In order to use this feature you must turn off registered users list cache. Do it by setting hub configuration variable %s to %d and restarting the hub. Please note: Turning cache off is not recommended with large list of registered users.|Pour utiliser cette fonctionnalitй, vous devez dйsactiver les utilisateurs enregistrйs liste cache. Faites-le par la mise en configuration du concentrateur variable %s а %d  et le redйmarrage du moyeu. S'il vous plaоt noter: Mise hors cache n'est pas recommandй avec une grande liste des utilisateurs enregistrйs.
 Both|Both
 Deleted search filter: %s|Supprimй un filtre de recherche: %s 
@@ -322,13 +322,13 @@ No releases by requested search string were found: %s|Aucunne releases de la dem
 time|Heure
 Known search types are: %s|Les types de recherche connus sont : %s
 Configuration variable %s can't be empty.|La configuration variable %s ne peut pas кtre vide .
-Deleted from share rank list: %s|Supprimй de la liste des share de Frimousse: %s
-Not found in share rank list: %s|Ne se  trouve pas dans la liste share Frimousse: %s
-Your share rank|Votre share Frimousse
-Top %d share rankers|Top %d share Frimousses
+Deleted from share rank list: %s|Supprimй de la liste des share de Top lignes: %s
+Not found in share rank list: %s|Ne se  trouve pas dans la liste share Top lignes: %s
+Your share rank|Votre share Top lignes
+Top %d share rankers|Top %d share Top lignes
 You have to share %s and reconnect to get started.|Vous devez partager %s reconnecter pour commencer.
-Share rank list is empty.|La liste de Partage Frimousse est vide .
-Your share rank is: %s|Votre partage  Frimousse est : %s
+Share rank list is empty.|La liste de Partage Top lignes est vide .
+Your share rank is: %s|Votre partage  Top lignes est : %s
 Custom nick can't be longer than %d characters.|La personnalisй pseudonyme ne pas peut кtre plus de %d caractиres.
 Delete custom nick|Supprimer personnalisation pseudonyme
 Deleted user from custom nick list: %s|Utilisateur supprimй de la liste des pseudonyme customisй: %s
@@ -345,7 +345,7 @@ Added command permission with class %d: %s|Autorisation de commande ajoutйe ave
 Deleted command permission: %s| Supprimer la Commande de  permission: %s
 Couldn't delete command permission because not found: %s|Impossible de supprimer l'autorisation commande car elle es introuvable:%s
 Command permission list is empty.|Liste des autorisations de commande est vide.
-Total search rank points: %d|Total des points de recherche de Frimousse : %d
+Total search rank points: %d|Total des points de recherche de Top lignes : %d
 Please use following commands to finish update process|S'il vous plaоt utiliser les commandes suivantes pour terminer processus de mise а jour
 Moving file: %s|Dйplacement du fichier: %s
 Please visit %s to download the script manually.|S'il vous plaоt visitez %s pour tйlйcharger le script manuellement .
@@ -373,14 +373,14 @@ Requested nick wasn't found in custom nick list.|Pseudonyme demandй n'a pas йt
 Requested nick belongs to a user who is %s: %s|La requette demandй sur le pseudonyme  appartient а un utilisateur qui est %s: %s
 offline|dйconnectй
 online|connecter
-Clean up ranks|Nettoyer Frimousses
+Clean up ranks|Nettoyer Top lignes
 limit|limite
-%s with class %d deleted %d chat ranks lower than %d.|%s avec le profil %d a йtй supprimйs %d la discussion rank est infйrieure а celle %d.
-%s with class %d deleted %d share ranks lower than %s.|%s avec le profil %d a йtй supprimйs %d le share rank est infйrieure а celle %d.
-%s with class %d deleted %d operator ranks lower than %d.|%s avec le profil %d a йtй supprimйs %d la discussion operator rank est infйrieure а celle %d.
-Size of chat ranks table: %d [ %s: %d @ %s ]|Taille de discussion Frimousse table: %d [ %s: %d @ %s ]
+%s with class %d deleted %d chat ranks lower than %d.|%s avec le profil %d a йtй supprimйs %d la discussion Top lignes est infйrieure а celle %d.
+%s with class %d deleted %d share ranks lower than %s.|%s avec le profil %d a йtй supprimйs %d le share Top lignes est infйrieure а celle %d.
+%s with class %d deleted %d operator ranks lower than %d.|%s avec le profil %d a йtй supprimйs %d la discussion operator Top lignes est infйrieure а celle %d.
+Size of chat ranks table: %d [ %s: %d @ %s ]|Taille de discussion de Top lignes table: %d [ %s: %d @ %s ]
 Size of share ranks table: %d [ %s: %d @ %s ]|Taille de share table: %d [ %s: %d @ %s ]
-Size of operator ranks table: %d [ %s: %d @ %s ]|Taille de l'opйrateur Frimousse table: %d [ %s: %d @ %s ]
+Size of operator ranks table: %d [ %s: %d @ %s ]|Taille de l'opйrateur Top lignes table: %d [ %s: %d @ %s ]
 content|teneur
 destination|destination
 interval|interval
@@ -441,12 +441,12 @@ day|jour
 hour|heure
 hours|heures
 Top %d used words|Top %s des mots utilisй
-Deleted from word rank list: %s|Supprimй de la liste des mots de Frimousse: %s
-Not found in word rank list: %s|Ne se trouve pas dans liste de mots de Frimousse: %s
+Deleted from word rank list: %s|Supprimй de la liste des mots de Top lignes: %s
+Not found in word rank list: %s|Ne se trouve pas dans liste de mots de Top lignes: %s
 %s with class %d deleted %d word ranks lower than %d.|%s avec le profil %d supprime %d mot infйrieure а celle d%.
-Size of word ranks table: %d [ %s: %d @ %s ]|Taille de la table de mot Frimousse: %d [ %s: %d @ %s ]
-Total word rank points: %d|Total des points mot de Frimousse: %d
-Word rank list is empty.|La liste des mots de Frimousse est vide .
+Size of word ranks table: %d [ %s: %d @ %s ]|Taille de la table de mot Top lignes: %d [ %s: %d @ %s ]
+Total word rank points: %d|Total des points mot de Top lignes: %d
+Word rank list is empty.|La liste des mots de Top lignes est vide .
 %s with class %d registered new user with class %d: %s|%s avec le profil %d enregistre nouvel utilisateur avec le\nprofil %d: %s
 %s with class %d deleted registered user with class %d: %s|%s avec le profil %d surprime un utilisateur enregistrй avec le profil %d: %s
 %s with class %d changed user class from %d to %d: %s|%s avec le profil %d change le profil user  а partir de %d а%d: %s
@@ -664,7 +664,7 @@ No error message specified.|Pas de message d'erreur spйcifiй
 Search filter|Filtre de recherche
 MyINFO check|MyINFO vйrifier 
 Authorization|Autorisation
-Ranks|Frimousses
+Ranks|Top lignes
 Welcome messages|Messages de bienvenue
 Chatrooms|Chatrooms
 Reminders|Rappels information temporiser
@@ -693,11 +693,11 @@ This feature requires following binary installed on your system: %s|Cette foncti
 Configuration directory: %s|Rйpertoire de configuration: %s
 %s with IP %s and class %d stated incorrect IP in connect request to %s: %s|%s avec l'IP %s et le profil %d a donnй une IP incorrecte а la demande de connexion а %s: %s
 Top %d search requests|Top %d des requиtes de recherche
-Search rank list is empty.|La liste de recherche de frimousse est vide.
-Deleted from search rank list: %s|Supprimй de la liste de recherche frimousse: %s
-Not found in search rank list: %s|Introuvable dans la liste recherche frimousse: %s
-%s with class %d deleted %d search ranks lower than %d.|%s avec le profil %d a supprimй %d les frimousses de recherche supйrieurs а %d.
-Size of search ranks table: %d [ %s: %d @ %s ]|Taille de la table frimousse de recherche: %d [ %s: %d @ %s ]
+Search rank list is empty.|La liste de recherche de Top lignes est vide.
+Deleted from search rank list: %s|Supprimй de la liste de recherche Top lignes: %s
+Not found in search rank list: %s|Introuvable dans la liste recherche Top lignes: %s
+%s with class %d deleted %d search ranks lower than %d.|%s avec le profil %d a supprimй %d les Top lignes de recherche supйrieurs а %d.
+Size of search ranks table: %d [ %s: %d @ %s ]|Taille de la table Top lignes de recherche: %d [ %s: %d @ %s ]
 Size of user location statistics table: %d [ %s: %s ]|Taille de la table des statistiques d'emplacement de l'utilisateur: %d [ %s: %s ]
 Open files limit: %d|Limite de fichiers ouverts: %d
 User information|Informations de l'utilisateur
@@ -1026,7 +1026,7 @@ Added trigger: %s|Ajouter le trigger: %s
 Deleted trigger: %s|Supprimer le trigger: %s
 Trigger not found: %s|Trigger introuvable: %s
 Trigger list is empty.|La liste du trigger est vide.
-Class range: %d to %d|Rangйe de profil: %d а %d
+Class range: %d to %d|Dйnomination de profil: %d а %d
 Pinger|Pinger
 Guest|Invitй
 Registered|Enregistrй
