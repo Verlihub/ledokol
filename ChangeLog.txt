@@ -1,4 +1,4 @@
-[ 2.8.4 :: 2014-11-## ]
+[ 2.8.4 :: 2014-11-17 ]
 
 Fixed: Correctly remove user from operator ranks when he deletes his own registration
 Changed: User registration notification now rely on plugin callbacks instead of command scans
