@@ -1,6 +1,6 @@
 # Language: en_GB
 # Charset: CP1252
-# Version: 2.8.4
+# Version: 2.8.5
 # Author: RoLex
 # Email: webmaster@feardc.net
 
@@ -57,18 +57,18 @@ type|
 %s with IP %s and class %d allowed due to forbidden share size exception: %s|
 Deleted %d releases from category: %s|
 Why would you want to set empty topic?|
-Couldn't add forbidden nick because already exists: %s|
-Added forbidden nick: %s|
-Couldn't add forbidden description because already exists: %s|
-Added forbidden description: %s|
-Couldn't add forbidden tag because already exists: %s|
-Added forbidden tag: %s|
-Couldn't add forbidden connection type because already exists: %s|
-Added forbidden connection type: %s|
-Couldn't add forbidden email because already exists: %s|
-Added forbidden email: %s|
-Couldn't add forbidden share size because already exists: %s|
-Added forbidden share size: %s|
+Modified forbidden nick with ban time %s: %s|
+Added forbidden nick with ban time %s: %s|
+Modified forbidden description with ban time %s: %s|
+Added forbidden description with ban time %s: %s|
+Modified forbidden tag with ban time %s: %s|
+Added forbidden tag with ban time %s: %s|
+Modified forbidden connection type with ban time %s: %s|
+Added forbidden connection type with ban time %s: %s|
+Modified forbidden email with ban time %s: %s|
+Added forbidden email with ban time %s: %s|
+Modified forbidden share size with ban time %s: %s|
+Added forbidden share size with ban time %s: %s|
 Couldn't add MyINFO exception because already exists: %s|
 Added MyINFO exception: %s|
 and|
@@ -349,8 +349,8 @@ Total search rank points: %d|
 Please use following commands to finish update process|
 Moving file: %s|
 Please visit %s to download the script manually.|
-Couldn't add forbidden IP address because already exists: %s|
-Added forbidden IP address: %s|
+Modified forbidden IP address with ban time %s: %s|
+Added forbidden IP address with ban time %s: %s|
 Deleted forbidden IP address: %s|
 Couldn't delete forbidden IP address because not found: %s|
 Forbidden IP address list|
@@ -756,8 +756,8 @@ Bot information|
 Owner script: %s|
 %s with IP %s and class %d allowed due to forbidden DNS exception: %s|
 In order to use this feature you need to enable DNS lookup. Do it by setting hub configuration variable %s to %d. Please note: Enabling DNS lookup might slow your hub performance down.|
-Couldn't add forbidden DNS because already exists: %s|
-Added forbidden DNS: %s|
+Modified forbidden DNS with ban time %s: %s|
+Added forbidden DNS with ban time %s: %s|
 Deleted forbidden DNS: %s|
 Couldn't delete forbidden DNS because not found: %s|
 Forbidden DNS list|
@@ -787,8 +787,8 @@ Couldn't modify authorization entry because not found: %d|
 Uptime: %s|
 Enable requested feature and try again.|
 cc|
-Couldn't add forbidden country code because already exists: %s|
-Added forbidden country code: %s|
+Modified forbidden country code with ban time %s: %s|
+Added forbidden country code with ban time %s: %s|
 Deleted forbidden country code: %s|
 Couldn't delete forbidden country code because not found: %s|
 Forbidden country code list|
@@ -891,10 +891,10 @@ Unknown protocol command from IP %s before login: %s|
 Added %s to hard ban list, %d users in total.|
 NMDC version: %s|
 Client supports: %s|
-Couldn't add forbidden client supports because already exists: %s|
-Added forbidden client supports: %s|
-Couldn't add forbidden NMDC version because already exists: %s|
-Added forbidden NMDC version: %s|
+Modified forbidden client supports with ban time %s: %s|
+Added forbidden client supports with ban time %s: %s|
+Modified forbidden NMDC version with ban time %s: %s|
+Added forbidden NMDC version with ban time %s: %s|
 Latest version of %s is required in order to use this feature.|
 Deleted forbidden client supports: %s|
 Couldn't delete forbidden client supports because not found: %s|
@@ -1075,3 +1075,4 @@ Couldn't delete automatic country chatroom entrance because ID not found: %d|
 Deleted automatic country chatroom entrance with ID: %d|
 Automatic country chatroom entrance list is empty.|
 Please note, following function is required for features available in this version of %s and is currently not available in running version of %s but is available in latest update: %s|
+note|
