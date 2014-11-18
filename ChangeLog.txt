@@ -1,3 +1,8 @@
+[ 2.8.5 :: 201#-##-## ]
+
+Changed: myinfadd command parameter syntax to <type> <"lre"> ["time"] ["note"]
+Added: Optional parameter to add note for each forbidden MyINFO item, request by Uhlik
+
 [ 2.8.4 :: 2014-11-17 ]
 
 Fixed: Correctly remove user from operator ranks when he deletes his own registration
