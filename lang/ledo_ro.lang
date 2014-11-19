@@ -1,6 +1,6 @@
 # Language: ro_RO
 # Charset: CP1250
-# Version: 2.8.4
+# Version: 2.8.5
 # Author: S0RiN
 # Email: rusu_sorin_con@yahoo.com
 
@@ -57,18 +57,18 @@ type|tip
 %s with IP %s and class %d allowed due to forbidden share size exception: %s|%s cu IP %s єi clasa %d are permis accesul pe hub, datoritг excepюiei de la interzicere pe aceasta dimensiune de share: %s
 Deleted %d releases from category: %s|S-au єters %d lansгrile din categoria %s
 Why would you want to set empty topic?|De ce ai dori sг setezi un spaюiu gol ca єi topic?
-Couldn't add forbidden nick because already exists: %s|Nu poюi adгuga aceastг interdicюie pe nick pentru cг: %s deja existг.
-Added forbidden nick: %s|Ai adгugat interdicюie pe nick: %s
-Couldn't add forbidden description because already exists: %s|Nu poюi adгuga aceastг interdicюie pe descriere pentru cг deja existг: %s
-Added forbidden description: %s|Ai adгugat interdicюie pe descrierea: %s
-Couldn't add forbidden tag because already exists: %s|Nu poюi adгuga aceastг interdicюie pe tag pentru cг deja existг: %s
-Added forbidden tag: %s|Ai adгugat interdicюie pe tag-ul: %s
-Couldn't add forbidden connection type because already exists: %s|Nu poюi adгuga aceastг interdicюie pe tipul de conexiune pentru cг deja existг: %s
-Added forbidden connection type: %s|Ai adгugat interdicюie pe tipul de conexiune: %s
-Couldn't add forbidden email because already exists: %s|Nu poюi adгuga aceastг interdicюie pe email pentru cг deja existг: %s
-Added forbidden email: %s|Ai adгugat interdicюie pe email: %s
-Couldn't add forbidden share size because already exists: %s|Nu poюi adгuga aceastг cifrг de share la interdicюii pentru cг deja existг: %s
-Added forbidden share size: %s|Ai adгugat interdicюie pe cifra de share: %s
+Modified forbidden nick with ban time %s: %s|Modificare nick nepermis cu timp de banare %s: %s
+Added forbidden nick with ban time %s: %s|Adгugare nick nepermis cu timp de banare %s: %s
+Modified forbidden description with ban time %s: %s|Modificare descriere nepermisг cu timp de banare %s: %s
+Added forbidden description with ban time %s: %s|Adгugare descriere nepermisг cu timp de banare %s: %s
+Modified forbidden tag with ban time %s: %s|Modificare tag nepermis cu timp de banare %s: %s
+Added forbidden tag with ban time %s: %s|Adгugare tag nepermis cu timp de banare %s: %s
+Modified forbidden connection type with ban time %s: %s|Modificare tip de conexiune nepermisг cu timp de banare %s: %s
+Added forbidden connection type with ban time %s: %s|Adгugare tip de conexiune nepermisг cu timp de banare %s: %s
+Modified forbidden email with ban time %s: %s|Modificare e-mail nepermis cu timp de banare %s: %s
+Added forbidden email with ban time %s: %s|Adгugare e-mail nepermis cu timp de banare %s: %s
+Modified forbidden share size with ban time %s: %s|Modificare dimensiune share nepermisг cu timp de banare %s: %s
+Added forbidden share size with ban time %s: %s|Adгugare dimensiune share nepermisг cu timp de banare %s: %s
 Couldn't add MyINFO exception because already exists: %s|Nu poюi adгuga aceastг excepюie de la MyINFO pentru cг deja existг: %s
 Added MyINFO exception: %s|Ai adгugat excepюie de la MyINFO: %s
 and|єi
@@ -349,8 +349,8 @@ Total search rank points: %d|Totalul punctajului gradelor: %d
 Please use following commands to finish update process|Te rog sг foloseєti urmгtoarele comenzi pentru a finaliza procesul de оnnoire a datelor
 Moving file: %s|Se mutг filele: %s
 Please visit %s to download the script manually.|Rog sг vizitezi %s pentru a descгrca scriptul manual.
-Couldn't add forbidden IP address because already exists: %s|Nu poюi adгuga interdicюie pe IP %s pentru cг existг deja.
-Added forbidden IP address: %s|Adгugare interdicюie pe IP: %s
+Modified forbidden IP address with ban time %s: %s|Modificare adresг IP nepermisг cu timp de banare %s: %s
+Added forbidden IP address with ban time %s: %s|Adгugare adresг IP nepermisг cu timp de banare %s: %s
 Deleted forbidden IP address: %s|Єtergere interdicюie IP: %s
 Couldn't delete forbidden IP address because not found: %s|Nu se poate єterge interdicюia pe IP %s pentru cг nu s-a gгsit.
 Forbidden IP address list|Lista cu interdicюii pe IP
@@ -756,8 +756,8 @@ Bot information|Informaюiile botului
 Owner script: %s|Script de proprietar: %s
 %s with IP %s and class %d allowed due to forbidden DNS exception: %s|%s cu IP %s are permisiune datoritг excepюiei la interdicюia pe DNS: %s
 In order to use this feature you need to enable DNS lookup. Do it by setting hub configuration variable %s to %d. Please note: Enabling DNS lookup might slow your hub performance down.|Pentru a utiliza aceastг funcюie este nevoie sг activezi cercetarea DNS. Fг-o setвnd configuraюia variabilг a hubului de la %s la %d. Rog sг iei aminte: Activarea cercetгrii DNS poate provoca оncetinirea performanюelor hubului.
-Couldn't add forbidden DNS because already exists: %s|Nu poюi adгuga interdicюie pe DNS %s pentru cг deja existг.
-Added forbidden DNS: %s|Adгugare interdicюie DNS: %s
+Modified forbidden DNS with ban time %s: %s|Modificare adresг DNS nepermisг cu timp de banare %s: %s
+Added forbidden DNS with ban time %s: %s|Adгugare adresг DNS nepermisг cu timp de banare %s: %s
 Deleted forbidden DNS: %s|Єtergere interdicюie DNS: %s
 Couldn't delete forbidden DNS because not found: %s|Nu poate fi єtearsг interzicerea pe DNS %s pentru cг nu a fost gгsitг.
 Forbidden DNS list|Lista de interdicюii pe DNS
@@ -787,8 +787,8 @@ Couldn't modify authorization entry because not found: %d|Nu se poate modifica i
 Uptime: %s|Timp de pornire: %s
 Enable requested feature and try again.|Dezactiveazг caracteristica solicitatг єi оncearcг din nou.
 cc|cc
-Couldn't add forbidden country code because already exists: %s|Nu poюi adгuga interzicere pe cod de юarг pentru cг deja existг: %s
-Added forbidden country code: %s|Adгugare interzicere cod de юarг: %s
+Modified forbidden country code with ban time %s: %s|Modificare cod de юarг nepermis cu timp de banare %s: %s
+Added forbidden country code with ban time %s: %s|Adгugare cod de юarг nepermis cu timp de banare %s: %s
 Deleted forbidden country code: %s|Єtergere interzicere cod de юarг: %s
 Couldn't delete forbidden country code because not found: %s|Nu se poate єterge interzicerea pe cod de юarг, pentru cг n-a fost gгsit: %s
 Forbidden country code list|Lista cu interziceri pe cod de юarг
@@ -891,10 +891,10 @@ Unknown protocol command from IP %s before login: %s|Comandг cu protocol necuno
 Added %s to hard ban list, %d users in total.|Adгugat %s la lista cu ban-uri grele, %d utilizatori оn total.
 NMDC version: %s|Versiune NMDC: %s
 Client supports: %s|Clienюi suport: %s
-Couldn't add forbidden client supports because already exists: %s|Nu poюi adгuga interdicюie pe client suport pentru cг deja existг: %s
-Added forbidden client supports: %s|Adгugat client suport interzis: %s
-Couldn't add forbidden NMDC version because already exists: %s|Nu poюi adгuga interdicюie pe versiunea de NMDC, pentru cг deja existг: %s
-Added forbidden NMDC version: %s|Adгugat interdicюie pe versiunea NMDC: %s
+Modified forbidden client supports with ban time %s: %s|Modificare suport client DC nepermis cu timp de banare %s: %s
+Added forbidden client supports with ban time %s: %s|Adгugare suport client DC nepermis cu timp de banare %s: %s
+Modified forbidden NMDC version with ban time %s: %s|Modificare NMDC nepermis cu timp de banare %s: %s
+Added forbidden NMDC version with ban time %s: %s|Adгugare NMDC nepermis cu timp de banare %s: %s
 Latest version of %s is required in order to use this feature.|Ultima versiune a %s este necesarг pentru a utiliza aceastг funcюie.
 Deleted forbidden client supports: %s|S-a єters interdicюia pe clientul suport: %s
 Couldn't delete forbidden client supports because not found: %s|Nu se poate єterge interdicюia pe clientul suport, pentru cг nu s-a gгsit: %s
@@ -1075,3 +1075,4 @@ Couldn't delete automatic country chatroom entrance because ID not found: %d|Nu 
 Deleted automatic country chatroom entrance with ID: %d|S-a єters intrarea camerг automatг pe юarг cu identificator: %d
 Automatic country chatroom entrance list is empty.|Lista cu intrгri automate camere de chat dupг югri, este goalг.
 Please note, following function is required for features available in this version of %s and is currently not available in running version of %s but is available in latest update: %s|Te rog sг notezi, urmгtoarea funcюie este necesarг pentru caracteristici disponibile оn aceastг versiune a %s єi оn acest moment nu este disponibilг оn versiunea ce ruleazг %s dar este disponibilг оn ultimul update: %s
+note|notг
