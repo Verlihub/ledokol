@@ -1,6 +1,6 @@
 # Language: ru_RU
 # Charset: CP1251
-# Version: 2.8.4
+# Version: 2.8.5
 # Author: MaxFox
 # Email: maxfox@inbox.ru
 
@@ -57,18 +57,18 @@ type|тип
 %s with IP %s and class %d allowed due to forbidden share size exception: %s|Пользователь %s с IP-адресом %s и классом %d пропущен с исключением по размеру шары: %s
 Deleted %d releases from category: %s|Удалены %d релизов из категории %s
 Why would you want to set empty topic?|Почему вы хотите установить пустую тему?
-Couldn't add forbidden nick because already exists: %s|Не могу добавить ник в запрещенне поскольку такой ник уже существует: %s
-Added forbidden nick: %s|Добавлен запрещенный ник: %s
-Couldn't add forbidden description because already exists: %s|Не могу добавить описание в запрещенные поскольку такое описание уже существеут: %s
-Added forbidden description: %s|Добавлено запрещенное описание: %s
-Couldn't add forbidden tag because already exists: %s|Не могу добавить тег в запрещенные поскольку такой тег уже существует: %s
-Added forbidden tag: %s|Добавлен запрещенный тег: %s
-Couldn't add forbidden connection type because already exists: %s|Не могу добавить тип соединения в запрещенные поскольку такой тип уже существует: %s
-Added forbidden connection type: %s|Добавлен запрещенный тип соединения: %s
-Couldn't add forbidden email because already exists: %s|Не могу добавить e-mail в запрещенные поскольку такой e-mail уже существует: %s
-Added forbidden email: %s|Добавлен запрещенный e-mail: %s
-Couldn't add forbidden share size because already exists: %s|Не могу добавить размер шары в запрещенные поскольку такой размер уже существует: %s
-Added forbidden share size: %s|Добавлен запрещенный размер шары: %s
+Modified forbidden nick with ban time %s: %s|Изменен запрещенный ник с баном %s: %s
+Added forbidden nick with ban time %s: %s|Добавлен запрещенный ник с баном %s: %s
+Modified forbidden description with ban time %s: %s|Изменено запрещенное описание с баном %s: %s
+Added forbidden description with ban time %s: %s|Добавлено запрещенное описание с баном %s: %s
+Modified forbidden tag with ban time %s: %s|Изменен запрещенный тэг с баном %s: %s
+Added forbidden tag with ban time %s: %s|Добавлен запрещенный тэг с баном %s: %s
+Modified forbidden connection type with ban time %s: %s|Изменен запрещенный тип соединения с баном %s: %s
+Added forbidden connection type with ban time %s: %s|Добавлен запрещенный тип соединения с баном %s: %s
+Modified forbidden email with ban time %s: %s|Изменен запрещенный почтовый адрес с баном %s: %s
+Added forbidden email with ban time %s: %s|Добавлен запрещенный почтовый адрес с баном %s: %s
+Modified forbidden share size with ban time %s: %s|Изменен запрещенный размер шары с баном %s: %s
+Added forbidden share size with ban time %s: %s|Добавлен запрещенный размер шары с баном %s: %s
 Couldn't add MyINFO exception because already exists: %s|Не могу добавить исключение в MyINFO сканера, поскольку оно уже существует: %s
 Added MyINFO exception: %s|Добавлено исключение MyINFO сканера: %s
 and|и
@@ -349,8 +349,8 @@ Total search rank points: %d|Итоговое количество очков в
 Please use following commands to finish update process|Используйте следующие команды для завершения процесса обновления
 Moving file: %s|Перемещаю файл: %s
 Please visit %s to download the script manually.|Пожалуйста посетите %s чтобы загрузить скрипт вручную.
-Couldn't add forbidden IP address because already exists: %s|Не могу добавить уже существующий IP-адрес в запрещенные: %s
-Added forbidden IP address: %s|Добавлен IP-адрес в запрещенные: %s
+Modified forbidden IP address with ban time %s: %s|Изменен запрещенный IP адрес с баном %s: %s
+Added forbidden IP address with ban time %s: %s|Добавлен запрещенный IP адрес с баном %s: %s
 Deleted forbidden IP address: %s|Удален IP-адрес из запрещенных: %s
 Couldn't delete forbidden IP address because not found: %s|Не могу удалить IP-адрес из запрещенных. Не найден в базе: %s
 Forbidden IP address list|Список запрещенных IP-адресов
@@ -756,8 +756,8 @@ Bot information|Описание бота
 Owner script: %s|Родительский скрипт: %s
 %s with IP %s and class %d allowed due to forbidden DNS exception: %s|Пользователь %s с IP-адресом %s и классом %d пропущен с исключением по запрещенному DNS-имени: %s
 In order to use this feature you need to enable DNS lookup. Do it by setting hub configuration variable %s to %d. Please note: Enabling DNS lookup might slow your hub performance down.|Если вы хотите использовать данную функцию вы должны включить DNS lookup. Сделайте это установив конфигурационную переменную хаба %s в значение %d. Однако помните. Включение DNS-lookup может понизить производительность вашего хаба.
-Couldn't add forbidden DNS because already exists: %s|Невозможно добавить существующее DNS-имя: %s
-Added forbidden DNS: %s|Добавлено запрещенное DNS-имя: %s
+Modified forbidden DNS with ban time %s: %s|Изменен запрещенный DNS адрес с баном %s: %s
+Added forbidden DNS with ban time %s: %s|Добавлен запрещенный DNS адрес с баном %s: %s
 Deleted forbidden DNS: %s|Удалено запрещенное DNS-имя: %s
 Couldn't delete forbidden DNS because not found: %s|Невозможно удалить запрещенное DNS-имя. Не найдено в базе: %s
 Forbidden DNS list|Список запрещенных DNS-имен
@@ -787,8 +787,8 @@ Couldn't modify authorization entry because not found: %d|Невозможно �
 Uptime: %s|Время работы: %s
 Enable requested feature and try again.|Пожалуйста, включите функцию и попробуйте снова.
 cc|cc
-Couldn't add forbidden country code because already exists: %s|Невозможно повторно добавить уже существующую запись кода страны: %s
-Added forbidden country code: %s|Добавлен запрещенный код страны: %s
+Modified forbidden country code with ban time %s: %s|Изменен запрещенный код страны с баном %s: %s
+Added forbidden country code with ban time %s: %s|Добавлен запрещенный код страны с баном %s: %s
 Deleted forbidden country code: %s|Удален запрещенный код страны: %s
 Couldn't delete forbidden country code because not found: %s|Запрещенный код страны не удален потому что не найден: %s
 Forbidden country code list|Список запрещенных кодов страны
@@ -891,10 +891,10 @@ Unknown protocol command from IP %s before login: %s|Неизвестная ко
 Added %s to hard ban list, %d users in total.|Добавлен %s жесткий банлист, всего пользователей - %d.
 NMDC version: %s|NMDC версия: %s
 Client supports: %s|Клиент поддерживает: %s
-Couldn't add forbidden client supports because already exists: %s|Невозможно заблокировать поддержку клиента, уже существует: %s
-Added forbidden client supports: %s|Добавлена блокировка поддержки клиента: %s
-Couldn't add forbidden NMDC version because already exists: %s|Невозможно заблокировать NMDC версию, уже существует: %s
-Added forbidden NMDC version: %s|Добавлена блокировка NMDC версии: %s
+Modified forbidden client supports with ban time %s: %s|Изменен запрещенный саппорт клиента с баном %s: %s
+Added forbidden client supports with ban time %s: %s|Добавлен запрещенный саппорт клиента с баном %s: %s
+Modified forbidden NMDC version with ban time %s: %s|Изменена запрещенная версия NMDC с баном %s: %s
+Added forbidden NMDC version with ban time %s: %s|Добавлена запрещенная версия NMDC с баном %s: %s
 Latest version of %s is required in order to use this feature.|Последняя версия %s требуется для использования данной функции.
 Deleted forbidden client supports: %s|Удалена блокировка поддержки клиента: %s
 Couldn't delete forbidden client supports because not found: %s|Невозможно удалить блокировку поддержки клиента, не найдено: %s
@@ -1075,3 +1075,4 @@ Couldn't delete automatic country chatroom entrance because ID not found: %d|Н�
 Deleted automatic country chatroom entrance with ID: %d|Удален автоматический вход в чат комнату по стране с ID: %d
 Automatic country chatroom entrance list is empty.|Список автоматических входов в чат комнаты по стране пуст.
 Please note, following function is required for features available in this version of %s and is currently not available in running version of %s but is available in latest update: %s|Внимание, следующая функция требуется для полноценной работы данной версии %s и является не доступной в данной версии %s но доступна в последнем обновлении: %s
+note|заметка
