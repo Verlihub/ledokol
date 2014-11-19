@@ -1,8 +1,8 @@
 # Language: pl_PL
 # Charset: CP1250
-# Version: 2.8.4
-# Author: Krzychu
-# Email: krzychulex@gmail.com
+# Version: 2.8.5
+# Author: Zorro
+# Email: zbyszekslyz@hostpl.eu
 
 Current topic: %s|Aktualny topik: %s 
 Current topic set by %s: %s|Obecny topic ustawiony przez %s: %s
@@ -57,35 +57,35 @@ type|typ
 %s with IP %s and class %d allowed due to forbidden share size exception: %s|% z IP i klasy %d dozwolone ze wzgledu na zakaz Wielosci Shere  z wyjatkiem:  %s.
 Deleted %d releases from category: %s|Usunieto %d nowosc z kategorii: %s
 Why would you want to set empty topic?|Czemu chcesz ustawic pusty topic?
-Couldn't add forbidden nick because already exists: %s|Nie mozna dodac zakazanego nicku poniewaz juz zostal dodany: %s
-Added forbidden nick: %s|Dodano zakazany nick: %s
-Couldn't add forbidden description because already exists: %s|Nie mozna dodac zakazanego opisu poniewaz juz zostal dodany: %s
-Added forbidden description: %s|Dodano zakazany opis: %s
-Couldn't add forbidden tag because already exists: %s|Nie mozna dodac zakazanego tagu poniewaz juz zostal dodany: %s
-Added forbidden tag: %s|Dodano zakazany tag: %s
-Couldn't add forbidden connection type because already exists: %s|Nie mozna dodac zakazanego typu polaczenia poniewaz juz zostal dodany: %s
-Added forbidden connection type: %s|Dodano zakazany typ polaczenia: %s
-Couldn't add forbidden email because already exists: %s|Nie mozna dodac zakazanego emaila poniewaz juz zostal dodany: %s
-Added forbidden email: %s|Dodano zakazany email: %s
-Couldn't add forbidden share size because already exists: %s|Nie mozna dodac zakazanej wielkosci share poniewaz juz zostala dodana: %s
-Added forbidden share size: %s|Dodano zakazana wielkosc share: %s
+Modified forbidden nick with ban time %s: %s|Zmodyfikowano florbida nick z czasem ban %s: %s
+Added forbidden nick with ban time %s: %s|Dodano florbida nick z czasem ban %s: %s
+Modified forbidden description with ban time %s: %s|Zmodyfikowano florbida opis z czasem ban %s: %s
+Added forbidden description with ban time %s: %s|Dodano florbida opis z czasem ban %s: %s
+Modified forbidden tag with ban time %s: %s|Zmodyfikowano florbida tag z czasem ban %s: %s
+Added forbidden tag with ban time %s: %s|Dodano florbida tag z czasem ban %s: %s
+Modified forbidden connection type with ban time %s: %s|Zmodyfikowano florbida typ polaczenia z czasem ban %s: %s
+Added forbidden connection type with ban time %s: %s|Dodano florbida typ polaczenia z czasem ban %s: %s
+Modified forbidden email with ban time %s: %s|Zmodyfikowano florbida email z czasem ban %s: %s
+Added forbidden email with ban time %s: %s|Dodano florbida email z czasem ban %s: %s
+Modified forbidden share size with ban time %s: %s|Zmodyfikowano florbida share rozmiar z czasem ban %s: %s
+Added forbidden share size with ban time %s: %s|Dodano florbida share rozmiar z czasem ban %s: %s
 Couldn't add MyINFO exception because already exists: %s|Nie mozna dodac wyjatku MyINFO poniewaz juz zostal dodany: %s
 Added MyINFO exception: %s|Dodano wyjatek MyINFO: %s
 and|oraz
 Deleted forbidden nick: %s|Usunieto zakazany nick: %s
-Couldn't delete forbidden nick because not found: %s|Nie mozna uzunac zakazanego nicku gdyz nie znaleziono go na liscie: %s
+Couldn't delete forbidden nick because not found: %s|Nie mozna usunac zakazanego nicku gdyz nie znaleziono go na liscie: %s
 Deleted forbidden description: %s|Usunieto zakazany opis: %s
-Couldn't delete forbidden description because not found: %s|Nie mozna uzunac zakazanego opisu gdyz nie znaleziono go na liscie: %s
+Couldn't delete forbidden description because not found: %s|Nie mozna usunac zakazanego opisu gdyz nie znaleziono go na liscie: %s
 Deleted forbidden tag: %s|Usunieto zakazany tag: %s
-Couldn't delete forbidden tag because not found: %s|Nie mozna uzunac zakazanego tagu gdyz nie znaleziono go na liscie: %s
+Couldn't delete forbidden tag because not found: %s|Nie mozna usunac zakazanego tagu gdyz nie znaleziono go na liscie: %s
 Deleted forbidden connection type: %s|Usunieto zakazany typ polaczenia: %s
-Couldn't delete forbidden connection type because not found: %s|Nie mozna uzunac zakazanego typu polaczenia gdyz nie znaleziono go na liscie: %s
+Couldn't delete forbidden connection type because not found: %s|Nie mozna usunac zakazanego typu polaczenia gdyz nie znaleziono go na liscie: %s
 Deleted forbidden email: %s|Usunieto zakazany email: %s
-Couldn't delete forbidden email because not found: %s|Nie mozna uzunac zakazanego email gdyz nie znaleziono go na liscie: %s
+Couldn't delete forbidden email because not found: %s|Nie mozna usunac zakazanego email gdyz nie znaleziono go na liscie: %s
 Deleted forbidden share size: %s|Usunieto zakazana wielkosc share: %s
-Couldn't delete forbidden share size because not found: %s|Nie mozna uzunac zakazanej wielkosci share gdyz nie znaleziono jej na liscie: %s
+Couldn't delete forbidden share size because not found: %s|Nie mozna usunac zakazanej wielkosci share gdyz nie znaleziono jej na liscie: %s
 Deleted MyINFO exception: %s|Usunieto wyjatek MyINFO: %s
-Couldn't delete MyINFO exception because not found: %s|Nie mozna uzunac wyjatku MyINFO gdyz nie znaleziono go na liscie: %s
+Couldn't delete MyINFO exception because not found: %s|Nie mozna usunac wyjatku MyINFO gdyz nie znaleziono go na liscie: %s
 Forbidden nick list|Lista zakazanych nickow
 Forbidden nick list is empty.|Lista zakazanych nickow jest pusta.
 Forbidden description list|Lista zakazanych opisow
@@ -349,8 +349,8 @@ Total search rank points: %d|Suma punktow rankingu share: %d
 Please use following commands to finish update process|Prosze uzyc nastepujacych komend, aby zakonczyc proces aktualizacji
 Moving file: %s|Przenoszenie pliku: %s
 Please visit %s to download the script manually.|Prosze odwiedzic %s w celu pobrania pliku recznie.
-Couldn't add forbidden IP address because already exists: %s|Nie mozna dodac zakazanego adresu IP, wpis juz istnieje: %s
-Added forbidden IP address: %s|Dodaj zakazany adres IP: %s
+Modified forbidden IP address with ban time %s: %s|Zmodyfikowano florbida IP adres z czasem ban %s: %s
+Added forbidden IP address with ban time %s: %s|Dodano florbida IP adres z czasem ban %s: %s
 Deleted forbidden IP address: %s|Usunieto zakazany adres IP: %s
 Couldn't delete forbidden IP address because not found: %s|Nie mozna usunac wpisu adresu IP, nie znaleziono: %s
 Forbidden IP address list|Lista zakazanych adresow IP
@@ -756,8 +756,8 @@ Bot information|Informacjie bota
 Owner script: %s|Skrypt ownera: %s
 %s with IP %s and class %d allowed due to forbidden DNS exception: %s|%s z IP %s i klasy %d dozwolone z powodu forbida DNS wyjatkiem: %s
 In order to use this feature you need to enable DNS lookup. Do it by setting hub configuration variable %s to %d. Please note: Enabling DNS lookup might slow your hub performance down.|W celu wykorzystywania tej opcji musisz wlaczyc DNS lookup. Mozesz to zrobic zmieniajac zmienna konfiguracji %s na %d. Uwaga: Wlaczenie DNS lookup moze spowolnic dzialanie huba.
-Couldn't add forbidden DNS because already exists: %s|Nie mozna dodac zakazanego DNS, wpis juz istnieje: %s
-Added forbidden DNS: %s|Dodano zakazany DNS: %s
+Modified forbidden DNS with ban time %s: %s|Zmodyfikowano florbida DNS z czasem ban %s: %s
+Added forbidden DNS with ban time %s: %s|Dodano florbida DNS z czasem ban %s: %s
 Deleted forbidden DNS: %s|Usunieto zakazany DNS: %s
 Couldn't delete forbidden DNS because not found: %s|Nie mozna usunac zakazanego DNS, nie znaleziono: %s
 Forbidden DNS list|Lista zakazanych DNS
@@ -787,8 +787,8 @@ Couldn't modify authorization entry because not found: %d|Nie mozna zmodyfikowac
 Uptime: %s|Czas: %s
 Enable requested feature and try again.|Wlacz zadana opcje i sprobuj ponownie.
 cc|kk
-Couldn't add forbidden country code because already exists: %s|Nie mozna dodac zakazanego kodu kraju (kk), wpis juz istnieje: %s
-Added forbidden country code: %s|Dodano zakazany KK: %s
+Modified forbidden country code with ban time %s: %s|Zmodyfikowano florbida kod kraju z czasem ban %s: %s
+Added forbidden country code with ban time %s: %s|Dodano florbida kod kraju z czasem ban %s: %s
 Deleted forbidden country code: %s|Usunieto zakazany KK: %s
 Couldn't delete forbidden country code because not found: %s|Nie mozna usunac zakazanego kodu kraju, nie znaleziono: %s
 Forbidden country code list|Lista zakazanych kodow krajow
@@ -891,10 +891,10 @@ Unknown protocol command from IP %s before login: %s|Nieznana komeda protokolu z
 Added %s to hard ban list, %d users in total.|Dodano %s do czarnej listy banow. %d uzytkownikow w sumie.
 NMDC version: %s|Wersja NMDC: %s
 Client supports: %s|Wspierany klient: %s
-Couldn't add forbidden client supports because already exists: %s|Nie mozna dodac zakazanego wpisu poniewaz juz zostal dodany: %s
-Added forbidden client supports: %s|Dodano zabroniony wpis obsluguje klijentow.
-Couldn't add forbidden NMDC version because already exists: %s|Nie mozna dodac zakazanego NMDC wersja, poniewaz juz istnieje: %s
-Added forbidden NMDC version: %s|Dodano zabronione NMDC wersja: %s
+Modified forbidden client supports with ban time %s: %s|Zmodyfikowano florbida klient obsіuguje czasu bana
+Added forbidden client supports with ban time %s: %s|Dodano florbida klient obsіuguje czasu bana
+Modified forbidden NMDC version with ban time %s: %s|Zmodyfikowano florbida NMDC wersja z czasem ban %s: %s
+Added forbidden NMDC version with ban time %s: %s|Dodano florbida NMDC wersja z czasem ban %s: %s
 Latest version of %s is required in order to use this feature.|Najnowsza wersja z %s jest wymagana, aby uzyc tej funkcji.
 Deleted forbidden client supports: %s|Usuniete zabronione, klient obsluguje: %s
 Couldn't delete forbidden client supports because not found: %s|Nie mozna usunac zabronione klient obsluguje poniewaz nie znaleziono: %s
@@ -1075,3 +1075,4 @@ Couldn't delete automatic country chatroom entrance because ID not found: %d|Nie
 Deleted automatic country chatroom entrance with ID: %d|Skreslone automatycznie z pokoju wejscie z krajuo ID: %d
 Automatic country chatroom entrance list is empty.|Automatyczna lista krajow z pokojow jest pusta.
 Please note, following function is required for features available in this version of %s and is currently not available in running version of %s but is available in latest update: %s|Uwaga, ponizsza funkcja jest wymagana dla funkcji dostepnych w tej wersji %s, a obecnie nie jest dostepny w biezacej wersji %s, ale jest dostepna w najnowszej aktualizacji: %s
+note|uwaga
