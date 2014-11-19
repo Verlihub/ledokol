@@ -1074,8 +1074,8 @@ function Main (file)
 
 				if ver and ver > 274 then -- new style since 2.7.5
 					if ver <= 275 then
-						VH:SQLQuery ("create table if not exists `" .. tbl_sql ["misup"] .. "` (`supports` varchar(255) not null, `time` varchar(10) not null, `occurred` bigint(20) unsigned not null default 0, primary key (`supports`)) engine = myisam default character set utf8 collate utf8_unicode_ci")
-						VH:SQLQuery ("create table if not exists `" .. tbl_sql ["miver"] .. "` (`version` varchar(255) not null, `time` varchar(10) not null, `occurred` bigint(20) unsigned not null default 0, primary key (`version`)) engine = myisam default character set utf8 collate utf8_unicode_ci")
+						VH:SQLQuery ("create table if not exists `" .. tbl_sql ["misup"] .. "` (`supports` varchar(255) not null primary key, `time` varchar(10) null, `occurred` bigint(20) unsigned not null default 0, `note` varchar(255) null) engine = myisam default character set utf8 collate utf8_unicode_ci")
+						VH:SQLQuery ("create table if not exists `" .. tbl_sql ["miver"] .. "` (`version` varchar(255) not null primary key, `time` varchar(10) null, `occurred` bigint(20) unsigned not null default 0, `note` varchar(255) null) engine = myisam default character set utf8 collate utf8_unicode_ci")
 
 						VH:SQLQuery ("alter ignore table `" .. tbl_sql ["anti"] .. "` change column `action` `action` tinyint(2) unsigned not null default 0")
 
@@ -1199,6 +1199,17 @@ function Main (file)
 						VH:SQLQuery ("alter ignore table `" .. tbl_sql ["misup"] .. "` add column `note` varchar(255) null after `occurred`")
 						VH:SQLQuery ("alter ignore table `" .. tbl_sql ["miver"] .. "` add column `note` varchar(255) null after `occurred`")
 						VH:SQLQuery ("alter ignore table `" .. tbl_sql ["miex"] .. "` add column `note` varchar(255) null after `occurred`")
+						VH:SQLQuery ("alter ignore table `" .. tbl_sql ["minick"] .. "` change column `time` `time` varchar(10) null")
+						VH:SQLQuery ("alter ignore table `" .. tbl_sql ["midesc"] .. "` change column `time` `time` varchar(10) null")
+						VH:SQLQuery ("alter ignore table `" .. tbl_sql ["mitag"] .. "` change column `time` `time` varchar(10) null")
+						VH:SQLQuery ("alter ignore table `" .. tbl_sql ["miconn"] .. "` change column `time` `time` varchar(10) null")
+						VH:SQLQuery ("alter ignore table `" .. tbl_sql ["miemail"] .. "` change column `time` `time` varchar(10) null")
+						VH:SQLQuery ("alter ignore table `" .. tbl_sql ["mishare"] .. "` change column `time` `time` varchar(10) null")
+						VH:SQLQuery ("alter ignore table `" .. tbl_sql ["miip"] .. "` change column `time` `time` varchar(10) null")
+						VH:SQLQuery ("alter ignore table `" .. tbl_sql ["micc"] .. "` change column `time` `time` varchar(10) null")
+						VH:SQLQuery ("alter ignore table `" .. tbl_sql ["midns"] .. "` change column `time` `time` varchar(10) null")
+						VH:SQLQuery ("alter ignore table `" .. tbl_sql ["misup"] .. "` change column `time` `time` varchar(10) null")
+						VH:SQLQuery ("alter ignore table `" .. tbl_sql ["miver"] .. "` change column `time` `time` varchar(10) null")
 					end
 
 					if ver <= 286 then
@@ -9971,13 +9982,17 @@ function checknick (nick, ucls, aip)
 							opsnotify (table_sets ["classnotiledoact"], ferr)
 						elseif fval then
 							VH:SQLQuery ("update `" .. tbl_sql ["miex"] .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (entry) .. "' limit 1")
-							opsnotify (table_sets ["classnotiex"], string.format (gettext ("%s with IP %s and class %d allowed due to forbidden nick exception: %s"), nick, aip .. tryipcc (aip, nick), ucls, nick))
+							opsnotify (table_sets ["classnotiex"], gettext ("%s with IP %s and class %d allowed due to forbidden nick exception: %s"):format (nick, aip .. tryipcc (aip, nick), ucls, nick))
 							return 0
 						end
 					end
 				end
 
-				local rsn = string.gsub (table_sets ["minickmessage"], "%*", reprexpchars (nick))
+				if not btime or btime == "" then
+					btime = table_sets ["mitbantime"]
+				end
+
+				local rsn = table_sets ["minickmessage"]:gsub ("%*", reprexpchars (nick))
 				VH:KickUser (table_othsets ["sendfrom"], nick, rsn .. "     #_ban_" .. btime)
 				return 1
 			end
@@ -9990,8 +10005,11 @@ end
 ----- ---- --- -- -
 
 function checkdesc (nick, desc, ucls, aip)
-	if table_sets ["michdesc"] == 0 then return 0 end
-	local _, rows = VH:SQLQuery ("select `description`, `time` from `"..tbl_sql ["midesc"].."` order by `occurred` desc")
+	if table_sets ["michdesc"] == 0 then
+		return 0
+	end
+
+	local _, rows = VH:SQLQuery ("select `description`, `time` from `" .. tbl_sql ["midesc"] .. "` order by `occurred` desc")
 
 	if rows > 0 then
 		local lowtxt = tolow (repnmdcinchars (desc))
@@ -10007,8 +10025,8 @@ function checkdesc (nick, desc, ucls, aip)
 				ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
 				opsnotify (table_sets ["classnotiledoact"], ferr)
 			elseif fval then
-				VH:SQLQuery ("update `"..tbl_sql ["midesc"].."` set `occurred` = `occurred` + 1 where `description` = '"..repsqlchars (entry).."' limit 1")
-				local _, rows = VH:SQLQuery ("select `exception` from `"..tbl_sql ["miex"].."`")
+				VH:SQLQuery ("update `" .. tbl_sql ["midesc"] .. "` set `occurred` = `occurred` + 1 where `description` = '" .. repsqlchars (entry) .. "' limit 1")
+				local _, rows = VH:SQLQuery ("select `exception` from `" .. tbl_sql ["miex"] .. "`")
 
 				if rows > 0 then
 					for x = 0, rows - 1 do
@@ -10022,15 +10040,19 @@ function checkdesc (nick, desc, ucls, aip)
 							ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
 							opsnotify (table_sets ["classnotiledoact"], ferr)
 						elseif fval then
-							VH:SQLQuery ("update `"..tbl_sql ["miex"].."` set `occurred` = `occurred` + 1 where `exception` = '"..repsqlchars (entry).."' limit 1")
-							opsnotify (table_sets ["classnotiex"], string.format (gettext ("%s with IP %s and class %d allowed due to forbidden description exception: %s"), nick, aip .. tryipcc (aip, nick), ucls, desc))
+							VH:SQLQuery ("update `" .. tbl_sql ["miex"] .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (entry) .. "' limit 1")
+							opsnotify (table_sets ["classnotiex"], gettext ("%s with IP %s and class %d allowed due to forbidden description exception: %s"):format (nick, aip .. tryipcc (aip, nick), ucls, desc))
 							return 0
 						end
 					end
 				end
 
-				local rsn = string.gsub (table_sets ["midescmessage"], "%*", reprexpchars (desc))
-				VH:KickUser (table_othsets ["sendfrom"], nick, rsn.."     #_ban_"..btime)
+				if not btime or btime == "" then
+					btime = table_sets ["mitbantime"]
+				end
+
+				local rsn = table_sets ["midescmessage"]:gsub ("%*", reprexpchars (desc))
+				VH:KickUser (table_othsets ["sendfrom"], nick, rsn .. "     #_ban_" .. btime)
 				return 1
 			end
 		end
@@ -10042,8 +10064,11 @@ end
 ----- ---- --- -- -
 
 function checktag (nick, tag, ucls, aip)
-	if table_sets ["michtag"] == 0 then return 0 end
-	local _, rows = VH:SQLQuery ("select `tag`, `time` from `"..tbl_sql ["mitag"].."` order by `occurred` desc")
+	if table_sets ["michtag"] == 0 then
+		return 0
+	end
+
+	local _, rows = VH:SQLQuery ("select `tag`, `time` from `" .. tbl_sql ["mitag"] .. "` order by `occurred` desc")
 
 	if rows > 0 then
 		local lowtxt = tolow (repnmdcinchars (tag))
@@ -10059,8 +10084,8 @@ function checktag (nick, tag, ucls, aip)
 				ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
 				opsnotify (table_sets ["classnotiledoact"], ferr)
 			elseif fval then
-				VH:SQLQuery ("update `"..tbl_sql ["mitag"].."` set `occurred` = `occurred` + 1 where `tag` = '"..repsqlchars (entry).."' limit 1")
-				local _, rows = VH:SQLQuery ("select `exception` from `"..tbl_sql ["miex"].."`")
+				VH:SQLQuery ("update `" .. tbl_sql ["mitag"] .. "` set `occurred` = `occurred` + 1 where `tag` = '" .. repsqlchars (entry) .. "' limit 1")
+				local _, rows = VH:SQLQuery ("select `exception` from `" .. tbl_sql ["miex"] .. "`")
 
 				if rows > 0 then
 					for x = 0, rows - 1 do
@@ -10074,8 +10099,8 @@ function checktag (nick, tag, ucls, aip)
 							ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
 							opsnotify (table_sets ["classnotiledoact"], ferr)
 						elseif fval then
-							VH:SQLQuery ("update `"..tbl_sql ["miex"].."` set `occurred` = `occurred` + 1 where `exception` = '"..(entry).."' limit 1")
-							opsnotify (table_sets ["classnotiex"], string.format (gettext ("%s with IP %s and class %d allowed due to forbidden tag exception: %s"), nick, aip .. tryipcc (aip, nick), ucls, tag))
+							VH:SQLQuery ("update `" .. tbl_sql ["miex"] .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (entry) .. "' limit 1")
+							opsnotify (table_sets ["classnotiex"], gettext ("%s with IP %s and class %d allowed due to forbidden tag exception: %s"):format (nick, aip .. tryipcc (aip, nick), ucls, tag))
 							return 0
 						end
 					end
@@ -10108,6 +10133,10 @@ function checktag (nick, tag, ucls, aip)
 					rsn = rsn:gsub ("<li>", reprexpchars (res ["li"]))
 				end
 
+				if not btime or btime == "" then
+					btime = table_sets ["mitbantime"]
+				end
+
 				rsn = rsn:gsub ("%*", reprexpchars (tag))
 				VH:KickUser (table_othsets ["sendfrom"], nick, rsn .. "     #_ban_" .. btime)
 				return 1
@@ -10121,8 +10150,11 @@ end
 ----- ---- --- -- -
 
 function checkconn (nick, conn, ucls, aip)
-	if table_sets ["michconn"] == 0 then return 0 end
-	local _, rows = VH:SQLQuery ("select `connection`, `time` from `"..tbl_sql ["miconn"].."` order by `occurred` desc")
+	if table_sets ["michconn"] == 0 then
+		return 0
+	end
+
+	local _, rows = VH:SQLQuery ("select `connection`, `time` from `" .. tbl_sql ["miconn"] .. "` order by `occurred` desc")
 
 	if rows > 0 then
 		local lowtxt = tolow (repnmdcinchars (conn))
@@ -10138,8 +10170,8 @@ function checkconn (nick, conn, ucls, aip)
 				ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
 				opsnotify (table_sets ["classnotiledoact"], ferr)
 			elseif fval then
-				VH:SQLQuery ("update `"..tbl_sql ["miconn"].."` set `occurred` = `occurred` + 1 where `connection` = '"..repsqlchars (entry).."' limit 1")
-				local _, rows = VH:SQLQuery ("select `exception` from `"..tbl_sql ["miex"].."`")
+				VH:SQLQuery ("update `" .. tbl_sql ["miconn"] .. "` set `occurred` = `occurred` + 1 where `connection` = '" .. repsqlchars (entry) .. "' limit 1")
+				local _, rows = VH:SQLQuery ("select `exception` from `" .. tbl_sql ["miex"] .. "`")
 
 				if rows > 0 then
 					for x = 0, rows - 1 do
@@ -10153,15 +10185,19 @@ function checkconn (nick, conn, ucls, aip)
 							ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
 							opsnotify (table_sets ["classnotiledoact"], ferr)
 						elseif fval then
-							VH:SQLQuery ("update `"..tbl_sql ["miex"].."` set `occurred` = `occurred` + 1 where `exception` = '"..repsqlchars (entry).."' limit 1")
-							opsnotify (table_sets ["classnotiex"], string.format (gettext ("%s with IP %s and class %d allowed due to forbidden connection type exception: %s"), nick, aip .. tryipcc (aip, nick), ucls, conn))
+							VH:SQLQuery ("update `" .. tbl_sql ["miex"] .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (entry) .. "' limit 1")
+							opsnotify (table_sets ["classnotiex"], gettext ("%s with IP %s and class %d allowed due to forbidden connection type exception: %s"):format (nick, aip .. tryipcc (aip, nick), ucls, conn))
 							return 0
 						end
 					end
 				end
 
-				local rsn = string.gsub (table_sets ["miconnmessage"], "%*", reprexpchars (conn))
-				VH:KickUser (table_othsets ["sendfrom"], nick, rsn.."     #_ban_"..btime)
+				if not btime or btime == "" then
+					btime = table_sets ["mitbantime"]
+				end
+
+				local rsn = table_sets ["miconnmessage"]:gsub ("%*", reprexpchars (conn))
+				VH:KickUser (table_othsets ["sendfrom"], nick, rsn .. "     #_ban_" .. btime)
 				return 1
 			end
 		end
@@ -10173,8 +10209,11 @@ end
 ----- ---- --- -- -
 
 function checkemail (nick, email, ucls, aip)
-	if table_sets ["michemail"] == 0 then return 0 end
-	local _, rows = VH:SQLQuery ("select `email`, `time` from `"..tbl_sql ["miemail"].."` order by `occurred` desc")
+	if table_sets ["michemail"] == 0 then
+		return 0
+	end
+
+	local _, rows = VH:SQLQuery ("select `email`, `time` from `" .. tbl_sql ["miemail"] .. "` order by `occurred` desc")
 
 	if rows > 0 then
 		local lowtxt = tolow (repnmdcinchars (email))
@@ -10190,8 +10229,8 @@ function checkemail (nick, email, ucls, aip)
 				ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
 				opsnotify (table_sets ["classnotiledoact"], ferr)
 			elseif fval then
-				VH:SQLQuery ("update `"..tbl_sql ["miemail"].."` set `occurred` = `occurred` + 1 where `email` = '"..repsqlchars (entry).."' limit 1")
-				local _, rows = VH:SQLQuery ("select `exception` from `"..tbl_sql ["miex"].."`")
+				VH:SQLQuery ("update `" .. tbl_sql ["miemail"] .. "` set `occurred` = `occurred` + 1 where `email` = '" .. repsqlchars (entry) .. "' limit 1")
+				local _, rows = VH:SQLQuery ("select `exception` from `" .. tbl_sql ["miex"] .. "`")
 
 				if rows > 0 then
 					for x = 0, rows - 1 do
@@ -10205,15 +10244,19 @@ function checkemail (nick, email, ucls, aip)
 							ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
 							opsnotify (table_sets ["classnotiledoact"], ferr)
 						elseif fval then
-							VH:SQLQuery ("update `"..tbl_sql ["miex"].."` set `occurred` = `occurred` + 1 where `exception` = '"..repsqlchars (entry).."' limit 1")
-							opsnotify (table_sets ["classnotiex"], string.format (gettext ("%s with IP %s and class %d allowed due to forbidden email exception: %s"), nick, aip .. tryipcc (aip, nick), ucls, email))
+							VH:SQLQuery ("update `" .. tbl_sql ["miex"] .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (entry) .. "' limit 1")
+							opsnotify (table_sets ["classnotiex"], gettext ("%s with IP %s and class %d allowed due to forbidden email exception: %s"):format (nick, aip .. tryipcc (aip, nick), ucls, email))
 							return 0
 						end
 					end
 				end
 
-				local rsn = string.gsub (table_sets ["miemailmessage"], "%*", reprexpchars (email))
-				VH:KickUser (table_othsets ["sendfrom"], nick, rsn.."     #_ban_"..btime)
+				if not btime or btime == "" then
+					btime = table_sets ["mitbantime"]
+				end
+
+				local rsn = table_sets ["miemailmessage"]:gsub ("%*", reprexpchars (email))
+				VH:KickUser (table_othsets ["sendfrom"], nick, rsn .. "     #_ban_" .. btime)
 				return 1
 			end
 		end
@@ -10225,8 +10268,11 @@ end
 ----- ---- --- -- -
 
 function checkshare (nick, share, ucls, aip)
-	if table_sets ["michshare"] == 0 then return 0 end
-	local _, rows = VH:SQLQuery ("select `share`, `time` from `"..tbl_sql ["mishare"].."` order by `occurred` desc")
+	if table_sets ["michshare"] == 0 then
+		return 0
+	end
+
+	local _, rows = VH:SQLQuery ("select `share`, `time` from `" .. tbl_sql ["mishare"] .. "` order by `occurred` desc")
 
 	if rows > 0 then
 		local lowtxt = repnmdcinchars (share)
@@ -10242,8 +10288,8 @@ function checkshare (nick, share, ucls, aip)
 				ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
 				opsnotify (table_sets ["classnotiledoact"], ferr)
 			elseif fval then
-				VH:SQLQuery ("update `"..tbl_sql ["mishare"].."` set `occurred` = `occurred` + 1 where `share` = '"..repsqlchars (entry).."' limit 1")
-				local _, rows = VH:SQLQuery ("select `exception` from `"..tbl_sql ["miex"].."`")
+				VH:SQLQuery ("update `" .. tbl_sql ["mishare"] .. "` set `occurred` = `occurred` + 1 where `share` = '" .. repsqlchars (entry) .. "' limit 1")
+				local _, rows = VH:SQLQuery ("select `exception` from `" .. tbl_sql ["miex"] .. "`")
 
 				if rows > 0 then
 					for x = 0, rows - 1 do
@@ -10257,15 +10303,19 @@ function checkshare (nick, share, ucls, aip)
 							ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
 							opsnotify (table_sets ["classnotiledoact"], ferr)
 						elseif fval then
-							VH:SQLQuery ("update `"..tbl_sql ["miex"].."` set `occurred` = `occurred` + 1 where `exception` = '"..repsqlchars (entry).."' limit 1")
-							opsnotify (table_sets ["classnotiex"], string.format (gettext ("%s with IP %s and class %d allowed due to forbidden share size exception: %s"), nick, aip .. tryipcc (aip, nick), ucls, share))
+							VH:SQLQuery ("update `" .. tbl_sql ["miex"] .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (entry) .. "' limit 1")
+							opsnotify (table_sets ["classnotiex"], gettext ("%s with IP %s and class %d allowed due to forbidden share size exception: %s"):format (nick, aip .. tryipcc (aip, nick), ucls, share))
 							return 0
 						end
 					end
 				end
 
-				local rsn = string.gsub (table_sets ["misharemessage"], "%*", reprexpchars (share))
-				VH:KickUser (table_othsets ["sendfrom"], nick, rsn.."     #_ban_"..btime)
+				if not btime or btime == "" then
+					btime = table_sets ["mitbantime"]
+				end
+
+				local rsn = table_sets ["misharemessage"]:gsub ("%*", reprexpchars (share))
+				VH:KickUser (table_othsets ["sendfrom"], nick, rsn .. "     #_ban_" .. btime)
 				return 1
 			end
 		end
@@ -10277,9 +10327,11 @@ end
 ----- ---- --- -- -
 
 function checkip (nick, aip, ucls)
-	if table_sets ["michip"] == 0 then return 0 end
-	if aip == "0.0.0.0" then return 0 end
-	local _, rows = VH:SQLQuery ("select `ip`, `time` from `"..tbl_sql ["miip"].."` order by `occurred` desc")
+	if table_sets ["michip"] == 0 or aip == "0.0.0.0" then
+		return 0
+	end
+
+	local _, rows = VH:SQLQuery ("select `ip`, `time` from `" .. tbl_sql ["miip"] .. "` order by `occurred` desc")
 
 	if rows > 0 then
 		local lowtxt = repnmdcinchars (aip)
@@ -10295,8 +10347,8 @@ function checkip (nick, aip, ucls)
 				ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
 				opsnotify (table_sets ["classnotiledoact"], ferr)
 			elseif fval then
-				VH:SQLQuery ("update `"..tbl_sql ["miip"].."` set `occurred` = `occurred` + 1 where `ip` = '"..repsqlchars (entry).."' limit 1")
-				local _, rows = VH:SQLQuery ("select `exception` from `"..tbl_sql ["miex"].."`")
+				VH:SQLQuery ("update `" .. tbl_sql ["miip"] .. "` set `occurred` = `occurred` + 1 where `ip` = '" .. repsqlchars (entry) .. "' limit 1")
+				local _, rows = VH:SQLQuery ("select `exception` from `" .. tbl_sql ["miex"] .. "`")
 
 				if rows > 0 then
 					for x = 0, rows - 1 do
@@ -10310,15 +10362,19 @@ function checkip (nick, aip, ucls)
 							ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
 							opsnotify (table_sets ["classnotiledoact"], ferr)
 						elseif fval then
-							VH:SQLQuery ("update `"..tbl_sql ["miex"].."` set `occurred` = `occurred` + 1 where `exception` = '"..repsqlchars (entry).."' limit 1")
-							opsnotify (table_sets ["classnotiex"], string.format (gettext ("%s with IP %s and class %d allowed due to forbidden IP address exception: %s"), nick, aip .. tryipcc (aip, nick), ucls, aip))
+							VH:SQLQuery ("update `" .. tbl_sql ["miex"] .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (entry) .. "' limit 1")
+							opsnotify (table_sets ["classnotiex"], gettext ("%s with IP %s and class %d allowed due to forbidden IP address exception: %s"):format (nick, aip .. tryipcc (aip, nick), ucls, aip))
 							return 0
 						end
 					end
 				end
 
-				local rsn = string.gsub (table_sets ["miipmessage"], "%*", reprexpchars (aip))
-				VH:KickUser (table_othsets ["sendfrom"], nick, rsn.."     #_ban_"..btime)
+				if not btime or btime == "" then
+					btime = table_sets ["mitbantime"]
+				end
+
+				local rsn = table_sets ["miipmessage"]:gsub ("%*", reprexpchars (aip))
+				VH:KickUser (table_othsets ["sendfrom"], nick, rsn .. "     #_ban_" .. btime)
 				return 1
 			end
 		end
@@ -10335,8 +10391,12 @@ function checkcc (nick, cls)
 	end
 
 	local cc = getcc (nick)
-	if not cc then return false end
-	local _, rows = VH:SQLQuery ("select `cc`, `time` from `"..tbl_sql ["micc"].."` order by `occurred` desc")
+
+	if not cc then
+		return false
+	end
+
+	local _, rows = VH:SQLQuery ("select `cc`, `time` from `" .. tbl_sql ["micc"] .. "` order by `occurred` desc")
 
 	if rows > 0 then
 		local lcc = tolow (repnmdcinchars (cc))
@@ -10352,8 +10412,8 @@ function checkcc (nick, cls)
 				ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
 				opsnotify (table_sets ["classnotiledoact"], ferr)
 			elseif fval then
-				VH:SQLQuery ("update `"..tbl_sql ["micc"].."` set `occurred` = `occurred` + 1 where `cc` = '"..repsqlchars (ent).."' limit 1")
-				local _, rows = VH:SQLQuery ("select `exception` from `"..tbl_sql ["miex"].."`")
+				VH:SQLQuery ("update `" .. tbl_sql ["micc"] .. "` set `occurred` = `occurred` + 1 where `cc` = '" .. repsqlchars (ent) .. "' limit 1")
+				local _, rows = VH:SQLQuery ("select `exception` from `" .. tbl_sql ["miex"] .. "`")
 
 				if rows > 0 then
 					for x = 0, rows - 1 do
@@ -10367,11 +10427,15 @@ function checkcc (nick, cls)
 							ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
 							opsnotify (table_sets ["classnotiledoact"], ferr)
 						elseif fval then
-							VH:SQLQuery ("update `"..tbl_sql ["miex"].."` set `occurred` = `occurred` + 1 where `exception` = '"..repsqlchars (ent).."' limit 1")
+							VH:SQLQuery ("update `" .. tbl_sql ["miex"] .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (ent) .. "' limit 1")
 							opsnotify (table_sets ["classnotiex"], gettext ("%s with IP %s and class %d allowed due to forbidden country code exception: %s"):format (nick, ip .. tryipcc (ip, nick), cls, cc .. "=" .. (cc_names [cc] or gettext ("Unknown country"))))
 							return false
 						end
 					end
+				end
+
+				if not btime or btime == "" then
+					btime = table_sets ["mitbantime"]
 				end
 
 				local rsn = table_sets ["miccmessage"]:gsub ("%*", reprexpchars (cc .. "=" .. (cc_names [cc] or gettext ("Unknown country"))))
@@ -10387,11 +10451,17 @@ end
 ----- ---- --- -- -
 
 function checkdns (nick, cls, ip)
-	if table_sets ["michdns"] == 0 then return false end
-	if getconfig ("dns_lookup") == 0 then return false end
+	if table_sets ["michdns"] == 0 or getconfig ("dns_lookup") == 0 then
+		return false
+	end
+
 	local dns = gethost (nick)
-	if dns == "[unknown]" then return false end
-	local _, rows = VH:SQLQuery ("select `dns`, `time` from `"..tbl_sql ["midns"].."` order by `occurred` desc")
+
+	if dns == "[unknown]" then
+		return false
+	end
+
+	local _, rows = VH:SQLQuery ("select `dns`, `time` from `" .. tbl_sql ["midns"] .. "` order by `occurred` desc")
 
 	if rows > 0 then
 		local ldns = tolow (repnmdcinchars (dns))
@@ -10407,8 +10477,8 @@ function checkdns (nick, cls, ip)
 				ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
 				opsnotify (table_sets ["classnotiledoact"], ferr)
 			elseif fval then
-				VH:SQLQuery ("update `"..tbl_sql ["midns"].."` set `occurred` = `occurred` + 1 where `dns` = '"..repsqlchars (ent).."' limit 1")
-				local _, rows = VH:SQLQuery ("select `exception` from `"..tbl_sql ["miex"].."`")
+				VH:SQLQuery ("update `" .. tbl_sql ["midns"] .. "` set `occurred` = `occurred` + 1 where `dns` = '" .. repsqlchars (ent) .. "' limit 1")
+				local _, rows = VH:SQLQuery ("select `exception` from `" .. tbl_sql ["miex"] .. "`")
 
 				if rows > 0 then
 					for x = 0, rows - 1 do
@@ -10422,15 +10492,19 @@ function checkdns (nick, cls, ip)
 							ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
 							opsnotify (table_sets ["classnotiledoact"], ferr)
 						elseif fval then
-							VH:SQLQuery ("update `"..tbl_sql ["miex"].."` set `occurred` = `occurred` + 1 where `exception` = '"..repsqlchars (ent).."' limit 1")
-							opsnotify (table_sets ["classnotiex"], string.format (gettext ("%s with IP %s and class %d allowed due to forbidden DNS exception: %s"), nick, ip .. tryipcc (ip, nick), cls, dns))
+							VH:SQLQuery ("update `" .. tbl_sql ["miex"] .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (ent) .. "' limit 1")
+							opsnotify (table_sets ["classnotiex"], gettext ("%s with IP %s and class %d allowed due to forbidden DNS exception: %s"):format (nick, ip .. tryipcc (ip, nick), cls, dns))
 							return false
 						end
 					end
 				end
 
-				local rsn = string.gsub (table_sets ["midnsmessage"], "%*", reprexpchars (dns))
-				VH:KickUser (table_othsets ["sendfrom"], nick, rsn.."     #_ban_"..btime)
+				if not btime or btime == "" then
+					btime = table_sets ["mitbantime"]
+				end
+
+				local rsn = table_sets ["midnsmessage"]:gsub ("%*", reprexpchars (dns))
+				VH:KickUser (table_othsets ["sendfrom"], nick, rsn .. "     #_ban_" .. btime)
 				return true
 			end
 		end
@@ -10447,7 +10521,11 @@ function checksup (nick, cls, ip)
 	end
 
 	local on, sup = VH:GetUserSupports (nick)
-	if (not on) or (not sup) or (sup == "") then return false end
+
+	if not on or not sup or sup == "" then
+		return false
+	end
+
 	local _, rows = VH:SQLQuery ("select `supports`, `time` from `" .. tbl_sql ["misup"] .. "` order by `occurred` desc")
 
 	if rows > 0 then
@@ -10480,13 +10558,17 @@ function checksup (nick, cls, ip)
 							opsnotify (table_sets ["classnotiledoact"], ferr)
 						elseif fval then
 							VH:SQLQuery ("update `" .. tbl_sql ["miex"] .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (ent) .. "' limit 1")
-							opsnotify (table_sets ["classnotiex"], string.format (gettext ("%s with IP %s and class %d allowed due to forbidden client supports exception: %s"), nick, ip .. tryipcc (ip, nick), cls, sup))
+							opsnotify (table_sets ["classnotiex"], gettext ("%s with IP %s and class %d allowed due to forbidden client supports exception: %s"):format (nick, ip .. tryipcc (ip, nick), cls, sup))
 							return false
 						end
 					end
 				end
 
-				local rsn = string.gsub (table_sets ["misupmessage"], "%*", reprexpchars (sup))
+				if not btime or btime == "" then
+					btime = table_sets ["mitbantime"]
+				end
+
+				local rsn = table_sets ["misupmessage"]:gsub ("%*", reprexpchars (sup))
 				VH:KickUser (table_othsets ["sendfrom"], nick, rsn .. "     #_ban_" .. btime)
 				return true
 			end
@@ -10504,7 +10586,11 @@ function checkver (nick, cls, ip)
 	end
 
 	local on, ver = VH:GetUserVersion (nick)
-	if (not on) or (not ver) or (ver == "") then return false end
+
+	if not on or not ver or ver == "" then
+		return false
+	end
+
 	local _, rows = VH:SQLQuery ("select `version`, `time` from `" .. tbl_sql ["miver"] .. "` order by `occurred` desc")
 
 	if rows > 0 then
@@ -10537,13 +10623,17 @@ function checkver (nick, cls, ip)
 							opsnotify (table_sets ["classnotiledoact"], ferr)
 						elseif fval then
 							VH:SQLQuery ("update `" .. tbl_sql ["miex"] .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (ent) .. "' limit 1")
-							opsnotify (table_sets ["classnotiex"], string.format (gettext ("%s with IP %s and class %d allowed due to forbidden NMDC version exception: %s"), nick, ip .. tryipcc (ip, nick), cls, ver))
+							opsnotify (table_sets ["classnotiex"], gettext ("%s with IP %s and class %d allowed due to forbidden NMDC version exception: %s"):format (nick, ip .. tryipcc (ip, nick), cls, ver))
 							return false
 						end
 					end
 				end
 
-				local rsn = string.gsub (table_sets ["mivermessage"], "%*", reprexpchars (ver))
+				if not btime or btime == "" then
+					btime = table_sets ["mitbantime"]
+				end
+
+				local rsn = table_sets ["mivermessage"]:gsub ("%*", reprexpchars (ver))
 				VH:KickUser (table_othsets ["sendfrom"], nick, rsn .. "     #_ban_" .. btime)
 				return true
 			end
@@ -11174,7 +11264,7 @@ end
 ----- ---- --- -- -
 
 function addmyinfoentry (nick, line)
-	local _, part, item, btime, note = 0, "", "", table_sets ["mitbantime"], ""
+	local _, part, item, btime, note = 0, "", "", "", ""
 
 	if line:find ("^[^ ]+ \".+\" \"%d+%a\" \".+\"$") then -- <type> <"lre"> <"time"> <"note">
 		_, _, part, item, btime, note = line:find ("^([^ ]+) \"(.+)\" \"(%d+%a)\" \"(.+)\"$")
@@ -11210,10 +11300,10 @@ function addmyinfoentry (nick, line)
 			local _, rows = VH:SQLQuery ("select `occurred` from `" .. tbl_sql ["minick"] .. "` where `nick` = '" .. entry .. "'")
 
 			if rows > 0 then
-				VH:SQLQuery ("update `" .. tbl_sql ["minick"] .. "` set `time` = '" .. repsqlchars (btime) .. "', `note` = " .. sqlemptnull (note) .. " where `nick` = '" .. entry .. "'")
+				VH:SQLQuery ("update `" .. tbl_sql ["minick"] .. "` set `time` = " .. sqlemptnull (btime) .. ", `note` = " .. sqlemptnull (note) .. " where `nick` = '" .. entry .. "'")
 				commandanswer (nick, gettext ("Modified forbidden nick with ban time %s: %s"):format (btime, item))
 			else
-				VH:SQLQuery ("insert into `" .. tbl_sql ["minick"] .. "` (`nick`, `time`, `note`) values ('" .. entry .. "', '" .. repsqlchars (btime) .. "', " .. sqlemptnull (note) .. ")")
+				VH:SQLQuery ("insert into `" .. tbl_sql ["minick"] .. "` (`nick`, `time`, `note`) values ('" .. entry .. "', " .. sqlemptnull (btime) .. ", " .. sqlemptnull (note) .. ")")
 				commandanswer (nick, gettext ("Added forbidden nick with ban time %s: %s"):format (btime, item))
 			end
 		end
@@ -11229,10 +11319,10 @@ function addmyinfoentry (nick, line)
 			local _, rows = VH:SQLQuery ("select `occurred` from `" .. tbl_sql ["midesc"] .. "` where `description` = '" .. entry .. "'")
 
 			if rows > 0 then
-				VH:SQLQuery ("update `" .. tbl_sql ["midesc"] .. "` set `time` = '" .. repsqlchars (btime) .. "', `note` = " .. sqlemptnull (note) .. " where `description` = '" .. entry .. "'")
+				VH:SQLQuery ("update `" .. tbl_sql ["midesc"] .. "` set `time` = " .. sqlemptnull (btime) .. ", `note` = " .. sqlemptnull (note) .. " where `description` = '" .. entry .. "'")
 				commandanswer (nick, gettext ("Modified forbidden description with ban time %s: %s"):format (btime, item))
 			else
-				VH:SQLQuery ("insert into `" .. tbl_sql ["midesc"] .. "` (`description`, `time`, `note`) values ('" .. entry .. "', '" .. repsqlchars (btime) .. "', " .. sqlemptnull (note) .. ")")
+				VH:SQLQuery ("insert into `" .. tbl_sql ["midesc"] .. "` (`description`, `time`, `note`) values ('" .. entry .. "', " .. sqlemptnull (btime) .. ", " .. sqlemptnull (note) .. ")")
 				commandanswer (nick, gettext ("Added forbidden description with ban time %s: %s"):format (btime, item))
 			end
 		end
@@ -11248,10 +11338,10 @@ function addmyinfoentry (nick, line)
 			local _, rows = VH:SQLQuery ("select `occurred` from `" .. tbl_sql ["mitag"] .. "` where `tag` = '" .. entry .. "'")
 
 			if rows > 0 then
-				VH:SQLQuery ("update `" .. tbl_sql ["mitag"] .. "` set `time` = '" .. repsqlchars (btime) .. "', `note` = " .. sqlemptnull (note) .. " where `tag` = '" .. entry .. "'")
+				VH:SQLQuery ("update `" .. tbl_sql ["mitag"] .. "` set `time` = " .. sqlemptnull (btime) .. ", `note` = " .. sqlemptnull (note) .. " where `tag` = '" .. entry .. "'")
 				commandanswer (nick, gettext ("Modified forbidden tag with ban time %s: %s"):format (btime, item))
 			else
-				VH:SQLQuery ("insert into `" .. tbl_sql ["mitag"] .. "` (`tag`, `time`, `note`) values ('" .. entry .. "', '" .. repsqlchars (btime) .. "', " .. sqlemptnull (note) .. ")")
+				VH:SQLQuery ("insert into `" .. tbl_sql ["mitag"] .. "` (`tag`, `time`, `note`) values ('" .. entry .. "', " .. sqlemptnull (btime) .. ", " .. sqlemptnull (note) .. ")")
 				commandanswer (nick, gettext ("Added forbidden tag with ban time %s: %s"):format (btime, item))
 			end
 		end
@@ -11267,10 +11357,10 @@ function addmyinfoentry (nick, line)
 			local _, rows = VH:SQLQuery ("select `occurred` from `" .. tbl_sql ["miconn"] .. "` where `connection` = '" .. entry .. "'")
 
 			if rows > 0 then
-				VH:SQLQuery ("update `" .. tbl_sql ["miconn"] .. "` set `time` = '" .. repsqlchars (btime) .. "', `note` = " .. sqlemptnull (note) .. " where `connection` = '" .. entry .. "'")
+				VH:SQLQuery ("update `" .. tbl_sql ["miconn"] .. "` set `time` = " .. sqlemptnull (btime) .. ", `note` = " .. sqlemptnull (note) .. " where `connection` = '" .. entry .. "'")
 				commandanswer (nick, gettext ("Modified forbidden connection type with ban time %s: %s"):format (btime, item))
 			else
-				VH:SQLQuery ("insert into `" .. tbl_sql ["miconn"] .. "` (`connection`, `time`, `note`) values ('" .. entry .. "', '" .. repsqlchars (btime) .. "', " .. sqlemptnull (note) .. ")")
+				VH:SQLQuery ("insert into `" .. tbl_sql ["miconn"] .. "` (`connection`, `time`, `note`) values ('" .. entry .. "', " .. sqlemptnull (btime) .. ", " .. sqlemptnull (note) .. ")")
 				commandanswer (nick, gettext ("Added forbidden connection type with ban time %s: %s"):format (btime, item))
 			end
 		end
@@ -11286,10 +11376,10 @@ function addmyinfoentry (nick, line)
 			local _, rows = VH:SQLQuery ("select `occurred` from `" .. tbl_sql ["miemail"] .. "` where `email` = '" .. entry .. "'")
 
 			if rows > 0 then
-				VH:SQLQuery ("update `" .. tbl_sql ["miemail"] .. "` set `time` = '" .. repsqlchars (btime) .. "', `note` = " .. sqlemptnull (note) .. " where `email` = '" .. entry .. "'")
+				VH:SQLQuery ("update `" .. tbl_sql ["miemail"] .. "` set `time` = " .. sqlemptnull (btime) .. ", `note` = " .. sqlemptnull (note) .. " where `email` = '" .. entry .. "'")
 				commandanswer (nick, gettext ("Modified forbidden email with ban time %s: %s"):format (btime, item))
 			else
-				VH:SQLQuery ("insert into `" .. tbl_sql ["miemail"] .. "` (`email`, `time`, `note`) values ('" .. entry .. "', '" .. repsqlchars (btime) .. "', " .. sqlemptnull (note) .. ")")
+				VH:SQLQuery ("insert into `" .. tbl_sql ["miemail"] .. "` (`email`, `time`, `note`) values ('" .. entry .. "', " .. sqlemptnull (btime) .. ", " .. sqlemptnull (note) .. ")")
 				commandanswer (nick, gettext ("Added forbidden email with ban time %s: %s"):format (btime, item))
 			end
 		end
@@ -11305,10 +11395,10 @@ function addmyinfoentry (nick, line)
 			local _, rows = VH:SQLQuery ("select `occurred` from `" .. tbl_sql ["mishare"] .. "` where `share` = '" .. entry .. "'")
 
 			if rows > 0 then
-				VH:SQLQuery ("update `" .. tbl_sql ["mishare"] .. "` set `time` = '" .. repsqlchars (btime) .. "', `note` = " .. sqlemptnull (note) .. " where `share` = '" .. entry .. "'")
+				VH:SQLQuery ("update `" .. tbl_sql ["mishare"] .. "` set `time` = " .. sqlemptnull (btime) .. ", `note` = " .. sqlemptnull (note) .. " where `share` = '" .. entry .. "'")
 				commandanswer (nick, gettext ("Modified forbidden share size with ban time %s: %s"):format (btime, item))
 			else
-				VH:SQLQuery ("insert into `" .. tbl_sql ["mishare"] .. "` (`share`, `time`, `note`) values ('" .. entry .. "', '" .. repsqlchars (btime) .. "', " .. sqlemptnull (note) .. ")")
+				VH:SQLQuery ("insert into `" .. tbl_sql ["mishare"] .. "` (`share`, `time`, `note`) values ('" .. entry .. "', " .. sqlemptnull (btime) .. ", " .. sqlemptnull (note) .. ")")
 				commandanswer (nick, gettext ("Added forbidden share size with ban time %s: %s"):format (btime, item))
 			end
 		end
@@ -11324,10 +11414,10 @@ function addmyinfoentry (nick, line)
 			local _, rows = VH:SQLQuery ("select `occurred` from `" .. tbl_sql ["miip"] .. "` where `ip` = '" .. entry .. "'")
 
 			if rows > 0 then
-				VH:SQLQuery ("update `" .. tbl_sql ["miip"] .. "` set `time` = '" .. repsqlchars (btime) .. "', `note` = " .. sqlemptnull (note) .. " where `ip` = '" .. entry .. "'")
+				VH:SQLQuery ("update `" .. tbl_sql ["miip"] .. "` set `time` = " .. sqlemptnull (btime) .. ", `note` = " .. sqlemptnull (note) .. " where `ip` = '" .. entry .. "'")
 				commandanswer (nick, gettext ("Modified forbidden IP address with ban time %s: %s"):format (btime, item))
 			else
-				VH:SQLQuery ("insert into `" .. tbl_sql ["miip"] .. "` (`ip`, `time`, `note`) values ('" .. entry .. "', '" .. repsqlchars (btime) .. "', " .. sqlemptnull (note) .. ")")
+				VH:SQLQuery ("insert into `" .. tbl_sql ["miip"] .. "` (`ip`, `time`, `note`) values ('" .. entry .. "', " .. sqlemptnull (btime) .. ", " .. sqlemptnull (note) .. ")")
 				commandanswer (nick, gettext ("Added forbidden IP address with ban time %s: %s"):format (btime, item))
 			end
 		end
@@ -11343,10 +11433,10 @@ function addmyinfoentry (nick, line)
 			local _, rows = VH:SQLQuery ("select `occurred` from `" .. tbl_sql ["micc"] .. "` where `cc` = '" .. entry .. "'")
 
 			if rows > 0 then
-				VH:SQLQuery ("update `" .. tbl_sql ["micc"] .. "` set `time` = '" .. repsqlchars (btime) .. "', `note` = " .. sqlemptnull (note) .. " where `cc` = '" .. entry .. "'")
+				VH:SQLQuery ("update `" .. tbl_sql ["micc"] .. "` set `time` = " .. sqlemptnull (btime) .. ", `note` = " .. sqlemptnull (note) .. " where `cc` = '" .. entry .. "'")
 				commandanswer (nick, gettext ("Modified forbidden country code with ban time %s: %s"):format (btime, item))
 			else
-				VH:SQLQuery ("insert into `" .. tbl_sql ["micc"] .. "` (`cc`, `time`, `note`) values ('" .. entry .. "', '" .. repsqlchars (btime) .. "', " .. sqlemptnull (note) .. ")")
+				VH:SQLQuery ("insert into `" .. tbl_sql ["micc"] .. "` (`cc`, `time`, `note`) values ('" .. entry .. "', " .. sqlemptnull (btime) .. ", " .. sqlemptnull (note) .. ")")
 				commandanswer (nick, gettext ("Added forbidden country code with ban time %s: %s"):format (btime, item))
 			end
 		end
@@ -11362,10 +11452,10 @@ function addmyinfoentry (nick, line)
 			local _, rows = VH:SQLQuery ("select `occurred` from `" .. tbl_sql ["midns"] .. "` where `dns` = '" .. entry .. "'")
 
 			if rows > 0 then
-				VH:SQLQuery ("update `" .. tbl_sql ["midns"] .. "` set `time` = '" .. repsqlchars (btime) .. "', `note` = " .. sqlemptnull (note) .. " where `dns` = '" .. entry .. "'")
+				VH:SQLQuery ("update `" .. tbl_sql ["midns"] .. "` set `time` = " .. sqlemptnull (btime) .. ", `note` = " .. sqlemptnull (note) .. " where `dns` = '" .. entry .. "'")
 				commandanswer (nick, gettext ("Modified forbidden DNS with ban time %s: %s"):format (btime, item))
 			else
-				VH:SQLQuery ("insert into `" .. tbl_sql ["midns"] .. "` (`dns`, `time`, `note`) values ('" .. entry .. "', '" .. repsqlchars (btime) .. "', " .. sqlemptnull (note) .. ")")
+				VH:SQLQuery ("insert into `" .. tbl_sql ["midns"] .. "` (`dns`, `time`, `note`) values ('" .. entry .. "', " .. sqlemptnull (btime) .. ", " .. sqlemptnull (note) .. ")")
 				commandanswer (nick, gettext ("Added forbidden DNS with ban time %s: %s"):format (btime, item))
 			end
 		end
@@ -11381,10 +11471,10 @@ function addmyinfoentry (nick, line)
 			local _, rows = VH:SQLQuery ("select `occurred` from `" .. tbl_sql ["misup"] .. "` where `supports` = '" .. entry .. "'")
 
 			if rows > 0 then
-				VH:SQLQuery ("update `" .. tbl_sql ["misup"] .. "` set `time` = '" .. repsqlchars (btime) .. "', `note` = " .. sqlemptnull (note) .. " where `supports` = '" .. entry .. "'")
+				VH:SQLQuery ("update `" .. tbl_sql ["misup"] .. "` set `time` = " .. sqlemptnull (btime) .. ", `note` = " .. sqlemptnull (note) .. " where `supports` = '" .. entry .. "'")
 				commandanswer (nick, gettext ("Modified forbidden client supports with ban time %s: %s"):format (btime, item))
 			else
-				VH:SQLQuery ("insert into `" .. tbl_sql ["misup"] .. "` (`supports`, `time`, `note`) values ('" .. entry .. "', '" .. repsqlchars (btime) .. "', " .. sqlemptnull (note) .. ")")
+				VH:SQLQuery ("insert into `" .. tbl_sql ["misup"] .. "` (`supports`, `time`, `note`) values ('" .. entry .. "', " .. sqlemptnull (btime) .. ", " .. sqlemptnull (note) .. ")")
 				commandanswer (nick, gettext ("Added forbidden client supports with ban time %s: %s"):format (btime, item))
 			end
 		end
@@ -11400,10 +11490,10 @@ function addmyinfoentry (nick, line)
 			local _, rows = VH:SQLQuery ("select `occurred` from `" .. tbl_sql ["miver"] .. "` where `version` = '" .. entry .. "'")
 
 			if rows > 0 then
-				VH:SQLQuery ("update `" .. tbl_sql ["miver"] .. "` set `time` = '" .. repsqlchars (btime) .. "', `note` = " .. sqlemptnull (note) .. " where `version` = '" .. entry .. "'")
+				VH:SQLQuery ("update `" .. tbl_sql ["miver"] .. "` set `time` = " .. sqlemptnull (btime) .. ", `note` = " .. sqlemptnull (note) .. " where `version` = '" .. entry .. "'")
 				commandanswer (nick, gettext ("Modified forbidden NMDC version with ban time %s: %s"):format (btime, item))
 			else
-				VH:SQLQuery ("insert into `" .. tbl_sql ["miver"] .. "` (`version`, `time`, `note`) values ('" .. entry .. "', '" .. repsqlchars (btime) .. "', " .. sqlemptnull (note) .. ")")
+				VH:SQLQuery ("insert into `" .. tbl_sql ["miver"] .. "` (`version`, `time`, `note`) values ('" .. entry .. "', " .. sqlemptnull (btime) .. ", " .. sqlemptnull (note) .. ")")
 				commandanswer (nick, gettext ("Added forbidden NMDC version with ban time %s: %s"):format (btime, item))
 			end
 		end
@@ -11650,11 +11740,19 @@ function listmyinfoentry (nick, part)
 				list = list .. " " .. prezero (rlen, x + 1) .. ". [ O: " .. prezero (olen, occ) .. " ] " .. repnmdcoutchars (item)
 
 				if part ~= "ex" then
-					list = list .. " [ B: " .. repnmdcoutchars (btime) .. " ]"
+					list = list .. " [ B: "
+
+					if btime and btime ~= "" then
+						list = list .. btime
+					else
+						list = list .. table_sets ["mitbantime"]
+					end
+
+					list = list .. " ]"
 				end
 
 				if note and note ~= "" then
-					list = list .. " [ N: " .. repnmdcoutchars (note) .. " ]"
+					list = list .. " [ N: " .. note .. " ]"
 				end
 
 				list = list .. "\r\n"
@@ -17553,17 +17651,17 @@ VH:SQLQuery ("create table if not exists `"..tbl_sql ["sefi"].."` (`filter` varc
 VH:SQLQuery ("create table if not exists `"..tbl_sql ["sefiex"].."` (`exception` varchar(255) not null, `occurred` bigint(20) unsigned not null default 0, primary key (`exception`)) engine = myisam default character set utf8 collate utf8_unicode_ci")
 
 	-- myinfo
-	VH:SQLQuery ("create table if not exists `" .. tbl_sql ["minick"] .. "` (`nick` varchar(255) not null primary key, `time` varchar(10) not null, `occurred` bigint(20) unsigned not null default 0, `note` varchar(255) null) engine = myisam default character set utf8 collate utf8_unicode_ci")
-	VH:SQLQuery ("create table if not exists `" .. tbl_sql ["midesc"] .. "` (`description` varchar(255) not null primary key, `time` varchar(10) not null, `occurred` bigint(20) unsigned not null default 0, `note` varchar(255) null) engine = myisam default character set utf8 collate utf8_unicode_ci")
-	VH:SQLQuery ("create table if not exists `" .. tbl_sql ["mitag"] .. "` (`tag` varchar(255) not null primary key, `time` varchar(10) not null, `occurred` bigint(20) unsigned not null default 0, `note` varchar(255) null) engine = myisam default character set utf8 collate utf8_unicode_ci")
-	VH:SQLQuery ("create table if not exists `" .. tbl_sql ["miconn"] .. "` (`connection` varchar(255) not null primary key, `time` varchar(10) not null, `occurred` bigint(20) unsigned not null default 0, `note` varchar(255) null) engine = myisam default character set utf8 collate utf8_unicode_ci")
-	VH:SQLQuery ("create table if not exists `" .. tbl_sql ["miemail"] .. "` (`email` varchar(255) not null primary key, `time` varchar(10) not null, `occurred` bigint(20) unsigned not null default 0, `note` varchar(255) null) engine = myisam default character set utf8 collate utf8_unicode_ci")
-	VH:SQLQuery ("create table if not exists `" .. tbl_sql ["mishare"] .. "` (`share` varchar(255) not null primary key, `time` varchar(10) not null, `occurred` bigint(20) unsigned not null default 0, `note` varchar(255) null) engine = myisam default character set utf8 collate utf8_unicode_ci")
-	VH:SQLQuery ("create table if not exists `" .. tbl_sql ["miip"] .. "` (`ip` varchar(255) not null primary key, `time` varchar(10) not null, `occurred` bigint(20) unsigned not null default 0, `note` varchar(255) null) engine = myisam default character set utf8 collate utf8_unicode_ci")
-	VH:SQLQuery ("create table if not exists `" .. tbl_sql ["micc"] .. "` (`cc` varchar(255) not null primary key, `time` varchar(10) not null, `occurred` bigint(20) unsigned not null default 0, `note` varchar(255) null) engine = myisam default character set utf8 collate utf8_unicode_ci")
-	VH:SQLQuery ("create table if not exists `" .. tbl_sql ["midns"] .. "` (`dns` varchar(255) not null primary key, `time` varchar(10) not null, `occurred` bigint(20) unsigned not null default 0, `note` varchar(255) null) engine = myisam default character set utf8 collate utf8_unicode_ci")
-	VH:SQLQuery ("create table if not exists `" .. tbl_sql ["misup"] .. "` (`supports` varchar(255) not null primary key, `time` varchar(10) not null, `occurred` bigint(20) unsigned not null default 0, `note` varchar(255) null) engine = myisam default character set utf8 collate utf8_unicode_ci")
-	VH:SQLQuery ("create table if not exists `" .. tbl_sql ["miver"] .. "` (`version` varchar(255) not null primary key, `time` varchar(10) not null, `occurred` bigint(20) unsigned not null default 0, `note` varchar(255) null) engine = myisam default character set utf8 collate utf8_unicode_ci")
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql ["minick"] .. "` (`nick` varchar(255) not null primary key, `time` varchar(10) null, `occurred` bigint(20) unsigned not null default 0, `note` varchar(255) null) engine = myisam default character set utf8 collate utf8_unicode_ci")
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql ["midesc"] .. "` (`description` varchar(255) not null primary key, `time` varchar(10) null, `occurred` bigint(20) unsigned not null default 0, `note` varchar(255) null) engine = myisam default character set utf8 collate utf8_unicode_ci")
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql ["mitag"] .. "` (`tag` varchar(255) not null primary key, `time` varchar(10) null, `occurred` bigint(20) unsigned not null default 0, `note` varchar(255) null) engine = myisam default character set utf8 collate utf8_unicode_ci")
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql ["miconn"] .. "` (`connection` varchar(255) not null primary key, `time` varchar(10) null, `occurred` bigint(20) unsigned not null default 0, `note` varchar(255) null) engine = myisam default character set utf8 collate utf8_unicode_ci")
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql ["miemail"] .. "` (`email` varchar(255) not null primary key, `time` varchar(10) null, `occurred` bigint(20) unsigned not null default 0, `note` varchar(255) null) engine = myisam default character set utf8 collate utf8_unicode_ci")
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql ["mishare"] .. "` (`share` varchar(255) not null primary key, `time` varchar(10) null, `occurred` bigint(20) unsigned not null default 0, `note` varchar(255) null) engine = myisam default character set utf8 collate utf8_unicode_ci")
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql ["miip"] .. "` (`ip` varchar(255) not null primary key, `time` varchar(10) null, `occurred` bigint(20) unsigned not null default 0, `note` varchar(255) null) engine = myisam default character set utf8 collate utf8_unicode_ci")
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql ["micc"] .. "` (`cc` varchar(255) not null primary key, `time` varchar(10) null, `occurred` bigint(20) unsigned not null default 0, `note` varchar(255) null) engine = myisam default character set utf8 collate utf8_unicode_ci")
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql ["midns"] .. "` (`dns` varchar(255) not null primary key, `time` varchar(10) null, `occurred` bigint(20) unsigned not null default 0, `note` varchar(255) null) engine = myisam default character set utf8 collate utf8_unicode_ci")
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql ["misup"] .. "` (`supports` varchar(255) not null primary key, `time` varchar(10) null, `occurred` bigint(20) unsigned not null default 0, `note` varchar(255) null) engine = myisam default character set utf8 collate utf8_unicode_ci")
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql ["miver"] .. "` (`version` varchar(255) not null primary key, `time` varchar(10) null, `occurred` bigint(20) unsigned not null default 0, `note` varchar(255) null) engine = myisam default character set utf8 collate utf8_unicode_ci")
 	VH:SQLQuery ("create table if not exists `" .. tbl_sql ["miex"] .. "` (`exception` varchar(255) not null primary key, `occurred` bigint(20) unsigned not null default 0, `note` varchar(255) null) engine = myisam default character set utf8 collate utf8_unicode_ci")
 
 -- welcome messages
@@ -17740,53 +17838,64 @@ VH:SQLQuery ("alter ignore table `"..tbl_sql ["sefiex"].."` change column `occur
 	-- myinfo check
 	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["minick"] .. "` engine = myisam") -- engine
 	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["minick"] .. "` change column `nick` `nick` varchar(255) not null") -- nick
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["minick"] .. "` add column `time` varchar(10) not null default '" .. repsqlchars (table_sets ["mitbantime"]) .. "' after `nick`") -- time
+	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["minick"] .. "` add column `time` varchar(10) null after `nick`") -- time
+	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["minick"] .. "` change column `time` `time` varchar(10) null") -- time
 	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["minick"] .. "` change column `occured` `occurred` bigint(20) unsigned not null default 0") -- occurred
 	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["minick"] .. "` add column `note` varchar(255) null after `occurred`") -- note
 
 	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["midesc"] .. "` engine = myisam") -- engine
 	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["midesc"] .. "` change column `description` `description` varchar(255) not null") -- description
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["midesc"] .. "` add column `time` varchar(10) not null default '" .. repsqlchars (table_sets ["mitbantime"]) .. "' after `description`") -- time
+	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["midesc"] .. "` add column `time` varchar(10) null after `description`") -- time
+	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["midesc"] .. "` change column `time` `time` varchar(10) null") -- time
 	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["midesc"] .. "` change column `occured` `occurred` bigint(20) unsigned not null default 0") -- occurred
 	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["midesc"] .. "` add column `note` varchar(255) null after `occurred`") -- note
 
 	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["mitag"] .. "` engine = myisam") -- engine
 	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["mitag"] .. "` change column `tag` `tag` varchar(255) not null") -- tag
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["mitag"] .. "` add column `time` varchar(10) not null default '" .. repsqlchars (table_sets ["mitbantime"]) .. "' after `tag`") -- time
+	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["mitag"] .. "` add column `time` varchar(10) null after `tag`") -- time
+	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["mitag"] .. "` change column `time` `time` varchar(10) null") -- time
 	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["mitag"] .. "` change column `occured` `occurred` bigint(20) unsigned not null default 0") -- occurred
 	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["mitag"] .. "` add column `note` varchar(255) null after `occurred`") -- note
 
 	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["miconn"] .. "` engine = myisam") -- engine
 	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["miconn"] .. "` change column `connection` `connection` varchar(255) not null") -- connection
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["miconn"] .. "` add column `time` varchar(10) not null default '" .. repsqlchars (table_sets ["mitbantime"]) .. "' after `connection`") -- time
+	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["miconn"] .. "` add column `time` varchar(10) null after `connection`") -- time
+	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["miconn"] .. "` change column `time` `time` varchar(10) null") -- time
 	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["miconn"] .. "` change column `occured` `occurred` bigint(20) unsigned not null default 0") -- occurred
 	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["miconn"] .. "` add column `note` varchar(255) null after `occurred`") -- note
 
 	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["miemail"] .. "` engine = myisam") -- engine
 	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["miemail"] .. "` change column `email` `email` varchar(255) not null") -- email
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["miemail"] .. "` add column `time` varchar(10) not null default '" .. repsqlchars (table_sets ["mitbantime"]) .. "' after `email`") -- time
+	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["miemail"] .. "` add column `time` varchar(10) null after `email`") -- time
+	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["miemail"] .. "` change column `time` `time` varchar(10) null") -- time
 	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["miemail"] .. "` change column `occured` `occurred` bigint(20) unsigned not null default 0") -- occurred
 	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["miemail"] .. "` add column `note` varchar(255) null after `occurred`") -- note
 
 	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["mishare"] .. "` engine = myisam") -- engine
 	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["mishare"] .. "` change column `share` `share` varchar(255) not null") -- share
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["mishare"] .. "` add column `time` varchar(10) not null default '" .. repsqlchars (table_sets ["mitbantime"]) .. "' after `share`") -- time
+	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["mishare"] .. "` add column `time` varchar(10) null after `share`") -- time
+	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["mishare"] .. "` change column `time` `time` varchar(10) null") -- time
 	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["mishare"] .. "` change column `occured` `occurred` bigint(20) unsigned not null default 0") -- occurred
 	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["mishare"] .. "` add column `note` varchar(255) null after `occurred`") -- note
 
 	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["miip"] .. "` engine = myisam") -- engine
 	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["miip"] .. "` change column `ip` `ip` varchar(255) not null") -- ip
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["miip"] .. "` add column `time` varchar(10) not null default '" .. repsqlchars (table_sets ["mitbantime"]) .. "' after `ip`") -- time
+	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["miip"] .. "` add column `time` varchar(10) null after `ip`") -- time
+	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["miip"] .. "` change column `time` `time` varchar(10) null") -- time
 	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["miip"] .. "` change column `occured` `occurred` bigint(20) unsigned not null default 0") -- occurred
 	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["miip"] .. "` add column `note` varchar(255) null after `occurred`") -- note
 
+	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["micc"] .. "` change column `time` `time` varchar(10) null") -- time
 	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["micc"] .. "` add column `note` varchar(255) null after `occurred`") -- note
 
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["midns"] .. "` add column `time` varchar(10) not null default '" .. repsqlchars (table_sets ["mitbantime"]) .. "' after `dns`") -- time
+	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["midns"] .. "` add column `time` varchar(10) null after `dns`") -- time
+	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["midns"] .. "` change column `time` `time` varchar(10) null") -- time
 	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["midns"] .. "` add column `note` varchar(255) null after `occurred`") -- note
 
+	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["misup"] .. "` change column `time` `time` varchar(10) null") -- time
 	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["misup"] .. "` add column `note` varchar(255) null after `occurred`") -- note
 
+	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["miver"] .. "` change column `time` `time` varchar(10) null") -- time
 	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["miver"] .. "` add column `note` varchar(255) null after `occurred`") -- note
 
 	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["miex"] .. "` engine = myisam") -- engine
@@ -20474,7 +20583,7 @@ end
 ----- ---- --- -- -
 
 function sqlemptnull (val)
-	if val == "" then
+	if not val or val == "" then
 		return "null"
 	else
 		return "'" .. repsqlchars (val) .. "'"
