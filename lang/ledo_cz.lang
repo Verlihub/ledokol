@@ -1,6 +1,6 @@
 # Language: cs_CZ
 # Charset: CP1250
-# Version: 2.8.4
+# Version: 2.8.5
 # Author: Uhlik
 # Email: pjanos.uk@gmail.com
 
@@ -57,19 +57,19 @@ type|type
 %s with IP %s and class %d allowed due to forbidden share size exception: %s|%s s IP %s a class %d vstup povolen diky vyjimce pro zakazanou velikost sdileni: %s
 Deleted %d releases from category: %s|Smazano %d releasu z kategorie: %s
 Why would you want to set empty topic?|Proc by jsi nastavoval prazdny topic?
-Couldn't add forbidden nick because already exists: %s|Nemohu vlozit zakazany nick, protoze uz existuje: %s
-Added forbidden nick: %s|Vlozen zakazany nick: %s
-Couldn't add forbidden description because already exists: %s|Nemohu vlozit zakazany popis, protoze uz existuje: %s
-Added forbidden description: %s|Vlozen zakazany popis: %s
-Couldn't add forbidden tag because already exists: %s|Nemohu vlozit zakazany tag, protoze uz existuje: %s: %s
-Added forbidden tag: %s|Vlozen zakazany tag: %s
-Couldn't add forbidden connection type because already exists: %s|Nemohu vlozit zakazany typ pripojeni, protoze uz existuje: %s
-Added forbidden connection type: %s|Vlozen zakazany typ pripojeni: %s
-Couldn't add forbidden email because already exists: %s|Nemohu vlozit zakazany email, protoze uz existuje: %s
-Added forbidden email: %s|Vlozen zakazany email: %s
-Couldn't add forbidden share size because already exists: %s|Nemohu vlozit zakazanou velikost sdileni, protoze uz existuje: %s
-Added forbidden share size: %s|Vlozena zakazana velikost sdileni: %s
-Couldn't add MyINFO exception because already exists: %s|Nemohu vlozit MyINFO vyjimku, protoze uz existuje: %s: %s
+Modified forbidden nick with ban time %s: %s|Modifikovan zakazany nick s banem %s: %s
+Added forbidden nick with ban time %s: %s|Pridan zakazany nick s banem %s: %s
+Modified forbidden description with ban time %s: %s|Modifikovan zakazany desc s banem %s: %s
+Added forbidden description with ban time %s: %s|Pridan zakazany desc s banem %s: %s
+Modified forbidden tag with ban time %s: %s|Modifikovan zakazany tag s banem %s: %s
+Added forbidden tag with ban time %s: %s|Pridan zakazany tag s banem %s: %s
+Modified forbidden connection type with ban time %s: %s|Modifikovano zakazane conn type s banem %s: %s
+Added forbidden connection type with ban time %s: %s|Pridano zakazane conn type s banem %s: %s
+Modified forbidden email with ban time %s: %s|Modifikovan zakazany email s banem %s: %s
+Added forbidden email with ban time %s: %s|Pridan zakazany email s banem %s: %s
+Modified forbidden share size with ban time %s: %s|Modifikovano zakazane share s banem %s: %s
+Added forbidden share size with ban time %s: %s|Pridano zakazane share s banem %s: %s
+Couldn't add MyINFO exception because already exists: %s|Nemohu vlozit MyINFO vyjimku, protoze uz existuje: %s
 Added MyINFO exception: %s|Vlozena MyInfo vyjimka: %s
 and|a
 Deleted forbidden nick: %s|Smazan zakazany nick: %s
@@ -349,8 +349,8 @@ Total search rank points: %d|Celkovy pocet bodu v hodnoceni hledani: %d bodu
 Please use following commands to finish update process|Pouzij nasedujici prikazy k dokonceni procesu aktualizace
 Moving file: %s|Presouvam soubor: %s
 Please visit %s to download the script manually.|Navstiv %s pro rucni stazeni scriptu.
-Couldn't add forbidden IP address because already exists: %s|Nemohu vlozit zakazanou IP %s protoze uz existuje.
-Added forbidden IP address: %s|Vlozena zakazana IP: %s
+Modified forbidden IP address with ban time %s: %s|Modifikovana zakazana IP s banem %s: %s
+Added forbidden IP address with ban time %s: %s|Pridana zakazana IP s banem %s: %s
 Deleted forbidden IP address: %s|Smazana zakazana IP: %s
 Couldn't delete forbidden IP address because not found: %s|Nemohu smazat zakazanou IP %s protoze nebyla nalezena.
 Forbidden IP address list|Seznam zakazanych IP
@@ -756,8 +756,8 @@ Bot information|Informace o botu
 Owner script: %s|Majitel scriptu: %s
 %s with IP %s and class %d allowed due to forbidden DNS exception: %s|%s s IP %s a class %d vstup povolen diky vyjimce pro zakazane DNS: %s
 In order to use this feature you need to enable DNS lookup. Do it by setting hub configuration variable %s to %d. Please note: Enabling DNS lookup might slow your hub performance down.|Pro pouziti teto funkce potrebujes mit zapnuty DNS lookup. To muzes udelat nastavenim promenne hubu %s na %d. Upozorneni: Zapnuti DNS Lookup muze snizit vykon hubu.
-Couldn't add forbidden DNS because already exists: %s|Nemohu vlozit zakazanou DNS %s protoze uz existuje.
-Added forbidden DNS: %s|Vlozena zakazana DNS: %s
+Modified forbidden DNS with ban time %s: %s|Modifikovana zakazana DNS s banem %s: %s
+Added forbidden DNS with ban time %s: %s|Pridana zakazana DNS s banem %s: %s
 Deleted forbidden DNS: %s|Smazana zakazana DNS: %s
 Couldn't delete forbidden DNS because not found: %s|Nemohu smazat zakazanou DNS %s protoze nebyla nalezena.
 Forbidden DNS list|Seznam zakazanych DNS
@@ -787,8 +787,8 @@ Couldn't modify authorization entry because not found: %d|Nemohu modifikovat aut
 Uptime: %s|Uptime: %s
 Enable requested feature and try again.|Zapni pozadovanou funkci a zkus znova.
 cc|cc
-Couldn't add forbidden country code because already exists: %s|Nemohu vlozit zakazany country code %s protoze uz existuje.
-Added forbidden country code: %s|Vlozen zakazany country code: %s
+Modified forbidden country code with ban time %s: %s|Modifikovan zakazany CC s banem %s: %s
+Added forbidden country code with ban time %s: %s|Pridan zakazany CC s banem %s: %s
 Deleted forbidden country code: %s|Smazan zakazany country code: %s
 Couldn't delete forbidden country code because not found: %s|Nemohu smazat zakazany country code %s protoze nebyl nalezen.
 Forbidden country code list|Seznam zakazanych country code
@@ -891,10 +891,10 @@ Unknown protocol command from IP %s before login: %s|Neznamy prikaz protokolu z 
 Added %s to hard ban list, %d users in total.|Pridan %s do hard ban seznamu, %d celkem uzivatelu.
 NMDC version: %s|NMDC verze: %s
 Client supports: %s|Client supports: %s
-Couldn't add forbidden client supports because already exists: %s|Nemohu pridat zakazany client supports protoze uz existuje: %s
-Added forbidden client supports: %s|Pridan zakazany client supports: %s
-Couldn't add forbidden NMDC version because already exists: %s|Nemohu pridat zakazanou NMDC verzi protoze uz existuje: %s
-Added forbidden NMDC version: %s|Vlozena zakazana NMDC verze: %s
+Modified forbidden client supports with ban time %s: %s|Modifikovan zakazany client supports s banem %s: %s
+Added forbidden client supports with ban time %s: %s|Pridan zakazany client supports s banem %s: %s
+Modified forbidden NMDC version with ban time %s: %s|Modifikovana zakazana NMDC version s banem %s: %s
+Added forbidden NMDC version with ban time %s: %s|Pridana zakazana NMDC version s banem %s: %s
 Latest version of %s is required in order to use this feature.|Nejnovejsi verze %s je nutna pro pouzivani tet funkce.
 Deleted forbidden client supports: %s|Smazan zakazany client supports: %s
 Couldn't delete forbidden client supports because not found: %s|Nemohu smazat zakazany client supports protoze nebyl nalezen: %s
@@ -1075,3 +1075,4 @@ Couldn't delete automatic country chatroom entrance because ID not found: %d|Nel
 Deleted automatic country chatroom entrance with ID: %d|Smazan automaticky vstup do country chatroom s ID: %d
 Automatic country chatroom entrance list is empty.|Seznam pro automaticky vstup do country chatroom je prazdny
 Please note, following function is required for features available in this version of %s and is currently not available in running version of %s but is available in latest update: %s|Upozorneni, nasledujici funkce je vyzadovana pro funkce dostupne v teto verzi %s a neni dostupna v aktualne bezici verzi %s ale je dostupna v poslednim update: %s
+note|poznamka
