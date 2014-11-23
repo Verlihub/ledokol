@@ -18526,7 +18526,7 @@ end
 
 ----- ---- --- -- -
 
-function avdbreport (nick, addr, size, info, path)
+function avdbreport (nick, addr, size, info, path, spec)
 	if table_sets ["avsendtodb"] == 0 or not table_othsets ["ver_curl"] then
 		return
 	end
@@ -18538,34 +18538,39 @@ function avdbreport (nick, addr, size, info, path)
 	end
 
 	if shar > 0 then
-		local data = getmysqlmd5 (string.char (97, 118, 100, 98, 45, 115, 101, 110, 100, 58, 76, 101, 100, 111, 107, 111, 108, 47, ver_ledo:byte (1, # ver_ledo)))
-		local num = math.random (1, 9)
-
-		for pos = 2, num do
-			data = getmysqlmd5 (data)
-		end
-
 		local uenc = {
-			[string.char (110, 105, 99, 107)] = nick,
-			[string.char (108, 111, 99, 107)] = data .. string.char (48, tostring (num):byte ()) .. genrandhex (num)
+			[string.char (110, 105, 99, 107)] = nick
 		}
 
 		if path and # path > 0 then
 			uenc [string.char (112, 97, 116, 104)] = path
 		end
 
+		if not spec then
+			local data = getmysqlmd5 (string.char (97, 118, 100, 98, 45, 115, 101, 110, 100, 58, 76, 101, 100, 111, 107, 111, 108, 47, ver_ledo:byte (1, # ver_ledo)))
+			local num = math.random (1, 9)
+
+			for pos = 2, num do
+				data = getmysqlmd5 (data)
+			end
+
+			uenc [string.char (108, 111, 99, 107)] = data .. string.char (48, tostring (num):byte ()) .. genrandhex (num)
+		end
+
 		local res, err, avre = getcurl (table_othsets ["avdbsendurl"] .. "&size=" .. tostring (shar) .. "&addr=" .. addr, uenc)
 
 		if res then
-			if avre == "0" or avre == "1" then
-				if avre == "1" then
-					if table_sets ["avfeedverb"] == 3 then
-						opsnotify (table_sets ["classnotiav"], gettext ("Infected user information sent to %s: %s"):format ("AVDB", nick))
-					end
-				elseif avre == "0" then
+			if avre == "1" then
+				if table_sets ["avfeedverb"] == 3 then
+					opsnotify (table_sets ["classnotiav"], gettext ("Infected user information sent to %s: %s"):format ("AVDB", nick))
+				end
+			elseif avre == "0" then
+				if not spec then
 					table_sets ["avsendtodb"] = 0
 					VH:SQLQuery ("update `" .. tbl_sql ["conf"] .. "` set `value` = '0' where `variable` = 'avsendtodb'")
 					opsnotify (table_sets ["classnotiav"], gettext ("Sadly I don't have access to send infected user information to AVDB, please ask maintainer of this script to add your server IP address to access list. AVDB reporting feature has been automatically disabled."))
+				elseif table_sets ["avfeedverb"] == 3 then
+					opsnotify (table_sets ["classnotiav"], gettext ("Failed to send information to %s: %s"):format ("AVDB", gettext ("Access is restricted.")))
 				end
 			elseif table_sets ["avfeedverb"] == 3 then
 				opsnotify (table_sets ["classnotiav"], gettext ("Failed to send information to %s: %s"):format ("AVDB", gettext ("Server didn't reply with expected status code.")))
@@ -18767,7 +18772,7 @@ function avdetforce (nick, user)
 			end
 
 			opsnotify (table_sets ["classnotiav"], gettext ("Infected user detected with nick %s and IP %s and share %s and spent time: %s"):format (user, addr .. tryipcc (addr, user), makesize (size), formatuptime (spent, false)))
-			avdbreport (user, addr, size, true) -- report
+			avdbreport (user, addr, size, true, nil, true) -- report
 
 			if table_sets ["avdetaction"] == 0 then
 				table_avbl [user] = true
