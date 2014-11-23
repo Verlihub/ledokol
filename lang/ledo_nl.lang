@@ -1,0 +1,1078 @@
+# Language: nl_NL
+# Charset: CP1252
+# Version: 2.8.5
+# Author: Marcel
+# Email: future_dance@hotmail.com
+
+Current topic: %s|Huidige topic gemaakt door %s: %s
+Current topic set by %s: %s|Huidige topic gemaakt door %s: %s
+This operation might take very long time depending on how much is going to be removed. Please be patient.|Deze operatie kan zeer lang duren, afhankelijk van hoeveel zal worden verwijderd . Wees geduldig .
+days|Dagen
+%s with class %d deleted %d IP logger plugin entries older than %d days.|%s met clas %d verwijderd %d IP logger plugin entries ouder dan %d dagen
+%s with class %d deleted %d unbans older than %d days.|%s met class %d verwijderde %d unbans ouder dan %d dagen.
+%s with class %d deleted %d bans older than %d days.|%s met class %d verwijderde %d bans ouder dan %d dagen.
+%s with class %d deleted %d kicks older than %d days.|%s met class %d verwijderde %d kicks ouder dan %d dagen
+I'm probably away. State your business and I might answer later if you're lucky.|Ik ben er even niet, probeer het later opnieuw.
+Perform script update|Doe een script update
+Deleted %d main chat history messages.|Verwijderde %d main chat history berichten.
+There are no main chat history messages to remove.|Er zijn geen main chat history berichten om te verwijderen.
+Deleted %d operator chat history messages.|Verwijderde %d operator chat history berichten
+There are no operator chat history messages to remove.|Er zijn geen Operator chat history berichten om te verwijderen.
+%s with class %d deleted %d main chat history messages.|%s met class %d verwijderde %d main chat history berichten.
+Unable to connect to target server. Please try again later.|Kan geen verbinding maken met de server.  Probeer het later opnieuw.
+Last %d main chat messages|laatste %d main chat berichten.
+Main chat history is empty.|Main chat history is leeg.
+%s is now known as: %s|%s is nu bekend als: %s
+Last %d operator chat messages|Laatste %d Operator chat berichten.
+Operator chat history is empty.|Operator chat history is leeg.
+Valid priority is a number from %d to %d.|Geldig prioriteit is een getal van %d tot %d.
+You are using latest version of %s, no update is required.|Je gebruikt de laatste nieuwe versie van %s, een update is niet nodig.
+Why would you send offline message to yourself?|Waarom zou je een ofline bericht aan je zelf sturen?
+User %s is online. Sending message directly.|Gebruiker %s is online. Stuur het bericht meteen.
+Your offline message stored for user: %s|Je ofline bericht is opgeslagen voor gebruikerr: %s
+%s with IP %s and class %d sent offline message.|%s met IP %s en class %d stuurt offline bericht.
+priority|prioriteit
+Offline|Offline
+Online|Online
+I sent offline message to you on %s|Ik heb op %s een offline bericht aan je gestuurd
+My current status|Mijn huidige status.
+%s with IP %s and class %d received offline messages.|%s met IP %s en class %d ontvangen offline berichten.
+Stored offline messages|Opgeslagen offline berichten.
+Offline message list is empty.|Offline berichten lijst is leeg.
+Deleted %d offline messages.|verwijderd %d offline berichten.
+Couldn't delete offline messages because not found: %s|Er konden geen offline berichten worden verwijderd, omdat deze niet gevonden zijn: %s
+%s with class %d deleted all offline messages.|%s met class %d verwijderde alle offline berichten.
+There are no offline messages to remove.|Er zijn geen offline berichten te verwijderen.
+No topic is set.|Geen topic gemaakt.
+%s with IP %s and class %d allowed due to forbidden nick exception: %s|%s met IP %s en class %d toegestaan op grond van verboden nick uitzondering: %s
+message|Bericht
+%s with IP %s and class %d allowed due to forbidden description exception: %s|%s with IP %s and class %d toegestaan op grond van verboden desciption uitzondering %s
+User you're trying to kick or redirect is protected: %s|De gebruiker die je probeert te kikken of om te leiden is beschermd.
+%s with IP %s and class %d allowed due to forbidden tag exception: %s|%s met IP %s en class %d  toegestaan op grond van verboden tag uitzondering %s
+type|type
+%s with IP %s and class %d allowed due to forbidden connection type exception: %s|%s met IP %s en class %d  toegestaan op grond van verboden verbindings type uitzondering %s
+%s with class %d changed configuration variable %s: %s => %s|%s met class %d gewijzigde configuratie variabele %s: %s => %s
+%s with IP %s and class %d allowed due to forbidden email exception: %s|%s met IP %s en class %d toegestaan op grond van verboden email uitzondering %s
+%s received own message.|%s  Eigen bericht ontvangen.
+%s with IP %s and class %d allowed due to forbidden share size exception: %s|%s met IP %s en class %d toegestaan op grond van verboden share grote uitzondering %s
+Deleted %d releases from category: %s|Verwijderde %d releases van de categorie : %s
+Why would you want to set empty topic?|Waarom zou je een lege topic willen maken?
+Modified forbidden nick with ban time %s: %s|Gemodificeerd verboden nick met ban tijd %s: %s
+Added forbidden nick with ban time %s: %s|Toegevoegd verboden nick met ban tijd %s: %s
+Modified forbidden description with ban time %s: %s|Gemodificeerde verboden description met ban tijd  %s: %s
+Added forbidden description with ban time %s: %s|Toegevoegd verboden description met ban tijd %s: %s
+Modified forbidden tag with ban time %s: %s|Gemodificeerde verboden tag met ban tijd %s: %s
+Added forbidden tag with ban time %s: %s|Toegevoegd verboden tag met ban tijd %s: %s
+Modified forbidden connection type with ban time %s: %s|Gemodificeerde verboden verbindings type met de band tijd %s: %s
+Added forbidden connection type with ban time %s: %s|Toegevoegd verboden verbindings type met ban tijd %s: %s
+Modified forbidden email with ban time %s: %s|Gemodificeerde verboden e-mail met ban tijd %s: %s
+Added forbidden email with ban time %s: %s|Toegevoegd verboden e-mail met de ban tijd %s: %s
+Modified forbidden share size with ban time %s: %s|Gemodificeerde verboden share grote met ban tijd %s: %s
+Added forbidden share size with ban time %s: %s|Toegevoegd verboden share grote met ban tijd %s: %s
+Couldn't add MyINFO exception because already exists: %s|Het toevoegen van MyINFO uitzondering gaat niet omdat deze al bestaat: %s
+Added MyINFO exception: %s|Toegevoegd MyINFO uitzondering: %s
+and|en
+Deleted forbidden nick: %s|Verboden nick verwijderd %s
+Couldn't delete forbidden nick because not found: %s|Verboden nick kon niet worden verwijderd omdat deze niet is gevonden %s
+Deleted forbidden description: %s|Verboden description verwijderd %s
+Couldn't delete forbidden description because not found: %s|Verboden description kon niet worden verwijderd omdat deze niet is gevonden %s
+Deleted forbidden tag: %s|Verboden tag verwijderd %s
+Couldn't delete forbidden tag because not found: %s|Verboden tag kon niet worden verwijderd omdat deze niet is gevonden %s
+Deleted forbidden connection type: %s|Verboden verbindings type verwijderd %s
+Couldn't delete forbidden connection type because not found: %s|Verboden verbindings type kon niet worden verwijderd omdat deze niet is gevonden %s
+Deleted forbidden email: %s|Verboden email verwijderd %s
+Couldn't delete forbidden email because not found: %s|Verboden email kon niet worden verwijderd omdat deze niet is gevonden %s
+Deleted forbidden share size: %s|Verboden share verwijderd %s
+Couldn't delete forbidden share size because not found: %s|Verboden share grote kon niet worden verwijderd omdat deze niet is gevonden %s
+Deleted MyINFO exception: %s|Verboden MyINFO uitzondering verwijderd %s
+Couldn't delete MyINFO exception because not found: %s|Verboden MyINFO uitzondering kon niet worden verwijderd omdat deze niet is gevonden %s
+Forbidden nick list|Verboden nick lijst
+Forbidden nick list is empty.|Verboden nick lijst is leeg.
+Forbidden description list|Verboden description lijst.
+Forbidden description list is empty.|Verboden description lijst is leeg.
+Forbidden tag list|Verboden tag lijst.
+Forbidden tag list is empty.|Verboden tag lijst is leeg.
+Forbidden connection type list|Verboden verbindings type lijst.
+Forbidden connection type list is empty.|Verboden verbindings type is leeg.
+Forbidden email list|Verboden email lijst.
+Forbidden email list is empty.|Verboden email lijst is leeg.
+Forbidden share size list|Verboden share lijst.
+Forbidden share size list is empty.|Verboden share lijst is leeg.
+MyINFO exception list|MyINFO uitonderings lijst.
+MyINFO exception list is empty.|MyINFO uitzonderingslijst is leeg.
+Deleted %d rows: %s|Verwijderde %d rijen: %s
+Known types are: %s|Bekende types zijn: %s
+No rows to remove: %s|Geen rijen te verwijderen: %s
+date|Datum
+%s with class %d used command: %s|%s met class %d gebruikte het comando: %s
+context|Context
+Deleted from chat rank list: %s|Verwijder van de chat rank lijst: %s
+Not found in chat rank list: %s|Niet gevonden in de chat rank lijst: %s
+Deleted from operator rank list: %s|Verwijderd van de Operator rank lijst: %s
+Not found in operator rank list: %s|Niet gevonden in de Operator rank lijst: %s
+Antispam|Antispam
+Your chat rank is: %d|Je chat rank is: %d
+You have to write something in main chat to get started.|Je moet eerst iets schrijven in de main chat om te kunnen beginnen.
+Custom nick list is empty.|Custom nick lijst is leeg.
+Total share rank size: %s|Totale share rank grote: %s
+Your operator rank is: %d|Je Operator rank is: %d
+You have to do some operator actions to get started.|Je moet eerst een Operator actie doen om te kunnen beginnen.
+Top %d chat rankers|Top  %d chat rankers
+Chat rank list is empty.|Chat rank lijst is leeg.
+Top %d operator rankers|Top %d Operator rankers
+Operator rank list is empty.|Operator rank lijst is leeg.
+string|String
+No user results found.|Geen gebruiker resultaat gevonden.
+Showing %d user log results|Toont %d gebruiker log resultaten
+Size of user log table: %d [ %s: %d @ %s ]|Grote van de gebruikers log tabel: %d [ %s: %d @ %s ]
+Add protection entry|Toevoegen beschermings regel
+Delete protection entry|Verwijderen beschermings regel
+flags|Flags
+%s dropped due to bad search request.|%s dropped als gevolg van slechte zoekopdracht.
+This command is either disabled or you don't have access to it.|Dit commando is uitgeschakeld of u heeft hier geen toestemming voor.
+Deleted antispam entry: %s|Verwijder antispam regel: %s
+Couldn't delete antispam entry because not found: %s| Het verwijderen van de antispam regel is niet gelukt, omdat deze niet is gevonden: %s
+Antispam list|Antispam lijst
+Antispam list is empty.|Antispam lijst is leeg.
+Couldn't add antispam exception entry because already exists: %s|Het toevoegen van antispam uitzondering gaat niet omdat deze al bestaat: %s
+Added antispam exception entry: %s|Toegevoegd antispam uitzondering: %s
+Deleted antispam exception entry: %s|Verboden antispam uitzondering verwijderd %s
+Couldn't delete antispam exception entry because not found: %s|Verboden antispam uitzondering kon niet worden verwijderd omdat deze niet is gevonden %s
+Antispam exception list|Antispam uitonderings lijst.
+Antispam exception list is empty.|Antispam uitzonderingslijst is leeg.
+The user you're trying to send offline message to is a bot. Message is discarded.|De gebruiker waar naar je een bericht wilt sturen is een BOT!! Bericht wordt weggegooit.
+You can't start at user number %d when you only have %d accounts with class %d.|Je kunt niet beginnen bij gebruikersnummer %d als je %d accounts hebt met class %d.
+Showing %d out of total %d accounts with class %d starting at user number %d|Toont %d van totaal %d accounts met class %d vanaf gebruiker nummer %d
+There are no accounts with class: %d|Er zijn geen accounts met class %d
+Known classes are: %s|Bekende classes zijn: %s
+%s with class %d sent say message: <%s> %s|%s met class %d stuurd het bericht: <%s> %s
+%s with class %d had bad luck sending say message: <%s> %s|%s met class %d heeft dikke pech met het versturen van say bericht: <%s> %s
+You can't talk from nick whose class is higher or equals your own.|Je kunt niet praten tegen een nick wiens klasse is hoger of gelijk aan uw eigen .
+%s with IP %s and class %d kicked: <%s> %s|%s met IP %s en class %d kicked: <%s> %s
+%s with class %d deleted %d statistics plugin entries older than %d days.|%s met class %d verwijderd %d statistieken plugin regels ouder dan %d dagen.
+offset|compenseren
+order|order
+%s didn't get any search results.|%s leverde geen zoekresultaten op.
+Redirected %s with IP %s and class %d to %s: <%s> %s|Omgeleid %s met IP %s en class %d naar %s: <%s> %s
+Unknown protocol command from %s with IP %s and class %d: %s|Onbekend protocol commando van %s met IP %s en class %d: %s
+Custom nick list|Custom nick lijst
+%s operator commands|%s Operator commando's
+Add antispam entry|Toevoegen Antispam regel
+Showing last %d lines out of total %d found in %s file|Laat zien de %d regels uit totaal van %d gevonden in %s bestand
+Delete antispam entry|Verwijder antispam regel
+Add antispam exception entry|Toegevoegd antispam uitzondering regel
+Delete antispam exception entry|Verboden antispam uitzondering regel
+Add MyINFO entry|Toegevoegd MyINFO regel
+Delete MyINFO entry|Verboden MyINFO regel
+MyINFO list|MyINFO lijst
+List of registered users by class|Lijst van geregistreerde gebruikers per class
+Speak from other nick|Spreek met een andere nick als die van je zelf
+Remove user or word from rank list|Verwijder gebruiker of woord van rank lijst
+%s with class %d deleted %d user log entries older than %d days.|%s met class %d verwijderde %d gebruikers  logs ouder dan %d dagen.
+List stored offline messages|Lijst opgeslagen offline berichten.
+Delete offline messages by date|Verwijder offline berichten op datum
+Delete all offline messages|Verwijder alle offline berichten.
+class|Class
+Clean up tables|Opruimen tabellen
+Operator chat history|Operator chat history
+Delete all history messages|Verwijder alle history berichten
+Your operator rank|Je Operator rank
+Script configuration variables|Script configuratie variabelen
+Change configuration variable|Wijziging in de configuratie variabele
+nick|Nick
+This list of commands|Deze lijst van commando's
+%s user commands|%s gebruikers commands
+Current topic|Huidige topic
+Your chat rank|Je chat rank
+You're not allowed to send private messages.|Het wordt je niet toegestaan om privй berichten te versturen.
+Unknown|Onbekend
+identifier|identifier
+Offline message to user|Offline bericht naar gebruiker
+Main chat history|Hoofd chat history
+%s statistics|%s statistieken 
+Script version: %s|Script versie %s
+Total chat rank points: %d|Totaal chat rank punten: %d
+Total operator rank points: %d|Totaal Operator rank punten: %d
+Average message count per user: %.2f|Gemiddeld aantal berichten per gebruiker: %.2f
+lre|lre
+action|Aktie
+Changed configuration variable %s: %s => %s|Gewijzigde configuratie variabele %s: %s => %s
+Configuration variable %s can only be set to: %s|Configuratie variabele %s kan alleen gemaakt worden door : %s
+or|of
+Configuration variable %s must be a number.|Configuratie variabelen %s moet een nummer zijn.
+to|aan
+Unknown configuration variable: %s|Onbekende configuratie variabele %s
+%s version: %s|%s Versie: %s
+Not installed|Niet geinstalleerd
+%s dropped due to spam.|%s dropped als gevolg van spam.
+variable|variable
+value|Waarde
+minutes|Minuten
+%s library version: %s|%s bibliotheek versie %s
+Reorder right click menu item|Opnieuw indelen right klik menu
+lines|lijnen
+Couldn't add rank exception because already exists: %s|Het toevoegen van rank uitzondering gaat niet omdat deze al bestaat: %s
+Added rank exception: %s|Toegevoegd rank uitzondering: %s
+Deleted rank exception: %s|Verboden rank uitzondering verwijderd %s
+Couldn't delete rank exception because not found: %s|Verboden rank uitzondering kon niet worden verwijderd omdat deze niet is gevonden %s
+Rank exception list|Rank uitzonderings lijst.
+Rank exception list is empty.|Rank uitzonderingslijst is leeg.
+Add rank exception|Toegevoegd rank uitzondering regel
+Delete rank exception|Verboden rank uitzondering regel
+In order to use this feature you must turn off registered users list cache. Do it by setting hub configuration variable %s to %d and restarting the hub. Please note: Turning cache off is not recommended with large list of registered users.|Om deze functie te gebruiken moet je uitschakelen geregistreerde gebruikers lijst cache.Doe het door het instellen hub configuratie variabele %s to %d en restart de huub.Let op : cache uitzetten wordt niet aanbevolen bij grote lijst van geregistreerde gebruikers .
+Both|Beide
+Deleted search filter: %s|Verwijderde zoek filter: %s
+Couldn't delete search filter because not found: %s| Het verwijderen van de zoek filter niet gelukt, omdat deze niet is gevonden: %s
+Search filter list|Zoek filter lijst
+Search filter list is empty.|Zoek filter lijst is leeg.
+Magnet link: %s|Magnet link: %s
+Add search filter|Toevoegen zoek filter
+Delete search filter|Verwijder zoek filter
+Known actions are: %s|Bekend acties zijn: %s
+Known flags are: %s|Bekende flags zijn: %s
+Downloading version file: %s|Versie %s wordt gedownload
+Size of kicks table: %d [ %s: %d @ %s ]|Grote van de kik tabel: %d [ %s: %d @ %s ]
+Size of bans table: %d [ %s: %d @ %s ]|Grote van de bans tabel: %d [ %s: %d @ %s ]
+Size of unbans table: %d [ %s: %d @ %s ]|Grote van de unbans tabel: %d [ %s: %d @ %s ]
+Size of IP logger plugin table: %d [ %s: %d @ %s ]|Grote van de IP log plugin tabel: %d [ %s: %d @ %s ]
+Size of statistics plugin table: %d [ %s: %d @ %s ]|Grote van de statistieken plugin tabel: %d [ %s: %d @ %s ]
+Modified authorization entry: %s @ %s|Gewijzigd authorization: %s @ %s
+Added authorization entry: %s @ %s|Toegevoegd authorization regel: %s @ %s
+Deleted authorization entry: %s|Verwijderde authorization regel: %s
+Couldn't delete authorization entry because not found: %s| Het verwijderen van de authorization regel is niet gelukt, omdat deze niet is gevonden: %s
+IP authorization list|IP authorization lijst
+IP authorization list is empty.|IP authorization lijst is leeg.
+Add IP authorization entry|Toegevoegd IP authorization regel
+Delete authorization entry|Verwijder authorization regel
+ip|ip
+%s with IP %s and class %d authorized.|%s met IP %s en class %d authorized.
+%s with IP %s and class %d failed authorization and disconnected.|%s met IP %s en class %d authorization niet gelukt en wordt nu afgesloten.
+Category: %s|Category: %s
+Set custom nick for yourself|Custom nick voor je zelf invoeren
+This nick is registered or in use and therefore can't be used as custom nick: %s|Deze nick is geregistreerd en kan daarom niet worden gebruikt als custom nick: %s
+Set your welcome message|Maak je welkoms bericht
+Division by zero is forbidden.| Delen door nul is verboden
+Show your welcome messages|Je welkoms berichten laten zien
+Welcome message list|Welkoms berichten lijst
+Delete user and his welcome messages|Verwijder gebruiker en zijn welkomsberichten
+Nick|Nick
+Login message|Login bericht
+Logout message|Uitlog bericht
+Welcome message list is empty.|Welkoms berichten lijst is leeg.
+Welcome messages were deleted for user: %s|Welkoms berichten werden verwijderd voor gebruiker: %s
+Couldn't delete user from welcome message list because not found: %s|Gebruiker kon niet  worden verwijderd van de welkoms berichten lijst omdat deze niet gevonden is: %s
+Your login message set: %s|Je login bericht is gemaakt: %s
+%s with class %d changed his login message: %s|%s met class %d veranderde zijn login bericht: %s
+Your logout message set: %s|Je bericht dat te zien is als je uit logt is gemaakt: %s
+%s with class %d changed his logout message: %s|%s met class %d veranderde zijn bericht dat te zien is als er uitgelogd wordt: %s
+You don't have any welcome messages.|Je hebt geen welkoms berichten.
+Your login message: %s|Je welkoms bericht: %s
+Add chatroom|Chatroom toevoegen
+Chatroom list|Chatroom lijst
+Delete chatroom|Verwijder chatroom
+description|description
+minclass|minclass
+maxclass|maxclass
+Modified chatroom: %s|Aangepaste chatroom: %s
+Added chatroom: %s|Toegevoegde chatroom: %s
+Deleted chatroom: %s|Verwijderde chatroom: %s
+Couldn't delete chatroom because not found: %s| Het verwijderen van de chatroom isniet gelukt, omdat deze niet is gevonden: %s
+Chatroom|Chatroom
+Description|Description
+Chatroom list is empty.|Chatroom lijst is leeg.
+Not found in country code statistics table: %s|Niet gevonden in de landen code tabel: %s
+Custom nick %s is now owned by real user and therefore has been reset for user: %s|Custom nick %s is nu van de echte eigenaar, en is daar door nu gereset voor gebruiker:  %s
+%s is registered with class %d.|%s is geregistreerd met class %d.
+Query executed but didn't return any results.|Query uitgevoerd maar leverde geen resultaten op.
+Published: %s|Gepubliceerd: %s
+Add search filter exception entry|Toegevoegd zoek filter uitzondering regel
+Delete search filter exception entry|verwijderd filter uitzondering regel
+Search filter exception list|Zoek filter uitzonderings  lijst
+Couldn't add search filter exception entry because already exists: %s|Het toevoegen van de zoek filter uitzondering gaat niet omdat deze al bestaat: %s
+Added search filter exception entry: %s|Toegevoegd zoek filter uitzondering: %s
+Deleted search filter exception entry: %s|Zoek filter uitzondering regel verwijderd %s
+Couldn't delete search filter exception entry because not found: %s|Zoek filter uitzondering kon niet worden verwijderd omdat deze niet is gevonden %s
+Search filter exception list is empty.|Zoek filter uitzonderings lijst is leeg.
+file|Bestand
+Read hub logs|Lees de hub logs
+Known files are: %s|Bekende bestanden zijn: %s
+Log file is empty or does not exist.|Log bestand is leeg of bestaat niet.
+Add command notification exception|Toevoegen uitzondering kennisgeving commando
+Delete command notification exception|Verwijder command notificatie uitzondering
+Command notification exception list|Command notificatie uitzonderings lijst
+Added command notification exception entry: %s|Toevoegen command notificatie uitzonderings regel:%s
+Couldn't add command notification exception entry because already exists: %s|Het toevoegen van command notificatie uitzondering gaat niet omdat deze al bestaat: %s
+Deleted command notification exception entry: %s|Verwijderen command notificatie uitzondering regel: %s
+Couldn't delete command notification exception entry because not found: %s|Command notificatie uitzondering kon niet worden verwijderd omdat deze niet is gevonden %s
+Command notification exception list is empty.|Command notificatie uitzonderings lijst is leeg.
+Couldn't add chatroom because nick is already in use: %s|Chatroom toevoegen kan niet omdat de naam al in gebruik is: %s
+Query results|Query resultaten
+Connections from your IP aren't allowed for another %d seconds.|Verbindingen vanaf uw IP zijn niet toegestaan voor %d seconden.
+Executed shell command didn't return any status code: %s|Uitgevoerd shell commandoGeeft geen status code terug: %s
+Returned status code: %s|Teruggekeerd statuscode: %s
+Added by: %s|Toegevoegd door: %s
+publisher|uitgever
+Release list is empty.|Release lijst is leeg.
+Last %d releases|Laatste %d Release
+No releases by requested publisher were found: %s|Geen releases van gevraagde uitgever gevonden: %s
+Last %d releases published by %s|Laatste %d releases gepubliceerd door %s
+No releases by requested category were found: %s|Geen releases van gevraagde categorie werden gevonden: %s
+Last %d releases by category %s|Laatste %d releases per categorie %s
+No releases by requested search string were found: %s|Geen releases van gevraagde zoekterm werden gevonden: %s
+time|tijd
+Known search types are: %s|Bekende zoek types zijn: %s
+Configuration variable %s can't be empty.|Configuratie variabele %s mogen niet leeg zijn.
+Deleted from share rank list: %s|Verwijderd van share rank lijst: %s
+Not found in share rank list: %s|Niet gevonden in share rank lijst: %s
+Your share rank|Je share rank
+Top %d share rankers|Top %d share rankers
+You have to share %s and reconnect to get started.|Je moet sharen %s en reconecten om te kunnen beginnen.
+Share rank list is empty.|Share rank lijst is leeg.
+Your share rank is: %s|Je share rank is: %s
+Custom nick can't be longer than %d characters.|Custom nick kan niet langer zijn dan %d tekens.
+Delete custom nick|Verwijder custom nick
+Deleted user from custom nick list: %s|Verwijder gebruiker van de custom nikc lijst: %s
+Couldn't delete user from custom nick list because not found: %s|Gebruiker kon niet  worden verwijderd van de custom nick lijst omdat deze niet gevonden is: %s
+Selected type requires extra parameters. Please refer to manual for more information.|Geselecteerde type vereist extra parameters. Raadpleeg de handleiding voor meer informatie.
+Size of registered users table: %d [ %s: %d @ %s ]|Grote van de geregistreerde gebruikers tabel: %d [ %s: %d @ %s ]
+Deleted %d accounts with class %d|Verwijder %d accounts met class %d
+%s with class %d deleted %d accounts with class %d that has been inactive for %d days.|%s met class %d verwijder %d accounts met class %d die inactive zijn de afgelopen %d dagen.
+Add command permission|Command permission toevoegen
+Delete command permission|Command permission verwijderen
+Command permission list|Command permission lijst
+Modified command permission with class %d: %s|Gewijzigde command permission met class %d: %s
+Added command permission with class %d: %s|Toegevoegd command permission met class %d: %s
+Deleted command permission: %s|Verwijderd command permission: %s
+Couldn't delete command permission because not found: %s|Command permission kon niet worden verwijderd omdat deze niet is gevonden %s
+Command permission list is empty.|Command permission lijst is leeg.
+Total search rank points: %d|Totale zoek rank punten:%d
+Please use following commands to finish update process|Gebruik volgende commands om de update te voltooien
+Moving file: %s|Bestand verplaatsen: %s
+Please visit %s to download the script manually.|A.U.B bezoek %s om het bestand handmatig te downloaden.
+Modified forbidden IP address with ban time %s: %s|Gemodificeerde forbidden IP address met ban tijd %s: %s
+Added forbidden IP address with ban time %s: %s|Toegevoegd forbidden IP address met ban tijd %s: %s
+Deleted forbidden IP address: %s|forbidden IP address verwijderd %s
+Couldn't delete forbidden IP address because not found: %s|forbidden IP address kon niet worden verwijderd omdat deze niet is gevonden %s
+Forbidden IP address list|Forbidden IP address lijst
+Forbidden IP address list is empty.|forbidden IP address lijst is leeg.
+%s with IP %s and class %d allowed due to forbidden IP address exception: %s|%s met IP %s en class %d toegestaan op grond van forbidden IP address exception: %s
+Couldn't delete category because not found: %s|Kon categorie niet verwijderen omdat deze is niet gevonden: %s
+%s redirected due to spam.|%s omgeleid wegens spam.
+%s redirected due to bad search request.|%s omgeleid als gevolg van slechte zoekopdracht.
+You can download me from: %s|Je kunt mij downloaden van: %s
+%s is registered with class %d and has been automatically unregistered and deleted from other tables.|%s is geregistreerd met class %d en is automatisch afgemeld en verwijderd uit andere tabellen .
+PiB|PiB
+TiB|TiB
+GiB|GiB
+MiB|MiB
+KiB|KiB
+B|B
+EiB|EiB
+Get users real nick|Gebruikers echte nick naam
+Requested nick wasn't found in custom nick list.|Gevraagde nick is niet gevonden in custon nick lijst.
+Requested nick belongs to a user who is %s: %s|Gevraagde nick hoort toe aan gebruiker die is %s: %s
+offline|offline
+online|online
+Clean up ranks|Clean up ranks
+limit|limiet
+%s with class %d deleted %d chat ranks lower than %d.|%s met class %d verwijderd %d chat ranks lager dan %d.
+%s with class %d deleted %d share ranks lower than %s.|%s met class %d verwijderd %d share ranks lager dan %s.
+%s with class %d deleted %d operator ranks lower than %d.|%s met class %d verwijderd %d operator ranks lager dan %d.
+Size of chat ranks table: %d [ %s: %d @ %s ]|Grote van de chat ranks tabel: %d [ %s: %d @ %s ]
+Size of share ranks table: %d [ %s: %d @ %s ]|Grote van de share ranks tabel: %d [ %s: %d @ %s ]
+Size of operator ranks table: %d [ %s: %d @ %s ]|Grote van de Operator ranks tabel: %d [ %s: %d @ %s ]
+content|inhoud
+destination|bestemming
+interval|interval
+Add reminder|Toevoegen herinering
+Delete reminder|Verwijder herinering
+Reminder list|Herinerings lijst
+Reminder list is empty.|Herinerings lijst is leeg.
+Known destinanions are: %s|Bekende bestemmingen zijn: %s
+Known interval is: %s|Bekende interval is: %s
+Modified reminder: %s|Aangepaste herinering: %s
+Added reminder: %s|Voeg herinering toe: %s
+Deleted reminder: %s|Verwijder herinering: %s
+Reminder not found: %s|Herinering niet gevonden: %s
+Identifier: %s|Identifier: %s
+Content: %s|Inhoud: %s
+Interval: %d of %d|Interval: %d of %d
+Destination: %s|Bestemming: %s
+Raw command|Raw command
+PM|PM
+MC|MC
+reply|antwoorden
+Add chat responder|chat- responder toevoegen
+Delete chat responder|Verwijder chat- responder
+Main chat responder list|Main chat responder list
+Main chat responder list is empty.|Main chat responder list is leeg.
+%s with class %d deleted %d operator chat history messages.|%s met class %d verwijderd %d Operator chat history berichten.
+Search in user log|Zoeken in gebruikers log
+Added chat responder: %s|Chat- responder toevoegen: %s
+Deleted chat responder with ID: %d|Verwijder chat- responder met ID: %d
+Couldn't delete chat responder because ID not found: %d|Kan chat- responder niet verwijderen omdat ID niet is gevonden: %d
+Responder|Responder
+Reply|Antwoorden
+Add chat responder exception|Chat- responder uitzondering toevoegen
+Delete chat responder exception|Verwijder chat- responder uitzondering
+Chat responder exception list|Chat - responder uitzonderings lijst
+Chat responder exception list is empty.|Chat - responder uitzonderings lijst is leeg.
+Couldn't add chat responder exception because already exists: %s|Het toevoegen van Chat - responder uitzondering gaat niet omdat deze al bestaat: %s
+Added chat responder exception: %s|Toegevoegd  Chat - responder uitzondering: %s
+Deleted chat responder exception: %s| Chat - responder uitzondering verwijderd %s
+Couldn't delete chat responder exception because not found: %s|Chat - responder uitzondering kon niet worden verwijderd omdat deze niet is gevonden %s
+command|Commando
+Customize script command|Cscript commando
+Customized script command: %s => %s|Custom script commando: %s => %s
+Unknown script command: %s|Onbekend script commando: %s
+Requested nick is real.|Gevraagde nick is echt.
+%s with class %d customized script command: %s => %s|%s met class %d custom script commando: %s => %s
+Reset all custom commands|Reset custom script commando's
+%d custom commands were reset.|%d custom script commando's zijn gereset.
+%s tables are now deleted and script is locked.|%s tabellen zijn nu verwijderd en het script is vergrendeld.
+Please unload the script and remove it from scripts directory.|Unload het script en verwijder dit uit de scripts directory.
+Good luck.|Veel succes
+Please unload the script to finish.|A.U.B unload het script om te eindigen.
+%s with IP %s and class %d sent message to %s: %s|%s met IP %s en class %d stuur bericht aan %s: %s
+Script uptime: %s|Script uptime: %s
+month|Maand
+months|Maanden
+day|Dag
+hour|Uur
+hours|Uren
+Top %d used words|Top %d gebruikte woorden
+Deleted from word rank list: %s|Verwijderd van woorden rank lijst: %s
+Not found in word rank list: %s|Niet gevonden in woorden rank lijst: %s
+%s with class %d deleted %d word ranks lower than %d.|%s met class %d verwijderd %d woorden ranks lager dan %d.
+Size of word ranks table: %d [ %s: %d @ %s ]|Grote van de woorden ranks tabel: %d [ %s: %d @ %s ]
+Total word rank points: %d|Totaal woorden rank punten: %d
+Word rank list is empty.|Woorden rank lijst is leeg.
+%s with class %d registered new user with class %d: %s|%s met class %d heeft een nieuwe gebruiker geregistreerd met class %d: %s
+%s with class %d deleted registered user with class %d: %s|%s met class %d Verwijderde een geregistreerde gebruiker met class %d: %s
+%s with class %d changed user class from %d to %d: %s|%s met class %d veranderde gebruiker class van %d naar %d: %s
+%s with IP %s and class %d allowed due to fake share exception: %s|%s met IP %s en class %d toegestaan op grond van fake share uitzonderingn: %s
+%s with IP %s and class %d allowed due to clone exception: %s|%s met IP %s en class %d toegestaan op grond van clone uitzondering: %s
+%s with IP %s and class %d allowed due to same IP exception: %s|%s met IP %s en class %d toegestaan op grond van de zelfde IP uitzondering: %s
+seconds|Seconden
+Add news item|Nieuws item toevoegen
+Delete news items|Nieuws item verwijderen
+Read hub news|Lees hub nieuws
+Added news item: %s|Nieuws item toevoegen: %s
+Hub news list is empty.|Hub nieuws  lijst is leeg.
+Deleted %d news items.|Verwijder nieuws items.
+Couldn't delete news items because not found: %s| Het verwijderen van de nieuws items niet gelukt, omdat deze niet is gevonden: %s
+Last %d news items|Laatste %d nieuws items
+By %s on %s: %s|Door %s op %s: %s
+There are no main chat history messages written by you.|Er zijn geen main chat history berichten geschreven door jou.
+Last %d main chat messages written by you|Laatste %d main chat berichten geschreven door jou.
+Your main chat history|Je main chat history
+Script memory usage: %s|Script geheugen verbruik: %s
+Failed to load translation file %s: %s|Het is niet gelukt het vertalings bestand te laden %s: %s
+Force custom nick for user|Dwing custom nick voor gebruiker
+Either the feature is disabled or user that you're trying to set welcome message for doesn't have access to it.|Of de functie is uitgeschakeld of de gebruiker waar van je probeert een welkomstbericht in te stellen heeft geen toegang hier voor.
+name|naam
+category|category
+tth|tth
+Add new release|Nieuwe release toevoegen
+Delete releases|Verwijder releases
+List of available releases|Lijst van beschikbare releases.
+Find release by name or category|Vind release bij naam of categorie
+Hub is now going for a very quick restart. Please be patient.|Hub gaat nu voor een zeer snelle herstart . Wees geduldig en tot zo ;)
+Hub is now going to shut down. Please be patient.|De huub gaat sluiten, heb geduld.
+equation|vergelijking
+Calculate an equation|Bereken een vergelijking
+Both numbers must be either pi or numbers.|Beide nummers moeten of pi zijn of nummers
+Known operations are: %s|Bekende bewerkingen zijn: %s
+Your logout message: %s|Je loguit bericht: %s
+Force welcome message for user|Gedwongen welkoms bericht voor gebruiker
+Login message set for %s: %s|Login bericht gemaakt voor %s: %s
+Change nick of an registered user|Verander de nicknaam van een geregistreerde gebruiker
+User is not registered: %s|Gebruiker is niet geregistreerd: %s
+You are now going to be disconnected from the hub in order for your new nick to apply: %s|Je wordt nu gedisconnect van de huub, zodat je nieuwe nick gebruikt kan worden.
+Renamed account %s: %s|Hernoemt account %s: %s
+%s with class %d renamed account %s: %s|%s met class %d hernoemt account %s: %s
+Your login message deleted.|Je login bericht is verwijderd.
+Your logout message deleted.|Je loguit bericht is verwijderd.
+%s with class %d deleted his login message.|%s met class %d verwijderde zijn login bericht.
+%s with class %d deleted his logout message.|%s met class %d verwijderde zijn loguit bericht..
+Logout message set for %s: %s|Loguit bericht gemaakt voor %s: %s
+%s with class %d changed login message for %s: %s|%s met class %d veranderd login bericht voor %s: %s
+%s with class %d changed logout message for %s: %s|%s met class %d veranderd loguit bericht voor %s: %s
+Login message deleted for user: %s|Login bericht verwijderd voor gebruiker: %s
+Logout message deleted for user: %s|Loguit bericht verwijderd voor gebruiker: %s
+%s with class %d deleted login message for user: %s|%s met class %d verwijderd login bericht voor gebruiker: %s
+%s with class %d deleted logout message for user: %s|%s met class %d verwijderd loguit bericht voor gebruiker: %s
+%s with class %d deleted welcome messages for user: %s|%s met class %d verwijderd welkoms bericht voor gebruiker: %s
+minute|minuut
+Last %d releases by search string %s|Laatste %d releases door zoekterm %s
+Modified release: %s|Gemodificeerde release: %s
+Added release: %s|Release toegevoegd: %s
+Deleted release: %s|Verwijder release: %s
+Couldn't delete release because not found: %s|Kon release niet verwijderen omdat deze is niet gevonden: %s
+Reminder preview|Herinering preview
+Preview of %s reminder: %s|Preview van %s herinering: %s
+Specified nick is already in use.|Opgegeven nick is al in gebruik.
+Live user location statistics by country|Live- locatie van de gebruiker, statistieken per land
+All time user location statistics|All time locatie van de gebruiker statistieken
+This feature requires %s or later installed on your system.|Voor deze feature heb je %s nodig of instaleer het later.
+Total count since %s: %d|Totaal opgeteld sinds %s: %d
+Unknown country|Onbekend land
+No users in the hub.|Geen gebruikers in de huub.
+User location statistics table is empty.|Gebruiker locatie statistiekken tabel is leeg.
+Total count: %d|Totaal opgeteld: %d
+Deleted all rows: %s|Verwijder alle rijen: %s
+%s with class %d deleted all user location entries.|%s met class %d verwijderd ale gebruikers locaties
+address|adres
+owner|eigennaar
+Add friendly hub|Bevriende huub toevoegen
+Delete friendly hub|Verwijder bevriende huub
+Show friendly hubs|Laat bevriende huubs zien
+Added friendly hub: %s|Bevriende huub toevoegen: %s
+Modified friendly hub: %s|Aangepast bevriende huub: %s
+Deleted friendly hub: %s|Verwijderen van bevriende huub: %s
+Friendly hub not found: %s|Bevriende huub niet gevonden: %s
+Friendly hublist|Bevriende huub hublijst
+Friendly hublist is empty.|Bevriende huublijst is leeg.
+Executed shell command didn't return any output.|Uitgevoerd shell commando heeft geen uitvoer terug gegeven.
+Returned output|Returned output
+%s renamed %s to: %s|%s hernoemt %s naar: %s
+%s plugin version: %s|%s plugin versie: %s
+second|seconde
+You are now known as: %s|Je bent nu bekend als:%s
+You renamed %s to: %s|Jij hernoemde %s naar: %s
+Spam exception from %s with IP %s and class %d in MC: %s|Spam uitzondering van %s met IP %s en class %d in MC: %s
+Spam exception from %s with IP %s and class %d in PM: %s|Spam uitzondering van %s met IP %s en class %d in PM: %s
+Spam exception from %s with IP %s and class %d in offline message: %s|Spam uitzondering van %s met IP %s en class %d  in offline message: %s
+Spam exception from %s with IP %s and class %d in report: %s|Spam uitzondering van %s met IP %s en class %d in report: %s
+Spam notification from %s with IP %s and class %d in MC: %s|Spam uitzondering van %s met IP %s en class %d in MC: %s
+Spam notification from %s with IP %s and class %d in PM: %s|Spam notificatie van %s met IP %s en class %d in PM: %s
+Spam notification from %s with IP %s and class %d in offline message: %s|Spam notificatie van %s met IP %s en class %d in offline bericht: %s
+Spam notification from %s with IP %s and class %d in report: %s|Spam notificatie van %s met IP %s en class %d in report: %s
+Spam from %s with IP %s and class %d in MC: %s|Spam van %s met IP %s en class %d in MC: %s
+Spam from %s with IP %s and class %d in PM: %s|Spam van %s met IP %s en class %d in PM: %s
+Spam from %s with IP %s and class %d in offline message: %s|Spam van %s met IP %s en class %d in offline bericht: %s
+Spam from %s with IP %s and class %d in report: %s|Spam van %s met IP %s en class %d in report: %s
+Modified antispam entry with action %d and priority %d to scan in MC: %s|Gewijzigde antispam vermelding met actie %d en prioriteit %d scannen in MC: %s
+Modified antispam entry with action %d and priority %d to scan in PM: %s|Gewijzigde antispam vermelding met actie %d en prioriteit %d scannen in PM: %s
+Modified antispam entry with action %d and priority %d to scan in MC and PM: %s|Gewijzigde antispam vermelding met actie %d en prioriteit %d scannen in MC en PM: %s
+Added antispam entry with action %d and priority %d to scan in MC: %s|Toegevoegde antispam vermelding met actie %d en prioriteit %d scannen in MC: %s
+Added antispam entry with action %d and priority %d to scan in PM: %s|Toegevoegde antispam vermelding met actie %d en prioriteit %d scannen in PM: %s
+Added antispam entry with action %d and priority %d to scan in MC and PM: %s|Toegevoegde antispam vermelding met actie %d en prioriteit %d scannen in MC EN PM: %s
+Search request exception from %s with IP %s and class %d as any file: %s|Zoekopdracht uitzondering van %s met IP %s en class %d als een bestand: %s
+Search request exception from %s with IP %s and class %d as audio file: %s|Zoekopdracht uitzondering van %s met IP %s en class %d als een audio bestand: %s
+Search request exception from %s with IP %s and class %d as compressed file: %s|Zoekopdracht uitzondering van %s met IP %s en class %d als een gecomprimeerd bestand: %s
+Search request exception from %s with IP %s and class %d as document: %s|Zoekopdracht uitzondering van %s met IP %s en class %d als document: %s
+Search request exception from %s with IP %s and class %d as executable: %s|Zoekopdracht uitzondering van %s met IP %s en class %d als uitvoerbaar: %s
+Search request exception from %s with IP %s and class %d as picture: %s|Zoekopdracht uitzondering van %s met IP %s en class %d als plaatje: %s
+Search request exception from %s with IP %s and class %d as video: %s|Zoekopdracht uitzondering van %s met IP %s en class %d als video: %s
+Search request exception from %s with IP %s and class %d as folder: %s|Zoekopdracht uitzondering van %s met IP %s en class %d als map: %s
+Search request exception from %s with IP %s and class %d as TTH: %s|Zoekopdracht uitzondering van %s met IP %s en class %d als TTH: %s
+Search request notification from %s with IP %s and class %d as any file: %s|Zoekopdracht uitzondering van %s met IP %s en class %d als elk bestand: %s
+Search request notification from %s with IP %s and class %d as audio file: %s|Zoekopdracht uitzondering van %s met IP %s en class %d als audio bestand: %s
+Search request notification from %s with IP %s and class %d as compressed file: %s|Zoekopdracht uitzondering van %s met IP %s en class %d als gecomprimeerd bestand: %s
+Search request notification from %s with IP %s and class %d as document: %s|Zoekopdracht uitzondering van %s met IP %s en class %d als document: %s
+Search request notification from %s with IP %s and class %d as executable: %s|Zoekopdracht uitzondering van %s met IP %s en class %d als uitvoerbaar: %s
+Search request notification from %s with IP %s and class %d as picture: %s|Zoekopdracht uitzondering van %s met IP %s en class %d als plaatje: %s
+Search request notification from %s with IP %s and class %d as video: %s|Zoekopdracht uitzondering van %s met IP %s en class %d als video: %s
+Search request notification from %s with IP %s and class %d as folder: %s|Zoekopdracht uitzondering van %s met IP %s en class %d als map: %s
+Search request notification from %s with IP %s and class %d as TTH: %s|Zoekopdracht uitzondering van %s met IP %s en class %d als TTH: %s
+Bad search request from %s with IP %s and class %d as any file: %s| Slechte zoekopdracht van %s met IP %s en class %d  elk bestand: %s
+Bad search request from %s with IP %s and class %d as audio file: %s|Slechte zoekopdracht van %s met IP %s en class %d  als audio bestand: %s
+Bad search request from %s with IP %s and class %d as compressed file: %s|Slechte zoekopdracht van %s met IP %s en class %d als gecomprimeerd bestand: %s
+Bad search request from %s with IP %s and class %d as document: %s|Slechte zoekopdracht van %s met IP %s en class %d als document: %s
+Bad search request from %s with IP %s and class %d as executable: %s|Slechte zoekopdracht van %s met IP %s en class %d als uitvoerbaar:%s
+Bad search request from %s with IP %s and class %d as picture: %s|Slechte zoekopdracht van %s met IP %s en class %d als plaatje: %s
+Bad search request from %s with IP %s and class %d as video: %s|Slechte zoekopdracht van %s met IP %s en class %d als video: %s
+Bad search request from %s with IP %s and class %d as folder: %s|Slechte zoekopdracht van %s met IP %s en class %d als map: %s
+Bad search request from %s with IP %s and class %d as TTH: %s|Slechte zoekopdracht van %s met IP %s en class %d als TTH: %s
+Modified search filter with action %d and priority %d as any file: %s|Gewijzigde zoek filter met actie %d en prioriteit %d als elk bestand: %s
+Modified search filter with action %d and priority %d as audio file: %s|Gewijzigde zoek filter met actie %d en prioriteit %d als audio bestand: %s
+Modified search filter with action %d and priority %d as compressed file: %s|Gewijzigde zoek filter met actie %d en prioriteit %d als gecomprimeerd bestand: %s
+Modified search filter with action %d and priority %d as document: %s|Gewijzigde zoek filter met actie %d en prioriteit %d als document: %s
+Modified search filter with action %d and priority %d as executable: %s|Gewijzigde zoek filter met actie %d en prioriteit %d als uitvooerbaar: %s
+Modified search filter with action %d and priority %d as picture: %s|Gewijzigde zoek filter met actie %d en prioriteit %d als plaatje: %s
+Modified search filter with action %d and priority %d as video: %s|Gewijzigde zoek filter met actie %d en prioriteit %d als video: %s
+Modified search filter with action %d and priority %d as folder: %s|Gewijzigde zoek filter met actie %d en prioriteit %d als map: %s
+Modified search filter with action %d and priority %d as TTH: %s|Gewijzigde zoek filter met actie %d en prioriteit %d als TTH: %s
+Added search filter with action %d and priority %d as any file: %s|Toegevoegde zoekfilter met actie %d en prioriteit %d als elk bestand: %s
+Added search filter with action %d and priority %d as audio file: %s|Toegevoegde zoekfilter met actie %d en prioriteit %d als audio bestand: %s
+Added search filter with action %d and priority %d as compressed file: %s|Toegevoegde zoekfilter met actie %d en prioriteit %d als gecomprimeerd bestand: %s
+Added search filter with action %d and priority %d as document: %s|Toegevoegde zoekfilter met actie %d en prioriteit %d als document: %s
+Added search filter with action %d and priority %d as executable: %s|Toegevoegde zoekfilter met actie %d en prioriteit %d als uitvoerbaar: %s
+Added search filter with action %d and priority %d as picture: %s|Toegevoegde zoekfilter met actie %d en prioriteit %d als plaatje: %s
+Added search filter with action %d and priority %d as video: %s|Toegevoegde zoekfilter met actie %d en prioriteit %d als video: %s
+Added search filter with action %d and priority %d as folder: %s|Toegevoegde zoekfilter met actie %d en prioriteit %d als map: %s
+Added search filter with action %d and priority %d as TTH: %s|Toegevoegde zoekfilter met actie %d en prioriteit %d als TTH: %s
+%s with class %d deleted %d releases older than %d days.|%s met class %d verwijderd %d releases ouder dan %d dagen.
+Size of release table: %d [ %s: %d @ %s ]|Grote van de release tabel: %d [ %s: %d @ %s ]
+LRE|LRE
+Code accepted.|Code geacepteerd.
+Protection list|Bescherming lijst
+Added protection entry: %s|Toegevoegd bescherming regel: %s
+Deleted protection entry: %s|Verwijderd beschermings regel: %s
+Protection entry already exists: %s|Beschermings regel bestaat al: %s
+Protection entry not found: %s|Beschermings regel niet gevonden: %s
+Protection list is empty.|Beschermings lijst is leeg.
+Missing %s in configuration variable.|Mist %s in configuratie variable.
+Chatroom: %s|Chatroom: %s
+You've left the chatroom.|Je hebt de chatroom verlaten.
+User left the chatroom: %s|Gebruiker heeft de chatroom verlaten: %s
+User entered the chatroom: %s|Gebruiker komt de chatroom binnen: %s
+You've entered %s chatroom.|Je komt de %s chatroom binnen
+You're not member of this chatroom.|Je bent geen lid van deze chatroom.
+You don't have access to this chatroom.|Je hebt geen toegang tot deze chatroom
+Chatroom member list|Chatroom leden lijst.
+Chatroom is empty.|Chatroom is leeg.
+You're already member of this chatroom.|Je bent al lid van deze chatroom.
+Chatroom user commands|Chatroom gebruikers comando
+Unknown chatroom command. Use %s for help.|Onbekend chatroom comando. Gebruik %s for help.
+Enter the chatroom|Ga de chatroom binnen.
+Leave the chatroom|Verlaat de chatroom.
+Deleted %d rows from country code statistics table: %s|Verwijder %d rijen van landen code statistieken tabel: %s
+Set chat mode|Kies chat mode
+Known chat modes are: %s|Bekende chat modes zijn: %s
+mode|mode
+Changing chat mode for %s: %s => %s|Wijzig chat mode voor %s: %s => %s
+Not found in chat mode list: %s|Niet gevonden in chat mode lijst: %s
+Chat mode user list|Chat mode gebruikerslijst 
+Chat mode user list is empty.|Chat mode gebruikers lijst is leeg.
+%s user lookup|%s gebruiker lookup
+Looking for %s on: %s|Kijken voor %s op: %s
+User %s found in following hubs|Gebruiker %s gevonden in de volgende huubs
+User wasn't found in any hubs: %s|Gebruiker in geen enkele hub gevonden: %s
+Add IP gag|IP gag toevoegen
+Added IP gag: %s|Toegevoed IP gag: %s
+Modified IP gag: %s|Gewijzigde IP gag: %s 
+Deleted IP gag: %s|Verwijderde IP gag: %s
+IP gag not found: %s|IP gag niet gevonden: %s
+IP gag list|IP gag lijst
+IP gag list is empty.|IP gag lijst is leeg.
+Delete IP gag|Verwijder Ip gag
+Main chat is currently disabled for you.|Main chat  is momenteel uitgeschakeld voor je.
+Cleared temporary IP gag list.|Opgeruimd tijdelijke IP gag lijst.
+Show custom script commands|Toon custom script commando's
+Custom script command list|Custom script comando lijst
+Custom script command list is empty.|Custom script comando lijst is leeg.
+Script size: %d lines in %s|Script grote: %d regels in %s
+Added %s to IP gag list, %d users in total.|Toegevoegd  %s aan IP gag lijst, %d gebruikers in totaal.
+Flood detected from IP %s last known as %s with class %d in MC: %s|Flood gedetecteerd van IP %s laatste bekend als %s met class %d in MC: %s
+Flood detected from IP %s last known as %s with class %d in PM: %s|Flood gedetecteerd van IP %s laatste bekend als %s met class %d in PM: %s
+Private chat is currently disabled for you.|Privй chat is momenteel uitgeschakeld voor je
+Flood detected from your IP.|Flood gedetecteerd van jou IP.
+%d users with IP %s dropped due to flood.|%d gebruikers met IP %s verbinding verbroken tijdens flood.
+No error message specified.|Geen foutmelding aangegeven.
+Search filter|Zoek filter
+MyINFO check|MyINFO check
+Authorization|Authorization
+Ranks|Ranks
+Welcome messages|Welkoms berichten
+Chatrooms|Chatrooms
+Reminders|Herineringen
+Hub news|Huub nieuws
+Chat responder|Chat responder
+Releases|Releases
+Offline messenger|Offline messenger
+Chat history|Chat history
+Commands|Commands
+Custom nicks|Custom nicks
+Registered users|Geregistreerde gebruikers
+Hublist|Huublijst
+Chat|Chat
+IP gag|IP gag
+User logger|Gebruikers logger
+Other|Ander
+Configuration|Configuratie
+Clear main chat|Main chat schoon maken
+Chat cleanup performed by %s|Chat schoon gemaakt door %s
+Search in registered users list|Zoeken in geregistreerde gebruikers lijst
+Registered users list statistics|Geregistreerde gebruikers lijst statistieken
+Registered users list results for %s|Geregistreerde gebruikers lijst resultaten voor %s
+Class %d: %d|Class %d: %d
+Registered users list is empty.|Geregistreerde gebruikers lijst is leeg.
+This feature requires following binary installed on your system: %s|Deze functie vereist volgende binaire geпnstalleerd op uw systeem: %s
+Configuration directory: %s|Configuratie directory: %s
+%s with IP %s and class %d stated incorrect IP in connect request to %s: %s|%s met IP %s en class %d onjuist IP in connect verzoek aan %s: %s
+Top %d search requests|Top %d zoek verzoek
+Search rank list is empty.|Lijst zoekopdracht rank is leeg.
+Deleted from search rank list: %s|Verwijderd van zoek rank lijst: %s
+Not found in search rank list: %s|Niet gevonden in zoek rank lijst: %s
+%s with class %d deleted %d search ranks lower than %d.|%s met class %d verwijderd %d zoek ranks lager dan %d.
+Size of search ranks table: %d [ %s: %d @ %s ]|Grote van de share ranks tabel: %d [ %s: %d @ %s ]
+Size of user location statistics table: %d [ %s: %s ]|Grote van gebruikers locatie statistieken tabel: %d [ %s: %s ]
+Open files limit: %d|Open bestanden limit: %d
+User information|Gebruikers informatie
+User not in list: %s|Gebruikers niet in de lijst: %s
+Nick: %s|Nick: %s
+Description: %s|Description: %s
+Tag: %s|Tag: %s
+Mode: %s|Mode: %s
+Slots: %s|Slots: %s
+Hubs: %s|Huubs: %s
+Limiter: %s KiB/s|Limiter: %s KiB/s
+Connection: %s|Verbinding: %s
+Status: %s|Status: %s
+Email: %s|Email: %s
+Share: %s|Share: %s
+Exact share: %s|Exact share: %s
+Class: %d|Class: %d
+IP: %s|IP: %s
+DNS: %s|DNS: %s
+Country: %s|Land: %s
+Client: %s|Client: %s
+Version: %s|Versie: %s
+Normal|Normaal
+Away|Weg
+Normal away|Normaal weg
+Fileserver|Bestand server
+Normal fileserver|Normale bestands server
+Away fileserver|Weg bestand server
+Normal away fileserver|Normaal weg bestand server
+Fireball|Fireball
+Normal fireball|Normaal  fireball
+Away fireball|Weg fireball
+Normal away fireball|Normaal weg fireball
+Fileserver fireball|Bestand server fireball
+Normal fileserver fireball|Normaal bestand server fireball
+Away fileserver fireball|Weg bestand server fireball
+Normal away fileserver fireball|Normaal weg bestand server fireball
+TLS|TLS
+Normal TLS|Normaal TLS
+Away TLS|Weg TLS
+Normal away TLS|Normaal weg TLS
+Fileserver TLS|Bestand server TLS
+Normal fileserver TLS|Normaal bestand server TLS
+Away fileserver TLS|Weg bestand server TLS
+Normal away fileserver TLS|Normaal weg bestand server TLS
+Fireball TLS|Fireball TLS
+Normal fireball TLS|Normaal fireball TLS
+Away fireball TLS|Weg fireball TLS
+Normal away fireball TLS|Normaal weg fireball TLS
+Fileserver fireball TLS|Bestand fireball TLS
+Normal fileserver fireball TLS|Normaal bestand server TLS
+Away fileserver fireball TLS|Weg bestand server fireball TLS
+Normal away fileserver fireball TLS|Normaal weg bestand server fireball TLS
+Unable to get bot information: %s|Kan geen bot informatie krijgen: %s
+Bot information|Bot informatie
+Owner script: %s|Eigenaar script: %s
+%s with IP %s and class %d allowed due to forbidden DNS exception: %s|%s met IP %s en class %d  toegestaan op grond van verboden DNS uitzondering %s
+In order to use this feature you need to enable DNS lookup. Do it by setting hub configuration variable %s to %d. Please note: Enabling DNS lookup might slow your hub performance down.|Om deze functie te gebruiken moet u de DNS- lookup aanzetten. Doe het door het instellen van de huub configuratie variabele %s to %d. Let op : Het inschakelen van de DNS- lookup kan uw huub prestaties vertragen .
+Modified forbidden DNS with ban time %s: %s|Gemodificeerde verboden DNS met ban tijd %s: %s
+Added forbidden DNS with ban time %s: %s|Toegevoegd verboden DNS met ban tijd %s: %s
+Deleted forbidden DNS: %s|Verboden DNS verwijderd: %s
+Couldn't delete forbidden DNS because not found: %s|Verboden DNS kon niet worden verwijderd omdat deze niet is gevonden %s
+Forbidden DNS list|Verboden DNS lijst.
+Forbidden DNS list is empty.|Verboden DNS lijst is leeg.
+Powered by %s|Powered by %s
+Warning: %s|Waarschuwing: %s
+Open files limit set to %d is smaller than maximum users configuration which is %d. You can correct this by setting %s to %d or higher and restarting the hub.|Open bestanden worden ingesteld op %d kleiner is dan de maximale gebruikers configuratie die %d. U kunt dit corrigeren door het instellen van %s naar %d of hoger en de hub herstarten .
+Additional help|Extra hulp
+Remove all %s tables and files|Verwijder alle %s tabellen en bestanden
+No reason specified.|Geen reden aangegeven.
+You can't kick user whose class is higher or equals your own: %s|Je kunt niet een gebruiker kikken wiens klasse is hoger of gelijk aan je eigen : %s
+Your topic contains forbidden characters which can't be used for security reason: %s|Je topic bevat verboden karakters die niet gebruikt mogen worden voor om veiligheids redenen: % s
+Hub uptime: %s|Huub uptime:  %s
+User count: %s|Gebruikers teller: %s
+Total share: %s|Totale share: %s
+%s with IP %s and class %d tries to speak with IP gag in MC: %s|%s met IP %s enclass %d probeert te spreken met IP gag in MC: %s
+%s with IP %s and class %d tries to speak with IP gag in PM: %s|%s met IP %s en class %d probeert te spreken met IP gag in PM: %s
+Private message replaced for user: %s|Privй bericht vervangen voor gebruiker: %s
+Command logger|Command logger
+Showing %d entries from command logger|Laat zien %d regels van command logger
+Command logger is empty.|Command logger is leeg.
+%s with class %d deleted %d command log entries older than %d days.|%s met class %d verwijderd %d command log regels ouder dan %d dagen.
+Size of command log table: %d [ %s: %d @ %s ]|Grote van command log table: %d [ %s: %d @ %s ]
+password|paswoord
+Modify IP authorization entry|Gewijzigde IP authorization regel
+Couldn't modify authorization entry because not found: %d|Kon authorization regel niet wijzigen omdat deze niet gevonden is: % d
+Uptime: %s|Uptime: %s
+Enable requested feature and try again.|Gevraagde functie in te schakelen en probeer het opnieuw .
+cc|cc
+Modified forbidden country code with ban time %s: %s|Gemodificeerd verboden land code met ban tijd %s: %s
+Added forbidden country code with ban time %s: %s|Toegevoegd verboden land code met ban tijd %s: %s
+Deleted forbidden country code: %s|Verboden land code verwijderd %s
+Couldn't delete forbidden country code because not found: %s|Verboden land code kon niet worden verwijderd omdat deze niet is gevonden %s
+Forbidden country code list|Verboden land code lijst
+Forbidden country code list is empty.|Verboden land code lijst is leeg.
+%s with IP %s and class %d allowed due to forbidden country code exception: %s|%s met IP %s en class %d toegestaan op grond van verboden land code uitzondering: %s
+I'm staying idle due to confusion.|Ik blijf inactief, te wijten aan verwarring.
+Added replacer in MC: %s|Toegevoegd vervanger in MC: %s
+Deleted chat replacer with ID: %d|Verwijder chat- vervanger met ID: %d
+Couldn't delete chat replacer because ID not found: %d|Kan chat- vervanger niet verwijderen omdat ID niet is gevonden: %d
+Chat replacer list|Chat vervanger list
+Chat replacer list is empty.|Chat vervanger lijst is leeg.
+Replace|Vervang
+Couldn't add chat replacer exception because already exists: %s|Het toevoegen van Chat - vervanger uitzondering gaat niet omdat deze al bestaat: %s
+Added chat replacer exception: %s|Toegevoegd  Chat - vervangerr uitzondering: %s
+Deleted chat replacer exception: %s| Chat - vervanger uitzondering verwijderd %s
+Couldn't delete chat replacer exception because not found: %s|Chat - vervanger uitzondering kon niet worden verwijderd omdat deze niet is gevonden %s
+Chat replacer exception list|Chat - vervanger uitzonderings lijst
+Chat replacer exception list is empty.|Chat vervanger uitzonderings lijst is leeg.
+replace|vervang
+Add chat replacer|Chat vervanger toevoegen
+Delete chat replacer|Chat vervanger verwijderen
+Add chat replacer exception|Chat vervanger uitzondering toevoegen
+Delete chat replacer exception|Chat vervanger uitzondering verwijderen
+Chat replacer|Chat vervanger
+You need to send another %d main chat messages in order to use hub registration.|Stuur een ander %d main chat berichten om de hub registratie te gebruiken.
+Please wait another %.1f minutes before using hub registration.|Even geduld aub  %.1f minuten voordat u hub registratie kunt gebruiken.
+In order to use this feature you need to set %s to: %d|Om deze functie te gebruiken moet je eerst dit instellen %s to: %d
+Please reconnect to gain %d minutes of uptime in order to use hub registration.|Reconnect om %d uptime te verkrijgen en de hub registratie te gebruiken.
+Dropping %s with IP %s and class %d due to protocol flood detection: %s|Verbinding verbreken %s met IP %s en class %d door flood detectie: %s
+Protocol flood detected from your client: %s|Flood dedected  van je client: %s
+Automatic update check detected stable version of %s available, use following command to update: %s|Automatische update check gedetecteerd stabiele versie van %s beschikbaar , gebruik volgende opdracht bij te werken: %s
+menu|menu
+Dropping user due to clone detection from IP %s with class %d: %s = %s|Verbinding verbreken omdat er een clone is gevonden van IP %s with class %d: %s = %s
+Configuration variable %s must be a valid IP address.|Configuratie variabele %s moet en geldig IP adres zijn.
+Average share per user: %s|Gemiddeld gedeelt per gebruiker: %s
+Don't be stupid.|Doe niet zo stom.
+reason|reden
+Add blocked PM entry|Geblokte PM regel toevoegen
+Delete blocked PM entry|Verwijder geblokte PM regel
+List of blocked PM entries|Lijst van geblokte PM regels
+Modified blocked PM entry: %s|Aangepaste geblokte PM regels: %s
+Added blocked PM entry: %s|Toegevoegd geblokte PM regel: %s
+Deleted blocked PM entry: %s|Verwijderd geblokte PM regel: %s
+Blocked PM list is empty.|Geblokte PM regel lijst is leeg.
+Couldn't delete blocked PM entry because not found: %s|Kon geblokte PM regel niet verwijderen omdat deze is niet gevonden: %s
+Reason: %s|Reden: %s
+You're not allowed to send PM to this user because: %s|Je hebt geen toestemming om een PM te sturen naar deze gebruiker omdat: %s
+%s with class %d deleted %d antispam entries with occurrence less than %d.|%s met class %d verwijderd %d antispam regel met voorval minder dan %d.
+%s with class %d deleted %d search filter entries with occurrence less than %d.|%s met class %d verwijderd %d zoek filter regel met voorval minder dan %d.
+query|query
+Execute MySQL query|Uitvoeren MySQL query
+Execute shell command|Uitvoeren shell command
+Experts only|Alleen voor experts
+Add hard IP ban entry|Hard IP ban regel toevoegen
+Delete hard IP ban entry|Verwijder hard IP ban regel
+List of hard IP ban entries|Lijst van hard IP ban regels
+Modified hard IP ban entry: %s|Aangepaste hard IP ban regel: %s
+Added hard IP ban entry: %s|Hard IP ban regel toegevoegd: %s
+Deleted hard IP ban entry: %s|Hard IP ban regel verwijderd: %s
+Hard IP ban list is empty.|Lijst hard IP ban is leeg.
+Couldn't delete hard IP ban entry because not found: %s|Kon hard IP ban regel niet verwijderen omdat deze is niet gevonden: %s
+Hard IP ban refused connection from IP %s: %s|Hard IP ban weigerd verbinding van IP %s: %s
+Please wait another %d seconds before using hub search engine.|Even geduld aub % d seconden voordat u hub zoekmachine kunt gebruiken.
+Loading %s in memory...|Laden %s in geheugen...
+Finished loading %s in memory.|Laden %s in geheugen is klaar
+Unable to locate %s in hub configuration directory.|Kan %s niet vinden in hub configuratie directory .
+Add right click menu item|Right klik menu item toevoegen
+Delete right click menu item|Right klik menu item verwijderen
+List of right click menu items|Lijst van right klik menu items
+Blacklisted connection from IP %s dropped: %s|Zwarte lijst verbinding van IP %s verbinding geweigerd: %s
+To add multiple entries with this command you need to separate every entry by space.|Om meerdere items toe te voegen aan deze opdracht moet je er rekening mee houden spaties te gebruiken tussen elke regel.
+Add IP watch entry|IP watch regel toevoegen
+Delete IP watch entry|IP watch regel verwijderen
+List of IP watch entries|Lijst van IP watch regels
+result|resultaat
+Modified IP watch entry: %s|IP watch regel aanpassen: %s
+Added IP watch entry: %s|IP watch regel toevoegd: %s
+Known results are: %s|Bekende resultaten zijn: %s
+Deleted IP watch entry: %s|IP watch regel verwijderen: %s
+IP watch list is empty.|IP watch lijst is leeg.
+Couldn't delete IP watch entry because not found: %s|Kon IP watch regel niet verwijderen omdat deze is niet gevonden: %s
+IP watch notification from %s with IP %s: %s|IP watch kennisgeving van %s met IP  %s: %s
+unknown nick|Onbekende nick
+Country code gag|Land code gag
+Add country code gag|Land code gag toevoegen
+Added country code gag: %s|Land code gag toegevoegd: %s
+Modified country code gag: %s|Land code gag gewijzigd: %s
+Deleted country code gag: %s|Land code gag verwijderd: %s
+Country code gag not found: %s|Land code gag niet gevonden: %s
+Country code gag list|Land code gag lijst
+Country code gag list is empty.|Land code gag lijst is leeg.
+Delete country code gag|Land code gag verwijderen
+Cleared country code gag list.|Land code gag lijst opgeruimd
+%s with IP %s and class %d tries to speak with country code gag in MC: %s|%s met IP %s en class %d probeert te spreken met Land code gag in MC: %s
+%s with IP %s and class %d tries to speak with country code gag in PM: %s|%s met IP %s en class %d probeert te spreken met Land code gag in PM: %s
+No reason specified|Geen reden opgegeven
+Automatically deleted %d user log entries older than %d days.|Automatisch verwijderd %d gebruiker loggegevens die ouder zijn dan %d dagen .
+Main chat message replaced for user: %s|Main chat bericht veranderd voor gebruiker: %s
+Unknown protocol command from IP %s before login: %s|Onbekend protocol commando van IP %s voor het inloggen: %s
+Added %s to hard ban list, %d users in total.|Toegevoegd  %s aan hard ban lijst, %d gebruikers in totaal.
+NMDC version: %s|NMDC versie: %s
+Client supports: %s|Client ondersteunt: %s
+Modified forbidden client supports with ban time %s: %s|Gewijzigde verboden client ondersteunt met ban tijd %s: %s
+Added forbidden client supports with ban time %s: %s|Toegevoegd verboden client ondersteunt met ban tijd %s: %s
+Modified forbidden NMDC version with ban time %s: %s|Gemodificeerde verboden NMDC versie met ban tijd  %s: %s
+Added forbidden NMDC version with ban time %s: %s|Toegevoegd verboden NMDC versie met ban tijd %s: %s
+Latest version of %s is required in order to use this feature.|Laatste versie van %s is nodig om deze functie te kunnen gebruiken.
+Deleted forbidden client supports: %s|Verboden client ondersteuning verwijderd %s
+Couldn't delete forbidden client supports because not found: %s|Verboden client ondersteuning kon niet worden verwijderd omdat deze niet is gevonden %s
+Deleted forbidden NMDC version: %s|Verwijderd verboden NMDC versie: %s
+Couldn't delete forbidden NMDC version because not found: %s|Verboden NMDC versie kon niet worden verwijderd omdat deze niet is gevonden %s
+Forbidden client supports list|Verboden client ondersteunings lijst
+Forbidden client supports list is empty.|Verboden client ondersteunings lijst is leeg.
+Forbidden NMDC version list|Verboden NMDC versie lijst
+Forbidden NMDC version list is empty.|Verboden NMDC versie lijst is leeg.
+%s with IP %s and class %d allowed due to forbidden client supports exception: %s|%s met IP %s en class %d toegestaan op grond van verboden client ondersteuning uitzondering %s
+%s with IP %s and class %d allowed due to forbidden NMDC version exception: %s|%s met IP %s en class %d toegestaan op grond van verboden NMDC versie  uitzondering %s
+City: %s|Stad: %s
+IP range: %s - %s|IP reeks: %s - %s
+Region: %s|Regio: %s
+Time zone: %s|Tijd zone: %s
+Continent: %s|Continent: %s
+Postal code: %s|Postcode: %s
+Coordinates: %.4f %.4f|Coцrdinaten: %.4f %.4f
+Metro code: %d|Metro code: %d
+Area code: %d|Net nummer: %d
+Drop users with IP|Verbinding verbreken voor gebruikers met IP
+No users found with IP: %s|Geen gebruikers gevonden met IP: %s
+Dropped %d users with IP: %s|Verbinding verbreken %d gebruikers met IP: %s
+%s dropped %d users with IP: %s|%s verbinding verbreken %d gebruikers met IP: %s
+Live user location statistics by city|Live gebruikers locatie statistieken bij stad
+Live user location statistics by city from %s=%s|Live gebruikers locatie statistieken bij stad van %s=%s
+No users in the hub from: %s=%s|Geen gebruikers in de hub van: %s=%s
+Help notes|Help notities
+parameter|parameter
+Command parameters %s are always required, while %s are optional.|Comande parameters %s zijn altijd verplicht, omdat %s optioneel zijn.
+Quoted parameters %s or %s must be used with quotes.|Quoted parameters %s of %s moeten wordn gebruikt met quotes.
+IP information|IP informatie
+IP information not available: %s|IP informatie niet beschikbaar: %s
+Message replaced for user with class %d in MC: <%s> %s|Main chat bericht veranderd voor gebruiker met class %d in MC: <%s> %s
+IP %s permanently banned: <%s> %s|IP %s permanent gebannen: <%s> %s
+Nick %s permanently banned: <%s> %s|Nick %s permanent gebannen: <%s> %s
+Range %s permanently banned: <%s> %s|Reeks %s permanent gebannen: <%s> %s
+Host %s permanently banned: <%s> %s|Host %s permanent gebannen: <%s> %s
+Share %s permanently banned: <%s> %s|Share %s permanent gebannen:  <%s> %s
+Prefix %s permanently banned: <%s> %s|Prefix %s  permanent gebannen: <%s> %s
+IP %s temporarily banned until %s: <%s> %s|IP tijdelijk gebannen tot  %s: <%s> %s
+Nick %s temporarily banned until %s: <%s> %s|Nick %s tijdelijk gebannen tot %s: <%s> %s
+Range %s temporarily banned until %s: <%s> %s|Reeks %s tijdelijk gebannen tot %s: <%s> %s
+Host %s temporarily banned until %s: <%s> %s|Host tijdelijk gebannen tot %s: <%s> %s
+Share %s temporarily banned until %s: <%s> %s|Share %s tijdelijk gebannen tot %s: <%s> %s
+Prefix %s temporarily banned until %s: <%s> %s|Prefix %s tijdelijk gebannen tot %s: <%s> %s
+IP %s unbanned: <%s> %s|IP %s unbanned: <%s> %s
+Nick %s unbanned: <%s> %s|Nick %s unbanned: <%s> %s
+Range %s unbanned: <%s> %s|Reeks %s unbanned: <%s> %s
+Host %s unbanned: <%s> %s|Host %s unbanned: <%s> %s
+Share %s unbanned: <%s> %s|Share %s unbanned: <%s> %s
+Prefix %s unbanned: <%s> %s|Prefix %s unbanned: <%s> %s
+Known contexts are: %s|Bekende contexten zijn: %s
+Known orders are: %s|Bekende orders zijn: %s
+Modified right click menu item: %s|Gewijzigde right klik menu item: %s
+Added right click menu item: %s|Toegevoegde right klik menu item: %s
+Deleted right click menu item: %s|Verwijderde right klik menu item: %s
+Right click menu item not found: %s|Right klik menu item niet gevonden: %s
+Right click menu item list is empty.|Right klik menu item is leeg.
+Menu item|Menu item
+Menu command|Menu comando
+Changed right click menu item order: %s|Gewijzigd right klik menu item: %s
+Separator or eraser|Afscheider of gum
+Nick and IP %s unbanned: <%s> %s|Nick en IP %s unbanned: <%s> %s
+Other %s unbanned: <%s> %s|Ander %s unbanned: <%s> %s
+Vote for user to be kicked|Stem voor gebruiker om gekikt te worden
+You don't want to vote for kicking an operator.|Je kunt niet te stemmen om een Operator te kikken
+User voted kick|Gebruikers kunnen stemmen om te kikken
+You have already voted for kicking that user.|Je hebt al gestemd om een gebruiker te kikken .
+%s added vote %d of %d for kicking user with class %d: %s|%s stem toegevoegd %d om %d gebruiker te kikken met class %d: %s
+There is an error in following antispam entry pattern|Er zit een fout in de volgende antispam patroon
+Pattern|Pattern
+Error|Error
+Solution|Oplossing
+There is an error in following search filter pattern|Er zit een fout in de volgende zoek filter patroon
+There is an error in following search filter exception pattern|Er zit een fout in de volgende zoek filter uitzonderings patroon
+There is an error in following antispam exception entry pattern|Er zit een fout in de volgende antispam uitzonderings regel patroon
+There is an error in following forbidden nick pattern|Er zit een fout in de volgende verboden nick patroon
+There is an error in following MyINFO exception pattern|Er zit een fout in de volgende MyINFO uitzonderings patroon
+There is an error in following forbidden description pattern|Er zit een fout in de volgende verboden description patroon
+There is an error in following forbidden tag pattern|Er zit een fout in de volgende verboden tag patroon
+There is an error in following forbidden connection type pattern|Er zit een fout in de volgende verboden verbindings type patroon
+There is an error in following forbidden email pattern|Er zit een fout in de volgende verboden email patroon
+There is an error in following forbidden share size pattern|Er zit een fout in de volgende verboden share grote patroon
+There is an error in following forbidden IP address pattern|Er zit een fout in de volgende verboden IP adres patroon
+There is an error in following forbidden country code pattern|Er zit een fout in de volgende verboden landen code patroon
+There is an error in following forbidden DNS pattern|Er zit een fout in de volgende verboden DNS patroon
+There is an error in following forbidden client supports pattern|Er zit een fout in de volgende verboden client ondersteuning patroon
+There is an error in following forbidden NMDC version pattern|Er zit een fout in de volgende verboden NMDC versie patroon
+Added replacer in PM: %s|Vervanger toegevoegd in PM: %s
+Added replacer in MC and PM: %s|Vervanger toegevoegd in MC en PM: %S
+Message replaced for user with class %d in PM: <%s> %s|Bericht vervangen voor gebruiker met class %d in PM: <%s> %s
+Message ignored due to flood detection from %s with IP %s and class %d in MC: %s|Bericht genegeerd vanwege flood detectie van %s met IP %s en class %d in MC: %s
+Users with same IP|Gebruikers met het zelfde IP adres
+Parameter count mismatch detected in following translation string: %s|Parameter mismatch gedetecteerd in volgende vertaling string: %s
+Infected user detected|Geпnfecteerde gebruiker gedetecteerd
+Found files|Gevonden bestanden
+Infected user detected with nick %s and IP %s and share %s and spent time: %s|Geпnfecteerde gebruiker gedetecteerd met nick %s en IP %s en share %s gespendeerde tijd: %s
+Sadly I don't have access to send infected user information to AVDB, please ask maintainer of this script to add your server IP address to access list. AVDB reporting feature has been automatically disabled.|Helaas heb ik geen toegang tot geпnfecteerde gebruiker informatie om te sturen naar AVDB, vraag onderhouder van dit script naar uw server IP-adres toe te voegen aan toegang lijst. AVDB rapportage functie is automatisch uitgeschakeld 
+In order to send infected user information to AVDB you need to ask maintainer of this script to add your server IP address to AVDB access list.|Om de geпnfecteerde gebruiker informatie te sturen naar AVDB moet je de beheerder van dit script te vragen om uw server IP-adres toe te voegen aan de toegang lijst AVDB .
+Antivirus statistics|Antivirus statistieken
+File names used for search|Bestand namen gebruikt om te zoeken
+File extensions used for search|Bestand extensies gebruikt voor zoeken
+Possibly infected users|Mogelijk geinfecteerde gebruikers
+Spent time: %s|Gespendeerde tijd: %s
+Infected user logged in with IP %s and share %s: %s|Geinfecteerde gebruiker logt in met IP %s en share %s: %s
+Loaded %d of %d with totally %d items: %s|Geladen %d of %d met totaal %d items: %s
+Infected user information sent to %s: %s|Geinfecteerde gebruiker informatie verzonden aan %s: %s
+Failed to load information from %s: %s|Niet gelukt informatie te laden van %s: %s
+Failed to send information to %s: %s|Niet gelukt om informatie te versturen naar %s: %s
+Error on executing %s: %s|Fout bij uitvoeren %s: %s
+Error on connecting.|Fout bij verbinden.
+Loaded none with totally %d items: %s|Geladen nul met totaal %d items: %s
+Infected user found with IP %s and share %s: %s|Geпnfecteerde gebruiker gedetecteerd met  IP %s en share %s
+Server didn't reply with expected status code.|Server reageerde niet met de verwacht status code
+Size of %s: %d @ %s|Grote van %s: %d @ %s
+Clear kick votes for user|Kik stem voor gebruiker opgeruimd
+%s cleared %d of %d votes for kicking user with class %d: %s|%s opgeruimd %d van %d stemmen om gebruiker te kikken %d: %s
+Vote kick list|Stem kik lijst
+Vote kick list is empty.|Stem kik lijst is leeg
+Votes: %d of %d|Stemmen: %d of %d
+Voters: %s|Stemmers: %s
+Triggers|Triggers
+Add trigger|Trigger toevoegen
+Trigger list|Trigger lijst
+Delete trigger|Verwijder trigger
+Modified trigger: %s|Aanpassen van trigger: %s
+Added trigger: %s|Toegevoegde trigger: %s
+Deleted trigger: %s|Verwijderen van trigger: %s
+Trigger not found: %s|Trigger niet gevonden: %s
+Trigger list is empty.|Trigger lijst is leeg.
+Class range: %d to %d|Classe reeks: %d to %d
+Pinger|Pinger
+Guest|Gast
+Registered|Geregistreerde
+VIP|VIP
+Operator|Operator
+Cheef|Chef
+Administrator|Administrator
+Master|Master
+News item added by %s: %s|Nieuws item toegevoegd door %s: %s
+Your connection request is blocked because user that you're trying connect to was detected as virus spreader: %s|Uw verbinding aanvraag wordt geblokkeerd omdat de gebruiker waar mee dat je probeert verbinding te maken werd gedetecteerd als virus spreader: %s
+Connection requests to following user will be blocked: %s|Verbindings aanvraag met de volgende gebruiker wordt geblokeerd: %s
+Downloading script file: %s|Downloading script bestand: %s
+Stable version of %s is available: %s|Stabiele versie van %s is beschikbaar: %s
+Development version of %s is available: %s|Ontwikkelings fase versie van %s is available: %s
+Translation file loaded: %s|Vertaald bestand geladen: %s
+Loaded none of %d with totally %d items: %s|Geladen nul van %d met totaal %d items: %s
+Failed to execute %s with code: %d|Niet gelukt om uit te voeren %s met code: %d
+Failed to execute %s with error: %s|Niet gelukt om uit te voeren %s met error: %s
+Failed to execute %s without code and error.|Niet gelukt om uit te voeren %s zonder code en error: %d
+Failed to move file: %s|Niet gelukt om bestand te verplaatsen: %s
+Downloading translation file: %s|Downloaden van vertalings bestand: %s
+File not found on update server: %s|Bestand niet gevonden op upate server: %s
+File not found on remote server: %s|Bestand niet gevonden op remote server
+File is empty.|Bestand is leeg.
+Force infected user detection|Gedwongen geпnfecteerde gebruiker detectie
+You can't block user whose class is higher or equals your own: %s|Je kunt geen gebruiker blokken met een class hoger of gelijk aan je zelf: %s
+User already blocked: %s|Gebruiker is al geblokt: %s
+item|item
+Search in %s|Zoeken in %s
+Antivirus|Antivirus
+Nothing was found in: %s|Niks gevonden in: %s
+Searching for %s in %s: %s|Zoeken naar %s in %s: %s
+Showing %d results from %s|Resultaten van %s laten zien %d
+%s module version: %s|%s module versie: %s
+This feature requires following module installed on your system: %s|Deze functie vereist volgende module op uw systeem zijn geпnstalleerd: %s
+Failed to start antivirus search server: %s|Niet gelukt te starten met een antivirus \\oek opdracht op de server: %s
+Started antivirus search server: %s|Gestart een antivirus zoektocht op de server: %s
+Stopped antivirus search server: %s|Gestopt antivirus zoektocht op de server: %s
+Blocked infected users|Geblokeerde geinfecteerde gebruikers
+Add automatic country chatroom entrance|Voeg toe automatische land chatroom entree
+Automatic country chatroom entrance list|Automatische land chatroom ingang lijst
+Delete automatic country chatroom entrance| Verwijder automatische land chatroom ingang lijst
+Couldn't add automatic country chatroom entrance because already exists with ID: %d|Het toevoegen van automatische land chatroom ingang gaat niet omdat deze al bestaat al met ID:%d
+Added automatic country chatroom entrance for %s: %s|Toegevoegd automatische land chatroom ingang voor %s: %s
+Couldn't delete automatic country chatroom entrance because ID not found: %d|Kan automatische land chatroom ingang niet verwijderen omdat ID niet is gevonden: %d
+Deleted automatic country chatroom entrance with ID: %d|Verwijder automatische land chatroom ingang met ID: %d
+Automatic country chatroom entrance list is empty.|Automatische land chatroom ingang lijst is leeg.
+Please note, following function is required for features available in this version of %s and is currently not available in running version of %s but is available in latest update: %s|Let op, volgende functie is vereist voor functies die beschikbaar zijn in deze versie van %s en is momenteel niet beschikbaar in de actieve versie van %s , maar is beschikbaar in de laatste update: %s
+note|note
