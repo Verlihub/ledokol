@@ -557,7 +557,7 @@ Modified antispam entry with action %d and priority %d to scan in PM: %s|Zmodyfi
 Modified antispam entry with action %d and priority %d to scan in MC and PM: %s|Zmodyfikowane wejscie antyspam z akcja %d oraz priorytetem %d do skanowania na glownym czacie i PM: %s
 Added antispam entry with action %d and priority %d to scan in MC: %s|Dodano wpis antyspam z akcja %d oraz priorytetem %d do skanowania na glownym czacie: %s
 Added antispam entry with action %d and priority %d to scan in PM: %s|Dodano wpis antyspam z akcja %d oraz priorytetem %d do skanowania na PM: %s
-Added antispam entry with action %d and priority %d to scan in MC and PM: %s|Dodano wpis antyspam z akcja %d oraz priorytetem %d do skanowania na glownym czacie and PM: %s
+Added antispam entry with action %d and priority %d to scan in MC and PM: %s|Dodano wpis antyspam z akcja %d oraz priorytetem %d do skanowania na glownym czacie i PM: %s
 Search request exception from %s with IP %s and class %d as any file: %s|Prosba wyszukiwania wyjatku %s z IP %s i klasa %d jako dowolny plik: %s
 Search request exception from %s with IP %s and class %d as audio file: %s|Prosba wyszukiwania wyjatku: %s z IP %s i klasa %d jako pliku audio: %s
 Search request exception from %s with IP %s and class %d as compressed file: %s|Prosba wyszukiwania wyjatku: %s z IP %s i klasa %d jako zkompresowanego pliku: %s
@@ -1076,3 +1076,4 @@ Deleted automatic country chatroom entrance with ID: %d|Skreslone automatycznie 
 Automatic country chatroom entrance list is empty.|Automatyczna lista krajow z pokojow jest pusta.
 Please note, following function is required for features available in this version of %s and is currently not available in running version of %s but is available in latest update: %s|Uwaga, ponizsza funkcja jest wymagana dla funkcji dostepnych w tej wersji %s, a obecnie nie jest dostepny w biezacej wersji %s, ale jest dostepna w najnowszej aktualizacji: %s
 note|uwaga
+Access is restricted.|Dostep jest ograniczony.
