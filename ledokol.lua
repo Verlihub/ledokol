@@ -991,6 +991,8 @@ table_avex = {
 	".exe", ".zip", ".rar"
 }
 
+cache_prot = {}
+
 ---------------------------------------------------------------------
 -- global storage variables and tables <<
 ---------------------------------------------------------------------
@@ -1234,6 +1236,7 @@ function Main (file)
 	end
 
 	loadsettings ()
+	loadcachelists ()
 	loadlangfile (nil, nil)
 
 	table_othsets ["botnick"] = getconfig ("hub_security")
@@ -9560,62 +9563,85 @@ end
 ----- ---- --- -- -
 
 function addprotentry (nick, line)
-local ent = repsqlchars (repnmdcinchars (line))
-local _, rows = VH:SQLQuery ("select `occurred` from `"..tbl_sql ["prot"].."` where `protected` = '"..ent.."' limit 1")
+	local ent = repnmdcinchars (line)
+	local ok = true
 
-if rows > 0 then -- exists
-	commandanswer (nick, string.format (gettext ("Protection entry already exists: %s"), line))
-else -- add
-	VH:SQLQuery ("insert into `"..tbl_sql ["prot"].."` (`protected`) values ('"..ent.."')")
-	commandanswer (nick, string.format (gettext ("Added protection entry: %s"), line))
-end
+	for _, prot in pairs (cache_prot) do
+		if prot == ent then
+			ok = false
+			break
+		end
+	end
+
+	if ok then -- add
+		table.insert (cache_prot, ent)
+		VH:SQLQuery ("insert ignore into `" .. tbl_sql ["prot"] .. "` (`protected`) values ('" .. repsqlchars (ent) .. "')")
+		commandanswer (nick, gettext ("Added protection entry: %s"):format (line))
+	else -- exists
+		commandanswer (nick, gettext ("Protection entry already exists: %s"):format (line))
+	end
 end
 
 ----- ---- --- -- -
 
 function delprotentry (nick, line)
-local ent = repsqlchars (repnmdcinchars (line))
-local _, rows = VH:SQLQuery ("select `occurred` from `"..tbl_sql ["prot"].."` where `protected` = '"..ent.."' limit 1")
+	local ent = repnmdcinchars (line)
+	local id = 0
 
-if rows > 0 then -- delete
-	VH:SQLQuery ("delete from `"..tbl_sql ["prot"].."` where `protected` = '"..ent.."' limit 1")
-	commandanswer (nick, string.format (gettext ("Deleted protection entry: %s"), line))
-else -- not in list
-	commandanswer (nick, string.format (gettext ("Protection entry not found: %s"), line))
-end
+	for pos, prot in pairs (cache_prot) do
+		if prot == ent then
+			id = pos
+			break
+		end
+	end
+
+	if id > 0 then -- delete
+		table.remove (cache_prot, id)
+		VH:SQLQuery ("delete ignore from `" .. tbl_sql ["prot"] .. "` where `protected` = '" .. repsqlchars (ent) .. "'")
+		commandanswer (nick, gettext ("Deleted protection entry: %s"):format (line))
+	else -- not in list
+		commandanswer (nick, gettext ("Protection entry not found: %s"):format (line))
+	end
 end
 
 ----- ---- --- -- -
 
 function listprotentry (nick)
-local _, rows = VH:SQLQuery ("select `protected`, `occurred` from `"..tbl_sql ["prot"].."` order by `occurred` desc")
+	local _, rows = VH:SQLQuery ("select `protected`, `occurred` from `" .. tbl_sql ["prot"] .. "` order by `occurred` desc")
 
-if rows > 0 then
-	local list, len = "", 0
+	if rows > 0 then
+		local list, rlen, olen = "", 0, 0
 
-	for x = 0, rows - 1 do
-		local _, ent, occ = VH:SQLFetch (x)
-		if x == 0 then len = string.len (occ) end
-		list = list.." "..prezero (string.len (rows), (x + 1))..". [ O: "..prezero (len, occ).." ] "..repnmdcoutchars (ent).."\r\n"
+		for x = 0, rows - 1 do
+			local _, ent, occ = VH:SQLFetch (x)
+
+			if x == 0 then
+				rlen = # tostring (rows)
+				olen = # tostring (occ)
+			end
+
+			list = list .. " " .. prezero (rlen, (x + 1)) .. ". [ O: " .. prezero (olen, occ) .. " ] " .. repnmdcoutchars (ent) .. "\r\n"
+		end
+
+		commandanswer (nick, gettext ("Protection list") .. ":\r\n\r\n" .. list)
+	else -- empty
+		commandanswer (nick, gettext ("Protection list is empty."))
 	end
-
-	commandanswer (nick, gettext ("Protection list")..":\r\n\r\n"..list)
-else -- empty
-	commandanswer (nick, gettext ("Protection list is empty."))
-end
 end
 
 ----- ---- --- -- -
 
-function isprotected (nick, ip)
-	local _, rows = VH:SQLQuery ("select `protected` from `" .. tbl_sql ["prot"] .. "` order by `occurred` desc")
+function isprotected (nick, addr)
+	if # cache_prot > 0 then
+		local lick = ""
 
-	if rows > 0 then
-		for x = 0, rows - 1 do
-			local _, ent = VH:SQLFetch (x)
+		if nick then
+			lick = tolow (nick)
+		end
 
-			if (nick and string.find (tolow (nick), ent)) or (ip and string.find (ip, ent)) then
-				VH:SQLQuery ("update `" .. tbl_sql ["prot"] .. "` set `occurred` = `occurred` + 1 where `protected` = '" .. repsqlchars (ent) .. "' limit 1")
+		for _, prot in pairs (cache_prot) do
+			if (nick and lick:find (prot)) or (addr and addr:find (prot)) then
+				VH:SQLQuery ("update ignore `" .. tbl_sql ["prot"] .. "` set `occurred` = `occurred` + 1 where `protected` = '" .. repsqlchars (prot) .. "'")
 				return true
 			end
 		end
@@ -17727,8 +17753,8 @@ VH:SQLQuery ("create table if not exists `"..tbl_sql ["clog"].."` (`id` bigint(2
 -- hublist
 VH:SQLQuery ("create table if not exists `"..tbl_sql ["hubs"].."` (`address` varchar(255) not null, `name` varchar(255) not null, `owner` varchar(255) not null, `status` tinyint(1) not null default 0, primary key (`address`)) engine = myisam default character set utf8 collate utf8_unicode_ci")
 
--- protected list
-VH:SQLQuery ("create table if not exists `"..tbl_sql ["prot"].."` (`protected` varchar(255) not null, `occurred` bigint(20) unsigned not null default 0, primary key (`protected`)) engine = myisam default character set utf8 collate utf8_unicode_ci")
+	-- protected list
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql ["prot"] .. "` (`protected` varchar(255) not null primary key, `occurred` bigint(20) unsigned not null default 0) engine = myisam default character set utf8 collate utf8_unicode_ci")
 
 -- statistics
 VH:SQLQuery ("create table if not exists `"..tbl_sql ["stat"].."` (`type` varchar(255) not null, `time` bigint(20) unsigned not null default 0, `count` text not null, primary key (`type`)) engine = myisam default character set utf8 collate utf8_unicode_ci")
@@ -18138,6 +18164,20 @@ function loadsettings ()
 	if table_sets ["useblacklist"] == 1 then -- blacklist
 		if loadblacklist () == false then
 			table_sets ["useblacklist"] = 0
+		end
+	end
+end
+
+----- ---- --- -- -
+
+function loadcachelists ()
+	-- protected list
+	local _, rows = VH:SQLQuery ("select `protected` from `" .. tbl_sql ["prot"] .. "`")
+
+	if rows > 0 then
+		for x = 0, rows - 1 do
+			local _, prot = VH:SQLFetch (x)
+			table.insert (cache_prot, prot)
 		end
 	end
 end
