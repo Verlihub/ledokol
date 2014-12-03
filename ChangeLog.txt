@@ -1,9 +1,10 @@
-[ 2.8.5 :: 2014-##-## ]
+[ 2.8.5 :: 201#-##-## ]
 
 Changed: myinfadd command parameter syntax to <type> <"lre"> ["time"] ["note"]
 Changed: Modify existing forbidden MyINFO item when it's added again
 Changed: Restrict access of forced infected user detection report to AVDB
 Added: Optional parameter to add note for each forbidden MyINFO item, request by Uhlik
+Added: Cache for protected users list, it's called too often, we don't want to put high load on MySQL server
 
 [ 2.8.4 :: 2014-11-17 ]
 
