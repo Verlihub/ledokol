@@ -18771,6 +18771,7 @@ function showavstats (nick, user)
 
 					for fame, fize in pairs (file) do
 						if # fame > 0 then
+							fame = fame:gsub ("[\r\n]", " ")
 							stats = stats .. " " .. string.rep (" ", plen) .. repnmdcoutchars (fame) .. " &#124; " .. makesize (fize) .. "\r\n"
 						end
 					end
@@ -19124,6 +19125,7 @@ function avparsesr (data, user, addr)
 
 												for fame, fize in pairs (table_avus [nick][path]) do
 													if # fame > 0 then
+														fame = fame:gsub ("[\r\n]", " ")
 														list = list .. " " .. string.rep (" ", plen) .. repnmdcoutchars (fame) .. " &#124; " .. makesize (fize) .. "\r\n"
 													end
 												end
