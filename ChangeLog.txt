@@ -1,5 +1,6 @@
 [ 2.8.5 :: 201#-##-## ]
 
+Fixed: Correctly send $NoReport command to pingers, report by S0RiN
 Changed: myinfadd command parameter syntax to <type> <"lre"> ["time"] ["note"]
 Changed: Modify existing forbidden MyINFO item when it's added again
 Changed: Restrict access of forced infected user detection report to AVDB
