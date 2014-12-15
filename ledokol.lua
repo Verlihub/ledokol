@@ -3551,31 +3551,18 @@ elseif string.find (data, "^"..table_othsets ["optrig"].."=%s+%S+ .*$") then
 		donotifyconfig (nick, string.sub (data, string.len ("=") + 3, -1), ucl)
 	end
 
------ ---- --- -- -
+	----- ---- --- -- -
 
-elseif string.find (data, "^"..table_othsets ["optrig"].."restart$") or string.find (data, "^"..table_othsets ["optrig"].."restart .*$") then
-	if ucl == 10 then
-		maintoall (gettext ("Hub is now going for a very quick restart. Please be patient."), 0, 10)
-		donotifycmd (nick, data, 0, ucl)
-		table_othsets ["restart"] = true
-	else
-		commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
-		return 0
-	end
+	elseif data:find ("^" .. table_othsets ["optrig"] .. "restart$") or data:find ("^" .. table_othsets ["optrig"] .. "quit$") or data:find ("^" .. table_othsets ["optrig"] .. "core_dump$") then
+		if ucl == 10 then
+			donotifycmd (nick, data, 0, ucl)
+			table_othsets ["restart"] = true
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+			return 0
+		end
 
------ ---- --- -- -
-
-elseif string.find (data, "^"..table_othsets ["optrig"].."quit$") or string.find (data, "^"..table_othsets ["optrig"].."quit .*$") then
-	if ucl == 10 then
-		maintoall (gettext ("Hub is now going to shut down. Please be patient."), 0, 10)
-		donotifycmd (nick, data, 0, ucl)
-		table_othsets ["restart"] = true
-	else
-		commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
-		return 0
-	end
-
------ ---- --- -- -
+	----- ---- --- -- -
 
 elseif string.find (data, "^"..table_othsets ["optrig"].."luaload .*$") or string.find (data, "^"..table_othsets ["optrig"].."luaunload .*$") or string.find (data, "^"..table_othsets ["optrig"].."luareload .*$") then
 	if ucl >= getconfig ("plugin_mod_class") then -- use plugin permission for lua scripts too
