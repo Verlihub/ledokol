@@ -6,6 +6,7 @@ Changed: Restrict access of forced infected user detection report to AVDB
 Changed: Replace new line character with space in antivirus detection file names
 Added: Optional parameter to add note for each forbidden MyINFO item, request by Uhlik
 Added: Cache for protected users list, it's called too often, we don't want to put high load on MySQL server
+Removed: Messages on hub restart and stop, hub itself will do that for us
 
 [ 2.8.4 :: 2014-11-17 ]
 
