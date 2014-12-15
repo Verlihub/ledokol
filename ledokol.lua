@@ -4276,12 +4276,8 @@ function VH_OnFirstMyINFO (nick, desc, speed, mail, size)
 		return 1
 	end
 
-	if (table_sets ["avdbloadint"] > 0 or table_sets ["avsearchint"] > 0) and table_sets ["avdetaction"] == 0 then
-		local class = getclass (nick)
-
-		if class == -1 then -- ask pinger to not send +report
-			VH:SendToUser ("$NoReport|", nick)
-		end
+	if (table_sets ["avsearchint"] > 0 or table_sets ["avdbloadint"] > 0) and table_sets ["avdetaction"] == 0 and getclass (nick) == -1 then
+		return {"$NoReport|", 1, 1} -- ask pinger to not send +report
 	end
 
 	return 1
