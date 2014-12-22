@@ -477,8 +477,6 @@ Add new release|Nieuwe release toevoegen
 Delete releases|Verwijder releases
 List of available releases|Lijst van beschikbare releases.
 Find release by name or category|Vind release bij naam of categorie
-Hub is now going for a very quick restart. Please be patient.|Hub gaat nu voor een zeer snelle herstart . Wees geduldig en tot zo ;)
-Hub is now going to shut down. Please be patient.|De huub gaat sluiten, heb geduld.
 equation|vergelijking
 Calculate an equation|Bereken een vergelijking
 Both numbers must be either pi or numbers.|Beide nummers moeten of pi zijn of nummers
@@ -1077,3 +1075,6 @@ Automatic country chatroom entrance list is empty.|Automatische land chatroom in
 Please note, following function is required for features available in this version of %s and is currently not available in running version of %s but is available in latest update: %s|Let op, volgende functie is vereist voor functies die beschikbaar zijn in deze versie van %s en is momenteel niet beschikbaar in de actieve versie van %s , maar is beschikbaar in de laatste update: %s
 note|note
 Access is restricted.|Toegang is restricted
+Convert LRE to plain text|Omzetten LRE naar platte tekst
+LRE converted to plain text: %s|LRE omgezet naar platte tekst: %s
+Please check your command syntax, something is wrong there.|Controleer uw syntaxis van de opdracht , iets mis is daar.
