@@ -1,8 +1,8 @@
 # Language: ru_RU
 # Charset: CP1251
 # Version: 2.8.5
-# Author: KCAHDEP
-# Email: admin@kcahdep.org
+# Author: MaxFox
+# Email: maxfox@inbox.ru
 
 Current topic: %s|Данная тема: %s
 Current topic set by %s: %s|Данная тема установленная %s: %s
@@ -477,8 +477,6 @@ Add new release|Добавлен новый релиз
 Delete releases|Удалить релизы
 List of available releases|Список доступных релизов
 Find release by name or category|Найти релизы по имени или категории
-Hub is now going for a very quick restart. Please be patient.|Хаб уходит в быструю перезагрузку. Пожалуйста, подождите.
-Hub is now going to shut down. Please be patient.|Хаб выключается. Пожалуйста, подождите.
 equation|формула
 Calculate an equation|Посчитать формулу
 Both numbers must be either pi or numbers.|Оба введенных значения должны быть или pi или цифрами.
@@ -648,7 +646,7 @@ IP gag not found: %s|Заглушка по IP не найдена: %s
 IP gag list|Список зазлушек по IP
 IP gag list is empty.|Список заглушек по IP пуст.
 Delete IP gag|Удалить заглушку по IP
-Main chat is currently disabled for you.|В данный момен основной чат для вас отключен.
+Main chat is currently disabled for you.|В данный момент основной чат для вас отключен.
 Cleared temporary IP gag list.|Список временных заглушек по IP очищен.
 Show custom script commands|Показать команды скрипта
 Custom script command list|Список переопределенных пользователем команд скрипта
@@ -657,7 +655,7 @@ Script size: %d lines in %s|Размер скрипта: %d строк в %s
 Added %s to IP gag list, %d users in total.|Адрес %s добавлен в список заглушек по IP, %d пользователей всего.
 Flood detected from IP %s last known as %s with class %d in MC: %s|Обнаружен флуд с IP адреса %s. Текущий пользователь адреса - %s %d-го класса, флудил в MC: %s
 Flood detected from IP %s last known as %s with class %d in PM: %s|Обнаружен флуд с IP адреса %s. Текущий пользователь адреса - %s %d-го класса, флудил в PM: %s
-Private chat is currently disabled for you.|Личные сообщения для вас отключены.
+Private chat is currently disabled for you.|В данный момент личные сообщения для вас отключены.
 Flood detected from your IP.|С вашего IP ведется рассылка флуда.
 %d users with IP %s dropped due to flood.|Пользователь %d with IP %s выкинут за флуд.
 No error message specified.|Сообщений об ошибках не обнаружено.
@@ -1000,9 +998,9 @@ File names used for search|Названия файлов используемы�
 File extensions used for search|Расширения файлов используемые для поиска
 Possibly infected users|Возможно зараженные пользователи
 Spent time: %s|Проведенное время: %s
-Infected user logged in with IP %s and share %s: %s|Зараженный пользователь вошел с IP адресом %s и шарой %s: %s
+Infected user logged in with IP %s and share %s: %s|Зараженный пользователь %s вошел с IP адреса %s и шарой %s
 Loaded %d of %d with totally %d items: %s|Загружено %d из %d итого %d пунктов: %s
-Infected user information sent to %s: %s|Информация о зараженном пользователе отправлена в %s: %s
+Infected user information sent to %s: %s|Информация о зараженном пользователе %s отправлена в %s
 Failed to load information from %s: %s|Не удалось загрузить информацию из %s: %s
 Failed to send information to %s: %s|Не удалось отправить информацию в %s: %s
 Error on executing %s: %s|Ошибка при выполнении %s: %s
@@ -1077,3 +1075,6 @@ Automatic country chatroom entrance list is empty.|Список автомати
 Please note, following function is required for features available in this version of %s and is currently not available in running version of %s but is available in latest update: %s|Внимание, следующая функция требуется для полноценной работы данной версии %s и является не доступной в данной версии %s но доступна в последнем обновлении: %s
 note|заметка
 Access is restricted.|Доступ ограничен.
+Convert LRE to plain text|Конвертация LRE в чистый текст
+LRE converted to plain text: %s|LRE конвертированный в чистый текст: %s
+Please check your command syntax, something is wrong there.|Пожалуйста проверьте синтаксис вашей команды, в ней что-то не так.
