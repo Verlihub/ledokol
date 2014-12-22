@@ -11821,7 +11821,13 @@ end
 ----- ---- --- -- -
 
 function cleanuptable (nick, line, cls)
-	local _, _, ctype, cdays = string.find (line, "^(%S+) (%d+).*$")
+	local ctype, cdays = line:match ("^(%S+) (%d+).*$")
+
+	if not ctype then
+		commandanswer (nick, gettext ("Please check your command syntax, something is wrong there."))
+		return
+	end
+
 	local seconds = os.difftime (os.time (), (tonumber (cdays) * 24 * 3600))
 	local tm = os.time () + table_sets ["srvtimediff"]
 
