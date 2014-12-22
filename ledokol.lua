@@ -221,6 +221,7 @@ table_sets = {
 	["ophistautolines"] = 0,
 	["histautolinemax"] = 256,
 	["histautonewlinedel"] = 1,
+	["histshowipclass"] = 11,
 	["autoupdcheck"] = 24,
 	["addspecialver"] = 0,
 	["addledobot"] = 1,
@@ -541,6 +542,7 @@ table_cmnds = {
 	["say"] = "say",
 	["mode"] = "mode",
 	["calculate"] = "calculate",
+	["lretoplain"] = "lretoplain",
 	["mychatrank"] = "mychatrank",
 	["mysharerank"] = "mysharerank",
 	["myoprank"] = "myoprank",
@@ -1212,6 +1214,11 @@ function Main (file)
 						VH:SQLQuery ("alter ignore table `" .. tbl_sql ["midns"] .. "` change column `time` `time` varchar(10) null")
 						VH:SQLQuery ("alter ignore table `" .. tbl_sql ["misup"] .. "` change column `time` `time` varchar(10) null")
 						VH:SQLQuery ("alter ignore table `" .. tbl_sql ["miver"] .. "` change column `time` `time` varchar(10) null")
+						VH:SQLQuery ("alter ignore table `" .. tbl_sql ["mchist"] .. "` add column `ip` varchar(15) null after `nick`")
+
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["ledocmd"] .. "` (`original`, `new`) values ('lretoplain', '" .. repsqlchars (table_cmnds ["lretoplain"]) .. "')")
+
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('histshowipclass', '" .. repsqlchars (table_sets ["histshowipclass"]) .. "')")
 					end
 
 					if ver <= 286 then
@@ -2228,10 +2235,10 @@ return 0
 
 	----- ---- --- -- -
 
-	elseif string.find (data, "^" .. table_othsets ["optrig"] .. table_cmnds ["myhistory"] .. " %d+$") then
-		if (ucl >= table_sets ["mchistclass"]) and (table_sets ["histlimit"] > 0) then
+	elseif data:match ("^" .. table_othsets ["optrig"] .. table_cmnds ["myhistory"] .. " %d+$") then
+		if ucl >= table_sets ["mchistclass"] and table_sets ["histlimit"] > 0 then
 			donotifycmd (nick, data, 0, ucl)
-			sendownhistory (nick, string.sub (data, string.len (table_cmnds ["myhistory"]) + 3, -1))
+			sendownhistory (nick, ucl, data:sub (# table_cmnds ["myhistory"] + 3))
 		else
 			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
@@ -2240,10 +2247,10 @@ return 0
 
 	----- ---- --- -- -
 
-	elseif string.find (data, "^" .. table_othsets ["optrig"] .. table_cmnds ["history"] .. " %d+$") then
-		if (ucl >= table_sets ["mchistclass"]) and (table_sets ["histlimit"] > 0) then
+	elseif data:match ("^" .. table_othsets ["optrig"] .. table_cmnds ["history"] .. " %d+$") then
+		if ucl >= table_sets ["mchistclass"] and table_sets ["histlimit"] > 0 then
 			donotifycmd (nick, data, 0, ucl)
-			sendmchistory (nick, string.sub (data, string.len (table_cmnds ["history"]) + 3, -1), 0)
+			sendmchistory (nick, ucl, data:sub (# table_cmnds ["history"] + 3), 0)
 		else
 			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
@@ -2274,7 +2281,19 @@ end
 
 return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
+
+	elseif data:match ("^" .. table_othsets ["optrig"] .. table_cmnds ["lretoplain"] .. " .+$") then
+		if ucl >= table_sets ["mincommandclass"] then
+			donotifycmd (nick, data, 0, ucl)
+			lretoplain (nick, data:sub (# table_cmnds ["lretoplain"] + 3))
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
+
+		return 0
+
+	----- ---- --- -- -
 
 elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["showtopic"].."$") then
 if ucl >= table_sets ["minusrcommandclass"] then
@@ -4157,10 +4176,10 @@ elseif string.find (data, "^"..table_othsets ["ustrig"]..table_cmnds ["mode"].."
 
 	----- ---- --- -- -
 
-	elseif string.find (data, "^" .. table_othsets ["ustrig"] .. table_cmnds ["history"] .. " %d+$") then
-		if (ucl >= table_sets ["mchistclass"]) and (table_sets ["histlimit"] > 0) then
+	elseif data:match ("^" .. table_othsets ["ustrig"] .. table_cmnds ["history"] .. " %d+$") then
+		if ucl >= table_sets ["mchistclass"] and table_sets ["histlimit"] > 0 then
 			donotifycmd (nick, data, 0, ucl)
-			sendmchistory (nick, string.sub (data, string.len (table_cmnds ["history"]) + 3, -1), 0)
+			sendmchistory (nick, ucl, data:sub (# table_cmnds ["history"] + 3), 0)
 		else
 			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
@@ -4169,10 +4188,10 @@ elseif string.find (data, "^"..table_othsets ["ustrig"]..table_cmnds ["mode"].."
 
 	----- ---- --- -- -
 
-	elseif string.find (data, "^" .. table_othsets ["ustrig"] .. table_cmnds ["myhistory"] .. " %d+$") then
-		if (ucl >= table_sets ["mchistclass"]) and (table_sets ["histlimit"] > 0) then
+	elseif data:match ("^" .. table_othsets ["ustrig"] .. table_cmnds ["myhistory"] .. " %d+$") then
+		if ucl >= table_sets ["mchistclass"] and table_sets ["histlimit"] > 0 then
 			donotifycmd (nick, data, 0, ucl)
-			sendownhistory (nick, string.sub (data, string.len (table_cmnds ["myhistory"]) + 3, -1))
+			sendownhistory (nick, ucl, data:sub (# table_cmnds ["myhistory"] + 3))
 		else
 			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
@@ -4525,11 +4544,11 @@ if (cls >= table_sets ["newsclass"]) and (table_sets ["newsautolines"] > 0) then
 end
 
 	if table_sets ["histlimit"] > 0 then
-		if (cls >= table_sets ["mchistclass"]) and (table_sets ["histautolines"] > 0) then -- mc history
-			sendmchistory (nick, table_sets ["histautolines"], 1)
+		if cls >= table_sets ["mchistclass"] and table_sets ["histautolines"] > 0 then -- mc history
+			sendmchistory (nick, cls, table_sets ["histautolines"], 1)
 		end
 
-		if (cls >= 3) and (table_sets ["ophistautolines"] > 0) then -- op history
+		if cls >= 3 and table_sets ["ophistautolines"] > 0 then -- op history
 			sendophistory (nick, table_sets ["ophistautolines"], 1, false)
 		end
 	end
@@ -8994,6 +9013,12 @@ end
 
 ----- ---- --- -- -
 
+function lretoplain (nick, data)
+	commandanswer (nick, gettext ("LRE converted to plain text: %s"):format (repnmdcoutchars (reppatchars (repnmdcinchars (tolow (data))))))
+end
+
+----- ---- --- -- -
+
 function addauthentry (nick, item)
 	local _, _, user, ip = string.find (item, "^(%S+) (.+)$")
 	VH:SQLQuery ("insert into `"..tbl_sql ["auth"].."` (`nick`, `ip`) values ('"..repsqlchars (user).."', '"..repsqlchars (repnmdcinchars (ip)).."')")
@@ -9362,48 +9387,48 @@ end
 
 ----- ---- --- -- -
 
-function sendmchistory (nick, lnnum, autosend)
-local lnn = tonumber (lnnum)
+function sendmchistory (nick, class, num, auto)
+	local lnum = tonumber (num)
 
-if lnn >= table_sets ["histlimit"] then
-lnn = table_sets ["histlimit"]
-elseif lnn <= 1 then
-lnn = 1
-end
-
-local _, rows = VH:SQLQuery ("select `nick`, `date`, `message` from `"..tbl_sql ["mchist"].."` order by `date` desc, `id` desc limit "..lnn)
-
-if rows > 0 then
-local aentry = ""
-
-for x = 0, rows - 1 do
-local _, user, adate, msg = VH:SQLFetch (x)
-
-	if autosend == 1 then -- truncate the message
-		if table_sets ["histautonewlinedel"] == 1 then
-			msg = string.gsub (msg, "[\r\n]", "")
-		end
-
-		if (table_sets ["histautolinemax"] > 0) and (string.len (msg) > table_sets ["histautolinemax"]) then
-			msg = string.sub (msg, 1, table_sets ["histautolinemax"]) .. " [...]"
-		end
+	if lnum > table_sets ["histlimit"] then
+		lnum = table_sets ["histlimit"]
+	elseif lnum < 1 then
+		lnum = 1
 	end
 
-aentry = " "..os.date (table_sets ["dateformat"].." "..table_sets ["timeformat"], adate)..": <"..user.."> "..msg.."\r\n"..aentry
-end
+	local _, rows = VH:SQLQuery ("select `nick`, `ip`, `date`, `message` from `" .. tbl_sql ["mchist"] .. "` order by `date` desc, `id` desc limit " .. lnum)
 
-if autosend == 0 then
-commandanswer (nick, string.format (gettext ("Last %d main chat messages"), rows)..":\r\n\r\n"..aentry)
-else
-maintouser (nick, string.format (gettext ("Last %d main chat messages"), rows)..":\r\n\r\n"..aentry)
-end
+	if rows > 0 then
+		local list = ""
 
-else
+		for x = 0, rows - 1 do
+			local _, user, ip, stamp, text = VH:SQLFetch (x)
 
-if autosend == 0 then -- only if sending manually
-commandanswer (nick, gettext ("Main chat history is empty."))
-end
-end
+			if auto == 1 then -- truncate message
+				if table_sets ["histautonewlinedel"] == 1 then
+					text = text:gsub ("[\r\n]", "")
+				end
+
+				if table_sets ["histautolinemax"] > 0 and # text > table_sets ["histautolinemax"] then
+					text = text:sub (1, table_sets ["histautolinemax"]) .. " [...]"
+				end
+			end
+
+			if class >= table_sets ["histshowipclass"] and ip and # ip > 0 then
+				list = " " .. os.date (table_sets ["dateformat"] .. " " .. table_sets ["timeformat"], stamp) .. " &#124; " .. ip .. ": <" .. user .. "> " .. text .. "\r\n" .. list
+			else
+				list = " " .. os.date (table_sets ["dateformat"] .. " " .. table_sets ["timeformat"], stamp) .. ": <" .. user .. "> " .. text .. "\r\n" .. list
+			end
+		end
+
+		if auto == 0 then
+			commandanswer (nick, gettext ("Last %d main chat messages"):format (rows) .. ":\r\n\r\n" .. list)
+		else
+			maintouser (nick, gettext ("Last %d main chat messages"):format (rows) .. ":\r\n\r\n" .. list)
+		end
+	elseif auto == 0 then -- only if sending manually
+		commandanswer (nick, gettext ("Main chat history is empty."))
+	end
 end
 
 ----- ---- --- -- -
@@ -9463,29 +9488,34 @@ end
 
 ----- ---- --- -- -
 
-function sendownhistory (nick, lnnum)
-local lnnm = tonumber (lnnum)
+function sendownhistory (nick, class, num)
+	local lnum = tonumber (num)
 
-if lnnm >= table_sets ["histlimit"] then
-lnnm = table_sets ["histlimit"]
-elseif lnnm < 1 then
-lnnm = 1
-end
+	if lnum > table_sets ["histlimit"] then
+		lnum = table_sets ["histlimit"]
+	elseif lnum < 1 then
+		lnum = 1
+	end
 
-local _, rows = VH:SQLQuery ("select `nick`, `date`, `message` from `"..tbl_sql ["mchist"].."` where `realnick` = '"..repsqlchars (nick).."' order by `date` desc, `id` desc limit "..lnnm)
+	local _, rows = VH:SQLQuery ("select `nick`, `ip`, `date`, `message` from `" .. tbl_sql ["mchist"] .. "` where `realnick` = '" .. repsqlchars (nick) .. "' order by `date` desc, `id` desc limit " .. lnum)
 
-if rows > 0 then
-local aentry = ""
+	if rows > 0 then
+		local list = ""
 
-for x = 0, rows - 1 do
-local _, user, adate, msg = VH:SQLFetch (x)
-aentry = " "..os.date (table_sets ["dateformat"].." "..table_sets ["timeformat"], adate)..": <"..user.."> "..msg.."\r\n"..aentry
-end
+		for x = 0, rows - 1 do
+			local _, user, ip, stamp, text = VH:SQLFetch (x)
 
-commandanswer (nick, string.format (gettext ("Last %d main chat messages written by you"), rows)..":\r\n\r\n"..aentry)
-else
-commandanswer (nick, gettext ("There are no main chat history messages written by you."))
-end
+			if class >= table_sets ["histshowipclass"] and ip and # ip > 0 then
+				list = " " .. os.date (table_sets ["dateformat"] .. " " .. table_sets ["timeformat"], stamp) .. " &#124; " .. ip .. ": <" .. user .. "> " .. text .. "\r\n" .. list
+			else
+				list = " " .. os.date (table_sets ["dateformat"] .. " " .. table_sets ["timeformat"], stamp) .. ": <" .. user .. "> " .. text .. "\r\n" .. list
+			end
+		end
+
+		commandanswer (nick, gettext ("Last %d main chat messages written by you"):format (rows) .. ":\r\n\r\n" .. list)
+	else
+		commandanswer (nick, gettext ("There are no main chat history messages written by you."))
+	end
 end
 
 ----- ---- --- -- -
@@ -9505,16 +9535,22 @@ function addmchistoryline (nick, real, line, refl)
 
 	local data = line:gsub ("is kicking", reprexpchars ("is" .. string.char (160) .. "kicking"))
 	local _, rows = VH:SQLQuery ("select `date` from `" .. tbl_sql ["mchist"] .. "` order by `date` asc")
+	local ip = getip (real)
 
-	if rows > 0 then
-		if rows >= table_sets ["histlimit"] then
-			local _, adate = VH:SQLFetch (0)
-			VH:SQLQuery ("update `" .. tbl_sql ["mchist"] .. "` set `realnick` = '" .. repsqlchars (real) .. "', `nick` = '" .. repsqlchars (nick) .. "', `date` = " .. tostring (os.time () + table_sets ["srvtimediff"]) .. ", `message` = '" .. repsqlchars (data) .. "' where `date` = " .. tostring (adate) .. " limit 1")
+	if rows >= table_sets ["histlimit"] then
+		local _, stamp = VH:SQLFetch (0)
+
+		if ip == "0.0.0.0" then
+			VH:SQLQuery ("update `" .. tbl_sql ["mchist"] .. "` set `realnick` = '" .. repsqlchars (real) .. "', `nick` = '" .. repsqlchars (nick) .. "', `ip` = null, `date` = " .. tostring (os.time () + table_sets ["srvtimediff"]) .. ", `message` = '" .. repsqlchars (data) .. "' where `date` = " .. tostring (stamp) .. " limit 1")
 		else
-			VH:SQLQuery ("insert into `" .. tbl_sql ["mchist"] .. "` (`realnick`, `nick`, `date`, `message`) values ('" .. repsqlchars (real) .. "', '" .. repsqlchars (nick) .. "', " .. tostring (os.time () + table_sets ["srvtimediff"]) .. ", '" .. repsqlchars (data) .. "')")
+			VH:SQLQuery ("update `" .. tbl_sql ["mchist"] .. "` set `realnick` = '" .. repsqlchars (real) .. "', `nick` = '" .. repsqlchars (nick) .. "', `ip` = '" .. repsqlchars (ip) .. "', `date` = " .. tostring (os.time () + table_sets ["srvtimediff"]) .. ", `message` = '" .. repsqlchars (data) .. "' where `date` = " .. tostring (stamp) .. " limit 1")
 		end
 	else
-		VH:SQLQuery ("insert into `" .. tbl_sql ["mchist"] .. "` (`realnick`, `nick`, `date`, `message`) values ('" .. repsqlchars (real) .. "', '" .. repsqlchars (nick) .. "', " .. tostring (os.time () + table_sets ["srvtimediff"]) .. ", '" .. repsqlchars (data) .. "')")
+		if ip == "0.0.0.0" then
+			VH:SQLQuery ("insert into `" .. tbl_sql ["mchist"] .. "` (`realnick`, `nick`, `date`, `message`) values ('" .. repsqlchars (real) .. "', '" .. repsqlchars (nick) .. "', " .. tostring (os.time () + table_sets ["srvtimediff"]) .. ", '" .. repsqlchars (data) .. "')")
+		else
+			VH:SQLQuery ("insert into `" .. tbl_sql ["mchist"] .. "` (`realnick`, `nick`, `ip`, `date`, `message`) values ('" .. repsqlchars (real) .. "', '" .. repsqlchars (nick) .. "', '" .. repsqlchars (ip) .. "', " .. tostring (os.time () + table_sets ["srvtimediff"]) .. ", '" .. repsqlchars (data) .. "')")
+		end
 	end
 end
 
@@ -13812,26 +13848,27 @@ end
 		sopmenitm (usr, gettext ("Other") .. "\\" .. gettext ("Clean up tables"), table_cmnds ["oldclean"] .. " %[line:<" .. gettext ("type") .. ">] %[line:<" .. gettext ("days") .. " " .. gettext ("or") .. " *>] %[line:<" .. gettext ("class") .. ">]")
 		--sopmenitm (usr, gettext ("Other") .. "\\" .. gettext ("Clean up tables"), table_cmnds ["oldclean"] .. " %[line:<" .. gettext ("type") .. ">] %[line:<" .. gettext ("days") .. ">]")
 		sopmenitm (usr, gettext ("Other") .. "\\" .. gettext ("Read hub logs"), table_cmnds ["readlog"] .. " %[line:<" .. gettext ("file") .. ">] %[line:<" .. gettext ("lines") .. ">]")
+		smensep (usr)
+		sopmenitm (usr, gettext ("Other") .. "\\" .. gettext ("Convert LRE to plain text"), table_cmnds ["lretoplain"] .. " %[line:<" .. gettext ("lre") .. ">]")
 	end
 
-if ucl >= table_sets ["minusrcommandclass"] then
-if ucl >= table_sets ["mincommandclass"] then
-smensep (usr)
-end
+	if ucl >= table_sets ["minusrcommandclass"] then
+		if ucl >= table_sets ["mincommandclass"] then
+			smensep (usr)
+		end
 
-susmenitm (usr, gettext ("Other").."\\"..gettext ("Calculate an equation"), table_cmnds ["calculate"].." %[line:<"..gettext ("equation")..">]")
-susmenitm (usr, gettext ("Other").."\\"..gettext ("Current topic"), table_cmnds ["showtopic"])
-end
+		susmenitm (usr, gettext ("Other") .. "\\" .. gettext ("Calculate an equation"), table_cmnds ["calculate"] .. " %[line:<" .. gettext ("equation") .. ">]")
+		susmenitm (usr, gettext ("Other") .. "\\" .. gettext ("Current topic"), table_cmnds ["showtopic"])
+	end
 
--- configuration
-
-if ucl >= table_sets ["mincommandclass"] then
-sopmenitm (usr, gettext ("Configuration").."\\"..gettext ("Script configuration variables"), table_cmnds ["ledoconf"])
-sopmenitm (usr, gettext ("Configuration").."\\"..gettext ("Change configuration variable"), table_cmnds ["ledoset"].." %[line:<"..gettext ("variable")..">] %[line:<"..gettext ("value")..">]")
-sopmenitm (usr, gettext ("Configuration").."\\"..gettext ("Perform script update"), table_cmnds ["ledover"])
-sopmenitm (usr, gettext ("Configuration").."\\"..gettext ("This list of commands"), table_cmnds ["ledohelp"])
-	sopmenitm (usr, gettext ("Configuration") .. "\\" .. gettext ("%s statistics"):format ("Ledokol"), table_cmnds ["ledostats"])
-end
+	-- general
+	if ucl >= table_sets ["mincommandclass"] then
+		sopmenitm (usr, gettext ("Configuration") .. "\\" .. gettext ("Script configuration variables"), table_cmnds ["ledoconf"])
+		sopmenitm (usr, gettext ("Configuration") .. "\\" .. gettext ("Change configuration variable"), table_cmnds ["ledoset"] .. " %[line:<" .. gettext ("variable") .. ">] %[line:<" .. gettext ("value") .. ">]")
+		sopmenitm (usr, gettext ("Configuration") .. "\\" .. gettext ("Perform script update"), table_cmnds ["ledover"])
+		sopmenitm (usr, gettext ("Configuration") .. "\\" .. gettext ("This list of commands"), table_cmnds ["ledohelp"])
+		sopmenitm (usr, gettext ("Configuration") .. "\\" .. gettext ("%s statistics"):format ("Ledokol"), table_cmnds ["ledostats"])
+	end
 end
 
 ----- ---- --- -- -
@@ -16556,6 +16593,19 @@ end
 
 	----- ---- --- -- -
 
+	elseif tvar == "histshowipclass" then
+		if num == true then
+			if (setto >= 0 and setto <= 5) or setto == 10 or setto == 11 then
+				ok = true
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0, 1, 2, 3, 4, 5, 10 " .. gettext ("or") .. " 11"))
+			end
+		else
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
+		end
+
+	----- ---- --- -- -
+
 	elseif tvar == "histautolinemax" then
 		if num == true then
 			if (setto >= 0) and (setto <= 1000) then
@@ -17165,9 +17215,10 @@ help = help.." "..optrig..table_cmnds ["clear"].." - "..gettext ("Clear main cha
 	-- other
 	help = help .. " " .. optrig .. table_cmnds ["dropip"] .. " <" .. gettext ("ip") .. "> - " .. gettext ("Drop users with IP") .. "\r\n"
 	help = help .. " " .. optrig .. table_cmnds ["oldclean"] .. " <" .. gettext ("type") .. "> <" .. gettext ("days") .. " " .. gettext ("or") .. " *> [" .. gettext ("class") .. "] - " .. gettext ("Clean up tables") .. "\r\n"
-	help = help .. " " .. optrig .. table_cmnds ["readlog"] .. " <" .. gettext ("file") .. "> <" .. gettext ("lines") .. "> - " .. gettext ("Read hub logs") .. "\r\n\r\n"
+	help = help .. " " .. optrig .. table_cmnds ["readlog"] .. " <" .. gettext ("file") .. "> <" .. gettext ("lines") .. "> - " .. gettext ("Read hub logs") .. "\r\n"
+	help = help .. " " .. optrig .. table_cmnds ["lretoplain"] .. " <" .. gettext ("lre") .. "> - " .. gettext ("Convert LRE to plain text") .. "\r\n\r\n"
 
-	-- ledokol commands
+	-- general
 	help = help .. " " .. optrig .. table_cmnds ["ledoconf"] .. " - " .. gettext ("Script configuration variables") .. "\r\n"
 	help = help .. " " .. optrig .. table_cmnds ["ledoset"] .. " <" .. gettext ("variable") .. "> <" .. gettext ("value") .. "> - " .. gettext ("Change configuration variable") .. "\r\n"
 	help = help .. " " .. optrig .. table_cmnds ["ledover"] .. " [force&#124;dev] - " .. gettext ("Perform script update") .. "\r\n"
@@ -17565,6 +17616,7 @@ conf = conf.."\r\n [::] savecchistory = "..table_sets ["savecchistory"]
 	conf = conf .. "\r\n [::] ophistautolines = " .. table_sets ["ophistautolines"]
 	conf = conf .. "\r\n [::] histautolinemax = " .. table_sets ["histautolinemax"]
 	conf = conf .. "\r\n [::] histautonewlinedel = " .. table_sets ["histautonewlinedel"]
+	conf = conf .. "\r\n [::] histshowipclass = " .. table_sets ["histshowipclass"]
 	conf = conf .. "\r\n"
 conf = conf.."\r\n [::] autoupdcheck = "..table_sets ["autoupdcheck"]
 conf = conf.."\r\n [::] addspecialver = "..table_sets ["addspecialver"]
@@ -17718,9 +17770,9 @@ VH:SQLQuery ("create table if not exists `"..tbl_sql ["ranex"].."` (`nick` varch
 -- offline messenger
 VH:SQLQuery ("create table if not exists `"..tbl_sql ["off"].."` (`id` bigint(20) unsigned not null auto_increment, `from` varchar(255) not null, `ip` varchar(15) not null, `to` varchar(255) not null, `date` int(10) unsigned not null, `message` text not null, primary key (`id`)) engine = myisam default character set utf8 collate utf8_unicode_ci")
 
--- chat history
-VH:SQLQuery ("create table if not exists `"..tbl_sql ["mchist"].."` (`id` bigint(20) unsigned not null auto_increment, `realnick` varchar(255) not null, `nick` varchar(255) not null, `date` int(10) unsigned not null, `message` text not null, primary key (`id`)) engine = myisam default character set utf8 collate utf8_unicode_ci")
-VH:SQLQuery ("create table if not exists `"..tbl_sql ["ophist"].."` (`id` bigint(20) unsigned not null auto_increment, `nick` varchar(255) not null, `date` int(10) unsigned not null, `message` text not null, primary key (`id`)) engine = myisam default character set utf8 collate utf8_unicode_ci")
+	-- chat history
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql ["mchist"] .. "` (`id` bigint(20) unsigned not null auto_increment primary key, `realnick` varchar(255) not null, `nick` varchar(255) not null, `ip` varchar(15) null, `date` int(10) unsigned not null, `message` text not null) engine = myisam default character set utf8 collate utf8_unicode_ci")
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql ["ophist"] .. "` (`id` bigint(20) unsigned not null auto_increment primary key, `nick` varchar(255) not null, `date` int(10) unsigned not null, `message` text not null) engine = myisam default character set utf8 collate utf8_unicode_ci")
 
 -- commands
 VH:SQLQuery ("create table if not exists `"..tbl_sql ["ledocmd"].."` (`original` varchar(255) not null, `new` varchar(255) not null, primary key (`original`)) engine = myisam default character set utf8 collate utf8_unicode_ci")
@@ -17801,8 +17853,8 @@ VH:SQLQuery ("alter ignore table `script_ledokol_wordranks` rename to `"..tbl_sq
 VH:SQLQuery ("alter ignore table `script_ccstats` rename to `"..tbl_sql ["ccstat"].."`")
 VH:SQLQuery ("alter ignore table `script_ledokol_rankexceptions` rename to `"..tbl_sql ["ranex"].."`")
 VH:SQLQuery ("alter ignore table `script_ledokol_offline` rename to `"..tbl_sql ["off"].."`")
-VH:SQLQuery ("alter ignore table `script_ledokol_mchistory` rename to `"..tbl_sql ["mchist"].."`")
-VH:SQLQuery ("alter ignore table `script_ledokol_ophistory` rename to `"..tbl_sql ["ophist"].."`")
+	VH:SQLQuery ("alter ignore table `script_ledokol_mchistory` rename to `" .. tbl_sql ["mchist"] .. "`")
+	VH:SQLQuery ("alter ignore table `script_ledokol_ophistory` rename to `" .. tbl_sql ["ophist"] .. "`")
 VH:SQLQuery ("alter ignore table `script_ledokol_ledocommands` rename to `"..tbl_sql ["ledocmd"].."`")
 VH:SQLQuery ("alter ignore table `script_ledokol_commands` rename to `"..tbl_sql ["cmd"].."`")
 VH:SQLQuery ("alter ignore table `script_ledokol_cmdexceptions` rename to `"..tbl_sql ["cmdex"].."`")
@@ -18019,13 +18071,14 @@ VH:SQLQuery ("alter ignore table `"..tbl_sql ["off"].."` change column `to` `to`
 VH:SQLQuery ("alter ignore table `"..tbl_sql ["off"].."` change column `date` `date` int(10) unsigned not null") -- date
 VH:SQLQuery ("alter ignore table `"..tbl_sql ["off"].."` change column `message` `message` text not null") -- message
 
--- chat history
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["mchist"].."` engine = myisam") -- engine
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["mchist"].."` change column `id` `id` bigint(20) unsigned auto_increment") -- id
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["mchist"].."` add column `realnick` varchar(255) not null after `id`") -- realnick
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["mchist"].."` change column `nick` `nick` varchar(255) not null") -- nick
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["mchist"].."` change column `date` `date` int(10) unsigned not null") -- date
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["mchist"].."` change column `message` `message` text not null") -- message
+	-- chat history
+	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["mchist"] .. "` engine = myisam") -- engine
+	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["mchist"] .. "` change column `id` `id` bigint(20) unsigned auto_increment") -- id
+	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["mchist"] .. "` add column `realnick` varchar(255) not null after `id`") -- realnick
+	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["mchist"] .. "` change column `nick` `nick` varchar(255) not null") -- nick
+	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["mchist"] .. "` add column `ip` varchar(15) null after `nick`") -- ip
+	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["mchist"] .. "` change column `date` `date` int(10) unsigned not null") -- date
+	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["mchist"] .. "` change column `message` `message` text not null") -- message
 
 VH:SQLQuery ("alter ignore table `"..tbl_sql ["ophist"].."` engine = myisam") -- engine
 VH:SQLQuery ("alter ignore table `"..tbl_sql ["ophist"].."` change column `id` `id` bigint(20) unsigned auto_increment") -- id
@@ -19926,21 +19979,21 @@ end
 
 ----- ---- --- -- -
 
-function reppatchars (str)
-	local ret = str
-	ret = string.gsub (ret, "%%", "%%%%")
-	ret = string.gsub (ret, "%^", "%%^")
-	ret = string.gsub (ret, "%$", "%%$")
-	ret = string.gsub (ret, "%(", "%%(")
-	ret = string.gsub (ret, "%)", "%%)")
-	ret = string.gsub (ret, "%.", "%%.")
-	ret = string.gsub (ret, "%[", "%%[")
-	ret = string.gsub (ret, "%]", "%%]")
-	ret = string.gsub (ret, "%*", "%%*")
-	ret = string.gsub (ret, "%+", "%%+")
-	ret = string.gsub (ret, "%-", "%%-")
-	ret = string.gsub (ret, "%?", "%%?")
-	return ret
+function reppatchars (data)
+	local safe = data
+	safe = safe:gsub ("%%", "%%%%")
+	safe = safe:gsub ("%^", "%%^")
+	safe = safe:gsub ("%$", "%%$")
+	safe = safe:gsub ("%(", "%%(")
+	safe = safe:gsub ("%)", "%%)")
+	safe = safe:gsub ("%.", "%%.")
+	safe = safe:gsub ("%[", "%%[")
+	safe = safe:gsub ("%]", "%%]")
+	safe = safe:gsub ("%*", "%%*")
+	safe = safe:gsub ("%+", "%%+")
+	safe = safe:gsub ("%-", "%%-")
+	safe = safe:gsub ("%?", "%%?")
+	return safe
 end
 
 ----- ---- --- -- -
