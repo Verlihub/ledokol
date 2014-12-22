@@ -1132,7 +1132,7 @@ function Main (file)
 					end
 
 					if ver <= 280 then
-						VH:SQLQuery ("create table if not exists `" .. tbl_sql ["ccgag"] .. "` (`cc` varchar(2) not null, `flag` tinyint(1) unsigned not null default 0, primary key (`cc`)) engine = myisam default character set utf8 collate utf8_unicode_ci")
+						VH:SQLQuery ("create table if not exists `" .. tbl_sql ["ccgag"] .. "` (`item` varchar(255) not null primary key, `flag` tinyint(1) unsigned not null default 0) engine = myisam default character set utf8 collate utf8_unicode_ci")
 						VH:SQLQuery ("create table if not exists `" .. tbl_sql ["trig"] .. "` (`id` varchar(255) not null primary key, `content` text not null, `minclass` tinyint(2) unsigned not null default 0, `maxclass` tinyint(2) unsigned not null default 10) engine = myisam default character set utf8 collate utf8_unicode_ci")
 
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["ledocmd"] .. "` (`original`, `new`) values ('" .. repsqlchars ("avstats") .. "', '" .. repsqlchars (table_cmnds ["avstats"]) .. "')")
@@ -1215,6 +1215,7 @@ function Main (file)
 						VH:SQLQuery ("alter ignore table `" .. tbl_sql ["misup"] .. "` change column `time` `time` varchar(10) null")
 						VH:SQLQuery ("alter ignore table `" .. tbl_sql ["miver"] .. "` change column `time` `time` varchar(10) null")
 						VH:SQLQuery ("alter ignore table `" .. tbl_sql ["mchist"] .. "` add column `ip` varchar(15) null after `nick`")
+						VH:SQLQuery ("alter ignore table `" .. tbl_sql ["ccgag"] .. "` change column `cc` `item` varchar(255) not null")
 
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["ledocmd"] .. "` (`original`, `new`) values ('lretoplain', '" .. repsqlchars (table_cmnds ["lretoplain"]) .. "')")
 
@@ -2631,7 +2632,7 @@ elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["clog"].."
 
 	----- ---- --- -- -
 
-	elseif string.find (data, "^" .. table_othsets ["optrig"] .. table_cmnds ["gagccadd"] .. " [%a%-][%a%d%-] %d$") then
+	elseif data:match ("^" .. table_othsets ["optrig"] .. table_cmnds ["gagccadd"] .. " .+ %d$") then
 		if ucl >= table_sets ["mincommandclass"] then
 			donotifycmd (nick, data, 0, ucl)
 			gagccadd (nick, data:sub (# table_cmnds ["gagccadd"] + 3))
@@ -2643,7 +2644,7 @@ elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["clog"].."
 
 	----- ---- --- -- -
 
-	elseif string.find (data, "^" .. table_othsets ["optrig"] .. table_cmnds ["gagccdel"] .. " [%a%d%-%*]+$") then
+	elseif data:match ("^" .. table_othsets ["optrig"] .. table_cmnds ["gagccdel"] .. " .+$") then
 		if ucl >= table_sets ["mincommandclass"] then
 			donotifycmd (nick, data, 0, ucl)
 			gagccdel (nick, data:sub (# table_cmnds ["gagccdel"] + 3))
@@ -2655,7 +2656,7 @@ elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["clog"].."
 
 	----- ---- --- -- -
 
-	elseif string.find (data, "^" .. table_othsets ["optrig"] .. table_cmnds ["gagcclist"] .. "$") then
+	elseif data:match ("^" .. table_othsets ["optrig"] .. table_cmnds ["gagcclist"] .. "$") then
 		if ucl >= table_sets ["mincommandclass"] then
 			donotifycmd (nick, data, 0, ucl)
 			gagcclist (nick)
@@ -10929,20 +10930,20 @@ function gagipcheck (nick, ip, class, to, data)
 
 	if rows > 0 then -- permanent list
 		for x = 0, rows - 1 do
-			local _, ip, flag = VH:SQLFetch (x)
-			t [ip] = tonumber (flag)
+			local _, lre, flag = VH:SQLFetch (x)
+			t [lre] = tonumber (flag)
 		end
 	end
 
 	for key, value in pairs (t) do
-		if string.find (ip, key) then
-			if to and ((value == 0) or (value == 2)) then -- pm
+		if ip:match (key) then
+			if to and (value == 0 or value == 2) then -- pm
 				pmtouser (nick, to, gettext ("Private chat is currently disabled for you."))
-				opsnotify (table_sets ["classnotigagip"], string.format (gettext ("%s with IP %s and class %d tries to speak with IP gag in PM: %s"), nick, ip .. tryipcc (ip, nick), class, data))
+				opsnotify (table_sets ["classnotigagip"], gettext ("%s with IP %s and class %d tries to speak with IP gag in PM: %s"):format (nick, ip .. tryipcc (ip, nick), class, data))
 				return true
-			elseif (not to) and ((value == 0) or (value == 1)) then -- mc
+			elseif not to and (value == 0 or value == 1) then -- mc
 				maintouser (nick, gettext ("Main chat is currently disabled for you."))
-				opsnotify (table_sets ["classnotigagip"], string.format (gettext ("%s with IP %s and class %d tries to speak with IP gag in MC: %s"), nick, ip .. tryipcc (ip, nick), class, data))
+				opsnotify (table_sets ["classnotigagip"], gettext ("%s with IP %s and class %d tries to speak with IP gag in MC: %s"):format (nick, ip .. tryipcc (ip, nick), class, data))
 				return true
 			end
 
@@ -10956,41 +10957,40 @@ end
 ----- ---- --- -- -
 
 function gagccadd (nick, line)
-	local _, _, cc, flag = line:find ("^([%a%-][%a%d%-]) (%d)$")
-	cc = cc:upper ()
+	local lre, flag = line:match ("^(.+) (%d)$")
 	flag = tonumber (flag)
 
 	if flag < 0 or flag > 2 then
 		commandanswer (nick, gettext ("Known flags are: %s"):format ("0=ALL, 1=MC " .. gettext ("and") .. " 2=PM"))
 	else
-		local rcc = repsqlchars (cc)
-		local _, rows = VH:SQLQuery ("select `flag` from `" .. tbl_sql ["ccgag"] .. "` where `cc` = '" .. rcc .. "' limit 1")
+		local rlre = repsqlchars (repnmdcinchars (lre))
+		local _, rows = VH:SQLQuery ("select `flag` from `" .. tbl_sql ["ccgag"] .. "` where `item` = '" .. rlre .. "'")
 
 		if rows > 0 then -- modify
-			VH:SQLQuery ("update `" .. tbl_sql ["ccgag"] .. "` set `flag` = " .. tostring (flag) .. " where `cc` = '" .. rcc .. "' limit 1")
-			commandanswer (nick, gettext ("Modified country code gag: %s"):format (cc .. "=" .. (cc_names [cc] or gettext ("Unknown country"))))
+			VH:SQLQuery ("update `" .. tbl_sql ["ccgag"] .. "` set `flag` = " .. tostring (flag) .. " where `item` = '" .. rlre .. "'")
+			commandanswer (nick, gettext ("Modified country code gag: %s"):format (lre))
 		else -- add
-			VH:SQLQuery ("insert into `" .. tbl_sql ["ccgag"] .. "` (`cc`, `flag`) values ('" .. rcc .. "', " .. tostring (flag) .. ")")
-			commandanswer (nick, gettext ("Added country code gag: %s"):format (cc .. "=" .. (cc_names [cc] or gettext ("Unknown country"))))
+			VH:SQLQuery ("insert into `" .. tbl_sql ["ccgag"] .. "` (`item`, `flag`) values ('" .. rlre .. "', " .. tostring (flag) .. ")")
+			commandanswer (nick, gettext ("Added country code gag: %s"):format (lre))
 		end
 	end
 end
 
 ----- ---- --- -- -
 
-function gagccdel (nick, cc)
-	if cc == "*" then
+function gagccdel (nick, lre)
+	if lre == "*" then
 		VH:SQLQuery ("truncate table `" .. tbl_sql ["ccgag"] .. "`")
 		commandanswer (nick, gettext ("Cleared country code gag list."))
 	else
-		local rcc = repsqlchars (cc)
-		local _, rows = VH:SQLQuery ("select `flag` from `" .. tbl_sql ["ccgag"] .. "` where `cc` = '" .. rcc .. "' limit 1")
+		local rlre = repsqlchars (repnmdcinchars (lre))
+		local _, rows = VH:SQLQuery ("select `flag` from `" .. tbl_sql ["ccgag"] .. "` where `item` = '" .. rlre .. "'")
 
 		if rows > 0 then
-			VH:SQLQuery ("delete from `" .. tbl_sql ["ccgag"] .. "` where `cc` = '" .. rcc .. "' limit 1")
-			commandanswer (nick, gettext ("Deleted country code gag: %s"):format (cc .. "=" .. (cc_names [cc] or gettext ("Unknown country"))))
+			VH:SQLQuery ("delete from `" .. tbl_sql ["ccgag"] .. "` where `item` = '" .. rlre .. "'")
+			commandanswer (nick, gettext ("Deleted country code gag: %s"):format (lre))
 		else -- not in list
-			commandanswer (nick, gettext ("Country code gag not found: %s"):format (cc .. "=" .. (cc_names [cc] or gettext ("Unknown country"))))
+			commandanswer (nick, gettext ("Country code gag not found: %s"):format (lre))
 		end
 	end
 end
@@ -11010,14 +11010,14 @@ function gagcclist (nick)
 		end
 	end
 
-	local _, rows = VH:SQLQuery ("select `cc`, `flag` from `" .. tbl_sql ["ccgag"] .. "`")
+	local _, rows = VH:SQLQuery ("select `item`, `flag` from `" .. tbl_sql ["ccgag"] .. "`")
 
 	if rows > 0 then
 		local list = ""
 
 		for x = 0, rows - 1 do
-			local _, cc, flag = VH:SQLFetch (x)
-			list = list .. " " .. tostring (x + 1) .. ". " .. cc .. "=" .. (cc_names [cc] or gettext ("Unknown country")) .. " [ F: " .. flag .. flagname (tonumber (flag)) .. " ]\r\n"
+			local _, lre, flag = VH:SQLFetch (x)
+			list = list .. " " .. tostring (x + 1) .. ". " .. repnmdcoutchars (lre) .. " [ F: " .. tostring (flag) .. flagname (tonumber (flag)) .. " ]\r\n"
 		end
 
 		commandanswer (nick, gettext ("Country code gag list") .. ":\r\n\r\n" .. list)
@@ -11039,21 +11039,29 @@ function gagccheck (nick, ip, class, to, data)
 		return false
 	end
 
-	cc = cc:upper ()
-	local _, rows = VH:SQLQuery ("select `flag` from `" .. tbl_sql ["ccgag"] .. "` where `cc` = '" .. repsqlchars (cc) .. "' limit 1")
+	local _, rows = VH:SQLQuery ("select `item`, `flag` from `" .. tbl_sql ["ccgag"] .. "`")
 
 	if rows > 0 then
-		local _, flag = VH:SQLFetch (0)
-		flag = tonumber (flag)
+		cc = cc:lower ()
 
-		if to and (flag == 0 or flag == 2) then -- pm
-			pmtouser (nick, to, gettext ("Private chat is currently disabled for you."))
-			opsnotify (table_sets ["classnotigagip"], gettext ("%s with IP %s and class %d tries to speak with country code gag in PM: %s"):format (nick, ip .. tryipcc (ip, nick), class, data))
-			return true
-		elseif not to and (flag == 0 or flag == 1) then -- mc
-			maintouser (nick, gettext ("Main chat is currently disabled for you."))
-			opsnotify (table_sets ["classnotigagip"], gettext ("%s with IP %s and class %d tries to speak with country code gag in MC: %s"):format (nick, ip .. tryipcc (ip, nick), class, data))
-			return true
+		for x = 0, rows - 1 do
+			local _, lre, flag = VH:SQLFetch (x)
+
+			if cc:match (lre) then
+				flag = tonumber (flag)
+
+				if to and (flag == 0 or flag == 2) then -- pm
+					pmtouser (nick, to, gettext ("Private chat is currently disabled for you."))
+					opsnotify (table_sets ["classnotigagip"], gettext ("%s with IP %s and class %d tries to speak with country code gag in PM: %s"):format (nick, ip .. tryipcc (ip, nick), class, data))
+					return true
+				elseif not to and (flag == 0 or flag == 1) then -- mc
+					maintouser (nick, gettext ("Main chat is currently disabled for you."))
+					opsnotify (table_sets ["classnotigagip"], gettext ("%s with IP %s and class %d tries to speak with country code gag in MC: %s"):format (nick, ip .. tryipcc (ip, nick), class, data))
+					return true
+				end
+
+				break
+			end
 		end
 	end
 
@@ -13816,10 +13824,10 @@ end
 
 	-- cc gag
 	if ucl >= table_sets ["mincommandclass"] then
-		sopmenitm (usr, gettext ("Country code gag") .. "\\" .. gettext ("Add country code gag"), table_cmnds ["gagccadd"] .. " %[line:<" .. gettext ("cc") .. ">] %[line:<" .. gettext ("flags") .. ">]")
+		sopmenitm (usr, gettext ("Country code gag") .. "\\" .. gettext ("Add country code gag"), table_cmnds ["gagccadd"] .. " %[line:<" .. gettext ("lre") .. ">] %[line:<" .. gettext ("flags") .. ">]")
 		sopmenitm (usr, gettext ("Country code gag") .. "\\" .. gettext ("Country code gag list"), table_cmnds ["gagcclist"])
 		smensep (usr)
-		sopmenitm (usr, gettext ("Country code gag") .. "\\" .. gettext ("Delete country code gag"), table_cmnds ["gagccdel"] .. " %[line:<" .. gettext ("cc") .. " " .. gettext ("or") .. " *>]")
+		sopmenitm (usr, gettext ("Country code gag") .. "\\" .. gettext ("Delete country code gag"), table_cmnds ["gagccdel"] .. " %[line:<" .. gettext ("lre") .. " " .. gettext ("or") .. " *>]")
 	end
 
 	-- user logger
@@ -17193,9 +17201,9 @@ help = help.." "..optrig..table_cmnds ["clear"].." - "..gettext ("Clear main cha
 	help = help .. " " .. optrig .. table_cmnds ["gagipdel"] .. " <" .. gettext ("lre") .. " " .. gettext ("or") .. " *> - " .. gettext ("Delete IP gag") .. "\r\n\r\n"
 
 	-- cc gag
-	help = help .. " " .. optrig .. table_cmnds ["gagccadd"] .. " <" .. gettext ("cc") .. "> <" .. gettext ("flags") .. "> - " .. gettext ("Add country code gag") .. "\r\n"
+	help = help .. " " .. optrig .. table_cmnds ["gagccadd"] .. " <" .. gettext ("lre") .. "> <" .. gettext ("flags") .. "> - " .. gettext ("Add country code gag") .. "\r\n"
 	help = help .. " " .. optrig .. table_cmnds ["gagcclist"] .. " - " .. gettext ("Country code gag list") .. "\r\n"
-	help = help .. " " .. optrig .. table_cmnds ["gagccdel"] .. " <" .. gettext ("cc") .. " " .. gettext ("or") .. " *> - " .. gettext ("Delete country code gag") .. "\r\n\r\n"
+	help = help .. " " .. optrig .. table_cmnds ["gagccdel"] .. " <" .. gettext ("lre") .. " " .. gettext ("or") .. " *> - " .. gettext ("Delete country code gag") .. "\r\n\r\n"
 
 	-- user logger
 	help = help .. " " .. optrig .. table_cmnds ["userinfo"] .. " <" .. gettext ("nick") .. "> - " .. gettext ("User information") .. "\r\n"
@@ -17807,7 +17815,7 @@ VH:SQLQuery ("create table if not exists `"..tbl_sql ["stat"].."` (`type` varcha
 	VH:SQLQuery ("create table if not exists `" .. tbl_sql ["ipgag"] .. "` (`ip` varchar(255) not null, `flag` tinyint(1) unsigned not null default 0, primary key (`ip`)) engine = myisam default character set utf8 collate utf8_unicode_ci")
 
 	-- cc gag
-	VH:SQLQuery ("create table if not exists `" .. tbl_sql ["ccgag"] .. "` (`cc` varchar(2) not null, `flag` tinyint(1) unsigned not null default 0, primary key (`cc`)) engine = myisam default character set utf8 collate utf8_unicode_ci")
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql ["ccgag"] .. "` (`item` varchar(255) not null primary key, `flag` tinyint(1) unsigned not null default 0) engine = myisam default character set utf8 collate utf8_unicode_ci")
 
 	-- right click menu
 	VH:SQLQuery ("create table if not exists `" .. tbl_sql ["rcmenu"] .. "` (`id` bigint(20) unsigned not null auto_increment primary key, `menu` varchar(255) not null, `command` varchar(255) not null, `type` tinyint(3) unsigned not null default 1, `cont` tinyint(2) unsigned not null default 3, `order` smallint(5) unsigned not null default 0, `minclass` tinyint(2) unsigned not null default 0, `maxclass` tinyint(2) unsigned not null default 10) engine = myisam default character set utf8 collate utf8_unicode_ci")
@@ -18127,6 +18135,9 @@ VH:SQLQuery ("alter ignore table `"..tbl_sql ["stat"].."` change column `count` 
 
 	-- ip gag
 	-- not added
+
+	-- cc gag
+	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["ccgag"] .. "` change column `cc` `item` varchar(255) not null") -- item
 end
 
 ----- ---- --- -- -
