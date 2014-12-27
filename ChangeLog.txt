@@ -2,6 +2,7 @@
 
 Fixed: Correctly send $NoReport command to pingers, report by S0RiN
 Fixed: Check syntax of oldclean command, report by KCAHDEP
+Fixed: Don't notify user commands as messages sent to hub security
 Changed: myinfadd command parameter syntax to <type> <"lre"> ["time"] ["note"]
 Changed: Modify existing forbidden MyINFO item when it's added again
 Changed: Restrict access of forced infected user detection report to AVDB
