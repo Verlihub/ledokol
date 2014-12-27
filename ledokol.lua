@@ -5527,9 +5527,11 @@ function VH_OnParsedMsgPM (from, data, to)
 	----- ---- --- -- -
 
 	elseif to == table_othsets ["botnick"] then -- hub security
-		if string.find (string.sub (data, 1, 1), table_othsets ["optrig"]) then
+		if data:sub (1, 1):match (table_othsets ["ustrig"]) then
+			-- skip
+		elseif data:sub (1, 1):match (table_othsets ["optrig"]) then
 			if fcls >= 3 then -- operator command
-				if string.find (data, "^"..table_othsets ["optrig"].."luaload .*$") or string.find (data, "^"..table_othsets ["optrig"].."luaunload .*$") or string.find (data, "^"..table_othsets ["optrig"].."luareload .*$") then
+				if data:match ("^" .. table_othsets ["optrig"] .. "luaload .*$") or data:match ("^" .. table_othsets ["optrig"] .. "luaunload .*$") or data:match ("^" .. table_othsets ["optrig"] .. "luareload .*$") then
 					if fcls >= getconfig ("plugin_mod_class") then -- use plugin permission for lua scripts too
 						donotifycmd (from, data, 0, fcls)
 						savecmdlog (from, fcls, data, true)
@@ -5537,25 +5539,23 @@ function VH_OnParsedMsgPM (from, data, to)
 						commandanswer (from, gettext ("This command is either disabled or you don't have access to it."))
 						return 0
 					end
-				elseif string.find (data, "^"..table_othsets ["optrig"].."lualist.*$") or string.find (data, "^"..table_othsets ["optrig"].."luainfo.*$") or string.find (data, "^"..table_othsets ["optrig"].."luaversion.*$") then
+				elseif data:match ("^" .. table_othsets ["optrig"] .. "lualist.*$") or data:match ("^" .. table_othsets ["optrig"] .. "luainfo.*$") or data:match ("^" .. table_othsets ["optrig"] .. "luaversion.*$") then
 					donotifycmd (from, data, 0, fcls)
 					savecmdlog (from, fcls, data, true)
-				elseif string.find (data, "^"..table_othsets ["optrig"].."offplug .*$") or string.find (data, "^"..table_othsets ["optrig"].."onplug .*$") or string.find (data, "^"..table_othsets ["optrig"].."replug .*$") or string.find (data, "^"..table_othsets ["optrig"].."modplug .*$") or string.find (data, "^"..table_othsets ["optrig"].."addplug .*$") or string.find (data, "^"..table_othsets ["optrig"].."delplug .*$") then
+				elseif data:match ("^" .. table_othsets ["optrig"] .. "offplug .*$") or data:match ("^" .. table_othsets ["optrig"] .. "onplug .*$") or data:match ("^" .. table_othsets ["optrig"] .. "replug .*$") or data:match ("^" .. table_othsets ["optrig"] .. "modplug .*$") or data:match ("^" .. table_othsets ["optrig"] .. "addplug .*$") or data:match ("^" .. table_othsets ["optrig"] .. "delplug .*$") then
 					if fcls >= getconfig ("plugin_mod_class") then -- check the permissions
 						donotifycmd (from, data, 0, fcls)
 						savecmdlog (from, fcls, data, true)
 					end
-				elseif string.find (data, "^"..table_othsets ["optrig"].."lstplug.*$") then
+				elseif data:match ("^" .. table_othsets ["optrig"] .. "lstplug.*$") then
 					donotifycmd (from, data, 0, fcls)
 					savecmdlog (from, fcls, data, true)
 				end
 			else
-				opsnotify (table_sets ["classnotibotpm"], string.format (gettext ("%s with IP %s and class %d sent message to %s: %s"), from, ip .. tryipcc (ip, from), fcls, table_othsets ["botnick"], data))
+				opsnotify (table_sets ["classnotibotpm"], gettext ("%s with IP %s and class %d sent message to %s: %s"):format (from, ip .. tryipcc (ip, from), fcls, table_othsets ["botnick"], data))
 			end
-		elseif string.find (string.sub (data, 1, 1), table_othsets ["ustrig"]) then
-			-- skip
 		else
-			opsnotify (table_sets ["classnotibotpm"], string.format (gettext ("%s with IP %s and class %d sent message to %s: %s"), from, ip .. tryipcc (ip, from), fcls, table_othsets ["botnick"], data))
+			opsnotify (table_sets ["classnotibotpm"], gettext ("%s with IP %s and class %d sent message to %s: %s"):format (from, ip .. tryipcc (ip, from), fcls, table_othsets ["botnick"], data))
 		end
 
 	----- ---- --- -- -
