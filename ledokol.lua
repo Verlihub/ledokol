@@ -2,7 +2,7 @@
 --[[ license agreement >>
 ---------------------------------------------------------------------
 
-Copyright © 2007-2014 RoLex
+Copyright © 2007-2015 RoLex
 
 Ledokol is free software; You can redistribute it
 and modify it under the terms of the GNU General
@@ -49,7 +49,7 @@ over sixty different features for Verlihub.
 Neolo, Uhlik, Astronomik, LadyStardust, Seth, Molotov, burek,
 Hungarista, Stefani, Aethra, netcelli, TheBoss, Maximum, BulleT,
 Doxtur, chaos, sphinx, Zorro, W1ZaRd, S0RiN, MaxFox, Krzychu,
-@tlantide, Atalanttore, Trumpy
+@tlantide, Atalanttore, Trumpy, Modswat, KCAHDEP
 
 ---------------------------------------------------------------------
 ]]-- special thanks to <<
@@ -11354,10 +11354,10 @@ function addmyinfoentry (nick, line)
 
 			if rows > 0 then
 				VH:SQLQuery ("update `" .. tbl_sql ["minick"] .. "` set `time` = " .. sqlemptnull (btime) .. ", `note` = " .. sqlemptnull (note) .. " where `nick` = '" .. entry .. "'")
-				commandanswer (nick, gettext ("Modified forbidden nick with ban time %s: %s"):format (btime, item))
+				commandanswer (nick, gettext ("Modified forbidden nick with ban time %s: %s"):format ((valor (btime, "") or table_sets ["mitbantime"]), item))
 			else
 				VH:SQLQuery ("insert into `" .. tbl_sql ["minick"] .. "` (`nick`, `time`, `note`) values ('" .. entry .. "', " .. sqlemptnull (btime) .. ", " .. sqlemptnull (note) .. ")")
-				commandanswer (nick, gettext ("Added forbidden nick with ban time %s: %s"):format (btime, item))
+				commandanswer (nick, gettext ("Added forbidden nick with ban time %s: %s"):format ((valor (btime, "") or table_sets ["mitbantime"]), item))
 			end
 		end
 
@@ -11373,10 +11373,10 @@ function addmyinfoentry (nick, line)
 
 			if rows > 0 then
 				VH:SQLQuery ("update `" .. tbl_sql ["midesc"] .. "` set `time` = " .. sqlemptnull (btime) .. ", `note` = " .. sqlemptnull (note) .. " where `description` = '" .. entry .. "'")
-				commandanswer (nick, gettext ("Modified forbidden description with ban time %s: %s"):format (btime, item))
+				commandanswer (nick, gettext ("Modified forbidden description with ban time %s: %s"):format ((valor (btime, "") or table_sets ["mitbantime"]), item))
 			else
 				VH:SQLQuery ("insert into `" .. tbl_sql ["midesc"] .. "` (`description`, `time`, `note`) values ('" .. entry .. "', " .. sqlemptnull (btime) .. ", " .. sqlemptnull (note) .. ")")
-				commandanswer (nick, gettext ("Added forbidden description with ban time %s: %s"):format (btime, item))
+				commandanswer (nick, gettext ("Added forbidden description with ban time %s: %s"):format ((valor (btime, "") or table_sets ["mitbantime"]), item))
 			end
 		end
 
@@ -11392,10 +11392,10 @@ function addmyinfoentry (nick, line)
 
 			if rows > 0 then
 				VH:SQLQuery ("update `" .. tbl_sql ["mitag"] .. "` set `time` = " .. sqlemptnull (btime) .. ", `note` = " .. sqlemptnull (note) .. " where `tag` = '" .. entry .. "'")
-				commandanswer (nick, gettext ("Modified forbidden tag with ban time %s: %s"):format (btime, item))
+				commandanswer (nick, gettext ("Modified forbidden tag with ban time %s: %s"):format ((valor (btime, "") or table_sets ["mitbantime"]), item))
 			else
 				VH:SQLQuery ("insert into `" .. tbl_sql ["mitag"] .. "` (`tag`, `time`, `note`) values ('" .. entry .. "', " .. sqlemptnull (btime) .. ", " .. sqlemptnull (note) .. ")")
-				commandanswer (nick, gettext ("Added forbidden tag with ban time %s: %s"):format (btime, item))
+				commandanswer (nick, gettext ("Added forbidden tag with ban time %s: %s"):format ((valor (btime, "") or table_sets ["mitbantime"]), item))
 			end
 		end
 
@@ -11411,10 +11411,10 @@ function addmyinfoentry (nick, line)
 
 			if rows > 0 then
 				VH:SQLQuery ("update `" .. tbl_sql ["miconn"] .. "` set `time` = " .. sqlemptnull (btime) .. ", `note` = " .. sqlemptnull (note) .. " where `connection` = '" .. entry .. "'")
-				commandanswer (nick, gettext ("Modified forbidden connection type with ban time %s: %s"):format (btime, item))
+				commandanswer (nick, gettext ("Modified forbidden connection type with ban time %s: %s"):format ((valor (btime, "") or table_sets ["mitbantime"]), item))
 			else
 				VH:SQLQuery ("insert into `" .. tbl_sql ["miconn"] .. "` (`connection`, `time`, `note`) values ('" .. entry .. "', " .. sqlemptnull (btime) .. ", " .. sqlemptnull (note) .. ")")
-				commandanswer (nick, gettext ("Added forbidden connection type with ban time %s: %s"):format (btime, item))
+				commandanswer (nick, gettext ("Added forbidden connection type with ban time %s: %s"):format ((valor (btime, "") or table_sets ["mitbantime"]), item))
 			end
 		end
 
@@ -11430,10 +11430,10 @@ function addmyinfoentry (nick, line)
 
 			if rows > 0 then
 				VH:SQLQuery ("update `" .. tbl_sql ["miemail"] .. "` set `time` = " .. sqlemptnull (btime) .. ", `note` = " .. sqlemptnull (note) .. " where `email` = '" .. entry .. "'")
-				commandanswer (nick, gettext ("Modified forbidden email with ban time %s: %s"):format (btime, item))
+				commandanswer (nick, gettext ("Modified forbidden email with ban time %s: %s"):format ((valor (btime, "") or table_sets ["mitbantime"]), item))
 			else
 				VH:SQLQuery ("insert into `" .. tbl_sql ["miemail"] .. "` (`email`, `time`, `note`) values ('" .. entry .. "', " .. sqlemptnull (btime) .. ", " .. sqlemptnull (note) .. ")")
-				commandanswer (nick, gettext ("Added forbidden email with ban time %s: %s"):format (btime, item))
+				commandanswer (nick, gettext ("Added forbidden email with ban time %s: %s"):format ((valor (btime, "") or table_sets ["mitbantime"]), item))
 			end
 		end
 
@@ -11449,10 +11449,10 @@ function addmyinfoentry (nick, line)
 
 			if rows > 0 then
 				VH:SQLQuery ("update `" .. tbl_sql ["mishare"] .. "` set `time` = " .. sqlemptnull (btime) .. ", `note` = " .. sqlemptnull (note) .. " where `share` = '" .. entry .. "'")
-				commandanswer (nick, gettext ("Modified forbidden share size with ban time %s: %s"):format (btime, item))
+				commandanswer (nick, gettext ("Modified forbidden share size with ban time %s: %s"):format ((valor (btime, "") or table_sets ["mitbantime"]), item))
 			else
 				VH:SQLQuery ("insert into `" .. tbl_sql ["mishare"] .. "` (`share`, `time`, `note`) values ('" .. entry .. "', " .. sqlemptnull (btime) .. ", " .. sqlemptnull (note) .. ")")
-				commandanswer (nick, gettext ("Added forbidden share size with ban time %s: %s"):format (btime, item))
+				commandanswer (nick, gettext ("Added forbidden share size with ban time %s: %s"):format ((valor (btime, "") or table_sets ["mitbantime"]), item))
 			end
 		end
 
@@ -11468,10 +11468,10 @@ function addmyinfoentry (nick, line)
 
 			if rows > 0 then
 				VH:SQLQuery ("update `" .. tbl_sql ["miip"] .. "` set `time` = " .. sqlemptnull (btime) .. ", `note` = " .. sqlemptnull (note) .. " where `ip` = '" .. entry .. "'")
-				commandanswer (nick, gettext ("Modified forbidden IP address with ban time %s: %s"):format (btime, item))
+				commandanswer (nick, gettext ("Modified forbidden IP address with ban time %s: %s"):format ((valor (btime, "") or table_sets ["mitbantime"]), item))
 			else
 				VH:SQLQuery ("insert into `" .. tbl_sql ["miip"] .. "` (`ip`, `time`, `note`) values ('" .. entry .. "', " .. sqlemptnull (btime) .. ", " .. sqlemptnull (note) .. ")")
-				commandanswer (nick, gettext ("Added forbidden IP address with ban time %s: %s"):format (btime, item))
+				commandanswer (nick, gettext ("Added forbidden IP address with ban time %s: %s"):format ((valor (btime, "") or table_sets ["mitbantime"]), item))
 			end
 		end
 
@@ -11487,10 +11487,10 @@ function addmyinfoentry (nick, line)
 
 			if rows > 0 then
 				VH:SQLQuery ("update `" .. tbl_sql ["micc"] .. "` set `time` = " .. sqlemptnull (btime) .. ", `note` = " .. sqlemptnull (note) .. " where `cc` = '" .. entry .. "'")
-				commandanswer (nick, gettext ("Modified forbidden country code with ban time %s: %s"):format (btime, item))
+				commandanswer (nick, gettext ("Modified forbidden country code with ban time %s: %s"):format ((valor (btime, "") or table_sets ["mitbantime"]), item))
 			else
 				VH:SQLQuery ("insert into `" .. tbl_sql ["micc"] .. "` (`cc`, `time`, `note`) values ('" .. entry .. "', " .. sqlemptnull (btime) .. ", " .. sqlemptnull (note) .. ")")
-				commandanswer (nick, gettext ("Added forbidden country code with ban time %s: %s"):format (btime, item))
+				commandanswer (nick, gettext ("Added forbidden country code with ban time %s: %s"):format ((valor (btime, "") or table_sets ["mitbantime"]), item))
 			end
 		end
 
@@ -11506,10 +11506,10 @@ function addmyinfoentry (nick, line)
 
 			if rows > 0 then
 				VH:SQLQuery ("update `" .. tbl_sql ["midns"] .. "` set `time` = " .. sqlemptnull (btime) .. ", `note` = " .. sqlemptnull (note) .. " where `dns` = '" .. entry .. "'")
-				commandanswer (nick, gettext ("Modified forbidden DNS with ban time %s: %s"):format (btime, item))
+				commandanswer (nick, gettext ("Modified forbidden DNS with ban time %s: %s"):format ((valor (btime, "") or table_sets ["mitbantime"]), item))
 			else
 				VH:SQLQuery ("insert into `" .. tbl_sql ["midns"] .. "` (`dns`, `time`, `note`) values ('" .. entry .. "', " .. sqlemptnull (btime) .. ", " .. sqlemptnull (note) .. ")")
-				commandanswer (nick, gettext ("Added forbidden DNS with ban time %s: %s"):format (btime, item))
+				commandanswer (nick, gettext ("Added forbidden DNS with ban time %s: %s"):format ((valor (btime, "") or table_sets ["mitbantime"]), item))
 			end
 		end
 
@@ -11525,10 +11525,10 @@ function addmyinfoentry (nick, line)
 
 			if rows > 0 then
 				VH:SQLQuery ("update `" .. tbl_sql ["misup"] .. "` set `time` = " .. sqlemptnull (btime) .. ", `note` = " .. sqlemptnull (note) .. " where `supports` = '" .. entry .. "'")
-				commandanswer (nick, gettext ("Modified forbidden client supports with ban time %s: %s"):format (btime, item))
+				commandanswer (nick, gettext ("Modified forbidden client supports with ban time %s: %s"):format ((valor (btime, "") or table_sets ["mitbantime"]), item))
 			else
 				VH:SQLQuery ("insert into `" .. tbl_sql ["misup"] .. "` (`supports`, `time`, `note`) values ('" .. entry .. "', " .. sqlemptnull (btime) .. ", " .. sqlemptnull (note) .. ")")
-				commandanswer (nick, gettext ("Added forbidden client supports with ban time %s: %s"):format (btime, item))
+				commandanswer (nick, gettext ("Added forbidden client supports with ban time %s: %s"):format ((valor (btime, "") or table_sets ["mitbantime"]), item))
 			end
 		end
 
@@ -11544,10 +11544,10 @@ function addmyinfoentry (nick, line)
 
 			if rows > 0 then
 				VH:SQLQuery ("update `" .. tbl_sql ["miver"] .. "` set `time` = " .. sqlemptnull (btime) .. ", `note` = " .. sqlemptnull (note) .. " where `version` = '" .. entry .. "'")
-				commandanswer (nick, gettext ("Modified forbidden NMDC version with ban time %s: %s"):format (btime, item))
+				commandanswer (nick, gettext ("Modified forbidden NMDC version with ban time %s: %s"):format ((valor (btime, "") or table_sets ["mitbantime"]), item))
 			else
 				VH:SQLQuery ("insert into `" .. tbl_sql ["miver"] .. "` (`version`, `time`, `note`) values ('" .. entry .. "', " .. sqlemptnull (btime) .. ", " .. sqlemptnull (note) .. ")")
-				commandanswer (nick, gettext ("Added forbidden NMDC version with ban time %s: %s"):format (btime, item))
+				commandanswer (nick, gettext ("Added forbidden NMDC version with ban time %s: %s"):format ((valor (btime, "") or table_sets ["mitbantime"]), item))
 			end
 		end
 
