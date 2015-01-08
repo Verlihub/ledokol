@@ -477,8 +477,6 @@ Add new release|Vlozi novy release
 Delete releases|Smaze releasy
 List of available releases|Seznam dostupnych releasu
 Find release by name or category|Najde release podle jmena nebo kategorie
-Hub is now going for a very quick restart. Please be patient.|Hub se bude restartovat. Prosim strpeni...
-Hub is now going to shut down. Please be patient.|Hub bude vypnut. Prosim strpeni...
 equation|rovnice
 Calculate an equation|Pocitani rovnice
 Both numbers must be either pi or numbers.|Obe cisla museji byt bud pi, nebo cisla.
@@ -1077,3 +1075,6 @@ Automatic country chatroom entrance list is empty.|Seznam pro automaticky vstup 
 Please note, following function is required for features available in this version of %s and is currently not available in running version of %s but is available in latest update: %s|Upozorneni, nasledujici funkce je vyzadovana pro funkce dostupne v teto verzi %s a neni dostupna v aktualne bezici verzi %s ale je dostupna v poslednim update: %s
 note|poznamka
 Access is restricted.|Pristup je omezen.
+Convert LRE to plain text|Prevest LRE na prosty text
+LRE converted to plain text: %s|LRE prevedeno na prosty text: %s
+Please check your command syntax, something is wrong there.|Prosim prekontroluj si syntaxi prikazu, neco je tam spatne.
