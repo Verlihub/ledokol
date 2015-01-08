@@ -1,6 +1,6 @@
 # Language: de_DE
 # Charset: CP1252
-# Version: 2.8.4
+# Version: 2.8.5
 # Author: Ettore Atalan
 # Email: atalanttore@googlemail.com
 
@@ -57,30 +57,30 @@ type|Typ
 %s with IP %s and class %d allowed due to forbidden share size exception: %s|
 Deleted %d releases from category: %s|
 Why would you want to set empty topic?|
-Couldn't add forbidden nick because already exists: %s|
-Added forbidden nick: %s|
-Couldn't add forbidden description because already exists: %s|
-Added forbidden description: %s|
-Couldn't add forbidden tag because already exists: %s|
-Added forbidden tag: %s|
-Couldn't add forbidden connection type because already exists: %s|
-Added forbidden connection type: %s|
-Couldn't add forbidden email because already exists: %s|
-Added forbidden email: %s|
-Couldn't add forbidden share size because already exists: %s|
-Added forbidden share size: %s|
+Modified forbidden nick with ban time %s: %s|
+Added forbidden nick with ban time %s: %s|
+Modified forbidden description with ban time %s: %s|
+Added forbidden description with ban time %s: %s|
+Modified forbidden tag with ban time %s: %s|
+Added forbidden tag with ban time %s: %s|
+Modified forbidden connection type with ban time %s: %s|
+Added forbidden connection type with ban time %s: %s|
+Modified forbidden email with ban time %s: %s|
+Added forbidden email with ban time %s: %s|
+Modified forbidden share size with ban time %s: %s|
+Added forbidden share size with ban time %s: %s|
 Couldn't add MyINFO exception because already exists: %s|
 Added MyINFO exception: %s|
 and|und
 Deleted forbidden nick: %s|
 Couldn't delete forbidden nick because not found: %s|
-Deleted forbidden description: %s|
+Deleted forbidden description: %s|Verbotene Beschreibung gelцscht: %s
 Couldn't delete forbidden description because not found: %s|
-Deleted forbidden tag: %s|
+Deleted forbidden tag: %s|Verbotenes Schlagwort gelцscht: %s
 Couldn't delete forbidden tag because not found: %s|
 Deleted forbidden connection type: %s|
 Couldn't delete forbidden connection type because not found: %s|
-Deleted forbidden email: %s|
+Deleted forbidden email: %s|Verbotene E-Mail gelцscht: %s
 Couldn't delete forbidden email because not found: %s|
 Deleted forbidden share size: %s|
 Couldn't delete forbidden share size because not found: %s|
@@ -122,7 +122,7 @@ Chat rank list is empty.|
 Top %d operator rankers|
 Operator rank list is empty.|
 string|Zeichenkette
-No user results found.|
+No user results found.|Keine Benutzerergebnisse gefunden.
 Showing %d user log results|
 Size of user log table: %d [ %s: %d @ %s ]|
 Add protection entry|
@@ -183,7 +183,7 @@ nick|
 This list of commands|Diese Liste mit Befehlen
 %s user commands|%s Benutzerbefehle
 Current topic|
-Your chat rank|
+Your chat rank|Ihr Chatrang
 You're not allowed to send private messages.|
 Unknown|Unbekannt
 identifier|Bezeichner
@@ -196,10 +196,10 @@ Total operator rank points: %d|
 Average message count per user: %.2f|
 lre|
 action|Aktion
-Changed configuration variable %s: %s => %s|
+Changed configuration variable %s: %s => %s|Konfigurationsvariable %s geдndert: %s => %s
 Configuration variable %s can only be set to: %s|
 or|oder
-Configuration variable %s must be a number.|
+Configuration variable %s must be a number.|Konfigurationsvariable %s muss eine Zahl sein.
 to|an
 Unknown configuration variable: %s|Unbekannte Konfigurationsvariable: %s
 %s version: %s|%s-Version: %s
@@ -221,7 +221,7 @@ Add rank exception|
 Delete rank exception|
 In order to use this feature you must turn off registered users list cache. Do it by setting hub configuration variable %s to %d and restarting the hub. Please note: Turning cache off is not recommended with large list of registered users.|
 Both|Beide
-Deleted search filter: %s|
+Deleted search filter: %s|Gelцschter Suchfilter: %s
 Couldn't delete search filter because not found: %s|
 Search filter list|Suchfilterliste
 Search filter list is empty.|Suchfilterliste ist leer.
@@ -230,7 +230,7 @@ Add search filter|Suchfilter hinzufьgen
 Delete search filter|Suchfilter lцschen
 Known actions are: %s|
 Known flags are: %s|
-Downloading version file: %s|
+Downloading version file: %s|Versionsdatei wird heruntergeladen: %s
 Size of kicks table: %d [ %s: %d @ %s ]|
 Size of bans table: %d [ %s: %d @ %s ]|
 Size of unbans table: %d [ %s: %d @ %s ]|
@@ -273,7 +273,7 @@ Delete chatroom|Chatraum lцschen
 description|Beschreibung
 minclass|
 maxclass|
-Modified chatroom: %s|
+Modified chatroom: %s|Geдnderter Chatraum: %s
 Added chatroom: %s|Chatraum hinzugefьgt: %s
 Deleted chatroom: %s|Chatraum gelцscht: %s
 Couldn't delete chatroom because not found: %s|
@@ -284,7 +284,7 @@ Not found in country code statistics table: %s|
 Custom nick %s is now owned by real user and therefore has been reset for user: %s|
 %s is registered with class %d.|
 Query executed but didn't return any results.|
-Published: %s|
+Published: %s|Verцffentlicht: %s
 Add search filter exception entry|
 Delete search filter exception entry|
 Search filter exception list|
@@ -296,7 +296,7 @@ Search filter exception list is empty.|
 file|Datei
 Read hub logs|
 Known files are: %s|Bekannte Dateien sind: %s
-Log file is empty or does not exist.|
+Log file is empty or does not exist.|Protokolldatei ist leer oder nicht vorhanden.
 Add command notification exception|
 Delete command notification exception|
 Command notification exception list|
@@ -306,10 +306,10 @@ Deleted command notification exception entry: %s|
 Couldn't delete command notification exception entry because not found: %s|
 Command notification exception list is empty.|
 Couldn't add chatroom because nick is already in use: %s|
-Query results|
+Query results|Suchanfragenergebnisse
 Connections from your IP aren't allowed for another %d seconds.|
 Executed shell command didn't return any status code: %s|
-Returned status code: %s|
+Returned status code: %s|Zurьckgegebener Statuscode: %s
 Added by: %s|Hinzugefьgt von: %s
 publisher|
 Release list is empty.|
@@ -349,12 +349,12 @@ Total search rank points: %d|
 Please use following commands to finish update process|
 Moving file: %s|Datei verschieben: %s
 Please visit %s to download the script manually.|
-Couldn't add forbidden IP address because already exists: %s|
-Added forbidden IP address: %s|
+Modified forbidden IP address with ban time %s: %s|
+Added forbidden IP address with ban time %s: %s|
 Deleted forbidden IP address: %s|
 Couldn't delete forbidden IP address because not found: %s|
-Forbidden IP address list|
-Forbidden IP address list is empty.|
+Forbidden IP address list|Adressliste fьr verbotene IP
+Forbidden IP address list is empty.|Adressliste fьr verbotene IP ist leer.
 %s with IP %s and class %d allowed due to forbidden IP address exception: %s|
 Couldn't delete category because not found: %s|
 %s redirected due to spam.|
@@ -422,25 +422,25 @@ Added chat responder exception: %s|
 Deleted chat responder exception: %s|
 Couldn't delete chat responder exception because not found: %s|
 command|Befehl
-Customize script command|
+Customize script command|Benutzerdefinierter Skriptbefehl
 Customized script command: %s => %s|
-Unknown script command: %s|
+Unknown script command: %s|Unbekannter Skriptbefehl: %s
 Requested nick is real.|
 %s with class %d customized script command: %s => %s|
 Reset all custom commands|Alle benutzerdefinierten Befehle zurьcksetzen
-%d custom commands were reset.|
-%s tables are now deleted and script is locked.|
+%d custom commands were reset.|%d benutzerdefinierte Befehle wurden zurьckgesetzt.
+%s tables are now deleted and script is locked.|%s Tabellen werden nun gelцscht und das Skript ist gesperrt.
 Please unload the script and remove it from scripts directory.|
 Good luck.|Viel Glьck.
 Please unload the script to finish.|
-%s with IP %s and class %d sent message to %s: %s|
+%s with IP %s and class %d sent message to %s: %s|%s mit IP %s und Klasse %d sendete Nachricht an %s: %s
 Script uptime: %s|Skript-Betriebszeit: %s
 month|Monat
 months|Monate
 day|Tag
 hour|Stunde
 hours|Stunden
-Top %d used words|
+Top %d used words|%d meistbenutzte Wцrter
 Deleted from word rank list: %s|
 Not found in word rank list: %s|
 %s with class %d deleted %d word ranks lower than %d.|
@@ -477,15 +477,13 @@ Add new release|
 Delete releases|
 List of available releases|
 Find release by name or category|
-Hub is now going for a very quick restart. Please be patient.|
-Hub is now going to shut down. Please be patient.|
 equation|Gleichung
 Calculate an equation|Gleichung berechnen
 Both numbers must be either pi or numbers.|
-Known operations are: %s|
+Known operations are: %s|Bekannte Operationen sind: %s
 Your logout message: %s|Ihre Abmeldenachricht: %s
-Force welcome message for user|
-Login message set for %s: %s|
+Force welcome message for user|Willkommensnachricht fьr Benutzer erzwingen
+Login message set for %s: %s|Anmeldenachricht festgelegt fьr %s: %s
 Change nick of an registered user|
 User is not registered: %s|Benutzer ist nicht registriert: %s
 You are now going to be disconnected from the hub in order for your new nick to apply: %s|
@@ -495,7 +493,7 @@ Your login message deleted.|
 Your logout message deleted.|
 %s with class %d deleted his login message.|
 %s with class %d deleted his logout message.|
-Logout message set for %s: %s|
+Logout message set for %s: %s|Abmeldenachricht festgelegt fьr %s: %s
 %s with class %d changed login message for %s: %s|
 %s with class %d changed logout message for %s: %s|
 Login message deleted for user: %s|
@@ -535,7 +533,7 @@ Friendly hublist|
 Friendly hublist is empty.|
 Executed shell command didn't return any output.|
 Returned output|
-%s renamed %s to: %s|
+%s renamed %s to: %s|%s hat %s in: %s umbenannt
 %s plugin version: %s|
 second|Sekunde
 You are now known as: %s|Sie sind jetzt bekannt als: %s
@@ -620,22 +618,22 @@ User left the chatroom: %s|Benutzer verlieЯ den Chatraum: %s
 User entered the chatroom: %s|Benutzer betrat den Chatraum: %s
 You've entered %s chatroom.|Sie haben den Chatraum %s betreten.
 You're not member of this chatroom.|
-You don't have access to this chatroom.|
-Chatroom member list|
+You don't have access to this chatroom.|Sie haben keinen Zugang zu diesem Chatraum.
+Chatroom member list|Chatraum-Mitgliederliste
 Chatroom is empty.|Chatraum ist leer.
-You're already member of this chatroom.|
-Chatroom user commands|
+You're already member of this chatroom.|Sie sind bereits Mitglied dieses Chatraums.
+Chatroom user commands|Chatraum-Benutzerbefehle
 Unknown chatroom command. Use %s for help.|
 Enter the chatroom|Chatraum betreten
 Leave the chatroom|Chatraum verlassen
 Deleted %d rows from country code statistics table: %s|
-Set chat mode|
+Set chat mode|Chatmodus festlegen
 Known chat modes are: %s|Bekannte Chatmodi sind: %s
 mode|Modus
 Changing chat mode for %s: %s => %s|
 Not found in chat mode list: %s|
-Chat mode user list|
-Chat mode user list is empty.|
+Chat mode user list|Chatmodus-Benutzerliste
+Chat mode user list is empty.|Chatmodus-Benutzerliste ist leer.
 %s user lookup|
 Looking for %s on: %s|
 User %s found in following hubs|
@@ -650,10 +648,10 @@ IP gag list is empty.|
 Delete IP gag|
 Main chat is currently disabled for you.|
 Cleared temporary IP gag list.|
-Show custom script commands|
-Custom script command list|
-Custom script command list is empty.|
-Script size: %d lines in %s|
+Show custom script commands|Benutzerdefinierte Skriptbefehle anzeigen
+Custom script command list|Benutzerdefinierte Skriptbefehlsliste
+Custom script command list is empty.|Benutzerdefinierte Skriptbefehlsliste ist leer.
+Script size: %d lines in %s|SkriptgrцЯe: %d Zeilen in %s
 Added %s to IP gag list, %d users in total.|
 Flood detected from IP %s last known as %s with class %d in MC: %s|
 Flood detected from IP %s last known as %s with class %d in PM: %s|
@@ -665,7 +663,7 @@ Search filter|Suchfilter
 MyINFO check|
 Authorization|Autorisierung
 Ranks|
-Welcome messages|
+Welcome messages|Willkommensnachrichten
 Chatrooms|Chatrдume
 Reminders|
 Hub news|
@@ -701,7 +699,7 @@ Size of search ranks table: %d [ %s: %d @ %s ]|
 Size of user location statistics table: %d [ %s: %s ]|
 Open files limit: %d|
 User information|Benutzerinformation
-User not in list: %s|
+User not in list: %s|Benutzer nicht in Liste: %s
 Nick: %s|
 Description: %s|Beschreibung: %s
 Tag: %s|Schlagwort: %s
@@ -756,13 +754,13 @@ Bot information|Botinformation
 Owner script: %s|Eigentьmerskript: %s
 %s with IP %s and class %d allowed due to forbidden DNS exception: %s|
 In order to use this feature you need to enable DNS lookup. Do it by setting hub configuration variable %s to %d. Please note: Enabling DNS lookup might slow your hub performance down.|
-Couldn't add forbidden DNS because already exists: %s|
-Added forbidden DNS: %s|
+Modified forbidden DNS with ban time %s: %s|
+Added forbidden DNS with ban time %s: %s|
 Deleted forbidden DNS: %s|
 Couldn't delete forbidden DNS because not found: %s|
 Forbidden DNS list|
 Forbidden DNS list is empty.|
-Powered by %s|
+Powered by %s|Bereitgestellt von %s
 Warning: %s|Warnung: %s
 Open files limit set to %d is smaller than maximum users configuration which is %d. You can correct this by setting %s to %d or higher and restarting the hub.|
 Additional help|Zusдtzliche Hilfe
@@ -787,12 +785,12 @@ Couldn't modify authorization entry because not found: %d|
 Uptime: %s|Betriebszeit: %s
 Enable requested feature and try again.|
 cc|cc
-Couldn't add forbidden country code because already exists: %s|
-Added forbidden country code: %s|
+Modified forbidden country code with ban time %s: %s|
+Added forbidden country code with ban time %s: %s|
 Deleted forbidden country code: %s|
 Couldn't delete forbidden country code because not found: %s|
-Forbidden country code list|
-Forbidden country code list is empty.|
+Forbidden country code list|Liste fьr verbotenen Lдndercode
+Forbidden country code list is empty.|Liste fьr verbotenen Lдndercode ist leer.
 %s with IP %s and class %d allowed due to forbidden country code exception: %s|
 I'm staying idle due to confusion.|
 Added replacer in MC: %s|
@@ -838,9 +836,9 @@ Reason: %s|Grund: %s
 You're not allowed to send PM to this user because: %s|
 %s with class %d deleted %d antispam entries with occurrence less than %d.|
 %s with class %d deleted %d search filter entries with occurrence less than %d.|
-query|
-Execute MySQL query|
-Execute shell command|
+query|Suchanfrage
+Execute MySQL query|MySQL-Suchanfrage ausfьhren
+Execute shell command|Shellbefehl ausfьhren
 Experts only|
 Add hard IP ban entry|
 Delete hard IP ban entry|
@@ -890,11 +888,11 @@ Main chat message replaced for user: %s|
 Unknown protocol command from IP %s before login: %s|
 Added %s to hard ban list, %d users in total.|
 NMDC version: %s|NMDC-Version: %s
-Client supports: %s|
-Couldn't add forbidden client supports because already exists: %s|
-Added forbidden client supports: %s|
-Couldn't add forbidden NMDC version because already exists: %s|
-Added forbidden NMDC version: %s|
+Client supports: %s|Client unterstьtzt: %s
+Modified forbidden client supports with ban time %s: %s|
+Added forbidden client supports with ban time %s: %s|
+Modified forbidden NMDC version with ban time %s: %s|
+Added forbidden NMDC version with ban time %s: %s|
 Latest version of %s is required in order to use this feature.|
 Deleted forbidden client supports: %s|
 Couldn't delete forbidden client supports because not found: %s|
@@ -907,7 +905,7 @@ Forbidden NMDC version list is empty.|
 %s with IP %s and class %d allowed due to forbidden client supports exception: %s|
 %s with IP %s and class %d allowed due to forbidden NMDC version exception: %s|
 City: %s|Stadt: %s
-IP range: %s - %s|
+IP range: %s - %s|IP-Bereich: %s - %s
 Region: %s|Region: %s
 Time zone: %s|Zeitzone: %s
 Continent: %s|Kontinent: %s
@@ -988,7 +986,7 @@ Added replacer in PM: %s|
 Added replacer in MC and PM: %s|
 Message replaced for user with class %d in PM: <%s> %s|
 Message ignored due to flood detection from %s with IP %s and class %d in MC: %s|
-Users with same IP|
+Users with same IP|Benutzer mit der gleichen IP
 Parameter count mismatch detected in following translation string: %s|
 Infected user detected|Infizierte Benutzer erkannt
 Found files|Gefundene Dateien
@@ -996,8 +994,8 @@ Infected user detected with nick %s and IP %s and share %s and spent time: %s|
 Sadly I don't have access to send infected user information to AVDB, please ask maintainer of this script to add your server IP address to access list. AVDB reporting feature has been automatically disabled.|
 In order to send infected user information to AVDB you need to ask maintainer of this script to add your server IP address to AVDB access list.|
 Antivirus statistics|Antivirus-Statistiken
-File names used for search|
-File extensions used for search|
+File names used for search|Fьr die Suche verwendete Dateinamen
+File extensions used for search|Fьr die Suche verwendete Dateierweiterungen
 Possibly infected users|Mцglicherweise infizierte Benutzer
 Spent time: %s|
 Infected user logged in with IP %s and share %s: %s|
@@ -1015,7 +1013,7 @@ Clear kick votes for user|
 %s cleared %d of %d votes for kicking user with class %d: %s|
 Vote kick list|
 Vote kick list is empty.|
-Votes: %d of %d|
+Votes: %d of %d|Stimmen: %d von %d
 Voters: %s|
 Triggers|
 Add trigger|
@@ -1047,11 +1045,11 @@ Failed to execute %s with code: %d|
 Failed to execute %s with error: %s|
 Failed to execute %s without code and error.|
 Failed to move file: %s|Fehler beim Verschieben der Datei: %s
-Downloading translation file: %s|
-File not found on update server: %s|
-File not found on remote server: %s|
+Downloading translation file: %s|Ьbersetzungsdatei wird heruntergeladen: %s
+File not found on update server: %s|Datei auf Aktualisierungsserver nicht gefunden: %s
+File not found on remote server: %s|Datei auf entferntem Server nicht gefunden: %s
 File is empty.|Datei ist leer.
-Force infected user detection|
+Force infected user detection|Erkennung von infizierten Benutzern erzwingen
 You can't block user whose class is higher or equals your own: %s|
 User already blocked: %s|Benutzer bereits gesperrt: %s
 item|Eintrag
@@ -1075,3 +1073,8 @@ Couldn't delete automatic country chatroom entrance because ID not found: %d|
 Deleted automatic country chatroom entrance with ID: %d|
 Automatic country chatroom entrance list is empty.|
 Please note, following function is required for features available in this version of %s and is currently not available in running version of %s but is available in latest update: %s|
+note|Anmerkung
+Access is restricted.|Zugriff ist beschrдnkt.
+Convert LRE to plain text|
+LRE converted to plain text: %s|
+Please check your command syntax, something is wrong there.|
