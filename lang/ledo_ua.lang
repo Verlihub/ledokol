@@ -1,6 +1,6 @@
 # Language: uk_UA
 # Charset: CP1251
-# Version: 2.8.4
+# Version: 2.8.5
 # Author: Neolo
 # Email: admin@nlight.org.ua
 
@@ -57,18 +57,18 @@ type|type
 %s with IP %s and class %d allowed due to forbidden share size exception: %s|
 Deleted %d releases from category: %s|Видалено %d релізів з категорії: %s
 Why would you want to set empty topic?|Чому вам захотілося встановити порожню тему? Придумайте щось =)
-Couldn't add forbidden nick because already exists: %s|Цей нік вже занесено до списку заборонених: %s
-Added forbidden nick: %s|Занесено до списку заборонених ніків: %s
-Couldn't add forbidden description because already exists: %s|Цей опис вже занесено до списку заборонених: %s
-Added forbidden description: %s|Занесено до списку заборонених описів: %s
-Couldn't add forbidden tag because already exists: %s|Такий тег вже занесено до списку заборонених: %s
-Added forbidden tag: %s|Занесено до списку заборонених тегів: %s
-Couldn't add forbidden connection type because already exists: %s|Цей тип з`єднання вже занесено до списку заборонених: %s
-Added forbidden connection type: %s|Занесено до списку заборонених типів з`єднання: %s
-Couldn't add forbidden email because already exists: %s|Цей e-mail вже занесено до списку заборонених: %s
-Added forbidden email: %s|Занесено до списку заборонених e-mail`ів: %s
-Couldn't add forbidden share size because already exists: %s|Цей розмір шари вже занесено до списку заборонених: %s
-Added forbidden share size: %s|Занесено до списку заборонених розмірів шари: %s
+Modified forbidden nick with ban time %s: %s|
+Added forbidden nick with ban time %s: %s|
+Modified forbidden description with ban time %s: %s|
+Added forbidden description with ban time %s: %s|
+Modified forbidden tag with ban time %s: %s|
+Added forbidden tag with ban time %s: %s|
+Modified forbidden connection type with ban time %s: %s|
+Added forbidden connection type with ban time %s: %s|
+Modified forbidden email with ban time %s: %s|
+Added forbidden email with ban time %s: %s|
+Modified forbidden share size with ban time %s: %s|
+Added forbidden share size with ban time %s: %s|
 Couldn't add MyINFO exception because already exists: %s|Цей MYINFO вже занесено до списку виключень: %s
 Added MyINFO exception: %s|Додано MyINFO виключення: %s
 and|і
@@ -349,8 +349,8 @@ Total search rank points: %d|Загальна кількість балів ТО
 Please use following commands to finish update process|
 Moving file: %s|
 Please visit %s to download the script manually.|Відвідайте %s щоб завантажити скрипт вручну.
-Couldn't add forbidden IP address because already exists: %s|Заборонена IP адреса вже записана: %s
-Added forbidden IP address: %s|Додана заборонена IP адреса: %s
+Modified forbidden IP address with ban time %s: %s|
+Added forbidden IP address with ban time %s: %s|
 Deleted forbidden IP address: %s|Видалена заборонена IP адреса: %s
 Couldn't delete forbidden IP address because not found: %s|Заборонена IP адреса не знайдена, нічого видаляти: %s
 Forbidden IP address list|Список заборонених IP адрес
@@ -477,8 +477,6 @@ Add new release|Додати новий реліз
 Delete releases|Видалити релізи
 List of available releases|Список існуючих релізів
 Find release by name or category|Знайти реліз за ім`ям або категорією
-Hub is now going for a very quick restart. Please be patient.|Увага! Зараз відбудеться перезавантаження хабу, залишайтеся з нами.
-Hub is now going to shut down. Please be patient.|Увага! Зараз відбудеться вимкнення хабу. Зверніть увагу на повідомлення адміністратора з якої причини.
 equation|вираз
 Calculate an equation|Порахувати вираз
 Both numbers must be either pi or numbers.|Всі числа мають бути `пi` або числами.
@@ -756,8 +754,8 @@ Bot information|Бот інформація
 Owner script: %s|Власник скрипту: %s
 %s with IP %s and class %d allowed due to forbidden DNS exception: %s|
 In order to use this feature you need to enable DNS lookup. Do it by setting hub configuration variable %s to %d. Please note: Enabling DNS lookup might slow your hub performance down.|Для використання цієї функції вам необхідно увімкнути виявлення DNS на вашому хабі. Встановіть значення конфігурації хабу %s на %d зі списку !gc. Попередження: Увімкнення цієї опції знижує швидкодію хабу.
-Couldn't add forbidden DNS because already exists: %s|Не вдалося додати заборонений DNS тому що вже існує: %s
-Added forbidden DNS: %s|Додано заборонений DNS: %s
+Modified forbidden DNS with ban time %s: %s|
+Added forbidden DNS with ban time %s: %s|
 Deleted forbidden DNS: %s|Видалено заборонений DNS: %s
 Couldn't delete forbidden DNS because not found: %s|Не вдалося видалити заборонений DNS тому що не знайдено: %s
 Forbidden DNS list|Список заборонених DNS
@@ -787,8 +785,8 @@ Couldn't modify authorization entry because not found: %d|Неможливо з�
 Uptime: %s|Безперервна робота: %s
 Enable requested feature and try again.|Увімкніть функцію запитів і спробуйте ще раз.
 cc|кк
-Couldn't add forbidden country code because already exists: %s|Неможливо додати заборонений код кріїни (КК) тому що вже існує: %s
-Added forbidden country code: %s|Додано заборонений код країни (КК): %s
+Modified forbidden country code with ban time %s: %s|
+Added forbidden country code with ban time %s: %s|
 Deleted forbidden country code: %s|Видалено заборонений код країни (КК): %s
 Couldn't delete forbidden country code because not found: %s|Неможливо видалити заборонений код країни (КК) тому що не знайдений: %s
 Forbidden country code list|Список заборонених кодів країн (КК)
@@ -891,10 +889,10 @@ Unknown protocol command from IP %s before login: %s|
 Added %s to hard ban list, %d users in total.|
 NMDC version: %s|
 Client supports: %s|
-Couldn't add forbidden client supports because already exists: %s|
-Added forbidden client supports: %s|
-Couldn't add forbidden NMDC version because already exists: %s|
-Added forbidden NMDC version: %s|
+Modified forbidden client supports with ban time %s: %s|
+Added forbidden client supports with ban time %s: %s|
+Modified forbidden NMDC version with ban time %s: %s|
+Added forbidden NMDC version with ban time %s: %s|
 Latest version of %s is required in order to use this feature.|
 Deleted forbidden client supports: %s|
 Couldn't delete forbidden client supports because not found: %s|
@@ -1075,3 +1073,8 @@ Couldn't delete automatic country chatroom entrance because ID not found: %d|
 Deleted automatic country chatroom entrance with ID: %d|
 Automatic country chatroom entrance list is empty.|
 Please note, following function is required for features available in this version of %s and is currently not available in running version of %s but is available in latest update: %s|
+note|
+Access is restricted.|
+Convert LRE to plain text|
+LRE converted to plain text: %s|
+Please check your command syntax, something is wrong there.|
