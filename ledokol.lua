@@ -49,7 +49,7 @@ over sixty different features for Verlihub.
 Neolo, Uhlik, Astronomik, LadyStardust, Seth, Molotov, burek,
 Hungarista, Stefani, Aethra, netcelli, TheBoss, Maximum, BulleT,
 Doxtur, chaos, sphinx, Zorro, W1ZaRd, S0RiN, MaxFox, Krzychu,
-@tlantide, Atalanttore, Trumpy, Modswat, KCAHDEP
+@tlantide, Ettore Atalan, Trumpy, Modswat, KCAHDEP
 
 ---------------------------------------------------------------------
 ]]-- special thanks to <<
@@ -59,7 +59,7 @@ Doxtur, chaos, sphinx, Zorro, W1ZaRd, S0RiN, MaxFox, Krzychu,
 -- global storage variables and tables >>
 ---------------------------------------------------------------------
 
-ver_ledo = "2.8.5" -- ledokol version
+ver_ledo = "2.8.6" -- ledokol version
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -75,6 +75,7 @@ table_sets = {
 	["seventhacttime"] = "",
 	["ninthactrepmsg"] = "Sorry. I won't be spamming this hub again.",
 	["enableantispam"] = 0,
+	["antispamdebug"] = 0,
 	["antibelowclass"] = 3,
 	["allowspamtoops"] = 0,
 	["checkcmdspam"] = 0,
@@ -1223,6 +1224,10 @@ function Main (file)
 					end
 
 					if ver <= 286 then
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('antispamdebug', '" .. repsqlchars (table_sets ["antispamdebug"]) .. "')")
+					end
+
+					if ver <= 287 then
 						-- todo
 					end
 
@@ -14015,30 +14020,43 @@ local _, _, tvar, setto = string.find (line, "^(%S+) (.*)$")
 local num, ok = true, false
 if tonumber (setto) then setto = tonumber (setto) else num = false end
 
------ ---- --- -- -
+	----- ---- --- -- -
 
 	if tvar == "enableantispam" then
 		if num == true then
-			if (setto == 0) or (setto == 1) then
+			if setto == 0 or setto == 1 then
 				ok = true
 			else
-				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 "..gettext ("or").." 1"))
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0 " .. gettext ("or") .. " 1"))
 			end
 		else
-			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
 		end
 
------ ---- --- -- -
+	----- ---- --- -- -
+
+	elseif tvar == "antispamdebug" then
+		if num == true then
+			if setto == 0 or setto == 1 then
+				ok = true
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0 " .. gettext ("or") .. " 1"))
+			end
+		else
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
+		end
+
+	----- ---- --- -- -
 
 	elseif tvar == "checkcmdspam" then
 		if num == true then
-			if (setto == 0) or (setto == 1) then
+			if setto == 0 or setto == 1 then
 				ok = true
 			else
-				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 "..gettext ("or").." 1"))
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0 " .. gettext ("or") .. " 1"))
 			end
 		else
-			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
 		end
 
 ----- ---- --- -- -
@@ -17465,7 +17483,8 @@ conf = conf.."\r\n [::] seventhacttime = "..table_sets ["seventhacttime"]
 conf = conf.."\r\n [::] sixthactaddr = "..table_sets ["sixthactaddr"]
 conf = conf.."\r\n [::] ninthactrepmsg = "..table_sets ["ninthactrepmsg"]
 conf = conf.."\r\n"
-conf = conf.."\r\n [::] enableantispam = "..table_sets ["enableantispam"]
+	conf = conf .. "\r\n [::] enableantispam = " .. table_sets ["enableantispam"]
+	conf = conf .. "\r\n [::] antispamdebug = " .. table_sets ["antispamdebug"]
 	conf = conf .. "\r\n [::] antibelowclass = " .. table_sets ["antibelowclass"]
 conf = conf.."\r\n [::] allowspamtoops = "..table_sets ["allowspamtoops"]
 conf = conf.."\r\n [::] checkcmdspam = "..table_sets ["checkcmdspam"]
@@ -20913,6 +20932,12 @@ function antiscan (nick, class, data, where, to, status)
 
 						local mtip = getip (nick)
 						opsnotify (table_sets ["classnotiex"], string.format (gettext (note), nick, mtip .. tryipcc (mtip, nick), class, data))
+
+						if table_sets ["antispamdebug"] == 1 then -- debug
+							opsnotify (table_sets ["classnotianti"], gettext ("Entry used in detection: %s"):format (repnmdcoutchars (entry)))
+							opsnotify (table_sets ["classnotianti"], gettext ("Exception used in detection: %s"):format (repnmdcoutchars (value)))
+						end
+
 						return 1
 					end
 				end
@@ -20933,6 +20958,11 @@ function antiscan (nick, class, data, where, to, status)
 
 				local mtip = getip (nick)
 				opsnotify (table_sets ["classnotianti"], string.format (gettext (note), nick, mtip .. tryipcc (mtip, nick), class, data))
+
+				if table_sets ["antispamdebug"] == 1 then -- debug
+					opsnotify (table_sets ["classnotianti"], gettext ("Entry used in detection: %s"):format (repnmdcoutchars (entry)))
+				end
+
 				return 1
 			end
 
@@ -20946,6 +20976,7 @@ function antiscan (nick, class, data, where, to, status)
 						commandanswer (nick, string.format (gettext ("Your offline message stored for user: %s"), to))
 					end
 				end
+
 			elseif action == 9 then -- replace with ninthactrepmsg
 				if where == 1 then
 					local custnick = nick
@@ -20967,6 +20998,7 @@ function antiscan (nick, class, data, where, to, status)
 				elseif (where == 3) or (where == 4) then
 					commandanswer (nick, table_sets ["antimessage"])
 				end
+
 			else
 				if where == 1 then
 					maintouser (nick, table_sets ["antimessage"])
@@ -20993,34 +21025,46 @@ function antiscan (nick, class, data, where, to, status)
 			if action == 1 then -- drop
 				opsnotify (table_sets ["classnotianti"], string.format (gettext ("%s dropped due to spam."), nick))
 				VH:Disconnect (nick)
+
 			elseif action == 2 then -- kick
 				local reason = string.gsub (table_sets ["antikreason"], "%*", reprexpchars (data))
 				VH:KickUser (table_othsets ["sendfrom"], nick, reason)
+
 			elseif action == 3 then -- temporary ban, kick using thirdacttime
 				local reason = string.gsub (table_sets ["antikreason"], "%*", reprexpchars (data))
 				VH:KickUser (table_othsets ["sendfrom"], nick, reason .. "     #_ban_" .. table_sets ["thirdacttime"])
+
 			elseif action == 4 then -- spam to self
 				opsnotify (table_sets ["classnotianti"], string.format (gettext ("%s received own message."), nick))
+
 			elseif action == 6 then -- redirect to sixthactaddr
 				opsnotify (table_sets ["classnotianti"], string.format (gettext ("%s redirected due to spam."), nick))
 				VH:SendToUser ("$ForceMove " .. table_sets ["sixthactaddr"] .. "|", nick)
 				VH:Disconnect (nick)
+
 			elseif action == 7 then -- permanent ban, kick using seventhacttime
 				local reason = string.gsub (table_sets ["antikreason"], "%*", reprexpchars (data))
 				VH:KickUser (table_othsets ["sendfrom"], nick, reason .. "     #_ban_" .. table_sets ["seventhacttime"])
+
 			elseif action == 8 then -- gag ip
 				gagipadd (nil, ip .. " " .. tostring (where))
 				opsnotify (table_sets ["classnotianti"], string.format (gettext ("Added %s to IP gag list, %d users in total."), ip .. tryipcc (ip, nick), # getusersbyip (ip, table_sets ["scanbelowclass"])))
+
 			elseif action == 9 then -- replace
 				if where == 1 then -- mc
 					opsnotify (table_sets ["classnotianti"], string.format (gettext ("Main chat message replaced for user: %s"), nick))
 				elseif where == 2 then -- pm
 					opsnotify (table_sets ["classnotianti"], string.format (gettext ("Private message replaced for user: %s"), nick))
 				end
+
 			elseif action == 10 then -- hard ban
-				addhban (nil, repexdots (ip) .. "$ \"" .. entry .. "\"")
+				addhban (nil, repexdots (ip) .. "$ \"" .. repnmdcoutchars (entry) .. "\"")
 				opsnotify (table_sets ["classnotianti"], string.format (gettext ("Added %s to hard ban list, %d users in total."), ip, # getusersbyip (ip, table_sets ["scanbelowclass"])))
 				VH:Disconnect (nick)
+			end
+
+			if table_sets ["antispamdebug"] == 1 then -- debug
+				opsnotify (table_sets ["classnotianti"], gettext ("Entry used in detection: %s"):format (repnmdcoutchars (entry)))
 			end
 
 			return 0
