@@ -1,3 +1,7 @@
+[ 2.8.6 :: 2015-##-## ]
+
+Added: Antispam debug option to see which entry caused detection
+
 [ 2.8.5 :: 2015-01-08 ]
 
 Fixed: Correctly send $NoReport command to pingers, report by S0RiN
