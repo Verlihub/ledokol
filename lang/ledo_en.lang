@@ -1,6 +1,6 @@
 # Language: en_GB
 # Charset: CP1252
-# Version: 2.8.5
+# Version: 2.8.6
 # Author: RoLex
 # Email: webmaster@feardc.net
 
@@ -1078,3 +1078,5 @@ Access is restricted.|
 Convert LRE to plain text|
 LRE converted to plain text: %s|
 Please check your command syntax, something is wrong there.|
+Entry used in detection: %s|
+Exception used in detection: %s|
