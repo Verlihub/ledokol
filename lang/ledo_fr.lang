@@ -1,6 +1,6 @@
 # Language: fr_FR
 # Charset: CP1252
-# Version: 2.8.5
+# Version: 2.8.6
 # Author: @tlantide
 # Email: chatonhubfrance@gmail.com
 
@@ -191,7 +191,7 @@ Offline message to user|Un message а l'utilisateur Hors ligne
 Main chat history|Historique du chat central
 %s statistics|%s statistiques
 Script version: %s|Script version: %s
-Total chat rank points: %d|Total des points Top lignesdu chat central: %d
+Total chat rank points: %d|Total des points Top lignes du chat central: %d
 Total operator rank points: %d|Total des points Top lignes de Top lignes: %d
 Average message count per user: %.2f|Nombre moyen de messages par utilisateur: %.2f
 lre|lre
@@ -665,7 +665,7 @@ Authorization|Autorisation
 Ranks|Top lignes
 Welcome messages|Messages de bienvenue
 Chatrooms|Chatrooms
-Reminders|Rappels information temporiser
+Reminders|Rappels
 Hub news|Nouveautйs du hub
 Chat responder|Rйpondeur message
 Releases|Releases
@@ -1077,4 +1077,6 @@ note|note
 Access is restricted.|Accиs est limitй.
 Convert LRE to plain text|LRE convertir en texte
 LRE converted to plain text: %s|LRE converti en texte brut: %s
-Please check your command syntax, something is wrong there.|S  il vous plaоt vйrifier votre syntaxe de commande , quelque chose ne va lа-bas.
+Please check your command syntax, something is wrong there.|S' il vous plaоt vйrifier votre syntaxe de commande , quelque chose ne va pas.
+Entry used in detection: %s|Entrйe utilisйe dans la dйtection: %s
+Exception used in detection: %s|Exception utilisй dans la dйtection: %s
