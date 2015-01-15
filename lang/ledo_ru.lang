@@ -1,6 +1,6 @@
 # Language: ru_RU
 # Charset: CP1251
-# Version: 2.8.5
+# Version: 2.8.6
 # Author: MaxFox
 # Email: maxfox@inbox.ru
 
@@ -1078,3 +1078,5 @@ Access is restricted.|Доступ ограничен.
 Convert LRE to plain text|Конвертация LRE в чистый текст
 LRE converted to plain text: %s|LRE конвертированный в чистый текст: %s
 Please check your command syntax, something is wrong there.|Пожалуйста проверьте синтаксис вашей команды, в ней что-то не так.
+Entry used in detection: %s|Пункт использованный для детекта: %s
+Exception used in detection: %s|Исключение использованное для детекта: %s
