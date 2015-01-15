@@ -1,6 +1,6 @@
 # Language: nl_NL
 # Charset: CP1252
-# Version: 2.8.5
+# Version: 2.8.6
 # Author: Modswat
 # Email: future_dance@hotmail.com
 
@@ -1078,3 +1078,5 @@ Access is restricted.|Toegang is restricted
 Convert LRE to plain text|Omzetten LRE naar platte tekst
 LRE converted to plain text: %s|LRE omgezet naar platte tekst: %s
 Please check your command syntax, something is wrong there.|Controleer uw syntaxis van de opdracht , iets mis is daar.
+Entry used in detection: %s|Entry gebruikt in detectie: %s
+Exception used in detection: %s|Uitzondering gebruikt in detectie: %s
