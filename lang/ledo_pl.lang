@@ -1,6 +1,6 @@
 # Language: pl_PL
 # Charset: CP1250
-# Version: 2.8.5
+# Version: 2.8.6
 # Author: Zorro
 # Email: zbyszekslyz@hostpl.eu
 
@@ -1078,3 +1078,5 @@ Access is restricted.|Dostep jest ograniczony.
 Convert LRE to plain text|Konwersja tekstu na zwykіy LRE
 LRE converted to plain text: %s|LRE przekonwertowane na zwykіy tekst: %s
 Please check your command syntax, something is wrong there.|Prosze sprawdzic skladnie polecenia, cos jest nie tak.
+Entry used in detection: %s|Wpis uzywany w wykrywaniu: %s
+Exception used in detection: %s|Wyjatek stosowany w wykrywaniu: %s
