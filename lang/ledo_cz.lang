@@ -1,6 +1,6 @@
 # Language: cs_CZ
 # Charset: CP1250
-# Version: 2.8.5
+# Version: 2.8.6
 # Author: Uhlik
 # Email: pjanos.uk@gmail.com
 
@@ -1078,3 +1078,5 @@ Access is restricted.|Pristup je omezen.
 Convert LRE to plain text|Prevest LRE na prosty text
 LRE converted to plain text: %s|LRE prevedeno na prosty text: %s
 Please check your command syntax, something is wrong there.|Prosim prekontroluj si syntaxi prikazu, neco je tam spatne.
+Entry used in detection: %s|Polozka pouzita v detekci: %s
+Exception used in detection: %s|Vyjimka pouzita v detekci: %s
