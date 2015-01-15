@@ -1,6 +1,6 @@
 # Language: ro_RO
 # Charset: CP1250
-# Version: 2.8.5
+# Version: 2.8.6
 # Author: S0RiN
 # Email: rusu_sorin_con@yahoo.com
 
@@ -583,24 +583,24 @@ Bad search request from %s with IP %s and class %d as picture: %s|Cerere cгutar
 Bad search request from %s with IP %s and class %d as video: %s|Cerere cгutare rea de la %s cu IP %s єi clasa %d pe fiєier video: %s
 Bad search request from %s with IP %s and class %d as folder: %s|Cerere cгutare rea de la %s cu IP %s єi clasa %d pe dosar: %s
 Bad search request from %s with IP %s and class %d as TTH: %s|Cerere cгutare rea de la %s cu IP %s єi clasa %d pe TTH: %s
-Modified search filter with action %d and priority %d as any file: %s|Modificare filtru de cгutare cu accюiunea %d єi prioritate %d pentru orice fiєier: %s
-Modified search filter with action %d and priority %d as audio file: %s|Modificare filtru de cгutare cu accюiunea %d єi prioritate %d pentru fiєier audio: %s
-Modified search filter with action %d and priority %d as compressed file: %s|Modificare filtru de cгutare cu accюiunea %d єi prioritate %d pentru fiєier compresat: %s
-Modified search filter with action %d and priority %d as document: %s|Modificare filtru de cгutare cu accюiunea %d єi prioritate %d pentru fiєier document: %s
-Modified search filter with action %d and priority %d as executable: %s|Modificare filtru de cгutare cu accюiunea %d єi prioritate %d pentru fiєier executabil: %s
-Modified search filter with action %d and priority %d as picture: %s|Modificare filtru de cгutare cu accюiunea %d єi prioritate %d pentru fiєier foto: %s
-Modified search filter with action %d and priority %d as video: %s|Modificare filtru de cгutare cu accюiunea %d єi prioritate %d pentru fiєier video: %s
-Modified search filter with action %d and priority %d as folder: %s|Modificare filtru de cгutare cu accюiunea %d єi prioritate %d pentru dosar: %s
-Modified search filter with action %d and priority %d as TTH: %s|Modificare filtru de cгutare cu accюiunea %d єi prioritate %d pentru TTH: %s
-Added search filter with action %d and priority %d as any file: %s|Adгugat filtru pe cгutare cu accюiunea %d єi prioritate %d pentru orice fiєier: %s
-Added search filter with action %d and priority %d as audio file: %s|Adгugat filtru pe cгutare cu accюiunea %d єi prioritate %d pentru fiєier audio: %s
-Added search filter with action %d and priority %d as compressed file: %s|Adгugat filtru pe cгutare cu accюiunea %d єi prioritate %d pentru fiєier compresat: %s
-Added search filter with action %d and priority %d as document: %s|Adгugat filtru pe cгutare cu accюiunea %d єi prioritate %d pentru fiєier document: %s
-Added search filter with action %d and priority %d as executable: %s|Adгugat filtru pe cгutare cu accюiunea %d єi prioritate %d pentru fiєier executabil: %s
-Added search filter with action %d and priority %d as picture: %s|Adгugat filtru pe cгutare cu accюiunea %d єi prioritate %d pentru fiєier foto: %s
-Added search filter with action %d and priority %d as video: %s|Adгugat filtru pe cгutare cu accюiunea %d єi prioritate %d pentru fiєier video: %s
-Added search filter with action %d and priority %d as folder: %s|Adгugat filtru pe cгutare cu accюiunea %d єi prioritate %d pentru dosar: %s
-Added search filter with action %d and priority %d as TTH: %s|Adгugat filtru pe cгutare cu accюiunea %d єi prioritate %d pentru TTH: %s
+Modified search filter with action %d and priority %d as any file: %s|Modificare filtru de cгutare cu acюiunea %d єi prioritate %d pentru orice fiєier: %s
+Modified search filter with action %d and priority %d as audio file: %s|Modificare filtru de cгutare cu acюiunea %d єi prioritate %d pentru fiєier audio: %s
+Modified search filter with action %d and priority %d as compressed file: %s|Modificare filtru de cгutare cu acюiunea %d єi prioritate %d pentru fiєier compresat: %s
+Modified search filter with action %d and priority %d as document: %s|Modificare filtru de cгutare cu acюiunea %d єi prioritate %d pentru fiєier document: %s
+Modified search filter with action %d and priority %d as executable: %s|Modificare filtru de cгutare cu acюiunea %d єi prioritate %d pentru fiєier executabil: %s
+Modified search filter with action %d and priority %d as picture: %s|Modificare filtru de cгutare cu acюiunea %d єi prioritate %d pentru fiєier foto: %s
+Modified search filter with action %d and priority %d as video: %s|Modificare filtru de cгutare cu acюiunea %d єi prioritate %d pentru fiєier video: %s
+Modified search filter with action %d and priority %d as folder: %s|Modificare filtru de cгutare cu acюiunea %d єi prioritate %d pentru dosar: %s
+Modified search filter with action %d and priority %d as TTH: %s|Modificare filtru de cгutare cu acюiunea %d єi prioritate %d pentru TTH: %s
+Added search filter with action %d and priority %d as any file: %s|Adгugat filtru pe cгutare cu acюiunea %d єi prioritate %d pentru orice fiєier: %s
+Added search filter with action %d and priority %d as audio file: %s|Adгugat filtru pe cгutare cu acюiunea %d єi prioritate %d pentru fiєier audio: %s
+Added search filter with action %d and priority %d as compressed file: %s|Adгugat filtru pe cгutare cu acюiunea %d єi prioritate %d pentru fiєier compresat: %s
+Added search filter with action %d and priority %d as document: %s|Adгugat filtru pe cгutare cu acюiunea %d єi prioritate %d pentru fiєier document: %s
+Added search filter with action %d and priority %d as executable: %s|Adгugat filtru pe cгutare cu acюiunea %d єi prioritate %d pentru fiєier executabil: %s
+Added search filter with action %d and priority %d as picture: %s|Adгugat filtru pe cгutare cu acюiunea %d єi prioritate %d pentru fiєier foto: %s
+Added search filter with action %d and priority %d as video: %s|Adгugat filtru pe cгutare cu acюiunea %d єi prioritate %d pentru fiєier video: %s
+Added search filter with action %d and priority %d as folder: %s|Adгugat filtru pe cгutare cu acюiunea %d єi prioritate %d pentru dosar: %s
+Added search filter with action %d and priority %d as TTH: %s|Adгugat filtru pe cгutare cu acюiunea %d єi prioritate %d pentru TTH: %s
 %s with class %d deleted %d releases older than %d days.|% cu clasa %d a єters %d lansгri mai vechi de %d zile.
 Size of release table: %d [ %s: %d @ %s ]|Mгrimea tabelei de realizгri: %d [ %s: %d @ %s ]
 LRE|LRE
@@ -1078,3 +1078,5 @@ Access is restricted.|Accesul este restricюionat.
 Convert LRE to plain text|Convertire LRE оn text simplu
 LRE converted to plain text: %s|LRE a convertit оn text simplu: %s
 Please check your command syntax, something is wrong there.|Te rog sг verifici sintaxa comenzii tale, ceva nu e оn regulг acolo.
+Entry used in detection: %s|Intrare utilizatг оn detectare: %s
+Exception used in detection: %s|Excepюie utilizatг оn detectare: %s
