@@ -4568,27 +4568,27 @@ end
 	addccroommember (nick, cls)
 	addccroomacre (nick, cls)
 
-if cls < 3 then -- operator keys
-	if cls >= table_sets ["opkeyclass"] then
-		table_opks [nick] = 1 -- class
-	elseif (table_sets ["opkeyshare"] > 0) and (size >= (table_sets ["opkeyshare"] * 1073741824)) then
-		table_opks [nick] = 2 -- share
-	elseif cls >= table_sets ["opkeyself"] then -- self
-		VH:SendToUser ("$OpList "..nick.."|", nick)
-	end
-end
-
-if (table_sets ["opkeyclass"] < 11) or (table_sets ["opkeyshare"] > 0) then
-	local list = ""
-
-	for k, _ in pairs (table_opks) do
-		list = list..k.."$$"
+	if cls < 3 then -- operator keys
+		if cls >= table_sets ["opkeyclass"] then
+			table_opks [nick] = 1 -- class
+		elseif table_sets ["opkeyshare"] > 0 and size >= table_sets ["opkeyshare"] * 1073741824 then
+			table_opks [nick] = 2 -- share
+		elseif cls >= table_sets ["opkeyself"] then -- self
+			VH:SendToUser ("$OpList " .. nick .. "$$|", nick)
+		end
 	end
 
-	if list ~= "" then
-		VH:SendToClass ("$OpList "..list.."|", 0, 10)
+	if table_sets ["opkeyclass"] < 11 or table_sets ["opkeyshare"] > 0 then
+		local list = ""
+
+		for k, _ in pairs (table_opks) do
+			list = list .. k .. "$$"
+		end
+
+		if list ~= "" then
+			VH:SendToClass ("$OpList " .. list .. "|", 0, 10)
+		end
 	end
-end
 
 	installusermenu (nick)
 	sendrcmenu (nick, cls)
@@ -7130,10 +7130,10 @@ function installtimebot ()
 
 	if table_sets ["fasttimebot"] == 1 then
 		if table_othsets ["lasttimenick"] then
-			VH:SendToClass ("$Quit "..table_othsets ["lasttimenick"].."|", 0, 10)
+			VH:SendToClass ("$Quit " .. table_othsets ["lasttimenick"] .. "|", 0, 10)
 		end
 
-		VH:SendToClass ("$OpList "..bottime.."$$|", 0, 10)
+		VH:SendToClass ("$OpList " .. bottime .. "$$|", 0, 10)
 	else
 		if table_othsets ["lasttimenick"] then
 			delhubrobot (table_othsets ["lasttimenick"])
