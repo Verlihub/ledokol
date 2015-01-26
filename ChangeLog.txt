@@ -1,5 +1,6 @@
 [ 2.8.6 :: 2015-##-## ]
 
+Fixed: Missing OpList command separator, report by PPK
 Added: Antispam debug option to see which entry caused detection
 
 [ 2.8.5 :: 2015-01-08 ]
