@@ -518,6 +518,7 @@ table_cmnds = {
 	["reldel"] = "reldel",
 	["rellist"] = "rellist",
 	["relfind"] = "relfind",
+	["histdel"] = "histdel",
 	["histclean"] = "histclean",
 	["ophistory"] = "ophistory",
 	["history"] = "history",
@@ -1225,6 +1226,8 @@ function Main (file)
 
 					if ver <= 286 then
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('antispamdebug', '" .. repsqlchars (table_sets ["antispamdebug"]) .. "')")
+
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["ledocmd"] .. "` (`original`, `new`) values ('histdel', '" .. repsqlchars (table_cmnds ["histdel"]) .. "')")
 					end
 
 					if ver <= 287 then
@@ -3380,22 +3383,37 @@ end
 
 return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
 
-elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["histclean"].."$") then
-if ucl >= table_sets ["mincommandclass"] then
-if table_sets ["classnotiledoact"] == 11 then
-donotifycmd (nick, data, 0, ucl)
-end
+	elseif data:match ("^" .. table_othsets ["optrig"] .. table_cmnds ["histdel"] .. " .+$") then
+		if ucl >= table_sets ["mincommandclass"] then
+			if table_sets ["classnotiledoact"] == 11 then
+				donotifycmd (nick, data, 0, ucl)
+			end
 
-cleanhistory (nick, 0, 0, ucl)
-else
-commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
-end
+			deletehistory (nick, data:sub (# table_cmnds ["histdel"] + 3), ucl)
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
 
-return 0
+		return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
+
+	elseif data:match ("^" .. table_othsets ["optrig"] .. table_cmnds ["histclean"] .. "$") then
+		if ucl >= table_sets ["mincommandclass"] then
+			if table_sets ["classnotiledoact"] == 11 then
+				donotifycmd (nick, data, 0, ucl)
+			end
+
+			cleanhistory (nick, 0, 0, ucl)
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
+
+		return 0
+
+	----- ---- --- -- -
 
 elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["ophistory"].." %d+$") then
 if (ucl >= 3) and (table_sets ["histlimit"] > 0) then
@@ -9345,6 +9363,20 @@ end
 
 ----- ---- --- -- -
 
+function deletehistory (nick, text, class)
+	local _, rows = VH:SQLQuery ("select `id` from `" .. tbl_sql ["mchist"] .. "` where `message` like '%" .. repsqlchars (text) .. "%'")
+
+	if rows > 0 then
+		VH:SQLQuery ("delete from `" .. tbl_sql ["mchist"] .. "` where `message` like '%" .. repsqlchars (text) .. "%'")
+		commandanswer (nick, gettext ("Deleted %d main chat history messages by text: %s"):format (rows, text))
+		opsnotify (table_sets ["classnotiledoact"], gettext ("%s with class %d deleted %d main chat history messages by text: %s"):format (nick, class, rows, text))
+	else
+		commandanswer (nick, gettext ("There are no main chat history messages to remove."))
+	end
+end
+
+----- ---- --- -- -
+
 function cleanhistory (nick, limt, autom, cls)
 local rows = counttable (tbl_sql ["mchist"])
 
@@ -13732,6 +13764,7 @@ end
 			smensep (usr)
 		end
 
+		sopmenitm (usr, gettext ("Chat history") .. "\\" .. gettext ("Delete history messages by text"), table_cmnds ["histdel"] .. " %[line:<" .. gettext ("text") .. ">]")
 		sopmenitm (usr, gettext ("Chat history") .. "\\" .. gettext ("Delete all history messages"), table_cmnds ["histclean"])
 	end
 
@@ -17185,6 +17218,7 @@ help = help.." "..optrig..table_cmnds ["offclean"].." - "..gettext ("Delete all 
 
 	-- history
 	help = help .. " " .. optrig .. table_cmnds ["ophistory"] .. " <" .. gettext ("lines") .. "> - " .. gettext ("Operator chat history") .. "\r\n"
+	help = help .. " " .. optrig .. table_cmnds ["histdel"] .. " <" .. gettext ("text") .. "> - " .. gettext ("Delete history messages by text") .. "\r\n"
 	help = help .. " " .. optrig .. table_cmnds ["histclean"] .. " - " .. gettext ("Delete all history messages") .. "\r\n\r\n"
 
 -- commands
