@@ -2,6 +2,7 @@
 
 Fixed: Missing OpList command separator, report by PPK
 Added: Antispam debug option to see which entry caused detection
+Added: histdel command to delete history messages by text, request by KCAHDEP
 
 [ 2.8.5 :: 2015-01-08 ]
 
