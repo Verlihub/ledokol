@@ -9364,10 +9364,21 @@ end
 ----- ---- --- -- -
 
 function deletehistory (nick, text, class)
-	local _, rows = VH:SQLQuery ("select `id` from `" .. tbl_sql ["mchist"] .. "` where `message` like '%" .. repsqlchars (text) .. "%'")
+	local data = repsqlchars (text)
+	local _, rows = VH:SQLQuery ("select `id` from `" .. tbl_sql ["mchist"] .. "` where `message` like '%" .. data .. "%' or `nick` like '%" .. data .. "%' or `realnick` like '%" .. data .. "%'")
 
 	if rows > 0 then
-		VH:SQLQuery ("delete from `" .. tbl_sql ["mchist"] .. "` where `message` like '%" .. repsqlchars (text) .. "%'")
+		local delete = {}
+
+		for row = 0, rows - 1 do
+			local _, id = VH:SQLFetch (row)
+			table.insert (delete, id)
+		end
+
+		for _, id in pairs (delete) do
+			VH:SQLQuery ("delete from `" .. tbl_sql ["mchist"] .. "` where `id` = " .. tostring (id))
+		end
+
 		commandanswer (nick, gettext ("Deleted %d main chat history messages by text: %s"):format (rows, text))
 		opsnotify (table_sets ["classnotiledoact"], gettext ("%s with class %d deleted %d main chat history messages by text: %s"):format (nick, class, rows, text))
 	else
