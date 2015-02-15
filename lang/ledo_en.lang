@@ -1080,3 +1080,7 @@ LRE converted to plain text: %s|
 Please check your command syntax, something is wrong there.|
 Entry used in detection: %s|
 Exception used in detection: %s|
+text|
+Delete history messages by text|
+Deleted %d main chat history messages by text: %s|
+%s with class %d deleted %d main chat history messages by text: %s|
