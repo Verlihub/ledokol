@@ -2581,7 +2581,7 @@ elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["clog"].."
 
 	----- ---- --- -- -
 
-	elseif data:find ("^" .. table_othsets ["optrig"] .. table_cmnds ["seen"] .. " [^ ]+$") then
+	elseif data:match ("^" .. table_othsets ["optrig"] .. table_cmnds ["seen"] .. " [^ ]+$") or data:match ("^" .. table_othsets ["optrig"] .. table_cmnds ["seen"] .. " [^ ]+ .+$") then
 		if ucl >= table_sets ["mincommandclass"] then
 			donotifycmd (nick, data, 0, ucl)
 			seenlookup (nick, data:sub (# table_cmnds ["seen"] + 3))
@@ -8320,33 +8320,102 @@ end
 
 ----- ---- --- -- -
 
-function seenlookup (nick, user)
-	commandanswer (nick, gettext ("Looking for %s on: %s"):format (user, "http://www.te-home.net/?do=hublist"))
-	local res, err, data = getcurl (table_othsets ["seenurl"], {["nick"] = user})
+function seenlookup (nick, line)
+	local _, ftype, ftext = 0, "nick", ""
 
-	if res then
-		if data == "" or data == "0" then
-			commandanswer (nick, gettext ("User wasn't found in any hubs: %s"):format (user))
-		else
-			local list, lpos = "", 1
+	if line:match ("^[^ ]+ .+$") then
+		ftype, ftext = line:match ("^([^ ]+) (.+)$")
+	else
+		ftext = line
+	end
 
-			for line in data:gmatch ("[^\r\n]+") do
-				local _, _, lous, lohu = line:find ("^([^ ]+)|([^ ]+)$")
+	if ftype == "nick" or ftype == "desc" or ftype == "tag" or ftype == "conn" or ftype == "mail" or ftype == "share" or ftype == "ip" then
+		if ftype == "nick" then
+			commandanswer (nick, gettext ("Looking for users with nick %s on: %s"):format (ftext, "http://www.te-home.net/?do=hublist"))
+		elseif ftype == "desc" then
+			commandanswer (nick, gettext ("Looking for users with description %s on: %s"):format (ftext, "http://www.te-home.net/?do=hublist"))
+		elseif ftype == "tag" then
+			commandanswer (nick, gettext ("Looking for users with client tag %s on: %s"):format (ftext, "http://www.te-home.net/?do=hublist"))
+		elseif ftype == "conn" then
+			commandanswer (nick, gettext ("Looking for users with connection type %s on: %s"):format (ftext, "http://www.te-home.net/?do=hublist"))
+		elseif ftype == "mail" then
+			commandanswer (nick, gettext ("Looking for users with email address %s on: %s"):format (ftext, "http://www.te-home.net/?do=hublist"))
+		elseif ftype == "share" then
+			commandanswer (nick, gettext ("Looking for users with share size %s on: %s"):format (ftext, "http://www.te-home.net/?do=hublist"))
+		elseif ftype == "ip" then
+			commandanswer (nick, gettext ("Looking for users with IP address %s on: %s"):format (ftext, "http://www.te-home.net/?do=hublist"))
+		end
 
-				if lous and lohu then
-					list = list .. " " .. tostring (lpos) .. ". " .. repnmdcoutchars (lous) .. " @ dchub://" .. repnmdcoutchars (lohu) .. "/\r\n"
-					lpos = lpos + 1
+		local res, err, data = getcurl (table_othsets ["seenurl"], {[ftype] = ftext})
+
+		if res then
+			if data == "" or data == "0" then
+				if ftype == "nick" then
+					commandanswer (nick, gettext ("Users with nick not found in any hubs: %s"):format (ftext))
+				elseif ftype == "desc" then
+					commandanswer (nick, gettext ("Users with description not found in any hubs: %s"):format (ftext))
+				elseif ftype == "tag" then
+					commandanswer (nick, gettext ("Users with client tag not found in any hubs: %s"):format (ftext))
+				elseif ftype == "conn" then
+					commandanswer (nick, gettext ("Users with connection type not found in any hubs: %s"):format (ftext))
+				elseif ftype == "mail" then
+					commandanswer (nick, gettext ("Users with email address not found in any hubs: %s"):format (ftext))
+				elseif ftype == "share" then
+					commandanswer (nick, gettext ("Users with share size not found in any hubs: %s"):format (ftext))
+				elseif ftype == "ip" then
+					commandanswer (nick, gettext ("Users with IP address not found in any hubs: %s"):format (ftext))
+				end
+			else
+				local list, lpos = "", 1
+
+				for line in data:gmatch ("[^\r\n]+") do
+					local _, _, lous, lohu = line:find ("^([^ ]+)|([^ ]+)$")
+
+					if lous and lohu then
+						list = list .. " " .. tostring (lpos) .. ". " .. repnmdcoutchars (lous) .. " @ dchub://" .. repnmdcoutchars (lohu) .. "/\r\n"
+						lpos = lpos + 1
+					end
+				end
+
+				if list == "" then
+					if ftype == "nick" then
+						commandanswer (nick, gettext ("Users with nick not found in any hubs: %s"):format (ftext))
+					elseif ftype == "desc" then
+						commandanswer (nick, gettext ("Users with description not found in any hubs: %s"):format (ftext))
+					elseif ftype == "tag" then
+						commandanswer (nick, gettext ("Users with client tag not found in any hubs: %s"):format (ftext))
+					elseif ftype == "conn" then
+						commandanswer (nick, gettext ("Users with connection type not found in any hubs: %s"):format (ftext))
+					elseif ftype == "mail" then
+						commandanswer (nick, gettext ("Users with email address not found in any hubs: %s"):format (ftext))
+					elseif ftype == "share" then
+						commandanswer (nick, gettext ("Users with share size not found in any hubs: %s"):format (ftext))
+					elseif ftype == "ip" then
+						commandanswer (nick, gettext ("Users with IP address not found in any hubs: %s"):format (ftext))
+					end
+				else
+					if ftype == "nick" then
+						commandanswer (nick, gettext ("Users with nick %s found in following hubs"):format (ftext) .. ":\r\n\r\n" .. list)
+					elseif ftype == "desc" then
+						commandanswer (nick, gettext ("Users with description %s found in following hubs"):format (ftext) .. ":\r\n\r\n" .. list)
+					elseif ftype == "tag" then
+						commandanswer (nick, gettext ("Users with client tag %s found in following hubs"):format (ftext) .. ":\r\n\r\n" .. list)
+					elseif ftype == "conn" then
+						commandanswer (nick, gettext ("Users with connection type %s found in following hubs"):format (ftext) .. ":\r\n\r\n" .. list)
+					elseif ftype == "mail" then
+						commandanswer (nick, gettext ("Users with email address %s found in following hubs"):format (ftext) .. ":\r\n\r\n" .. list)
+					elseif ftype == "share" then
+						commandanswer (nick, gettext ("Users with share size %s found in following hubs"):format (ftext) .. ":\r\n\r\n" .. list)
+					elseif ftype == "ip" then
+						commandanswer (nick, gettext ("Users with IP address %s found in following hubs"):format (ftext) .. ":\r\n\r\n" .. list)
+					end
 				end
 			end
-
-			if list == "" then
-				commandanswer (nick, gettext ("User wasn't found in any hubs: %s"):format (user))
-			else
-				commandanswer (nick, gettext ("User %s found in following hubs"):format (user) .. ":\r\n\r\n" .. list)
-			end
+		else
+			commandanswer (nick, err)
 		end
 	else
-		commandanswer (nick, err)
+		commandanswer (nick, gettext ("Known types are: %s"):format ("nick, desc, tag, conn, mail, share " .. gettext ("and") .. " ip"))
 	end
 end
 
@@ -13891,7 +13960,7 @@ end
 		sopmenitm (usr, gettext ("User logger") .. "\\" .. gettext ("User information"), table_cmnds ["userinfo"] .. " %[line:<" .. gettext ("nick") .. ">]")
 		sopmenitm (usr, gettext ("User logger") .. "\\" .. gettext ("IP information"), table_cmnds ["ipinfo"] .. " %[line:<" .. gettext ("ip") .. ">]")
 		sopmenitm (usr, gettext ("User logger") .. "\\" .. gettext ("Search in user log"), table_cmnds ["ulog"] .. " %[line:<" .. gettext ("type") .. ">] %[line:<" .. gettext ("string") .. ">] %[line:<" .. gettext ("lines") .. ">]")
-		sopmenitm (usr, gettext ("User logger") .. "\\" .. string.format (gettext ("%s user lookup"), "http://www.te-home.net/?do=hublist"), table_cmnds ["seen"] .. " %[line:<" .. gettext ("nick") .. ">]")
+		sopmenitm (usr, gettext ("User logger") .. "\\" .. gettext ("%s user lookup"):format ("http://www.te-home.net/?do=hublist"), table_cmnds ["seen"] .. " %[line:<" .. gettext ("type") .. ">] %[line:<" .. gettext ("text") .. ">]")
 	end
 
 	-- todo: no pm
@@ -17278,7 +17347,7 @@ help = help.." "..optrig..table_cmnds ["clear"].." - "..gettext ("Clear main cha
 	help = help .. " " .. optrig .. table_cmnds ["userinfo"] .. " <" .. gettext ("nick") .. "> - " .. gettext ("User information") .. "\r\n"
 	help = help .. " " .. optrig .. table_cmnds ["ipinfo"] .. " <" .. gettext ("ip") .. "> - " .. gettext ("IP information") .. "\r\n"
 	help = help .. " " .. optrig .. table_cmnds ["ulog"] .. " <" .. gettext ("type") .. "> <" .. gettext ("string") .. "> <" .. gettext ("lines") .. "> - " .. gettext ("Search in user log") .. "\r\n"
-	help = help .. " " .. optrig .. table_cmnds ["seen"] .. " <" .. gettext ("nick") .. "> - " .. string.format (gettext ("%s user lookup"), "http://www.te-home.net/?do=hublist") .. "\r\n\r\n"
+	help = help .. " " .. optrig .. table_cmnds ["seen"] .. " <" .. gettext ("type") .. "> <" .. gettext ("text") .. "> - " .. gettext ("%s user lookup"):format ("http://www.te-home.net/?do=hublist") .. "\r\n\r\n"
 
 	-- vote kick
 	help = help .. " " .. optrig .. table_cmnds ["votekickdel"] .. " <" .. gettext ("nick") .. "> - " .. gettext ("Clear kick votes for user") .. "\r\n"
