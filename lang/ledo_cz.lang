@@ -156,7 +156,7 @@ order|poradi
 Redirected %s with IP %s and class %d to %s: <%s> %s|%s s IP %s a class %d presmerovan na %s : <%s> %s
 Unknown protocol command from %s with IP %s and class %d: %s|Neznamy prikaz od %s s IP %s a class %d: %s
 Custom nick list|Seznam volitelnych nicku
-%s operator commands|%s operatorskych prikazu
+%s operator commands|Vypis dostupnych %s operatorskych prikazu
 Add antispam entry|Vlozi antispam retezec
 Showing last %d lines out of total %d found in %s file|Zobrazuji poslednich %d radku z celkem %d nalezenych v souboru %s
 Delete antispam entry|Smaze antispam retezec
@@ -181,7 +181,7 @@ Script configuration variables|Konfigurace scriptu
 Change configuration variable|Zmeni konfiguraci
 nick|nick
 This list of commands|Tento seznam prikazu
-%s user commands|%s uzivatelskych prikazu
+%s user commands|Vypis dostupnych %s uzivatelskych prikazu
 Current topic|Aktualni topic
 Your chat rank|Tvoje hodnoceni v chatu
 You're not allowed to send private messages.|Nemas povoleno odesilat soukrome zpravy.
@@ -190,7 +190,7 @@ identifier|identifikator
 Offline message to user|Offline zprava uzivateli
 Main chat history|Historie chatu
 %s statistics|%s statistik
-Script version: %s|Script verze: %s ( info www.crazyhub.net )
+Script version: %s|Script verze: %s ( info www.crazyhub.net ) 
 Total chat rank points: %d|Celkove hodnoceni chatu: %d bodu
 Total operator rank points: %d|Celkove hodnoceni operatoru: %d bodu
 Average message count per user: %.2f|Prumerny pocet zprav na uzivatele: %.2f
@@ -429,7 +429,7 @@ Requested nick is real.|Pozadovany nick je skutecny.
 %s with class %d customized script command: %s => %s|%s s class %d upravil script prikaz: %s => %s
 Reset all custom commands|Resetuje vsechny volitelne prikazy scriptu
 %d custom commands were reset.|%d modifikaci prikazu bylo zruseno.
-%s tables are now deleted and script is locked.|%s zaznamu bylo smazano a script byl uzamcen.
+%s tables are now deleted and script is locked.|%s zaznamy jsou nyni smazany a script byl uzamcen.
 Please unload the script and remove it from scripts directory.|Zastav script a odstran ze slozky Scripts.
 Good luck.|Hodne stesti.
 Please unload the script to finish.|Zastav script pro dokonceni.
@@ -635,9 +635,6 @@ Not found in chat mode list: %s|%s nebylo nalezeno v seznamu modu chatu.
 Chat mode user list|Seznam uzivatelu pro mod chatu
 Chat mode user list is empty.|Seznam uzivatelu pro mod chatu je prazdny.
 %s user lookup|Vyhledani uzivatele pomoci %s
-Looking for %s on: %s|Hledam %s na: %s
-User %s found in following hubs|Uzivatel %s nalezen na nasledujicich hubech
-User wasn't found in any hubs: %s|Uzivatel nebyl nalezen na zadnem hubu: %s
 Add IP gag|Vlozi IP gag
 Added IP gag: %s|Vlozen IP gag: %s
 Modified IP gag: %s|IP gag %s byl upraven.
@@ -1080,3 +1077,28 @@ LRE converted to plain text: %s|LRE prevedeno na prosty text: %s
 Please check your command syntax, something is wrong there.|Prosim prekontroluj si syntaxi prikazu, neco je tam spatne.
 Entry used in detection: %s|Polozka pouzita v detekci: %s
 Exception used in detection: %s|Vyjimka pouzita v detekci: %s
+text|text
+Delete history messages by text|Smaze historii zprav podle textu
+Deleted %d main chat history messages by text: %s|Smazano %d zprav z mainchat historie podle textu: %s
+%s with class %d deleted %d main chat history messages by text: %s|%s s class %d smazal %d zprav z main chat historie podle textu: %s
+Looking for users with nick %s on: %s|Hledam uzivatele s nickem %s na: %s
+Looking for users with description %s on: %s|Hledam uzivatele s popisem %s na: %s
+Looking for users with client tag %s on: %s|Hledam uzivatele s tagem %s na: %s
+Looking for users with connection type %s on: %s|Hledam uzivatele s typem pripojeni %s na: %s
+Looking for users with email address %s on: %s|Hledam uzivatele s emailovou adresou %s na: %s
+Looking for users with share size %s on: %s|Hledam uzivatele s velikosti sdileni %s na: %s
+Looking for users with IP address %s on: %s|Hledam uzivatele s IP adresou %s na: %s
+Users with nick not found in any hubs: %s|Zadni uzivatele s timto nickem nebyli nalezeni na zadnem hubu: %s
+Users with description not found in any hubs: %s|Zadni uzivatele s timto popisem nebyli nalezeni na zadnem hubu: %s
+Users with client tag not found in any hubs: %s|Zadni uzivatele s timto tagem nebyli nalezeni na zadnem hubu: %s
+Users with connection type not found in any hubs: %s|Zadni uzivatele s timto typem pripojeni nebyli nalezeni na zadnem hubu: %s
+Users with email address not found in any hubs: %s|Zadni uzivatele s timto emailem nebyli nalezeni na zadnem hubu: %s
+Users with share size not found in any hubs: %s|Zadni uzivatele s timto sdilenim nebyli nalezeni na zadnem hubu: %s
+Users with IP address not found in any hubs: %s|Zadni uzivatele s touto IP adresou nebyli nalezeni na zadnem hubu: %s
+Users with nick %s found in following hubs|Uzivatele s nickem %s byli nalezeni na nasledujicich hubech
+Users with description %s found in following hubs|Uzivatele s popisem %s byli nalezeni na nasledujicich hubech
+Users with client tag %s found in following hubs|Uzivatele s tagem %s byli nalezeni na nasledujicich hubech
+Users with connection type %s found in following hubs|Uzivatele s typem pripojeni %s byli nalezeni na nasledujicich hubech
+Users with email address %s found in following hubs|Uzivatele s emailovou adresou %s byli nalezeni na nasledujicich hubech
+Users with share size %s found in following hubs|Uzivatele se sdilenim %s byli nalezeni na nasledujicich hubech
+Users with IP address %s found in following hubs|Uzivatele s IP adresou %s byli nalezeni na nasledujicich hubech
