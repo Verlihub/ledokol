@@ -635,9 +635,6 @@ Not found in chat mode list: %s|Nu a fost gгsit %s оn lista cu moduri de chat.
 Chat mode user list|Lista cu moduri de chat a utilizatorilor
 Chat mode user list is empty.|Lista cu moduri de chat a utilizatorilor, este goalг.
 %s user lookup|Utilizator cгutat: %s
-Looking for %s on: %s|Cгutare pentru %s оn: %s
-User %s found in following hubs|Utilizatorul %s a fost gгsit pe urmгtoarele huburi
-User wasn't found in any hubs: %s|Utilizatorul %s n-a fost gгsit pe nici un hub.
 Add IP gag|Adгugare gag pe IP
 Added IP gag: %s|Gag adгugat pe IP: %s
 Modified IP gag: %s|Gag modificat pentru IP: %s
@@ -1080,3 +1077,28 @@ LRE converted to plain text: %s|LRE a convertit оn text simplu: %s
 Please check your command syntax, something is wrong there.|Te rog sг verifici sintaxa comenzii tale, ceva nu e оn regulг acolo.
 Entry used in detection: %s|Intrare utilizatг оn detectare: %s
 Exception used in detection: %s|Excepюie utilizatг оn detectare: %s
+text|text
+Delete history messages by text|Єtergere a mesajelor istoricului, dupг text
+Deleted %d main chat history messages by text: %s|S-au єters %d mesaje ale istoricului de chat, dupг text: %s
+%s with class %d deleted %d main chat history messages by text: %s|%s cu clasa %d a єters %d mesaje ale istoricului de chat, dupг text: %s
+Looking for users with nick %s on: %s|Cгutare utilizatori cu nick %s pe: %s
+Looking for users with description %s on: %s|Cгutare utilizatori cu descriere %s pe: %s
+Looking for users with client tag %s on: %s|Cгutare utilizatori cu cu tag de client DC++ %s pe: %s
+Looking for users with connection type %s on: %s|Cгutare utilizatori cu tip de conexiune %s pe: %s
+Looking for users with email address %s on: %s|Cгutare utilizatori cu adresг de e-mail %s pe: %s
+Looking for users with share size %s on: %s|Cгutare utilizatori cu share de dimensiunea %s pe: %s
+Looking for users with IP address %s on: %s|Cгutare utilizatori cu adresг IP %s pe: %s
+Users with nick not found in any hubs: %s|Utilizatorii cu nick-ul dat, nu s-au gгsit pe urmгtoarele huburi: %s
+Users with description not found in any hubs: %s|Utilizatorii cu descriera datг, nu s-au gгsit pe urmгtoarele huburi: %s
+Users with client tag not found in any hubs: %s|Utilizatorii cu tag-ul dat, nu s-au gгsit pe urmгtoarele huburi: %s
+Users with connection type not found in any hubs: %s|Utilizatorii cu tipul de conexiune dat, nu s-au gгsit pe urmгtoarele huburi: %s
+Users with email address not found in any hubs: %s|Utilizatorii cu e-mail-ul dat, nu s-au gгsit pe urmгtoarele huburi: %s
+Users with share size not found in any hubs: %s|Utilizatorii cu share de dimensiunea datг, nu s-au gгsit pe urmгtoarele huburi: %s
+Users with IP address not found in any hubs: %s|Utilizatorii cu adresa IP datг, nu s-au gгsit pe urmгtoarele huburi: %s
+Users with nick %s found in following hubs|Utilizatorii cu nick %s s-au gгsit pe urmгtoarele huburi
+Users with description %s found in following hubs|Utilizatorii cu descrierea %s s-au gгsit pe urmгtoarele huburi
+Users with client tag %s found in following hubs|Utilizatorii cu tag-ul de client DC++ %s s-au gгsit pe urmгtoarele huburi
+Users with connection type %s found in following hubs|Utilizatorii cu tipul de conexiune %s s-au gгsit pe urmгtoarele huburi
+Users with email address %s found in following hubs|Utilizatorii cu adresa e-mail %s s-au gгsit pe urmгtoarele huburi
+Users with share size %s found in following hubs|Utilizatorii cu share de dimensiunea %s s-au gгsit pe urmгtoarele huburi
+Users with IP address %s found in following hubs|Utilizatorii cu adresa IP %s s-au gгsit pe urmгtoarele huburi
