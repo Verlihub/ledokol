@@ -883,7 +883,7 @@ No reason specified|Нет указанных причин
 Automatically deleted %d user log entries older than %d days.|Автоматически удалено %d пунктов старее чем %d дней из лога пользователей.
 Main chat message replaced for user: %s|Сообщение главного чата заменяются, для пользователя: %s
 Unknown protocol command from IP %s before login: %s|Неизвестная команда протокола с IP %s до логина: %s
-Added %s to hard ban list, %d users in total.|Добавлен %s жесткий банлист, всего пользователей - %d.
+Added %s to hard IP ban list, %d users in total.|%s добавлен в жесткий IP банлист, всего %d пользователей.
 NMDC version: %s|NMDC версия: %s
 Client supports: %s|Клиент поддерживает: %s
 Modified forbidden client supports with ban time %s: %s|Изменен запрещенный саппорт клиента с баном %s: %s
@@ -1102,3 +1102,7 @@ Users with connection type %s found in following hubs|Пользователи �
 Users with email address %s found in following hubs|Пользователи с почтовым адресом %s найдены на следующих хабах
 Users with share size %s found in following hubs|Пользователи с размером шары %s найдены на следующих хабах
 Users with IP address %s found in following hubs|Пользователи с IP адресом %s найдены на следующих хабах
+Blocked PM|Блокировка личных сообщений
+Right click menu|Меню правой кнопки
+IP watch|Отслеживание по IP
+Hard IP bans|Жесткие баны по IP
