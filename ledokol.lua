@@ -13736,7 +13736,6 @@ sopmenitm (usr, gettext ("Reminders").."\\"..gettext ("Delete reminder"), table_
 end
 
 	-- triggers
-
 	if ucl >= table_sets ["mincommandclass"] then
 		sopmenitm (usr, gettext ("Triggers") .. "\\" .. gettext ("Add trigger"), table_cmnds ["trigadd"] .. " %[line:<" .. gettext ("identifier") .. ">] \"%[line:<" .. gettext ("content") .. ">]\" %[line:<" .. gettext ("minclass") .. ">] %[line:<" .. gettext ("maxclass") .. ">]")
 		sopmenitm (usr, gettext ("Triggers") .. "\\" .. gettext ("Trigger list"), table_cmnds ["triglist"])
@@ -13744,13 +13743,45 @@ end
 		sopmenitm (usr, gettext ("Triggers") .. "\\" .. gettext ("Delete trigger"), table_cmnds ["trigdel"] .. " %[line:<" .. gettext ("identifier") .. ">]")
 	end
 
--- hub news
+	-- no pm
+	if ucl >= table_sets ["mincommandclass"] then
+		sopmenitm (usr, gettext ("Blocked PM") .. "\\" .. gettext ("Add blocked PM entry"), table_cmnds ["nopmadd"] .. " %[line:<" .. gettext ("nick") .. ">] %[line:<" .. gettext ("action") .. ">] %[line:<" .. gettext ("maxclass") .. ">] %[line:<" .. gettext ("reason") .. ">]")
+		sopmenitm (usr, gettext ("Blocked PM") .. "\\" .. gettext ("List of blocked PM entries"), table_cmnds ["nopmlist"])
+		smensep (usr)
+		sopmenitm (usr, gettext ("Blocked PM") .. "\\" .. gettext ("Delete blocked PM entry"), table_cmnds ["nopmdel"] .. " %[line:<" .. gettext ("nick") .. ">]")
+	end
 
-if ucl >= table_sets ["mincommandclass"] then
-sopmenitm (usr, gettext ("Hub news").."\\"..gettext ("Add news item"), table_cmnds ["newsadd"].." %[line:<"..gettext ("string")..">]")
-smensep (usr)
-sopmenitm (usr, gettext ("Hub news").."\\"..gettext ("Delete news items"), table_cmnds ["newsdel"].." %[line:<"..gettext ("date")..">]")
-end
+	-- right click menu
+	if ucl >= table_sets ["mincommandclass"] then
+		sopmenitm (usr, gettext ("Right click menu") .. "\\" .. gettext ("Add right click menu item"), table_cmnds ["rcmenuadd"] .. " \"%[line:<" .. gettext ("menu") .. ">]\" \"%[line:<" .. gettext ("command") .. ">]\" %[line:<" .. gettext ("type") .. ">] %[line:<" .. gettext ("context") .. ">] %[line:<" .. gettext ("order") .. ">] %[line:<" .. gettext ("minclass") .. ">] %[line:<" .. gettext ("maxclass") .. ">]")
+		sopmenitm (usr, gettext ("Right click menu") .. "\\" .. gettext ("List of right click menu items"), table_cmnds ["rcmenulist"])
+		smensep (usr)
+		sopmenitm (usr, gettext ("Right click menu") .. "\\" .. gettext ("Reorder right click menu item"), table_cmnds ["rcmenuord"] .. " %[line:<" .. gettext ("identifier") .. ">] %[line:<" .. gettext ("order") .. ">]")
+		sopmenitm (usr, gettext ("Right click menu") .. "\\" .. gettext ("Delete right click menu item"), table_cmnds ["rcmenudel"] .. " %[line:<" .. gettext ("identifier") .. ">]")
+	end
+
+	-- ip watch
+	if ucl >= table_sets ["mincommandclass"] then
+		sopmenitm (usr, gettext ("IP watch") .. "\\" .. gettext ("Add IP watch entry"), table_cmnds ["ipwatadd"] .. " %[line:<" .. gettext ("lre") .. ">] \"%[line:<" .. gettext ("reason") .. ">]\" %[line:<" .. gettext ("result") .. ">]")
+		sopmenitm (usr, gettext ("IP watch") .. "\\" .. gettext ("List of IP watch entries"), table_cmnds ["ipwatlist"])
+		smensep (usr)
+		sopmenitm (usr, gettext ("IP watch") .. "\\" .. gettext ("Delete IP watch entry"), table_cmnds ["ipwatdel"] .. " %[line:<" .. gettext ("lre") .. ">]")
+	end
+
+	-- hard ip ban
+	if ucl >= table_sets ["mincommandclass"] then
+		sopmenitm (usr, gettext ("Hard IP bans") .. "\\" .. gettext ("Add hard IP ban entry"), table_cmnds ["hban"] .. " %[line:<" .. gettext ("lre") .. ">] \"%[line:<" .. gettext ("reason") .. ">]\"")
+		sopmenitm (usr, gettext ("Hard IP bans") .. "\\" .. gettext ("List of hard IP ban entries"), table_cmnds ["hbans"])
+		smensep (usr)
+		sopmenitm (usr, gettext ("Hard IP bans") .. "\\" .. gettext ("Delete hard IP ban entry"), table_cmnds ["hunban"] .. " %[line:<" .. gettext ("lre") .. ">]")
+	end
+
+	-- hub news
+	if ucl >= table_sets ["mincommandclass"] then
+		sopmenitm (usr, gettext ("Hub news") .. "\\" .. gettext ("Add news item"), table_cmnds ["newsadd"] .. " %[line:<" .. gettext ("string") .. ">]")
+		smensep (usr)
+		sopmenitm (usr, gettext ("Hub news") .. "\\" .. gettext ("Delete news items"), table_cmnds ["newsdel"] .. " %[line:<" .. gettext ("date") .. ">]")
+	end
 
 if ucl >= table_sets ["newsclass"] then
 if ucl >= table_sets ["mincommandclass"] then
