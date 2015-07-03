@@ -883,7 +883,7 @@ No reason specified|
 Automatically deleted %d user log entries older than %d days.|
 Main chat message replaced for user: %s|
 Unknown protocol command from IP %s before login: %s|
-Added %s to hard ban list, %d users in total.|
+Added %s to hard IP ban list, %d users in total.|
 NMDC version: %s|
 Client supports: %s|
 Modified forbidden client supports with ban time %s: %s|
@@ -1102,3 +1102,7 @@ Users with connection type %s found in following hubs|
 Users with email address %s found in following hubs|
 Users with share size %s found in following hubs|
 Users with IP address %s found in following hubs|
+Blocked PM|
+Right click menu|
+IP watch|
+Hard IP bans|
