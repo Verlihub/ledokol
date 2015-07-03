@@ -883,7 +883,7 @@ No reason specified|Nebyl zadan duvod
 Automatically deleted %d user log entries older than %d days.|Automaticky bylo smazano %d zaznamu z logu uzivatelu starsich nez %d dnu.
 Main chat message replaced for user: %s|Zprava v hlavnim chatu zamenena pro uzivatele: %s.
 Unknown protocol command from IP %s before login: %s|Neznamy prikaz protokolu z IP %s pred prihlasenim: %s
-Added %s to hard ban list, %d users in total.|Pridan %s do hard ban seznamu, %d celkem uzivatelu.
+Added %s to hard IP ban list, %d users in total.|Pridan %s do hard IP ban seznamu, celkem %d uzivatelu v seznamu.
 NMDC version: %s|NMDC verze: %s
 Client supports: %s|Client supports: %s
 Modified forbidden client supports with ban time %s: %s|Modifikovan zakazany client supports s banem %s: %s
@@ -1102,3 +1102,7 @@ Users with connection type %s found in following hubs|Uzivatele s typem pripojen
 Users with email address %s found in following hubs|Uzivatele s emailovou adresou %s byli nalezeni na nasledujicich hubech
 Users with share size %s found in following hubs|Uzivatele se sdilenim %s byli nalezeni na nasledujicich hubech
 Users with IP address %s found in following hubs|Uzivatele s IP adresou %s byli nalezeni na nasledujicich hubech
+Blocked PM|PM zablokovano
+Right click menu|Pravy click menu
+IP watch|IP sledovani
+Hard IP bans|Hard IP bany
