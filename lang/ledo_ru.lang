@@ -623,7 +623,7 @@ Chatroom member list|Список пользователей чат-рума
 Chatroom is empty.|В чартуме никого нету.
 You're already member of this chatroom.|Вы уже являетесь пользователем данного чат-рума.
 Chatroom user commands|Команды чатрумов
-Unknown chatroom command. Use %s for help.|Неизвестная команда чат-рума. Используйте %s для получения помощи.
+Unknown chatroom command, use %s for help.|Неизвестная команда чат комнаты, используйте %s для получения помощи.
 Enter the chatroom|Подключить чат-рум
 Leave the chatroom|Покинуть чат-рум
 Deleted %d rows from country code statistics table: %s|Удалено %d записей из таблицы статистики кодов стран: %s
@@ -1106,3 +1106,9 @@ Blocked PM|Блокировка личных сообщений
 Right click menu|Меню правой кнопки
 IP watch|Отслеживание по IP
 Hard IP bans|Жесткие баны по IP
+Chatroom history|История чат комнаты
+Chatroom history is empty.|История чат комнаты пуста.
+Last %d chatroom messages|Последние %d сообщений истории чат комнаты
+There are no chatroom history messages to remove: %s|Нет сообщений для удаления из истории чат комнаты: %s
+Deleted %d chatroom history messages: %s|Удалено %d сообщений из истории чат комнаты: %s
+%s with class %d deleted %d chatroom history messages: %s|%s с классом %d удалил %d сообщений из истории чат комнаты: %s
