@@ -5,6 +5,8 @@ Fixed: Missing built in right click menu items, report by Uhlik
 Changed: Hublist user lookup now accepts type parameter such as nick, desc, tag, conn, mail, share and ip
 Added: Antispam debug option to see which entry caused detection
 Added: histdel command to delete history messages by text, request by KCAHDEP
+Added: Use custom nicks in all chatroom broadcasts when available
+Added: Regular and country code chatroom history, request by KCAHDEP
 
 [ 2.8.5 :: 2015-01-08 ]
 
