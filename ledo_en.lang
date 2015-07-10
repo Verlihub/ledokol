@@ -623,7 +623,7 @@ Chatroom member list|
 Chatroom is empty.|
 You're already member of this chatroom.|
 Chatroom user commands|
-Unknown chatroom command. Use %s for help.|
+Unknown chatroom command, use %s for help.|
 Enter the chatroom|
 Leave the chatroom|
 Deleted %d rows from country code statistics table: %s|
@@ -1106,3 +1106,9 @@ Blocked PM|
 Right click menu|
 IP watch|
 Hard IP bans|
+Chatroom history|
+Chatroom history is empty.|
+Last %d chatroom messages|
+There are no chatroom history messages to remove: %s|
+Deleted %d chatroom history messages: %s|
+%s with class %d deleted %d chatroom history messages: %s|
