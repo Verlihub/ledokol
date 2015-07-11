@@ -623,7 +623,7 @@ Chatroom member list|Seznam uzivatelu v chatroomu
 Chatroom is empty.|Chatroom je prazdny.
 You're already member of this chatroom.|Uz jsi clenem tohoto chatroomu.
 Chatroom user commands|Chatroom uzivatelske prikazy
-Unknown chatroom command. Use %s for help.|Neznamy chatroom prikaz. Napis %s pro napovedu.
+Unknown chatroom command, use %s for help.|Neznamy chatroom prikaz, pouzij %s pro napovedu.
 Enter the chatroom|Vstoupit do chatroomu
 Leave the chatroom|Opustit chatroom
 Deleted %d rows from country code statistics table: %s|Smazano %d radku ze statistiky zemi uzivatelu: %s
@@ -1102,7 +1102,13 @@ Users with connection type %s found in following hubs|Uzivatele s typem pripojen
 Users with email address %s found in following hubs|Uzivatele s emailovou adresou %s byli nalezeni na nasledujicich hubech
 Users with share size %s found in following hubs|Uzivatele se sdilenim %s byli nalezeni na nasledujicich hubech
 Users with IP address %s found in following hubs|Uzivatele s IP adresou %s byli nalezeni na nasledujicich hubech
-Blocked PM|PM zablokovano
+Blocked PM|Blokovani PM
 Right click menu|Pravy click menu
 IP watch|IP sledovani
 Hard IP bans|Hard IP bany
+Chatroom history|Chatroom historie
+Chatroom history is empty.|Chatroom historie je prazdna.
+Last %d chatroom messages|Poslednich %d zprav v chatroomu
+There are no chatroom history messages to remove: %s|V historii chatroomu nejsou zadne zpravy ke smazani: %s
+Deleted %d chatroom history messages: %s|Smazano %d zprav v historii chatroomu: %s
+%s with class %d deleted %d chatroom history messages: %s|%s s class %d smazal %d zprav z chatroom historie: %s
