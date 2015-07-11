@@ -146,7 +146,7 @@ Showing %d out of total %d accounts with class %d starting at user number %d|Aff
 There are no accounts with class: %d|Il n'y a pas de comptes avec se profil: %d
 Known classes are: %s|Les profil  connues sont: %s
 %s with class %d sent say message: <%s> %s|%s avec le profil %d le message envoyй dit: <%s> %s
-%s with class %d had bad luck sending say message: <%s> %s|%s avec le profil %d n'a aps de chance avec ce que dit le message envoyй: <%s> %s
+%s with class %d had bad luck sending say message: <%s> %s|%s avec le profil %d n'a pas de chance avec ce que dit le message envoyй: <%s> %s
 You can't talk from nick whose class is higher or equals your own.|Tu ne peux pas parler а un pseudonyme qui a un profil plus йlevй ou йgal au tien.
 %s with IP %s and class %d kicked: <%s> %s|%s avec l'IP %s et le profil %d est kickй: <%s> %s
 %s with class %d deleted %d statistics plugin entries older than %d days.|%s avec le profil %d supprimй %d des entrйes de plugin des statistiques plus vieilles que %d jours.
@@ -162,7 +162,7 @@ Showing last %d lines out of total %d found in %s file|Afficher les derniиres %
 Delete antispam entry|Supprimer une interdiction de spam
 Add antispam exception entry|Ajouter une interdiction d'exception anti-spam
 Delete antispam exception entry|Supprimer une interdiction d'exception anti-spam
-Add MyINFO entry|Ajouter une  interdiction de myinfo
+Add MyINFO entry|Ajouter une  interdiction de MyINFO
 Delete MyINFO entry|Supprimer une  interdiction de MyINFO
 MyINFO list|Liste de MyINFO
 List of registered users by class|Liste des utilisateurs enregistrйs par profil
@@ -623,7 +623,7 @@ Chatroom member list|Liste des membres de la Chatroom
 Chatroom is empty.|La salle Chatroom est vide.
 You're already member of this chatroom.|Tu es dйjа membre sur cette chatroom.
 Chatroom user commands|Commandes d'utilisateur dans la salle de chat
-Unknown chatroom command. Use %s for help.|Commande de la chatroom inconnue. Utilises %s pour de l'aide
+Unknown chatroom command, use %s for help.|
 Enter the chatroom|Entrer dans la chatroom
 Leave the chatroom|Quitter la Chatroom
 Deleted %d rows from country code statistics table: %s|Supprimйe %d les rangйes de la table de statistiques des codes de pays: %s
@@ -635,9 +635,6 @@ Not found in chat mode list: %s|Introuvable dans la liste du mode chat: %s
 Chat mode user list|Liste d'utilisateur du mode chat
 Chat mode user list is empty.|La liste d'utilisateur du mode chat est vide.
 %s user lookup|%s consultation de l'utilisateur
-Looking for %s on: %s|Regarder pour %s sur: %s
-User %s found in following hubs|Utilisateur %s trouvй sur le hub suivant
-User wasn't found in any hubs: %s|L'utilisateur n'a йtй trouvй sur aucun hub: %s
 Add IP gag|Ajouter une IP bloquer
 Added IP gag: %s|IP bloquer ajoutйe: %s
 Modified IP gag: %s|IP bloquer modifiйe: %s
@@ -886,7 +883,7 @@ No reason specified|Aucune raison spйcifiйe
 Automatically deleted %d user log entries older than %d days.|Suppression automatique %d de l'entrйe de log de l'utilisateur plus vieille que %d jours.
 Main chat message replaced for user: %s|chat central remplacй pour l'utilisateur: %s
 Unknown protocol command from IP %s before login: %s|Protocole de commande inconnu de l'IP %s avant connexion: %s
-Added %s to hard ban list, %d users in total.|Ajoutй %s а la liste dure de ban, %d utilisateur en totalitй.
+Added %s to hard IP ban list, %d users in total.|
 NMDC version: %s|Version de NMDC: %s
 Client supports: %s|Supports de client: %s
 Modified forbidden client supports with ban time %s: %s|Modifiй les supports de client interdits avec le temps de ban %s: %s
@@ -1080,3 +1077,38 @@ LRE converted to plain text: %s|LRE converti en texte brut: %s
 Please check your command syntax, something is wrong there.|S' il vous plaоt vйrifier votre syntaxe de commande , quelque chose ne va pas.
 Entry used in detection: %s|Entrйe utilisйe dans la dйtection: %s
 Exception used in detection: %s|Exception utilisй dans la dйtection: %s
+text|texte
+Delete history messages by text|Supprimer les messages de l'histoire en texte
+Deleted %d main chat history messages by text: %s|Supprimй %d messages principaux de l'histoire de chat par texte : %s
+%s with class %d deleted %d main chat history messages by text: %s|%s avec la classe %d %d supprimйs les messages de l'historique chat par texte : %s
+Looking for users with nick %s on: %s|
+Looking for users with description %s on: %s|
+Looking for users with client tag %s on: %s|
+Looking for users with connection type %s on: %s|
+Looking for users with email address %s on: %s|
+Looking for users with share size %s on: %s|
+Looking for users with IP address %s on: %s|
+Users with nick not found in any hubs: %s|
+Users with description not found in any hubs: %s|
+Users with client tag not found in any hubs: %s|
+Users with connection type not found in any hubs: %s|
+Users with email address not found in any hubs: %s|
+Users with share size not found in any hubs: %s|
+Users with IP address not found in any hubs: %s|
+Users with nick %s found in following hubs|
+Users with description %s found in following hubs|
+Users with client tag %s found in following hubs|
+Users with connection type %s found in following hubs|
+Users with email address %s found in following hubs|
+Users with share size %s found in following hubs|
+Users with IP address %s found in following hubs|
+Blocked PM|
+Right click menu|
+IP watch|
+Hard IP bans|
+Chatroom history|
+Chatroom history is empty.|
+Last %d chatroom messages|
+There are no chatroom history messages to remove: %s|
+Deleted %d chatroom history messages: %s|
+%s with class %d deleted %d chatroom history messages: %s|
