@@ -623,7 +623,7 @@ Chatroom member list|Chatroom - lista uzytkownikow
 Chatroom is empty.|Chatroom jest pusty.
 You're already member of this chatroom.|Jestes juz czlonkiem tego chatroomu.
 Chatroom user commands|Chatroom - lista komend uzytkownika
-Unknown chatroom command. Use %s for help.|Nieznana komenda chatroom. Wpisz %s by uzyskac pomoc.
+Unknown chatroom command, use %s for help.|Nieznana komenda czatu, uzyj %s dla help.
 Enter the chatroom|Dolacz do chatroomu
 Leave the chatroom|Opusc chatroom
 Deleted %d rows from country code statistics table: %s|Usunieto %d linijek z tablicy statystyki kodow krajow: %s
@@ -635,9 +635,6 @@ Not found in chat mode list: %s|Nie znaleziono na liscie trybow czatu: %s
 Chat mode user list|Lista uzytkownikow trybu czatu
 Chat mode user list is empty.|Lista uzytkownikow trybu czatu jest pusta.
 %s user lookup|%s wyszukiwanie uzytkownika
-Looking for %s on: %s|Szukam %s o: %s
-User %s found in following hubs|Uzytkownik %s znaleziony na nastepujacych hubach
-User wasn't found in any hubs: %s|Uzytkownik nie zostal znaleziony na zadnym hubie: %s
 Add IP gag|Dodaj gag IP
 Added IP gag: %s|Dodano gag IP: %s
 Modified IP gag: %s|Zmodyfikowane IP gag: %s
@@ -886,7 +883,7 @@ No reason specified|Bez uzasadnienia
 Automatically deleted %d user log entries older than %d days.|Automatycznie usuwane %d wpisy logu  uzytkownika starsze niz %d dni.
 Main chat message replaced for user: %s|Glowna wiadomosc na czacie zostala zastapiona przez uzytkownika: %s
 Unknown protocol command from IP %s before login: %s|Nieznana komeda protokolu z IP %s przed logowaniem: %s
-Added %s to hard ban list, %d users in total.|Dodano %s do czarnej listy banow. %d uzytkownikow w sumie.
+Added %s to hard IP ban list, %d users in total.|Dodano %s do listy IP ban, %d users w sumie.
 NMDC version: %s|Wersja NMDC: %s
 Client supports: %s|Wspierany klient: %s
 Modified forbidden client supports with ban time %s: %s|Zmodyfikowano florbida klient obsіuguje czasu bana
@@ -1080,3 +1077,38 @@ LRE converted to plain text: %s|LRE przekonwertowane na zwykіy tekst: %s
 Please check your command syntax, something is wrong there.|Prosze sprawdzic skladnie polecenia, cos jest nie tak.
 Entry used in detection: %s|Wpis uzywany w wykrywaniu: %s
 Exception used in detection: %s|Wyjatek stosowany w wykrywaniu: %s
+text|tekst
+Delete history messages by text|Usun historie tekstu wiadomosci
+Deleted %d main chat history messages by text: %s|Usunieto %d historie tekstu wiadomosci z czata glownego: %s
+%s with class %d deleted %d main chat history messages by text: %s|%s z klasy %d usunieto %d historie tekstu wiadomosci z czata glownego: %s
+Looking for users with nick %s on: %s|Szukam dla uzytkownikow z nazwa uzytkownika %s na : %s
+Looking for users with description %s on: %s|Szukam uzytkownikow z opisem %s na: %s
+Looking for users with client tag %s on: %s|Szukam uzytkownikow z tagiem klienta %s na: %s
+Looking for users with connection type %s on: %s|Szukam uzytkownikow z rodzajem polaczenia %s na: %s
+Looking for users with email address %s on: %s|Szukam uzytkownikow z adresem email %s na: %s
+Looking for users with share size %s on: %s|Szukam uzytkownikow z wielkoscia udostepmienia %s na: %s
+Looking for users with IP address %s on: %s|Szukam uzytkownikow z adresem IP %s na: %s
+Users with nick not found in any hubs: %s|Uzytkownik z nickiem nie zostal znaleziony na zadnym hubie: %s
+Users with description not found in any hubs: %s|Uzytkownik z podanym opisem nie zostal znaleziony na zadnym hubie: %s
+Users with client tag not found in any hubs: %s|Uzytkownik z podanym tagiem klienta nie zostal znaleziony na zadnym hubie: %s
+Users with connection type not found in any hubs: %s|Uzytkownik z podanym rodzajem polaczenia nie zostal znaleziony na zadnym hubie: %s
+Users with email address not found in any hubs: %s|Uzytkownik z podanym adresem email nie zostal znaleziony na zadnym hubie: %s
+Users with share size not found in any hubs: %s|Uzytkownik z wielkoscia udostepnienia nie zostal znaleziony na zadnym hubie: %s
+Users with IP address not found in any hubs: %s|Uzytkownik z podanym adresem IP nie zostal znaleziony na zadnym hubie: %s
+Users with nick %s found in following hubs|Uzytkownik z nazwa uzytkownika %s zostal znaleziony na nastepujacych hubach
+Users with description %s found in following hubs|Uzytkownik z opisem %s zostal znaleziony na nastepujacych hubach
+Users with client tag %s found in following hubs|Uzytkownik z tagiem kilenta %s zostal znaleziony na nastepujacych hubach
+Users with connection type %s found in following hubs|Uzytkownik z rodzajem polaczenia %s zostal znaleziony na nastepujacych hubach
+Users with email address %s found in following hubs|Uzytkownik z adresem email %s zostal znaleziony na nastepujacych hubach
+Users with share size %s found in following hubs|Uzytkownik z wielkoscia udostenienia %s zostal znaleziony na nastepujacych hubach
+Users with IP address %s found in following hubs|Uzytkownik z adresem IP %s zostal znaleziony na nastepujacych hubach
+Blocked PM|Zablokowany PM
+Right click menu|Menu prawokliku myszy
+IP watch|Ogladane IP
+Hard IP bans|Zbanowane IP na stale
+Chatroom history|Historia czatu
+Chatroom history is empty.|Historia czatu jest pusta.
+Last %d chatroom messages|Ostatnie %d wiadomoњci czatu
+There are no chatroom history messages to remove: %s|Brak wiadomosci historii czatu, aby usunac: %s
+Deleted %d chatroom history messages: %s|Usunieto %d wiadomosci historii czatu: %s
+%s with class %d deleted %d chatroom history messages: %s|%s z klasa %d usunal %d wiadomosci z historii czata: %s
