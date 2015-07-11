@@ -623,7 +623,7 @@ Chatroom member list|Lista membrilor camerei de chat
 Chatroom is empty.|Camera de chat este goalг.
 You're already member of this chatroom.|Eєti deja membru al acestei camere de chat.
 Chatroom user commands|Comenzi pentru utilizatorul camerei de chat
-Unknown chatroom command. Use %s for help.|Comandг necunoscutг pentru camera de chat. Foloseєte %s pentru ajutor.
+Unknown chatroom command, use %s for help.|Comandг necunoscutг pentru chat, foloseєte %s pentru ajutor.
 Enter the chatroom|Intrare camerг de chat
 Leave the chatroom|Pгrгsire camerг de chat
 Deleted %d rows from country code statistics table: %s|S-au єters %d rвnduri din tabelul statistic al codurilor de юarг: %s
@@ -883,7 +883,7 @@ No reason specified|Nu s-a specificat nici un motiv
 Automatically deleted %d user log entries older than %d days.|Єtergere automatг %d intrгri оn user log mai vechi de %d zile.
 Main chat message replaced for user: %s|Mesaj de main chat modificat pentru utilizatorul: %s
 Unknown protocol command from IP %s before login: %s|Comandг cu protocol necunoscut de pe IP %s оnainte de intrare: %s
-Added %s to hard ban list, %d users in total.|Adгugat %s la lista cu ban-uri grele, %d utilizatori оn total.
+Added %s to hard IP ban list, %d users in total.|Adгugare %s оn lista de banuri grele %d utilizatori оn total.
 NMDC version: %s|Versiune NMDC: %s
 Client supports: %s|Clienюi suport: %s
 Modified forbidden client supports with ban time %s: %s|Modificare suport client DC nepermis cu timp de banare %s: %s
@@ -1102,3 +1102,13 @@ Users with connection type %s found in following hubs|Utilizatorii cu tipul de c
 Users with email address %s found in following hubs|Utilizatorii cu adresa e-mail %s s-au gгsit pe urmгtoarele huburi
 Users with share size %s found in following hubs|Utilizatorii cu share de dimensiunea %s s-au gгsit pe urmгtoarele huburi
 Users with IP address %s found in following hubs|Utilizatorii cu adresa IP %s s-au gгsit pe urmгtoarele huburi
+Blocked PM|PM blocat
+Right click menu|Meniu pe click dreapta
+IP watch|Verificare IP
+Hard IP bans|Listг banгri grele pe IP
+Chatroom history|Istoricul camerelor de chat
+Chatroom history is empty.|Istoricul camerelor de chat, este єters.
+Last %d chatroom messages|Ultimele %d mesaje de chat
+There are no chatroom history messages to remove: %s|Nici un mesaj de chatroom de єters aici: %s
+Deleted %d chatroom history messages: %s|S-au єters %d rвnduri ale istoricului de mesaje: %s
+%s with class %d deleted %d chatroom history messages: %s|%s cu clasa %d a єters %d rвnduri ale istoricului de mesaje: %s
