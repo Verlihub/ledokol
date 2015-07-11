@@ -1,6 +1,6 @@
 # Language: lt_LT
 # Charset: CP1257
-# Version: 2.8.5
+# Version: 2.8.6
 # Author: Mindaugas K
 # Email: mex@micro.lt
 
@@ -623,7 +623,7 @@ Chatroom member list|Kanalo nariш sаraрas
 Chatroom is empty.|Kanale nieko nлra.
 You're already member of this chatroom.|Tu jau esi рio pokalbiш kanalo narys.
 Chatroom user commands|Pokalbiш kanalo useriш komandos
-Unknown chatroom command. Use %s for help.|Neюinoma pokalbiш kanalo komanda, pagalbai raрykite: %s
+Unknown chatroom command, use %s for help.|
 Enter the chatroom|Prisijungti б kanalа
 Leave the chatroom|Atsijungti iр kanalo
 Deleted %d rows from country code statistics table: %s|
@@ -635,9 +635,6 @@ Not found in chat mode list: %s|
 Chat mode user list|
 Chat mode user list is empty.|
 %s user lookup|
-Looking for %s on: %s|
-User %s found in following hubs|
-User wasn't found in any hubs: %s|
 Add IP gag|
 Added IP gag: %s|
 Modified IP gag: %s|
@@ -886,7 +883,7 @@ No reason specified|
 Automatically deleted %d user log entries older than %d days.|
 Main chat message replaced for user: %s|
 Unknown protocol command from IP %s before login: %s|
-Added %s to hard ban list, %d users in total.|
+Added %s to hard IP ban list, %d users in total.|
 NMDC version: %s|NMDC versija: %s
 Client supports: %s|Klientas palaiko: %s
 Modified forbidden client supports with ban time %s: %s|
@@ -1078,3 +1075,40 @@ Access is restricted.|
 Convert LRE to plain text|
 LRE converted to plain text: %s|
 Please check your command syntax, something is wrong there.|
+Entry used in detection: %s|
+Exception used in detection: %s|
+text|
+Delete history messages by text|
+Deleted %d main chat history messages by text: %s|
+%s with class %d deleted %d main chat history messages by text: %s|
+Looking for users with nick %s on: %s|
+Looking for users with description %s on: %s|
+Looking for users with client tag %s on: %s|
+Looking for users with connection type %s on: %s|
+Looking for users with email address %s on: %s|
+Looking for users with share size %s on: %s|
+Looking for users with IP address %s on: %s|
+Users with nick not found in any hubs: %s|
+Users with description not found in any hubs: %s|
+Users with client tag not found in any hubs: %s|
+Users with connection type not found in any hubs: %s|
+Users with email address not found in any hubs: %s|
+Users with share size not found in any hubs: %s|
+Users with IP address not found in any hubs: %s|
+Users with nick %s found in following hubs|
+Users with description %s found in following hubs|
+Users with client tag %s found in following hubs|
+Users with connection type %s found in following hubs|
+Users with email address %s found in following hubs|
+Users with share size %s found in following hubs|
+Users with IP address %s found in following hubs|
+Blocked PM|
+Right click menu|
+IP watch|
+Hard IP bans|
+Chatroom history|
+Chatroom history is empty.|
+Last %d chatroom messages|
+There are no chatroom history messages to remove: %s|
+Deleted %d chatroom history messages: %s|
+%s with class %d deleted %d chatroom history messages: %s|
