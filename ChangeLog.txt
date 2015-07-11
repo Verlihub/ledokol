@@ -1,4 +1,4 @@
-[ 2.8.6 :: 2015-##-## ]
+[ 2.8.6 :: 2015-07-11 ]
 
 Fixed: Missing $OpList command separator, report by PPK
 Fixed: Missing built in right click menu items, report by Uhlik
