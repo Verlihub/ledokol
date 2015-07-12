@@ -59,7 +59,7 @@ Doxtur, chaos, sphinx, Zorro, W1ZaRd, S0RiN, MaxFox, Krzychu,
 -- global storage variables and tables >>
 ---------------------------------------------------------------------
 
-ver_ledo = "2.8.6" -- ledokol version
+ver_ledo = "2.8.7" -- ledokol version
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -7295,7 +7295,7 @@ function addreminder (nick, item)
 	if ((minc > 5) and (minc < 10)) or (minc > 10) or ((maxc > 5) and (maxc < 10)) or (maxc > 10) then -- invalid class
 		commandanswer (nick, string.format (gettext ("Known classes are: %s"), "0, 1, 2, 3, 4, 5 "..gettext ("and").." 10"))
 	elseif dest > 3 then -- invalid destination
-		commandanswer (nick, string.format (gettext ("Known destinanions are: %s"), "0, 1, 2 "..gettext ("and").." 3"))
+		commandanswer (nick, string.format (gettext ("Known destinations are: %s"), "0, 1, 2 "..gettext ("and").." 3"))
 	elseif (intv < 1) or (intv > 10080) then -- invalid interval
 		commandanswer (nick, string.format (gettext ("Known interval is: %s"), "1 "..gettext ("to").." 10080"))
 	else
@@ -14219,7 +14219,7 @@ susmenitm (usr, gettext ("Custom nicks").."\\"..gettext ("Custom nick list"), ta
 -- registered users
 
 if ucl >= table_sets ["mincommandclass"] then
-sopmenitm (usr, gettext ("Registered users").."\\"..gettext ("Change nick of an registered user"), table_cmnds ["regname"].." %[line:<"..gettext ("nick")..">] %[line:<"..gettext ("nick")..">]")
+sopmenitm (usr, gettext ("Registered users").."\\"..gettext ("Change nick of a registered user"), table_cmnds ["regname"].." %[line:<"..gettext ("nick")..">] %[line:<"..gettext ("nick")..">]")
 sopmenitm (usr, gettext ("Registered users").."\\"..gettext ("List of registered users by class"), table_cmnds ["reglist"].." %[line:<"..gettext ("class")..">] %[line:<"..gettext ("offset")..">]")
 sopmenitm (usr, gettext ("Registered users").."\\"..gettext ("Search in registered users list"), table_cmnds ["regfind"].." %[line:<"..gettext ("nick")..">]")
 sopmenitm (usr, gettext ("Registered users").."\\"..gettext ("Registered users list statistics"), table_cmnds ["regstats"])
@@ -17703,7 +17703,7 @@ help = help.." "..optrig..table_cmnds ["rename"].." <"..gettext ("nick").."> <".
 help = help.." "..optrig..table_cmnds ["custdel"].." <"..gettext ("nick").."> - "..gettext ("Delete custom nick").."\r\n\r\n"
 
 -- registered users
-help = help.." "..optrig..table_cmnds ["regname"].." <"..gettext ("nick").."> <"..gettext ("nick").."> - "..gettext ("Change nick of an registered user").."\r\n"
+help = help.." "..optrig..table_cmnds ["regname"].." <"..gettext ("nick").."> <"..gettext ("nick").."> - "..gettext ("Change nick of a registered user").."\r\n"
 help = help.." "..optrig..table_cmnds ["reglist"].." <"..gettext ("class").."> <"..gettext ("offset").."> - "..gettext ("List of registered users by class").."\r\n"
 help = help.." "..optrig..table_cmnds ["regfind"].." <"..gettext ("nick").."> - "..gettext ("Search in registered users list").."\r\n"
 help = help.." "..optrig..table_cmnds ["regstats"].." - "..gettext ("Registered users list statistics").."\r\n\r\n"
