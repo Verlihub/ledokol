@@ -368,7 +368,7 @@ MiB|
 KiB|
 B|
 EiB|
-Get users real nick|
+Get user's real nick|
 Requested nick wasn't found in custom nick list.|
 Requested nick belongs to a user who is %s: %s|
 offline|
