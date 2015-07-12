@@ -14213,7 +14213,7 @@ susmenitm (usr, gettext ("Custom nicks").."\\"..gettext ("Set custom nick for yo
 --susmenitm (usr, gettext ("Custom nicks").."\\"..gettext ("Set custom nick for yourself"), table_cmnds ["nick"])
 end
 
-susmenitm (usr, gettext ("Custom nicks").."\\"..gettext ("Get users real nick"), table_cmnds ["realnick"].." %[line:<"..gettext ("nick")..">]")
+susmenitm (usr, gettext ("Custom nicks").."\\"..gettext ("Get user's real nick"), table_cmnds ["realnick"].." %[line:<"..gettext ("nick")..">]")
 susmenitm (usr, gettext ("Custom nicks").."\\"..gettext ("Custom nick list"), table_cmnds ["custlist"])
 
 -- registered users
@@ -17799,7 +17799,7 @@ help = help.." "..ustrig..table_cmnds ["wmshow"].." - "..gettext ("Show your wel
 
 -- custom nicks
 help = help.." "..ustrig..table_cmnds ["nick"].." ["..gettext ("nick").."] - "..gettext ("Set custom nick for yourself").."\r\n"
-help = help.." "..ustrig..table_cmnds ["realnick"].." <"..gettext ("nick").."> - "..gettext ("Get users real nick").."\r\n"
+help = help.." "..ustrig..table_cmnds ["realnick"].." <"..gettext ("nick").."> - "..gettext ("Get user's real nick").."\r\n"
 help = help.." "..ustrig..table_cmnds ["custlist"].." - "..gettext ("Custom nick list").."\r\n\r\n"
 
 	-- chat history
