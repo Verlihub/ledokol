@@ -1,6 +1,6 @@
 # Language: en_GB
 # Charset: CP1252
-# Version: 2.8.6
+# Version: 2.8.7
 # Author: RoLex
 # Email: webmaster@feardc.net
 
@@ -388,7 +388,7 @@ Add reminder|
 Delete reminder|
 Reminder list|
 Reminder list is empty.|
-Known destinanions are: %s|
+Known destinations are: %s|
 Known interval is: %s|
 Modified reminder: %s|
 Added reminder: %s|
@@ -484,7 +484,7 @@ Known operations are: %s|
 Your logout message: %s|
 Force welcome message for user|
 Login message set for %s: %s|
-Change nick of an registered user|
+Change nick of a registered user|
 User is not registered: %s|
 You are now going to be disconnected from the hub in order for your new nick to apply: %s|
 Renamed account %s: %s|
