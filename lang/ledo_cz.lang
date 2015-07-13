@@ -1,6 +1,6 @@
 # Language: cs_CZ
 # Charset: CP1250
-# Version: 2.8.6
+# Version: 2.8.7
 # Author: Uhlik
 # Email: pjanos.uk@gmail.com
 
@@ -368,7 +368,7 @@ MiB|MiB
 KiB|KiB
 B|B
 EiB|EiB
-Get users real nick|Zjisti uzivateluv skutecny nick
+Get user's real nick|Zjisti uzivateluv skutecny nick
 Requested nick wasn't found in custom nick list.|Pozadovany nick nebyl nalezen v seznamu volitelnych nicku.
 Requested nick belongs to a user who is %s: %s|Pozadovany nick nalezi uzivateli ktery je %s: %s
 offline|offline
@@ -388,7 +388,7 @@ Add reminder|Vlozi reminder
 Delete reminder|Smaze reminder
 Reminder list|Reminder seznam
 Reminder list is empty.|Reminder seznam je prazdny.
-Known destinanions are: %s|Zname cile jsou: %s
+Known destinations are: %s|Zname cile jsou: %s
 Known interval is: %s|Znamy interval je: %s
 Modified reminder: %s|Modifikovan reminder: %s
 Added reminder: %s|Vlozen reminder: %s
@@ -484,7 +484,7 @@ Known operations are: %s|Zname operace jsou: %s
 Your logout message: %s|Tvoje logout zprava je: %s
 Force welcome message for user|Vnuti uvitaci zpravu uzivateli
 Login message set for %s: %s|Login zprava pro uzivatele %s nastavena na: %s
-Change nick of an registered user|Zmeni nick registrovanemu uzivateli
+Change nick of a registered user|Zmeni nick registrovanemu uzivateli
 User is not registered: %s|Uzivatel %s neni regitrovan.
 You are now going to be disconnected from the hub in order for your new nick to apply: %s|Nyni budes odpojenn z hubu za ucelem zmeny tveho nicku na: %s
 Renamed account %s: %s|Registrace %s prejmenovana na: %s
@@ -627,7 +627,7 @@ Unknown chatroom command, use %s for help.|Neznamy chatroom prikaz, pouzij %s pr
 Enter the chatroom|Vstoupit do chatroomu
 Leave the chatroom|Opustit chatroom
 Deleted %d rows from country code statistics table: %s|Smazano %d radku ze statistiky zemi uzivatelu: %s
-Set chat mode|Nastavi mod chatu
+Force chat mode for user|Vnuti chat mode uzivateli
 Known chat modes are: %s|Zname mody chatu jsou: %s
 mode|mod
 Changing chat mode for %s: %s => %s|Menim mod chatu pro %s: %s => %s
@@ -1112,3 +1112,4 @@ Last %d chatroom messages|Poslednich %d zprav v chatroomu
 There are no chatroom history messages to remove: %s|V historii chatroomu nejsou zadne zpravy ke smazani: %s
 Deleted %d chatroom history messages: %s|Smazano %d zprav v historii chatroomu: %s
 %s with class %d deleted %d chatroom history messages: %s|%s s class %d smazal %d zprav z chatroom historie: %s
+Set your chat mode|Nastavit vlastni chat mode
