@@ -14241,28 +14241,27 @@ end
 susmenitm (usr, gettext ("Hublist").."\\"..gettext ("Show friendly hubs"), table_cmnds ["showhubs"])
 end
 
--- chat
+	-- chat
+	if ucl >= table_sets ["chatmodeclass"] then
+		if ucl >= table_sets ["mincommandclass"] then
+			sopmenitm (usr, gettext ("Chat") .. "\\" .. gettext ("Force chat mode for user"), table_cmnds ["mode"] .. " %[line:<" .. gettext ("lre") .. ">] %[line:<" .. gettext ("mode") .. ">]")
+			sopmenitm (usr, gettext ("Chat") .. "\\" .. gettext ("Chat mode user list"), table_cmnds ["mode"])
+		end
 
-if ucl >= table_sets ["chatmodeclass"] then
-if ucl >= table_sets ["mincommandclass"] then
-sopmenitm (usr, gettext ("Chat").."\\"..gettext ("Set chat mode"), table_cmnds ["mode"].." %[line:<"..gettext ("lre")..">] %[line:<"..gettext ("mode")..">]")
-sopmenitm (usr, gettext ("Chat").."\\"..gettext ("Chat mode user list"), table_cmnds ["mode"])
-end
+		susmenitm (usr, gettext ("Chat") .. "\\" .. gettext ("Set your chat mode"), table_cmnds ["mode"] .. " %[line:<" .. gettext ("mode") .. ">]")
+	end
 
-susmenitm (usr, gettext ("Chat").."\\"..gettext ("Set chat mode"), table_cmnds ["mode"].." %[line:<"..gettext ("mode")..">]")
-end
+	if ucl >= table_sets ["sayclass"] then
+		if ucl >= table_sets ["chatmodeclass"] and ucl >= table_sets ["mincommandclass"] then
+			smensep (usr)
+		end
 
-if ucl >= table_sets ["sayclass"] then
-if (ucl >= table_sets ["chatmodeclass"]) and (ucl >= table_sets ["mincommandclass"]) then
-smensep (usr)
-end
-
-sopmenitm (usr, gettext ("Chat").."\\"..gettext ("Speak from other nick"), table_cmnds ["say"].." %[line:<"..gettext ("nick")..">] %[line:<"..gettext ("message")..">]")
-end
+		sopmenitm (usr, gettext ("Chat") .. "\\" .. gettext ("Speak from other nick"), table_cmnds ["say"] .. " %[line:<" .. gettext ("nick") .. ">] %[line:<" .. gettext ("message") .. ">]")
+	end
 
 	if ucl >= table_sets ["clearclass"] then
 		smensep (usr)
-		sopmenitm (usr, gettext ("Chat").."\\"..gettext ("Clear main chat"), table_cmnds ["clear"])
+		sopmenitm (usr, gettext ("Chat") .. "\\" .. gettext ("Clear main chat"), table_cmnds ["clear"])
 	end
 
 	-- ip gag
@@ -17712,11 +17711,11 @@ help = help.." "..optrig..table_cmnds ["regstats"].." - "..gettext ("Registered 
 help = help.." "..optrig..table_cmnds ["hubadd"].." <"..gettext ("address").."> <\""..gettext ("name").."\"> <\""..gettext ("owner").."\"> - "..gettext ("Add friendly hub").."\r\n"
 help = help.." "..optrig..table_cmnds ["hubdel"].." <"..gettext ("address").."> - "..gettext ("Delete friendly hub").."\r\n\r\n"
 
--- chat
-help = help.." "..optrig..table_cmnds ["mode"].." <"..gettext ("lre").."> <"..gettext ("mode").."> - "..gettext ("Set chat mode").."\r\n"
-help = help.." "..optrig..table_cmnds ["mode"].." - "..gettext ("Chat mode user list").."\r\n"
-help = help.." "..optrig..table_cmnds ["say"].." <"..gettext ("nick").."> <"..gettext ("message").."> - "..gettext ("Speak from other nick").."\r\n"
-help = help.." "..optrig..table_cmnds ["clear"].." - "..gettext ("Clear main chat").."\r\n\r\n"
+	-- chat
+	help = help .. " " .. optrig .. table_cmnds ["mode"] .. " <" .. gettext ("lre") .. "> <" .. gettext ("mode") .. "> - " .. gettext ("Force chat mode for user") .. "\r\n"
+	help = help .. " " .. optrig .. table_cmnds ["mode"] .. " - " .. gettext ("Chat mode user list") .. "\r\n"
+	help = help .. " " .. optrig .. table_cmnds ["say"] .. " <" .. gettext ("nick") .. "> <" .. gettext ("message") .. "> - " .. gettext ("Speak from other nick") .. "\r\n"
+	help = help .. " " .. optrig .. table_cmnds ["clear"] .. " - " .. gettext ("Clear main chat") .. "\r\n\r\n"
 
 	-- ip gag
 	help = help .. " " .. optrig .. table_cmnds ["gagipadd"] .. " <" .. gettext ("lre") .. "> <" .. gettext ("flags") .. "> - " .. gettext ("Add IP gag") .. "\r\n"
@@ -17809,14 +17808,14 @@ help = help.." "..ustrig..table_cmnds ["custlist"].." - "..gettext ("Custom nick
 	-- other
 
 	help = help .. " " .. ustrig .. table_cmnds ["votekick"] .. " <" .. gettext ("nick") .. "> - " .. gettext ("Vote for user to be kicked") .. "\r\n"
-help = help.." "..ustrig..table_cmnds ["mode"].." <"..gettext ("mode").."> - "..gettext ("Set chat mode").."\r\n"
-help = help.." "..ustrig..table_cmnds ["offmsg"].." <"..gettext ("nick").."> <"..gettext ("message").."> - "..gettext ("Offline message to user").."\r\n"
-help = help.." "..ustrig..table_cmnds ["calculate"].." <"..gettext ("equation").."> - "..gettext ("Calculate an equation").."\r\n"
-help = help.." "..ustrig..table_cmnds ["hubnews"].." <"..gettext ("lines").."> - "..gettext ("Read hub news").."\r\n"
-help = help.." "..ustrig..table_cmnds ["showtopic"].." - "..gettext ("Current topic").."\r\n"
-help = help.." "..ustrig..table_cmnds ["showhubs"].." - "..gettext ("Show friendly hubs").."\r\n\r\n"
+	help = help .. " " .. ustrig .. table_cmnds ["mode"] .. " <" .. gettext ("mode") .. "> - " .. gettext ("Set your chat mode") .. "\r\n"
+	help = help .. " " .. ustrig .. table_cmnds ["offmsg"] .. " <" .. gettext ("nick") .. "> <" .. gettext ("message") .. "> - " .. gettext ("Offline message to user") .. "\r\n"
+	help = help .. " " .. ustrig .. table_cmnds ["calculate"] .. " <" .. gettext ("equation") .. "> - " .. gettext ("Calculate an equation") .. "\r\n"
+	help = help .. " " .. ustrig .. table_cmnds ["hubnews"] .. " <" .. gettext ("lines") .. "> - " .. gettext ("Read hub news") .. "\r\n"
+	help = help .. " " .. ustrig .. table_cmnds ["showtopic"] .. " - " .. gettext ("Current topic") .. "\r\n"
+	help = help .. " " .. ustrig .. table_cmnds ["showhubs"] .. " - " .. gettext ("Show friendly hubs") .. "\r\n\r\n"
 
-help = help.." .:: "..gettext ("Chatroom user commands")..":\r\n\r\n"
+	help = help .. " .:: " .. gettext ("Chatroom user commands") .. ":\r\n\r\n"
 
 	-- chatroom commands
 	help = help .. chatroomhelp () .. "\r\n"
