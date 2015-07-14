@@ -5471,16 +5471,28 @@ end
 ----- ---- --- -- -
 
 function VH_OnOperatorDrops (op, nick)
-if table_othsets ["locked"] == true then return 1 end
+	if table_othsets ["locked"] then
+		return 1
+	end
 
-if isprotected (nick, getip (nick)) == true then -- protected
-	commandanswer (op, gettext ("User you're trying to kick or redirect is protected: %s"):format (nick))
-	return 0
+	if isprotected (nick, getip (nick)) then -- protected
+		commandanswer (op, gettext ("User you're trying to kick or redirect is protected: %s"):format (nick))
+		return 0
+	end
+
+	oprankaccept (op, getclass (op))
+	return 1
 end
 
-oprankaccept (op, getclass (op))
+----- ---- --- -- -
 
-return 1
+function VH_OnOpChatMessage (nick, data)
+	if table_othsets ["locked"] then
+		return 1
+	end
+
+	addophistoryline (nick, data)
+	return 1
 end
 
 ----- ---- --- -- -
@@ -5558,8 +5570,8 @@ function VH_OnParsedMsgPM (from, data, to)
 				end
 
 				return 0
-			else
-				addophistoryline (from, data) -- log operators chat
+			--else -- moved to VH_OnOpChatMessage
+				--addophistoryline (from, data) -- log operators chat
 			end
 		else
 			opsnotify (table_sets ["classnotibotpm"], gettext ("%s with IP %s and class %d sent message to %s: %s"):format (from, ip .. tryipcc (ip, from), fcls, table_othsets ["opchatnick"], data))
@@ -9912,12 +9924,8 @@ function addmchistoryline (nick, real, line, refl)
 		return
 	end
 
-	if nick == table_othsets ["sendfrom"] then
-		if table_sets ["histbotmsg"] == 0 then
-			return
-		elseif refl then
-			return
-		end
+	if nick == table_othsets ["sendfrom"] and (table_sets ["histbotmsg"] == 0 or refl) then
+		return
 	end
 
 	local data = line:gsub ("is kicking", reprexpchars ("is" .. string.char (160) .. "kicking"))
@@ -9945,6 +9953,10 @@ end
 
 function addophistoryline (nick, line)
 	if table_sets ["histlimit"] == 0 then
+		return
+	end
+
+	if nick == table_othsets ["opchatnick"] and table_sets ["histbotmsg"] == 0 then
 		return
 	end
 
@@ -13691,7 +13703,7 @@ function donotifycmd (nick, data, micl, class)
 		VH:SendPMToAll ("[" .. prezero (2, micl) .. "] " .. send, table_othsets ["feednick"], micl, 10)
 	end
 
-	if table_sets ["histbotmsg"] >= 1 and table_sets ["addledobot"] == 0 and table_sets ["useextrafeed"] == 0 then
+	if table_sets ["histbotmsg"] == 1 and table_sets ["addledobot"] == 0 and table_sets ["useextrafeed"] == 0 then
 		addophistoryline (table_othsets ["opchatnick"], send)
 	end
 end
@@ -17068,10 +17080,10 @@ end
 
 	elseif tvar == "histbotmsg" then
 		if num == true then
-			if setto >= 0 and setto <= 2 then
+			if setto == 0 or setto == 1 then
 				ok = true
 			else
-				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0, 1 " .. gettext ("or") .. " 2"))
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0 " .. gettext ("or") .. " 1"))
 			end
 		else
 			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
@@ -21795,7 +21807,7 @@ function opsnotify (micl, data) -- todo: replace nmdc characters here
 
 	VH:SendPMToAll ("[" .. prezero (2, micl) .. "] " .. data, table_othsets ["feednick"], micl, 10)
 
-	if table_sets ["histbotmsg"] >= 1 and table_sets ["addledobot"] == 0 and table_sets ["useextrafeed"] == 0 then
+	if table_sets ["histbotmsg"] == 1 and table_sets ["addledobot"] == 0 and table_sets ["useextrafeed"] == 0 then
 		addophistoryline (table_othsets ["opchatnick"], data)
 	end
 end
