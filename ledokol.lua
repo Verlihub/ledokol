@@ -5570,8 +5570,8 @@ function VH_OnParsedMsgPM (from, data, to)
 				end
 
 				return 0
-			--else -- moved to VH_OnOpChatMessage
-				--addophistoryline (from, data) -- log operators chat
+			elseif not VH_OnOpChatMessage then -- backward compatibility
+				addophistoryline (from, data) -- log operator chat
 			end
 		else
 			opsnotify (table_sets ["classnotibotpm"], gettext ("%s with IP %s and class %d sent message to %s: %s"):format (from, ip .. tryipcc (ip, from), fcls, table_othsets ["opchatnick"], data))
