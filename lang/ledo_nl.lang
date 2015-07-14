@@ -1,7 +1,7 @@
 # Language: nl_NL
 # Charset: CP1252
-# Version: 2.8.6
-# Author: Marcel
+# Version: 2.8.7
+# Author: Modswat
 # Email: future_dance@hotmail.com
 
 Current topic: %s|Huidige topic gemaakt door %s: %s
@@ -368,7 +368,7 @@ MiB|MiB
 KiB|KiB
 B|B
 EiB|EiB
-Get users real nick|Gebruikers echte nick naam
+Get user's real nick|Neem echte nick van gebruiker
 Requested nick wasn't found in custom nick list.|Gevraagde nick is niet gevonden in custon nick lijst.
 Requested nick belongs to a user who is %s: %s|Gevraagde nick hoort toe aan gebruiker die is %s: %s
 offline|offline
@@ -388,7 +388,7 @@ Add reminder|Toevoegen herinering
 Delete reminder|Verwijder herinering
 Reminder list|Herinerings lijst
 Reminder list is empty.|Herinerings lijst is leeg.
-Known destinanions are: %s|Bekende bestemmingen zijn: %s
+Known destinations are: %s|Bekende plaatsen zijn: %s
 Known interval is: %s|Bekende interval is: %s
 Modified reminder: %s|Aangepaste herinering: %s
 Added reminder: %s|Voeg herinering toe: %s
@@ -484,7 +484,7 @@ Known operations are: %s|Bekende bewerkingen zijn: %s
 Your logout message: %s|Je loguit bericht: %s
 Force welcome message for user|Gedwongen welkoms bericht voor gebruiker
 Login message set for %s: %s|Login bericht gemaakt voor %s: %s
-Change nick of an registered user|Verander de nicknaam van een geregistreerde gebruiker
+Change nick of a registered user|verander nick van een geregistreerde gebruiker
 User is not registered: %s|Gebruiker is niet geregistreerd: %s
 You are now going to be disconnected from the hub in order for your new nick to apply: %s|Je wordt nu gedisconnect van de huub, zodat je nieuwe nick gebruikt kan worden.
 Renamed account %s: %s|Hernoemt account %s: %s
@@ -627,7 +627,7 @@ Unknown chatroom command, use %s for help.|Onbekende chatroom comand, gebruik %s
 Enter the chatroom|Ga de chatroom binnen.
 Leave the chatroom|Verlaat de chatroom.
 Deleted %d rows from country code statistics table: %s|Verwijder %d rijen van landen code statistieken tabel: %s
-Set chat mode|Kies chat mode
+Force chat mode for user|Geforceerde chat mode gebruiker
 Known chat modes are: %s|Bekende chat modes zijn: %s
 mode|mode
 Changing chat mode for %s: %s => %s|Wijzig chat mode voor %s: %s => %s
@@ -1112,3 +1112,4 @@ Last %d chatroom messages|Laatste %d chatroom berichten
 There are no chatroom history messages to remove: %s|Er zijn geen chatroom history berichten om te verwijderen: %s
 Deleted %d chatroom history messages: %s|Verwijderde %d chatroom history berichten: %s
 %s with class %d deleted %d chatroom history messages: %s|%s met class %d verwijderde %d chatroom history berichten: %s
+Set your chat mode|Bepaal je chat mode
