@@ -1,6 +1,6 @@
 # Language: pl_PL
 # Charset: CP1250
-# Version: 2.8.6
+# Version: 2.8.7
 # Author: Zorro
 # Email: zbyszekslyz@hostpl.eu
 
@@ -368,7 +368,7 @@ MiB|MiB
 KiB|KiB
 B|B
 EiB|EiB
-Get users real nick|Pobierz prawdziwy nick uzytkownika
+Get user's real nick|Pobierz prawdziwy nick uzytkownika
 Requested nick wasn't found in custom nick list.|Szukany nick nie zostal znaleziony na liscie nickow.
 Requested nick belongs to a user who is %s: %s|Szukany nick nalezy do uzytkownika ktory jest %s: %s
 offline|offline
@@ -388,7 +388,7 @@ Add reminder|Dodaj przypomnienie
 Delete reminder|Usun przypomnienie
 Reminder list|Lista przypomnien
 Reminder list is empty.|Lista przypomnien jest pusta.
-Known destinanions are: %s|Wybierz jeden z celow: %s
+Known destinations are: %s|Wybierz jeden z celow: %s
 Known interval is: %s|Wybierz jeden z przerw: %s
 Modified reminder: %s|Zmieniono przypomnienie: %s
 Added reminder: %s|Dodano przypomnienie: %s
@@ -484,7 +484,7 @@ Known operations are: %s|Dostepne operacje to: %s
 Your logout message: %s|Twoja wiadomosc pozegnalna to: %s
 Force welcome message for user|Wymus wiadomosc witajaca dla uzytkownika
 Login message set for %s: %s|Wiadomosc powitalna ustawiona dla %s: %s
-Change nick of an registered user|Zmien nick zarejestrowanego uzytkownika
+Change nick of a registered user|Zmien nick zarejestrowanego uzytkownika
 User is not registered: %s|Uzytkownik nie jest zarejestrowany: %s
 You are now going to be disconnected from the hub in order for your new nick to apply: %s|Teraz powinienes sie rozlaczyc z hubem w celu uzyskania swojego nowego nicka: %s
 Renamed account %s: %s|Przemianowano konto %s: %s
@@ -627,7 +627,7 @@ Unknown chatroom command, use %s for help.|Nieznana komenda czatu, uzyj %s dla h
 Enter the chatroom|Dolacz do chatroomu
 Leave the chatroom|Opusc chatroom
 Deleted %d rows from country code statistics table: %s|Usunieto %d linijek z tablicy statystyki kodow krajow: %s
-Set chat mode|Ustaw tryb chatu
+Force chat mode for user|Tryb czata dla uzytkownika
 Known chat modes are: %s|Dostepne tryby czatu to: %s
 mode|tryb
 Changing chat mode for %s: %s => %s|Zmiana trybu czatu z %s: %s => %s
@@ -652,7 +652,7 @@ Script size: %d lines in %s|Rozmiar skryptu: %d linijek w %s
 Added %s to IP gag list, %d users in total.|Dodano %s do IP Listy Gag, %d Uzytkownikow w sumie
 Flood detected from IP %s last known as %s with class %d in MC: %s|Wykryto flood od IP %s ostatnio znany jako %s z klasa %d na glownym czacie: %s
 Flood detected from IP %s last known as %s with class %d in PM: %s|Wykryto flood od %s jako %s z klasa %d in PM: %s
-Private chat is currently disabled for you.|Czat prywatny jest obecnie zablokowany dla ciebie.
+Private chat is currently disabled for you.|Prywatny czat jest obecnie zablokowany dla Ciebie.
 Flood detected from your IP.|Wykryto flood z twojego IP.
 %d users with IP %s dropped due to flood.|%d Uzytkownicy z IP %s usunieci ze wzgledu na flood.
 No error message specified.|Nie sprecyzowano wiadomosci z bledami.
@@ -1102,7 +1102,7 @@ Users with connection type %s found in following hubs|Uzytkownik z rodzajem pola
 Users with email address %s found in following hubs|Uzytkownik z adresem email %s zostal znaleziony na nastepujacych hubach
 Users with share size %s found in following hubs|Uzytkownik z wielkoscia udostenienia %s zostal znaleziony na nastepujacych hubach
 Users with IP address %s found in following hubs|Uzytkownik z adresem IP %s zostal znaleziony na nastepujacych hubach
-Blocked PM|Zablokowany PM
+Blocked PM|Blokada PM
 Right click menu|Menu prawokliku myszy
 IP watch|Ogladane IP
 Hard IP bans|Zbanowane IP na stale
@@ -1112,3 +1112,4 @@ Last %d chatroom messages|Ostatnie %d wiadomoњci czatu
 There are no chatroom history messages to remove: %s|Brak wiadomosci historii czatu, aby usunac: %s
 Deleted %d chatroom history messages: %s|Usunieto %d wiadomosci historii czatu: %s
 %s with class %d deleted %d chatroom history messages: %s|%s z klasa %d usunal %d wiadomosci z historii czata: %s
+Set your chat mode|Ustaw tryb czata
