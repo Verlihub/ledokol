@@ -1,6 +1,6 @@
 # Language: ro_RO
 # Charset: CP1250
-# Version: 2.8.6
+# Version: 2.8.7
 # Author: S0RiN
 # Email: rusu_sorin_con@yahoo.com
 
@@ -368,7 +368,7 @@ MiB|MiB
 KiB|KiB
 B|B
 EiB|EiB
-Get users real nick|Aflг nick-ul real al utilizatorului
+Get user's real nick|Obюine nick-ul real al userului
 Requested nick wasn't found in custom nick list.|Nu a fost gгsit nick-ul cгutat, оn lista de nick-uri predefinite.
 Requested nick belongs to a user who is %s: %s|Nick-ul cerut aparюine utilizatorului care este: %s: %s
 offline|offline
@@ -388,7 +388,7 @@ Add reminder|Adгugare reminder
 Delete reminder|Єtergere reminder
 Reminder list|Lista cu remindere
 Reminder list is empty.|Lista cu remindere, este goalг.
-Known destinanions are: %s|Destinaюia cunoscutг este: %s
+Known destinations are: %s|Destinaюia cunoscutг este: %s
 Known interval is: %s|Intervalul cunoscut este: %s
 Modified reminder: %s|Modificare reminder: %s
 Added reminder: %s|Adгugare reminder: %s
@@ -484,7 +484,7 @@ Known operations are: %s|Operaюiunea cunoscutг este: %s
 Your logout message: %s|Mesajul tгu de ieєire este: %s
 Force welcome message for user|Forюeazг mesaj de оntвmpinare pentru utilizator
 Login message set for %s: %s|Mesaj de intrare setat pentru %s: %s
-Change nick of an registered user|Schimbг nick-ul utilizatorului оnregistrat
+Change nick of a registered user|Schimbare nick pentru user оnregistrat
 User is not registered: %s|Userul %s nu este оnregistrat
 You are now going to be disconnected from the hub in order for your new nick to apply: %s|Acum va trebui sг dai un reconnect la hub, pentru ca noul nick %s sг poatг fi aplicat.
 Renamed account %s: %s|Redenumirea contului %s: %s
@@ -627,7 +627,7 @@ Unknown chatroom command, use %s for help.|Comandг necunoscutг pentru chat, fo
 Enter the chatroom|Intrare camerг de chat
 Leave the chatroom|Pгrгsire camerг de chat
 Deleted %d rows from country code statistics table: %s|S-au єters %d rвnduri din tabelul statistic al codurilor de юarг: %s
-Set chat mode|Setare mod de chat
+Force chat mode for user|Forюare mod de chat pentru utilizator
 Known chat modes are: %s|Modul de chat cunoscut este: %s
 mode|mod
 Changing chat mode for %s: %s => %s|Schimbare mod de chat pentru %s: %s => %s
@@ -1112,3 +1112,4 @@ Last %d chatroom messages|Ultimele %d mesaje de chat
 There are no chatroom history messages to remove: %s|Nici un mesaj de chatroom de єters aici: %s
 Deleted %d chatroom history messages: %s|S-au єters %d rвnduri ale istoricului de mesaje: %s
 %s with class %d deleted %d chatroom history messages: %s|%s cu clasa %d a єters %d rвnduri ale istoricului de mesaje: %s
+Set your chat mode|Seteazг-юi modul tгu de chat
