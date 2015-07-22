@@ -3350,19 +3350,19 @@ return 0
 
 		return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
 
-	elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["rename"].." %S+ .+$") then
+	elseif data:match ("^" .. table_othsets ["optrig"] .. table_cmnds ["rename"] .. " %S+ .+$") then
 		if ucl >= table_sets ["mincommandclass"] then
 			donotifycmd (nick, data, 0, ucl)
-			opforcecustnick (nick, string.sub (data, string.len (table_cmnds ["rename"]) + 3, -1))
+			opforcecustnick (nick, data:sub (# table_cmnds ["rename"] + 3))
 		else
 			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
 
 elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["offlist"].."$") then
 if ucl >= table_sets ["mincommandclass"] then
@@ -14208,25 +14208,25 @@ smensep (usr)
 sopmenitm (usr, gettext ("Commands").."\\"..gettext ("Delete command notification exception"), table_cmnds ["cmndexdel"].." %[line:<"..gettext ("lre")..">]")
 end
 
--- custom nicks
+	-- custom nicks
 
-if ucl >= table_sets ["mincommandclass"] then
-sopmenitm (usr, gettext ("Custom nicks").."\\"..gettext ("Force custom nick for user"), table_cmnds ["rename"].." %[line:<"..gettext ("nick")..">] %[line:<"..gettext ("nick")..">]")
-smensep (usr)
-sopmenitm (usr, gettext ("Custom nicks").."\\"..gettext ("Delete custom nick"), table_cmnds ["custdel"].." %[line:<"..gettext ("nick")..">]")
-end
+	if ucl >= table_sets ["mincommandclass"] then
+		sopmenitm (usr, gettext ("Custom nicks") .. "\\" .. gettext ("Force custom nick for user"), table_cmnds ["rename"] .. " %[line:<" .. gettext ("real") .. ">] %[line:<" .. gettext ("nick") .. ">]")
+		smensep (usr)
+		sopmenitm (usr, gettext ("Custom nicks") .. "\\" .. gettext ("Delete custom nick"), table_cmnds ["custdel"] .. " %[line:<" .. gettext ("nick") .. ">]")
+	end
 
-if ucl >= table_sets ["custnickclass"] then
-if ucl >= table_sets ["mincommandclass"] then
-smensep (usr)
-end
+	if ucl >= table_sets ["custnickclass"] then
+		if ucl >= table_sets ["mincommandclass"] then
+			smensep (usr)
+		end
 
-susmenitm (usr, gettext ("Custom nicks").."\\"..gettext ("Set custom nick for yourself"), table_cmnds ["nick"].." %[line:<"..gettext ("nick")..">]")
---susmenitm (usr, gettext ("Custom nicks").."\\"..gettext ("Set custom nick for yourself"), table_cmnds ["nick"])
-end
+		susmenitm (usr, gettext ("Custom nicks") .. "\\" .. gettext ("Set custom nick for yourself"), table_cmnds ["nick"] .. " %[line:<" .. gettext ("nick") .. ">]")
+		--susmenitm (usr, gettext ("Custom nicks") .. "\\" .. gettext ("Reset your custom nick"), table_cmnds ["nick"])
+	end
 
-susmenitm (usr, gettext ("Custom nicks").."\\"..gettext ("Get user's real nick"), table_cmnds ["realnick"].." %[line:<"..gettext ("nick")..">]")
-susmenitm (usr, gettext ("Custom nicks").."\\"..gettext ("Custom nick list"), table_cmnds ["custlist"])
+	susmenitm (usr, gettext ("Custom nicks") .. "\\" .. gettext ("Get user's real nick"), table_cmnds ["realnick"] .. " %[line:<" .. gettext ("nick") .. ">]")
+	susmenitm (usr, gettext ("Custom nicks") .. "\\" .. gettext ("Custom nick list"), table_cmnds ["custlist"])
 
 -- registered users
 
@@ -17709,9 +17709,9 @@ help = help.." "..optrig..table_cmnds ["cmndexadd"].." <"..gettext ("lre").."> -
 help = help.." "..optrig..table_cmnds ["cmndexlist"].." - "..gettext ("Command notification exception list").."\r\n"
 help = help.." "..optrig..table_cmnds ["cmndexdel"].." <"..gettext ("lre").."> - "..gettext ("Delete command notification exception").."\r\n\r\n"
 
--- custom nicks
-help = help.." "..optrig..table_cmnds ["rename"].." <"..gettext ("nick").."> <"..gettext ("nick").."> - "..gettext ("Force custom nick for user").."\r\n"
-help = help.." "..optrig..table_cmnds ["custdel"].." <"..gettext ("nick").."> - "..gettext ("Delete custom nick").."\r\n\r\n"
+	-- custom nicks
+	help = help .. " " .. optrig .. table_cmnds ["rename"] .. " <" .. gettext ("real") .. "> <" .. gettext ("nick") .. "> - " .. gettext ("Force custom nick for user") .. "\r\n"
+	help = help .. " " .. optrig .. table_cmnds ["custdel"] .. " <" .. gettext ("nick") .. "> - " .. gettext ("Delete custom nick") .. "\r\n\r\n"
 
 -- registered users
 help = help.." "..optrig..table_cmnds ["regname"].." <"..gettext ("nick").."> <"..gettext ("nick").."> - "..gettext ("Change nick of a registered user").."\r\n"
