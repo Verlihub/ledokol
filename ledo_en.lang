@@ -1114,3 +1114,4 @@ Deleted %d chatroom history messages: %s|
 %s with class %d deleted %d chatroom history messages: %s|
 Set your chat mode|
 real|
+Specified country code isn't valid: %s|
