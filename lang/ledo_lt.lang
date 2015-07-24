@@ -1,6 +1,6 @@
 # Language: lt_LT
 # Charset: CP1257
-# Version: 2.8.6
+# Version: 2.8.7
 # Author: Mindaugas K
 # Email: mex@micro.lt
 
@@ -368,7 +368,7 @@ MiB|
 KiB|
 B|
 EiB|
-Get users real nick|
+Get user's real nick|
 Requested nick wasn't found in custom nick list.|
 Requested nick belongs to a user who is %s: %s|
 offline|
@@ -388,7 +388,7 @@ Add reminder|
 Delete reminder|
 Reminder list|
 Reminder list is empty.|
-Known destinanions are: %s|
+Known destinations are: %s|
 Known interval is: %s|
 Modified reminder: %s|
 Added reminder: %s|
@@ -484,7 +484,7 @@ Known operations are: %s|
 Your logout message: %s|
 Force welcome message for user|
 Login message set for %s: %s|
-Change nick of an registered user|
+Change nick of a registered user|
 User is not registered: %s|
 You are now going to be disconnected from the hub in order for your new nick to apply: %s|
 Renamed account %s: %s|
@@ -627,7 +627,7 @@ Unknown chatroom command, use %s for help.|
 Enter the chatroom|Prisijungti б kanalа
 Leave the chatroom|Atsijungti iр kanalo
 Deleted %d rows from country code statistics table: %s|
-Set chat mode|
+Force chat mode for user|
 Known chat modes are: %s|
 mode|
 Changing chat mode for %s: %s => %s|
@@ -1112,3 +1112,5 @@ Last %d chatroom messages|
 There are no chatroom history messages to remove: %s|
 Deleted %d chatroom history messages: %s|
 %s with class %d deleted %d chatroom history messages: %s|
+Set your chat mode|
+real|
