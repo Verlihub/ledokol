@@ -1,6 +1,6 @@
 # Language: de_DE
 # Charset: CP1252
-# Version: 2.8.6
+# Version: 2.8.7
 # Author: Atalan Ettore
 # Email: atalanttore@googlemail.com
 
@@ -368,7 +368,7 @@ MiB|MiB
 KiB|KiB
 B|B
 EiB|EiB
-Get users real nick|
+Get user's real nick|
 Requested nick wasn't found in custom nick list.|
 Requested nick belongs to a user who is %s: %s|
 offline|offline
@@ -388,7 +388,7 @@ Add reminder|
 Delete reminder|
 Reminder list|
 Reminder list is empty.|
-Known destinanions are: %s|Bekannte Ziele sind: %s
+Known destinations are: %s|
 Known interval is: %s|
 Modified reminder: %s|
 Added reminder: %s|
@@ -484,7 +484,7 @@ Known operations are: %s|Bekannte Operationen sind: %s
 Your logout message: %s|Ihre Abmeldenachricht: %s
 Force welcome message for user|Willkommensnachricht fьr Benutzer erzwingen
 Login message set for %s: %s|Anmeldenachricht festgelegt fьr %s: %s
-Change nick of an registered user|
+Change nick of a registered user|
 User is not registered: %s|Benutzer ist nicht registriert: %s
 You are now going to be disconnected from the hub in order for your new nick to apply: %s|
 Renamed account %s: %s|Umbenanntes Konto %s: %s
@@ -627,7 +627,7 @@ Unknown chatroom command, use %s for help.|
 Enter the chatroom|Chatraum betreten
 Leave the chatroom|Chatraum verlassen
 Deleted %d rows from country code statistics table: %s|
-Set chat mode|Chatmodus festlegen
+Force chat mode for user|
 Known chat modes are: %s|Bekannte Chatmodi sind: %s
 mode|Modus
 Changing chat mode for %s: %s => %s|
@@ -1103,12 +1103,14 @@ Users with email address %s found in following hubs|
 Users with share size %s found in following hubs|
 Users with IP address %s found in following hubs|
 Blocked PM|
-Right click menu|
+Right click menu|Rechtsklick-Menь
 IP watch|
 Hard IP bans|
-Chatroom history|
+Chatroom history|Chatraumverlauf
 Chatroom history is empty.|
 Last %d chatroom messages|
 There are no chatroom history messages to remove: %s|
 Deleted %d chatroom history messages: %s|
 %s with class %d deleted %d chatroom history messages: %s|
+Set your chat mode|Legen Sie Ihren Chatmodus fest
+real|
