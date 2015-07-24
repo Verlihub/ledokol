@@ -1114,3 +1114,4 @@ Deleted %d chatroom history messages: %s|Удалено %d сообщений и
 %s with class %d deleted %d chatroom history messages: %s|%s с классом %d удалил %d сообщений из истории чат комнаты: %s
 Set your chat mode|Установить свой режим чата
 real|настоящий
+Specified country code isn't valid: %s|Указанный код страны не действителен: %s
