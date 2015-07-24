@@ -1,6 +1,6 @@
 # Language: uk_UA
 # Charset: CP1251
-# Version: 2.8.6
+# Version: 2.8.7
 # Author: Neolo
 # Email: admin@nlight.org.ua
 
@@ -368,7 +368,7 @@ MiB|МБ
 KiB|КБ
 B|Б
 EiB|ЕБ
-Get users real nick|Відобразити справжній нік юзера
+Get user's real nick|
 Requested nick wasn't found in custom nick list.|Запитаний нік не знайдено серед списку підробних ніків.
 Requested nick belongs to a user who is %s: %s|Запитаний нік належить користувачу який %s: %s
 offline|не в мережі
@@ -388,7 +388,7 @@ Add reminder|Додати нагадування
 Delete reminder|Видалити нагадування
 Reminder list|Список нагадувань
 Reminder list is empty.|Список нагадувань порожній.
-Known destinanions are: %s|Відомі значення: %s
+Known destinations are: %s|
 Known interval is: %s|Відомі значення інтервалів: %s
 Modified reminder: %s|Нагадування відредаговано: %s
 Added reminder: %s|Нагадування додано: %s
@@ -484,7 +484,7 @@ Known operations are: %s|Відомі операції: %s
 Your logout message: %s|Ваше повідомлення при виході: %s
 Force welcome message for user|Примусове вітальне повідомлення для користувача
 Login message set for %s: %s|Привітання входу встановлене для %s: %s
-Change nick of an registered user|Змінити нік зареєстрованого користувача
+Change nick of a registered user|
 User is not registered: %s|Користувач не зареєстрований: %s
 You are now going to be disconnected from the hub in order for your new nick to apply: %s|Зараз вам необхідно перез'єднатися з хабом для задіяння нового ніку: %s
 Renamed account %s: %s|Обліковий запис перейменовано %s: %s
@@ -627,7 +627,7 @@ Unknown chatroom command, use %s for help.|
 Enter the chatroom|Увійти в чат-кімнату
 Leave the chatroom|Вийти з чат-кімнати
 Deleted %d rows from country code statistics table: %s|Видалено %d записів з БД статистики кодів країн: %s
-Set chat mode|Встановити режим чату
+Force chat mode for user|
 Known chat modes are: %s|Відомі режими: %s
 mode|режим
 Changing chat mode for %s: %s => %s|Змінення чат режиму для %s: %s => %s
@@ -1112,3 +1112,5 @@ Last %d chatroom messages|
 There are no chatroom history messages to remove: %s|
 Deleted %d chatroom history messages: %s|
 %s with class %d deleted %d chatroom history messages: %s|
+Set your chat mode|
+real|
