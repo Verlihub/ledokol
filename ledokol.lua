@@ -17231,9 +17231,27 @@ elseif tvar == "tolowcharcase" then
 	----- ---- --- -- -
 
 	elseif tvar == "langfileprefix" then
-		ok = true
 		setto = setto:lower ()
-		loadlangfile (nick, setto)
+
+		if # setto > 0 and setto ~= "en" and setto ~= "l1" and setto ~= "p1" and setto ~= "a1" and setto ~= "a2" and setto ~= "o1" and setto ~= "eu" and setto ~= "ap" then
+			for code, name in pairs (cc_names) do
+				local lowcode, lowname = code:lower (), name:lower ()
+
+				if setto == lowcode or setto == lowname then
+					setto = lowcode
+					loadlangfile (nick, setto)
+					ok = true
+					break
+				end
+			end
+
+			if not ok then
+				commandanswer (nick, gettext ("Specified country code isn't valid: %s"):format (setto))
+			end
+		else
+			loadlangfile (nick, "en")
+			ok = true
+		end
 
 	----- ---- --- -- -
 
