@@ -1,6 +1,6 @@
 # Language: fr_FR
 # Charset: CP1252
-# Version: 2.8.6
+# Version: 2.8.7
 # Author: @tlantide
 # Email: chatonhubfrance@gmail.com
 
@@ -368,7 +368,7 @@ MiB|mйgaoctet
 KiB|kibioctet
 B|octet
 EiB|exbioctet
-Get users real nick|Obtenir les pseudonymes rйel des utilisateurs 
+Get user's real nick|Obtenez le rйel de l'utilisateur
 Requested nick wasn't found in custom nick list.|Pseudonyme demandй n'a pas йtй trouvй dans la liste des pseudonymes customisйs.
 Requested nick belongs to a user who is %s: %s|La requette demandй sur le pseudonyme  appartient а un utilisateur qui est %s: %s
 offline|dйconnectй
@@ -388,7 +388,7 @@ Add reminder|Ajouter rappel
 Delete reminder|Supprimer rappel
 Reminder list|Liste des rappel
 Reminder list is empty.|Liste de rappel est vide.
-Known destinanions are: %s|Destinations connus sont: %s
+Known destinations are: %s|Destinations connues sont: %s
 Known interval is: %s|Intervalle connu est: %s
 Modified reminder: %s|Modification rappel: %s
 Added reminder: %s|Ajouter rappel: %s
@@ -484,7 +484,7 @@ Known operations are: %s|Les opйrations connues sont: %s
 Your logout message: %s|Ton message de dйconnexion: %s
 Force welcome message for user|Forcй le message de bienvenue  pour utilisateur
 Login message set for %s: %s|Ensemble de message de connexion pour %s: %s
-Change nick of an registered user|Changer le pseudonyme d'un utilisateur enregistrй
+Change nick of a registered user|Changer pseudo d'un utilisateur enregistrй
 User is not registered: %s|L'utilisateur n'est pas enregistrй: %s
 You are now going to be disconnected from the hub in order for your new nick to apply: %s|Tu vas maintenant кtre dйconnectй du hub pour mettre ton nouveau pseudonyme: %s
 Renamed account %s: %s|Compte renommй %s: %s
@@ -623,11 +623,11 @@ Chatroom member list|Liste des membres de la Chatroom
 Chatroom is empty.|La salle Chatroom est vide.
 You're already member of this chatroom.|Tu es dйjа membre sur cette chatroom.
 Chatroom user commands|Commandes d'utilisateur dans la salle de chat
-Unknown chatroom command, use %s for help.|
+Unknown chatroom command, use %s for help.|Commande chatroom inconnu , utilisez %s l'aide.
 Enter the chatroom|Entrer dans la chatroom
 Leave the chatroom|Quitter la Chatroom
 Deleted %d rows from country code statistics table: %s|Supprimйe %d les rangйes de la table de statistiques des codes de pays: %s
-Set chat mode|Ensemble du mode chat
+Force chat mode for user|Force le mode de chat pour l'utilisateur
 Known chat modes are: %s|Les modes de chat connus sont: %s
 mode|mode
 Changing chat mode for %s: %s => %s|Changement du mode chat %s: %s => %s
@@ -883,7 +883,7 @@ No reason specified|Aucune raison spйcifiйe
 Automatically deleted %d user log entries older than %d days.|Suppression automatique %d de l'entrйe de log de l'utilisateur plus vieille que %d jours.
 Main chat message replaced for user: %s|chat central remplacй pour l'utilisateur: %s
 Unknown protocol command from IP %s before login: %s|Protocole de commande inconnu de l'IP %s avant connexion: %s
-Added %s to hard IP ban list, %d users in total.|
+Added %s to hard IP ban list, %d users in total.|Ajoutй %s sur la liste d'interdiction de ban IP, %d utilisateurs au total .
 NMDC version: %s|Version de NMDC: %s
 Client supports: %s|Supports de client: %s
 Modified forbidden client supports with ban time %s: %s|Modifiй les supports de client interdits avec le temps de ban %s: %s
@@ -1081,34 +1081,36 @@ text|texte
 Delete history messages by text|Supprimer les messages de l'histoire en texte
 Deleted %d main chat history messages by text: %s|Supprimй %d messages principaux de l'histoire de chat par texte : %s
 %s with class %d deleted %d main chat history messages by text: %s|%s avec la classe %d %d supprimйs les messages de l'historique chat par texte : %s
-Looking for users with nick %s on: %s|
-Looking for users with description %s on: %s|
-Looking for users with client tag %s on: %s|
-Looking for users with connection type %s on: %s|
-Looking for users with email address %s on: %s|
-Looking for users with share size %s on: %s|
-Looking for users with IP address %s on: %s|
-Users with nick not found in any hubs: %s|
-Users with description not found in any hubs: %s|
-Users with client tag not found in any hubs: %s|
-Users with connection type not found in any hubs: %s|
-Users with email address not found in any hubs: %s|
-Users with share size not found in any hubs: %s|
-Users with IP address not found in any hubs: %s|
-Users with nick %s found in following hubs|
-Users with description %s found in following hubs|
-Users with client tag %s found in following hubs|
-Users with connection type %s found in following hubs|
-Users with email address %s found in following hubs|
-Users with share size %s found in following hubs|
-Users with IP address %s found in following hubs|
-Blocked PM|
-Right click menu|
-IP watch|
-Hard IP bans|
-Chatroom history|
-Chatroom history is empty.|
-Last %d chatroom messages|
-There are no chatroom history messages to remove: %s|
-Deleted %d chatroom history messages: %s|
-%s with class %d deleted %d chatroom history messages: %s|
+Looking for users with nick %s on: %s|Vous cherchez pour les utilisateurs avec nick %s sur: %s
+Looking for users with description %s on: %s|Vous cherchez pour les utilisateurs avec la description %s sur: %s
+Looking for users with client tag %s on: %s|Vous cherchez pour les utilisateurs avec un tag client %s sur: %s
+Looking for users with connection type %s on: %s|Vous cherchez pour les utilisateurs avec une connection  %s sur: %s
+Looking for users with email address %s on: %s|Vous cherchez pour les utilisateurs avec une adresse email  %s sur: %s
+Looking for users with share size %s on: %s|Vous cherchez pour les utilisateurs avec une taille de partage  %s sur: %s
+Looking for users with IP address %s on: %s|Vous recherchez pour les utilisateurs avec adresse IP %s sur: %s
+Users with nick not found in any hubs: %s|Utilisateurs avec Nick introuvables dans toute hubs: %s
+Users with description not found in any hubs: %s|Utilisateurs avec description introuvables dans tous les salons: %s
+Users with client tag not found in any hubs: %s|Utilisateurs avec le tag client introuvables dans tous les salons: %s
+Users with connection type not found in any hubs: %s|Les utilisateurs avec se type de connexion est introuvables dans aucun salons: %s 
+Users with email address not found in any hubs: %s|Les utilisateurs avec cette adresse e-mail ne trouve pas dans tous les salons: %s
+Users with share size not found in any hubs: %s|Les utilisateurs disposant de la taille de partage ne se trouvent dans aucun salons: %s
+Users with IP address not found in any hubs: %s|Les utilisateurs avec cette  adresse IP na pas йtи trouvйe dans aucun salons: %s
+Users with nick %s found in following hubs|Les utilisateurs avec les pseudo %s trouvйs dans les salons
+Users with description %s found in following hubs|Les utilisateurs avec la description suivante %s non pas йtй trouvйs dans les salons
+Users with client tag %s found in following hubs|Les utilisateurs avec le tag client  suivant %s non pas йtи trouvйs dans les salons
+Users with connection type %s found in following hubs|Les tilisateurs avec avec se type de connexion suivante %s non pas йtи trouvйs dans les salons
+Users with email address %s found in following hubs|Les utilisateurs avec cette email suivante %s non pas йtи trouvйs dans les salons
+Users with share size %s found in following hubs|Les utilisateurs avec cette taille de partage suivant %s non pas йtи trouvйs dans les salons
+Users with IP address %s found in following hubs|Les utilisateurs avec cette adresse IP suivante %s non pas йtи trouvйs dans les salons
+Blocked PM|PM bloquйs
+Right click menu|Le menu du clic droit
+IP watch|Ip regarder
+Hard IP bans|IP  bannis Interdite 
+Chatroom history|Historique Tchat
+Chatroom history is empty.|L'historique tchat est vide.
+Last %d chatroom messages|Dernier %d messages du tchat
+There are no chatroom history messages to remove: %s|Il n'y a pas d'historique de messages tchat pour кtre effacer : %s
+Deleted %d chatroom history messages: %s|Supprimйs %d l'historique des messages:%s
+%s with class %d deleted %d chatroom history messages: %s|%s avec la classe %d a supprimйs %d les messages d'historique: %s
+Set your chat mode|Rйglez votre mode chat
+real|rйel
