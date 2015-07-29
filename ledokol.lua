@@ -3676,7 +3676,7 @@ function VH_OnUserCommand (nick, data)
 
 	local ucl = getclass (nick)
 
-	if ucl < 0 and not string.find (data, "^" .. table_othsets ["ustrig"] .. "report .+$") then
+	if ucl < 0 and not data:match ("^" .. table_othsets ["ustrig"] .. "report .+$") then
 		return 0
 	end
 
@@ -5505,6 +5505,10 @@ function VH_OnParsedMsgPM (from, data, to)
 	local ip = getip (from)
 	local prot = isprotected (from, ip)
 	local fcls = getclass (from)
+
+	if fcls == -1 and to == table_othsets ["botnick"] and data:match ("^" .. table_othsets ["ustrig"] .. "report .+$") then
+		return 1
+	end
 
 	if not prot then -- protection
 		if fcls < table_sets ["pmminclass"] and to ~= table_othsets ["botnick"] then
