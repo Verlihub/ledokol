@@ -5186,29 +5186,28 @@ function VH_OnParsedMsgAny (nick, data)
 		end
 
 	elseif string.find (data, "^%$ConnectToMe ") then -- connecttome
+		local cls = getclass (nick)
+		local rip = getip (nick)
+
 		if table_sets ["classnotibadctm"] < 11 then -- bad ctm notification
-			local _, _, othernick, ctm = string.find (data, "^%$ConnectToMe (%S+) (.+)$")
+			local othernick, ctm = data:match ("^%$ConnectToMe ([^ ]+) (.+)$")
 
-			if othernick and ctm then
-				local rip = getip (nick)
+			if othernick and ctm and rip ~= "0.0.0.0" then
+				local ip, port = ctm:match ("^(.-):(.*)$")
 
-				if rip ~= "0.0.0.0" then
-					local _, _, ip, port = string.find (ctm, "^(.*):(.*)$")
-
-					if ip and port then
-						if ip ~= rip then -- either ctm exploitation or incorrect ip in client settings
-							opsnotify (table_sets ["classnotibadctm"], string.format (gettext ("%s with IP %s and class %d stated incorrect IP in connect request to %s: %s"), nick, rip .. tryipcc (rip, nick), getclass (nick), othernick, repnmdcoutchars (ip..":"..port)))
-						end
-					else
-						if ctm ~= rip then
-							opsnotify (table_sets ["classnotibadctm"], string.format (gettext ("%s with IP %s and class %d stated incorrect IP in connect request to %s: %s"), nick, rip .. tryipcc (rip, nick), getclass (nick), othernick, repnmdcoutchars (ctm)))
-						end
+				if ip and port then
+					if ip ~= rip then -- either ctm exploit or incorrect ip in client settings
+						opsnotify (table_sets ["classnotibadctm"], gettext ("%s with IP %s and class %d stated incorrect IP in connect request to %s: %s"):format (nick, rip .. tryipcc (rip, nick), cls, othernick, repnmdcoutchars (ip .. ":" .. port)))
 					end
+				elseif ctm ~= rip then
+					opsnotify (table_sets ["classnotibadctm"], gettext ("%s with IP %s and class %d stated incorrect IP in connect request to %s: %s"):format (nick, rip .. tryipcc (rip, nick), cls, othernick, repnmdcoutchars (ctm)))
 				end
 			end
 		end
 
-		if detprotoflood ("ctm", true, nick, getip (nick), getclass (nick)) == true then return 0 end -- protocol flood
+		if detprotoflood ("ctm", true, nick, rip, cls) then -- protocol flood
+			return 0
+		end
 	end
 
 	return 1
