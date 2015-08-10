@@ -2763,19 +2763,19 @@ end
 
 return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
 
-elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["reglist"].." %d+ %d+x%d+$") or string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["reglist"].." %-%d %d+x%d+$") then
-if ucl >= table_sets ["mincommandclass"] then
-donotifycmd (nick, data, 0, ucl)
-sendreglist (nick, string.sub (data, string.len (table_cmnds ["reglist"]) + 3, -1))
-else
-commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
-end
+	elseif data:match ("^" .. table_othsets ["optrig"] .. table_cmnds ["reglist"] .. " %d+ %d+x%d+$") or data:match ("^" .. table_othsets ["optrig"] .. table_cmnds ["reglist"] .. " %-%d %d+x%d+$") then
+		if ucl >= table_sets ["mincommandclass"] then
+			donotifycmd (nick, data, 0, ucl)
+			sendreglist (nick, data:sub (# table_cmnds ["reglist"] + 3))
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
 
-return 0
+		return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
 
 elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["regfind"].." %S+$") then
 	if ucl >= table_sets ["mincommandclass"] then
@@ -13534,21 +13534,21 @@ end
 
 ----- ---- --- -- -
 
-function findreglist (nick, usr)
-local _, rows = VH:SQLQuery ("select `nick`, `class` from `reglist` where `nick` like '%"..repsqlchars (usr).."%' order by `class` asc, `nick` asc")
+function findreglist (nick, user)
+	local _, rows = VH:SQLQuery ("select `nick`, `class` from `reglist` where `nick` like '%" .. repsqlchars (user) .. "%' order by `class` asc, `nick` asc")
 
-if rows > 0 then
-	local list = ""
+	if rows > 0 then
+		local list = ""
 
-	for x = 0, rows - 1 do
-		local _, n, c = VH:SQLFetch (x)
-		list = list.." "..prezero (string.len (rows), (x + 1))..". "..n.." @ "..c.."\r\n"
+		for x = 0, rows - 1 do
+			local _, reg, class = VH:SQLFetch (x)
+			list = list .. " " .. prezero (# tostring (rows), x + 1) .. ". " .. reg .. " @ " .. tostring (class) .. "\r\n"
+		end
+
+		commandanswer (nick, gettext ("Registered users list results for %s"):format (user) .. ":\r\n\r\n" .. list)
+	else
+		commandanswer (nick, gettext ("No user results found."))
 	end
-
-	commandanswer (nick, string.format (gettext ("Registered users list results for %s"), usr)..":\r\n\r\n"..list)
-else
-	commandanswer (nick, gettext ("No user results found."))
-end
 end
 
 ----- ---- --- -- -
@@ -13557,27 +13557,25 @@ function statsreglist (nick)
 	local _, rows = VH:SQLQuery ("select `class` from `reglist` order by `class` asc")
 
 	if rows > 0 then
-		local t = {}
+		local temp, ord, list, total = {}, {}, "", 0
 
 		for x = 0, rows - 1 do
-			local _, cls = VH:SQLFetch (x)
-			t [cls] = (t [cls] or 0) + 1
+			local _, class = VH:SQLFetch (x)
+			temp [class] = (temp [class] or 0) + 1
 		end
 
-		local tmp, list, tot = {}, "", 0
-
-		for k, v in pairs (t) do
-			table.insert (tmp, {key = k, val = v})
+		for k, v in pairs (temp) do
+			table.insert (ord, {key = k, val = v})
 		end
 
-		table.sort (tmp, function (a, b) return a.val > b.val end)
+		table.sort (ord, function (a, b) return a.val > b.val end)
 
-		for _, v in pairs (tmp) do
-			list = list.." "..string.format (gettext ("Class %d: %d"), v.key, v.val).."\r\n"
-			tot = tot + v.val
+		for _, v in pairs (ord) do
+			list = list .. " " .. gettext ("Class %d: %d"):format (v.key, v.val) .. "\r\n"
+			total = total + v.val
 		end
 
-		commandanswer (nick, gettext ("Registered users list statistics")..":\r\n\r\n"..list.."\r\n "..string.format (gettext ("Total count: %d"), tot).."\r\n")
+		commandanswer (nick, gettext ("Registered users list statistics") .. ":\r\n\r\n" .. list .. "\r\n " .. gettext ("Total count: %d"):format (total) .. "\r\n")
 	else
 		commandanswer (nick, gettext ("Registered users list is empty."))
 	end
@@ -13586,60 +13584,61 @@ end
 ----- ---- --- -- -
 
 function sendreglist (nick, line)
-local _, class, sfrom, hmany = 0, 0, 0, 0
+	local class, from, count = 1, 1, 100
 
-if string.find (line, "^%-%d %d+x%d+$") then -- lol: %d != -1
-_, _, class, sfrom, hmany = string.find (line, "^(%-%d) (%d+)x(%d+)$")
-else
-_, _, class, sfrom, hmany = string.find (line, "^(%d+) (%d+)x(%d+)$")
-end
+	if line:match ("^%-%d %d+x%d+$") then
+		class, from, count = line:match ("^(%-%d) (%d+)x(%d+)$")
+	else
+		class, from, count = line:match ("^(%d+) (%d+)x(%d+)$")
+	end
 
-class = tonumber (class)
-sfrom = tonumber (sfrom)
-hmany = tonumber (hmany)
-if hmany <= 1 then hmany = 1 end
+	class = tonumber (class or 1) or 1
+	from = tonumber (from or 1) or 1
+	count = tonumber (count or 100) or 100
 
-if (class == 10) or (class == 5) or (class == 4) or (class == 3) or (class == 2) or (class == 1) or (class == 0) or (class == -1) then
-local _, trows = VH:SQLQuery ("select `class` from `reglist` where `class` = "..class)
+	if count < 1 then
+		count = 1
+	end
 
-if trows > 0 then
-if (sfrom <= 0) or (sfrom > trows) then
-commandanswer (nick, string.format (gettext ("You can't start at user number %d when you only have %d accounts with class %d."), sfrom, trows, class))
-else
-local _, rows = VH:SQLQuery ("select `nick`, `reg_date`, `pwd_change`, `login_last`, `enabled` from `reglist` where `class` = "..class.." order by `login_last` desc limit "..(sfrom - 1)..", "..hmany)
+	if class == -1 or (class >= 1 and class <= 5) or class == 10 then
+		local _, total = VH:SQLQuery ("select `class` from `reglist` where `class` = " .. tostring (class))
 
-if rows > 0 then
-local areg = ""
+		if total > 0 then
+			if from <= 0 or from > total then
+				commandanswer (nick, gettext ("You can't start at user number %d when you only have %d accounts with class %d."):format (from, total, class))
+			else
+				local _, rows = VH:SQLQuery ("select `nick`, `reg_date`, `pwd_change`, `login_last`, `enabled` from `reglist` where `class` = " .. tostring (class) .. " order by `login_last` desc limit " .. tostring (from - 1) .. ", " .. tostring (count))
 
-for x = 0, rows - 1 do
-local _, user, rgdate, pwdc, lastlog, enacc = VH:SQLFetch (x)
-areg = areg.." "..prezero (string.len (rows), (x + 1))..". [ R: "..fromunixtime (rgdate, true, table_sets ["longdateformat"]).." ] [ L: "..fromunixtime (lastlog, false, table_sets ["longdateformat"]).." ] [ P: "..pwdc.." ] [ E: "..enacc.." ] [ O: "..getstatus (user).." ] "..user.."\r\n"
-end
+				if rows > 0 then
+					local list = ""
 
-commandanswer (nick, string.format (gettext ("Showing %d out of total %d accounts with class %d starting at user number %d"), rows, trows, class, sfrom)..":\r\n\r\n"..areg)
-end
-end
+					for x = 0, rows - 1 do
+						local _, user, reg, pass, last, on = VH:SQLFetch (x)
+						list = list .. " " .. prezero (# tostring (rows), x + 1) .. ". [ R: " .. fromunixtime (reg, true, table_sets ["longdateformat"]) .. " ] [ L: " .. fromunixtime (last, false, table_sets ["longdateformat"]) .. " ] [ P: " .. tostring (pass) .. " ] [ E: " .. tostring (on) .. " ] [ O: " .. getstatus (user) .. " ] " .. user .. "\r\n"
+					end
 
-else
-commandanswer (nick, string.format (gettext ("There are no accounts with class: %d"), class))
-end
-
-else
-commandanswer (nick, string.format (gettext ("Known classes are: %s"), "-1, 0, 1, 2, 3, 4, 5 "..gettext ("and").." 10"))
-end
+					commandanswer (nick, gettext ("Showing %d out of total %d accounts with class %d starting at user number %d"):format (rows, total, class, from) .. ":\r\n\r\n" .. list)
+				end
+			end
+		else
+			commandanswer (nick, gettext ("There are no accounts with class: %d"):format (class))
+		end
+	else
+		commandanswer (nick, gettext ("Known classes are: %s"):format ("-1, 1, 2, 3, 4, 5 " .. gettext ("and") .. " 10"))
+	end
 end
 
 ----- ---- --- -- -
 
 function delledouser (nick)
-local usr = repsqlchars (nick)
-VH:SQLQuery ("delete from `"..tbl_sql ["wm"].."` where `nick` = '"..usr.."' limit 1")
-VH:SQLQuery ("delete from `"..tbl_sql ["cust"].."` where `nick` = '"..usr.."' limit 1")
-VH:SQLQuery ("delete from `"..tbl_sql ["auth"].."` where `nick` = '"..usr.."'")
-VH:SQLQuery ("delete from `"..tbl_sql ["off"].."` where `from` = '"..usr.."'")
-VH:SQLQuery ("delete from `"..tbl_sql ["chran"].."` where `nick` = '"..usr.."' limit 1")
-VH:SQLQuery ("delete from `"..tbl_sql ["opran"].."` where `nick` = '"..usr.."' limit 1")
-VH:SQLQuery ("delete from `"..tbl_sql ["shran"].."` where `nick` = '"..usr.."' limit 1")
+	local usr = repsqlchars (nick)
+	VH:SQLQuery ("delete from `" .. tbl_sql ["wm"] .. "` where `nick` = '" .. usr .."' limit 1")
+	VH:SQLQuery ("delete from `" .. tbl_sql ["cust"] .. "` where `nick` = '" .. usr .. "' limit 1")
+	VH:SQLQuery ("delete from `" .. tbl_sql ["auth"] .. "` where `nick` = '" .. usr .. "'")
+	VH:SQLQuery ("delete from `" .. tbl_sql ["off"] .. "` where `from` = '" .. usr .. "'")
+	VH:SQLQuery ("delete from `" .. tbl_sql ["chran"] .. "` where `nick` = '" .. usr .. "' limit 1")
+	VH:SQLQuery ("delete from `" .. tbl_sql ["opran"] .. "` where `nick` = '" .. usr .. "' limit 1")
+	VH:SQLQuery ("delete from `" .. tbl_sql ["shran"] .. "` where `nick` = '" .. usr .. "' limit 1")
 end
 
 ----- ---- --- -- -
