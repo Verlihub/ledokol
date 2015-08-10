@@ -3,6 +3,7 @@
 Fixed: rename command parameters when used from user menu, report by KCAHDEP
 Fixed: Pingers can use +report command in PM to hub security bot when gag is set, report by KCAHDEP
 Fixed: Incorrect IP in connect request notification
+Fixed: Class number check on reglist command
 Added: Save hub messages from operator chat bot in operator chat history, requires VH_OnOpChatMessage callback, request by KCAHDEP
 Added: Turkish language, thanks to Mauron
 Added: langfileprefix country code validation, also allows use of full country names in English
