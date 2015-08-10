@@ -2777,19 +2777,19 @@ return 0
 
 	----- ---- --- -- -
 
-elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["regfind"].." %S+$") then
-	if ucl >= table_sets ["mincommandclass"] then
-		donotifycmd (nick, data, 0, ucl)
-		findreglist (nick, string.sub (data, string.len (table_cmnds ["regfind"]) + 3, -1))
-	else
-		commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
-	end
+	elseif data:match ("^" .. table_othsets ["optrig"] .. table_cmnds ["regfind"] .. " [^ ]+$") then
+		if ucl >= table_sets ["mincommandclass"] then
+			donotifycmd (nick, data, 0, ucl)
+			findreglist (nick, data:sub (# table_cmnds ["regfind"] + 3))
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
 
-return 0
+	return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
 
-	elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["regstats"].."$") then
+	elseif data:match ("^" .. table_othsets ["optrig"] .. table_cmnds ["regstats"] .. "$") then
 		if ucl >= table_sets ["mincommandclass"] then
 			donotifycmd (nick, data, 0, ucl)
 			statsreglist (nick)
@@ -2799,7 +2799,7 @@ return 0
 
 		return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
 
 elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["readlog"].." %S+ %d+$") then
 if ucl >= table_sets ["mincommandclass"] then
