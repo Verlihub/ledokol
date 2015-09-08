@@ -1,8 +1,8 @@
 # Language: ru_RU
 # Charset: CP1251
 # Version: 2.8.7
-# Author: MaxFox
-# Email: maxfox@inbox.ru
+# Author: RoLex
+# Email: webmaster@feardc.net
 
 Current topic: %s|Данная тема: %s
 Current topic set by %s: %s|Данная тема установленная %s: %s
@@ -1115,3 +1115,5 @@ Deleted %d chatroom history messages: %s|Удалено %d сообщений и
 Set your chat mode|Установить свой режим чата
 real|настоящий
 Specified country code isn't valid: %s|Указанный код страны не действителен: %s
+You can't block user who don't share anything: %s|Вы не можете заблокировать пользователя чья шара пуста: %s
+You can't kick user who don't share anything: %s|Вы не можете кикнуть пользователя чья шара пуста: %s
