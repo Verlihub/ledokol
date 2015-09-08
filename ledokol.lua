@@ -19413,28 +19413,37 @@ function avdetforce (nick, user)
 			commandanswer (nick, gettext ("User already blocked: %s"):format (user))
 		else
 			local size = parsemyinfoshare (getmyinfo (user))
-			local spent = os.time ()
 
-			if table_sets ["avsearchint"] > 0 and table_avus [user] then
-				spent = table_avus [user][""]
-			end
-
-			opsnotify (table_sets ["classnotiav"], gettext ("Infected user detected with nick %s and IP %s and share %s and spent time: %s"):format (user, addr .. tryipcc (addr, user), makesize (size), formatuptime (spent, false)))
-			avdbreport (user, addr, size, true, nil, true) -- report
-
-			if table_sets ["avdetaction"] == 0 then
-				table_avbl [user] = true
-				opsnotify (table_sets ["classnotiav"], gettext ("Connection requests to following user will be blocked: %s"):format (user))
-			else
-				if table_refu ["KickRedirUser"] then
-					VH:KickRedirUser (nick, user, table_sets ["avkicktext"], table_othsets ["avdbhubaddr"])
+			if size == 0 then
+				if table_sets ["avdetaction"] == 0 then
+					commandanswer (nick, gettext ("You can't block user who don't share anything: %s"):format (user))
 				else
-					VH:KickUser (nick, user, table_sets ["avkicktext"])
+					commandanswer (nick, gettext ("You can't kick user who don't share anything: %s"):format (user))
 				end
-			end
+			else
+				local spent = os.time ()
 
-			if table_sets ["avsearchint"] > 0 then
-				table_avus [user] = nil
+				if table_sets ["avsearchint"] > 0 and table_avus [user] then
+					spent = table_avus [user][""]
+				end
+
+				opsnotify (table_sets ["classnotiav"], gettext ("Infected user detected with nick %s and IP %s and share %s and spent time: %s"):format (user, addr .. tryipcc (addr, user), makesize (size), formatuptime (spent, false)))
+				avdbreport (user, addr, size, true, nil, true) -- report
+
+				if table_sets ["avdetaction"] == 0 then
+					table_avbl [user] = true
+					opsnotify (table_sets ["classnotiav"], gettext ("Connection requests to following user will be blocked: %s"):format (user))
+				else
+					if table_refu ["KickRedirUser"] then
+						VH:KickRedirUser (nick, user, table_sets ["avkicktext"], table_othsets ["avdbhubaddr"])
+					else
+						VH:KickUser (nick, user, table_sets ["avkicktext"])
+					end
+				end
+
+				if table_sets ["avsearchint"] > 0 then
+					table_avus [user] = nil
+				end
 			end
 		end
 	end
