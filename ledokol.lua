@@ -1249,6 +1249,17 @@ function Main (file)
 					end
 
 					if ver <= 287 then
+						VH:SQLQuery ("create table if not exists `" .. tbl_sql ["ulog"] .. "` (`id` bigint(20) unsigned not null auto_increment primary key, `time` bigint(20) unsigned not null, `nick` varchar(255) not null, `ip` varchar(15) not null, `cc` varchar(2) null, `desc` varchar(255) null, `tag` varchar(255) null, `conn` varchar(255) null, `email` varchar(255) null, `share` bigint(20) unsigned not null default 0) engine = myisam default character set utf8 collate utf8_unicode_ci")
+
+						VH:SQLQuery ("alter ignore table `" .. tbl_sql ["ulog"] .. "` add column `cc` varchar(2) null after `ip`")
+						VH:SQLQuery ("alter ignore table `" .. tbl_sql ["ulog"] .. "` change column `desc` `desc` varchar(255) null")
+						VH:SQLQuery ("alter ignore table `" .. tbl_sql ["ulog"] .. "` change column `tag` `tag` varchar(255) null")
+						VH:SQLQuery ("alter ignore table `" .. tbl_sql ["ulog"] .. "` change column `conn` `conn` varchar(255) null")
+						VH:SQLQuery ("alter ignore table `" .. tbl_sql ["ulog"] .. "` change column `email` `email` varchar(255) null")
+						VH:SQLQuery ("alter ignore table `" .. tbl_sql ["ulog"] .. "` change column `share` `share` bigint(20) unsigned not null default 0")
+					end
+
+					if ver <= 288 then
 						-- todo
 					end
 
@@ -2549,19 +2560,19 @@ end
 
 return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
 
-	elseif string.find (data, "^" .. table_othsets ["optrig"] .. table_cmnds ["ulog"] .. " %S+ .+ %d+$") then
-		if (ucl >= table_sets ["mincommandclass"]) and (table_sets ["enableuserlog"] == 1) then
+	elseif data:match ("^" .. table_othsets ["optrig"] .. table_cmnds ["ulog"] .. " %S+ .+ %d+$") then
+		if ucl >= table_sets ["mincommandclass"] and table_sets ["enableuserlog"] == 1 then
 			donotifycmd (nick, data, 0, ucl)
-			showuserlog (nick, string.sub (data, string.len (table_cmnds ["ulog"]) + 3, -1))
+			showuserlog (nick, data:sub (# table_cmnds ["ulog"] + 3))
 		else
 			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
 
 elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["clog"].." %d+$") then
 	if (ucl >= table_sets ["mincommandclass"]) and (table_sets ["enablecmdlog"] > 0) then
@@ -4351,16 +4362,20 @@ function VH_OnParsedMsgMyINFO (nick, data)
 		return 1
 	end
 
-	local _, ip, desc, tag, conn, email, size, hasinfo, gotip = "", "", "", "", "", "", 0, false, false
+	local _, addr, cc, desc, tag, conn, mail, size, hasinfo, gotaddr, gotcc = 0, "", "", "", "", "", "", 0, false, false, false
 
 	if table_sets ["enableuserlog"] == 1 and table_sets ["logallmyinfos"] == 1 then -- user logger
-		if not gotip then
-			ip, gotip = getip (nick), true
+		--if not gotaddr then
+			addr, gotaddr = getip (nick), true
+		--end
+
+		if table_refu ["GetUserCC"] then -- and not gotcc
+			cc, gotcc = getcc (nick), true
 		end
 
-		desc, tag, conn, _, email, size = parsemyinfo (nick, data)
+		desc, tag, conn, _, mail, size = parsemyinfo (nil, data)
 		hasinfo = true
-		VH:SQLQuery ("insert into `" .. tbl_sql ["ulog"] .. "` (`time`, `nick`, `ip`, `desc`, `tag`, `conn`, `email`, `share`) values (" .. tostring (os.time () + table_sets ["srvtimediff"]) .. ", '" .. repsqlchars (nick) .. "', '" .. repsqlchars (ip) .. "', '" .. repsqlchars (desc) .. "', '" .. repsqlchars (tag) .. "', '" .. repsqlchars (conn) .. "', '" .. repsqlchars (email) .. "', " .. repsqlchars (size) .. ")")
+		VH:SQLQuery ("insert into `" .. tbl_sql ["ulog"] .. "` (`time`, `nick`, `ip`, `cc`, `desc`, `tag`, `conn`, `email`, `share`) values (" .. tostring (os.time () + table_sets ["srvtimediff"]) .. ", '" .. repsqlchars (nick) .. "', '" .. repsqlchars (addr) .. "', " .. sqlemptnull (cc, true) .. ", " .. sqlemptnull (desc) .. ", " .. sqlemptnull (tag) .. ", " .. sqlemptnull (conn) .. ", " .. sqlemptnull (mail) .. ", " .. repsqlchars (size) .. ")")
 	end
 
 	if table_sets ["micheck"] == 0 or table_sets ["micallall"] == 0 then
@@ -4373,43 +4388,43 @@ function VH_OnParsedMsgMyINFO (nick, data)
 		return 1
 	end
 
-	if not gotip then
-		ip = getip (nick)
+	if not gotaddr then
+		addr, gotaddr = getip (nick), true
 	end
 
-	if isprotected (nick, ip) then -- skip all checks
+	if isprotected (nick, addr) then -- skip all checks
 		return 1
 	end
 
 	if not hasinfo then -- prepare
-		desc, tag, conn, _, email, size = parsemyinfo (nick, data)
+		desc, tag, conn, _, mail, size = parsemyinfo (nil, data)
 	end
 
-	if checkdesc (nick, desc, cls, ip) == 1 then
+	if checkdesc (nick, desc, cls, addr) == 1 then
 		return 0
 	end
 
-	if checktag (nick, tag, cls, ip) == 1 then
+	if checktag (nick, tag, cls, addr) == 1 then
 		return 0
 	end
 
-	if checkconn (nick, conn, cls, ip) == 1 then
+	if checkconn (nick, conn, cls, addr) == 1 then
 		return 0
 	end
 
-	if checkemail (nick, email, cls, ip) == 1 then
+	if checkemail (nick, mail, cls, addr) == 1 then
 		return 0
 	end
 
-	if checkshare (nick, size, cls, ip) == 1 then
+	if checkshare (nick, size, cls, addr) == 1 then
 		return 0
 	end
 
-	if checkfake (nick, size, cls, ip) == 1 then
+	if checkfake (nick, size, cls, addr) == 1 then
 		return 0
 	end
 
-	if checkclone (nick, size, ip, cls) == 1 then
+	if checkclone (nick, size, addr, cls) == 1 then
 		return 0
 	end
 
@@ -4419,55 +4434,70 @@ end
 ----- ---- --- -- -
 
 function VH_OnUserLogin (nick, uip)
-	if table_othsets ["locked"] == true then
+	if table_othsets ["locked"] then
 		return 1
 	end
 
-	local mistr, ip, desc, tag, conn, email, size, prot, hasip, hasinfo, hasprot, hasmistr, _ = "", "", "", "", "", "", 0, false, false, false, false, false, 0
+	local mistr, ip, cc, desc, tag, conn, email, size, prot, hasip, hascc, hasinfo, hasprot, hasmistr, _ = "", "", "", "", "", "", "", 0, false, false, false, false, false, false, 0
 
 	if table_sets ["enableipwatch"] == 1 then -- ip watch
 		mistr, hasmistr = getmyinfo (nick), true
-		ip, hasip = getip (nick), true
-		checkipwat (nick, ip, mistr) -- do not return 0, is a login sequence
+		ip, hasip = (uip or getip (nick)), true
+		checkipwat (nick, ip, mistr) -- dont return 0, its a login sequence
 	end
 
 	if table_sets ["enableuserlog"] == 1 then -- user logger
-		if hasip == false then ip, hasip = getip (nick), true end
-		if hasmistr == false then mistr, hasmistr = getmyinfo (nick), true end
-		desc, tag, conn, _, email, size = parsemyinfo (nick, mistr)
+		if not hasip then
+			ip, hasip = (uip or getip (nick)), true
+		end
+
+		if table_refu ["GetUserCC"] then -- and not hascc
+			cc, hascc = getcc (nick), true
+		end
+
+		if not hasmistr then
+			mistr, hasmistr = getmyinfo (nick), true
+		end
+
+		desc, tag, conn, _, email, size = parsemyinfo (nil, mistr)
 		hasinfo = true
-		VH:SQLQuery ("insert into `"..tbl_sql ["ulog"].."` (`time`, `nick`, `ip`, `desc`, `tag`, `conn`, `email`, `share`) values ("..(os.time () + table_sets ["srvtimediff"])..", '"..repsqlchars (nick).."', '"..repsqlchars (ip).."', '"..repsqlchars (desc).."', '"..repsqlchars (tag).."', '"..repsqlchars (conn).."', '"..repsqlchars (email).."', "..size..")")
+		VH:SQLQuery ("insert into `" .. tbl_sql ["ulog"] .. "` (`time`, `nick`, `ip`, `cc`, `desc`, `tag`, `conn`, `email`, `share`) values (" .. tostring (os.time () + table_sets ["srvtimediff"]) .. ", '" .. repsqlchars (nick) .. "', '" .. repsqlchars (ip) .. "', " .. sqlemptnull (cc, true) .. ", " .. sqlemptnull (desc) .. ", " .. sqlemptnull (tag) .. ", " .. sqlemptnull (conn) .. ", " .. sqlemptnull (email) .. ", " .. repsqlchars (size) .. ")")
 	end
 
 	local cls = getclass (nick)
-	if cls < 0 then return 1 end -- dont check pingers
 
-if (table_sets ["ipconantiflint"] > 0) and (cls < table_sets ["scanbelowclass"]) then -- ip connect antiflood
-	if hasip == false then ip, hasip = getip (nick), true end
-	prot, hasprot = isprotected (nick, ip), true
+	if cls < 0 then -- dont check pingers
+		return 1
+	end
 
-	if prot == false then -- protection
-		if table_rcnn [ip] then
-			local dif = os.difftime (os.time (), table_rcnn [ip])
+	if table_sets ["ipconantiflint"] > 0 and cls < table_sets ["scanbelowclass"] then -- ip connect antiflood
+		if not hasip then
+			ip, hasip = (uip or getip (nick)), true
+		end
 
-			if dif >= table_sets ["ipconantiflint"] then
-				table_rcnn [ip] = nil -- delete
-			else
-				maintouser (nick, string.format (gettext ("Connections from your IP aren't allowed for another %d seconds."), table_sets ["ipconantiflint"] - dif))
+		prot, hasprot = isprotected (nick, ip), true
 
-				if cls >= table_sets ["welcomeclass"] then -- dont send logout message
-					table_faau [nick] = 1
+		if not prot then -- protection
+			if table_rcnn [ip] then
+				local dif = os.difftime (os.time (), table_rcnn [ip])
+
+				if dif >= table_sets ["ipconantiflint"] then
+					table_rcnn [ip] = nil -- delete
+				else
+					maintouser (nick, gettext ("Connections from your IP aren't allowed for another %d seconds."):format (table_sets ["ipconantiflint"] - dif))
+
+					if cls >= table_sets ["welcomeclass"] then -- dont send logout message
+						table_faau [nick] = 1
+					end
+
+					VH:Disconnect (nick) -- drop user
+					return 0
 				end
-
-				VH:Disconnect (nick) -- drop user
-				return 0
+			else -- add
+				table_rcnn [ip] = os.time ()
 			end
-
-		else -- add
-			table_rcnn [ip] = os.time ()
 		end
 	end
-end
 
 	if table_sets ["avdbloadint"] > 0 and cls < table_sets ["scanbelowclass"] then -- antivirus load
 		if not hasprot then
@@ -4476,7 +4506,7 @@ end
 
 		if not prot then
 			if not hasip then
-				ip, hasip = getip (nick), true
+				ip, hasip = (uip or getip (nick)), true
 			end
 
 			if not hasinfo then
@@ -4484,7 +4514,7 @@ end
 					mistr, hasmistr = getmyinfo (nick), true
 				end
 
-				desc, tag, conn, _, email, size = parsemyinfo (nick, mistr)
+				desc, tag, conn, _, email, size = parsemyinfo (nil, mistr)
 				hasinfo = true
 			end
 
@@ -4518,72 +4548,128 @@ end
 		end
 	end
 
-if table_sets ["authrunning"] == 1 then -- ip authorization
-	if hasip == false then ip, hasip = getip (nick), true end
-
-	if authcheck (nick, cls, ip) == true then
-		if cls >= table_sets ["welcomeclass"] then -- dont send logout message
-			table_faau [nick] = 1
+	if table_sets ["authrunning"] == 1 then -- ip authorization
+		if not hasip then
+			ip, hasip = (uip or getip (nick)), true
 		end
 
-		return 0
+		if authcheck (nick, cls, ip) then
+			if cls >= table_sets ["welcomeclass"] then -- dont send logout message
+				table_faau [nick] = 1
+			end
+
+			return 0
+		end
 	end
-end
 
-if (table_sets ["micheck"] == 1) and (cls < table_sets ["scanbelowclass"]) then -- myinfo check
-	if hasip == false then ip, hasip = getip (nick), true end
-	if hasprot == false then prot = isprotected (nick, ip) end
-
-	if prot == false then -- protection
-		if hasinfo == false then
-			if hasmistr == false then mistr, hasmistr = getmyinfo (nick), true end
-			desc, tag, conn, _, email, size = parsemyinfo (nick, mistr)
-			hasinfo = true
+	if table_sets ["micheck"] == 1 and cls < table_sets ["scanbelowclass"] then -- myinfo check
+		if not hasip then
+			ip, hasip = (uip or getip (nick)), true
 		end
 
-		if checknick (nick, cls, ip) == 1 then return 0 end
-		if checkdesc (nick, desc, cls, ip) == 1 then return 0 end
-		if checktag (nick, tag, cls, ip) == 1 then return 0 end
-		if checkconn (nick, conn, cls, ip) == 1 then return 0 end
-		if checkemail (nick, email, cls, ip) == 1 then return 0 end
-		if checkshare (nick, size, cls, ip) == 1 then return 0 end
-		if checkip (nick, ip, cls) == 1 then return 0 end
-		if checkcc (nick, cls) == true then return 0 end
-		if checkdns (nick, cls, ip) == true then return 0 end
-		if checksup (nick, cls, ip) == true then return 0 end
-		if checkver (nick, cls, ip) == true then return 0 end
-		if checkfake (nick, size, cls, ip) == 1 then return 0 end
-		if checkclone (nick, size, ip, cls) == 1 then return 0 end
-		if checksameip (nick, ip, cls) == 1 then return 0 end
+		if not hasprot then
+			prot = isprotected (nick, ip)
+		end
+
+		if not prot then -- protection
+			if not hasinfo then
+				if not hasmistr then
+					mistr, hasmistr = getmyinfo (nick), true
+				end
+
+				desc, tag, conn, _, email, size = parsemyinfo (nil, mistr)
+				hasinfo = true
+			end
+
+			if checknick (nick, cls, ip) == 1 then
+				return 0
+			end
+
+			if checkdesc (nick, desc, cls, ip) == 1 then
+				return 0
+			end
+
+			if checktag (nick, tag, cls, ip) == 1 then
+				return 0
+			end
+
+			if checkconn (nick, conn, cls, ip) == 1 then
+				return 0
+			end
+
+			if checkemail (nick, email, cls, ip) == 1 then
+				return 0
+			end
+
+			if checkshare (nick, size, cls, ip) == 1 then
+				return 0
+			end
+
+			if checkip (nick, ip, cls) == 1 then
+				return 0
+			end
+
+			if checkcc (nick, cls) then
+				return 0
+			end
+
+			if checkdns (nick, cls, ip) then
+				return 0
+			end
+
+			if checksup (nick, cls, ip) then
+				return 0
+			end
+
+			if checkver (nick, cls, ip) then
+				return 0
+			end
+
+			if checkfake (nick, size, cls, ip) == 1 then
+				return 0
+			end
+
+			if checkclone (nick, size, ip, cls) == 1 then
+				return 0
+			end
+
+			if checksameip (nick, ip, cls) == 1 then
+				return 0
+			end
+		end
 	end
-end
 
 	if table_sets ["showuseruptime"] == 1 then -- user uptime
 		table_usup [nick] = os.time ()
 	end
 
-if table_refu ["GetUserCC"] and table_sets ["savecchistory"] == 1 and table_sets ["ccstatsclass"] < 11 then -- cc statistics
-	if isbot (nick) == false then -- callback used for bots too
-		local cc = getcc (nick)
+	if table_refu ["GetUserCC"] and table_sets ["savecchistory"] == 1 and table_sets ["ccstatsclass"] < 11 then -- cc statistics
+		if not isbot (nick) then -- callback used for bots too
+			if not hascc then
+				cc, hascc = getcc (nick), true
+			end
 
-		if cc then
-			cc = repsqlchars (cc)
-			VH:SQLQuery ("insert into `"..tbl_sql ["ccstat"].."` (`nick`, `cc`) values ('"..repsqlchars (nick).."', '"..cc.."') on duplicate key update `cc` = '"..cc.."'")
+			if cc then
+				local repcc = repsqlchars (cc)
+				VH:SQLQuery ("insert into `" .. tbl_sql ["ccstat"] .. "` (`nick`, `cc`) values ('" .. repsqlchars (nick) .. "', '" .. repcc .. "') on duplicate key update `cc` = '" .. repcc .. "'")
+			end
 		end
 	end
-end
 
-	if hasinfo == false then
-		if hasmistr == false then mistr = getmyinfo (nick) end
+	if not hasinfo then
+		if not hasmistr then
+			mistr, hasmistr = getmyinfo (nick), true
+		end
+
 		size = parsemyinfoshare (mistr)
 	end
 
 	sharerankaccept (nick, size, cls)
 	resetrealnick (nick) -- reset custom nick when used by real user
 
-if (cls >= table_sets ["newsclass"]) and (table_sets ["newsautolines"] > 0) then -- hub news
-	sendnews (nick, table_sets ["newsautolines"], 1)
-end
+	if cls >= table_sets ["newsclass"] and table_sets ["newsautolines"] > 0 then -- hub news
+		sendnews (nick, table_sets ["newsautolines"], 1)
+	end
 
 	if table_sets ["histlimit"] > 0 then
 		if cls >= table_sets ["mchistclass"] and table_sets ["histautolines"] > 0 then -- mc history
@@ -4596,7 +4682,7 @@ end
 	end
 
 	if not hasip then
-		ip = getip (nick)
+		ip, hasip = (uip or getip (nick)), true
 	end
 
 	sendwelcomein (nick, cls)
@@ -4607,7 +4693,7 @@ end
 	if cls < 3 then -- operator keys
 		if cls >= table_sets ["opkeyclass"] then
 			table_opks [nick] = 1 -- class
-		elseif table_sets ["opkeyshare"] > 0 and size >= table_sets ["opkeyshare"] * 1073741824 then
+		elseif table_sets ["opkeyshare"] > 0 and size >= (table_sets ["opkeyshare"] * 1073741824) then
 			table_opks [nick] = 2 -- share
 		elseif cls >= table_sets ["opkeyself"] then -- self
 			VH:SendToUser ("$OpList " .. nick .. "$$|", nick)
@@ -5021,17 +5107,17 @@ function VH_OnTimer (msec)
 		end
 	end
 
-	if (table_sets ["enableuserlog"] == 1) and (table_sets ["ulogautoclean"] > 0) then -- clean up user logger
+	if table_sets ["enableuserlog"] == 1 and table_sets ["ulogautoclean"] > 0 then -- clean up user logger
 		if os.difftime (st, table_othsets ["ulogcleanmins"]) >= 86400 then -- every 24 hours
 			local secs = os.difftime (st, (table_sets ["ulogautoclean"] * 24 * 60 * 60))
-			local _, rows = VH:SQLQuery ("select `id` from `" .. tbl_sql ["ulog"] .. "` where `time` < " .. secs)
+			local _, rows = VH:SQLQuery ("select `id` from `" .. tbl_sql ["ulog"] .. "` where `time` < " .. tostring (secs))
 
 			if rows > 0 then
-				VH:SQLQuery ("delete from `" .. tbl_sql ["ulog"] .. "` where `time` < " .. secs)
-				opsnotify (table_sets ["classnotiledoact"], string.format (gettext ("Automatically deleted %d user log entries older than %d days."), rows, table_sets ["ulogautoclean"]))
+				VH:SQLQuery ("delete from `" .. tbl_sql ["ulog"] .. "` where `time` < " .. tostring (secs))
+				opsnotify (table_sets ["classnotiledoact"], gettext ("Automatically deleted %d user log entries older than %d days."):format (rows, table_sets ["ulogautoclean"]))
 				local tdiff = st + table_sets ["srvtimediff"]
-				VH:SQLQuery ("insert into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('lastcleanulog', " .. tdiff .. ") on duplicate key update `value` = " .. tdiff)
-				VH:SQLQuery ("insert into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('limcleanulog', " .. table_sets ["ulogautoclean"] .. ") on duplicate key update `value` = " .. table_sets ["ulogautoclean"])
+				VH:SQLQuery ("insert into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('lastcleanulog', " .. tostring (tdiff) .. ") on duplicate key update `value` = " .. tostring (tdiff))
+				VH:SQLQuery ("insert into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('limcleanulog', " .. tostring (table_sets ["ulogautoclean"]) .. ") on duplicate key update `value` = " .. tostring (table_sets ["ulogautoclean"]))
 			end
 
 			table_othsets ["ulogcleanmins"] = st
@@ -8927,9 +9013,19 @@ end
 ----- ---- --- -- -
 
 function showuserlog (nick, line)
-	local _, _, tp, str, lim = line:find ("^(%S+) (.+) (%d+)$")
+	local tp, str, lim = line:match ("^(%S+) (.+) (%d+)$")
 
-	if tp == "nick" or tp == "ip" or tp == "desc" or tp == "tag" or tp == "conn" or tp == "email" or tp == "share" or tp == "all" then
+	if tp == "nick" or tp == "addr" or tp == "ip" or tp == "code" or tp == "cc" or tp == "desc" or tp == "tag" or tp == "conn" or tp == "mail" or tp == "email" or tp == "size" or tp == "share" or tp == "all" then
+		if tp == "addr" then
+			tp = "ip"
+		elseif tp == "code" then
+			tp = "cc"
+		elseif tp == "mail" then
+			tp = "email"
+		elseif tp == "size" then
+			tp = "share"
+		end
+
 		lim = tonumber (lim)
 
 		if lim < 1 then
@@ -8939,13 +9035,13 @@ function showuserlog (nick, line)
 		str = repsqlchars (str)
 
 		if tp == "all" then -- any part
-			local _, rows = VH:SQLQuery ("select `time`, `nick`, `ip`, `desc`, `tag`, `conn`, `email`, `share` from `" .. tbl_sql ["ulog"] .. "` where `nick` like '%" .. str .. "%' or `ip` like '%" .. str .. "%' or `desc` like '%" .. str .. "%' or `tag` like '%" .. str .. "%' or `conn` like '%" .. str .. "%' or `email` like '%" .. str .. "%' or `share` like '%" .. str .. "%' order by `time` desc limit " .. lim)
+			local _, rows = VH:SQLQuery ("select `time`, `nick`, `ip`, `cc`, `desc`, `tag`, `conn`, `email`, `share` from `" .. tbl_sql ["ulog"] .. "` where `nick` like '%" .. str .. "%' or `ip` like '%" .. str .. "%' or `cc` like '%" .. str .. "%' or `desc` like '%" .. str .. "%' or `tag` like '%" .. str .. "%' or `conn` like '%" .. str .. "%' or `email` like '%" .. str .. "%' or `share` like '%" .. str .. "%' order by `time` desc limit " .. lim)
 
 			if rows > 0 then
 				local res = ""
 
 				for x = 0, rows - 1 do
-					local _, rtime, rnick, rip, rdesc, rtag, rconn, remail, rshare = VH:SQLFetch (x)
+					local _, rtime, rnick, rip, rcc, rdesc, rtag, rconn, remail, rshare = VH:SQLFetch (x)
 					rnick = repnmdcoutchars (rnick)
 					rip = repnmdcoutchars (rip)
 					res = res .. " [ O: " .. fromunixtime (rtime, false) .. " ] [ N: " .. rnick .. " ]"
@@ -8954,23 +9050,27 @@ function showuserlog (nick, line)
 						res = res .. " [ I: " .. rip .. tryipcc (rip, rnick) .. " ]"
 					end
 
-					if rdesc ~= "" then
+					if rcc and rcc ~= "" then
+						res = res .. " [ L: " .. repnmdcoutchars (rcc) .. " ]"
+					end
+
+					if rdesc and rdesc ~= "" then
 						res = res .. " [ D: " .. repnmdcoutchars (rdesc) .. " ]"
 					end
 
-					if rtag ~= "" then
+					if rtag and rtag ~= "" then
 						res = res .. " [ T: " .. repnmdcoutchars (rtag) .. " ]"
 					end
 
-					if rconn ~= "" then
+					if rconn and rconn ~= "" then
 						res = res .. " [ C: " .. repnmdcoutchars (rconn) .. " ]"
 					end
 
-					if remail ~= "" then
+					if remail and remail ~= "" then
 						res = res .. " [ E: " .. repnmdcoutchars (remail) .. " ]"
 					end
 
-					if rshare ~= "0" then
+					if (tonumber (rshare or 0) or 0) > 0 then
 						res = res .. " [ S: " .. repnmdcoutchars (rshare) .. " ]"
 					end
 
@@ -8983,13 +9083,13 @@ function showuserlog (nick, line)
 			end
 
 		else -- specific
-			local _, rows = VH:SQLQuery ("select `time`, `nick`, `ip`, `desc`, `tag`, `conn`, `email`, `share` from `" .. tbl_sql ["ulog"] .. "` where `" .. tp .. "` like '%" .. str .. "%' order by `time` desc limit " .. lim)
+			local _, rows = VH:SQLQuery ("select `time`, `nick`, `ip`, `cc`, `desc`, `tag`, `conn`, `email`, `share` from `" .. tbl_sql ["ulog"] .. "` where `" .. tp .. "` like '%" .. str .. "%' order by `time` desc limit " .. lim)
 
 			if rows > 0 then
 				local res = ""
 
 				for x = 0, rows - 1 do
-					local _, rtime, rnick, rip, rdesc, rtag, rconn, remail, rshare = VH:SQLFetch (x)
+					local _, rtime, rnick, rip, rcc, rdesc, rtag, rconn, remail, rshare = VH:SQLFetch (x)
 					rnick = repnmdcoutchars (rnick)
 					rip = repnmdcoutchars (rip)
 					res = res .. " [ O: " .. fromunixtime (rtime, false) .. " ] [ N: " .. rnick .. " ]"
@@ -8998,23 +9098,27 @@ function showuserlog (nick, line)
 						res = res .. " [ I: " .. rip .. tryipcc (rip, rnick) .. " ]"
 					end
 
-					if rdesc ~= "" then
+					if rcc and rcc ~= "" then
+						res = res .. " [ L: " .. repnmdcoutchars (rcc) .. " ]"
+					end
+
+					if rdesc and rdesc ~= "" then
 						res = res .. " [ D: " .. repnmdcoutchars (rdesc) .. " ]"
 					end
 
-					if rtag ~= "" then
+					if rtag and rtag ~= "" then
 						res = res .. " [ T: " .. repnmdcoutchars (rtag) .. " ]"
 					end
 
-					if rconn ~= "" then
+					if rconn and rconn ~= "" then
 						res = res .. " [ C: " .. repnmdcoutchars (rconn) .. " ]"
 					end
 
-					if remail ~= "" then
+					if remail and remail ~= "" then
 						res = res .. " [ E: " .. repnmdcoutchars (remail) .. " ]"
 					end
 
-					if rshare ~= "0" then
+					if (tonumber (rshare or 0) or 0) > 0 then
 						res = res .. " [ S: " .. repnmdcoutchars (rshare) .. " ]"
 					end
 
@@ -9026,8 +9130,9 @@ function showuserlog (nick, line)
 				commandanswer (nick, gettext ("No user results found."))
 			end
 		end
+
 	else -- unknown type
-		commandanswer (nick, gettext ("Known types are: %s"):format ("nick, ip, desc, tag, conn, email, share " .. gettext ("and") .. " all"))
+		commandanswer (nick, gettext ("Known types are: %s"):format ("nick, addr, code, desc, tag, conn, mail, size " .. gettext ("and") .. " all"))
 	end
 end
 
@@ -11662,44 +11767,40 @@ end
 ----- ---- --- -- -
 
 function parsemyinfoshare (info)
-	local shar = 0
-
-	if info then
-		local _, _, size = info:find ("^%$MyINFO %$ALL [^ ]+ .*%$.*%$.*%$.*%$(%d+)%$$")
-
-		if size then
-			shar = tonumber (size) or 0
-		end
-	end
-
+	local size = info:match ("^%$MyINFO %$ALL [^ ]+ .*%$.*%$.*%$.*%$(.*)%$$")
+	size = tonumber (size or 0) or 0
 	return shar
 end
 
 ----- ---- --- -- -
 
-function parsemyinfo (nick, myinfo)
-local _, _, desc, conn, email, share = string.find (myinfo, "^%$MyINFO %$ALL "..reppatchars (nick).." (.*)%$.*%$(.*)%$(.*)%$(.*)%$$")
-local tag = ""
-conn = conn or ""
-local sts = string.sub (conn, string.len (conn))
-sts = string.byte (sts or string.char (1)) or 1
-conn = string.sub (conn, 1, string.len (conn) - 1)
-desc = desc or ""
-local len = string.len (desc)
+function parsemyinfo (nick, info)
+	local desc, conn, mail, size = info:match ("^%$MyINFO %$ALL [^ ]+ (.*)%$.*%$(.*)%$(.*)%$(.*)%$$")
+	local tag, sts = "", 1
+	desc = desc or ""
+	conn = conn or ""
+	mail = mail or ""
+	size = tonumber (size or 0) or 0
+	local slen = # conn
 
-for x = len, 1, -1 do
-	if (string.sub (desc, x, x) == "<") and (string.sub (desc, len, -1) == ">") then
-		tag = string.sub (desc, x, -1)
-		desc = string.sub (desc, 1, x - 1)
-		break
+	if slen > 0 then
+		sts = (conn:sub (slen):byte () or 1)
+		conn = conn:sub (1, slen - 1)
 	end
-end
 
-tag = tag or ""
-email = email or ""
-if share and tonumber (share) then share = tonumber (share) else share = 0 end
+	slen = # desc
 
-return desc, tag, conn, sts, email, share
+	if slen > 0 then
+		for pos = slen, 1, -1 do
+			if desc:sub (pos, pos) == "<" and desc:sub (slen, -1) == ">" then
+				tag = desc:sub (pos, -1)
+				desc = desc:sub (1, pos - 1)
+				break
+			end
+		end
+	end
+
+	return desc, tag, conn, sts, mail, size
 end
 
 ----- ---- --- -- -
@@ -12260,7 +12361,7 @@ function cleanuptable (nick, line, cls)
 	local tm = os.time () + table_sets ["srvtimediff"]
 
 	if ctype == "kick" then
-		commandanswer (nick, gettext ("This operation might take very long time depending on how much is going to be removed. Please be patient."))
+		commandanswer (nick, gettext ("This operation might take very long time depending on how much is going to be removed, please be patient."))
 		local _, rows = VH:SQLQuery ("select `is_drop` from `kicklist` where `time` < "..seconds)
 
 		if rows > 0 then
@@ -12274,7 +12375,7 @@ function cleanuptable (nick, line, cls)
 		end
 
 	elseif ctype == "ban" then
-		commandanswer (nick, gettext ("This operation might take very long time depending on how much is going to be removed. Please be patient."))
+		commandanswer (nick, gettext ("This operation might take very long time depending on how much is going to be removed, please be patient."))
 		local _, rows = VH:SQLQuery ("select `ban_type` from `banlist` where `date_start` < "..seconds)
 
 		if rows > 0 then
@@ -12288,7 +12389,7 @@ function cleanuptable (nick, line, cls)
 		end
 
 	elseif ctype == "unban" then
-		commandanswer (nick, gettext ("This operation might take very long time depending on how much is going to be removed. Please be patient."))
+		commandanswer (nick, gettext ("This operation might take very long time depending on how much is going to be removed, please be patient."))
 		local _, rows = VH:SQLQuery ("select `ban_type` from `unbanlist` where `date_start` < "..seconds)
 
 		if rows > 0 then
@@ -12305,7 +12406,7 @@ function cleanuptable (nick, line, cls)
 		commandanswer (nick, gettext ("Selected type requires extra parameters. Please refer to manual for more information."))
 
 	elseif ctype == "iplog" then
-		commandanswer (nick, gettext ("This operation might take very long time depending on how much is going to be removed. Please be patient."))
+		commandanswer (nick, gettext ("This operation might take very long time depending on how much is going to be removed, please be patient."))
 		local _, rows = VH:SQLQuery ("select `id` from `pi_iplog` where `date` < "..seconds)
 
 		if rows > 0 then
@@ -12319,7 +12420,7 @@ function cleanuptable (nick, line, cls)
 		end
 
 	elseif ctype == "stats" then
-		commandanswer (nick, gettext ("This operation might take very long time depending on how much is going to be removed. Please be patient."))
+		commandanswer (nick, gettext ("This operation might take very long time depending on how much is going to be removed, please be patient."))
 		local _, rows = VH:SQLQuery ("select `realtime` from `pi_stats` where `realtime` < "..seconds)
 
 		if rows > 0 then
@@ -12333,21 +12434,21 @@ function cleanuptable (nick, line, cls)
 		end
 
 	elseif ctype == "ulog" then
-		commandanswer (nick, gettext ("This operation might take very long time depending on how much is going to be removed. Please be patient."))
-		local _, rows = VH:SQLQuery ("select `id` from `"..tbl_sql ["ulog"].."` where `time` < "..seconds)
+		commandanswer (nick, gettext ("This operation might take very long time depending on how much is going to be removed, please be patient."))
+		local _, rows = VH:SQLQuery ("select `id` from `" .. tbl_sql ["ulog"] .. "` where `time` < " .. tostring (seconds))
 
 		if rows > 0 then
-			VH:SQLQuery ("delete from `"..tbl_sql ["ulog"].."` where `time` < "..seconds)
-			commandanswer (nick, string.format (gettext ("Deleted %d rows: %s"), rows, ctype))
-			opsnotify (table_sets ["classnotiledoact"], string.format (gettext ("%s with class %d deleted %d user log entries older than %d days."), nick, cls, rows, cdays))
-			VH:SQLQuery ("insert into `"..tbl_sql ["conf"].."` (`variable`, `value`) values ('lastcleanulog', "..tm..") on duplicate key update `value` = "..tm)
-			VH:SQLQuery ("insert into `"..tbl_sql ["conf"].."` (`variable`, `value`) values ('limcleanulog', "..cdays..") on duplicate key update `value` = "..cdays)
+			VH:SQLQuery ("delete from `" .. tbl_sql ["ulog"] .. "` where `time` < " .. tostring (seconds))
+			commandanswer (nick, gettext ("Deleted %d rows: %s"):format (rows, ctype))
+			opsnotify (table_sets ["classnotiledoact"], gettext ("%s with class %d deleted %d user log entries older than %d days."):format (nick, cls, rows, cdays))
+			VH:SQLQuery ("insert into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('lastcleanulog', " .. tostring (tm) .. ") on duplicate key update `value` = " .. tostring (tm))
+			VH:SQLQuery ("insert into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('limcleanulog', " .. tostring (cdays) .. ") on duplicate key update `value` = " .. tostring (cdays))
 		else
-			commandanswer (nick, string.format (gettext ("No rows to remove: %s"), ctype))
+			commandanswer (nick, gettext ("No rows to remove: %s"):format (ctype))
 		end
 
 	elseif ctype == "clog" then
-		commandanswer (nick, gettext ("This operation might take very long time depending on how much is going to be removed. Please be patient."))
+		commandanswer (nick, gettext ("This operation might take very long time depending on how much is going to be removed, please be patient."))
 		local _, rows = VH:SQLQuery ("select `id` from `"..tbl_sql ["clog"].."` where `time` < "..seconds)
 
 		if rows > 0 then
@@ -12361,7 +12462,7 @@ function cleanuptable (nick, line, cls)
 		end
 
 	elseif ctype == "anti" then
-		commandanswer (nick, gettext ("This operation might take very long time depending on how much is going to be removed. Please be patient."))
+		commandanswer (nick, gettext ("This operation might take very long time depending on how much is going to be removed, please be patient."))
 		local _, rows = VH:SQLQuery ("select `occurred` from `"..tbl_sql ["anti"].."` where `occurred` < "..cdays)
 
 		if rows > 0 then
@@ -12373,7 +12474,7 @@ function cleanuptable (nick, line, cls)
 		end
 
 	elseif ctype == "sefi" then
-		commandanswer (nick, gettext ("This operation might take very long time depending on how much is going to be removed. Please be patient."))
+		commandanswer (nick, gettext ("This operation might take very long time depending on how much is going to be removed, please be patient."))
 		local _, rows = VH:SQLQuery ("select `occurred` from `"..tbl_sql ["sefi"].."` where `occurred` < "..cdays)
 
 		if rows > 0 then
@@ -12385,7 +12486,7 @@ function cleanuptable (nick, line, cls)
 		end
 
 	elseif ctype == "rel" then
-		commandanswer (nick, gettext ("This operation might take very long time depending on how much is going to be removed. Please be patient."))
+		commandanswer (nick, gettext ("This operation might take very long time depending on how much is going to be removed, please be patient."))
 		local _, rows = VH:SQLQuery ("select `date` from `"..tbl_sql ["rel"].."` where `date` < "..seconds)
 
 		if rows > 0 then
@@ -12427,7 +12528,7 @@ function altcleanuptable (nick, line, cls)
 				seconds = os.difftime (os.time (), (cdays * 24 * 3600))
 			end
 
-			commandanswer (nick, gettext ("This operation might take very long time depending on how much is going to be removed. Please be patient."))
+			commandanswer (nick, gettext ("This operation might take very long time depending on how much is going to be removed, please be patient."))
 			local rows = 0
 
 			if cdays == "*" then
@@ -12717,7 +12818,7 @@ local climt = tonumber (climt)
 local tm = os.time () + table_sets ["srvtimediff"]
 
 if ctype == "chat" then
-commandanswer (nick, gettext ("This operation might take very long time depending on how much is going to be removed. Please be patient."))
+commandanswer (nick, gettext ("This operation might take very long time depending on how much is going to be removed, please be patient."))
 local rows = 0
 
 if climt == 0 then
@@ -12742,7 +12843,7 @@ commandanswer (nick, string.format (gettext ("No rows to remove: %s"), ctype))
 end
 
 elseif ctype == "share" then
-commandanswer (nick, gettext ("This operation might take very long time depending on how much is going to be removed. Please be patient."))
+commandanswer (nick, gettext ("This operation might take very long time depending on how much is going to be removed, please be patient."))
 local rows, cbytes = 0, 0
 
 if climt == 0 then
@@ -12768,7 +12869,7 @@ commandanswer (nick, string.format (gettext ("No rows to remove: %s"), ctype))
 end
 
 elseif ctype == "op" then
-commandanswer (nick, gettext ("This operation might take very long time depending on how much is going to be removed. Please be patient."))
+commandanswer (nick, gettext ("This operation might take very long time depending on how much is going to be removed, please be patient."))
 local rows = 0
 
 if climt == 0 then
@@ -12793,7 +12894,7 @@ commandanswer (nick, string.format (gettext ("No rows to remove: %s"), ctype))
 end
 
 elseif ctype == "sear" then
-	commandanswer (nick, gettext ("This operation might take very long time depending on how much is going to be removed. Please be patient."))
+	commandanswer (nick, gettext ("This operation might take very long time depending on how much is going to be removed, please be patient."))
 	local rows = 0
 
 	if climt == 0 then
@@ -12818,7 +12919,7 @@ elseif ctype == "sear" then
 	end
 
 elseif ctype == "word" then
-commandanswer (nick, gettext ("This operation might take very long time depending on how much is going to be removed. Please be patient."))
+commandanswer (nick, gettext ("This operation might take very long time depending on how much is going to be removed, please be patient."))
 local rows = 0
 
 if climt == 0 then
@@ -17983,7 +18084,7 @@ stats = stats.."\r\n "..string.format (gettext ("Size of kicks table: %d [ %s: %
 stats = stats.."\r\n "..string.format (gettext ("Size of bans table: %d [ %s: %d @ %s ]"), counttable ("banlist"), "C", (getledoconf ("limcleanban") or 0), fromunixtime ((getledoconf ("lastcleanban") or 0), true))
 stats = stats.."\r\n "..string.format (gettext ("Size of unbans table: %d [ %s: %d @ %s ]"), counttable ("unbanlist"), "C", (getledoconf ("limcleanunban") or 0), fromunixtime ((getledoconf ("lastcleanunban") or 0), true))
 stats = stats.."\r\n "..string.format (gettext ("Size of registered users table: %d [ %s: %d @ %s ]"), counttable ("reglist"), "C", (getledoconf ("limcleanreg") or 0), fromunixtime ((getledoconf ("lastcleanreg") or 0), true))
-stats = stats.."\r\n "..string.format (gettext ("Size of user log table: %d [ %s: %d @ %s ]"), counttable (tbl_sql ["ulog"]), "C", (getledoconf ("limcleanulog") or 0), fromunixtime ((getledoconf ("lastcleanulog") or 0), true))
+	stats = stats .. "\r\n " .. gettext ("Size of user log table: %d [ %s: %d @ %s ]"):format (counttable (tbl_sql ["ulog"]), "C", (getledoconf ("limcleanulog") or 0), fromunixtime ((getledoconf ("lastcleanulog") or 0), true))
 stats = stats.."\r\n "..string.format (gettext ("Size of command log table: %d [ %s: %d @ %s ]"), counttable (tbl_sql ["clog"]), "C", (getledoconf ("limcleanclog") or 0), fromunixtime ((getledoconf ("lastcleanclog") or 0), true))
 stats = stats.."\r\n "..string.format (gettext ("Size of release table: %d [ %s: %d @ %s ]"), counttable (tbl_sql ["rel"]), "C", (getledoconf ("limcleanrel") or 0), fromunixtime ((getledoconf ("lastcleanrel") or 0), true))
 stats = stats.."\r\n "..string.format (gettext ("Size of chat ranks table: %d [ %s: %d @ %s ]"), counttable (tbl_sql ["chran"]), "C", (getledoconf ("limcleanchran") or 0), fromunixtime ((getledoconf ("lastcleanchran") or 0), true))
@@ -18347,7 +18448,7 @@ VH:SQLQuery ("create table if not exists `"..tbl_sql ["cmd"].."` (`command` varc
 VH:SQLQuery ("create table if not exists `"..tbl_sql ["cmdex"].."` (`exception` varchar(255) not null, `occurred` bigint(20) unsigned not null default 0, primary key (`exception`)) engine = myisam default character set utf8 collate utf8_unicode_ci")
 
 	-- user log
-	VH:SQLQuery ("create table if not exists `" .. tbl_sql ["ulog"] .. "` (`id` bigint(20) unsigned not null auto_increment primary key, `time` bigint(20) unsigned not null, `nick` varchar(255) not null, `ip` varchar(15) not null, `desc` varchar(255) not null, `tag` varchar(255) not null, `conn` varchar(255) not null, `email` varchar(255) not null, `share` bigint(20) unsigned not null) engine = myisam default character set utf8 collate utf8_unicode_ci")
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql ["ulog"] .. "` (`id` bigint(20) unsigned not null auto_increment primary key, `time` bigint(20) unsigned not null, `nick` varchar(255) not null, `ip` varchar(15) not null, `cc` varchar(2) null, `desc` varchar(255) null, `tag` varchar(255) null, `conn` varchar(255) null, `email` varchar(255) null, `share` bigint(20) unsigned not null default 0) engine = myisam default character set utf8 collate utf8_unicode_ci")
 
 -- command log
 VH:SQLQuery ("create table if not exists `"..tbl_sql ["clog"].."` (`id` bigint(20) unsigned not null auto_increment, `time` bigint(20) unsigned not null, `nick` varchar(255) not null, `class` tinyint(2) unsigned not null, `command` text not null, primary key (`id`)) engine = myisam default character set utf8 collate utf8_unicode_ci")
@@ -18670,6 +18771,12 @@ VH:SQLQuery ("alter ignore table `"..tbl_sql ["cmdex"].."` change column `occurr
 
 	-- user log
 	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["ulog"] .. "` change column `time` `time` bigint(20) unsigned not null") -- time
+	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["ulog"] .. "` add column `cc` varchar(2) null after `ip`") -- cc
+	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["ulog"] .. "` change column `desc` `desc` varchar(255) null") -- desc
+	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["ulog"] .. "` change column `tag` `tag` varchar(255) null") -- tag
+	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["ulog"] .. "` change column `conn` `conn` varchar(255) null") -- conn
+	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["ulog"] .. "` change column `email` `email` varchar(255) null") -- email
+	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["ulog"] .. "` change column `share` `share` bigint(20) unsigned not null default 0") -- share
 
 -- command log
 -- not added
@@ -21245,8 +21352,8 @@ end
 
 ----- ---- --- -- -
 
-function sqlemptnull (val)
-	if not val or val == "" then
+function sqlemptnull (val, cc)
+	if not val or val == "" or (cc and val == "--") then
 		return "null"
 	else
 		return "'" .. repsqlchars (val) .. "'"
