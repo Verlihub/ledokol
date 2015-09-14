@@ -6,7 +6,7 @@
 
 Current topic: %s|
 Current topic set by %s: %s|
-This operation might take very long time depending on how much is going to be removed. Please be patient.|
+This operation might take very long time depending on how much is going to be removed, please be patient.|
 days|
 %s with class %d deleted %d IP logger plugin entries older than %d days.|
 %s with class %d deleted %d unbans older than %d days.|
