@@ -11769,7 +11769,7 @@ end
 function parsemyinfoshare (info)
 	local size = info:match ("^%$MyINFO %$ALL [^ ]+ .*%$.*%$.*%$.*%$(.*)%$$")
 	size = tonumber (size or 0) or 0
-	return shar
+	return size
 end
 
 ----- ---- --- -- -
