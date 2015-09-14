@@ -6,7 +6,7 @@
 
 Current topic: %s|Данная тема: %s
 Current topic set by %s: %s|Данная тема установленная %s: %s
-This operation might take very long time depending on how much is going to be removed. Please be patient.|Время выполнения данной операции зависит от количества удаляемых данных. Пожалуйста, дождитесь выполнения данной команды.
+This operation might take very long time depending on how much is going to be removed, please be patient.|Время выполнения данной операции может занять очень много времени в зависимости от количества удаляемых данных, пожалуйста будьте терпеливы.
 days|дней
 %s with class %d deleted %d IP logger plugin entries older than %d days.|Пользователь %s с классом %d удалил %d записей плагина IP logger которые являлись старше %d дней.
 %s with class %d deleted %d unbans older than %d days.|Пользователь %s %d-го класса удалил %d записей о снятых банах. Удалялись записи старше %d дней.
