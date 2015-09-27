@@ -1045,7 +1045,7 @@ end
 function Main (file)
 	table_othsets ["locked"] = loadcomponents ()
 
-	if table_othsets ["locked"] == true then
+	if table_othsets ["locked"] then
 		return 1
 	end
 
@@ -1348,16 +1348,16 @@ end
 ----- ---- --- -- -
 
 function UnLoad ()
-	if table_othsets ["locked"] == true then
-		return 1
-	end
-
-	if table_othsets ["restart"] == true then -- restart mode
+	if table_othsets ["locked"] then
 		return 1
 	end
 
 	if table_sets ["avsearchint"] > 0 and table_sets ["avsearservaddr"] ~= "" then -- antivirus search server
 		avsearservstop ()
+	end
+
+	if table_othsets ["restart"] then
+		return 1
 	end
 
 	resetcustnicks ()
@@ -1370,9 +1370,9 @@ function UnLoad ()
 		uninstallccrooms ()
 	end
 
-	if (table_sets ["timebotint"] > 0) and table_othsets ["lasttimenick"] then
+	if table_sets ["timebotint"] > 0 and table_othsets ["lasttimenick"] then
 		if table_sets ["fasttimebot"] == 1 then
-			VH:SendToClass ("$Quit "..table_othsets ["lasttimenick"].."|", 0, 10)
+			VH:SendToClass ("$Quit " .. table_othsets ["lasttimenick"] .. "|", 0, 10)
 		else
 			delhubrobot (table_othsets ["lasttimenick"])
 		end
@@ -1387,15 +1387,24 @@ end
 
 ----- ---- --- -- -
 
-function VH_OnNewConn (ip)
-	if table_othsets ["locked"] == true then return 1 end
+function VH_OnUnLoad (code)
+	table_othsets ["restart"] = true
+	return 1
+end
 
-	if table_sets ["enablehardban"] == 1 then -- hard ban
-		if checkhban (ip) == true then return 0 end
+----- ---- --- -- -
+
+function VH_OnNewConn (addr)
+	if table_othsets ["locked"] then
+		return 1
 	end
 
-	if table_sets ["useblacklist"] == 1 then -- blacklist
-		if checkblacklist (ip) == true then return 0 end
+	if table_sets ["enablehardban"] == 1 and checkhban (addr) then -- hard ban
+		return 0
+	end
+
+	if table_sets ["useblacklist"] == 1 and checkblacklist (addr) then -- blacklist
+		return 0
 	end
 
 	return 1
@@ -1403,12 +1412,8 @@ end
 
 ----- ---- --- -- -
 
-function VH_OnCloseConn (ip, nick)
-	--if table_othsets ["locked"] == true then
-		--return 1
-	--end
-
-	--if table_othsets ["restart"] == true then -- restart mode
+function VH_OnCloseConn (addr, nick)
+	--if table_othsets ["locked"] or table_othsets ["restart"] then
 		--return 1
 	--end
 
@@ -3094,57 +3099,67 @@ elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["ledostats
 
 	----- ---- --- -- -
 
-elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["ledokoluninstallisconfirmed"].."$") then
+	elseif data:match ("^" .. table_othsets ["optrig"] .. table_cmnds ["ledokoluninstallisconfirmed"] .. "$") then
 
--- dont use it unless you know what it does, you can fuck up all ledokol tables in one step
--- this action completely deletes all ledokol tables and files, and locks the script
+		-- dont use it unless you know what it does, you can fuck up all ledokol tables in one step
+		-- this action completely deletes all ledokol tables and files, and locks the script
 
-	if ucl == 10 then
-		table_othsets ["locked"] = true -- lock the script
-		donotifycmd (nick, data, 10, ucl)
-		if table_sets ["chatrunning"] == 1 then uninstallchatrooms () end
-		if table_sets ["ccroomrunning"] == 1 then uninstallccrooms () end
+		if ucl == 10 then
+			table_othsets ["locked"] = true -- lock the script
+			donotifycmd (nick, data, 10, ucl)
 
-		if (table_sets ["timebotint"] > 0) and table_othsets ["lasttimenick"] then
-			if table_sets ["fasttimebot"] == 1 then
-				VH:SendToClass ("$Quit "..table_othsets ["lasttimenick"].."|", 0, 10)
+			if table_sets ["avsearchint"] > 0 and table_sets ["avsearservaddr"] ~= "" then -- antivirus search server
+				avsearservstop ()
+			end
+
+			if table_sets ["chatrunning"] == 1 then
+				uninstallchatrooms ()
+			end
+
+			if table_sets ["ccroomrunning"] == 1 then
+				uninstallccrooms ()
+			end
+
+			if table_sets ["timebotint"] > 0 and table_othsets ["lasttimenick"] then
+				if table_sets ["fasttimebot"] == 1 then
+					VH:SendToClass ("$Quit " .. table_othsets ["lasttimenick"] .. "|", 0, 10)
+				else
+					delhubrobot (table_othsets ["lasttimenick"])
+				end
+
+				table_othsets ["lasttimenick"] = nil
+			end
+
+			if table_sets ["addledobot"] == 1 then
+				delhubrobot (table_sets ["ledobotnick"])
+			end
+
+			if table_sets ["addspecialver"] == 1 then
+				VH:SetConfig ("config", "hub_version_special", "")
+			end
+
+			droptables () -- drop all tables
+			local file = io.open (table_othsets ["cfgdir"] .. "scripts/" .. table_othsets ["luafile"], "r") -- open script file
+
+			if file then
+				file:close ()
+				os.remove (table_othsets ["cfgdir"] .. "scripts/" .. table_othsets ["luafile"]) -- delete script file
+
+				if table_sets ["langfileprefix"] ~= "" then -- delete language files
+					os.remove (table_othsets ["cfgdir"] .. "scripts/" .. table_othsets ["langfilefmt"]:format (table_sets ["langfileprefix"]))
+				end
+
+				commandanswer (nick, gettext ("%s tables are now deleted and script is locked."):format ("Ledokol") .. " " .. gettext ("Please unload the script to finish.") .. " " .. gettext ("Good luck.")) -- finish
 			else
-				delhubrobot (table_othsets ["lasttimenick"])
+				commandanswer (nick, gettext ("%s tables are now deleted and script is locked."):format ("Ledokol") .. " " .. gettext ("Please unload the script and remove it from scripts directory.") .. " " .. gettext ("Good luck.")) -- finish
 			end
-
-			table_othsets ["lasttimenick"] = nil
-		end
-
-		if table_sets ["addledobot"] == 1 then
-			delhubrobot (table_sets ["ledobotnick"])
-		end
-
-		if table_sets ["addspecialver"] == 1 then
-			VH:SetConfig ("config", "hub_version_special", "")
-		end
-
-		droptables () -- drop all tables
-		local f = io.open (table_othsets ["cfgdir"].."scripts/" .. table_othsets ["luafile"], "r") -- open script file
-
-		if f then
-			f:close ()
-			os.remove (table_othsets ["cfgdir"] .. "scripts/" .. table_othsets ["luafile"]) -- delete script file
-
-			if table_sets ["langfileprefix"] ~= "" then -- delete language files
-				os.remove (table_othsets ["cfgdir"] .. "scripts/" .. table_othsets ["langfilefmt"]:format (table_sets ["langfileprefix"]))
-			end
-
-			commandanswer (nick, gettext ("%s tables are now deleted and script is locked."):format ("Ledokol") .. " " .. gettext ("Please unload the script to finish.") .. " " .. gettext ("Good luck.")) -- finish
 		else
-			commandanswer (nick, gettext ("%s tables are now deleted and script is locked."):format ("Ledokol") .. " " .. gettext ("Please unload the script and remove it from scripts directory.") .. " " .. gettext ("Good luck.")) -- finish
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
-	else
-		commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
-	end
 
-	return 0
+		return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
 
 elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["ledoset"].." %S+ .*$") then
 if ucl >= table_sets ["mincommandclass"] then
@@ -3625,13 +3640,13 @@ elseif string.find (data, "^"..table_othsets ["optrig"].."=%s+%S+ .*$") then
 
 	----- ---- --- -- -
 
-	elseif data:find ("^" .. table_othsets ["optrig"] .. "restart$") or data:find ("^" .. table_othsets ["optrig"] .. "quit$") or data:find ("^" .. table_othsets ["optrig"] .. "core_dump$") then
+	elseif data:match ("^" .. table_othsets ["optrig"] .. "restart$") or data:match ("^" .. table_othsets ["optrig"] .. "quit$") or data:match ("^" .. table_othsets ["optrig"] .. "core_dump$") then
 		if ucl == 10 then
 			donotifycmd (nick, data, 0, ucl)
 			table_othsets ["restart"] = true
-		else
-			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
-			return 0
+		--else
+			--commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+			--return 0
 		end
 
 	----- ---- --- -- -
@@ -4330,7 +4345,7 @@ end
 ----- ---- --- -- -
 
 function VH_OnHubCommand (nick, data, op, pm)
-	if table_othsets ["locked"] == true then
+	if table_othsets ["locked"] then
 		return 1
 	end
 
@@ -4720,11 +4735,7 @@ end
 ----- ---- --- -- -
 
 function VH_OnUserLogout (nick, uip)
-	if table_othsets ["locked"] then
-		return 1
-	end
-
-	if table_othsets ["restart"] then -- restart mode
+	if table_othsets ["locked"] or table_othsets ["restart"] then
 		return 1
 	end
 
@@ -4788,7 +4799,10 @@ end
 ----- ---- --- -- -
 
 function VH_OnParsedMsgSearch (nick, data)
-	if table_othsets ["locked"] == true then return 1 end
+	if table_othsets ["locked"] then
+		return 1
+	end
+
 	local cls, ip, prot, gotcls, gotip, gotprot = 0, "", false, false, false, false
 
 	if table_sets ["enableipwatch"] == 1 then -- ip watch
@@ -4858,7 +4872,9 @@ end
 ----- ---- --- -- -
 
 function VH_OnParsedMsgValidateNick (ip, data)
-	if table_othsets ["locked"] == true then return 1 end
+	if table_othsets ["locked"] then
+		return 1
+	end
 
 	if table_sets ["enableipwatch"] == 1 then -- ip watch
 		checkipwat (nil, ip, data) -- do not return 0, is a login sequence
@@ -4873,7 +4889,9 @@ end
 ----- ---- --- -- -
 
 function VH_OnParsedMsgSupport (ip, data)
-	if table_othsets ["locked"] == true then return 1 end
+	if table_othsets ["locked"] then
+		return 1
+	end
 
 	if table_sets ["enableipwatch"] == 1 then -- ip watch
 		checkipwat (nil, ip, data) -- do not return 0, is a login sequence
@@ -4985,15 +5003,18 @@ end
 ----- ---- --- -- -
 
 function VH_OnHubName (nick, name)
-	--if table_othsets ["locked"] == true then return 1 end
-	-- use this for rolling topic in future
+	--if table_othsets ["locked"] then
+		--return 1
+	--end
+
+	-- todo: use this for rolling topic in future
 	return 1
 end
 
 ----- ---- --- -- -
 
 function VH_OnTimer (msec)
-	if table_othsets ["locked"] == true then
+	if table_othsets ["locked"] then
 		return 1
 	end
 
@@ -5140,7 +5161,7 @@ end
 ----- ---- --- -- -
 
 function VH_OnUnknownMsg (nick, data, isnick, ipaddr)
-	if table_othsets ["locked"] == true then
+	if table_othsets ["locked"] then
 		return 1
 	end
 
@@ -5209,7 +5230,7 @@ end
 ----- ---- --- -- -
 
 function VH_OnParsedMsgAnyEx (ip, data)
-	--if table_othsets ["locked"] == true then
+	--if table_othsets ["locked"] then
 		--return 1
 	--end
 
@@ -5220,7 +5241,9 @@ end
 ----- ---- --- -- -
 
 function VH_OnParsedMsgAny (nick, data)
-	if table_othsets ["locked"] == true then return 1 end
+	if table_othsets ["locked"] then
+		return 1
+	end
 
 	if string.find (data, "^<") then -- main chat
 		local _, _, cmd = string.find (data, "^<"..reppatchars (nick).."> ("..table_othsets ["optrig"]..".+)$")
@@ -5519,7 +5542,10 @@ end
 ----- ---- --- -- -
 
 function VH_OnOperatorKicks (op, nick, data)
-if table_othsets ["locked"] == true then return 1 end
+	if table_othsets ["locked"] then
+		return 1
+	end
+
 local ip = getip (nick)
 
 if isprotected (nick, ip) == true then -- protected
@@ -9051,7 +9077,7 @@ function showuserlog (nick, line)
 					end
 
 					if rcc and rcc ~= "" then
-						res = res .. " [ L: " .. repnmdcoutchars (rcc) .. " ]"
+						res = res .. " [ L: " .. repnmdcoutchars (rcc .. "=" .. (cc_names [rcc] or gettext ("Unknown country"))) .. " ]"
 					end
 
 					if rdesc and rdesc ~= "" then
@@ -9099,7 +9125,7 @@ function showuserlog (nick, line)
 					end
 
 					if rcc and rcc ~= "" then
-						res = res .. " [ L: " .. repnmdcoutchars (rcc) .. " ]"
+						res = res .. " [ L: " .. repnmdcoutchars (rcc .. "=" .. (cc_names [rcc] or gettext ("Unknown country"))) .. " ]"
 					end
 
 					if rdesc and rdesc ~= "" then
