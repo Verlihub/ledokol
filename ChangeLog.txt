@@ -1,4 +1,4 @@
-[ 2.8.7 :: 2015-##-## ]
+[ 2.8.7 :: 2015-10-03 ]
 
 Fixed: rename command parameters when used from user menu, report by KCAHDEP
 Fixed: Pingers can use +report command in PM to hub security bot when gag is set, report by KCAHDEP
