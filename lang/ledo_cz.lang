@@ -6,7 +6,7 @@
 
 Current topic: %s|Aktualni topic: %s
 Current topic set by %s: %s|Aktualni topic nastavil %s: %s
-This operation might take very long time depending on how much is going to be removed. Please be patient.|Tato operace muze trvat velmi dlouho, podle toho, kolik dat se bude odstranovat. Bud trpelivy.
+This operation might take very long time depending on how much is going to be removed, please be patient.|Tato operace muze trvat velmi dlouho, podle toho, kolik dat se bude odstranovat. Bud trpelivy.
 days|dny
 %s with class %d deleted %d IP logger plugin entries older than %d days.|%s s class %d smazal %d IP logger plugin zaznamu starsich nez %d dnu.
 %s with class %d deleted %d unbans older than %d days.|%s s class %d smazal %d unbanu starsich nez %d dnu.
@@ -1114,3 +1114,6 @@ Deleted %d chatroom history messages: %s|Smazano %d zprav v historii chatroomu: 
 %s with class %d deleted %d chatroom history messages: %s|%s s class %d smazal %d zprav z chatroom historie: %s
 Set your chat mode|Nastavit vlastni chat mode
 real|skutecny
+Specified country code isn't valid: %s|Vybrany country code neni platny: %s
+You can't block user who don't share anything: %s|Nemuzes zablokovat uzivatele ktery nic nesdili: %s
+You can't kick user who don't share anything: %s|Nemuzes vykopnout uzivatele ktery nic nesdili: %s
