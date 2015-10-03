@@ -6,7 +6,7 @@
 
 Current topic: %s|Huidige topic gemaakt door %s: %s
 Current topic set by %s: %s|Huidige topic gemaakt door %s: %s
-This operation might take very long time depending on how much is going to be removed. Please be patient.|Deze operatie kan zeer lang duren, afhankelijk van hoeveel zal worden verwijderd . Wees geduldig .
+This operation might take very long time depending on how much is going to be removed, please be patient.|Deze operatie kan erg lang duren, afhankelijk van hoeveel zal worden verwijderd, wees geduldig .
 days|Dagen
 %s with class %d deleted %d IP logger plugin entries older than %d days.|%s met clas %d verwijderd %d IP logger plugin entries ouder dan %d dagen
 %s with class %d deleted %d unbans older than %d days.|%s met class %d verwijderde %d unbans ouder dan %d dagen.
@@ -1114,3 +1114,6 @@ Deleted %d chatroom history messages: %s|Verwijderde %d chatroom history bericht
 %s with class %d deleted %d chatroom history messages: %s|%s met class %d verwijderde %d chatroom history berichten: %s
 Set your chat mode|Bepaal je chat mode
 real|echt
+Specified country code isn't valid: %s|Gespecificeerd land code is niet geldig: %s
+You can't block user who don't share anything: %s|Je kunt geen gebruikers blokkeren  als deze niets delen: %s
+You can't kick user who don't share anything: %s|Je kunt geen gebruikers kicken als deze niets delen: %s
