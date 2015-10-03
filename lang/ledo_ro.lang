@@ -6,7 +6,7 @@
 
 Current topic: %s|Topicul actual: %s
 Current topic set by %s: %s|Topicul actual setat de %s: %s
-This operation might take very long time depending on how much is going to be removed. Please be patient.|Aceastг operaюiune poate dura un timp оndelungat, depinde cвt de mare este cantitatea de date ce trebuie єtearsг. Te rog sг ai rгbdare.
+This operation might take very long time depending on how much is going to be removed, please be patient.|Aceastг operaюiune s-ar putea sг dureze ceva mai mult timp, depinde cвt de mult va trebui єters. Te rog sг ai rгbdare.
 days|zile
 %s with class %d deleted %d IP logger plugin entries older than %d days.|%s cu clasa %d a єters %d intrгri оn logul IP-urilor mai vechi de %d zile.
 %s with class %d deleted %d unbans older than %d days.|%s cu clasa %d a єters %d unban-uri mai vechi de %d zile.
@@ -1114,3 +1114,6 @@ Deleted %d chatroom history messages: %s|S-au єters %d rвnduri ale istoricului
 %s with class %d deleted %d chatroom history messages: %s|%s cu clasa %d a єters %d rвnduri ale istoricului de mesaje: %s
 Set your chat mode|Seteazг-юi modul tгu de chat
 real|adevгrat
+Specified country code isn't valid: %s|Codul de юarг specificat nu este valid: %s
+You can't block user who don't share anything: %s|Nu poюi bloca un user ce nu shareazг: %s
+You can't kick user who don't share anything: %s|Nu poюi kick-ui un user ce nu shareazг: %s
