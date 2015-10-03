@@ -6,7 +6,7 @@
 
 Current topic: %s|Nuvarande tema: %s
 Current topic set by %s: %s|Nuvarande tema av %s: %s
-This operation might take very long time depending on how much is going to be removed. Please be patient.|Den hдr operationen kan ta mycket lеng tid beroende pе hur mycket som ska tas bort. Vдnligen var tеlamodig.
+This operation might take very long time depending on how much is going to be removed, please be patient.|
 days|dagar
 %s with class %d deleted %d IP logger plugin entries older than %d days.|%s med klass %d tog bort %d rader frеn IP logger insticksprogrammet som var дldre дn %d dagar.
 %s with class %d deleted %d unbans older than %d days.|%s med klass %d tog bort %s rader frеn unban listan som var дldre дn %d dagar.
@@ -1114,3 +1114,6 @@ Deleted %d chatroom history messages: %s|
 %s with class %d deleted %d chatroom history messages: %s|
 Set your chat mode|
 real|
+Specified country code isn't valid: %s|
+You can't block user who don't share anything: %s|
+You can't kick user who don't share anything: %s|
