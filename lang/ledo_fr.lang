@@ -6,7 +6,7 @@
 
 Current topic: %s|Topic actuel: %s
 Current topic set by %s: %s|Topic actuel fixй par %s: %s
-This operation might take very long time depending on how much is going to be removed. Please be patient.|Cette opйration peut prendre quelques minutes avant d'кtre terminйe. Veuillez patienter...
+This operation might take very long time depending on how much is going to be removed, please be patient.|
 days|jours
 %s with class %d deleted %d IP logger plugin entries older than %d days.|%s de profil %d supprimйe %d  %s IP enregistrйe depuis plus de %d  jours.
 %s with class %d deleted %d unbans older than %d days.|%s de profil %d supprimйe %d dй-bannir tous les utilisateurs depuis plus de %d jours.
@@ -1114,3 +1114,6 @@ Deleted %d chatroom history messages: %s|Supprimйs %d l'historique des messages
 %s with class %d deleted %d chatroom history messages: %s|%s avec la classe %d a supprimйs %d les messages d'historique: %s
 Set your chat mode|Rйglez votre mode chat
 real|rйel
+Specified country code isn't valid: %s|Code pays spйcifiй est incorrect: %s
+You can't block user who don't share anything: %s|Vous ne pouvez pas bloquer l'utilisateur qui ne rien partager: %s
+You can't kick user who don't share anything: %s|Vous ne pouvez pas kicker l' utilisateur qui ne partagent rien: %s
