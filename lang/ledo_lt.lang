@@ -6,7 +6,7 @@
 
 Current topic: %s|Dabartinis topic: %s
 Current topic set by %s: %s|Dabartini topic nustate %s: %s
-This operation might take very long time depending on how much is going to be removed. Please be patient.|Рi operacija gali uюtrukti labai ilgai (priklausomai nuo to, kiek bus paрalinta). Praрome kantrybлs.
+This operation might take very long time depending on how much is going to be removed, please be patient.|
 days|dienos
 %s with class %d deleted %d IP logger plugin entries older than %d days.|%s su klase %d istryne %d IP logerio irasus senesnius nei %d dienos.
 %s with class %d deleted %d unbans older than %d days.|%s su klase %d istryne %d nuimtus banus senesnius nei %d dienos.
@@ -1114,3 +1114,6 @@ Deleted %d chatroom history messages: %s|
 %s with class %d deleted %d chatroom history messages: %s|
 Set your chat mode|
 real|
+Specified country code isn't valid: %s|
+You can't block user who don't share anything: %s|
+You can't kick user who don't share anything: %s|
