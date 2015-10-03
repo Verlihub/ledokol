@@ -1,12 +1,12 @@
 # Language: tr_TR
 # Charset: CP1254
 # Version: 2.8.7
-# Author: Mauron
-# Email: <unknown>
+# Author: mauron
+# Email: mauron@vmail.me
 
 Current topic: %s|Gьncel konu: %s
 Current topic set by %s: %s|Gьncel konu %s tarafэndan ayarlandэ: %s
-This operation might take very long time depending on how much is going to be removed. Please be patient.|Bu iюlem kaldэrэlacak црelere gцre uzun zaman alabilir. Lьtfen sabэrlэ olun.
+This operation might take very long time depending on how much is going to be removed, please be patient.|Bu iюlem kaldэrэlacak црelere gцre uzun zaman alabilir, lьtfen sabэrlэ olun.
 days|gьn
 %s with class %d deleted %d IP logger plugin entries older than %d days.|%d sэnэflэ %s, %d IP kьtьkleyici eklentisi unsurunu sildi ki bunlar %d gьnden daha eskiydi.
 %s with class %d deleted %d unbans older than %d days.|%d sэnэflэ %s, %d yasaklama kaldэrэmэnэ sildi ki bunlar %d gьnden daha eskiydi.
@@ -1114,3 +1114,6 @@ Deleted %d chatroom history messages: %s|%d sohbet odasэ mesajэ silindi: %s
 %s with class %d deleted %d chatroom history messages: %s|%d sэnэflэ %s, %d sohbet odasэ mesajэnэ sildi: %s
 Set your chat mode|Sohbet kipinizi ayarlayэn
 real|hakiki
+Specified country code isn't valid: %s|Belirtilen ьlke kodu geзerli deрil: %s
+You can't block user who don't share anything: %s|Hiзbir юey paylaюmayan kullanэcэyэ engelleyemezsiniz: %s
+You can't kick user who don't share anything: %s|Hiзbir юey paylaюmayan kullancэyэ kovamazsэnэz: %s
