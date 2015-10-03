@@ -6,7 +6,7 @@
 
 Current topic: %s|Aktualny topik: %s 
 Current topic set by %s: %s|Obecny topic ustawiony przez %s: %s
-This operation might take very long time depending on how much is going to be removed. Please be patient.|Ta operacja moze dlugo potrwac w zaleznosci jak duzo zostanie usuniete. Badz cierpliwy.
+This operation might take very long time depending on how much is going to be removed, please be patient.|Operacja ta moze potrwac bardzo dіugo w zaleznosci od tego ile ma byc usunietych, prosimy o cierpliwosc.
 days|dni
 %s with class %d deleted %d IP logger plugin entries older than %d days.|%s z klasa %d usunol %d wpisy pluginu logu IP starsze niz %d dni.
 %s with class %d deleted %d unbans older than %d days.|%s z klasa %d usunol %d unbany starsze niz %d dni.
@@ -1114,3 +1114,6 @@ Deleted %d chatroom history messages: %s|Usunieto %d wiadomosci historii czatu: 
 %s with class %d deleted %d chatroom history messages: %s|%s z klasa %d usunal %d wiadomosci z historii czata: %s
 Set your chat mode|Ustaw tryb czata
 real|prawdziwy
+Specified country code isn't valid: %s|Podany kod kraju jest niewazny: %s
+You can't block user who don't share anything: %s|Nie mozna zablokowac uzytkownika, ktory nic nie udostepnia: %s
+You can't kick user who don't share anything: %s|Nie mozna kopnac uzytkownika, ktory nic nie udostepnia: %s
