@@ -59,7 +59,7 @@ Doxtur, chaos, sphinx, Zorro, W1ZaRd, S0RiN, MaxFox, Krzychu,
 -- global storage variables and tables >>
 ---------------------------------------------------------------------
 
-ver_ledo = "2.8.7" -- ledokol version
+ver_ledo = "2.8.8" -- ledokol version
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -10062,24 +10062,25 @@ function addmchistoryline (nick, real, line, refl)
 		return
 	end
 
+	local count = counttable (tbl_sql ["mchist"])
+	local addr = getip (real)
 	local data = line:gsub ("is kicking", reprexpchars ("is" .. string.char (160) .. "kicking"))
-	local _, rows = VH:SQLQuery ("select `id` from `" .. tbl_sql ["mchist"] .. "` order by `date` asc")
-	local ip = getip (real)
 
-	if rows >= table_sets ["histlimit"] then
-		local _, id = VH:SQLFetch (0)
+	if count > 0 and getclass (real) < 3 then
+		VH:SQLQuery ("select `realnick`, `nick`, `ip`, `message` from `" .. tbl_sql ["mchist"] .. "` order by `date` desc limit 1") -- get last message
+		local _, last_real, last_nick, last_addr, last_data = VH:SQLFetch (0)
 
-		if ip == "0.0.0.0" then
-			VH:SQLQuery ("update `" .. tbl_sql ["mchist"] .. "` set `realnick` = '" .. repsqlchars (real) .. "', `nick` = '" .. repsqlchars (nick) .. "', `ip` = null, `date` = " .. tostring (os.time () + table_sets ["srvtimediff"]) .. ", `message` = '" .. repsqlchars (data) .. "' where `id` = " .. tostring (id))
-		else
-			VH:SQLQuery ("update `" .. tbl_sql ["mchist"] .. "` set `realnick` = '" .. repsqlchars (real) .. "', `nick` = '" .. repsqlchars (nick) .. "', `ip` = '" .. repsqlchars (ip) .. "', `date` = " .. tostring (os.time () + table_sets ["srvtimediff"]) .. ", `message` = '" .. repsqlchars (data) .. "' where `id` = " .. tostring (id))
+		if last_real == real and last_nick == nick and last_addr == addr and last_data == data then -- skip same message
+			return
 		end
+	end
+
+	if count >= table_sets ["histlimit"] then
+		VH:SQLQuery ("select `id` from `" .. tbl_sql ["mchist"] .. "` order by `date` asc limit 1") -- get oldest message
+		local _, old_id = VH:SQLFetch (0)
+		VH:SQLQuery ("update `" .. tbl_sql ["mchist"] .. "` set `realnick` = '" .. repsqlchars (real) .. "', `nick` = '" .. repsqlchars (nick) .. "', `ip` = " .. sqlemptnull (valor (addr, "0.0.0.0")) .. ", `date` = " .. tostring (os.time () + table_sets ["srvtimediff"]) .. ", `message` = '" .. repsqlchars (data) .. "' where `id` = " .. tostring (old_id))
 	else
-		if ip == "0.0.0.0" then
-			VH:SQLQuery ("insert into `" .. tbl_sql ["mchist"] .. "` (`realnick`, `nick`, `date`, `message`) values ('" .. repsqlchars (real) .. "', '" .. repsqlchars (nick) .. "', " .. tostring (os.time () + table_sets ["srvtimediff"]) .. ", '" .. repsqlchars (data) .. "')")
-		else
-			VH:SQLQuery ("insert into `" .. tbl_sql ["mchist"] .. "` (`realnick`, `nick`, `ip`, `date`, `message`) values ('" .. repsqlchars (real) .. "', '" .. repsqlchars (nick) .. "', '" .. repsqlchars (ip) .. "', " .. tostring (os.time () + table_sets ["srvtimediff"]) .. ", '" .. repsqlchars (data) .. "')")
-		end
+		VH:SQLQuery ("insert into `" .. tbl_sql ["mchist"] .. "` (`realnick`, `nick`, `ip`, `date`, `message`) values ('" .. repsqlchars (real) .. "', '" .. repsqlchars (nick) .. "', " .. sqlemptnull (valor (addr, "0.0.0.0")) .. ", " .. tostring (os.time () + table_sets ["srvtimediff"]) .. ", '" .. repsqlchars (data) .. "')")
 	end
 end
 
@@ -10098,15 +10099,10 @@ function addophistoryline (nick, line)
 		return
 	end
 
-	local _, rows = VH:SQLQuery ("select `id` from `" .. tbl_sql ["ophist"] .. "` order by `date` asc")
-
-	if rows > 0 then
-		if rows >= table_sets ["histlimit"] then
-			local _, id = VH:SQLFetch (0)
-			VH:SQLQuery ("update `" .. tbl_sql ["ophist"] .. "` set `nick` = '" .. repsqlchars (nick) .. "', `date` = " .. tostring (os.time () + table_sets ["srvtimediff"]) .. ", `message` = '" .. repsqlchars (line) .. "' where `id` = " .. tostring (id))
-		else
-			VH:SQLQuery ("insert into `" .. tbl_sql ["ophist"] .. "` (`nick`, `date`, `message`) values ('" .. repsqlchars (nick) .. "', " .. tostring (os.time () + table_sets ["srvtimediff"]) .. ", '" .. repsqlchars (line) .. "')")
-		end
+	if counttable (tbl_sql ["ophist"]) >= table_sets ["histlimit"] then
+		VH:SQLQuery ("select `id` from `" .. tbl_sql ["ophist"] .. "` order by `date` asc limit 1") -- get oldest message
+		local _, old_id = VH:SQLFetch (0)
+		VH:SQLQuery ("update `" .. tbl_sql ["ophist"] .. "` set `nick` = '" .. repsqlchars (nick) .. "', `date` = " .. tostring (os.time () + table_sets ["srvtimediff"]) .. ", `message` = '" .. repsqlchars (line) .. "' where `id` = " .. tostring (old_id))
 	else
 		VH:SQLQuery ("insert into `" .. tbl_sql ["ophist"] .. "` (`nick`, `date`, `message`) values ('" .. repsqlchars (nick) .. "', " .. tostring (os.time () + table_sets ["srvtimediff"]) .. ", '" .. repsqlchars (line) .. "')")
 	end
@@ -10119,23 +10115,15 @@ function addcrhistoryline (room, nick, real, line)
 		return
 	end
 
-	local _, rows = VH:SQLQuery ("select `id` from `" .. tbl_sql ["crhist"] .. "` where `room` = '" .. repsqlchars (room) .. "' order by `date` asc")
-	local ip = getip (real)
+	local rep_room = repsqlchars (room)
+	local addr = getip (real)
 
-	if rows >= table_sets ["chathistlimit"] then
-		local _, id = VH:SQLFetch (0)
-
-		if ip == "0.0.0.0" then
-			VH:SQLQuery ("update `" .. tbl_sql ["crhist"] .. "` set `realnick` = '" .. repsqlchars (real) .. "', `nick` = '" .. repsqlchars (nick) .. "', `ip` = null, `date` = " .. tostring (os.time () + table_sets ["srvtimediff"]) .. ", `message` = '" .. repsqlchars (line) .. "' where `id` = " .. tostring (id))
-		else
-			VH:SQLQuery ("update `" .. tbl_sql ["crhist"] .. "` set `realnick` = '" .. repsqlchars (real) .. "', `nick` = '" .. repsqlchars (nick) .. "', `ip` = '" .. repsqlchars (ip) .. "', `date` = " .. tostring (os.time () + table_sets ["srvtimediff"]) .. ", `message` = '" .. repsqlchars (line) .. "' where `id` = " .. tostring (id))
-		end
+	if counttable (tbl_sql ["crhist"], "`room` = '" .. rep_room .. "'") >= table_sets ["chathistlimit"] then
+		VH:SQLQuery ("select `id` from `" .. tbl_sql ["crhist"] .. "` where `room` = '" .. rep_room .. "' order by `date` asc limit 1") -- get oldest message
+		local _, old_id = VH:SQLFetch (0)
+		VH:SQLQuery ("update `" .. tbl_sql ["crhist"] .. "` set `realnick` = '" .. repsqlchars (real) .. "', `nick` = '" .. repsqlchars (nick) .. "', `ip` = " .. sqlemptnull (valor (addr, "0.0.0.0")) .. ", `date` = " .. tostring (os.time () + table_sets ["srvtimediff"]) .. ", `message` = '" .. repsqlchars (line) .. "' where `id` = " .. tostring (old_id))
 	else
-		if ip == "0.0.0.0" then
-			VH:SQLQuery ("insert into `" .. tbl_sql ["crhist"] .. "` (`room`, `realnick`, `nick`, `date`, `message`) values ('" .. repsqlchars (room) .. "', '" .. repsqlchars (real) .. "', '" .. repsqlchars (nick) .. "', " .. tostring (os.time () + table_sets ["srvtimediff"]) .. ", '" .. repsqlchars (line) .. "')")
-		else
-			VH:SQLQuery ("insert into `" .. tbl_sql ["crhist"] .. "` (`room`, `realnick`, `nick`, `ip`, `date`, `message`) values ('" .. repsqlchars (room) .. "', '" .. repsqlchars (real) .. "', '" .. repsqlchars (nick) .. "', '" .. repsqlchars (ip) .. "', " .. tostring (os.time () + table_sets ["srvtimediff"]) .. ", '" .. repsqlchars (line) .. "')")
-		end
+		VH:SQLQuery ("insert into `" .. tbl_sql ["crhist"] .. "` (`room`, `realnick`, `nick`, `ip`, `date`, `message`) values ('" .. rep_room .. "', '" .. repsqlchars (real) .. "', '" .. repsqlchars (nick) .. "', " .. sqlemptnull (valor (addr, "0.0.0.0")) .. ", " .. tostring (os.time () + table_sets ["srvtimediff"]) .. ", '" .. repsqlchars (line) .. "')")
 	end
 end
 
@@ -21479,8 +21467,14 @@ end
 
 ----- ---- --- -- -
 
-function counttable (tbl)
-	local _, rows = VH:SQLQuery ("select count(*) from `" .. tbl .. "`")
+function counttable (tbl, where)
+	local sql = "select count(*) from `" .. tbl .. "`"
+
+	if where and where ~= "" then
+		sql = sql .. " where " .. where
+	end
+
+	local _, rows = VH:SQLQuery (sql)
 	local num = 0
 
 	if rows > 0 then
