@@ -1,3 +1,7 @@
+[ 2.8.8 :: 2015-##-## ]
+
+Fixed: Skip repeated main chat history messages from same user
+
 [ 2.8.7 :: 2015-10-03 ]
 
 Fixed: rename command parameters when used from user menu, report by KCAHDEP
