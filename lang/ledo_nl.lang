@@ -1,6 +1,6 @@
 # Language: nl_NL
 # Charset: CP1252
-# Version: 2.8.7
+# Version: 2.8.8
 # Author: Modswat
 # Email: future_dance@hotmail.com
 
@@ -539,15 +539,15 @@ second|seconde
 You are now known as: %s|Je bent nu bekend als:%s
 You renamed %s to: %s|Jij hernoemde %s naar: %s
 Spam exception from %s with IP %s and class %d in MC: %s|Spam uitzondering van %s met IP %s en class %d in MC: %s
-Spam exception from %s with IP %s and class %d in PM: %s|Spam uitzondering van %s met IP %s en class %d in PM: %s
+Spam exception from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s|spam uitzondering van% s met ips en klasse %d uur tot %s %s en klasse met ip %d: %s
 Spam exception from %s with IP %s and class %d in offline message: %s|Spam uitzondering van %s met IP %s en class %d  in offline message: %s
 Spam exception from %s with IP %s and class %d in report: %s|Spam uitzondering van %s met IP %s en class %d in report: %s
 Spam notification from %s with IP %s and class %d in MC: %s|Spam uitzondering van %s met IP %s en class %d in MC: %s
-Spam notification from %s with IP %s and class %d in PM: %s|Spam notificatie van %s met IP %s en class %d in PM: %s
+Spam notification from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s|spam bericht van %s met ip %s en klasse %d in pm aan %s met ip %s en klasse %d: %s
 Spam notification from %s with IP %s and class %d in offline message: %s|Spam notificatie van %s met IP %s en class %d in offline bericht: %s
 Spam notification from %s with IP %s and class %d in report: %s|Spam notificatie van %s met IP %s en class %d in report: %s
 Spam from %s with IP %s and class %d in MC: %s|Spam van %s met IP %s en class %d in MC: %s
-Spam from %s with IP %s and class %d in PM: %s|Spam van %s met IP %s en class %d in PM: %s
+Spam from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s|spam van %s met ip %s en klasse %d in pm aan %s met ip %s en klasse %d: %s
 Spam from %s with IP %s and class %d in offline message: %s|Spam van %s met IP %s en class %d in offline bericht: %s
 Spam from %s with IP %s and class %d in report: %s|Spam van %s met IP %s en class %d in report: %s
 Modified antispam entry with action %d and priority %d to scan in MC: %s|Gewijzigde antispam vermelding met actie %d en prioriteit %d scannen in MC: %s
@@ -651,7 +651,7 @@ Custom script command list is empty.|Custom script comando lijst is leeg.
 Script size: %d lines in %s|Script grote: %d regels in %s
 Added %s to IP gag list, %d users in total.|Toegevoegd  %s aan IP gag lijst, %d gebruikers in totaal.
 Flood detected from IP %s last known as %s with class %d in MC: %s|Flood gedetecteerd van IP %s laatste bekend als %s met class %d in MC: %s
-Flood detected from IP %s last known as %s with class %d in PM: %s|Flood gedetecteerd van IP %s laatste bekend als %s met class %d in PM: %s
+Flood detected from IP %s last known as %s with class %d in PM to %s with IP %s and class %d: %s|flood gedetecteerd van ip %s laatst bekende als %s met klasse %d in pm aan %s met ip %s en klasse %d: %s
 Private chat is currently disabled for you.|Privй chat is momenteel uitgeschakeld voor je
 Flood detected from your IP.|Flood gedetecteerd van jou IP.
 %d users with IP %s dropped due to flood.|%d gebruikers met IP %s verbinding verbroken tijdens flood.
@@ -769,7 +769,7 @@ Hub uptime: %s|Huub uptime:  %s
 User count: %s|Gebruikers teller: %s
 Total share: %s|Totale share: %s
 %s with IP %s and class %d tries to speak with IP gag in MC: %s|%s met IP %s enclass %d probeert te spreken met IP gag in MC: %s
-%s with IP %s and class %d tries to speak with IP gag in PM: %s|%s met IP %s en class %d probeert te spreken met IP gag in PM: %s
+%s with IP %s and class %d tries to speak with IP gag in PM to %s with IP %s and class %d: %s|%s met ip %s en klasse %d probeert met ip gag te spreken pm aan %s met ip %s en klasse %d: %s
 Private message replaced for user: %s|Privй bericht vervangen voor gebruiker: %s
 Command logger|Command logger
 Showing %d entries from command logger|Laat zien %d regels van command logger
@@ -878,7 +878,7 @@ Country code gag list is empty.|Land code gag lijst is leeg.
 Delete country code gag|Land code gag verwijderen
 Cleared country code gag list.|Land code gag lijst opgeruimd
 %s with IP %s and class %d tries to speak with country code gag in MC: %s|%s met IP %s en class %d probeert te spreken met Land code gag in MC: %s
-%s with IP %s and class %d tries to speak with country code gag in PM: %s|%s met IP %s en class %d probeert te spreken met Land code gag in PM: %s
+%s with IP %s and class %d tries to speak with country code gag in PM to %s with IP %s and class %d: %s|%s met ip % s en klasse %d probeert met landcode gag te spreken pm aan %s met ip %s en klasse %d: %s
 No reason specified|Geen reden opgegeven
 Automatically deleted %d user log entries older than %d days.|Automatisch verwijderd %d gebruiker loggegevens die ouder zijn dan %d dagen .
 Main chat message replaced for user: %s|Main chat bericht veranderd voor gebruiker: %s
@@ -981,7 +981,7 @@ There is an error in following forbidden client supports pattern|Er zit een fout
 There is an error in following forbidden NMDC version pattern|Er zit een fout in de volgende verboden NMDC versie patroon
 Added replacer in PM: %s|Vervanger toegevoegd in PM: %s
 Added replacer in MC and PM: %s|Vervanger toegevoegd in MC en PM: %S
-Message replaced for user with class %d in PM: <%s> %s|Bericht vervangen voor gebruiker met class %d in PM: <%s> %s
+Message replaced for user with IP %s and class %d in PM to %s with IP %s and class %d: <%s> %s|bericht vervangen gebruiker met ip %s en klasse %d in pm aan % s met ip %s en klasse %d: <%s> %s
 Message ignored due to flood detection from %s with IP %s and class %d in MC: %s|Bericht genegeerd vanwege flood detectie van %s met IP %s en class %d in MC: %s
 Users with same IP|Gebruikers met het zelfde IP adres
 Parameter count mismatch detected in following translation string: %s|Parameter mismatch gedetecteerd in volgende vertaling string: %s
