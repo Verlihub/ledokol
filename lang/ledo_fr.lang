@@ -1,12 +1,12 @@
 # Language: fr_FR
 # Charset: CP1252
-# Version: 2.8.7
+# Version: 2.8.8
 # Author: @tlantide
 # Email: chatonhubfrance@gmail.com
 
 Current topic: %s|Topic actuel: %s
 Current topic set by %s: %s|Topic actuel fixй par %s: %s
-This operation might take very long time depending on how much is going to be removed, please be patient.|
+This operation might take very long time depending on how much is going to be removed, please be patient.|Cette opйration peut prendre trиs longtemps en fonction de combien va кtre supprimй , s'il vous plaоt soyez patient.
 days|jours
 %s with class %d deleted %d IP logger plugin entries older than %d days.|%s de profil %d supprimйe %d  %s IP enregistrйe depuis plus de %d  jours.
 %s with class %d deleted %d unbans older than %d days.|%s de profil %d supprimйe %d dй-bannir tous les utilisateurs depuis plus de %d jours.
@@ -539,15 +539,15 @@ second|deuxiиme
 You are now known as: %s|Tu es maintenant connu comme: %s
 You renamed %s to: %s|Tu as renommй %s en: %s
 Spam exception from %s with IP %s and class %d in MC: %s|Exception de spam provenant de %s avec l'IP %s et le profil %d en messagerie centrale: %s
-Spam exception from %s with IP %s and class %d in PM: %s|Exception de spam provenant de %s avec l'IP %s et le profil %d en messagerie privйe: %s
+Spam exception from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s|Spam exception de %s avec IP % set la classe %d dans PM %s avec IP %s et la classe  %d: %s
 Spam exception from %s with IP %s and class %d in offline message: %s|Exception de spam provenant de %s avec l'IP %s et le profil %d en messagerie hors ligne: %s
 Spam exception from %s with IP %s and class %d in report: %s|Exception de spam provenant de %s avec l'IP %s et le profil %d dans le rapport: %s
 Spam notification from %s with IP %s and class %d in MC: %s|Notification de spam provenant de %s avec l'IP %s et le profil %d en messagerie centrale: %s
-Spam notification from %s with IP %s and class %d in PM: %s|Notification de spam provenant de %s avec l'IP %s et le profil %d en messagerie privйe: %s
+Spam notification from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s|Notification de Spam de %s avec IP  %s et la classe %d dans PM %s avec IP %s et la classe %d: %s
 Spam notification from %s with IP %s and class %d in offline message: %s|Notification de spam provenant de %s avec l'IP %s et le profil %d en messagerie hors ligne: %s
 Spam notification from %s with IP %s and class %d in report: %s|Notification de spam provenant de %s avec l'IP %s et le profil %d dans le rapport: %s
 Spam from %s with IP %s and class %d in MC: %s|Spam provenant de %s avec l'IP %s et le profil %d en messagerie centrale: %s
-Spam from %s with IP %s and class %d in PM: %s|Spam provenant de %s avec l'IP %s et le profil %d en messagerie privйe: %s
+Spam from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s|Spam de %s avec IP %s et la classe %d dans PM %s avec IP %s et la classe %d: %s
 Spam from %s with IP %s and class %d in offline message: %s|Spam provenant de %s avec l'IP %s et le profil %d dans la messagerie hors ligne: %s
 Spam from %s with IP %s and class %d in report: %s|Spam provenant de %s avec l'IP %s et le profil %d dans le rapport: %s
 Modified antispam entry with action %d and priority %d to scan in MC: %s|Entrйe d'antispam modifiйe avec l'action %d et la prioritй %d du scan en messagerie centrale: %s
@@ -651,7 +651,7 @@ Custom script command list is empty.|La liste de commande du script personnalis�
 Script size: %d lines in %s|Taille du script: %d lignes en %s
 Added %s to IP gag list, %d users in total.|Ajout %s а la liste des IP bloquer, %d tous les utilisateurs.
 Flood detected from IP %s last known as %s with class %d in MC: %s|Flood dйtectй provenant de l'IP %s derniиrement connu comme %s avec le profil %d en messagerie centrale: %s
-Flood detected from IP %s last known as %s with class %d in PM: %s|Flood dйtectй provenant de l'IP %s derniиrement connu comme %s avec le profil %d en message privй: %s
+Flood detected from IP %s last known as %s with class %d in PM to %s with IP %s and class %d: %s|Flood dйtectй а partir de IP %s derniиre connue sous le nom %s avec la classe %d dans PM %s avec IP %s et la classe %d: %s
 Private chat is currently disabled for you.|Le chat privй est actuellement dйsactivй pour toi.
 Flood detected from your IP.|Flood dйtectй provenant de ton IP.
 %d users with IP %s dropped due to flood.|%d utilisateurs avec l'IP %s virйs pour cause de flood.
@@ -769,7 +769,7 @@ Hub uptime: %s|Temps de fonctionnement du hub: %s
 User count: %s|Compte d'utilisateur: %s
 Total share: %s|Partage total: %s
 %s with IP %s and class %d tries to speak with IP gag in MC: %s|%s avec l'IP %s et le profil %d essaie de parler avec l'IP bвillonnйe en messagerie centrale: %s
-%s with IP %s and class %d tries to speak with IP gag in PM: %s|%s avec l'IP %s et le profil %d essaie de parler avec l'IP bвillonnйe en message privй: %s
+%s with IP %s and class %d tries to speak with IP gag in PM to %s with IP %s and class %d: %s|%s avec IP %s et la classe %d essaie de parler avec gag IP dans PM %s avec IP %s et la classe %d: %s
 Private message replaced for user: %s|Message privй remplacй pour l'utilisateur: %s
 Command logger|Enregistreur de commande
 Showing %d entries from command logger|Afficher %d les entrйs de l'enregistreur de commande
@@ -878,7 +878,7 @@ Country code gag list is empty.|La liste de code de pays bloquй est vide.
 Delete country code gag|Supprimer code de pays bloquer
 Cleared country code gag list.|La liste de code de pays bloquer est nettoyйe.
 %s with IP %s and class %d tries to speak with country code gag in MC: %s|%s avec l'IP %s et le profil %d avec un code de pays bвillonnй essaie de parler sur la messagerie centrale: %s
-%s with IP %s and class %d tries to speak with country code gag in PM: %s|%s avec l'IP %s et le profil %d avec un code de pays bвillonnй essaie de parler en message privй: %s
+%s with IP %s and class %d tries to speak with country code gag in PM to %s with IP %s and class %d: %s|%s avec IP %s et la classe  %d essaie de parler avec le code pays bloquer dans PM %s avec IP %s et la classe %d: %s
 No reason specified|Aucune raison spйcifiйe
 Automatically deleted %d user log entries older than %d days.|Suppression automatique %d de l'entrйe de log de l'utilisateur plus vieille que %d jours.
 Main chat message replaced for user: %s|chat central remplacй pour l'utilisateur: %s
@@ -981,7 +981,7 @@ There is an error in following forbidden client supports pattern|Il y a une erre
 There is an error in following forbidden NMDC version pattern|Il y a une erreur interdite dans le modиle de version NMDC suivant
 Added replacer in PM: %s|Le remplacement en message privй a йtй ajoutй: %s
 Added replacer in MC and PM: %s|Le remplacement en Message Central et message privй a йtй ajoutй: %s
-Message replaced for user with class %d in PM: <%s> %s|Message remplacй pour l'utilisateur avec le profil %d en message privй: <%s> %s
+Message replaced for user with IP %s and class %d in PM to %s with IP %s and class %d: <%s> %s|Message remplacй pour l'utilisateur avec IP %s et la classe %d dans PM %s avec IP %s et la classe %d: <%s> %s 
 Message ignored due to flood detection from %s with IP %s and class %d in MC: %s|Message ignorй car un flood a йtй dйtectй de %s avec l'IP %s et le profil %d dans le Message Central: %s
 Users with same IP|Utilisateurs avec la mиme IP
 Parameter count mismatch detected in following translation string: %s|Disparitй de paramиtre de compte dйtectйe dans la sйrie de traduction suivante: %s
