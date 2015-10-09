@@ -1,6 +1,9 @@
 [ 2.8.8 :: 2015-##-## ]
 
 Fixed: Skip repeated main chat history messages from same user
+Added: replprotect configuration to protect users from chat replacer feature, request by KCAHDEP
+Added: custlistclass configuration to restrict users from using custlist and realnick commands, request by KCAHDEP
+Added: Involved user information such as nick, IP address and class in all PM action notifications, request by KCAHDEP
 
 [ 2.8.7 :: 2015-10-03 ]
 
