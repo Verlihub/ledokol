@@ -178,6 +178,7 @@ table_sets = {
 	["searuptimeact"] = 0,
 	["showuseruptime"] = 0,
 	["custnickclass"] = 3,
+	["custlistclass"] = 0,
 	["custmaxlen"] = 64,
 	["savecustnicks"] = 1,
 	["opkeyclass"] = 11,
@@ -204,6 +205,7 @@ table_sets = {
 	["remrunning"] = 0,
 	["trigrunning"] = 0,
 	["replrunning"] = 0,
+	["replprotect"] = 0,
 	["resprunning"] = 0,
 	["respdelay"] = 3,
 	["newsclass"] = 0,
@@ -1054,8 +1056,8 @@ function Main (file)
 	local optrig = getconfig ("cmd_start_op")
 	table_othsets ["optrig"] = "["
 
-	for pos = 1, string.len (optrig) do
-		table_othsets ["optrig"] = table_othsets ["optrig"] .. "%" .. string.sub (optrig, pos, pos)
+	for pos = 1, # optrig do
+		table_othsets ["optrig"] = table_othsets ["optrig"] .. "%" .. optrig:sub (pos, pos)
 	end
 
 	table_othsets ["optrig"] = table_othsets ["optrig"] .. "]"
@@ -1063,8 +1065,8 @@ function Main (file)
 	local ustrig = getconfig ("cmd_start_user")
 	table_othsets ["ustrig"] = "["
 
-	for pos = 1, string.len (ustrig) do
-		table_othsets ["ustrig"] = table_othsets ["ustrig"] .. "%" .. string.sub (ustrig, pos, pos)
+	for pos = 1, # ustrig do
+		table_othsets ["ustrig"] = table_othsets ["ustrig"] .. "%" .. ustrig:sub (pos, pos)
 	end
 
 	table_othsets ["ustrig"] = table_othsets ["ustrig"] .. "]"
@@ -1077,8 +1079,8 @@ function Main (file)
 	if rows > 0 then
 		local _, ver = VH:SQLFetch (0)
 
-		if ver and type (ver) == "string" and string.len (ver) == 5 then
-			local _, _, a, b, c = string.find (ver, "^(%d)%.(%d)%.(%d)$")
+		if ver and type (ver) == "string" and # ver == 5 then
+			local a, b, c = ver:match ("^(%d)%.(%d)%.(%d)$")
 
 			if a and b and c then
 				ver = tonumber (a .. b .. c)
@@ -1260,6 +1262,11 @@ function Main (file)
 					end
 
 					if ver <= 288 then
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('replprotect', '" .. repsqlchars (table_sets ["replprotect"]) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('custlistclass', '" .. repsqlchars (table_sets ["custlistclass"]) .. "')")
+					end
+
+					if ver <= 289 then
 						-- todo
 					end
 
@@ -1267,7 +1274,7 @@ function Main (file)
 
 					old = false -- update version
 					local tm = os.time () + table_sets ["srvtimediff"]
-					VH:SQLQuery ("insert into `" .. tbl_sql ["stat"] .. "` (`type`, `time`, `count`) values ('ver_ledo', " .. tm .. ", '" .. ver_ledo .. "') on duplicate key update `time` = " .. tm .. ", `count` = '" .. ver_ledo .. "'")
+					VH:SQLQuery ("insert into `" .. tbl_sql ["stat"] .. "` (`type`, `time`, `count`) values ('ver_ledo', " .. tostring (tm) .. ", '" .. ver_ledo .. "') on duplicate key update `time` = " .. tostring (tm) .. ", `count` = '" .. ver_ledo .. "'")
 				end
 			end
 		end
@@ -2359,10 +2366,10 @@ end
 
 return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
 
-	elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["custlist"].."$") then
-		if table_sets ["custnickclass"] < 11 then
+	elseif data:match ("^" .. table_othsets ["optrig"] .. table_cmnds ["custlist"] .. "$") then
+		if table_sets ["custnickclass"] < 11 and ucl >= table_sets ["custlistclass"] then
 			donotifycmd (nick, data, 0, ucl)
 			listcustnick (nick)
 		else
@@ -2371,30 +2378,30 @@ return 0
 
 		return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
 
-	elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["realnick"].." %S+$") then
-		if table_sets ["custnickclass"] < 11 then
+	elseif data:match ("^" .. table_othsets ["optrig"] .. table_cmnds ["realnick"] .. " [^ ]+$") then
+		if table_sets ["custnickclass"] < 11 and ucl >= table_sets ["custlistclass"] then
 			donotifycmd (nick, data, 0, ucl)
-			getrealnick (nick, string.sub (data, string.len (table_cmnds ["realnick"]) + 3, -1))
+			getrealnick (nick, data:sub (# table_cmnds ["realnick"] + 3))
 		else
 			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
 
-	elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["nick"].."$") or string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["nick"].." .+$") then
+	elseif data:match ("^" .. table_othsets ["optrig"] .. table_cmnds ["nick"] .. "$") or data:match ("^" .. table_othsets ["optrig"] .. table_cmnds ["nick"] .. " .+$") then
 		if ucl >= table_sets ["custnickclass"] then
-			setcustnick (nick, string.sub (data, string.len (table_cmnds ["nick"]) + 3, -1), ucl)
+			setcustnick (nick, data:sub (# table_cmnds ["nick"] + 3), ucl)
 		else
 			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
 
 elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["wmshow"].."$") then
 if ucl >= table_sets ["welcomeclass"] then
@@ -3765,14 +3772,15 @@ function VH_OnUserCommand (nick, data)
 
 	-- process +me command
 
-	if data:find ("^" .. table_othsets ["ustrig"] .. "me .*$") then
+	if data:match ("^" .. table_othsets ["ustrig"] .. "me .*$") then
 		if getconfig ("disable_me_cmd") ~= 0 then
 			return 1
 		end
 
 		local msg = data:sub (string.len ("me") + 3)
+		local prot = isprotected (nick, ip)
 
-		if not isprotected (nick, ip) then -- protection
+		if not prot then -- protection
 			if table_sets ["chatcodeon"] > 0 and (table_sets ["chatcodeflag"] == 0 or table_sets ["chatcodeflag"] == 1) and ucl <= table_sets ["codemaxclass"] then -- chatcode
 				if not table_code [nick] then
 					local vcode, code = genchatcode ()
@@ -3824,80 +3832,86 @@ function VH_OnUserCommand (nick, data)
 			end
 		end
 
-local fakenick = nick
+		local fakenick = nick
 
-if table_sets ["funrandomchat"] == 1 then
-	fakenick = getrandomnick ()
+		if table_sets ["funrandomchat"] == 1 then
+			fakenick = getrandomnick ()
 
-	if table_sets ["custnickclass"] < 11 then
-		fakenick = getcustnick (fakenick) or fakenick -- use custom nick
-	end
-else
-	if table_sets ["custnickclass"] < 11 then
-		fakenick = getcustnick (nick) or nick
-	end
-end
-
-local cvdat = msg
-local retval = 1
-
-if table_sets ["translitmode"] > 0 then -- convert translit
-	cvdat = convtranslit (cvdat, table_sets ["translitmode"])
-
-	if msg ~= cvdat then -- only when modified
-		if antiscan (nick, ucl, cvdat, 1, nil, nil) == 0 then return 0 end -- spam detection after translit conversion
-		retval = 0
-	end
-end
-
-if (table_sets ["tolowcharcase"] == 1) and (ucl < 3) then -- convert char case
-	cvdat = convcaps (cvdat, true)
-	if msg ~= cvdat then retval = 0 end -- only when modified
-end
-
-	cvdat = modusrmode (nick, ip, cvdat) -- chat mode
-
-	if table_sets ["replrunning"] == 1 then -- replacer
-		local norepl = cvdat
-		cvdat = replchatmsg (nick, ucl, cvdat, 1)
-
-		if norepl ~= cvdat then
-			opsnotify (table_sets ["classnotirepl"], string.format (gettext ("Message replaced for user with class %d in MC: <%s> %s"), ucl, nick, "+me " .. msg))
+			if table_sets ["custnickclass"] < 11 then
+				fakenick = getcustnick (fakenick) or fakenick -- use custom nick
+			end
+		elseif table_sets ["custnickclass"] < 11 then
+			fakenick = getcustnick (nick) or nick
 		end
-	end
 
-	if msg ~= cvdat then
-		retval = 0 -- only when modified
-	end
+		local cvdat = msg
+		local retval = 1
 
-if table_sets ["useripinchat"] > 0 then -- ip in chat
-	local pfx = ""
+		if table_sets ["translitmode"] > 0 then -- convert translit
+			cvdat = convtranslit (cvdat, table_sets ["translitmode"])
 
-	if table_sets ["useripinchat"] == 2 and table_refu ["GetUserCC"] then
-		local cc = getcc (nick)
-		if (not cc) or (cc == "--") then cc = "??" end
-		pfx = "[ "..ip.." &#124; "..cc.." ]"
-	else
-		pfx = "[ "..ip.." ]"
-	end
+			if msg ~= cvdat then -- only when modified
+				if antiscan (nick, ucl, cvdat, 1, nil, nil) == 0 then -- spam detection after translit conversion
+					return 0
+				end
 
-	VH:SendToClass ("** "..fakenick.." "..cvdat.."|", 0, 2)
-	VH:SendToClass (pfx.." ** "..fakenick.." "..cvdat.."|", 3, 10)
-	retval = 0
-else -- no ip
-	if (retval == 0) or (fakenick ~= nick) then -- only when modified
-		VH:SendToClass ("** "..fakenick.." "..cvdat.."|", 0, 10)
-		retval = 0
-	end
-end
+				retval = 0
+			end
+		end
 
-	addmchistoryline (fakenick, nick, getconfig ("cmd_start_user"):sub (1, 1) .. "me " .. cvdat)
-	replyresponder (fakenick, ucl, cvdat)
-	chatrankaccept (nick, ucl)
-	wordrankaccept (nick, ucl, cvdat)
-	return retval
+		if table_sets ["tolowcharcase"] == 1 and ucl < 3 then -- convert char case
+			cvdat = convcaps (cvdat, true)
 
-	elseif data:find ("^" .. table_othsets ["ustrig"] .. "me$") then
+			if msg ~= cvdat then -- only when modified
+				retval = 0
+			end
+		end
+
+		cvdat = modusrmode (nick, ip, cvdat) -- chat mode
+
+		if table_sets ["replrunning"] == 1 and (table_sets ["replprotect"] == 0 or not prot) then -- replacer
+			local norepl = cvdat
+			cvdat = replchatmsg (nick, ucl, cvdat, 1)
+
+			if norepl ~= cvdat then
+				opsnotify (table_sets ["classnotirepl"], gettext ("Message replaced for user with class %d in MC: <%s> %s"):format (ucl, nick, "+me " .. msg))
+			end
+		end
+
+		if msg ~= cvdat then
+			retval = 0 -- only when modified
+		end
+
+		if table_sets ["useripinchat"] > 0 then -- ip in chat
+			local pfx = ""
+
+			if table_sets ["useripinchat"] == 2 and table_refu ["GetUserCC"] then
+				local cc = getcc (nick)
+
+				if not cc or cc == "--" then
+					cc = "??"
+				end
+
+				pfx = "[ " .. ip .. " &#124; " .. cc .. " ]"
+			else
+				pfx = "[ " .. ip .. " ]"
+			end
+
+			VH:SendToClass ("** " .. fakenick .. " " .. cvdat .. "|", 0, 2)
+			VH:SendToClass (pfx .. " ** " .. fakenick .. " " .. cvdat .. "|", 3, 10)
+			retval = 0
+		elseif retval == 0 or fakenick ~= nick then -- no ip, only when modified
+			VH:SendToClass ("** " .. fakenick .. " " .. cvdat .. "|", 0, 10)
+			retval = 0
+		end
+
+		addmchistoryline (fakenick, nick, getconfig ("cmd_start_user"):sub (1, 1) .. "me " .. cvdat)
+		replyresponder (fakenick, ucl, cvdat)
+		chatrankaccept (nick, ucl)
+		wordrankaccept (nick, ucl, cvdat)
+		return retval
+
+	elseif data:match ("^" .. table_othsets ["ustrig"] .. "me$") then
 		if getconfig ("disable_me_cmd") ~= 0 then
 			return 1
 		end
@@ -3938,47 +3952,47 @@ end
 			end
 		end
 
-local fakenick = nick
+		local fakenick = nick
 
-if table_sets ["funrandomchat"] == 1 then
-	fakenick = getrandomnick ()
+		if table_sets ["funrandomchat"] == 1 then
+			fakenick = getrandomnick ()
 
-	if table_sets ["custnickclass"] < 11 then
-		fakenick = getcustnick (fakenick) or fakenick -- use custom nick
+			if table_sets ["custnickclass"] < 11 then
+				fakenick = getcustnick (fakenick) or fakenick -- use custom nick
+			end
+		elseif table_sets ["custnickclass"] < 11 then
+			fakenick = getcustnick (nick) or nick
+		end
+
+		local retval = 1
+
+		if table_sets ["useripinchat"] > 0 then -- ip in chat
+			local pfx = ""
+
+			if table_sets ["useripinchat"] == 2 and table_refu ["GetUserCC"] then
+				local cc = getcc (nick)
+
+				if not cc or cc == "--" then
+					cc = "??"
+				end
+
+				pfx = "[ " .. ip .. " &#124; " .. cc .. " ]"
+			else
+				pfx = "[ " .. ip .. " ]"
+			end
+
+			VH:SendToClass ("** " .. fakenick .. "|", 0, 2)
+			VH:SendToClass (pfx .. " ** " .. fakenick .. "|", 3, 10)
+			retval = 0
+		elseif fakenick ~= nick then -- no ip, only when modified
+			VH:SendToClass ("** " .. fakenick .. "|", 0, 10)
+			retval = 0
+		end
+
+		addmchistoryline (fakenick, nick, data)
+		chatrankaccept (nick, ucl)
+		return retval
 	end
-else
-	if table_sets ["custnickclass"] < 11 then
-		fakenick = getcustnick (nick) or nick
-	end
-end
-
-local retval = 1
-
-if table_sets ["useripinchat"] > 0 then -- ip in chat
-	local pfx = ""
-
-	if table_sets ["useripinchat"] == 2 and table_refu ["GetUserCC"] then
-		local cc = getcc (nick)
-		if (not cc) or (cc == "--") then cc = "??" end
-		pfx = "[ "..ip.." &#124; "..cc.." ]"
-	else
-		pfx = "[ "..ip.." ]"
-	end
-
-	VH:SendToClass ("** "..fakenick.."|", 0, 2)
-	VH:SendToClass (pfx.." ** "..fakenick.."|", 3, 10)
-	retval = 0
-else -- no ip
-	if fakenick ~= nick then -- only when modified
-		VH:SendToClass ("** "..fakenick.."|", 0, 10)
-		retval = 0
-	end
-end
-
-	addmchistoryline (fakenick, nick, data)
-	chatrankaccept (nick, ucl)
-	return retval
-end
 
 	-- process other commands
 
@@ -4268,31 +4282,31 @@ elseif string.find (data, "^"..table_othsets ["ustrig"]..table_cmnds ["mode"].."
 
 	----- ---- --- -- -
 
-	elseif string.find (data, "^"..table_othsets ["ustrig"]..table_cmnds ["nick"].."$") or string.find (data, "^"..table_othsets ["ustrig"]..table_cmnds ["nick"].." .+$") then
+	elseif data:match ("^" .. table_othsets ["ustrig"] .. table_cmnds ["nick"] .. "$") or data:match ("^" .. table_othsets ["ustrig"] .. table_cmnds ["nick"] .. " .+$") then
 		if ucl >= table_sets ["custnickclass"] then
-			setcustnick (nick, string.sub (data, string.len (table_cmnds ["nick"]) + 3, -1), ucl)
+			setcustnick (nick, data:sub (# table_cmnds ["nick"] + 3), ucl)
 		else
 			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
 
-	elseif string.find (data, "^"..table_othsets ["ustrig"]..table_cmnds ["realnick"].." %S+$") then
-		if table_sets ["custnickclass"] < 11 then
+	elseif data:match ("^" .. table_othsets ["ustrig"] .. table_cmnds ["realnick"] .. " [^ ]+$") then
+		if table_sets ["custnickclass"] < 11 and ucl >= table_sets ["custlistclass"] then
 			donotifycmd (nick, data, 0, ucl)
-			getrealnick (nick, string.sub (data, string.len (table_cmnds ["realnick"]) + 3, -1))
+			getrealnick (nick, data:sub (# table_cmnds ["realnick"] + 3))
 		else
 			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
 
-	elseif string.find (data, "^"..table_othsets ["ustrig"]..table_cmnds ["custlist"].."$") then
-		if table_sets ["custnickclass"] < 11 then
+	elseif data:match ("^" .. table_othsets ["ustrig"] .. table_cmnds ["custlist"] .. "$") then
+		if table_sets ["custnickclass"] < 11 and ucl >= table_sets ["custlistclass"] then
 			donotifycmd (nick, data, 0, ucl)
 			listcustnick (nick)
 		else
@@ -4301,7 +4315,7 @@ elseif string.find (data, "^"..table_othsets ["ustrig"]..table_cmnds ["mode"].."
 
 		return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
 
 	elseif string.find (data, "^"..table_othsets ["ustrig"]..table_cmnds ["wmset"].." %S+ .+$") or string.find (data, "^"..table_othsets ["ustrig"]..table_cmnds ["wmset"].." %S+$") then
 		if ucl >= table_sets ["welcomeclass"] then
@@ -5765,17 +5779,17 @@ function VH_OnParsedMsgPM (from, data, to)
 	----- ---- --- -- -
 
 	else -- other
-		if prot == false then -- protection
+		if not prot then -- protection
 			if antiscan (from, fcls, data, 2, to, nil) == 0 then -- scan before broadcasting
 				return 0
 			end
 		end
 
-		if broadcastchatroom (to, from, data, fcls) == true then -- check chatrooms
+		if broadcastchatroom (to, from, data, fcls) then -- check chatrooms
 			return 0
 		end
 
-		if broadcastccroom (to, from, data, fcls) == true then
+		if broadcastccroom (to, from, data, fcls) then
 			return 0
 		end
 
@@ -5784,13 +5798,13 @@ function VH_OnParsedMsgPM (from, data, to)
 			--return 0
 		--end
 
-		if checknopm (from, fcls, to) == true then -- no pm
+		if checknopm (from, fcls, to) then -- no pm
 			return 0
 		end
 
 		local pmdat = data
 
-		if table_sets ["replrunning"] == 1 then -- replacer
+		if table_sets ["replrunning"] == 1 and (table_sets ["replprotect"] == 0 or not prot) then -- replacer
 			pmdat = replchatmsg (from, fcls, pmdat, 2)
 		end
 
@@ -5799,18 +5813,21 @@ function VH_OnParsedMsgPM (from, data, to)
 
 			if custnick then
 				if data ~= pmdat then
-					opsnotify (table_sets ["classnotirepl"], string.format (gettext ("Message replaced for user with class %d in PM: <%s> %s"), fcls, from, data))
+					local toip = getip (to)
+					opsnotify (table_sets ["classnotirepl"], gettext ("Message replaced for user with IP %s and class %d in PM to %s with IP %s and class %d: <%s> %s"):format (ip .. tryipcc (ip, from), fcls, to, toip .. tryipcc (toip, to), getclass (to), from, data))
 				end
 
 				VH:SendToUser ("$To: " .. to .. " From: " .. from .. " $<" .. custnick .. "> " .. pmdat .. "|", to)
 				return 0
 			elseif data ~= pmdat then
-				opsnotify (table_sets ["classnotirepl"], string.format (gettext ("Message replaced for user with class %d in PM: <%s> %s"), fcls, from, data))
+				local toip = getip (to)
+				opsnotify (table_sets ["classnotirepl"], gettext ("Message replaced for user with IP %s and class %d in PM to %s with IP %s and class %d: <%s> %s"):format (ip .. tryipcc (ip, from), fcls, to, toip .. tryipcc (toip, to), getclass (to), from, data))
 				VH:SendToUser ("$To: " .. to .. " From: " .. from .. " $<" .. from .. "> " .. pmdat .. "|", to)
 				return 0
 			end
 		elseif data ~= pmdat then
-			opsnotify (table_sets ["classnotirepl"], string.format (gettext ("Message replaced for user with class %d in PM: <%s> %s"), fcls, from, data))
+			local toip = getip (to)
+			opsnotify (table_sets ["classnotirepl"], gettext ("Message replaced for user with IP %s and class %d in PM to %s with IP %s and class %d: <%s> %s"):format (ip .. tryipcc (ip, from), fcls, to, toip .. tryipcc (toip, to), getclass (to), from, data))
 			VH:SendToUser ("$To: " .. to .. " From: " .. from .. " $<" .. from .. "> " .. pmdat .. "|", to)
 			return 0
 		end
@@ -5833,8 +5850,9 @@ function VH_OnParsedMsgChat (nick, data)
 	end
 
 	local ip = getip (nick)
+	local prot = isprotected (nick, ip)
 
-	if not isprotected (nick, ip) then -- protection
+	if not prot then -- protection
 		if table_sets ["chatcodeon"] > 0 and (table_sets ["chatcodeflag"] == 0 or table_sets ["chatcodeflag"] == 1) and ucl <= table_sets ["codemaxclass"] then -- chatcode
 			if not table_code [nick] then
 				local vcode, code = genchatcode ()
@@ -5884,45 +5902,49 @@ function VH_OnParsedMsgChat (nick, data)
 		end
 	end
 
-local fakenick = nick
+	local fakenick = nick
 
-if table_sets ["funrandomchat"] == 1 then
-	fakenick = getrandomnick ()
+	if table_sets ["funrandomchat"] == 1 then
+		fakenick = getrandomnick ()
 
-	if table_sets ["custnickclass"] < 11 then
-		fakenick = getcustnick (fakenick) or fakenick -- use custom nick
-	end
-else
-	if table_sets ["custnickclass"] < 11 then
+		if table_sets ["custnickclass"] < 11 then
+			fakenick = getcustnick (fakenick) or fakenick -- use custom nick
+		end
+	elseif table_sets ["custnickclass"] < 11 then
 		fakenick = getcustnick (nick) or nick
 	end
-end
 
-local cvdat = data
-local retval = 1
+	local cvdat = data
+	local retval = 1
 
-if table_sets ["translitmode"] > 0 then -- convert translit
-	cvdat = convtranslit (cvdat, table_sets ["translitmode"])
+	if table_sets ["translitmode"] > 0 then -- convert translit
+		cvdat = convtranslit (cvdat, table_sets ["translitmode"])
 
-	if data ~= cvdat then -- only when modified
-		if antiscan (nick, ucl, cvdat, 1, nil, nil) == 0 then return 0 end -- spam detection after translit conversion
-		retval = 0
+		if data ~= cvdat then -- only when modified
+			if antiscan (nick, ucl, cvdat, 1, nil, nil) == 0 then -- spam detection after translit conversion
+				return 0
+			end
+
+			retval = 0
+		end
 	end
-end
 
-if (table_sets ["tolowcharcase"] == 1) and (ucl < 3) then -- convert char case
-	cvdat = convcaps (cvdat, true)
-	if data ~= cvdat then retval = 0 end -- only when modified
-end
+	if table_sets ["tolowcharcase"] == 1 and ucl < 3 then -- convert char case
+		cvdat = convcaps (cvdat, true)
+
+		if data ~= cvdat then -- only when modified
+			retval = 0
+		end
+	end
 
 	cvdat = modusrmode (nick, ip, cvdat) -- chat mode
 
-	if table_sets ["replrunning"] == 1 then -- replacer
+	if table_sets ["replrunning"] == 1 and (table_sets ["replprotect"] == 0 or not prot) then -- replacer
 		local norepl = cvdat
 		cvdat = replchatmsg (nick, ucl, cvdat, 1)
 
 		if norepl ~= cvdat then
-			opsnotify (table_sets ["classnotirepl"], string.format (gettext ("Message replaced for user with class %d in MC: <%s> %s"), ucl, nick, data))
+			opsnotify (table_sets ["classnotirepl"], gettext ("Message replaced for user with class %d in MC: <%s> %s"):format (ucl, nick, data))
 		end
 	end
 
@@ -5930,26 +5952,28 @@ end
 		retval = 0 -- only when modified
 	end
 
-if table_sets ["useripinchat"] > 0 then -- ip in chat
-	local pfx = ""
+	if table_sets ["useripinchat"] > 0 then -- ip in chat
+		local pfx = ""
 
-	if table_sets ["useripinchat"] == 2 and table_refu ["GetUserCC"] then
-		local cc = getcc (nick)
-		if (not cc) or (cc == "--") then cc = "??" end
-		pfx = "[ "..ip.." &#124; "..cc.." ]"
-	else
-		pfx = "[ "..ip.." ]"
-	end
+		if table_sets ["useripinchat"] == 2 and table_refu ["GetUserCC"] then
+			local cc = getcc (nick)
 
-	VH:SendToClass ("<"..fakenick.."> "..cvdat.."|", 0, 2)
-	VH:SendToClass (pfx.." <"..fakenick.."> "..cvdat.."|", 3, 10)
-	retval = 0
-else -- no ip
-	if (retval == 0) or (fakenick ~= nick) then -- only when modified
-		VH:SendToClass ("<"..fakenick.."> "..cvdat.."|", 0, 10)
+			if not cc or cc == "--" then
+				cc = "??"
+			end
+
+			pfx = "[ " .. ip .. " &#124; " .. cc .. " ]"
+		else
+			pfx = "[ " .. ip .. " ]"
+		end
+
+		VH:SendToClass ("<" .. fakenick .. "> " .. cvdat .. "|", 0, 2)
+		VH:SendToClass (pfx .. " <" .. fakenick .. "> " .. cvdat .. "|", 3, 10)
+		retval = 0
+	elseif retval == 0 or fakenick ~= nick then -- no ip, only when modified
+		VH:SendToClass ("<" .. fakenick .. "> " .. cvdat .. "|", 0, 10)
 		retval = 0
 	end
-end
 
 	addmchistoryline (fakenick, nick, cvdat)
 	replyresponder (fakenick, ucl, cvdat)
@@ -6144,16 +6168,19 @@ end
 ----- ---- --- -- -
 
 function sendwelcomein (nick, ucl)
-	if ucl < table_sets ["welcomeclass"] then return nil end
-	local _, rows = VH:SQLQuery ("select `in` from `"..tbl_sql ["wm"].."` where `nick` = '"..repsqlchars (nick).."' and `in` != '' limit 1")
+	if ucl < table_sets ["welcomeclass"] then
+		return
+	end
+
+	local _, rows = VH:SQLQuery ("select `in` from `" .. tbl_sql ["wm"] .. "` where `nick` = '" .. repsqlchars (nick) .. "' and `in` != '' limit 1")
 
 	if rows > 0 then
 		local _, cmsg = VH:SQLFetch (0)
 
 		if table_sets ["custnickclass"] < 11 then
-			cmsg = string.gsub (cmsg, "%*", reprexpchars (getcustnick (nick) or nick))
+			cmsg = cmsg:gsub ("%*", reprexpchars (getcustnick (nick) or nick))
 		else
-			cmsg = string.gsub (cmsg, "%*", reprexpchars (nick))
+			cmsg = cmsg:gsub ("%*", reprexpchars (nick))
 		end
 
 		maintoall (cmsg, 0, 10)
@@ -6163,16 +6190,19 @@ end
 ----- ---- --- -- -
 
 function sendwelcomeout (nick, ucl)
-	if ucl < table_sets ["welcomeclass"] then return nil end
-	local _, rows = VH:SQLQuery ("select `out` from `"..tbl_sql ["wm"].."` where `nick` = '"..repsqlchars (nick).."' and `out` != '' limit 1")
+	if ucl < table_sets ["welcomeclass"] then
+		return
+	end
+
+	local _, rows = VH:SQLQuery ("select `out` from `" .. tbl_sql ["wm"] .. "` where `nick` = '" .. repsqlchars (nick) .. "' and `out` != '' limit 1")
 
 	if rows > 0 then
 		local _, cmsg = VH:SQLFetch (0)
 
 		if table_sets ["custnickclass"] < 11 then
-			cmsg = string.gsub (cmsg, "%*", reprexpchars (getcustnick (nick) or nick))
+			cmsg = cmsg:gsub ("%*", reprexpchars (getcustnick (nick) or nick))
 		else
-			cmsg = string.gsub (cmsg, "%*", reprexpchars (nick))
+			cmsg = cmsg:gsub ("%*", reprexpchars (nick))
 		end
 
 		maintoall (cmsg, 0, 10)
@@ -6623,11 +6653,14 @@ end
 --[[
 
 function broadcastcustnick (to, nick, data)
-	if table_sets ["custnickclass"] == 11 then return false end
+	if table_sets ["custnickclass"] == 11 then
+		return false
+	end
+
 	local rnick = findcustnick (to)
 
 	if rnick then -- match
-		VH:SendToUser ("$To: "..rnick.." From: "..nick.." $<"..nick.."> "..data.."|", rnick)
+		VH:SendToUser ("$To: " .. rnick .. " From: " .. nick .. " $<" .. nick .. "> " .. data .. "|", rnick)
 		return true
 	end
 
@@ -6943,11 +6976,11 @@ function delcustnick (nick, cls, quit)
 	local lnick = tolow (nick)
 
 	for k, v in pairs (table_cust) do
-		if (tolow (k) == lnick) or (tolow (v) == lnick) then
+		if tolow (k) == lnick or tolow (v) == lnick then
 			table_cust [k] = nil
 
-			if quit == true then
-				VH:SendToClass ("$Quit "..v.."|", 0, 10)
+			if quit then
+				VH:SendToClass ("$Quit " .. v .. "|", 0, 10)
 			end
 
 			return v
@@ -6956,14 +6989,14 @@ function delcustnick (nick, cls, quit)
 
 	if cls >= table_sets ["custnickclass"] then
 		lnick = repsqlchars (nick)
-		local _, rows = VH:SQLQuery ("select `custom` from `"..tbl_sql ["cust"].."` where `nick` = '"..lnick.."' or `custom` = '"..lnick.."'")
+		local _, rows = VH:SQLQuery ("select `custom` from `" .. tbl_sql ["cust"] .. "` where `nick` = '" .. lnick .. "' or `custom` = '" .. lnick .. "'")
 
 		if rows > 0 then
 			local _, cust = VH:SQLFetch (0)
-			VH:SQLQuery ("delete from `"..tbl_sql ["cust"].."` where `custom` = '"..repsqlchars (cust).."'")
+			VH:SQLQuery ("delete from `" .. tbl_sql ["cust"] .. "` where `custom` = '" .. repsqlchars (cust) .. "'")
 
-			if quit == true then
-				VH:SendToClass ("$Quit "..cust.."|", 0, 10)
+			if quit then
+				VH:SendToClass ("$Quit " .. cust .. "|", 0, 10)
 			end
 
 			return cust
@@ -6980,19 +7013,19 @@ function resetrealnick (nick)
 
 	for k, v in pairs (table_cust) do
 		if tolow (v) == lnick then
-			maintoall (string.format (gettext ("Custom nick %s is now owned by real user and therefore has been reset for user: %s"), nick, k), 0, 10)
+			maintoall (gettext ("Custom nick %s is now owned by real user and therefore has been reset for user: %s"):format (nick, k), 0, 10)
 			table_cust [k] = nil
-			return nil
+			return
 		end
 	end
 
 	if table_sets ["custnickclass"] ~= 11 then -- might be enabled after user login, results a conflict
-		local _, rows = VH:SQLQuery ("select `nick` from `"..tbl_sql ["cust"].."` where `custom` = '"..repsqlchars (nick).."' limit 1")
+		local _, rows = VH:SQLQuery ("select `nick` from `" .. tbl_sql ["cust"] .. "` where `custom` = '" .. repsqlchars (nick) .. "' limit 1")
 
 		if rows > 0 then
 			local _, cust = VH:SQLFetch (0)
-			VH:SQLQuery ("delete from `"..tbl_sql ["cust"].."` where `nick` = '"..repsqlchars (cust).."' limit 1")
-			maintoall (string.format (gettext ("Custom nick %s is now owned by real user and therefore has been reset for user: %s"), nick, cust), 0, 10)
+			VH:SQLQuery ("delete from `" .. tbl_sql ["cust"] .. "` where `nick` = '" .. repsqlchars (cust) .. "' limit 1")
+			maintoall (gettext ("Custom nick %s is now owned by real user and therefore has been reset for user: %s"):format (nick, cust), 0, 10)
 		end
 	end
 end
@@ -10207,7 +10240,7 @@ function isprotected (nick, addr)
 		end
 
 		for _, prot in pairs (cache_prot) do
-			if (nick and lick:find (prot)) or (addr and addr:find (prot)) then
+			if (nick and lick:match (prot)) or (addr and addr:match (prot)) then
 				VH:SQLQuery ("update ignore `" .. tbl_sql ["prot"] .. "` set `occurred` = `occurred` + 1 where `protected` = '" .. repsqlchars (prot) .. "'")
 				return true
 			end
@@ -11486,7 +11519,8 @@ function gagipcheck (nick, ip, class, to, data)
 		if ip:match (key) then
 			if to and (value == 0 or value == 2) then -- pm
 				pmtouser (nick, to, gettext ("Private chat is currently disabled for you."))
-				opsnotify (table_sets ["classnotigagip"], gettext ("%s with IP %s and class %d tries to speak with IP gag in PM: %s"):format (nick, ip .. tryipcc (ip, nick), class, data))
+				local toip = getip (to)
+				opsnotify (table_sets ["classnotigagip"], gettext ("%s with IP %s and class %d tries to speak with IP gag in PM to %s with IP %s and class %d: %s"):format (nick, ip .. tryipcc (ip, nick), class, to, toip .. tryipcc (toip, to), getclass (to), data))
 				return true
 			elseif not to and (value == 0 or value == 1) then -- mc
 				maintouser (nick, gettext ("Main chat is currently disabled for you."))
@@ -11599,7 +11633,8 @@ function gagccheck (nick, ip, class, to, data)
 
 				if to and (flag == 0 or flag == 2) then -- pm
 					pmtouser (nick, to, gettext ("Private chat is currently disabled for you."))
-					opsnotify (table_sets ["classnotigagip"], gettext ("%s with IP %s and class %d tries to speak with country code gag in PM: %s"):format (nick, ip .. tryipcc (ip, nick), class, data))
+					local toip = getip (to)
+					opsnotify (table_sets ["classnotigagip"], gettext ("%s with IP %s and class %d tries to speak with country code gag in PM to %s with IP %s and class %d: %s"):format (nick, ip .. tryipcc (ip, nick), class, to, toip .. tryipcc (toip, to), getclass (to), data))
 					return true
 				elseif not to and (flag == 0 or flag == 1) then -- mc
 					maintouser (nick, gettext ("Main chat is currently disabled for you."))
@@ -11702,7 +11737,7 @@ function detchatflood (nick, class, ip, msg, to)
 		local dif = os.difftime (tm, table_othsets ["chflalltime"])
 
 		if table_othsets ["chflallcount"] >= table_sets ["chatfloodallcount"] and dif <= table_sets ["chatfloodallint"] then
-			opsnotify (table_sets ["classnotiflood"], string.format (gettext ("Message ignored due to flood detection from %s with IP %s and class %d in MC: %s"), nick, ip .. tryipcc (ip, nick), class, msg))
+			opsnotify (table_sets ["classnotiflood"], gettext ("Message ignored due to flood detection from %s with IP %s and class %d in MC: %s"):format (nick, ip .. tryipcc (ip, nick), class, msg))
 			return true
 		elseif dif > table_sets ["chatfloodallint"] then
 			table_othsets ["chflallcount"] = 1
@@ -11718,13 +11753,14 @@ function detchatflood (nick, class, ip, msg, to)
 		if table_flod [ip]["cnt"] >= table_sets ["chatfloodcount"] and dif <= table_sets ["chatfloodint"] then -- match
 			if to then -- pm
 				if table_flod [ip]["fst"] == true then -- notify only first time
-					opsnotify (table_sets ["classnotiflood"], string.format (gettext ("Flood detected from IP %s last known as %s with class %d in PM: %s"), ip .. tryipcc (ip, nick), nick, class, msg))
+					local toip = getip (to)
+					opsnotify (table_sets ["classnotiflood"], gettext ("Flood detected from IP %s last known as %s with class %d in PM to %s with IP %s and class %d: %s"):format (ip .. tryipcc (ip, nick), nick, class, to, toip .. tryipcc (toip, to), getclass (to), msg))
 				end
 
 				pmtouser (nick, to, gettext ("Flood detected from your IP."))
 			else -- mc
 				if table_flod [ip]["fst"] == true then -- notify only first time
-					opsnotify (table_sets ["classnotiflood"], string.format (gettext ("Flood detected from IP %s last known as %s with class %d in MC: %s"), ip .. tryipcc (ip, nick), nick, class, msg))
+					opsnotify (table_sets ["classnotiflood"], gettext ("Flood detected from IP %s last known as %s with class %d in MC: %s"):format (ip .. tryipcc (ip, nick), nick, class, msg))
 				end
 
 				maintouser (nick, gettext ("Flood detected from your IP."))
@@ -11738,14 +11774,14 @@ function detchatflood (nick, class, ip, msg, to)
 				end
 
 				if table_flod [ip]["fst"] == true then -- notify only first time
-					opsnotify (table_sets ["classnotiflood"], string.format (gettext ("Added %s to IP gag list, %d users in total."), ip .. tryipcc (ip, nick), # getusersbyip (ip, table_sets ["scanbelowclass"])))
+					opsnotify (table_sets ["classnotiflood"], gettext ("Added %s to IP gag list, %d users in total."):format (ip .. tryipcc (ip, nick), # getusersbyip (ip, table_sets ["scanbelowclass"])))
 				end
 
 			elseif table_sets ["chatfloodaction"] == 2 then -- drop
 				local res = dropallbyip (ip)
 
 				if table_flod [ip]["fst"] == true then -- notify only first time
-					opsnotify (table_sets ["classnotiflood"], string.format (gettext ("%d users with IP %s dropped due to flood."), res, ip .. tryipcc (ip, nick)))
+					opsnotify (table_sets ["classnotiflood"], gettext ("%d users with IP %s dropped due to flood."):format (res, ip .. tryipcc (ip, nick)))
 				end
 
 			elseif table_sets ["chatfloodaction"] == 3 then -- kick
@@ -14342,8 +14378,10 @@ end
 		--susmenitm (usr, gettext ("Custom nicks") .. "\\" .. gettext ("Reset your custom nick"), table_cmnds ["nick"])
 	end
 
-	susmenitm (usr, gettext ("Custom nicks") .. "\\" .. gettext ("Get user's real nick"), table_cmnds ["realnick"] .. " %[line:<" .. gettext ("nick") .. ">]")
-	susmenitm (usr, gettext ("Custom nicks") .. "\\" .. gettext ("Custom nick list"), table_cmnds ["custlist"])
+	if ucl >= table_sets ["custlistclass"] then
+		susmenitm (usr, gettext ("Custom nicks") .. "\\" .. gettext ("Get user's real nick"), table_cmnds ["realnick"] .. " %[line:<" .. gettext ("nick") .. ">]")
+		susmenitm (usr, gettext ("Custom nicks") .. "\\" .. gettext ("Custom nick list"), table_cmnds ["custlist"])
+	end
 
 -- registered users
 
@@ -16390,21 +16428,37 @@ else
 commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 end
 
------ ---- --- -- -
+	----- ---- --- -- -
 
 	elseif tvar == "custnickclass" then
-		if num == true then
-			if ((setto >= 0) and (setto <= 5)) or (setto == 10) or (setto == 11) then
+		if num then
+			if (setto >= 0 and setto <= 5) or setto == 10 or setto == 11 then
 				ok = true
-				if setto > table_sets [tvar] then cleancustnick (setto, 1) end
+
+				if setto > table_sets [tvar] then
+					cleancustnick (setto, 1)
+				end
 			else
-				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0, 1, 2, 3, 4, 5, 10 "..gettext ("or").." 11"))
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0, 1, 2, 3, 4, 5, 10 " .. gettext ("or") .. " 11"))
 			end
 		else
-			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
 		end
 
------ ---- --- -- -
+	----- ---- --- -- -
+
+	elseif tvar == "custlistclass" then
+		if num then
+			if (setto >= 0 and setto <= 5) or setto == 10 or setto == 11 then
+				ok = true
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0, 1, 2, 3, 4, 5, 10 " .. gettext ("or") .. " 11"))
+			end
+		else
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
+		end
+
+	----- ---- --- -- -
 
 elseif tvar == "welcomeclass" then
 if num == true then
@@ -16640,20 +16694,33 @@ end
 			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
 		end
 
------ ---- --- -- -
+	----- ---- --- -- -
 
 	elseif tvar == "replrunning" then
-		if num == true then
-			if (setto == 0) or (setto == 1) then
+		if num then
+			if setto == 0 or setto == 1 then
 				ok = true
 			else
-				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 "..gettext ("or").." 1"))
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0 " .. gettext ("or") .. " 1"))
 			end
 		else
-			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
 		end
 
------ ---- --- -- -
+	----- ---- --- -- -
+
+	elseif tvar == "replprotect" then
+		if num then
+			if setto == 0 or setto == 1 then
+				ok = true
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0 " .. gettext ("or") .. " 1"))
+			end
+		else
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
+		end
+
+	----- ---- --- -- -
 
 elseif tvar == "resprunning" then
 if num == true then
@@ -18239,11 +18306,12 @@ conf = conf.."\r\n [::] regmeuptime = "..table_sets ["regmeuptime"]
 conf = conf.."\r\n [::] searchuptime = "..table_sets ["searchuptime"]
 conf = conf.."\r\n [::] searuptimeact = "..table_sets ["searuptimeact"]
 conf = conf.."\r\n [::] showuseruptime = "..table_sets ["showuseruptime"]
-conf = conf.."\r\n"
-conf = conf.."\r\n [::] custnickclass = "..table_sets ["custnickclass"]
-conf = conf.."\r\n [::] custmaxlen = "..table_sets ["custmaxlen"]
-conf = conf.."\r\n [::] savecustnicks = "..table_sets ["savecustnicks"]
-conf = conf.."\r\n"
+	conf = conf .. "\r\n"
+	conf = conf .. "\r\n [::] custnickclass = " .. table_sets ["custnickclass"]
+	conf = conf .. "\r\n [::] custlistclass = " .. table_sets ["custlistclass"]
+	conf = conf .. "\r\n [::] custmaxlen = " .. table_sets ["custmaxlen"]
+	conf = conf .. "\r\n [::] savecustnicks = " .. table_sets ["savecustnicks"]
+	conf = conf .. "\r\n"
 conf = conf.."\r\n [::] opkeyclass = "..table_sets ["opkeyclass"]
 conf = conf.."\r\n [::] opkeyshare = "..table_sets ["opkeyshare"]
 conf = conf.."\r\n [::] opkeyself = "..table_sets ["opkeyself"]
@@ -18272,10 +18340,11 @@ conf = conf.."\r\n [::] clearclass = "..table_sets ["clearclass"]
 	conf = conf .. "\r\n"
 	conf = conf .. "\r\n [::] remrunning = " .. table_sets ["remrunning"]
 	conf = conf .. "\r\n [::] trigrunning = " .. table_sets ["trigrunning"]
-conf = conf.."\r\n [::] replrunning = "..table_sets ["replrunning"]
-conf = conf.."\r\n [::] resprunning = "..table_sets ["resprunning"]
-conf = conf.."\r\n [::] respdelay = "..table_sets ["respdelay"]
-conf = conf.."\r\n"
+	conf = conf .. "\r\n [::] replrunning = " .. table_sets ["replrunning"]
+	conf = conf .. "\r\n [::] replprotect = " .. table_sets ["replprotect"]
+	conf = conf .. "\r\n [::] resprunning = " .. table_sets ["resprunning"]
+	conf = conf .. "\r\n [::] respdelay = " .. table_sets ["respdelay"]
+	conf = conf .. "\r\n"
 conf = conf.."\r\n [::] newsclass = "..table_sets ["newsclass"]
 conf = conf.."\r\n [::] newsautolines = "..table_sets ["newsautolines"]
 conf = conf.."\r\n"
@@ -21531,7 +21600,15 @@ end
 ----- ---- --- -- -
 
 function antiscan (nick, class, data, where, to, status)
-	-- where: 1 = main chat, 2 = private message, 3 = offline message, 4 = report command
+	--[[
+
+		where
+			1 = main chat
+			2 = private message
+			3 = offline message
+			4 = report command
+
+	]]--
 
 	if table_sets ["enableantispam"] == 0 then
 		return 1
@@ -21541,11 +21618,13 @@ function antiscan (nick, class, data, where, to, status)
 		return 1
 	end
 
-	if string.len (data) == 0 then
+	if # data == 0 then
 		return 1
 	end
 
-	if ((where == 2) or (where == 3)) and (table_sets ["allowspamtoops"] == 1) and (getclass (to) >= 3) then
+	local toclass = getclass (to)
+
+	if (where == 2 or where == 3) and table_sets ["allowspamtoops"] == 1 and toclass >= 3 then
 		return 1
 	end
 
@@ -21560,7 +21639,7 @@ function antiscan (nick, class, data, where, to, status)
 	local lowdata = tolow (repnmdcinchars (data))
 	local flag = 1
 
-	if (where == 2) or (where == 3) then
+	if where == 2 or where == 3 then
 		flag = 2
 	end
 
@@ -21594,7 +21673,7 @@ function antiscan (nick, class, data, where, to, status)
 						local note = "Spam exception from %s with IP %s and class %d in MC: %s"
 
 						if where == 2 then
-							note = "Spam exception from %s with IP %s and class %d in PM: %s"
+							note = "Spam exception from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s"
 						elseif where == 3 then
 							note = "Spam exception from %s with IP %s and class %d in offline message: %s"
 						elseif where == 4 then
@@ -21602,7 +21681,13 @@ function antiscan (nick, class, data, where, to, status)
 						end
 
 						local mtip = getip (nick)
-						opsnotify (table_sets ["classnotiex"], string.format (gettext (note), nick, mtip .. tryipcc (mtip, nick), class, data))
+						local toip = getip (to)
+
+						if where == 2 then
+							opsnotify (table_sets ["classnotiex"], gettext (note):format (nick, mtip .. tryipcc (mtip, nick), class, to, toip .. tryipcc (toip, to), toclass, data))
+						else
+							opsnotify (table_sets ["classnotiex"], gettext (note):format (nick, mtip .. tryipcc (mtip, nick), class, data))
+						end
 
 						if table_sets ["antispamdebug"] == 1 then -- debug
 							opsnotify (table_sets ["classnotianti"], gettext ("Entry used in detection: %s"):format (repnmdcoutchars (entry)))
@@ -21620,7 +21705,7 @@ function antiscan (nick, class, data, where, to, status)
 				local note = "Spam notification from %s with IP %s and class %d in MC: %s"
 
 				if where == 2 then
-					note = "Spam notification from %s with IP %s and class %d in PM: %s"
+					note = "Spam notification from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s"
 				elseif where == 3 then
 					note = "Spam notification from %s with IP %s and class %d in offline message: %s"
 				elseif where == 4 then
@@ -21628,7 +21713,13 @@ function antiscan (nick, class, data, where, to, status)
 				end
 
 				local mtip = getip (nick)
-				opsnotify (table_sets ["classnotianti"], string.format (gettext (note), nick, mtip .. tryipcc (mtip, nick), class, data))
+				local toip = getip (to)
+
+				if where == 2 then
+					opsnotify (table_sets ["classnotianti"], gettext (note):format (nick, mtip .. tryipcc (mtip, nick), class, to, toip .. tryipcc (toip, to), toclass, data))
+				else
+					opsnotify (table_sets ["classnotianti"], gettext (note):format (nick, mtip .. tryipcc (mtip, nick), class, data))
+				end
 
 				if table_sets ["antispamdebug"] == 1 then -- debug
 					opsnotify (table_sets ["classnotianti"], gettext ("Entry used in detection: %s"):format (repnmdcoutchars (entry)))
@@ -21642,9 +21733,9 @@ function antiscan (nick, class, data, where, to, status)
 					maintoself (nick, data)
 				elseif where == 3 then
 					if status == 1 then
-						commandanswer (nick, string.format (gettext ("User %s is online. Sending message directly."), to))
+						commandanswer (nick, gettext ("User %s is online. Sending message directly."):format (to))
 					else
-						commandanswer (nick, string.format (gettext ("Your offline message stored for user: %s"), to))
+						commandanswer (nick, gettext ("Your offline message stored for user: %s"):format (to))
 					end
 				end
 
@@ -21683,7 +21774,7 @@ function antiscan (nick, class, data, where, to, status)
 			local note = "Spam from %s with IP %s and class %d in MC: %s"
 
 			if where == 2 then
-				note = "Spam from %s with IP %s and class %d in PM: %s"
+				note = "Spam from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s"
 			elseif where == 3 then
 				note = "Spam from %s with IP %s and class %d in offline message: %s"
 			elseif where == 4 then
@@ -21691,46 +21782,52 @@ function antiscan (nick, class, data, where, to, status)
 			end
 
 			local ip = getip (nick)
-			opsnotify (table_sets ["classnotianti"], string.format (gettext (note), nick, ip .. tryipcc (ip, nick), class, data))
+			local toip = getip (to)
+
+			if where == 2 then
+				opsnotify (table_sets ["classnotianti"], gettext (note):format (nick, ip .. tryipcc (ip, nick), class, to, toip .. tryipcc (toip, to), toclass, data))
+			else
+				opsnotify (table_sets ["classnotianti"], gettext (note):format (nick, ip .. tryipcc (ip, nick), class, data))
+			end
 
 			if action == 1 then -- drop
-				opsnotify (table_sets ["classnotianti"], string.format (gettext ("%s dropped due to spam."), nick))
+				opsnotify (table_sets ["classnotianti"], gettext ("%s dropped due to spam."):format (nick))
 				VH:Disconnect (nick)
 
 			elseif action == 2 then -- kick
-				local reason = string.gsub (table_sets ["antikreason"], "%*", reprexpchars (data))
+				local reason = table_sets ["antikreason"]:gsub ("%*", reprexpchars (data))
 				VH:KickUser (table_othsets ["sendfrom"], nick, reason)
 
 			elseif action == 3 then -- temporary ban, kick using thirdacttime
-				local reason = string.gsub (table_sets ["antikreason"], "%*", reprexpchars (data))
+				local reason = table_sets ["antikreason"]:gsub ("%*", reprexpchars (data))
 				VH:KickUser (table_othsets ["sendfrom"], nick, reason .. "     #_ban_" .. table_sets ["thirdacttime"])
 
 			elseif action == 4 then -- spam to self
-				opsnotify (table_sets ["classnotianti"], string.format (gettext ("%s received own message."), nick))
+				opsnotify (table_sets ["classnotianti"], gettext ("%s received own message."):format (nick))
 
 			elseif action == 6 then -- redirect to sixthactaddr
-				opsnotify (table_sets ["classnotianti"], string.format (gettext ("%s redirected due to spam."), nick))
+				opsnotify (table_sets ["classnotianti"], gettext ("%s redirected due to spam."):format (nick))
 				VH:SendToUser ("$ForceMove " .. table_sets ["sixthactaddr"] .. "|", nick)
 				VH:Disconnect (nick)
 
 			elseif action == 7 then -- permanent ban, kick using seventhacttime
-				local reason = string.gsub (table_sets ["antikreason"], "%*", reprexpchars (data))
+				local reason = table_sets ["antikreason"]:gsub ("%*", reprexpchars (data))
 				VH:KickUser (table_othsets ["sendfrom"], nick, reason .. "     #_ban_" .. table_sets ["seventhacttime"])
 
 			elseif action == 8 then -- gag ip
 				gagipadd (nil, ip .. " " .. tostring (where))
-				opsnotify (table_sets ["classnotianti"], string.format (gettext ("Added %s to IP gag list, %d users in total."), ip .. tryipcc (ip, nick), # getusersbyip (ip, table_sets ["scanbelowclass"])))
+				opsnotify (table_sets ["classnotianti"], gettext ("Added %s to IP gag list, %d users in total."):format (ip .. tryipcc (ip, nick), # getusersbyip (ip, table_sets ["scanbelowclass"])))
 
 			elseif action == 9 then -- replace
 				if where == 1 then -- mc
-					opsnotify (table_sets ["classnotianti"], string.format (gettext ("Main chat message replaced for user: %s"), nick))
+					opsnotify (table_sets ["classnotianti"], gettext ("Main chat message replaced for user: %s"):format (nick))
 				elseif where == 2 then -- pm
-					opsnotify (table_sets ["classnotianti"], string.format (gettext ("Private message replaced for user: %s"), nick))
+					opsnotify (table_sets ["classnotianti"], gettext ("Private message replaced for user: %s"):format (nick))
 				end
 
 			elseif action == 10 then -- hard ban
 				addhban (nil, repexdots (ip) .. "$ \"" .. repnmdcoutchars (entry) .. "\"")
-				opsnotify (table_sets ["classnotianti"], string.format (gettext ("Added %s to hard ban list, %d users in total."), ip, # getusersbyip (ip, table_sets ["scanbelowclass"])))
+				opsnotify (table_sets ["classnotianti"], gettext ("Added %s to hard ban list, %d users in total."):format (ip, # getusersbyip (ip, table_sets ["scanbelowclass"])))
 				VH:Disconnect (nick)
 			end
 
