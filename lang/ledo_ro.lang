@@ -1,6 +1,6 @@
 # Language: ro_RO
 # Charset: CP1250
-# Version: 2.8.7
+# Version: 2.8.8
 # Author: S0RiN
 # Email: rusu_sorin_con@yahoo.com
 
@@ -539,15 +539,15 @@ second|secundг
 You are now known as: %s|Eєti acum cunoscut ca: %s
 You renamed %s to: %s|Ai redenumit %s оn: %s
 Spam exception from %s with IP %s and class %d in MC: %s|Excepюie de la spam pentru %s cu IP %s єi clasa %d оn MC: %s
-Spam exception from %s with IP %s and class %d in PM: %s|Excepюie de la spam pentru %s cu IP %s єi clasa %d оn PM: %s
+Spam exception from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s|Excepюie de spam de la %s cu IP %s єi clasa %d оn PM cгtre %s cu IP %s єi clasa %d: %s
 Spam exception from %s with IP %s and class %d in offline message: %s|Excepюie de la spam pentru %s cu IP %s єi clasa %d оn mesaj offline: %s
 Spam exception from %s with IP %s and class %d in report: %s|Excepюie de la spam pentru %s cu IP %s єi clasa %d оn report: %s
 Spam notification from %s with IP %s and class %d in MC: %s|Notificare de spam de la %s cu IP %s єi clasa %d оn MC: %s
-Spam notification from %s with IP %s and class %d in PM: %s|Notificare de spam de la %s cu IP %s єi clasa %d оn PM: %s
+Spam notification from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s|Notificare de spam de la %s cu IP %s єi clasa %d оn PM cгtre %s cu IP %s єi clasa %d: %s
 Spam notification from %s with IP %s and class %d in offline message: %s|Notificare de spam de la %s cu IP %s єi clasa %d оn mesaj offline: %s
 Spam notification from %s with IP %s and class %d in report: %s|Notificare de spam de la %s cu IP %s єi clasa %d оn report: %s
 Spam from %s with IP %s and class %d in MC: %s|Spam de la %s cu IP %s єi clasa %d оn MC: %s
-Spam from %s with IP %s and class %d in PM: %s|Spam de la %s cu IP %s єi clasa %d оn PM: %s
+Spam from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s|Spam de la %s cu IP %s єi clasa %d оn PM cгtre %s cu IP %s єi clasa %d: %s
 Spam from %s with IP %s and class %d in offline message: %s|Spam de la %s cu IP %s єi clasa %d оn mesaj offline: %s
 Spam from %s with IP %s and class %d in report: %s|Spam de la %s cu IP %s єi clasa %d оn report: %s
 Modified antispam entry with action %d and priority %d to scan in MC: %s|Modificare intrare antispam cu accюiunea %d єi prioritate %d pentru scanare оn MC: %s
@@ -651,7 +651,7 @@ Custom script command list is empty.|Lista de comenzi personalizate, este goalг
 Script size: %d lines in %s|Mгrimea scriptului: %d avвnd %s linii
 Added %s to IP gag list, %d users in total.|Adгugare %s la lista de gag-гri pe IP, %d useri оn total.
 Flood detected from IP %s last known as %s with class %d in MC: %s|Flood detectat de pe IP %s ultima datг cunoscut ca %s cu clasa %d оn MC: %s
-Flood detected from IP %s last known as %s with class %d in PM: %s|Flood detectat de pe IP %s ultima datг cunoscut ca %s cu clasa %d оn PM: %s
+Flood detected from IP %s last known as %s with class %d in PM to %s with IP %s and class %d: %s|Flood detectat de la IP %s cunoscut anterior ca %s cu clasa %d оn PM cгtre %s cu IP %s єi clasa %d: %s
 Private chat is currently disabled for you.|Chatul privat este momentan dezactivat pentru tine.
 Flood detected from your IP.|Flood detectat de pe IP-ul tгu.
 %d users with IP %s dropped due to flood.|Utilizatorii %d cu IP %s au fost deconectaюi pentru cг au fгcut flood.
@@ -769,7 +769,7 @@ Hub uptime: %s|Timpul de pornire a hubului: %s
 User count: %s|Contul utilizatorului: %s
 Total share: %s|Share total: %s
 %s with IP %s and class %d tries to speak with IP gag in MC: %s|%s cu IP %s єi clasa %d оncearcг sг scrie оn MC: %s оnsг are gag.
-%s with IP %s and class %d tries to speak with IP gag in PM: %s|%s cu IP %s єi clasa %d оncearcг sг scrie оn PM: %s оnsг are gag.
+%s with IP %s and class %d tries to speak with IP gag in PM to %s with IP %s and class %d: %s|%s cu IP %s єi clasa %d оncearcг sг scrie cu gag pe IP оn PM cгtre %s cu IP %s єi clasa %d: %s
 Private message replaced for user: %s|Mesaj privat оnlocuit pentru utilizatorul: %s
 Command logger|Loggerul comenzilor
 Showing %d entries from command logger|Aratг %d intrгri din logger-ul comenzilor
@@ -878,7 +878,7 @@ Country code gag list is empty.|Lista de gag-uri pe cod de юarг, este goalг.
 Delete country code gag|Єtergere gag pe cod de юarг
 Cleared country code gag list.|Curгюare listг de gag-uri pe cod de юarг.
 %s with IP %s and class %d tries to speak with country code gag in MC: %s|%s cu IP %s єi clasa %d cu gag pe cod de юarг, оncearcг sг scrie оn MC: %s
-%s with IP %s and class %d tries to speak with country code gag in PM: %s|%s cu IP %s єi clasa %d cu gag pe cod de юarг, оncearcг sг scrie оn PM: %s
+%s with IP %s and class %d tries to speak with country code gag in PM to %s with IP %s and class %d: %s|%s cu IP єi clasa %d оncearcг sг scrie cu gag pe cod de юarг оn PM cгtre %s cu IP %s єi clasa %d: %s
 No reason specified|Nu s-a specificat nici un motiv
 Automatically deleted %d user log entries older than %d days.|Єtergere automatг %d intrгri оn user log mai vechi de %d zile.
 Main chat message replaced for user: %s|Mesaj de main chat modificat pentru utilizatorul: %s
@@ -981,7 +981,7 @@ There is an error in following forbidden client supports pattern|Aici este o ero
 There is an error in following forbidden NMDC version pattern|Aici este o eroare оn urmгtoarea interdicюie pe baza versiunii de NMDC
 Added replacer in PM: %s|Adгugare replacer оn PM: %s
 Added replacer in MC and PM: %s|Adгugare replacer оn MC єi PM: %s
-Message replaced for user with class %d in PM: <%s> %s|Mesaj modificat pentru utilizatorul cu clasa %d оn PM: <%s> %s
+Message replaced for user with IP %s and class %d in PM to %s with IP %s and class %d: <%s> %s|Mesaj modificat pentru utilizator cu IP %s єi clasa %d оn PM cгtre %s cu IP %s єi clasa %d: <%s> %s
 Message ignored due to flood detection from %s with IP %s and class %d in MC: %s|Mesaj ignorat datoritг detectгrii de flood de la %s cu IP %s єi clasa %d оn MC: %s
 Users with same IP|Utilizatori cu acelaєi IP
 Parameter count mismatch detected in following translation string: %s|Nepotrivire a cifrei parametru detectatг оn urmгtarul єir tradus: %s
