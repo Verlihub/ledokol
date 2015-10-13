@@ -187,6 +187,7 @@ table_sets = {
 	["enablevipkick"] = 0,
 	["votekickclass"] = 11,
 	["votekickcount"] = 5,
+	["reluseclass"] = 0,
 	["relmodclass"] = 3,
 	["welcomeclass"] = 3,
 	["offmsgclass"] = 3,
@@ -1264,6 +1265,7 @@ function Main (file)
 					if ver <= 288 then
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('replprotect', '" .. repsqlchars (table_sets ["replprotect"]) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('custlistclass', '" .. repsqlchars (table_sets ["custlistclass"]) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('reluseclass', '" .. repsqlchars (table_sets ["reluseclass"]) .. "')")
 					end
 
 					if ver <= 289 then
@@ -1789,43 +1791,67 @@ end
 
 return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
 
-	elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["reladd"].." \".+\" \".+\"$") or string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["reladd"].." \".+\" \".+\" %S+$") then
+	elseif data:match ("^" .. table_othsets ["optrig"] .. table_cmnds ["reladd"] .. " \".+\" \".+\"$") or data:match ("^" .. table_othsets ["optrig"] .. table_cmnds ["reladd"] .. " \".+\" \".+\" %S+$") then
 		if ucl >= table_sets ["relmodclass"] then
 			donotifycmd (nick, data, 0, ucl)
-			addrelease (nick, string.sub (data, string.len (table_cmnds ["reladd"]) + 3, -1))
+			addrelease (nick, data:sub (# table_cmnds ["reladd"] + 3))
 		else
 			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
 
-	elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["reldel"].." %S+ .+$") then
+	elseif data:match ("^" .. table_othsets ["optrig"] .. table_cmnds ["reldel"] .. " %S+ .+$") then
 		if ucl >= table_sets ["relmodclass"] then
 			donotifycmd (nick, data, 0, ucl)
-			delrelease (nick, string.sub (data, string.len (table_cmnds ["reldel"]) + 3, -1))
+			delrelease (nick, data:sub (# table_cmnds ["reldel"] + 3))
 		else
 			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
 
-	elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["respadd"].." \".+\" \".+\" %d+$") then
+	elseif data:match ("^" .. table_othsets ["optrig"] .. table_cmnds ["relfind"] .. " .+$") then
+		if ucl >= table_sets ["reluseclass"] then
+			donotifycmd (nick, data, 0, ucl)
+			findrelease (nick, data:sub (# table_cmnds ["relfind"] + 3))
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
+
+		return 0
+
+	----- ---- --- -- -
+
+	elseif data:match ("^" .. table_othsets ["optrig"] .. table_cmnds ["rellist"] .. " %S+ %d+$") or data:match ("^" .. table_othsets ["optrig"] .. table_cmnds ["rellist"] .. " %S+ %d+ .+$") then
+		if ucl >= table_sets ["reluseclass"] then
+			donotifycmd (nick, data, 0, ucl)
+			listrelease (nick, data:sub (# table_cmnds ["rellist"] + 3))
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
+
+		return 0
+
+	----- ---- --- -- -
+
+	elseif data:match ("^" .. table_othsets ["optrig"] .. table_cmnds ["respadd"] .. " \".+\" \".+\" %d+$") then
 		if ucl >= table_sets ["mincommandclass"] then
 			donotifycmd (nick, data, 0, ucl)
-			addresponder (nick, string.sub (data, string.len (table_cmnds ["respadd"]) + 3, -1))
+			addresponder (nick, data:sub (# table_cmnds ["respadd"] + 3))
 		else
 			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
 
 	elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["respdel"].." %d+$") then
 		if ucl >= table_sets ["mincommandclass"] then
@@ -2427,30 +2453,6 @@ commandanswer (nick, gettext ("This command is either disabled or you don't have
 end
 
 return 0
-
------ ---- --- -- -
-
-	elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["relfind"].." .+$") then
-		if ucl >= table_sets ["minusrcommandclass"] then
-			donotifycmd (nick, data, 0, ucl)
-			findrelease (nick, string.sub (data, string.len (table_cmnds ["relfind"]) + 3, -1))
-		else
-			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
-		end
-
-		return 0
-
------ ---- --- -- -
-
-	elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["rellist"].." %S+ %d+$") or string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["rellist"].." %S+ %d+ .+$") then
-		if ucl >= table_sets ["minusrcommandclass"] then
-			donotifycmd (nick, data, 0, ucl)
-			listrelease (nick, string.sub (data, string.len (table_cmnds ["rellist"]) + 3, -1))
-		else
-			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
-		end
-
-		return 0
 
 ----- ---- --- -- -
 
@@ -4208,48 +4210,48 @@ elseif string.find (data, "^"..table_othsets ["ustrig"]..table_cmnds ["mode"].."
 
 	return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
 
-	elseif string.find (data, "^"..table_othsets ["ustrig"]..table_cmnds ["rellist"].." %S+ %d+$") or string.find (data, "^"..table_othsets ["ustrig"]..table_cmnds ["rellist"].." %S+ %d+ .+$") then
-		if ucl >= table_sets ["minusrcommandclass"] then
+	elseif data:match ("^" .. table_othsets ["ustrig"] .. table_cmnds ["rellist"] .. " %S+ %d+$") or data:match ("^" .. table_othsets ["ustrig"] .. table_cmnds ["rellist"] .. " %S+ %d+ .+$") then
+		if ucl >= table_sets ["reluseclass"] then
 			donotifycmd (nick, data, 0, ucl)
-			listrelease (nick, string.sub (data, string.len (table_cmnds ["rellist"]) + 3, -1))
+			listrelease (nick, data:sub (# table_cmnds ["rellist"] + 3))
 		else
 			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
 
-	elseif string.find (data, "^"..table_othsets ["ustrig"]..table_cmnds ["reladd"].." \".+\" \".+\"$") or string.find (data, "^"..table_othsets ["ustrig"]..table_cmnds ["reladd"].." \".+\" \".+\" %S+$") then
+	elseif data:match ("^" .. table_othsets ["ustrig"] .. table_cmnds ["relfind"] .. " .+$") then
+		if ucl >= table_sets ["reluseclass"] then
+			donotifycmd (nick, data, 0, ucl)
+			findrelease (nick, data:sub (# table_cmnds ["relfind"] + 3))
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
+
+		return 0
+
+	----- ---- --- -- -
+
+	elseif data:match ("^" .. table_othsets ["ustrig"] .. table_cmnds ["reladd"] .. " \".+\" \".+\"$") or data:match ("^" .. table_othsets ["ustrig"] .. table_cmnds ["reladd"] .. " \".+\" \".+\" %S+$") then
 		if ucl >= table_sets ["relmodclass"] then
 			donotifycmd (nick, data, 0, ucl)
-			addrelease (nick, string.sub (data, string.len (table_cmnds ["reladd"]) + 3, -1))
+			addrelease (nick, data:sub (# table_cmnds ["reladd"] + 3))
 		else
 			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
 
-	elseif string.find (data, "^"..table_othsets ["ustrig"]..table_cmnds ["reldel"].." %S+ .+$") then
+	elseif data:match ("^" .. table_othsets ["ustrig"] .. table_cmnds ["reldel"] .. " %S+ .+$") then
 		if ucl >= table_sets ["relmodclass"] then
 			donotifycmd (nick, data, 0, ucl)
-			delrelease (nick, string.sub (data, string.len (table_cmnds ["reldel"]) + 3, -1))
-		else
-			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
-		end
-
-		return 0
-
------ ---- --- -- -
-
-	elseif string.find (data, "^"..table_othsets ["ustrig"]..table_cmnds ["relfind"].." .+$") then
-		if ucl >= table_sets ["minusrcommandclass"] then
-			donotifycmd (nick, data, 0, ucl)
-			findrelease (nick, string.sub (data, string.len (table_cmnds ["relfind"]) + 3, -1))
+			delrelease (nick, data:sub (# table_cmnds ["reldel"] + 3))
 		else
 			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
@@ -14280,24 +14282,24 @@ end
 		sopmenitm (usr, gettext ("Chat responder").."\\"..gettext ("Delete chat responder exception"), table_cmnds ["respexdel"].." %[line:<"..gettext ("nick").." "..gettext ("or").." "..gettext ("ip")..">]")
 	end
 
--- releases
+	-- releases
 
-if ucl >= table_sets ["relmodclass"] then
-susmenitm (usr, gettext ("Releases").."\\"..gettext ("Add new release"), table_cmnds ["reladd"].." \"%[line:<"..gettext ("name")..">]\" \"%[line:<"..gettext ("category")..">]\" %[line:<"..gettext ("tth")..">]")
---susmenitm (usr, gettext ("Releases").."\\"..gettext ("Add new release"), table_cmnds ["reladd"].." \"%[line:<"..gettext ("name")..">]\" \"%[line:<"..gettext ("category")..">]\"")
-smensep (usr)
-susmenitm (usr, gettext ("Releases").."\\"..gettext ("Delete releases"), table_cmnds ["reldel"].." %[line:<"..gettext ("type")..">] %[line:<"..gettext ("name")..">]")
-end
+	if ucl >= table_sets ["relmodclass"] then
+		susmenitm (usr, gettext ("Releases") .. "\\" .. gettext ("Add new release"), table_cmnds ["reladd"] .. " \"%[line:<" .. gettext ("name") .. ">]\" \"%[line:<" .. gettext ("category") .. ">]\" %[line:<" .. gettext ("tth") .. ">]")
+		--susmenitm (usr, gettext ("Releases") .. "\\" .. gettext ("Add new release"), table_cmnds ["reladd"] .. " \"%[line:<" .. gettext ("name") .. ">]\" \"%[line:<" .. gettext ("category") .. ">]\"")
+		smensep (usr)
+		susmenitm (usr, gettext ("Releases") .. "\\" .. gettext ("Delete releases"), table_cmnds ["reldel"] .. " %[line:<" .. gettext ("type") .. ">] %[line:<" .. gettext ("name") .. ">]")
+	end
 
-if ucl >= table_sets ["minusrcommandclass"] then
-if ucl >= table_sets ["relmodclass"] then
-smensep (usr)
-end
+	if ucl >= table_sets ["reluseclass"] then
+		if ucl >= table_sets ["relmodclass"] then
+			smensep (usr)
+		end
 
-susmenitm (usr, gettext ("Releases").."\\"..gettext ("List of available releases"), table_cmnds ["rellist"].." %[line:<"..gettext ("type")..">] %[line:<"..gettext ("lines")..">] %[line:<"..gettext ("category").." "..gettext ("or").." "..gettext ("publisher")..">]")
---susmenitm (usr, gettext ("Releases").."\\"..gettext ("List of available releases"), table_cmnds ["rellist"].." %[line:<"..gettext ("type")..">] %[line:<"..gettext ("lines")..">]")
-susmenitm (usr, gettext ("Releases").."\\"..gettext ("Find release by name or category"), table_cmnds ["relfind"].." %[line:<"..gettext ("name")..">]")
-end
+		susmenitm (usr, gettext ("Releases") .. "\\" .. gettext ("List of available releases"), table_cmnds ["rellist"] .. " %[line:<" .. gettext ("type") .. ">] %[line:<" .. gettext ("lines") .. ">] %[line:<" .. gettext ("category") .. " " .. gettext ("or") .. " " .. gettext ("publisher") .. ">]")
+		--susmenitm (usr, gettext ("Releases") .. "\\" .. gettext ("List of available releases"), table_cmnds ["rellist"] .. " %[line:<" .. gettext ("type") .. ">] %[line:<" .. gettext ("lines") .. ">]")
+		susmenitm (usr, gettext ("Releases") .. "\\" .. gettext ("Find release by name or category"), table_cmnds ["relfind"] .. " %[line:<" .. gettext ("name") .. ">]")
+	end
 
 -- offline messenger
 
@@ -16529,20 +16531,33 @@ elseif tvar == "opkeyshare" then
 		commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 	end
 
------ ---- --- -- -
+	----- ---- --- -- -
 
 	elseif tvar == "relmodclass" then
-		if num == true then
-			if ((setto >= 0) and (setto <= 5)) or (setto == 10) or (setto == 11) then
+		if num then
+			if (setto >= 0 and setto <= 5) or setto == 10 or setto == 11 then
 				ok = true
 			else
-				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0, 1, 2, 3, 4, 5, 10 "..gettext ("or").." 11"))
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0, 1, 2, 3, 4, 5, 10 " .. gettext ("or") .. " 11"))
 			end
 		else
-			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
 		end
 
------ ---- --- -- -
+	----- ---- --- -- -
+
+	elseif tvar == "reluseclass" then
+		if num then
+			if (setto >= 0 and setto <= 5) or setto == 10 or setto == 11 then
+				ok = true
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0, 1, 2, 3, 4, 5, 10 " .. gettext ("or") .. " 11"))
+			end
+		else
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
+		end
+
+	----- ---- --- -- -
 
 elseif tvar == "antimessage" then
 if string.len (setto) > 0 then
@@ -18000,11 +18015,11 @@ help = help.." "..ustrig..table_cmnds ["wordranks"].." - "..string.format (gette
 	help = help .. " " .. ustrig .. table_cmnds ["citylive"] .. " <" .. gettext ("cc") .. "> - " .. gettext ("Live user location statistics by city") .. "\r\n"
 	help = help .. " " .. ustrig .. table_cmnds ["cchist"] .. " - " .. gettext ("All time user location statistics") .. "\r\n\r\n"
 
--- releases
-help = help.." "..ustrig..table_cmnds ["reladd"].." <\""..gettext ("name").."\"> <\""..gettext ("category").."\"> ["..gettext ("tth").."] - "..gettext ("Add new release").."\r\n"
-help = help.." "..ustrig..table_cmnds ["reldel"].." <"..gettext ("type").."> <"..gettext ("name").."> - "..gettext ("Delete releases").."\r\n"
-help = help.." "..ustrig..table_cmnds ["rellist"].." <"..gettext ("type").."> <"..gettext ("lines").."> ["..gettext ("category").." "..gettext ("or").." "..gettext ("publisher").."] - "..gettext ("List of available releases").."\r\n"
-help = help.." "..ustrig..table_cmnds ["relfind"].." <"..gettext ("name").."> - "..gettext ("Find release by name or category").."\r\n\r\n"
+	-- releases
+	help = help .. " " .. ustrig .. table_cmnds ["reladd"] .. " <\"" .. gettext ("name") .. "\"> <\"" .. gettext ("category") .. "\"> [" .. gettext ("tth") .. "] - " .. gettext ("Add new release") .. "\r\n"
+	help = help .. " " .. ustrig .. table_cmnds ["reldel"] .. " <" .. gettext ("type") .. "> <" .. gettext ("name") .. "> - " .. gettext ("Delete releases") .. "\r\n"
+	help = help .. " " .. ustrig .. table_cmnds ["rellist"] .. " <" .. gettext ("type") .. "> <" .. gettext ("lines") .. "> [" .. gettext ("category") .. " " .. gettext ("or") .. " " .. gettext ("publisher") .. "] - " .. gettext ("List of available releases") .. "\r\n"
+	help = help .. " " .. ustrig .. table_cmnds ["relfind"] .. " <" .. gettext ("name") .. "> - " .. gettext ("Find release by name or category") .. "\r\n\r\n"
 
 -- welcome messages
 help = help.." "..ustrig..table_cmnds ["wmset"].." <"..gettext ("type").."> ["..gettext ("message").."] - "..gettext ("Set your welcome message").."\r\n"
@@ -18320,9 +18335,10 @@ conf = conf.."\r\n [::] opkeyself = "..table_sets ["opkeyself"]
 	conf = conf .. "\r\n [::] votekickclass = " .. table_sets ["votekickclass"]
 	conf = conf .. "\r\n [::] votekickcount = " .. table_sets ["votekickcount"]
 	conf = conf .. "\r\n"
-conf = conf.."\r\n [::] relmodclass = "..table_sets ["relmodclass"]
-conf = conf.."\r\n [::] welcomeclass = "..table_sets ["welcomeclass"]
-conf = conf.."\r\n [::] offmsgclass = "..table_sets ["offmsgclass"]
+	conf = conf .. "\r\n [::] reluseclass = " .. table_sets ["reluseclass"]
+	conf = conf .. "\r\n [::] relmodclass = " .. table_sets ["relmodclass"]
+	conf = conf .. "\r\n [::] welcomeclass = " .. table_sets ["welcomeclass"]
+	conf = conf .. "\r\n [::] offmsgclass = " .. table_sets ["offmsgclass"]
 	conf = conf .. "\r\n [::] mchistclass = " .. table_sets ["mchistclass"]
 conf = conf.."\r\n [::] chatmodeclass = "..table_sets ["chatmodeclass"]
 conf = conf.."\r\n [::] sayclass = "..table_sets ["sayclass"]
