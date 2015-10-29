@@ -8,6 +8,7 @@ Added: Involved user information such as nick, IP address and class in all PM ac
 Added: reluseclass configuration to restrict users from using rellist and relfind commands, request by KCAHDEP
 Added: Main chat flood detection from single user with high interval
 Added: Disable any type of chat flood detection by setting any of its *count or *int configurations to 0
+Added: Notify user when his message is ignored on main chat flood from all detection
 
 [ 2.8.7 :: 2015-10-03 ]
 
