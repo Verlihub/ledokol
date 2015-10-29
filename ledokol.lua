@@ -3839,6 +3839,8 @@ function VH_OnUserCommand (nick, data)
 			if table_sets ["checkcmdspam"] == 0 and antiscan (nick, ucl, msg, 1, nil, nil) == 0 then -- antispam, dont check twice
 				return 0
 			end
+		elseif table_sets ["chatantiflood"] == 1 then -- update last chat nick
+			table_othsets ["chflonenick"] = nick
 		end
 
 		local fakenick = nick
@@ -3959,6 +3961,8 @@ function VH_OnUserCommand (nick, data)
 					return 0
 				end
 			end
+		elseif table_sets ["chatantiflood"] == 1 then -- update last chat nick
+			table_othsets ["chflonenick"] = nick
 		end
 
 		local fakenick = nick
@@ -5693,6 +5697,8 @@ function VH_OnParsedMsgPM (from, data, to)
 		if gagccheck (from, ip, fcls, to, data) then
 			return 0
 		end
+	--elseif table_sets ["chatantiflood"] == 1 then -- update last chat nick, pm not supported
+		--table_othsets ["chflonenick"] = from
 	end
 
 	----- ---- --- -- -
@@ -5909,6 +5915,8 @@ function VH_OnParsedMsgChat (nick, data)
 		if antiscan (nick, ucl, data, 1, nil, nil) == 0 then -- antispam
 			return 0
 		end
+	elseif table_sets ["chatantiflood"] == 1 then -- update last chat nick
+		table_othsets ["chflonenick"] = nick
 	end
 
 	local fakenick = nick
@@ -11737,7 +11745,10 @@ function detchatflood (nick, class, ip, msg, to)
 	end
 
 	if class >= table_sets ["scanbelowclass"] then
-		table_othsets ["chflonenick"] = nick
+		if not pm then -- update last chat nick, pm not supported
+			table_othsets ["chflonenick"] = nick
+		end
+
 		return false
 	end
 
