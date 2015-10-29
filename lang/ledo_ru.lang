@@ -653,7 +653,7 @@ Added %s to IP gag list, %d users in total.|Адрес %s добавлен в с
 Flood detected from IP %s last known as %s with class %d in MC: %s|Обнаружен флуд с IP адреса %s. Текущий пользователь адреса - %s %d-го класса, флудил в MC: %s
 Flood detected from IP %s last known as %s with class %d in PM to %s with IP %s and class %d: %s|Обнаружен флуд с IP адреса %s ранее известным как %s с классом %d в виде личного сообщения пользователю %s c IP адресом %s и классом %d: %s
 Private chat is currently disabled for you.|В данный момент личные сообщения для вас отключены.
-Flood detected from your IP.|С вашего IP ведется рассылка флуда.
+Main chat flood detected from your IP.|Обнаружен флуд в главный чат от вашего IP адреса.
 %d users with IP %s dropped due to flood.|Пользователь %d with IP %s выкинут за флуд.
 No error message specified.|Сообщений об ошибках не обнаружено.
 Search filter|Фильтр поиска
@@ -1119,4 +1119,6 @@ You can't block user who don't share anything: %s|Вы не можете заб�
 You can't kick user who don't share anything: %s|Вы не можете кикнуть пользователя чья шара пуста: %s
 Flood detected from %s with IP %s and class %d in MC: %s|Обнаружен флуд от пользователя %s с IP адресом %s и классом %d в главный чат: %s
 %s dropped due to flood.|%s дропнут из за флуда.
-Flood detected from your nick.|Обнаружен флуд от вашего ника.
+Main chat flood detected from your nick.|Обнаружен флуд в главный чат от вашего ника.
+Private chat flood detected from your IP.|Обнаружен флуд в виде личного сообщения от вашего IP адреса.
+Sorry, your message has been ignored.|Извините, ваше сообщение было игнорировано.
