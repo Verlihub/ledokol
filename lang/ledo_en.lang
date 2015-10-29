@@ -653,7 +653,7 @@ Added %s to IP gag list, %d users in total.|
 Flood detected from IP %s last known as %s with class %d in MC: %s|
 Flood detected from IP %s last known as %s with class %d in PM to %s with IP %s and class %d: %s|
 Private chat is currently disabled for you.|
-Flood detected from your IP.|
+Main chat flood detected from your IP.|
 %d users with IP %s dropped due to flood.|
 No error message specified.|
 Search filter|
@@ -1119,4 +1119,6 @@ You can't block user who don't share anything: %s|
 You can't kick user who don't share anything: %s|
 Flood detected from %s with IP %s and class %d in MC: %s|
 %s dropped due to flood.|
-Flood detected from your nick.|
+Main chat flood detected from your nick.|
+Private chat flood detected from your IP.|
+Sorry, your message has been ignored.|
