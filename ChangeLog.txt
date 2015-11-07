@@ -1,6 +1,7 @@
 [ 2.8.8 :: 2015-##-## ]
 
 Fixed: Skip repeated main chat history messages from same user
+Fixed: Chat replacer feature now replaces all possible occurrences instead of first random only
 Changed: chatantiflood is not used for chat flood detection type anymore, use each type configurations instead
 Added: replprotect configuration to protect users from chat replacer feature, request by KCAHDEP
 Added: custlistclass configuration to restrict users from using custlist and realnick commands, request by KCAHDEP
@@ -13,7 +14,7 @@ Added: Notify user when his message is ignored on main chat flood from all detec
 [ 2.8.7 :: 2015-10-03 ]
 
 Fixed: rename command parameters when used from user menu, report by KCAHDEP
-Fixed: Pingers can use +report command in PM to hub security bot when gag is set, report by KCAHDEP
+Fixed: Pingers can use report command in PM to hub security bot when gag is set, report by KCAHDEP
 Fixed: Incorrect IP in connect request notification
 Fixed: Class number check on reglist command
 Fixed: Don't allow forced infected user detection on users who don't share anything, report by KCAHDEP
@@ -66,7 +67,7 @@ Added: Detect invalid patterns before they are added, idea by Lord_Zero
 Added: Detect virus spreaders by IP address and share aswell
 Added: Antivirus search server to detect passive virus spreaders, requires LuaSocket
 Added: List of blocked infected users in antivirus statistics, request by KCAHDEP
-Added: chatcodeflag for destination of chat secirity code, 0 = MC+PM, 1 = MC, 2 = PM, request by KCAHDEP
+Added: chatcodeflag for destination of chat secirity code, 0 = MC and PM, 1 = MC, 2 = PM, request by KCAHDEP
 Added: Automatic country chatroom entrance feature to allow users entering these chatrooms even when their country is different
 Added: French, German and Lithuanian languages, only French is complete
 
@@ -78,7 +79,7 @@ Fixed: Correctly escape backslash character in cURL parameters
 Changed: histbotmsg value 0 = don't save bot messages, 1 = save all except main chat reminders, 2 = save all, idea by Uhlik
 Added: When blocking infected users tell pingers to not send report, idea by S0RiN
 Added: Command to force infected user detection
-Added: Reduce size of AVDB to download by using "notime" parameter, idea by FlylinkDC
+Added: Reduce size of AVDB to download by using notime parameter, idea by FlylinkDC
 Added: Detection of special virus spreaders who reply to any random search request, enabled by default, idea by Lord_Zero and MaxFox
 Added: Report path of infected files to AVDB
 Added: Command to search in AVDB, known types are nick, addr, size and path
@@ -93,20 +94,20 @@ Changed: Load AVDB using timestamp to reduce data transfer
 Added: Bot list to statistics collection
 Added: Chat notification when news item is added, idea by Uhlik
 Added: Virus spreader detection action to block connection requests to user, used by default, request by Ger
-Added: "dev" and "force" parameters for "ledover" command available for class 10 to force update to last development and stable versions
+Added: dev and force parameters for ledover command available for class 10 to force update to last development and stable versions
 Added: Try to download translation file when it doesn't exist
 Added: Missing user agent on AVDB load
 Added: Support for cURL exit codes to identify usage problems
 
 [ 2.8.0 :: 2014-08-16 ]
 
-Fixed: +me command triggered by operator did not perform any operations
-Fixed: Renamed "cleanup" command to "oldclean" since Verlihub has got "clean*" prefix reserver for some of its own commands
-Fixed: Pattern of "oldclean" command parameters
+Fixed: me command triggered by operator did not perform any operations
+Fixed: Renamed cleanup command to oldclean since Verlihub has got clean* prefix reserver for some of its own commands
+Fixed: Pattern of oldclean command parameters
 Fixed: Correctly encode nick with cURL on user lookup
 Fixed: Case sensitivity in vote kicks, report by Uhlik
 Fixed: Don't send user commands to clients that don't support them
-Changed: Allow pingers to use +report command, required for AVDB
+Changed: Allow pingers to use report command, required for AVDB
 Changed: Store country code gags permanently, request by MaxFox
 Added: Custom orderless gettext() format for translations, strings must be in format "english|translation\n" with each string on new line, comment with # character
 Added: Detection of parameter count mismatch in translation strings, this helps to detect errors in translation files
@@ -136,7 +137,7 @@ Fixed: Secondary right click menu item order
 Fixed: Version numbers comparison on update
 Fixed: VIP kick was not accessible with new style commands in Verlihub
 Changed: VIP kicks are made with users nick instead of bot nick
-Added: Basic vote kicks using +votekick <nick>, configured with votekickclass and votekickcount
+Added: Basic vote kicks using votekick <nick>, configured with votekickclass and votekickcount
 Added: CTM protocol flood actions, 0 = drop, 1 = kick, 2 = temporary ban, 3 = permanent ban, request by KCAHDEP
 
 [ 2.7.7 :: 2014-04-05 ]
@@ -148,21 +149,21 @@ Changed: Ban and unban notifications now use OnNewBan and OnUnBan callbacks inst
 Changed: Don't notify /me command from operators
 Added: Configuration antibelowclass that will override scanbelowclass for spam detection
 Added: Configuration longdateformat to show in registered users list
-Added: Right click menu feature to build custom user commands, set instrcmenu to 1 and see !ledohelp, user must reconnect to get new menu
+Added: Right click menu feature to build custom user commands, set instrcmenu to 1 and see ledohelp command, user must reconnect to get new menu
 
 [ 2.7.6 :: 2014-03-04 ]
 
 Fixed: Unknown user IP on unknown protocol command before user login
 Fixed: Ban and unban notification without reason
 Added: Full GeoIP information to user information, if supported by hub
-Added: Updated country code list according to Maxminds ISO-3166 standard, also added "EU=European Union" and "AP=Asia Pacific Region" missing country codes, report by Uhlik
-Added: "x" as multiplication character in calculator, you can use "*" or "x", idea by Uhlik
-Added: "*" in <days> parameter to delete all users with chosen class on registered users table cleanup, idea by Uhlik
-Added: !dropip <ip> command to drop users with specific IP address, sends notification to users with class classnotikick and higher
-Added: +citylive <cc> command to show live user city statistics by country code
+Added: Updated country code list according to Maxminds ISO-3166 standard, also added EU=European Union and AP=Asia Pacific Region missing country codes, report by Uhlik
+Added: x as multiplication character in calculator, you can use * or x, idea by Uhlik
+Added: * in <days> parameter to delete all users with chosen class on registered users table cleanup, idea by Uhlik
+Added: dropip <ip> command to drop users with specific IP address, sends notification to users with class classnotikick and higher
+Added: citylive <cc> command to show live user city statistics by country code
 Added: mchistclass configuration to restrict main chat history to specific classes, idea by Lord_Zero
 Added: Help notes to help command, request by Meka][Meka
-Added: !ipinfo <ip> command to get GeoIP information about specific IP address
+Added: ipinfo <ip> command to get GeoIP information about specific IP address
 Added: Feed notification for replaced MC messages, real message is displayed, configured with classnotirepl, idea by Lord_Zero
 Added: Separate kick time for clone detection, configured with miclonekicktime
 Changed: Corrected some English language strings, report by madkid
@@ -190,7 +191,7 @@ Removed: Old client $Capabilities from unknown protocol command exception list
 [ 2.7.4 :: 2013-04-14 ]
 
 Fixed: Ban notification without reason, report by Uhlik
-Fixed: Invalid translation on !wmforce command for user without access, report by Uhlik
+Fixed: Invalid translation on wmforce command for user without access, report by Uhlik
 Added: ulogautoclean = 30, meaning user logger will automatically delete entries older than 30 days, request by many people
 Added: Soft hyphen character to forbidden nick list by default, request by PetterOSS
 Added: Ability to use A1, A2 and --, unknown, in all country code functions
@@ -251,11 +252,11 @@ Removed: nGrep support
 [ 2.6.9 :: 2011-01-14 ]
 
 Fixed: Allow messages to hub security bot for users not allowed to send PM, report by Trumpy
-Fixed: Lua error on !replug, report by Toecutter
+Fixed: Lua error on replug command, report by Toecutter
 Fixed: Command logger against plugin commands
 Fixed: Replaced chat messages containing inappropriate replace variables
 Added: -L option for cURL to follow redirects, report by Marcel
-Added: clearclass configuration variable for !clear command restriction, request by Neolo
+Added: clearclass configuration variable for clear command restriction, request by Neolo
 Added: <avgshare>, <peakavgshare>, <peakavgsharetime> and <peakavgshareshrttime> replace variables, request by Uhlik
 Added: Accept case insensitive chat security code when chatcodeon is set to 2
 Added: Blocked PM list to disallow sending private messages to certain users
