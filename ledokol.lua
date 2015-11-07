@@ -3882,7 +3882,7 @@ function VH_OnUserCommand (nick, data)
 
 		if table_sets ["replrunning"] == 1 and (table_sets ["replprotect"] == 0 or not prot) then -- replacer
 			local norepl = cvdat
-			cvdat = replchatmsg (nick, ucl, cvdat, 1)
+			cvdat = replchatmsg (nick, ip, ucl, cvdat, 1)
 
 			if norepl ~= cvdat then
 				opsnotify (table_sets ["classnotirepl"], gettext ("Message replaced for user with class %d in MC: <%s> %s"):format (ucl, nick, "+me " .. msg))
@@ -5820,7 +5820,7 @@ function VH_OnParsedMsgPM (from, data, to)
 		local pmdat = data
 
 		if table_sets ["replrunning"] == 1 and (table_sets ["replprotect"] == 0 or not prot) then -- replacer
-			pmdat = replchatmsg (from, fcls, pmdat, 2)
+			pmdat = replchatmsg (from, ip, fcls, pmdat, 2)
 		end
 
 		if table_sets ["custnickclass"] < 11 then -- use custom nick for sender in receivers message
@@ -5958,7 +5958,7 @@ function VH_OnParsedMsgChat (nick, data)
 
 	if table_sets ["replrunning"] == 1 and (table_sets ["replprotect"] == 0 or not prot) then -- replacer
 		local norepl = cvdat
-		cvdat = replchatmsg (nick, ucl, cvdat, 1)
+		cvdat = replchatmsg (nick, ip, ucl, cvdat, 1)
 
 		if norepl ~= cvdat then
 			opsnotify (table_sets ["classnotirepl"], gettext ("Message replaced for user with class %d in MC: <%s> %s"):format (ucl, nick, data))
@@ -8403,43 +8403,44 @@ end
 
 ----- ---- --- -- -
 
-function replchatmsg (nick, cls, msg, flags)
-	local _, rows = VH:SQLQuery ("select `exception` from `" .. tbl_sql ["replex"] .. "` where `exception` = '" .. repsqlchars (nick) .. "' or `exception` = '" .. repsqlchars (getip (nick)) .. "'")
+function replchatmsg (nick, addr, class, data, flag)
+	local _, rows = VH:SQLQuery ("select `exception` from `" .. tbl_sql ["replex"] .. "` where `exception` = '" .. repsqlchars (nick) .. "' or `exception` = '" .. repsqlchars (addr) .. "'")
 
 	if rows > 0 then
-		local _, ex = VH:SQLFetch (0)
-		VH:SQLQuery ("update `" .. tbl_sql ["replex"] .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (ex) .. "'")
-		return msg
+		local _, item = VH:SQLFetch (0)
+		VH:SQLQuery ("update `" .. tbl_sql ["replex"] .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (item) .. "'")
+		return data
 	end
 
-	local _, rows = VH:SQLQuery ("select `id`, `message`, `replace`, `maxclass` from `" .. tbl_sql ["chatrepl"] .. "` where `flags` = 0 or `flags` = " .. flags)
+	local _, rows = VH:SQLQuery ("select `id`, `message`, `replace`, `maxclass` from `" .. tbl_sql ["chatrepl"] .. "` where `flags` = 0 or `flags` = " .. tostring (flag))
 
 	if rows > 0 then
-		local txt = tolow (repnmdcinchars (msg))
-		local replsel = {}
+		local repls = {}
+		local test = tolow (repnmdcinchars (data))
 
-		for x = 0, rows - 1 do
-			local _, id, ent, repl, maxc = VH:SQLFetch (x)
-			id = tonumber (id)
+		for row = 0, rows - 1 do
+			local _, id, item, repl, cmax = VH:SQLFetch (row)
 
-			if cls <= tonumber (maxc) and string.find (txt, ent) then
-				table.insert (replsel, {[id] = {["m"] = ent, ["r"] = repl}})
+			if class <= (tonumber (cmax or 0) or 0) and test:match (item) then
+				table.insert (repls, {[(tonumber (id or 1) or 1)] = {["m"] = item, ["r"] = repl}})
 			end
 		end
 
-		local cnt = # replsel
+		if # repls > 0 then
+			local back = tolow (data)
 
-		if cnt > 0 then
-			for k, v in pairs (replsel [math.random (cnt)]) do
-				VH:SQLQuery ("update `" .. tbl_sql ["chatrepl"] .. "` set `occurred` = `occurred` + 1 where `id` = " .. k)
-				local repl = reptextvars (v ["r"], (getcustnick (nick) or nick), msg)
-				repl = string.gsub (tolow (msg), v ["m"], repl) -- dont replace % here
-				return repl
+			for _, list in pairs (repls) do
+				for id, item in pairs (list) do
+					VH:SQLQuery ("update `" .. tbl_sql ["chatrepl"] .. "` set `occurred` = `occurred` + 1 where `id` = " .. tostring (id))
+					back = back:gsub (item ["m"], reptextvars (item ["r"], (getcustnick (nick) or nick), back)) -- dont replace % here
+				end
 			end
+
+			return back
 		end
 	end
 
-	return msg
+	return data
 end
 
 ----- ---- --- -- -
