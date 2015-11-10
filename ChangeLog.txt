@@ -2,6 +2,7 @@
 
 Fixed: Skip repeated main chat history messages from same user
 Fixed: Chat replacer feature now replaces all possible occurrences instead of first random only
+Fixed: Keep letter case sensitivity in messages that are being replaced, report by KCAHDEP
 Changed: chatantiflood is not used for chat flood detection type anymore, use each type configurations instead
 Added: replprotect configuration to protect users from chat replacer feature, request by KCAHDEP
 Added: custlistclass configuration to restrict users from using custlist and realnick commands, request by KCAHDEP
