@@ -1,8 +1,8 @@
 # Language: ru_RU
 # Charset: CP1251
 # Version: 2.8.8
-# Author: MaxFox
-# Email: maxfox@inbox.ru
+# Author: KCAHDEP
+# Email: admin@kcahdep.org
 
 Current topic: %s|Данная тема: %s
 Current topic set by %s: %s|Данная тема установленная %s: %s
@@ -104,7 +104,7 @@ Deleted %d rows: %s|Удалено %d рядов: %s
 Known types are: %s|Известные типы: %s
 No rows to remove: %s|Нет рядов для удаления: %s
 date|дата
-%s with class %d used command: %s|Пользователь %s %d-го класса использовал команду: %s
+%s with IP %s and class %d used following command: %s|Пользователь %s с IP адресом %s и классом %d использовал следующую команду: %s
 context|контекст
 Deleted from chat rank list: %s|Из списка рангов в чате удалено: %s
 Not found in chat rank list: %s|Не найдено в списке ранга в чате: %s
@@ -923,7 +923,7 @@ Command parameters %s are always required, while %s are optional.|Парамет
 Quoted parameters %s or %s must be used with quotes.|Цитируемые параметры %s или %s должны быть в кавычках.
 IP information|Информация по IP
 IP information not available: %s|Информации по IP не обнаружено: %s
-Message replaced for user with class %d in MC: <%s> %s|Для пользователя с классом %d, заменено сообщение в главном чате: <%s> %s
+Message replaced for user with IP %s and class %d in MC: <%s> %s|Заменено сообщение для пользователя с IP адресом %s и классом %d в главном чате: <%s> %s
 IP %s permanently banned: <%s> %s|IP %s напостоянно забанен: <%s> %s
 Nick %s permanently banned: <%s> %s|Ник %s напостоянно забанен: <%s> %s
 Range %s permanently banned: <%s> %s|IP диапазон %s напостоянно забанен: <%s> %s
