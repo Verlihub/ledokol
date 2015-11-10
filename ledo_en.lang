@@ -104,7 +104,7 @@ Deleted %d rows: %s|
 Known types are: %s|
 No rows to remove: %s|
 date|
-%s with class %d used command: %s|
+%s with IP %s and class %d used following command: %s|
 context|
 Deleted from chat rank list: %s|
 Not found in chat rank list: %s|
@@ -923,7 +923,7 @@ Command parameters %s are always required, while %s are optional.|
 Quoted parameters %s or %s must be used with quotes.|
 IP information|
 IP information not available: %s|
-Message replaced for user with class %d in MC: <%s> %s|
+Message replaced for user with IP %s and class %d in MC: <%s> %s|
 IP %s permanently banned: <%s> %s|
 Nick %s permanently banned: <%s> %s|
 Range %s permanently banned: <%s> %s|
