@@ -3885,7 +3885,7 @@ function VH_OnUserCommand (nick, data)
 			cvdat = replchatmsg (nick, ip, ucl, cvdat, 1)
 
 			if norepl ~= cvdat then
-				opsnotify (table_sets ["classnotirepl"], gettext ("Message replaced for user with class %d in MC: <%s> %s"):format (ucl, nick, "+me " .. msg))
+				opsnotify (table_sets ["classnotirepl"], gettext ("Message replaced for user with IP %s and class %d in MC: <%s> %s"):format (ip .. tryipcc (ip, nick), ucl, nick, "+me " .. msg))
 			end
 		end
 
@@ -5961,7 +5961,7 @@ function VH_OnParsedMsgChat (nick, data)
 		cvdat = replchatmsg (nick, ip, ucl, cvdat, 1)
 
 		if norepl ~= cvdat then
-			opsnotify (table_sets ["classnotirepl"], gettext ("Message replaced for user with class %d in MC: <%s> %s"):format (ucl, nick, data))
+			opsnotify (table_sets ["classnotirepl"], gettext ("Message replaced for user with IP %s and class %d in MC: <%s> %s"):format (ip .. tryipcc (ip, nick), ucl, nick, data))
 		end
 	end
 
@@ -8416,27 +8416,39 @@ function replchatmsg (nick, addr, class, data, flag)
 
 	if rows > 0 then
 		local repls = {}
-		local test = tolow (repnmdcinchars (data))
 
 		for row = 0, rows - 1 do
 			local _, id, item, repl, cmax = VH:SQLFetch (row)
 
-			if class <= (tonumber (cmax or 0) or 0) and test:match (item) then
-				table.insert (repls, {[(tonumber (id or 1) or 1)] = {["m"] = item, ["r"] = repl}})
+			table.insert (repls, {
+				[(tonumber (id or 1) or 1)] = {
+					["c"] = tonumber (cmax or 0) or 0,
+					["d"] = item,
+					["r"] = repl
+				}
+			})
+		end
+
+		local back = repnmdcinchars (data)
+		local test = tolow (back)
+		local done = false
+
+		for _, list in pairs (repls) do
+			for id, item in pairs (list) do
+				if class <= item.c then
+					local sos, eos = test:find (item.d)
+
+					if sos and eos then
+						VH:SQLQuery ("update `" .. tbl_sql ["chatrepl"] .. "` set `occurred` = `occurred` + 1 where `id` = " .. tostring (id))
+						back = back:sub (1, sos - 1) .. reptextvars (item.r, (getcustnick (nick) or nick), back) .. back:sub (eos + 1) -- dont replace % here
+						done = true
+					end
+				end
 			end
 		end
 
-		if # repls > 0 then
-			local back = tolow (data)
-
-			for _, list in pairs (repls) do
-				for id, item in pairs (list) do
-					VH:SQLQuery ("update `" .. tbl_sql ["chatrepl"] .. "` set `occurred` = `occurred` + 1 where `id` = " .. tostring (id))
-					back = back:gsub (item ["m"], reptextvars (item ["r"], (getcustnick (nick) or nick), back)) -- dont replace % here
-				end
-			end
-
-			return back
+		if done then
+			return repnmdcoutchars (back)
 		end
 	end
 
@@ -13929,17 +13941,18 @@ function donotifycmd (nick, data, micl, class)
 	local _, rows = VH:SQLQuery ("select `exception` from `" .. tbl_sql ["cmdex"] .. "`")
 
 	if rows > 0 then
-		for x = 0, rows - 1 do
-			local _, lre = VH:SQLFetch (x)
+		for row = 0, rows - 1 do
+			local _, lre = VH:SQLFetch (row)
 
-			if repnmdcinchars (data):find (lre) then
-				VH:SQLQuery ("update `" .. tbl_sql ["cmdex"] .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (lre) .. "' limit 1")
+			if repnmdcinchars (data):match (lre) then
+				VH:SQLQuery ("update `" .. tbl_sql ["cmdex"] .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (lre) .. "'")
 				return
 			end
 		end
 	end
 
-	local send = gettext ("%s with class %d used command: %s"):format (nick, class, data)
+	local addr = getip (nick)
+	local send = gettext ("%s with IP %s and class %d used following command: %s"):format (nick, addr .. tryipcc (addr, nick), class, data)
 
 	if micl == 0 then
 		VH:SendPMToAll ("[" .. prezero (2, table_sets ["classnoticom"]) .. "] " .. send, table_othsets ["feednick"], table_sets ["classnoticom"], 10)
