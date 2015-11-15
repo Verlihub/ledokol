@@ -5635,6 +5635,20 @@ end
 
 ----- ---- --- -- -
 
+function VH_OnPublicBotMessage (nick, data, micl, macl)
+	if table_othsets ["locked"] then
+		return 1
+	end
+
+	if (tonumber (micl or 0) or 0) == 0 and (tonumber (macl or 10) or 10) == 10 then -- only when sent to all
+		addmchistoryline (nick, nick, data)
+	end
+
+	return 1
+end
+
+----- ---- --- -- -
+
 function VH_OnParsedMsgPM (from, data, to)
 	if table_othsets ["locked"] then
 		return 1
@@ -10121,7 +10135,7 @@ function addmchistoryline (nick, real, line, refl)
 		return
 	end
 
-	if nick == table_othsets ["sendfrom"] and (table_sets ["histbotmsg"] == 0 or refl) then
+	if (nick == table_othsets ["sendfrom"] or nick == table_othsets ["botnick"]) and (table_sets ["histbotmsg"] == 0 or refl) then
 		return
 	end
 
