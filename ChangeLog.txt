@@ -12,6 +12,7 @@ Added: Main chat flood detection from single user with high interval
 Added: Disable any type of chat flood detection by setting any of its *count or *int configurations to 0
 Added: Notify user when his message is ignored on main chat flood from all detection
 Added: Public bot message support to use in main chat history, idea by SCALOlаz
+Added: Support for chat_to_all script command, external scripts can use this to send main chat history line to Ledokol
 
 [ 2.8.7 :: 2015-10-03 ]
 
