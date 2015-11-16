@@ -5649,6 +5649,24 @@ end
 
 ----- ---- --- -- -
 
+function VH_OnScriptCommand (name, data, plug, file)
+	if table_othsets ["locked"] then
+		return 1
+	end
+
+	if name == "chat_to_all" then -- user sends chat message to all
+		local nick, line = data:match ("^<([^ ]+)> (.*)$")
+
+		if nick and line then
+			addmchistoryline (nick, nick, line)
+		end
+	end
+
+	return 1
+end
+
+----- ---- --- -- -
+
 function VH_OnParsedMsgPM (from, data, to)
 	if table_othsets ["locked"] then
 		return 1
