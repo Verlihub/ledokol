@@ -60,6 +60,7 @@ Doxtur, chaos, sphinx, Zorro, W1ZaRd, S0RiN, MaxFox, Krzychu,
 ---------------------------------------------------------------------
 
 ver_ledo = "2.8.8" -- ledokol version
+bld_ledo = "1" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -305,7 +306,7 @@ table_sets = {
 ---------------------------------------------------------------------
 
 table_othsets = {
-	["ledobottag"] = "<Ledokol V:" .. ver_ledo .. ",M:A,H:0/0/1,S:0>",
+	["ledobottag"] = "<Ledokol V:" .. ver_ledo .. "." .. bld_ledo .. ",M:A,H:0/0/1,S:0>",
 	["ledobotdesc"] = "Security and entertainment bot",
 	["timebotdesc"] = "Ledokol time bot",
 	["updserv"] = "http://ledo.feardc.net/",
@@ -1346,7 +1347,7 @@ function Main (file)
 	end
 
 	if table_sets ["addspecialver"] == 1 then -- special version
-		VH:SetConfig ("config", "hub_version_special", string.format (gettext ("Powered by %s"), "Ledokol "..ver_ledo))
+		VH:SetConfig ("config", "hub_version_special", gettext ("Powered by %s"):format ("Ledokol " .. ver_ledo .. "." .. bld_ledo))
 	end
 
 	if table_sets ["avsearchint"] > 0 then -- antivirus search
@@ -17801,27 +17802,26 @@ end
 			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 		end
 
------ ---- --- -- -
+	----- ---- --- -- -
 
-elseif tvar == "addspecialver" then
-	if num == true then
-		if (setto == 0) or (setto == 1) then
-			if (setto ~= table_sets [tvar]) and (setto == 0) then
-				VH:SetConfig ("config", "hub_version_special", "")
-			elseif setto == 1 then
-				VH:SetConfig ("config", "hub_version_special", string.format (gettext ("Powered by %s"), "Ledokol "..ver_ledo))
+	elseif tvar == "addspecialver" then
+		if num then
+			if setto == 0 or setto == 1 then
+				if setto ~= table_sets [tvar] and setto == 0 then
+					VH:SetConfig ("config", "hub_version_special", "")
+				elseif setto == 1 then
+					VH:SetConfig ("config", "hub_version_special", gettext ("Powered by %s"):format ("Ledokol " .. ver_ledo .. "." .. bld_ledo))
+				end
+
+				ok = true
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0 " .. gettext ("or") .. " 1"))
 			end
-
-			ok = true
 		else
-			commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 "..gettext ("or").." 1"))
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
 		end
 
-	else
-		commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
-	end
-
------ ---- --- -- -
+	----- ---- --- -- -
 
 	elseif tvar == "ledobotnick" then
 		if string.len (setto) > 0 then
@@ -18233,7 +18233,7 @@ function sendstats (nick)
 	end
 
 	local stats = "\r\n\r\n .:: " .. gettext ("%s statistics"):format ("Ledokol") .. ":\r\n"
-	stats = stats .. "\r\n " .. gettext ("Script version: %s"):format (ver_ledo) .. "-" .. table_othsets ["langver"]
+	stats = stats .. "\r\n " .. gettext ("Script version: %s"):format (ver_ledo .. "." .. bld_ledo .. "." .. table_othsets ["langver"])
 	stats = stats .. "\r\n " .. gettext ("%s version: %s"):format ("Verlihub", (getconfig ("hub_version") or gettext ("Unknown")))
 	stats = stats .. "\r\n " .. gettext ("%s plugin version: %s"):format ("Lua", (table_othsets ["ver_luaplug"] or gettext ("Unknown")))
 	stats = stats .. "\r\n " .. gettext ("%s library version: %s"):format ("Lua", (table_othsets ["ver_lua"] or gettext ("Unknown")))
@@ -19111,7 +19111,7 @@ function createsettings ()
 	VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('defmyinfnick', 1)")
 	VH:SQLQuery ("insert ignore into `"..tbl_sql ["conf"].."` (`variable`, `value`) values ('allow_shell', 0)")
 	VH:SQLQuery ("insert ignore into `"..tbl_sql ["conf"].."` (`variable`, `value`) values ('allow_sql', 0)")
-	VH:SQLQuery ("insert into `"..tbl_sql ["stat"].."` (`type`, `time`, `count`) values ('ver_ledo', "..tm..", '"..ver_ledo.."') on duplicate key update `time` = "..tm..", `count` = '"..ver_ledo.."'")
+	VH:SQLQuery ("insert into `" .. tbl_sql ["stat"] .. "` (`type`, `time`, `count`) values ('ver_ledo', " .. tostring (tm) .. ", '" .. ver_ledo .. "') on duplicate key update `time` = " .. tostring (tm) .. ", `count` = '" .. ver_ledo .. "'")
 end
 
 ----- ---- --- -- -
@@ -19560,7 +19560,7 @@ function avdbreport (nick, addr, size, info, path, spec)
 		end
 
 		if not spec then
-			local data = getmysqlmd5 (string.char (97, 118, 100, 98, 45, 115, 101, 110, 100, 58, 76, 101, 100, 111, 107, 111, 108, 47, ver_ledo:byte (1, # ver_ledo)))
+			local data = getmysqlmd5 (string.char (97, 118, 100, 98, 45, 115, 101, 110, 100, 58, 76, 101, 100, 111, 107, 111, 108, 47, ver_ledo:byte (1, # ver_ledo), 46, bld_ledo:byte (1, # bld_ledo)))
 			local num = math.random (1, 9)
 
 			for pos = 2, num do
@@ -20774,7 +20774,7 @@ function getcurl (url, enc, del, reh)
 		rehreq = " -D \"" .. table_othsets ["cfgdir"] .. table_othsets ["headfile"] .. "\""
 	end
 
-	local res, err, code = os.execute ("curl -G -L --retry 3 --connect-timeout 5 -m 30" .. face .. " -A \"Ledokol/" .. ver_ledo .. "\" -s -o \"" .. table_othsets ["cfgdir"] .. table_othsets ["tmpfile"] .. "\"" .. rehreq .. urlenc .. " \"" .. url .. "\"")
+	local res, err, code = os.execute ("curl -G -L --retry 3 --connect-timeout 5 -m 30" .. face .. " -A \"Ledokol/" .. ver_ledo .. "." .. bld_ledo .. "\" -s -o \"" .. table_othsets ["cfgdir"] .. table_othsets ["tmpfile"] .. "\"" .. rehreq .. urlenc .. " \"" .. url .. "\"")
 
 	if res then
 		local head = ""
@@ -21338,9 +21338,9 @@ if string.find (txt, "<hubmaxsh>") then
 	txt = string.gsub (txt, "<hubmaxsh>", reprexpchars (makesize (getconfig ("max_share") * 1048576)))
 end
 
-if string.find (txt, "<ledover>") then
-	txt = string.gsub (txt, "<ledover>", reprexpchars (ver_ledo))
-end
+	if txt:match ("<ledover>") then
+		txt = txt:gsub ("<ledover>", reprexpchars (ver_ledo .. "." .. bld_ledo))
+	end
 
 if string.find (txt, "<suptshrt>") then
 	txt = string.gsub (txt, "<suptshrt>", reprexpchars (formatuptime (table_othsets ["uptime"], true)))
