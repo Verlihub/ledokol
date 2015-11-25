@@ -14,6 +14,7 @@
 [  0] Added: Public bot message support to use in main chat history, idea by SCALOlаz
 [  0] Added: Support for chat_to_all script command, external scripts can use this to send main chat history line to Ledokol
 [  1] Added: Build number starting from 1 to increase on every development and release update, request by Uhlik
+[  2] Added: rcmenuoff command to disable or enable right click menu item
 
 [ 2.8.7 :: 2015-10-03 ]
 
