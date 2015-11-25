@@ -1,8 +1,8 @@
 # Language: ru_RU
 # Charset: CP1251
 # Version: 2.8.8
-# Author: KCAHDEP
-# Email: admin@kcahdep.org
+# Author: RoLex
+# Email: webmaster@feardc.net
 
 Current topic: %s|Данная тема: %s
 Current topic set by %s: %s|Данная тема установленная %s: %s
@@ -947,7 +947,7 @@ Known orders are: %s|Варианты порядка: %s
 Modified right click menu item: %s|Изменен пункт меню правой кнопки мыши: %s\"
 Added right click menu item: %s|Добавлен пункт меню правой кнопки мыши: %s
 Deleted right click menu item: %s|Удален пункт меню правой кнопки мыши: %s
-Right click menu item not found: %s|Пункт меню правой кнопки мыши не найден: %s
+Right click menu item not found: %d|Пункт меню правой кнопки мыши не найден: %d
 Right click menu item list is empty.|Список пунктов меню правой кнопки мыши пуст.
 Menu item|Пункт меню
 Menu command|Команда меню
@@ -1122,3 +1122,6 @@ Flood detected from %s with IP %s and class %d in MC: %s|Обнаружен фл
 Main chat flood detected from your nick.|Обнаружен флуд в главный чат от вашего ника.
 Private chat flood detected from your IP.|Обнаружен флуд в виде личного сообщения от вашего IP адреса.
 Sorry, your message has been ignored.|Извините, ваше сообщение было игнорировано.
+Disable or enable right click menu item|Закрыть или открыть пункт меню правой кнопки мыши
+Disabled right click menu item: %s|Пункт меню правой кнопки мыши закрыт: %s
+Enabled right click menu item: %s|Пункт меню правой кнопки мыши открыт: %s
