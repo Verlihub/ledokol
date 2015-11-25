@@ -60,7 +60,7 @@ Doxtur, chaos, sphinx, Zorro, W1ZaRd, S0RiN, MaxFox, Krzychu,
 ---------------------------------------------------------------------
 
 ver_ledo = "2.8.8" -- ledokol version
-bld_ledo = "1" -- build number
+bld_ledo = "2" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -518,6 +518,7 @@ table_cmnds = {
 	["rcmenudel"] = "rcmenudel",
 	["rcmenulist"] = "rcmenulist",
 	["rcmenuord"] = "rcmenuord",
+	["rcmenuoff"] = "rcmenuoff",
 	["ipwatadd"] = "ipwatadd",
 	["ipwatdel"] = "ipwatdel",
 	["ipwatlist"] = "ipwatlist",
@@ -1269,11 +1270,15 @@ function Main (file)
 					end
 
 					if ver <= 288 then
+						VH:SQLQuery ("alter ignore table `" .. tbl_sql ["rcmenu"] .. "` add column `off` tinyint(1) unsigned not null default 0 after `maxclass`")
+
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('replprotect', '" .. repsqlchars (table_sets ["replprotect"]) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('custlistclass', '" .. repsqlchars (table_sets ["custlistclass"]) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('reluseclass', '" .. repsqlchars (table_sets ["reluseclass"]) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('chatfloodonecount', '" .. repsqlchars (table_sets ["chatfloodonecount"]) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('chatfloodoneint', '" .. repsqlchars (table_sets ["chatfloodoneint"]) .. "')")
+
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["ledocmd"] .. "` (`original`, `new`) values ('" .. repsqlchars ("rcmenuoff") .. "', '" .. repsqlchars (table_cmnds ["rcmenuoff"]) .. "')")
 					end
 
 					if ver <= 289 then
@@ -1693,7 +1698,7 @@ return 0
 
 	----- ---- --- -- -
 
-	elseif string.find (data, "^" .. table_othsets ["optrig"] .. table_cmnds ["rcmenuord"] .. " %d+ %d+$") then
+	elseif data:match ("^" .. table_othsets ["optrig"] .. table_cmnds ["rcmenuord"] .. " %d+ %d+$") then
 		if ucl >= table_sets ["mincommandclass"] then
 			donotifycmd (nick, data, 0, ucl)
 			ordrcmenu (nick, data:sub (# table_cmnds ["rcmenuord"] + 3))
@@ -1703,7 +1708,19 @@ return 0
 
 		return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
+
+	elseif data:match ("^" .. table_othsets ["optrig"] .. table_cmnds ["rcmenuoff"] .. " %d+$") then
+		if ucl >= table_sets ["mincommandclass"] then
+			donotifycmd (nick, data, 0, ucl)
+			offrcmenu (nick, data:sub (# table_cmnds ["rcmenuoff"] + 3))
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
+
+		return 0
+
+	----- ---- --- -- -
 
 	elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["ipwatadd"].." %S+ \".+\" %d$") then
 		if ucl >= table_sets ["mincommandclass"] then
@@ -7856,7 +7873,7 @@ function addrcmenu (nick, line)
 
 						if rows > 0 then -- update
 							local _, id = VH:SQLFetch (0)
-							VH:SQLQuery ("update `" .. tbl_sql ["rcmenu"] .. "` set `command` = '" .. repcmnd .."', `type` = " .. tostring (cype) .. ", `cont` = " .. tostring (cont) .. ", `order` = " .. tostring (ord) .. ", `minclass` = " .. tostring (minc) .. ", `maxclass` = " .. tostring (maxc) .. " where `id` = " .. tostring (id) .. " limit 1")
+							VH:SQLQuery ("update `" .. tbl_sql ["rcmenu"] .. "` set `command` = '" .. repcmnd .."', `type` = " .. tostring (cype) .. ", `cont` = " .. tostring (cont) .. ", `order` = " .. tostring (ord) .. ", `minclass` = " .. tostring (minc) .. ", `maxclass` = " .. tostring (maxc) .. " where `id` = " .. tostring (id))
 							commandanswer (nick, gettext ("Modified right click menu item: %s"):format (menu))
 						else -- add
 							VH:SQLQuery ("insert into `" .. tbl_sql ["rcmenu"] .. "` (`menu`, `command`, `type`, `cont`, `order`, `minclass`, `maxclass`) values ('" .. repmenu .. "', '" .. repcmnd .. "', " .. tostring (cype) .. ", " .. tostring (cont) .. ", " .. tostring (ord) .. ", " .. tostring (minc) .. ", " .. tostring (maxc) .. ")")
@@ -7882,14 +7899,14 @@ end
 ----- ---- --- -- -
 
 function delrcmenu (nick, id)
-	local _, rows = VH:SQLQuery ("select `menu` from `" .. tbl_sql ["rcmenu"] .. "` where `id` = " .. id .. " limit 1")
+	local _, rows = VH:SQLQuery ("select `menu` from `" .. tbl_sql ["rcmenu"] .. "` where `id` = " .. tostring (id))
 
 	if rows > 0 then
 		local _, menu = VH:SQLFetch (0)
-		VH:SQLQuery ("delete from `" .. tbl_sql ["rcmenu"] .. "` where `id` = " .. id .. " limit 1")
+		VH:SQLQuery ("delete from `" .. tbl_sql ["rcmenu"] .. "` where `id` = " .. tostring (id))
 		commandanswer (nick, gettext ("Deleted right click menu item: %s"):format (menu))
 	else
-		commandanswer (nick, gettext ("Right click menu item not found: %s"):format (id))
+		commandanswer (nick, gettext ("Right click menu item not found: %d"):format (tonumber (id)))
 	end
 end
 
@@ -7902,7 +7919,7 @@ function listrcmenu (nick)
 		local list = ""
 
 		for x = 0, rows - 1 do
-			local _, id, menu, cmnd, cype, cont, ord, minc, maxc = VH:SQLFetch (x)
+			local _, id, menu, cmnd, cype, cont, ord, minc, maxc, off = VH:SQLFetch (x)
 			list = list .. "\r\n " .. gettext ("Menu item") .. ": " .. menu .. "\r\n"
 
 			if cmnd == "" then
@@ -7911,7 +7928,7 @@ function listrcmenu (nick)
 				list = list .. " " .. gettext ("Menu command") .. ": " .. cmnd .. "\r\n"
 			end
 
-			list = list .. " [ I: " .. tostring (id) .. " ] [ T: " .. tostring (cype) .. " ] [ C: " .. tostring (cont) .. " ] [ O: " .. tostring (ord) .. " ] [ MIC: " .. tostring (minc) .. " ] [ MAC: " .. tostring (maxc) .. " ]\r\n"
+			list = list .. " [ I: " .. tostring (id) .. " ] [ T: " .. tostring (cype) .. " ] [ C: " .. tostring (cont) .. " ] [ O: " .. tostring (ord) .. " ] [ MIC: " .. tostring (minc) .. " ] [ MAC: " .. tostring (maxc) .. " ] [ D: " .. tostring (off) .. " ]\r\n"
 		end
 
 		commandanswer (nick, gettext ("List of right click menu items") .. ":\r\n" .. list)
@@ -7923,21 +7940,42 @@ end
 ----- ---- --- -- -
 
 function ordrcmenu (nick, line)
-	local _, _, id, ord = line:find ("^(%d+) (%d+)$")
+	local id, ord = line:match ("^(%d+) (%d+)$")
 	ord = tonumber (ord)
 
 	if ord >= 0 and ord <= 65535 then
-		local _, rows = VH:SQLQuery ("select `menu` from `" .. tbl_sql ["rcmenu"] .. "` where `id` = " .. id .. " limit 1")
+		local _, rows = VH:SQLQuery ("select `menu` from `" .. tbl_sql ["rcmenu"] .. "` where `id` = " .. tostring (id))
 
 		if rows > 0 then
 			local _, menu = VH:SQLFetch (0)
-			VH:SQLQuery ("update `" .. tbl_sql ["rcmenu"] .. "` set `order` = " .. tostring (ord) .. " where `id` = " .. tostring (id) .. " limit 1")
+			VH:SQLQuery ("update `" .. tbl_sql ["rcmenu"] .. "` set `order` = " .. tostring (ord) .. " where `id` = " .. tostring (id))
 			commandanswer (nick, gettext ("Changed right click menu item order: %s"):format (menu))
 		else
-			commandanswer (nick, gettext ("Right click menu item not found: %s"):format (id))
+			commandanswer (nick, gettext ("Right click menu item not found: %d"):format (tonumber (id)))
 		end
 	else -- unknown order
 		commandanswer (nick, gettext ("Known orders are: %s"):format ("0 " .. gettext ("to") .. " 65535"))
+	end
+end
+
+----- ---- --- -- -
+
+function offrcmenu (nick, id)
+	local _, rows = VH:SQLQuery ("select `menu`, `off` from `" .. tbl_sql ["rcmenu"] .. "` where `id` = " .. tostring (id))
+
+	if rows > 0 then
+		local _, menu, off = VH:SQLFetch (0)
+		off = tonumber (off or 0) or 0
+
+		if off == 0 then
+			VH:SQLQuery ("update `" .. tbl_sql ["rcmenu"] .. "` set `off` = 1 where `id` = " .. tostring (id))
+			commandanswer (nick, gettext ("Disabled right click menu item: %s"):format (menu))
+		else
+			VH:SQLQuery ("update `" .. tbl_sql ["rcmenu"] .. "` set `off` = 0 where `id` = " .. tostring (id))
+			commandanswer (nick, gettext ("Enabled right click menu item: %s"):format (menu))
+		end
+	else
+		commandanswer (nick, gettext ("Right click menu item not found: %d"):format (tonumber (id)))
 	end
 end
 
@@ -7956,7 +7994,7 @@ function sendrcmenu (nick, class)
 		end
 	end
 
-	local _, rows = VH:SQLQuery ("select `menu`, `command`, `type`, `cont` from `" .. tbl_sql ["rcmenu"] .. "` where `minclass` <= " .. tostring (class) .. " and `maxclass` >= " .. tonumber (class) .. " order by `order` asc, `id` asc")
+	local _, rows = VH:SQLQuery ("select `menu`, `command`, `type`, `cont` from `" .. tbl_sql ["rcmenu"] .. "` where `off` = 0 and `minclass` <= " .. tostring (class) .. " and `maxclass` >= " .. tonumber (class) .. " order by `order` asc, `id` asc")
 
 	if rows > 0 then
 		for x = 0, rows - 1 do
@@ -14355,6 +14393,8 @@ end
 		sopmenitm (usr, gettext ("Right click menu") .. "\\" .. gettext ("List of right click menu items"), table_cmnds ["rcmenulist"])
 		smensep (usr)
 		sopmenitm (usr, gettext ("Right click menu") .. "\\" .. gettext ("Reorder right click menu item"), table_cmnds ["rcmenuord"] .. " %[line:<" .. gettext ("identifier") .. ">] %[line:<" .. gettext ("order") .. ">]")
+		sopmenitm (usr, gettext ("Right click menu") .. "\\" .. gettext ("Disable or enable right click menu item"), table_cmnds ["rcmenuoff"] .. " %[line:<" .. gettext ("identifier") .. ">]")
+		smensep (usr)
 		sopmenitm (usr, gettext ("Right click menu") .. "\\" .. gettext ("Delete right click menu item"), table_cmnds ["rcmenudel"] .. " %[line:<" .. gettext ("identifier") .. ">]")
 	end
 
@@ -18030,7 +18070,8 @@ help = help.." "..optrig..table_cmnds ["remdel"].." <"..gettext ("identifier")..
 	help = help .. " " .. optrig .. table_cmnds ["rcmenuadd"] .. " <\"" .. gettext ("menu") .. "\"> <\"" .. gettext ("command") .. "\"> <" .. gettext ("type") .. "> <" .. gettext ("context") .. "> <" .. gettext ("order") .. "> <" .. gettext ("minclass") .. "> <" .. gettext ("maxclass") .. "> - " .. gettext ("Add right click menu item") .. "\r\n"
 	help = help .. " " .. optrig .. table_cmnds ["rcmenulist"] .. " - " .. gettext ("List of right click menu items") .. "\r\n"
 	help = help .. " " .. optrig .. table_cmnds ["rcmenudel"] .. " <" .. gettext ("identifier") .. "> - " .. gettext ("Delete right click menu item") .. "\r\n"
-	help = help .. " " .. optrig .. table_cmnds ["rcmenuord"] .. " <" .. gettext ("identifier") .. "> <" .. gettext ("order") .. "> - " .. gettext ("Reorder right click menu item") .. "\r\n\r\n"
+	help = help .. " " .. optrig .. table_cmnds ["rcmenuord"] .. " <" .. gettext ("identifier") .. "> <" .. gettext ("order") .. "> - " .. gettext ("Reorder right click menu item") .. "\r\n"
+	help = help .. " " .. optrig .. table_cmnds ["rcmenuoff"] .. " <" .. gettext ("identifier") .. "> - " .. gettext ("Disable or enable right click menu item") .. "\r\n\r\n"
 
 	-- ip watch
 	help = help.." "..optrig..table_cmnds ["ipwatadd"].." <"..gettext ("lre").."> <\""..gettext ("reason").."\"> <"..gettext ("result").."> - "..gettext ("Add IP watch entry").."\r\n"
@@ -18737,7 +18778,7 @@ VH:SQLQuery ("create table if not exists `"..tbl_sql ["stat"].."` (`type` varcha
 	VH:SQLQuery ("create table if not exists `" .. tbl_sql ["ccgag"] .. "` (`item` varchar(255) not null primary key, `flag` tinyint(1) unsigned not null default 0) engine = myisam default character set utf8 collate utf8_unicode_ci")
 
 	-- right click menu
-	VH:SQLQuery ("create table if not exists `" .. tbl_sql ["rcmenu"] .. "` (`id` bigint(20) unsigned not null auto_increment primary key, `menu` varchar(255) not null, `command` varchar(255) not null, `type` tinyint(3) unsigned not null default 1, `cont` tinyint(2) unsigned not null default 3, `order` smallint(5) unsigned not null default 0, `minclass` tinyint(2) unsigned not null default 0, `maxclass` tinyint(2) unsigned not null default 10) engine = myisam default character set utf8 collate utf8_unicode_ci")
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql ["rcmenu"] .. "` (`id` bigint(20) unsigned not null auto_increment primary key, `menu` varchar(255) not null, `command` varchar(255) not null, `type` tinyint(3) unsigned not null default 1, `cont` tinyint(2) unsigned not null default 3, `order` smallint(5) unsigned not null default 0, `minclass` tinyint(2) unsigned not null default 0, `maxclass` tinyint(2) unsigned not null default 10, `off` tinyint(1) unsigned not null default 0) engine = myisam default character set utf8 collate utf8_unicode_ci")
 end
 
 ----- ---- --- -- -
@@ -19064,6 +19105,9 @@ VH:SQLQuery ("alter ignore table `"..tbl_sql ["stat"].."` change column `count` 
 
 	-- cc gag
 	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["ccgag"] .. "` change column `cc` `item` varchar(255) not null") -- item
+
+	-- right click menu
+	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["rcmenu"] .. "` add column `off` tinyint(1) unsigned not null default 0 after `maxclass`")
 end
 
 ----- ---- --- -- -
