@@ -947,7 +947,7 @@ Known orders are: %s|
 Modified right click menu item: %s|
 Added right click menu item: %s|
 Deleted right click menu item: %s|
-Right click menu item not found: %s|
+Right click menu item not found: %d|
 Right click menu item list is empty.|
 Menu item|
 Menu command|
@@ -1122,3 +1122,6 @@ Flood detected from %s with IP %s and class %d in MC: %s|
 Main chat flood detected from your nick.|
 Private chat flood detected from your IP.|
 Sorry, your message has been ignored.|
+Disable or enable right click menu item|
+Disabled right click menu item: %s|
+Enabled right click menu item: %s|
