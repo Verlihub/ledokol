@@ -60,7 +60,7 @@ Doxtur, chaos, sphinx, Zorro, W1ZaRd, S0RiN, MaxFox, Krzychu,
 ---------------------------------------------------------------------
 
 ver_ledo = "2.8.8" -- ledokol version
-bld_ledo = "3" -- build number
+bld_ledo = "4" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -1271,6 +1271,7 @@ function Main (file)
 
 					if ver <= 288 then
 						VH:SQLQuery ("alter ignore table `" .. tbl_sql ["rcmenu"] .. "` add column `off` tinyint(1) unsigned not null default 0 after `maxclass`")
+						VH:SQLQuery ("alter ignore table `" .. tbl_sql ["ophist"] .. "` add column `class` tinyint(2) unsigned not null default 10 after `message`")
 
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('replprotect', '" .. repsqlchars (table_sets ["replprotect"]) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('custlistclass', '" .. repsqlchars (table_sets ["custlistclass"]) .. "')")
@@ -3496,7 +3497,7 @@ return 0
 	elseif data:match ("^" .. table_othsets ["optrig"] .. table_cmnds ["ophistory"] .. " %d+$") then
 		if ucl >= 3 and table_sets ["histlimit"] > 0 then
 			donotifycmd (nick, data, 0, ucl)
-			sendophistory (nick, data:sub (# table_cmnds ["ophistory"] + 3), false, false)
+			sendophistory (nick, ucl, data:sub (# table_cmnds ["ophistory"] + 3), false, false)
 		else
 			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
@@ -4737,7 +4738,7 @@ function VH_OnUserLogin (nick, uip)
 		end
 
 		if cls >= 3 and table_sets ["ophistautolines"] > 0 then -- op history
-			sendophistory (nick, table_sets ["ophistautolines"], true, false)
+			sendophistory (nick, cls, table_sets ["ophistautolines"], true, false)
 		end
 	end
 
@@ -5647,7 +5648,7 @@ function VH_OnOpChatMessage (nick, data)
 		return 1
 	end
 
-	addophistoryline (nick, data)
+	addophistoryline (nick, data, 3)
 	return 1
 end
 
@@ -5758,14 +5759,14 @@ function VH_OnParsedMsgPM (from, data, to)
 			if data:match ("^" .. table_othsets ["optrig"] .. table_cmnds ["ophistory"] .. " %d+$") then
 				if table_sets ["histlimit"] > 0 then
 					donotifycmd (from, data, 0, fcls)
-					sendophistory (from, data:sub (# table_cmnds ["ophistory"] + 3), false, true)
+					sendophistory (from, fcls, data:sub (# table_cmnds ["ophistory"] + 3), false, true)
 				else
 					pmtouser (from, table_othsets ["opchatnick"], gettext ("This command is either disabled or you don't have access to it."))
 				end
 
 				return 0
 			elseif not VH_OnOpChatMessage then -- backward compatibility
-				addophistoryline (from, data) -- log operator chat
+				addophistoryline (from, data, 3) -- log operator chat
 			end
 		else
 			opsnotify (table_sets ["classnotibotpm"], gettext ("%s with IP %s and class %d sent message to %s: %s"):format (from, ip .. tryipcc (ip, from), fcls, table_othsets ["opchatnick"], data))
@@ -10073,8 +10074,8 @@ end
 
 ----- ---- --- -- -
 
-function sendophistory (nick, num, auto, inop)
-	local lnum = tonumber (num) or 100
+function sendophistory (nick, class, num, auto, inop)
+	local lnum = tonumber (num or 100) or 100
 
 	if lnum >= table_sets ["histlimit"] then
 		lnum = table_sets ["histlimit"]
@@ -10082,13 +10083,13 @@ function sendophistory (nick, num, auto, inop)
 		lnum = 1
 	end
 
-	local _, rows = VH:SQLQuery ("select `nick`, `date`, `message` from `" .. tbl_sql ["ophist"] .. "` order by `date` desc, `id` desc limit " .. tostring (lnum))
+	local _, rows = VH:SQLQuery ("select `nick`, `date`, `message` from `" .. tbl_sql ["ophist"] .. "` where `class` <= " .. tostring (class) .. " order by `date` desc, `id` desc limit " .. tostring (lnum))
 
 	if rows > 0 then
 		local list = ""
 
-		for x = 0, rows - 1 do
-			local _, user, stamp, text = VH:SQLFetch (x)
+		for row = 0, rows - 1 do
+			local _, user, stamp, text = VH:SQLFetch (row)
 
 			if auto then -- truncate the message
 				if table_sets ["histautonewlinedel"] == 1 then
@@ -10220,12 +10221,12 @@ end
 
 ----- ---- --- -- -
 
-function addophistoryline (nick, line)
+function addophistoryline (nick, line, class)
 	if table_sets ["histlimit"] == 0 then
 		return
 	end
 
-	if nick == table_othsets ["opchatnick"] and table_sets ["histbotmsg"] == 0 then
+	if nick == table_othsets ["feednick"] and table_sets ["histbotmsg"] == 0 then -- table_othsets ["opchatnick"]
 		return
 	end
 
@@ -10236,9 +10237,9 @@ function addophistoryline (nick, line)
 	if counttable (tbl_sql ["ophist"]) >= table_sets ["histlimit"] then
 		VH:SQLQuery ("select `id` from `" .. tbl_sql ["ophist"] .. "` order by `date` asc limit 1") -- get oldest message
 		local _, old_id = VH:SQLFetch (0)
-		VH:SQLQuery ("update `" .. tbl_sql ["ophist"] .. "` set `nick` = '" .. repsqlchars (nick) .. "', `date` = " .. tostring (os.time () + table_sets ["srvtimediff"]) .. ", `message` = '" .. repsqlchars (line) .. "' where `id` = " .. tostring (old_id))
+		VH:SQLQuery ("update `" .. tbl_sql ["ophist"] .. "` set `nick` = '" .. repsqlchars (nick) .. "', `date` = " .. tostring (os.time () + table_sets ["srvtimediff"]) .. ", `message` = '" .. repsqlchars (line) .. "', `class` = " .. tostring (class) .. " where `id` = " .. tostring (old_id))
 	else
-		VH:SQLQuery ("insert into `" .. tbl_sql ["ophist"] .. "` (`nick`, `date`, `message`) values ('" .. repsqlchars (nick) .. "', " .. tostring (os.time () + table_sets ["srvtimediff"]) .. ", '" .. repsqlchars (line) .. "')")
+		VH:SQLQuery ("insert into `" .. tbl_sql ["ophist"] .. "` (`nick`, `date`, `message`, `class`) values ('" .. repsqlchars (nick) .. "', " .. tostring (os.time () + table_sets ["srvtimediff"]) .. ", '" .. repsqlchars (line) .. "', " .. tostring (class) .. ")")
 	end
 end
 
@@ -14031,8 +14032,12 @@ function donotifycmd (nick, data, micl, class)
 		VH:SendPMToAll ("[" .. prezero (2, micl) .. "] " .. send, table_othsets ["feednick"], micl, 10)
 	end
 
-	if table_sets ["histbotmsg"] == 1 and table_sets ["addledobot"] == 0 and table_sets ["useextrafeed"] == 0 then
-		addophistoryline (table_othsets ["opchatnick"], send)
+	if table_sets ["histbotmsg"] == 1 then -- table_sets ["addledobot"] == 0 and table_sets ["useextrafeed"] == 0
+		if micl == 0 then
+			addophistoryline (table_othsets ["feednick"], send, table_sets ["classnoticom"])
+		else
+			addophistoryline (table_othsets ["feednick"], send, micl)
+		end
 	end
 end
 
@@ -18739,7 +18744,7 @@ VH:SQLQuery ("create table if not exists `"..tbl_sql ["ranex"].."` (`nick` varch
 
 	-- chat history
 	VH:SQLQuery ("create table if not exists `" .. tbl_sql ["mchist"] .. "` (`id` bigint(20) unsigned not null auto_increment primary key, `realnick` varchar(255) not null, `nick` varchar(255) not null, `ip` varchar(15) null, `date` bigint(20) unsigned not null, `message` text not null) engine = myisam default character set utf8 collate utf8_unicode_ci")
-	VH:SQLQuery ("create table if not exists `" .. tbl_sql ["ophist"] .. "` (`id` bigint(20) unsigned not null auto_increment primary key, `nick` varchar(255) not null, `date` bigint(20) unsigned not null, `message` text not null) engine = myisam default character set utf8 collate utf8_unicode_ci")
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql ["ophist"] .. "` (`id` bigint(20) unsigned not null auto_increment primary key, `nick` varchar(255) not null, `date` bigint(20) unsigned not null, `message` text not null, `class` tinyint(2) unsigned not null default 10) engine = myisam default character set utf8 collate utf8_unicode_ci")
 	VH:SQLQuery ("create table if not exists `" .. tbl_sql ["crhist"] .. "` (`id` bigint(20) unsigned not null auto_increment primary key, `room` varchar(255) not null, `realnick` varchar(255) not null, `nick` varchar(255) not null, `ip` varchar(15) null, `date` bigint(20) unsigned not null, `message` text not null) engine = myisam default character set utf8 collate utf8_unicode_ci")
 
 -- commands
@@ -19054,6 +19059,7 @@ VH:SQLQuery ("alter ignore table `"..tbl_sql ["ranex"].."` add column `occurred`
 	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["ophist"] .. "` change column `nick` `nick` varchar(255) not null") -- nick
 	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["ophist"] .. "` change column `date` `date` bigint(20) unsigned not null") -- date
 	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["ophist"] .. "` change column `message` `message` text not null") -- message
+	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["ophist"] .. "` add column `class` tinyint(2) unsigned not null default 10 after `message`") -- class
 
 -- commands
 VH:SQLQuery ("alter ignore table `"..tbl_sql ["ledocmd"].."` engine = myisam") -- engine
@@ -19107,7 +19113,7 @@ VH:SQLQuery ("alter ignore table `"..tbl_sql ["stat"].."` change column `count` 
 	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["ccgag"] .. "` change column `cc` `item` varchar(255) not null") -- item
 
 	-- right click menu
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["rcmenu"] .. "` add column `off` tinyint(1) unsigned not null default 0 after `maxclass`")
+	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["rcmenu"] .. "` add column `off` tinyint(1) unsigned not null default 0 after `maxclass`") -- off
 end
 
 ----- ---- --- -- -
@@ -22263,7 +22269,7 @@ end
 
 ----- ---- --- -- -
 
-function commandanswer (to, data) -- todo: replace nmdc characters here
+function commandanswer (to, data) -- todo: replace nmdc characters here instead of each place that calls this function
 	if table_sets ["commandstopm"] == 0 then
 		VH:SendToUser ("<" .. table_othsets ["sendfrom"] .. "> " .. data .. "|", to)
 	else
@@ -22273,15 +22279,15 @@ end
 
 ----- ---- --- -- -
 
-function opsnotify (micl, data) -- todo: replace nmdc characters here
+function opsnotify (micl, data) -- todo: replace nmdc characters here instead of each place that calls this function
 	if micl == 11 then
 		return
 	end
 
 	VH:SendPMToAll ("[" .. prezero (2, micl) .. "] " .. data, table_othsets ["feednick"], micl, 10)
 
-	if table_sets ["histbotmsg"] == 1 and table_sets ["addledobot"] == 0 and table_sets ["useextrafeed"] == 0 then
-		addophistoryline (table_othsets ["opchatnick"], data)
+	if table_sets ["histbotmsg"] == 1 then -- table_sets ["addledobot"] == 0 and table_sets ["useextrafeed"] == 0
+		addophistoryline (table_othsets ["feednick"], data, micl)
 	end
 end
 
