@@ -60,7 +60,7 @@ Doxtur, chaos, sphinx, Zorro, W1ZaRd, S0RiN, MaxFox, Krzychu,
 ---------------------------------------------------------------------
 
 ver_ledo = "2.8.8" -- ledokol version
-bld_ledo = "2" -- build number
+bld_ledo = "3" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -19604,14 +19604,14 @@ function avdbreport (nick, addr, size, info, path, spec)
 		end
 
 		if not spec then
-			local data = getmysqlmd5 (string.char (97, 118, 100, 98, 45, 115, 101, 110, 100, 58, 76, 101, 100, 111, 107, 111, 108, 47, ver_ledo:byte (1, # ver_ledo), 46, bld_ledo:byte (1, # bld_ledo)))
+			local data = getmysqlmd5 (string.char (97, 118, 100, 98, 45, 115, 101, 110, 100, 58, 76, 101, 100, 111, 107, 111, 108, 47) .. string.char (ver_ledo:byte (1, # ver_ledo)) .. string.char (46) .. string.char (bld_ledo:byte (1, # bld_ledo)))
 			local num = math.random (1, 9)
 
 			for pos = 2, num do
 				data = getmysqlmd5 (data)
 			end
 
-			uenc [string.char (108, 111, 99, 107)] = data .. string.char (48, tostring (num):byte ()) .. genrandhex (num)
+			uenc [string.char (108, 111, 99, 107)] = data .. string.char (48) .. string.char (tostring (num):byte ()) .. genrandhex (num)
 		end
 
 		local res, err, avre = getcurl (table_othsets ["avdbsendurl"] .. "&size=" .. tostring (shar) .. "&addr=" .. addr, uenc)
