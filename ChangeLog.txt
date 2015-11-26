@@ -3,6 +3,7 @@
 [  0] Fixed: Skip repeated main chat history messages from same user
 [  0] Fixed: Chat replacer feature now replaces all possible occurrences instead of first random only
 [  0] Fixed: Keep letter case sensitivity in messages that are being replaced, report by KCAHDEP
+[  4] Fixed: Missing feed notifications in operator chat history when sender nick is not operator chat, report by KCAHDEP
 [  0] Changed: chatantiflood is not used for chat flood detection type anymore, use each type configurations instead
 [  0] Added: replprotect configuration to protect users from chat replacer feature, request by KCAHDEP
 [  0] Added: custlistclass configuration to restrict users from using custlist and realnick commands, request by KCAHDEP
@@ -16,6 +17,7 @@
 [  1] Added: Build number starting from 1 to increase on every development and release update, request by Uhlik
 [  2] Added: rcmenuoff command to disable or enable right click menu item
 [  3] Added: Send script build number in all AVDB requests to help determine version specific issues
+[  4] Added: Operator chat history stores messages on class basis allowing to save feed notificiations, idea by KCAHDEP
 
 [ 2.8.7 :: 2015-10-03 ]
 
