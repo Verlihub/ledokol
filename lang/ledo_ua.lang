@@ -1,6 +1,6 @@
 # Language: uk_UA
 # Charset: CP1251
-# Version: 2.8.7
+# Version: 2.8.8
 # Author: Neolo
 # Email: admin@nlight.org.ua
 
@@ -104,7 +104,7 @@ Deleted %d rows: %s|Видалено %d рядків: %s
 Known types are: %s|Відомі варіанти: %s
 No rows to remove: %s|Немає рядків для видалення: %s
 date|дата
-%s with class %d used command: %s|%s з класом %d використав команду: %s
+%s with IP %s and class %d used following command: %s|
 context|
 Deleted from chat rank list: %s|Видалено з ТОП чат: %s
 Not found in chat rank list: %s|Не знайдено в ТОП чат: %s
@@ -539,15 +539,15 @@ second|секунда
 You are now known as: %s|Ви зараз відомі як: %s
 You renamed %s to: %s|Ви перейменували %s в: %s
 Spam exception from %s with IP %s and class %d in MC: %s|Спам виключення %s з IP %s та класом %d в ГЧ: %s
-Spam exception from %s with IP %s and class %d in PM: %s|Спам виключення %s з IP %s та класом %d в ПП: %s
+Spam exception from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s|
 Spam exception from %s with IP %s and class %d in offline message: %s|Спам виключення %s з IP %s та класом %d в offline повідомленні: %s
 Spam exception from %s with IP %s and class %d in report: %s|Спам виключення %s з IP %s та класом %d в report повідомленні: %s
 Spam notification from %s with IP %s and class %d in MC: %s|Спам сповіщення від %s з IP %s та класом %d в ГЧ: %s
-Spam notification from %s with IP %s and class %d in PM: %s|Спам сповіщення від %s з IP %s та класом %d в ПП: %s
+Spam notification from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s|
 Spam notification from %s with IP %s and class %d in offline message: %s|Спам сповіщення від %s з IP %s та класом %d в offline повідомленні: %s
 Spam notification from %s with IP %s and class %d in report: %s|Спам сповіщення від %s з IP %s та класом %d в report повідомленні: %s
 Spam from %s with IP %s and class %d in MC: %s|Спам від %s з IP %s та класом %d в ГЧ: %s
-Spam from %s with IP %s and class %d in PM: %s|Спам від %s з IP %s та класом %d в ПП: %s
+Spam from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s|
 Spam from %s with IP %s and class %d in offline message: %s|Спам від %s з IP %s та класом %d в offline повідомленні: %s
 Spam from %s with IP %s and class %d in report: %s|Спам від %s з IP %s та класом %d в report повідомленні: %s
 Modified antispam entry with action %d and priority %d to scan in MC: %s|Змінено антиспам запис з дією %d та пріорітетом %d для сканування в ГЧ: %s
@@ -651,9 +651,9 @@ Custom script command list is empty.|Список нестандартних к�
 Script size: %d lines in %s|Розмір скрипту: %d рядків в %s
 Added %s to IP gag list, %d users in total.|Додано %s в IP gag список, %d users in total.
 Flood detected from IP %s last known as %s with class %d in MC: %s|Виявлено флуд з IP %s останній раз відомий як %s з класом %d в ГЧ: %s
-Flood detected from IP %s last known as %s with class %d in PM: %s|Виявлено флуд з IP %s останній раз відомий як %s з класом %d в ПП: %s
+Flood detected from IP %s last known as %s with class %d in PM to %s with IP %s and class %d: %s|
 Private chat is currently disabled for you.|Приватні повідомлення вимкнено для вас.
-Flood detected from your IP.|З вашої IP адреси виявлено флуд.
+Main chat flood detected from your IP.|
 %d users with IP %s dropped due to flood.|
 No error message specified.|Немає відповідного повідомлення про помилку.
 Search filter|Пошуковий фільтр
@@ -769,7 +769,7 @@ Hub uptime: %s|Безперервна робота хабу: %s
 User count: %s|Кількість коистувачів: %s
 Total share: %s|Загальний розмір шар: %s
 %s with IP %s and class %d tries to speak with IP gag in MC: %s|%s з IP %s та класом %d намагається щось сказати з заблокованого IP в ГЧ: %s
-%s with IP %s and class %d tries to speak with IP gag in PM: %s|%s з IP %s та класом %d намагається щось сказати з заблокованого IP в ПП: %s
+%s with IP %s and class %d tries to speak with IP gag in PM to %s with IP %s and class %d: %s|
 Private message replaced for user: %s|
 Command logger|Логгер команд
 Showing %d entries from command logger|Відображення %d записів з логу команд
@@ -878,7 +878,7 @@ Country code gag list is empty.|
 Delete country code gag|
 Cleared country code gag list.|
 %s with IP %s and class %d tries to speak with country code gag in MC: %s|
-%s with IP %s and class %d tries to speak with country code gag in PM: %s|
+%s with IP %s and class %d tries to speak with country code gag in PM to %s with IP %s and class %d: %s|
 No reason specified|
 Automatically deleted %d user log entries older than %d days.|
 Main chat message replaced for user: %s|
@@ -923,7 +923,7 @@ Command parameters %s are always required, while %s are optional.|
 Quoted parameters %s or %s must be used with quotes.|
 IP information|
 IP information not available: %s|
-Message replaced for user with class %d in MC: <%s> %s|
+Message replaced for user with IP %s and class %d in MC: <%s> %s|
 IP %s permanently banned: <%s> %s|
 Nick %s permanently banned: <%s> %s|
 Range %s permanently banned: <%s> %s|
@@ -947,7 +947,7 @@ Known orders are: %s|
 Modified right click menu item: %s|
 Added right click menu item: %s|
 Deleted right click menu item: %s|
-Right click menu item not found: %s|
+Right click menu item not found: %d|
 Right click menu item list is empty.|
 Menu item|
 Menu command|
@@ -981,7 +981,7 @@ There is an error in following forbidden client supports pattern|
 There is an error in following forbidden NMDC version pattern|
 Added replacer in PM: %s|
 Added replacer in MC and PM: %s|
-Message replaced for user with class %d in PM: <%s> %s|
+Message replaced for user with IP %s and class %d in PM to %s with IP %s and class %d: <%s> %s|
 Message ignored due to flood detection from %s with IP %s and class %d in MC: %s|
 Users with same IP|
 Parameter count mismatch detected in following translation string: %s|
@@ -1117,3 +1117,11 @@ real|
 Specified country code isn't valid: %s|
 You can't block user who don't share anything: %s|
 You can't kick user who don't share anything: %s|
+Flood detected from %s with IP %s and class %d in MC: %s|
+%s dropped due to flood.|
+Main chat flood detected from your nick.|
+Private chat flood detected from your IP.|
+Sorry, your message has been ignored.|
+Disable or enable right click menu item|
+Disabled right click menu item: %s|
+Enabled right click menu item: %s|
