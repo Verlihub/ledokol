@@ -104,7 +104,7 @@ Deleted %d rows: %s|Supprimйs %d lignes: %s
 Known types are: %s|Les types connus sont: %s
 No rows to remove: %s|Pas de lignes а supprimer: %s
 date|date
-%s with class %d used command: %s|%s avec le profil %d commande utilisйe: %s
+%s with IP %s and class %d used following command: %s|
 context|contexte
 Deleted from chat rank list: %s|Supprimй de la liste Top lignes du chat: %s
 Not found in chat rank list: %s|Introuvable dans la liste Top lignes du message central: %s
@@ -653,7 +653,7 @@ Added %s to IP gag list, %d users in total.|Ajout %s а la liste des IP bloquer,
 Flood detected from IP %s last known as %s with class %d in MC: %s|Flood dйtectй provenant de l'IP %s derniиrement connu comme %s avec le profil %d en messagerie centrale: %s
 Flood detected from IP %s last known as %s with class %d in PM to %s with IP %s and class %d: %s|Flood dйtectй а partir de IP %s derniиre connue sous le nom %s avec la classe %d dans PM %s avec IP %s et la classe %d: %s
 Private chat is currently disabled for you.|Le chat privй est actuellement dйsactivй pour toi.
-Flood detected from your IP.|Flood dйtectй provenant de ton IP.
+Main chat flood detected from your IP.|Flood dйtectйe sur le central а partir de votre adresse IP
 %d users with IP %s dropped due to flood.|%d utilisateurs avec l'IP %s virйs pour cause de flood.
 No error message specified.|Pas de message d'erreur spйcifiй
 Search filter|Filtre de recherche
@@ -923,7 +923,7 @@ Command parameters %s are always required, while %s are optional.|Les paramиtre
 Quoted parameters %s or %s must be used with quotes.|Les paramиtres citйs %s ou %s doivent кtre utilisйs avec les citations.
 IP information|Information de l'IP
 IP information not available: %s|Information de l'IP non disponible: %s
-Message replaced for user with class %d in MC: <%s> %s|Message remplacй pour l'utilisateur avec le profil %d en Message central: <%s> %s
+Message replaced for user with IP %s and class %d in MC: <%s> %s|
 IP %s permanently banned: <%s> %s|L'IP %s est bannie en permanence: <%s> %s
 Nick %s permanently banned: <%s> %s|Le pseudonyme %s est banni en permanence: <%s> %s
 Range %s permanently banned: <%s> %s|La rangйe %s est bannie en permanence: <%s> %s
@@ -947,7 +947,7 @@ Known orders are: %s|Les ordres connus sont: %s
 Modified right click menu item: %s|Article du menu du click droit modifiй: %s
 Added right click menu item: %s|Article du menu du klick droit ajoutй: %s
 Deleted right click menu item: %s|Article du menu du click droit supprimй: %s
-Right click menu item not found: %s|L'article du menu du click droit introuvable: %s
+Right click menu item not found: %d|
 Right click menu item list is empty.|La liste d'article du menu du Click droit est vide.
 Menu item|Menu de l'article
 Menu command|Menu de commande
@@ -1117,3 +1117,11 @@ real|rйel
 Specified country code isn't valid: %s|Code pays spйcifiй est incorrect: %s
 You can't block user who don't share anything: %s|Vous ne pouvez pas bloquer l'utilisateur qui ne rien partager: %s
 You can't kick user who don't share anything: %s|Vous ne pouvez pas kicker l' utilisateur qui ne partagent rien: %s
+Flood detected from %s with IP %s and class %d in MC: %s|Flood dйtectйe de cette %s with IP %s avec le rang %d sur le central: %s
+%s dropped due to flood.|%s dйconnecter raison flood.
+Main chat flood detected from your nick.|Flood dйtectй sur le central а partir de votre pseudo.
+Private chat flood detected from your IP.|Flood dйtectйe en priver  а partir de votre adresse IP.
+Sorry, your message has been ignored.|Dйsoler votre message a йtй ignorer.
+Disable or enable right click menu item|
+Disabled right click menu item: %s|
+Enabled right click menu item: %s|
