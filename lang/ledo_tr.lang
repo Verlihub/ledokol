@@ -1,7 +1,7 @@
 # Language: tr_TR
 # Charset: CP1254
-# Version: 2.8.7
-# Author: mauron
+# Version: 2.8.8
+# Author: Mauron
 # Email: mauron@vmail.me
 
 Current topic: %s|Gьncel konu: %s
@@ -104,7 +104,7 @@ Deleted %d rows: %s|%d satэr silindi: %s
 Known types are: %s|Bilinen tьrler юunlardэr: %s
 No rows to remove: %s|Kaldэrэlacak satэr yok: %s
 date|tarih
-%s with class %d used command: %s|%d sэnэflэ %s юu komutu kullandэ: %s
+%s with IP %s and class %d used following command: %s|%s, ki %s IP adresli ve %d sэnэflэ, юu komutu kullandэ: %s
 context|baрlam
 Deleted from chat rank list: %s|Sohbet dьzey listesinden silindi: %s
 Not found in chat rank list: %s|Sohbet dьzey listesinde bulunamadэ: %s
@@ -539,15 +539,15 @@ second|saniye
 You are now known as: %s|Artэk %s olarak biliniyorsunuz
 You renamed %s to: %s|%s rumuzunu %s olarak yeniden adlandэrdэnэz
 Spam exception from %s with IP %s and class %d in MC: %s|Ana sohbette %s kullanэcэsэndan, ki %s IP adresli ve %d sэnэflэ, yэрэn mesaj istisnasэ: %s
-Spam exception from %s with IP %s and class %d in PM: %s|Цzel mesajda %s kullanэcэsэndan, ki %s IP adresli ve %d sэnэflэ, yэрэn mesaj istisnasэ: %s
+Spam exception from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s|%s kullanэcэsэndan, ki %s IP adresli ve %d sэnэflэ, %s kullanэcэsэna ki %s IP adresli ve %d sэnэflэ, цzel sohbette yэрэn mesaj istisnasэ: %s
 Spam exception from %s with IP %s and class %d in offline message: %s|Зevrimdэюэ mesajda %s kullanэcэsэndan, ki %s IP adresli ve %d sэnэflэ, yэрэn mesaj istisnasэ: %s
 Spam exception from %s with IP %s and class %d in report: %s|Raporda %s kullanэcэsэndan, ki %s IP adresli ve %d sэnэflэ, yэрэn mesaj istisnasэ: %s
 Spam notification from %s with IP %s and class %d in MC: %s|Ana sohbette %s kullanэcэsэndan, ki %s IP adresli ve %d sэnэflэ, yэрэn mesaj bildirimi: %s
-Spam notification from %s with IP %s and class %d in PM: %s|Цzel mesajda %s kullanэcэsэndan, ki %s IP adresli ve %d sэnэflэ, yэрэn mesaj bildirimi: %s
+Spam notification from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s|%s kullanэcэsэndan, ki %s IP adresli ve %d sэnэflэ, %s kullanэcэsэna ki %s IP adresli ve %d sэnэflэ, цzel sohbette yэрэn mesaj bildirimi: %s
 Spam notification from %s with IP %s and class %d in offline message: %s|Зevrimdэюэ mesajda %s kullanэcэsэndan, ki %s IP adresli ve %d sэnэflэ, yэрэn mesaj bildirimi: %s
 Spam notification from %s with IP %s and class %d in report: %s|Raporda %s kullanэcэsэndan, ki %s IP adresli ve %d sэnэflэ, yэрэn mesaj bildirimi: %s
 Spam from %s with IP %s and class %d in MC: %s|%s kullanэcэsэndan, ki %s IP adresli ve %d sэnэflэ, ana sohbette yэрэn mesaj: %s
-Spam from %s with IP %s and class %d in PM: %s|%s kullanэcэsэndan, ki %s IP adresli ve %d sэnэflэ, цzel mesajda yэрэn mesaj: %s
+Spam from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s|%s kullanэcэsэndan, ki %s IP adresli ve %d sэnэflэ, %s kullanэcэsэna, ki %s IP adresli ve %d sэnэflэ, цzel sohbette yэрэn mesaj: %s
 Spam from %s with IP %s and class %d in offline message: %s|%s kullanэcэsэndan, ki %s IP adresli ve %d sэnэflэ, зevrimdэюэ mesajda yэрэn mesaj: %s
 Spam from %s with IP %s and class %d in report: %s|%s kullanэcэsэndan, ki %s IP adresli ve %d sэnэflэ, raporda yэрэn mesaj: %s
 Modified antispam entry with action %d and priority %d to scan in MC: %s|Yэрэn mesajdan korunma unsuru ana sohbeti taramak iзin %d faaliyeti ve %d цnceliрi ile deрiюtirildi: %s
@@ -651,9 +651,9 @@ Custom script command list is empty.|Цzel betik komutu listesi boюtur.
 Script size: %d lines in %s|Betik boyutu: %s iзinde %d satэr
 Added %s to IP gag list, %d users in total.|%s IP susturma listesine eklendi, toplam %d kullanэcэ.
 Flood detected from IP %s last known as %s with class %d in MC: %s|%s IP adresinden, ki son olarak %s olarak bilinen ve %d sэnэflэ olan, ana sohbette aюэrэ tekrar tespit edildi: %s
-Flood detected from IP %s last known as %s with class %d in PM: %s|%s IP adresinden, ki son olarak %s olarak bilinen ve %d sэnэflэ olan, цzel mesajda aюэrэ tekrar tespit edildi: %s
+Flood detected from IP %s last known as %s with class %d in PM to %s with IP %s and class %d: %s|%s IP adresinden, ki son olarak %s olarak bilinen ve %d sэnэfэnda olan, цzel sohbette %s kullanэcэsэna, ki %s IP adresli ve %d sэnэflэ, aюэrэ tekrar tespit edildi: %s
 Private chat is currently disabled for you.|Цzel sohbet юu anda sizin iзin devre dэюэdэr.
-Flood detected from your IP.|IP adresinizden aюэrэ tekrar tespit edilmiюtir.
+Main chat flood detected from your IP.|IP adresinizden ana sohbette aюэrэ tekrar tespit edilmiюtir.
 %d users with IP %s dropped due to flood.|%s IP adresinden %d kullanэcэnэn baрlantэsэ aюэrэ tekrar nedeniyle kesilmiюtir.
 No error message specified.|Hiзbir hata mesajэ belirtilmemiюtir.
 Search filter|Arama filtresi
@@ -769,7 +769,7 @@ Hub uptime: %s|Hub зalэюma sьresi: %s
 User count: %s|Kullanэcэ sayэsэ: %s
 Total share: %s|Toplam paylaюэm: %s
 %s with IP %s and class %d tries to speak with IP gag in MC: %s|%s, ki %s IP adresli ve %d sэnэflэ, IP susturmasэna raрmen ana sohbette konuюmaya зalэюmaktadэr: %s
-%s with IP %s and class %d tries to speak with IP gag in PM: %s|%s, ki %s IP adresli ve %d sэnэflэ, IP susturmasэna raрmen цzel mesajda konuюmaya зalэюmaktadэr: %s
+%s with IP %s and class %d tries to speak with IP gag in PM to %s with IP %s and class %d: %s|%s kullanэcэsэ, ki %s IP adresli ve %d sэnэflэ, IP susturmasэna raрmen цzel sohbette %s kullanэcэsэyla, ki %s IP adresli ve %d sэnэflэ, konuюmaya зalэюэyor: %s
 Private message replaced for user: %s|%s kullanэcэsэ iзin цzel mesaj deрiюtirildi
 Command logger|Komut kьtьkleyicisi
 Showing %d entries from command logger|Komut kьtьkleyicisinden %d unsur gцsteriliyor
@@ -878,7 +878,7 @@ Country code gag list is empty.|Ьlke kodu susturucu listesi boюtur.
 Delete country code gag|Ьlke kodu susturucusu sil
 Cleared country code gag list.|Ьlke kodu susturucu listesi temizlendi.
 %s with IP %s and class %d tries to speak with country code gag in MC: %s|%s, ki %s IP adresli ve %d sэnэflэ, ana sohbette ьlke kodu susturmasэna raрmen konuюmaya зalэюэyor: %s
-%s with IP %s and class %d tries to speak with country code gag in PM: %s|%s, ki %s IP adresli ve %d sэnэflэ, цzel mesajda ьlke kodu susturmasэna raрmen konuюmaya зalэюэyor: %s
+%s with IP %s and class %d tries to speak with country code gag in PM to %s with IP %s and class %d: %s|%s kullanэcэsэ, ki %s IP adresli ve %d sэnэflэ, ьlke kodu susturmasэna raрmen цzel sohbette %s kullanэcэsэyla, ki %s IP adresli ve %d sэnэflэ, konuюmaya зalэюэyor: %s
 No reason specified|Hiзbir sebep belirtilmemiюtir
 Automatically deleted %d user log entries older than %d days.|%d kullanэcэ kьtьk unsuru, ki %d gьnden eski, otomatik olarak silinmiюtir.
 Main chat message replaced for user: %s|Ana sohbet mesajэ юu kullanэcэ iзin deрiюtirilmiюtir: %s
@@ -923,7 +923,7 @@ Command parameters %s are always required, while %s are optional.|%s komut param
 Quoted parameters %s or %s must be used with quotes.|%s ya da %s tэrnaklэ parametreleri tэrnak iюaretleri ile kullanэlmalэdэr.
 IP information|IP bilgisi
 IP information not available: %s|IP bilgisi mevcut deрil: %s
-Message replaced for user with class %d in MC: <%s> %s|%d sэnэflэ kullanэcэ iзin mesaj ana sohbette deрiюtirildi: <%s> %s
+Message replaced for user with IP %s and class %d in MC: <%s> %s|%s Ip adresli ve %d sэnэflэ kullanэcэ iзin ana sohbette mesaj deрiюtirildi: <%s> %s
 IP %s permanently banned: <%s> %s|%s IP adresi daimi olarak yasaklandэ: <%s> %s
 Nick %s permanently banned: <%s> %s|%s rumuzu daimi olarak yasaklandэ: <%s> %s
 Range %s permanently banned: <%s> %s|%s alanэ daimi olarak yasaklandэ: <%s> %s
@@ -947,7 +947,7 @@ Known orders are: %s|Bilinen emirler юunlardэr: %s
 Modified right click menu item: %s|Saр tэklama menь unsuru deрiюtirildi: %s
 Added right click menu item: %s|Saр tэklama menь unsuru eklendi: %s
 Deleted right click menu item: %s|Saр tэklama menь unsuru silindi: %s
-Right click menu item not found: %s|Saр tэklama menь unsuru bulunamadэ: %s
+Right click menu item not found: %d|Saр tэklama menь unsuru bulunamadэ: %d
 Right click menu item list is empty.|Saр tэklama menь unsuru listesi boюtur.
 Menu item|Menь unsuru
 Menu command|Menь komutu
@@ -981,7 +981,7 @@ There is an error in following forbidden client supports pattern|Yasaklэ istemc
 There is an error in following forbidden NMDC version pattern|Yasaklэ NMDC sьrьm цrьntьsьnь izlemede bir hata meydana geldi
 Added replacer in PM: %s|Цzel mesajda deрiюtirici ekle: %s
 Added replacer in MC and PM: %s|Цzel ve ana sohbette deрiюtirici eklendi: %s
-Message replaced for user with class %d in PM: <%s> %s|%d sэnэflэ kullanэcэ iзin цzel mesaj deрiюtirildi: <%s> %s
+Message replaced for user with IP %s and class %d in PM to %s with IP %s and class %d: <%s> %s|%s IP adresli ve %d sэnэflэ kullanэcэ iзin цzel sohbette mesaj %s olarak ki %s IP adresi ve %d sэnэfэ olarak deрiюtirildi: <%s> %s
 Message ignored due to flood detection from %s with IP %s and class %d in MC: %s|%s kullanэcэsэndan ki %s IP adresli ve %d sэnflэ, mesaj gцrmezden gelindi зьnkь aюэrэ tekrar tespit edildi: %s
 Users with same IP|Aynэ IP'li kullanэcэlar
 Parameter count mismatch detected in following translation string: %s|Aюaрэdaki tercьme dizisinde parametre sayэsэ uyuюmazlэрэ tespit edildi: %s
@@ -1117,3 +1117,11 @@ real|hakiki
 Specified country code isn't valid: %s|Belirtilen ьlke kodu geзerli deрil: %s
 You can't block user who don't share anything: %s|Hiзbir юey paylaюmayan kullanэcэyэ engelleyemezsiniz: %s
 You can't kick user who don't share anything: %s|Hiзbir юey paylaюmayan kullancэyэ kovamazsэnэz: %s
+Flood detected from %s with IP %s and class %d in MC: %s|%s kullanэcэsэndan, ki %s IP adresli ve %d sэnэflэ, ana sohbette aюэrэ tekrar tespit edildi: %s
+%s dropped due to flood.|%d ile baрlantэ aюэrэ tekrar nedeniyle kesildi.
+Main chat flood detected from your nick.|Rumuzunuzdan ana sohbette aюэrэ tekrar tespit edilmiюtir.
+Private chat flood detected from your IP.|IP adresinizden цzel sohbette aюэrэ tekrar tespit edilmiюtir.
+Sorry, your message has been ignored.|Цzьr dileriz, mesajэnэz gцrmezden gelinmiюtir.
+Disable or enable right click menu item|Saр tэklama menь unsurunu etkinleюtir veya devre dэюэ bэrak
+Disabled right click menu item: %s|Saр tэklama menь unsuru devre dэюэ bэrakэldэ: %s
+Enabled right click menu item: %s|Saр tэklama menь unsuru etkinleюtirildi: %s
