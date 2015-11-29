@@ -104,7 +104,7 @@ Deleted %d rows: %s|Verwijderde %d rijen: %s
 Known types are: %s|Bekende types zijn: %s
 No rows to remove: %s|Geen rijen te verwijderen: %s
 date|Datum
-%s with class %d used command: %s|%s met class %d gebruikte het comando: %s
+%s with IP %s and class %d used following command: %s|%s met IP %d gebruikte het volgende comando: %s
 context|Context
 Deleted from chat rank list: %s|Verwijder van de chat rank lijst: %s
 Not found in chat rank list: %s|Niet gevonden in de chat rank lijst: %s
@@ -653,7 +653,7 @@ Added %s to IP gag list, %d users in total.|Toegevoegd  %s aan IP gag lijst, %d 
 Flood detected from IP %s last known as %s with class %d in MC: %s|Flood gedetecteerd van IP %s laatste bekend als %s met class %d in MC: %s
 Flood detected from IP %s last known as %s with class %d in PM to %s with IP %s and class %d: %s|flood gedetecteerd van ip %s laatst bekende als %s met klasse %d in pm aan %s met ip %s en klasse %d: %s
 Private chat is currently disabled for you.|Privй chat is momenteel uitgeschakeld voor je
-Flood detected from your IP.|Flood gedetecteerd van jou IP.
+Main chat flood detected from your IP.|Mainchat flood gedetecteerd van uw ip .
 %d users with IP %s dropped due to flood.|%d gebruikers met IP %s verbinding verbroken tijdens flood.
 No error message specified.|Geen foutmelding aangegeven.
 Search filter|Zoek filter
@@ -923,7 +923,7 @@ Command parameters %s are always required, while %s are optional.|Comande parame
 Quoted parameters %s or %s must be used with quotes.|Quoted parameters %s of %s moeten wordn gebruikt met quotes.
 IP information|IP informatie
 IP information not available: %s|IP informatie niet beschikbaar: %s
-Message replaced for user with class %d in MC: <%s> %s|Main chat bericht veranderd voor gebruiker met class %d in MC: <%s> %s
+Message replaced for user with IP %s and class %d in MC: <%s> %s|Bericht herplaatst voor gebruiker met IP %s met class %d in MC: <%s> %s
 IP %s permanently banned: <%s> %s|IP %s permanent gebannen: <%s> %s
 Nick %s permanently banned: <%s> %s|Nick %s permanent gebannen: <%s> %s
 Range %s permanently banned: <%s> %s|Reeks %s permanent gebannen: <%s> %s
@@ -947,7 +947,7 @@ Known orders are: %s|Bekende orders zijn: %s
 Modified right click menu item: %s|Gewijzigde right klik menu item: %s
 Added right click menu item: %s|Toegevoegde right klik menu item: %s
 Deleted right click menu item: %s|Verwijderde right klik menu item: %s
-Right click menu item not found: %s|Right klik menu item niet gevonden: %s
+Right click menu item not found: %d|Right click menu item niet gevonden: %d
 Right click menu item list is empty.|Right klik menu item is leeg.
 Menu item|Menu item
 Menu command|Menu comando
@@ -1117,3 +1117,11 @@ real|echt
 Specified country code isn't valid: %s|Gespecificeerd land code is niet geldig: %s
 You can't block user who don't share anything: %s|Je kunt geen gebruikers blokkeren  als deze niets delen: %s
 You can't kick user who don't share anything: %s|Je kunt geen gebruikers kicken als deze niets delen: %s
+Flood detected from %s with IP %s and class %d in MC: %s|Flood gedetecteerd van %s met IP %s en class %d in MC: %s
+%s dropped due to flood.|%s verwijderd tijdens flood
+Main chat flood detected from your nick.|Main chat flood gedetecteerd van jou nicknaam
+Private chat flood detected from your IP.|Prive chat flood gedetecteerd van jou IP.
+Sorry, your message has been ignored.|Sorry, je bericht is genegeerd.
+Disable or enable right click menu item|Uitzetten of verwijderen van het right click menu item
+Disabled right click menu item: %s|Aanzetten right click menu item: %s
+Enabled right click menu item: %s|Uitzetten right click menu item: %s
