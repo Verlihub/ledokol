@@ -1,6 +1,6 @@
 # Language: de_DE
 # Charset: CP1252
-# Version: 2.8.7
+# Version: 2.8.8
 # Author: Ettore Atalan
 # Email: atalanttore@googlemail.com
 
@@ -70,7 +70,7 @@ Added forbidden email with ban time %s: %s|
 Modified forbidden share size with ban time %s: %s|
 Added forbidden share size with ban time %s: %s|
 Couldn't add MyINFO exception because already exists: %s|
-Added MyINFO exception: %s|
+Added MyINFO exception: %s|Hinzugefьgte MyINFO-Ausnahme: %s
 and|und
 Deleted forbidden nick: %s|
 Couldn't delete forbidden nick because not found: %s|
@@ -84,7 +84,7 @@ Deleted forbidden email: %s|Verbotene E-Mail gelцscht: %s
 Couldn't delete forbidden email because not found: %s|
 Deleted forbidden share size: %s|
 Couldn't delete forbidden share size because not found: %s|
-Deleted MyINFO exception: %s|
+Deleted MyINFO exception: %s|Gelцschte MyINFO-Ausnahme: %s
 Couldn't delete MyINFO exception because not found: %s|
 Forbidden nick list|
 Forbidden nick list is empty.|
@@ -98,13 +98,13 @@ Forbidden email list|
 Forbidden email list is empty.|
 Forbidden share size list|
 Forbidden share size list is empty.|
-MyINFO exception list|
-MyINFO exception list is empty.|
+MyINFO exception list|MyINFO-Ausnahmeliste
+MyINFO exception list is empty.|MyINFO-Ausnahmeliste ist leer.
 Deleted %d rows: %s|
 Known types are: %s|Bekannte Typen sind: %s
 No rows to remove: %s|Keine Zeilen zum Lцschen: %s
 date|Datum
-%s with class %d used command: %s|
+%s with IP %s and class %d used following command: %s|
 context|Kontext
 Deleted from chat rank list: %s|Gelцscht aus Chatrangliste: %s
 Not found in chat rank list: %s|Nicht gefunden in Chatrangliste: %s
@@ -135,11 +135,11 @@ Couldn't delete antispam entry because not found: %s|
 Antispam list|Antispam-Liste
 Antispam list is empty.|Antispam-Liste ist leer.
 Couldn't add antispam exception entry because already exists: %s|
-Added antispam exception entry: %s|
-Deleted antispam exception entry: %s|
+Added antispam exception entry: %s|Hinzugefьgter Antispam-Ausnahmeeintrag: %s
+Deleted antispam exception entry: %s|Gelцschter Antispam-Ausnahmeeintrag: %s
 Couldn't delete antispam exception entry because not found: %s|
-Antispam exception list|
-Antispam exception list is empty.|
+Antispam exception list|Antispam-Ausnahmeliste
+Antispam exception list is empty.|Antispam-Ausnahmeliste ist leer.
 The user you're trying to send offline message to is a bot. Message is discarded.|
 You can't start at user number %d when you only have %d accounts with class %d.|
 Showing %d out of total %d accounts with class %d starting at user number %d|
@@ -160,8 +160,8 @@ Custom nick list|
 Add antispam entry|
 Showing last %d lines out of total %d found in %s file|
 Delete antispam entry|
-Add antispam exception entry|
-Delete antispam exception entry|
+Add antispam exception entry|Antispam-Ausnahmeeintrag hinzufьgen
+Delete antispam exception entry|Antispam-Ausnahmeeintrag lцschen
 Add MyINFO entry|
 Delete MyINFO entry|
 MyINFO list|
@@ -539,15 +539,15 @@ second|Sekunde
 You are now known as: %s|Sie sind jetzt bekannt als: %s
 You renamed %s to: %s|
 Spam exception from %s with IP %s and class %d in MC: %s|
-Spam exception from %s with IP %s and class %d in PM: %s|
+Spam exception from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s|
 Spam exception from %s with IP %s and class %d in offline message: %s|
 Spam exception from %s with IP %s and class %d in report: %s|
 Spam notification from %s with IP %s and class %d in MC: %s|
-Spam notification from %s with IP %s and class %d in PM: %s|
+Spam notification from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s|
 Spam notification from %s with IP %s and class %d in offline message: %s|
 Spam notification from %s with IP %s and class %d in report: %s|
 Spam from %s with IP %s and class %d in MC: %s|
-Spam from %s with IP %s and class %d in PM: %s|
+Spam from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s|
 Spam from %s with IP %s and class %d in offline message: %s|
 Spam from %s with IP %s and class %d in report: %s|
 Modified antispam entry with action %d and priority %d to scan in MC: %s|
@@ -651,9 +651,9 @@ Custom script command list is empty.|Benutzerdefinierte Skriptbefehlsliste ist l
 Script size: %d lines in %s|SkriptgrцЯe: %d Zeilen in %s
 Added %s to IP gag list, %d users in total.|
 Flood detected from IP %s last known as %s with class %d in MC: %s|
-Flood detected from IP %s last known as %s with class %d in PM: %s|
+Flood detected from IP %s last known as %s with class %d in PM to %s with IP %s and class %d: %s|
 Private chat is currently disabled for you.|
-Flood detected from your IP.|
+Main chat flood detected from your IP.|
 %d users with IP %s dropped due to flood.|
 No error message specified.|
 Search filter|Suchfilter
@@ -769,7 +769,7 @@ Hub uptime: %s|
 User count: %s|Benutzeranzahl: %s
 Total share: %s|
 %s with IP %s and class %d tries to speak with IP gag in MC: %s|
-%s with IP %s and class %d tries to speak with IP gag in PM: %s|
+%s with IP %s and class %d tries to speak with IP gag in PM to %s with IP %s and class %d: %s|
 Private message replaced for user: %s|
 Command logger|
 Showing %d entries from command logger|
@@ -800,13 +800,13 @@ Couldn't add chat replacer exception because already exists: %s|
 Added chat replacer exception: %s|
 Deleted chat replacer exception: %s|
 Couldn't delete chat replacer exception because not found: %s|
-Chat replacer exception list|
-Chat replacer exception list is empty.|
+Chat replacer exception list|Chatersetzungs-Ausnahmeliste
+Chat replacer exception list is empty.|Chatersetzungs-Ausnahmeliste ist leer.
 replace|ersetzen
 Add chat replacer|
 Delete chat replacer|
-Add chat replacer exception|
-Delete chat replacer exception|
+Add chat replacer exception|Chatersetzungs-Ausnahme hinzufьgen
+Delete chat replacer exception|Chatersetzungs-Ausnahme lцschen
 Chat replacer|
 You need to send another %d main chat messages in order to use hub registration.|
 Please wait another %.1f minutes before using hub registration.|
@@ -878,7 +878,7 @@ Country code gag list is empty.|
 Delete country code gag|
 Cleared country code gag list.|
 %s with IP %s and class %d tries to speak with country code gag in MC: %s|
-%s with IP %s and class %d tries to speak with country code gag in PM: %s|
+%s with IP %s and class %d tries to speak with country code gag in PM to %s with IP %s and class %d: %s|
 No reason specified|Kein Grund angegeben
 Automatically deleted %d user log entries older than %d days.|
 Main chat message replaced for user: %s|
@@ -923,7 +923,7 @@ Command parameters %s are always required, while %s are optional.|
 Quoted parameters %s or %s must be used with quotes.|
 IP information|IP-Information
 IP information not available: %s|IP-Information nicht verfьgbar: %s
-Message replaced for user with class %d in MC: <%s> %s|
+Message replaced for user with IP %s and class %d in MC: <%s> %s|
 IP %s permanently banned: <%s> %s|
 Nick %s permanently banned: <%s> %s|
 Range %s permanently banned: <%s> %s|
@@ -947,7 +947,7 @@ Known orders are: %s|
 Modified right click menu item: %s|
 Added right click menu item: %s|
 Deleted right click menu item: %s|
-Right click menu item not found: %s|
+Right click menu item not found: %d|
 Right click menu item list is empty.|
 Menu item|Menьeintrag
 Menu command|Menьbefehl
@@ -966,9 +966,9 @@ Error|Fehler
 Solution|Lцsung
 There is an error in following search filter pattern|
 There is an error in following search filter exception pattern|
-There is an error in following antispam exception entry pattern|
+There is an error in following antispam exception entry pattern|Es gibt einen Fehler im folgenden Antispam-Ausnahmeeintragsmuster
 There is an error in following forbidden nick pattern|
-There is an error in following MyINFO exception pattern|
+There is an error in following MyINFO exception pattern|Es gibt einen Fehler im folgenden MyINFO-Ausnahmemuster
 There is an error in following forbidden description pattern|
 There is an error in following forbidden tag pattern|
 There is an error in following forbidden connection type pattern|
@@ -981,7 +981,7 @@ There is an error in following forbidden client supports pattern|
 There is an error in following forbidden NMDC version pattern|
 Added replacer in PM: %s|
 Added replacer in MC and PM: %s|
-Message replaced for user with class %d in PM: <%s> %s|
+Message replaced for user with IP %s and class %d in PM to %s with IP %s and class %d: <%s> %s|
 Message ignored due to flood detection from %s with IP %s and class %d in MC: %s|
 Users with same IP|Benutzer mit der gleichen IP
 Parameter count mismatch detected in following translation string: %s|
@@ -1076,7 +1076,7 @@ Convert LRE to plain text|LRE in Klartext konvertieren
 LRE converted to plain text: %s|LRE in Klartext konvertiert: %s
 Please check your command syntax, something is wrong there.|
 Entry used in detection: %s|
-Exception used in detection: %s|
+Exception used in detection: %s|In Erkennung verwendete Ausnahme: %s
 text|Text
 Delete history messages by text|
 Deleted %d main chat history messages by text: %s|
@@ -1104,11 +1104,11 @@ Users with share size %s found in following hubs|
 Users with IP address %s found in following hubs|
 Blocked PM|
 Right click menu|Rechtsklick-Menь
-IP watch|
+IP watch|IP-Beobachtung
 Hard IP bans|
 Chatroom history|Chatraumverlauf
 Chatroom history is empty.|Chatraumverlauf ist leer.
-Last %d chatroom messages|
+Last %d chatroom messages|Letzte %d Chatraumnachrichten
 There are no chatroom history messages to remove: %s|
 Deleted %d chatroom history messages: %s|
 %s with class %d deleted %d chatroom history messages: %s|
@@ -1117,3 +1117,11 @@ real|
 Specified country code isn't valid: %s|
 You can't block user who don't share anything: %s|
 You can't kick user who don't share anything: %s|
+Flood detected from %s with IP %s and class %d in MC: %s|
+%s dropped due to flood.|
+Main chat flood detected from your nick.|
+Private chat flood detected from your IP.|
+Sorry, your message has been ignored.|
+Disable or enable right click menu item|
+Disabled right click menu item: %s|
+Enabled right click menu item: %s|
