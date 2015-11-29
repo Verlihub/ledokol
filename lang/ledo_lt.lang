@@ -1,6 +1,6 @@
 # Language: lt_LT
 # Charset: CP1257
-# Version: 2.8.7
+# Version: 2.8.8
 # Author: Mindaugas K
 # Email: mex@micro.lt
 
@@ -104,7 +104,7 @@ Deleted %d rows: %s|
 Known types are: %s|Юinomi tipai yra: %s
 No rows to remove: %s|Nлra eiluиiш, kurias galлtumлm paрalinti: %s
 date|
-%s with class %d used command: %s|
+%s with IP %s and class %d used following command: %s|
 context|%s uюbanintas visam laikui: <%s> %s
 Deleted from chat rank list: %s|
 Not found in chat rank list: %s|
@@ -539,15 +539,15 @@ second|
 You are now known as: %s|Tu юinomas kaip: %s
 You renamed %s to: %s|Tu pervardinai %s б: %s
 Spam exception from %s with IP %s and class %d in MC: %s|
-Spam exception from %s with IP %s and class %d in PM: %s|
+Spam exception from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s|
 Spam exception from %s with IP %s and class %d in offline message: %s|
 Spam exception from %s with IP %s and class %d in report: %s|
 Spam notification from %s with IP %s and class %d in MC: %s|
-Spam notification from %s with IP %s and class %d in PM: %s|
+Spam notification from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s|
 Spam notification from %s with IP %s and class %d in offline message: %s|
 Spam notification from %s with IP %s and class %d in report: %s|
 Spam from %s with IP %s and class %d in MC: %s|
-Spam from %s with IP %s and class %d in PM: %s|
+Spam from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s|
 Spam from %s with IP %s and class %d in offline message: %s|
 Spam from %s with IP %s and class %d in report: %s|
 Modified antispam entry with action %d and priority %d to scan in MC: %s|
@@ -651,9 +651,9 @@ Custom script command list is empty.|
 Script size: %d lines in %s|
 Added %s to IP gag list, %d users in total.|
 Flood detected from IP %s last known as %s with class %d in MC: %s|
-Flood detected from IP %s last known as %s with class %d in PM: %s|
+Flood detected from IP %s last known as %s with class %d in PM to %s with IP %s and class %d: %s|
 Private chat is currently disabled for you.|
-Flood detected from your IP.|
+Main chat flood detected from your IP.|
 %d users with IP %s dropped due to flood.|
 No error message specified.|
 Search filter|Paieрkos filtras
@@ -769,7 +769,7 @@ Hub uptime: %s|
 User count: %s|
 Total share: %s|
 %s with IP %s and class %d tries to speak with IP gag in MC: %s|
-%s with IP %s and class %d tries to speak with IP gag in PM: %s|
+%s with IP %s and class %d tries to speak with IP gag in PM to %s with IP %s and class %d: %s|
 Private message replaced for user: %s|
 Command logger|
 Showing %d entries from command logger|
@@ -878,7 +878,7 @@ Country code gag list is empty.|
 Delete country code gag|
 Cleared country code gag list.|
 %s with IP %s and class %d tries to speak with country code gag in MC: %s|
-%s with IP %s and class %d tries to speak with country code gag in PM: %s|
+%s with IP %s and class %d tries to speak with country code gag in PM to %s with IP %s and class %d: %s|
 No reason specified|
 Automatically deleted %d user log entries older than %d days.|
 Main chat message replaced for user: %s|
@@ -923,7 +923,7 @@ Command parameters %s are always required, while %s are optional.|
 Quoted parameters %s or %s must be used with quotes.|
 IP information|IP informacija
 IP information not available: %s|Nлra IP informacijos: %s
-Message replaced for user with class %d in MC: <%s> %s|
+Message replaced for user with IP %s and class %d in MC: <%s> %s|
 IP %s permanently banned: <%s> %s|
 Nick %s permanently banned: <%s> %s|
 Range %s permanently banned: <%s> %s|
@@ -947,7 +947,7 @@ Known orders are: %s|
 Modified right click menu item: %s|
 Added right click menu item: %s|
 Deleted right click menu item: %s|
-Right click menu item not found: %s|
+Right click menu item not found: %d|
 Right click menu item list is empty.|
 Menu item|
 Menu command|
@@ -981,7 +981,7 @@ There is an error in following forbidden client supports pattern|
 There is an error in following forbidden NMDC version pattern|
 Added replacer in PM: %s|
 Added replacer in MC and PM: %s|
-Message replaced for user with class %d in PM: <%s> %s|
+Message replaced for user with IP %s and class %d in PM to %s with IP %s and class %d: <%s> %s|
 Message ignored due to flood detection from %s with IP %s and class %d in MC: %s|
 Users with same IP|
 Parameter count mismatch detected in following translation string: %s|
@@ -1117,3 +1117,11 @@ real|
 Specified country code isn't valid: %s|
 You can't block user who don't share anything: %s|
 You can't kick user who don't share anything: %s|
+Flood detected from %s with IP %s and class %d in MC: %s|
+%s dropped due to flood.|
+Main chat flood detected from your nick.|
+Private chat flood detected from your IP.|
+Sorry, your message has been ignored.|
+Disable or enable right click menu item|
+Disabled right click menu item: %s|
+Enabled right click menu item: %s|
