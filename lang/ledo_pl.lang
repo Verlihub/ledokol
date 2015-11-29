@@ -1,6 +1,6 @@
 # Language: pl_PL
 # Charset: CP1250
-# Version: 2.8.7
+# Version: 2.8.8
 # Author: Zorro
 # Email: zbyszekslyz@hostpl.eu
 
@@ -104,7 +104,7 @@ Deleted %d rows: %s|Usunieto %d linijek: %s
 Known types are: %s|Znane typy to: %s
 No rows to remove: %s|Brak rzedow do usuniecia: %s
 date|data
-%s with class %d used command: %s|%s z klasa %d uzyl komendy: %s
+%s with IP %s and class %d used following command: %s|
 context|kontekst
 Deleted from chat rank list: %s|Usunieto z listy rankingu czatu: %s
 Not found in chat rank list: %s|Nie znaleziono na liscie rankingu czatu: %s
@@ -539,15 +539,15 @@ second|sekund
 You are now known as: %s|Teraz jestes znany jako: %s
 You renamed %s to: %s|Zmieniles nazwe %s na: %s
 Spam exception from %s with IP %s and class %d in MC: %s|Wyjatek spamu %s z IP %s i klasa %d na glownym czacie: %s
-Spam exception from %s with IP %s and class %d in PM: %s|Wyjatek spamu %s z IP %s i klasa %d na PM: %s
+Spam exception from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s|Wyjatek spamu %s z IP %s i klasy %d na PM do %s z IP %s i klas№ %d: %s
 Spam exception from %s with IP %s and class %d in offline message: %s|Wyjatek spamu %s z IP %s i klasa %d w wiadomosci offline: %s
 Spam exception from %s with IP %s and class %d in report: %s|Wyjatek spamu %s z IP %s i klasa %d w reporcie: %s
 Spam notification from %s with IP %s and class %d in MC: %s|Powiadomienie o spamie %s z IP %s i klasa %d na glownym czacie: %s
-Spam notification from %s with IP %s and class %d in PM: %s|Powiadomienie o spamie %s z IP %s i klasa %d na PM: %s
+Spam notification from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s|Zawiadomienie o spamie %s z IP %s i klasy %d na PM do %s z IP %s i klas№ %d: %s 
 Spam notification from %s with IP %s and class %d in offline message: %s|Powiadomienie o spamie %s z IP %s i klasa %d w wiadomosci offline: %s
 Spam notification from %s with IP %s and class %d in report: %s|Powiadomienie o spamie %s z IP %s i klasa %d w reporcie: %s
 Spam from %s with IP %s and class %d in MC: %s|Spam z %s z IP %s i klasa %d na glownym czacie: %s
-Spam from %s with IP %s and class %d in PM: %s|Spam z %s z IP %s i klasa %d na PM: %s
+Spam from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s|Spam %s z IP %s i klasy %d na PM do %s z IP %s i klas№ %d: %s 
 Spam from %s with IP %s and class %d in offline message: %s|Spam z %s z IP %s i klasa %d w wiadomosci offline: %s
 Spam from %s with IP %s and class %d in report: %s|Spam z %s z IP %s i klasa %d w reporcie: %s
 Modified antispam entry with action %d and priority %d to scan in MC: %s|Zmodyfikowane wejscie antyspam z akcja %d oraz priorytetem %d do skanowania na glownym czacie: %s
@@ -651,9 +651,9 @@ Custom script command list is empty.|Lista komend skryptu jest pusta.
 Script size: %d lines in %s|Rozmiar skryptu: %d linijek w %s
 Added %s to IP gag list, %d users in total.|Dodano %s do IP Listy Gag, %d Uzytkownikow w sumie
 Flood detected from IP %s last known as %s with class %d in MC: %s|Wykryto flood od IP %s ostatnio znany jako %s z klasa %d na glownym czacie: %s
-Flood detected from IP %s last known as %s with class %d in PM: %s|Wykryto flood od %s jako %s z klasa %d in PM: %s
+Flood detected from IP %s last known as %s with class %d in PM to %s with IP %s and class %d: %s|Wykryto flood od %s jako %s z klasa %d na PM do %s z IP %s i klasy %d: %s
 Private chat is currently disabled for you.|Prywatny czat jest obecnie zablokowany dla Ciebie.
-Flood detected from your IP.|Wykryto flood z twojego IP.
+Main chat flood detected from your IP.|
 %d users with IP %s dropped due to flood.|%d Uzytkownicy z IP %s usunieci ze wzgledu na flood.
 No error message specified.|Nie sprecyzowano wiadomosci z bledami.
 Search filter|Filter wyszukiwania
@@ -769,7 +769,7 @@ Hub uptime: %s|Czas pracy huba: %s
 User count: %s|Liczba uzytkownikow: %s
 Total share: %s|Suma share: %s
 %s with IP %s and class %d tries to speak with IP gag in MC: %s|%s z IP %s i klasa %d probuje mowic na glownym czacie (MC) majac IP gag: %s
-%s with IP %s and class %d tries to speak with IP gag in PM: %s|%s z IP %s i klasa %d probuje mowic na PM majac IP gag: %s
+%s with IP %s and class %d tries to speak with IP gag in PM to %s with IP %s and class %d: %s|%s z IP %s i klasa %d probuje mowic na PM majac IP gag do %s z IP %s i klasa %d: %s
 Private message replaced for user: %s|Prywatne wiadomosci zastapione przez uzytkownika: %s
 Command logger|Log komend
 Showing %d entries from command logger|Pokazuje %d wpisow z logera komend
@@ -878,7 +878,7 @@ Country code gag list is empty.|Lista gagow wedlug kodu kraju jest pusta.
 Delete country code gag|Usun gaga wedlug kodu kraju
 Cleared country code gag list.|Wyczyszczona lista gagow kodu kraju.
 %s with IP %s and class %d tries to speak with country code gag in MC: %s|%s z IP i klasy %d prubuje pisac na MC majac gag na kod kraju: %s
-%s with IP %s and class %d tries to speak with country code gag in PM: %s|%s z IP i klasy %d prubuje pisac na PM majac gag na kod kraju: %s
+%s with IP %s and class %d tries to speak with country code gag in PM to %s with IP %s and class %d: %s|%s z IP %s i klasy %d prubuje pisac na PM majac gag na kod kraju i PM do %s z IP %s  klasa %d: %s
 No reason specified|Bez uzasadnienia
 Automatically deleted %d user log entries older than %d days.|Automatycznie usuwane %d wpisy logu  uzytkownika starsze niz %d dni.
 Main chat message replaced for user: %s|Glowna wiadomosc na czacie zostala zastapiona przez uzytkownika: %s
@@ -923,7 +923,7 @@ Command parameters %s are always required, while %s are optional.|Parametry pole
 Quoted parameters %s or %s must be used with quotes.|Podane parametry %s lub %s musza byc stosowane z cytatami.
 IP information|Informacja o IP
 IP information not available: %s|o IP Informacje nie sa dostepne: %s
-Message replaced for user with class %d in MC: <%s> %s|Wiadomosc zastapiona przez uzytkownika z klasy %d w MC: <%s> %s
+Message replaced for user with IP %s and class %d in MC: <%s> %s|
 IP %s permanently banned: <%s> %s|IP %s Pernamentny BAN: <%s> %s
 Nick %s permanently banned: <%s> %s|Nick %s Pernamentny BAN: <%s> %s
 Range %s permanently banned: <%s> %s|Ranga %s Pernamentny BAN: <%s> %s
@@ -947,7 +947,7 @@ Known orders are: %s|Znane sa zamowienia: %s
 Modified right click menu item: %s|Zmodefikowana pozycja menu prawoklika myszki: %s
 Added right click menu item: %s|Dodano pozycje menu  prawoklika myszki
 Deleted right click menu item: %s|Usunieta pozycja menu prawoklika szyszki: %s
-Right click menu item not found: %s|Pod prawoklikiem myszki elementu menu nie znaleziono: %s
+Right click menu item not found: %d|
 Right click menu item list is empty.|Lista menu pod prawoklikiem myszki jest pusta.
 Menu item|Pozycja menu
 Menu command|Komenda menu
@@ -981,7 +981,7 @@ There is an error in following forbidden client supports pattern|Tam jest blad ,
 There is an error in following forbidden NMDC version pattern|Tam jest balad , nastepujaca zabroniona wersja NMDC wzor
 Added replacer in PM: %s|Dodano zamiennik dla PM: %s
 Added replacer in MC and PM: %s|Dodano zamienniki dla MC i PM: %s
-Message replaced for user with class %d in PM: <%s> %s|Wiadomosc zastapiona przez uzytkownika z klasy %d na PM: <%s> %s
+Message replaced for user with IP %s and class %d in PM to %s with IP %s and class %d: <%s> %s|Wiadomosc zastapiona przez uzytkownika z IP %s i klasy %d na PM do %s z IP %s i klasy %d: <%s> %s
 Message ignored due to flood detection from %s with IP %s and class %d in MC: %s|Wiadomosc ignorowane ze wzgledu na flood wykryty z  %s z IP %s i klasy %d in MC: %s
 Users with same IP|Uzytkownicy z danego IP
 Parameter count mismatch detected in following translation string: %s|Niewlasciwa liczba parametrow w niezgodnosc tlumaczenia ciagu w nastepujacych: %s
@@ -1117,3 +1117,11 @@ real|prawdziwy
 Specified country code isn't valid: %s|Podany kod kraju jest niewazny: %s
 You can't block user who don't share anything: %s|Nie mozna zablokowac uzytkownika, ktory nic nie udostepnia: %s
 You can't kick user who don't share anything: %s|Nie mozna kopnac uzytkownika, ktory nic nie udostepnia: %s
+Flood detected from %s with IP %s and class %d in MC: %s|
+%s dropped due to flood.|
+Main chat flood detected from your nick.|
+Private chat flood detected from your IP.|
+Sorry, your message has been ignored.|
+Disable or enable right click menu item|
+Disabled right click menu item: %s|
+Enabled right click menu item: %s|
