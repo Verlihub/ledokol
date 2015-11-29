@@ -1,6 +1,6 @@
 # Language: cs_CZ
 # Charset: CP1250
-# Version: 2.8.7
+# Version: 2.8.8
 # Author: Uhlik
 # Email: pjanos.uk@gmail.com
 
@@ -104,7 +104,7 @@ Deleted %d rows: %s|Smazano %d radku: %s
 Known types are: %s|Zname typy jsou: %s
 No rows to remove: %s|Zadne radky ke smazani: %s
 date|datum
-%s with class %d used command: %s|%s s class %d pouzil prikaz: %s
+%s with IP %s and class %d used following command: %s|%s s IP %s a class %d pouzil nasledujici prikaz: %s
 context|kontext
 Deleted from chat rank list: %s|%s smazan ze seznamu hodnoceni chatu.
 Not found in chat rank list: %s|%s nenalezen v seznamu hodnoceni chatu.
@@ -539,15 +539,15 @@ second|sekunda
 You are now known as: %s|Nyni jsi znam jako: %s
 You renamed %s to: %s|Byl jsi prejmenovan uzivatelem %s na: %s
 Spam exception from %s with IP %s and class %d in MC: %s|Spam vyjimka pro %s s IP %s a class %d na MC: %s
-Spam exception from %s with IP %s and class %d in PM: %s|Spam vyjimka pro %s s IP %s a class %d na PM: %s
+Spam exception from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s|Spam vyjimka od %s s IP %s a class %d na PM pro %s s IP %s a class %d: %s
 Spam exception from %s with IP %s and class %d in offline message: %s|Spam vyjimka pro %s s IP %s a class %d v offline zprave: %s
 Spam exception from %s with IP %s and class %d in report: %s|Spam vyjimka pro %s s IP %s a class %d v reportu: %s
 Spam notification from %s with IP %s and class %d in MC: %s|Oznameni spamu od %s with IP %s and class %d na MC: %s
-Spam notification from %s with IP %s and class %d in PM: %s|Oznameni spamu od %s with IP %s and class %d na PM: %s
+Spam notification from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s|Oznameni spamu od %s with IP %s and class %d na PM pro %s s IP %s a class %d: %s
 Spam notification from %s with IP %s and class %d in offline message: %s|Oznameni spamu od %s with IP %s and class %d v offline zprave: %s
 Spam notification from %s with IP %s and class %d in report: %s|Oznameni spamu od %s with IP %s and class %d v reportu: %s
 Spam from %s with IP %s and class %d in MC: %s|Spam od %s s IP %s a class %d na MC: %s
-Spam from %s with IP %s and class %d in PM: %s|Spam od %s s IP %s a class %d na PM: %s
+Spam from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s|Spam od %s s IP %s a class %d na PM pro %s s IP %s a class %d: %s
 Spam from %s with IP %s and class %d in offline message: %s|Spam od %s s IP %s a class %d v offline zprave: %s
 Spam from %s with IP %s and class %d in report: %s|Spam od %s s IP %s a class %d v reportu: %s
 Modified antispam entry with action %d and priority %d to scan in MC: %s|Modifikovan antispam retezec s akci %d a prioritou %d pro sledovani MC: %s
@@ -651,9 +651,9 @@ Custom script command list is empty.|Seznam upraveny script prikazu je prazdny.
 Script size: %d lines in %s|Velikost scriptu: %d radku v %s
 Added %s to IP gag list, %d users in total.|Vlozena %s do IP gag seznamu, celkem %d uzivatelu v seznamu.
 Flood detected from IP %s last known as %s with class %d in MC: %s|Detekovan flood z IP %s naposledy pripojen jako %s s class %d na MC: %s
-Flood detected from IP %s last known as %s with class %d in PM: %s|Detekovan flood z IP %s naposledy pripojen jako %s s class %d na PM: %s
+Flood detected from IP %s last known as %s with class %d in PM to %s with IP %s and class %d: %s|Detekovan flood z IP %s naposledy pripojen jako %s s class %d na PM pro %s s IP %s a class %d: %s
 Private chat is currently disabled for you.|Soukromy chat je pro tebe zamcen
-Flood detected from your IP.|Detekovan flood z tve IP.
+Main chat flood detected from your IP.|Main chat flood detekovan z tve IP.
 %d users with IP %s dropped due to flood.|%d uzivatelu s IP %s odpojeno za flood.
 No error message specified.|Nebyla urcena zadna chybova zprava.
 Search filter|Filtr hledani
@@ -769,7 +769,7 @@ Hub uptime: %s|Hub bezi: %s
 User count: %s|Pocet uzivatelu: %s
 Total share: %s|Celkove sdileni: %s
 %s with IP %s and class %d tries to speak with IP gag in MC: %s|%s s IP %s a class %d se pokousi promluvit s IP gagem na MC: %s
-%s with IP %s and class %d tries to speak with IP gag in PM: %s|%s s IP %s a class %d se pokousi promluvit s IP gagem na PM: %s
+%s with IP %s and class %d tries to speak with IP gag in PM to %s with IP %s and class %d: %s|%s s IP %s a class %s se pokousi promluvit s IP gagem na PM k %s s IP %s a class %d: %s
 Private message replaced for user: %s|Soukroma zprava zamenena pro uzivatele: %s.
 Command logger|Log prikazu
 Showing %d entries from command logger|Zobrazuji %d zaznamu z logu prikazu
@@ -878,7 +878,7 @@ Country code gag list is empty.|Country code gag seznam je prazdny.
 Delete country code gag|Smaze country code gag
 Cleared country code gag list.|Country code gag seznam byl vycisten.
 %s with IP %s and class %d tries to speak with country code gag in MC: %s|%s s IP %s a class %d se pokousi promluvit s country code gag na MC: %s
-%s with IP %s and class %d tries to speak with country code gag in PM: %s|%s s IP %s a class %d se pokousi promluvit s country code gag na PM: %s
+%s with IP %s and class %d tries to speak with country code gag in PM to %s with IP %s and class %d: %s|%s s IP %s a class %s se pokousi promluvit s country code gagem na PM k %s s IP %s a class %d: %s
 No reason specified|Nebyl zadan duvod
 Automatically deleted %d user log entries older than %d days.|Automaticky bylo smazano %d zaznamu z logu uzivatelu starsich nez %d dnu.
 Main chat message replaced for user: %s|Zprava v hlavnim chatu zamenena pro uzivatele: %s.
@@ -923,7 +923,7 @@ Command parameters %s are always required, while %s are optional.|Parametry prik
 Quoted parameters %s or %s must be used with quotes.|Parametry v uvozovkach %s nebo %s musi byt vzdy pouzity s uvozovkami.
 IP information|Informace o IP
 IP information not available: %s|Informace o IP %s nejsou dostupne
-Message replaced for user with class %d in MC: <%s> %s|Chat zprava uzivatele s class %d byla zmenena: <%s> %s
+Message replaced for user with IP %s and class %d in MC: <%s> %s|Main chat zprava pro uzivatele s IP %s a class %d byla zmenena: <%s> %s
 IP %s permanently banned: <%s> %s|IP %s byla permanetne zabanovana: <%s> %s
 Nick %s permanently banned: <%s> %s|Nick %s byl permanetne zabanovan: <%s> %s
 Range %s permanently banned: <%s> %s|IP rozsah %s byl permanetne zabanovan: <%s> %s
@@ -947,7 +947,7 @@ Known orders are: %s|Znama poradi jsou: %s
 Modified right click menu item: %s|Modifikovana right click menu polozka: %s
 Added right click menu item: %s|Vlozena right click menu polozka: %s
 Deleted right click menu item: %s|Smazana right click menu polozka: %s
-Right click menu item not found: %s|Right click menu polozka nebyla nalezena: %s
+Right click menu item not found: %d|Right click menu polozka nebyla nalezena: %d
 Right click menu item list is empty.|Right click menu seznam je prazdny.
 Menu item|Polozka menu
 Menu command|Prikazove menu
@@ -981,7 +981,7 @@ There is an error in following forbidden client supports pattern|V nasledujicim 
 There is an error in following forbidden NMDC version pattern|V nasledujicim retezci pro zakazanou verzi NMDC je chyba
 Added replacer in PM: %s|Vlozen replacer na PM: %s
 Added replacer in MC and PM: %s|Vlozen replacer na MC a PM: %s
-Message replaced for user with class %d in PM: <%s> %s|PM zprava uzivatele s class %d byla zmenena: <%s> %s
+Message replaced for user with IP %s and class %d in PM to %s with IP %s and class %d: <%s> %s|PM zprava od uzivatele s IP %s a class %d pro %s s IP %s a class %d byla zmenena: <%s> %s
 Message ignored due to flood detection from %s with IP %s and class %d in MC: %s|Zprava ignorovana pro detekci floodu od %s s IP %s a class %d na chatu: %s
 Users with same IP|Uzivatele se stejnou IP
 Parameter count mismatch detected in following translation string: %s|Nalezen nesouhlasici soucet parametru v nasledujicim prekladu: %s
@@ -1117,3 +1117,11 @@ real|skutecny
 Specified country code isn't valid: %s|Vybrany country code neni platny: %s
 You can't block user who don't share anything: %s|Nemuzes zablokovat uzivatele ktery nic nesdili: %s
 You can't kick user who don't share anything: %s|Nemuzes vykopnout uzivatele ktery nic nesdili: %s
+Flood detected from %s with IP %s and class %d in MC: %s|Detekovan flood od %s s IP %s a class %d na MC: %s
+%s dropped due to flood.|%s dropnut pro flood.
+Main chat flood detected from your nick.|Main chat flood detekovan z tveho nicku.
+Private chat flood detected from your IP.|PM flood detekovan z tve IP.
+Sorry, your message has been ignored.|Je mi lito, tva zprava byla ignorovana.
+Disable or enable right click menu item|Vypne nebo zapne polozku v right click menu
+Disabled right click menu item: %s|Vypnuta right click menu polozka: %s
+Enabled right click menu item: %s|Zapnuta right click menu polozka: %s
