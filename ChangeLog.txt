@@ -1,4 +1,4 @@
-[ 2.8.8 :: 2015-00-00 ]
+[ 2.8.8 :: 2015-11-29 ]
 
 [  0] Fixed: Skip repeated main chat history messages from same user
 [  0] Fixed: Chat replacer feature now replaces all possible occurrences instead of first random only
