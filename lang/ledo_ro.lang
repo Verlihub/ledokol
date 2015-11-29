@@ -104,7 +104,7 @@ Deleted %d rows: %s|S-au єters %d rвnduri: %s
 Known types are: %s|Tipurile cunoscute sunt: %s
 No rows to remove: %s|Nu mai sunt rвnduri de єters: %s
 date|data
-%s with class %d used command: %s|%s cu clasa %d a folosit comanda: %s
+%s with IP %s and class %d used following command: %s|%s cu IP %s єi clasa %d a utilizat urmгtoarea comandг: %s
 context|context
 Deleted from chat rank list: %s|S-a єters din lista Cei mai... activi pe chat: %s
 Not found in chat rank list: %s|Nu s-a gгsit оn lista de Cei mai... activi pe chat: %s
@@ -653,7 +653,7 @@ Added %s to IP gag list, %d users in total.|Adгugare %s la lista de gag-гri pe
 Flood detected from IP %s last known as %s with class %d in MC: %s|Flood detectat de pe IP %s ultima datг cunoscut ca %s cu clasa %d оn MC: %s
 Flood detected from IP %s last known as %s with class %d in PM to %s with IP %s and class %d: %s|Flood detectat de la IP %s cunoscut anterior ca %s cu clasa %d оn PM cгtre %s cu IP %s єi clasa %d: %s
 Private chat is currently disabled for you.|Chatul privat este momentan dezactivat pentru tine.
-Flood detected from your IP.|Flood detectat de pe IP-ul tгu.
+Main chat flood detected from your IP.|Flood оn main chat detectat de pe IP-ul tгu.
 %d users with IP %s dropped due to flood.|Utilizatorii %d cu IP %s au fost deconectaюi pentru cг au fгcut flood.
 No error message specified.|Nu s-a specificat vre-un mesaj de eroare.
 Search filter|Filtru de cгutare
@@ -923,7 +923,7 @@ Command parameters %s are always required, while %s are optional.|Parametrii com
 Quoted parameters %s or %s must be used with quotes.|Parametrii оncadraюi cu %s sau cu %s trebuie folosiюi doar cu ghilimele.
 IP information|Informaюiile IP-ului
 IP information not available: %s|Informaюiile IP-ului %s nu sunt disponibile.
-Message replaced for user with class %d in MC: <%s> %s|Mesaj modificat pentru utilizatorul cu clasa %d оn MC: <%s> %s
+Message replaced for user with IP %s and class %d in MC: <%s> %s|Mesaj modificat pentru utilizatorul cu IP %s єi clasa %d оn MainChat: <%s> %s
 IP %s permanently banned: <%s> %s|IP %s banat permanent: <%s> %s
 Nick %s permanently banned: <%s> %s|Nick %s banat permanent: <%s> %s
 Range %s permanently banned: <%s> %s|Range %s banat permanent: <%s> %s
@@ -947,7 +947,7 @@ Known orders are: %s|Ordinea cunoscutг este: %s
 Modified right click menu item: %s|Modificare element meniu de click dreapta: %s
 Added right click menu item: %s|Adгugat element meniu de click dreapta: %s
 Deleted right click menu item: %s|Єters element meniu de click dreapta: %s
-Right click menu item not found: %s|Element meniu de click dreapta negгsit: %s
+Right click menu item not found: %d|Articolul din meniul de click dreapta negгsit: %d
 Right click menu item list is empty.|Lista cu elemente pentru meniu de click dreapta, este goalг.
 Menu item|Element de meniu
 Menu command|Comandг de meniu
@@ -1117,3 +1117,11 @@ real|adevгrat
 Specified country code isn't valid: %s|Codul de юarг specificat nu este valid: %s
 You can't block user who don't share anything: %s|Nu poюi bloca un user ce nu shareazг: %s
 You can't kick user who don't share anything: %s|Nu poюi kick-ui un user ce nu shareazг: %s
+Flood detected from %s with IP %s and class %d in MC: %s|S-a detectat flood de la %s cu IP %s єi clasa %d оn MainChat: %s
+%s dropped due to flood.|%s a luat drop pentru cг a fгcut flood.
+Main chat flood detected from your nick.|Flood оn main chat detectat de pe nick-ul tгu.
+Private chat flood detected from your IP.|Flood оn privat detectat de pe IP-ul tгu.
+Sorry, your message has been ignored.|Ne pare rгu, mesajul tгu a fost ignorat.
+Disable or enable right click menu item|Dezactiveazг sau activeazг articol al meniului de click dreapta
+Disabled right click menu item: %s|Dezactivare articol al meniului de click dreapta: %s
+Enabled right click menu item: %s|Activare articol al meniului de click dreapta: %s
