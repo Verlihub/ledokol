@@ -59,8 +59,8 @@ Doxtur, chaos, sphinx, Zorro, W1ZaRd, S0RiN, MaxFox, Krzychu,
 -- global storage variables and tables >>
 ---------------------------------------------------------------------
 
-ver_ledo = "2.8.8" -- ledokol version
-bld_ledo = "4" -- build number
+ver_ledo = "2.8.9" -- ledokol version
+bld_ledo = "5" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -4934,13 +4934,17 @@ end
 
 ----- ---- --- -- -
 
-function VH_OnParsedMsgSupport (ip, data)
+function VH_OnParsedMsgSupports (addr, data, back)
 	if table_othsets ["locked"] then
 		return 1
 	end
 
 	if table_sets ["enableipwatch"] == 1 then -- ip watch
-		checkipwat (nil, ip, data) -- do not return 0, is a login sequence
+		checkipwat (nil, addr, data) -- do not return 0 here, we are adding own support flags
+	end
+
+	if (table_sets ["instrcmenu"] == 1 or table_sets ["instusermenu"] == 1) and data:find ("UserCommand", 1, true) and not back:find ("UserCommand", 1, true) then
+		return {"$Supports " .. back .. "UserCommand |", 0, 1}
 	end
 
 	return 1
