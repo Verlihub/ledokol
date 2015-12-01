@@ -1,3 +1,7 @@
+[ 2.8.9 :: 0000-00-00 ]
+
+[  5] Added: Support for new VH_OnParsedMsgSupports callback
+
 [ 2.8.8 :: 2015-11-29 ]
 
 [  0] Fixed: Skip repeated main chat history messages from same user
