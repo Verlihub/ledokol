@@ -1,11 +1,13 @@
 [ 2.8.9 :: 0000-00-00 ]
 
+[  6] Fixed: Chat replacer feature now replaces all occurrences of an entry instead of first only
+[  6] Fixed: Possible error when unloading Lua plugin, report by KCAHDEP
 [  5] Added: Support for new VH_OnParsedMsgSupports callback
 
 [ 2.8.8 :: 2015-11-29 ]
 
 [  0] Fixed: Skip repeated main chat history messages from same user
-[  0] Fixed: Chat replacer feature now replaces all possible occurrences instead of first random only
+[  0] Fixed: Chat replacer feature now replaces all entries instead of first random only
 [  0] Fixed: Keep letter case sensitivity in messages that are being replaced, report by KCAHDEP
 [  4] Fixed: Missing feed notifications in operator chat history when sender nick is not operator chat, report by KCAHDEP
 [  0] Changed: chatantiflood is not used for chat flood detection type anymore, use each type configurations instead
