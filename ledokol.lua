@@ -60,7 +60,7 @@ Doxtur, chaos, sphinx, Zorro, W1ZaRd, S0RiN, MaxFox, Krzychu,
 ---------------------------------------------------------------------
 
 ver_ledo = "2.8.9" -- ledokol version
-bld_ledo = "5" -- build number
+bld_ledo = "6" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -8512,11 +8512,18 @@ function replchatmsg (nick, addr, class, data, flag)
 		for _, list in pairs (repls) do
 			for id, item in pairs (list) do
 				if class <= item.c then
-					local sos, eos = test:find (item.d)
+					local last = 1
 
-					if sos and eos then
+					for part in test:gmatch (item.d) do
+						local repl = reptextvars (item.r, (getcustnick (nick) or nick), back) -- dont replace % here
+						local sos, eos = test:find (part, last, true)
+						back = back:sub (1, sos - 1) .. repl .. back:sub (eos + 1)
+						test = test:sub (1, sos - 1) .. repl .. test:sub (eos + 1)
+						last = eos + # repl
+					end
+
+					if last > 1 then
 						VH:SQLQuery ("update `" .. tbl_sql ["chatrepl"] .. "` set `occurred` = `occurred` + 1 where `id` = " .. tostring (id))
-						back = back:sub (1, sos - 1) .. reptextvars (item.r, (getcustnick (nick) or nick), back) .. back:sub (eos + 1) -- dont replace % here
 						done = true
 					end
 				end
@@ -21776,7 +21783,7 @@ function counttable (tbl, where)
 	local _, rows = VH:SQLQuery (sql)
 	local num = 0
 
-	if rows > 0 then
+	if type (rows) == "number" and rows > 0 then
 		_, num = VH:SQLFetch (0)
 	end
 
