@@ -60,7 +60,7 @@ Doxtur, chaos, sphinx, Zorro, W1ZaRd, S0RiN, MaxFox, Krzychu,
 ---------------------------------------------------------------------
 
 ver_ledo = "2.8.9" -- ledokol version
-bld_ledo = "6" -- build number
+bld_ledo = "7" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -313,7 +313,6 @@ table_othsets = {
 	["updservdev"] = "http://ledo.feardc.net/dev/",
 	["updservlang"] = "http://ledo.feardc.net/lang/",
 	["vazhub"] = "dchub://hub.verlihub.net:7777/",
-	["avdbhubaddr"] = "avdb.feardc.net:12242",
 	["tmpfile"] = "ledokol.data",
 	["headfile"] = "ledokol.head",
 	["verfile"] = "ledokol.ver",
@@ -386,8 +385,7 @@ table_refu = {
 	["GetUserSupports"] = false,
 	["SendToActiveClass"] = false,
 	["SendToPassiveClass"] = false,
-	["InUserSupports"] = false,
-	["KickRedirUser"] = false
+	["InUserSupports"] = false
 }
 
 ---------------------------------------------------------------------
@@ -4593,12 +4591,7 @@ function VH_OnUserLogin (nick, uip)
 								table_faau [nick] = 1
 							end
 
-							if table_refu ["KickRedirUser"] then
-								VH:KickRedirUser (table_othsets ["sendfrom"], nick, table_sets ["avkicktext"], table_othsets ["avdbhubaddr"])
-							else
-								VH:KickUser (table_othsets ["sendfrom"], nick, table_sets ["avkicktext"])
-							end
-
+							VH:KickUser (table_othsets ["sendfrom"], nick, table_sets ["avkicktext"])
 							return 0
 						end
 
@@ -19677,11 +19670,7 @@ function avdbcheckall ()
 								table_avbl [nick] = true
 								opsnotify (table_sets ["classnotiav"], gettext ("Connection requests to following user will be blocked: %s"):format (nick))
 							else
-								if table_refu ["KickRedirUser"] then
-									VH:KickRedirUser (table_othsets ["sendfrom"], nick, table_sets ["avkicktext"], table_othsets ["avdbhubaddr"])
-								else
-									VH:KickUser (table_othsets ["sendfrom"], nick, table_sets ["avkicktext"])
-								end
+								VH:KickUser (table_othsets ["sendfrom"], nick, table_sets ["avkicktext"])
 							end
 
 							break
@@ -19861,11 +19850,7 @@ function avdetforce (nick, user)
 					table_avbl [user] = true
 					opsnotify (table_sets ["classnotiav"], gettext ("Connection requests to following user will be blocked: %s"):format (user))
 				else
-					if table_refu ["KickRedirUser"] then
-						VH:KickRedirUser (nick, user, table_sets ["avkicktext"], table_othsets ["avdbhubaddr"])
-					else
-						VH:KickUser (nick, user, table_sets ["avkicktext"])
-					end
+					VH:KickUser (nick, user, table_sets ["avkicktext"])
 				end
 
 				if table_sets ["avsearchint"] > 0 then
@@ -20126,11 +20111,7 @@ function avparsesr (data, user, addr)
 						checkipwat (nick, usip, data) -- we will return 0 anyway
 					end
 
-					if table_refu ["KickRedirUser"] then
-						VH:KickRedirUser (table_othsets ["sendfrom"], nick, table_sets ["avkicktext"], table_othsets ["avdbhubaddr"])
-					else
-						VH:KickUser (table_othsets ["sendfrom"], nick, table_sets ["avkicktext"])
-					end
+					VH:KickUser (table_othsets ["sendfrom"], nick, table_sets ["avkicktext"])
 				end
 
 				if table_avus [nick] then
@@ -20210,11 +20191,7 @@ function avparsesr (data, user, addr)
 													checkipwat (nick, usip, data) -- we will return 0 anyway
 												end
 
-												if table_refu ["KickRedirUser"] then
-													VH:KickRedirUser (table_othsets ["sendfrom"], nick, table_sets ["avkicktext"], table_othsets ["avdbhubaddr"])
-												else
-													VH:KickUser (table_othsets ["sendfrom"], nick, table_sets ["avkicktext"])
-												end
+												VH:KickUser (table_othsets ["sendfrom"], nick, table_sets ["avkicktext"])
 											end
 
 											table_avus [nick] = nil
