@@ -1,6 +1,6 @@
 # Language: ru_RU
 # Charset: CP1251
-# Version: 2.8.8
+# Version: 2.8.9
 # Author: MaxFox
 # Email: maxfox@inbox.ru
 
@@ -1125,3 +1125,5 @@ Sorry, your message has been ignored.|Извините, ваше сообщен�
 Disable or enable right click menu item|Закрыть или открыть пункт меню правой кнопки мыши
 Disabled right click menu item: %s|Пункт меню правой кнопки мыши закрыт: %s
 Enabled right click menu item: %s|Пункт меню правой кнопки мыши открыт: %s
+%s added to search block list.|%s добавлен в поисковый блок список.
+Your search request is discarded due to previous forbidden search request.|Ваш поисковый запрос заблокирован по причине ранее отправленного запрещенного поискового запроса.
