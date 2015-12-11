@@ -60,7 +60,7 @@ Doxtur, chaos, sphinx, Zorro, W1ZaRd, S0RiN, MaxFox, Krzychu,
 ---------------------------------------------------------------------
 
 ver_ledo = "2.8.9" -- ledokol version
-bld_ledo = "7" -- build number
+bld_ledo = "8" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -995,6 +995,7 @@ table_avus = {}
 table_avse = {}
 table_avbl = {}
 table_avss = {}
+table_sefi = {}
 
 table_avfi = {
 	"download", "free", "driver", "100 best", "top 100", "top girl", "18 girl", "sexy girl",
@@ -2081,7 +2082,7 @@ return 0
 
 	----- ---- --- -- -
 
-	elseif data:find ("^" .. table_othsets ["optrig"] .. table_cmnds ["sefiadd"] .. " .+ %d %d %d$") then
+	elseif data:match ("^" .. table_othsets ["optrig"] .. table_cmnds ["sefiadd"] .. " .+ %d %d+ %d$") then
 		if ucl >= table_sets ["mincommandclass"] then
 			donotifycmd (nick, data, 0, ucl)
 			addsefientry (nick, data:sub (# table_cmnds ["sefiadd"] + 3))
@@ -2093,31 +2094,31 @@ return 0
 
 	----- ---- --- -- -
 
-elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["sefidel"].." .+$") then
-if ucl >= table_sets ["mincommandclass"] then
-donotifycmd (nick, data, 0, ucl)
-delsefientry (nick, string.sub (data, string.len (table_cmnds ["sefidel"]) + 3, -1))
-else
-commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
-end
+	elseif data:match ("^" .. table_othsets ["optrig"] .. table_cmnds ["sefidel"] .. " .+$") then
+		if ucl >= table_sets ["mincommandclass"] then
+			donotifycmd (nick, data, 0, ucl)
+			delsefientry (nick, data:sub (# table_cmnds ["sefidel"] + 3))
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
 
-return 0
-
------ ---- --- -- -
-
-elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["sefilist"].."$") then
-if ucl >= table_sets ["mincommandclass"] then
-donotifycmd (nick, data, 0, ucl)
-listsefientry (nick)
-else
-commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
-end
-
-return 0
+		return 0
 
 	----- ---- --- -- -
 
-	elseif data:find ("^" .. table_othsets ["optrig"] .. table_cmnds ["sefiexadd"] .. " .+$") then
+	elseif data:match ("^" .. table_othsets ["optrig"] .. table_cmnds ["sefilist"] .. "$") then
+		if ucl >= table_sets ["mincommandclass"] then
+			donotifycmd (nick, data, 0, ucl)
+			listsefientry (nick)
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
+
+		return 0
+
+	----- ---- --- -- -
+
+	elseif data:match ("^" .. table_othsets ["optrig"] .. table_cmnds ["sefiexadd"] .. " .+$") then
 		if ucl >= table_sets ["mincommandclass"] then
 			donotifycmd (nick, data, 0, ucl)
 			addsefiexentry (nick, data:sub (# table_cmnds ["sefiexadd"] + 3))
@@ -2129,29 +2130,29 @@ return 0
 
 	----- ---- --- -- -
 
-elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["sefiexdel"].." .+$") then
-if ucl >= table_sets ["mincommandclass"] then
-donotifycmd (nick, data, 0, ucl)
-delsefiexentry (nick, string.sub (data, string.len (table_cmnds ["sefiexdel"]) + 3, -1))
-else
-commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
-end
+	elseif data:match ("^" .. table_othsets ["optrig"] .. table_cmnds ["sefiexdel"] .. " .+$") then
+		if ucl >= table_sets ["mincommandclass"] then
+			donotifycmd (nick, data, 0, ucl)
+			delsefiexentry (nick, data:sub (# table_cmnds ["sefiexdel"] + 3))
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
 
-return 0
+		return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
 
-elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["sefiexlist"].."$") then
-if ucl >= table_sets ["mincommandclass"] then
-donotifycmd (nick, data, 0, ucl)
-listsefiexentry (nick)
-else
-commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
-end
+	elseif data:match ("^" .. table_othsets ["optrig"] .. table_cmnds ["sefiexlist"] .. "$") then
+		if ucl >= table_sets ["mincommandclass"] then
+			donotifycmd (nick, data, 0, ucl)
+			listsefiexentry (nick)
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
 
-return 0
+		return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
 
 elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["cmndset"].." %S+ %S+$") then
 if ucl >= table_sets ["mincommandclass"] then
@@ -4824,12 +4825,16 @@ function VH_OnUserLogout (nick, uip)
 		table_ctmb [nick] = nil
 	end
 
-	if cls >= table_sets ["opkeyclass"] or table_sets ["opkeyshare"] > 0 then
-		table_opks [nick] = nil -- operator keys
+	if cls >= table_sets ["opkeyclass"] or table_sets ["opkeyshare"] > 0 then -- operator keys
+		table_opks [nick] = nil
 	end
 
-	if table_sets ["votekickclass"] < 11 then
-		table_voki [nick] = nil -- vote kicks
+	if table_sets ["votekickclass"] < 11 then -- vote kicks
+		table_voki [nick] = nil
+	end
+
+	if table_sets ["enablesearfilt"] == 1 then -- search filter
+		table_sefi [nick] = nil
 	end
 
 	return 1
@@ -4852,11 +4857,14 @@ function VH_OnParsedMsgSearch (nick, data)
 		end
 	end
 
-	if (table_sets ["searchuptime"] > 0) and (table_sets ["showuseruptime"] == 1) then
+	if table_sets ["searchuptime"] > 0 and table_sets ["showuseruptime"] == 1 then
 		cls, gotcls = getclass (nick), true
 
 		if cls < table_sets ["scanbelowclass"] then
-			if gotip == false then ip, gotip = getip (nick), true end
+			if not gotip then
+				ip, gotip = getip (nick), true
+			end
+
 			prot, gotprot = isprotected (nick, ip), true
 
 			if table_usup [nick] then
@@ -4864,7 +4872,7 @@ function VH_OnParsedMsgSearch (nick, data)
 
 				if dif < table_sets ["searchuptime"] then
 					if table_sets ["searuptimeact"] == 0 then -- message
-						maintouser (nick, string.format (gettext ("Please wait another %d seconds before using hub search engine."), (table_sets ["searchuptime"] - dif)))
+						maintouser (nick, gettext ("Please wait another %d seconds before using hub search engine."):format (table_sets ["searchuptime"] - dif))
 					elseif table_sets ["searuptimeact"] == 1 then -- drop
 						VH:Disconnect (nick)
 					end
@@ -4875,20 +4883,38 @@ function VH_OnParsedMsgSearch (nick, data)
 		end
 	end
 
-	if table_sets ["enablesearfilt"] == 1 then
-		if gotcls == false then cls, gotcls = getclass (nick), true end
+	if table_sets ["enablesearfilt"] == 1 then -- search filter
+		if not gotcls then
+			cls, gotcls = getclass (nick), true
+		end
 
 		if cls < table_sets ["scanbelowclass"] then
-			if gotip == false then ip = getip (nick) end
-			if gotprot == false then prot = isprotected (nick, ip) end
+			if not gotip then
+				ip = getip (nick)
+			end
 
-			if (prot == false) and (sefiscan (nick, data, cls, ip) == 0) then -- search filter
-				return 0
+			if not gotprot then
+				prot = isprotected (nick, ip)
+			end
+
+			if not prot then
+				local sefi = table_sefi [nick]
+
+				if sefi == nil then
+					if sefiscan (nick, data, cls, ip) then
+						return 0
+					end
+				elseif sefi == true then
+					maintouser (nick, gettext ("Your search request is discarded due to previous forbidden search request."))
+				end
 			end
 		end
 	end
 
-	if gotcls == false then cls = getclass (nick) end
+	if not gotcls then
+		cls = getclass (nick)
+	end
+
 	searrankaccept (nick, cls, data)
 	return 1
 end
@@ -13368,75 +13394,75 @@ end
 
 ----- ---- --- -- -
 
-function addsefientry (nick, item)
-	local _, _, aitem, prio, aaction, stype = item:find ("^(.+) (%d) (%d) (%d)$")
-	prio, aaction, stype = tonumber (prio), tonumber (aaction), tonumber (stype)
+function addsefientry (nick, line)
+	local item, prio, act, sype = line:match ("^(.+) (%d) (%d+) (%d)$")
+	prio, act, sype = tonumber (prio), tonumber (act), tonumber (sype)
 
-	if aaction < 0 or aaction > 7 then -- invalid action
-		commandanswer (nick, gettext ("Known actions are: %s"):format ("0, 1, 2, 3, 4, 5, 6 " .. gettext ("and") .. " 7"))
+	if act < 0 or act > 9 then -- invalid action
+		commandanswer (nick, gettext ("Known actions are: %s"):format ("0, 1, 2, 3, 4, 5, 6, 7, 8 " .. gettext ("and") .. " 9"))
 	elseif prio < 0 or prio > 9 then -- invalid priority
 		commandanswer (nick, gettext ("Valid priority is a number from %d to %d."):format (0, 9))
-	elseif stype < 1 or stype > 9 then -- invalid search type
+	elseif sype < 1 or sype > 9 then -- invalid search type
 		commandanswer (nick, gettext ("Known search types are: %s"):format ("1, 2, 3, 4, 5, 6, 7, 8 " .. gettext ("and") .. " 9"))
 	else
-		local fres, fval = catchfinderror ("", repnmdcinchars (aitem))
+		local fres, fval = catchfinderror ("", repnmdcinchars (item))
 
 		if not fres then
 			local ferr = gettext ("There is an error in following search filter pattern") .. ":\r\n\r\n"
-			ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. aitem .. "\r\n"
+			ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. item .. "\r\n"
 			ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
 			ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
 			commandanswer (nick, ferr)
 		else
-			local entry = repsqlchars (repnmdcinchars (aitem))
-			local _, rows = VH:SQLQuery ("select `action` from `" .. tbl_sql ["sefi"] .. "` where `filter` = '" .. entry .. "' limit 1")
+			local entry = repsqlchars (repnmdcinchars (item))
+			local _, rows = VH:SQLQuery ("select `action` from `" .. tbl_sql ["sefi"] .. "` where `filter` = '" .. entry .. "'")
 
 			if rows > 0 then
-				VH:SQLQuery ("update `" .. tbl_sql ["sefi"] .. "` set `priority` = " .. tostring (prio) .. ", `action` = " .. tostring (aaction) .. ", `type` = " .. tostring (stype) .. " where `filter` = '" .. entry .. "' limit 1")
+				VH:SQLQuery ("update `" .. tbl_sql ["sefi"] .. "` set `priority` = " .. tostring (prio) .. ", `action` = " .. tostring (act) .. ", `type` = " .. tostring (sype) .. " where `filter` = '" .. entry .. "'")
 				local note = "Modified search filter with action %d and priority %d as any file: %s"
 
-				if stype == 2 then
+				if sype == 2 then
 					note = "Modified search filter with action %d and priority %d as audio file: %s"
-				elseif stype == 3 then
+				elseif sype == 3 then
 					note = "Modified search filter with action %d and priority %d as compressed file: %s"
-				elseif stype == 4 then
+				elseif sype == 4 then
 					note = "Modified search filter with action %d and priority %d as document: %s"
-				elseif stype == 5 then
+				elseif sype == 5 then
 					note = "Modified search filter with action %d and priority %d as executable: %s"
-				elseif stype == 6 then
+				elseif sype == 6 then
 					note = "Modified search filter with action %d and priority %d as picture: %s"
-				elseif stype == 7 then
+				elseif sype == 7 then
 					note = "Modified search filter with action %d and priority %d as video: %s"
-				elseif stype == 8 then
+				elseif sype == 8 then
 					note = "Modified search filter with action %d and priority %d as folder: %s"
-				elseif stype == 9 then
+				elseif sype == 9 then
 					note = "Modified search filter with action %d and priority %d as TTH: %s"
 				end
 
-				commandanswer (nick, gettext (note):format (aaction, prio, aitem))
+				commandanswer (nick, gettext (note):format (act, prio, item))
 			else
-				VH:SQLQuery ("insert into `" .. tbl_sql ["sefi"] .. "` (`filter`, `priority`, `action`, `type`) values ('" .. entry .. "', " .. tostring (prio) .. ", " .. tostring (aaction) .. ", " .. tostring (stype) .. ")")
+				VH:SQLQuery ("insert into `" .. tbl_sql ["sefi"] .. "` (`filter`, `priority`, `action`, `type`) values ('" .. entry .. "', " .. tostring (prio) .. ", " .. tostring (act) .. ", " .. tostring (sype) .. ")")
 				local note = "Added search filter with action %d and priority %d as any file: %s"
 
-				if stype == 2 then
+				if sype == 2 then
 					note = "Added search filter with action %d and priority %d as audio file: %s"
-				elseif stype == 3 then
+				elseif sype == 3 then
 					note = "Added search filter with action %d and priority %d as compressed file: %s"
-				elseif stype == 4 then
+				elseif sype == 4 then
 					note = "Added search filter with action %d and priority %d as document: %s"
-				elseif stype == 5 then
+				elseif sype == 5 then
 					note = "Added search filter with action %d and priority %d as executable: %s"
-				elseif stype == 6 then
+				elseif sype == 6 then
 					note = "Added search filter with action %d and priority %d as picture: %s"
-				elseif stype == 7 then
+				elseif sype == 7 then
 					note = "Added search filter with action %d and priority %d as video: %s"
-				elseif stype == 8 then
+				elseif sype == 8 then
 					note = "Added search filter with action %d and priority %d as folder: %s"
-				elseif stype == 9 then
+				elseif sype == 9 then
 					note = "Added search filter with action %d and priority %d as TTH: %s"
 				end
 
-				commandanswer (nick, gettext (note):format (aaction, prio, aitem))
+				commandanswer (nick, gettext (note):format (act, prio, item))
 			end
 		end
 	end
@@ -13445,35 +13471,39 @@ end
 ----- ---- --- -- -
 
 function delsefientry (nick, item)
-local aitem = repsqlchars (repnmdcinchars (item))
-local _, rows = VH:SQLQuery ("select `occurred` from `"..tbl_sql ["sefi"].."` where `filter` = '"..aitem.."' limit 1")
+	local entry = repsqlchars (repnmdcinchars (item))
+	local _, rows = VH:SQLQuery ("select `occurred` from `" .. tbl_sql ["sefi"] .. "` where `filter` = '" .. entry .. "'")
 
-if rows > 0 then
-VH:SQLQuery ("delete from `"..tbl_sql ["sefi"].."` where `filter` = '"..aitem.."' limit 1")
-commandanswer (nick, string.format (gettext ("Deleted search filter: %s"), item))
-else
-commandanswer (nick, string.format (gettext ("Couldn't delete search filter because not found: %s"), item))
-end
+	if rows > 0 then
+		VH:SQLQuery ("delete from `" .. tbl_sql ["sefi"] .. "` where `filter` = '" .. entry .. "'")
+		commandanswer (nick, gettext ("Deleted search filter: %s"):format (item))
+	else
+		commandanswer (nick, gettext ("Couldn't delete search filter because not found: %s"):format (item))
+	end
 end
 
 ----- ---- --- -- -
 
 function listsefientry (nick)
-local _, rows = VH:SQLQuery ("select `filter`, `occurred`, `priority`, `action`, `type` from `"..tbl_sql ["sefi"].."` order by `occurred` desc, `priority` desc")
+	local _, rows = VH:SQLQuery ("select `filter`, `occurred`, `priority`, `action`, `type` from `" .. tbl_sql ["sefi"] .. "` order by `occurred` desc, `priority` desc")
 
-if rows > 0 then
-local anentry, len = "", 0
+	if rows > 0 then
+		local list, olen = "", 0
 
-for x = 0, rows - 1 do
-local _, entry, occurred, prio, aaction, stype = VH:SQLFetch (x)
-if x == 0 then len = string.len (occurred) end
-anentry = anentry.." "..prezero (string.len (rows), (x + 1))..". [ P: "..prio.." ] [ A: "..aaction.." ] [ T: "..stype.." ] [ O: "..prezero (len, occurred).." ] "..repnmdcoutchars (entry).."\r\n"
-end
+		for row = 0, rows - 1 do
+			local _, item, occ, prio, act, sype = VH:SQLFetch (row)
 
-commandanswer (nick, gettext ("Search filter list")..":\r\n\r\n"..anentry)
-else
-commandanswer (nick, gettext ("Search filter list is empty."))
-end
+			if row == 0 then
+				olen = # tostring (occ)
+			end
+
+			list = list .. " " .. prezero (# tostring (rows), (row + 1)) .. ". [ P: " .. tostring (prio) .. " ] [ A: " .. tostring (act) .. " ] [ T: " .. tostring (sype) .. " ] [ O: " .. prezero (olen, occ) .. " ] " .. repnmdcoutchars (item) .. "\r\n"
+		end
+
+		commandanswer (nick, gettext ("Search filter list") .. ":\r\n\r\n" .. list)
+	else
+		commandanswer (nick, gettext ("Search filter list is empty."))
+	end
 end
 
 ----- ---- --- -- -
@@ -13503,35 +13533,39 @@ end
 ----- ---- --- -- -
 
 function delsefiexentry (nick, item)
-local aitem = repsqlchars (repnmdcinchars (item))
-local _, rows = VH:SQLQuery ("select `occurred` from `"..tbl_sql ["sefiex"].."` where `exception` = '"..aitem.."' limit 1")
+	local entry = repsqlchars (repnmdcinchars (item))
+	local _, rows = VH:SQLQuery ("select `occurred` from `" .. tbl_sql ["sefiex"] .. "` where `exception` = '" .. entry .. "'")
 
-if rows > 0 then
-VH:SQLQuery ("delete from `"..tbl_sql ["sefiex"].."` where `exception` = '"..aitem.."' limit 1")
-commandanswer (nick, string.format (gettext ("Deleted search filter exception entry: %s"), item))
-else
-commandanswer (nick, string.format (gettext ("Couldn't delete search filter exception entry because not found: %s"), item))
-end
+	if rows > 0 then
+		VH:SQLQuery ("delete from `" .. tbl_sql ["sefiex"] .. "` where `exception` = '" .. entry .. "'")
+		commandanswer (nick, gettext ("Deleted search filter exception entry: %s"):format (item))
+	else
+		commandanswer (nick, gettext ("Couldn't delete search filter exception entry because not found: %s"):format (item))
+	end
 end
 
 ----- ---- --- -- -
 
 function listsefiexentry (nick)
-local _, rows = VH:SQLQuery ("select `exception`, `occurred` from `"..tbl_sql ["sefiex"].."` order by `occurred` desc")
+	local _, rows = VH:SQLQuery ("select `exception`, `occurred` from `" .. tbl_sql ["sefiex"] .. "` order by `occurred` desc")
 
-if rows > 0 then
-local anentry, len = "", 0
+	if rows > 0 then
+		local list, olen = "", 0
 
-for x = 0, rows - 1 do
-local _, entry, occurred = VH:SQLFetch (x)
-if x == 0 then len = string.len (occurred) end
-anentry = anentry.." "..prezero (string.len (rows), (x + 1))..". [ O: "..prezero (len, occurred).." ] "..repnmdcoutchars (entry).."\r\n"
-end
+		for row = 0, rows - 1 do
+			local _, item, occ = VH:SQLFetch (row)
 
-commandanswer (nick, gettext ("Search filter exception list")..":\r\n\r\n"..anentry)
-else
-commandanswer (nick, gettext ("Search filter exception list is empty."))
-end
+			if row == 0 then
+				olen = # tostring (occ)
+			end
+
+			list = list .. " " .. prezero (# tostring (rows), (row + 1)) .. ". [ O: " .. prezero (olen, occ) .. " ] " .. repnmdcoutchars (item) .. "\r\n"
+		end
+
+		commandanswer (nick, gettext ("Search filter exception list") .. ":\r\n\r\n" .. list)
+	else
+		commandanswer (nick, gettext ("Search filter exception list is empty."))
+	end
 end
 
 ----- ---- --- -- -
@@ -15120,19 +15154,22 @@ else
 commandanswer (nick, string.format (gettext ("Configuration variable %s can't be empty."), tvar))
 end
 
------ ---- --- -- -
+	----- ---- --- -- -
 
-elseif tvar == "enablesearfilt" then
-if num == true then
-if (setto == 0) or (setto == 1) then
-ok = true
-else
-commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 "..gettext ("or").." 1"))
-end
+	elseif tvar == "enablesearfilt" then
+		if num then
+			if setto == 0 or setto == 1 then
+				if setto == 0 then -- clean up
+					table_sefi = {}
+				end
 
-else
-commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
-end
+				ok = true
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0 " .. gettext ("or") .. " 1"))
+			end
+		else
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
+		end
 
 	----- ---- --- -- -
 
@@ -22059,13 +22096,13 @@ end
 ----- ---- --- -- -
 
 function sefiscan (nick, srch, cls, ip)
-	local _, _, tp, str = srch:find ("^%$Search .* .*%?.*%?.*%?(.*)%?(.*)$")
+	local tp, str = srch:match ("^%$Search .* .*%?.*%?.*%?(.*)%?(.*)$")
 
 	if not str or # str == 0 then
-		return 1
+		return false
 	end
 
-	tp = tonumber (tp) or 1
+	tp = tonumber (tp or 1) or 1
 
 	if tp < 1 or tp > 9 then
 		tp = 1
@@ -22103,9 +22140,9 @@ function sefiscan (nick, srch, cls, ip)
 			ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
 			opsnotify (table_sets ["classnotiledoact"], ferr)
 		elseif fval then
-			VH:SQLQuery ("update `" .. tbl_sql ["sefi"] .. "` set `occurred` = `occurred` + 1 where `filter` = '" .. repsqlchars (ent) .. "' limit 1")
+			VH:SQLQuery ("update `" .. tbl_sql ["sefi"] .. "` set `occurred` = `occurred` + 1 where `filter` = '" .. repsqlchars (ent) .. "'")
 
-			if tonumber (prio) < 7 then -- skip for 7, 8 and 9
+			if (tonumber (prio or 0) or 0) < 7 then -- skip for 7, 8 and 9
 				for _, v in pairs (exlist) do
 					local fres, fval = catchfinderror (lsr, v)
 
@@ -22116,7 +22153,7 @@ function sefiscan (nick, srch, cls, ip)
 						ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
 						opsnotify (table_sets ["classnotiledoact"], ferr)
 					elseif fval then
-						VH:SQLQuery ("update `" .. tbl_sql ["sefiex"] .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (v) .. "' limit 1")
+						VH:SQLQuery ("update `" .. tbl_sql ["sefiex"] .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (v) .. "'")
 						local note = "Search request exception from %s with IP %s and class %d as any file: %s"
 
 						if tp == 2 then
@@ -22137,13 +22174,13 @@ function sefiscan (nick, srch, cls, ip)
 							note = "Search request exception from %s with IP %s and class %d as TTH: %s"
 						end
 
-						opsnotify (table_sets ["classnotiex"], string.format (gettext (note), nick, ip .. tryipcc (ip, nick), cls, str))
-						return 1
+						opsnotify (table_sets ["classnotiex"], gettext (note):format (nick, ip .. tryipcc (ip, nick), cls, str))
+						return false
 					end
 				end
 			end
 
-			act = tonumber (act)
+			act = tonumber (act or 0) or 0
 
 			if act == 5 then
 				local note = "Search request notification from %s with IP %s and class %d as any file: %s"
@@ -22166,12 +22203,12 @@ function sefiscan (nick, srch, cls, ip)
 					note = "Search request notification from %s with IP %s and class %d as TTH: %s"
 				end
 
-				opsnotify (table_sets ["classnotisefi"], string.format (gettext (note), nick, ip .. tryipcc (ip, nick), cls, str))
-				return 1
+				opsnotify (table_sets ["classnotisefi"], gettext (note):format (nick, ip .. tryipcc (ip, nick), cls, str))
+				return false
 			end
 
-			if act ~= 4 then
-				local rsn = string.gsub (table_sets ["searfiltmsg"], "%*", reprexpchars (str))
+			if act ~= 4 and act ~= 8 then
+				local rsn = table_sets ["searfiltmsg"]:gsub ("%*", reprexpchars (str))
 				commandanswer (nick, rsn)
 			end
 
@@ -22195,33 +22232,46 @@ function sefiscan (nick, srch, cls, ip)
 				note = "Bad search request from %s with IP %s and class %d as TTH: %s"
 			end
 
-			opsnotify (table_sets ["classnotisefi"], string.format (gettext (note), nick, ip .. tryipcc (ip, nick), cls, str))
+			opsnotify (table_sets ["classnotisefi"], gettext (note):format (nick, ip .. tryipcc (ip, nick), cls, str))
 
-			if act == 1 then
-				opsnotify (table_sets ["classnotisefi"], string.format (gettext ("%s dropped due to bad search request."), nick))
+			if act == 1 then -- drop
+				opsnotify (table_sets ["classnotisefi"], gettext ("%s dropped due to bad search request."):format (nick))
 				VH:Disconnect (nick)
-			elseif act == 2 then
-				local rsn = string.gsub (table_sets ["sefireason"], "%*", reprexpchars (str))
+
+			elseif act == 2 then -- kick
+				local rsn = table_sets ["sefireason"]:gsub ("%*", reprexpchars (str))
 				VH:KickUser (table_othsets ["sendfrom"], nick, rsn)
-			elseif act == 3 then
-				local rsn = string.gsub (table_sets ["sefireason"], "%*", reprexpchars (str))
+
+			elseif act == 3 then -- temporary ban
+				local rsn = table_sets ["sefireason"]:gsub ("%*", reprexpchars (str))
 				VH:KickUser (table_othsets ["sendfrom"], nick, rsn .. "     #_ban_" .. table_sets ["thirdacttime"])
-			elseif act == 4 then
-				opsnotify (table_sets ["classnotisefi"], string.format (gettext ("%s didn't get any search results."), nick))
-			elseif act == 6 then
-				opsnotify (table_sets ["classnotisefi"], string.format (gettext ("%s redirected due to bad search request."), nick))
+
+			elseif act == 4 then -- silent skip
+				opsnotify (table_sets ["classnotisefi"], gettext ("%s didn't get any search results."):format (nick))
+
+			elseif act == 6 then -- redirect
+				opsnotify (table_sets ["classnotisefi"], gettext ("%s redirected due to bad search request."):format (nick))
 				VH:SendToUser ("$ForceMove " .. table_sets ["sixthactaddr"] .. "|", nick)
 				VH:Disconnect (nick)
-			elseif act == 7 then
-				local rsn = string.gsub (table_sets ["sefireason"], "%*", reprexpchars (str))
+
+			elseif act == 7 then -- permanent ban
+				local rsn = table_sets ["sefireason"]:gsub ("%*", reprexpchars (str))
 				VH:KickUser (table_othsets ["sendfrom"], nick, rsn .. "     #_ban_" .. table_sets ["seventhacttime"])
+
+			elseif act == 8 then -- silent skip + block list
+				opsnotify (table_sets ["classnotisefi"], gettext ("%s added to search block list."):format (nick))
+				table_sefi [nick] = false
+
+			elseif act == 9 then -- block list
+				opsnotify (table_sets ["classnotisefi"], gettext ("%s added to search block list."):format (nick))
+				table_sefi [nick] = true
 			end
 
-			return 0
+			return true
 		end
 	end
 
-	return 1
+	return false
 end
 
 ----- ---- --- -- -
