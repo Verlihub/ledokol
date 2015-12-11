@@ -1,6 +1,6 @@
 # Language: en_GB
 # Charset: CP1252
-# Version: 2.8.8
+# Version: 2.8.9
 # Author: RoLex
 # Email: webmaster@feardc.net
 
@@ -1125,3 +1125,5 @@ Sorry, your message has been ignored.|
 Disable or enable right click menu item|
 Disabled right click menu item: %s|
 Enabled right click menu item: %s|
+%s added to search block list.|
+Your search request is discarded due to previous forbidden search request.|
