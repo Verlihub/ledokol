@@ -796,9 +796,9 @@ Couldn't delete chat replacer because ID not found: %d|
 Chat replacer list|
 Chat replacer list is empty.|
 Replace|
-Couldn't add chat replacer exception because already exists: %s|
-Added chat replacer exception: %s|
-Deleted chat replacer exception: %s|
+Modified chat replacer exception with type %d: %s|
+Added chat replacer exception with type %d: %s|
+Deleted chat replacer exception with type %d: %s|
 Couldn't delete chat replacer exception because not found: %s|
 Chat replacer exception list|
 Chat replacer exception list is empty.|
