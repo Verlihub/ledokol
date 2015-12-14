@@ -60,7 +60,7 @@ Doxtur, chaos, sphinx, Zorro, W1ZaRd, S0RiN, MaxFox, Krzychu,
 ---------------------------------------------------------------------
 
 ver_ledo = "2.8.9" -- ledokol version
-bld_ledo = "8" -- build number
+bld_ledo = "9" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -1282,6 +1282,10 @@ function Main (file)
 					end
 
 					if ver <= 289 then
+						VH:SQLQuery ("alter ignore table `" .. tbl_sql ["replex"] .. "` add column `type` tinyint(1) not null default 0 after `exception`")
+					end
+
+					if ver <= 290 then
 						-- todo
 					end
 
@@ -1938,10 +1942,10 @@ return 0
 
 	----- ---- --- -- -
 
-	elseif string.find (data, "^" .. table_othsets ["optrig"] .. table_cmnds ["repladd"] .. " \".+\" \".+\" %d+$") or string.find (data, "^" .. table_othsets ["optrig"] .. table_cmnds ["repladd"] .. " \".+\" \".+\" %d+ %d$") then
+	elseif data:match ("^" .. table_othsets ["optrig"] .. table_cmnds ["repladd"] .. " \".+\" \".+\" %d+$") or data:match ("^" .. table_othsets ["optrig"] .. table_cmnds ["repladd"] .. " \".+\" \".+\" %d+ %d$") then
 		if ucl >= table_sets ["mincommandclass"] then
 			donotifycmd (nick, data, 0, ucl)
-			addreplacer (nick, string.sub (data, string.len (table_cmnds ["repladd"]) + 3))
+			addreplacer (nick, data:sub (# table_cmnds ["repladd"] + 3))
 		else
 			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
@@ -1950,19 +1954,19 @@ return 0
 
 	----- ---- --- -- -
 
-	elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["repldel"].." %d+$") then
+	elseif data:match ("^" .. table_othsets ["optrig"] .. table_cmnds ["repldel"] .. " %d+$") then
 		if ucl >= table_sets ["mincommandclass"] then
 			donotifycmd (nick, data, 0, ucl)
-			delreplacer (nick, string.sub (data, string.len (table_cmnds ["repldel"]) + 3, -1))
+			delreplacer (nick, data:sub (# table_cmnds ["repldel"] + 3))
 		else
 			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
 
-	elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["repllist"].."$") then
+	elseif data:match ("^" .. table_othsets ["optrig"] .. table_cmnds ["repllist"] .. "$") then
 		if ucl >= table_sets ["mincommandclass"] then
 			donotifycmd (nick, data, 0, ucl)
 			listreplacer (nick)
@@ -1972,33 +1976,33 @@ return 0
 
 		return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
 
-	elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["replexadd"].." %S+$") then
+	elseif data:match ("^" .. table_othsets ["optrig"] .. table_cmnds ["replexadd"] .. " .+ %d$") then
 		if ucl >= table_sets ["mincommandclass"] then
 			donotifycmd (nick, data, 0, ucl)
-			addreplex (nick, string.sub (data, string.len (table_cmnds ["replexadd"]) + 3, -1))
+			addreplex (nick, data:sub (# table_cmnds ["replexadd"] + 3))
 		else
 			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
 
-	elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["replexdel"].." %S+$") then
+	elseif data:match ("^" .. table_othsets ["optrig"] .. table_cmnds ["replexdel"] .. " .*$") then
 		if ucl >= table_sets ["mincommandclass"] then
 			donotifycmd (nick, data, 0, ucl)
-			delreplex (nick, string.sub (data, string.len (table_cmnds ["replexdel"]) + 3, -1))
+			delreplex (nick, data:sub (# table_cmnds ["replexdel"] + 3))
 		else
 			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
 
-	elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["replexlist"].."$") then
+	elseif data:match ("^" .. table_othsets ["optrig"] .. table_cmnds ["replexlist"] .. "$") then
 		if ucl >= table_sets ["mincommandclass"] then
 			donotifycmd (nick, data, 0, ucl)
 			listreplex (nick)
@@ -8387,12 +8391,12 @@ end
 ----- ---- --- -- -
 
 function addreplacer (nick, item)
-	local _, _, msg, rpl, maxc, flags = 0, 0, "", "", 10, 1
+	local data, repl, maxc, flags = "", "", 10, 1
 
-	if item:find ("^\".+\" \".+\" %d+ %d$") then
-		_, _, msg, rpl, maxc, flags = item:find ("^\"(.+)\" \"(.+)\" (%d+) (%d)$")
+	if item:match ("^\".+\" \".+\" %d+ %d$") then
+		data, repl, maxc, flags = item:match ("^\"(.+)\" \"(.+)\" (%d+) (%d)$")
 	else
-		_, _, msg, rpl, maxc = item:find ("^\"(.+)\" \"(.+)\" (%d+)$")
+		data, repl, maxc = item:match ("^\"(.+)\" \"(.+)\" (%d+)$")
 	end
 
 	maxc = tonumber (maxc)
@@ -8403,7 +8407,7 @@ function addreplacer (nick, item)
 	elseif flags < 0 or flags > 2 then
 		commandanswer (nick, gettext ("Known flags are: %s"):format ("0=ALL, 1=MC " .. gettext ("and") .. " 2=PM"))
 	else
-		VH:SQLQuery ("insert into `" .. tbl_sql ["chatrepl"] .. "` (`message`, `replace`, `maxclass`, `flags`) values ('" .. repsqlchars (repnmdcinchars (msg)) .. "', '" .. repsqlchars (rpl) .. "', " .. tostring (maxc) .. ", " .. tostring (flags) .. ")")
+		VH:SQLQuery ("insert into `" .. tbl_sql ["chatrepl"] .. "` (`message`, `replace`, `maxclass`, `flags`) values ('" .. repsqlchars (repnmdcinchars (data)) .. "', '" .. repsqlchars (repl) .. "', " .. tostring (maxc) .. ", " .. tostring (flags) .. ")")
 		local note = "Added replacer in MC: %s"
 
 		if flags == 0 then
@@ -8412,20 +8416,20 @@ function addreplacer (nick, item)
 			note = "Added replacer in PM: %s"
 		end
 
-		commandanswer (nick, gettext (note):format (msg))
+		commandanswer (nick, gettext (note):format (data))
 	end
 end
 
 ----- ---- --- -- -
 
 function delreplacer (nick, id)
-	local _, rows = VH:SQLQuery ("select `maxclass` from `" .. tbl_sql ["chatrepl"] .. "` where `id` = " .. id)
+	local _, rows = VH:SQLQuery ("select `maxclass` from `" .. tbl_sql ["chatrepl"] .. "` where `id` = " .. tostring (id))
 
 	if rows > 0 then
-		VH:SQLQuery ("delete from `" .. tbl_sql ["chatrepl"] .. "` where `id` = " .. id)
-		commandanswer (nick, string.format (gettext ("Deleted chat replacer with ID: %d"), id))
+		VH:SQLQuery ("delete from `" .. tbl_sql ["chatrepl"] .. "` where `id` = " .. tostring (id))
+		commandanswer (nick, gettext ("Deleted chat replacer with ID: %d"):format (id))
 	else
-		commandanswer (nick, string.format (gettext ("Couldn't delete chat replacer because ID not found: %d"), id))
+		commandanswer (nick, gettext ("Couldn't delete chat replacer because ID not found: %d"):format (id))
 	end
 end
 
@@ -8435,14 +8439,14 @@ function listreplacer (nick)
 	local _, rows = VH:SQLQuery ("select `id`, `message`, `replace`, `maxclass`, `flags`, `occurred` from `" .. tbl_sql ["chatrepl"] .. "` order by `occurred` desc, `id` desc")
 
 	if rows > 0 then
-		local anentry = ""
+		local list = ""
 
-		for x = 0, rows - 1 do
-			local _, id, msg, repl, maxc, flags, occur = VH:SQLFetch (x)
-			anentry = anentry .. "\r\n " .. gettext ("LRE") .. ": " .. repnmdcoutchars (msg) .. "\r\n " .. gettext ("Replace") .. ": " .. repl .. "\r\n [ I: " .. id .. " ] [ C: " .. maxc .. " ] [ F: " .. flags .. " ] [ O: " .. occur .. " ]\r\n"
+		for row = 0, rows - 1 do
+			local _, id, data, repl, maxc, flag, occ = VH:SQLFetch (row)
+			list = list .. "\r\n " .. gettext ("LRE") .. ": " .. repnmdcoutchars (data) .. "\r\n " .. gettext ("Replace") .. ": " .. repl .. "\r\n [ I: " .. tostring (id) .. " ] [ C: " .. tostring (maxc) .. " ] [ F: " .. tostring (flag) .. " ] [ O: " .. tostring (occ) .. " ]\r\n"
 		end
 
-		commandanswer (nick, gettext ("Chat replacer list") .. ":\r\n" .. anentry)
+		commandanswer (nick, gettext ("Chat replacer list") .. ":\r\n" .. list)
 	else
 		commandanswer (nick, gettext ("Chat replacer list is empty."))
 	end
@@ -8450,47 +8454,60 @@ end
 
 ----- ---- --- -- -
 
-function addreplex (nick, item)
-	local entry = repsqlchars (item)
-	local _, rows = VH:SQLQuery ("select `exception` from `"..tbl_sql ["replex"].."` where `exception` = '"..entry.."'")
+function addreplex (nick, line)
+	local item, iype = line:match ("^(.+) (%d)$")
+	iype = tonumber (iype)
 
-	if rows > 0 then
-		commandanswer (nick, string.format (gettext ("Couldn't add chat replacer exception because already exists: %s"), item))
+	if iype < 0 or iype > 2 then
+		commandanswer (nick, gettext ("Known types are: %s"):format ("0, 1 " .. gettext ("and") .. " 2"))
 	else
-		VH:SQLQuery ("insert into `"..tbl_sql ["replex"].."` (`exception`) values ('"..entry.."')")
-		commandanswer (nick, string.format (gettext ("Added chat replacer exception: %s"), item))
+		local entry = repsqlchars (item)
+		local _, rows = VH:SQLQuery ("select `type` from `" .. tbl_sql ["replex"] .. "` where `exception` = '" .. entry .. "'")
+
+		if rows > 0 then
+			VH:SQLQuery ("update `" .. tbl_sql ["replex"] .. "` set `type` = " .. tostring (iype) .. " where `exception` = '" .. entry .. "'")
+			commandanswer (nick, gettext ("Modified chat replacer exception with type %d: %s"):format (iype, item))
+		else
+			VH:SQLQuery ("insert into `" .. tbl_sql ["replex"] .. "` (`exception`, `type`) values ('" .. entry .. "', " .. tostring (iype) .. ")")
+			commandanswer (nick, gettext ("Added chat replacer exception with type %d: %s"):format (iype, item))
+		end
 	end
 end
 
 ----- ---- --- -- -
 
 function delreplex (nick, item)
-	local aitem = repsqlchars (item)
-	local _, rows = VH:SQLQuery ("select `exception` from `"..tbl_sql ["replex"].."` where `exception` = '"..aitem.."'")
+	local entry = repsqlchars (item)
+	local _, rows = VH:SQLQuery ("select `type` from `" .. tbl_sql ["replex"] .. "` where `exception` = '" .. entry .. "'")
 
 	if rows > 0 then
-		VH:SQLQuery ("delete from `"..tbl_sql ["replex"].."` where `exception` = '"..aitem.."'")
-		commandanswer (nick, string.format (gettext ("Deleted chat replacer exception: %s"), item))
+		local _, iype = VH:SQLFetch (0)
+		VH:SQLQuery ("delete from `" .. tbl_sql ["replex"] .. "` where `exception` = '" .. entry .. "'")
+		commandanswer (nick, gettext ("Deleted chat replacer exception with type %d: %s"):format (iype, item))
 	else
-		commandanswer (nick, string.format (gettext ("Couldn't delete chat replacer exception because not found: %s"), item))
+		commandanswer (nick, gettext ("Couldn't delete chat replacer exception because not found: %s"):format (item))
 	end
 end
 
 ----- ---- --- -- -
 
 function listreplex (nick)
-	local _, rows = VH:SQLQuery ("select `exception`, `occurred` from `"..tbl_sql ["replex"].."` order by `occurred` desc")
+	local _, rows = VH:SQLQuery ("select `exception`, `type`, `occurred` from `" .. tbl_sql ["replex"] .. "` order by `occurred` desc")
 
 	if rows > 0 then
-		local anentry, len = "", 0
+		local list, olen = "", 0
 
-		for x = 0, rows - 1 do
-			local _, entry, occurred = VH:SQLFetch (x)
-			if x == 0 then len = string.len (occurred) end
-			anentry = anentry.." "..prezero (string.len (rows), (x + 1))..". [ O: "..prezero (len, occurred).." ] "..entry.."\r\n"
+		for row = 0, rows - 1 do
+			local _, item, iype, occ = VH:SQLFetch (row)
+
+			if row == 0 then
+				olen = # tostring (occ)
+			end
+
+			list = list .. " " .. prezero (# tostring (rows), (row + 1)) .. ". [ T: " .. tostring (iype) .. " ] [ O: " .. prezero (olen, occ) .. " ] " .. repnmdcoutchars (item) .. "\r\n"
 		end
 
-		commandanswer (nick, gettext ("Chat replacer exception list")..":\r\n\r\n"..anentry)
+		commandanswer (nick, gettext ("Chat replacer exception list") .. ":\r\n\r\n" .. list)
 	else
 		commandanswer (nick, gettext ("Chat replacer exception list is empty."))
 	end
@@ -8499,12 +8516,35 @@ end
 ----- ---- --- -- -
 
 function replchatmsg (nick, addr, class, data, flag)
-	local _, rows = VH:SQLQuery ("select `exception` from `" .. tbl_sql ["replex"] .. "` where `exception` = '" .. repsqlchars (nick) .. "' or `exception` = '" .. repsqlchars (addr) .. "'")
+	local _, rows = VH:SQLQuery ("select `exception`, `type` from `" .. tbl_sql ["replex"] .. "`")
+	local exli = {}
 
 	if rows > 0 then
-		local _, item = VH:SQLFetch (0)
-		VH:SQLQuery ("update `" .. tbl_sql ["replex"] .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (item) .. "'")
-		return data
+		local done = ""
+
+		for row = 0, rows - 1 do
+			local _, item, iype = VH:SQLFetch (row)
+			iype = tonumber (iype or 2) or 2
+
+			if iype == 0 then -- nick
+				if nick == item then
+					done = item
+					break
+				end
+			elseif iype == 1 then -- addr
+				if addr == item then
+					done = item
+					break
+				end
+			else -- lre
+				table.insert (exli, item)
+			end
+		end
+
+		if done ~= "" then
+			VH:SQLQuery ("update `" .. tbl_sql ["replex"] .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (done) .. "'")
+			return data
+		end
 	end
 
 	local _, rows = VH:SQLQuery ("select `id`, `message`, `replace`, `maxclass` from `" .. tbl_sql ["chatrepl"] .. "` where `flags` = 0 or `flags` = " .. tostring (flag))
@@ -8534,11 +8574,29 @@ function replchatmsg (nick, addr, class, data, flag)
 					local last = 1
 
 					for part in test:gmatch (item.d) do
-						local repl = reptextvars (item.r, (getcustnick (nick) or nick), back) -- dont replace % here
 						local sos, eos = test:find (part, last, true)
-						back = back:sub (1, sos - 1) .. repl .. back:sub (eos + 1)
-						test = test:sub (1, sos - 1) .. repl .. test:sub (eos + 1)
-						last = eos + # repl
+						local cont, expa = true, ""
+
+						if sos < 7 then
+							expa = test:sub (1, eos + 5)
+						else
+							expa = test:sub (sos - 5, eos + 5)
+						end
+
+						for _, exen in pairs (exli) do
+							if expa:match (exen) then
+								VH:SQLQuery ("update `" .. tbl_sql ["replex"] .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (exen) .. "'")
+								cont = false
+								break
+							end
+						end
+
+						if cont then
+							local repl = reptextvars (item.r, (getcustnick (nick) or nick), back) -- dont replace % here
+							back = back:sub (1, sos - 1) .. repl .. back:sub (eos + 1)
+							test = test:sub (1, sos - 1) .. repl .. test:sub (eos + 1)
+							last = eos + # repl
+						end
 					end
 
 					if last > 1 then
@@ -14472,21 +14530,21 @@ end
 susmenitm (usr, gettext ("Hub news").."\\"..gettext ("Read hub news"), table_cmnds ["hubnews"].." %[line:<"..gettext ("lines")..">]")
 end
 
--- chat replacer
+	-- chat replacer
 
 	if ucl >= table_sets ["mincommandclass"] then
 		sopmenitm (usr, gettext ("Chat replacer") .. "\\" .. gettext ("Add chat replacer"), table_cmnds ["repladd"] .. " \"%[line:<" .. gettext ("lre") .. ">]\" \"%[line:<" .. gettext ("replace") .. ">]\" %[line:<" .. gettext ("maxclass") .. ">] %[line:<" .. gettext ("flags") .. ">]")
-		sopmenitm (usr, gettext ("Chat replacer").."\\"..gettext ("Chat replacer list"), table_cmnds ["repllist"])
+		sopmenitm (usr, gettext ("Chat replacer") .. "\\" .. gettext ("Chat replacer list"), table_cmnds ["repllist"])
 		smensep (usr)
-		sopmenitm (usr, gettext ("Chat replacer").."\\"..gettext ("Delete chat replacer"), table_cmnds ["repldel"].." %[line:<"..gettext ("identifier")..">]")
+		sopmenitm (usr, gettext ("Chat replacer") .. "\\" .. gettext ("Delete chat replacer"), table_cmnds ["repldel"] .. " %[line:<" .. gettext ("identifier") .. ">]")
 		smensep (usr)
-		sopmenitm (usr, gettext ("Chat replacer").."\\"..gettext ("Add chat replacer exception"), table_cmnds ["replexadd"].." %[line:<"..gettext ("nick").." "..gettext ("or").." "..gettext ("ip")..">]")
-		sopmenitm (usr, gettext ("Chat replacer").."\\"..gettext ("Chat replacer exception list"), table_cmnds ["replexlist"])
+		sopmenitm (usr, gettext ("Chat replacer") .. "\\" .. gettext ("Add chat replacer exception"), table_cmnds ["replexadd"] .. " %[line:<" .. gettext ("item") .. ">] %[line:<" .. gettext ("type") .. ">]")
+		sopmenitm (usr, gettext ("Chat replacer") .. "\\" .. gettext ("Chat replacer exception list"), table_cmnds ["replexlist"])
 		smensep (usr)
-		sopmenitm (usr, gettext ("Chat replacer").."\\"..gettext ("Delete chat replacer exception"), table_cmnds ["replexdel"].." %[line:<"..gettext ("nick").." "..gettext ("or").." "..gettext ("ip")..">]")
+		sopmenitm (usr, gettext ("Chat replacer") .. "\\" .. gettext ("Delete chat replacer exception"), table_cmnds ["replexdel"] .. " %[line:<" .. gettext ("item") .. ">]")
 	end
 
--- chat responder
+	-- chat responder
 
 	if ucl >= table_sets ["mincommandclass"] then
 		sopmenitm (usr, gettext ("Chat responder").."\\"..gettext ("Add chat responder"), table_cmnds ["respadd"].." \"%[line:<"..gettext ("lre")..">]\" \"%[line:<"..gettext ("reply")..">]\" %[line:<"..gettext ("maxclass")..">]")
@@ -18135,11 +18193,11 @@ help = help.." "..optrig..table_cmnds ["newsdel"].." <"..gettext ("date").."> - 
 
 	-- chat replacer
 	help = help .. " " .. optrig .. table_cmnds ["repladd"] .. " <\"" .. gettext ("lre") .. "\"> <\"" .. gettext ("replace") .. "\"> <" .. gettext ("maxclass") .. "> [" .. gettext ("flags") .. "] - " .. gettext ("Add chat replacer") .. "\r\n"
-help = help.." "..optrig..table_cmnds ["repllist"].." - "..gettext ("Chat replacer list").."\r\n"
-help = help.." "..optrig..table_cmnds ["repldel"].." <"..gettext ("identifier").."> - "..gettext ("Delete chat replacer").."\r\n"
-help = help.." "..optrig..table_cmnds ["replexadd"].." <"..gettext ("nick").." "..gettext ("or").." "..gettext ("ip").."> - "..gettext ("Add chat replacer exception").."\r\n"
-help = help.." "..optrig..table_cmnds ["replexlist"].." - "..gettext ("Chat replacer exception list").."\r\n"
-help = help.." "..optrig..table_cmnds ["replexdel"].." <"..gettext ("nick").." "..gettext ("or").." "..gettext ("ip").."> - "..gettext ("Delete chat replacer exception").."\r\n\r\n"
+	help = help .. " " .. optrig .. table_cmnds ["repllist"] .. " - " .. gettext ("Chat replacer list") .. "\r\n"
+	help = help .. " " .. optrig .. table_cmnds ["repldel"] .. " <" .. gettext ("identifier") .. "> - " .. gettext ("Delete chat replacer") .. "\r\n"
+	help = help .. " " .. optrig .. table_cmnds ["replexadd"] .. " <" .. gettext ("item") .. "> <" .. gettext ("type") .. "> - " .. gettext ("Add chat replacer exception") .. "\r\n"
+	help = help .. " " .. optrig .. table_cmnds ["replexlist"] .. " - " .. gettext ("Chat replacer exception list") .. "\r\n"
+	help = help .. " " .. optrig .. table_cmnds ["replexdel"] .. " <" .. gettext ("item") .. "> - " .. gettext ("Delete chat replacer exception") .. "\r\n\r\n"
 
 -- chat responder
 help = help.." "..optrig..table_cmnds ["respadd"].." <\""..gettext ("lre").."\"> <\""..gettext ("reply").."\"> <"..gettext ("maxclass").."> - "..gettext ("Add chat responder").."\r\n"
@@ -18758,8 +18816,8 @@ VH:SQLQuery ("create table if not exists `"..tbl_sql ["rem"].."` (`id` varchar(2
 	VH:SQLQuery ("create table if not exists `" .. tbl_sql ["news"] .. "` (`id` bigint(20) unsigned not null auto_increment primary key, `date` bigint(20) unsigned not null, `by` varchar(255) not null, `item` text not null) engine = myisam default character set utf8 collate utf8_unicode_ci")
 
 	-- chat replacer
-	VH:SQLQuery ("create table if not exists `" .. tbl_sql ["chatrepl"] .. "` (`id` bigint(20) unsigned not null auto_increment, `message` varchar(255) not null, `replace` text not null, `maxclass` tinyint(2) unsigned not null default 10, `flags` tinyint(1) unsigned not null default 1, `occurred` bigint(20) unsigned not null default 0, primary key (`id`)) engine = myisam default character set utf8 collate utf8_unicode_ci")
-VH:SQLQuery ("create table if not exists `"..tbl_sql ["replex"].."` (`exception` varchar(255) not null, `occurred` bigint(20) unsigned not null default 0, primary key (`exception`)) engine = myisam default character set utf8 collate utf8_unicode_ci")
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql ["chatrepl"] .. "` (`id` bigint(20) unsigned not null auto_increment primary key, `message` varchar(255) not null, `replace` text not null, `maxclass` tinyint(2) unsigned not null default 10, `flags` tinyint(1) unsigned not null default 1, `occurred` bigint(20) unsigned not null default 0) engine = myisam default character set utf8 collate utf8_unicode_ci")
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql ["replex"] .. "` (`exception` varchar(255) not null primary key, `type` tinyint(1) not null default 0, `occurred` bigint(20) unsigned not null default 0) engine = myisam default character set utf8 collate utf8_unicode_ci")
 
 -- chat responder
 VH:SQLQuery ("create table if not exists `"..tbl_sql ["mcresp"].."` (`id` bigint(20) unsigned not null auto_increment, `message` varchar(255) not null, `reply` text not null, `maxclass` tinyint(2) unsigned not null default 10, `occurred` bigint(20) unsigned not null default 0, primary key (`id`)) engine = myisam default character set utf8 collate utf8_unicode_ci")
@@ -19035,6 +19093,7 @@ VH:SQLQuery ("alter ignore table `"..tbl_sql ["rem"].."` change column `timer` `
 
 	-- chat replacer
 	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["chatrepl"] .. "` add column `flags` tinyint(1) unsigned not null default 1 after `maxclass`") -- flags
+	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["replex"] .. "` add column `type` tinyint(1) not null default 0 after `exception`") -- type
 
 -- chat responder
 VH:SQLQuery ("alter ignore table `"..tbl_sql ["mcresp"].."` engine = myisam") -- engine
