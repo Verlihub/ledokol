@@ -796,9 +796,9 @@ Couldn't delete chat replacer because ID not found: %d|Невозможно уд
 Chat replacer list|Список замен выражений
 Chat replacer list is empty.|Список замен выражений пуст.
 Replace|Замена для выражения
-Couldn't add chat replacer exception because already exists: %s|Невозможно добавить существующее исключение из выражений для замены в чате: %s
-Added chat replacer exception: %s|Добавлено исключение для замены выражений: %s
-Deleted chat replacer exception: %s|Удалено исключение для замены выражений: %s
+Modified chat replacer exception with type %d: %s|Изменено исключение для замены выражений с типом %d: %s
+Added chat replacer exception with type %d: %s|Добавлено исключение для замены выражений с типом %d: %s
+Deleted chat replacer exception with type %d: %s|Удалено исключение для замены выражений с типом %d: %s
 Couldn't delete chat replacer exception because not found: %s|Невозможно удалить исключение для замены выражения. Не найдено в базе: %s
 Chat replacer exception list|Список исключений для замены выражений
 Chat replacer exception list is empty.|Список исключений для замены выражений пуст.
