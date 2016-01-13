@@ -12,3 +12,7 @@ Documentation
 =======
 Ledokol Documentation can be found [here](https://github.com/Eco-logical/ledokol/wiki)
 
+Download
+=======
+Ledokol can be Downloaded [here](http://ledo.feardc.net/)
+
