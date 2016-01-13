@@ -17,6 +17,3 @@ Support
 =======
 
 VAZ @ dchub://hub.verlihub.net:7777/
-
-
-
