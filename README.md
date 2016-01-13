@@ -7,3 +7,8 @@ Support
 =======
 
 VAZ @ dchub://hub.verlihub.net:7777/
+
+Documentation
+=======
+Ledokol Documentation can be found [here](https://github.com/Eco-logical/ledokol/wiki)
+
