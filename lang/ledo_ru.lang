@@ -762,7 +762,6 @@ Warning: %s|Внимание: %s
 Open files limit set to %d is smaller than maximum users configuration which is %d. You can correct this by setting %s to %d or higher and restarting the hub.|Количество разрешенных открытых файлов в системе равно %d, что является меньше количества пользователей разрешенных в хабе %d. Вы можете исправить это, выставив %s на %d или выше и перезапустив хаб.
 Additional help|Дополнительная помощь и информация
 Remove all %s tables and files|Удалить таблицы и файлы %s
-No reason specified.|Причина не указана.
 You can't kick user whose class is higher or equals your own: %s|Вы не можете кикнуть пользователя чей класс равен или выше вашего: %s
 Your topic contains forbidden characters which can't be used for security reason: %s|Устанавливаемая вами тема содержит символы, которые могут являться проблемой безопасности: %s. Тема не установлена.
 Hub uptime: %s|Время работы хаба: %s
@@ -1127,3 +1126,4 @@ Disabled right click menu item: %s|Пункт меню правой кнопки
 Enabled right click menu item: %s|Пункт меню правой кнопки мыши открыт: %s
 %s added to search block list.|%s добавлен в поисковый блок список.
 Your search request is discarded due to previous forbidden search request.|Ваш поисковый запрос заблокирован по причине ранее отправленного запрещенного поискового запроса.
+Hub URL: %s|Адрес хаба: %s
