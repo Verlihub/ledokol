@@ -5,6 +5,7 @@
 [  5] Added: Support for new VH_OnParsedMsgSupports callback
 [  8] Added: Search filter actions 8 and 9 to block all next search requests from user, action 8 is silent
 [  9] Added: Chat replacer exception types, 0 = nick, 1 = IP and 2 = LRE, request by KCAHDEP
+[ 10] Added: Hub URL to user information when available
 [  7] Removed: Infected user redirect to AVDB quarantine hub
 
 [ 2.8.8 :: 2015-11-29 ]
