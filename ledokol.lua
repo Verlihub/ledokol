@@ -2,7 +2,7 @@
 --[[ license agreement >>
 ---------------------------------------------------------------------
 
-Copyright © 2007-2015 RoLex
+Copyright © 2007-2016 RoLex
 
 Ledokol is free software; You can redistribute it
 and modify it under the terms of the GNU General
@@ -60,7 +60,7 @@ Doxtur, chaos, sphinx, Zorro, W1ZaRd, S0RiN, MaxFox, Krzychu,
 ---------------------------------------------------------------------
 
 ver_ledo = "2.8.9" -- ledokol version
-bld_ledo = "9" -- build number
+bld_ledo = "10" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -383,6 +383,7 @@ table_refu = {
 	["SetTopic"] = false,
 	["GetUserVersion"] = false,
 	["GetUserSupports"] = false,
+	["GetUserHubURL"] = false,
 	["SendToActiveClass"] = false,
 	["SendToPassiveClass"] = false,
 	["InUserSupports"] = false
@@ -714,6 +715,7 @@ cc_names = {
 	["A1"] = "Anonymous Proxy",
 	["A2"] = "Satellite Provider",
 	["O1"] = "Other Country",
+	["SU"] = "Soviet Union",
 	["EU"] = "European Union",
 	["AD"] = "Andorra",
 	["AE"] = "United Arab Emirates",
@@ -3783,7 +3785,7 @@ function VH_OnUserCommand (nick, data)
 
 				if not isprotected (usr, uip) then
 					if rsn == "" then
-						rsn = gettext ("No reason specified.")
+						rsn = gettext ("No reason specified")
 					end
 
 					commandanswer (nick, string.format (gettext ("%s with IP %s and class %d kicked: <%s> %s"), usr, uip .. tryipcc (uip, usr), ucls, nick, rsn))
@@ -5104,7 +5106,7 @@ function VH_OnTimer (msec)
 			end
 		end
 
-		if table_sets ["avsearservaddr"] ~= "" and table_othsets ["serv_udp"] then -- we have search server
+		if table_sets ["avsearservaddr"] ~= "" and table_othsets ["serv_udp"] then -- we have search server, todo: dont send to no share, self and similar users
 			if table_refu ["SendToActiveClass"] and table_refu ["SendToPassiveClass"] then -- active request to passive users and passive request to active users
 				VH:SendToPassiveClass ("$Search " .. table_sets ["avsearservaddr"] .. ":" .. tostring (table_sets ["avsearservport"]) .. " F?F?0?1?" .. table_avse [table_othsets ["avnextitem"]] .. "|", 0, table_sets ["scanbelowclass"] - 1)
 				VH:SendToActiveClass ("$Search Hub:" .. table_othsets ["sendfrom"] .. " F?F?0?1?" .. table_avse [table_othsets ["avnextitem"]] .. "|", 0, table_sets ["scanbelowclass"] - 1)
@@ -5619,37 +5621,36 @@ function VH_OnOperatorKicks (op, nick, data)
 		return 1
 	end
 
-local ip = getip (nick)
+	local ip = getip (nick)
 
-if isprotected (nick, ip) == true then -- protected
-	commandanswer (op, gettext ("User you're trying to kick or redirect is protected: %s"):format (nick))
-	return 0
-end
+	if isprotected (nick, ip) then -- protected
+		commandanswer (op, gettext ("User you're trying to kick or redirect is protected: %s"):format (nick))
+		return 0
+	end
 
-local ucl = getclass (nick)
-opsnotify (table_sets ["classnotikick"], string.format (gettext ("%s with IP %s and class %d kicked: <%s> %s"), nick, ip .. tryipcc (ip, nick), ucl, op, data))
-oprankaccept (op, getclass (op))
+	local ucl = getclass (nick)
+	opsnotify (table_sets ["classnotikick"], gettext ("%s with IP %s and class %d kicked: <%s> %s"):format (nick, ip .. tryipcc (ip, nick), ucl, op, (valor (data, "") or gettext ("No reason specified"))))
+	oprankaccept (op, getclass (op))
 
-if (ucl > 0) and (ucl < table_sets ["scanbelowclass"]) then
-	if table_sets ["regkickaction"] == 1 then
-		local rucl = getregclass (nick)
+	if ucl > 0 and ucl < table_sets ["scanbelowclass"] then
+		if table_sets ["regkickaction"] == 1 then
+			local rucl = getregclass (nick)
 
-		if rucl then -- check if physically registered
-			opsnotify (table_sets ["classnotikick"], string.format (gettext ("%s is registered with class %d."), nick, rucl))
-		end
+			if rucl then -- check if physically registered
+				opsnotify (table_sets ["classnotikick"], gettext ("%s is registered with class %d."):format (nick, rucl))
+			end
+		elseif table_sets ["regkickaction"] == 2 then
+			rucl = getregclass (nick)
 
-	elseif table_sets ["regkickaction"] == 2 then
-		rucl = getregclass (nick)
-
-		if rucl then -- only if registered
-			delledouser (nick)
-			VH:SQLQuery ("delete from `reglist` where `nick` = '"..repsqlchars (nick).."' limit 1")
-			opsnotify (table_sets ["classnotikick"], string.format (gettext ("%s is registered with class %d and has been automatically unregistered and deleted from other tables."), nick, rucl))
+			if rucl then -- only if registered
+				delledouser (nick)
+				VH:SQLQuery ("delete from `reglist` where `nick` = '" .. repsqlchars (nick) .. "' limit 1")
+				opsnotify (table_sets ["classnotikick"], gettext ("%s is registered with class %d and has been automatically unregistered and deleted from other tables."):format (nick, rucl))
+			end
 		end
 	end
-end
 
-return 1
+	return 1
 end
 
 ----- ---- --- -- -
@@ -9140,6 +9141,14 @@ else -- user
 
 		if on and ver and ver ~= "" then
 			info = info .. " " .. string.format (gettext ("NMDC version: %s"), ver) .. "\r\n" -- version
+		end
+	end
+
+	if table_refu ["GetUserHubURL"] then
+		local on, url = VH:GetUserHubURL (user)
+
+		if on and url and url ~= "" then
+			info = info .. " " .. gettext ("Hub URL: %s"):format (url) .. "\r\n" -- hub url
 		end
 	end
 
@@ -20908,7 +20917,7 @@ function getcurl (url, enc, del, reh)
 		rehreq = " -D \"" .. table_othsets ["cfgdir"] .. table_othsets ["headfile"] .. "\""
 	end
 
-	local res, err, code = os.execute ("curl -G -L --retry 3 --connect-timeout 5 -m 30" .. face .. " -A \"Ledokol/" .. ver_ledo .. "." .. bld_ledo .. "\" -s -o \"" .. table_othsets ["cfgdir"] .. table_othsets ["tmpfile"] .. "\"" .. rehreq .. urlenc .. " \"" .. url .. "\"")
+	local res, err, code = os.execute ("curl -G -L --max-redirs 1 --retry 3 --connect-timeout 5 -m 30" .. face .. " -A \"Ledokol/" .. ver_ledo .. "." .. bld_ledo .. "\" -s -o \"" .. table_othsets ["cfgdir"] .. table_othsets ["tmpfile"] .. "\"" .. rehreq .. urlenc .. " \"" .. url .. "\"")
 
 	if res then
 		local head = ""
@@ -20938,11 +20947,11 @@ function getcurl (url, enc, del, reh)
 			return true, nil, "", (head or "")
 		end
 	else
-		if code then
-			code = tonumber (code)
+		if code ~= nil then
+			code = tonumber (code) or -1
 		end
 
-		if code then -- http://curl.haxx.se/docs/manpage.html
+		if code ~= nil and code ~= -1 then -- http://curl.haxx.se/docs/manpage.html
 			return false, gettext ("Failed to execute %s with code: %d"):format ("cURL", code), nil, nil
 		elseif err and err ~= "" then
 			return false, gettext ("Failed to execute %s with error: %s"):format ("cURL", repnmdcoutchars (err)), nil, nil
