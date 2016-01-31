@@ -762,7 +762,6 @@ Warning: %s|
 Open files limit set to %d is smaller than maximum users configuration which is %d. You can correct this by setting %s to %d or higher and restarting the hub.|
 Additional help|
 Remove all %s tables and files|
-No reason specified.|
 You can't kick user whose class is higher or equals your own: %s|
 Your topic contains forbidden characters which can't be used for security reason: %s|
 Hub uptime: %s|
@@ -1127,3 +1126,4 @@ Disabled right click menu item: %s|
 Enabled right click menu item: %s|
 %s added to search block list.|
 Your search request is discarded due to previous forbidden search request.|
+Hub URL: %s|
