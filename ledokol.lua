@@ -60,7 +60,7 @@ Doxtur, chaos, sphinx, Zorro, W1ZaRd, S0RiN, MaxFox, Krzychu,
 ---------------------------------------------------------------------
 
 ver_ledo = "2.8.9" -- ledokol version
-bld_ledo = "10" -- build number
+bld_ledo = "11" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -83,6 +83,7 @@ table_sets = {
 	["antikreason"] = "Spam detected: *",
 	["antimessage"] = "Your message wasn't sent due to spam detection. Please contact the hub administration if you disagree with this decision.",
 	["enablesearfilt"] = 0,
+	["sefiblockdel"] = 1,
 	["sefireason"] = "Forbidden search request detected: *",
 	["searfiltmsg"] = "Your search request is forbidden and therefore discarded: *",
 	["avsearchint"] = 30,
@@ -476,6 +477,8 @@ table_cmnds = {
 	["sefiexadd"] = "sefiexadd",
 	["sefiexdel"] = "sefiexdel",
 	["sefiexlist"] = "sefiexlist",
+	["sefibllist"] = "sefibllist",
+	["sefibldel"] = "sefibldel",
 	["myinfadd"] = "myinfadd",
 	["myinfdel"] = "myinfdel",
 	["myinflist"] = "myinflist",
@@ -2152,6 +2155,30 @@ return 0
 		if ucl >= table_sets ["mincommandclass"] then
 			donotifycmd (nick, data, 0, ucl)
 			listsefiexentry (nick)
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
+
+		return 0
+
+	----- ---- --- -- -
+
+	elseif data:match ("^" .. table_othsets ["optrig"] .. table_cmnds ["sefibllist"] .. "$") then
+		if ucl >= table_sets ["mincommandclass"] then
+			donotifycmd (nick, data, 0, ucl)
+			listsefiblocks (nick)
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
+
+		return 0
+
+	----- ---- --- -- -
+
+	elseif data:match ("^" .. table_othsets ["optrig"] .. table_cmnds ["sefibldel"] .. " [^ ]+$") then
+		if ucl >= table_sets ["mincommandclass"] then
+			donotifycmd (nick, data, 0, ucl)
+			delsefiblock (nick, data:sub (# table_cmnds ["sefibldel"] + 3))
 		else
 			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
@@ -4839,7 +4866,7 @@ function VH_OnUserLogout (nick, uip)
 		table_voki [nick] = nil
 	end
 
-	if table_sets ["enablesearfilt"] == 1 then -- search filter
+	if table_sets ["enablesearfilt"] == 1 and table_sets ["sefiblockdel"] == 1 then -- search filter
 		table_sefi [nick] = nil
 	end
 
@@ -4906,12 +4933,15 @@ function VH_OnParsedMsgSearch (nick, data)
 			if not prot then
 				local sefi = table_sefi [nick]
 
-				if sefi == nil then
-					if sefiscan (nick, data, cls, ip) then
-						return 0
+				if sefi then
+					if not sefi.sil then
+						maintouser (nick, gettext ("Your search request is discarded due to previous forbidden search request: %s"):format (sefi.req))
 					end
-				elseif sefi == true then
-					maintouser (nick, gettext ("Your search request is discarded due to previous forbidden search request."))
+
+					table_sefi [nick].num = sefi.num + 1
+					return 0
+				elseif sefiscan (nick, data, cls, ip) then
+					return 0
 				end
 			end
 		end
@@ -13637,6 +13667,41 @@ end
 
 ----- ---- --- -- -
 
+function listsefiblocks (nick)
+	local list = ""
+
+	for user, data in pairs (table_sefi) do
+		list = list .. " [ N: " .. user .. " ] [ R: " .. data.req .. " ] [ N: " .. tostring (data.num) .. " ] [ S: "
+
+		if data.sil then
+			list = list .. gettext ("Yes")
+		else
+			list = list .. gettext ("No")
+		end
+
+		list = list .. " ]\r\n"
+	end
+
+	if # list > 0 then
+		commandanswer (nick, gettext ("Search filter block list") .. ":\r\n\r\n" .. list)
+	else
+		commandanswer (nick, gettext ("Search filter block list is empty."))
+	end
+end
+
+----- ---- --- -- -
+
+function delsefiblock (nick, user)
+	if table_sefi [user] then
+		table_sefi [user] = nil
+		commandanswer (nick, gettext ("Deleted search filter block list entry: %s"):format (user))
+	else
+		commandanswer (nick, gettext ("Couldn't delete search filter block list entry because not found: %s"):format (user))
+	end
+end
+
+----- ---- --- -- -
+
 function addantientry (nick, item)
 	local _, _, aitem, prio, aaction, flags = item:find ("^(.+) (%d) (%d+) (%d)$")
 	prio, aaction, flags = tonumber (prio), tonumber (aaction), tonumber (flags)
@@ -14346,19 +14411,22 @@ smensep (usr)
 sopmenitm (usr, gettext ("Antispam").."\\"..gettext ("Delete antispam exception entry"), table_cmnds ["antiexdel"].." %[line:<"..gettext ("lre")..">]")
 end
 
--- search filter
-
-if ucl >= table_sets ["mincommandclass"] then
-sopmenitm (usr, gettext ("Search filter").."\\"..gettext ("Add search filter"), table_cmnds ["sefiadd"].." %[line:<"..gettext ("lre")..">] %[line:<"..gettext ("priority")..">] %[line:<"..gettext ("action")..">] %[line:<"..gettext ("type")..">]")
-sopmenitm (usr, gettext ("Search filter").."\\"..gettext ("Search filter list"), table_cmnds ["sefilist"])
-smensep (usr)
-sopmenitm (usr, gettext ("Search filter").."\\"..gettext ("Delete search filter"), table_cmnds ["sefidel"].." %[line:<"..gettext ("lre")..">]")
-smensep (usr)
-sopmenitm (usr, gettext ("Search filter").."\\"..gettext ("Add search filter exception entry"), table_cmnds ["sefiexadd"].." %[line:<"..gettext ("lre")..">]")
-sopmenitm (usr, gettext ("Search filter").."\\"..gettext ("Search filter exception list"), table_cmnds ["sefiexlist"])
-smensep (usr)
-sopmenitm (usr, gettext ("Search filter").."\\"..gettext ("Delete search filter exception entry"), table_cmnds ["sefiexdel"].." %[line:<"..gettext ("lre")..">]")
-end
+	-- search filter
+	if ucl >= table_sets ["mincommandclass"] then
+		sopmenitm (usr, gettext ("Search filter") .. "\\" .. gettext ("Add search filter"), table_cmnds ["sefiadd"] .. " %[line:<" .. gettext ("lre") .. ">] %[line:<" .. gettext ("priority") .. ">] %[line:<" .. gettext ("action") .. ">] %[line:<" .. gettext ("type") .. ">]")
+		sopmenitm (usr, gettext ("Search filter") .. "\\" .. gettext ("Search filter list"), table_cmnds ["sefilist"])
+		smensep (usr)
+		sopmenitm (usr, gettext ("Search filter") .. "\\" .. gettext ("Delete search filter"), table_cmnds ["sefidel"] .. " %[line:<" .. gettext ("lre") .. ">]")
+		smensep (usr)
+		sopmenitm (usr, gettext ("Search filter") .. "\\" .. gettext ("Add search filter exception entry"), table_cmnds ["sefiexadd"] .. " %[line:<" .. gettext ("lre") .. ">]")
+		sopmenitm (usr, gettext ("Search filter") .. "\\" .. gettext ("Search filter exception list"), table_cmnds ["sefiexlist"])
+		smensep (usr)
+		sopmenitm (usr, gettext ("Search filter") .. "\\" .. gettext ("Delete search filter exception entry"), table_cmnds ["sefiexdel"] .. " %[line:<" .. gettext ("lre") .. ">]")
+		smensep (usr)
+		sopmenitm (usr, gettext ("Search filter") .. "\\" .. gettext ("Search filter block list"), table_cmnds ["sefibllist"])
+		smensep (usr)
+		sopmenitm (usr, gettext ("Search filter") .. "\\" .. gettext ("Delete search filter block list entry"), table_cmnds ["sefibldel"] .. " %[line:<" .. gettext ("nick") .. ">]")
+	end
 
 	-- myinfo check
 	if ucl >= table_sets ["mincommandclass"] then
@@ -15230,6 +15298,19 @@ end
 					table_sefi = {}
 				end
 
+				ok = true
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0 " .. gettext ("or") .. " 1"))
+			end
+		else
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
+		end
+
+	----- ---- --- -- -
+
+	elseif tvar == "sefiblockdel" then
+		if num then
+			if setto == 0 or setto == 1 then
 				ok = true
 			else
 				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0 " .. gettext ("or") .. " 1"))
@@ -18118,13 +18199,15 @@ help = help.." "..optrig..table_cmnds ["antiexadd"].." <"..gettext ("lre").."> -
 help = help.." "..optrig..table_cmnds ["antiexlist"].." - "..gettext ("Antispam exception list").."\r\n"
 help = help.." "..optrig..table_cmnds ["antiexdel"].." <"..gettext ("lre").."> - "..gettext ("Delete antispam exception entry").."\r\n\r\n"
 
--- search filter
-help = help.." "..optrig..table_cmnds ["sefiadd"].." <"..gettext ("lre").."> <"..gettext ("priority").."> <"..gettext ("action").."> <"..gettext ("type").."> - "..gettext ("Add search filter").."\r\n"
-help = help.." "..optrig..table_cmnds ["sefilist"].." - "..gettext ("Search filter list").."\r\n"
-help = help.." "..optrig..table_cmnds ["sefidel"].." <"..gettext ("lre").."> - "..gettext ("Delete search filter").."\r\n"
-help = help.." "..optrig..table_cmnds ["sefiexadd"].." <"..gettext ("lre").."> - "..gettext ("Add search filter exception entry").."\r\n"
-help = help.." "..optrig..table_cmnds ["sefiexlist"].." - "..gettext ("Search filter exception list").."\r\n"
-help = help.." "..optrig..table_cmnds ["sefiexdel"].." <"..gettext ("lre").."> - "..gettext ("Delete search filter exception entry").."\r\n\r\n"
+	-- search filter
+	help = help .. " " .. optrig .. table_cmnds ["sefiadd"] .. " <" .. gettext ("lre") .. "> <" .. gettext ("priority") .. "> <" .. gettext ("action") .. "> <" .. gettext ("type") .. "> - " .. gettext ("Add search filter") .. "\r\n"
+	help = help .. " " .. optrig .. table_cmnds ["sefilist"] .. " - " .. gettext ("Search filter list") .. "\r\n"
+	help = help .. " " .. optrig .. table_cmnds ["sefidel"] .. " <" .. gettext ("lre") .. "> - " .. gettext ("Delete search filter") .. "\r\n"
+	help = help .. " " .. optrig .. table_cmnds ["sefiexadd"] .. " <" .. gettext ("lre") .. "> - " .. gettext ("Add search filter exception entry") .. "\r\n"
+	help = help .. " " .. optrig .. table_cmnds ["sefiexlist"] .. " - " .. gettext ("Search filter exception list") .. "\r\n"
+	help = help .. " " .. optrig .. table_cmnds ["sefiexdel"] .. " <" .. gettext ("lre") .. "> - " .. gettext ("Delete search filter exception entry") .. "\r\n"
+	help = help .. " " .. optrig .. table_cmnds ["sefibllist"] .. " - " .. gettext ("Search filter block list") .. "\r\n"
+	help = help .. " " .. optrig .. table_cmnds ["sefibldel"] .. " <" .. gettext ("nick") .. "> - " .. gettext ("Delete search filter block list entry") .. "\r\n\r\n"
 
 	-- myinfo check
 	help = help .. " " .. optrig .. table_cmnds ["myinfadd"] .. " <" .. gettext ("type") .. "> <\"" .. gettext ("lre") .. "\"> [\"" .. gettext ("time") .. "\"] [\"" .. gettext ("note") .. "\"] - " .. gettext ("Add MyINFO entry") .. "\r\n"
@@ -18529,10 +18612,11 @@ conf = conf.."\r\n [::] allowspamtoops = "..table_sets ["allowspamtoops"]
 conf = conf.."\r\n [::] checkcmdspam = "..table_sets ["checkcmdspam"]
 conf = conf.."\r\n [::] antikreason = "..table_sets ["antikreason"]
 conf = conf.."\r\n [::] antimessage = "..table_sets ["antimessage"]
-conf = conf.."\r\n"
-conf = conf.."\r\n [::] enablesearfilt = "..table_sets ["enablesearfilt"]
-conf = conf.."\r\n [::] sefireason = "..table_sets ["sefireason"]
-conf = conf.."\r\n [::] searfiltmsg = "..table_sets ["searfiltmsg"]
+	conf = conf .. "\r\n"
+	conf = conf .. "\r\n [::] enablesearfilt = " .. table_sets ["enablesearfilt"]
+	conf = conf .. "\r\n [::] sefiblockdel = " .. table_sets ["sefiblockdel"]
+	conf = conf .. "\r\n [::] sefireason = " .. table_sets ["sefireason"]
+	conf = conf .. "\r\n [::] searfiltmsg = " .. table_sets ["searfiltmsg"]
 	conf = conf .. "\r\n"
 	conf = conf .. "\r\n [::] avsearchint = " .. table_sets ["avsearchint"]
 	conf = conf .. "\r\n [::] avfilediff = " .. table_sets ["avfilediff"]
@@ -22303,7 +22387,7 @@ function sefiscan (nick, srch, cls, ip)
 			opsnotify (table_sets ["classnotisefi"], gettext (note):format (nick, ip .. tryipcc (ip, nick), cls, str))
 
 			if act == 1 then -- drop
-				opsnotify (table_sets ["classnotisefi"], gettext ("%s dropped due to bad search request."):format (nick))
+				opsnotify (table_sets ["classnotisefi"], gettext ("User dropped due to bad search request: %s"):format (nick))
 				VH:Disconnect (nick)
 
 			elseif act == 2 then -- kick
@@ -22315,10 +22399,10 @@ function sefiscan (nick, srch, cls, ip)
 				VH:KickUser (table_othsets ["sendfrom"], nick, rsn .. "     #_ban_" .. table_sets ["thirdacttime"])
 
 			elseif act == 4 then -- silent skip
-				opsnotify (table_sets ["classnotisefi"], gettext ("%s didn't get any search results."):format (nick))
+				opsnotify (table_sets ["classnotisefi"], gettext ("User didn't get any search results: %s"):format (nick))
 
 			elseif act == 6 then -- redirect
-				opsnotify (table_sets ["classnotisefi"], gettext ("%s redirected due to bad search request."):format (nick))
+				opsnotify (table_sets ["classnotisefi"], gettext ("User redirected due to bad search request: %s"):format (nick))
 				VH:SendToUser ("$ForceMove " .. table_sets ["sixthactaddr"] .. "|", nick)
 				VH:Disconnect (nick)
 
@@ -22326,13 +22410,14 @@ function sefiscan (nick, srch, cls, ip)
 				local rsn = table_sets ["sefireason"]:gsub ("%*", reprexpchars (str))
 				VH:KickUser (table_othsets ["sendfrom"], nick, rsn .. "     #_ban_" .. table_sets ["seventhacttime"])
 
-			elseif act == 8 then -- silent skip + block list
-				opsnotify (table_sets ["classnotisefi"], gettext ("%s added to search block list."):format (nick))
-				table_sefi [nick] = false
+			elseif act == 8 or act == 9 then -- block list
+				opsnotify (table_sets ["classnotisefi"], gettext ("User added to search block list: %s"):format (nick))
 
-			elseif act == 9 then -- block list
-				opsnotify (table_sets ["classnotisefi"], gettext ("%s added to search block list."):format (nick))
-				table_sefi [nick] = true
+				table_sefi [nick] = {
+					sil = (act == 8), -- silent
+					req = str,
+					num = 1
+				}
 			end
 
 			return true
