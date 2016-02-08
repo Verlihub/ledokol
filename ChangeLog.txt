@@ -2,10 +2,14 @@
 
 [  6] Fixed: Chat replacer feature now replaces all occurrences of an entry instead of first only
 [  6] Fixed: Possible error when unloading Lua plugin, report by KCAHDEP
+[ 11] Fixed: Search filter block list was never blocking
 [  5] Added: Support for new VH_OnParsedMsgSupports callback
 [  8] Added: Search filter actions 8 and 9 to block all next search requests from user, action 8 is silent
 [  9] Added: Chat replacer exception types, 0 = nick, 1 = IP and 2 = LRE, request by KCAHDEP
 [ 10] Added: Hub URL to user information when available
+[ 11] Added: sefiblockdel to delete user from search filter block list on logout
+[ 11] Added: sefibllist command to show users in search filter block list
+[ 11] Added: sefibldel command to delete users from search filter block list
 [  7] Removed: Infected user redirect to AVDB quarantine hub
 
 [ 2.8.8 :: 2015-11-29 ]
