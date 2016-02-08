@@ -1127,3 +1127,10 @@ Enabled right click menu item: %s|
 %s added to search block list.|
 Your search request is discarded due to previous forbidden search request.|
 Hub URL: %s|
+Search filter block list|
+Delete search filter block list entry|
+Search filter block list is empty.|
+Deleted search filter block list entry: %s|
+Couldn't delete search filter block list entry because not found: %s|
+Yes|
+No|
