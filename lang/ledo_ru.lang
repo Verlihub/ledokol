@@ -1127,3 +1127,10 @@ Enabled right click menu item: %s|Пункт меню правой кнопки 
 %s added to search block list.|%s добавлен в поисковый блок список.
 Your search request is discarded due to previous forbidden search request.|Ваш поисковый запрос заблокирован по причине ранее отправленного запрещенного поискового запроса.
 Hub URL: %s|Адрес хаба: %s
+Search filter block list|Список блокировки поискового фильтра
+Delete search filter block list entry|Удалить пункт из списка блокировки поискового фильтра
+Search filter block list is empty.|Список блокировки поискового фильтра пуст.
+Deleted search filter block list entry: %s|Удален пункт из списка блокировки поискового фильтра: %s
+Couldn't delete search filter block list entry because not found: %s|Не удалось удалить пункт из списка блокировки поискового фильтра потому что не найдено: %s
+Yes|Да
+No|Нет
