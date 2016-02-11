@@ -60,7 +60,7 @@ Doxtur, chaos, sphinx, Zorro, W1ZaRd, S0RiN, MaxFox, Krzychu,
 ---------------------------------------------------------------------
 
 ver_ledo = "2.8.9" -- ledokol version
-bld_ledo = "11" -- build number
+bld_ledo = "12" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -5735,7 +5735,8 @@ function VH_OnScriptCommand (name, data, plug, file)
 		local nick, line = data:match ("^<([^ ]+)> (.*)$")
 
 		if nick and line then
-			addmchistoryline (nick, nick, line)
+			nick = repnmdcoutchars (nick)
+			addmchistoryline (nick, nick, repnmdcoutchars (line))
 		end
 	end
 
@@ -8606,27 +8607,30 @@ function replchatmsg (nick, addr, class, data, flag)
 
 					for part in test:gmatch (item.d) do
 						local sos, eos = test:find (part, last, true)
-						local cont, expa = true, ""
 
-						if sos < 7 then
-							expa = test:sub (1, eos + 5)
-						else
-							expa = test:sub (sos - 5, eos + 5)
-						end
+						if sos and eos then
+							local cont, expa = true, ""
 
-						for _, exen in pairs (exli) do
-							if expa:match (exen) then
-								VH:SQLQuery ("update `" .. tbl_sql ["replex"] .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (exen) .. "'")
-								cont = false
-								break
+							if sos < 7 then
+								expa = test:sub (1, eos + 5)
+							else
+								expa = test:sub (sos - 5, eos + 5)
 							end
-						end
 
-						if cont then
-							local repl = reptextvars (item.r, (getcustnick (nick) or nick), back) -- dont replace % here
-							back = back:sub (1, sos - 1) .. repl .. back:sub (eos + 1)
-							test = test:sub (1, sos - 1) .. repl .. test:sub (eos + 1)
-							last = eos + # repl
+							for _, exen in pairs (exli) do
+								if expa:match (exen) then
+									VH:SQLQuery ("update `" .. tbl_sql ["replex"] .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (exen) .. "'")
+									cont = false
+									break
+								end
+							end
+
+							if cont then
+								local repl = reptextvars (item.r, (getcustnick (nick) or nick), back) -- dont replace % here
+								back = back:sub (1, sos - 1) .. repl .. back:sub (eos + 1)
+								test = test:sub (1, sos - 1) .. repl .. test:sub (eos + 1)
+								last = sos + # repl
+							end
 						end
 					end
 
