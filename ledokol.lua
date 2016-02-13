@@ -60,7 +60,7 @@ Doxtur, chaos, sphinx, Zorro, W1ZaRd, S0RiN, MaxFox, Krzychu,
 ---------------------------------------------------------------------
 
 ver_ledo = "2.8.9" -- ledokol version
-bld_ledo = "12" -- build number
+bld_ledo = "13" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -3668,42 +3668,42 @@ elseif string.find (data, "^"..table_othsets ["optrig"].."set%s+%[%S+%]%s+%S+ .*
 		donotifyextconfig (nick, string.sub (data, string.len ("set") + 3, -1), ucl)
 	end
 
------ ---- --- -- -
+	----- ---- --- -- -
 
-elseif string.find (data, "^"..table_othsets ["optrig"].."set%s+%S+ .*$") then
-	if ucl >= 5 then
-		sethubconf (string.sub (data, string.len ("set") + 3, -1))
+	elseif data:match ("^" .. table_othsets ["optrig"] .. "set%s+%S+%s+.*$") then
+		if ucl >= 5 then
+			sethubconf (data:sub (string.len ("set") + 3))
 
-		if table_sets ["classnoticonfig"] == 11 then
-			donotifycmd (nick, data, 0, ucl)
+			if table_sets ["classnoticonfig"] == 11 then
+				donotifycmd (nick, data, 0, ucl)
+			end
+
+			donotifyconfig (nick, data:sub (string.len ("set") + 3), ucl)
 		end
 
-		donotifyconfig (nick, string.sub (data, string.len ("set") + 3, -1), ucl)
-	end
+	----- ---- --- -- -
 
------ ---- --- -- -
+	elseif data:match ("^" .. table_othsets ["optrig"] .. "=%s+%[%S+%]%s+%S+%s+.*$") then
+		if ucl >= 5 then
+			if table_sets ["classnoticonfig"] == 11 then
+				donotifycmd (nick, data, 0, ucl)
+			end
 
-elseif string.find (data, "^"..table_othsets ["optrig"].."=%s+%[%S+%]%s+%S+ .*$") then
-	if ucl >= 5 then
-		if table_sets ["classnoticonfig"] == 11 then
-			donotifycmd (nick, data, 0, ucl)
+			donotifyextconfig (nick, data:sub (string.len ("=") + 3), ucl)
 		end
 
-		donotifyextconfig (nick, string.sub (data, string.len ("=") + 3, -1), ucl)
-	end
+	----- ---- --- -- -
 
------ ---- --- -- -
+	elseif data:match ("^" .. table_othsets ["optrig"] .. "=%s+%S+%s+.*$") then
+		if ucl >= 5 then
+			sethubconf (data:sub (string.len ("=") + 3))
 
-elseif string.find (data, "^"..table_othsets ["optrig"].."=%s+%S+ .*$") then
-	if ucl >= 5 then
-		sethubconf (string.sub (data, string.len ("=") + 3, -1))
+			if table_sets ["classnoticonfig"] == 11 then
+				donotifycmd (nick, data, 0, ucl)
+			end
 
-		if table_sets ["classnoticonfig"] == 11 then
-			donotifycmd (nick, data, 0, ucl)
+			donotifyconfig (nick, data:sub (string.len ("=") + 3), ucl)
 		end
-
-		donotifyconfig (nick, string.sub (data, string.len ("=") + 3, -1), ucl)
-	end
 
 	----- ---- --- -- -
 
@@ -14875,9 +14875,10 @@ end
 
 ----- ---- --- -- -
 
-function sethubconf (line)
-	local _, _, cname, cvalu = string.find (line, "^%s*(%S+) (.*)$")
-	local _, _, nospval = string.find (cvalu, "^%s*(%S+)%s*$") -- truncate spaces
+function sethubconf (line) -- todo: make use of OnSetConfig instead, this wont help in all cases
+	local cname, cvalu = line:match ("^%s*(%S+)%s+(.*)$")
+	local nospval = cvalu:match ("^%s*(%S+)%s*$") -- truncate spaces
+	nospval = nospval or ""
 
 	if cname == "hub_security" then
 		table_othsets ["botnick"] = nospval
@@ -14896,8 +14897,8 @@ function sethubconf (line)
 	elseif cname == "cmd_start_op" then
 		table_othsets ["optrig"] = "["
 
-		for pos = 1, string.len (nospval) do
-			table_othsets ["optrig"] = table_othsets ["optrig"] .. "%" .. string.sub (nospval, pos, pos)
+		for pos = 1, # nospval do
+			table_othsets ["optrig"] = table_othsets ["optrig"] .. "%" .. nospval:sub (pos, pos)
 		end
 
 		table_othsets ["optrig"] = table_othsets ["optrig"] .. "]"
@@ -14905,8 +14906,8 @@ function sethubconf (line)
 	elseif cname == "cmd_start_user" then
 		table_othsets ["ustrig"] = "["
 
-		for pos = 1, string.len (nospval) do
-			table_othsets ["ustrig"] = table_othsets ["ustrig"] .. "%" .. string.sub (nospval, pos, pos)
+		for pos = 1, # nospval do
+			table_othsets ["ustrig"] = table_othsets ["ustrig"] .. "%" .. nospval:sub (pos, pos)
 		end
 
 		table_othsets ["ustrig"] = table_othsets ["ustrig"] .. "]"
