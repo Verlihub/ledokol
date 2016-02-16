@@ -60,7 +60,7 @@ Doxtur, chaos, sphinx, Zorro, W1ZaRd, S0RiN, MaxFox, Krzychu,
 ---------------------------------------------------------------------
 
 ver_ledo = "2.8.9" -- ledokol version
-bld_ledo = "13" -- build number
+bld_ledo = "14" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -1361,7 +1361,7 @@ function Main (file)
 	end
 
 	if table_sets ["addspecialver"] == 1 then -- special version
-		VH:SetConfig ("config", "hub_version_special", gettext ("Powered by %s"):format ("Ledokol " .. ver_ledo .. "." .. bld_ledo))
+		VH:SetConfig ((VH.ConfName or "config"), "hub_version_special", gettext ("Powered by %s"):format ("Ledokol " .. ver_ledo .. "." .. bld_ledo))
 	end
 
 	if table_sets ["avsearchint"] > 0 then -- antivirus search
@@ -1448,6 +1448,16 @@ function VH_OnCloseConn (addr, nick)
 		--return 1
 	--end
 
+	return 1
+end
+
+----- ---- --- -- -
+
+function VH_OnSetConfig (nick, conf, var, val_new, val_old, val_type)
+	local cls = getclass (nick)
+	sethubconf (nick, cls, var, val_new)
+	opsnotify (table_sets ["classnoticonfig"], gettext ("%s with class %d changed configuration variable %s.%s: %s => %s"):format (nick, cls, conf, var, val_old, val_new))
+	oprankaccept (nick, cls)
 	return 1
 end
 
@@ -3202,7 +3212,7 @@ elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["ledostats
 			end
 
 			if table_sets ["addspecialver"] == 1 then
-				VH:SetConfig ("config", "hub_version_special", "")
+				VH:SetConfig ((VH.ConfName or "config"), "hub_version_special", "")
 			end
 
 			droptables () -- drop all tables
@@ -3657,52 +3667,64 @@ elseif string.find (data, "^"..table_othsets ["optrig"].."topic $") or string.fi
 			donotifycmd (nick, data, 0, ucl)
 		end
 
------ ---- --- -- -
-
-elseif string.find (data, "^"..table_othsets ["optrig"].."set%s+%[%S+%]%s+%S+ .*$") then
-	if ucl >= 5 then
-		if table_sets ["classnoticonfig"] == 11 then
-			donotifycmd (nick, data, 0, ucl)
-		end
-
-		donotifyextconfig (nick, string.sub (data, string.len ("set") + 3, -1), ucl)
-	end
-
 	----- ---- --- -- -
 
-	elseif data:match ("^" .. table_othsets ["optrig"] .. "set%s+%S+%s+.*$") then
+	elseif data:match ("^" .. table_othsets.optrig .. "set%s+%[%S+%]%s+%S+%s+.*$") then
 		if ucl >= 5 then
-			sethubconf (data:sub (string.len ("set") + 3))
+			if not VH_OnSetConfig then
+				donotifyextconfig (nick, data:sub (string.len ("set") + 3), ucl)
+			end
 
 			if table_sets ["classnoticonfig"] == 11 then
 				donotifycmd (nick, data, 0, ucl)
 			end
-
-			donotifyconfig (nick, data:sub (string.len ("set") + 3), ucl)
 		end
 
 	----- ---- --- -- -
 
-	elseif data:match ("^" .. table_othsets ["optrig"] .. "=%s+%[%S+%]%s+%S+%s+.*$") then
+	elseif data:match ("^" .. table_othsets.optrig .. "=%s+%[%S+%]%s+%S+%s+.*$") then
 		if ucl >= 5 then
+			if not VH_OnSetConfig then
+				donotifyextconfig (nick, data:sub (string.len ("=") + 3), ucl)
+			end
+
 			if table_sets ["classnoticonfig"] == 11 then
 				donotifycmd (nick, data, 0, ucl)
 			end
-
-			donotifyextconfig (nick, data:sub (string.len ("=") + 3), ucl)
 		end
 
 	----- ---- --- -- -
 
-	elseif data:match ("^" .. table_othsets ["optrig"] .. "=%s+%S+%s+.*$") then
+	elseif data:match ("^" .. table_othsets.optrig .. "set%s+%S+%s+.*$") then
 		if ucl >= 5 then
-			sethubconf (data:sub (string.len ("=") + 3))
+			if not VH_OnSetConfig then
+				local var, val = data:sub (string.len ("set") + 3):match ("^%s*(%S+)%s+(.*)$")
+				val = val:match ("^%s*(%S+)%s*$") -- truncate spaces
+				val = val or ""
+				sethubconf (nick, ucl, var, val)
+				donotifyconfig (nick, var .. " " .. val, ucl)
+			end
 
 			if table_sets ["classnoticonfig"] == 11 then
 				donotifycmd (nick, data, 0, ucl)
 			end
+		end
 
-			donotifyconfig (nick, data:sub (string.len ("=") + 3), ucl)
+	----- ---- --- -- -
+
+	elseif data:match ("^" .. table_othsets.optrig .. "=%s+%S+%s+.*$") then
+		if ucl >= 5 then
+			if not VH_OnSetConfig then
+				local var, val = data:sub (string.len ("=") + 3):match ("^%s*(%S+)%s+(.*)$")
+				val = val:match ("^%s*(%S+)%s*$") -- truncate spaces
+				val = val or ""
+				sethubconf (nick, ucl, var, val)
+				donotifyconfig (nick, var .. " " .. val, ucl)
+			end
+
+			if table_sets ["classnoticonfig"] == 11 then
+				donotifycmd (nick, data, 0, ucl)
+			end
 		end
 
 	----- ---- --- -- -
@@ -5813,7 +5835,7 @@ function VH_OnParsedMsgPM (from, data, to)
 
 	----- ---- --- -- -
 
-	if to == table_othsets ["opchatnick"] then -- operator chat
+	if table_othsets ["opchatnick"] ~= "" and to == table_othsets ["opchatnick"] then -- operator chat
 		if fcls >= 3 then
 			if data:match ("^" .. table_othsets ["optrig"] .. table_cmnds ["ophistory"] .. " %d+$") then
 				if table_sets ["histlimit"] > 0 then
@@ -14159,12 +14181,12 @@ end
 ----- ---- --- -- -
 
 function donotifyconfig (nick, line, cls)
-	local _, _, var, val = string.find (line, "^%s*(%S+) (.*)$")
+	local var, val = line:match ("^%s*(%S+)%s+(.*)$")
 	local oval = getconfig (var)
-	--local _, rows = VH:SQLQuery ("select `var` from `SetupList` where `file` = 'config' and `var` = '"..repsqlchars (var).."' limit 1")
+	--local _, rows = VH:SQLQuery ("select `var` from `SetupList` where `file` = '" .. (VH.ConfName or "config") .. "' and `var` = '" .. repsqlchars (var) .. "' limit 1")
 
 	if oval then
-		opsnotify (table_sets ["classnoticonfig"], string.format (gettext ("%s with class %d changed configuration variable %s: %s => %s"), nick, cls, var, oval, val))
+		opsnotify (table_sets ["classnoticonfig"], gettext ("%s with class %d changed configuration variable %s: %s => %s"):format (nick, cls, var, oval, val))
 		oprankaccept (nick, cls)
 	end
 end
@@ -14172,8 +14194,8 @@ end
 ----- ---- --- -- -
 
 function donotifyextconfig (nick, line, cls)
-	local _, _, cfg, var, val = string.find (line, "^%s*%[(%S+)%]%s+(%S+) (.*)$")
-	opsnotify (table_sets ["classnoticonfig"], string.format (gettext ("%s with class %d changed configuration variable %s: %s => %s"), nick, cls, var.." @ "..cfg, (getextconfig (cfg, var) or ""), val))
+	local cfg, var, val = line:match ("^%s*%[(%S+)%]%s+(%S+)%s+(.*)$")
+	opsnotify (table_sets ["classnoticonfig"], gettext ("%s with class %d changed configuration variable %s: %s => %s"):format (nick, cls, var .. " @ " .. cfg, (getextconfig (cfg, var) or ""), val))
 	oprankaccept (nick, cls)
 end
 
@@ -14875,42 +14897,50 @@ end
 
 ----- ---- --- -- -
 
-function sethubconf (line) -- todo: make use of OnSetConfig instead, this wont help in all cases
-	local cname, cvalu = line:match ("^%s*(%S+)%s+(.*)$")
-	local nospval = cvalu:match ("^%s*(%S+)%s*$") -- truncate spaces
-	nospval = nospval or ""
+function sethubconf (nick, ucl, var, val)
+	if var == "hub_security" then
+		if val ~= "" then
+			table_othsets ["botnick"] = val
 
-	if cname == "hub_security" then
-		table_othsets ["botnick"] = nospval
-
-		if table_sets ["addledobot"] == 0 then
-			table_othsets ["sendfrom"] = nospval
+			if table_sets ["addledobot"] == 0 then
+				table_othsets ["sendfrom"] = val
+			end
 		end
 
-	elseif cname == "opchat_name" then
-		table_othsets ["opchatnick"] = nospval
-
-		if table_sets ["addledobot"] == 0 and table_sets ["useextrafeed"] == 0 then
-			table_othsets ["feednick"] = nospval
+	elseif var == "opchat_name" then
+		if val == "" then
+			if table_sets ["addledobot"] == 0 then
+				setledoconf (nick, ucl, "addledobot 1")
+			end
+		else
+			if table_sets ["addledobot"] == 0 and table_sets ["useextrafeed"] == 0 then
+				table_othsets ["feednick"] = val
+			end
 		end
 
-	elseif cname == "cmd_start_op" then
-		table_othsets ["optrig"] = "["
+		table_othsets ["opchatnick"] = val
 
-		for pos = 1, # nospval do
-			table_othsets ["optrig"] = table_othsets ["optrig"] .. "%" .. nospval:sub (pos, pos)
+	elseif var == "cmd_start_op" then
+		if val ~= "" then
+			table_othsets ["optrig"] = "["
+
+			for pos = 1, # val do
+				table_othsets ["optrig"] = table_othsets ["optrig"] .. "%" .. val:sub (pos, pos)
+			end
+
+			table_othsets ["optrig"] = table_othsets ["optrig"] .. "]"
 		end
 
-		table_othsets ["optrig"] = table_othsets ["optrig"] .. "]"
+	elseif var == "cmd_start_user" then
+		if val ~= "" then
+			table_othsets ["ustrig"] = "["
 
-	elseif cname == "cmd_start_user" then
-		table_othsets ["ustrig"] = "["
+			for pos = 1, # val do
+				table_othsets ["ustrig"] = table_othsets ["ustrig"] .. "%" .. val:sub (pos, pos)
+			end
 
-		for pos = 1, # nospval do
-			table_othsets ["ustrig"] = table_othsets ["ustrig"] .. "%" .. nospval:sub (pos, pos)
+			table_othsets ["ustrig"] = table_othsets ["ustrig"] .. "]"
 		end
-
-		table_othsets ["ustrig"] = table_othsets ["ustrig"] .. "]"
 	end
 end
 
@@ -14982,9 +15012,14 @@ end
 ----- ---- --- -- -
 
 function setledoconf (nick, ucls, line)
-local _, _, tvar, setto = string.find (line, "^(%S+) (.*)$")
-local num, ok = true, false
-if tonumber (setto) then setto = tonumber (setto) else num = false end
+	local tvar, setto = line:match ("^(%S+) (.*)$")
+	local num, ok = true, false
+
+	if tonumber (setto) then
+		setto = tonumber (setto)
+	else
+		num = false
+	end
 
 	----- ---- --- -- -
 
@@ -17995,35 +18030,39 @@ else
 commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 end
 
------ ---- --- -- -
+	----- ---- --- -- -
 
-elseif tvar == "addledobot" then
-if num == true then
-if (setto == 0) or (setto == 1) then
-ok = true
+	elseif tvar == "addledobot" then
+		if num == true then
+			if setto == 0 or setto == 1 then
+				ok = true
 
-if table_sets [tvar] ~= setto then
-if setto == 0 then
-if table_sets ["useextrafeed"] == 0 then table_othsets ["feednick"] = table_othsets ["opchatnick"] end
-table_othsets ["sendfrom"] = table_othsets ["botnick"]
-delhubrobot (table_sets ["ledobotnick"])
-else
+				if table_sets [tvar] ~= setto then
+					if setto == 0 then
+						if table_sets ["useextrafeed"] == 0 then
+							table_othsets ["feednick"] = table_othsets ["opchatnick"]
+						end
 
-addhubrobot (table_sets ["ledobotnick"], table_othsets ["ledobotdesc"]..table_othsets ["ledobottag"], 2, table_sets ["ledobotmail"], getownsize (true, table_sets ["ledobotsize"]))
-if table_sets ["useextrafeed"] == 0 then table_othsets ["feednick"] = table_sets ["ledobotnick"] end
-table_othsets ["sendfrom"] = table_sets ["ledobotnick"]
-end
-end
+						table_othsets ["sendfrom"] = table_othsets ["botnick"]
+						delhubrobot (table_sets ["ledobotnick"])
+					else
+						addhubrobot (table_sets ["ledobotnick"], table_othsets ["ledobotdesc"] .. table_othsets ["ledobottag"], 2, table_sets ["ledobotmail"], getownsize (true, table_sets ["ledobotsize"]))
 
-else
-commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 "..gettext ("or").." 1"))
-end
+						if table_sets ["useextrafeed"] == 0 then
+							table_othsets ["feednick"] = table_sets ["ledobotnick"]
+						end
 
-else
-commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
-end
+						table_othsets ["sendfrom"] = table_sets ["ledobotnick"]
+					end
+				end
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0 " .. gettext ("or") .. " 1"))
+			end
+		else
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
+		end
 
------ ---- --- -- -
+	----- ---- --- -- -
 
 	elseif tvar == "ledobotsize" then
 		if num == true then
@@ -18047,9 +18086,9 @@ end
 		if num then
 			if setto == 0 or setto == 1 then
 				if setto ~= table_sets [tvar] and setto == 0 then
-					VH:SetConfig ("config", "hub_version_special", "")
+					VH:SetConfig ((VH.ConfName or "config"), "hub_version_special", "")
 				elseif setto == 1 then
-					VH:SetConfig ("config", "hub_version_special", gettext ("Powered by %s"):format ("Ledokol " .. ver_ledo .. "." .. bld_ledo))
+					VH:SetConfig ((VH.ConfName or "config"), "hub_version_special", gettext ("Powered by %s"):format ("Ledokol " .. ver_ledo .. "." .. bld_ledo))
 				end
 
 				ok = true
@@ -20920,9 +20959,9 @@ end
 ----- ---- --- -- -
 
 function getconfig (var)
-	local _, cfg = VH:GetConfig ("config", var)
+	local ok, cfg = VH:GetConfig ((VH.ConfName or "config"), var)
 
-	if cfg then
+	if ok and cfg then
 		if cfg == "Error calling GetConfig API" then
 			return nil
 		else
