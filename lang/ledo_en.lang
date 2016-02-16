@@ -1134,3 +1134,4 @@ Deleted search filter block list entry: %s|
 Couldn't delete search filter block list entry because not found: %s|
 Yes|
 No|
+%s with class %d changed configuration variable %s.%s: %s => %s|
