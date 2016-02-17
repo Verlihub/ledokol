@@ -1,0 +1,3407 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Ledokol\n"
+"Project-Version: 2.8.9\n"
+"Report-Msgid-Bugs-To: RoLex <webmaster@feardc.net>\n"
+"POT-Creation-Date: 2016-02-17 12:36+0200\n"
+"PO-Revision-Date: 2016-02-17 12:36+0200\n"
+"Last-Translator: RoLex <webmaster@feardc.net>\n"
+"Language-Team: RoLex <webmaster@feardc.net>\n"
+"Language: en_GB\n"
+"Plural-Forms: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Current topic: %s"
+msgstr ""
+
+msgid "Current topic set by %s: %s"
+msgstr ""
+
+msgid "This operation might take very long time depending on how much is going to be removed, please be patient."
+msgstr ""
+
+msgid "days"
+msgstr ""
+
+msgid "%s with class %d deleted %d IP logger plugin entries older than %d days."
+msgstr ""
+
+msgid "%s with class %d deleted %d unbans older than %d days."
+msgstr ""
+
+msgid "%s with class %d deleted %d bans older than %d days."
+msgstr ""
+
+msgid "%s with class %d deleted %d kicks older than %d days."
+msgstr ""
+
+msgid "I'm probably away. State your business and I might answer later if you're lucky."
+msgstr ""
+
+msgid "Perform script update"
+msgstr ""
+
+msgid "Deleted %d main chat history messages."
+msgstr ""
+
+msgid "There are no main chat history messages to remove."
+msgstr ""
+
+msgid "Deleted %d operator chat history messages."
+msgstr ""
+
+msgid "There are no operator chat history messages to remove."
+msgstr ""
+
+msgid "%s with class %d deleted %d main chat history messages."
+msgstr ""
+
+msgid "Unable to connect to target server. Please try again later."
+msgstr ""
+
+msgid "Last %d main chat messages"
+msgstr ""
+
+msgid "Main chat history is empty."
+msgstr ""
+
+msgid "%s is now known as: %s"
+msgstr ""
+
+msgid "Last %d operator chat messages"
+msgstr ""
+
+msgid "Operator chat history is empty."
+msgstr ""
+
+msgid "Valid priority is a number from %d to %d."
+msgstr ""
+
+msgid "You are using latest version of %s, no update is required."
+msgstr ""
+
+msgid "Why would you send offline message to yourself?"
+msgstr ""
+
+msgid "User %s is online. Sending message directly."
+msgstr ""
+
+msgid "Your offline message stored for user: %s"
+msgstr ""
+
+msgid "%s with IP %s and class %d sent offline message."
+msgstr ""
+
+msgid "priority"
+msgstr ""
+
+msgid "Offline"
+msgstr ""
+
+msgid "Online"
+msgstr ""
+
+msgid "I sent offline message to you on %s"
+msgstr ""
+
+msgid "My current status"
+msgstr ""
+
+msgid "%s with IP %s and class %d received offline messages."
+msgstr ""
+
+msgid "Stored offline messages"
+msgstr ""
+
+msgid "Offline message list is empty."
+msgstr ""
+
+msgid "Deleted %d offline messages."
+msgstr ""
+
+msgid "Couldn't delete offline messages because not found: %s"
+msgstr ""
+
+msgid "%s with class %d deleted all offline messages."
+msgstr ""
+
+msgid "There are no offline messages to remove."
+msgstr ""
+
+msgid "No topic is set."
+msgstr ""
+
+msgid "%s with IP %s and class %d allowed due to forbidden nick exception: %s"
+msgstr ""
+
+msgid "message"
+msgstr ""
+
+msgid "%s with IP %s and class %d allowed due to forbidden description exception: %s"
+msgstr ""
+
+msgid "User you're trying to kick or redirect is protected: %s"
+msgstr ""
+
+msgid "%s with IP %s and class %d allowed due to forbidden tag exception: %s"
+msgstr ""
+
+msgid "type"
+msgstr ""
+
+msgid "%s with IP %s and class %d allowed due to forbidden connection type exception: %s"
+msgstr ""
+
+msgid "%s with class %d changed configuration variable %s: %s => %s"
+msgstr ""
+
+msgid "%s with IP %s and class %d allowed due to forbidden email exception: %s"
+msgstr ""
+
+msgid "%s received own message."
+msgstr ""
+
+msgid "%s with IP %s and class %d allowed due to forbidden share size exception: %s"
+msgstr ""
+
+msgid "Deleted %d releases from category: %s"
+msgstr ""
+
+msgid "Why would you want to set empty topic?"
+msgstr ""
+
+msgid "Modified forbidden nick with ban time %s: %s"
+msgstr ""
+
+msgid "Added forbidden nick with ban time %s: %s"
+msgstr ""
+
+msgid "Modified forbidden description with ban time %s: %s"
+msgstr ""
+
+msgid "Added forbidden description with ban time %s: %s"
+msgstr ""
+
+msgid "Modified forbidden tag with ban time %s: %s"
+msgstr ""
+
+msgid "Added forbidden tag with ban time %s: %s"
+msgstr ""
+
+msgid "Modified forbidden connection type with ban time %s: %s"
+msgstr ""
+
+msgid "Added forbidden connection type with ban time %s: %s"
+msgstr ""
+
+msgid "Modified forbidden email with ban time %s: %s"
+msgstr ""
+
+msgid "Added forbidden email with ban time %s: %s"
+msgstr ""
+
+msgid "Modified forbidden share size with ban time %s: %s"
+msgstr ""
+
+msgid "Added forbidden share size with ban time %s: %s"
+msgstr ""
+
+msgid "Couldn't add MyINFO exception because already exists: %s"
+msgstr ""
+
+msgid "Added MyINFO exception: %s"
+msgstr ""
+
+msgid "and"
+msgstr ""
+
+msgid "Deleted forbidden nick: %s"
+msgstr ""
+
+msgid "Couldn't delete forbidden nick because not found: %s"
+msgstr ""
+
+msgid "Deleted forbidden description: %s"
+msgstr ""
+
+msgid "Couldn't delete forbidden description because not found: %s"
+msgstr ""
+
+msgid "Deleted forbidden tag: %s"
+msgstr ""
+
+msgid "Couldn't delete forbidden tag because not found: %s"
+msgstr ""
+
+msgid "Deleted forbidden connection type: %s"
+msgstr ""
+
+msgid "Couldn't delete forbidden connection type because not found: %s"
+msgstr ""
+
+msgid "Deleted forbidden email: %s"
+msgstr ""
+
+msgid "Couldn't delete forbidden email because not found: %s"
+msgstr ""
+
+msgid "Deleted forbidden share size: %s"
+msgstr ""
+
+msgid "Couldn't delete forbidden share size because not found: %s"
+msgstr ""
+
+msgid "Deleted MyINFO exception: %s"
+msgstr ""
+
+msgid "Couldn't delete MyINFO exception because not found: %s"
+msgstr ""
+
+msgid "Forbidden nick list"
+msgstr ""
+
+msgid "Forbidden nick list is empty."
+msgstr ""
+
+msgid "Forbidden description list"
+msgstr ""
+
+msgid "Forbidden description list is empty."
+msgstr ""
+
+msgid "Forbidden tag list"
+msgstr ""
+
+msgid "Forbidden tag list is empty."
+msgstr ""
+
+msgid "Forbidden connection type list"
+msgstr ""
+
+msgid "Forbidden connection type list is empty."
+msgstr ""
+
+msgid "Forbidden email list"
+msgstr ""
+
+msgid "Forbidden email list is empty."
+msgstr ""
+
+msgid "Forbidden share size list"
+msgstr ""
+
+msgid "Forbidden share size list is empty."
+msgstr ""
+
+msgid "MyINFO exception list"
+msgstr ""
+
+msgid "MyINFO exception list is empty."
+msgstr ""
+
+msgid "Deleted %d rows: %s"
+msgstr ""
+
+msgid "Known types are: %s"
+msgstr ""
+
+msgid "No rows to remove: %s"
+msgstr ""
+
+msgid "date"
+msgstr ""
+
+msgid "%s with IP %s and class %d used following command: %s"
+msgstr ""
+
+msgid "context"
+msgstr ""
+
+msgid "Deleted from chat rank list: %s"
+msgstr ""
+
+msgid "Not found in chat rank list: %s"
+msgstr ""
+
+msgid "Deleted from operator rank list: %s"
+msgstr ""
+
+msgid "Not found in operator rank list: %s"
+msgstr ""
+
+msgid "Antispam"
+msgstr ""
+
+msgid "Your chat rank is: %d"
+msgstr ""
+
+msgid "You have to write something in main chat to get started."
+msgstr ""
+
+msgid "Custom nick list is empty."
+msgstr ""
+
+msgid "Total share rank size: %s"
+msgstr ""
+
+msgid "Your operator rank is: %d"
+msgstr ""
+
+msgid "You have to do some operator actions to get started."
+msgstr ""
+
+msgid "Top %d chat rankers"
+msgstr ""
+
+msgid "Chat rank list is empty."
+msgstr ""
+
+msgid "Top %d operator rankers"
+msgstr ""
+
+msgid "Operator rank list is empty."
+msgstr ""
+
+msgid "string"
+msgstr ""
+
+msgid "No user results found."
+msgstr ""
+
+msgid "Showing %d user log results"
+msgstr ""
+
+msgid "Size of user log table: %d [ %s: %d @ %s ]"
+msgstr ""
+
+msgid "Add protection entry"
+msgstr ""
+
+msgid "Delete protection entry"
+msgstr ""
+
+msgid "flags"
+msgstr ""
+
+msgid "%s dropped due to bad search request."
+msgstr ""
+
+msgid "This command is either disabled or you don't have access to it."
+msgstr ""
+
+msgid "Deleted antispam entry: %s"
+msgstr ""
+
+msgid "Couldn't delete antispam entry because not found: %s"
+msgstr ""
+
+msgid "Antispam list"
+msgstr ""
+
+msgid "Antispam list is empty."
+msgstr ""
+
+msgid "Couldn't add antispam exception entry because already exists: %s"
+msgstr ""
+
+msgid "Added antispam exception entry: %s"
+msgstr ""
+
+msgid "Deleted antispam exception entry: %s"
+msgstr ""
+
+msgid "Couldn't delete antispam exception entry because not found: %s"
+msgstr ""
+
+msgid "Antispam exception list"
+msgstr ""
+
+msgid "Antispam exception list is empty."
+msgstr ""
+
+msgid "The user you're trying to send offline message to is a bot. Message is discarded."
+msgstr ""
+
+msgid "You can't start at user number %d when you only have %d accounts with class %d."
+msgstr ""
+
+msgid "Showing %d out of total %d accounts with class %d starting at user number %d"
+msgstr ""
+
+msgid "There are no accounts with class: %d"
+msgstr ""
+
+msgid "Known classes are: %s"
+msgstr ""
+
+msgid "%s with class %d sent say message: <%s> %s"
+msgstr ""
+
+msgid "%s with class %d had bad luck sending say message: <%s> %s"
+msgstr ""
+
+msgid "You can't talk from nick whose class is higher or equals your own."
+msgstr ""
+
+msgid "%s with IP %s and class %d kicked: <%s> %s"
+msgstr ""
+
+msgid "%s with class %d deleted %d statistics plugin entries older than %d days."
+msgstr ""
+
+msgid "offset"
+msgstr ""
+
+msgid "order"
+msgstr ""
+
+msgid "%s didn't get any search results."
+msgstr ""
+
+msgid "Redirected %s with IP %s and class %d to %s: <%s> %s"
+msgstr ""
+
+msgid "Unknown protocol command from %s with IP %s and class %d: %s"
+msgstr ""
+
+msgid "Custom nick list"
+msgstr ""
+
+msgid "%s operator commands"
+msgstr ""
+
+msgid "Add antispam entry"
+msgstr ""
+
+msgid "Showing last %d lines out of total %d found in %s file"
+msgstr ""
+
+msgid "Delete antispam entry"
+msgstr ""
+
+msgid "Add antispam exception entry"
+msgstr ""
+
+msgid "Delete antispam exception entry"
+msgstr ""
+
+msgid "Add MyINFO entry"
+msgstr ""
+
+msgid "Delete MyINFO entry"
+msgstr ""
+
+msgid "MyINFO list"
+msgstr ""
+
+msgid "List of registered users by class"
+msgstr ""
+
+msgid "Speak from other nick"
+msgstr ""
+
+msgid "Remove user or word from rank list"
+msgstr ""
+
+msgid "%s with class %d deleted %d user log entries older than %d days."
+msgstr ""
+
+msgid "List stored offline messages"
+msgstr ""
+
+msgid "Delete offline messages by date"
+msgstr ""
+
+msgid "Delete all offline messages"
+msgstr ""
+
+msgid "class"
+msgstr ""
+
+msgid "Clean up tables"
+msgstr ""
+
+msgid "Operator chat history"
+msgstr ""
+
+msgid "Delete all history messages"
+msgstr ""
+
+msgid "Your operator rank"
+msgstr ""
+
+msgid "Script configuration variables"
+msgstr ""
+
+msgid "Change configuration variable"
+msgstr ""
+
+msgid "nick"
+msgstr ""
+
+msgid "This list of commands"
+msgstr ""
+
+msgid "%s user commands"
+msgstr ""
+
+msgid "Current topic"
+msgstr ""
+
+msgid "Your chat rank"
+msgstr ""
+
+msgid "You're not allowed to send private messages."
+msgstr ""
+
+msgid "Unknown"
+msgstr ""
+
+msgid "identifier"
+msgstr ""
+
+msgid "Offline message to user"
+msgstr ""
+
+msgid "Main chat history"
+msgstr ""
+
+msgid "%s statistics"
+msgstr ""
+
+msgid "Script version: %s"
+msgstr ""
+
+msgid "Total chat rank points: %d"
+msgstr ""
+
+msgid "Total operator rank points: %d"
+msgstr ""
+
+msgid "Average message count per user: %.2f"
+msgstr ""
+
+msgid "lre"
+msgstr ""
+
+msgid "action"
+msgstr ""
+
+msgid "Changed configuration variable %s: %s => %s"
+msgstr ""
+
+msgid "Configuration variable %s can only be set to: %s"
+msgstr ""
+
+msgid "or"
+msgstr ""
+
+msgid "Configuration variable %s must be a number."
+msgstr ""
+
+msgid "to"
+msgstr ""
+
+msgid "Unknown configuration variable: %s"
+msgstr ""
+
+msgid "%s version: %s"
+msgstr ""
+
+msgid "Not installed"
+msgstr ""
+
+msgid "%s dropped due to spam."
+msgstr ""
+
+msgid "variable"
+msgstr ""
+
+msgid "value"
+msgstr ""
+
+msgid "minutes"
+msgstr ""
+
+msgid "%s library version: %s"
+msgstr ""
+
+msgid "Reorder right click menu item"
+msgstr ""
+
+msgid "lines"
+msgstr ""
+
+msgid "Couldn't add rank exception because already exists: %s"
+msgstr ""
+
+msgid "Added rank exception: %s"
+msgstr ""
+
+msgid "Deleted rank exception: %s"
+msgstr ""
+
+msgid "Couldn't delete rank exception because not found: %s"
+msgstr ""
+
+msgid "Rank exception list"
+msgstr ""
+
+msgid "Rank exception list is empty."
+msgstr ""
+
+msgid "Add rank exception"
+msgstr ""
+
+msgid "Delete rank exception"
+msgstr ""
+
+msgid "In order to use this feature you must turn off registered users list cache. Do it by setting hub configuration variable %s to %d and restarting the hub. Please note: Turning cache off is not recommended with large list of registered users."
+msgstr ""
+
+msgid "Both"
+msgstr ""
+
+msgid "Deleted search filter: %s"
+msgstr ""
+
+msgid "Couldn't delete search filter because not found: %s"
+msgstr ""
+
+msgid "Search filter list"
+msgstr ""
+
+msgid "Search filter list is empty."
+msgstr ""
+
+msgid "Magnet link: %s"
+msgstr ""
+
+msgid "Add search filter"
+msgstr ""
+
+msgid "Delete search filter"
+msgstr ""
+
+msgid "Known actions are: %s"
+msgstr ""
+
+msgid "Known flags are: %s"
+msgstr ""
+
+msgid "Downloading version file: %s"
+msgstr ""
+
+msgid "Size of kicks table: %d [ %s: %d @ %s ]"
+msgstr ""
+
+msgid "Size of bans table: %d [ %s: %d @ %s ]"
+msgstr ""
+
+msgid "Size of unbans table: %d [ %s: %d @ %s ]"
+msgstr ""
+
+msgid "Size of IP logger plugin table: %d [ %s: %d @ %s ]"
+msgstr ""
+
+msgid "Size of statistics plugin table: %d [ %s: %d @ %s ]"
+msgstr ""
+
+msgid "Modified authorization entry: %s @ %s"
+msgstr ""
+
+msgid "Added authorization entry: %s @ %s"
+msgstr ""
+
+msgid "Deleted authorization entry: %s"
+msgstr ""
+
+msgid "Couldn't delete authorization entry because not found: %s"
+msgstr ""
+
+msgid "IP authorization list"
+msgstr ""
+
+msgid "IP authorization list is empty."
+msgstr ""
+
+msgid "Add IP authorization entry"
+msgstr ""
+
+msgid "Delete authorization entry"
+msgstr ""
+
+msgid "ip"
+msgstr ""
+
+msgid "%s with IP %s and class %d authorized."
+msgstr ""
+
+msgid "%s with IP %s and class %d failed authorization and disconnected."
+msgstr ""
+
+msgid "Category: %s"
+msgstr ""
+
+msgid "Set custom nick for yourself"
+msgstr ""
+
+msgid "This nick is registered or in use and therefore can't be used as custom nick: %s"
+msgstr ""
+
+msgid "Set your welcome message"
+msgstr ""
+
+msgid "Division by zero is forbidden."
+msgstr ""
+
+msgid "Show your welcome messages"
+msgstr ""
+
+msgid "Welcome message list"
+msgstr ""
+
+msgid "Delete user and his welcome messages"
+msgstr ""
+
+msgid "Nick"
+msgstr ""
+
+msgid "Login message"
+msgstr ""
+
+msgid "Logout message"
+msgstr ""
+
+msgid "Welcome message list is empty."
+msgstr ""
+
+msgid "Welcome messages were deleted for user: %s"
+msgstr ""
+
+msgid "Couldn't delete user from welcome message list because not found: %s"
+msgstr ""
+
+msgid "Your login message set: %s"
+msgstr ""
+
+msgid "%s with class %d changed his login message: %s"
+msgstr ""
+
+msgid "Your logout message set: %s"
+msgstr ""
+
+msgid "%s with class %d changed his logout message: %s"
+msgstr ""
+
+msgid "You don't have any welcome messages."
+msgstr ""
+
+msgid "Your login message: %s"
+msgstr ""
+
+msgid "Add chatroom"
+msgstr ""
+
+msgid "Chatroom list"
+msgstr ""
+
+msgid "Delete chatroom"
+msgstr ""
+
+msgid "description"
+msgstr ""
+
+msgid "minclass"
+msgstr ""
+
+msgid "maxclass"
+msgstr ""
+
+msgid "Modified chatroom: %s"
+msgstr ""
+
+msgid "Added chatroom: %s"
+msgstr ""
+
+msgid "Deleted chatroom: %s"
+msgstr ""
+
+msgid "Couldn't delete chatroom because not found: %s"
+msgstr ""
+
+msgid "Chatroom"
+msgstr ""
+
+msgid "Description"
+msgstr ""
+
+msgid "Chatroom list is empty."
+msgstr ""
+
+msgid "Not found in country code statistics table: %s"
+msgstr ""
+
+msgid "Custom nick %s is now owned by real user and therefore has been reset for user: %s"
+msgstr ""
+
+msgid "%s is registered with class %d."
+msgstr ""
+
+msgid "Query executed but didn't return any results."
+msgstr ""
+
+msgid "Published: %s"
+msgstr ""
+
+msgid "Add search filter exception entry"
+msgstr ""
+
+msgid "Delete search filter exception entry"
+msgstr ""
+
+msgid "Search filter exception list"
+msgstr ""
+
+msgid "Couldn't add search filter exception entry because already exists: %s"
+msgstr ""
+
+msgid "Added search filter exception entry: %s"
+msgstr ""
+
+msgid "Deleted search filter exception entry: %s"
+msgstr ""
+
+msgid "Couldn't delete search filter exception entry because not found: %s"
+msgstr ""
+
+msgid "Search filter exception list is empty."
+msgstr ""
+
+msgid "file"
+msgstr ""
+
+msgid "Read hub logs"
+msgstr ""
+
+msgid "Known files are: %s"
+msgstr ""
+
+msgid "Log file is empty or does not exist."
+msgstr ""
+
+msgid "Add command notification exception"
+msgstr ""
+
+msgid "Delete command notification exception"
+msgstr ""
+
+msgid "Command notification exception list"
+msgstr ""
+
+msgid "Added command notification exception entry: %s"
+msgstr ""
+
+msgid "Couldn't add command notification exception entry because already exists: %s"
+msgstr ""
+
+msgid "Deleted command notification exception entry: %s"
+msgstr ""
+
+msgid "Couldn't delete command notification exception entry because not found: %s"
+msgstr ""
+
+msgid "Command notification exception list is empty."
+msgstr ""
+
+msgid "Couldn't add chatroom because nick is already in use: %s"
+msgstr ""
+
+msgid "Query results"
+msgstr ""
+
+msgid "Connections from your IP aren't allowed for another %d seconds."
+msgstr ""
+
+msgid "Executed shell command didn't return any status code: %s"
+msgstr ""
+
+msgid "Returned status code: %s"
+msgstr ""
+
+msgid "Added by: %s"
+msgstr ""
+
+msgid "publisher"
+msgstr ""
+
+msgid "Release list is empty."
+msgstr ""
+
+msgid "Last %d releases"
+msgstr ""
+
+msgid "No releases by requested publisher were found: %s"
+msgstr ""
+
+msgid "Last %d releases published by %s"
+msgstr ""
+
+msgid "No releases by requested category were found: %s"
+msgstr ""
+
+msgid "Last %d releases by category %s"
+msgstr ""
+
+msgid "No releases by requested search string were found: %s"
+msgstr ""
+
+msgid "time"
+msgstr ""
+
+msgid "Known search types are: %s"
+msgstr ""
+
+msgid "Configuration variable %s can't be empty."
+msgstr ""
+
+msgid "Deleted from share rank list: %s"
+msgstr ""
+
+msgid "Not found in share rank list: %s"
+msgstr ""
+
+msgid "Your share rank"
+msgstr ""
+
+msgid "Top %d share rankers"
+msgstr ""
+
+msgid "You have to share %s and reconnect to get started."
+msgstr ""
+
+msgid "Share rank list is empty."
+msgstr ""
+
+msgid "Your share rank is: %s"
+msgstr ""
+
+msgid "Custom nick can't be longer than %d characters."
+msgstr ""
+
+msgid "Delete custom nick"
+msgstr ""
+
+msgid "Deleted user from custom nick list: %s"
+msgstr ""
+
+msgid "Couldn't delete user from custom nick list because not found: %s"
+msgstr ""
+
+msgid "Selected type requires extra parameters. Please refer to manual for more information."
+msgstr ""
+
+msgid "Size of registered users table: %d [ %s: %d @ %s ]"
+msgstr ""
+
+msgid "Deleted %d accounts with class %d"
+msgstr ""
+
+msgid "%s with class %d deleted %d accounts with class %d that has been inactive for %d days."
+msgstr ""
+
+msgid "Add command permission"
+msgstr ""
+
+msgid "Delete command permission"
+msgstr ""
+
+msgid "Command permission list"
+msgstr ""
+
+msgid "Modified command permission with class %d: %s"
+msgstr ""
+
+msgid "Added command permission with class %d: %s"
+msgstr ""
+
+msgid "Deleted command permission: %s"
+msgstr ""
+
+msgid "Couldn't delete command permission because not found: %s"
+msgstr ""
+
+msgid "Command permission list is empty."
+msgstr ""
+
+msgid "Total search rank points: %d"
+msgstr ""
+
+msgid "Please use following commands to finish update process"
+msgstr ""
+
+msgid "Moving file: %s"
+msgstr ""
+
+msgid "Please visit %s to download the script manually."
+msgstr ""
+
+msgid "Modified forbidden IP address with ban time %s: %s"
+msgstr ""
+
+msgid "Added forbidden IP address with ban time %s: %s"
+msgstr ""
+
+msgid "Deleted forbidden IP address: %s"
+msgstr ""
+
+msgid "Couldn't delete forbidden IP address because not found: %s"
+msgstr ""
+
+msgid "Forbidden IP address list"
+msgstr ""
+
+msgid "Forbidden IP address list is empty."
+msgstr ""
+
+msgid "%s with IP %s and class %d allowed due to forbidden IP address exception: %s"
+msgstr ""
+
+msgid "Couldn't delete category because not found: %s"
+msgstr ""
+
+msgid "%s redirected due to spam."
+msgstr ""
+
+msgid "%s redirected due to bad search request."
+msgstr ""
+
+msgid "You can download me from: %s"
+msgstr ""
+
+msgid "%s is registered with class %d and has been automatically unregistered and deleted from other tables."
+msgstr ""
+
+msgid "PiB"
+msgstr ""
+
+msgid "TiB"
+msgstr ""
+
+msgid "GiB"
+msgstr ""
+
+msgid "MiB"
+msgstr ""
+
+msgid "KiB"
+msgstr ""
+
+msgid "B"
+msgstr ""
+
+msgid "EiB"
+msgstr ""
+
+msgid "Get user's real nick"
+msgstr ""
+
+msgid "Requested nick wasn't found in custom nick list."
+msgstr ""
+
+msgid "Requested nick belongs to a user who is %s: %s"
+msgstr ""
+
+msgid "offline"
+msgstr ""
+
+msgid "online"
+msgstr ""
+
+msgid "Clean up ranks"
+msgstr ""
+
+msgid "limit"
+msgstr ""
+
+msgid "%s with class %d deleted %d chat ranks lower than %d."
+msgstr ""
+
+msgid "%s with class %d deleted %d share ranks lower than %s."
+msgstr ""
+
+msgid "%s with class %d deleted %d operator ranks lower than %d."
+msgstr ""
+
+msgid "Size of chat ranks table: %d [ %s: %d @ %s ]"
+msgstr ""
+
+msgid "Size of share ranks table: %d [ %s: %d @ %s ]"
+msgstr ""
+
+msgid "Size of operator ranks table: %d [ %s: %d @ %s ]"
+msgstr ""
+
+msgid "content"
+msgstr ""
+
+msgid "destination"
+msgstr ""
+
+msgid "interval"
+msgstr ""
+
+msgid "Add reminder"
+msgstr ""
+
+msgid "Delete reminder"
+msgstr ""
+
+msgid "Reminder list"
+msgstr ""
+
+msgid "Reminder list is empty."
+msgstr ""
+
+msgid "Known destinations are: %s"
+msgstr ""
+
+msgid "Known interval is: %s"
+msgstr ""
+
+msgid "Modified reminder: %s"
+msgstr ""
+
+msgid "Added reminder: %s"
+msgstr ""
+
+msgid "Deleted reminder: %s"
+msgstr ""
+
+msgid "Reminder not found: %s"
+msgstr ""
+
+msgid "Identifier: %s"
+msgstr ""
+
+msgid "Content: %s"
+msgstr ""
+
+msgid "Interval: %d of %d"
+msgstr ""
+
+msgid "Destination: %s"
+msgstr ""
+
+msgid "Raw command"
+msgstr ""
+
+msgid "PM"
+msgstr ""
+
+msgid "MC"
+msgstr ""
+
+msgid "reply"
+msgstr ""
+
+msgid "Add chat responder"
+msgstr ""
+
+msgid "Delete chat responder"
+msgstr ""
+
+msgid "Main chat responder list"
+msgstr ""
+
+msgid "Main chat responder list is empty."
+msgstr ""
+
+msgid "%s with class %d deleted %d operator chat history messages."
+msgstr ""
+
+msgid "Search in user log"
+msgstr ""
+
+msgid "Added chat responder: %s"
+msgstr ""
+
+msgid "Deleted chat responder with ID: %d"
+msgstr ""
+
+msgid "Couldn't delete chat responder because ID not found: %d"
+msgstr ""
+
+msgid "Responder"
+msgstr ""
+
+msgid "Reply"
+msgstr ""
+
+msgid "Add chat responder exception"
+msgstr ""
+
+msgid "Delete chat responder exception"
+msgstr ""
+
+msgid "Chat responder exception list"
+msgstr ""
+
+msgid "Chat responder exception list is empty."
+msgstr ""
+
+msgid "Couldn't add chat responder exception because already exists: %s"
+msgstr ""
+
+msgid "Added chat responder exception: %s"
+msgstr ""
+
+msgid "Deleted chat responder exception: %s"
+msgstr ""
+
+msgid "Couldn't delete chat responder exception because not found: %s"
+msgstr ""
+
+msgid "command"
+msgstr ""
+
+msgid "Customize script command"
+msgstr ""
+
+msgid "Customized script command: %s => %s"
+msgstr ""
+
+msgid "Unknown script command: %s"
+msgstr ""
+
+msgid "Requested nick is real."
+msgstr ""
+
+msgid "%s with class %d customized script command: %s => %s"
+msgstr ""
+
+msgid "Reset all custom commands"
+msgstr ""
+
+msgid "%d custom commands were reset."
+msgstr ""
+
+msgid "%s tables are now deleted and script is locked."
+msgstr ""
+
+msgid "Please unload the script and remove it from scripts directory."
+msgstr ""
+
+msgid "Good luck."
+msgstr ""
+
+msgid "Please unload the script to finish."
+msgstr ""
+
+msgid "%s with IP %s and class %d sent message to %s: %s"
+msgstr ""
+
+msgid "Script uptime: %s"
+msgstr ""
+
+msgid "month"
+msgstr ""
+
+msgid "months"
+msgstr ""
+
+msgid "day"
+msgstr ""
+
+msgid "hour"
+msgstr ""
+
+msgid "hours"
+msgstr ""
+
+msgid "Top %d used words"
+msgstr ""
+
+msgid "Deleted from word rank list: %s"
+msgstr ""
+
+msgid "Not found in word rank list: %s"
+msgstr ""
+
+msgid "%s with class %d deleted %d word ranks lower than %d."
+msgstr ""
+
+msgid "Size of word ranks table: %d [ %s: %d @ %s ]"
+msgstr ""
+
+msgid "Total word rank points: %d"
+msgstr ""
+
+msgid "Word rank list is empty."
+msgstr ""
+
+msgid "%s with class %d registered new user with class %d: %s"
+msgstr ""
+
+msgid "%s with class %d deleted registered user with class %d: %s"
+msgstr ""
+
+msgid "%s with class %d changed user class from %d to %d: %s"
+msgstr ""
+
+msgid "%s with IP %s and class %d allowed due to fake share exception: %s"
+msgstr ""
+
+msgid "%s with IP %s and class %d allowed due to clone exception: %s"
+msgstr ""
+
+msgid "%s with IP %s and class %d allowed due to same IP exception: %s"
+msgstr ""
+
+msgid "seconds"
+msgstr ""
+
+msgid "Add news item"
+msgstr ""
+
+msgid "Delete news items"
+msgstr ""
+
+msgid "Read hub news"
+msgstr ""
+
+msgid "Added news item: %s"
+msgstr ""
+
+msgid "Hub news list is empty."
+msgstr ""
+
+msgid "Deleted %d news items."
+msgstr ""
+
+msgid "Couldn't delete news items because not found: %s"
+msgstr ""
+
+msgid "Last %d news items"
+msgstr ""
+
+msgid "By %s on %s: %s"
+msgstr ""
+
+msgid "There are no main chat history messages written by you."
+msgstr ""
+
+msgid "Last %d main chat messages written by you"
+msgstr ""
+
+msgid "Your main chat history"
+msgstr ""
+
+msgid "Script memory usage: %s"
+msgstr ""
+
+msgid "Failed to load translation file %s: %s"
+msgstr ""
+
+msgid "Force custom nick for user"
+msgstr ""
+
+msgid "Either the feature is disabled or user that you're trying to set welcome message for doesn't have access to it."
+msgstr ""
+
+msgid "name"
+msgstr ""
+
+msgid "category"
+msgstr ""
+
+msgid "tth"
+msgstr ""
+
+msgid "Add new release"
+msgstr ""
+
+msgid "Delete releases"
+msgstr ""
+
+msgid "List of available releases"
+msgstr ""
+
+msgid "Find release by name or category"
+msgstr ""
+
+msgid "equation"
+msgstr ""
+
+msgid "Calculate an equation"
+msgstr ""
+
+msgid "Both numbers must be either pi or numbers."
+msgstr ""
+
+msgid "Known operations are: %s"
+msgstr ""
+
+msgid "Your logout message: %s"
+msgstr ""
+
+msgid "Force welcome message for user"
+msgstr ""
+
+msgid "Login message set for %s: %s"
+msgstr ""
+
+msgid "Change nick of a registered user"
+msgstr ""
+
+msgid "User is not registered: %s"
+msgstr ""
+
+msgid "You are now going to be disconnected from the hub in order for your new nick to apply: %s"
+msgstr ""
+
+msgid "Renamed account %s: %s"
+msgstr ""
+
+msgid "%s with class %d renamed account %s: %s"
+msgstr ""
+
+msgid "Your login message deleted."
+msgstr ""
+
+msgid "Your logout message deleted."
+msgstr ""
+
+msgid "%s with class %d deleted his login message."
+msgstr ""
+
+msgid "%s with class %d deleted his logout message."
+msgstr ""
+
+msgid "Logout message set for %s: %s"
+msgstr ""
+
+msgid "%s with class %d changed login message for %s: %s"
+msgstr ""
+
+msgid "%s with class %d changed logout message for %s: %s"
+msgstr ""
+
+msgid "Login message deleted for user: %s"
+msgstr ""
+
+msgid "Logout message deleted for user: %s"
+msgstr ""
+
+msgid "%s with class %d deleted login message for user: %s"
+msgstr ""
+
+msgid "%s with class %d deleted logout message for user: %s"
+msgstr ""
+
+msgid "%s with class %d deleted welcome messages for user: %s"
+msgstr ""
+
+msgid "minute"
+msgstr ""
+
+msgid "Last %d releases by search string %s"
+msgstr ""
+
+msgid "Modified release: %s"
+msgstr ""
+
+msgid "Added release: %s"
+msgstr ""
+
+msgid "Deleted release: %s"
+msgstr ""
+
+msgid "Couldn't delete release because not found: %s"
+msgstr ""
+
+msgid "Reminder preview"
+msgstr ""
+
+msgid "Preview of %s reminder: %s"
+msgstr ""
+
+msgid "Specified nick is already in use."
+msgstr ""
+
+msgid "Live user location statistics by country"
+msgstr ""
+
+msgid "All time user location statistics"
+msgstr ""
+
+msgid "This feature requires %s or later installed on your system."
+msgstr ""
+
+msgid "Total count since %s: %d"
+msgstr ""
+
+msgid "Unknown country"
+msgstr ""
+
+msgid "No users in the hub."
+msgstr ""
+
+msgid "User location statistics table is empty."
+msgstr ""
+
+msgid "Total count: %d"
+msgstr ""
+
+msgid "Deleted all rows: %s"
+msgstr ""
+
+msgid "%s with class %d deleted all user location entries."
+msgstr ""
+
+msgid "address"
+msgstr ""
+
+msgid "owner"
+msgstr ""
+
+msgid "Add friendly hub"
+msgstr ""
+
+msgid "Delete friendly hub"
+msgstr ""
+
+msgid "Show friendly hubs"
+msgstr ""
+
+msgid "Added friendly hub: %s"
+msgstr ""
+
+msgid "Modified friendly hub: %s"
+msgstr ""
+
+msgid "Deleted friendly hub: %s"
+msgstr ""
+
+msgid "Friendly hub not found: %s"
+msgstr ""
+
+msgid "Friendly hublist"
+msgstr ""
+
+msgid "Friendly hublist is empty."
+msgstr ""
+
+msgid "Executed shell command didn't return any output."
+msgstr ""
+
+msgid "Returned output"
+msgstr ""
+
+msgid "%s renamed %s to: %s"
+msgstr ""
+
+msgid "%s plugin version: %s"
+msgstr ""
+
+msgid "second"
+msgstr ""
+
+msgid "You are now known as: %s"
+msgstr ""
+
+msgid "You renamed %s to: %s"
+msgstr ""
+
+msgid "Spam exception from %s with IP %s and class %d in MC: %s"
+msgstr ""
+
+msgid "Spam exception from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s"
+msgstr ""
+
+msgid "Spam exception from %s with IP %s and class %d in offline message: %s"
+msgstr ""
+
+msgid "Spam exception from %s with IP %s and class %d in report: %s"
+msgstr ""
+
+msgid "Spam notification from %s with IP %s and class %d in MC: %s"
+msgstr ""
+
+msgid "Spam notification from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s"
+msgstr ""
+
+msgid "Spam notification from %s with IP %s and class %d in offline message: %s"
+msgstr ""
+
+msgid "Spam notification from %s with IP %s and class %d in report: %s"
+msgstr ""
+
+msgid "Spam from %s with IP %s and class %d in MC: %s"
+msgstr ""
+
+msgid "Spam from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s"
+msgstr ""
+
+msgid "Spam from %s with IP %s and class %d in offline message: %s"
+msgstr ""
+
+msgid "Spam from %s with IP %s and class %d in report: %s"
+msgstr ""
+
+msgid "Modified antispam entry with action %d and priority %d to scan in MC: %s"
+msgstr ""
+
+msgid "Modified antispam entry with action %d and priority %d to scan in PM: %s"
+msgstr ""
+
+msgid "Modified antispam entry with action %d and priority %d to scan in MC and PM: %s"
+msgstr ""
+
+msgid "Added antispam entry with action %d and priority %d to scan in MC: %s"
+msgstr ""
+
+msgid "Added antispam entry with action %d and priority %d to scan in PM: %s"
+msgstr ""
+
+msgid "Added antispam entry with action %d and priority %d to scan in MC and PM: %s"
+msgstr ""
+
+msgid "Search request exception from %s with IP %s and class %d as any file: %s"
+msgstr ""
+
+msgid "Search request exception from %s with IP %s and class %d as audio file: %s"
+msgstr ""
+
+msgid "Search request exception from %s with IP %s and class %d as compressed file: %s"
+msgstr ""
+
+msgid "Search request exception from %s with IP %s and class %d as document: %s"
+msgstr ""
+
+msgid "Search request exception from %s with IP %s and class %d as executable: %s"
+msgstr ""
+
+msgid "Search request exception from %s with IP %s and class %d as picture: %s"
+msgstr ""
+
+msgid "Search request exception from %s with IP %s and class %d as video: %s"
+msgstr ""
+
+msgid "Search request exception from %s with IP %s and class %d as folder: %s"
+msgstr ""
+
+msgid "Search request exception from %s with IP %s and class %d as TTH: %s"
+msgstr ""
+
+msgid "Search request notification from %s with IP %s and class %d as any file: %s"
+msgstr ""
+
+msgid "Search request notification from %s with IP %s and class %d as audio file: %s"
+msgstr ""
+
+msgid "Search request notification from %s with IP %s and class %d as compressed file: %s"
+msgstr ""
+
+msgid "Search request notification from %s with IP %s and class %d as document: %s"
+msgstr ""
+
+msgid "Search request notification from %s with IP %s and class %d as executable: %s"
+msgstr ""
+
+msgid "Search request notification from %s with IP %s and class %d as picture: %s"
+msgstr ""
+
+msgid "Search request notification from %s with IP %s and class %d as video: %s"
+msgstr ""
+
+msgid "Search request notification from %s with IP %s and class %d as folder: %s"
+msgstr ""
+
+msgid "Search request notification from %s with IP %s and class %d as TTH: %s"
+msgstr ""
+
+msgid "Bad search request from %s with IP %s and class %d as any file: %s"
+msgstr ""
+
+msgid "Bad search request from %s with IP %s and class %d as audio file: %s"
+msgstr ""
+
+msgid "Bad search request from %s with IP %s and class %d as compressed file: %s"
+msgstr ""
+
+msgid "Bad search request from %s with IP %s and class %d as document: %s"
+msgstr ""
+
+msgid "Bad search request from %s with IP %s and class %d as executable: %s"
+msgstr ""
+
+msgid "Bad search request from %s with IP %s and class %d as picture: %s"
+msgstr ""
+
+msgid "Bad search request from %s with IP %s and class %d as video: %s"
+msgstr ""
+
+msgid "Bad search request from %s with IP %s and class %d as folder: %s"
+msgstr ""
+
+msgid "Bad search request from %s with IP %s and class %d as TTH: %s"
+msgstr ""
+
+msgid "Modified search filter with action %d and priority %d as any file: %s"
+msgstr ""
+
+msgid "Modified search filter with action %d and priority %d as audio file: %s"
+msgstr ""
+
+msgid "Modified search filter with action %d and priority %d as compressed file: %s"
+msgstr ""
+
+msgid "Modified search filter with action %d and priority %d as document: %s"
+msgstr ""
+
+msgid "Modified search filter with action %d and priority %d as executable: %s"
+msgstr ""
+
+msgid "Modified search filter with action %d and priority %d as picture: %s"
+msgstr ""
+
+msgid "Modified search filter with action %d and priority %d as video: %s"
+msgstr ""
+
+msgid "Modified search filter with action %d and priority %d as folder: %s"
+msgstr ""
+
+msgid "Modified search filter with action %d and priority %d as TTH: %s"
+msgstr ""
+
+msgid "Added search filter with action %d and priority %d as any file: %s"
+msgstr ""
+
+msgid "Added search filter with action %d and priority %d as audio file: %s"
+msgstr ""
+
+msgid "Added search filter with action %d and priority %d as compressed file: %s"
+msgstr ""
+
+msgid "Added search filter with action %d and priority %d as document: %s"
+msgstr ""
+
+msgid "Added search filter with action %d and priority %d as executable: %s"
+msgstr ""
+
+msgid "Added search filter with action %d and priority %d as picture: %s"
+msgstr ""
+
+msgid "Added search filter with action %d and priority %d as video: %s"
+msgstr ""
+
+msgid "Added search filter with action %d and priority %d as folder: %s"
+msgstr ""
+
+msgid "Added search filter with action %d and priority %d as TTH: %s"
+msgstr ""
+
+msgid "%s with class %d deleted %d releases older than %d days."
+msgstr ""
+
+msgid "Size of release table: %d [ %s: %d @ %s ]"
+msgstr ""
+
+msgid "LRE"
+msgstr ""
+
+msgid "Code accepted."
+msgstr ""
+
+msgid "Protection list"
+msgstr ""
+
+msgid "Added protection entry: %s"
+msgstr ""
+
+msgid "Deleted protection entry: %s"
+msgstr ""
+
+msgid "Protection entry already exists: %s"
+msgstr ""
+
+msgid "Protection entry not found: %s"
+msgstr ""
+
+msgid "Protection list is empty."
+msgstr ""
+
+msgid "Missing %s in configuration variable."
+msgstr ""
+
+msgid "Chatroom: %s"
+msgstr ""
+
+msgid "You've left the chatroom."
+msgstr ""
+
+msgid "User left the chatroom: %s"
+msgstr ""
+
+msgid "User entered the chatroom: %s"
+msgstr ""
+
+msgid "You've entered %s chatroom."
+msgstr ""
+
+msgid "You're not member of this chatroom."
+msgstr ""
+
+msgid "You don't have access to this chatroom."
+msgstr ""
+
+msgid "Chatroom member list"
+msgstr ""
+
+msgid "Chatroom is empty."
+msgstr ""
+
+msgid "You're already member of this chatroom."
+msgstr ""
+
+msgid "Chatroom user commands"
+msgstr ""
+
+msgid "Unknown chatroom command, use %s for help."
+msgstr ""
+
+msgid "Enter the chatroom"
+msgstr ""
+
+msgid "Leave the chatroom"
+msgstr ""
+
+msgid "Deleted %d rows from country code statistics table: %s"
+msgstr ""
+
+msgid "Force chat mode for user"
+msgstr ""
+
+msgid "Known chat modes are: %s"
+msgstr ""
+
+msgid "mode"
+msgstr ""
+
+msgid "Changing chat mode for %s: %s => %s"
+msgstr ""
+
+msgid "Not found in chat mode list: %s"
+msgstr ""
+
+msgid "Chat mode user list"
+msgstr ""
+
+msgid "Chat mode user list is empty."
+msgstr ""
+
+msgid "%s user lookup"
+msgstr ""
+
+msgid "Add IP gag"
+msgstr ""
+
+msgid "Added IP gag: %s"
+msgstr ""
+
+msgid "Modified IP gag: %s"
+msgstr ""
+
+msgid "Deleted IP gag: %s"
+msgstr ""
+
+msgid "IP gag not found: %s"
+msgstr ""
+
+msgid "IP gag list"
+msgstr ""
+
+msgid "IP gag list is empty."
+msgstr ""
+
+msgid "Delete IP gag"
+msgstr ""
+
+msgid "Main chat is currently disabled for you."
+msgstr ""
+
+msgid "Cleared temporary IP gag list."
+msgstr ""
+
+msgid "Show custom script commands"
+msgstr ""
+
+msgid "Custom script command list"
+msgstr ""
+
+msgid "Custom script command list is empty."
+msgstr ""
+
+msgid "Script size: %d lines in %s"
+msgstr ""
+
+msgid "Added %s to IP gag list, %d users in total."
+msgstr ""
+
+msgid "Flood detected from IP %s last known as %s with class %d in MC: %s"
+msgstr ""
+
+msgid "Flood detected from IP %s last known as %s with class %d in PM to %s with IP %s and class %d: %s"
+msgstr ""
+
+msgid "Private chat is currently disabled for you."
+msgstr ""
+
+msgid "Main chat flood detected from your IP."
+msgstr ""
+
+msgid "%d users with IP %s dropped due to flood."
+msgstr ""
+
+msgid "No error message specified."
+msgstr ""
+
+msgid "Search filter"
+msgstr ""
+
+msgid "MyINFO check"
+msgstr ""
+
+msgid "Authorization"
+msgstr ""
+
+msgid "Ranks"
+msgstr ""
+
+msgid "Welcome messages"
+msgstr ""
+
+msgid "Chatrooms"
+msgstr ""
+
+msgid "Reminders"
+msgstr ""
+
+msgid "Hub news"
+msgstr ""
+
+msgid "Chat responder"
+msgstr ""
+
+msgid "Releases"
+msgstr ""
+
+msgid "Offline messenger"
+msgstr ""
+
+msgid "Chat history"
+msgstr ""
+
+msgid "Commands"
+msgstr ""
+
+msgid "Custom nicks"
+msgstr ""
+
+msgid "Registered users"
+msgstr ""
+
+msgid "Hublist"
+msgstr ""
+
+msgid "Chat"
+msgstr ""
+
+msgid "IP gag"
+msgstr ""
+
+msgid "User logger"
+msgstr ""
+
+msgid "Other"
+msgstr ""
+
+msgid "Configuration"
+msgstr ""
+
+msgid "Clear main chat"
+msgstr ""
+
+msgid "Chat cleanup performed by %s"
+msgstr ""
+
+msgid "Search in registered users list"
+msgstr ""
+
+msgid "Registered users list statistics"
+msgstr ""
+
+msgid "Registered users list results for %s"
+msgstr ""
+
+msgid "Class %d: %d"
+msgstr ""
+
+msgid "Registered users list is empty."
+msgstr ""
+
+msgid "This feature requires following binary installed on your system: %s"
+msgstr ""
+
+msgid "Configuration directory: %s"
+msgstr ""
+
+msgid "%s with IP %s and class %d stated incorrect IP in connect request to %s: %s"
+msgstr ""
+
+msgid "Top %d search requests"
+msgstr ""
+
+msgid "Search rank list is empty."
+msgstr ""
+
+msgid "Deleted from search rank list: %s"
+msgstr ""
+
+msgid "Not found in search rank list: %s"
+msgstr ""
+
+msgid "%s with class %d deleted %d search ranks lower than %d."
+msgstr ""
+
+msgid "Size of search ranks table: %d [ %s: %d @ %s ]"
+msgstr ""
+
+msgid "Size of user location statistics table: %d [ %s: %s ]"
+msgstr ""
+
+msgid "Open files limit: %d"
+msgstr ""
+
+msgid "User information"
+msgstr ""
+
+msgid "User not in list: %s"
+msgstr ""
+
+msgid "Nick: %s"
+msgstr ""
+
+msgid "Description: %s"
+msgstr ""
+
+msgid "Tag: %s"
+msgstr ""
+
+msgid "Mode: %s"
+msgstr ""
+
+msgid "Slots: %s"
+msgstr ""
+
+msgid "Hubs: %s"
+msgstr ""
+
+msgid "Limiter: %s KiB/s"
+msgstr ""
+
+msgid "Connection: %s"
+msgstr ""
+
+msgid "Status: %s"
+msgstr ""
+
+msgid "Email: %s"
+msgstr ""
+
+msgid "Share: %s"
+msgstr ""
+
+msgid "Exact share: %s"
+msgstr ""
+
+msgid "Class: %d"
+msgstr ""
+
+msgid "IP: %s"
+msgstr ""
+
+msgid "DNS: %s"
+msgstr ""
+
+msgid "Country: %s"
+msgstr ""
+
+msgid "Client: %s"
+msgstr ""
+
+msgid "Version: %s"
+msgstr ""
+
+msgid "Normal"
+msgstr ""
+
+msgid "Away"
+msgstr ""
+
+msgid "Normal away"
+msgstr ""
+
+msgid "Fileserver"
+msgstr ""
+
+msgid "Normal fileserver"
+msgstr ""
+
+msgid "Away fileserver"
+msgstr ""
+
+msgid "Normal away fileserver"
+msgstr ""
+
+msgid "Fireball"
+msgstr ""
+
+msgid "Normal fireball"
+msgstr ""
+
+msgid "Away fireball"
+msgstr ""
+
+msgid "Normal away fireball"
+msgstr ""
+
+msgid "Fileserver fireball"
+msgstr ""
+
+msgid "Normal fileserver fireball"
+msgstr ""
+
+msgid "Away fileserver fireball"
+msgstr ""
+
+msgid "Normal away fileserver fireball"
+msgstr ""
+
+msgid "TLS"
+msgstr ""
+
+msgid "Normal TLS"
+msgstr ""
+
+msgid "Away TLS"
+msgstr ""
+
+msgid "Normal away TLS"
+msgstr ""
+
+msgid "Fileserver TLS"
+msgstr ""
+
+msgid "Normal fileserver TLS"
+msgstr ""
+
+msgid "Away fileserver TLS"
+msgstr ""
+
+msgid "Normal away fileserver TLS"
+msgstr ""
+
+msgid "Fireball TLS"
+msgstr ""
+
+msgid "Normal fireball TLS"
+msgstr ""
+
+msgid "Away fireball TLS"
+msgstr ""
+
+msgid "Normal away fireball TLS"
+msgstr ""
+
+msgid "Fileserver fireball TLS"
+msgstr ""
+
+msgid "Normal fileserver fireball TLS"
+msgstr ""
+
+msgid "Away fileserver fireball TLS"
+msgstr ""
+
+msgid "Normal away fileserver fireball TLS"
+msgstr ""
+
+msgid "Unable to get bot information: %s"
+msgstr ""
+
+msgid "Bot information"
+msgstr ""
+
+msgid "Owner script: %s"
+msgstr ""
+
+msgid "%s with IP %s and class %d allowed due to forbidden DNS exception: %s"
+msgstr ""
+
+msgid "In order to use this feature you need to enable DNS lookup. Do it by setting hub configuration variable %s to %d. Please note: Enabling DNS lookup might slow your hub performance down."
+msgstr ""
+
+msgid "Modified forbidden DNS with ban time %s: %s"
+msgstr ""
+
+msgid "Added forbidden DNS with ban time %s: %s"
+msgstr ""
+
+msgid "Deleted forbidden DNS: %s"
+msgstr ""
+
+msgid "Couldn't delete forbidden DNS because not found: %s"
+msgstr ""
+
+msgid "Forbidden DNS list"
+msgstr ""
+
+msgid "Forbidden DNS list is empty."
+msgstr ""
+
+msgid "Powered by %s"
+msgstr ""
+
+msgid "Warning: %s"
+msgstr ""
+
+msgid "Open files limit set to %d is smaller than maximum users configuration which is %d. You can correct this by setting %s to %d or higher and restarting the hub."
+msgstr ""
+
+msgid "Additional help"
+msgstr ""
+
+msgid "Remove all %s tables and files"
+msgstr ""
+
+msgid "You can't kick user whose class is higher or equals your own: %s"
+msgstr ""
+
+msgid "Your topic contains forbidden characters which can't be used for security reason: %s"
+msgstr ""
+
+msgid "Hub uptime: %s"
+msgstr ""
+
+msgid "User count: %s"
+msgstr ""
+
+msgid "Total share: %s"
+msgstr ""
+
+msgid "%s with IP %s and class %d tries to speak with IP gag in MC: %s"
+msgstr ""
+
+msgid "%s with IP %s and class %d tries to speak with IP gag in PM to %s with IP %s and class %d: %s"
+msgstr ""
+
+msgid "Private message replaced for user: %s"
+msgstr ""
+
+msgid "Command logger"
+msgstr ""
+
+msgid "Showing %d entries from command logger"
+msgstr ""
+
+msgid "Command logger is empty."
+msgstr ""
+
+msgid "%s with class %d deleted %d command log entries older than %d days."
+msgstr ""
+
+msgid "Size of command log table: %d [ %s: %d @ %s ]"
+msgstr ""
+
+msgid "password"
+msgstr ""
+
+msgid "Modify IP authorization entry"
+msgstr ""
+
+msgid "Couldn't modify authorization entry because not found: %d"
+msgstr ""
+
+msgid "Uptime: %s"
+msgstr ""
+
+msgid "Enable requested feature and try again."
+msgstr ""
+
+msgid "cc"
+msgstr ""
+
+msgid "Modified forbidden country code with ban time %s: %s"
+msgstr ""
+
+msgid "Added forbidden country code with ban time %s: %s"
+msgstr ""
+
+msgid "Deleted forbidden country code: %s"
+msgstr ""
+
+msgid "Couldn't delete forbidden country code because not found: %s"
+msgstr ""
+
+msgid "Forbidden country code list"
+msgstr ""
+
+msgid "Forbidden country code list is empty."
+msgstr ""
+
+msgid "%s with IP %s and class %d allowed due to forbidden country code exception: %s"
+msgstr ""
+
+msgid "I'm staying idle due to confusion."
+msgstr ""
+
+msgid "Added replacer in MC: %s"
+msgstr ""
+
+msgid "Deleted chat replacer with ID: %d"
+msgstr ""
+
+msgid "Couldn't delete chat replacer because ID not found: %d"
+msgstr ""
+
+msgid "Chat replacer list"
+msgstr ""
+
+msgid "Chat replacer list is empty."
+msgstr ""
+
+msgid "Replace"
+msgstr ""
+
+msgid "Modified chat replacer exception with type %d: %s"
+msgstr ""
+
+msgid "Added chat replacer exception with type %d: %s"
+msgstr ""
+
+msgid "Deleted chat replacer exception with type %d: %s"
+msgstr ""
+
+msgid "Couldn't delete chat replacer exception because not found: %s"
+msgstr ""
+
+msgid "Chat replacer exception list"
+msgstr ""
+
+msgid "Chat replacer exception list is empty."
+msgstr ""
+
+msgid "replace"
+msgstr ""
+
+msgid "Add chat replacer"
+msgstr ""
+
+msgid "Delete chat replacer"
+msgstr ""
+
+msgid "Add chat replacer exception"
+msgstr ""
+
+msgid "Delete chat replacer exception"
+msgstr ""
+
+msgid "Chat replacer"
+msgstr ""
+
+msgid "You need to send another %d main chat messages in order to use hub registration."
+msgstr ""
+
+msgid "Please wait another %.1f minutes before using hub registration."
+msgstr ""
+
+msgid "In order to use this feature you need to set %s to: %d"
+msgstr ""
+
+msgid "Please reconnect to gain %d minutes of uptime in order to use hub registration."
+msgstr ""
+
+msgid "Dropping %s with IP %s and class %d due to protocol flood detection: %s"
+msgstr ""
+
+msgid "Protocol flood detected from your client: %s"
+msgstr ""
+
+msgid "Automatic update check detected stable version of %s available, use following command to update: %s"
+msgstr ""
+
+msgid "menu"
+msgstr ""
+
+msgid "Dropping user due to clone detection from IP %s with class %d: %s = %s"
+msgstr ""
+
+msgid "Configuration variable %s must be a valid IP address."
+msgstr ""
+
+msgid "Average share per user: %s"
+msgstr ""
+
+msgid "Don't be stupid."
+msgstr ""
+
+msgid "reason"
+msgstr ""
+
+msgid "Add blocked PM entry"
+msgstr ""
+
+msgid "Delete blocked PM entry"
+msgstr ""
+
+msgid "List of blocked PM entries"
+msgstr ""
+
+msgid "Modified blocked PM entry: %s"
+msgstr ""
+
+msgid "Added blocked PM entry: %s"
+msgstr ""
+
+msgid "Deleted blocked PM entry: %s"
+msgstr ""
+
+msgid "Blocked PM list is empty."
+msgstr ""
+
+msgid "Couldn't delete blocked PM entry because not found: %s"
+msgstr ""
+
+msgid "Reason: %s"
+msgstr ""
+
+msgid "You're not allowed to send PM to this user because: %s"
+msgstr ""
+
+msgid "%s with class %d deleted %d antispam entries with occurrence less than %d."
+msgstr ""
+
+msgid "%s with class %d deleted %d search filter entries with occurrence less than %d."
+msgstr ""
+
+msgid "query"
+msgstr ""
+
+msgid "Execute MySQL query"
+msgstr ""
+
+msgid "Execute shell command"
+msgstr ""
+
+msgid "Experts only"
+msgstr ""
+
+msgid "Add hard IP ban entry"
+msgstr ""
+
+msgid "Delete hard IP ban entry"
+msgstr ""
+
+msgid "List of hard IP ban entries"
+msgstr ""
+
+msgid "Modified hard IP ban entry: %s"
+msgstr ""
+
+msgid "Added hard IP ban entry: %s"
+msgstr ""
+
+msgid "Deleted hard IP ban entry: %s"
+msgstr ""
+
+msgid "Hard IP ban list is empty."
+msgstr ""
+
+msgid "Couldn't delete hard IP ban entry because not found: %s"
+msgstr ""
+
+msgid "Hard IP ban refused connection from IP %s: %s"
+msgstr ""
+
+msgid "Please wait another %d seconds before using hub search engine."
+msgstr ""
+
+msgid "Loading %s in memory..."
+msgstr ""
+
+msgid "Finished loading %s in memory."
+msgstr ""
+
+msgid "Unable to locate %s in hub configuration directory."
+msgstr ""
+
+msgid "Add right click menu item"
+msgstr ""
+
+msgid "Delete right click menu item"
+msgstr ""
+
+msgid "List of right click menu items"
+msgstr ""
+
+msgid "Blacklisted connection from IP %s dropped: %s"
+msgstr ""
+
+msgid "To add multiple entries with this command you need to separate every entry by space."
+msgstr ""
+
+msgid "Add IP watch entry"
+msgstr ""
+
+msgid "Delete IP watch entry"
+msgstr ""
+
+msgid "List of IP watch entries"
+msgstr ""
+
+msgid "result"
+msgstr ""
+
+msgid "Modified IP watch entry: %s"
+msgstr ""
+
+msgid "Added IP watch entry: %s"
+msgstr ""
+
+msgid "Known results are: %s"
+msgstr ""
+
+msgid "Deleted IP watch entry: %s"
+msgstr ""
+
+msgid "IP watch list is empty."
+msgstr ""
+
+msgid "Couldn't delete IP watch entry because not found: %s"
+msgstr ""
+
+msgid "IP watch notification from %s with IP %s: %s"
+msgstr ""
+
+msgid "unknown nick"
+msgstr ""
+
+msgid "Country code gag"
+msgstr ""
+
+msgid "Add country code gag"
+msgstr ""
+
+msgid "Added country code gag: %s"
+msgstr ""
+
+msgid "Modified country code gag: %s"
+msgstr ""
+
+msgid "Deleted country code gag: %s"
+msgstr ""
+
+msgid "Country code gag not found: %s"
+msgstr ""
+
+msgid "Country code gag list"
+msgstr ""
+
+msgid "Country code gag list is empty."
+msgstr ""
+
+msgid "Delete country code gag"
+msgstr ""
+
+msgid "Cleared country code gag list."
+msgstr ""
+
+msgid "%s with IP %s and class %d tries to speak with country code gag in MC: %s"
+msgstr ""
+
+msgid "%s with IP %s and class %d tries to speak with country code gag in PM to %s with IP %s and class %d: %s"
+msgstr ""
+
+msgid "No reason specified"
+msgstr ""
+
+msgid "Automatically deleted %d user log entries older than %d days."
+msgstr ""
+
+msgid "Main chat message replaced for user: %s"
+msgstr ""
+
+msgid "Unknown protocol command from IP %s before login: %s"
+msgstr ""
+
+msgid "Added %s to hard IP ban list, %d users in total."
+msgstr ""
+
+msgid "NMDC version: %s"
+msgstr ""
+
+msgid "Client supports: %s"
+msgstr ""
+
+msgid "Modified forbidden client supports with ban time %s: %s"
+msgstr ""
+
+msgid "Added forbidden client supports with ban time %s: %s"
+msgstr ""
+
+msgid "Modified forbidden NMDC version with ban time %s: %s"
+msgstr ""
+
+msgid "Added forbidden NMDC version with ban time %s: %s"
+msgstr ""
+
+msgid "Latest version of %s is required in order to use this feature."
+msgstr ""
+
+msgid "Deleted forbidden client supports: %s"
+msgstr ""
+
+msgid "Couldn't delete forbidden client supports because not found: %s"
+msgstr ""
+
+msgid "Deleted forbidden NMDC version: %s"
+msgstr ""
+
+msgid "Couldn't delete forbidden NMDC version because not found: %s"
+msgstr ""
+
+msgid "Forbidden client supports list"
+msgstr ""
+
+msgid "Forbidden client supports list is empty."
+msgstr ""
+
+msgid "Forbidden NMDC version list"
+msgstr ""
+
+msgid "Forbidden NMDC version list is empty."
+msgstr ""
+
+msgid "%s with IP %s and class %d allowed due to forbidden client supports exception: %s"
+msgstr ""
+
+msgid "%s with IP %s and class %d allowed due to forbidden NMDC version exception: %s"
+msgstr ""
+
+msgid "City: %s"
+msgstr ""
+
+msgid "IP range: %s - %s"
+msgstr ""
+
+msgid "Region: %s"
+msgstr ""
+
+msgid "Time zone: %s"
+msgstr ""
+
+msgid "Continent: %s"
+msgstr ""
+
+msgid "Postal code: %s"
+msgstr ""
+
+msgid "Coordinates: %.4f %.4f"
+msgstr ""
+
+msgid "Metro code: %d"
+msgstr ""
+
+msgid "Area code: %d"
+msgstr ""
+
+msgid "Drop users with IP"
+msgstr ""
+
+msgid "No users found with IP: %s"
+msgstr ""
+
+msgid "Dropped %d users with IP: %s"
+msgstr ""
+
+msgid "%s dropped %d users with IP: %s"
+msgstr ""
+
+msgid "Live user location statistics by city"
+msgstr ""
+
+msgid "Live user location statistics by city from %s=%s"
+msgstr ""
+
+msgid "No users in the hub from: %s=%s"
+msgstr ""
+
+msgid "Help notes"
+msgstr ""
+
+msgid "parameter"
+msgstr ""
+
+msgid "Command parameters %s are always required, while %s are optional."
+msgstr ""
+
+msgid "Quoted parameters %s or %s must be used with quotes."
+msgstr ""
+
+msgid "IP information"
+msgstr ""
+
+msgid "IP information not available: %s"
+msgstr ""
+
+msgid "Message replaced for user with IP %s and class %d in MC: <%s> %s"
+msgstr ""
+
+msgid "IP %s permanently banned: <%s> %s"
+msgstr ""
+
+msgid "Nick %s permanently banned: <%s> %s"
+msgstr ""
+
+msgid "Range %s permanently banned: <%s> %s"
+msgstr ""
+
+msgid "Host %s permanently banned: <%s> %s"
+msgstr ""
+
+msgid "Share %s permanently banned: <%s> %s"
+msgstr ""
+
+msgid "Prefix %s permanently banned: <%s> %s"
+msgstr ""
+
+msgid "IP %s temporarily banned until %s: <%s> %s"
+msgstr ""
+
+msgid "Nick %s temporarily banned until %s: <%s> %s"
+msgstr ""
+
+msgid "Range %s temporarily banned until %s: <%s> %s"
+msgstr ""
+
+msgid "Host %s temporarily banned until %s: <%s> %s"
+msgstr ""
+
+msgid "Share %s temporarily banned until %s: <%s> %s"
+msgstr ""
+
+msgid "Prefix %s temporarily banned until %s: <%s> %s"
+msgstr ""
+
+msgid "IP %s unbanned: <%s> %s"
+msgstr ""
+
+msgid "Nick %s unbanned: <%s> %s"
+msgstr ""
+
+msgid "Range %s unbanned: <%s> %s"
+msgstr ""
+
+msgid "Host %s unbanned: <%s> %s"
+msgstr ""
+
+msgid "Share %s unbanned: <%s> %s"
+msgstr ""
+
+msgid "Prefix %s unbanned: <%s> %s"
+msgstr ""
+
+msgid "Known contexts are: %s"
+msgstr ""
+
+msgid "Known orders are: %s"
+msgstr ""
+
+msgid "Modified right click menu item: %s"
+msgstr ""
+
+msgid "Added right click menu item: %s"
+msgstr ""
+
+msgid "Deleted right click menu item: %s"
+msgstr ""
+
+msgid "Right click menu item not found: %d"
+msgstr ""
+
+msgid "Right click menu item list is empty."
+msgstr ""
+
+msgid "Menu item"
+msgstr ""
+
+msgid "Menu command"
+msgstr ""
+
+msgid "Changed right click menu item order: %s"
+msgstr ""
+
+msgid "Separator or eraser"
+msgstr ""
+
+msgid "Nick and IP %s unbanned: <%s> %s"
+msgstr ""
+
+msgid "Other %s unbanned: <%s> %s"
+msgstr ""
+
+msgid "Vote for user to be kicked"
+msgstr ""
+
+msgid "You don't want to vote for kicking an operator."
+msgstr ""
+
+msgid "User voted kick"
+msgstr ""
+
+msgid "You have already voted for kicking that user."
+msgstr ""
+
+msgid "%s added vote %d of %d for kicking user with class %d: %s"
+msgstr ""
+
+msgid "There is an error in following antispam entry pattern"
+msgstr ""
+
+msgid "Pattern"
+msgstr ""
+
+msgid "Error"
+msgstr ""
+
+msgid "Solution"
+msgstr ""
+
+msgid "There is an error in following search filter pattern"
+msgstr ""
+
+msgid "There is an error in following search filter exception pattern"
+msgstr ""
+
+msgid "There is an error in following antispam exception entry pattern"
+msgstr ""
+
+msgid "There is an error in following forbidden nick pattern"
+msgstr ""
+
+msgid "There is an error in following MyINFO exception pattern"
+msgstr ""
+
+msgid "There is an error in following forbidden description pattern"
+msgstr ""
+
+msgid "There is an error in following forbidden tag pattern"
+msgstr ""
+
+msgid "There is an error in following forbidden connection type pattern"
+msgstr ""
+
+msgid "There is an error in following forbidden email pattern"
+msgstr ""
+
+msgid "There is an error in following forbidden share size pattern"
+msgstr ""
+
+msgid "There is an error in following forbidden IP address pattern"
+msgstr ""
+
+msgid "There is an error in following forbidden country code pattern"
+msgstr ""
+
+msgid "There is an error in following forbidden DNS pattern"
+msgstr ""
+
+msgid "There is an error in following forbidden client supports pattern"
+msgstr ""
+
+msgid "There is an error in following forbidden NMDC version pattern"
+msgstr ""
+
+msgid "Added replacer in PM: %s"
+msgstr ""
+
+msgid "Added replacer in MC and PM: %s"
+msgstr ""
+
+msgid "Message replaced for user with IP %s and class %d in PM to %s with IP %s and class %d: <%s> %s"
+msgstr ""
+
+msgid "Message ignored due to flood detection from %s with IP %s and class %d in MC: %s"
+msgstr ""
+
+msgid "Users with same IP"
+msgstr ""
+
+msgid "Parameter count mismatch detected in following translation string: %s"
+msgstr ""
+
+msgid "Infected user detected"
+msgstr ""
+
+msgid "Found files"
+msgstr ""
+
+msgid "Infected user detected with nick %s and IP %s and share %s and spent time: %s"
+msgstr ""
+
+msgid "Sadly I don't have access to send infected user information to AVDB, please ask maintainer of this script to add your server IP address to access list. AVDB reporting feature has been automatically disabled."
+msgstr ""
+
+msgid "In order to send infected user information to AVDB you need to ask maintainer of this script to add your server IP address to AVDB access list."
+msgstr ""
+
+msgid "Antivirus statistics"
+msgstr ""
+
+msgid "File names used for search"
+msgstr ""
+
+msgid "File extensions used for search"
+msgstr ""
+
+msgid "Possibly infected users"
+msgstr ""
+
+msgid "Spent time: %s"
+msgstr ""
+
+msgid "Infected user logged in with IP %s and share %s: %s"
+msgstr ""
+
+msgid "Loaded %d of %d with totally %d items: %s"
+msgstr ""
+
+msgid "Infected user information sent to %s: %s"
+msgstr ""
+
+msgid "Failed to load information from %s: %s"
+msgstr ""
+
+msgid "Failed to send information to %s: %s"
+msgstr ""
+
+msgid "Error on executing %s: %s"
+msgstr ""
+
+msgid "Error on connecting."
+msgstr ""
+
+msgid "Loaded none with totally %d items: %s"
+msgstr ""
+
+msgid "Infected user found with IP %s and share %s: %s"
+msgstr ""
+
+msgid "Server didn't reply with expected status code."
+msgstr ""
+
+msgid "Size of %s: %d @ %s"
+msgstr ""
+
+msgid "Clear kick votes for user"
+msgstr ""
+
+msgid "%s cleared %d of %d votes for kicking user with class %d: %s"
+msgstr ""
+
+msgid "Vote kick list"
+msgstr ""
+
+msgid "Vote kick list is empty."
+msgstr ""
+
+msgid "Votes: %d of %d"
+msgstr ""
+
+msgid "Voters: %s"
+msgstr ""
+
+msgid "Triggers"
+msgstr ""
+
+msgid "Add trigger"
+msgstr ""
+
+msgid "Trigger list"
+msgstr ""
+
+msgid "Delete trigger"
+msgstr ""
+
+msgid "Modified trigger: %s"
+msgstr ""
+
+msgid "Added trigger: %s"
+msgstr ""
+
+msgid "Deleted trigger: %s"
+msgstr ""
+
+msgid "Trigger not found: %s"
+msgstr ""
+
+msgid "Trigger list is empty."
+msgstr ""
+
+msgid "Class range: %d to %d"
+msgstr ""
+
+msgid "Pinger"
+msgstr ""
+
+msgid "Guest"
+msgstr ""
+
+msgid "Registered"
+msgstr ""
+
+msgid "VIP"
+msgstr ""
+
+msgid "Operator"
+msgstr ""
+
+msgid "Cheef"
+msgstr ""
+
+msgid "Administrator"
+msgstr ""
+
+msgid "Master"
+msgstr ""
+
+msgid "News item added by %s: %s"
+msgstr ""
+
+msgid "Your connection request is blocked because user that you're trying connect to was detected as virus spreader: %s"
+msgstr ""
+
+msgid "Connection requests to following user will be blocked: %s"
+msgstr ""
+
+msgid "Downloading script file: %s"
+msgstr ""
+
+msgid "Stable version of %s is available: %s"
+msgstr ""
+
+msgid "Development version of %s is available: %s"
+msgstr ""
+
+msgid "Translation file loaded: %s"
+msgstr ""
+
+msgid "Loaded none of %d with totally %d items: %s"
+msgstr ""
+
+msgid "Failed to execute %s with code: %d"
+msgstr ""
+
+msgid "Failed to execute %s with error: %s"
+msgstr ""
+
+msgid "Failed to execute %s without code and error."
+msgstr ""
+
+msgid "Failed to move file: %s"
+msgstr ""
+
+msgid "Downloading translation file: %s"
+msgstr ""
+
+msgid "File not found on update server: %s"
+msgstr ""
+
+msgid "File not found on remote server: %s"
+msgstr ""
+
+msgid "File is empty."
+msgstr ""
+
+msgid "Force infected user detection"
+msgstr ""
+
+msgid "You can't block user whose class is higher or equals your own: %s"
+msgstr ""
+
+msgid "User already blocked: %s"
+msgstr ""
+
+msgid "item"
+msgstr ""
+
+msgid "Search in %s"
+msgstr ""
+
+msgid "Antivirus"
+msgstr ""
+
+msgid "Nothing was found in: %s"
+msgstr ""
+
+msgid "Searching for %s in %s: %s"
+msgstr ""
+
+msgid "Showing %d results from %s"
+msgstr ""
+
+msgid "%s module version: %s"
+msgstr ""
+
+msgid "This feature requires following module installed on your system: %s"
+msgstr ""
+
+msgid "Failed to start antivirus search server: %s"
+msgstr ""
+
+msgid "Started antivirus search server: %s"
+msgstr ""
+
+msgid "Stopped antivirus search server: %s"
+msgstr ""
+
+msgid "Blocked infected users"
+msgstr ""
+
+msgid "Add automatic country chatroom entrance"
+msgstr ""
+
+msgid "Automatic country chatroom entrance list"
+msgstr ""
+
+msgid "Delete automatic country chatroom entrance"
+msgstr ""
+
+msgid "Couldn't add automatic country chatroom entrance because already exists with ID: %d"
+msgstr ""
+
+msgid "Added automatic country chatroom entrance for %s: %s"
+msgstr ""
+
+msgid "Couldn't delete automatic country chatroom entrance because ID not found: %d"
+msgstr ""
+
+msgid "Deleted automatic country chatroom entrance with ID: %d"
+msgstr ""
+
+msgid "Automatic country chatroom entrance list is empty."
+msgstr ""
+
+msgid "Please note, following function is required for features available in this version of %s and is currently not available in running version of %s but is available in latest update: %s"
+msgstr ""
+
+msgid "note"
+msgstr ""
+
+msgid "Access is restricted."
+msgstr ""
+
+msgid "Convert LRE to plain text"
+msgstr ""
+
+msgid "LRE converted to plain text: %s"
+msgstr ""
+
+msgid "Please check your command syntax, something is wrong there."
+msgstr ""
+
+msgid "Entry used in detection: %s"
+msgstr ""
+
+msgid "Exception used in detection: %s"
+msgstr ""
+
+msgid "text"
+msgstr ""
+
+msgid "Delete history messages by text"
+msgstr ""
+
+msgid "Deleted %d main chat history messages by text: %s"
+msgstr ""
+
+msgid "%s with class %d deleted %d main chat history messages by text: %s"
+msgstr ""
+
+msgid "Looking for users with nick %s on: %s"
+msgstr ""
+
+msgid "Looking for users with description %s on: %s"
+msgstr ""
+
+msgid "Looking for users with client tag %s on: %s"
+msgstr ""
+
+msgid "Looking for users with connection type %s on: %s"
+msgstr ""
+
+msgid "Looking for users with email address %s on: %s"
+msgstr ""
+
+msgid "Looking for users with share size %s on: %s"
+msgstr ""
+
+msgid "Looking for users with IP address %s on: %s"
+msgstr ""
+
+msgid "Users with nick not found in any hubs: %s"
+msgstr ""
+
+msgid "Users with description not found in any hubs: %s"
+msgstr ""
+
+msgid "Users with client tag not found in any hubs: %s"
+msgstr ""
+
+msgid "Users with connection type not found in any hubs: %s"
+msgstr ""
+
+msgid "Users with email address not found in any hubs: %s"
+msgstr ""
+
+msgid "Users with share size not found in any hubs: %s"
+msgstr ""
+
+msgid "Users with IP address not found in any hubs: %s"
+msgstr ""
+
+msgid "Users with nick %s found in following hubs"
+msgstr ""
+
+msgid "Users with description %s found in following hubs"
+msgstr ""
+
+msgid "Users with client tag %s found in following hubs"
+msgstr ""
+
+msgid "Users with connection type %s found in following hubs"
+msgstr ""
+
+msgid "Users with email address %s found in following hubs"
+msgstr ""
+
+msgid "Users with share size %s found in following hubs"
+msgstr ""
+
+msgid "Users with IP address %s found in following hubs"
+msgstr ""
+
+msgid "Blocked PM"
+msgstr ""
+
+msgid "Right click menu"
+msgstr ""
+
+msgid "IP watch"
+msgstr ""
+
+msgid "Hard IP bans"
+msgstr ""
+
+msgid "Chatroom history"
+msgstr ""
+
+msgid "Chatroom history is empty."
+msgstr ""
+
+msgid "Last %d chatroom messages"
+msgstr ""
+
+msgid "There are no chatroom history messages to remove: %s"
+msgstr ""
+
+msgid "Deleted %d chatroom history messages: %s"
+msgstr ""
+
+msgid "%s with class %d deleted %d chatroom history messages: %s"
+msgstr ""
+
+msgid "Set your chat mode"
+msgstr ""
+
+msgid "real"
+msgstr ""
+
+msgid "Specified country code isn't valid: %s"
+msgstr ""
+
+msgid "You can't block user who don't share anything: %s"
+msgstr ""
+
+msgid "You can't kick user who don't share anything: %s"
+msgstr ""
+
+msgid "Flood detected from %s with IP %s and class %d in MC: %s"
+msgstr ""
+
+msgid "%s dropped due to flood."
+msgstr ""
+
+msgid "Main chat flood detected from your nick."
+msgstr ""
+
+msgid "Private chat flood detected from your IP."
+msgstr ""
+
+msgid "Sorry, your message has been ignored."
+msgstr ""
+
+msgid "Disable or enable right click menu item"
+msgstr ""
+
+msgid "Disabled right click menu item: %s"
+msgstr ""
+
+msgid "Enabled right click menu item: %s"
+msgstr ""
+
+msgid "%s added to search block list."
+msgstr ""
+
+msgid "Your search request is discarded due to previous forbidden search request."
+msgstr ""
+
+msgid "Hub URL: %s"
+msgstr ""
+
+msgid "Search filter block list"
+msgstr ""
+
+msgid "Delete search filter block list entry"
+msgstr ""
+
+msgid "Search filter block list is empty."
+msgstr ""
+
+msgid "Deleted search filter block list entry: %s"
+msgstr ""
+
+msgid "Couldn't delete search filter block list entry because not found: %s"
+msgstr ""
+
+msgid "Yes"
+msgstr ""
+
+msgid "No"
+msgstr ""
+
+msgid "%s with class %d changed configuration variable %s.%s: %s => %s"
+msgstr ""
