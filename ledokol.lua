@@ -5985,6 +5985,158 @@ end
 
 ----- ---- --- -- -
 
+function VH_OnParsedMsgMCTo (from, data, to)
+	if table_othsets ["locked"] then
+		return 1
+	end
+
+	local ip = getip (from)
+	local prot = isprotected (from, ip)
+	local fcls = getclass (from)
+
+	if not prot then -- protection
+		if fcls < table_sets ["pmminclass"] then
+			maintouser (from, gettext ("You're not allowed to send private messages."))
+			return 0
+		end
+
+		if table_sets ["chatcodeon"] > 0 and (table_sets ["chatcodeflag"] == 0 or table_sets ["chatcodeflag"] == 2) and fcls <= table_sets ["codemaxclass"] then -- chatcode
+			if not table_code [from] then
+				local vcode, code = genchatcode ()
+
+				table_code [from] = {
+					["vcode"] = vcode,
+					["code"] = code,
+					["lock"] = true
+				}
+
+				local txt = table_sets ["codetext"]:gsub ("<code>", reprexpchars (vcode))
+				maintouser (from, txt)
+				return 0
+			elseif table_code [from]["lock"] then
+				local rcode = table_code [from]["code"]
+
+				if table_sets ["chatcodeon"] == 2 then -- accept lower case
+					rcode = rcode:lower ()
+				end
+
+				if data == rcode or data == table_code [from]["code"] then
+					table_code [from]["lock"] = false
+					maintouser (from, gettext ("Code accepted."))
+				else
+					local txt = table_sets ["codetext"]:gsub ("<code>", reprexpchars (table_code [from]["vcode"]))
+					maintouser (from, txt)
+				end
+
+				return 0
+			end
+		end
+
+		if detchatflood (from, fcls, ip, data, to) then -- flood detection
+			return 0
+		end
+
+		if gagipcheck (from, ip, fcls, to, data) then
+			return 0
+		end
+
+		if gagccheck (from, ip, fcls, to, data) then
+			return 0
+		end
+	--elseif table_sets ["chatantiflood"] == 1 then -- update last chat nick, mcto not supported
+		--table_othsets ["chflonenick"] = from
+	end
+
+	if not prot then -- protection
+		if antiscan (from, fcls, data, 2, to, nil) == 0 then -- scan before broadcasting
+			return 0
+		end
+	end
+
+	if checknopm (from, fcls, to) then -- no pm
+		return 0
+	end
+
+	local pmdat = data
+
+	if table_sets ["replrunning"] == 1 and (table_sets ["replprotect"] == 0 or not prot) then -- replacer
+		pmdat = replchatmsg (from, ip, fcls, pmdat, 2)
+	end
+
+	if table_sets ["custnickclass"] < 11 then -- use custom nick for sender in receivers message
+		local custnick = getcustnick (from)
+
+		if custnick then
+			if data ~= pmdat then
+				local toip = getip (to)
+				opsnotify (table_sets ["classnotirepl"], gettext ("Message replaced for user with IP %s and class %d in PM to %s with IP %s and class %d: <%s> %s"):format (ip .. tryipcc (ip, from), fcls, to, toip .. tryipcc (toip, to), getclass (to), from, data))
+			end
+
+			local mcto = false
+
+			if table_refu ["InUserSupports"] then -- check if client supports mcto
+				local on, has = VH:InUserSupports (to, "MCTo")
+
+				if on and has and tonumber (has) == 1 then
+					mcto = true
+				end
+			end
+
+			if mcto then
+				VH:SendToUser ("$MCTo: " .. to .. " From: " .. from .. " $<" .. custnick .. "> " .. pmdat .. "|", to)
+			else
+				VH:SendToUser ("<" .. custnick .. "> " .. pmdat .. "|", to)
+			end
+
+			return 0
+		elseif data ~= pmdat then
+			local toip = getip (to)
+			opsnotify (table_sets ["classnotirepl"], gettext ("Message replaced for user with IP %s and class %d in PM to %s with IP %s and class %d: <%s> %s"):format (ip .. tryipcc (ip, from), fcls, to, toip .. tryipcc (toip, to), getclass (to), from, data))
+			local mcto = false
+
+			if table_refu ["InUserSupports"] then -- check if client supports mcto
+				local on, has = VH:InUserSupports (to, "MCTo")
+
+				if on and has and tonumber (has) == 1 then
+					mcto = true
+				end
+			end
+
+			if mcto then
+				VH:SendToUser ("$MCTo: " .. to .. " From: " .. from .. " $<" .. from .. "> " .. pmdat .. "|", to)
+			else
+				VH:SendToUser ("<" .. from .. "> " .. pmdat .. "|", to)
+			end
+
+			return 0
+		end
+	elseif data ~= pmdat then
+		local toip = getip (to)
+		opsnotify (table_sets ["classnotirepl"], gettext ("Message replaced for user with IP %s and class %d in PM to %s with IP %s and class %d: <%s> %s"):format (ip .. tryipcc (ip, from), fcls, to, toip .. tryipcc (toip, to), getclass (to), from, data))
+		local mcto = false
+
+		if table_refu ["InUserSupports"] then -- check if client supports mcto
+			local on, has = VH:InUserSupports (to, "MCTo")
+
+			if on and has and tonumber (has) == 1 then
+				mcto = true
+			end
+		end
+
+		if mcto then
+			VH:SendToUser ("$MCTo: " .. to .. " From: " .. from .. " $<" .. from .. "> " .. pmdat .. "|", to)
+		else
+			VH:SendToUser ("<" .. from .. "> " .. pmdat .. "|", to)
+		end
+
+		return 0
+	end
+
+	return 1
+end
+
+----- ---- --- -- -
+
 function VH_OnParsedMsgChat (nick, data)
 	if table_othsets ["locked"] then
 		return 1
