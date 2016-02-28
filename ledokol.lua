@@ -60,7 +60,7 @@ Doxtur, chaos, sphinx, Zorro, W1ZaRd, S0RiN, MaxFox, Krzychu,
 ---------------------------------------------------------------------
 
 ver_ledo = "2.8.9" -- ledokol version
-bld_ledo = "14" -- build number
+bld_ledo = "15" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -5728,7 +5728,7 @@ function VH_OnOpChatMessage (nick, data)
 		return 1
 	end
 
-	addophistoryline (nick, data, 3)
+	addophistoryline (nick, data, getconfig ("opchat_class") or 3)
 	return 1
 end
 
@@ -5759,6 +5759,13 @@ function VH_OnScriptCommand (name, data, plug, file)
 		if nick and line then
 			nick = repnmdcoutchars (nick)
 			addmchistoryline (nick, nick, repnmdcoutchars (line))
+		end
+	elseif name == "opchat_to_all" then -- user sends operator chat message to all
+		local nick, line = data:match ("^<([^ ]+)> (.*)$")
+
+		if nick and line then
+			nick = repnmdcoutchars (nick)
+			addophistoryline (nick, line, getconfig ("opchat_class") or 3)
 		end
 	end
 
@@ -6048,7 +6055,7 @@ function VH_OnParsedMsgMCTo (from, data, to)
 	end
 
 	if not prot then -- protection
-		if antiscan (from, fcls, data, 2, to, nil) == 0 then -- scan before broadcasting
+		if antiscan (from, fcls, data, 2, to, nil) == 0 then -- antispam
 			return 0
 		end
 	end
