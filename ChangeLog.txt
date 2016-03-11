@@ -15,6 +15,8 @@
 [ 11] Added: sefibldel command to delete users from search filter block list
 [ 14] Added: Take advantage of VH_OnSetConfig callback if supported by hub
 [ 15] Added: Support for opchat_to_all script command, external scripts can use this to send operator chat history line to Ledokol
+[ 16] Added: Requirement to gain some uptime in order to use public and private chats and related commands
+[ 16] Added: Notification on low registration, search and chat uptimes
 [  7] Removed: Infected user redirect to AVDB quarantine hub
 
 [ 2.8.8 :: 2015-11-29 ]
