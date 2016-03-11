@@ -53,7 +53,7 @@ type|
 %s with IP %s and class %d allowed due to forbidden connection type exception: %s|
 %s with class %d changed configuration variable %s: %s => %s|
 %s with IP %s and class %d allowed due to forbidden email exception: %s|
-%s received own message.|
+User received own message: %s|
 %s with IP %s and class %d allowed due to forbidden share size exception: %s|
 Deleted %d releases from category: %s|
 Why would you want to set empty topic?|
@@ -204,7 +204,7 @@ to|
 Unknown configuration variable: %s|
 %s version: %s|
 Not installed|
-%s dropped due to spam.|
+User dropped due to spam: %s|
 variable|
 value|
 minutes|
@@ -357,7 +357,7 @@ Forbidden IP address list|
 Forbidden IP address list is empty.|
 %s with IP %s and class %d allowed due to forbidden IP address exception: %s|
 Couldn't delete category because not found: %s|
-%s redirected due to spam.|
+User redirected due to spam: %s|
 %s redirected due to bad search request.|
 You can download me from: %s|
 %s is registered with class %d and has been automatically unregistered and deleted from other tables.|
@@ -1117,7 +1117,7 @@ Specified country code isn't valid: %s|
 You can't block user who don't share anything: %s|
 You can't kick user who don't share anything: %s|
 Flood detected from %s with IP %s and class %d in MC: %s|
-%s dropped due to flood.|
+User dropped due to flood: %s|
 Main chat flood detected from your nick.|
 Private chat flood detected from your IP.|
 Sorry, your message has been ignored.|
@@ -1152,3 +1152,4 @@ Low search uptime of %d seconds from %s with IP %s and class %d as picture: %s|
 Low search uptime of %d seconds from %s with IP %s and class %d as video: %s|
 Low search uptime of %d seconds from %s with IP %s and class %d as folder: %s|
 Low search uptime of %d seconds from %s with IP %s and class %d as TTH: %s|
+User dropped: %s|
