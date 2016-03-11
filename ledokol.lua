@@ -60,7 +60,7 @@ Doxtur, chaos, sphinx, Zorro, W1ZaRd, S0RiN, MaxFox, Krzychu,
 ---------------------------------------------------------------------
 
 ver_ledo = "2.8.9" -- ledokol version
-bld_ledo = "15" -- build number
+bld_ledo = "16" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -105,6 +105,9 @@ table_sets = {
 	["classnotimich"] = 3,
 	["classnotiflood"] = 3,
 	["classnotigagip"] = 3,
+	["classnotilowupreg"] = 3,
+	["classnotilowupsear"] = 3,
+	["classnotilowupchat"] = 3,
 	["classnoticom"] = 10,
 	["classnotisay"] = 5,
 	["classnotirepl"] = 3,
@@ -174,6 +177,8 @@ table_sets = {
 	["regnewpubmsgadmin"] = "Please say hello to our new administrator: <nick>",
 	["regnewpubmsgmaster"] = "Please say hello to our new master: <nick>",
 	["regkickaction"] = 1,
+	["chatuptime"] = 0,
+	["chatuptimeact"] = 0,
 	["regmechatcnt"] = 0,
 	["regmeuptime"] = 0,
 	["searchuptime"] = 0,
@@ -1086,7 +1091,7 @@ function Main (file)
 	-- update tables according to old version number
 
 	local old = true
-	local _, rows = VH:SQLQuery ("select `count` from `" .. tbl_sql ["stat"] .. "` where `type` = 'ver_ledo' limit 1")
+	local _, rows = VH:SQLQuery ("select `count` from `" .. tbl_sql ["stat"] .. "` where `type` = 'ver_ledo'")
 
 	if rows > 0 then
 		local _, ver = VH:SQLFetch (0)
@@ -1114,9 +1119,9 @@ function Main (file)
 					end
 
 					if ver <= 276 then
-						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["ledocmd"] .. "` (`original`, `new`) values ('" .. repsqlchars ("dropip") .. "', '" .. repsqlchars (table_cmnds ["dropip"]) .. "')")
-						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["ledocmd"] .. "` (`original`, `new`) values ('" .. repsqlchars ("citylive") .. "', '" .. repsqlchars (table_cmnds ["citylive"]) .. "')")
-						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["ledocmd"] .. "` (`original`, `new`) values ('" .. repsqlchars ("ipinfo") .. "', '" .. repsqlchars (table_cmnds ["ipinfo"]) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["ledocmd"] .. "` (`original`, `new`) values ('dropip', '" .. repsqlchars (table_cmnds ["dropip"]) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["ledocmd"] .. "` (`original`, `new`) values ('citylive', '" .. repsqlchars (table_cmnds ["citylive"]) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["ledocmd"] .. "` (`original`, `new`) values ('ipinfo', '" .. repsqlchars (table_cmnds ["ipinfo"]) .. "')")
 
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('mchistclass', '" .. repsqlchars (table_sets ["mchistclass"]) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('classnotirepl', '" .. repsqlchars (table_sets ["classnotirepl"]) .. "')")
@@ -1130,14 +1135,14 @@ function Main (file)
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('longdateformat', '" .. repsqlchars (table_sets ["longdateformat"]) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('instrcmenu', '" .. repsqlchars (table_sets ["instrcmenu"]) .. "')")
 
-						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["ledocmd"] .. "` (`original`, `new`) values ('" .. repsqlchars ("rcmenuadd") .. "', '" .. repsqlchars (table_cmnds ["rcmenuadd"]) .. "')")
-						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["ledocmd"] .. "` (`original`, `new`) values ('" .. repsqlchars ("rcmenudel") .. "', '" .. repsqlchars (table_cmnds ["rcmenudel"]) .. "')")
-						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["ledocmd"] .. "` (`original`, `new`) values ('" .. repsqlchars ("rcmenulist") .. "', '" .. repsqlchars (table_cmnds ["rcmenulist"]) .. "')")
-						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["ledocmd"] .. "` (`original`, `new`) values ('" .. repsqlchars ("rcmenuord") .. "', '" .. repsqlchars (table_cmnds ["rcmenuord"]) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["ledocmd"] .. "` (`original`, `new`) values ('rcmenuadd', '" .. repsqlchars (table_cmnds ["rcmenuadd"]) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["ledocmd"] .. "` (`original`, `new`) values ('rcmenudel', '" .. repsqlchars (table_cmnds ["rcmenudel"]) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["ledocmd"] .. "` (`original`, `new`) values ('rcmenulist', '" .. repsqlchars (table_cmnds ["rcmenulist"]) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["ledocmd"] .. "` (`original`, `new`) values ('rcmenuord', '" .. repsqlchars (table_cmnds ["rcmenuord"]) .. "')")
 					end
 
 					if ver <= 278 then
-						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["ledocmd"] .. "` (`original`, `new`) values ('" .. repsqlchars ("votekick") .. "', '" .. repsqlchars (table_cmnds ["votekick"]) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["ledocmd"] .. "` (`original`, `new`) values ('votekick', '" .. repsqlchars (table_cmnds ["votekick"]) .. "')")
 
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('votekickclass', '" .. repsqlchars (table_sets ["votekickclass"]) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('votekickcount', '" .. repsqlchars (table_sets ["votekickcount"]) .. "')")
@@ -1156,12 +1161,12 @@ function Main (file)
 						VH:SQLQuery ("create table if not exists `" .. tbl_sql ["ccgag"] .. "` (`item` varchar(255) not null primary key, `flag` tinyint(1) unsigned not null default 0) engine = myisam default character set utf8 collate utf8_unicode_ci")
 						VH:SQLQuery ("create table if not exists `" .. tbl_sql ["trig"] .. "` (`id` varchar(255) not null primary key, `content` text not null, `minclass` tinyint(2) unsigned not null default 0, `maxclass` tinyint(2) unsigned not null default 10) engine = myisam default character set utf8 collate utf8_unicode_ci")
 
-						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["ledocmd"] .. "` (`original`, `new`) values ('" .. repsqlchars ("avstats") .. "', '" .. repsqlchars (table_cmnds ["avstats"]) .. "')")
-						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["ledocmd"] .. "` (`original`, `new`) values ('" .. repsqlchars ("votekickdel") .. "', '" .. repsqlchars (table_cmnds ["votekickdel"]) .. "')")
-						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["ledocmd"] .. "` (`original`, `new`) values ('" .. repsqlchars ("votekicklist") .. "', '" .. repsqlchars (table_cmnds ["votekicklist"]) .. "')")
-						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["ledocmd"] .. "` (`original`, `new`) values ('" .. repsqlchars ("trigadd") .. "', '" .. repsqlchars (table_cmnds ["trigadd"]) .. "')")
-						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["ledocmd"] .. "` (`original`, `new`) values ('" .. repsqlchars ("trigdel") .. "', '" .. repsqlchars (table_cmnds ["trigdel"]) .. "')")
-						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["ledocmd"] .. "` (`original`, `new`) values ('" .. repsqlchars ("triglist") .. "', '" .. repsqlchars (table_cmnds ["triglist"]) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["ledocmd"] .. "` (`original`, `new`) values ('avstats', '" .. repsqlchars (table_cmnds ["avstats"]) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["ledocmd"] .. "` (`original`, `new`) values ('votekickdel', '" .. repsqlchars (table_cmnds ["votekickdel"]) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["ledocmd"] .. "` (`original`, `new`) values ('votekicklist', '" .. repsqlchars (table_cmnds ["votekicklist"]) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["ledocmd"] .. "` (`original`, `new`) values ('trigadd', '" .. repsqlchars (table_cmnds ["trigadd"]) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["ledocmd"] .. "` (`original`, `new`) values ('trigdel', '" .. repsqlchars (table_cmnds ["trigdel"]) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["ledocmd"] .. "` (`original`, `new`) values ('triglist', '" .. repsqlchars (table_cmnds ["triglist"]) .. "')")
 						VH:SQLQuery ("update `" .. tbl_sql ["ledocmd"] .. "` set `original` = 'oldclean', `new` = '" .. repsqlchars (table_cmnds ["oldclean"]) .. "' where `original` = 'cleanup'")
 
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('avsearchint', '" .. repsqlchars (table_sets ["avsearchint"]) .. "')")
@@ -1283,18 +1288,28 @@ function Main (file)
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('chatfloodonecount', '" .. repsqlchars (table_sets ["chatfloodonecount"]) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('chatfloodoneint', '" .. repsqlchars (table_sets ["chatfloodoneint"]) .. "')")
 
-						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["ledocmd"] .. "` (`original`, `new`) values ('" .. repsqlchars ("rcmenuoff") .. "', '" .. repsqlchars (table_cmnds ["rcmenuoff"]) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["ledocmd"] .. "` (`original`, `new`) values ('rcmenuoff', '" .. repsqlchars (table_cmnds ["rcmenuoff"]) .. "')")
 					end
 
 					if ver <= 289 then
 						VH:SQLQuery ("alter ignore table `" .. tbl_sql ["replex"] .. "` add column `type` tinyint(1) not null default 0 after `exception`")
+
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('sefiblockdel', '" .. repsqlchars (table_sets ["sefiblockdel"]) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('chatuptime', '" .. repsqlchars (table_sets ["chatuptime"]) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('chatuptimeact', '" .. repsqlchars (table_sets ["chatuptimeact"]) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('classnotilowupreg', '" .. repsqlchars (table_sets ["classnotilowupreg"]) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('classnotilowupsear', '" .. repsqlchars (table_sets ["classnotilowupsear"]) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('classnotilowupchat', '" .. repsqlchars (table_sets ["classnotilowupchat"]) .. "')")
+
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["ledocmd"] .. "` (`original`, `new`) values ('sefibllist', '" .. repsqlchars (table_cmnds ["sefibllist"]) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["ledocmd"] .. "` (`original`, `new`) values ('sefibldel', '" .. repsqlchars (table_cmnds ["sefibldel"]) .. "')")
 					end
 
 					if ver <= 290 then
 						-- todo
 					end
 
-					-- and so on
+					-- and so on, todo: dont forget to update this list on every release
 
 					old = false -- update version
 					local tm = os.time () + table_sets ["srvtimediff"]
@@ -1304,7 +1319,7 @@ function Main (file)
 		end
 	end
 
-	if old == true then -- old style or fresh install
+	if old then -- old style or fresh install
 		renametables ()
 		createtables ()
 		altertables ()
@@ -1319,7 +1334,7 @@ function Main (file)
 	table_othsets ["opchatnick"] = getconfig ("opchat_name")
 
 	if table_sets ["addledobot"] == 1 then
-		addhubrobot (table_sets ["ledobotnick"], table_othsets ["ledobotdesc"]..table_othsets ["ledobottag"], 2, table_sets ["ledobotmail"], getownsize (true, table_sets ["ledobotsize"]))
+		addhubrobot (table_sets ["ledobotnick"], table_othsets ["ledobotdesc"] .. table_othsets ["ledobottag"], 2, table_sets ["ledobotmail"], getownsize (true, table_sets ["ledobotsize"]))
 
 		if table_sets ["useextrafeed"] == 1 then
 			table_othsets ["feednick"] = table_sets ["extrafeednick"]
@@ -1356,7 +1371,7 @@ function Main (file)
 		local umax = getconfig ("max_users")
 
 		if ulim < umax then
-			VH:SendToClass ("<"..table_othsets ["sendfrom"].."> "..string.format (gettext ("Warning: %s"), string.format (gettext ("Open files limit set to %d is smaller than maximum users configuration which is %d. You can correct this by setting %s to %d or higher and restarting the hub."), ulim, umax, "ulimit -n", umax)).."|", 5, 10)
+			VH:SendToClass ("<" .. table_othsets ["sendfrom"] .. "> " .. gettext ("Warning: %s"):format (gettext ("Open files limit set to %d is smaller than maximum users configuration which is %d. You can correct this by setting %s to %d or higher and restarting the hub."):format (ulim, umax, "ulimit -n", umax)) .. "|", 5, 10)
 		end
 	end
 
@@ -3863,6 +3878,26 @@ function VH_OnUserCommand (nick, data)
 		local prot = isprotected (nick, ip)
 
 		if not prot then -- protection
+			if table_sets ["chatuptime"] > 0 and table_sets ["showuseruptime"] == 1 and ucl < table_sets ["scanbelowclass"] and table_usup [nick] then -- chat uptime
+				local dif = os.time () - table_usup [nick]
+
+				if dif < table_sets ["chatuptime"] then
+					opsnotify (table_sets ["classnotilowupchat"], gettext ("Low chat uptime of %d seconds from %s with IP %s and class %d in command: %s"):format (dif, nick, ip .. tryipcc (ip, nick), ucl, "+me " .. msg))
+
+					if table_sets ["chatuptimeact"] == 0 then -- message
+						maintouser (nick, gettext ("Please wait another %d seconds before using public chat."):format (table_sets ["chatuptime"] - dif))
+					elseif table_sets ["chatuptimeact"] == 1 then -- drop
+						VH:Disconnect (nick)
+					--elseif table_sets ["chatuptimeact"] == 2 then -- silent
+						-- nothing to do
+					elseif table_sets ["chatuptimeact"] == 3 then -- message to self
+						VH:SendToUser ("** " .. nick .. " " .. msg .. "|", nick)
+					end
+
+					return 0
+				end
+			end
+
 			if table_sets ["chatcodeon"] > 0 and (table_sets ["chatcodeflag"] == 0 or table_sets ["chatcodeflag"] == 1) and ucl <= table_sets ["codemaxclass"] then -- chatcode
 				if not table_code [nick] then
 					local vcode, code = genchatcode ()
@@ -4001,6 +4036,26 @@ function VH_OnUserCommand (nick, data)
 		end
 
 		if not isprotected (nick, ip) then -- protection
+			if table_sets ["chatuptime"] > 0 and table_sets ["showuseruptime"] == 1 and ucl < table_sets ["scanbelowclass"] and table_usup [nick] then -- chat uptime
+				local dif = os.time () - table_usup [nick]
+
+				if dif < table_sets ["chatuptime"] then
+					opsnotify (table_sets ["classnotilowupchat"], gettext ("Low chat uptime of %d seconds from %s with IP %s and class %d in command: %s"):format (dif, nick, ip .. tryipcc (ip, nick), ucl, "+me"))
+
+					if table_sets ["chatuptimeact"] == 0 then -- message
+						maintouser (nick, gettext ("Please wait another %d seconds before using public chat."):format (table_sets ["chatuptime"] - dif))
+					elseif table_sets ["chatuptimeact"] == 1 then -- drop
+						VH:Disconnect (nick)
+					--elseif table_sets ["chatuptimeact"] == 2 then -- silent
+						-- nothing to do
+					elseif table_sets ["chatuptimeact"] == 3 then -- message to self
+						VH:SendToUser ("** " .. nick .. "|", nick)
+					end
+
+					return 0
+				end
+			end
+
 			if table_sets ["chatcodeon"] > 0 and (table_sets ["chatcodeflag"] == 0 or table_sets ["chatcodeflag"] == 1) and ucl <= table_sets ["codemaxclass"] then -- chatcode
 				if not table_code [nick] then
 					local vcode, code = genchatcode ()
@@ -4082,13 +4137,41 @@ function VH_OnUserCommand (nick, data)
 
 	-- process other commands
 
-	if string.find (data, "^"..table_othsets ["ustrig"].."report .+$") then -- antispam
+	if data:match ("^" .. table_othsets ["ustrig"] .. "report .+$") then -- report antispam
 		if table_sets ["checkcmdspam"] == 0 then -- dont check twice
 			local cfg = getconfig ("disable_report_cmd")
-			if cfg and (cfg ~= 0) then return 1 end
-			if table_sets ["allowspamtoops"] == 1 then return 1 end
-			if isprotected (nick, getip (nick)) == true then return 1 end
-			return antiscan (nick, ucl, string.sub (data, string.len ("report") + 3, -1), 4, nil, nil)
+
+			if cfg and cfg ~= 0 then
+				return 1
+			end
+
+			local msg = data:sub (string.len ("report") + 3)
+
+			if table_sets ["chatuptime"] > 0 and table_sets ["showuseruptime"] == 1 and ucl < table_sets ["scanbelowclass"] and table_usup [nick] then -- chat uptime
+				local dif = os.time () - table_usup [nick]
+
+				if dif < table_sets ["chatuptime"] then
+					opsnotify (table_sets ["classnotilowupchat"], gettext ("Low chat uptime of %d seconds from %s with IP %s and class %d in command: %s"):format (dif, nick, ip .. tryipcc (ip, nick), ucl, "+report " .. msg))
+
+					if table_sets ["chatuptimeact"] == 0 then -- message
+						maintouser (nick, gettext ("Please wait another %d seconds before using public chat."):format (table_sets ["chatuptime"] - dif))
+					elseif table_sets ["chatuptimeact"] == 1 then -- drop
+						VH:Disconnect (nick)
+					--elseif table_sets ["chatuptimeact"] == 2 then -- silent
+						-- nothing to do
+					elseif table_sets ["chatuptimeact"] == 3 then -- message to self
+						maintouser (nick, gettext ("Thank you, your report has been accepted."))
+					end
+
+					return 0
+				end
+			end
+
+			if table_sets ["allowspamtoops"] == 1 or isprotected (nick, getip (nick)) then
+				return 1
+			end
+
+			return antiscan (nick, ucl, msg, 4, nil, nil)
 		end
 
 	----- ---- --- -- -
@@ -4431,7 +4514,7 @@ elseif string.find (data, "^"..table_othsets ["ustrig"]..table_cmnds ["mode"].."
 ----- ---- --- -- -
 
 	elseif string.find (data, "^"..table_othsets ["ustrig"].."regme$") or string.find (data, "^"..table_othsets ["ustrig"].."regme%s+.*$") then
-		return checkregmecmd (nick, ucl)
+		return checkregmecmd (nick, ucl, ip)
 
 ----- ---- --- -- -
 
@@ -4912,7 +4995,7 @@ function VH_OnParsedMsgSearch (nick, data)
 		end
 	end
 
-	if table_sets ["searchuptime"] > 0 and table_sets ["showuseruptime"] == 1 then
+	if table_sets ["searchuptime"] > 0 and table_sets ["showuseruptime"] == 1 then -- search uptime
 		cls, gotcls = getclass (nick), true
 
 		if cls < table_sets ["scanbelowclass"] then
@@ -4926,6 +5009,47 @@ function VH_OnParsedMsgSearch (nick, data)
 				local dif = os.time () - table_usup [nick]
 
 				if dif < table_sets ["searchuptime"] then
+					if table_sets ["classnotilowupsear"] < 11 then
+						local sype, sear = data:match ("^%$Search .* .*%?.*%?.*%?(.*)%?(.*)$")
+
+						if sype and sear then
+							sype = tonumber (sype or 1) or 1
+
+							if sype < 1 or sype > 9 then
+								sype = 1
+							end
+
+							if sype == 9 and sear:sub (1, 4):lower () == "tth:" then -- remove "TTH:"
+								sear = sear:sub (5)
+							end
+						else
+							sype = 1
+							sear = ""
+						end
+
+						local note = "Low search uptime of %d seconds from %s with IP %s and class %d as any file: %s"
+
+						if sype == 2 then
+							note = "Low search uptime of %d seconds from %s with IP %s and class %d as audio file: %s"
+						elseif sype == 3 then
+							note = "Low search uptime of %d seconds from %s with IP %s and class %d as compressed file: %s"
+						elseif sype == 4 then
+							note = "Low search uptime of %d seconds from %s with IP %s and class %d as document: %s"
+						elseif sype == 5 then
+							note = "Low search uptime of %d seconds from %s with IP %s and class %d as executable: %s"
+						elseif sype == 6 then
+							note = "Low search uptime of %d seconds from %s with IP %s and class %d as picture: %s"
+						elseif sype == 7 then
+							note = "Low search uptime of %d seconds from %s with IP %s and class %d as video: %s"
+						elseif sype == 8 then
+							note = "Low search uptime of %d seconds from %s with IP %s and class %d as folder: %s"
+						elseif sype == 9 then
+							note = "Low search uptime of %d seconds from %s with IP %s and class %d as TTH: %s"
+						end
+
+						opsnotify (table_sets ["classnotilowupsear"], gettext (note):format (dif, nick, ip .. tryipcc (ip, nick), cls, repnmdcoutchars (sear)))
+					end
+
 					if table_sets ["searuptimeact"] == 0 then -- message
 						maintouser (nick, gettext ("Please wait another %d seconds before using hub search engine."):format (table_sets ["searchuptime"] - dif))
 					elseif table_sets ["searuptimeact"] == 1 then -- drop
@@ -4957,7 +5081,7 @@ function VH_OnParsedMsgSearch (nick, data)
 
 				if sefi then
 					if not sefi.sil then
-						maintouser (nick, gettext ("Your search request is discarded due to previous forbidden search request: %s"):format (sefi.req))
+						maintouser (nick, gettext ("Your search request is discarded due to previous forbidden search request: %s"):format (repnmdcoutchars (sefi.req)))
 					end
 
 					table_sefi [nick].num = sefi.num + 1
@@ -5793,6 +5917,27 @@ function VH_OnParsedMsgPM (from, data, to)
 			return 0
 		end
 
+		if table_sets ["chatuptime"] > 0 and table_sets ["showuseruptime"] == 1 and fcls < table_sets ["scanbelowclass"] and table_usup [from] then -- chat uptime
+			local dif = os.time () - table_usup [from]
+
+			if dif < table_sets ["chatuptime"] then
+				local toip = getip (to)
+				opsnotify (table_sets ["classnotilowupchat"], gettext ("Low chat uptime of %d seconds from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s"):format (dif, from, ip .. tryipcc (ip, from), fcls, to, toip .. tryipcc (toip, to), getclass (to), data))
+
+				if table_sets ["chatuptimeact"] == 0 then -- message
+					pmtouser (from, to, gettext ("Please wait another %d seconds before using private chat."):format (table_sets ["chatuptime"] - dif))
+				elseif table_sets ["chatuptimeact"] == 1 then -- drop
+					VH:Disconnect (from)
+				--elseif table_sets ["chatuptimeact"] == 2 then -- silent
+					-- nothing to do
+				--elseif table_sets ["chatuptimeact"] == 3 then -- message to self
+					-- not needed for private messages
+				end
+
+				return 0
+			end
+		end
+
 		if table_sets ["chatcodeon"] > 0 and (table_sets ["chatcodeflag"] == 0 or table_sets ["chatcodeflag"] == 2) and fcls <= table_sets ["codemaxclass"] then -- chatcode
 			if not table_code [from] then
 				local vcode, code = genchatcode ()
@@ -6007,6 +6152,27 @@ function VH_OnParsedMsgMCTo (from, data, to)
 			return 0
 		end
 
+		if table_sets ["chatuptime"] > 0 and table_sets ["showuseruptime"] == 1 and fcls < table_sets ["scanbelowclass"] and table_usup [from] then -- chat uptime
+			local dif = os.time () - table_usup [from]
+
+			if dif < table_sets ["chatuptime"] then
+				local toip = getip (to)
+				opsnotify (table_sets ["classnotilowupchat"], gettext ("Low chat uptime of %d seconds from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s"):format (dif, from, ip .. tryipcc (ip, from), fcls, to, toip .. tryipcc (toip, to), getclass (to), data))
+
+				if table_sets ["chatuptimeact"] == 0 then -- message
+					maintouser (from, gettext ("Please wait another %d seconds before using private chat."):format (table_sets ["chatuptime"] - dif))
+				elseif table_sets ["chatuptimeact"] == 1 then -- drop
+					VH:Disconnect (from)
+				--elseif table_sets ["chatuptimeact"] == 2 then -- silent
+					-- nothing to do
+				--elseif table_sets ["chatuptimeact"] == 3 then -- message to self
+					-- not needed for private messages
+				end
+
+				return 0
+			end
+		end
+
 		if table_sets ["chatcodeon"] > 0 and (table_sets ["chatcodeflag"] == 0 or table_sets ["chatcodeflag"] == 2) and fcls <= table_sets ["codemaxclass"] then -- chatcode
 			if not table_code [from] then
 				local vcode, code = genchatcode ()
@@ -6159,6 +6325,26 @@ function VH_OnParsedMsgChat (nick, data)
 	local prot = isprotected (nick, ip)
 
 	if not prot then -- protection
+		if table_sets ["chatuptime"] > 0 and table_sets ["showuseruptime"] == 1 and ucl < table_sets ["scanbelowclass"] and table_usup [nick] then -- chat uptime
+			local dif = os.time () - table_usup [nick]
+
+			if dif < table_sets ["chatuptime"] then
+				opsnotify (table_sets ["classnotilowupchat"], gettext ("Low chat uptime of %d seconds from %s with IP %s and class %d in MC: %s"):format (dif, nick, ip .. tryipcc (ip, nick), ucl, data))
+
+				if table_sets ["chatuptimeact"] == 0 then -- message
+					maintouser (nick, gettext ("Please wait another %d seconds before using public chat."):format (table_sets ["chatuptime"] - dif))
+				elseif table_sets ["chatuptimeact"] == 1 then -- drop
+					VH:Disconnect (nick)
+				--elseif table_sets ["chatuptimeact"] == 2 then -- silent
+					-- nothing to do
+				elseif table_sets ["chatuptimeact"] == 3 then -- message to self
+					maintoself (nick, data)
+				end
+
+				return 0
+			end
+		end
+
 		if table_sets ["chatcodeon"] > 0 and (table_sets ["chatcodeflag"] == 0 or table_sets ["chatcodeflag"] == 1) and ucl <= table_sets ["codemaxclass"] then -- chatcode
 			if not table_code [nick] then
 				local vcode, code = genchatcode ()
@@ -7455,7 +7641,29 @@ end
 ----- ---- --- -- -
 
 function setcustnick (nick, custom, ucl)
-	if not isprotected (nick, getip (nick)) then -- protection
+	local ip = getip (nick)
+
+	if not isprotected (nick, ip) then -- protection
+		if table_sets ["chatuptime"] > 0 and table_sets ["showuseruptime"] == 1 and ucl < table_sets ["scanbelowclass"] and table_usup [nick] then -- chat uptime
+			local dif = os.time () - table_usup [nick]
+
+			if dif < table_sets ["chatuptime"] then
+				opsnotify (table_sets ["classnotilowupchat"], gettext ("Low chat uptime of %d seconds from %s with IP %s and class %d in command: %s"):format (dif, nick, ip .. tryipcc (ip, nick), ucl, "+" .. table_cmnds ["nick"] .. " " .. custom))
+
+				if table_sets ["chatuptimeact"] == 0 then -- message
+					maintouser (nick, gettext ("Please wait another %d seconds before using public chat."):format (table_sets ["chatuptime"] - dif))
+				elseif table_sets ["chatuptimeact"] == 1 then -- drop
+					VH:Disconnect (nick)
+				--elseif table_sets ["chatuptimeact"] == 2 then -- silent
+					-- nothing to do
+				elseif table_sets ["chatuptimeact"] == 3 then -- message to self
+					maintouser (nick, gettext ("%s is now known as: %s"):format (nick, custom)) -- simple for now
+				end
+
+				return
+			end
+		end
+
 		if table_sets ["chatcodeon"] > 0 and (table_sets ["chatcodeflag"] == 0 or table_sets ["chatcodeflag"] == 1) and ucl <= table_sets ["codemaxclass"] then -- chatcode
 			if not table_code [nick] then
 				local vcode, code = genchatcode ()
@@ -7468,11 +7676,11 @@ function setcustnick (nick, custom, ucl)
 
 				local txt = table_sets ["codetext"]:gsub ("<code>", reprexpchars (vcode))
 				maintouser (nick, txt)
-				return nil
+				return
 			elseif table_code [nick]["lock"] then
 				local txt = table_sets ["codetext"]:gsub ("<code>", reprexpchars (table_code [nick]["vcode"]))
 				maintouser (nick, txt)
-				return nil
+				return
 			end
 		end
 	end
@@ -7495,7 +7703,7 @@ if string.len (custom) == 0 then -- user is resetting his nick
 elseif string.len (custom) > table_sets ["custmaxlen"] then
 	commandanswer (nick, string.format (gettext ("Custom nick can't be longer than %d characters."), table_sets ["custmaxlen"]))
 else
-	if antiscan (nick, ucl, custom, 1, nil, nil) == 0 then return nil end -- scan for spam
+	if antiscan (nick, ucl, custom, 1, nil, nil) == 0 then return end -- scan for spam
 	local custom = repnickchars (custom)
 
 	if (string.lower (nick) == string.lower (custom)) or ((getstatus (custom) == 0) and (not getregclass (custom)) and (not findcustnick (custom))) then
@@ -9915,7 +10123,7 @@ end
 
 ----- ---- --- -- -
 
-function checkregmecmd (nick, ucl)
+function checkregmecmd (nick, ucl, ip)
 	if getconfig ("disable_regme_cmd") ~= 0 then return 1 end
 	if ucl >= 1 then return 1 end -- unregistered only
 
@@ -9931,17 +10139,17 @@ function checkregmecmd (nick, ucl)
 		end
 	end
 
-	if (table_sets ["regmeuptime"] > 0) and (table_sets ["showuseruptime"] == 1) then
+	if table_sets ["regmeuptime"] > 0 and table_sets ["showuseruptime"] == 1 then -- regme uptime
 		if table_usup [nick] then
-			local dif = os.time () - table_usup [nick]
+			local dif = (os.time () - table_usup [nick]) / 60
 
-			if (dif / 60) < table_sets ["regmeuptime"] then
-				commandanswer (nick, string.format (gettext ("Please wait another %.1f minutes before using hub registration."), roundint ((table_sets ["regmeuptime"] - (dif / 60)), 1)))
+			if dif < table_sets ["regmeuptime"] then
+				opsnotify (table_sets ["classnotilowupreg"], gettext ("Low registration uptime from %s with IP %s and class %d: %s"):format (nick, ip .. tryipcc (ip, nick), ucl, gettext ("%.1f minutes"):format (dif)))
+				commandanswer (nick, gettext ("Please wait another %.1f minutes before using hub registration."):format (table_sets ["regmeuptime"] - dif))
 				return 0
 			end
 		--else
-			--commandanswer (nick, string.format (gettext ("Please reconnect to gain %d minutes of uptime in order to use hub registration."), table_sets ["regmeuptime"]))
-			--return 0
+			--commandanswer (nick, gettext ("Please reconnect to gain %d minutes of uptime in order to use hub registration."):format (table_sets ["regmeuptime"]))
 		end
 	end
 
@@ -13856,7 +14064,7 @@ function listsefiblocks (nick)
 	local list = ""
 
 	for user, data in pairs (table_sefi) do
-		list = list .. " [ N: " .. user .. " ] [ R: " .. data.req .. " ] [ N: " .. tostring (data.num) .. " ] [ S: "
+		list = list .. " [ N: " .. user .. " ] [ R: " .. repnmdcoutchars (data.req) .. " ] [ N: " .. tostring (data.num) .. " ] [ S: "
 
 		if data.sil then
 			list = list .. gettext ("Yes")
@@ -15766,7 +15974,37 @@ end
 			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 		end
 
------ ---- --- -- -
+	----- ---- --- -- -
+
+	elseif tvar == "chatuptime" then
+		if num then
+			if setto >= 0 and setto <= 86400 then
+				if setto > 0 and table_sets ["showuseruptime"] == 0 then
+					commandanswer (nick, gettext ("In order to use this feature you need to set %s to: %d"):format ("showuseruptime", 1))
+				end
+
+				ok = true
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0 " .. gettext ("to") .. " 86400"))
+			end
+		else
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
+		end
+
+	----- ---- --- -- -
+
+	elseif tvar == "chatuptimeact" then
+		if num then
+			if setto >= 0 and setto <= 3 then
+				ok = true
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0, 1, 2 " .. gettext ("or") .. " 3"))
+			end
+		else
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
+		end
+
+	----- ---- --- -- -
 
 	elseif tvar == "regmechatcnt" then
 		if num == true then
@@ -15780,41 +16018,41 @@ end
 			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 		end
 
------ ---- --- -- -
+	----- ---- --- -- -
 
 	elseif tvar == "regmeuptime" then
-		if num == true then
-			if (setto >= 0) and (setto <= 1440) then
-				if (setto > 0) and (table_sets ["showuseruptime"] == 0) then
-					commandanswer (nick, string.format (gettext ("In order to use this feature you need to set %s to: %d"), "showuseruptime", 1))
+		if num then
+			if setto >= 0 and setto <= 1440 then
+				if setto > 0 and table_sets ["showuseruptime"] == 0 then
+					commandanswer (nick, gettext ("In order to use this feature you need to set %s to: %d"):format ("showuseruptime", 1))
 				end
 
 				ok = true
 			else
-				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 "..gettext ("to").." 1440"))
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0 " .. gettext ("to") .. " 1440"))
 			end
 		else
-			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
 		end
 
------ ---- --- -- -
+	----- ---- --- -- -
 
 	elseif tvar == "searchuptime" then
-		if num == true then
-			if (setto >= 0) and (setto <= 86400) then
-				if (setto > 0) and (table_sets ["showuseruptime"] == 0) then
-					commandanswer (nick, string.format (gettext ("In order to use this feature you need to set %s to: %d"), "showuseruptime", 1))
+		if num then
+			if setto >= 0 and setto <= 86400 then
+				if setto > 0 and table_sets ["showuseruptime"] == 0 then
+					commandanswer (nick, gettext ("In order to use this feature you need to set %s to: %d"):format ("showuseruptime", 1))
 				end
 
 				ok = true
 			else
-				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 "..gettext ("to").." 86400"))
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0 " .. gettext ("to") .. " 86400"))
 			end
 		else
-			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
 		end
 
------ ---- --- -- -
+	----- ---- --- -- -
 
 	elseif tvar == "searuptimeact" then
 		if num == true then
@@ -16693,7 +16931,46 @@ elseif tvar == "classnotigagip" then
 		commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
 	end
 
------ ---- --- -- -
+	----- ---- --- -- -
+
+	elseif tvar == "classnotilowupreg" then
+		if num then
+			if setto >= 0 and setto <= 5 or setto == 10 or setto == 11 then
+				ok = true
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0, 1, 2, 3, 4, 5, 10 " .. gettext ("or") .. " 11"))
+			end
+		else
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
+		end
+
+	----- ---- --- -- -
+
+	elseif tvar == "classnotilowupsear" then
+		if num then
+			if setto >= 0 and setto <= 5 or setto == 10 or setto == 11 then
+				ok = true
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0, 1, 2, 3, 4, 5, 10 " .. gettext ("or") .. " 11"))
+			end
+		else
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
+		end
+
+	----- ---- --- -- -
+
+	elseif tvar == "classnotilowupchat" then
+		if num then
+			if setto >= 0 and setto <= 5 or setto == 10 or setto == 11 then
+				ok = true
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0, 1, 2, 3, 4, 5, 10 " .. gettext ("or") .. " 11"))
+			end
+		else
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
+		end
+
+	----- ---- --- -- -
 
 elseif tvar == "classnoticom" then
 if num == true then
@@ -18772,7 +19049,7 @@ stats = stats.."\r\n "..string.format (gettext ("Total share rank size: %s"), ma
 stats = stats.."\r\n "..string.format (gettext ("Total operator rank points: %d"), countranks (tbl_sql ["opran"]))
 stats = stats.."\r\n "..string.format (gettext ("Total search rank points: %d"), countranks (tbl_sql ["srran"]))
 stats = stats.."\r\n "..string.format (gettext ("Total word rank points: %d"), countranks (tbl_sql ["wdran"]))
-stats = stats.."\r\n "..string.format (gettext ("Average message count per user: %.2f"), roundint (mesperuser, 2))
+stats = stats.."\r\n "..string.format (gettext ("Average message count per user: %.2f"), mesperuser)
 stats = stats.."\r\n"
 stats = stats.."\r\n "..string.format (gettext ("Size of kicks table: %d [ %s: %d @ %s ]"), counttable ("kicklist"), "C", (getledoconf ("limcleankick") or 0), fromunixtime ((getledoconf ("lastcleankick") or 0), true))
 stats = stats.."\r\n "..string.format (gettext ("Size of bans table: %d [ %s: %d @ %s ]"), counttable ("banlist"), "C", (getledoconf ("limcleanban") or 0), fromunixtime ((getledoconf ("lastcleanban") or 0), true))
@@ -18841,8 +19118,11 @@ conf = conf.."\r\n [::] classnotiex = "..table_sets ["classnotiex"]
 conf = conf.."\r\n [::] classnotimich = "..table_sets ["classnotimich"]
 conf = conf.."\r\n [::] classnotiflood = "..table_sets ["classnotiflood"]
 conf = conf.."\r\n [::] classnotigagip = "..table_sets ["classnotigagip"]
-conf = conf.."\r\n [::] classnoticom = "..table_sets ["classnoticom"]
-conf = conf.."\r\n [::] classnotisay = "..table_sets ["classnotisay"]
+	conf = conf .. "\r\n [::] classnotilowupreg = " .. table_sets ["classnotilowupreg"]
+	conf = conf .. "\r\n [::] classnotilowupsear = " .. table_sets ["classnotilowupsear"]
+	conf = conf .. "\r\n [::] classnotilowupchat = " .. table_sets ["classnotilowupchat"]
+	conf = conf .. "\r\n [::] classnoticom = " .. table_sets ["classnoticom"]
+	conf = conf .. "\r\n [::] classnotisay = " .. table_sets ["classnotisay"]
 	conf = conf .. "\r\n [::] classnotirepl = " .. table_sets ["classnotirepl"]
 	conf = conf .. "\r\n [::] classnotikick = " .. table_sets ["classnotikick"]
 	conf = conf .. "\r\n [::] classnotiban = " .. table_sets ["classnotiban"]
@@ -18914,12 +19194,14 @@ conf = conf.."\r\n [::] authmessage = "..table_sets ["authmessage"]
 	conf = conf .. "\r\n [::] regnewpubmsgadmin = " .. table_sets ["regnewpubmsgadmin"]
 	conf = conf .. "\r\n [::] regnewpubmsgmaster = " .. table_sets ["regnewpubmsgmaster"]
 	conf = conf .. "\r\n"
-conf = conf.."\r\n [::] regkickaction = "..table_sets ["regkickaction"]
-conf = conf.."\r\n [::] regmechatcnt = "..table_sets ["regmechatcnt"]
-conf = conf.."\r\n [::] regmeuptime = "..table_sets ["regmeuptime"]
-conf = conf.."\r\n [::] searchuptime = "..table_sets ["searchuptime"]
-conf = conf.."\r\n [::] searuptimeact = "..table_sets ["searuptimeact"]
-conf = conf.."\r\n [::] showuseruptime = "..table_sets ["showuseruptime"]
+	conf = conf .. "\r\n [::] regkickaction = " .. table_sets ["regkickaction"]
+	conf = conf .. "\r\n [::] chatuptime = " .. table_sets ["chatuptime"]
+	conf = conf .. "\r\n [::] chatuptimeact = " .. table_sets ["chatuptimeact"]
+	conf = conf .. "\r\n [::] regmechatcnt = " .. table_sets ["regmechatcnt"]
+	conf = conf .. "\r\n [::] regmeuptime = " .. table_sets ["regmeuptime"]
+	conf = conf .. "\r\n [::] searchuptime = " .. table_sets ["searchuptime"]
+	conf = conf .. "\r\n [::] searuptimeact = " .. table_sets ["searuptimeact"]
+	conf = conf .. "\r\n [::] showuseruptime = " .. table_sets ["showuseruptime"]
 	conf = conf .. "\r\n"
 	conf = conf .. "\r\n [::] custnickclass = " .. table_sets ["custnickclass"]
 	conf = conf .. "\r\n [::] custlistclass = " .. table_sets ["custlistclass"]
@@ -22529,7 +22811,7 @@ function sefiscan (nick, srch, cls, ip)
 							note = "Search request exception from %s with IP %s and class %d as TTH: %s"
 						end
 
-						opsnotify (table_sets ["classnotiex"], gettext (note):format (nick, ip .. tryipcc (ip, nick), cls, str))
+						opsnotify (table_sets ["classnotiex"], gettext (note):format (nick, ip .. tryipcc (ip, nick), cls, repnmdcoutchars (str)))
 						return false
 					end
 				end
@@ -22558,7 +22840,7 @@ function sefiscan (nick, srch, cls, ip)
 					note = "Search request notification from %s with IP %s and class %d as TTH: %s"
 				end
 
-				opsnotify (table_sets ["classnotisefi"], gettext (note):format (nick, ip .. tryipcc (ip, nick), cls, str))
+				opsnotify (table_sets ["classnotisefi"], gettext (note):format (nick, ip .. tryipcc (ip, nick), cls, repnmdcoutchars (str)))
 				return false
 			end
 
@@ -22587,7 +22869,7 @@ function sefiscan (nick, srch, cls, ip)
 				note = "Bad search request from %s with IP %s and class %d as TTH: %s"
 			end
 
-			opsnotify (table_sets ["classnotisefi"], gettext (note):format (nick, ip .. tryipcc (ip, nick), cls, str))
+			opsnotify (table_sets ["classnotisefi"], gettext (note):format (nick, ip .. tryipcc (ip, nick), cls, repnmdcoutchars (str)))
 
 			if act == 1 then -- drop
 				opsnotify (table_sets ["classnotisefi"], gettext ("User dropped due to bad search request: %s"):format (nick))
@@ -22595,11 +22877,11 @@ function sefiscan (nick, srch, cls, ip)
 
 			elseif act == 2 then -- kick
 				local rsn = table_sets ["sefireason"]:gsub ("%*", reprexpchars (str))
-				VH:KickUser (table_othsets ["sendfrom"], nick, rsn)
+				VH:KickUser (table_othsets ["sendfrom"], nick, repnmdcoutchars (rsn))
 
 			elseif act == 3 then -- temporary ban
 				local rsn = table_sets ["sefireason"]:gsub ("%*", reprexpchars (str))
-				VH:KickUser (table_othsets ["sendfrom"], nick, rsn .. "     #_ban_" .. table_sets ["thirdacttime"])
+				VH:KickUser (table_othsets ["sendfrom"], nick, repnmdcoutchars (rsn) .. "     #_ban_" .. table_sets ["thirdacttime"])
 
 			elseif act == 4 then -- silent skip
 				opsnotify (table_sets ["classnotisefi"], gettext ("User didn't get any search results: %s"):format (nick))
@@ -22611,7 +22893,7 @@ function sefiscan (nick, srch, cls, ip)
 
 			elseif act == 7 then -- permanent ban
 				local rsn = table_sets ["sefireason"]:gsub ("%*", reprexpchars (str))
-				VH:KickUser (table_othsets ["sendfrom"], nick, rsn .. "     #_ban_" .. table_sets ["seventhacttime"])
+				VH:KickUser (table_othsets ["sendfrom"], nick, repnmdcoutchars (rsn) .. "     #_ban_" .. table_sets ["seventhacttime"])
 
 			elseif act == 8 or act == 9 then -- block list
 				opsnotify (table_sets ["classnotisefi"], gettext ("User added to search block list: %s"):format (nick))
