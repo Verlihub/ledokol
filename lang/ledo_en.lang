@@ -1135,3 +1135,20 @@ Couldn't delete search filter block list entry because not found: %s|
 Yes|
 No|
 %s with class %d changed configuration variable %s.%s: %s => %s|
+Please wait another %d seconds before using public chat.|
+Please wait another %d seconds before using private chat.|
+Low chat uptime of %d seconds from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s|
+Low chat uptime of %d seconds from %s with IP %s and class %d in MC: %s|
+Low chat uptime of %d seconds from %s with IP %s and class %d in command: %s|
+Low registration uptime from %s with IP %s and class %d: %s|
+%.1f minutes|
+Thank you, your report has been accepted.|
+Low search uptime of %d seconds from %s with IP %s and class %d as any file: %s|
+Low search uptime of %d seconds from %s with IP %s and class %d as audio file: %s|
+Low search uptime of %d seconds from %s with IP %s and class %d as compressed file: %s|
+Low search uptime of %d seconds from %s with IP %s and class %d as document: %s|
+Low search uptime of %d seconds from %s with IP %s and class %d as executable: %s|
+Low search uptime of %d seconds from %s with IP %s and class %d as picture: %s|
+Low search uptime of %d seconds from %s with IP %s and class %d as video: %s|
+Low search uptime of %d seconds from %s with IP %s and class %d as folder: %s|
+Low search uptime of %d seconds from %s with IP %s and class %d as TTH: %s|
