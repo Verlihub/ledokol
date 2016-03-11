@@ -3887,10 +3887,12 @@ function VH_OnUserCommand (nick, data)
 					if table_sets ["chatuptimeact"] == 0 then -- message
 						maintouser (nick, gettext ("Please wait another %d seconds before using public chat."):format (table_sets ["chatuptime"] - dif))
 					elseif table_sets ["chatuptimeact"] == 1 then -- drop
+						opsnotify (table_sets ["classnotilowupchat"], gettext ("User dropped: %s"):format (nick))
 						VH:Disconnect (nick)
 					--elseif table_sets ["chatuptimeact"] == 2 then -- silent
 						-- nothing to do
 					elseif table_sets ["chatuptimeact"] == 3 then -- message to self
+						opsnotify (table_sets ["classnotilowupchat"], gettext ("User received own message: %s"):format (nick))
 						VH:SendToUser ("** " .. nick .. " " .. msg .. "|", nick)
 					end
 
@@ -4045,10 +4047,12 @@ function VH_OnUserCommand (nick, data)
 					if table_sets ["chatuptimeact"] == 0 then -- message
 						maintouser (nick, gettext ("Please wait another %d seconds before using public chat."):format (table_sets ["chatuptime"] - dif))
 					elseif table_sets ["chatuptimeact"] == 1 then -- drop
+						opsnotify (table_sets ["classnotilowupchat"], gettext ("User dropped: %s"):format (nick))
 						VH:Disconnect (nick)
 					--elseif table_sets ["chatuptimeact"] == 2 then -- silent
 						-- nothing to do
 					elseif table_sets ["chatuptimeact"] == 3 then -- message to self
+						opsnotify (table_sets ["classnotilowupchat"], gettext ("User received own message: %s"):format (nick))
 						VH:SendToUser ("** " .. nick .. "|", nick)
 					end
 
@@ -4156,10 +4160,12 @@ function VH_OnUserCommand (nick, data)
 					if table_sets ["chatuptimeact"] == 0 then -- message
 						maintouser (nick, gettext ("Please wait another %d seconds before using public chat."):format (table_sets ["chatuptime"] - dif))
 					elseif table_sets ["chatuptimeact"] == 1 then -- drop
+						opsnotify (table_sets ["classnotilowupchat"], gettext ("User dropped: %s"):format (nick))
 						VH:Disconnect (nick)
 					--elseif table_sets ["chatuptimeact"] == 2 then -- silent
 						-- nothing to do
 					elseif table_sets ["chatuptimeact"] == 3 then -- message to self
+						opsnotify (table_sets ["classnotilowupchat"], gettext ("User received own message: %s"):format (nick))
 						maintouser (nick, gettext ("Thank you, your report has been accepted."))
 					end
 
@@ -5053,6 +5059,7 @@ function VH_OnParsedMsgSearch (nick, data)
 					if table_sets ["searuptimeact"] == 0 then -- message
 						maintouser (nick, gettext ("Please wait another %d seconds before using hub search engine."):format (table_sets ["searchuptime"] - dif))
 					elseif table_sets ["searuptimeact"] == 1 then -- drop
+						opsnotify (table_sets ["classnotilowupsear"], gettext ("User dropped: %s"):format (nick))
 						VH:Disconnect (nick)
 					end
 
@@ -5927,10 +5934,12 @@ function VH_OnParsedMsgPM (from, data, to)
 				if table_sets ["chatuptimeact"] == 0 then -- message
 					pmtouser (from, to, gettext ("Please wait another %d seconds before using private chat."):format (table_sets ["chatuptime"] - dif))
 				elseif table_sets ["chatuptimeact"] == 1 then -- drop
+					opsnotify (table_sets ["classnotilowupchat"], gettext ("User dropped: %s"):format (from))
 					VH:Disconnect (from)
 				--elseif table_sets ["chatuptimeact"] == 2 then -- silent
 					-- nothing to do
-				--elseif table_sets ["chatuptimeact"] == 3 then -- message to self
+				elseif table_sets ["chatuptimeact"] == 3 then -- message to self
+					opsnotify (table_sets ["classnotilowupchat"], gettext ("User received own message: %s"):format (from))
 					-- not needed for private messages
 				end
 
@@ -6162,10 +6171,12 @@ function VH_OnParsedMsgMCTo (from, data, to)
 				if table_sets ["chatuptimeact"] == 0 then -- message
 					maintouser (from, gettext ("Please wait another %d seconds before using private chat."):format (table_sets ["chatuptime"] - dif))
 				elseif table_sets ["chatuptimeact"] == 1 then -- drop
+					opsnotify (table_sets ["classnotilowupchat"], gettext ("User dropped: %s"):format (from))
 					VH:Disconnect (from)
 				--elseif table_sets ["chatuptimeact"] == 2 then -- silent
 					-- nothing to do
-				--elseif table_sets ["chatuptimeact"] == 3 then -- message to self
+				elseif table_sets ["chatuptimeact"] == 3 then -- message to self
+					opsnotify (table_sets ["classnotilowupchat"], gettext ("User received own message: %s"):format (from))
 					-- not needed for private messages
 				end
 
@@ -6334,10 +6345,12 @@ function VH_OnParsedMsgChat (nick, data)
 				if table_sets ["chatuptimeact"] == 0 then -- message
 					maintouser (nick, gettext ("Please wait another %d seconds before using public chat."):format (table_sets ["chatuptime"] - dif))
 				elseif table_sets ["chatuptimeact"] == 1 then -- drop
+					opsnotify (table_sets ["classnotilowupchat"], gettext ("User dropped: %s"):format (nick))
 					VH:Disconnect (nick)
 				--elseif table_sets ["chatuptimeact"] == 2 then -- silent
 					-- nothing to do
 				elseif table_sets ["chatuptimeact"] == 3 then -- message to self
+					opsnotify (table_sets ["classnotilowupchat"], gettext ("User received own message: %s"):format (nick))
 					maintoself (nick, data)
 				end
 
@@ -7653,10 +7666,12 @@ function setcustnick (nick, custom, ucl)
 				if table_sets ["chatuptimeact"] == 0 then -- message
 					maintouser (nick, gettext ("Please wait another %d seconds before using public chat."):format (table_sets ["chatuptime"] - dif))
 				elseif table_sets ["chatuptimeact"] == 1 then -- drop
+					opsnotify (table_sets ["classnotilowupchat"], gettext ("User dropped: %s"):format (nick))
 					VH:Disconnect (nick)
 				--elseif table_sets ["chatuptimeact"] == 2 then -- silent
 					-- nothing to do
 				elseif table_sets ["chatuptimeact"] == 3 then -- message to self
+					opsnotify (table_sets ["classnotilowupchat"], gettext ("User received own message: %s"):format (nick))
 					maintouser (nick, gettext ("%s is now known as: %s"):format (nick, custom)) -- simple for now
 				end
 
@@ -12396,7 +12411,7 @@ function detchatflood (nick, class, ip, msg, to)
 					VH:Disconnect (nick)
 
 					if not table_flod ["nick"][nick] then -- notify only first time
-						opsnotify (table_sets ["classnotiflood"], gettext ("%s dropped due to flood."):format (nick))
+						opsnotify (table_sets ["classnotiflood"], gettext ("User dropped due to flood: %s"):format (nick))
 					end
 
 				elseif table_sets ["chatfloodaction"] == 3 then -- kick
@@ -16055,17 +16070,17 @@ end
 	----- ---- --- -- -
 
 	elseif tvar == "searuptimeact" then
-		if num == true then
-			if (setto == 0) or (setto == 1) then
+		if num then
+			if setto == 0 or setto == 1 then
 				ok = true
 			else
-				commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 "..gettext ("or").." 1"))
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0 " .. gettext ("or") .. " 1"))
 			end
 		else
-			commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
 		end
 
------ ---- --- -- -
+	----- ---- --- -- -
 
 elseif tvar == "showtopicowner" then
 if num == true then
@@ -22679,7 +22694,7 @@ function antiscan (nick, class, data, where, to, status)
 			end
 
 			if action == 1 then -- drop
-				opsnotify (table_sets ["classnotianti"], gettext ("%s dropped due to spam."):format (nick))
+				opsnotify (table_sets ["classnotianti"], gettext ("User dropped due to spam: %s"):format (nick))
 				VH:Disconnect (nick)
 
 			elseif action == 2 then -- kick
@@ -22691,10 +22706,10 @@ function antiscan (nick, class, data, where, to, status)
 				VH:KickUser (table_othsets ["sendfrom"], nick, reason .. "     #_ban_" .. table_sets ["thirdacttime"])
 
 			elseif action == 4 then -- spam to self
-				opsnotify (table_sets ["classnotianti"], gettext ("%s received own message."):format (nick))
+				opsnotify (table_sets ["classnotianti"], gettext ("User received own message: %s"):format (nick))
 
 			elseif action == 6 then -- redirect to sixthactaddr
-				opsnotify (table_sets ["classnotianti"], gettext ("%s redirected due to spam."):format (nick))
+				opsnotify (table_sets ["classnotianti"], gettext ("User redirected due to spam: %s"):format (nick))
 				VH:SendToUser ("$ForceMove " .. table_sets ["sixthactaddr"] .. "|", nick)
 				VH:Disconnect (nick)
 
