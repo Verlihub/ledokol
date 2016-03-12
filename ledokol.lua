@@ -5053,7 +5053,7 @@ function VH_OnParsedMsgSearch (nick, data)
 							note = "Low search uptime of %d seconds from %s with IP %s and class %d as TTH: %s"
 						end
 
-						opsnotify (table_sets ["classnotilowupsear"], gettext (note):format (dif, nick, ip .. tryipcc (ip, nick), cls, repnmdcoutchars (sear)))
+						opsnotify (table_sets ["classnotilowupsear"], gettext (note):format (dif, nick, ip .. tryipcc (ip, nick), cls, repsrchchars (sear)))
 					end
 
 					if table_sets ["searuptimeact"] == 0 then -- message
@@ -5088,7 +5088,7 @@ function VH_OnParsedMsgSearch (nick, data)
 
 				if sefi then
 					if not sefi.sil then
-						maintouser (nick, gettext ("Your search request is discarded due to previous forbidden search request: %s"):format (repnmdcoutchars (sefi.req)))
+						maintouser (nick, gettext ("Your search request is discarded due to previous forbidden search request: %s"):format (sefi.req))
 					end
 
 					table_sefi [nick].num = sefi.num + 1
@@ -14079,7 +14079,7 @@ function listsefiblocks (nick)
 	local list = ""
 
 	for user, data in pairs (table_sefi) do
-		list = list .. " [ N: " .. user .. " ] [ R: " .. repnmdcoutchars (data.req) .. " ] [ N: " .. tostring (data.num) .. " ] [ S: "
+		list = list .. " [ N: " .. user .. " ] [ R: " .. data.req .. " ] [ N: " .. tostring (data.num) .. " ] [ S: "
 
 		if data.sil then
 			list = list .. gettext ("Yes")
@@ -22826,7 +22826,7 @@ function sefiscan (nick, srch, cls, ip)
 							note = "Search request exception from %s with IP %s and class %d as TTH: %s"
 						end
 
-						opsnotify (table_sets ["classnotiex"], gettext (note):format (nick, ip .. tryipcc (ip, nick), cls, repnmdcoutchars (str)))
+						opsnotify (table_sets ["classnotiex"], gettext (note):format (nick, ip .. tryipcc (ip, nick), cls, str))
 						return false
 					end
 				end
@@ -22855,7 +22855,7 @@ function sefiscan (nick, srch, cls, ip)
 					note = "Search request notification from %s with IP %s and class %d as TTH: %s"
 				end
 
-				opsnotify (table_sets ["classnotisefi"], gettext (note):format (nick, ip .. tryipcc (ip, nick), cls, repnmdcoutchars (str)))
+				opsnotify (table_sets ["classnotisefi"], gettext (note):format (nick, ip .. tryipcc (ip, nick), cls, str))
 				return false
 			end
 
@@ -22884,7 +22884,7 @@ function sefiscan (nick, srch, cls, ip)
 				note = "Bad search request from %s with IP %s and class %d as TTH: %s"
 			end
 
-			opsnotify (table_sets ["classnotisefi"], gettext (note):format (nick, ip .. tryipcc (ip, nick), cls, repnmdcoutchars (str)))
+			opsnotify (table_sets ["classnotisefi"], gettext (note):format (nick, ip .. tryipcc (ip, nick), cls, str))
 
 			if act == 1 then -- drop
 				opsnotify (table_sets ["classnotisefi"], gettext ("User dropped due to bad search request: %s"):format (nick))
@@ -22892,11 +22892,11 @@ function sefiscan (nick, srch, cls, ip)
 
 			elseif act == 2 then -- kick
 				local rsn = table_sets ["sefireason"]:gsub ("%*", reprexpchars (str))
-				VH:KickUser (table_othsets ["sendfrom"], nick, repnmdcoutchars (rsn))
+				VH:KickUser (table_othsets ["sendfrom"], nick, rsn)
 
 			elseif act == 3 then -- temporary ban
 				local rsn = table_sets ["sefireason"]:gsub ("%*", reprexpchars (str))
-				VH:KickUser (table_othsets ["sendfrom"], nick, repnmdcoutchars (rsn) .. "     #_ban_" .. table_sets ["thirdacttime"])
+				VH:KickUser (table_othsets ["sendfrom"], nick, rsn .. "     #_ban_" .. table_sets ["thirdacttime"])
 
 			elseif act == 4 then -- silent skip
 				opsnotify (table_sets ["classnotisefi"], gettext ("User didn't get any search results: %s"):format (nick))
@@ -22908,7 +22908,7 @@ function sefiscan (nick, srch, cls, ip)
 
 			elseif act == 7 then -- permanent ban
 				local rsn = table_sets ["sefireason"]:gsub ("%*", reprexpchars (str))
-				VH:KickUser (table_othsets ["sendfrom"], nick, repnmdcoutchars (rsn) .. "     #_ban_" .. table_sets ["seventhacttime"])
+				VH:KickUser (table_othsets ["sendfrom"], nick, rsn .. "     #_ban_" .. table_sets ["seventhacttime"])
 
 			elseif act == 8 or act == 9 then -- block list
 				opsnotify (table_sets ["classnotisefi"], gettext ("User added to search block list: %s"):format (nick))
