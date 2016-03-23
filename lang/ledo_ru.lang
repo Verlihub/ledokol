@@ -53,7 +53,7 @@ type|тип
 %s with IP %s and class %d allowed due to forbidden connection type exception: %s|Пользователь %s с IP-адресом %s и классом %d пропущен с исключением по типу подключения: %s
 %s with class %d changed configuration variable %s: %s => %s|Пользователь %s %d-го класса изменил конфигурационную переменную %s: %s => %s
 %s with IP %s and class %d allowed due to forbidden email exception: %s|Пользователь %s с IP-адресом %s и классом %d пропущен с исключением по e-mail: %s
-%s received own message.|%s наивно полагает, что его сообщение прочитали. Удачи ему в нелегком деле - беседе самим с собой..
+User received own message: %s|
 %s with IP %s and class %d allowed due to forbidden share size exception: %s|Пользователь %s с IP-адресом %s и классом %d пропущен с исключением по размеру шары: %s
 Deleted %d releases from category: %s|Удалены %d релизов из категории %s
 Why would you want to set empty topic?|Почему вы хотите установить пустую тему?
@@ -204,7 +204,7 @@ to|до
 Unknown configuration variable: %s|Неизвестная конфигурационная переменная: %s
 %s version: %s|Версия %s: %s
 Not installed|Не установлено
-%s dropped due to spam.|Пользователь %s выкинут за спам.
+User dropped due to spam: %s|
 variable|переменная
 value|значение
 minutes|минуты
@@ -357,7 +357,7 @@ Forbidden IP address list|Список запрещенных IP-адресов
 Forbidden IP address list is empty.|Список запрещенных IP-адресов пуст.
 %s with IP %s and class %d allowed due to forbidden IP address exception: %s|Пользователь %s с IP-адресом %s и классом %d пропущен с исключением по IP-адресу: %s
 Couldn't delete category because not found: %s|Невозможно удалить категорию. Не найдена в базе: %s
-%s redirected due to spam.|Пользователь %s перенаправлен за спам.
+User redirected due to spam: %s|
 %s redirected due to bad search request.|Пользователь %s перенаправлен за поиск запрещенной информации.
 You can download me from: %s|Вы можете скачать меня с: %s
 %s is registered with class %d and has been automatically unregistered and deleted from other tables.|Пользователь %s %d-го класса автоматически удален из списка зарегистрированных пользователей и других таблиц скрипта.
@@ -1117,7 +1117,7 @@ Specified country code isn't valid: %s|Указанный код страны н
 You can't block user who don't share anything: %s|Вы не можете заблокировать пользователя чья шара пуста: %s
 You can't kick user who don't share anything: %s|Вы не можете кикнуть пользователя чья шара пуста: %s
 Flood detected from %s with IP %s and class %d in MC: %s|Обнаружен флуд от пользователя %s с IP адресом %s и классом %d в главный чат: %s
-%s dropped due to flood.|%s дропнут из за флуда.
+User dropped due to flood: %s|
 Main chat flood detected from your nick.|Обнаружен флуд в главный чат от вашего ника.
 Private chat flood detected from your IP.|Обнаружен флуд в виде личного сообщения от вашего IP адреса.
 Sorry, your message has been ignored.|Извините, ваше сообщение было игнорировано.
@@ -1134,3 +1134,22 @@ Deleted search filter block list entry: %s|Удален пункт из спис
 Couldn't delete search filter block list entry because not found: %s|Не удалось удалить пункт из списка блокировки поискового фильтра потому что не найдено: %s
 Yes|Да
 No|Нет
+%s with class %d changed configuration variable %s.%s: %s => %s|Пользователь %s с классом %d изменил конфигурационную переменную %s.%s: %s => %s
+Please wait another %d seconds before using public chat.|
+Please wait another %d seconds before using private chat.|
+Low chat uptime of %d seconds from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s|
+Low chat uptime of %d seconds from %s with IP %s and class %d in MC: %s|
+Low chat uptime of %d seconds from %s with IP %s and class %d in command: %s|
+Low registration uptime from %s with IP %s and class %d: %s|
+%.1f minutes|
+Thank you, your report has been accepted.|
+Low search uptime of %d seconds from %s with IP %s and class %d as any file: %s|
+Low search uptime of %d seconds from %s with IP %s and class %d as audio file: %s|
+Low search uptime of %d seconds from %s with IP %s and class %d as compressed file: %s|
+Low search uptime of %d seconds from %s with IP %s and class %d as document: %s|
+Low search uptime of %d seconds from %s with IP %s and class %d as executable: %s|
+Low search uptime of %d seconds from %s with IP %s and class %d as picture: %s|
+Low search uptime of %d seconds from %s with IP %s and class %d as video: %s|
+Low search uptime of %d seconds from %s with IP %s and class %d as folder: %s|
+Low search uptime of %d seconds from %s with IP %s and class %d as TTH: %s|
+User dropped: %s|
