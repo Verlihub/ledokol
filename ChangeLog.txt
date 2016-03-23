@@ -1,4 +1,4 @@
-[ 2.8.9 :: 0000-00-00 ]
+[ 2.8.9 :: 2016-03-23 ]
 
 [  6] Fixed: Chat replacer feature now replaces all occurrences of an entry instead of first only
 [  6] Fixed: Possible error when unloading Lua plugin, report by KCAHDEP
