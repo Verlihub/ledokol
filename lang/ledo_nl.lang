@@ -1,6 +1,6 @@
 # Language: nl_NL
 # Charset: CP1252
-# Version: 2.8.8
+# Version: 2.8.9
 # Author: Modswat
 # Email: future_dance@hotmail.com
 
@@ -53,7 +53,7 @@ type|type
 %s with IP %s and class %d allowed due to forbidden connection type exception: %s|%s met IP %s en class %d  toegestaan op grond van verboden verbindings type uitzondering %s
 %s with class %d changed configuration variable %s: %s => %s|%s met class %d gewijzigde configuratie variabele %s: %s => %s
 %s with IP %s and class %d allowed due to forbidden email exception: %s|%s met IP %s en class %d toegestaan op grond van verboden email uitzondering %s
-%s received own message.|%s  Eigen bericht ontvangen.
+User received own message: %s|Gebruiker ontving zijn eigen bericht: %s
 %s with IP %s and class %d allowed due to forbidden share size exception: %s|%s met IP %s en class %d toegestaan op grond van verboden share grote uitzondering %s
 Deleted %d releases from category: %s|Verwijderde %d releases van de categorie : %s
 Why would you want to set empty topic?|Waarom zou je een lege topic willen maken?
@@ -204,7 +204,7 @@ to|aan
 Unknown configuration variable: %s|Onbekende configuratie variabele %s
 %s version: %s|%s Versie: %s
 Not installed|Niet geinstalleerd
-%s dropped due to spam.|%s dropped als gevolg van spam.
+User dropped due to spam: %s|Gebruiker gedropt wegens spam: %s
 variable|variable
 value|Waarde
 minutes|Minuten
@@ -357,7 +357,7 @@ Forbidden IP address list|Forbidden IP address lijst
 Forbidden IP address list is empty.|forbidden IP address lijst is leeg.
 %s with IP %s and class %d allowed due to forbidden IP address exception: %s|%s met IP %s en class %d toegestaan op grond van forbidden IP address exception: %s
 Couldn't delete category because not found: %s|Kon categorie niet verwijderen omdat deze is niet gevonden: %s
-%s redirected due to spam.|%s omgeleid wegens spam.
+User redirected due to spam: %s|Gebruiker gedropt wegens spam: %s
 %s redirected due to bad search request.|%s omgeleid als gevolg van slechte zoekopdracht.
 You can download me from: %s|Je kunt mij downloaden van: %s
 %s is registered with class %d and has been automatically unregistered and deleted from other tables.|%s is geregistreerd met class %d en is automatisch afgemeld en verwijderd uit andere tabellen .
@@ -522,15 +522,15 @@ Deleted all rows: %s|Verwijder alle rijen: %s
 %s with class %d deleted all user location entries.|%s met class %d verwijderd ale gebruikers locaties
 address|adres
 owner|eigennaar
-Add friendly hub|Bevriende huub toevoegen
-Delete friendly hub|Verwijder bevriende huub
-Show friendly hubs|Laat bevriende huubs zien
+Add friendly hub|Bevriende hub toevoegen
+Delete friendly hub|Verwijder bevriende hub
+Show friendly hubs|Laat bevriende hubs zien
 Added friendly hub: %s|Bevriende huub toevoegen: %s
-Modified friendly hub: %s|Aangepast bevriende huub: %s
-Deleted friendly hub: %s|Verwijderen van bevriende huub: %s
-Friendly hub not found: %s|Bevriende huub niet gevonden: %s
-Friendly hublist|Bevriende huub hublijst
-Friendly hublist is empty.|Bevriende huublijst is leeg.
+Modified friendly hub: %s|Aangepast bevriende hub: %s
+Deleted friendly hub: %s|Verwijderen van bevriende hub: %s
+Friendly hub not found: %s|Bevriende hub niet gevonden: %s
+Friendly hublist|Bevriende hub hublijst
+Friendly hublist is empty.|Bevriende hublijst is leeg.
 Executed shell command didn't return any output.|Uitgevoerd shell commando heeft geen uitvoer terug gegeven.
 Returned output|Returned output
 %s renamed %s to: %s|%s hernoemt %s naar: %s
@@ -663,7 +663,7 @@ Ranks|Ranks
 Welcome messages|Welkoms berichten
 Chatrooms|Chatrooms
 Reminders|Herineringen
-Hub news|Huub nieuws
+Hub news|Hub nieuws
 Chat responder|Chat responder
 Releases|Releases
 Offline messenger|Offline messenger
@@ -671,7 +671,7 @@ Chat history|Chat history
 Commands|Commands
 Custom nicks|Custom nicks
 Registered users|Geregistreerde gebruikers
-Hublist|Huublijst
+Hublist|Hublijst
 Chat|Chat
 IP gag|IP gag
 User logger|Gebruikers logger
@@ -702,7 +702,7 @@ Description: %s|Description: %s
 Tag: %s|Tag: %s
 Mode: %s|Mode: %s
 Slots: %s|Slots: %s
-Hubs: %s|Huubs: %s
+Hubs: %s|Hubs: %s
 Limiter: %s KiB/s|Limiter: %s KiB/s
 Connection: %s|Verbinding: %s
 Status: %s|Status: %s
@@ -750,7 +750,7 @@ Unable to get bot information: %s|Kan geen bot informatie krijgen: %s
 Bot information|Bot informatie
 Owner script: %s|Eigenaar script: %s
 %s with IP %s and class %d allowed due to forbidden DNS exception: %s|%s met IP %s en class %d  toegestaan op grond van verboden DNS uitzondering %s
-In order to use this feature you need to enable DNS lookup. Do it by setting hub configuration variable %s to %d. Please note: Enabling DNS lookup might slow your hub performance down.|Om deze functie te gebruiken moet u de DNS- lookup aanzetten. Doe het door het instellen van de huub configuratie variabele %s to %d. Let op : Het inschakelen van de DNS- lookup kan uw huub prestaties vertragen .
+In order to use this feature you need to enable DNS lookup. Do it by setting hub configuration variable %s to %d. Please note: Enabling DNS lookup might slow your hub performance down.|Om deze functie te gebruiken moet u de DNS- lookup aanzetten. Doe het door het instellen van de hub configuratie variabele %s to %d. Let op : Het inschakelen van de DNS- lookup kan uw hub prestaties vertragen .
 Modified forbidden DNS with ban time %s: %s|Gemodificeerde verboden DNS met ban tijd %s: %s
 Added forbidden DNS with ban time %s: %s|Toegevoegd verboden DNS met ban tijd %s: %s
 Deleted forbidden DNS: %s|Verboden DNS verwijderd: %s
@@ -762,10 +762,9 @@ Warning: %s|Waarschuwing: %s
 Open files limit set to %d is smaller than maximum users configuration which is %d. You can correct this by setting %s to %d or higher and restarting the hub.|Open bestanden worden ingesteld op %d kleiner is dan de maximale gebruikers configuratie die %d. U kunt dit corrigeren door het instellen van %s naar %d of hoger en de hub herstarten .
 Additional help|Extra hulp
 Remove all %s tables and files|Verwijder alle %s tabellen en bestanden
-No reason specified.|Geen reden aangegeven.
 You can't kick user whose class is higher or equals your own: %s|Je kunt niet een gebruiker kikken wiens klasse is hoger of gelijk aan je eigen : %s
 Your topic contains forbidden characters which can't be used for security reason: %s|Je topic bevat verboden karakters die niet gebruikt mogen worden voor om veiligheids redenen: % s
-Hub uptime: %s|Huub uptime:  %s
+Hub uptime: %s|Hub uptime:  %s
 User count: %s|Gebruikers teller: %s
 Total share: %s|Totale share: %s
 %s with IP %s and class %d tries to speak with IP gag in MC: %s|%s met IP %s enclass %d probeert te spreken met IP gag in MC: %s
@@ -796,9 +795,9 @@ Couldn't delete chat replacer because ID not found: %d|Kan chat- vervanger niet 
 Chat replacer list|Chat vervanger list
 Chat replacer list is empty.|Chat vervanger lijst is leeg.
 Replace|Vervang
-Couldn't add chat replacer exception because already exists: %s|Het toevoegen van Chat - vervanger uitzondering gaat niet omdat deze al bestaat: %s
-Added chat replacer exception: %s|Toegevoegd  Chat - vervangerr uitzondering: %s
-Deleted chat replacer exception: %s| Chat - vervanger uitzondering verwijderd %s
+Modified chat replacer exception with type %d: %s|Gewijzigde chat vervanger uitzondering met type%d: %s
+Added chat replacer exception with type %d: %s|Toegevoegd chat vervanger uitzondering met type %d: %s
+Deleted chat replacer exception with type %d: %s|Verwijderde chat vervanger uitzondering met type %d: %s
 Couldn't delete chat replacer exception because not found: %s|Chat - vervanger uitzondering kon niet worden verwijderd omdat deze niet is gevonden %s
 Chat replacer exception list|Chat - vervanger uitzonderings lijst
 Chat replacer exception list is empty.|Chat vervanger uitzonderings lijst is leeg.
@@ -1118,10 +1117,39 @@ Specified country code isn't valid: %s|Gespecificeerd land code is niet geldig: 
 You can't block user who don't share anything: %s|Je kunt geen gebruikers blokkeren  als deze niets delen: %s
 You can't kick user who don't share anything: %s|Je kunt geen gebruikers kicken als deze niets delen: %s
 Flood detected from %s with IP %s and class %d in MC: %s|Flood gedetecteerd van %s met IP %s en class %d in MC: %s
-%s dropped due to flood.|%s verwijderd tijdens flood
+User dropped due to flood: %s|Gebruiker gedropt wegens flooden: %s
 Main chat flood detected from your nick.|Main chat flood gedetecteerd van jou nicknaam
 Private chat flood detected from your IP.|Prive chat flood gedetecteerd van jou IP.
 Sorry, your message has been ignored.|Sorry, je bericht is genegeerd.
 Disable or enable right click menu item|Uitzetten of verwijderen van het right click menu item
 Disabled right click menu item: %s|Aanzetten right click menu item: %s
 Enabled right click menu item: %s|Uitzetten right click menu item: %s
+%s added to search block list.|%s toegevoegd aan zoek blok lijst
+Your search request is discarded due to previous forbidden search request.|Zoek aanvraag afgebroken door verboden zoek aanvraag.
+Hub URL: %s|Hub URL: %s
+Search filter block list|Zoekfilter block lijst
+Delete search filter block list entry|Verwijder zoekfilter blok lijstvermelding
+Search filter block list is empty.|Zoekfilter blok lijst is leeg.
+Deleted search filter block list entry: %s|Verwijderde zoekfilter blok lijstvermelding: %s
+Couldn't delete search filter block list entry because not found: %s|Kon zoekfilter blok lijst vermelding niet verwijderen omdat deze niet is gevonden: %s
+Yes|Ja
+No|Nee
+%s with class %d changed configuration variable %s.%s: %s => %s|%s Met klasse %d gewijzigde configuratie variabele %s.%s: %s => %s
+Please wait another %d seconds before using public chat.|Voordat je de mainchat mag gebruiken wacht %d seconden
+Please wait another %d seconds before using private chat.|Voordat je de privй chat mag gebruiken wacht %d seconden
+Low chat uptime of %d seconds from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s|Low -chat uptime van %d seconden vanaf %s met IP % s en class % d in PM naar %s met IP %s en class % d: %s
+Low chat uptime of %d seconds from %s with IP %s and class %d in MC: %s|Low -chat uptime van %d seconden vanaf %s met IP %s en klasse %d in MC : %s
+Low chat uptime of %d seconds from %s with IP %s and class %d in command: %s|Low -chat uptime van %d seconden vanaf %s met IP %s en klasse %d in opdracht: %s
+Low registration uptime from %s with IP %s and class %d: %s|Lage registratie uptime van %s met IP %s en class %d: %s
+%.1f minutes|%.1f Minuten
+Thank you, your report has been accepted.|Dank u , uw rapport is geaccepteerd.
+Low search uptime of %d seconds from %s with IP %s and class %d as any file: %s|Lage zoeken uptime van %d seconden vanaf %s met IP %s en class %d als een bestand : %s
+Low search uptime of %d seconds from %s with IP %s and class %d as audio file: %s|Lage zoeken uptime van %d seconden vanaf %s met IP %s en class %d als audio file: %s
+Low search uptime of %d seconds from %s with IP %s and class %d as compressed file: %s|Lage zoeken uptime van %d seconden vanaf %s met IP %s en class %d als gecomprimeerde bestand: %s
+Low search uptime of %d seconds from %s with IP %s and class %d as document: %s|Lage zoeken uptime van %d seconden vanaf %s met IP %s en classe %d als document: %s
+Low search uptime of %d seconds from %s with IP %s and class %d as executable: %s|Lage zoeken uptime van %d seconden vanaf %s met IP %s en class %d als uitvoerbare: %s
+Low search uptime of %d seconds from %s with IP %s and class %d as picture: %s|Lage zoeken uptime van %d seconden vanaf %s met IP %s en class %d als foto: %s
+Low search uptime of %d seconds from %s with IP %s and class %d as video: %s|Lage zoeken uptime van %d seconden vanaf %s met IP % s en class %d als video: %s
+Low search uptime of %d seconds from %s with IP %s and class %d as folder: %s|Lage zoeken uptime van %d seconden vanaf %s met IP %s en klasse %d als map: %s
+Low search uptime of %d seconds from %s with IP %s and class %d as TTH: %s|Lage zoeken uptime van %d seconden vanaf %s met IP %s en klasse %d als TTH: %s
+User dropped: %s|Gebruiker gedropt: %s
