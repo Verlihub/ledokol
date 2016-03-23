@@ -1,91 +1,91 @@
 # Language: it_IT
 # Charset: CP1252
-# Version: 2.8.8
-# Author: netcelli
-# Email: netcelli.tux@gmail.com
+# Version: 2.8.9
+# Author: DiegoZ
+# Email: anarchia99dc@gmail.com
 
-Current topic: %s|
-Current topic set by %s: %s|
-This operation might take very long time depending on how much is going to be removed, please be patient.|
-days|
-%s with class %d deleted %d IP logger plugin entries older than %d days.|
-%s with class %d deleted %d unbans older than %d days.|
-%s with class %d deleted %d bans older than %d days.|
-%s with class %d deleted %d kicks older than %d days.|
+Current topic: %s|Topic corrente: %s
+Current topic set by %s: %s|Topic corrente impostato da: %s
+This operation might take very long time depending on how much is going to be removed, please be patient.|Questa operazione potrebbe richiedere molto tempo a seconda di quanto sta per essere rimosso, per favore sii paziente.
+days|giorni
+%s with class %d deleted %d IP logger plugin entries older than %d days.|%s con classe %d ha eliminato %d voci del plugin IP log piщ vecchi di %d giorni.
+%s with class %d deleted %d unbans older than %d days.|%s con classe %d ha eliminato %d unban piщ vecchi di %d giorni.
+%s with class %d deleted %d bans older than %d days.|%s con classe %d ha eliminato %d ban piщ vecchi di %d giorni.
+%s with class %d deleted %d kicks older than %d days.|%s con classe %d ha eliminato %d kick piщ vecchi di %d giorni.
 I'm probably away. State your business and I might answer later if you're lucky.|
 Perform script update|
-Deleted %d main chat history messages.|
-There are no main chat history messages to remove.|
-Deleted %d operator chat history messages.|
-There are no operator chat history messages to remove.|
-%s with class %d deleted %d main chat history messages.|
-Unable to connect to target server. Please try again later.|
-Last %d main chat messages|
-Main chat history is empty.|
-%s is now known as: %s|
-Last %d operator chat messages|
-Operator chat history is empty.|
-Valid priority is a number from %d to %d.|
-You are using latest version of %s, no update is required.|
-Why would you send offline message to yourself?|
-User %s is online. Sending message directly.|
-Your offline message stored for user: %s|
-%s with IP %s and class %d sent offline message.|
-priority|
-Offline|
-Online|
+Deleted %d main chat history messages.|Eliminati %d messaggi nella cronologia della chat pubblica.
+There are no main chat history messages to remove.|Non ci sono messaggi nella cronologia della chat pubblica da rimuovere.
+Deleted %d operator chat history messages.|Eliminati %d messaggi nella cronologia della chat Operatori.
+There are no operator chat history messages to remove.|Non ci sono messaggi nella cronologia della chat Operatori da rimuovere.
+%s with class %d deleted %d main chat history messages.|%s con classe %d ha eliminato %d messaggi nella cronologia della chat pubblica.
+Unable to connect to target server. Please try again later.|Impossibile connettersi al server di destinazione. Per favore riprova piщ tardi.
+Last %d main chat messages|Ultimi %d messaggi nella chat principale
+Main chat history is empty.|La cronologia della chat pubblica и vuota.
+%s is now known as: %s|%s и conosciuto ora come: %s
+Last %d operator chat messages|Ultimi %d messaggi nella chat Operatori
+Operator chat history is empty.|La cronologia della chat Operatori и vuota.
+Valid priority is a number from %d to %d.|Un numero di prioritа valido va da %d a %d.
+You are using latest version of %s, no update is required.|Si sta utilizzando la versione piщ recente di %s, non и richiesto alcun aggiornamento.
+Why would you send offline message to yourself?|Perchи vuoi inviare un messaggio offline a te stesso?
+User %s is online. Sending message directly.|L'utente %s и online. Inviagli direttamente il messaggio.
+Your offline message stored for user: %s|Il tuo messaggio offline и stato memorizzato per l'utente: %s
+%s with IP %s and class %d sent offline message.|%s con indirizzo IP %s e classe %d ha inviato un messaggio offline.
+priority|prioritа
+Offline|Offline
+Online|Online
 I sent offline message to you on %s|
-My current status|
+My current status|Il mio stato corrente
 %s with IP %s and class %d received offline messages.|
-Stored offline messages|
-Offline message list is empty.|
-Deleted %d offline messages.|
-Couldn't delete offline messages because not found: %s|
-%s with class %d deleted all offline messages.|
-There are no offline messages to remove.|
-No topic is set.|
+Stored offline messages|Messaggi offline memorizzati
+Offline message list is empty.|La lista dei messaggi offline и vuota.
+Deleted %d offline messages.|Eliminati %d messaggi offline
+Couldn't delete offline messages because not found: %s|Impossibile eliminare messaggi offline perchи non presenti: %s
+%s with class %d deleted all offline messages.|%s con classe %d ha eliminato tutti i messaggi offline.
+There are no offline messages to remove.|Non ci sono messaggi offline da rimuovere.
+No topic is set.|Nessun topic impostato.
 %s with IP %s and class %d allowed due to forbidden nick exception: %s|
-message|
+message|messaggio
 %s with IP %s and class %d allowed due to forbidden description exception: %s|
-User you're trying to kick or redirect is protected: %s|
+User you're trying to kick or redirect is protected: %s|L'utente che stai cercando di cacciare o reindirizzare и protetto: %s
 %s with IP %s and class %d allowed due to forbidden tag exception: %s|
-type|
+type|tipo
 %s with IP %s and class %d allowed due to forbidden connection type exception: %s|
 %s with class %d changed configuration variable %s: %s => %s|
 %s with IP %s and class %d allowed due to forbidden email exception: %s|
-%s received own message.|
+User received own message: %s|
 %s with IP %s and class %d allowed due to forbidden share size exception: %s|
 Deleted %d releases from category: %s|
-Why would you want to set empty topic?|
-Modified forbidden nick with ban time %s: %s|
-Added forbidden nick with ban time %s: %s|
-Modified forbidden description with ban time %s: %s|
-Added forbidden description with ban time %s: %s|
-Modified forbidden tag with ban time %s: %s|
-Added forbidden tag with ban time %s: %s|
-Modified forbidden connection type with ban time %s: %s|
-Added forbidden connection type with ban time %s: %s|
-Modified forbidden email with ban time %s: %s|
-Added forbidden email with ban time %s: %s|
-Modified forbidden share size with ban time %s: %s|
-Added forbidden share size with ban time %s: %s|
+Why would you want to set empty topic?|Perchи vuoi impostare un topic vuoto?
+Modified forbidden nick with ban time %s: %s|Modificato nick proibito con tempo di ban %s: %s
+Added forbidden nick with ban time %s: %s|Aggiunto nick proibito con tempo di ban %s: %s
+Modified forbidden description with ban time %s: %s|Modificata descrizione proibita con tempo di ban %s: %s
+Added forbidden description with ban time %s: %s|Aggiunta descrizione proibita con tempo di ban %s: %s
+Modified forbidden tag with ban time %s: %s|Modificata tag proibita con tempo di ban %s: %s
+Added forbidden tag with ban time %s: %s|Aggiunta tag proibita con tempo di ban %s: %s
+Modified forbidden connection type with ban time %s: %s|Modificata connessione proibita con tempo di ban %s: %s
+Added forbidden connection type with ban time %s: %s|Aggiunta connessione proibita con tempo di ban %s: %s
+Modified forbidden email with ban time %s: %s|Modificato email proibito con tempo di ban %s: %s
+Added forbidden email with ban time %s: %s|Aggiunto email proibito con tempo di ban %s: %s
+Modified forbidden share size with ban time %s: %s|Modificata condivisione proibita con tempo di ban %s: %s
+Added forbidden share size with ban time %s: %s|Aggiunta condivisione proibita con tempo di ban %s: %s
 Couldn't add MyINFO exception because already exists: %s|
 Added MyINFO exception: %s|
-and|
-Deleted forbidden nick: %s|
-Couldn't delete forbidden nick because not found: %s|
-Deleted forbidden description: %s|
-Couldn't delete forbidden description because not found: %s|
-Deleted forbidden tag: %s|
-Couldn't delete forbidden tag because not found: %s|
-Deleted forbidden connection type: %s|
-Couldn't delete forbidden connection type because not found: %s|
-Deleted forbidden email: %s|
-Couldn't delete forbidden email because not found: %s|
-Deleted forbidden share size: %s|
-Couldn't delete forbidden share size because not found: %s|
-Deleted MyINFO exception: %s|
-Couldn't delete MyINFO exception because not found: %s|
+and|e
+Deleted forbidden nick: %s|Nick proibito eliminato: %s
+Couldn't delete forbidden nick because not found: %s|Non posso eliminare il nick proibito perchи non trovato: %s
+Deleted forbidden description: %s|Descrizione proibita eliminata: %s
+Couldn't delete forbidden description because not found: %s|Non posso eliminare la descrizione proibita perchи non trovata: %s
+Deleted forbidden tag: %s|Tag proibita eliminata: %s
+Couldn't delete forbidden tag because not found: %s|Non posso eliminare la tag proibita perchи non trovata: %s
+Deleted forbidden connection type: %s|Tipo connessione proibita eliminata: %s
+Couldn't delete forbidden connection type because not found: %s|Non posso eliminare la connessione proibita perchи non trovata: %s
+Deleted forbidden email: %s|Mail proibita eliminata: %s
+Couldn't delete forbidden email because not found: %s|Non posso eliminare la mail proibita perchи non trovata: %s
+Deleted forbidden share size: %s|Share proibito eliminato: %s
+Couldn't delete forbidden share size because not found: %s|Non posso eliminare la condivisione proibita perchи non trovata: %s
+Deleted MyINFO exception: %s|Eccezione MyINFO eliminata: %s
+Couldn't delete MyINFO exception because not found: %s|Non posso eliminare eccezione MyINFO perchи non trovata: %s
 Forbidden nick list|
 Forbidden nick list is empty.|
 Forbidden description list|
@@ -104,13 +104,13 @@ Deleted %d rows: %s|
 Known types are: %s|
 No rows to remove: %s|
 date|
-%s with IP %s and class %d used following command: %s|
+%s with IP %s and class %d used following command: %s|% con IP %s e classe %d ha usato il seguente comando: %s
 context|
 Deleted from chat rank list: %s|
 Not found in chat rank list: %s|
 Deleted from operator rank list: %s|
 Not found in operator rank list: %s|
-Antispam|
+Antispam|Antispam
 Your chat rank is: %d|
 You have to write something in main chat to get started.|
 Custom nick list is empty.|
@@ -130,16 +130,16 @@ Delete protection entry|
 flags|
 %s dropped due to bad search request.|
 This command is either disabled or you don't have access to it.|
-Deleted antispam entry: %s|
-Couldn't delete antispam entry because not found: %s|
-Antispam list|
-Antispam list is empty.|
-Couldn't add antispam exception entry because already exists: %s|
-Added antispam exception entry: %s|
-Deleted antispam exception entry: %s|
-Couldn't delete antispam exception entry because not found: %s|
-Antispam exception list|
-Antispam exception list is empty.|
+Deleted antispam entry: %s|Eliminata voce antispam: %s
+Couldn't delete antispam entry because not found: %s|Impossibile eliminare la voce antispam perchй non trovata: %s
+Antispam list|Lista antispam
+Antispam list is empty.|La lista antispam и vuota.
+Couldn't add antispam exception entry because already exists: %s|Impossibile aggiungere l'eccezione antispam perchи giа esiste: %s
+Added antispam exception entry: %s|Aggiunta eccezione antispam: %s
+Deleted antispam exception entry: %s|Rimossa eccezione antispam: %s
+Couldn't delete antispam exception entry because not found: %s|Impossibile rimuovere l'eccezione antispam perchи non esiste: %s
+Antispam exception list|Lista eccezioni antispam
+Antispam exception list is empty.|La lista eccezioni antispam и vuota.
 The user you're trying to send offline message to is a bot. Message is discarded.|
 You can't start at user number %d when you only have %d accounts with class %d.|
 Showing %d out of total %d accounts with class %d starting at user number %d|
@@ -157,11 +157,11 @@ Redirected %s with IP %s and class %d to %s: <%s> %s|
 Unknown protocol command from %s with IP %s and class %d: %s|
 Custom nick list|
 %s operator commands|
-Add antispam entry|
+Add antispam entry|Aggiungi voce antispam
 Showing last %d lines out of total %d found in %s file|
-Delete antispam entry|
-Add antispam exception entry|
-Delete antispam exception entry|
+Delete antispam entry|Rimuovi voce antispam
+Add antispam exception entry|Aggiungi eccezione antispam
+Delete antispam exception entry|Rimuovi eccezione antispam
 Add MyINFO entry|
 Delete MyINFO entry|
 MyINFO list|
@@ -182,7 +182,7 @@ Change configuration variable|
 nick|
 This list of commands|
 %s user commands|
-Current topic|
+Current topic|Topic attuale
 Your chat rank|
 You're not allowed to send private messages.|
 Unknown|
@@ -204,7 +204,7 @@ to|
 Unknown configuration variable: %s|
 %s version: %s|
 Not installed|
-%s dropped due to spam.|
+User dropped due to spam: %s|
 variable|
 value|
 minutes|
@@ -221,19 +221,19 @@ Add rank exception|
 Delete rank exception|
 In order to use this feature you must turn off registered users list cache. Do it by setting hub configuration variable %s to %d and restarting the hub. Please note: Turning cache off is not recommended with large list of registered users.|
 Both|
-Deleted search filter: %s|
+Deleted search filter: %s|Filtro di ricerca eliminato: %s
 Couldn't delete search filter because not found: %s|
 Search filter list|
 Search filter list is empty.|
 Magnet link: %s|
 Add search filter|
-Delete search filter|
+Delete search filter|Eliminare filtro di ricerca
 Known actions are: %s|
 Known flags are: %s|
 Downloading version file: %s|
 Size of kicks table: %d [ %s: %d @ %s ]|
-Size of bans table: %d [ %s: %d @ %s ]|
-Size of unbans table: %d [ %s: %d @ %s ]|
+Size of bans table: %d [ %s: %d @ %s ]|Dimensione tabella ban: %d [ %s: %d @ %s ]
+Size of unbans table: %d [ %s: %d @ %s ]|Dimensione tabella unban: %d [ %s: %d @ %s ]
 Size of IP logger plugin table: %d [ %s: %d @ %s ]|
 Size of statistics plugin table: %d [ %s: %d @ %s ]|
 Modified authorization entry: %s @ %s|
@@ -349,15 +349,15 @@ Total search rank points: %d|
 Please use following commands to finish update process|
 Moving file: %s|
 Please visit %s to download the script manually.|
-Modified forbidden IP address with ban time %s: %s|
-Added forbidden IP address with ban time %s: %s|
+Modified forbidden IP address with ban time %s: %s|Modificato IP proibito con tempo di ban %s: %s
+Added forbidden IP address with ban time %s: %s|Aggiunto IP proibito con tempo di ban %s: %s
 Deleted forbidden IP address: %s|
 Couldn't delete forbidden IP address because not found: %s|
 Forbidden IP address list|
 Forbidden IP address list is empty.|
 %s with IP %s and class %d allowed due to forbidden IP address exception: %s|
 Couldn't delete category because not found: %s|
-%s redirected due to spam.|
+User redirected due to spam: %s|
 %s redirected due to bad search request.|
 You can download me from: %s|
 %s is registered with class %d and has been automatically unregistered and deleted from other tables.|
@@ -751,8 +751,8 @@ Bot information|
 Owner script: %s|
 %s with IP %s and class %d allowed due to forbidden DNS exception: %s|
 In order to use this feature you need to enable DNS lookup. Do it by setting hub configuration variable %s to %d. Please note: Enabling DNS lookup might slow your hub performance down.|
-Modified forbidden DNS with ban time %s: %s|
-Added forbidden DNS with ban time %s: %s|
+Modified forbidden DNS with ban time %s: %s|Modificato DNS proibito con tempo di ban %s: %s
+Added forbidden DNS with ban time %s: %s|Aggiunto DNS proibito con tempo di ban %s: %s
 Deleted forbidden DNS: %s|
 Couldn't delete forbidden DNS because not found: %s|
 Forbidden DNS list|
@@ -762,9 +762,8 @@ Warning: %s|
 Open files limit set to %d is smaller than maximum users configuration which is %d. You can correct this by setting %s to %d or higher and restarting the hub.|
 Additional help|
 Remove all %s tables and files|
-No reason specified.|
 You can't kick user whose class is higher or equals your own: %s|
-Your topic contains forbidden characters which can't be used for security reason: %s|
+Your topic contains forbidden characters which can't be used for security reason: %s|Il tuo topic contiene caratteri proibiti che non possono essere usati per ragioni di sicurezza: %s
 Hub uptime: %s|
 User count: %s|
 Total share: %s|
@@ -782,8 +781,8 @@ Couldn't modify authorization entry because not found: %d|
 Uptime: %s|
 Enable requested feature and try again.|
 cc|
-Modified forbidden country code with ban time %s: %s|
-Added forbidden country code with ban time %s: %s|
+Modified forbidden country code with ban time %s: %s|Modificato codice nazionale proibito con tempo di ban %s: %s
+Added forbidden country code with ban time %s: %s|Agginto codice nazionale proibito con tempo di ban %s: %s
 Deleted forbidden country code: %s|
 Couldn't delete forbidden country code because not found: %s|
 Forbidden country code list|
@@ -796,9 +795,9 @@ Couldn't delete chat replacer because ID not found: %d|
 Chat replacer list|
 Chat replacer list is empty.|
 Replace|
-Couldn't add chat replacer exception because already exists: %s|
-Added chat replacer exception: %s|
-Deleted chat replacer exception: %s|
+Modified chat replacer exception with type %d: %s|
+Added chat replacer exception with type %d: %s|
+Deleted chat replacer exception with type %d: %s|
 Couldn't delete chat replacer exception because not found: %s|
 Chat replacer exception list|
 Chat replacer exception list is empty.|
@@ -837,14 +836,14 @@ query|
 Execute MySQL query|
 Execute shell command|
 Experts only|
-Add hard IP ban entry|
-Delete hard IP ban entry|
-List of hard IP ban entries|
-Modified hard IP ban entry: %s|
-Added hard IP ban entry: %s|
-Deleted hard IP ban entry: %s|
-Hard IP ban list is empty.|
-Couldn't delete hard IP ban entry because not found: %s|
+Add hard IP ban entry|Aggiungi voce IP ban permanente
+Delete hard IP ban entry|Rimuovi voce IP ban permanente
+List of hard IP ban entries|Lista voci IP ban permanenti
+Modified hard IP ban entry: %s|Voce ban IP permanente modificata: %s
+Added hard IP ban entry: %s|Voce ban IP permanente aggiunta: %s
+Deleted hard IP ban entry: %s|Voce ban IP permanente eliminata: %s
+Hard IP ban list is empty.|La lista IP ban permanenti и vuota.
+Couldn't delete hard IP ban entry because not found: %s|Impossibile eliminare la voce IP ban permanente perchй non trovata: %s
 Hard IP ban refused connection from IP %s: %s|
 Please wait another %d seconds before using hub search engine.|
 Loading %s in memory...|
@@ -1105,7 +1104,7 @@ Users with IP address %s found in following hubs|
 Blocked PM|
 Right click menu|
 IP watch|
-Hard IP bans|
+Hard IP bans|IP ban permanenti
 Chatroom history|
 Chatroom history is empty.|
 Last %d chatroom messages|
@@ -1118,10 +1117,39 @@ Specified country code isn't valid: %s|
 You can't block user who don't share anything: %s|
 You can't kick user who don't share anything: %s|
 Flood detected from %s with IP %s and class %d in MC: %s|
-%s dropped due to flood.|
+User dropped due to flood: %s|
 Main chat flood detected from your nick.|
 Private chat flood detected from your IP.|
 Sorry, your message has been ignored.|
 Disable or enable right click menu item|
 Disabled right click menu item: %s|
 Enabled right click menu item: %s|
+%s added to search block list.|
+Your search request is discarded due to previous forbidden search request.|
+Hub URL: %s|
+Search filter block list|
+Delete search filter block list entry|
+Search filter block list is empty.|
+Deleted search filter block list entry: %s|
+Couldn't delete search filter block list entry because not found: %s|
+Yes|
+No|
+%s with class %d changed configuration variable %s.%s: %s => %s|
+Please wait another %d seconds before using public chat.|
+Please wait another %d seconds before using private chat.|
+Low chat uptime of %d seconds from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s|
+Low chat uptime of %d seconds from %s with IP %s and class %d in MC: %s|
+Low chat uptime of %d seconds from %s with IP %s and class %d in command: %s|
+Low registration uptime from %s with IP %s and class %d: %s|
+%.1f minutes|
+Thank you, your report has been accepted.|
+Low search uptime of %d seconds from %s with IP %s and class %d as any file: %s|
+Low search uptime of %d seconds from %s with IP %s and class %d as audio file: %s|
+Low search uptime of %d seconds from %s with IP %s and class %d as compressed file: %s|
+Low search uptime of %d seconds from %s with IP %s and class %d as document: %s|
+Low search uptime of %d seconds from %s with IP %s and class %d as executable: %s|
+Low search uptime of %d seconds from %s with IP %s and class %d as picture: %s|
+Low search uptime of %d seconds from %s with IP %s and class %d as video: %s|
+Low search uptime of %d seconds from %s with IP %s and class %d as folder: %s|
+Low search uptime of %d seconds from %s with IP %s and class %d as TTH: %s|
+User dropped: %s|
