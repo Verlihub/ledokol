@@ -1,6 +1,6 @@
 # Language: cs_CZ
 # Charset: CP1250
-# Version: 2.8.8
+# Version: 2.8.9
 # Author: Uhlik
 # Email: pjanos.uk@gmail.com
 
@@ -53,7 +53,7 @@ type|type
 %s with IP %s and class %d allowed due to forbidden connection type exception: %s|%s s IP %s a class %d vstup povolen diky vyjimce pro zakazany typ pripojeni: %s
 %s with class %d changed configuration variable %s: %s => %s|%s s class %d zmenil nastaveni promenne %s: %s => %s
 %s with IP %s and class %d allowed due to forbidden email exception: %s|%s s IP %s a class %d vstup povolen diky vyjimce pro zakazany email: %s
-%s received own message.|%s obdrzel svoji zpravu.
+User received own message: %s|Uzivatel obdrzel svoji zpravu: %s
 %s with IP %s and class %d allowed due to forbidden share size exception: %s|%s s IP %s a class %d vstup povolen diky vyjimce pro zakazanou velikost sdileni: %s
 Deleted %d releases from category: %s|Smazano %d releasu z kategorie: %s
 Why would you want to set empty topic?|Proc by jsi nastavoval prazdny topic?
@@ -204,7 +204,7 @@ to|to
 Unknown configuration variable: %s|Neznama konfiguracni promenna: %s
 %s version: %s|%s verze: %s
 Not installed|Nenainstalovano
-%s dropped due to spam.|%s odpojen za spam.
+User dropped due to spam: %s|Uzivatel odpojen za spam: %s
 variable|promenna
 value|hodnota
 minutes|minut
@@ -357,7 +357,7 @@ Forbidden IP address list|Seznam zakazanych IP
 Forbidden IP address list is empty.|Seznam zakazanych IP je prazdny.
 %s with IP %s and class %d allowed due to forbidden IP address exception: %s|%s s IP %s a class %d vstup povolen diky vyjimce v zakazanych IP: %s
 Couldn't delete category because not found: %s|Nemohu smazat kategorii %s protoze nebyla nalezena.
-%s redirected due to spam.|%s presmerovan za spam.
+User redirected due to spam: %s|Uzivatel presmerovan za spam: %s
 %s redirected due to bad search request.|%s presmerovan za nedovolene hledani.
 You can download me from: %s|Muzes me stahnout z: %s
 %s is registered with class %d and has been automatically unregistered and deleted from other tables.|%s byl zaregistrovan s class %d a byl automaticky smazan ze vsech zaznamu.
@@ -762,7 +762,6 @@ Warning: %s|Varovani: %s
 Open files limit set to %d is smaller than maximum users configuration which is %d. You can correct this by setting %s to %d or higher and restarting the hub.|ulimit nastaven na %d je mensi nez nastaveni maximalniho poctu uzivatelu, ktery je %d. Muzes to napravit nastavenim %s na %d nebo vyssi a restartovanim hubu.
 Additional help|Doplnkova napoveda
 Remove all %s tables and files|Odebere vsechny %s zaznamy a soubory
-No reason specified.|Nebyl urcen duvod.
 You can't kick user whose class is higher or equals your own: %s|Nemuzes kopnout uzivatele jehoz class je vyssi nebo stejna jako je tvoje: %s
 Your topic contains forbidden characters which can't be used for security reason: %s|Tvuj topic obsahuje zakazane znaky: %s, ktere nemohou byt pouzity s bezpecnostnich duvodu.
 Hub uptime: %s|Hub bezi: %s
@@ -796,9 +795,9 @@ Couldn't delete chat replacer because ID not found: %d|Nemohu smazat chat replac
 Chat replacer list|Seznam pro chat replacer
 Chat replacer list is empty.|Seznam pro chat replacer je prazdny.
 Replace|Nahradit
-Couldn't add chat replacer exception because already exists: %s|Nemohu vlozit chat replacer vyjimku %s protoze uz existuje.
-Added chat replacer exception: %s|Vlozena vyjimka %s pro chat replacer.
-Deleted chat replacer exception: %s|Smazana vyjimka %s pro chat replacer.
+Modified chat replacer exception with type %d: %s|Upravena vyjimka pro chat replacer typem %d: %s
+Added chat replacer exception with type %d: %s|Vlozena vyjimka pro chat replacer s typem %d: %s
+Deleted chat replacer exception with type %d: %s|Smazana vyjimka pro chat replacer s typem %d: %s
 Couldn't delete chat replacer exception because not found: %s|Nemohu smazat vyjimku %s pro chat replacer protoze nebyla nalezena.
 Chat replacer exception list|Seznam vyjimek pro chat replacer
 Chat replacer exception list is empty.|Seznam vyjimek pro chat replacerje prazdny.
@@ -1118,10 +1117,39 @@ Specified country code isn't valid: %s|Vybrany country code neni platny: %s
 You can't block user who don't share anything: %s|Nemuzes zablokovat uzivatele ktery nic nesdili: %s
 You can't kick user who don't share anything: %s|Nemuzes vykopnout uzivatele ktery nic nesdili: %s
 Flood detected from %s with IP %s and class %d in MC: %s|Detekovan flood od %s s IP %s a class %d na MC: %s
-%s dropped due to flood.|%s dropnut pro flood.
+User dropped due to flood: %s|Uzivatel odpojen pro flood: %s
 Main chat flood detected from your nick.|Main chat flood detekovan z tveho nicku.
 Private chat flood detected from your IP.|PM flood detekovan z tve IP.
 Sorry, your message has been ignored.|Je mi lito, tva zprava byla ignorovana.
 Disable or enable right click menu item|Vypne nebo zapne polozku v right click menu
 Disabled right click menu item: %s|Vypnuta right click menu polozka: %s
 Enabled right click menu item: %s|Zapnuta right click menu polozka: %s
+%s added to search block list.|%s pridan na search block seznam.
+Your search request is discarded due to previous forbidden search request.|Tvuj pozadavek na hledani byl zrusen z duvodu predchozich zakazanych pozadavku hledani.
+Hub URL: %s|Hub URL: %s
+Search filter block list|Seznam blokovani skrze filtr hledani
+Delete search filter block list entry|Smaze blokovani skrze filtr hledani
+Search filter block list is empty.|Seznam blokovani skrze filtr hledani je prazdny.
+Deleted search filter block list entry: %s|Smazano blokovani skrze filtr hledani: %s
+Couldn't delete search filter block list entry because not found: %s|Nemohu smazat polozku z blokovani skrze filtr hledani protoze nebyla nalezena: %s
+Yes|Ano
+No|Ne
+%s with class %d changed configuration variable %s.%s: %s => %s|%s sclass %d zmenil konfiguracni promennou %s.%s: %s => %s
+Please wait another %d seconds before using public chat.|Prosim pockej dalsich %d sekund pred pouzivanim verejneho chatu.
+Please wait another %d seconds before using private chat.|Prosim pockej dalsich %d sekund pred pouzivanim soukromeho chatu.
+Low chat uptime of %d seconds from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s|Kratky chat uptime %d sekund od %s s IP %s a class %d na PM pro %s s IP %s a class %d: %s
+Low chat uptime of %d seconds from %s with IP %s and class %d in MC: %s|Kratky chat uptime %d sekund od %s s IP %s a class %d na MC pro %s s IP %s a class %d: %s
+Low chat uptime of %d seconds from %s with IP %s and class %d in command: %s|Kratky chat uptime %d sekund od %s s IP %s a class %d na prikaz: %s
+Low registration uptime from %s with IP %s and class %d: %s|Kratky regustracni uptime pro %s s IP %s a class %d: %s
+%.1f minutes|%.1f minuty
+Thank you, your report has been accepted.|Dekuji, tvuj report byl prijat.
+Low search uptime of %d seconds from %s with IP %s and class %d as any file: %s|Kratky hledaci uptime %d sekund pro %s s IP %s a class %d na MC pri hledani jako any file: %s
+Low search uptime of %d seconds from %s with IP %s and class %d as audio file: %s|Kratky hledaci uptime %d sekund pro %s s IP %s a class %d na MC pri hledani jako audio file: %s
+Low search uptime of %d seconds from %s with IP %s and class %d as compressed file: %s|Kratky hledaci uptime %d sekund pro %s s IP %s a class %d na MC pri hledani jako compressed file: %s
+Low search uptime of %d seconds from %s with IP %s and class %d as document: %s|Kratky hledaci uptime %d sekund pro %s s IP %s a class %d na MC pri hledani jako document: %s
+Low search uptime of %d seconds from %s with IP %s and class %d as executable: %s|Kratky hledaci uptime %d sekund pro %s s IP %s a class %d na MC pri hledani jako spustitelny: %s
+Low search uptime of %d seconds from %s with IP %s and class %d as picture: %s|Kratky hledaci uptime %d sekund pro %s s IP %s a class %d na MC pri hledani jako picture: %s
+Low search uptime of %d seconds from %s with IP %s and class %d as video: %s|Kratky hledaci uptime %d sekund pro %s s IP %s a class %d na MC pri hledani jako video: %s
+Low search uptime of %d seconds from %s with IP %s and class %d as folder: %s|Kratky hledaci uptime %d sekund pro %s s IP %s a class %d na MC pri hledani jako folder: %s
+Low search uptime of %d seconds from %s with IP %s and class %d as TTH: %s|Kratky hledaci uptime %d sekund pro %s s IP %s a class %d na MC pri hledani jako TTH: %s
+User dropped: %s|Uzivatel dropnut: %s
