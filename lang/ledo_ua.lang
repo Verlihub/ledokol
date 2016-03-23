@@ -1,6 +1,6 @@
 # Language: uk_UA
 # Charset: CP1251
-# Version: 2.8.8
+# Version: 2.8.9
 # Author: Neolo
 # Email: admin@nlight.org.ua
 
@@ -53,7 +53,7 @@ type|type
 %s with IP %s and class %d allowed due to forbidden connection type exception: %s|
 %s with class %d changed configuration variable %s: %s => %s|%s з класом %d змінив(ла) значення конфігурації %s: %s => %s
 %s with IP %s and class %d allowed due to forbidden email exception: %s|
-%s received own message.|%s отримав власне повідомлення.
+User received own message: %s|
 %s with IP %s and class %d allowed due to forbidden share size exception: %s|
 Deleted %d releases from category: %s|Видалено %d релізів з категорії: %s
 Why would you want to set empty topic?|Чому вам захотілося встановити порожню тему? Придумайте щось =)
@@ -204,7 +204,7 @@ to|до
 Unknown configuration variable: %s|Такого значення конфігурації не знайдено: %s
 %s version: %s|%s версія: %s
 Not installed|Не встановлено
-%s dropped due to spam.|
+User dropped due to spam: %s|
 variable|змінна
 value|значення
 minutes|хвилин
@@ -357,7 +357,7 @@ Forbidden IP address list|Список заборонених IP адрес
 Forbidden IP address list is empty.|Список заборонених IP адрес порожній.
 %s with IP %s and class %d allowed due to forbidden IP address exception: %s|
 Couldn't delete category because not found: %s|Така категорія не знайдена, нічого видаляти: %s
-%s redirected due to spam.|
+User redirected due to spam: %s|
 %s redirected due to bad search request.|
 You can download me from: %s|Ви можете завантажити мене з: %s
 %s is registered with class %d and has been automatically unregistered and deleted from other tables.|%s зареєстровано з класом %d і було видалено з усіх таблиць бази даних.
@@ -762,7 +762,6 @@ Warning: %s|Увага: %s
 Open files limit set to %d is smaller than maximum users configuration which is %d. You can correct this by setting %s to %d or higher and restarting the hub.|Обмеження відкритих файлів встановлено на %d менше ніж %d. Встаніть значення конфігурації %s на %d або більше та перезавантажте хаб.
 Additional help|Додаткова допомога
 Remove all %s tables and files|
-No reason specified.|Не вказана причина.
 You can't kick user whose class is higher or equals your own: %s|
 Your topic contains forbidden characters which can't be used for security reason: %s|Вказана тема містить недопустимі символи і не може бути встановлена з міркувань безпеки: %s
 Hub uptime: %s|Безперервна робота хабу: %s
@@ -796,9 +795,9 @@ Couldn't delete chat replacer because ID not found: %d|Неможливо вид
 Chat replacer list|
 Chat replacer list is empty.|
 Replace|Заміна
-Couldn't add chat replacer exception because already exists: %s|Неможливо додати чат замінювач тому що вже існує: %s
-Added chat replacer exception: %s|Додано виключення чат замінювача: %s
-Deleted chat replacer exception: %s|Видалено виключення чат замінювача: %s
+Modified chat replacer exception with type %d: %s|
+Added chat replacer exception with type %d: %s|
+Deleted chat replacer exception with type %d: %s|
 Couldn't delete chat replacer exception because not found: %s|Неможливо видалити виключення чат замінювача тому що не знайдено: %s
 Chat replacer exception list|Список виключень виключення чат замінювача
 Chat replacer exception list is empty.|Список виключень виключення чат замінювача порожній.
@@ -1118,10 +1117,39 @@ Specified country code isn't valid: %s|
 You can't block user who don't share anything: %s|
 You can't kick user who don't share anything: %s|
 Flood detected from %s with IP %s and class %d in MC: %s|
-%s dropped due to flood.|
+User dropped due to flood: %s|
 Main chat flood detected from your nick.|
 Private chat flood detected from your IP.|
 Sorry, your message has been ignored.|
 Disable or enable right click menu item|
 Disabled right click menu item: %s|
 Enabled right click menu item: %s|
+%s added to search block list.|
+Your search request is discarded due to previous forbidden search request.|
+Hub URL: %s|
+Search filter block list|
+Delete search filter block list entry|
+Search filter block list is empty.|
+Deleted search filter block list entry: %s|
+Couldn't delete search filter block list entry because not found: %s|
+Yes|
+No|
+%s with class %d changed configuration variable %s.%s: %s => %s|
+Please wait another %d seconds before using public chat.|
+Please wait another %d seconds before using private chat.|
+Low chat uptime of %d seconds from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s|
+Low chat uptime of %d seconds from %s with IP %s and class %d in MC: %s|
+Low chat uptime of %d seconds from %s with IP %s and class %d in command: %s|
+Low registration uptime from %s with IP %s and class %d: %s|
+%.1f minutes|
+Thank you, your report has been accepted.|
+Low search uptime of %d seconds from %s with IP %s and class %d as any file: %s|
+Low search uptime of %d seconds from %s with IP %s and class %d as audio file: %s|
+Low search uptime of %d seconds from %s with IP %s and class %d as compressed file: %s|
+Low search uptime of %d seconds from %s with IP %s and class %d as document: %s|
+Low search uptime of %d seconds from %s with IP %s and class %d as executable: %s|
+Low search uptime of %d seconds from %s with IP %s and class %d as picture: %s|
+Low search uptime of %d seconds from %s with IP %s and class %d as video: %s|
+Low search uptime of %d seconds from %s with IP %s and class %d as folder: %s|
+Low search uptime of %d seconds from %s with IP %s and class %d as TTH: %s|
+User dropped: %s|
