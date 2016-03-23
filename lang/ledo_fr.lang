@@ -1,6 +1,6 @@
 # Language: fr_FR
 # Charset: CP1252
-# Version: 2.8.8
+# Version: 2.8.9
 # Author: @tlantide
 # Email: chatonhubfrance@gmail.com
 
@@ -53,7 +53,7 @@ type|type
 %s with IP %s and class %d allowed due to forbidden connection type exception: %s|%s %s IP et le profil %d autorisй en raison du type de connexion interdit exception: %s
 %s with class %d changed configuration variable %s: %s => %s|%s avec le profil %d changй de configuration de la variable %s: %s => %s
 %s with IP %s and class %d allowed due to forbidden email exception: %s|%s %s IP et de profil %d autorisй en raison interdit email exception: %s
-%s received own message.|%s reзus propre message .
+User received own message: %s|L'utilisateur a reзu son propre message: %s
 %s with IP %s and class %d allowed due to forbidden share size exception: %s|%s IP et de profil %d autorisй en raison interdit exception de la taille du partage: %s
 Deleted %d releases from category: %s|Supprimйs %d  release de la catйgorie: %s
 Why would you want to set empty topic?|Pourquoi voudriez-vous changer le sujet vide ?
@@ -104,7 +104,7 @@ Deleted %d rows: %s|Supprimйs %d lignes: %s
 Known types are: %s|Les types connus sont: %s
 No rows to remove: %s|Pas de lignes а supprimer: %s
 date|date
-%s with IP %s and class %d used following command: %s|
+%s with IP %s and class %d used following command: %s|%s avec IP %s et la classe %d a utilisй commande suivante: %s
 context|contexte
 Deleted from chat rank list: %s|Supprimй de la liste Top lignes du chat: %s
 Not found in chat rank list: %s|Introuvable dans la liste Top lignes du message central: %s
@@ -204,7 +204,7 @@ to|а
 Unknown configuration variable: %s|Configuration variable inconnu: %s
 %s version: %s|%s version: %s
 Not installed|Pas installй
-%s dropped due to spam.|%s dйconnectй а cause du spam.
+User dropped due to spam: %s|L'utilisateur a йtи dйconnecter а cause du spam: %s
 variable|variable
 value|valeur
 minutes|minutes
@@ -357,7 +357,7 @@ Forbidden IP address list|Liste d'adresse IP interdite
 Forbidden IP address list is empty.|La liste d'adresses IP Interdite est vide .
 %s with IP %s and class %d allowed due to forbidden IP address exception: %s|%s L' IP et profil %d es autorisй en raison interdit adresse IP exception: %s
 Couldn't delete category because not found: %s|Impossible de supprimer la catйgorie car elle es introuvable: %s
-%s redirected due to spam.|%s redirigй а cause du spam.
+User redirected due to spam: %s|Utilisateur a йtи  redirigй а cause de spam: %s
 %s redirected due to bad search request.|%s redirigй а cause de la mauvaise requкte de recherche .
 You can download me from: %s|Vous pouvez me tйlйcharger а partir de: %s
 %s is registered with class %d and has been automatically unregistered and deleted from other tables.|%s est inscrit avec le profil %d et a йtй automatiquement enregistrйes et supprimйes par les autres tables .
@@ -762,7 +762,6 @@ Warning: %s|Attention: %s
 Open files limit set to %d is smaller than maximum users configuration which is %d. You can correct this by setting %s to %d or higher and restarting the hub.|La limite d'ensemble de fichiers ouvert а %d est plus petit que les configurations utilisateur maximales qui est de %d. Tu peux corriger ceci en mettant %s а %s ou plus йlevй et redйmarrer\nle hub
 Additional help|Aide supplйmentaire
 Remove all %s tables and files|Supprimer toutes %s les tables et fichiers
-No reason specified.|Aucune raison spйcifiйe.
 You can't kick user whose class is higher or equals your own: %s|Tu ne peux pas kicker un utilisateur qui a un profil plus йlevй ou йgal au tien: %s
 Your topic contains forbidden characters which can't be used for security reason: %s|Ton topic contient des caractиres interdits qui ne peuvent кtre utilisйs par sйcuritй raison: %s
 Hub uptime: %s|Temps de fonctionnement du hub: %s
@@ -796,9 +795,9 @@ Couldn't delete chat replacer because ID not found: %d|Ne peut supprimer le remp
 Chat replacer list|Liste de remplacement du tchat
 Chat replacer list is empty.|La liste de remplacement du tchat est vide.
 Replace|Remplacer
-Couldn't add chat replacer exception because already exists: %s|Ne peut ajouter l'exception du remplacement du tchat car il existe dйjа: %s
-Added chat replacer exception: %s|L'exception de remplacement du tchat a йtй ajoutйe: %s
-Deleted chat replacer exception: %s|L'exception de remplacement du tchat a йtй supprimйe: %s
+Modified chat replacer exception with type %d: %s|Modifiй l'exception de substitution du chat central  avec le type %d: %s
+Added chat replacer exception with type %d: %s|Ajoutй une exception de substitution au chat central avec le type %d: %s
+Deleted chat replacer exception with type %d: %s|Supprimй l'exception de substitution du chat central  avec le type %d: %s
 Couldn't delete chat replacer exception because not found: %s|Ne peut supprimer l'exception du remplacement du tchat car introuvable: %s
 Chat replacer exception list|Liste d'exception de remplacement du tchat
 Chat replacer exception list is empty.|La liste d'exception de remplacement du tchat est vide.
@@ -923,7 +922,7 @@ Command parameters %s are always required, while %s are optional.|Les paramиtre
 Quoted parameters %s or %s must be used with quotes.|Les paramиtres citйs %s ou %s doivent кtre utilisйs avec les citations.
 IP information|Information de l'IP
 IP information not available: %s|Information de l'IP non disponible: %s
-Message replaced for user with IP %s and class %d in MC: <%s> %s|
+Message replaced for user with IP %s and class %d in MC: <%s> %s|Message remplacй pour l'utilisateur avec IP %s et la  classe %d in MC: <%s> %s
 IP %s permanently banned: <%s> %s|L'IP %s est bannie en permanence: <%s> %s
 Nick %s permanently banned: <%s> %s|Le pseudonyme %s est banni en permanence: <%s> %s
 Range %s permanently banned: <%s> %s|La rangйe %s est bannie en permanence: <%s> %s
@@ -947,7 +946,7 @@ Known orders are: %s|Les ordres connus sont: %s
 Modified right click menu item: %s|Article du menu du click droit modifiй: %s
 Added right click menu item: %s|Article du menu du klick droit ajoutй: %s
 Deleted right click menu item: %s|Article du menu du click droit supprimй: %s
-Right click menu item not found: %d|
+Right click menu item not found: %d|Clic droit menu introuvable: %d
 Right click menu item list is empty.|La liste d'article du menu du Click droit est vide.
 Menu item|Menu de l'article
 Menu command|Menu de commande
@@ -1118,10 +1117,39 @@ Specified country code isn't valid: %s|Code pays spйcifiй est incorrect: %s
 You can't block user who don't share anything: %s|Vous ne pouvez pas bloquer l'utilisateur qui ne rien partager: %s
 You can't kick user who don't share anything: %s|Vous ne pouvez pas kicker l' utilisateur qui ne partagent rien: %s
 Flood detected from %s with IP %s and class %d in MC: %s|Flood dйtectйe de cette %s with IP %s avec le rang %d sur le central: %s
-%s dropped due to flood.|%s dйconnecter raison flood.
+User dropped due to flood: %s|L'utilisateur a йtи dйconnecter en raison des flood: %s
 Main chat flood detected from your nick.|Flood dйtectй sur le central а partir de votre pseudo.
 Private chat flood detected from your IP.|Flood dйtectйe en priver  а partir de votre adresse IP.
 Sorry, your message has been ignored.|Dйsoler votre message a йtй ignorer.
-Disable or enable right click menu item|
-Disabled right click menu item: %s|
-Enabled right click menu item: %s|
+Disable or enable right click menu item|Dйsactiver ou activer le clic droit  du menu
+Disabled right click menu item: %s|Dйsactiver le clic droit: %s
+Enabled right click menu item: %s|Activer le clic droit du menu: %s
+%s added to search block list.|%s ajoutйe а la recherche bloc liste.
+Your search request is discarded due to previous forbidden search request.|Votre demande de recherche est йliminй en raison de la prйcйdente demande de recherche interdite .
+Hub URL: %s|Salon URL: %s
+Search filter block list|Filtre de recherche blocklist
+Delete search filter block list entry|Supprimer Recherche entrйe filtre blocklist
+Search filter block list is empty.|Le filtre de recherche de block list est vide.
+Deleted search filter block list entry: %s|Le filtre de recherche de block list a ete supprimer: %s
+Couldn't delete search filter block list entry because not found: %s|Impossible de supprimer le filtre de recherche entrйe de blocklist car il es introuvable: %s
+Yes|Oui
+No|Non
+%s with class %d changed configuration variable %s.%s: %s => %s|%s avec la classe %d modifie les variables de configuration %s.%s: %s => %s
+Please wait another %d seconds before using public chat.|S'il vous plaоt veuillez  attendre encore %d secondes avant d'utiliser le chat public.
+Please wait another %d seconds before using private chat.|S'il vous plaоt veuillez  attendre encore %d secondes avant d'utiliser le chat privй.
+Low chat uptime of %d seconds from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s|chat en bas temps de fonctionnement de %d secondes de %s avec %s IP et de la classe %d en PM а %s avec %s IP et de la classe %d: %s
+Low chat uptime of %d seconds from %s with IP %s and class %d in MC: %s|Chat en bas de disponibilitй %d secondes de %s avec IP %s et rang %d dans MC: %s
+Low chat uptime of %d seconds from %s with IP %s and class %d in command: %s|Chat en bas temps de fonctionnement de %d secondes de %s avec %s IP et de la classe %d dans la commande: %s
+Low registration uptime from %s with IP %s and class %d: %s|Faible disponibilitй d'enregistrement de %s avec %s IP et de la classe %d: %s
+%.1f minutes|%.1f minute
+Thank you, your report has been accepted.|Merci, votre rapport a йtй acceptй .
+Low search uptime of %d seconds from %s with IP %s and class %d as any file: %s|Recherche faible disponibilitй de %d secondes de %s avec %s IP et de la classe %d comme tout fichier: %s
+Low search uptime of %d seconds from %s with IP %s and class %d as audio file: %s|Recherche faible disponibilitй de %d secondes de %s avec %s IP et de la classe %d sous forme de fichier audio: %s
+Low search uptime of %d seconds from %s with IP %s and class %d as compressed file: %s|
+Low search uptime of %d seconds from %s with IP %s and class %d as document: %s|Recherche faible disponibilitй de %d secondes de %s avec %s IP et de la classe %d comme document: %s
+Low search uptime of %d seconds from %s with IP %s and class %d as executable: %s|Recherche faible disponibilitй de %d secondes de %s avec %s IP et de la classe %d comme exйcutable: %s
+Low search uptime of %d seconds from %s with IP %s and class %d as picture: %s|Recherche faible disponibilitй de %d secondes de %s avec %s IP et de la classe %d comme image: %s
+Low search uptime of %d seconds from %s with IP %s and class %d as video: %s|Recherche faible disponibilitй de %d secondes de %s avec %s IP et de la classe %d comme la vidйo: %s
+Low search uptime of %d seconds from %s with IP %s and class %d as folder: %s|Recherche faible disponibilitй de %d secondes de %s avec %s IP et de la classe %d comme dossier: %s
+Low search uptime of %d seconds from %s with IP %s and class %d as TTH: %s|Recherche faible disponibilitй de %d secondes de %s avec %s IP et de la classe %d comme TTH: %s
+User dropped: %s|Utilisateur dйconnectй: %s
