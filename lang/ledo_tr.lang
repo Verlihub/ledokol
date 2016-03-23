@@ -1,6 +1,6 @@
 # Language: tr_TR
 # Charset: CP1254
-# Version: 2.8.8
+# Version: 2.8.9
 # Author: Mauron
 # Email: mauron@vmail.me
 
@@ -53,7 +53,7 @@ type|tьr
 %s with IP %s and class %d allowed due to forbidden connection type exception: %s|%s, ki %s IP adresli ve %d sэnэflэ, yasaklэ baрlantэ tьrь istisnasэ sebebiyle kabul edildi: %s
 %s with class %d changed configuration variable %s: %s => %s|%d sэnэflэ %s, %s yapэlandэrma deрiюkenini deрiюtirdi: %s => %s
 %s with IP %s and class %d allowed due to forbidden email exception: %s|%s, ki %s IP adresli ve %d sэnэflэ, yasaklэ e-posta istisnasэ sebebiyle kabul edildi: %s
-%s received own message.|%s kendi mesajэnэ aldэ.
+User received own message: %s|Kullanэcэ kendi mesajэnэ aldэ: %s
 %s with IP %s and class %d allowed due to forbidden share size exception: %s|%s, ki %s IP adresli ve %d sэnэflэ, yasaklэ paylaюэm istisnasэ sebebiyle kabul edildi: %s
 Deleted %d releases from category: %s|%d bэrakэm юu kategoriden silindi: %s
 Why would you want to set empty topic?|Niзin boю bir konu belirtmek isteyesiniz ki?
@@ -204,7 +204,7 @@ to|юuna
 Unknown configuration variable: %s|Bilinmeyen yapэlandэrma deрiюkeni: %s
 %s version: %s|% sьrьmь: %s
 Not installed|Kurulu deрil
-%s dropped due to spam.|%s ile baрlantэ yэрэn mesajlar nedeniyle kesildi.
+User dropped due to spam: %s|Kullanэcэnэn baрlantэsэ yэрэn mesaj sebebiyle kesildi: %s
 variable|deрiюken
 value|deрer
 minutes|dakika
@@ -357,7 +357,7 @@ Forbidden IP address list|Yasaklэ IP adres listesi
 Forbidden IP address list is empty.|Yasaklэ IP adres listesi boюtur.
 %s with IP %s and class %d allowed due to forbidden IP address exception: %s|%s, ki %s IP adresli ve %d sэnэflэ, yasaklэ IP adresi istisnasэ sebebiyle kabul edildi: %s
 Couldn't delete category because not found: %s|Kategori silinemedi зьnkь bulunamadэ: %s
-%s redirected due to spam.|%s yэрэn mesaj nedeniyle yeniden yцnlendirildi.
+User redirected due to spam: %s|Kullanэcэ yэрэn mesaj nedeniyle yeniden yцnlendirildi: %s
 %s redirected due to bad search request.|%s kцtь arama talebi nedeniyle yeniden yцnlendirildi.
 You can download me from: %s|Beni юu konumdan inidirebilirsiniz: %s
 %s is registered with class %d and has been automatically unregistered and deleted from other tables.|%s, %d sэnэfэ ile kayэtlanmэюtэr ve otomatik olarak diрer tablolardan kaydэ kaldэrэlmэю ve silinmiюtir.
@@ -762,7 +762,6 @@ Warning: %s|Эkaz: %s
 Open files limit set to %d is smaller than maximum users configuration which is %d. You can correct this by setting %s to %d or higher and restarting the hub.|Aзэk dosya sэnэrэ %d olarak ayarlanmэюtэr ve bu %d olan azami kullanэcэ yapэlandэrmasэndan dьюьktьr. Bunu %d deрerine %s atayarak ve hub'э tekrar baюlatarak dьzeltebilirsiniz.
 Additional help|Эlave yardэm
 Remove all %s tables and files|Tьm %s tablolarэ ve dosyalarэ kaldэr
-No reason specified.|Hiзbir sebep belirtilmemiюtir.
 You can't kick user whose class is higher or equals your own: %s|Sэnэfэ kendi sэnэfэnэza eюit ya da sэnэfэnэzdan yьksek olan bir kullanэcэyэ kovamazsэnэz: %s
 Your topic contains forbidden characters which can't be used for security reason: %s|Konunuz gьvenlik nedenlerinden dolayэ kullanэlmasэ yasak olan karakterler iзermektedir: %s
 Hub uptime: %s|Hub зalэюma sьresi: %s
@@ -796,9 +795,9 @@ Couldn't delete chat replacer because ID not found: %d|Sohbet deрiюtiricisi si
 Chat replacer list|Sohbet deрiюtirici listesi
 Chat replacer list is empty.|Sohbet deрiюtirici listesi boюtur.
 Replace|Deрiюtir
-Couldn't add chat replacer exception because already exists: %s|Sobet deрiюtirici istisnasэ eklenemedi зьnkь zaten mevcut: %s
-Added chat replacer exception: %s|Sohbet deрiюtirici istisnasэ eklendi: %s
-Deleted chat replacer exception: %s|Sohbet deрiюtirici istisnasэ silindi: %s
+Modified chat replacer exception with type %d: %s|Sohbet deрiюtirici istisnasэ %d tьrь ile deрiюtirildi: %s
+Added chat replacer exception with type %d: %s|Sohbet deрiюtirici istisnasэ %d tьrь ile eklendi: %s
+Deleted chat replacer exception with type %d: %s|Sohbet deрiюtirici istisnasэ %d tьrь ile silindi: %s
 Couldn't delete chat replacer exception because not found: %s|Sohbet deрiюtirici istisnasэ silinemedi зьnkь bulunamadэ: %s
 Chat replacer exception list|Sohbet deрiюtirici istisna listesi
 Chat replacer exception list is empty.|Sohbet deрiюtirici istisna listesi boюtur.
@@ -1118,10 +1117,39 @@ Specified country code isn't valid: %s|Belirtilen ьlke kodu geзerli deрil: %s
 You can't block user who don't share anything: %s|Hiзbir юey paylaюmayan kullanэcэyэ engelleyemezsiniz: %s
 You can't kick user who don't share anything: %s|Hiзbir юey paylaюmayan kullancэyэ kovamazsэnэz: %s
 Flood detected from %s with IP %s and class %d in MC: %s|%s kullanэcэsэndan, ki %s IP adresli ve %d sэnэflэ, ana sohbette aюэrэ tekrar tespit edildi: %s
-%s dropped due to flood.|%d ile baрlantэ aюэrэ tekrar nedeniyle kesildi.
+User dropped due to flood: %s|Kullanэcэnэn baрlantэsэ aюэrэ tekrar nedeniyle kesildi: %s
 Main chat flood detected from your nick.|Rumuzunuzdan ana sohbette aюэrэ tekrar tespit edilmiюtir.
 Private chat flood detected from your IP.|IP adresinizden цzel sohbette aюэrэ tekrar tespit edilmiюtir.
 Sorry, your message has been ignored.|Цzьr dileriz, mesajэnэz gцrmezden gelinmiюtir.
 Disable or enable right click menu item|Saр tэklama menь unsurunu etkinleюtir veya devre dэюэ bэrak
 Disabled right click menu item: %s|Saр tэklama menь unsuru devre dэюэ bэrakэldэ: %s
 Enabled right click menu item: %s|Saр tэklama menь unsuru etkinleюtirildi: %s
+%s added to search block list.|%s arama engelleme listesine eklenmiюtir.
+Your search request is discarded due to previous forbidden search request.|Arama talebiniz, цnceki yasaklanmэю arama talebi nedeniyle gцrmezden gelindi.
+Hub URL: %s|Hub URL'i (baрlantэsэ): %s
+Search filter block list|Arama filtresi engelleme listesi
+Delete search filter block list entry|Arama listesi engelleme listesi unsurunu sil
+Search filter block list is empty.|Arama filtresi engelleme listesi boюtur.
+Deleted search filter block list entry: %s|Arama filtresi engelleme listesi unsuru silindi: %s
+Couldn't delete search filter block list entry because not found: %s|Arama filtresi engelleme listesi unsuru silinemedi зьnkь bulunamadэ: %s
+Yes|Evet
+No|Hayэr
+%s with class %d changed configuration variable %s.%s: %s => %s|%d sэnэflэ %s yapэlandэrma deрiюkenini deрiюtirdi %s.%s: %s => %s
+Please wait another %d seconds before using public chat.|Herkese aзэk sohbeti kullanmadan цnce %d saniye daha bekleyiniz.
+Please wait another %d seconds before using private chat.|Цzel sohbeti kullanmadan цnce %d saniye daha bekleyiniz.
+Low chat uptime of %d seconds from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s|Цzel sohbette %d saniyelik dьюьk sohbet зalэюma sьresi, ki %s unsurundan, %s IP adresli ve %d sэnэflэ, %s unsuruna ki %s IP adresli ve %d sэnэflэ: %s
+Low chat uptime of %d seconds from %s with IP %s and class %d in MC: %s|Ana sohbette %d saniyelik dьюьk зalэюma sьresi, ki %s unsurundan %s IP adresli ve %d sэnэflэ: %s
+Low chat uptime of %d seconds from %s with IP %s and class %d in command: %s|Komutta %d saniyelik dьюьk зalэюma sьresi, ki %s unsurundan, %s IP adresli ve %d sэnэflэ: %s
+Low registration uptime from %s with IP %s and class %d: %s|%s unsurundan, ki %s IP adresli ve %d sэnэflэ, dьюьk kayэt зalэюma sьresi: %s
+%.1f minutes|%.1f dakika
+Thank you, your report has been accepted.|Teюekkьr ederiz, raporunuz kabul edilmiюtir.
+Low search uptime of %d seconds from %s with IP %s and class %d as any file: %s|Herhangi bir dosya olarak %d saniyelik dьюьk arama зalэюma sьresi, ki %s unsurundan :%s IP adresli ve %d sэnэflэ: %s
+Low search uptime of %d seconds from %s with IP %s and class %d as audio file: %s|Ses dosyasэ olarak %d saniyelik dьюьk arama зalэюma sьresi, ki %s unsurundan %s IP adresli ve %d sэnэflэ: %s
+Low search uptime of %d seconds from %s with IP %s and class %d as compressed file: %s|Sэkэюtэrэlmэю dosya olarak %d saniyelik dьюьk arama зalэюma sьresi, ki %s unsurundan %s IP adresli ve %d sэnэflэ: %s
+Low search uptime of %d seconds from %s with IP %s and class %d as document: %s|Belge olarak %d saniyelik dьюьk arama зalэюma sьresi, ki %s unsurundan %s IP adresli ve %d sэnэflэ: %s
+Low search uptime of %d seconds from %s with IP %s and class %d as executable: %s|Зalэюtэrэlabilir dosya olarak %d saniyelik dьюьk arama зalэюma sьresi, ki %s unsurundan :%s IP adresli ve %d sэnэflэ: %s
+Low search uptime of %d seconds from %s with IP %s and class %d as picture: %s|Resim dosyasэ olarak %d saniyelik dьюьk arama зalэюma sьresi, ki %s unsurundan %s IP adresli ve %d sэnэflэ: %s
+Low search uptime of %d seconds from %s with IP %s and class %d as video: %s|Video olarak %d saniyelik dьюьk arama зalэюma sьresi, ki %s unsurundan %s IP adresli ve %d sэnэflэ: %s
+Low search uptime of %d seconds from %s with IP %s and class %d as folder: %s|Klasцr olarak %d saniyelik dьюьk arama зalэюma sьresi, ki %s unsurundan :%s IP adresli ve %d sэnэflэ: %s
+Low search uptime of %d seconds from %s with IP %s and class %d as TTH: %s|TTH olarak %d saniyelik dьюьk arama зalэюma sьresi, ki %s unsurundan %s IP adresli ve %d sэnэflэ: %s
+User dropped: %s|Kullanэcэnэn baрlantэsэ kesildi: %s
