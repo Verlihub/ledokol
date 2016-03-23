@@ -1,6 +1,6 @@
 # Language: ro_RO
 # Charset: CP1250
-# Version: 2.8.8
+# Version: 2.8.9
 # Author: S0RiN
 # Email: rusu_sorin_con@yahoo.com
 
@@ -53,7 +53,7 @@ type|tip
 %s with IP %s and class %d allowed due to forbidden connection type exception: %s|%s cu IP %s єi clasa %d are permis accesul pe hub, datoritг excepюiei de la interzicere pe tipul de conexiune: %s
 %s with class %d changed configuration variable %s: %s => %s|%s cu clasa %d a schimbat configuraюia variabilei %s: %s => %s
 %s with IP %s and class %d allowed due to forbidden email exception: %s|%s cu IP %s єi clasa %d are permis accesul pe hub, datoritг excepюiei de la interzicere pe email-ul: %s
-%s received own message.|%s primeєte propriul mesaj.
+User received own message: %s|Utilizatorul %s оєi recepюioneazг propriul mesaj.
 %s with IP %s and class %d allowed due to forbidden share size exception: %s|%s cu IP %s єi clasa %d are permis accesul pe hub, datoritг excepюiei de la interzicere pe aceasta dimensiune de share: %s
 Deleted %d releases from category: %s|S-au єters %d lansгrile din categoria %s
 Why would you want to set empty topic?|De ce ai dori sг setezi un spaюiu gol ca єi topic?
@@ -204,7 +204,7 @@ to|cгtre
 Unknown configuration variable: %s|Configurare necunoscutг a variabilei: %s
 %s version: %s|%s versiune: %s
 Not installed|Neinstalat
-%s dropped due to spam.|%s scos afarг pentru cг a fгcut spam.
+User dropped due to spam: %s|Utilizatorul %s este deconectat de pe hub pentru cг a fгcut spam.
 variable|variabilг
 value|valoare
 minutes|minute
@@ -357,7 +357,7 @@ Forbidden IP address list|Lista cu interdicюii pe IP
 Forbidden IP address list is empty.|Lista cu interdicюii pe IP este goalг.
 %s with IP %s and class %d allowed due to forbidden IP address exception: %s|%s cu IP %s єi clasa %d are permisiunea de a pune excepюie la interdicюia pe IP: %s
 Couldn't delete category because not found: %s|Nu se poate єterge categoria %s pentru cг nu a fost gгsitг.
-%s redirected due to spam.|% a fost redirectat pentru cг a fгcut spam.
+User redirected due to spam: %s|Utilizatorul %s a fost redirecюionat pentru cг a fгcut spam.
 %s redirected due to bad search request.|%s a fost redirectat pentru cг a cгutat lucruri rele.
 You can download me from: %s|Poюi descгrca de la mine din: %s
 %s is registered with class %d and has been automatically unregistered and deleted from other tables.|%s este оnregistrat cu clasa %d єi i-a fost automat єtearsг оnregistrarea din alte tabele.
@@ -762,7 +762,6 @@ Warning: %s|Avertizare: %s
 Open files limit set to %d is smaller than maximum users configuration which is %d. You can correct this by setting %s to %d or higher and restarting the hub.|Limita de deschidere a filelor setatг %d este mai micг decвt maximul de utilizatori configurat care este %d. Poюi corecta setвnd %s оn %d ori mai mult єi apoi restart la hub.
 Additional help|Ajutor suplimentar
 Remove all %s tables and files|Оnlгturг toate %s tabelele єi filele
-No reason specified.|Nici un motiv menюionat.
 You can't kick user whose class is higher or equals your own: %s|Nu poюi da kick unui utilizator a cгrui clasг este mai mare sau egalг cu a ta: %s
 Your topic contains forbidden characters which can't be used for security reason: %s|Topicul tгu conюine caractere interzise %s care nu pot fi folosite din motive de securitate.
 Hub uptime: %s|Timpul de pornire a hubului: %s
@@ -796,9 +795,9 @@ Couldn't delete chat replacer because ID not found: %d|Nu se poate єterge repla
 Chat replacer list|Lista cu replacere de chat
 Chat replacer list is empty.|Lista cu replacere de chat, este goalг.
 Replace|Schimb
-Couldn't add chat replacer exception because already exists: %s|Nu se poate adгuga excepюie la replacerul de chat, pentru cг deja existг: %s
-Added chat replacer exception: %s|Adгugare excepюie la replacer de chat: %s
-Deleted chat replacer exception: %s|Єtergere excepюie la replacer de chat: %s
+Modified chat replacer exception with type %d: %s|Modificare excepюie la replacer de chat cu tastarea %d: %s
+Added chat replacer exception with type %d: %s|Se adaugг excepюie la replacer cu tastarea %d: %s
+Deleted chat replacer exception with type %d: %s|Se єterge excepюia la replacer de chat cu tastarea %d: %s
 Couldn't delete chat replacer exception because not found: %s|Nu se poate єterge excepюia la replacerul de chat, pentru cг nu s-a gгsit: %s
 Chat replacer exception list|Lista cu excepюii la replacer de chat
 Chat replacer exception list is empty.|Lista cu excepюii la replacer de chat, este goalг.
@@ -1118,10 +1117,39 @@ Specified country code isn't valid: %s|Codul de юarг specificat nu este valid:
 You can't block user who don't share anything: %s|Nu poюi bloca un user ce nu shareazг: %s
 You can't kick user who don't share anything: %s|Nu poюi kick-ui un user ce nu shareazг: %s
 Flood detected from %s with IP %s and class %d in MC: %s|S-a detectat flood de la %s cu IP %s єi clasa %d оn MainChat: %s
-%s dropped due to flood.|%s a luat drop pentru cг a fгcut flood.
+User dropped due to flood: %s|Utilizatorul %s este deconectat pentru cг a fгcut flood.
 Main chat flood detected from your nick.|Flood оn main chat detectat de pe nick-ul tгu.
 Private chat flood detected from your IP.|Flood оn privat detectat de pe IP-ul tгu.
 Sorry, your message has been ignored.|Ne pare rгu, mesajul tгu a fost ignorat.
 Disable or enable right click menu item|Dezactiveazг sau activeazг articol al meniului de click dreapta
 Disabled right click menu item: %s|Dezactivare articol al meniului de click dreapta: %s
 Enabled right click menu item: %s|Activare articol al meniului de click dreapta: %s
+%s added to search block list.|%s adгugat оn lista de blocгri ale cгutгrilor.
+Your search request is discarded due to previous forbidden search request.|Cгutarea ta este respinsг din cauza unei cгutгri anterioare pe filг interzisг.
+Hub URL: %s|Hub URL: %s
+Search filter block list|Lista filtrului de blocare a cгutгrilor
+Delete search filter block list entry|Єtergerea listei filtrului de blocare a cгutгrilor
+Search filter block list is empty.|Lista filtrului de blocare a cгutгrilor este goalг.
+Deleted search filter block list entry: %s|Єtergere intrare оn lista filtrului de blocare a cгutгrilor: %s
+Couldn't delete search filter block list entry because not found: %s|Nu se poate єterge intrarea оn lista filtrului de blocare a cгutгrilor pentru cг nu s-a gгsit: %s
+Yes|Da
+No|Nu
+%s with class %d changed configuration variable %s.%s: %s => %s|%s cu clasa %d schimbг configurarea variabilei %s. %s: %s => %s
+Please wait another %d seconds before using public chat.|Te rugгm sг aєtepюi оncг %d secunde оnainte de a folosi chat-ul public.
+Please wait another %d seconds before using private chat.|Te rugгm sг aєtepюi оncг %d secunde оnainte de a folosi chat-ul privat.
+Low chat uptime of %d seconds from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s|Actualizare slabг a chat-ului de %d secunde de la %s cu IP %s єi clasa %d оn privat la %s cu IP %s єi clasa %d: %s
+Low chat uptime of %d seconds from %s with IP %s and class %d in MC: %s|Actualizare slabг a chat-ului de %d secunde de la %s cu IP %s єi clasa %d оn chat-ul public: %s
+Low chat uptime of %d seconds from %s with IP %s and class %d in command: %s|Actualizare slabг a chat-ului de %d secunde de la %s cu IP %s єi clasa %d оn comanda: %s
+Low registration uptime from %s with IP %s and class %d: %s|Actualizare slabг a оnregistrгrii de la %s cu IP %s єi clasa %d: %s
+%.1f minutes|%.1f minute
+Thank you, your report has been accepted.|Mulюumim, reportul tгu a fost acceptat.
+Low search uptime of %d seconds from %s with IP %s and class %d as any file: %s|Actualizare slabг a cгutгrii de %d secunde de la %s cu IP %s єi clasa %d pe tip de fiєier general: %s
+Low search uptime of %d seconds from %s with IP %s and class %d as audio file: %s|Actualizare slabг a cгutгrii de %d secunde de la %s cu IP %s єi clasa %d pe tip de fiєier audio: %s
+Low search uptime of %d seconds from %s with IP %s and class %d as compressed file: %s|Actualizare slabг a cгutгrii de %d secunde de la %s cu IP %s єi clasa %d pe tip de fiєier compresat: %s
+Low search uptime of %d seconds from %s with IP %s and class %d as document: %s|Actualizare slabг a cгutгrii de %d secunde de la %s cu IP %s єi clasa %d pe tip de fiєier document: %s
+Low search uptime of %d seconds from %s with IP %s and class %d as executable: %s|Actualizare slabг a cгutгrii de %d secunde de la %s cu IP %s єi clasa %d pe tip de fiєier executabil: %s
+Low search uptime of %d seconds from %s with IP %s and class %d as picture: %s|Actualizare slabг a cгutгrii de %d secunde de la %s cu IP %s єi clasa %d pe tip de fiєier pozг: %s
+Low search uptime of %d seconds from %s with IP %s and class %d as video: %s|Actualizare slabг a cгutгrii de %d secunde de la %s cu IP %s єi clasa %d pe tip de fiєier video: %s
+Low search uptime of %d seconds from %s with IP %s and class %d as folder: %s|Actualizare slabг a cгutгrii de %d secunde de la %s cu IP %s єi clasa %d pe tip de fiєier dosar: %s
+Low search uptime of %d seconds from %s with IP %s and class %d as TTH: %s|Actualizare slabг a cгutгrii de %d secunde de la %s cu IP %s єi clasa %d pe tip de fiєier TTH: %s
+User dropped: %s|Utilizator deconectat: %s
