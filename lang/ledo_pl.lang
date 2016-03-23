@@ -1,6 +1,6 @@
 # Language: pl_PL
 # Charset: CP1250
-# Version: 2.8.8
+# Version: 2.8.9
 # Author: Zorro
 # Email: zbyszekslyz@hostpl.eu
 
@@ -53,7 +53,7 @@ type|typ
 %s with IP %s and class %d allowed due to forbidden connection type exception: %s|% z IP i klasy %d dozwolone ze wzgledu na zakaz Typ polaczena z wyjatkiem:  %s.
 %s with class %d changed configuration variable %s: %s => %s|%s z klasa %d zmienil wartosc konfiguracji %s: %s => %s
 %s with IP %s and class %d allowed due to forbidden email exception: %s|% z IP i klasy %d dozwolone ze wzgledu na zakaz Email z wyjatkiem:  %s.
-%s received own message.|%s dostal swoja wiadomosc.
+User received own message: %s|
 %s with IP %s and class %d allowed due to forbidden share size exception: %s|% z IP i klasy %d dozwolone ze wzgledu na zakaz Wielosci Shere  z wyjatkiem:  %s.
 Deleted %d releases from category: %s|Usunieto %d nowosc z kategorii: %s
 Why would you want to set empty topic?|Czemu chcesz ustawic pusty topic?
@@ -104,7 +104,7 @@ Deleted %d rows: %s|Usunieto %d linijek: %s
 Known types are: %s|Znane typy to: %s
 No rows to remove: %s|Brak rzedow do usuniecia: %s
 date|data
-%s with IP %s and class %d used following command: %s|
+%s with IP %s and class %d used following command: %s|%s z IP %s oraz klasy %d uzywa nastepujacego polecenia: %s
 context|kontekst
 Deleted from chat rank list: %s|Usunieto z listy rankingu czatu: %s
 Not found in chat rank list: %s|Nie znaleziono na liscie rankingu czatu: %s
@@ -204,7 +204,7 @@ to|do
 Unknown configuration variable: %s|Nieznana wartosc konfiguracji: %s
 %s version: %s|%s wersja: %s
 Not installed|Nie zainstalowano
-%s dropped due to spam.|%s dropniety z powodu spamu.
+User dropped due to spam: %s|
 variable|zmienna
 value|wartosc
 minutes|minuty
@@ -357,7 +357,7 @@ Forbidden IP address list|Lista zakazanych adresow IP
 Forbidden IP address list is empty.|Lista zakazanych adresow IP jest pusta.
 %s with IP %s and class %d allowed due to forbidden IP address exception: %s|% z IP i klasy %d dozwolone ze wzgledu na zakaz IP adresow z wyjatkiem:  %s.
 Couldn't delete category because not found: %s|Nie mozna usunac kategorii, poniewaz nie znaleziono: %s
-%s redirected due to spam.|%s Przekierowano z powodu smamu
+User redirected due to spam: %s|
 %s redirected due to bad search request.|% Prziekierowano z powodu zlych zapytan
 You can download me from: %s|Mozesz mnie pobrac z: %s
 %s is registered with class %d and has been automatically unregistered and deleted from other tables.|%s jest zarejestrowany z klasa %d. Konto zostalo aktuomatycznie usuniete oraz wyczyszczono dane z tablic.
@@ -653,7 +653,7 @@ Added %s to IP gag list, %d users in total.|Dodano %s do IP Listy Gag, %d Uzytko
 Flood detected from IP %s last known as %s with class %d in MC: %s|Wykryto flood od IP %s ostatnio znany jako %s z klasa %d na glownym czacie: %s
 Flood detected from IP %s last known as %s with class %d in PM to %s with IP %s and class %d: %s|Wykryto flood od %s jako %s z klasa %d na PM do %s z IP %s i klasy %d: %s
 Private chat is currently disabled for you.|Prywatny czat jest obecnie zablokowany dla Ciebie.
-Main chat flood detected from your IP.|
+Main chat flood detected from your IP.|Wykryto floodowanie glownego czata z twojego IP
 %d users with IP %s dropped due to flood.|%d Uzytkownicy z IP %s usunieci ze wzgledu na flood.
 No error message specified.|Nie sprecyzowano wiadomosci z bledami.
 Search filter|Filter wyszukiwania
@@ -762,7 +762,6 @@ Warning: %s|Uwaga: %s
 Open files limit set to %d is smaller than maximum users configuration which is %d. You can correct this by setting %s to %d or higher and restarting the hub.|Limit otwartych plikow ustawiony na %d jest mniejszy niz maksymalna ilosc uzytkownikow, ktora wynosi %d. Mozesz zmienic to ustawienie %s na %d lub wyzej i zrestartowac hub.
 Additional help|Pomoc dodatkowa
 Remove all %s tables and files|Usun wszystkie %s z tabel i plikow
-No reason specified.|Nie podano powodu.
 You can't kick user whose class is higher or equals your own: %s|Nie mozna kopnac uzytkownika, ktorego klasa jest wyzsza lub rowna: %s
 Your topic contains forbidden characters which can't be used for security reason: %s|Twoj topic zawiera zakazane znaki ktore nie moga byc uzyte ze wzgledu na bezpieczenstwo huba: %s
 Hub uptime: %s|Czas pracy huba: %s
@@ -796,9 +795,9 @@ Couldn't delete chat replacer because ID not found: %d|Nie mozna usunac replacer
 Chat replacer list|Lista zamiennikow czata.
 Chat replacer list is empty.|Lista zamiennikow czata jest pusta.
 Replace|Replacer
-Couldn't add chat replacer exception because already exists: %s|Nie mozna dodac wyjatku replacer czatu, wpis juz istnieje: %s
-Added chat replacer exception: %s|Dodano wyjatek replacer czatu: %s
-Deleted chat replacer exception: %s|Usunieto wyjatek replacer czatu: %s
+Modified chat replacer exception with type %d: %s|Zmodyfikowany czat zamiennika z wyj№tkiem typu  %d: %s
+Added chat replacer exception with type %d: %s|Dodano czat zamiennika z wyj№tkiem typu %d: %s
+Deleted chat replacer exception with type %d: %s|Skasowany czat zamiennika z wyj№tkiem typu %d: %s
 Couldn't delete chat replacer exception because not found: %s|Nie mozna usunac wyjatku replacer czatu, nie znaleziono: %s
 Chat replacer exception list|Lista wyjatkow replacer czatu
 Chat replacer exception list is empty.|Lista wyjatkow replacer czatu jest pusta.
@@ -923,7 +922,7 @@ Command parameters %s are always required, while %s are optional.|Parametry pole
 Quoted parameters %s or %s must be used with quotes.|Podane parametry %s lub %s musza byc stosowane z cytatami.
 IP information|Informacja o IP
 IP information not available: %s|o IP Informacje nie sa dostepne: %s
-Message replaced for user with IP %s and class %d in MC: <%s> %s|
+Message replaced for user with IP %s and class %d in MC: <%s> %s|Wiadomosc zastapiona przez uzytkownika z IP %s i klasy %d w MC: <%s> %s
 IP %s permanently banned: <%s> %s|IP %s Pernamentny BAN: <%s> %s
 Nick %s permanently banned: <%s> %s|Nick %s Pernamentny BAN: <%s> %s
 Range %s permanently banned: <%s> %s|Ranga %s Pernamentny BAN: <%s> %s
@@ -947,7 +946,7 @@ Known orders are: %s|Znane sa zamowienia: %s
 Modified right click menu item: %s|Zmodefikowana pozycja menu prawoklika myszki: %s
 Added right click menu item: %s|Dodano pozycje menu  prawoklika myszki
 Deleted right click menu item: %s|Usunieta pozycja menu prawoklika szyszki: %s
-Right click menu item not found: %d|
+Right click menu item not found: %d|Pod prawoklikiem myszki elementu menu nie znaleziono: %s
 Right click menu item list is empty.|Lista menu pod prawoklikiem myszki jest pusta.
 Menu item|Pozycja menu
 Menu command|Komenda menu
@@ -1117,11 +1116,40 @@ real|prawdziwy
 Specified country code isn't valid: %s|Podany kod kraju jest niewazny: %s
 You can't block user who don't share anything: %s|Nie mozna zablokowac uzytkownika, ktory nic nie udostepnia: %s
 You can't kick user who don't share anything: %s|Nie mozna kopnac uzytkownika, ktory nic nie udostepnia: %s
-Flood detected from %s with IP %s and class %d in MC: %s|
-%s dropped due to flood.|
-Main chat flood detected from your nick.|
-Private chat flood detected from your IP.|
-Sorry, your message has been ignored.|
-Disable or enable right click menu item|
-Disabled right click menu item: %s|
-Enabled right click menu item: %s|
+Flood detected from %s with IP %s and class %d in MC: %s|Wykryto flood od %s z IP %s i klasy %d w MC: %s
+User dropped due to flood: %s|
+Main chat flood detected from your nick.|Wykryto floodowanie glownego czata z twojego nicka.
+Private chat flood detected from your IP.|Wykryto floodowanie prywatnego czata z twojego IP.
+Sorry, your message has been ignored.|Twoja wiadomosc zostala zignorowana
+Disable or enable right click menu item|Wylacz lub wlacz opcje menu prawokliku
+Disabled right click menu item: %s|Wylacz pozycje menu prawokliku: %s
+Enabled right click menu item: %s|Wlacz pozycje menu prawokliku: %s
+%s added to search block list.|%s dodany do wyszukiwaс listy zablokowanych
+Your search request is discarded due to previous forbidden search request.|Twoje zapytanie wyszukiwania jest usuniete z powodu poprzedniego zakazanego wyszukiwania.
+Hub URL: %s|Adres URL huba: %s
+Search filter block list|Filtr wyszukiwan listy zablokowanych
+Delete search filter block list entry|Usun wpisy wyszukiwan listy zablokowanych
+Search filter block list is empty.|Lista wyszukiwania filtru zablokowanych jest pusta
+Deleted search filter block list entry: %s|Usuniety wpis wyszukiwan listy zablokowanych: %s
+Couldn't delete search filter block list entry because not found: %s|Nie mozna usunac wyjatku filtra wyszukiwan, nie znaleziono: %s
+Yes|Tak
+No|Nie
+%s with class %d changed configuration variable %s.%s: %s => %s|%s z klasa %d zmienil wartosc konfiguracji %s.%s: %s => %s
+Please wait another %d seconds before using public chat.|
+Please wait another %d seconds before using private chat.|
+Low chat uptime of %d seconds from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s|
+Low chat uptime of %d seconds from %s with IP %s and class %d in MC: %s|
+Low chat uptime of %d seconds from %s with IP %s and class %d in command: %s|
+Low registration uptime from %s with IP %s and class %d: %s|
+%.1f minutes|
+Thank you, your report has been accepted.|
+Low search uptime of %d seconds from %s with IP %s and class %d as any file: %s|
+Low search uptime of %d seconds from %s with IP %s and class %d as audio file: %s|
+Low search uptime of %d seconds from %s with IP %s and class %d as compressed file: %s|
+Low search uptime of %d seconds from %s with IP %s and class %d as document: %s|
+Low search uptime of %d seconds from %s with IP %s and class %d as executable: %s|
+Low search uptime of %d seconds from %s with IP %s and class %d as picture: %s|
+Low search uptime of %d seconds from %s with IP %s and class %d as video: %s|
+Low search uptime of %d seconds from %s with IP %s and class %d as folder: %s|
+Low search uptime of %d seconds from %s with IP %s and class %d as TTH: %s|
+User dropped: %s|
