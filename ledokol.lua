@@ -59,8 +59,8 @@ Doxtur, chaos, sphinx, Zorro, W1ZaRd, S0RiN, MaxFox, Krzychu,
 -- global storage variables and tables >>
 ---------------------------------------------------------------------
 
-ver_ledo = "2.8.9" -- ledokol version
-bld_ledo = "16" -- build number
+ver_ledo = "2.9.0" -- ledokol version
+bld_ledo = "17" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -12569,7 +12569,7 @@ function parsetag (tag)
 	local res = {}
 
 	if # tag > 0 then
-		local _, _, cl, ve, mo, hu, sl, ot = tag:find ("^<(.+) V:(.+),M:(%S+),H:(%S+),S:(%d+)(.*>)$")
+		local _, _, cl, ve, mo, hu, sl, ot = tag:find ("^<(.+) [Vv]:(.+),[Mm]:(%S+),[Hh]:(%S+),[Ss]:(%d+)(.*>)$")
 
 		if cl then
 			res ["cl"] = cl
