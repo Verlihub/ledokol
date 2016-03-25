@@ -1,3 +1,7 @@
+[ 2.9.0 :: 0000-00-00 ]
+
+[ 17] Fixed: Tag parser with lowercase version identifier, report by Uhlik
+
 [ 2.8.9 :: 2016-03-23 ]
 
 [  6] Fixed: Chat replacer feature now replaces all occurrences of an entry instead of first only
