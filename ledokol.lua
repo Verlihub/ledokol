@@ -60,7 +60,7 @@ Doxtur, chaos, sphinx, Zorro, W1ZaRd, S0RiN, MaxFox, Krzychu,
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.0" -- ledokol version
-bld_ledo = "17" -- build number
+bld_ledo = "18" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -216,6 +216,7 @@ table_sets = {
 	["replprotect"] = 0,
 	["resprunning"] = 0,
 	["respdelay"] = 3,
+	["respskiplast"] = 0,
 	["newsclass"] = 0,
 	["newsautolines"] = 0,
 	["chatrankclass"] = 11,
@@ -984,6 +985,7 @@ cc_names = {
 
 table_lang = ""
 table_resp = {}
+table_lars = {}
 table_rcnn = {}
 table_faau = {}
 table_code = {}
@@ -1922,19 +1924,19 @@ return 0
 
 		return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
 
-	elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["resplist"].."$") then
+	elseif data:match ("^" .. table_othsets ["optrig"] .. table_cmnds ["resplist"] .. "$") or data:match ("^" .. table_othsets ["optrig"] .. table_cmnds ["resplist"] .. " .+$") then
 		if ucl >= table_sets ["mincommandclass"] then
 			donotifycmd (nick, data, 0, ucl)
-			listresponder (nick)
+			listresponder (nick, data:sub (# table_cmnds ["resplist"] + 3))
 		else
 			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
 
 	elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["respexadd"].." %S+$") then
 		if ucl >= table_sets ["mincommandclass"] then
@@ -8721,18 +8723,25 @@ end
 
 ----- ---- --- -- -
 
-function listresponder (nick)
-	local _, rows = VH:SQLQuery ("select `id`, `message`, `reply`, `maxclass`, `occurred` from `"..tbl_sql ["mcresp"].."` order by `occurred` desc, `id` desc")
+function listresponder (nick, lre)
+	local _, rows = VH:SQLQuery ("select `id`, `message`, `reply`, `maxclass`, `occurred` from `" .. tbl_sql ["mcresp"] .. "` order by `occurred` desc, `id` desc")
+	local list, count = "", 0
 
 	if rows > 0 then
-		local anentry = ""
-
 		for x = 0, rows - 1 do
 			local _, id, msg, repl, maxc, occur = VH:SQLFetch (x)
-			anentry = anentry.."\r\n "..gettext ("Responder")..": "..repnmdcoutchars (msg).."\r\n "..gettext ("Reply")..": "..repl.."\r\n [ I: "..id.." ] [ C: "..maxc.." ] [ O: "..occur.." ]\r\n"
-		end
 
-		commandanswer (nick, gettext ("Main chat responder list")..":\r\n"..anentry)
+			if lre == "" or reppatchars (msg):match (repnmdcinchars (lre)) then
+				list = list .. "\r\n " .. gettext ("Responder") .. ": " .. repnmdcoutchars (msg) .. "\r\n " .. gettext ("Reply") .. ": " .. repl .. "\r\n [ I: " .. tostring (id) .. " ] [ C: " .. tostring (maxc) .. " ] [ O: " .. tostring (occur) .. " ]\r\n"
+				count = count + 1
+			end
+		end
+	end
+
+	if count > 0 then
+		commandanswer (nick, gettext ("Main chat responder list") .. ": " .. gettext ("%d of %d"):format (count, rows) .. "\r\n" .. list)
+	elseif rows > 0 then
+		commandanswer (nick, gettext ("Main chat responder list contains %d items, but none matched your pattern."):format (rows))
 	else
 		commandanswer (nick, gettext ("Main chat responder list is empty."))
 	end
@@ -8789,16 +8798,19 @@ end
 ----- ---- --- -- -
 
 function replyresponder (nick, cls, msg)
-	if table_sets ["resprunning"] == 0 then return nil end
-	local _, rows = VH:SQLQuery ("select `exception` from `"..tbl_sql ["respex"].."` where `exception` = '"..repsqlchars (nick).."' or `exception` = '"..repsqlchars (getip (nick)).."'")
+	if table_sets ["resprunning"] == 0 then
+		return
+	end
+
+	local _, rows = VH:SQLQuery ("select `exception` from `" .. tbl_sql ["respex"] .. "` where `exception` = '" .. repsqlchars (nick) .. "' or `exception` = '" .. repsqlchars (getip (nick)) .. "'")
 
 	if rows > 0 then
 		local _, ex = VH:SQLFetch (0)
-		VH:SQLQuery ("update `"..tbl_sql ["respex"].."` set `occurred` = `occurred` + 1 where `exception` = '"..repsqlchars (ex).."'")
-		return nil
+		VH:SQLQuery ("update `" .. tbl_sql ["respex"] .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (ex) .. "'")
+		return
 	end
 
-	local _, rows = VH:SQLQuery ("select `id`, `message`, `reply`, `maxclass` from `"..tbl_sql ["mcresp"].."`")
+	local _, rows = VH:SQLQuery ("select `id`, `message`, `reply`, `maxclass` from `" .. tbl_sql ["mcresp"] .. "`")
 
 	if rows > 0 then
 		local txt = tolow (repnmdcinchars (msg))
@@ -8808,7 +8820,7 @@ function replyresponder (nick, cls, msg)
 			local _, id, ent, repl, maxc = VH:SQLFetch (x)
 			id = tonumber (id)
 
-			if (cls <= tonumber (maxc)) and string.find (txt, ent) then
+			if cls <= tonumber (maxc) and txt:match (ent) then
 				table.insert (respsel, {[id] = repl})
 			end
 		end
@@ -8816,9 +8828,23 @@ function replyresponder (nick, cls, msg)
 		local cnt = # respsel
 
 		if cnt > 0 then
+			if table_sets ["respskiplast"] == 1 and table_lars.last and cnt > 1 then
+				for k, v in pairs (respsel) do
+					if v [table_lars.last] then
+						table.remove (respsel, k)
+						cnt = cnt - 1
+						break
+					end
+				end
+			end
+
 			for k, v in pairs (respsel [math.random (cnt)]) do
 				table.insert (table_resp, {[os.time ()] = reptextvars (v, nick, msg)})
-				VH:SQLQuery ("update `"..tbl_sql ["mcresp"].."` set `occurred` = `occurred` + 1 where `id` = "..k)
+				VH:SQLQuery ("update `" .. tbl_sql ["mcresp"] .. "` set `occurred` = `occurred` + 1 where `id` = " .. tostring (k))
+
+				if table_sets ["respskiplast"] == 1 then
+					table_lars.last = k
+				end
 			end
 		end
 	end
@@ -15032,15 +15058,15 @@ end
 	-- chat responder
 
 	if ucl >= table_sets ["mincommandclass"] then
-		sopmenitm (usr, gettext ("Chat responder").."\\"..gettext ("Add chat responder"), table_cmnds ["respadd"].." \"%[line:<"..gettext ("lre")..">]\" \"%[line:<"..gettext ("reply")..">]\" %[line:<"..gettext ("maxclass")..">]")
-		sopmenitm (usr, gettext ("Chat responder").."\\"..gettext ("Main chat responder list"), table_cmnds ["resplist"])
+		sopmenitm (usr, gettext ("Chat responder") .. "\\" .. gettext ("Add chat responder"), table_cmnds ["respadd"] .. " \"%[line:<" .. gettext ("lre") .. ">]\" \"%[line:<" .. gettext ("reply") .. ">]\" %[line:<" .. gettext ("maxclass") .. ">]")
+		sopmenitm (usr, gettext ("Chat responder") .. "\\" .. gettext ("Main chat responder list"), table_cmnds ["resplist"])
 		smensep (usr)
-		sopmenitm (usr, gettext ("Chat responder").."\\"..gettext ("Delete chat responder"), table_cmnds ["respdel"].." %[line:<"..gettext ("identifier")..">]")
+		sopmenitm (usr, gettext ("Chat responder") .. "\\" .. gettext ("Delete chat responder"), table_cmnds ["respdel"] .. " %[line:<" .. gettext ("identifier") .. ">]")
 		smensep (usr)
-		sopmenitm (usr, gettext ("Chat responder").."\\"..gettext ("Add chat responder exception"), table_cmnds ["respexadd"].." %[line:<"..gettext ("nick").." "..gettext ("or").." "..gettext ("ip")..">]")
-		sopmenitm (usr, gettext ("Chat responder").."\\"..gettext ("Chat responder exception list"), table_cmnds ["respexlist"])
+		sopmenitm (usr, gettext ("Chat responder") .. "\\" .. gettext ("Add chat responder exception"), table_cmnds ["respexadd"] .. " %[line:<" .. gettext ("nick") .. " " .. gettext ("or") .. " " .. gettext ("ip") .. ">]")
+		sopmenitm (usr, gettext ("Chat responder") .. "\\" .. gettext ("Chat responder exception list"), table_cmnds ["respexlist"])
 		smensep (usr)
-		sopmenitm (usr, gettext ("Chat responder").."\\"..gettext ("Delete chat responder exception"), table_cmnds ["respexdel"].." %[line:<"..gettext ("nick").." "..gettext ("or").." "..gettext ("ip")..">]")
+		sopmenitm (usr, gettext ("Chat responder") .. "\\" .. gettext ("Delete chat responder exception"), table_cmnds ["respexdel"] .. " %[line:<" .. gettext ("nick") .. " " .. gettext ("or") .. " " .. gettext ("ip") .. ">]")
 	end
 
 	-- releases
@@ -17621,34 +17647,52 @@ end
 
 	----- ---- --- -- -
 
-elseif tvar == "resprunning" then
-if num == true then
-if (setto == 0) or (setto == 1) then
-ok = true
-if setto == 0 then table_resp = {} end -- flush
-else
-commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 "..gettext ("or").." 1"))
-end
+	elseif tvar == "resprunning" then
+		if num then
+			if setto == 0 or setto == 1 then
+				ok = true
 
-else
-commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
-end
+				if setto == 0 then -- flush
+					table_resp = {}
+				end
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0 " .. gettext ("or") .. " 1"))
+			end
+		else
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
+		end
 
------ ---- --- -- -
+	----- ---- --- -- -
 
-elseif tvar == "respdelay" then
-if num == true then
-if (setto >= 1) and (setto <= 60) then
-ok = true
-else
-commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "1 "..gettext ("to").." 60"))
-end
+	elseif tvar == "respdelay" then
+		if num then
+			if setto >= 1 and setto <= 60 then
+				ok = true
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "1 " .. gettext ("to") .. " 60"))
+			end
+		else
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
+		end
 
-else
-commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
-end
+	----- ---- --- -- -
 
------ ---- --- -- -
+	elseif tvar == "respskiplast" then
+		if num then
+			if setto == 0 or setto == 1 then
+				ok = true
+
+				if setto == 0 then -- flush
+					table_lars = {}
+				end
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0 " .. gettext ("or") .. " 1"))
+			end
+		else
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
+		end
+
+	----- ---- --- -- -
 
 elseif tvar == "custmaxlen" then
 if num == true then
@@ -18786,13 +18830,13 @@ help = help.." "..optrig..table_cmnds ["newsdel"].." <"..gettext ("date").."> - 
 	help = help .. " " .. optrig .. table_cmnds ["replexlist"] .. " - " .. gettext ("Chat replacer exception list") .. "\r\n"
 	help = help .. " " .. optrig .. table_cmnds ["replexdel"] .. " <" .. gettext ("item") .. "> - " .. gettext ("Delete chat replacer exception") .. "\r\n\r\n"
 
--- chat responder
-help = help.." "..optrig..table_cmnds ["respadd"].." <\""..gettext ("lre").."\"> <\""..gettext ("reply").."\"> <"..gettext ("maxclass").."> - "..gettext ("Add chat responder").."\r\n"
-help = help.." "..optrig..table_cmnds ["resplist"].." - "..gettext ("Main chat responder list").."\r\n"
-help = help.." "..optrig..table_cmnds ["respdel"].." <"..gettext ("identifier").."> - "..gettext ("Delete chat responder").."\r\n"
-help = help.." "..optrig..table_cmnds ["respexadd"].." <"..gettext ("nick").." "..gettext ("or").." "..gettext ("ip").."> - "..gettext ("Add chat responder exception").."\r\n"
-help = help.." "..optrig..table_cmnds ["respexlist"].." - "..gettext ("Chat responder exception list").."\r\n"
-help = help.." "..optrig..table_cmnds ["respexdel"].." <"..gettext ("nick").." "..gettext ("or").." "..gettext ("ip").."> - "..gettext ("Delete chat responder exception").."\r\n\r\n"
+	-- chat responder
+	help = help .. " " .. optrig .. table_cmnds ["respadd"] .. " <\"" .. gettext ("lre") .. "\"> <\"" .. gettext ("reply") .. "\"> <" .. gettext ("maxclass") .. "> - " .. gettext ("Add chat responder") .. "\r\n"
+	help = help .. " " .. optrig .. table_cmnds ["resplist"] .. " [" .. gettext ("lre") .. "] - " .. gettext ("Main chat responder list") .. "\r\n"
+	help = help .. " " .. optrig .. table_cmnds ["respdel"] .. " <" .. gettext ("identifier") .. "> - " .. gettext ("Delete chat responder") .. "\r\n"
+	help = help .. " " .. optrig .. table_cmnds ["respexadd"] .. " <" .. gettext ("nick") .. " " .. gettext ("or") .. " " .. gettext ("ip") .. "> - " .. gettext ("Add chat responder exception") .. "\r\n"
+	help = help .. " " .. optrig .. table_cmnds ["respexlist"] .. " - " .. gettext ("Chat responder exception list") .. "\r\n"
+	help = help .. " " .. optrig .. table_cmnds ["respexdel"] .. " <" .. gettext ("nick") .. " " .. gettext ("or") .. " " .. gettext ("ip") .. "> - " .. gettext ("Delete chat responder exception") .. "\r\n\r\n"
 
 -- offline messenger
 help = help.." "..optrig..table_cmnds ["offlist"].." - "..gettext ("List stored offline messages").."\r\n"
@@ -19256,6 +19300,7 @@ conf = conf.."\r\n [::] clearclass = "..table_sets ["clearclass"]
 	conf = conf .. "\r\n [::] replprotect = " .. table_sets ["replprotect"]
 	conf = conf .. "\r\n [::] resprunning = " .. table_sets ["resprunning"]
 	conf = conf .. "\r\n [::] respdelay = " .. table_sets ["respdelay"]
+	conf = conf .. "\r\n [::] respskiplast = " .. table_sets ["respskiplast"]
 	conf = conf .. "\r\n"
 conf = conf.."\r\n [::] newsclass = "..table_sets ["newsclass"]
 conf = conf.."\r\n [::] newsautolines = "..table_sets ["newsautolines"]
