@@ -1153,3 +1153,5 @@ Low search uptime of %d seconds from %s with IP %s and class %d as video: %s|
 Low search uptime of %d seconds from %s with IP %s and class %d as folder: %s|
 Low search uptime of %d seconds from %s with IP %s and class %d as TTH: %s|
 User dropped: %s|
+%d of %d|
+Main chat responder list contains %d items, but none matched your pattern.|
