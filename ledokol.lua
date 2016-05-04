@@ -60,7 +60,7 @@ Doxtur, chaos, sphinx, Zorro, W1ZaRd, S0RiN, MaxFox, Krzychu,
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.0" -- ledokol version
-bld_ledo = "18" -- build number
+bld_ledo = "19" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -236,6 +236,7 @@ table_sets = {
 	["ophistautolines"] = 0,
 	["histautolinemax"] = 256,
 	["histautonewlinedel"] = 1,
+	["histdeflines"] = 100,
 	["histshowipclass"] = 11,
 	["autoupdcheck"] = 24,
 	["addspecialver"] = 0,
@@ -2396,7 +2397,7 @@ return 0
 
 	----- ---- --- -- -
 
-	elseif data:match ("^" .. table_othsets ["optrig"] .. table_cmnds ["myhistory"] .. " %d+$") then
+	elseif data:match ("^" .. table_othsets ["optrig"] .. table_cmnds ["myhistory"] .. " %d+$") or data:match ("^" .. table_othsets ["optrig"] .. table_cmnds ["myhistory"] .. "$") then
 		if ucl >= table_sets ["mchistclass"] and table_sets ["histlimit"] > 0 then
 			donotifycmd (nick, data, 0, ucl)
 			sendownhistory (nick, ucl, data:sub (# table_cmnds ["myhistory"] + 3))
@@ -2408,7 +2409,7 @@ return 0
 
 	----- ---- --- -- -
 
-	elseif data:match ("^" .. table_othsets ["optrig"] .. table_cmnds ["history"] .. " %d+$") then
+	elseif data:match ("^" .. table_othsets ["optrig"] .. table_cmnds ["history"] .. " %d+$") or data:match ("^" .. table_othsets ["optrig"] .. table_cmnds ["history"] .. "$") then
 		if ucl >= table_sets ["mchistclass"] and table_sets ["histlimit"] > 0 then
 			donotifycmd (nick, data, 0, ucl)
 			sendmchistory (nick, ucl, data:sub (# table_cmnds ["history"] + 3), false)
@@ -3553,7 +3554,7 @@ return 0
 
 	----- ---- --- -- -
 
-	elseif data:match ("^" .. table_othsets ["optrig"] .. table_cmnds ["ophistory"] .. " %d+$") then
+	elseif data:match ("^" .. table_othsets ["optrig"] .. table_cmnds ["ophistory"] .. " %d+$") or data:match ("^" .. table_othsets ["optrig"] .. table_cmnds ["ophistory"] .. "$") then
 		if ucl >= 3 and table_sets ["histlimit"] > 0 then
 			donotifycmd (nick, data, 0, ucl)
 			sendophistory (nick, ucl, data:sub (# table_cmnds ["ophistory"] + 3), false, false)
@@ -4435,7 +4436,7 @@ elseif string.find (data, "^"..table_othsets ["ustrig"]..table_cmnds ["mode"].."
 
 	----- ---- --- -- -
 
-	elseif data:match ("^" .. table_othsets ["ustrig"] .. table_cmnds ["history"] .. " %d+$") then
+	elseif data:match ("^" .. table_othsets ["ustrig"] .. table_cmnds ["history"] .. " %d+$") or data:match ("^" .. table_othsets ["ustrig"] .. table_cmnds ["history"] .. "$") then
 		if ucl >= table_sets ["mchistclass"] and table_sets ["histlimit"] > 0 then
 			donotifycmd (nick, data, 0, ucl)
 			sendmchistory (nick, ucl, data:sub (# table_cmnds ["history"] + 3), false)
@@ -4447,7 +4448,7 @@ elseif string.find (data, "^"..table_othsets ["ustrig"]..table_cmnds ["mode"].."
 
 	----- ---- --- -- -
 
-	elseif data:match ("^" .. table_othsets ["ustrig"] .. table_cmnds ["myhistory"] .. " %d+$") then
+	elseif data:match ("^" .. table_othsets ["ustrig"] .. table_cmnds ["myhistory"] .. " %d+$") or data:match ("^" .. table_othsets ["ustrig"] .. table_cmnds ["myhistory"] .. "$") then
 		if ucl >= table_sets ["mchistclass"] and table_sets ["histlimit"] > 0 then
 			donotifycmd (nick, data, 0, ucl)
 			sendownhistory (nick, ucl, data:sub (# table_cmnds ["myhistory"] + 3))
@@ -6000,7 +6001,7 @@ function VH_OnParsedMsgPM (from, data, to)
 
 	if table_othsets ["opchatnick"] ~= "" and to == table_othsets ["opchatnick"] then -- operator chat
 		if fcls >= 3 then
-			if data:match ("^" .. table_othsets ["optrig"] .. table_cmnds ["ophistory"] .. " %d+$") then
+			if data:match ("^" .. table_othsets ["optrig"] .. table_cmnds ["ophistory"] .. " %d+$") or data:match ("^" .. table_othsets ["optrig"] .. table_cmnds ["ophistory"] .. "$") then
 				if table_sets ["histlimit"] > 0 then
 					donotifycmd (from, data, 0, fcls)
 					sendophistory (from, fcls, data:sub (# table_cmnds ["ophistory"] + 3), false, true)
@@ -7000,7 +7001,7 @@ function chatroomhelp ()
 	local txt = " " .. ustrig .. table_cmnds ["chatenter"] .. " - " .. gettext ("Enter the chatroom") .. "\r\n"
 	txt = txt .. " " .. ustrig .. table_cmnds ["chatleave"] .. " - " .. gettext ("Leave the chatroom") .. "\r\n"
 	txt = txt .. " " .. ustrig .. table_cmnds ["chatusers"] .. " - " .. gettext ("Chatroom member list") .. "\r\n"
-	txt = txt .. " " .. ustrig .. table_cmnds ["chathist"] .. " [" .. gettext ("lines") .. "=100] - " .. gettext ("Chatroom history") .. "\r\n"
+	txt = txt .. " " .. ustrig .. table_cmnds ["chathist"] .. " [" .. gettext ("lines") .. "=" .. table_sets ["histdeflines"] .. "] - " .. gettext ("Chatroom history") .. "\r\n"
 	txt = txt .. " " .. ustrig .. table_cmnds ["chathelp"] .. " - " .. gettext ("This list of commands") .. "\r\n"
 	return txt
 end
@@ -7071,7 +7072,7 @@ function broadcastccroom (to, nick, data, class) -- country code based chatroom
 						if table_sets ["chathistlimit"] == 0 then
 							VH:SendToUser ("$To: " .. nick .. " From: " .. to .. " $<" .. to .. "> " .. gettext ("This command is either disabled or you don't have access to it.") .. "|", nick)
 						else
-							sendcrhistory (to, nick, class, par or 100)
+							sendcrhistory (to, nick, class, par or table_sets ["histdeflines"])
 						end
 
 					elseif cmd == table_cmnds ["chathelp"] then
@@ -7300,7 +7301,7 @@ function broadcastchatroom (to, nick, data, class) -- class based chatroom
 							if table_sets ["chathistlimit"] == 0 then
 								VH:SendToUser ("$To: " .. nick .. " From: " .. to .. " $<" .. to .. "> " .. gettext ("This command is either disabled or you don't have access to it.") .. "|", nick)
 							else
-								sendcrhistory (to, nick, class, par or 100)
+								sendcrhistory (to, nick, class, par or table_sets ["histdeflines"])
 							end
 						end
 
@@ -10590,7 +10591,7 @@ end
 ----- ---- --- -- -
 
 function sendmchistory (nick, class, num, auto)
-	local lnum = tonumber (num) or 100
+	local lnum = tonumber (num or table_sets ["histdeflines"]) or table_sets ["histdeflines"]
 
 	if lnum > table_sets ["histlimit"] then
 		lnum = table_sets ["histlimit"]
@@ -10636,7 +10637,7 @@ end
 ----- ---- --- -- -
 
 function sendophistory (nick, class, num, auto, inop)
-	local lnum = tonumber (num or 100) or 100
+	local lnum = tonumber (num or table_sets ["histdeflines"]) or table_sets ["histdeflines"]
 
 	if lnum >= table_sets ["histlimit"] then
 		lnum = table_sets ["histlimit"]
@@ -10686,7 +10687,7 @@ end
 ----- ---- --- -- -
 
 function sendcrhistory (room, nick, class, num)
-	local lnum = tonumber (num) or 100
+	local lnum = tonumber (num or table_sets ["histdeflines"]) or table_sets ["histdeflines"]
 
 	if lnum > table_sets ["chathistlimit"] then
 		lnum = table_sets ["chathistlimit"]
@@ -10718,7 +10719,7 @@ end
 ----- ---- --- -- -
 
 function sendownhistory (nick, class, num)
-	local lnum = tonumber (num)
+	local lnum = tonumber (num or table_sets ["histdeflines"]) or table_sets ["histdeflines"]
 
 	if lnum > table_sets ["histlimit"] then
 		lnum = table_sets ["histlimit"]
@@ -18218,31 +18219,42 @@ end
 
 	----- ---- --- -- -
 
-elseif tvar == "histautolines" then
-if num == true then
-if (setto >= 0) and (setto <= 100) then
-ok = true
-else
-commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 "..gettext ("to").." 100"))
-end
+	elseif tvar == "histautolines" then
+		if num then
+			if setto >= 0 and setto <= 100 then
+				ok = true
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0 " .. gettext ("to") .. " 100"))
+			end
+		else
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
+		end
 
-else
-commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
-end
+	----- ---- --- -- -
 
------ ---- --- -- -
+	elseif tvar == "ophistautolines" then
+		if num then
+			if setto >= 0 and setto <= 100 then
+				ok = true
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0 " .. gettext ("to") .. " 100"))
+			end
+		else
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
+		end
 
-elseif tvar == "ophistautolines" then
-if num == true then
-if (setto >= 0) and (setto <= 100) then
-ok = true
-else
-commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0 "..gettext ("to").." 100"))
-end
+	----- ---- --- -- -
 
-else
-commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
-end
+	elseif tvar == "histdeflines" then
+		if num then
+			if setto >= 1 and setto <= 1000 then
+				ok = true
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "1 " .. gettext ("to") .. " 1000"))
+			end
+		else
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
+		end
 
 	----- ---- --- -- -
 
@@ -18844,7 +18856,7 @@ help = help.." "..optrig..table_cmnds ["offdel"].." <"..gettext ("date").."> - "
 help = help.." "..optrig..table_cmnds ["offclean"].." - "..gettext ("Delete all offline messages").."\r\n\r\n"
 
 	-- history
-	help = help .. " " .. optrig .. table_cmnds ["ophistory"] .. " <" .. gettext ("lines") .. "> - " .. gettext ("Operator chat history") .. "\r\n"
+	help = help .. " " .. optrig .. table_cmnds ["ophistory"] .. " [" .. gettext ("lines") .. "=" .. table_sets ["histdeflines"] .. "] - " .. gettext ("Operator chat history") .. "\r\n"
 	help = help .. " " .. optrig .. table_cmnds ["histdel"] .. " <" .. gettext ("text") .. "> - " .. gettext ("Delete history messages by text") .. "\r\n"
 	help = help .. " " .. optrig .. table_cmnds ["histclean"] .. " - " .. gettext ("Delete all history messages") .. "\r\n\r\n"
 
@@ -18965,8 +18977,8 @@ help = help.." "..ustrig..table_cmnds ["realnick"].." <"..gettext ("nick").."> -
 help = help.." "..ustrig..table_cmnds ["custlist"].." - "..gettext ("Custom nick list").."\r\n\r\n"
 
 	-- chat history
-	help = help .. " " .. ustrig .. table_cmnds ["history"] .. " <" .. gettext ("lines") .. "> - " .. gettext ("Main chat history") .. "\r\n"
-	help = help .. " " .. ustrig .. table_cmnds ["myhistory"] .. " <" .. gettext ("lines") .. "> - " .. gettext ("Your main chat history") .. "\r\n\r\n"
+	help = help .. " " .. ustrig .. table_cmnds ["history"] .. " [" .. gettext ("lines") .. "=" .. table_sets ["histdeflines"] .. "] - " .. gettext ("Main chat history") .. "\r\n"
+	help = help .. " " .. ustrig .. table_cmnds ["myhistory"] .. " [" .. gettext ("lines") .. "=" .. table_sets ["histdeflines"] .. "] - " .. gettext ("Your main chat history") .. "\r\n\r\n"
 
 	-- other
 
@@ -19323,6 +19335,7 @@ conf = conf.."\r\n [::] savecchistory = "..table_sets ["savecchistory"]
 	conf = conf .. "\r\n [::] ophistautolines = " .. table_sets ["ophistautolines"]
 	conf = conf .. "\r\n [::] histautolinemax = " .. table_sets ["histautolinemax"]
 	conf = conf .. "\r\n [::] histautonewlinedel = " .. table_sets ["histautonewlinedel"]
+	conf = conf .. "\r\n [::] histdeflines = " .. table_sets ["histdeflines"]
 	conf = conf .. "\r\n [::] histshowipclass = " .. table_sets ["histshowipclass"]
 	conf = conf .. "\r\n"
 conf = conf.."\r\n [::] autoupdcheck = "..table_sets ["autoupdcheck"]
