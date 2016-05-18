@@ -1,6 +1,6 @@
 # Language: sv_SE
 # Charset: CP1252
-# Version: 2.8.9
+# Version: 2.9.0
 # Author: RoLex
 # Email: webmaster@feardc.net
 
@@ -1153,3 +1153,5 @@ Low search uptime of %d seconds from %s with IP %s and class %d as video: %s|
 Low search uptime of %d seconds from %s with IP %s and class %d as folder: %s|
 Low search uptime of %d seconds from %s with IP %s and class %d as TTH: %s|
 User dropped: %s|
+%d of %d|
+Main chat responder list contains %d items, but none matched your pattern.|
