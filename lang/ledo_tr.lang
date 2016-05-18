@@ -1,6 +1,6 @@
 # Language: tr_TR
 # Charset: CP1254
-# Version: 2.8.9
+# Version: 2.9.0
 # Author: Mauron
 # Email: mauron@vmail.me
 
@@ -1153,3 +1153,5 @@ Low search uptime of %d seconds from %s with IP %s and class %d as video: %s|Vid
 Low search uptime of %d seconds from %s with IP %s and class %d as folder: %s|Klasцr olarak %d saniyelik dьюьk arama зalэюma sьresi, ki %s unsurundan :%s IP adresli ve %d sэnэflэ: %s
 Low search uptime of %d seconds from %s with IP %s and class %d as TTH: %s|TTH olarak %d saniyelik dьюьk arama зalэюma sьresi, ki %s unsurundan %s IP adresli ve %d sэnэflэ: %s
 User dropped: %s|Kullanэcэnэn baрlantэsэ kesildi: %s
+%d of %d|%d ki toplam %d
+Main chat responder list contains %d items, but none matched your pattern.|Ana sohbet cevaplayэcэ listesi %d unsur iзermektedir ancak bunlarэn hiзbiri sizin юablonunuzla eюleюmemiюtir.
