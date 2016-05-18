@@ -1,6 +1,6 @@
 # Language: fr_FR
 # Charset: CP1252
-# Version: 2.8.9
+# Version: 2.9.0
 # Author: @tlantide
 # Email: chatonhubfrance@gmail.com
 
@@ -1153,3 +1153,5 @@ Low search uptime of %d seconds from %s with IP %s and class %d as video: %s|Rec
 Low search uptime of %d seconds from %s with IP %s and class %d as folder: %s|Recherche faible disponibilitй de %d secondes de %s avec %s IP et de la classe %d comme dossier: %s
 Low search uptime of %d seconds from %s with IP %s and class %d as TTH: %s|Recherche faible disponibilitй de %d secondes de %s avec %s IP et de la classe %d comme TTH: %s
 User dropped: %s|Utilisateur dйconnectй: %s
+%d of %d|
+Main chat responder list contains %d items, but none matched your pattern.|
