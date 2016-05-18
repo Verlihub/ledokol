@@ -1,6 +1,6 @@
 # Language: pl_PL
 # Charset: CP1250
-# Version: 2.8.9
+# Version: 2.9.0
 # Author: Zorro
 # Email: zbyszekslyz@hostpl.eu
 
@@ -53,7 +53,7 @@ type|typ
 %s with IP %s and class %d allowed due to forbidden connection type exception: %s|% z IP i klasy %d dozwolone ze wzgledu na zakaz Typ polaczena z wyjatkiem:  %s.
 %s with class %d changed configuration variable %s: %s => %s|%s z klasa %d zmienil wartosc konfiguracji %s: %s => %s
 %s with IP %s and class %d allowed due to forbidden email exception: %s|% z IP i klasy %d dozwolone ze wzgledu na zakaz Email z wyjatkiem:  %s.
-User received own message: %s|
+User received own message: %s|Uzytkownik otrzymal wiadomosc: %s
 %s with IP %s and class %d allowed due to forbidden share size exception: %s|% z IP i klasy %d dozwolone ze wzgledu na zakaz Wielosci Shere  z wyjatkiem:  %s.
 Deleted %d releases from category: %s|Usunieto %d nowosc z kategorii: %s
 Why would you want to set empty topic?|Czemu chcesz ustawic pusty topic?
@@ -204,7 +204,7 @@ to|do
 Unknown configuration variable: %s|Nieznana wartosc konfiguracji: %s
 %s version: %s|%s wersja: %s
 Not installed|Nie zainstalowano
-User dropped due to spam: %s|
+User dropped due to spam: %s|Uzytkownik dropniety za wzgledu na spam: %s
 variable|zmienna
 value|wartosc
 minutes|minuty
@@ -357,7 +357,7 @@ Forbidden IP address list|Lista zakazanych adresow IP
 Forbidden IP address list is empty.|Lista zakazanych adresow IP jest pusta.
 %s with IP %s and class %d allowed due to forbidden IP address exception: %s|% z IP i klasy %d dozwolone ze wzgledu na zakaz IP adresow z wyjatkiem:  %s.
 Couldn't delete category because not found: %s|Nie mozna usunac kategorii, poniewaz nie znaleziono: %s
-User redirected due to spam: %s|
+User redirected due to spam: %s|Uzytkownik przekierowany ze wzgledu na spam: %s
 %s redirected due to bad search request.|% Prziekierowano z powodu zlych zapytan
 You can download me from: %s|Mozesz mnie pobrac z: %s
 %s is registered with class %d and has been automatically unregistered and deleted from other tables.|%s jest zarejestrowany z klasa %d. Konto zostalo aktuomatycznie usuniete oraz wyczyszczono dane z tablic.
@@ -1117,7 +1117,7 @@ Specified country code isn't valid: %s|Podany kod kraju jest niewazny: %s
 You can't block user who don't share anything: %s|Nie mozna zablokowac uzytkownika, ktory nic nie udostepnia: %s
 You can't kick user who don't share anything: %s|Nie mozna kopnac uzytkownika, ktory nic nie udostepnia: %s
 Flood detected from %s with IP %s and class %d in MC: %s|Wykryto flood od %s z IP %s i klasy %d w MC: %s
-User dropped due to flood: %s|
+User dropped due to flood: %s|Uzytkownik zostal dropniety z powodu floodu: %s
 Main chat flood detected from your nick.|Wykryto floodowanie glownego czata z twojego nicka.
 Private chat flood detected from your IP.|Wykryto floodowanie prywatnego czata z twojego IP.
 Sorry, your message has been ignored.|Twoja wiadomosc zostala zignorowana
@@ -1135,21 +1135,23 @@ Couldn't delete search filter block list entry because not found: %s|Nie mozna u
 Yes|Tak
 No|Nie
 %s with class %d changed configuration variable %s.%s: %s => %s|%s z klasa %d zmienil wartosc konfiguracji %s.%s: %s => %s
-Please wait another %d seconds before using public chat.|
-Please wait another %d seconds before using private chat.|
-Low chat uptime of %d seconds from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s|
-Low chat uptime of %d seconds from %s with IP %s and class %d in MC: %s|
-Low chat uptime of %d seconds from %s with IP %s and class %d in command: %s|
-Low registration uptime from %s with IP %s and class %d: %s|
-%.1f minutes|
-Thank you, your report has been accepted.|
-Low search uptime of %d seconds from %s with IP %s and class %d as any file: %s|
-Low search uptime of %d seconds from %s with IP %s and class %d as audio file: %s|
-Low search uptime of %d seconds from %s with IP %s and class %d as compressed file: %s|
-Low search uptime of %d seconds from %s with IP %s and class %d as document: %s|
-Low search uptime of %d seconds from %s with IP %s and class %d as executable: %s|
-Low search uptime of %d seconds from %s with IP %s and class %d as picture: %s|
-Low search uptime of %d seconds from %s with IP %s and class %d as video: %s|
-Low search uptime of %d seconds from %s with IP %s and class %d as folder: %s|
-Low search uptime of %d seconds from %s with IP %s and class %d as TTH: %s|
-User dropped: %s|
+Please wait another %d seconds before using public chat.|Prosze czekac %s sekund aby moc kozystac z publicznego czata.
+Please wait another %d seconds before using private chat.|Prosze czekac %s sekund aby moc kozystac z prywatnego czata. 
+Low chat uptime of %d seconds from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s|Niskie uptime czatu z %d sekund od %s IP %s i klasy %d w PM di IP %s i klasy %d: %s
+Low chat uptime of %d seconds from %s with IP %s and class %d in MC: %s|Niski czat uptime z %d sekund od %s z IP %s i klasa %d w MC: %s
+Low chat uptime of %d seconds from %s with IP %s and class %d in command: %s|Niski czat uptime z %d sekund od %s z IP %s i klasa %d w komendzie: %s 
+Low registration uptime from %s with IP %s and class %d: %s|Niskie uptime w rejestracji od %s z IP i klasa %d: %s
+%.1f minutes|%.1f minuty
+Thank you, your report has been accepted.|Dziekujemy, twoj raport zostal przyjety.
+Low search uptime of %d seconds from %s with IP %s and class %d as any file: %s|Niskie czas wyszukiwania z %d sekund od %s z IP %s i klasa %d w dowolnym pliku: %s
+Low search uptime of %d seconds from %s with IP %s and class %d as audio file: %s|Niskie czas wyszukiwania z %d sekund od %s z IP %s i klasa %d w postaci pliku dzwieku: %s
+Low search uptime of %d seconds from %s with IP %s and class %d as compressed file: %s|Niskie czas wyszukiwania z %d sekund od %s z IP %s i klasa %d jako skompresowanego pliku: %s
+Low search uptime of %d seconds from %s with IP %s and class %d as document: %s|Niskie czas wyszukiwania z %d sekund od %s z IP %s i klasa %d jako dokumentu: %s
+Low search uptime of %d seconds from %s with IP %s and class %d as executable: %s|Niskie czas wyszukiwania z %d sekund od %s z IP %s i klasa %d jako wykonywalne: %s
+Low search uptime of %d seconds from %s with IP %s and class %d as picture: %s|Niskie czas wyszukiwania z %d sekund od %s z IP %s i klasa %d jak obrazu: %s
+Low search uptime of %d seconds from %s with IP %s and class %d as video: %s|Niskie czas wyszukiwania z %d sekund od %s z IP %s i klasa %d jak video: %s
+Low search uptime of %d seconds from %s with IP %s and class %d as folder: %s|Niskie czas wyszukiwania z %d sekund od %s z IP %s i klasa %d w folderze: %s
+Low search uptime of %d seconds from %s with IP %s and class %d as TTH: %s|Niskie czas wyszukiwania z %d sekund od %s z IP %s i klasa %d jako TTH: %s
+User dropped: %s|Uzytkownik dropniety: %s
+%d of %d|%d z %d
+Main chat responder list contains %d items, but none matched your pattern.|Glowny czat odpowiadajacy zawiera %d pozycji, ale nie pasuje do Twojego wzoru.
