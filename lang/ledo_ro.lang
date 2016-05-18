@@ -1,6 +1,6 @@
 # Language: ro_RO
 # Charset: CP1250
-# Version: 2.8.9
+# Version: 2.9.0
 # Author: S0RiN
 # Email: rusu_sorin_con@yahoo.com
 
@@ -1153,3 +1153,5 @@ Low search uptime of %d seconds from %s with IP %s and class %d as video: %s|Act
 Low search uptime of %d seconds from %s with IP %s and class %d as folder: %s|Actualizare slabг a cгutгrii de %d secunde de la %s cu IP %s єi clasa %d pe tip de fiєier dosar: %s
 Low search uptime of %d seconds from %s with IP %s and class %d as TTH: %s|Actualizare slabг a cгutгrii de %d secunde de la %s cu IP %s єi clasa %d pe tip de fiєier TTH: %s
 User dropped: %s|Utilizator deconectat: %s
+%d of %d|%d din %d
+Main chat responder list contains %d items, but none matched your pattern.|Lista responderelor pentru chat-ul principal conюine %d elemente, dar nici unul nu corespunde cu cel cгutat.
