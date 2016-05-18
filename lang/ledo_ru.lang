@@ -1,8 +1,8 @@
 # Language: ru_RU
 # Charset: CP1251
-# Version: 2.8.9
-# Author: MaxFox
-# Email: maxfox@inbox.ru
+# Version: 2.9.0
+# Author: KCAHDEP
+# Email: admin@kcahdep.org
 
 Current topic: %s|Данная тема: %s
 Current topic set by %s: %s|Данная тема установленная %s: %s
@@ -53,7 +53,7 @@ type|тип
 %s with IP %s and class %d allowed due to forbidden connection type exception: %s|Пользователь %s с IP-адресом %s и классом %d пропущен с исключением по типу подключения: %s
 %s with class %d changed configuration variable %s: %s => %s|Пользователь %s %d-го класса изменил конфигурационную переменную %s: %s => %s
 %s with IP %s and class %d allowed due to forbidden email exception: %s|Пользователь %s с IP-адресом %s и классом %d пропущен с исключением по e-mail: %s
-User received own message: %s|
+User received own message: %s|Наивно полагает, что его сообщение прочитали. Удачи ему в нелегком деле - беседе самим с собой... %s
 %s with IP %s and class %d allowed due to forbidden share size exception: %s|Пользователь %s с IP-адресом %s и классом %d пропущен с исключением по размеру шары: %s
 Deleted %d releases from category: %s|Удалены %d релизов из категории %s
 Why would you want to set empty topic?|Почему вы хотите установить пустую тему?
@@ -204,7 +204,7 @@ to|до
 Unknown configuration variable: %s|Неизвестная конфигурационная переменная: %s
 %s version: %s|Версия %s: %s
 Not installed|Не установлено
-User dropped due to spam: %s|
+User dropped due to spam: %s|Пользователь выкинут за спам: %s
 variable|переменная
 value|значение
 minutes|минуты
@@ -357,7 +357,7 @@ Forbidden IP address list|Список запрещенных IP-адресов
 Forbidden IP address list is empty.|Список запрещенных IP-адресов пуст.
 %s with IP %s and class %d allowed due to forbidden IP address exception: %s|Пользователь %s с IP-адресом %s и классом %d пропущен с исключением по IP-адресу: %s
 Couldn't delete category because not found: %s|Невозможно удалить категорию. Не найдена в базе: %s
-User redirected due to spam: %s|
+User redirected due to spam: %s|Пользователь перенаправлен за спам: %s
 %s redirected due to bad search request.|Пользователь %s перенаправлен за поиск запрещенной информации.
 You can download me from: %s|Вы можете скачать меня с: %s
 %s is registered with class %d and has been automatically unregistered and deleted from other tables.|Пользователь %s %d-го класса автоматически удален из списка зарегистрированных пользователей и других таблиц скрипта.
@@ -1117,7 +1117,7 @@ Specified country code isn't valid: %s|Указанный код страны н
 You can't block user who don't share anything: %s|Вы не можете заблокировать пользователя чья шара пуста: %s
 You can't kick user who don't share anything: %s|Вы не можете кикнуть пользователя чья шара пуста: %s
 Flood detected from %s with IP %s and class %d in MC: %s|Обнаружен флуд от пользователя %s с IP адресом %s и классом %d в главный чат: %s
-User dropped due to flood: %s|
+User dropped due to flood: %s|Пользователь  выкинут из-за флуда: %s
 Main chat flood detected from your nick.|Обнаружен флуд в главный чат от вашего ника.
 Private chat flood detected from your IP.|Обнаружен флуд в виде личного сообщения от вашего IP адреса.
 Sorry, your message has been ignored.|Извините, ваше сообщение было игнорировано.
@@ -1135,21 +1135,23 @@ Couldn't delete search filter block list entry because not found: %s|Не уда
 Yes|Да
 No|Нет
 %s with class %d changed configuration variable %s.%s: %s => %s|Пользователь %s с классом %d изменил конфигурационную переменную %s.%s: %s => %s
-Please wait another %d seconds before using public chat.|
-Please wait another %d seconds before using private chat.|
-Low chat uptime of %d seconds from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s|
-Low chat uptime of %d seconds from %s with IP %s and class %d in MC: %s|
-Low chat uptime of %d seconds from %s with IP %s and class %d in command: %s|
-Low registration uptime from %s with IP %s and class %d: %s|
-%.1f minutes|
-Thank you, your report has been accepted.|
-Low search uptime of %d seconds from %s with IP %s and class %d as any file: %s|
-Low search uptime of %d seconds from %s with IP %s and class %d as audio file: %s|
-Low search uptime of %d seconds from %s with IP %s and class %d as compressed file: %s|
-Low search uptime of %d seconds from %s with IP %s and class %d as document: %s|
-Low search uptime of %d seconds from %s with IP %s and class %d as executable: %s|
-Low search uptime of %d seconds from %s with IP %s and class %d as picture: %s|
-Low search uptime of %d seconds from %s with IP %s and class %d as video: %s|
-Low search uptime of %d seconds from %s with IP %s and class %d as folder: %s|
-Low search uptime of %d seconds from %s with IP %s and class %d as TTH: %s|
-User dropped: %s|
+Please wait another %d seconds before using public chat.|Пожалуйста, подождите %d секунд, перед тем как использовать общий чат.
+Please wait another %d seconds before using private chat.|Пожалуйста, подождите %d секунд, перед тем как использовать приватный чат.
+Low chat uptime of %d seconds from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s|Недостаточный аптайм чата %d секунд от %s c IP адресом %s и классом %d в виде личного сообщения пользователю %s с IP адресом %s и классом %d: %s
+Low chat uptime of %d seconds from %s with IP %s and class %d in MC: %s|Недостаточный аптайм чата %d секунд от %s c IP адресом %s и классом %d в MC: %s
+Low chat uptime of %d seconds from %s with IP %s and class %d in command: %s|Недостаточный аптайм чата %d секунд от %s c IP адресом %s и классом %d в команде: %s
+Low registration uptime from %s with IP %s and class %d: %s|Недостаточный аптайм регистрации от %s c IP адресом %s и классом %d: %s
+%.1f minutes|%.1f минуты
+Thank you, your report has been accepted.|Спасибо, ваш отчет принят.
+Low search uptime of %d seconds from %s with IP %s and class %d as any file: %s|Недостаточный аптайм поиска %d секунд от %s c IP адресом %s и классом %d для любого файла: %s
+Low search uptime of %d seconds from %s with IP %s and class %d as audio file: %s|Недостаточный аптайм поиска %d секунд от %s c IP адресом %s и классом %d для аудио файла: %s
+Low search uptime of %d seconds from %s with IP %s and class %d as compressed file: %s|Недостаточный аптайм поиска %d секунд от %s c IP адресом %s и классом %d для сжатого файла: %s
+Low search uptime of %d seconds from %s with IP %s and class %d as document: %s|Недостаточный аптайм поиска %d секунд от %s c IP адресом %s и классом %d для документа: %s
+Low search uptime of %d seconds from %s with IP %s and class %d as executable: %s|Недостаточный аптайм поиска %d секунд от %s c IP адресом %s и классом %d для исполняегомого файла: %s
+Low search uptime of %d seconds from %s with IP %s and class %d as picture: %s|Недостаточный аптайм поиска %d секунд от %s c IP адресом %s и классом %d для картинки: %s
+Low search uptime of %d seconds from %s with IP %s and class %d as video: %s|Недостаточный аптайм поиска %d секунд от %s c IP адресом %s и классом %d для видео файла: %s
+Low search uptime of %d seconds from %s with IP %s and class %d as folder: %s|Недостаточный аптайм поиска %d секунд от %s c IP адресом %s и классом %d для каталога: %s
+Low search uptime of %d seconds from %s with IP %s and class %d as TTH: %s|Недостаточный аптайм поиска %d секунд от %s c IP адресом %s и классом %d для TTH: %s
+User dropped: %s|Пользователь выкинут: %s
+%d of %d|%d из %d
+Main chat responder list contains %d items, but none matched your pattern.|Автоответчик чата содержит %d элементов, но ни один не подходит твоему шаблону.
