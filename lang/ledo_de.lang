@@ -1,6 +1,6 @@
 # Language: de_DE
 # Charset: CP1252
-# Version: 2.8.9
+# Version: 2.9.0
 # Author: Ettore Atalan
 # Email: atalanttore@googlemail.com
 
@@ -1132,8 +1132,8 @@ Delete search filter block list entry|
 Search filter block list is empty.|
 Deleted search filter block list entry: %s|
 Couldn't delete search filter block list entry because not found: %s|
-Yes|
-No|
+Yes|Ja
+No|Nein
 %s with class %d changed configuration variable %s.%s: %s => %s|
 Please wait another %d seconds before using public chat.|
 Please wait another %d seconds before using private chat.|
@@ -1141,7 +1141,7 @@ Low chat uptime of %d seconds from %s with IP %s and class %d in PM to %s with I
 Low chat uptime of %d seconds from %s with IP %s and class %d in MC: %s|
 Low chat uptime of %d seconds from %s with IP %s and class %d in command: %s|
 Low registration uptime from %s with IP %s and class %d: %s|
-%.1f minutes|
+%.1f minutes|%.1f Minuten
 Thank you, your report has been accepted.|
 Low search uptime of %d seconds from %s with IP %s and class %d as any file: %s|
 Low search uptime of %d seconds from %s with IP %s and class %d as audio file: %s|
@@ -1153,3 +1153,5 @@ Low search uptime of %d seconds from %s with IP %s and class %d as video: %s|
 Low search uptime of %d seconds from %s with IP %s and class %d as folder: %s|
 Low search uptime of %d seconds from %s with IP %s and class %d as TTH: %s|
 User dropped: %s|
+%d of %d|%d von %d
+Main chat responder list contains %d items, but none matched your pattern.|
