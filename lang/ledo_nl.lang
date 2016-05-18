@@ -1,6 +1,6 @@
 # Language: nl_NL
 # Charset: CP1252
-# Version: 2.8.9
+# Version: 2.9.0
 # Author: Modswat
 # Email: future_dance@hotmail.com
 
@@ -1153,3 +1153,5 @@ Low search uptime of %d seconds from %s with IP %s and class %d as video: %s|Lag
 Low search uptime of %d seconds from %s with IP %s and class %d as folder: %s|Lage zoeken uptime van %d seconden vanaf %s met IP %s en klasse %d als map: %s
 Low search uptime of %d seconds from %s with IP %s and class %d as TTH: %s|Lage zoeken uptime van %d seconden vanaf %s met IP %s en klasse %d als TTH: %s
 User dropped: %s|Gebruiker gedropt: %s
+%d of %d|
+Main chat responder list contains %d items, but none matched your pattern.|
