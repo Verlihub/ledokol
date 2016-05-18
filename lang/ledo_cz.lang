@@ -1,6 +1,6 @@
 # Language: cs_CZ
 # Charset: CP1250
-# Version: 2.8.9
+# Version: 2.9.0
 # Author: Uhlik
 # Email: pjanos.uk@gmail.com
 
@@ -1153,3 +1153,5 @@ Low search uptime of %d seconds from %s with IP %s and class %d as video: %s|Kra
 Low search uptime of %d seconds from %s with IP %s and class %d as folder: %s|Kratky hledaci uptime %d sekund pro %s s IP %s a class %d na MC pri hledani jako folder: %s
 Low search uptime of %d seconds from %s with IP %s and class %d as TTH: %s|Kratky hledaci uptime %d sekund pro %s s IP %s a class %d na MC pri hledani jako TTH: %s
 User dropped: %s|Uzivatel dropnut: %s
+%d of %d|%d z %d
+Main chat responder list contains %d items, but none matched your pattern.|Main chat responder seznam obsahuje %d polozek, ale zadna se neshoduje s tvym pozadavkem.
