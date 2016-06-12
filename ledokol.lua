@@ -60,7 +60,7 @@ Doxtur, chaos, sphinx, Zorro, W1ZaRd, S0RiN, MaxFox, Krzychu,
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.0" -- ledokol version
-bld_ledo = "19" -- build number
+bld_ledo = "20" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -5690,66 +5690,66 @@ end
 ----- ---- --- -- -
 
 function VH_OnNewBan (ip, nick, host, share, ran_min, ran_max, bype, bate, why, op)
-	if table_othsets ["locked"] or table_sets ["classnotiban"] == 11 then
+	if table_othsets ["locked"] or table_sets ["classnotiban"] == 11 or not op then -- skip old verlihub
 		return 1
 	end
 
-	local banshare = tonumber (share) or 0
-	local bantype = tonumber (bype) or 0 -- we dont use ban type here because miltiple parts might be banned
-	local bandate = tonumber (bate) or 0
+	local banshare = tonumber (share or 0) or 0
+	local bantype = tonumber (bype or 0) or 0 -- we dont use ban type here because miltiple parts might be banned
+	local bandate = tonumber (bate or 0) or 0
 	local banwhy = why
 
-	if not banwhy or string.len (banwhy) == 0 then
+	if not banwhy or # banwhy == 0 then
 		banwhy = gettext ("No reason specified")
 	end
 
 	if bandate == 0 then
-		if bantype ~= 3 and bantype ~= 4 and bantype ~= 5 and bantype ~= 6 and bantype ~= 9 and ip and string.len (ip) > 0 then
-			opsnotify (table_sets ["classnotiban"], string.format (gettext ("IP %s permanently banned: <%s> %s"), ip, op, banwhy))
+		if bantype ~= 3 and bantype ~= 4 and bantype ~= 5 and bantype ~= 6 and bantype ~= 9 and ip and # ip > 0 then
+			opsnotify (table_sets ["classnotiban"], gettext ("IP %s permanently banned: <%s> %s"):format (ip, op, banwhy))
 		end
 
-		if nick and string.len (nick) > 0 then
+		if nick and # nick > 0 then
 			if bantype == 8 then
-				opsnotify (table_sets ["classnotiban"], string.format (gettext ("Prefix %s permanently banned: <%s> %s"), nick, op, banwhy))
+				opsnotify (table_sets ["classnotiban"], gettext ("Prefix %s permanently banned: <%s> %s"):format (nick, op, banwhy))
 			else
-				opsnotify (table_sets ["classnotiban"], string.format (gettext ("Nick %s permanently banned: <%s> %s"), nick, op, banwhy))
+				opsnotify (table_sets ["classnotiban"], gettext ("Nick %s permanently banned: <%s> %s"):format (nick, op, banwhy))
 			end
 		end
 
-		if host and string.len (host) > 0 then
-			opsnotify (table_sets ["classnotiban"], string.format (gettext ("Host %s permanently banned: <%s> %s"), host, op, banwhy))
+		if host and # host > 0 then
+			opsnotify (table_sets ["classnotiban"], gettext ("Host %s permanently banned: <%s> %s"):format (host, op, banwhy))
 		end
 
 		if banshare > 0 then
-			opsnotify (table_sets ["classnotiban"], string.format (gettext ("Share %s permanently banned: <%s> %s"), tostring (banshare), op, banwhy))
+			opsnotify (table_sets ["classnotiban"], gettext ("Share %s permanently banned: <%s> %s"):format (tostring (banshare), op, banwhy))
 		end
 
-		if ran_min and ran_max and string.len (ran_min) > 0 and string.len (ran_max) > 0 then
-			opsnotify (table_sets ["classnotiban"], string.format (gettext ("Range %s permanently banned: <%s> %s"), ran_min .. " - " .. ran_max, op, banwhy))
+		if ran_min and ran_max and # ran_min > 0 and # ran_max > 0 then
+			opsnotify (table_sets ["classnotiban"], gettext ("Range %s permanently banned: <%s> %s"):format (ran_min .. " - " .. ran_max, op, banwhy))
 		end
 	else
-		if bantype ~= 3 and ip and string.len (ip) > 0 then
-			opsnotify (table_sets ["classnotiban"], string.format (gettext ("IP %s temporarily banned until %s: <%s> %s"), ip, os.date (table_sets ["dateformat"] .. " " .. table_sets ["timeformat"], bandate), op, banwhy))
+		if bantype ~= 3 and ip and # ip > 0 then
+			opsnotify (table_sets ["classnotiban"], gettext ("IP %s temporarily banned until %s: <%s> %s"):format (ip, os.date (table_sets ["dateformat"] .. " " .. table_sets ["timeformat"], bandate), op, banwhy))
 		end
 
-		if nick and string.len (nick) > 0 then
+		if nick and # nick > 0 then
 			if bantype == 8 then
-				opsnotify (table_sets ["classnotiban"], string.format (gettext ("Prefix %s temporarily banned until %s: <%s> %s"), nick, os.date (table_sets ["dateformat"] .. " " .. table_sets ["timeformat"], bandate), op, banwhy))
+				opsnotify (table_sets ["classnotiban"], gettext ("Prefix %s temporarily banned until %s: <%s> %s"):format (nick, os.date (table_sets ["dateformat"] .. " " .. table_sets ["timeformat"], bandate), op, banwhy))
 			else
-				opsnotify (table_sets ["classnotiban"], string.format (gettext ("Nick %s temporarily banned until %s: <%s> %s"), nick, os.date (table_sets ["dateformat"] .. " " .. table_sets ["timeformat"], bandate), op, banwhy))
+				opsnotify (table_sets ["classnotiban"], gettext ("Nick %s temporarily banned until %s: <%s> %s"):format (nick, os.date (table_sets ["dateformat"] .. " " .. table_sets ["timeformat"], bandate), op, banwhy))
 			end
 		end
 
-		if host and string.len (host) > 0 then
-			opsnotify (table_sets ["classnotiban"], string.format (gettext ("Host %s temporarily banned until %s: <%s> %s"), host, os.date (table_sets ["dateformat"] .. " " .. table_sets ["timeformat"], bandate), op, banwhy))
+		if host and # host > 0 then
+			opsnotify (table_sets ["classnotiban"], gettext ("Host %s temporarily banned until %s: <%s> %s"):format (host, os.date (table_sets ["dateformat"] .. " " .. table_sets ["timeformat"], bandate), op, banwhy))
 		end
 
 		if banshare > 0 then
-			opsnotify (table_sets ["classnotiban"], string.format (gettext ("Share %s temporarily banned until %s: <%s> %s"), tostring (banshare), os.date (table_sets ["dateformat"] .. " " .. table_sets ["timeformat"], bandate), op, banwhy))
+			opsnotify (table_sets ["classnotiban"], gettext ("Share %s temporarily banned until %s: <%s> %s"):format (tostring (banshare), os.date (table_sets ["dateformat"] .. " " .. table_sets ["timeformat"], bandate), op, banwhy))
 		end
 
-		if ran_min and ran_max and string.len (ran_min) > 0 and string.len (ran_max) > 0 then
-			opsnotify (table_sets ["classnotiban"], string.format (gettext ("Range %s temporarily banned until %s: <%s> %s"), ran_min .. " - " .. ran_max, os.date (table_sets ["dateformat"] .. " " .. table_sets ["timeformat"], bandate), op, banwhy))
+		if ran_min and ran_max and # ran_min > 0 and # ran_max > 0 then
+			opsnotify (table_sets ["classnotiban"], gettext ("Range %s temporarily banned until %s: <%s> %s"):format (ran_min .. " - " .. ran_max, os.date (table_sets ["dateformat"] .. " " .. table_sets ["timeformat"], bandate), op, banwhy))
 		end
 	end
 
