@@ -1,6 +1,7 @@
 [ 2.9.0 :: 0000-00-00 ]
 
 [ 17] Fixed: Tag parser with lowercase version identifier, report by Uhlik
+[ 20] Fixed: Bypass ban notification on old Verlihub to avoid error due to missing arguments, report by Mank
 [ 18] Added: respskiplast configuration to skip last used chat responder, request by Uhlik
 [ 18] Added: resplist command now accepts optional search pattern, request by Uhlik
 [ 19] Added: history, myhistory and ophistory commands lines parameter is now optional and defaults to histdeflines configuration, request by Mank
