@@ -60,7 +60,7 @@ Doxtur, chaos, sphinx, Zorro, W1ZaRd, S0RiN, MaxFox, Krzychu,
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.0" -- ledokol version
-bld_ledo = "21" -- build number
+bld_ledo = "22" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -1110,7 +1110,7 @@ function Main (file)
 						VH:SQLQuery ("create table if not exists `" .. tbl_sql ["misup"] .. "` (`supports` varchar(255) not null primary key, `time` varchar(10) null, `occurred` bigint(20) unsigned not null default 0, `note` varchar(255) null) engine = myisam default character set utf8 collate utf8_unicode_ci")
 						VH:SQLQuery ("create table if not exists `" .. tbl_sql ["miver"] .. "` (`version` varchar(255) not null primary key, `time` varchar(10) null, `occurred` bigint(20) unsigned not null default 0, `note` varchar(255) null) engine = myisam default character set utf8 collate utf8_unicode_ci")
 
-						VH:SQLQuery ("alter ignore table `" .. tbl_sql ["anti"] .. "` change column `action` `action` tinyint(2) unsigned not null default 0")
+						VH:SQLQuery ("alter table `" .. tbl_sql ["anti"] .. "` change column `action` `action` tinyint(2) unsigned not null default 0")
 
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('useripsupport', '" .. repsqlchars (table_sets ["useripsupport"]) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('histautonewlinedel', '" .. repsqlchars (table_sets ["histautonewlinedel"]) .. "')")
@@ -1153,8 +1153,8 @@ function Main (file)
 					end
 
 					if ver <= 279 then
-						VH:SQLQuery ("alter ignore table `lua_ledo_mcrepl` rename to `" .. tbl_sql ["chatrepl"] .. "`")
-						VH:SQLQuery ("alter ignore table `" .. tbl_sql ["chatrepl"] .. "` add column `flags` tinyint(1) unsigned not null default 1 after `maxclass`")
+						VH:SQLQuery ("alter table `lua_ledo_mcrepl` rename to `" .. tbl_sql ["chatrepl"] .. "`")
+						VH:SQLQuery ("alter table `" .. tbl_sql ["chatrepl"] .. "` add column `flags` tinyint(1) unsigned not null default 1 after `maxclass`")
 
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('chatfloodallcount', '" .. repsqlchars (table_sets ["chatfloodallcount"]) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('chatfloodallint', '" .. repsqlchars (table_sets ["chatfloodallint"]) .. "')")
@@ -1220,31 +1220,31 @@ function Main (file)
 					end
 
 					if ver <= 285 then
-						VH:SQLQuery ("alter ignore table `" .. tbl_sql ["minick"] .. "` add column `note` varchar(255) null after `occurred`")
-						VH:SQLQuery ("alter ignore table `" .. tbl_sql ["midesc"] .. "` add column `note` varchar(255) null after `occurred`")
-						VH:SQLQuery ("alter ignore table `" .. tbl_sql ["mitag"] .. "` add column `note` varchar(255) null after `occurred`")
-						VH:SQLQuery ("alter ignore table `" .. tbl_sql ["miconn"] .. "` add column `note` varchar(255) null after `occurred`")
-						VH:SQLQuery ("alter ignore table `" .. tbl_sql ["miemail"] .. "` add column `note` varchar(255) null after `occurred`")
-						VH:SQLQuery ("alter ignore table `" .. tbl_sql ["mishare"] .. "` add column `note` varchar(255) null after `occurred`")
-						VH:SQLQuery ("alter ignore table `" .. tbl_sql ["miip"] .. "` add column `note` varchar(255) null after `occurred`")
-						VH:SQLQuery ("alter ignore table `" .. tbl_sql ["micc"] .. "` add column `note` varchar(255) null after `occurred`")
-						VH:SQLQuery ("alter ignore table `" .. tbl_sql ["midns"] .. "` add column `note` varchar(255) null after `occurred`")
-						VH:SQLQuery ("alter ignore table `" .. tbl_sql ["misup"] .. "` add column `note` varchar(255) null after `occurred`")
-						VH:SQLQuery ("alter ignore table `" .. tbl_sql ["miver"] .. "` add column `note` varchar(255) null after `occurred`")
-						VH:SQLQuery ("alter ignore table `" .. tbl_sql ["miex"] .. "` add column `note` varchar(255) null after `occurred`")
-						VH:SQLQuery ("alter ignore table `" .. tbl_sql ["minick"] .. "` change column `time` `time` varchar(10) null")
-						VH:SQLQuery ("alter ignore table `" .. tbl_sql ["midesc"] .. "` change column `time` `time` varchar(10) null")
-						VH:SQLQuery ("alter ignore table `" .. tbl_sql ["mitag"] .. "` change column `time` `time` varchar(10) null")
-						VH:SQLQuery ("alter ignore table `" .. tbl_sql ["miconn"] .. "` change column `time` `time` varchar(10) null")
-						VH:SQLQuery ("alter ignore table `" .. tbl_sql ["miemail"] .. "` change column `time` `time` varchar(10) null")
-						VH:SQLQuery ("alter ignore table `" .. tbl_sql ["mishare"] .. "` change column `time` `time` varchar(10) null")
-						VH:SQLQuery ("alter ignore table `" .. tbl_sql ["miip"] .. "` change column `time` `time` varchar(10) null")
-						VH:SQLQuery ("alter ignore table `" .. tbl_sql ["micc"] .. "` change column `time` `time` varchar(10) null")
-						VH:SQLQuery ("alter ignore table `" .. tbl_sql ["midns"] .. "` change column `time` `time` varchar(10) null")
-						VH:SQLQuery ("alter ignore table `" .. tbl_sql ["misup"] .. "` change column `time` `time` varchar(10) null")
-						VH:SQLQuery ("alter ignore table `" .. tbl_sql ["miver"] .. "` change column `time` `time` varchar(10) null")
-						VH:SQLQuery ("alter ignore table `" .. tbl_sql ["mchist"] .. "` add column `ip` varchar(15) null after `nick`")
-						VH:SQLQuery ("alter ignore table `" .. tbl_sql ["ccgag"] .. "` change column `cc` `item` varchar(255) not null")
+						VH:SQLQuery ("alter table `" .. tbl_sql ["minick"] .. "` add column `note` varchar(255) null after `occurred`")
+						VH:SQLQuery ("alter table `" .. tbl_sql ["midesc"] .. "` add column `note` varchar(255) null after `occurred`")
+						VH:SQLQuery ("alter table `" .. tbl_sql ["mitag"] .. "` add column `note` varchar(255) null after `occurred`")
+						VH:SQLQuery ("alter table `" .. tbl_sql ["miconn"] .. "` add column `note` varchar(255) null after `occurred`")
+						VH:SQLQuery ("alter table `" .. tbl_sql ["miemail"] .. "` add column `note` varchar(255) null after `occurred`")
+						VH:SQLQuery ("alter table `" .. tbl_sql ["mishare"] .. "` add column `note` varchar(255) null after `occurred`")
+						VH:SQLQuery ("alter table `" .. tbl_sql ["miip"] .. "` add column `note` varchar(255) null after `occurred`")
+						VH:SQLQuery ("alter table `" .. tbl_sql ["micc"] .. "` add column `note` varchar(255) null after `occurred`")
+						VH:SQLQuery ("alter table `" .. tbl_sql ["midns"] .. "` add column `note` varchar(255) null after `occurred`")
+						VH:SQLQuery ("alter table `" .. tbl_sql ["misup"] .. "` add column `note` varchar(255) null after `occurred`")
+						VH:SQLQuery ("alter table `" .. tbl_sql ["miver"] .. "` add column `note` varchar(255) null after `occurred`")
+						VH:SQLQuery ("alter table `" .. tbl_sql ["miex"] .. "` add column `note` varchar(255) null after `occurred`")
+						VH:SQLQuery ("alter table `" .. tbl_sql ["minick"] .. "` change column `time` `time` varchar(10) null")
+						VH:SQLQuery ("alter table `" .. tbl_sql ["midesc"] .. "` change column `time` `time` varchar(10) null")
+						VH:SQLQuery ("alter table `" .. tbl_sql ["mitag"] .. "` change column `time` `time` varchar(10) null")
+						VH:SQLQuery ("alter table `" .. tbl_sql ["miconn"] .. "` change column `time` `time` varchar(10) null")
+						VH:SQLQuery ("alter table `" .. tbl_sql ["miemail"] .. "` change column `time` `time` varchar(10) null")
+						VH:SQLQuery ("alter table `" .. tbl_sql ["mishare"] .. "` change column `time` `time` varchar(10) null")
+						VH:SQLQuery ("alter table `" .. tbl_sql ["miip"] .. "` change column `time` `time` varchar(10) null")
+						VH:SQLQuery ("alter table `" .. tbl_sql ["micc"] .. "` change column `time` `time` varchar(10) null")
+						VH:SQLQuery ("alter table `" .. tbl_sql ["midns"] .. "` change column `time` `time` varchar(10) null")
+						VH:SQLQuery ("alter table `" .. tbl_sql ["misup"] .. "` change column `time` `time` varchar(10) null")
+						VH:SQLQuery ("alter table `" .. tbl_sql ["miver"] .. "` change column `time` `time` varchar(10) null")
+						VH:SQLQuery ("alter table `" .. tbl_sql ["mchist"] .. "` add column `ip` varchar(15) null after `nick`")
+						VH:SQLQuery ("alter table `" .. tbl_sql ["ccgag"] .. "` change column `cc` `item` varchar(255) not null")
 
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["ledocmd"] .. "` (`original`, `new`) values ('lretoplain', '" .. repsqlchars (table_cmnds ["lretoplain"]) .. "')")
 
@@ -1254,12 +1254,12 @@ function Main (file)
 					if ver <= 286 then
 						VH:SQLQuery ("create table if not exists `" .. tbl_sql ["crhist"] .. "` (`id` bigint(20) unsigned not null auto_increment primary key, `room` varchar(255) not null, `realnick` varchar(255) not null, `nick` varchar(255) not null, `ip` varchar(15) null, `date` bigint(20) unsigned not null, `message` text not null) engine = myisam default character set utf8 collate utf8_unicode_ci")
 
-						VH:SQLQuery ("alter ignore table `" .. tbl_sql ["news"] .. "` change column `date` `date` bigint(20) unsigned not null")
-						VH:SQLQuery ("alter ignore table `" .. tbl_sql ["rel"] .. "` change column `date` `date` bigint(20) unsigned not null")
-						VH:SQLQuery ("alter ignore table `" .. tbl_sql ["off"] .. "` change column `date` `date` bigint(20) unsigned not null")
-						VH:SQLQuery ("alter ignore table `" .. tbl_sql ["mchist"] .. "` change column `date` `date` bigint(20) unsigned not null")
-						VH:SQLQuery ("alter ignore table `" .. tbl_sql ["ophist"] .. "` change column `date` `date` bigint(20) unsigned not null")
-						VH:SQLQuery ("alter ignore table `" .. tbl_sql ["ulog"] .. "` change column `time` `time` bigint(20) unsigned not null")
+						VH:SQLQuery ("alter table `" .. tbl_sql ["news"] .. "` change column `date` `date` bigint(20) unsigned not null")
+						VH:SQLQuery ("alter table `" .. tbl_sql ["rel"] .. "` change column `date` `date` bigint(20) unsigned not null")
+						VH:SQLQuery ("alter table `" .. tbl_sql ["off"] .. "` change column `date` `date` bigint(20) unsigned not null")
+						VH:SQLQuery ("alter table `" .. tbl_sql ["mchist"] .. "` change column `date` `date` bigint(20) unsigned not null")
+						VH:SQLQuery ("alter table `" .. tbl_sql ["ophist"] .. "` change column `date` `date` bigint(20) unsigned not null")
+						VH:SQLQuery ("alter table `" .. tbl_sql ["ulog"] .. "` change column `time` `time` bigint(20) unsigned not null")
 
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('antispamdebug', '" .. repsqlchars (table_sets ["antispamdebug"]) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('chathistlimit', '" .. repsqlchars (table_sets ["chathistlimit"]) .. "')")
@@ -1273,17 +1273,17 @@ function Main (file)
 					if ver <= 287 then
 						VH:SQLQuery ("create table if not exists `" .. tbl_sql ["ulog"] .. "` (`id` bigint(20) unsigned not null auto_increment primary key, `time` bigint(20) unsigned not null, `nick` varchar(255) not null, `ip` varchar(15) not null, `cc` varchar(2) null, `desc` varchar(255) null, `tag` varchar(255) null, `conn` varchar(255) null, `email` varchar(255) null, `share` bigint(20) unsigned not null default 0) engine = myisam default character set utf8 collate utf8_unicode_ci")
 
-						VH:SQLQuery ("alter ignore table `" .. tbl_sql ["ulog"] .. "` add column `cc` varchar(2) null after `ip`")
-						VH:SQLQuery ("alter ignore table `" .. tbl_sql ["ulog"] .. "` change column `desc` `desc` varchar(255) null")
-						VH:SQLQuery ("alter ignore table `" .. tbl_sql ["ulog"] .. "` change column `tag` `tag` varchar(255) null")
-						VH:SQLQuery ("alter ignore table `" .. tbl_sql ["ulog"] .. "` change column `conn` `conn` varchar(255) null")
-						VH:SQLQuery ("alter ignore table `" .. tbl_sql ["ulog"] .. "` change column `email` `email` varchar(255) null")
-						VH:SQLQuery ("alter ignore table `" .. tbl_sql ["ulog"] .. "` change column `share` `share` bigint(20) unsigned not null default 0")
+						VH:SQLQuery ("alter table `" .. tbl_sql ["ulog"] .. "` add column `cc` varchar(2) null after `ip`")
+						VH:SQLQuery ("alter table `" .. tbl_sql ["ulog"] .. "` change column `desc` `desc` varchar(255) null")
+						VH:SQLQuery ("alter table `" .. tbl_sql ["ulog"] .. "` change column `tag` `tag` varchar(255) null")
+						VH:SQLQuery ("alter table `" .. tbl_sql ["ulog"] .. "` change column `conn` `conn` varchar(255) null")
+						VH:SQLQuery ("alter table `" .. tbl_sql ["ulog"] .. "` change column `email` `email` varchar(255) null")
+						VH:SQLQuery ("alter table `" .. tbl_sql ["ulog"] .. "` change column `share` `share` bigint(20) unsigned not null default 0")
 					end
 
 					if ver <= 288 then
-						VH:SQLQuery ("alter ignore table `" .. tbl_sql ["rcmenu"] .. "` add column `off` tinyint(1) unsigned not null default 0 after `maxclass`")
-						VH:SQLQuery ("alter ignore table `" .. tbl_sql ["ophist"] .. "` add column `class` tinyint(2) unsigned not null default 10 after `message`")
+						VH:SQLQuery ("alter table `" .. tbl_sql ["rcmenu"] .. "` add column `off` tinyint(1) unsigned not null default 0 after `maxclass`")
+						VH:SQLQuery ("alter table `" .. tbl_sql ["ophist"] .. "` add column `class` tinyint(2) unsigned not null default 10 after `message`")
 
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('replprotect', '" .. repsqlchars (table_sets ["replprotect"]) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('custlistclass', '" .. repsqlchars (table_sets ["custlistclass"]) .. "')")
@@ -1295,7 +1295,7 @@ function Main (file)
 					end
 
 					if ver <= 289 then
-						VH:SQLQuery ("alter ignore table `" .. tbl_sql ["replex"] .. "` add column `type` tinyint(1) not null default 0 after `exception`")
+						VH:SQLQuery ("alter table `" .. tbl_sql ["replex"] .. "` add column `type` tinyint(1) not null default 0 after `exception`")
 
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('sefiblockdel', '" .. repsqlchars (table_sets ["sefiblockdel"]) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('chatuptime', '" .. repsqlchars (table_sets ["chatuptime"]) .. "')")
@@ -1309,8 +1309,8 @@ function Main (file)
 					end
 
 					if ver <= 290 then
-						VH:SQLQuery ("alter ignore table `" .. tbl_sql ["wm"] .. "` change column `in` `in` text null default null")
-						VH:SQLQuery ("alter ignore table `" .. tbl_sql ["wm"] .. "` change column `out` `out` text null default null")
+						VH:SQLQuery ("alter table `" .. tbl_sql ["wm"] .. "` change column `in` `in` text null default null")
+						VH:SQLQuery ("alter table `" .. tbl_sql ["wm"] .. "` change column `out` `out` text null default null")
 
 						VH:SQLQuery ("update `" .. tbl_sql ["wm"] .. "` set `in` = null where `in` = ''")
 						VH:SQLQuery ("update `" .. tbl_sql ["wm"] .. "` set `out` = null where `out` = ''")
@@ -19555,42 +19555,42 @@ end
 ----- ---- --- -- -
 
 function renametables ()
-VH:SQLQuery ("alter ignore table `script_ledokol_settings` rename to `"..tbl_sql ["conf"].."`")
-VH:SQLQuery ("alter ignore table `script_ledokol_antispam` rename to `"..tbl_sql ["anti"].."`")
-VH:SQLQuery ("alter ignore table `script_ledokol_exceptions` rename to `"..tbl_sql ["antiex"].."`")
-VH:SQLQuery ("alter ignore table `script_ledokol_searchfilter` rename to `"..tbl_sql ["sefi"].."`")
-VH:SQLQuery ("alter ignore table `script_ledokol_sefiexceptions` rename to `"..tbl_sql ["sefiex"].."`")
-	VH:SQLQuery ("alter ignore table `script_ledokol_nicks` rename to `" .. tbl_sql ["minick"] .. "`")
-	VH:SQLQuery ("alter ignore table `script_ledokol_descriptions` rename to `" .. tbl_sql ["midesc"] .. "`")
-	VH:SQLQuery ("alter ignore table `script_ledokol_tags` rename to `" .. tbl_sql ["mitag"] .. "`")
-	VH:SQLQuery ("alter ignore table `script_ledokol_connections` rename to `" .. tbl_sql ["miconn"] .. "`")
-	VH:SQLQuery ("alter ignore table `script_ledokol_emails` rename to `" .. tbl_sql ["miemail"] .. "`")
-	VH:SQLQuery ("alter ignore table `script_ledokol_shares` rename to `" .. tbl_sql ["mishare"] .. "`")
-	VH:SQLQuery ("alter ignore table `script_ledokol_miips` rename to `" .. tbl_sql ["miip"] .. "`")
-	VH:SQLQuery ("alter ignore table `script_ledokol_myinfoexceptions` rename to `" .. tbl_sql ["miex"] .. "`")
-VH:SQLQuery ("alter ignore table `script_ledokol_authorization` rename to `"..tbl_sql ["auth"].."`")
-	VH:SQLQuery ("alter ignore table `script_ledokol_releases` rename to `" .. tbl_sql ["rel"] .. "`")
-	VH:SQLQuery ("alter ignore table `script_ledokol_welcomemessages` rename to `" .. tbl_sql ["wm"] .. "`")
-VH:SQLQuery ("alter ignore table `script_ledokol_customnicks` rename to `"..tbl_sql ["cust"].."`")
-VH:SQLQuery ("alter ignore table `script_ledokol_chatrooms` rename to `"..tbl_sql ["chat"].."`")
-VH:SQLQuery ("alter ignore table `script_ledokol_reminders` rename to `"..tbl_sql ["rem"].."`")
-	VH:SQLQuery ("alter ignore table `script_ledokol_hubnews` rename to `" .. tbl_sql ["news"] .. "`")
-VH:SQLQuery ("alter ignore table `script_ledokol_mcresponder` rename to `"..tbl_sql ["mcresp"].."`")
-VH:SQLQuery ("alter ignore table `script_ledokol_respexceptions` rename to `"..tbl_sql ["respex"].."`")
-VH:SQLQuery ("alter ignore table `script_ledokol_chatranks` rename to `"..tbl_sql ["chran"].."`")
-VH:SQLQuery ("alter ignore table `script_ledokol_opranks` rename to `"..tbl_sql ["opran"].."`")
-VH:SQLQuery ("alter ignore table `script_ledokol_shareranks` rename to `"..tbl_sql ["shran"].."`")
-VH:SQLQuery ("alter ignore table `script_ledokol_wordranks` rename to `"..tbl_sql ["wdran"].."`")
-VH:SQLQuery ("alter ignore table `script_ccstats` rename to `"..tbl_sql ["ccstat"].."`")
-VH:SQLQuery ("alter ignore table `script_ledokol_rankexceptions` rename to `"..tbl_sql ["ranex"].."`")
-	VH:SQLQuery ("alter ignore table `script_ledokol_offline` rename to `" .. tbl_sql ["off"] .. "`")
-	VH:SQLQuery ("alter ignore table `script_ledokol_mchistory` rename to `" .. tbl_sql ["mchist"] .. "`")
-	VH:SQLQuery ("alter ignore table `script_ledokol_ophistory` rename to `" .. tbl_sql ["ophist"] .. "`")
-VH:SQLQuery ("alter ignore table `script_ledokol_ledocommands` rename to `"..tbl_sql ["ledocmd"].."`")
-VH:SQLQuery ("alter ignore table `script_ledokol_commands` rename to `"..tbl_sql ["cmd"].."`")
-VH:SQLQuery ("alter ignore table `script_ledokol_cmdexceptions` rename to `"..tbl_sql ["cmdex"].."`")
-	VH:SQLQuery ("alter ignore table `script_ledokol_userlog` rename to `" .. tbl_sql ["ulog"] .. "`")
-	VH:SQLQuery ("alter ignore table `lua_ledo_mcrepl` rename to `" .. tbl_sql ["chatrepl"] .. "`")
+VH:SQLQuery ("alter table `script_ledokol_settings` rename to `"..tbl_sql ["conf"].."`")
+VH:SQLQuery ("alter table `script_ledokol_antispam` rename to `"..tbl_sql ["anti"].."`")
+VH:SQLQuery ("alter table `script_ledokol_exceptions` rename to `"..tbl_sql ["antiex"].."`")
+VH:SQLQuery ("alter table `script_ledokol_searchfilter` rename to `"..tbl_sql ["sefi"].."`")
+VH:SQLQuery ("alter table `script_ledokol_sefiexceptions` rename to `"..tbl_sql ["sefiex"].."`")
+	VH:SQLQuery ("alter table `script_ledokol_nicks` rename to `" .. tbl_sql ["minick"] .. "`")
+	VH:SQLQuery ("alter table `script_ledokol_descriptions` rename to `" .. tbl_sql ["midesc"] .. "`")
+	VH:SQLQuery ("alter table `script_ledokol_tags` rename to `" .. tbl_sql ["mitag"] .. "`")
+	VH:SQLQuery ("alter table `script_ledokol_connections` rename to `" .. tbl_sql ["miconn"] .. "`")
+	VH:SQLQuery ("alter table `script_ledokol_emails` rename to `" .. tbl_sql ["miemail"] .. "`")
+	VH:SQLQuery ("alter table `script_ledokol_shares` rename to `" .. tbl_sql ["mishare"] .. "`")
+	VH:SQLQuery ("alter table `script_ledokol_miips` rename to `" .. tbl_sql ["miip"] .. "`")
+	VH:SQLQuery ("alter table `script_ledokol_myinfoexceptions` rename to `" .. tbl_sql ["miex"] .. "`")
+VH:SQLQuery ("alter table `script_ledokol_authorization` rename to `"..tbl_sql ["auth"].."`")
+	VH:SQLQuery ("alter table `script_ledokol_releases` rename to `" .. tbl_sql ["rel"] .. "`")
+	VH:SQLQuery ("alter table `script_ledokol_welcomemessages` rename to `" .. tbl_sql ["wm"] .. "`")
+VH:SQLQuery ("alter table `script_ledokol_customnicks` rename to `"..tbl_sql ["cust"].."`")
+VH:SQLQuery ("alter table `script_ledokol_chatrooms` rename to `"..tbl_sql ["chat"].."`")
+VH:SQLQuery ("alter table `script_ledokol_reminders` rename to `"..tbl_sql ["rem"].."`")
+	VH:SQLQuery ("alter table `script_ledokol_hubnews` rename to `" .. tbl_sql ["news"] .. "`")
+VH:SQLQuery ("alter table `script_ledokol_mcresponder` rename to `"..tbl_sql ["mcresp"].."`")
+VH:SQLQuery ("alter table `script_ledokol_respexceptions` rename to `"..tbl_sql ["respex"].."`")
+VH:SQLQuery ("alter table `script_ledokol_chatranks` rename to `"..tbl_sql ["chran"].."`")
+VH:SQLQuery ("alter table `script_ledokol_opranks` rename to `"..tbl_sql ["opran"].."`")
+VH:SQLQuery ("alter table `script_ledokol_shareranks` rename to `"..tbl_sql ["shran"].."`")
+VH:SQLQuery ("alter table `script_ledokol_wordranks` rename to `"..tbl_sql ["wdran"].."`")
+VH:SQLQuery ("alter table `script_ccstats` rename to `"..tbl_sql ["ccstat"].."`")
+VH:SQLQuery ("alter table `script_ledokol_rankexceptions` rename to `"..tbl_sql ["ranex"].."`")
+	VH:SQLQuery ("alter table `script_ledokol_offline` rename to `" .. tbl_sql ["off"] .. "`")
+	VH:SQLQuery ("alter table `script_ledokol_mchistory` rename to `" .. tbl_sql ["mchist"] .. "`")
+	VH:SQLQuery ("alter table `script_ledokol_ophistory` rename to `" .. tbl_sql ["ophist"] .. "`")
+VH:SQLQuery ("alter table `script_ledokol_ledocommands` rename to `"..tbl_sql ["ledocmd"].."`")
+VH:SQLQuery ("alter table `script_ledokol_commands` rename to `"..tbl_sql ["cmd"].."`")
+VH:SQLQuery ("alter table `script_ledokol_cmdexceptions` rename to `"..tbl_sql ["cmdex"].."`")
+	VH:SQLQuery ("alter table `script_ledokol_userlog` rename to `" .. tbl_sql ["ulog"] .. "`")
+	VH:SQLQuery ("alter table `lua_ledo_mcrepl` rename to `" .. tbl_sql ["chatrepl"] .. "`")
 end
 
 ----- ---- --- -- -
@@ -19599,251 +19599,251 @@ function altertables ()
 -- todo: alter tables to default character set utf8 collate utf8_unicode_ci
 
 -- settings
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["conf"].."` engine = myisam") -- engine
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["conf"].."` change column `variable` `variable` varchar(255) not null") -- variable
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["conf"].."` change column `value` `value` text not null") -- value
+VH:SQLQuery ("alter table `"..tbl_sql ["conf"].."` engine = myisam") -- engine
+VH:SQLQuery ("alter table `"..tbl_sql ["conf"].."` change column `variable` `variable` varchar(255) not null") -- variable
+VH:SQLQuery ("alter table `"..tbl_sql ["conf"].."` change column `value` `value` text not null") -- value
 
 -- antispam
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["anti"].."` engine = myisam") -- engine
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["anti"].."` change column `antispam` `antispam` varchar(255) not null") -- antispam
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["anti"].."` change column `occured` `occurred` bigint(20) unsigned not null default 0") -- occurred
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["anti"].."` add column `priority` tinyint(1) unsigned not null default 0 after `occurred`") -- priority
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["anti"].."` change column `action` `action` tinyint(2) unsigned not null default 0") -- action
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["anti"].."` add column `flags` tinyint(1) unsigned not null default 3 after `action`") -- flags
+VH:SQLQuery ("alter table `"..tbl_sql ["anti"].."` engine = myisam") -- engine
+VH:SQLQuery ("alter table `"..tbl_sql ["anti"].."` change column `antispam` `antispam` varchar(255) not null") -- antispam
+VH:SQLQuery ("alter table `"..tbl_sql ["anti"].."` change column `occured` `occurred` bigint(20) unsigned not null default 0") -- occurred
+VH:SQLQuery ("alter table `"..tbl_sql ["anti"].."` add column `priority` tinyint(1) unsigned not null default 0 after `occurred`") -- priority
+VH:SQLQuery ("alter table `"..tbl_sql ["anti"].."` change column `action` `action` tinyint(2) unsigned not null default 0") -- action
+VH:SQLQuery ("alter table `"..tbl_sql ["anti"].."` add column `flags` tinyint(1) unsigned not null default 3 after `action`") -- flags
 
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["antiex"].."` engine = myisam") -- engine
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["antiex"].."` change column `exception` `exception` varchar(255) not null") -- exception
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["antiex"].."` change column `occured` `occurred` bigint(20) unsigned not null default 0") -- occurred
+VH:SQLQuery ("alter table `"..tbl_sql ["antiex"].."` engine = myisam") -- engine
+VH:SQLQuery ("alter table `"..tbl_sql ["antiex"].."` change column `exception` `exception` varchar(255) not null") -- exception
+VH:SQLQuery ("alter table `"..tbl_sql ["antiex"].."` change column `occured` `occurred` bigint(20) unsigned not null default 0") -- occurred
 
 -- search filter
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["sefi"].."` engine = myisam") -- engine
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["sefi"].."` change column `filter` `filter` varchar(255) not null") -- filter
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["sefi"].."` change column `occured` `occurred` bigint(20) unsigned not null default 0") -- occurred
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["sefi"].."` add column `priority` tinyint(1) unsigned not null default 0 after `occurred`") -- priority
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["sefi"].."` change column `action` `action` tinyint(1) unsigned not null default 0") -- action
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["sefi"].."` add column `type` tinyint(1) unsigned not null default 1 after `action`") -- type
+VH:SQLQuery ("alter table `"..tbl_sql ["sefi"].."` engine = myisam") -- engine
+VH:SQLQuery ("alter table `"..tbl_sql ["sefi"].."` change column `filter` `filter` varchar(255) not null") -- filter
+VH:SQLQuery ("alter table `"..tbl_sql ["sefi"].."` change column `occured` `occurred` bigint(20) unsigned not null default 0") -- occurred
+VH:SQLQuery ("alter table `"..tbl_sql ["sefi"].."` add column `priority` tinyint(1) unsigned not null default 0 after `occurred`") -- priority
+VH:SQLQuery ("alter table `"..tbl_sql ["sefi"].."` change column `action` `action` tinyint(1) unsigned not null default 0") -- action
+VH:SQLQuery ("alter table `"..tbl_sql ["sefi"].."` add column `type` tinyint(1) unsigned not null default 1 after `action`") -- type
 
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["sefiex"].."` engine = myisam") -- engine
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["sefiex"].."` change column `exception` `exception` varchar(255) not null") -- exception
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["sefiex"].."` change column `occurred` `occurred` bigint(20) unsigned not null default 0") -- occurred
+VH:SQLQuery ("alter table `"..tbl_sql ["sefiex"].."` engine = myisam") -- engine
+VH:SQLQuery ("alter table `"..tbl_sql ["sefiex"].."` change column `exception` `exception` varchar(255) not null") -- exception
+VH:SQLQuery ("alter table `"..tbl_sql ["sefiex"].."` change column `occurred` `occurred` bigint(20) unsigned not null default 0") -- occurred
 
 	-- myinfo check
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["minick"] .. "` engine = myisam") -- engine
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["minick"] .. "` change column `nick` `nick` varchar(255) not null") -- nick
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["minick"] .. "` add column `time` varchar(10) null after `nick`") -- time
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["minick"] .. "` change column `time` `time` varchar(10) null") -- time
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["minick"] .. "` change column `occured` `occurred` bigint(20) unsigned not null default 0") -- occurred
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["minick"] .. "` add column `note` varchar(255) null after `occurred`") -- note
+	VH:SQLQuery ("alter table `" .. tbl_sql ["minick"] .. "` engine = myisam") -- engine
+	VH:SQLQuery ("alter table `" .. tbl_sql ["minick"] .. "` change column `nick` `nick` varchar(255) not null") -- nick
+	VH:SQLQuery ("alter table `" .. tbl_sql ["minick"] .. "` add column `time` varchar(10) null after `nick`") -- time
+	VH:SQLQuery ("alter table `" .. tbl_sql ["minick"] .. "` change column `time` `time` varchar(10) null") -- time
+	VH:SQLQuery ("alter table `" .. tbl_sql ["minick"] .. "` change column `occured` `occurred` bigint(20) unsigned not null default 0") -- occurred
+	VH:SQLQuery ("alter table `" .. tbl_sql ["minick"] .. "` add column `note` varchar(255) null after `occurred`") -- note
 
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["midesc"] .. "` engine = myisam") -- engine
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["midesc"] .. "` change column `description` `description` varchar(255) not null") -- description
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["midesc"] .. "` add column `time` varchar(10) null after `description`") -- time
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["midesc"] .. "` change column `time` `time` varchar(10) null") -- time
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["midesc"] .. "` change column `occured` `occurred` bigint(20) unsigned not null default 0") -- occurred
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["midesc"] .. "` add column `note` varchar(255) null after `occurred`") -- note
+	VH:SQLQuery ("alter table `" .. tbl_sql ["midesc"] .. "` engine = myisam") -- engine
+	VH:SQLQuery ("alter table `" .. tbl_sql ["midesc"] .. "` change column `description` `description` varchar(255) not null") -- description
+	VH:SQLQuery ("alter table `" .. tbl_sql ["midesc"] .. "` add column `time` varchar(10) null after `description`") -- time
+	VH:SQLQuery ("alter table `" .. tbl_sql ["midesc"] .. "` change column `time` `time` varchar(10) null") -- time
+	VH:SQLQuery ("alter table `" .. tbl_sql ["midesc"] .. "` change column `occured` `occurred` bigint(20) unsigned not null default 0") -- occurred
+	VH:SQLQuery ("alter table `" .. tbl_sql ["midesc"] .. "` add column `note` varchar(255) null after `occurred`") -- note
 
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["mitag"] .. "` engine = myisam") -- engine
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["mitag"] .. "` change column `tag` `tag` varchar(255) not null") -- tag
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["mitag"] .. "` add column `time` varchar(10) null after `tag`") -- time
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["mitag"] .. "` change column `time` `time` varchar(10) null") -- time
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["mitag"] .. "` change column `occured` `occurred` bigint(20) unsigned not null default 0") -- occurred
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["mitag"] .. "` add column `note` varchar(255) null after `occurred`") -- note
+	VH:SQLQuery ("alter table `" .. tbl_sql ["mitag"] .. "` engine = myisam") -- engine
+	VH:SQLQuery ("alter table `" .. tbl_sql ["mitag"] .. "` change column `tag` `tag` varchar(255) not null") -- tag
+	VH:SQLQuery ("alter table `" .. tbl_sql ["mitag"] .. "` add column `time` varchar(10) null after `tag`") -- time
+	VH:SQLQuery ("alter table `" .. tbl_sql ["mitag"] .. "` change column `time` `time` varchar(10) null") -- time
+	VH:SQLQuery ("alter table `" .. tbl_sql ["mitag"] .. "` change column `occured` `occurred` bigint(20) unsigned not null default 0") -- occurred
+	VH:SQLQuery ("alter table `" .. tbl_sql ["mitag"] .. "` add column `note` varchar(255) null after `occurred`") -- note
 
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["miconn"] .. "` engine = myisam") -- engine
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["miconn"] .. "` change column `connection` `connection` varchar(255) not null") -- connection
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["miconn"] .. "` add column `time` varchar(10) null after `connection`") -- time
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["miconn"] .. "` change column `time` `time` varchar(10) null") -- time
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["miconn"] .. "` change column `occured` `occurred` bigint(20) unsigned not null default 0") -- occurred
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["miconn"] .. "` add column `note` varchar(255) null after `occurred`") -- note
+	VH:SQLQuery ("alter table `" .. tbl_sql ["miconn"] .. "` engine = myisam") -- engine
+	VH:SQLQuery ("alter table `" .. tbl_sql ["miconn"] .. "` change column `connection` `connection` varchar(255) not null") -- connection
+	VH:SQLQuery ("alter table `" .. tbl_sql ["miconn"] .. "` add column `time` varchar(10) null after `connection`") -- time
+	VH:SQLQuery ("alter table `" .. tbl_sql ["miconn"] .. "` change column `time` `time` varchar(10) null") -- time
+	VH:SQLQuery ("alter table `" .. tbl_sql ["miconn"] .. "` change column `occured` `occurred` bigint(20) unsigned not null default 0") -- occurred
+	VH:SQLQuery ("alter table `" .. tbl_sql ["miconn"] .. "` add column `note` varchar(255) null after `occurred`") -- note
 
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["miemail"] .. "` engine = myisam") -- engine
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["miemail"] .. "` change column `email` `email` varchar(255) not null") -- email
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["miemail"] .. "` add column `time` varchar(10) null after `email`") -- time
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["miemail"] .. "` change column `time` `time` varchar(10) null") -- time
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["miemail"] .. "` change column `occured` `occurred` bigint(20) unsigned not null default 0") -- occurred
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["miemail"] .. "` add column `note` varchar(255) null after `occurred`") -- note
+	VH:SQLQuery ("alter table `" .. tbl_sql ["miemail"] .. "` engine = myisam") -- engine
+	VH:SQLQuery ("alter table `" .. tbl_sql ["miemail"] .. "` change column `email` `email` varchar(255) not null") -- email
+	VH:SQLQuery ("alter table `" .. tbl_sql ["miemail"] .. "` add column `time` varchar(10) null after `email`") -- time
+	VH:SQLQuery ("alter table `" .. tbl_sql ["miemail"] .. "` change column `time` `time` varchar(10) null") -- time
+	VH:SQLQuery ("alter table `" .. tbl_sql ["miemail"] .. "` change column `occured` `occurred` bigint(20) unsigned not null default 0") -- occurred
+	VH:SQLQuery ("alter table `" .. tbl_sql ["miemail"] .. "` add column `note` varchar(255) null after `occurred`") -- note
 
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["mishare"] .. "` engine = myisam") -- engine
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["mishare"] .. "` change column `share` `share` varchar(255) not null") -- share
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["mishare"] .. "` add column `time` varchar(10) null after `share`") -- time
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["mishare"] .. "` change column `time` `time` varchar(10) null") -- time
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["mishare"] .. "` change column `occured` `occurred` bigint(20) unsigned not null default 0") -- occurred
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["mishare"] .. "` add column `note` varchar(255) null after `occurred`") -- note
+	VH:SQLQuery ("alter table `" .. tbl_sql ["mishare"] .. "` engine = myisam") -- engine
+	VH:SQLQuery ("alter table `" .. tbl_sql ["mishare"] .. "` change column `share` `share` varchar(255) not null") -- share
+	VH:SQLQuery ("alter table `" .. tbl_sql ["mishare"] .. "` add column `time` varchar(10) null after `share`") -- time
+	VH:SQLQuery ("alter table `" .. tbl_sql ["mishare"] .. "` change column `time` `time` varchar(10) null") -- time
+	VH:SQLQuery ("alter table `" .. tbl_sql ["mishare"] .. "` change column `occured` `occurred` bigint(20) unsigned not null default 0") -- occurred
+	VH:SQLQuery ("alter table `" .. tbl_sql ["mishare"] .. "` add column `note` varchar(255) null after `occurred`") -- note
 
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["miip"] .. "` engine = myisam") -- engine
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["miip"] .. "` change column `ip` `ip` varchar(255) not null") -- ip
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["miip"] .. "` add column `time` varchar(10) null after `ip`") -- time
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["miip"] .. "` change column `time` `time` varchar(10) null") -- time
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["miip"] .. "` change column `occured` `occurred` bigint(20) unsigned not null default 0") -- occurred
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["miip"] .. "` add column `note` varchar(255) null after `occurred`") -- note
+	VH:SQLQuery ("alter table `" .. tbl_sql ["miip"] .. "` engine = myisam") -- engine
+	VH:SQLQuery ("alter table `" .. tbl_sql ["miip"] .. "` change column `ip` `ip` varchar(255) not null") -- ip
+	VH:SQLQuery ("alter table `" .. tbl_sql ["miip"] .. "` add column `time` varchar(10) null after `ip`") -- time
+	VH:SQLQuery ("alter table `" .. tbl_sql ["miip"] .. "` change column `time` `time` varchar(10) null") -- time
+	VH:SQLQuery ("alter table `" .. tbl_sql ["miip"] .. "` change column `occured` `occurred` bigint(20) unsigned not null default 0") -- occurred
+	VH:SQLQuery ("alter table `" .. tbl_sql ["miip"] .. "` add column `note` varchar(255) null after `occurred`") -- note
 
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["micc"] .. "` change column `time` `time` varchar(10) null") -- time
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["micc"] .. "` add column `note` varchar(255) null after `occurred`") -- note
+	VH:SQLQuery ("alter table `" .. tbl_sql ["micc"] .. "` change column `time` `time` varchar(10) null") -- time
+	VH:SQLQuery ("alter table `" .. tbl_sql ["micc"] .. "` add column `note` varchar(255) null after `occurred`") -- note
 
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["midns"] .. "` add column `time` varchar(10) null after `dns`") -- time
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["midns"] .. "` change column `time` `time` varchar(10) null") -- time
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["midns"] .. "` add column `note` varchar(255) null after `occurred`") -- note
+	VH:SQLQuery ("alter table `" .. tbl_sql ["midns"] .. "` add column `time` varchar(10) null after `dns`") -- time
+	VH:SQLQuery ("alter table `" .. tbl_sql ["midns"] .. "` change column `time` `time` varchar(10) null") -- time
+	VH:SQLQuery ("alter table `" .. tbl_sql ["midns"] .. "` add column `note` varchar(255) null after `occurred`") -- note
 
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["misup"] .. "` change column `time` `time` varchar(10) null") -- time
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["misup"] .. "` add column `note` varchar(255) null after `occurred`") -- note
+	VH:SQLQuery ("alter table `" .. tbl_sql ["misup"] .. "` change column `time` `time` varchar(10) null") -- time
+	VH:SQLQuery ("alter table `" .. tbl_sql ["misup"] .. "` add column `note` varchar(255) null after `occurred`") -- note
 
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["miver"] .. "` change column `time` `time` varchar(10) null") -- time
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["miver"] .. "` add column `note` varchar(255) null after `occurred`") -- note
+	VH:SQLQuery ("alter table `" .. tbl_sql ["miver"] .. "` change column `time` `time` varchar(10) null") -- time
+	VH:SQLQuery ("alter table `" .. tbl_sql ["miver"] .. "` add column `note` varchar(255) null after `occurred`") -- note
 
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["miex"] .. "` engine = myisam") -- engine
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["miex"] .. "` change column `exception` `exception` varchar(255) not null") -- exception
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["miex"] .. "` change column `occured` `occurred` bigint(20) unsigned not null default 0") -- occurred
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["miex"] .. "` add column `note` varchar(255) null after `occurred`") -- note
+	VH:SQLQuery ("alter table `" .. tbl_sql ["miex"] .. "` engine = myisam") -- engine
+	VH:SQLQuery ("alter table `" .. tbl_sql ["miex"] .. "` change column `exception` `exception` varchar(255) not null") -- exception
+	VH:SQLQuery ("alter table `" .. tbl_sql ["miex"] .. "` change column `occured` `occurred` bigint(20) unsigned not null default 0") -- occurred
+	VH:SQLQuery ("alter table `" .. tbl_sql ["miex"] .. "` add column `note` varchar(255) null after `occurred`") -- note
 
 -- ip authorization
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["auth"].."` engine = myisam") -- engine
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["auth"].."` drop primary key")
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["auth"].."` add column `id` bigint(20) unsigned auto_increment first, add primary key (`id`)") -- id
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["auth"].."` change column `nick` `nick` varchar(255) not null") -- nick
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["auth"].."` change column `ip` `ip` varchar(255) not null") -- ip
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["auth"].."` add column `badip` varchar(15) not null default '0.0.0.0' after `ip`") -- badip
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["auth"].."` change column `badip` `badip` varchar(15) not null default '0.0.0.0'") -- badip
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["auth"].."` change column `good` `good` bigint(20) unsigned not null default 0") -- good
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["auth"].."` change column `bad` `bad` bigint(20) unsigned not null default 0") -- bad
+VH:SQLQuery ("alter table `"..tbl_sql ["auth"].."` engine = myisam") -- engine
+VH:SQLQuery ("alter table `"..tbl_sql ["auth"].."` drop primary key")
+VH:SQLQuery ("alter table `"..tbl_sql ["auth"].."` add column `id` bigint(20) unsigned auto_increment first, add primary key (`id`)") -- id
+VH:SQLQuery ("alter table `"..tbl_sql ["auth"].."` change column `nick` `nick` varchar(255) not null") -- nick
+VH:SQLQuery ("alter table `"..tbl_sql ["auth"].."` change column `ip` `ip` varchar(255) not null") -- ip
+VH:SQLQuery ("alter table `"..tbl_sql ["auth"].."` add column `badip` varchar(15) not null default '0.0.0.0' after `ip`") -- badip
+VH:SQLQuery ("alter table `"..tbl_sql ["auth"].."` change column `badip` `badip` varchar(15) not null default '0.0.0.0'") -- badip
+VH:SQLQuery ("alter table `"..tbl_sql ["auth"].."` change column `good` `good` bigint(20) unsigned not null default 0") -- good
+VH:SQLQuery ("alter table `"..tbl_sql ["auth"].."` change column `bad` `bad` bigint(20) unsigned not null default 0") -- bad
 
 	-- releases
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["rel"] .. "` engine = myisam") -- engine
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["rel"] .. "` change column `release` `release` varchar(255) not null") -- release
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["rel"] .. "` change column `category` `category` varchar(255) not null") -- category
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["rel"] .. "` add column `tth` varchar(255) not null after `category`") -- tth
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["rel"] .. "` change column `by` `by` varchar(255) not null") -- by
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["rel"] .. "` change column `date` `date` bigint(20) unsigned not null") -- date
+	VH:SQLQuery ("alter table `" .. tbl_sql ["rel"] .. "` engine = myisam") -- engine
+	VH:SQLQuery ("alter table `" .. tbl_sql ["rel"] .. "` change column `release` `release` varchar(255) not null") -- release
+	VH:SQLQuery ("alter table `" .. tbl_sql ["rel"] .. "` change column `category` `category` varchar(255) not null") -- category
+	VH:SQLQuery ("alter table `" .. tbl_sql ["rel"] .. "` add column `tth` varchar(255) not null after `category`") -- tth
+	VH:SQLQuery ("alter table `" .. tbl_sql ["rel"] .. "` change column `by` `by` varchar(255) not null") -- by
+	VH:SQLQuery ("alter table `" .. tbl_sql ["rel"] .. "` change column `date` `date` bigint(20) unsigned not null") -- date
 
 	-- welcome messages
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["wm"] .. "` engine = myisam") -- engine
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["wm"] .. "` change column `nick` `nick` varchar(255) not null") -- nick
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["wm"] .. "` change column `in` `in` text null default null") -- in
+	VH:SQLQuery ("alter table `" .. tbl_sql ["wm"] .. "` engine = myisam") -- engine
+	VH:SQLQuery ("alter table `" .. tbl_sql ["wm"] .. "` change column `nick` `nick` varchar(255) not null") -- nick
+	VH:SQLQuery ("alter table `" .. tbl_sql ["wm"] .. "` change column `in` `in` text null default null") -- in
 	VH:SQLQuery ("update `" .. tbl_sql ["wm"] .. "` set `in` = null where `in` = ''")
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["wm"] .. "` change column `out` `out` text null default null") -- out
+	VH:SQLQuery ("alter table `" .. tbl_sql ["wm"] .. "` change column `out` `out` text null default null") -- out
 	VH:SQLQuery ("update `" .. tbl_sql ["wm"] .. "` set `out` = null where `out` = ''")
 
 -- custom nicks
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["cust"].."` engine = myisam") -- engine
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["cust"].."` change column `nick` `nick` varchar(255) not null") -- nick
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["cust"].."` change column `custom` `custom` varchar(255) not null") -- custom
+VH:SQLQuery ("alter table `"..tbl_sql ["cust"].."` engine = myisam") -- engine
+VH:SQLQuery ("alter table `"..tbl_sql ["cust"].."` change column `nick` `nick` varchar(255) not null") -- nick
+VH:SQLQuery ("alter table `"..tbl_sql ["cust"].."` change column `custom` `custom` varchar(255) not null") -- custom
 
 -- chatrooms
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["chat"].."` engine = myisam") -- engine
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["chat"].."` change column `room` `room` varchar(255) not null") -- room
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["chat"].."` change column `description` `description` varchar(255) not null") -- description
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["chat"].."` change column `minclass` `minclass` tinyint(2) unsigned not null default 0") -- minclass
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["chat"].."` change column `maxclass` `maxclass` tinyint(2) unsigned not null default 10") -- maxclass
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["chat"].."` add column `cc` varchar(2) not null default '*' after `maxclass`") -- cc
+VH:SQLQuery ("alter table `"..tbl_sql ["chat"].."` engine = myisam") -- engine
+VH:SQLQuery ("alter table `"..tbl_sql ["chat"].."` change column `room` `room` varchar(255) not null") -- room
+VH:SQLQuery ("alter table `"..tbl_sql ["chat"].."` change column `description` `description` varchar(255) not null") -- description
+VH:SQLQuery ("alter table `"..tbl_sql ["chat"].."` change column `minclass` `minclass` tinyint(2) unsigned not null default 0") -- minclass
+VH:SQLQuery ("alter table `"..tbl_sql ["chat"].."` change column `maxclass` `maxclass` tinyint(2) unsigned not null default 10") -- maxclass
+VH:SQLQuery ("alter table `"..tbl_sql ["chat"].."` add column `cc` varchar(2) not null default '*' after `maxclass`") -- cc
 
 -- reminders
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["rem"].."` engine = myisam") -- engine
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["rem"].."` change column `id` `id` varchar(255) not null") -- id
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["rem"].."` change column `content` `content` text not null") -- content
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["rem"].."` change column `minclass` `minclass` tinyint(2) unsigned not null default 0") -- minclass
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["rem"].."` change column `maxclass` `maxclass` tinyint(2) unsigned not null default 10") -- maxclass
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["rem"].."` change column `pm` `dest` tinyint(1) unsigned not null default 0") -- dest
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["rem"].."` change column `interval` `interval` smallint(5) unsigned not null default 10080") -- interval
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["rem"].."` change column `timer` `timer` smallint(5) unsigned not null default 0") -- timer
+VH:SQLQuery ("alter table `"..tbl_sql ["rem"].."` engine = myisam") -- engine
+VH:SQLQuery ("alter table `"..tbl_sql ["rem"].."` change column `id` `id` varchar(255) not null") -- id
+VH:SQLQuery ("alter table `"..tbl_sql ["rem"].."` change column `content` `content` text not null") -- content
+VH:SQLQuery ("alter table `"..tbl_sql ["rem"].."` change column `minclass` `minclass` tinyint(2) unsigned not null default 0") -- minclass
+VH:SQLQuery ("alter table `"..tbl_sql ["rem"].."` change column `maxclass` `maxclass` tinyint(2) unsigned not null default 10") -- maxclass
+VH:SQLQuery ("alter table `"..tbl_sql ["rem"].."` change column `pm` `dest` tinyint(1) unsigned not null default 0") -- dest
+VH:SQLQuery ("alter table `"..tbl_sql ["rem"].."` change column `interval` `interval` smallint(5) unsigned not null default 10080") -- interval
+VH:SQLQuery ("alter table `"..tbl_sql ["rem"].."` change column `timer` `timer` smallint(5) unsigned not null default 0") -- timer
 
 	-- news
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["news"] .. "` engine = myisam") -- engine
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["news"] .. "` change column `id` `id` bigint(20) unsigned auto_increment") -- id
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["news"] .. "` change column `date` `date` bigint(20) unsigned not null") -- date
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["news"] .. "` change column `by` `by` varchar(255) not null") -- by
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["news"] .. "` change column `item` `item` text not null") -- item
+	VH:SQLQuery ("alter table `" .. tbl_sql ["news"] .. "` engine = myisam") -- engine
+	VH:SQLQuery ("alter table `" .. tbl_sql ["news"] .. "` change column `id` `id` bigint(20) unsigned auto_increment") -- id
+	VH:SQLQuery ("alter table `" .. tbl_sql ["news"] .. "` change column `date` `date` bigint(20) unsigned not null") -- date
+	VH:SQLQuery ("alter table `" .. tbl_sql ["news"] .. "` change column `by` `by` varchar(255) not null") -- by
+	VH:SQLQuery ("alter table `" .. tbl_sql ["news"] .. "` change column `item` `item` text not null") -- item
 
 	-- chat replacer
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["chatrepl"] .. "` add column `flags` tinyint(1) unsigned not null default 1 after `maxclass`") -- flags
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["replex"] .. "` add column `type` tinyint(1) not null default 0 after `exception`") -- type
+	VH:SQLQuery ("alter table `" .. tbl_sql ["chatrepl"] .. "` add column `flags` tinyint(1) unsigned not null default 1 after `maxclass`") -- flags
+	VH:SQLQuery ("alter table `" .. tbl_sql ["replex"] .. "` add column `type` tinyint(1) not null default 0 after `exception`") -- type
 
 -- chat responder
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["mcresp"].."` engine = myisam") -- engine
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["mcresp"].."` drop primary key")
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["mcresp"].."` add column `id` bigint(20) unsigned auto_increment first, add primary key (`id`)") -- id
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["mcresp"].."` change column `message` `message` varchar(255) not null") -- message
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["mcresp"].."` change column `reply` `reply` text not null") -- reply
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["mcresp"].."` add column `maxclass` tinyint(2) unsigned not null default 10 after `reply`") -- maxclass
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["mcresp"].."` change column `occurred` `occurred` bigint(20) unsigned not null default 0") -- occurred
+VH:SQLQuery ("alter table `"..tbl_sql ["mcresp"].."` engine = myisam") -- engine
+VH:SQLQuery ("alter table `"..tbl_sql ["mcresp"].."` drop primary key")
+VH:SQLQuery ("alter table `"..tbl_sql ["mcresp"].."` add column `id` bigint(20) unsigned auto_increment first, add primary key (`id`)") -- id
+VH:SQLQuery ("alter table `"..tbl_sql ["mcresp"].."` change column `message` `message` varchar(255) not null") -- message
+VH:SQLQuery ("alter table `"..tbl_sql ["mcresp"].."` change column `reply` `reply` text not null") -- reply
+VH:SQLQuery ("alter table `"..tbl_sql ["mcresp"].."` add column `maxclass` tinyint(2) unsigned not null default 10 after `reply`") -- maxclass
+VH:SQLQuery ("alter table `"..tbl_sql ["mcresp"].."` change column `occurred` `occurred` bigint(20) unsigned not null default 0") -- occurred
 
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["respex"].."` engine = myisam") -- engine
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["respex"].."` change column `nick` `exception` varchar(255) not null") -- exception
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["respex"].."` change column `occurred` `occurred` bigint(20) unsigned not null default 0") -- occurred
+VH:SQLQuery ("alter table `"..tbl_sql ["respex"].."` engine = myisam") -- engine
+VH:SQLQuery ("alter table `"..tbl_sql ["respex"].."` change column `nick` `exception` varchar(255) not null") -- exception
+VH:SQLQuery ("alter table `"..tbl_sql ["respex"].."` change column `occurred` `occurred` bigint(20) unsigned not null default 0") -- occurred
 
 -- ranks
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["chran"].."` engine = myisam") -- engine
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["chran"].."` change column `nick` `nick` varchar(255) not null") -- nick
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["chran"].."` change column `rank` `rank` bigint(20) unsigned not null default 1") -- rank
+VH:SQLQuery ("alter table `"..tbl_sql ["chran"].."` engine = myisam") -- engine
+VH:SQLQuery ("alter table `"..tbl_sql ["chran"].."` change column `nick` `nick` varchar(255) not null") -- nick
+VH:SQLQuery ("alter table `"..tbl_sql ["chran"].."` change column `rank` `rank` bigint(20) unsigned not null default 1") -- rank
 
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["opran"].."` engine = myisam") -- engine
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["opran"].."` change column `nick` `nick` varchar(255) not null") -- nick
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["opran"].."` change column `rank` `rank` bigint(20) unsigned not null default 1") -- rank
+VH:SQLQuery ("alter table `"..tbl_sql ["opran"].."` engine = myisam") -- engine
+VH:SQLQuery ("alter table `"..tbl_sql ["opran"].."` change column `nick` `nick` varchar(255) not null") -- nick
+VH:SQLQuery ("alter table `"..tbl_sql ["opran"].."` change column `rank` `rank` bigint(20) unsigned not null default 1") -- rank
 
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["shran"].."` engine = myisam") -- engine
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["shran"].."` change column `nick` `nick` varchar(255) not null") -- nick
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["shran"].."` change column `rank` `rank` bigint(20) unsigned not null default 1") -- rank
+VH:SQLQuery ("alter table `"..tbl_sql ["shran"].."` engine = myisam") -- engine
+VH:SQLQuery ("alter table `"..tbl_sql ["shran"].."` change column `nick` `nick` varchar(255) not null") -- nick
+VH:SQLQuery ("alter table `"..tbl_sql ["shran"].."` change column `rank` `rank` bigint(20) unsigned not null default 1") -- rank
 
 -- search ranks
 -- not added
 
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["wdran"].."` engine = myisam") -- engine
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["wdran"].."` change column `word` `word` varchar(255) not null") -- word
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["wdran"].."` change column `rank` `rank` bigint(20) unsigned not null default 1") -- rank
+VH:SQLQuery ("alter table `"..tbl_sql ["wdran"].."` engine = myisam") -- engine
+VH:SQLQuery ("alter table `"..tbl_sql ["wdran"].."` change column `word` `word` varchar(255) not null") -- word
+VH:SQLQuery ("alter table `"..tbl_sql ["wdran"].."` change column `rank` `rank` bigint(20) unsigned not null default 1") -- rank
 
 -- user location statistics
 -- not added
 
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["ranex"].."` engine = myisam") -- engine
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["ranex"].."` change column `nick` `nick` varchar(255) not null") -- nick
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["ranex"].."` add column `occurred` bigint(20) unsigned not null default 0 after `nick`") -- occurred
+VH:SQLQuery ("alter table `"..tbl_sql ["ranex"].."` engine = myisam") -- engine
+VH:SQLQuery ("alter table `"..tbl_sql ["ranex"].."` change column `nick` `nick` varchar(255) not null") -- nick
+VH:SQLQuery ("alter table `"..tbl_sql ["ranex"].."` add column `occurred` bigint(20) unsigned not null default 0 after `nick`") -- occurred
 
 	-- offline messenger
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["off"] .. "` engine = myisam") -- engine
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["off"] .. "` change column `id` `id` bigint(20) unsigned auto_increment") -- id
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["off"] .. "` change column `from` `from` varchar(255) not null") -- from
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["off"] .. "` change column `ip` `ip` varchar(15) not null") -- ip
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["off"] .. "` change column `to` `to` varchar(255) not null") -- to
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["off"] .. "` change column `date` `date` bigint(20) unsigned not null") -- date
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["off"] .. "` change column `message` `message` text not null") -- message
+	VH:SQLQuery ("alter table `" .. tbl_sql ["off"] .. "` engine = myisam") -- engine
+	VH:SQLQuery ("alter table `" .. tbl_sql ["off"] .. "` change column `id` `id` bigint(20) unsigned auto_increment") -- id
+	VH:SQLQuery ("alter table `" .. tbl_sql ["off"] .. "` change column `from` `from` varchar(255) not null") -- from
+	VH:SQLQuery ("alter table `" .. tbl_sql ["off"] .. "` change column `ip` `ip` varchar(15) not null") -- ip
+	VH:SQLQuery ("alter table `" .. tbl_sql ["off"] .. "` change column `to` `to` varchar(255) not null") -- to
+	VH:SQLQuery ("alter table `" .. tbl_sql ["off"] .. "` change column `date` `date` bigint(20) unsigned not null") -- date
+	VH:SQLQuery ("alter table `" .. tbl_sql ["off"] .. "` change column `message` `message` text not null") -- message
 
 	-- chat history
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["mchist"] .. "` engine = myisam") -- engine
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["mchist"] .. "` change column `id` `id` bigint(20) unsigned auto_increment") -- id
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["mchist"] .. "` add column `realnick` varchar(255) not null after `id`") -- realnick
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["mchist"] .. "` change column `nick` `nick` varchar(255) not null") -- nick
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["mchist"] .. "` add column `ip` varchar(15) null after `nick`") -- ip
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["mchist"] .. "` change column `date` `date` bigint(20) unsigned not null") -- date
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["mchist"] .. "` change column `message` `message` text not null") -- message
+	VH:SQLQuery ("alter table `" .. tbl_sql ["mchist"] .. "` engine = myisam") -- engine
+	VH:SQLQuery ("alter table `" .. tbl_sql ["mchist"] .. "` change column `id` `id` bigint(20) unsigned auto_increment") -- id
+	VH:SQLQuery ("alter table `" .. tbl_sql ["mchist"] .. "` add column `realnick` varchar(255) not null after `id`") -- realnick
+	VH:SQLQuery ("alter table `" .. tbl_sql ["mchist"] .. "` change column `nick` `nick` varchar(255) not null") -- nick
+	VH:SQLQuery ("alter table `" .. tbl_sql ["mchist"] .. "` add column `ip` varchar(15) null after `nick`") -- ip
+	VH:SQLQuery ("alter table `" .. tbl_sql ["mchist"] .. "` change column `date` `date` bigint(20) unsigned not null") -- date
+	VH:SQLQuery ("alter table `" .. tbl_sql ["mchist"] .. "` change column `message` `message` text not null") -- message
 
 	-- opchat history
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["ophist"] .. "` engine = myisam") -- engine
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["ophist"] .. "` change column `id` `id` bigint(20) unsigned auto_increment") -- id
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["ophist"] .. "` change column `nick` `nick` varchar(255) not null") -- nick
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["ophist"] .. "` change column `date` `date` bigint(20) unsigned not null") -- date
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["ophist"] .. "` change column `message` `message` text not null") -- message
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["ophist"] .. "` add column `class` tinyint(2) unsigned not null default 10 after `message`") -- class
+	VH:SQLQuery ("alter table `" .. tbl_sql ["ophist"] .. "` engine = myisam") -- engine
+	VH:SQLQuery ("alter table `" .. tbl_sql ["ophist"] .. "` change column `id` `id` bigint(20) unsigned auto_increment") -- id
+	VH:SQLQuery ("alter table `" .. tbl_sql ["ophist"] .. "` change column `nick` `nick` varchar(255) not null") -- nick
+	VH:SQLQuery ("alter table `" .. tbl_sql ["ophist"] .. "` change column `date` `date` bigint(20) unsigned not null") -- date
+	VH:SQLQuery ("alter table `" .. tbl_sql ["ophist"] .. "` change column `message` `message` text not null") -- message
+	VH:SQLQuery ("alter table `" .. tbl_sql ["ophist"] .. "` add column `class` tinyint(2) unsigned not null default 10 after `message`") -- class
 
 -- commands
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["ledocmd"].."` engine = myisam") -- engine
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["ledocmd"].."` change column `original` `original` varchar(255) not null") -- original
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["ledocmd"].."` change column `new` `new` varchar(255) not null") -- new
+VH:SQLQuery ("alter table `"..tbl_sql ["ledocmd"].."` engine = myisam") -- engine
+VH:SQLQuery ("alter table `"..tbl_sql ["ledocmd"].."` change column `original` `original` varchar(255) not null") -- original
+VH:SQLQuery ("alter table `"..tbl_sql ["ledocmd"].."` change column `new` `new` varchar(255) not null") -- new
 
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["cmd"].."` engine = myisam") -- engine
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["cmd"].."` change column `command` `command` varchar(255) not null") -- command
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["cmd"].."` change column `class` `class` tinyint(2) unsigned not null default 11") -- class
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["cmd"].."` add column `occurred` bigint(20) unsigned not null default 0 after `class`") -- occurred
+VH:SQLQuery ("alter table `"..tbl_sql ["cmd"].."` engine = myisam") -- engine
+VH:SQLQuery ("alter table `"..tbl_sql ["cmd"].."` change column `command` `command` varchar(255) not null") -- command
+VH:SQLQuery ("alter table `"..tbl_sql ["cmd"].."` change column `class` `class` tinyint(2) unsigned not null default 11") -- class
+VH:SQLQuery ("alter table `"..tbl_sql ["cmd"].."` add column `occurred` bigint(20) unsigned not null default 0 after `class`") -- occurred
 
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["cmdex"].."` engine = myisam") -- engine
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["cmdex"].."` change column `exception` `exception` varchar(255) not null") -- exception
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["cmdex"].."` change column `occurred` `occurred` bigint(20) unsigned not null default 0") -- occurred
+VH:SQLQuery ("alter table `"..tbl_sql ["cmdex"].."` engine = myisam") -- engine
+VH:SQLQuery ("alter table `"..tbl_sql ["cmdex"].."` change column `exception` `exception` varchar(255) not null") -- exception
+VH:SQLQuery ("alter table `"..tbl_sql ["cmdex"].."` change column `occurred` `occurred` bigint(20) unsigned not null default 0") -- occurred
 
 	-- user log
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["ulog"] .. "` change column `time` `time` bigint(20) unsigned not null") -- time
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["ulog"] .. "` add column `cc` varchar(2) null after `ip`") -- cc
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["ulog"] .. "` change column `desc` `desc` varchar(255) null") -- desc
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["ulog"] .. "` change column `tag` `tag` varchar(255) null") -- tag
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["ulog"] .. "` change column `conn` `conn` varchar(255) null") -- conn
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["ulog"] .. "` change column `email` `email` varchar(255) null") -- email
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["ulog"] .. "` change column `share` `share` bigint(20) unsigned not null default 0") -- share
+	VH:SQLQuery ("alter table `" .. tbl_sql ["ulog"] .. "` change column `time` `time` bigint(20) unsigned not null") -- time
+	VH:SQLQuery ("alter table `" .. tbl_sql ["ulog"] .. "` add column `cc` varchar(2) null after `ip`") -- cc
+	VH:SQLQuery ("alter table `" .. tbl_sql ["ulog"] .. "` change column `desc` `desc` varchar(255) null") -- desc
+	VH:SQLQuery ("alter table `" .. tbl_sql ["ulog"] .. "` change column `tag` `tag` varchar(255) null") -- tag
+	VH:SQLQuery ("alter table `" .. tbl_sql ["ulog"] .. "` change column `conn` `conn` varchar(255) null") -- conn
+	VH:SQLQuery ("alter table `" .. tbl_sql ["ulog"] .. "` change column `email` `email` varchar(255) null") -- email
+	VH:SQLQuery ("alter table `" .. tbl_sql ["ulog"] .. "` change column `share` `share` bigint(20) unsigned not null default 0") -- share
 
 -- command log
 -- not added
@@ -19855,11 +19855,11 @@ VH:SQLQuery ("alter ignore table `"..tbl_sql ["cmdex"].."` change column `occurr
 -- not added
 
 -- statistics
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["stat"].."` change column `count` `count` text not null") -- count
+VH:SQLQuery ("alter table `"..tbl_sql ["stat"].."` change column `count` `count` text not null") -- count
 
 	-- no pm
-	VH:SQLQuery ("alter ignore table `"..tbl_sql ["nopm"].."` add column `maxclass` tinyint(2) unsigned not null default 2 after `action`") -- maxclass
-	VH:SQLQuery ("alter ignore table `"..tbl_sql ["nopm"].."` add column `password` varchar(255) not null after `maxclass`") -- password
+	VH:SQLQuery ("alter table `"..tbl_sql ["nopm"].."` add column `maxclass` tinyint(2) unsigned not null default 2 after `action`") -- maxclass
+	VH:SQLQuery ("alter table `"..tbl_sql ["nopm"].."` add column `password` varchar(255) not null after `maxclass`") -- password
 
 	-- hard ban
 	-- not added
@@ -19871,10 +19871,10 @@ VH:SQLQuery ("alter ignore table `"..tbl_sql ["stat"].."` change column `count` 
 	-- not added
 
 	-- cc gag
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["ccgag"] .. "` change column `cc` `item` varchar(255) not null") -- item
+	VH:SQLQuery ("alter table `" .. tbl_sql ["ccgag"] .. "` change column `cc` `item` varchar(255) not null") -- item
 
 	-- right click menu
-	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["rcmenu"] .. "` add column `off` tinyint(1) unsigned not null default 0 after `maxclass`") -- off
+	VH:SQLQuery ("alter table `" .. tbl_sql ["rcmenu"] .. "` add column `off` tinyint(1) unsigned not null default 0 after `maxclass`") -- off
 end
 
 ----- ---- --- -- -
