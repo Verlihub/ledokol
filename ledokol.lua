@@ -60,7 +60,7 @@ Doxtur, chaos, sphinx, Zorro, W1ZaRd, S0RiN, MaxFox, Krzychu,
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.0" -- ledokol version
-bld_ledo = "20" -- build number
+bld_ledo = "21" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -1309,6 +1309,16 @@ function Main (file)
 					end
 
 					if ver <= 290 then
+						VH:SQLQuery ("alter ignore table `" .. tbl_sql ["wm"] .. "` change column `in` `in` text null default null")
+						VH:SQLQuery ("alter ignore table `" .. tbl_sql ["wm"] .. "` change column `out` `out` text null default null")
+
+						VH:SQLQuery ("update `" .. tbl_sql ["wm"] .. "` set `in` = null where `in` = ''")
+						VH:SQLQuery ("update `" .. tbl_sql ["wm"] .. "` set `out` = null where `out` = ''")
+
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('respskiplast', '" .. repsqlchars (table_sets ["respskiplast"]) .. "')")
+					end
+
+					if ver <= 291 then
 						-- todo
 					end
 
@@ -6500,179 +6510,175 @@ end
 -- ledokol functions >>
 ---------------------------------------------------------------------
 
-function forcewelcome (nick, item, cls)
-if string.find (item, "^%S+ %S+ .+$") then
-local _, _, stype = string.find (item, "^(%S+) %S+ .+$")
+function forcewelcome (nick, line, cls)
+	if line:match ("^%S+ %S+ .+$") then
+		local mype = line:match ("^(%S+) %S+ .+$")
 
-if (stype == "in") or (stype == "out") then
-local _, _, user, item = string.find (item, "^%S+ (%S+) (.+)$")
+		if mype == "in" or mype == "out" then
+			local user, item = line:match ("^%S+ (%S+) (.+)$")
 
-if (getstatus (user) == 1) and ((table_sets ["welcomeclass"] == 11) or (getclass (user) < table_sets ["welcomeclass"])) then
-commandanswer (nick, gettext ("Either the feature is disabled or user that you're trying to set welcome message for doesn't have access to it."))
-else
-local auser = repsqlchars (user)
-local _, rows = VH:SQLQuery ("select `nick` from `"..tbl_sql ["wm"].."` where `nick` = '"..auser.."' limit 1")
+			if getstatus (user) == 1 and (table_sets ["welcomeclass"] == 11 or getclass (user) < table_sets ["welcomeclass"]) then
+				commandanswer (nick, gettext ("Either the feature is disabled or user that you're trying to set welcome message for doesn't have access to it."))
+			else
+				local rser = repsqlchars (user)
+				local _, rows = VH:SQLQuery ("select `nick` from `" .. tbl_sql ["wm"] .. "` where `nick` = '" .. rser .. "'")
 
-if rows > 0 then
-VH:SQLQuery ("update `"..tbl_sql ["wm"].."` set `"..stype.."` = '"..repsqlchars (item).."' where `nick` = '"..auser.."' limit 1")
-else
-VH:SQLQuery ("insert into `"..tbl_sql ["wm"].."` (`nick`, `"..stype.."`) values ('"..auser.."', '"..repsqlchars (item).."')")
-end
+				if rows > 0 then
+					VH:SQLQuery ("update `" .. tbl_sql ["wm"] .. "` set `" .. mype .. "` = '" .. repsqlchars (item) .. "' where `nick` = '" .. rser .. "'")
+				else
+					VH:SQLQuery ("insert into `" .. tbl_sql ["wm"] .. "` (`nick`, `" .. mype .. "`) values ('" .. rser .. "', '" .. repsqlchars (item) .. "')")
+				end
 
-item = string.gsub (item, "%*", reprexpchars (user))
+				item = item:gsub ("%*", reprexpchars (user))
 
-if stype == "in" then
-commandanswer (nick, string.format (gettext ("Login message set for %s: %s"), user, item))
-opsnotify (table_sets ["classnotiwelcome"], string.format (gettext ("%s with class %d changed login message for %s: %s"), nick, cls, user, item))
-elseif stype == "out" then
-commandanswer (nick, string.format (gettext ("Logout message set for %s: %s"), user, item))
-opsnotify (table_sets ["classnotiwelcome"], string.format (gettext ("%s with class %d changed logout message for %s: %s"), nick, cls, user, item))
-end
-end
+				if mype == "in" then
+					commandanswer (nick, gettext ("Login message set for %s: %s"):format (user, item))
+					opsnotify (table_sets ["classnotiwelcome"], gettext ("%s with class %d changed login message for %s: %s"):format (nick, cls, user, item))
+				elseif mype == "out" then
+					commandanswer (nick, gettext ("Logout message set for %s: %s"):format (user, item))
+					opsnotify (table_sets ["classnotiwelcome"], gettext ("%s with class %d changed logout message for %s: %s"):format (nick, cls, user, item))
+				end
+			end
+		else -- unknown type
+			commandanswer (nick, gettext ("Known types are: %s"):format ("in " .. gettext ("and") .. " out"))
+		end
+	else -- deleting
+		local mype = line:match ("^(%S+) %S+$")
 
-else -- unknown type
-commandanswer (nick, string.format (gettext ("Known types are: %s"), "in "..gettext ("and").." out"))
-end
+		if mype == "in" then
+			local user = line:match ("^%S+ (%S+)$")
 
-else -- deleting
-local _, _, stype = string.find (item, "^(%S+) %S+$")
+			if getstatus (user) == 1 and (table_sets ["welcomeclass"] == 11 or getclass (user) < table_sets ["welcomeclass"]) then
+				commandanswer (nick, gettext ("Either the feature is disabled or user that you're trying to set welcome message for doesn't have access to it."))
+			else
+				local rser = repsqlchars (user)
+				VH:SQLQuery ("update `" .. tbl_sql ["wm"] .. "` set `in` = null where `nick` = '" .. rser .. "'")
+				VH:SQLQuery ("delete from `" .. tbl_sql ["wm"] .. "` where `nick` = '" .. rser .. "' and `out` is null")
+				commandanswer (nick, gettext ("Login message deleted for user: %s"):format (user))
+				opsnotify (table_sets ["classnotiwelcome"], gettext ("%s with class %d deleted login message for user: %s"):format (nick, cls, user))
+			end
+		elseif mype == "out" then
+			local user = line:match ("^%S+ (%S+)$")
 
-if stype == "in" then
-local _, _, user = string.find (item, "^%S+ (%S+)$")
-
-if (getstatus (user) == 1) and ((table_sets ["welcomeclass"] == 11) or (getclass (user) < table_sets ["welcomeclass"])) then
-commandanswer (nick, gettext ("Either the feature is disabled or user that you're trying to set welcome message for doesn't have access to it."))
-else
-local anick = repsqlchars (user)
-VH:SQLQuery ("update `"..tbl_sql ["wm"].."` set `in` = '' where `nick` = '"..anick.."' limit 1")
-VH:SQLQuery ("delete from `"..tbl_sql ["wm"].."` where `nick` = '"..anick.."' and `out` = '' limit 1")
-commandanswer (nick, string.format (gettext ("Login message deleted for user: %s"), user))
-opsnotify (table_sets ["classnotiwelcome"], string.format (gettext ("%s with class %d deleted login message for user: %s"), nick, cls, user))
-end
-
-elseif stype == "out" then
-local _, _, user = string.find (item, "^%S+ (%S+)$")
-
-if (getstatus (user) == 1) and ((table_sets ["welcomeclass"] == 11) or (getclass (user) < table_sets ["welcomeclass"])) then
-commandanswer (nick, gettext ("Either the feature is disabled or user that you're trying to set welcome message for doesn't have access to it."))
-else
-local anick = repsqlchars (user)
-VH:SQLQuery ("update `"..tbl_sql ["wm"].."` set `out` = '' where `nick` = '"..anick.."' limit 1")
-VH:SQLQuery ("delete from `"..tbl_sql ["wm"].."` where `nick` = '"..anick.."' and `in` = '' limit 1")
-commandanswer (nick, string.format (gettext ("Logout message deleted for user: %s"), user))
-opsnotify (table_sets ["classnotiwelcome"], string.format (gettext ("%s with class %d deleted logout message for user: %s"), nick, cls, user))
-end
-
-else -- unknown type
-commandanswer (nick, string.format (gettext ("Known types are: %s"), "in "..gettext ("and").." out"))
-end
-end
+			if getstatus (user) == 1 and (table_sets ["welcomeclass"] == 11 or getclass (user) < table_sets ["welcomeclass"]) then
+				commandanswer (nick, gettext ("Either the feature is disabled or user that you're trying to set welcome message for doesn't have access to it."))
+			else
+				local rser = repsqlchars (user)
+				VH:SQLQuery ("update `" .. tbl_sql ["wm"] .. "` set `out` = null where `nick` = '" .. rser .. "'")
+				VH:SQLQuery ("delete from `" .. tbl_sql ["wm"] .. "` where `nick` = '" .. rser .. "' and `in` is null")
+				commandanswer (nick, gettext ("Logout message deleted for user: %s"):format (user))
+				opsnotify (table_sets ["classnotiwelcome"], gettext ("%s with class %d deleted logout message for user: %s"):format (nick, cls, user))
+			end
+		else -- unknown type
+			commandanswer (nick, gettext ("Known types are: %s"):format ("in " .. gettext ("and") .. " out"))
+		end
+	end
 end
 
 ----- ---- --- -- -
 
 function listwelcome (nick)
-local _, rows = VH:SQLQuery ("select `nick`, `in`, `out` from `"..tbl_sql ["wm"].."` order by `nick` asc")
+	local _, rows = VH:SQLQuery ("select `nick`, `in`, `out` from `" .. tbl_sql ["wm"] .. "` order by `nick` asc")
 
-if rows > 0 then
-local anentry = ""
+	if rows > 0 then
+		local list = ""
 
-for x = 0, rows - 1 do
-local _, user, inm, outm = VH:SQLFetch (x)
-inm = string.gsub (inm, "%*", reprexpchars (user))
-outm = string.gsub (outm, "%*", reprexpchars (user))
-anentry = anentry.."\r\n "..gettext ("Nick")..": "..user.."\r\n "..gettext ("Login message")..": "..inm.."\r\n "..gettext ("Logout message")..": "..outm.."\r\n"
-end
+		for row = 0, rows - 1 do
+			local _, user, mein, meout = VH:SQLFetch (row)
+			mein = mein or ""
+			mein = mein:gsub ("%*", reprexpchars (user))
+			meout = meout or ""
+			meout = meout:gsub ("%*", reprexpchars (user))
+			list = list .. "\r\n " .. gettext ("Nick") .. ": " .. user .. "\r\n " .. gettext ("Login message") .. ": " .. mein .. "\r\n " .. gettext ("Logout message") .. ": " .. meout .. "\r\n"
+		end
 
-commandanswer (nick, gettext ("Welcome message list")..":\r\n"..anentry)
-else
-commandanswer (nick, gettext ("Welcome message list is empty."))
-end
+		commandanswer (nick, gettext ("Welcome message list") .. ":\r\n" .. list)
+	else
+		commandanswer (nick, gettext ("Welcome message list is empty."))
+	end
 end
 
 ----- ---- --- -- -
 
 function delwelcome (nick, item, cls)
-local aitem = repsqlchars (item)
-local _, rows = VH:SQLQuery ("select `nick` from `"..tbl_sql ["wm"].."` where `nick` = '"..aitem.."' limit 1")
+	local rtem = repsqlchars (item)
+	local _, rows = VH:SQLQuery ("select `nick` from `" .. tbl_sql ["wm"] .. "` where `nick` = '" .. rtem .. "'")
 
-if rows > 0 then
-VH:SQLQuery ("delete from `"..tbl_sql ["wm"].."` where `nick` = '"..aitem.."' limit 1")
-commandanswer (nick, string.format (gettext ("Welcome messages were deleted for user: %s"), item))
-opsnotify (table_sets ["classnotiwelcome"], string.format (gettext ("%s with class %d deleted welcome messages for user: %s"), nick, cls, item))
-else
-commandanswer (nick, string.format (gettext ("Couldn't delete user from welcome message list because not found: %s"), item))
-end
+	if rows > 0 then
+		VH:SQLQuery ("delete from `" .. tbl_sql ["wm"] .. "` where `nick` = '" .. rtem .. "'")
+		commandanswer (nick, gettext ("Welcome messages were deleted for user: %s"):format (item))
+		opsnotify (table_sets ["classnotiwelcome"], gettext ("%s with class %d deleted welcome messages for user: %s"):format (nick, cls, item))
+	else
+		commandanswer (nick, gettext ("Couldn't delete user from welcome message list because not found: %s"):format (item))
+	end
 end
 
 ----- ---- --- -- -
 
-function setwelcome (nick, item, cls)
-if string.find (item, "^%S+ .+$") then
-local _, _, stype = string.find (item, "^(%S+) .+$")
+function setwelcome (nick, line, cls)
+	if line:match ("^%S+ .+$") then
+		local mype = line:match ("^(%S+) .+$")
 
-if (stype == "in") or (stype == "out") then
-local _, _, item = string.find (item, "^%S+ (.+)$")
-local anick = repsqlchars (nick)
-local _, rows = VH:SQLQuery ("select `nick` from `"..tbl_sql ["wm"].."` where `nick` = '"..anick.."' limit 1")
+		if mype == "in" or mype == "out" then
+			local item = line:match ("^%S+ (.+)$")
+			local rick = repsqlchars (nick)
+			local _, rows = VH:SQLQuery ("select `nick` from `" .. tbl_sql ["wm"] .. "` where `nick` = '" .. rick .. "'")
 
-if rows > 0 then
-VH:SQLQuery ("update `"..tbl_sql ["wm"].."` set `"..stype.."` = '"..repsqlchars (item).."' where `nick` = '"..anick.."' limit 1")
-else
-VH:SQLQuery ("insert into `"..tbl_sql ["wm"].."` (`nick`, `"..stype.."`) values ('"..anick.."', '"..repsqlchars (item).."')")
-end
+			if rows > 0 then
+				VH:SQLQuery ("update `" .. tbl_sql ["wm"] .. "` set `" .. mype .. "` = '" .. repsqlchars (item) .. "' where `nick` = '" .. rick .. "'")
+			else
+				VH:SQLQuery ("insert into `" .. tbl_sql ["wm"] .. "` (`nick`, `" .. mype .. "`) values ('" .. rick .. "', '" .. repsqlchars (item) .. "')")
+			end
 
-item = string.gsub (item, "%*", reprexpchars (nick))
+			item = item:gsub ("%*", reprexpchars (nick))
 
-if stype == "in" then
-commandanswer (nick, string.format (gettext ("Your login message set: %s"), item))
-opsnotify (table_sets ["classnotiwelcome"], string.format (gettext ("%s with class %d changed his login message: %s"), nick, cls, item))
-elseif stype == "out" then
-commandanswer (nick, string.format (gettext ("Your logout message set: %s"), item))
-opsnotify (table_sets ["classnotiwelcome"], string.format (gettext ("%s with class %d changed his logout message: %s"), nick, cls, item))
-end
+			if mype == "in" then
+				commandanswer (nick, gettext ("Your login message set: %s"):format (item))
+				opsnotify (table_sets ["classnotiwelcome"], gettext ("%s with class %d changed his login message: %s"):format (nick, cls, item))
+			elseif mype == "out" then
+				commandanswer (nick, gettext ("Your logout message set: %s"):format (item))
+				opsnotify (table_sets ["classnotiwelcome"], gettext ("%s with class %d changed his logout message: %s"):format (nick, cls, item))
+			end
+		else -- unknown type
+			commandanswer (nick, gettext ("Known types are: %s"):format ("in " .. gettext ("and") .. " out"))
+		end
+	else -- deleting
+		local mype = line
 
-else -- unknown type
-commandanswer (nick, string.format (gettext ("Known types are: %s"), "in "..gettext ("and").." out"))
-end
-
-else -- deleting
-local stype = item
-
-if stype == "in" then
-local anick = repsqlchars (nick)
-VH:SQLQuery ("update `"..tbl_sql ["wm"].."` set `in` = '' where `nick` = '"..anick.."' limit 1")
-VH:SQLQuery ("delete from `"..tbl_sql ["wm"].."` where `nick` = '"..anick.."' and `out` = '' limit 1")
-commandanswer (nick, gettext ("Your login message deleted."))
-opsnotify (table_sets ["classnotiwelcome"], string.format (gettext ("%s with class %d deleted his login message."), nick, cls))
-
-elseif stype == "out" then
-local anick = repsqlchars (nick)
-VH:SQLQuery ("update `"..tbl_sql ["wm"].."` set `out` = '' where `nick` = '"..anick.."' limit 1")
-VH:SQLQuery ("delete from `"..tbl_sql ["wm"].."` where `nick` = '"..anick.."' and `in` = '' limit 1")
-commandanswer (nick, gettext ("Your logout message deleted."))
-opsnotify (table_sets ["classnotiwelcome"], string.format (gettext ("%s with class %d deleted his logout message."), nick, cls))
-
-else -- unknown type
-commandanswer (nick, string.format (gettext ("Known types are: %s"), "in "..gettext ("and").." out"))
-end
-end
+		if mype == "in" then
+			local rick = repsqlchars (nick)
+			VH:SQLQuery ("update `" .. tbl_sql ["wm"] .. "` set `in` = null where `nick` = '" .. rick .. "'")
+			VH:SQLQuery ("delete from `" .. tbl_sql ["wm"] .. "` where `nick` = '" .. rick .. "' and `out` is null")
+			commandanswer (nick, gettext ("Your login message deleted."))
+			opsnotify (table_sets ["classnotiwelcome"], gettext ("%s with class %d deleted his login message."):format (nick, cls))
+		elseif mype == "out" then
+			local rick = repsqlchars (nick)
+			VH:SQLQuery ("update `" .. tbl_sql ["wm"] .. "` set `out` = null where `nick` = '" .. rick .. "'")
+			VH:SQLQuery ("delete from `" .. tbl_sql ["wm"] .. "` where `nick` = '" .. rick .. "' and `in` is null")
+			commandanswer (nick, gettext ("Your logout message deleted."))
+			opsnotify (table_sets ["classnotiwelcome"], gettext ("%s with class %d deleted his logout message."):format (nick, cls))
+		else -- unknown type
+			commandanswer (nick, gettext ("Known types are: %s"):format ("in " .. gettext ("and") .. " out"))
+		end
+	end
 end
 
 ----- ---- --- -- -
 
 function showwelcome (nick)
-local _, rows = VH:SQLQuery ("select `in`, `out` from `"..tbl_sql ["wm"].."` where `nick` = '"..repsqlchars (nick).."' limit 1")
+	local _, rows = VH:SQLQuery ("select `in`, `out` from `" .. tbl_sql ["wm"] .. "` where `nick` = '" .. repsqlchars (nick) .. "'")
 
-if rows > 0 then
-local _, inm, outm = VH:SQLFetch (0)
-inm = string.gsub (inm, "%*", reprexpchars (nick))
-commandanswer (nick, string.format (gettext ("Your login message: %s"), inm))
-outm = string.gsub (outm, "%*", reprexpchars (nick))
-commandanswer (nick, string.format (gettext ("Your logout message: %s"), outm))
-else
-commandanswer (nick, gettext ("You don't have any welcome messages."))
-end
+	if rows > 0 then
+		local _, mein, meout = VH:SQLFetch (0)
+		mein = mein or ""
+		mein = mein:gsub ("%*", reprexpchars (nick))
+		commandanswer (nick, gettext ("Your login message: %s"):format (mein))
+		meout = meout or ""
+		meout = meout:gsub ("%*", reprexpchars (nick))
+		commandanswer (nick, gettext ("Your logout message: %s"):format (meout))
+	else
+		commandanswer (nick, gettext ("You don't have any welcome messages."))
+	end
 end
 
 ----- ---- --- -- -
@@ -6682,18 +6688,18 @@ function sendwelcomein (nick, ucl)
 		return
 	end
 
-	local _, rows = VH:SQLQuery ("select `in` from `" .. tbl_sql ["wm"] .. "` where `nick` = '" .. repsqlchars (nick) .. "' and `in` != '' limit 1")
+	local _, rows = VH:SQLQuery ("select `in` from `" .. tbl_sql ["wm"] .. "` where `nick` = '" .. repsqlchars (nick) .. "' and `in` is not null")
 
 	if rows > 0 then
-		local _, cmsg = VH:SQLFetch (0)
+		local _, mein = VH:SQLFetch (0)
 
 		if table_sets ["custnickclass"] < 11 then
-			cmsg = cmsg:gsub ("%*", reprexpchars (getcustnick (nick) or nick))
+			mein = mein:gsub ("%*", reprexpchars (getcustnick (nick) or nick))
 		else
-			cmsg = cmsg:gsub ("%*", reprexpchars (nick))
+			mein = mein:gsub ("%*", reprexpchars (nick))
 		end
 
-		maintoall (cmsg, 0, 10)
+		maintoall (mein, 0, 10)
 	end
 end
 
@@ -6704,18 +6710,18 @@ function sendwelcomeout (nick, ucl)
 		return
 	end
 
-	local _, rows = VH:SQLQuery ("select `out` from `" .. tbl_sql ["wm"] .. "` where `nick` = '" .. repsqlchars (nick) .. "' and `out` != '' limit 1")
+	local _, rows = VH:SQLQuery ("select `out` from `" .. tbl_sql ["wm"] .. "` where `nick` = '" .. repsqlchars (nick) .. "' and `out` is not null")
 
 	if rows > 0 then
-		local _, cmsg = VH:SQLFetch (0)
+		local _, meout = VH:SQLFetch (0)
 
 		if table_sets ["custnickclass"] < 11 then
-			cmsg = cmsg:gsub ("%*", reprexpchars (getcustnick (nick) or nick))
+			meout = meout:gsub ("%*", reprexpchars (getcustnick (nick) or nick))
 		else
-			cmsg = cmsg:gsub ("%*", reprexpchars (nick))
+			meout = meout:gsub ("%*", reprexpchars (nick))
 		end
 
-		maintoall (cmsg, 0, 10)
+		maintoall (meout, 0, 10)
 	end
 end
 
@@ -14447,7 +14453,7 @@ end
 local rnewn = repsqlchars (newn)
 local roldn = repsqlchars (oldn)
 VH:SQLQuery ("update `reglist` set `nick` = '"..rnewn.."' where `nick` = '"..roldn.."' limit 1")
-VH:SQLQuery ("update `"..tbl_sql ["wm"].."` set `nick` = '"..rnewn.."' where `nick` = '"..roldn.."' limit 1")
+	VH:SQLQuery ("update `" .. tbl_sql ["wm"] .. "` set `nick` = '" .. rnewn .. "' where `nick` = '" .. roldn .. "'")
 VH:SQLQuery ("update `"..tbl_sql ["cust"].."` set `nick` = '"..rnewn.."' where `nick` = '"..roldn.."' limit 1")
 VH:SQLQuery ("update `"..tbl_sql ["auth"].."` set `nick` = '"..rnewn.."' where `nick` = '"..roldn.."'") -- no limit
 VH:SQLQuery ("update `"..tbl_sql ["chran"].."` set `nick` = '"..rnewn.."' where `nick` = '"..roldn.."' limit 1")
@@ -14563,7 +14569,7 @@ end
 
 function delledouser (nick)
 	local usr = repsqlchars (nick)
-	VH:SQLQuery ("delete from `" .. tbl_sql ["wm"] .. "` where `nick` = '" .. usr .."' limit 1")
+	VH:SQLQuery ("delete from `" .. tbl_sql ["wm"] .. "` where `nick` = '" .. usr .. "'")
 	VH:SQLQuery ("delete from `" .. tbl_sql ["cust"] .. "` where `nick` = '" .. usr .. "' limit 1")
 	VH:SQLQuery ("delete from `" .. tbl_sql ["auth"] .. "` where `nick` = '" .. usr .. "'")
 	VH:SQLQuery ("delete from `" .. tbl_sql ["off"] .. "` where `from` = '" .. usr .. "'")
@@ -17373,20 +17379,22 @@ end
 
 	----- ---- --- -- -
 
-elseif tvar == "welcomeclass" then
-if num == true then
-if ((setto >= 0) and (setto <= 5)) or (setto == 10) or (setto == 11) then
-ok = true
-if setto > table_sets [tvar] then cleantablebyclass (setto, tbl_sql ["wm"]) end
-else
-commandanswer (nick, string.format (gettext ("Configuration variable %s can only be set to: %s"), tvar, "0, 1, 2, 3, 4, 5, 10 "..gettext ("or").." 11"))
-end
+	elseif tvar == "welcomeclass" then
+		if num then
+			if (setto >= 0 and setto <= 5) or setto == 10 or setto == 11 then
+				ok = true
 
-else
-commandanswer (nick, string.format (gettext ("Configuration variable %s must be a number."), tvar))
-end
+				if setto > table_sets [tvar] then
+					cleantablebyclass (setto, tbl_sql ["wm"])
+				end
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0, 1, 2, 3, 4, 5, 10 " .. gettext ("or") .. " 11"))
+			end
+		else
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
+		end
 
------ ---- --- -- -
+	----- ---- --- -- -
 
 elseif tvar == "opkeyclass" then
 	if num == true then
@@ -19447,8 +19455,8 @@ VH:SQLQuery ("create table if not exists `"..tbl_sql ["sefiex"].."` (`exception`
 	VH:SQLQuery ("create table if not exists `" .. tbl_sql ["miver"] .. "` (`version` varchar(255) not null primary key, `time` varchar(10) null, `occurred` bigint(20) unsigned not null default 0, `note` varchar(255) null) engine = myisam default character set utf8 collate utf8_unicode_ci")
 	VH:SQLQuery ("create table if not exists `" .. tbl_sql ["miex"] .. "` (`exception` varchar(255) not null primary key, `occurred` bigint(20) unsigned not null default 0, `note` varchar(255) null) engine = myisam default character set utf8 collate utf8_unicode_ci")
 
--- welcome messages
-VH:SQLQuery ("create table if not exists `"..tbl_sql ["wm"].."` (`nick` varchar(255) not null, `in` text not null, `out` text not null, primary key (`nick`)) engine = myisam default character set utf8 collate utf8_unicode_ci")
+	-- welcome messages
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql ["wm"] .. "` (`nick` varchar(255) not null primary key, `in` text null default null, `out` text null default null) engine = myisam default character set utf8 collate utf8_unicode_ci")
 
 -- custom nicks
 VH:SQLQuery ("create table if not exists `"..tbl_sql ["cust"].."` (`nick` varchar(255) not null, `custom` varchar(255) not null, primary key (`nick`)) engine = myisam default character set utf8 collate utf8_unicode_ci")
@@ -19562,7 +19570,7 @@ VH:SQLQuery ("alter ignore table `script_ledokol_sefiexceptions` rename to `"..t
 	VH:SQLQuery ("alter ignore table `script_ledokol_myinfoexceptions` rename to `" .. tbl_sql ["miex"] .. "`")
 VH:SQLQuery ("alter ignore table `script_ledokol_authorization` rename to `"..tbl_sql ["auth"].."`")
 	VH:SQLQuery ("alter ignore table `script_ledokol_releases` rename to `" .. tbl_sql ["rel"] .. "`")
-VH:SQLQuery ("alter ignore table `script_ledokol_welcomemessages` rename to `"..tbl_sql ["wm"].."`")
+	VH:SQLQuery ("alter ignore table `script_ledokol_welcomemessages` rename to `" .. tbl_sql ["wm"] .. "`")
 VH:SQLQuery ("alter ignore table `script_ledokol_customnicks` rename to `"..tbl_sql ["cust"].."`")
 VH:SQLQuery ("alter ignore table `script_ledokol_chatrooms` rename to `"..tbl_sql ["chat"].."`")
 VH:SQLQuery ("alter ignore table `script_ledokol_reminders` rename to `"..tbl_sql ["rem"].."`")
@@ -19706,11 +19714,13 @@ VH:SQLQuery ("alter ignore table `"..tbl_sql ["auth"].."` change column `bad` `b
 	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["rel"] .. "` change column `by` `by` varchar(255) not null") -- by
 	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["rel"] .. "` change column `date` `date` bigint(20) unsigned not null") -- date
 
--- welcome messages
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["wm"].."` engine = myisam") -- engine
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["wm"].."` change column `nick` `nick` varchar(255) not null") -- nick
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["wm"].."` change column `in` `in` text not null") -- in
-VH:SQLQuery ("alter ignore table `"..tbl_sql ["wm"].."` change column `out` `out` text not null") -- out
+	-- welcome messages
+	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["wm"] .. "` engine = myisam") -- engine
+	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["wm"] .. "` change column `nick` `nick` varchar(255) not null") -- nick
+	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["wm"] .. "` change column `in` `in` text null default null") -- in
+	VH:SQLQuery ("update `" .. tbl_sql ["wm"] .. "` set `in` = null where `in` = ''")
+	VH:SQLQuery ("alter ignore table `" .. tbl_sql ["wm"] .. "` change column `out` `out` text null default null") -- out
+	VH:SQLQuery ("update `" .. tbl_sql ["wm"] .. "` set `out` = null where `out` = ''")
 
 -- custom nicks
 VH:SQLQuery ("alter ignore table `"..tbl_sql ["cust"].."` engine = myisam") -- engine
