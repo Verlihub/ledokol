@@ -1,4 +1,4 @@
-[ 2.9.0 :: 2016-00-00 ]
+[ 2.9.0 :: 2016-08-31 ]
 
 [ 17] Fixed: Tag parser with lowercase version identifier, report by Uhlik
 [ 20] Fixed: Bypass ban notification on old Verlihub to avoid error due to missing arguments, report by Mank
