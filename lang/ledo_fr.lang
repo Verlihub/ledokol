@@ -1145,7 +1145,7 @@ Low registration uptime from %s with IP %s and class %d: %s|Faible disponibilit�
 Thank you, your report has been accepted.|Merci, votre rapport a йtй acceptй .
 Low search uptime of %d seconds from %s with IP %s and class %d as any file: %s|Recherche faible disponibilitй de %d secondes de %s avec %s IP et de la classe %d comme tout fichier: %s
 Low search uptime of %d seconds from %s with IP %s and class %d as audio file: %s|Recherche faible disponibilitй de %d secondes de %s avec %s IP et de la classe %d sous forme de fichier audio: %s
-Low search uptime of %d seconds from %s with IP %s and class %d as compressed file: %s|
+Low search uptime of %d seconds from %s with IP %s and class %d as compressed file: %s|Recherche faible disponibilitй de %d secondes de %s avec %s IP et de la classe %d comme fichier compressй : %s
 Low search uptime of %d seconds from %s with IP %s and class %d as document: %s|Recherche faible disponibilitй de %d secondes de %s avec %s IP et de la classe %d comme document: %s
 Low search uptime of %d seconds from %s with IP %s and class %d as executable: %s|Recherche faible disponibilitй de %d secondes de %s avec %s IP et de la classe %d comme exйcutable: %s
 Low search uptime of %d seconds from %s with IP %s and class %d as picture: %s|Recherche faible disponibilitй de %d secondes de %s avec %s IP et de la classe %d comme image: %s
@@ -1153,5 +1153,5 @@ Low search uptime of %d seconds from %s with IP %s and class %d as video: %s|Rec
 Low search uptime of %d seconds from %s with IP %s and class %d as folder: %s|Recherche faible disponibilitй de %d secondes de %s avec %s IP et de la classe %d comme dossier: %s
 Low search uptime of %d seconds from %s with IP %s and class %d as TTH: %s|Recherche faible disponibilitй de %d secondes de %s avec %s IP et de la classe %d comme TTH: %s
 User dropped: %s|Utilisateur dйconnectй: %s
-%d of %d|
-Main chat responder list contains %d items, but none matched your pattern.|
+%d of %d|%d de %d
+Main chat responder list contains %d items, but none matched your pattern.|Principale liste du chat repondeur contient %d des elements , mais aucun ne correspond a votre modele.
