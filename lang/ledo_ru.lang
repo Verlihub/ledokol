@@ -958,7 +958,7 @@ Vote for user to be kicked|Голосовать за кик пользовате
 You don't want to vote for kicking an operator.|Не думаю что вы хотите голосовать за кик оператора.
 User voted kick|Кик по голосованию пользователей
 You have already voted for kicking that user.|Вы уже проголосовали за кик этого юзера.
-%s added vote %d of %d for kicking user with class %d: %s|%s добавил голосование %d из %d за кик юзера с классом %d: %s
+%s added vote %d of %d for kicking user with class %d: %s|Юзер %s добавил голосование %d из %d за кик юзера с классом %d: %s
 There is an error in following antispam entry pattern|Существует ошибка в следующем шаблоне антиспама
 Pattern|Шаблон
 Error|Ошибка
