@@ -59,8 +59,8 @@ Doxtur, chaos, sphinx, Zorro, W1ZaRd, S0RiN, MaxFox, Krzychu,
 -- global storage variables and tables >>
 ---------------------------------------------------------------------
 
-ver_ledo = "2.9.0" -- ledokol version
-bld_ledo = "22" -- build number
+ver_ledo = "2.9.1" -- ledokol version
+bld_ledo = "23" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -219,6 +219,7 @@ table_sets = {
 	["respskiplast"] = 0,
 	["newsclass"] = 0,
 	["newsautolines"] = 0,
+	["newsdeflines"] = 25,
 	["chatrankclass"] = 11,
 	["sharerankclass"] = 11,
 	["shareranmin"] = 500,
@@ -1316,9 +1317,14 @@ function Main (file)
 						VH:SQLQuery ("update `" .. tbl_sql ["wm"] .. "` set `out` = null where `out` = ''")
 
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('respskiplast', '" .. repsqlchars (table_sets ["respskiplast"]) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('histdeflines', '" .. repsqlchars (table_sets ["histdeflines"]) .. "')")
 					end
 
 					if ver <= 291 then
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('newsdeflines', '" .. repsqlchars (table_sets ["newsdeflines"]) .. "')")
+					end
+
+					if ver <= 292 then
 						-- todo
 					end
 
@@ -2431,17 +2437,17 @@ return 0
 
 	----- ---- --- -- -
 
-	elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["hubnews"].." %d+$") then
+	elseif data:match ("^" .. table_othsets ["optrig"] .. table_cmnds ["hubnews"] .. " %d+$") or data:match ("^" .. table_othsets ["optrig"] .. table_cmnds ["hubnews"] .. "$") then
 		if ucl >= table_sets ["newsclass"] then
 			donotifycmd (nick, data, 0, ucl)
-			sendnews (nick, string.sub (data, string.len (table_cmnds ["hubnews"]) + 3, -1), 0)
+			sendnews (nick, data:sub (# table_cmnds ["hubnews"] + 3), false)
 		else
 			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
 
 elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["calculate"].." %S+ %S %S+$") then
 if ucl >= table_sets ["minusrcommandclass"] then
@@ -4360,19 +4366,19 @@ end
 
 return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
 
-	elseif string.find (data, "^"..table_othsets ["ustrig"]..table_cmnds ["hubnews"].." %d+$") then
+	elseif data:match ("^" .. table_othsets ["ustrig"] .. table_cmnds ["hubnews"] .. " %d+$") or data:match ("^" .. table_othsets ["ustrig"] .. table_cmnds ["hubnews"] .. "$") then
 		if ucl >= table_sets ["newsclass"] then
 			donotifycmd (nick, data, 0, ucl)
-			sendnews (nick, string.sub (data, string.len (table_cmnds ["hubnews"]) + 3, -1), 0)
+			sendnews (nick, data:sub (# table_cmnds ["hubnews"] + 3), false)
 		else
 			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
 
 elseif string.find (data, "^"..table_othsets ["ustrig"]..table_cmnds ["calculate"].." %S+ %S %S+$") then
 if ucl >= table_sets ["minusrcommandclass"] then
@@ -4880,7 +4886,7 @@ function VH_OnUserLogin (nick, uip)
 	resetrealnick (nick) -- reset custom nick when used by real user
 
 	if cls >= table_sets ["newsclass"] and table_sets ["newsautolines"] > 0 then -- hub news
-		sendnews (nick, table_sets ["newsautolines"], 1)
+		sendnews (nick, table_sets ["newsautolines"], true)
 	end
 
 	if table_sets ["histlimit"] > 0 then
@@ -8676,28 +8682,30 @@ end
 
 ----- ---- --- -- -
 
-function sendnews (nick, lnnum, autosend)
-	local lns = tonumber (lnnum)
-	if lns < 1 then lns = 1 end
-	local _, rows = VH:SQLQuery ("select `date`, `by`, `item` from `"..tbl_sql ["news"].."` order by `date` desc, `id` desc limit "..lns)
+function sendnews (nick, num, auto)
+	local lnum = tonumber (num or table_sets ["newsdeflines"]) or table_sets ["newsdeflines"]
+
+	if lnum < 1 then
+		lnum = 1
+	end
+
+	local _, rows = VH:SQLQuery ("select `date`, `by`, `item` from `" .. tbl_sql ["news"] .. "` order by `date` desc, `id` desc limit " .. tostring (lnum))
 
 	if rows > 0 then
-		local aentry = ""
+		local list = ""
 
 		for x = 0, rows - 1 do
-			local _, adate, user, msg = VH:SQLFetch (x)
-			aentry = " "..string.format (gettext ("By %s on %s: %s"), user, os.date (table_sets ["dateformat"].." "..table_sets ["timeformat"], adate), msg).."\r\n"..aentry
+			local _, sdate, user, text = VH:SQLFetch (x)
+			list = " " .. gettext ("By %s on %s: %s"):format (user, os.date (table_sets ["dateformat"] .. " " .. table_sets ["timeformat"], sdate), text) .. "\r\n" .. list
 		end
 
-		if autosend == 0 then
-			commandanswer (nick, string.format (gettext ("Last %d news items"), rows)..":\r\n\r\n"..aentry)
+		if auto then
+			maintouser (nick, gettext ("Last %d news items"):format (rows) .. ":\r\n\r\n" .. list)
 		else
-			maintouser (nick, string.format (gettext ("Last %d news items"), rows)..":\r\n\r\n"..aentry)
+			commandanswer (nick, gettext ("Last %d news items"):format (rows) .. ":\r\n\r\n" .. list)
 		end
-	else
-		if autosend == 0 then -- only if sending manually
-			commandanswer (nick, gettext ("Hub news list is empty."))
-		end
+	elseif not auto then -- only if sending manually
+		commandanswer (nick, gettext ("Hub news list is empty."))
 	end
 end
 
@@ -15040,13 +15048,13 @@ end
 		sopmenitm (usr, gettext ("Hub news") .. "\\" .. gettext ("Delete news items"), table_cmnds ["newsdel"] .. " %[line:<" .. gettext ("date") .. ">]")
 	end
 
-if ucl >= table_sets ["newsclass"] then
-if ucl >= table_sets ["mincommandclass"] then
-smensep (usr)
-end
+	if ucl >= table_sets ["newsclass"] then
+		if ucl >= table_sets ["mincommandclass"] then
+			smensep (usr)
+		end
 
-susmenitm (usr, gettext ("Hub news").."\\"..gettext ("Read hub news"), table_cmnds ["hubnews"].." %[line:<"..gettext ("lines")..">]")
-end
+		susmenitm (usr, gettext ("Hub news") .. "\\" .. gettext ("Read hub news"), table_cmnds ["hubnews"] .. " %[line:<" .. gettext ("lines") .. ">]")
+	end
 
 	-- chat replacer
 
@@ -18332,6 +18340,19 @@ end
 
 	----- ---- --- -- -
 
+	elseif tvar == "newsdeflines" then
+		if num then
+			if setto >= 1 and setto <= 1000 then
+				ok = true
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "1 " .. gettext ("to") .. " 1000"))
+			end
+		else
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
+		end
+
+	----- ---- --- -- -
+
 	elseif tvar == "histlimit" then
 		if num == true then
 			if setto >= 0 and setto <= 10000 then
@@ -18994,7 +19015,7 @@ help = help.." "..ustrig..table_cmnds ["custlist"].." - "..gettext ("Custom nick
 	help = help .. " " .. ustrig .. table_cmnds ["mode"] .. " <" .. gettext ("mode") .. "> - " .. gettext ("Set your chat mode") .. "\r\n"
 	help = help .. " " .. ustrig .. table_cmnds ["offmsg"] .. " <" .. gettext ("nick") .. "> <" .. gettext ("message") .. "> - " .. gettext ("Offline message to user") .. "\r\n"
 	help = help .. " " .. ustrig .. table_cmnds ["calculate"] .. " <" .. gettext ("equation") .. "> - " .. gettext ("Calculate an equation") .. "\r\n"
-	help = help .. " " .. ustrig .. table_cmnds ["hubnews"] .. " <" .. gettext ("lines") .. "> - " .. gettext ("Read hub news") .. "\r\n"
+	help = help .. " " .. ustrig .. table_cmnds ["hubnews"] .. " [" .. gettext ("lines") .. "=" .. table_sets ["newsdeflines"] .. "] - " .. gettext ("Read hub news") .. "\r\n"
 	help = help .. " " .. ustrig .. table_cmnds ["showtopic"] .. " - " .. gettext ("Current topic") .. "\r\n"
 	help = help .. " " .. ustrig .. table_cmnds ["showhubs"] .. " - " .. gettext ("Show friendly hubs") .. "\r\n\r\n"
 
@@ -19322,9 +19343,10 @@ conf = conf.."\r\n [::] clearclass = "..table_sets ["clearclass"]
 	conf = conf .. "\r\n [::] respdelay = " .. table_sets ["respdelay"]
 	conf = conf .. "\r\n [::] respskiplast = " .. table_sets ["respskiplast"]
 	conf = conf .. "\r\n"
-conf = conf.."\r\n [::] newsclass = "..table_sets ["newsclass"]
-conf = conf.."\r\n [::] newsautolines = "..table_sets ["newsautolines"]
-conf = conf.."\r\n"
+	conf = conf .. "\r\n [::] newsclass = " .. table_sets ["newsclass"]
+	conf = conf .. "\r\n [::] newsautolines = " .. table_sets ["newsautolines"]
+	conf = conf .. "\r\n [::] newsdeflines = " .. table_sets ["newsdeflines"]
+	conf = conf .. "\r\n"
 conf = conf.."\r\n [::] chatrankclass = "..table_sets ["chatrankclass"]
 conf = conf.."\r\n [::] sharerankclass = "..table_sets ["sharerankclass"]
 conf = conf.."\r\n [::] shareranmin = "..table_sets ["shareranmin"]

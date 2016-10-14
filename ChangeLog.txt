@@ -1,3 +1,7 @@
+[ 2.9.1 :: ####-##-## ]
+
+[ 23] Added: hubnews command lines parameter is now optional and defaults to newsdeflines configuration, request by Mank
+
 [ 2.9.0 :: 2016-08-31 ]
 
 [ 17] Fixed: Tag parser with lowercase version identifier, report by Uhlik
