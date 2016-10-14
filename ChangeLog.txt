@@ -1,3 +1,7 @@
+[ 2.9.1 :: ####-##-## ]
+
+[ 23] Added: hubnews command lines parameter is now optional and defaults to newsdeflines configuration, request by Mank
+
 [ 2.9.0 :: 2016-08-31 ]
 
 [ 17] Fixed: Tag parser with lowercase version identifier, report by Uhlik
@@ -47,6 +51,267 @@
 [  0] Added: Support for chat_to_all script command, external scripts can use this to send main chat history line to Ledokol
 [  1] Added: Build number starting from 1 to increase on every development and release update, request by Uhlik
 [  2] Added: rcmenuoff command to disable or enable right click menu item
+[  3] Added: Send script build number in all AVDB requests to help determine version specific issues
+[  4] Added: Operator chat history stores messages on class basis allowing to save feed notificiations, idea by KCAHDEP
+
+[ 2.8.7 :: 2015-10-03 ]
+
+[  0] Fixed: rename command parameters when used from user menu, report by KCAHDEP
+[  0] Fixed: Pingers can use report command in PM to hub security bot when gag is set, report by KCAHDEP
+[  0] Fixed: Incorrect IP in connect request notification
+[  0] Fixed: Class number check on reglist command
+[  0] Fixed: Don't allow forced infected user detection on users who don't share anything, report by KCAHDEP
+[  0] Added: Save hub messages from operator chat bot in operator chat history, requires VH_OnOpChatMessage callback, request by KCAHDEP
+[  0] Added: Turkish language, thanks to Mauron
+[  0] Added: langfileprefix country code validation, also allows use of full country names in English
+[  0] Added: User log search by country code
+
+[ 2.8.6 :: 2015-07-11 ]
+
+[  0] Fixed: Missing $OpList command separator, report by PPK
+[  0] Fixed: Missing built in right click menu items, report by Uhlik
+[  0] Changed: Hublist user lookup now accepts type parameter such as nick, desc, tag, conn, mail, share and ip
+[  0] Added: Antispam debug option to see which entry caused detection
+[  0] Added: histdel command to delete history messages by text, request by KCAHDEP
+[  0] Added: Use custom nicks in all chatroom broadcasts when available
+[  0] Added: Regular and country code chatroom history, request by KCAHDEP
+
+[ 2.8.5 :: 2015-01-08 ]
+
+[  0] Fixed: Correctly send $NoReport command to pingers, report by S0RiN
+[  0] Fixed: Check syntax of oldclean command, report by KCAHDEP
+[  0] Fixed: Don't notify user commands as messages sent to hub security
+[  0] Fixed: Missing ban time when adding forbidden MyINFO parts
+[  0] Changed: myinfadd command parameter syntax to <type> <"lre"> ["time"] ["note"]
+[  0] Changed: Modify existing forbidden MyINFO item when it's added again
+[  0] Changed: Restrict access of forced infected user detection report to AVDB
+[  0] Changed: Replace new line character with space in antivirus detection file names
+[  0] Changed: Country code gag now uses LRE instead of country code, request by KCAHDEP
+[  0] Added: Optional parameter to add note for each forbidden MyINFO item, request by Uhlik
+[  0] Added: Cache for protected users list, it's called too often, we don't want to put high load on MySQL server
+[  0] Added: lretoplain command to convert LRE to plain text, idea by KCAHDEP
+[  0] Added: histshowipclass configuration to show user IP in main chat history to users with set class and above, request by KCAHDEP
+[  0] Removed: Messages on hub restart and stop, hub itself will do that for us
+
+[ 2.8.4 :: 2014-11-17 ]
+
+[  0] Fixed: Correctly remove user from operator ranks when he deletes his own registration
+[  0] Changed: User registration notification now rely on plugin callbacks instead of command scans
+[  0] Added: Public user registration notification for all classes, empty regnewpubmsg* to skip notification for that class, idea by KCAHDEP
+[  0] Added: cURL will use same local address for connections as hub itself when defined
+[  0] Added: cURL helper function now returns response headers if requested
+[  0] Added: Avdb-Version-Count and Avdb-Delete-Count extension headers to use with AVDB load process
+
+[ 2.8.3 :: 2014-10-05 ]
+
+[  0] Fixed: Break the loop when infected user is found
+[  0] Fixed: IP connect antiflood update would break the logout process when user is protected
+[  0] Added: Detect invalid patterns before they are added, idea by Lord_Zero
+[  0] Added: Detect virus spreaders by IP address and share aswell
+[  0] Added: Antivirus search server to detect passive virus spreaders, requires LuaSocket
+[  0] Added: List of blocked infected users in antivirus statistics, request by KCAHDEP
+[  0] Added: chatcodeflag for destination of chat secirity code, 0 = MC and PM, 1 = MC, 2 = PM, request by KCAHDEP
+[  0] Added: Automatic country chatroom entrance feature to allow users entering these chatrooms even when their country is different
+[  0] Added: French, German and Lithuanian languages, only French is complete
+
+[ 2.8.2 :: 2014-09-15 ]
+
+[  0] Fixed: Check if user is protected before running antivirus scan on him
+[  0] Fixed: Ignore translation file version number when updating to last development version, report by S0RiN
+[  0] Fixed: Correctly escape backslash character in cURL parameters
+[  0] Changed: histbotmsg value 0 = don't save bot messages, 1 = save all except main chat reminders, 2 = save all, idea by Uhlik
+[  0] Added: When blocking infected users tell pingers to not send report, idea by S0RiN
+[  0] Added: Command to force infected user detection
+[  0] Added: Reduce size of AVDB to download by using notime parameter, idea by FlylinkDC
+[  0] Added: Detection of special virus spreaders who reply to any random search request, enabled by default, idea by Lord_Zero and MaxFox
+[  0] Added: Report path of infected files to AVDB
+[  0] Added: Command to search in AVDB, known types are nick, addr, size and path
+
+[ 2.8.1 :: 2014-08-30 ]
+
+[  0] Fixed: Negative GeoIP coordinates are valid
+[  0] Fixed: Download correct translation file on script update
+[  0] Fixed: Special NMDC characters in shell error messages were never escaped
+[  0] Fixed: Show correct result on user lookup, either user is not found or server is down
+[  0] Changed: Load AVDB using timestamp to reduce data transfer
+[  0] Added: Bot list to statistics collection
+[  0] Added: Chat notification when news item is added, idea by Uhlik
+[  0] Added: Virus spreader detection action to block connection requests to user, used by default, request by Ger
+[  0] Added: dev and force parameters for ledover command available for class 10 to force update to last development and stable versions
+[  0] Added: Try to download translation file when it doesn't exist
+[  0] Added: Missing user agent on AVDB load
+[  0] Added: Support for cURL exit codes to identify usage problems
+
+[ 2.8.0 :: 2014-08-16 ]
+
+[  0] Fixed: me command triggered by operator did not perform any operations
+[  0] Fixed: Renamed cleanup command to oldclean since Verlihub has got clean* prefix reserver for some of its own commands
+[  0] Fixed: Pattern of oldclean command parameters
+[  0] Fixed: Correctly encode nick with cURL on user lookup
+[  0] Fixed: Case sensitivity in vote kicks, report by Uhlik
+[  0] Fixed: Don't send user commands to clients that don't support them
+[  0] Changed: Allow pingers to use report command, required for AVDB
+[  0] Changed: Store country code gags permanently, request by MaxFox
+[  0] Added: Custom orderless gettext() format for translations, strings must be in format "english|translation\n" with each string on new line, comment with # character
+[  0] Added: Detection of parameter count mismatch in translation strings, this helps to detect errors in translation files
+[  0] Added: Support for replace variables in mitagmessage, <cl> = client, <ve> = version, <mo> = mode, <hu> = hubs, <sl> = slots, <li> = limiter
+[  0] Added: Virus spreader detection with AVDB support, requires cURL
+[  0] Added: Antivirus statistics, general and for each user separately
+[  0] Added: Load infected user list from AVDB and kick them when they log in, disabled by default
+[  0] Added: Commands to clear kick votes for user and list all current votes, request by Uhlik
+[  0] Added: Triggers with Ledokol replace variables support, request by S0RiN
+[  0] Added: More replace variables: custnick class classname uuptshrt uuptlong userhost userip geoiprange geoipcity geoipregcode geoipregname geoipcc geoipcn geoipconcode geoipconname geoiptz geoipcoord geoippost geoipmetro geoiparea myinfodesc myinfotag tagclient tagversion tagmode taghubs tagslots taglimit myinfoconn myinfostat myinfomail myinfoshare myinfoexshar myinfosupport myinfonmdcver
+[  0] Added: Support for L1=Local Network and P1=Private Network country codes
+
+[ 2.7.9 :: 2014-06-25 ]
+
+[  0] Fixed: Use newline character as delimiter in word ranks instead of using it as part of the word
+[  0] Changed: Chat replacer now supports PM using flags, 0 = MC & PM, 1 = MC, 2 = PM, old and default items have 1 = MC, idea by JOE™
+[  0] Added: Try to display country code along every IP address in hub feed messages
+[  0] Added: Check for invalid patterns on antispam, search filter and forbidden MyINFO detections and their exceptions, feed message with solution is sent when error is found
+[  0] Added: Feed notification for replaced PM messages aswell
+[  0] Added: Main chat flood detection from all users, messages are ignored for now, enable with chatantiflood = 2
+[  0] Added: List of users with same IP to user information
+
+[ 2.7.8 :: 2014-04-08 ]
+
+[  0] Fixed: Missing translations on ban and unban
+[  0] Fixed: Secondary right click menu item order
+[  0] Fixed: Version numbers comparison on update
+[  0] Fixed: VIP kick was not accessible with new style commands in Verlihub
+[  0] Changed: VIP kicks are made with users nick instead of bot nick
+[  0] Added: Basic vote kicks using votekick <nick>, configured with votekickclass and votekickcount
+[  0] Added: CTM protocol flood actions, 0 = drop, 1 = kick, 2 = temporary ban, 3 = permanent ban, request by KCAHDEP
+
+[ 2.7.7 :: 2014-04-05 ]
+
+[  0] Fixed: Operator and user commands against multiple triggers in cmd_start_op and cmd_start_user
+[  0] Fixed: Look for higher version during Ledokol update detection, report by KCAHDEP
+[  0] Fixed: Don't try to send user commands to pingers
+[  0] Changed: Ban and unban notifications now use OnNewBan and OnUnBan callbacks instead of scanning for commands, report by Uhlik
+[  0] Changed: Don't notify /me command from operators
+[  0] Added: Configuration antibelowclass that will override scanbelowclass for spam detection
+[  0] Added: Configuration longdateformat to show in registered users list
+[  0] Added: Right click menu feature to build custom user commands, set instrcmenu to 1 and see ledohelp command, user must reconnect to get new menu
+
+[ 2.7.6 :: 2014-03-04 ]
+
+[  0] Fixed: Unknown user IP on unknown protocol command before user login
+[  0] Fixed: Ban and unban notification without reason
+[  0] Added: Full GeoIP information to user information, if supported by hub
+[  0] Added: Updated country code list according to Maxminds ISO-3166 standard, also added EU=European Union and AP=Asia Pacific Region missing country codes, report by Uhlik
+[  0] Added: x as multiplication character in calculator, you can use * or x, idea by Uhlik
+[  0] Added: * in <days> parameter to delete all users with chosen class on registered users table cleanup, idea by Uhlik
+[  0] Added: dropip <ip> command to drop users with specific IP address, sends notification to users with class classnotikick and higher
+[  0] Added: citylive <cc> command to show live user city statistics by country code
+[  0] Added: mchistclass configuration to restrict main chat history to specific classes, idea by Lord_Zero
+[  0] Added: Help notes to help command, request by Meka][Meka
+[  0] Added: ipinfo <ip> command to get GeoIP information about specific IP address
+[  0] Added: Feed notification for replaced MC messages, real message is displayed, configured with classnotirepl, idea by Lord_Zero
+[  0] Added: Separate kick time for clone detection, configured with miclonekicktime
+[  0] Changed: Corrected some English language strings, report by madkid
+
+[ 2.7.5 :: 2013-08-13 ]
+
+[  0] Fixed: Consider custom nick when sending replaced main chat and private message on antispam action 9
+[  0] Fixed: Duplication of IP gag entries, report by Uhlik
+[  0] Added: Consider custom sender nick in receivers private chat when sending private message
+[  0] Added: useripsupport configuration to enable $UserIP support for operators, off by default, request by Uhlik
+[  0] Added: Information to operators about replaced main chat message on antispam action 9
+[  0] Added: Update tables according to old version number so the script can load much faster
+[  0] Added: histautonewlinedel configuration to allow deletion of new lines in automatic history messages, default is on
+[  0] Added: Unknown protocol command detection before login, supported since Verlihub 1.0
+[  0] Added: unkbeforelogin configuration to disable unknown protocol command detection before login, on by default
+[  0] Added: Antispam action 10, hard ban the IP and drop user, hard ban feature must be enabled
+[  0] Added: Client supports and NMDC version to MyINFO check and user information
+[  0] Changed: Minimum value of histautolinemax is 0, means don't cut automatic history messages
+[  0] Changed: Manually added IP gag entries are saved permanently, those added by antispam and antiflood remain temporary, request by Uhlik
+[  0] Removed: Support for iConv
+[  0] Removed: Support for LuaSocket and its modules
+[  0] Removed: Hublist pinger feature
+[  0] Removed: Old client $Capabilities from unknown protocol command exception list
+
+[ 2.7.4 :: 2013-04-14 ]
+
+[  0] Fixed: Ban notification without reason, report by Uhlik
+[  0] Fixed: Invalid translation on wmforce command for user without access, report by Uhlik
+[  0] Added: ulogautoclean = 30, meaning user logger will automatically delete entries older than 30 days, request by many people
+[  0] Added: Soft hyphen character to forbidden nick list by default, request by PetterOSS
+[  0] Added: Ability to use A1, A2 and --, unknown, in all country code functions
+[  0] Changed: Now using Team Elite Hublist instead of FearDC Hublist for user search
+[  0] Removed: $UserIP support, now supported by Verlihub
+
+[ 2.7.3 :: 2012-02-22 ]
+
+[  0] Fixed: Correct usage of percent character in string.gsub Lua function
+[  0] Fixed: Chat modes when changing for yourself
+[  0] Fixed: Unknown protocol command function for Verlihub 1.0.0
+[  0] Fixed: Broken IP gag flags
+[  0] Added: Support for Lua 5.2 and backward compatibility for Lua 5.1
+[  0] Added: Country code gag, request by Trumpy
+[  0] Changed: Using FearDC Hublist instead of QSDCHublist.com for user lookup
+[  0] Changed: User lookup no longer requires iConv
+
+[ 2.7.2 :: 2011-05-16 ]
+
+[  0] Fixed: Missing function parameter, report by Uhlik
+
+[ 2.7.1 :: 2011-05-16 ]
+
+[  0] Fixed: Garbage collection timer interval
+[  0] Fixed: Missing translation on blacklist notification
+[  0] Fixed: Custom nick removal when used by real user, report by Aeolide
+[  0] Fixed: Critical search filter vulnerability
+[  0] Added: $ConnectToMe protocol flood detection
+[  0] Added: Automatic Ledokol update check with custom interval, request by Marcel and Uhlik
+[  0] Added: Support for VH:GetTopic and VH:SetTopic
+[  0] Added: Custom character list for chat code, request by Maximum
+[  0] Added: Ability to add multiple hard IP bans at once, separate each IP by space
+[  0] Added: IP watch to notify about public user actions from IP or range, idea by Lord_Zero
+[  0] Added: Using CC chatroom share size as member counter
+[  0] Improved: Hard IP ban entry is always found in the beginning of a string
+[  0] Changed: Renamed configuration variable classnotictm to classnotibadctm
+[  0] Changed: Using country name in CC chatroom description
+
+[ 2.7.0 :: 2011-03-15 ]
+
+[  0] Fixed: Misspelling of configuration variable addspecialver
+[  0] Fixed: Spam detection after translit conversion
+[  0] Fixed: Some menu items are created when corresponding features are disabled, report by Uhlik
+[  0] Fixed: Flood detection before IP gag detection
+[  0] Fixed: Error on IP gag check, report by Trumpy
+[  0] Fixed: Cyrillic conversion table, report by Aeolide
+[  0] Fixed: Error when saving topic, report by Jaguar
+[  0] Added: Ability for users to see themselves as operators
+[  0] Added: Hard IP ban ability
+[  0] Added: Requirement to gain some uptime in order to use search engine
+[  0] Added: Blacklist support, very slow with large blacklists
+[  0] Added: Split fake share detection into same numbers and divide by unit detections
+[  0] Added: Current topic and its owner to statistics table
+[  0] Added: Clone detection actions
+[  0] Added: <cn> which represents country name in ccroomstyle variable
+[  0] Removed: nGrep support
+
+[ 2.6.9 :: 2011-01-14 ]
+
+[  0] Fixed: Allow messages to hub security bot for users not allowed to send PM, report by Trumpy
+[  0] Fixed: Lua error on replug command, report by Toecutter
+[  0] Fixed: Command logger against plugin commands
+[  0] Fixed: Replaced chat messages containing inappropriate replace variables
+[  0] Added: -L option for cURL to follow redirects, report by Marcel
+[  0] Added: clearclass configuration variable for clear command restriction, request by Neolo
+[  0] Added: <avgshare>, <peakavgshare>, <peakavgsharetime> and <peakavgshareshrttime> replace variables, request by Uhlik
+[  0] Added: Accept case insensitive chat security code when chatcodeon is set to 2
+[  0] Added: Blocked PM list to disallow sending private messages to certain users
+[  0] Added: IP gag flags to gag in MC, PM or both, request by Marcel
+[  0] Added: Flood detection now drops, kicks, bans all users with detected IP instead of the last one only, request by Maximum
+[  0] Added: Cleanup for antispam and search filter, request by Marcel
+[  0] Added: Experts only section to Ledokol help
+[  0] Removed: LuaSocket and nGrep warning messages
+
+[ 0.0.0 :: 0000-00-00 ]
+
+[  0] Missing: Older changelogs are not available
 [  3] Added: Send script build number in all AVDB requests to help determine version specific issues
 [  4] Added: Operator chat history stores messages on class basis allowing to save feed notificiations, idea by KCAHDEP
 
