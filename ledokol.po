@@ -1,10 +1,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ledokol\n"
-"Project-Version: 2.9.0\n"
+"Project-Version: 2.9.1\n"
 "Report-Msgid-Bugs-To: RoLex <webmaster@feardc.net>\n"
-"POT-Creation-Date: 2016-08-31 13:15+0200\n"
-"PO-Revision-Date: 2016-08-31 13:15+0200\n"
+"POT-Creation-Date: 2016-10-18 16:04+0200\n"
+"PO-Revision-Date: 2016-10-18 16:04+0200\n"
 "Last-Translator: RoLex <webmaster@feardc.net>\n"
 "Language-Team: RoLex <webmaster@feardc.net>\n"
 "Language: en_GB\n"
@@ -2425,13 +2425,13 @@ msgstr ""
 msgid "You need to send another %d main chat messages in order to use hub registration."
 msgstr ""
 
-msgid "Please wait another %.1f minutes before using hub registration."
+msgid "Please wait another %d seconds before using hub registration."
 msgstr ""
 
 msgid "In order to use this feature you need to set %s to: %d"
 msgstr ""
 
-msgid "Please reconnect to gain %d minutes of uptime in order to use hub registration."
+msgid "Please reconnect to gain %d seconds of uptime in order to use hub registration."
 msgstr ""
 
 msgid "Dropping %s with IP %s and class %d due to protocol flood detection: %s"
@@ -3424,7 +3424,7 @@ msgstr ""
 msgid "Low registration uptime from %s with IP %s and class %d: %s"
 msgstr ""
 
-msgid "%.1f minutes"
+msgid "%d seconds"
 msgstr ""
 
 msgid "Thank you, your report has been accepted."

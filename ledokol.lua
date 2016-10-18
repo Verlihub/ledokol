@@ -60,7 +60,7 @@ Doxtur, chaos, sphinx, Zorro, W1ZaRd, S0RiN, MaxFox, Krzychu,
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.1" -- ledokol version
-bld_ledo = "23" -- build number
+bld_ledo = "24" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -10197,15 +10197,15 @@ function checkregmecmd (nick, ucl, ip)
 
 	if table_sets ["regmeuptime"] > 0 and table_sets ["showuseruptime"] == 1 then -- regme uptime
 		if table_usup [nick] then
-			local dif = (os.time () - table_usup [nick]) / 60
+			local dif = os.time () - table_usup [nick]
 
 			if dif < table_sets ["regmeuptime"] then
-				opsnotify (table_sets ["classnotilowupreg"], gettext ("Low registration uptime from %s with IP %s and class %d: %s"):format (nick, ip .. tryipcc (ip, nick), ucl, gettext ("%.1f minutes"):format (dif)))
-				commandanswer (nick, gettext ("Please wait another %.1f minutes before using hub registration."):format (table_sets ["regmeuptime"] - dif))
+				opsnotify (table_sets ["classnotilowupreg"], gettext ("Low registration uptime from %s with IP %s and class %d: %s"):format (nick, ip .. tryipcc (ip, nick), ucl, gettext ("%d seconds"):format (dif)))
+				commandanswer (nick, gettext ("Please wait another %d seconds before using hub registration."):format (table_sets ["regmeuptime"] - dif))
 				return 0
 			end
 		--else
-			--commandanswer (nick, gettext ("Please reconnect to gain %d minutes of uptime in order to use hub registration."):format (table_sets ["regmeuptime"]))
+			--commandanswer (nick, gettext ("Please reconnect to gain %d seconds of uptime in order to use hub registration."):format (table_sets ["regmeuptime"]))
 		end
 	end
 
@@ -16078,14 +16078,14 @@ end
 
 	elseif tvar == "regmeuptime" then
 		if num then
-			if setto >= 0 and setto <= 1440 then
+			if setto >= 0 and setto <= 86400 then
 				if setto > 0 and table_sets ["showuseruptime"] == 0 then
 					commandanswer (nick, gettext ("In order to use this feature you need to set %s to: %d"):format ("showuseruptime", 1))
 				end
 
 				ok = true
 			else
-				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0 " .. gettext ("to") .. " 1440"))
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0 " .. gettext ("to") .. " 86400"))
 			end
 		else
 			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))

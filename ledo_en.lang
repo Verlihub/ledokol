@@ -808,9 +808,9 @@ Add chat replacer exception|
 Delete chat replacer exception|
 Chat replacer|
 You need to send another %d main chat messages in order to use hub registration.|
-Please wait another %.1f minutes before using hub registration.|
+Please wait another %d seconds before using hub registration.|
 In order to use this feature you need to set %s to: %d|
-Please reconnect to gain %d minutes of uptime in order to use hub registration.|
+Please reconnect to gain %d seconds of uptime in order to use hub registration.|
 Dropping %s with IP %s and class %d due to protocol flood detection: %s|
 Protocol flood detected from your client: %s|
 Automatic update check detected stable version of %s available, use following command to update: %s|
@@ -1141,7 +1141,7 @@ Low chat uptime of %d seconds from %s with IP %s and class %d in PM to %s with I
 Low chat uptime of %d seconds from %s with IP %s and class %d in MC: %s|
 Low chat uptime of %d seconds from %s with IP %s and class %d in command: %s|
 Low registration uptime from %s with IP %s and class %d: %s|
-%.1f minutes|
+%d seconds|
 Thank you, your report has been accepted.|
 Low search uptime of %d seconds from %s with IP %s and class %d as any file: %s|
 Low search uptime of %d seconds from %s with IP %s and class %d as audio file: %s|
