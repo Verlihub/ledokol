@@ -60,7 +60,7 @@ Doxtur, chaos, sphinx, Zorro, W1ZaRd, S0RiN, MaxFox, Krzychu,
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.1" -- ledokol version
-bld_ledo = "24" -- build number
+bld_ledo = "25" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -340,6 +340,7 @@ table_othsets = {
 	["ustrig"] = "",
 	["topicowner"] = nil,
 	["topicvalue"] = nil,
+	["logdeflines"] = 100,
 	["avlastseartick"] = os.time (),
 	["avlastloadtick"] = 0,
 	["avlastloadtime"] = 0,
@@ -2928,15 +2929,15 @@ return 0
 
 	----- ---- --- -- -
 
-elseif string.find (data, "^"..table_othsets ["optrig"]..table_cmnds ["readlog"].." %S+ %d+$") then
-if ucl >= table_sets ["mincommandclass"] then
-donotifycmd (nick, data, 0, ucl)
-logsread (nick, string.sub (data, string.len (table_cmnds ["readlog"]) + 3, -1))
-else
-commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
-end
+	elseif data:match ("^" .. table_othsets ["optrig"] .. table_cmnds ["readlog"] .. " %S+ %d+$") or data:match ("^" .. table_othsets ["optrig"] .. table_cmnds ["readlog"] .. " %S+$") then
+		if ucl >= table_sets ["mincommandclass"] then
+			donotifycmd (nick, data, 0, ucl)
+			logsread (nick, data:sub (# table_cmnds ["readlog"] + 3))
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
 
-return 0
+		return 0
 
 	----- ---- --- -- -
 
@@ -7013,7 +7014,7 @@ function chatroomhelp ()
 	local txt = " " .. ustrig .. table_cmnds ["chatenter"] .. " - " .. gettext ("Enter the chatroom") .. "\r\n"
 	txt = txt .. " " .. ustrig .. table_cmnds ["chatleave"] .. " - " .. gettext ("Leave the chatroom") .. "\r\n"
 	txt = txt .. " " .. ustrig .. table_cmnds ["chatusers"] .. " - " .. gettext ("Chatroom member list") .. "\r\n"
-	txt = txt .. " " .. ustrig .. table_cmnds ["chathist"] .. " [" .. gettext ("lines") .. "=" .. table_sets ["histdeflines"] .. "] - " .. gettext ("Chatroom history") .. "\r\n"
+	txt = txt .. " " .. ustrig .. table_cmnds ["chathist"] .. " [" .. gettext ("lines") .. "=" .. tostring (table_sets ["histdeflines"]) .. "] - " .. gettext ("Chatroom history") .. "\r\n"
 	txt = txt .. " " .. ustrig .. table_cmnds ["chathelp"] .. " - " .. gettext ("This list of commands") .. "\r\n"
 	return txt
 end
@@ -7790,45 +7791,55 @@ end
 
 ----- ---- --- -- -
 
-function logsread (nick, item)
-	local _, _, logfile, lnnum = string.find (item, "^(%S+) (%d+)$")
-	lnnum = tonumber (lnnum)
-	if lnnum < 1 then lnnum = 1 end
+function logsread (nick, line)
+	local name, linu = "", table_othsets ["logdeflines"]
 
-	if (logfile == "log") or (logfile == "log.old") or (logfile == "err") or (logfile == "err.old") or (logfile == "net_out.log") then
-		local cnt = 0
-		local lfl = io.open (table_othsets ["cfgdir"]..logfile, "r")
+	if line:match ("^%S+ %d+$") then
+		name, linu = line:match ("^(%S+) (%d+)$")
+	else
+		name = line:match ("^(%S+)$")
+	end
 
-		if lfl then
-			lfl:close ()
+	linu = tonumber (linu)
 
-			for line in io.lines (table_othsets ["cfgdir"]..logfile) do
-				cnt = cnt + 1
+	if linu < 1 then
+		linu = 1
+	end
+
+	if name == "log" or name == "log.old" or name == "err" or name == "err.old" or name == "net_out.log" then
+		local lito = 0
+		local file = io.open (table_othsets ["cfgdir"] .. name, "r")
+
+		if file then
+			file:close ()
+
+			for line in io.lines (table_othsets ["cfgdir"] .. name) do
+				lito = lito + 1
 			end
 
-			local diff, showcnt = 0, 0
+			local diff, show = 0, 0
 
-			if cnt > 0 then
-				if cnt > lnnum then
-					diff = cnt - lnnum + 1
-					showcnt = lnnum
+			if lito > 0 then
+				if lito > linu then
+					diff = lito - linu + 1
+					show = linu
 				else
 					diff = 1
-					showcnt = cnt
+					show = lito
 				end
 
-				local numlen, aline = string.len (cnt), ""
-				cnt = 0
+				local nule, list = # tostring (lito), ""
+				lito = 0
 
-				for line in io.lines (table_othsets ["cfgdir"]..logfile) do
-					cnt = cnt + 1
+				for line in io.lines (table_othsets ["cfgdir"] .. name) do
+					lito = lito + 1
 
-					if cnt >= diff then
-						aline = aline.." "..prezero (numlen, cnt)..": "..repnmdcoutchars (line).."\r\n"
+					if lito >= diff then
+						list = list .. " " .. prezero (nule, lito) .. ": " .. repnmdcoutchars (line) .. "\r\n"
 					end
 				end
 
-				commandanswer (nick, string.format (gettext ("Showing last %d lines out of total %d found in %s file"), showcnt, cnt, logfile)..":\r\n\r\n"..aline)
+				commandanswer (nick, gettext ("Showing last %d lines out of total %d found in %s file"):format (show, lito, name) .. ":\r\n\r\n" .. list)
 			else -- empty file
 				commandanswer (nick, gettext ("Log file is empty or does not exist."))
 			end
@@ -7836,7 +7847,7 @@ function logsread (nick, item)
 			commandanswer (nick, gettext ("Log file is empty or does not exist."))
 		end
 	else -- invalid file
-		commandanswer (nick, string.format (gettext ("Known files are: %s"), "log, err, log.old, err.old "..gettext ("and").." net_out.log"))
+		commandanswer (nick, gettext ("Known files are: %s"):format ("log, err, log.old, err.old " .. gettext ("and") .. " net_out.log"))
 	end
 end
 
@@ -18885,7 +18896,7 @@ help = help.." "..optrig..table_cmnds ["offdel"].." <"..gettext ("date").."> - "
 help = help.." "..optrig..table_cmnds ["offclean"].." - "..gettext ("Delete all offline messages").."\r\n\r\n"
 
 	-- history
-	help = help .. " " .. optrig .. table_cmnds ["ophistory"] .. " [" .. gettext ("lines") .. "=" .. table_sets ["histdeflines"] .. "] - " .. gettext ("Operator chat history") .. "\r\n"
+	help = help .. " " .. optrig .. table_cmnds ["ophistory"] .. " [" .. gettext ("lines") .. "=" .. tostring (table_sets ["histdeflines"]) .. "] - " .. gettext ("Operator chat history") .. "\r\n"
 	help = help .. " " .. optrig .. table_cmnds ["histdel"] .. " <" .. gettext ("text") .. "> - " .. gettext ("Delete history messages by text") .. "\r\n"
 	help = help .. " " .. optrig .. table_cmnds ["histclean"] .. " - " .. gettext ("Delete all history messages") .. "\r\n\r\n"
 
@@ -18949,7 +18960,7 @@ help = help.." "..optrig..table_cmnds ["hubdel"].." <"..gettext ("address").."> 
 	-- other
 	help = help .. " " .. optrig .. table_cmnds ["dropip"] .. " <" .. gettext ("ip") .. "> - " .. gettext ("Drop users with IP") .. "\r\n"
 	help = help .. " " .. optrig .. table_cmnds ["oldclean"] .. " <" .. gettext ("type") .. "> <" .. gettext ("days") .. " " .. gettext ("or") .. " *> [" .. gettext ("class") .. "] - " .. gettext ("Clean up tables") .. "\r\n"
-	help = help .. " " .. optrig .. table_cmnds ["readlog"] .. " <" .. gettext ("file") .. "> <" .. gettext ("lines") .. "> - " .. gettext ("Read hub logs") .. "\r\n"
+	help = help .. " " .. optrig .. table_cmnds ["readlog"] .. " <" .. gettext ("file") .. "> [" .. gettext ("lines") .. "=" .. tostring (table_othsets ["logdeflines"]) .. "] - " .. gettext ("Read hub logs") .. "\r\n"
 	help = help .. " " .. optrig .. table_cmnds ["lretoplain"] .. " <" .. gettext ("lre") .. "> - " .. gettext ("Convert LRE to plain text") .. "\r\n\r\n"
 
 	-- general
@@ -19006,8 +19017,8 @@ help = help.." "..ustrig..table_cmnds ["realnick"].." <"..gettext ("nick").."> -
 help = help.." "..ustrig..table_cmnds ["custlist"].." - "..gettext ("Custom nick list").."\r\n\r\n"
 
 	-- chat history
-	help = help .. " " .. ustrig .. table_cmnds ["history"] .. " [" .. gettext ("lines") .. "=" .. table_sets ["histdeflines"] .. "] - " .. gettext ("Main chat history") .. "\r\n"
-	help = help .. " " .. ustrig .. table_cmnds ["myhistory"] .. " [" .. gettext ("lines") .. "=" .. table_sets ["histdeflines"] .. "] - " .. gettext ("Your main chat history") .. "\r\n\r\n"
+	help = help .. " " .. ustrig .. table_cmnds ["history"] .. " [" .. gettext ("lines") .. "=" .. tostring (table_sets ["histdeflines"]) .. "] - " .. gettext ("Main chat history") .. "\r\n"
+	help = help .. " " .. ustrig .. table_cmnds ["myhistory"] .. " [" .. gettext ("lines") .. "=" .. tostring (table_sets ["histdeflines"]) .. "] - " .. gettext ("Your main chat history") .. "\r\n\r\n"
 
 	-- other
 
@@ -19015,7 +19026,7 @@ help = help.." "..ustrig..table_cmnds ["custlist"].." - "..gettext ("Custom nick
 	help = help .. " " .. ustrig .. table_cmnds ["mode"] .. " <" .. gettext ("mode") .. "> - " .. gettext ("Set your chat mode") .. "\r\n"
 	help = help .. " " .. ustrig .. table_cmnds ["offmsg"] .. " <" .. gettext ("nick") .. "> <" .. gettext ("message") .. "> - " .. gettext ("Offline message to user") .. "\r\n"
 	help = help .. " " .. ustrig .. table_cmnds ["calculate"] .. " <" .. gettext ("equation") .. "> - " .. gettext ("Calculate an equation") .. "\r\n"
-	help = help .. " " .. ustrig .. table_cmnds ["hubnews"] .. " [" .. gettext ("lines") .. "=" .. table_sets ["newsdeflines"] .. "] - " .. gettext ("Read hub news") .. "\r\n"
+	help = help .. " " .. ustrig .. table_cmnds ["hubnews"] .. " [" .. gettext ("lines") .. "=" .. tostring (table_sets ["newsdeflines"]) .. "] - " .. gettext ("Read hub news") .. "\r\n"
 	help = help .. " " .. ustrig .. table_cmnds ["showtopic"] .. " - " .. gettext ("Current topic") .. "\r\n"
 	help = help .. " " .. ustrig .. table_cmnds ["showhubs"] .. " - " .. gettext ("Show friendly hubs") .. "\r\n\r\n"
 
