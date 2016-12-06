@@ -60,7 +60,7 @@ Doxtur, chaos, sphinx, Zorro, W1ZaRd, S0RiN, MaxFox, Krzychu,
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.1" -- ledokol version
-bld_ledo = "25" -- build number
+bld_ledo = "26" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -9067,10 +9067,10 @@ function replchatmsg (nick, addr, class, data, flag)
 						if sos and eos then
 							local cont, expa = true, ""
 
-							if sos < 7 then
-								expa = test:sub (1, eos + 5)
+							if sos < 8 then
+								expa = test:sub (1, eos + 6)
 							else
-								expa = test:sub (sos - 5, eos + 5)
+								expa = test:sub (sos - 6, eos + 6)
 							end
 
 							for _, exen in pairs (exli) do
