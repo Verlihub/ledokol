@@ -1,4 +1,4 @@
-[ 2.9.1 :: ####-##-## ]
+[ 2.9.1 :: 2016-12-24 ]
 
 [ 26] Fixed: Chat replacer exception of long words, report by Nickel
 [ 24] Changed: regmeuptime to number of seconds instead of minutes

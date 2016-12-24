@@ -2,7 +2,7 @@
 --[[ license agreement >>
 ---------------------------------------------------------------------
 
-Copyright © 2007-2016 RoLex
+Copyright © 2007-2017 RoLex
 
 Ledokol is free software; You can redistribute it
 and modify it under the terms of the GNU General
@@ -49,7 +49,10 @@ over seventy different features for Verlihub.
 Neolo, Uhlik, Astronomik, LadyStardust, Seth, Molotov, burek,
 Hungarista, Stefani, Aethra, netcelli, TheBoss, Maximum, BulleT,
 Doxtur, chaos, sphinx, Zorro, W1ZaRd, S0RiN, MaxFox, Krzychu,
-@tlantide, Ettore Atalan, Trumpy, Modswat, KCAHDEP
+@tlantide, Ettore Atalan, Trumpy, Modswat, KCAHDEP, mauron, DiegoZ,
+Mank, Nickel, Lord_Zero, Meka][Meka, Ger, PetterOSS, Marcel, PPK,
+madkid, Aeolide, Jaguar, Toecutter, SCALOlàz, FlylinkDC, Men_VAf,
+Tzaca, JOE™
 
 ---------------------------------------------------------------------
 ]]-- special thanks to <<

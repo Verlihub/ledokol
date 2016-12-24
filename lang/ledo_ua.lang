@@ -1,62 +1,62 @@
 # Language: uk_UA
 # Charset: CP1251
-# Version: 2.9.0
+# Version: 2.9.1
 # Author: Neolo
 # Email: admin@nlight.org.ua
 
-Current topic: %s|РџРѕС‚РѕС‡РЅР° С‚РµРјР°: %s
-Current topic set by %s: %s|РџРѕС‚РѕС‡РЅР° С‚РµРјР° РІСЃС‚Р°РЅРѕРІР»РµРЅР° %s: %s
+Current topic: %s|Поточна тема: %s
+Current topic set by %s: %s|Поточна тема встановлена %s: %s
 This operation might take very long time depending on how much is going to be removed, please be patient.|
-days|РґРЅС–РІ
-%s with class %d deleted %d IP logger plugin entries older than %d days.|%s Р· РєР»Р°СЃРѕРј %d РІРёРґР°Р»РёРІ %d IP Р·РЅР°С‡РµРЅСЊ РїР»Р°РіС–РЅСѓ IP Р»РѕРіРіРµСЂ С‰Рѕ СЃС‚Р°СЂС€С– Р·Р° %d РґРЅС–РІ.
-%s with class %d deleted %d unbans older than %d days.|%s Р· РєР»Р°СЃРѕРј %d РІРёРґР°Р»РёРІ %d Р·Р°РїРёСЃС–РІ СЂРѕР·Р±Р°РЅС–РІ С‰Рѕ СЃС‚Р°СЂС€С– Р·Р° %d РґРЅС–РІ.
-%s with class %d deleted %d bans older than %d days.|%s Р· РєР»Р°СЃРѕРј %d РІРёРґР°Р»РёРІ %d Р·Р°РїРёСЃС–РІ Р±Р°РЅС–РІ С‰Р° СЃС‚Р°СЂС€С– Р·Р° %d РґРЅС–РІ.
-%s with class %d deleted %d kicks older than %d days.|%s Р· РєР»Р°СЃРѕРј %d РІРёРґР°Р»РёРІ %d Р·Р°РїРёСЃС–РІ kick С‰Рѕ СЃС‚Р°СЂС€С– Р·Р° %d РґРЅС–РІ.
-I'm probably away. State your business and I might answer later if you're lucky.|РЎРєРѕСЂС–С€ Р·Р° РІСЃРµ СЏ РІР°Рј РЅРµ РІС–РґРїРѕРІС–Рј Р·Р°СЂР°Р·. Р—Р°Р»РёС€С‚Рµ СЃРІРѕС” РїРѕРІС–РґРѕРјР»РµРЅРЅСЏ С– РјРѕР¶Р»РёРІРѕ РІР°Рј РІС–РґРїРѕРІС–РґСЏС‚СЊ... СЏРєС‰Рѕ РїРѕС‰Р°СЃС‚РёС‚СЊ.
-Perform script update|РћРЅРѕРІР»РµРЅРЅСЏ СЃРєСЂРёРїС‚Сѓ
-Deleted %d main chat history messages.|Р’РёРґР°Р»РµРЅРѕ %d С„СЂР°Р· С–СЃС‚РѕСЂС–С— РіРѕР»РѕРІРЅРѕРіРѕ С‡Р°С‚Сѓ.
-There are no main chat history messages to remove.|РќРµРјР°С” С‡РѕРіРѕ РІРёРґР°Р»СЏС‚Рё, С–СЃС‚РѕСЂС–СЏ РїРѕСЂРѕР¶РЅСЏ.
-Deleted %d operator chat history messages.|Р’РёРґР°Р»РµРЅРѕ %d С„СЂР°Р· С–СЃС‚РѕСЂС–С— РѕРїРµСЂР°С‚РѕСЂСЃСЊРєРѕРіРѕ С‡Р°С‚Сѓ.
-There are no operator chat history messages to remove.|Р†СЃС‚РѕСЂС–СЏ РѕРїРµСЂР°С‚РѕСЂ-С‡Р°С‚Сѓ РїРѕСЂРѕР¶РЅСЏ.
-%s with class %d deleted %d main chat history messages.|%s Р· РєР»Р°СЃРѕРј %d РІРёРґР°Р»РёРІ %d С„СЂР°Р· Р· С–СЃС‚РѕСЂС–С— РіРѕР»РѕРІРЅРѕРіРѕ С‡Р°С‚Сѓ.
-Unable to connect to target server. Please try again later.|РќРµ РІРґР°Р»РѕСЃСЏ Р·'С”РґРЅР°С‚РёСЃСЏ Р· РІС–РґРґР°Р»РµРЅРёРј СЃРµСЂРІРµСЂРѕРј. РЎРїСЂРѕР±СѓР№С‚Рµ РїС–Р·РЅС–С€Рµ.
-Last %d main chat messages|РћСЃС‚Р°РЅРЅС– %d С„СЂР°Р· РІ РіРѕР»РѕРІРЅРѕРјСѓ С‡Р°С‚С–
-Main chat history is empty.|Р†СЃС‚РѕСЂС–СЏ РіРѕР»РѕРІРЅРѕРіРѕ С‡Р°С‚Сѓ РїРѕСЂРѕР¶РЅСЏ.
-%s is now known as: %s|%s С‚РµРїРµСЂ РІС–РґРѕРјРёР№ СЏРє: %s
-Last %d operator chat messages|РћСЃС‚Р°РЅРЅС– %d С„СЂР°Р· РІ РѕРїРµСЂР°С‚РѕСЂ-С‡Р°С‚С–
-Operator chat history is empty.|Р†СЃС‚РѕСЂС–СЏ РѕРїРµСЂР°С‚РѕСЂ-С‡Р°С‚Сѓ РїРѕСЂРѕР¶РЅСЏ.
-Valid priority is a number from %d to %d.|Р—РЅР°С‡РµРЅРЅСЏ РїСЂС–РѕСЂРёС‚РµС‚Сѓ РјР°С” Р±СѓС‚Рё С†РёС„СЂР° РІС–Рґ %d РґРѕ %d.
+days|днів
+%s with class %d deleted %d IP logger plugin entries older than %d days.|%s з класом %d видалив %d IP значень плагіну IP логгер що старші за %d днів.
+%s with class %d deleted %d unbans older than %d days.|%s з класом %d видалив %d записів розбанів що старші за %d днів.
+%s with class %d deleted %d bans older than %d days.|%s з класом %d видалив %d записів банів ща старші за %d днів.
+%s with class %d deleted %d kicks older than %d days.|%s з класом %d видалив %d записів kick що старші за %d днів.
+I'm probably away. State your business and I might answer later if you're lucky.|Скоріш за все я вам не відповім зараз. Залиште своє повідомлення і можливо вам відповідять... якщо пощастить.
+Perform script update|Оновлення скрипту
+Deleted %d main chat history messages.|Видалено %d фраз історії головного чату.
+There are no main chat history messages to remove.|Немає чого видаляти, історія порожня.
+Deleted %d operator chat history messages.|Видалено %d фраз історії операторського чату.
+There are no operator chat history messages to remove.|Історія оператор-чату порожня.
+%s with class %d deleted %d main chat history messages.|%s з класом %d видалив %d фраз з історії головного чату.
+Unable to connect to target server. Please try again later.|Не вдалося з'єднатися з віддаленим сервером. Спробуйте пізніше.
+Last %d main chat messages|Останні %d фраз в головному чаті
+Main chat history is empty.|Історія головного чату порожня.
+%s is now known as: %s|%s тепер відомий як: %s
+Last %d operator chat messages|Останні %d фраз в оператор-чаті
+Operator chat history is empty.|Історія оператор-чату порожня.
+Valid priority is a number from %d to %d.|Значення пріоритету має бути цифра від %d до %d.
 You are using latest version of %s, no update is required.|
-Why would you send offline message to yourself?|Р”Р»СЏ С‡РѕРіРѕ РІРё С…РѕС‡РµС‚Рµ РЅР°РґС–СЃР»Р°С‚Рё РѕС„Р»Р°Р№РЅ РїРѕРІС–РґРѕРјР»РµРЅРЅСЏ СЃР°РјС– СЃРѕР±С–?
-User %s is online. Sending message directly.|РљРѕСЂРёСЃС‚СѓРІР°С‡ %s РІ РјРµСЂРµР¶С–. РќР°РґСЃРёР»Р°СЋ РїРѕРІС–РґРѕРјР»РµРЅРЅСЏ РЅРµРіР°Р№РЅРѕ.
-Your offline message stored for user: %s|Р’Р°С€Рµ РѕС„Р»Р°Р№РЅ РїРѕРІС–РґРѕРјР»РµРЅРЅСЏ Р·Р±РµСЂРµР¶РµРЅРѕ РґР»СЏ: %s
-%s with IP %s and class %d sent offline message.|%s Р· IP %s С‚Р° РєР»Р°СЃРѕРј %d РЅР°РґС–СЃР»Р°РІ(Р»Р°) РѕС„Р»Р°Р№РЅ РїРѕРІС–РґРѕРјР»РµРЅРЅСЏ.
-priority|РїСЂС–РѕСЂС–С‚РµС‚
-Offline|РќРµ РІ РјРµСЂРµР¶С–
-Online|Р’ РјРµСЂРµР¶С–
-I sent offline message to you on %s|РЇ РЅР°РґС–СЃР»Р°РІ(Р»Р°) РІР°Рј С†Рµ РїРѕРІС–РґРѕРјР»РµРЅРЅСЏ Рѕ %s
-My current status|РњС–Р№ РїРѕС‚РѕС‡РЅРёР№ СЃС‚Р°С‚СѓСЃ
-%s with IP %s and class %d received offline messages.|%s Р· IP %s С‚Р° РєР»Р°СЃРѕРј %d РѕС‚СЂРёРјР°РІ РѕС„Р»Р°Р№РЅ РїРѕРІС–РґРѕРјР»РµРЅРЅСЏ.
-Stored offline messages|Р—Р±РµСЂРµР¶РµРЅС– РѕС„Р»Р°Р№РЅ РїРѕРІС–РґРѕРјР»РµРЅРЅСЏ
-Offline message list is empty.|РЎРїРёСЃРѕРє Р·Р±РµСЂРµР¶РµРЅРёС… РѕС„Р»Р°Р№РЅ РїРѕРІС–РґРѕРјР»РµРЅСЊ РїРѕСЂРѕР¶РЅС–Р№.
-Deleted %d offline messages.|%d РѕС„Р»Р°Р№РЅ РїРѕРІС–РґРѕРјР»РµРЅСЊ РІРёРґР°Р»РµРЅРѕ.
-Couldn't delete offline messages because not found: %s|РќРµ Р·РЅР°Р№РґРµРЅРѕ: %s Р’РёРґР°Р»РµРЅРЅСЏ РЅРµ РІРґР°Р»РѕСЃСЏ.
-%s with class %d deleted all offline messages.|%s Р· РєР»Р°СЃРѕРј %d РІРёРґР°Р»РёРІ(Р»Р°) РІСЃС– РѕС„Р»Р°Р№РЅ РїРѕРІС–РґРѕРјР»РµРЅРЅСЏ.
-There are no offline messages to remove.|РЎРїРёСЃРѕРє РѕС„Р»Р°Р№РЅ РїРѕРІС–РґРѕРјР»РµРЅСЊ РїРѕСЂРѕР¶РЅС–Р№.
-No topic is set.|РўРµРјСѓ РЅРµ РІСЃС‚Р°РЅРѕРІР»РµРЅРѕ.
+Why would you send offline message to yourself?|Для чого ви хочете надіслати офлайн повідомлення самі собі?
+User %s is online. Sending message directly.|Користувач %s в мережі. Надсилаю повідомлення негайно.
+Your offline message stored for user: %s|Ваше офлайн повідомлення збережено для: %s
+%s with IP %s and class %d sent offline message.|%s з IP %s та класом %d надіслав(ла) офлайн повідомлення.
+priority|пріорітет
+Offline|Не в мережі
+Online|В мережі
+I sent offline message to you on %s|Я надіслав(ла) вам це повідомлення о %s
+My current status|Мій поточний статус
+%s with IP %s and class %d received offline messages.|%s з IP %s та класом %d отримав офлайн повідомлення.
+Stored offline messages|Збережені офлайн повідомлення
+Offline message list is empty.|Список збережених офлайн повідомлень порожній.
+Deleted %d offline messages.|%d офлайн повідомлень видалено.
+Couldn't delete offline messages because not found: %s|Не знайдено: %s Видалення не вдалося.
+%s with class %d deleted all offline messages.|%s з класом %d видалив(ла) всі офлайн повідомлення.
+There are no offline messages to remove.|Список офлайн повідомлень порожній.
+No topic is set.|Тему не встановлено.
 %s with IP %s and class %d allowed due to forbidden nick exception: %s|
-message|РїРѕРІС–РґРѕРјР»РµРЅРЅСЏ
+message|повідомлення
 %s with IP %s and class %d allowed due to forbidden description exception: %s|
 User you're trying to kick or redirect is protected: %s|
 %s with IP %s and class %d allowed due to forbidden tag exception: %s|
 type|type
 %s with IP %s and class %d allowed due to forbidden connection type exception: %s|
-%s with class %d changed configuration variable %s: %s => %s|%s Р· РєР»Р°СЃРѕРј %d Р·РјС–РЅРёРІ(Р»Р°) Р·РЅР°С‡РµРЅРЅСЏ РєРѕРЅС„С–РіСѓСЂР°С†С–С— %s: %s => %s
+%s with class %d changed configuration variable %s: %s => %s|%s з класом %d змінив(ла) значення конфігурації %s: %s => %s
 %s with IP %s and class %d allowed due to forbidden email exception: %s|
 User received own message: %s|
 %s with IP %s and class %d allowed due to forbidden share size exception: %s|
-Deleted %d releases from category: %s|Р’РёРґР°Р»РµРЅРѕ %d СЂРµР»С–Р·С–РІ Р· РєР°С‚РµРіРѕСЂС–С—: %s
-Why would you want to set empty topic?|Р§РѕРјСѓ РІР°Рј Р·Р°С…РѕС‚С–Р»РѕСЃСЏ РІСЃС‚Р°РЅРѕРІРёС‚Рё РїРѕСЂРѕР¶РЅСЋ С‚РµРјСѓ? РџСЂРёРґСѓРјР°Р№С‚Рµ С‰РѕСЃСЊ =)
+Deleted %d releases from category: %s|Видалено %d релізів з категорії: %s
+Why would you want to set empty topic?|Чому вам захотілося встановити порожню тему? Придумайте щось =)
 Modified forbidden nick with ban time %s: %s|
 Added forbidden nick with ban time %s: %s|
 Modified forbidden description with ban time %s: %s|
@@ -69,773 +69,773 @@ Modified forbidden email with ban time %s: %s|
 Added forbidden email with ban time %s: %s|
 Modified forbidden share size with ban time %s: %s|
 Added forbidden share size with ban time %s: %s|
-Couldn't add MyINFO exception because already exists: %s|Р¦РµР№ MYINFO РІР¶Рµ Р·Р°РЅРµСЃРµРЅРѕ РґРѕ СЃРїРёСЃРєСѓ РІРёРєР»СЋС‡РµРЅСЊ: %s
-Added MyINFO exception: %s|Р”РѕРґР°РЅРѕ MyINFO РІРёРєР»СЋС‡РµРЅРЅСЏ: %s
-and|С–
-Deleted forbidden nick: %s|Р—Р°Р±РѕСЂРѕРЅРµРЅРёР№ РЅС–Рє РІРёРґР°Р»РµРЅРѕ: %s
-Couldn't delete forbidden nick because not found: %s|Р—Р°Р±РѕСЂРѕРЅРµРЅРёР№ РЅС–Рє РЅРµ Р·РЅР°Р№РґРµРЅРѕ: %s
-Deleted forbidden description: %s|Р—Р°Р±РѕСЂРѕРЅРµРЅРёР№ РѕРїРёСЃ РІРёРґР°Р»РµРЅРѕ: %s
-Couldn't delete forbidden description because not found: %s|Р—Р°Р±РѕСЂРѕРЅРµРЅРёР№ РѕРїРёСЃ РЅРµ Р·РЅР°Р№РґРµРЅРѕ: %s
-Deleted forbidden tag: %s|Р—Р°Р±РѕСЂРѕРЅРµРЅРёР№ С‚РµРі РІРёРґР°Р»РµРЅРѕ: %s
-Couldn't delete forbidden tag because not found: %s|Р—Р°Р±РѕСЂРѕРЅРµРЅРёР№ С‚РµРі РЅРµ Р·РЅР°Р№РґРµРЅРѕ: %s
-Deleted forbidden connection type: %s|Р—Р°Р±РѕСЂРѕРЅРµРЅРёР№ С‚РёРї Р·`С”РґРЅР°РЅРЅСЏ РІРёРґР°Р»РµРЅРѕ: %s
-Couldn't delete forbidden connection type because not found: %s|Р—Р°Р±РѕСЂРѕРЅРµРЅРёР№ С‚РёРї Р·`С”РґРЅР°РЅРЅСЏ РЅРµ Р·РЅР°Р№РґРµРЅРѕ: %s
-Deleted forbidden email: %s|Р—Р°Р±РѕСЂРѕРЅРµРЅСѓ e-mail Р°РґСЂРµСЃСѓ РІРёРґР°Р»РµРЅРѕ: %s
-Couldn't delete forbidden email because not found: %s|Р—Р°Р±РѕСЂРѕРЅРµРЅСѓ e-mail Р°РґСЂРµСЃСѓ РЅРµ Р·РЅР°Р№РґРµРЅРѕ: %s
-Deleted forbidden share size: %s|Р—Р°Р±РѕСЂРѕРЅРµРЅРёР№ СЂРѕР·РјС–СЂ С€Р°СЂРё РІРёРґР°Р»РµРЅРѕ: %s
-Couldn't delete forbidden share size because not found: %s|Р—Р°Р±РѕСЂРѕРЅРµРЅРёР№ СЂРѕР·РјС–СЂ С€Р°СЂРё РЅРµ Р·РЅР°Р№РґРµРЅРѕ: %s
-Deleted MyINFO exception: %s|MyINFO РІРёРєР»СЋС‡РµРЅРЅСЏ РІРёРґР°Р»РµРЅРѕ: %s
-Couldn't delete MyINFO exception because not found: %s|Р¦Рµ MyINFO РЅРµ Р·РЅР°Р№РґРµРЅРѕ РІ СЃРїРёСЃРєСѓ: %s
-Forbidden nick list|РЎРїРёСЃРѕРє Р·Р°Р±РѕСЂРѕРЅРµРЅРёС… РЅС–РєС–РІ
-Forbidden nick list is empty.|РЎРїРёСЃРѕРє Р·Р°Р±РѕСЂРѕРЅРµРЅРёС… РЅС–РєС–РІ РїРѕСЂРѕР¶РЅС–Р№.
-Forbidden description list|РЎРїРёСЃРѕРє Р·Р°Р±РѕСЂРѕРЅРµРЅРёС… РѕРїРёСЃС–РІ
-Forbidden description list is empty.|РЎРїРёСЃРѕРє Р·Р°Р±РѕСЂРѕРЅРµРЅРёС… РѕРїРёСЃС–РІ РїРѕСЂРѕР¶РЅС–Р№.
-Forbidden tag list|РЎРїРёСЃРѕРє Р·Р°Р±РѕСЂРѕРЅРµРЅРёС… С‚РµРіС–РІ
-Forbidden tag list is empty.|РЎРїРёСЃРѕРє Р·Р°Р±РѕСЂРѕРЅРµРЅРёС… С‚РµРіС–РІ РїРѕСЂРѕР¶РЅС–Р№.
-Forbidden connection type list|РЎРїРёСЃРѕРє Р·Р°Р±РѕСЂРѕРЅРµРЅРёС… С‚РёРїС–РІ Р·`С”РґРЅР°РЅРЅСЏ
-Forbidden connection type list is empty.|РЎРїРёСЃРѕРє Р·Р°Р±РѕСЂРѕРЅРµРЅРёС… С‚РёРїС–РІ Р·`С”РґРЅР°РЅРЅСЏ РїРѕСЂРѕР¶РЅС–Р№.
-Forbidden email list|РЎРїРёСЃРѕРє Р·Р°Р±РѕСЂРѕРЅРµРЅРёС… e-mail Р°РґСЂРµСЃ
-Forbidden email list is empty.|РЎРїРёСЃРѕРє Р·Р°Р±РѕСЂРѕРЅРµРЅРёС… e-mail Р°РґСЂРµСЃ РїРѕСЂРѕР¶РЅС–Р№.
-Forbidden share size list|РЎРїРёСЃРѕРє Р·Р°Р±РѕСЂРѕРЅРµРЅРёС… СЂРѕР·РјС–СЂС–РІ С€Р°СЂРё
-Forbidden share size list is empty.|РЎРїРёСЃРѕРє Р·Р°Р±РѕСЂРѕРЅРµРЅРёС… СЂРѕР·РјС–СЂС–РІ С€Р°СЂРё РїРѕСЂРѕР¶РЅС–Р№.
-MyINFO exception list|РЎРїРёСЃРѕРє MyINFO РІРёРєР»СЋС‡РµРЅСЊ
-MyINFO exception list is empty.|РЎРїРёСЃРѕРє MyINFO РІРёРєР»СЋС‡РµРЅСЊ РїРѕСЂРѕР¶РЅС–Р№.
-Deleted %d rows: %s|Р’РёРґР°Р»РµРЅРѕ %d СЂСЏРґРєС–РІ: %s
-Known types are: %s|Р’С–РґРѕРјС– РІР°СЂС–Р°РЅС‚Рё: %s
-No rows to remove: %s|РќРµРјР°С” СЂСЏРґРєС–РІ РґР»СЏ РІРёРґР°Р»РµРЅРЅСЏ: %s
-date|РґР°С‚Р°
+Couldn't add MyINFO exception because already exists: %s|Цей MYINFO вже занесено до списку виключень: %s
+Added MyINFO exception: %s|Додано MyINFO виключення: %s
+and|і
+Deleted forbidden nick: %s|Заборонений нік видалено: %s
+Couldn't delete forbidden nick because not found: %s|Заборонений нік не знайдено: %s
+Deleted forbidden description: %s|Заборонений опис видалено: %s
+Couldn't delete forbidden description because not found: %s|Заборонений опис не знайдено: %s
+Deleted forbidden tag: %s|Заборонений тег видалено: %s
+Couldn't delete forbidden tag because not found: %s|Заборонений тег не знайдено: %s
+Deleted forbidden connection type: %s|Заборонений тип з`єднання видалено: %s
+Couldn't delete forbidden connection type because not found: %s|Заборонений тип з`єднання не знайдено: %s
+Deleted forbidden email: %s|Заборонену e-mail адресу видалено: %s
+Couldn't delete forbidden email because not found: %s|Заборонену e-mail адресу не знайдено: %s
+Deleted forbidden share size: %s|Заборонений розмір шари видалено: %s
+Couldn't delete forbidden share size because not found: %s|Заборонений розмір шари не знайдено: %s
+Deleted MyINFO exception: %s|MyINFO виключення видалено: %s
+Couldn't delete MyINFO exception because not found: %s|Це MyINFO не знайдено в списку: %s
+Forbidden nick list|Список заборонених ніків
+Forbidden nick list is empty.|Список заборонених ніків порожній.
+Forbidden description list|Список заборонених описів
+Forbidden description list is empty.|Список заборонених описів порожній.
+Forbidden tag list|Список заборонених тегів
+Forbidden tag list is empty.|Список заборонених тегів порожній.
+Forbidden connection type list|Список заборонених типів з`єднання
+Forbidden connection type list is empty.|Список заборонених типів з`єднання порожній.
+Forbidden email list|Список заборонених e-mail адрес
+Forbidden email list is empty.|Список заборонених e-mail адрес порожній.
+Forbidden share size list|Список заборонених розмірів шари
+Forbidden share size list is empty.|Список заборонених розмірів шари порожній.
+MyINFO exception list|Список MyINFO виключень
+MyINFO exception list is empty.|Список MyINFO виключень порожній.
+Deleted %d rows: %s|Видалено %d рядків: %s
+Known types are: %s|Відомі варіанти: %s
+No rows to remove: %s|Немає рядків для видалення: %s
+date|дата
 %s with IP %s and class %d used following command: %s|
 context|
-Deleted from chat rank list: %s|Р’РёРґР°Р»РµРЅРѕ Р· РўРћРџ С‡Р°С‚: %s
-Not found in chat rank list: %s|РќРµ Р·РЅР°Р№РґРµРЅРѕ РІ РўРћРџ С‡Р°С‚: %s
-Deleted from operator rank list: %s|Р’РёРґР°Р»РµРЅРѕ Р· РўРћРџ РѕРїРµСЂР°С‚РѕСЂС–РІ: %s
-Not found in operator rank list: %s|Р’РёРґР°Р»РµРЅРѕ Р· РўРћРџ РѕРїРµСЂР°С‚РѕСЂС–РІ: %s
-Antispam|РђРЅС‚РёСЃРїР°Рј
-Your chat rank is: %d|Р’Р°С€Р° РїРѕР·РёС†С–СЏ РІ РўРћРџ С‡Р°С‚: %d
-You have to write something in main chat to get started.|РЎРїРµСЂС€Сѓ РІРё РјР°С”С‚Рµ С‰РѕСЃСЊ РЅР°РїРёСЃР°С‚Рё РІ С‡Р°С‚ С‰РѕР± РїСЂРёР№РЅСЏС‚Рё СѓС‡Р°СЃС‚СЊ.
-Custom nick list is empty.|РЎРїРёСЃРѕРє РїС–РґСЂРѕР±РЅРёС… РЅС–РєС–РІ РїРѕСЂРѕР¶РЅС–Р№.
-Total share rank size: %s|Р—Р°РіР°Р»СЊРЅРёР№ СЂРµРєРѕСЂРґ С€Р°СЂРё: %s
-Your operator rank is: %d|Р’Р°С€Р° РїРѕР·РёС†С–СЏ РІ РўРћРџ РѕРїРµСЂР°С‚РѕСЂС–РІ: %d
-You have to do some operator actions to get started.|Р’Рё РјР°С”С‚Рµ РІРёРєРѕСЂРёСЃС‚Р°С‚Рё С…РѕС‡Р° Р± РѕРґРЅСѓ РѕРїРµСЂР°С‚РѕСЂСЃСЊРєСѓ РґС–СЋ С‰РѕР± РїСЂРёР№РЅСЏС‚Рё СѓС‡Р°СЃС‚СЊ.
-Top %d chat rankers|РўРћРџ %d Р±Р°Р»Р°РєСѓРЅС–РІ РІ С‡Р°С‚С–
-Chat rank list is empty.|РўРћРџ С‡Р°С‚ РїРѕСЂРѕР¶РЅС–Р№.
-Top %d operator rankers|РўРћРџ %d РѕРїРµСЂР°С‚РѕСЂС–РІ
-Operator rank list is empty.|РўРћРџ РѕРїРµСЂР°С‚РѕСЂС–РІ РїРѕСЂРѕР¶РЅС–Р№.
-string|Р·РЅР°С‡РµРЅРЅСЏ
-No user results found.|Р РµР·СѓР»СЊС‚Р°С‚С–РІ РїРѕ РєРѕСЂРёСЃС‚СѓРІР°С‡Сѓ РЅРµ Р·РЅР°Р№РґРµРЅРѕ.
-Showing %d user log results|Р’С–РґРѕР±СЂР°Р¶СѓС”С‚СЊСЃСЏ %d СЂРµР·СѓР»СЊС‚Р°С‚С–РІ Р»РѕРіС–РІ РєРѕСЂРёСЃС‚СѓРІР°С‡Р°
-Size of user log table: %d [ %s: %d @ %s ]|Р РѕР·РјС–СЂ Р»РѕРіСѓ РєРѕСЂРёСЃС‚СѓРІР°С‡Р°: %d [ %s: %d @ %s ]
-Add protection entry|Р”РѕРґР°С‚Рё Р·Р°С…РёСЃС‚
-Delete protection entry|Р—РЅСЏС‚Рё Р·Р°С…РёСЃС‚
-flags|РїСЂР°РїРѕСЂС†С–
+Deleted from chat rank list: %s|Видалено з ТОП чат: %s
+Not found in chat rank list: %s|Не знайдено в ТОП чат: %s
+Deleted from operator rank list: %s|Видалено з ТОП операторів: %s
+Not found in operator rank list: %s|Видалено з ТОП операторів: %s
+Antispam|Антиспам
+Your chat rank is: %d|Ваша позиція в ТОП чат: %d
+You have to write something in main chat to get started.|Спершу ви маєте щось написати в чат щоб прийняти участь.
+Custom nick list is empty.|Список підробних ніків порожній.
+Total share rank size: %s|Загальний рекорд шари: %s
+Your operator rank is: %d|Ваша позиція в ТОП операторів: %d
+You have to do some operator actions to get started.|Ви маєте використати хоча б одну операторську дію щоб прийняти участь.
+Top %d chat rankers|ТОП %d балакунів в чаті
+Chat rank list is empty.|ТОП чат порожній.
+Top %d operator rankers|ТОП %d операторів
+Operator rank list is empty.|ТОП операторів порожній.
+string|значення
+No user results found.|Результатів по користувачу не знайдено.
+Showing %d user log results|Відображується %d результатів логів користувача
+Size of user log table: %d [ %s: %d @ %s ]|Розмір логу користувача: %d [ %s: %d @ %s ]
+Add protection entry|Додати захист
+Delete protection entry|Зняти захист
+flags|прапорці
 %s dropped due to bad search request.|
-This command is either disabled or you don't have access to it.|Р¦СЏ РєРѕРјР°РЅРґР° РІРёРјРєРЅРµРЅР° Р°РґРјС–РЅС–СЃС‚СЂР°С‚РѕСЂРѕРј Р°Р±Рѕ Сѓ РІР°СЃ РЅРµРјР°С” РїСЂР°РІ РЅР° С—С— РІРёРєРѕСЂРёСЃС‚Р°РЅРЅСЏ.
-Deleted antispam entry: %s|Р’РёРґР°Р»РµРЅРѕ Р·РЅР°С‡РµРЅРЅСЏ Р°РЅС‚РёСЃРїР°РјСѓ: %s
-Couldn't delete antispam entry because not found: %s|РќРµ РјРѕР¶Р»РёРІРѕ РІРёРґР°Р»РёС‚Рё, С‚РѕРјСѓ С‰Рѕ Р·РЅР°С‡РµРЅРЅСЏ РЅРµ Р·РЅР°Р№РґРµРЅРѕ: %s
-Antispam list|РЎРїРёСЃРѕРє Р°РЅС‚РёСЃРїР°РјСѓ
-Antispam list is empty.|РЎРїРёСЃРѕРє Р°РЅС‚РёСЃРїР°РјСѓ РїРѕСЂРѕР¶РЅС–Р№.
-Couldn't add antispam exception entry because already exists: %s|Р¦РµР№ Р·Р°РїРёСЃ Р°РЅС‚РёСЃРїР°РјСѓ РІР¶Рµ С–СЃРЅСѓС”: %s
-Added antispam exception entry: %s|Р”РѕРґР°РЅРѕ РІРёРєР»СЋС‡РµРЅРЅСЏ Р°РЅС‚РёСЃРїР°РјСѓ: %s
-Deleted antispam exception entry: %s|Р’РёРґР°Р»РµРЅРѕ РІРёРєР»СЋС‡РµРЅРЅСЏ Р°РЅС‚РёСЃРїР°РјСѓ: %s
-Couldn't delete antispam exception entry because not found: %s|РќРµ РјРѕР¶Р»РёРІРѕ РІРёРґР°Р»РёС‚Рё, С‚РѕРјСѓ С‰Рѕ Р·РЅР°С‡РµРЅРЅСЏ РЅРµ Р·РЅР°Р№РґРµРЅРѕ: %s
-Antispam exception list|РЎРїРёСЃРѕРє РІРёРєР»СЋС‡РµРЅСЊ Р°РЅС‚РёСЃРїР°РјСѓ
-Antispam exception list is empty.|РЎРїРёСЃРѕРє РІРёРєР»СЋС‡РµРЅСЊ Р°РЅС‚РёСЃРїР°РјСѓ РїРѕСЂРѕР¶РЅС–Р№.
-The user you're trying to send offline message to is a bot. Message is discarded.|РљРѕСЂРёСЃС‚СѓРІР°С‡, СЏРєРѕРјСѓ РІРё РЅР°РјР°РіР°С”С‚РµСЃСЊ РЅР°РґС–СЃР»Р°С‚Рё РѕС„С„Р»Р°Р№РЅ РїРѕРІС–РґРѕРјР»РµРЅРЅСЏ, Р±РѕС‚ (РјР°С€РёРЅР°). РџРѕРІС–РґРѕРјР»РµРЅРЅСЏ РІС–РґС…РёР»РµРЅРѕ. :)
-You can't start at user number %d when you only have %d accounts with class %d.|Р’Рё РЅРµ РјРѕР¶РµС‚Рµ РїРѕС‡Р°С‚Рё Р· РєРѕСЂРёСЃС‚СѓРІР°С‡Р° РїС–Рґ РЅРѕРјРµСЂРѕРј %d РєРѕР»Рё РІРё РјР°С”С‚Рµ %d РѕР±Р»С–РєРѕРІРёС… Р·Р°РїРёСЃС–РІ Р· РєР»Р°СЃРѕРј %d.
-Showing %d out of total %d accounts with class %d starting at user number %d|Р’С–РґРѕР±СЂР°Р¶РµРЅРѕ %d Р· %d РѕР±Р»С–РєРѕРІРёС… Р·Р°РїРёСЃС–РІ Р· РєР»Р°СЃРѕРј %d РїРѕС‡РёРЅР°СЋС‡Рё Р· РєРѕСЂРёСЃС‚СѓРІР°С‡Р° РїС–Рґ РЅРѕРјРµСЂРѕРј %d
-There are no accounts with class: %d|РќРµРјР°С” РѕР±Р»С–РєРѕРІРёС… Р·Р°РїРёСЃС–РІ Р· С‚Р°РєРёРј РєР»Р°СЃРѕРј: %d
-Known classes are: %s|Р’С–РґРѕРјС– РєР»Р°СЃРё: %s
-%s with class %d sent say message: <%s> %s|%s Р· РєР»Р°СЃРѕРј %d РЅР°РґС–СЃР»Р°РІ SAY РїРѕРІС–РґРѕРјР»РµРЅРЅСЏ: <%s> %s
-%s with class %d had bad luck sending say message: <%s> %s|%s Р· РєР»Р°СЃРѕРј %d РЅР°РјР°РіР°РІСЃСЏ РЅР°РґС–СЃР»Р°С‚Рё SAY РїРѕРІС–РґРѕРјР»РµРЅРЅСЏ, Р°Р»Рµ Р№РѕРјСѓ РЅРµ РІРґР°Р»РѕСЃСЏ =D: <%s> %s
-You can't talk from nick whose class is higher or equals your own.|Р’Рё РЅРµ РјРѕР¶РµС‚Рµ РіРѕРІРѕСЂРёС‚Рё РІС–Рґ С–РјРµРЅС– РєРѕСЂРёСЃС‚СѓРІР°С‡Р°, РєР»Р°СЃ СЏРєРѕРіРѕ РІРёС‰Рµ Р°Р±Рѕ РґРѕСЂС–РІРЅСЋС” РІР°С€РѕРјСѓ =D.
-%s with IP %s and class %d kicked: <%s> %s|%s Р· IP %s С‚Р° РєР»Р°СЃРѕРј %d РєС–РєРЅСѓС‚Рѕ: <%s> %s
-%s with class %d deleted %d statistics plugin entries older than %d days.|%s Р· РєР»Р°СЃРѕРј %d РІРёРґР°Р»РёРІ %d РґР°РЅРёС… СЃС‚Р°С‚РёСЃС‚РёРєРё С‰Рѕ СЃС‚Р°СЂС–С€С– Р·Р° %d РґРЅС–РІ.
+This command is either disabled or you don't have access to it.|Ця команда вимкнена адміністратором або у вас немає прав на її використання.
+Deleted antispam entry: %s|Видалено значення антиспаму: %s
+Couldn't delete antispam entry because not found: %s|Не можливо видалити, тому що значення не знайдено: %s
+Antispam list|Список антиспаму
+Antispam list is empty.|Список антиспаму порожній.
+Couldn't add antispam exception entry because already exists: %s|Цей запис антиспаму вже існує: %s
+Added antispam exception entry: %s|Додано виключення антиспаму: %s
+Deleted antispam exception entry: %s|Видалено виключення антиспаму: %s
+Couldn't delete antispam exception entry because not found: %s|Не можливо видалити, тому що значення не знайдено: %s
+Antispam exception list|Список виключень антиспаму
+Antispam exception list is empty.|Список виключень антиспаму порожній.
+The user you're trying to send offline message to is a bot. Message is discarded.|Користувач, якому ви намагаєтесь надіслати оффлайн повідомлення, бот (машина). Повідомлення відхилено. :)
+You can't start at user number %d when you only have %d accounts with class %d.|Ви не можете почати з користувача під номером %d коли ви маєте %d облікових записів з класом %d.
+Showing %d out of total %d accounts with class %d starting at user number %d|Відображено %d з %d облікових записів з класом %d починаючи з користувача під номером %d
+There are no accounts with class: %d|Немає облікових записів з таким класом: %d
+Known classes are: %s|Відомі класи: %s
+%s with class %d sent say message: <%s> %s|%s з класом %d надіслав SAY повідомлення: <%s> %s
+%s with class %d had bad luck sending say message: <%s> %s|%s з класом %d намагався надіслати SAY повідомлення, але йому не вдалося =D: <%s> %s
+You can't talk from nick whose class is higher or equals your own.|Ви не можете говорити від імені користувача, клас якого вище або дорівнює вашому =D.
+%s with IP %s and class %d kicked: <%s> %s|%s з IP %s та класом %d кікнуто: <%s> %s
+%s with class %d deleted %d statistics plugin entries older than %d days.|%s з класом %d видалив %d даних статистики що старіші за %d днів.
 offset|offset
 order|
-%s didn't get any search results.|%s РЅРµ РѕС‚СЂРёРјР°РІ Р¶РѕРґРЅРёС… СЂРµР·СѓР»СЊС‚Р°С‚С–РІ РїРѕС€СѓРєСѓ.
-Redirected %s with IP %s and class %d to %s: <%s> %s|РџРµСЂРµРЅР°РїСЂР°РІР»РµРЅРѕ %s Р· IP %s РєР»Р°СЃРѕРј %d РЅР° %s: <%s> %s
-Unknown protocol command from %s with IP %s and class %d: %s|РќРµРІС–РґРѕРјР° РєРѕРјР°РЅРґР° РїСЂРѕС‚РѕРєРѕР»Сѓ Р±СѓР»Р° РѕС‚СЂРёРјР°РЅР° %s Р· IP %s С‚Р° РєР»Р°СЃРѕРј %d: %s
-Custom nick list|РЎРїРёСЃРѕРє РїС–РґСЂРѕР±РЅРёС… РЅС–РєС–РІ
+%s didn't get any search results.|%s не отримав жодних результатів пошуку.
+Redirected %s with IP %s and class %d to %s: <%s> %s|Перенаправлено %s з IP %s класом %d на %s: <%s> %s
+Unknown protocol command from %s with IP %s and class %d: %s|Невідома команда протоколу була отримана %s з IP %s та класом %d: %s
+Custom nick list|Список підробних ніків
 %s operator commands|
-Add antispam entry|Р”РѕРґР°С‚Рё Р·РЅР°С‡РµРЅРЅСЏ Р°РЅС‚РёСЃРїР°РјСѓ
-Showing last %d lines out of total %d found in %s file|Р’С–РґРѕР±СЂР°Р¶Р°СЋС‚СЊСЃСЏ РѕСЃС‚Р°РЅРЅС– %d СЂСЏРґРєС–РІ Р· %d Р·РЅР°Р№РґРµРЅРёС… Сѓ С„Р°Р№Р»С– %s
-Delete antispam entry|Р’РёРґР°Р»РёС‚Рё Р·РЅР°С‡РµРЅРЅСЏ Р°РЅС‚РёСЃРїР°РјСѓ
-Add antispam exception entry|Р”РѕРґР°С‚Рё РІРёРєР»СЋС‡РµРЅРЅСЏ Р°РЅС‚РёСЃРїР°РјСѓ
-Delete antispam exception entry|Р’РёРґР°Р»РёС‚Рё РІРёРєР»СЋС‡РµРЅРЅСЏ Р°РЅС‚РёСЃРїР°РјСѓ
-Add MyINFO entry|Р”РѕРґР°С‚Рё Р·РЅР°С‡РµРЅРЅСЏ MyINFO
-Delete MyINFO entry|Р’РёРґР°Р»РёС‚Рё Р·РЅР°С‡РµРЅРЅСЏ MyINFO
-MyINFO list|РЎРїРёСЃРѕРє MyINFO
-List of registered users by class|РЎРїРёСЃРѕРє Р·Р°СЂРµС”СЃС‚СЂРѕРІР°РЅРёС… РєРѕСЂРёСЃС‚СѓРІР°С‡С–РІ Р·Р° РєР»Р°СЃРѕРј
-Speak from other nick|Р“РѕРІРѕСЂРёС‚Рё РІС–Рґ С–РЅС€РѕРіРѕ С–РјРµРЅС–
-Remove user or word from rank list|Р’РёРґР°Р»РёС‚Рё РєРѕСЂРёСЃС‚СѓРІР°С‡Р° Р°Р±Рѕ СЃР»РѕРІРѕ Р· РўРћРџ
-%s with class %d deleted %d user log entries older than %d days.|%s Р· РєР»Р°СЃРѕРј %d РІРёРґР°Р»РёРІ %d Р»РѕРіСѓ РєРѕСЂРёСЃС‚СѓРІР°С‡Р° С‰Рѕ СЃС‚Р°СЂС–С€Рµ Р·Р° %d РґРЅС–РІ.
-List stored offline messages|РЎРїРёСЃРѕРє Р·Р±РµСЂРµР¶РµРЅРёС… РѕС„С„Р»Р°Р№РЅ РїРѕРІС–РґРѕРјР»РµРЅСЊ
-Delete offline messages by date|Р’РёРґР°Р»РёС‚Рё РѕС„С„Р»Р°Р№РЅ РїРѕРІС–РґРѕРјР»РµРЅРЅСЏ Р·Р° РґР°С‚РѕСЋ
-Delete all offline messages|Р’РёРґР°Р»РёС‚Рё РІСЃС– РѕС„С„Р»Р°Р№РЅ РїРѕРІС–РґРѕРјР»РµРЅРЅСЏ
-class|РєР»Р°СЃ
-Clean up tables|РћС‡РёСЃС‚РёС‚Рё С‚Р°Р±Р»РёС†С–
-Operator chat history|Р†СЃС‚РѕСЂС–СЏ РѕРїРµСЂР°С‚РѕСЂСЃСЊРєРѕРіРѕ С‡Р°С‚Сѓ
-Delete all history messages|Р’РёРґР°Р»РёС‚Рё РІСЃСЋ С–СЃС‚РѕСЂС–СЋ С‡Р°С‚Сѓ
-Your operator rank|Р’Р°С€Р° РїРѕР·РёС†С–СЏ РІ РўРћРџ РѕРїРµСЂР°С‚РѕСЂС–РІ
-Script configuration variables|РЎРєСЂРёРїС‚ РєРѕРЅС„С–РіСѓСЂР°С†С–Р№РЅРёС… Р·РЅР°С‡РµРЅСЊ
-Change configuration variable|Р—РјС–РЅС‚РёС‚Рё Р·РЅР°С‡РµРЅРЅСЏ РєРѕРЅС„С–РіСѓСЂР°С†С–С—
-nick|РЅС–Рє
-This list of commands|Р¦РµР№ СЃРїРёСЃРѕРє РєРѕРјР°РЅРґ
+Add antispam entry|Додати значення антиспаму
+Showing last %d lines out of total %d found in %s file|Відображаються останні %d рядків з %d знайдених у файлі %s
+Delete antispam entry|Видалити значення антиспаму
+Add antispam exception entry|Додати виключення антиспаму
+Delete antispam exception entry|Видалити виключення антиспаму
+Add MyINFO entry|Додати значення MyINFO
+Delete MyINFO entry|Видалити значення MyINFO
+MyINFO list|Список MyINFO
+List of registered users by class|Список зареєстрованих користувачів за класом
+Speak from other nick|Говорити від іншого імені
+Remove user or word from rank list|Видалити користувача або слово з ТОП
+%s with class %d deleted %d user log entries older than %d days.|%s з класом %d видалив %d логу користувача що старіше за %d днів.
+List stored offline messages|Список збережених оффлайн повідомлень
+Delete offline messages by date|Видалити оффлайн повідомлення за датою
+Delete all offline messages|Видалити всі оффлайн повідомлення
+class|клас
+Clean up tables|Очистити таблиці
+Operator chat history|Історія операторського чату
+Delete all history messages|Видалити всю історію чату
+Your operator rank|Ваша позиція в ТОП операторів
+Script configuration variables|Скрипт конфігураційних значень
+Change configuration variable|Змінтити значення конфігурації
+nick|нік
+This list of commands|Цей список команд
 %s user commands|
-Current topic|РџРѕС‚РѕС‡РЅР° С‚РµРјР°
-Your chat rank|Р’Р°С€Р° РїРѕР·РёС†С–СЏ РІ РўРћРџ С‡Р°С‚Сѓ
-You're not allowed to send private messages.|Р’Р°Рј Р±СѓР»Рѕ Р·Р°Р±РѕСЂРѕРЅРµРЅРѕ РЅР°РґСЃРёР»Р°С‚Рё РїСЂРёРІР°С‚РЅС– РїРѕРІС–РґРѕРјР»РµРЅРЅСЏ.
-Unknown|РќРµРІС–РґРѕРјРѕ
-identifier|С–РґРµРЅС‚РёС„С–РєР°С‚РѕСЂ
-Offline message to user|РћС„С„Р»Р°Р№РЅ РїРѕРІС–РґРѕРјР»РµРЅРЅСЏ РєРѕСЂРёСЃС‚СѓРІР°С‡Сѓ
-Main chat history|Р†СЃС‚РѕСЂС–СЏ РіРѕР»РѕРІРЅРѕРіРѕ С‡Р°С‚Сѓ
+Current topic|Поточна тема
+Your chat rank|Ваша позиція в ТОП чату
+You're not allowed to send private messages.|Вам було заборонено надсилати приватні повідомлення.
+Unknown|Невідомо
+identifier|ідентифікатор
+Offline message to user|Оффлайн повідомлення користувачу
+Main chat history|Історія головного чату
 %s statistics|
-Script version: %s|Р’РµСЂСЃС–СЏ СЃРєСЂРёРїС‚Сѓ: %s
-Total chat rank points: %d|Р—Р°РіР°Р»СЊРЅР° РєС–Р»СЊРєС–СЃС‚СЊ Р±Р°Р»С–РІ РўРћРџ С‡Р°С‚Сѓ: %d
-Total operator rank points: %d|Р—Р°РіР°Р»СЊРЅР° РєС–Р»СЊРєС–СЃС‚СЊ Р±Р°Р»С–РІ РўРћРџ РѕРїРµСЂР°С‚РѕСЂС–РІ: %d
-Average message count per user: %.2f|Р’ СЃРµСЂРµРґРЅСЊРѕРјСѓ РїРѕРІС–РґРѕРјР»РµРЅСЊ РЅР° РѕРґРЅРѕРіРѕ РєРѕСЂРёСЃС‚СѓРІР°С‡Р°: %.2f
-lre|РІРёСЂР°Р·
-action|РґС–СЏ
-Changed configuration variable %s: %s => %s|Р—РјС–РЅРµРЅРѕ Р·РЅР°С‡РµРЅРЅСЏ РєРѕРЅС„С–РіСѓСЂР°С†С–С— %s: %s => %s
-Configuration variable %s can only be set to: %s|Р—РЅР°С‡РµРЅРЅСЏ РєРѕРЅС„С–РіСѓСЂР°С†С–С— %s РјРѕР¶Рµ Р±СѓС‚Рё РІСЃС‚Р°РЅРѕРІР»РµРЅРѕ Р»РёС€Рµ РЅР°: %s
-or|Р°Р±Рѕ
-Configuration variable %s must be a number.|Р—РЅР°С‡РµРЅРЅСЏ %s РјР°С” Р±СѓС‚Рё С‡РёСЃР»Рѕ.
-to|РґРѕ
-Unknown configuration variable: %s|РўР°РєРѕРіРѕ Р·РЅР°С‡РµРЅРЅСЏ РєРѕРЅС„С–РіСѓСЂР°С†С–С— РЅРµ Р·РЅР°Р№РґРµРЅРѕ: %s
-%s version: %s|%s РІРµСЂСЃС–СЏ: %s
-Not installed|РќРµ РІСЃС‚Р°РЅРѕРІР»РµРЅРѕ
+Script version: %s|Версія скрипту: %s
+Total chat rank points: %d|Загальна кількість балів ТОП чату: %d
+Total operator rank points: %d|Загальна кількість балів ТОП операторів: %d
+Average message count per user: %.2f|В середньому повідомлень на одного користувача: %.2f
+lre|вираз
+action|дія
+Changed configuration variable %s: %s => %s|Змінено значення конфігурації %s: %s => %s
+Configuration variable %s can only be set to: %s|Значення конфігурації %s може бути встановлено лише на: %s
+or|або
+Configuration variable %s must be a number.|Значення %s має бути число.
+to|до
+Unknown configuration variable: %s|Такого значення конфігурації не знайдено: %s
+%s version: %s|%s версія: %s
+Not installed|Не встановлено
 User dropped due to spam: %s|
-variable|Р·РјС–РЅРЅР°
-value|Р·РЅР°С‡РµРЅРЅСЏ
-minutes|С…РІРёР»РёРЅ
-%s library version: %s|%s РІРµСЂСЃС–СЏ Р±С–Р±Р»С–РѕС‚РµРєРё: %s
+variable|змінна
+value|значення
+minutes|хвилин
+%s library version: %s|%s версія бібліотеки: %s
 Reorder right click menu item|
-lines|СЂСЏРґРєС–РІ
-Couldn't add rank exception because already exists: %s|РќРµ РјРѕР¶Р»РёРІРѕ РґРѕРґР°С‚Рё РІРёРєР»СЋС‡РµРЅРЅСЏ РўРћРџ, РІРѕРЅРѕ РІР¶Рµ С–СЃРЅСѓС”: %s
-Added rank exception: %s|РўРћРџ РІРёРєР»СЋС‡РµРЅРЅСЏ РґРѕРґР°РЅРѕ: %s
-Deleted rank exception: %s|РўРћРџ РІРёРєР»СЋС‡РµРЅРЅСЏ РІРёРґР°Р»РµРЅРѕ: %s
-Couldn't delete rank exception because not found: %s|РќРµ РјРѕР¶Р»РёРІРѕ РІРёРґР°Р»РёС‚Рё РІРёРєР»СЋС‡РµРЅРЅСЏ РўРћРџ, РЅРµ Р·РЅР°Р№РґРµРЅРѕ: %s
-Rank exception list|РЎРїРёСЃРѕРє РІРёРєР»СЋС‡РµРЅСЊ РўРћРџ
-Rank exception list is empty.|РЎРїРёСЃРѕРє РІРёРєР»СЋС‡РµРЅСЊ РўРћРџ РїРѕСЂРѕР¶РЅС–Р№.
-Add rank exception|Р”РѕРґР°С‚Рё РІРёРєР»СЋС‡РµРЅРЅСЏ РўРћРџ
-Delete rank exception|Р’РёРґР°Р»РёС‚Рё РІРёРєР»СЋС‡РµРЅРЅСЏ РўРћРџ
-In order to use this feature you must turn off registered users list cache. Do it by setting hub configuration variable %s to %d and restarting the hub. Please note: Turning cache off is not recommended with large list of registered users.|Р”Р»СЏ РІРёРєРѕСЂРёСЃС‚Р°РЅРЅСЏ С†С–С”С— С„СѓРЅРєС†С–С—, РІР°Рј РЅРµРѕР±С…С–РґРЅРѕ СЃРїРµСЂС€Сѓ РІРёРјРєРЅСѓС‚Рё РєРµС€СѓРІР°РЅРЅСЏ СЃРїРёСЃРєСѓ Р·Р°СЂРµС”СЃС‚СЂРѕРІР°РЅРёС… РєРѕСЂРёСЃС‚СѓРІР°С‡С–РІ. Р—РјС–РЅС–С‚СЊ Р·РЅР°С‡РµРЅРЅСЏ РєРѕРЅС„С–РіСѓСЂР°С†С–С— %s РЅР° %d С‚Р° РїРµСЂРµР·Р°РІР°РЅС‚Р°Р¶С‚Рµ С…Р°Р±. РџСЂРёРјС–С‚РєР°: Р’РёРјРєРЅРµРЅРЅСЏ РєРµС€СѓРІР°РЅРЅСЏ СЃРїРёСЃРєСѓ РѕР±Р»С–РєРѕРІРёС… Р·Р°РїРёСЃС–РІ РЅРµРіР°С‚РёРІРЅРѕ РїРѕР·РЅР°С‡РёС‚СЊСЃСЏ РЅР° С€РІРёРґРєРѕРґС–С— СЃРµСЂРІРµСЂСѓ Р· РІРµР»РёРєРѕСЋ РєС–Р»СЊРєС–СЃС‚СЋ РєРѕСЂРёСЃС‚СѓРІР°С‡С–РІ.
-Both|РћР±РёРґРІР°
-Deleted search filter: %s|РџРѕС€СѓРєРѕРІРёР№ С„С–Р»СЊС‚СЂ РІРёРґР°Р»РµРЅРѕ: %s
-Couldn't delete search filter because not found: %s|Р’РёРґР°Р»РёС‚Рё РЅРµ РІРґР°Р»РѕСЃСЏ, Р·РЅР°С‡РµРЅРЅСЏ РїРѕС€СѓРєРѕРІРѕРіРѕ С„С–Р»СЊС‚СЂСѓ РЅРµ Р·РЅР°Р№РґРµРЅРѕ: %s
-Search filter list|РЎРїРёСЃРѕРє РїРѕС€СѓРєРѕРІРѕРіРѕ С„С–Р»СЊС‚СЂСѓ
-Search filter list is empty.|РЎРїРёСЃРѕРє РїРѕС€СѓРєРѕРІРѕРіРѕ С„С–Р»СЊС‚СЂСѓ РїРѕСЂРѕР¶РЅС–Р№.
-Magnet link: %s|РњР°РіРЅРµС‚ РїРѕСЃРёР»Р°РЅРЅСЏ: %s
-Add search filter|Р”РѕРґР°С‚Рё РїРѕС€СѓРєРѕРІРёР№ С„С–Р»СЊС‚СЂ
-Delete search filter|Р’РёРґР°Р»РёС‚Рё РїРѕС€СѓРєРѕРІРёР№ С„С–Р»СЊС‚СЂ
-Known actions are: %s|РќР°СЏРІРЅС– РґС–С—: %s
-Known flags are: %s|РќР°СЏРІРЅС– РїСЂР°РїРѕСЂС†С–: %s
+lines|рядків
+Couldn't add rank exception because already exists: %s|Не можливо додати виключення ТОП, воно вже існує: %s
+Added rank exception: %s|ТОП виключення додано: %s
+Deleted rank exception: %s|ТОП виключення видалено: %s
+Couldn't delete rank exception because not found: %s|Не можливо видалити виключення ТОП, не знайдено: %s
+Rank exception list|Список виключень ТОП
+Rank exception list is empty.|Список виключень ТОП порожній.
+Add rank exception|Додати виключення ТОП
+Delete rank exception|Видалити виключення ТОП
+In order to use this feature you must turn off registered users list cache. Do it by setting hub configuration variable %s to %d and restarting the hub. Please note: Turning cache off is not recommended with large list of registered users.|Для використання цієї функції, вам необхідно спершу вимкнути кешування списку зареєстрованих користувачів. Змініть значення конфігурації %s на %d та перезавантажте хаб. Примітка: Вимкнення кешування списку облікових записів негативно позначиться на швидкодії серверу з великою кількістю користувачів.
+Both|Обидва
+Deleted search filter: %s|Пошуковий фільтр видалено: %s
+Couldn't delete search filter because not found: %s|Видалити не вдалося, значення пошукового фільтру не знайдено: %s
+Search filter list|Список пошукового фільтру
+Search filter list is empty.|Список пошукового фільтру порожній.
+Magnet link: %s|Магнет посилання: %s
+Add search filter|Додати пошуковий фільтр
+Delete search filter|Видалити пошуковий фільтр
+Known actions are: %s|Наявні дії: %s
+Known flags are: %s|Наявні прапорці: %s
 Downloading version file: %s|
-Size of kicks table: %d [ %s: %d @ %s ]|Р РѕР·РјС–СЂ С‚Р°Р±Р»РёС†С– РєС–РєС–РІ: %d [ %s: %d @ %s ]
-Size of bans table: %d [ %s: %d @ %s ]|Р РѕР·РјС–СЂ С‚Р°Р±Р»РёС†С– Р±Р»РѕРєСѓРІР°РЅСЊ: %d [ %s: %d @ %s ]
-Size of unbans table: %d [ %s: %d @ %s ]|Р РѕР·РјС–СЂ С‚Р°Р±Р»РёС†С– СЂРѕР·Р±Р»РѕРєСѓРІР°РЅСЊ: %d [ %s: %d @ %s ]
-Size of IP logger plugin table: %d [ %s: %d @ %s ]|Р РѕР·РјС–СЂ IP Р»РѕРіРіРµСЂСѓ: %d [ %s: %d @ %s ]
-Size of statistics plugin table: %d [ %s: %d @ %s ]|Р РѕР·РјС–СЂ С‚Р°Р±Р»РёС†С– СЃС‚Р°С‚РёСЃС‚РёРєРё: %d [ %s: %d @ %s ]
-Modified authorization entry: %s @ %s|Р—РјС–РЅРµРЅРѕ Р·Р°РїРёСЃ Р°РІС‚РѕСЂРёР·Р°С†С–Р№: %s @ %s
-Added authorization entry: %s @ %s|Р”РѕРґР°РЅРѕ Р·Р°РїРёСЃ Р°РІС‚РѕСЂРёР·Р°С†С–Р№: %s @ %s
-Deleted authorization entry: %s|Р’РёРґР°Р»РµРЅРѕ Р·Р°РїРёСЃ Р°РІС‚РѕСЂРёР·Р°С†С–Р№: %s
-Couldn't delete authorization entry because not found: %s|Р—Р°РїРёСЃ Р°РІС‚РѕСЂРёР·Р°С†С–С— РЅРµ Р·РЅР°Р№РґРµРЅРѕ: %s
-IP authorization list|РЎРїРёСЃРѕРє IP Р°РІС‚РѕСЂРёР·Р°С†С–Р№
-IP authorization list is empty.|РЎРїРёСЃРѕРє IP Р°РІС‚РѕСЂРёР·Р°С†С–Р№ РїРѕСЂРѕР¶РЅС–Р№.
-Add IP authorization entry|Р”РѕРґР°С‚Рё Р·Р°РїРёСЃ IP Р°РІС‚РѕСЂРёР·Р°С†С–С—
-Delete authorization entry|Р’РёРґР°Р»РёС‚Рё Р·Р°РїРёСЃ Р°РІС‚РѕСЂРёР·Р°С†С–С—
+Size of kicks table: %d [ %s: %d @ %s ]|Розмір таблиці кіків: %d [ %s: %d @ %s ]
+Size of bans table: %d [ %s: %d @ %s ]|Розмір таблиці блокувань: %d [ %s: %d @ %s ]
+Size of unbans table: %d [ %s: %d @ %s ]|Розмір таблиці розблокувань: %d [ %s: %d @ %s ]
+Size of IP logger plugin table: %d [ %s: %d @ %s ]|Розмір IP логгеру: %d [ %s: %d @ %s ]
+Size of statistics plugin table: %d [ %s: %d @ %s ]|Розмір таблиці статистики: %d [ %s: %d @ %s ]
+Modified authorization entry: %s @ %s|Змінено запис авторизацій: %s @ %s
+Added authorization entry: %s @ %s|Додано запис авторизацій: %s @ %s
+Deleted authorization entry: %s|Видалено запис авторизацій: %s
+Couldn't delete authorization entry because not found: %s|Запис авторизації не знайдено: %s
+IP authorization list|Список IP авторизацій
+IP authorization list is empty.|Список IP авторизацій порожній.
+Add IP authorization entry|Додати запис IP авторизації
+Delete authorization entry|Видалити запис авторизації
 ip|ip
-%s with IP %s and class %d authorized.|%s Р· IP %s С‚Р° РєР»Р°СЃРѕРј %d СѓСЃРїС–С€РЅРѕ Р°РІС‚РѕСЂРёР·РѕРІР°РЅРѕ.
-%s with IP %s and class %d failed authorization and disconnected.|%s Р· IP %s С‚Р° РєР»Р°СЃРѕРј %d РЅРµ РїСЂРѕР№С€РѕРІ(Р»Р°) Р°РІС‚РѕСЂРёР·Р°С†С–СЋ.
-Category: %s|РљР°С‚РµРіРѕСЂС–СЏ: %s
-Set custom nick for yourself|Р’СЃС‚Р°РЅРѕРІРёС‚Рё РЅРµСЃРїСЂР°РІР¶РЅС–Р№ РЅС–Рє РґР»СЏ СЃРµР±Рµ
-This nick is registered or in use and therefore can't be used as custom nick: %s|Р¦РµР№ РЅС–Рє Р·Р°СЂРµС”СЃС‚СЂРѕРІР°РЅРѕ Р°Р±Рѕ РІР¶Рµ РІРёРєРѕСЂРёСЃС‚РѕРІСѓС”С‚СЊСЃСЏ С– РЅРµ РјРѕР¶Рµ Р±СѓС‚Рё РІРёРєРѕСЂРёСЃС‚Р°РЅРёР№: %s
-Set your welcome message|Р’СЃС‚Р°РЅРѕРІРёС‚Рё РІР°С€Рµ РїСЂРёРІС–С‚Р°РЅРЅСЏ
-Division by zero is forbidden.|Р”С–Р»РµРЅРЅСЏ РЅР° РЅСѓР»СЊ РЅРµРјРѕР¶Р»РёРІРµ.
-Show your welcome messages|Р’С–РґРѕР±СЂР°Р·РёС‚Рё РІР°С€Рµ РїСЂРёРІС–С‚Р°РЅРЅСЏ
-Welcome message list|РЎРїРёСЃРѕРє РїСЂРёРІС–С‚Р°РЅСЊ
-Delete user and his welcome messages|Р’РёРґР°Р»РёС‚Рё РєРѕСЂРёСЃС‚СѓРІР°С‡Р° С– Р№РѕРіРѕ РїСЂРёРІС–С‚Р°РЅРЅСЏ
-Nick|РќС–Рє
-Login message|РџСЂРёРІС–С‚Р°РЅРЅСЏ РїСЂРё РІС…РѕРґС–
-Logout message|РџСЂРёРІС–С‚Р°РЅРЅСЏ РїСЂРё РІРёС…РѕРґС–
-Welcome message list is empty.|РЎРїРёСЃРѕРє РїСЂРёРІС–С‚Р°РЅСЊ РїРѕСЂРѕР¶РЅС–Р№.
-Welcome messages were deleted for user: %s|РџСЂРёРІС–С‚Р°Р»СЊРЅС– РїРѕРІС–РґРѕРјР»РµРЅРЅСЏ Р±СѓР»Рё РІРёРґР°Р»РµРЅС– РґР»СЏ РєРѕСЂРёСЃС‚СѓРІР°С‡Р°: %s
-Couldn't delete user from welcome message list because not found: %s|РљРѕСЂРёСЃС‚СѓРІР°С‡ РЅРµ Р·РЅР°Р№РґРµРЅРёР№ РІ СЃРїРёСЃРєСѓ РїСЂРёРІС–С‚Р°Р»СЊРЅРёС… РїРѕРІС–РґРѕРјР»РµРЅСЊ: %s
-Your login message set: %s|Р’Р°С€Рµ РїРѕРІС–РґРѕРјР»РµРЅРЅСЏ РїСЂРё РІС…РѕРґС– РІСЃС‚Р°РЅРѕРІР»РµРЅРѕ РЅР°: %s
-%s with class %d changed his login message: %s|%s Р· РєР»Р°СЃРѕРј %d Р·РјС–РЅРёРІ(Р»Р°) СЃРІРѕС” РїСЂРёРІС–С‚Р°Р»СЊРЅРµ РїРѕРІС–РґРѕРјР»РµРЅРЅСЏ: %s
-Your logout message set: %s|Р’Р°С€Рµ РїРѕРІС–РґРѕРјР»РµРЅРЅСЏ РїСЂРё РІРёС…РѕРґС– РІСЃС‚Р°РЅРѕРІР»РµРЅРѕ РЅР°: %s
-%s with class %d changed his logout message: %s|%s Р· РєР»Р°СЃРѕРј %d Р·РјС–РЅРёРІ(Р»Р°) СЃРІРѕРµ РїРѕРІС–РґРѕРјР»РµРЅРЅСЏ РїСЂРё РІРёС…РѕРґС– РЅР°: %s
-You don't have any welcome messages.|РЈ РІР°СЃ РЅРµРјР°С” Р¶РѕРґРЅРёС… РїСЂРёРІС–С‚Р°Р»СЊРЅРёС… РїРѕРІС–РґРѕРјР»РµРЅСЊ.
-Your login message: %s|Р’Р°С€Рµ РїРѕРІС–РґРѕРјР»РµРЅРЅСЏ РїСЂРё РІС…РѕРґС–: %s
-Add chatroom|Р”РѕРґР°С‚Рё РєС–РјРЅР°С‚Сѓ
-Chatroom list|РЎРїРёСЃРѕРє РєС–РјРЅР°С‚
-Delete chatroom|Р’РёРґР°Р»РёС‚Рё РєС–РјРЅР°С‚Сѓ
-description|РѕРїРёСЃ
-minclass|РјС–РЅС–РјР°Р»СЊРЅРёР№ РєР»Р°СЃ
-maxclass|РјР°РєСЃРёРјР°Р»СЊРЅРёР№ РєР»Р°СЃ
-Modified chatroom: %s|РљС–РјРЅР°С‚Сѓ Р·РјС–РЅРµРЅРѕ: %s
-Added chatroom: %s|Р”РѕРґР°РЅРѕ РєС–РјРЅР°С‚Сѓ: %s
-Deleted chatroom: %s|Р’РёРґР°Р»РµРЅРѕ РєС–РјРЅР°С‚Сѓ: %s
-Couldn't delete chatroom because not found: %s|РљС–РјРЅР°С‚Р° РЅРµ Р·РЅР°Р№РґРµРЅР°, РЅС–С‡РѕРіРѕ РІРёРґР°Р»СЏС‚Рё: %s
-Chatroom|РљС–РјРЅР°С‚Р°
-Description|РћРїРёСЃ
-Chatroom list is empty.|РЎРїРёСЃРѕРє РєС–РјРЅР°С‚ РїРѕСЂРѕР¶РЅС–Р№.
-Not found in country code statistics table: %s|РќРµ Р·РЅР°Р№РґРµРЅРѕ РІ С‚Р°Р±Р»РёС†С– СЃС‚Р°С‚РёСЃС‚РёРєРё РєРѕРґС–РІ РєСЂР°С—РЅ: %s
-Custom nick %s is now owned by real user and therefore has been reset for user: %s|РќС–Рє %s РЅР°СЂР°Р·С– РІРёРєРѕСЂРёСЃС‚РѕРІСѓС”С‚СЊСЃСЏ С–РЅС€РёРј СЋР·РµСЂРѕРј, РїРµСЂРµРІСЃС‚Р°РЅРѕРІР»РµРЅРѕ РґР»СЏ: %s
-%s is registered with class %d.|%s Р·Р°СЂРµС”СЃС‚СЂРѕРІР°РЅРѕ Р· РєР»Р°СЃРѕРј %d.
-Query executed but didn't return any results.|Р—Р°РїРёС‚ РІРёРєРѕРЅР°РЅРѕ Р°Р»Рµ Сѓ РІС–РґРїРѕРІС–РґСЊ РЅРµ Р±СѓР»Рѕ РѕС‚СЂРёРјР°РЅРѕ Р¶РѕРґРЅРёС… СЂРµР·СѓР»СЊС‚Р°С‚С–РІ.
-Published: %s|РћРїСѓР±Р»С–РєРѕРІР°РЅРѕ: %s
-Add search filter exception entry|Р”РѕРґР°С‚Рё РІРёР№РЅСЏС‚РѕРє РїРѕС€СѓРєРѕРІРѕРіРѕ С„С–Р»СЊС‚СЂСѓ
-Delete search filter exception entry|Р’РёРґР°Р»РёС‚Рё РІРёР№РЅСЏС‚РѕРє РїРѕС€СѓРєРѕРІРѕРіРѕ С„С–Р»СЊС‚СЂСѓ
-Search filter exception list|РЎРїРёСЃРѕРє РІРёР№РЅСЏС‚РєС–РІ РїРѕС€СѓРєРѕРІРѕРіРѕ С„С–Р»СЊС‚СЂСѓ
-Couldn't add search filter exception entry because already exists: %s|Р¦РµР№ РІРёР№РЅСЏС‚РѕРє РїРѕС€СѓРєРѕРІРѕРіРѕ С„С–Р»СЊС‚СЂСѓ РІР¶Рµ Р·Р°РїРёСЃР°РЅРѕ: %s
-Added search filter exception entry: %s|Р”РѕРґР°РЅРѕ РІРёР№РЅСЏС‚РѕРє РїРѕС€СѓРєРѕРІРѕРіРѕ С„С–Р»СЊС‚СЂСѓ: %s
-Deleted search filter exception entry: %s|Р’РёРґР°Р»РµРЅРѕ РІРёР№РЅСЏС‚РѕРє РїРѕС€СѓРєРѕРІРѕРіРѕ С„С–Р»СЊС‚СЂСѓ: %s
-Couldn't delete search filter exception entry because not found: %s|Р’РёР№РЅСЏС‚РѕРє РїРѕС€СѓРєРѕРІРѕРіРѕ С„С–Р»СЊС‚СЂСѓ РЅРµ Р·РЅР°Р№РґРµРЅРѕ, РЅС–С‡РѕРіРѕ РІРёРґР°Р»СЏС‚Рё: %s
-Search filter exception list is empty.|РЎРїРёСЃРѕРє РІРёР№РЅСЏС‚РєС–РІ РїРѕС€СѓРєРѕРІРѕРіРѕ С„С–Р»СЊС‚СЂСѓ РїРѕСЂРѕР¶РЅС–Р№.
-file|С„Р°Р№Р»
-Read hub logs|Р§РёС‚Р°С‚Рё Р»РѕРіРё С…Р°Р±Сѓ
-Known files are: %s|Р’С–РґРѕРјС– С„Р°Р№Р»Рё: %s
+%s with IP %s and class %d authorized.|%s з IP %s та класом %d успішно авторизовано.
+%s with IP %s and class %d failed authorization and disconnected.|%s з IP %s та класом %d не пройшов(ла) авторизацію.
+Category: %s|Категорія: %s
+Set custom nick for yourself|Встановити несправжній нік для себе
+This nick is registered or in use and therefore can't be used as custom nick: %s|Цей нік зареєстровано або вже використовується і не може бути використаний: %s
+Set your welcome message|Встановити ваше привітання
+Division by zero is forbidden.|Ділення на нуль неможливе.
+Show your welcome messages|Відобразити ваше привітання
+Welcome message list|Список привітань
+Delete user and his welcome messages|Видалити користувача і його привітання
+Nick|Нік
+Login message|Привітання при вході
+Logout message|Привітання при виході
+Welcome message list is empty.|Список привітань порожній.
+Welcome messages were deleted for user: %s|Привітальні повідомлення були видалені для користувача: %s
+Couldn't delete user from welcome message list because not found: %s|Користувач не знайдений в списку привітальних повідомлень: %s
+Your login message set: %s|Ваше повідомлення при вході встановлено на: %s
+%s with class %d changed his login message: %s|%s з класом %d змінив(ла) своє привітальне повідомлення: %s
+Your logout message set: %s|Ваше повідомлення при виході встановлено на: %s
+%s with class %d changed his logout message: %s|%s з класом %d змінив(ла) свое повідомлення при виході на: %s
+You don't have any welcome messages.|У вас немає жодних привітальних повідомлень.
+Your login message: %s|Ваше повідомлення при вході: %s
+Add chatroom|Додати кімнату
+Chatroom list|Список кімнат
+Delete chatroom|Видалити кімнату
+description|опис
+minclass|мінімальний клас
+maxclass|максимальний клас
+Modified chatroom: %s|Кімнату змінено: %s
+Added chatroom: %s|Додано кімнату: %s
+Deleted chatroom: %s|Видалено кімнату: %s
+Couldn't delete chatroom because not found: %s|Кімната не знайдена, нічого видаляти: %s
+Chatroom|Кімната
+Description|Опис
+Chatroom list is empty.|Список кімнат порожній.
+Not found in country code statistics table: %s|Не знайдено в таблиці статистики кодів країн: %s
+Custom nick %s is now owned by real user and therefore has been reset for user: %s|Нік %s наразі використовується іншим юзером, перевстановлено для: %s
+%s is registered with class %d.|%s зареєстровано з класом %d.
+Query executed but didn't return any results.|Запит виконано але у відповідь не було отримано жодних результатів.
+Published: %s|Опубліковано: %s
+Add search filter exception entry|Додати вийняток пошукового фільтру
+Delete search filter exception entry|Видалити вийняток пошукового фільтру
+Search filter exception list|Список вийнятків пошукового фільтру
+Couldn't add search filter exception entry because already exists: %s|Цей вийняток пошукового фільтру вже записано: %s
+Added search filter exception entry: %s|Додано вийняток пошукового фільтру: %s
+Deleted search filter exception entry: %s|Видалено вийняток пошукового фільтру: %s
+Couldn't delete search filter exception entry because not found: %s|Вийняток пошукового фільтру не знайдено, нічого видаляти: %s
+Search filter exception list is empty.|Список вийнятків пошукового фільтру порожній.
+file|файл
+Read hub logs|Читати логи хабу
+Known files are: %s|Відомі файли: %s
 Log file is empty or does not exist.|
-Add command notification exception|Р”РѕРґР°С‚Рё РІРёРЅСЏС‚РѕРє РєРѕРјР°РЅРґРё СЃРїРѕРІС–С‰РµРЅРЅСЏ
-Delete command notification exception|Р’РёРґР°Р»РёС‚Рё РІРёРЅСЏС‚РѕРє РєРѕРјР°РЅРґРё СЃРїРѕРІС–С‰РµРЅРЅСЏ
-Command notification exception list|РЎРїРёСЃРѕРє РІРёР№РЅСЏС‚РєС–РІ РєРѕРјР°РЅРґРё СЃРїРѕРІС–С‰РµРЅРЅСЏ
-Added command notification exception entry: %s|Р”РѕРґР°РЅРѕ РІРёР№РЅСЏС‚РѕРє РєРѕРјР°РЅРґРё СЃРїРѕРІС–С‰РµРЅРЅСЏ: %s
-Couldn't add command notification exception entry because already exists: %s|РўР°РєРёР№ РІРёР№РЅСЏС‚РѕРє РІР¶Рµ С–СЃРЅСѓС”: %s
-Deleted command notification exception entry: %s|Р’РёРґР°Р»РµРЅРѕ РІРёРЅСЏС‚РѕРє РєРѕРјР°РЅРґРё СЃРїРѕРІС–С‰РµРЅРЅСЏ: %s
-Couldn't delete command notification exception entry because not found: %s|Р’РёР№РЅСЏС‚РѕРє РІРёРЅСЏС‚РѕРє РєРѕРјР°РЅРґРё СЃРїРѕРІС–С‰РµРЅРЅСЏ РЅРµ Р·РЅР°Р№РґРµРЅРѕ, РЅС–С‡РѕРіРѕ РІРёРґР°Р»СЏС‚Рё: %s
-Command notification exception list is empty.|РЎРїРёСЃРѕРє РІРёР№РЅСЏС‚РєС–РІ РєРѕРјР°РЅРґРё СЃРїРѕРІС–С‰РµРЅРЅСЏ РїРѕСЂРѕР¶РЅС–Р№.
-Couldn't add chatroom because nick is already in use: %s|РќРµ РјРѕР¶Р»РёРІРѕ РґРѕРґР°С‚Рё РєС–РјРЅР°С‚Сѓ, С‚Р°РєРµ С–Рј`СЏ РІР¶Рµ РІРёРєРѕСЂРёСЃС‚РѕРІСѓС”С‚СЊСЃСЏ: %s
-Query results|Р РµР·СѓР»СЊС‚Р°С‚Рё Р·Р°РїРёС‚Сѓ
-Connections from your IP aren't allowed for another %d seconds.|Р—Р°С‡РµРєР°Р№С‚Рµ %d СЃРµРєСѓРЅРґ РїРµСЂРµРґ РЅР°СЃС‚СѓРїРЅРѕСЋ СЃРїСЂРѕР±РѕСЋ Р·`С”РґРЅР°РЅРЅСЏ.
-Executed shell command didn't return any status code: %s|Р’РёРєРѕРЅР°РЅР° shell РєРѕРјР°РЅРґР° РЅРµ РїРѕРІРµСЂРЅСѓР»Р° Р¶РѕРґРЅРѕРіРѕ СЃС‚Р°С‚СѓСЃ РєРѕРґСѓ: %s
-Returned status code: %s|РЎС‚Р°С‚СѓСЃ РєРѕРґ: %s
-Added by: %s|Р”РѕРґР°РЅРѕ: %s
-publisher|Р¶СѓСЂРЅР°Р»С–СЃС‚
-Release list is empty.|РЎРїРёСЃРѕРє СЂРµР»С–Р·С–РІ РїРѕСЂРѕР¶РЅС–Р№.
-Last %d releases|РћСЃС‚Р°РЅРЅС– %d СЂРµР»С–Р·С–РІ
-No releases by requested publisher were found: %s|Р–РѕРґРЅРѕРіРѕ СЂРµР»С–Р·Р° Р·Р°РїРёС‚Р°РЅРѕРіРѕ Р¶СѓСЂРЅР°Р»С–СЃС‚Р° РЅРµ Р·РЅР°Р№РґРµРЅРѕ: %s
-Last %d releases published by %s|РћСЃС‚Р°РЅРЅС– %d СЂРµР»С–Р·С–РІ РѕРїСѓР±Р»С–РєРѕРІР°РЅС– %s
-No releases by requested category were found: %s|Р–РѕРґРЅРѕРіРѕ СЂРµР»С–Р·Сѓ Р·Р° Р·Р°РїРёС‚Р°РЅРѕСЋ РєР°С‚РµРіРѕСЂС–С”СЋ РЅРµ Р·РЅР°Р№РґРµРЅРѕ: %s
-Last %d releases by category %s|РћСЃС‚Р°РЅРЅС– %d СЂРµР»С–Р·С–РІ РєР°С‚РµРіРѕСЂС–С— %s
-No releases by requested search string were found: %s|Р–РѕРґРЅРѕРіРѕ СЂРµР»С–Р·Сѓ Р·Р° РїРѕС€СѓРєРѕРІРёРј Р·Р°РїРёС‚РѕРј РЅРµ Р·РЅР°Р№РґРµРЅРѕ: %s
-time|С‡Р°СЃ
-Known search types are: %s|Р’С–РґРѕРјС– С‚РёРїРё РїРѕС€СѓРєСѓ: %s
-Configuration variable %s can't be empty.|Р—РЅР°С‡РµРЅРЅСЏ РєРѕРЅС„С–РіСѓСЂР°С†С–С— %s РЅРµ РјРѕР¶Рµ Р±СѓС‚Рё РїРѕСЂРѕР¶РЅС–Рј.
-Deleted from share rank list: %s|Р’РёРґР°Р»РµРЅРѕ Р·С– СЃРїРёСЃРєСѓ РўРћРџ С€Р°СЂРё: %s
-Not found in share rank list: %s|РќРµ Р·РЅР°Р№РґРµРЅРѕ РІ СЃРїРёСЃРєСѓ РўРћРџ С€Р°СЂРё: %s
-Your share rank|Р’Р°С€Р° РїРѕР·РёС†С–СЏ РІ РўРћРџ С€Р°СЂРё
-Top %d share rankers|РўРћРџ %d РЅР°Р№Р±С–Р»СЊС€РёС… С€Р°СЂ
-You have to share %s and reconnect to get started.|Р’Р°Рј РїРѕС‚СЂС–Р±РЅРѕ СЂРѕР·С€Р°СЂРёС‚Рё %s С‚Р° РїРµСЂРµР·`С”РґРЅР°С‚РёСЃСЏ С‡С‚РѕР± РїСЂРёР№РЅСЏС‚Рё СѓС‡Р°СЃС‚СЊ.
-Share rank list is empty.|РЎРїРёСЃРѕРє РўРћРџ С€Р°СЂРё РїРѕСЂРѕР¶РЅС–Р№.
-Your share rank is: %s|Р’Р°С€Р° РїРѕР·РёС†С–СЏ РІ РўРћРџ С€Р°СЂРё: %s
-Custom nick can't be longer than %d characters.|Р’РІРµРґРµРЅРёР№ РЅС–Рє РЅРµ РїРѕРІРёРЅРµРЅ Р±СѓС‚Рё РґРѕРІС€Рµ Р·Р° %d СЃРёРјРІРѕР»С–РІ.
-Delete custom nick|Р’РёРґР°Р»РёС‚Рё РїС–РґСЂРѕР±РЅРёР№ РЅС–Рє
-Deleted user from custom nick list: %s|Р’РёРґР°Р»РµРЅРѕ РєРѕСЂРёСЃС‚СѓРІР°С‡Р° Р·С– СЃРїРёСЃРєСѓ РїС–РґСЂРѕР±РЅРёС… РЅС–РєС–РІ: %s
-Couldn't delete user from custom nick list because not found: %s|РљРѕСЂРёСЃС‚СѓРІР°С‡ РЅРµ Р·РЅР°Р№РґРµРЅРёР№, РЅС–С‡РѕРіРѕ РІРёРґР°Р»СЏС‚Рё: %s
-Selected type requires extra parameters. Please refer to manual for more information.|РћР±СЂР°РЅРёР№ С‚РёРї РїРѕС‚СЂРµР±СѓС” РґРѕРґР°С‚РєРѕРІРёС… РїР°СЂР°РјРµС‚СЂС–РІ, Р·РІРµСЂРЅС–С‚СЊСЃСЏ РґРѕ С–РЅСЃС‚СЂСѓРєС†С–С— Р·Р° С–РЅС„РѕСЂРјР°С†С–С”СЋ.
-Size of registered users table: %d [ %s: %d @ %s ]|Р РѕР·РјС–СЂ С‚Р°Р»РёС†С– РѕР±С–РєРѕРІРёС… Р·Р°РїРёСЃС–РІ РєРѕСЂРёСЃС‚СѓРІР°С‡С–РІ: %d [ %s: %d @ %s ]
-Deleted %d accounts with class %d|Р’РёРґР°Р»РµРЅРѕ %d РѕР±Р»С–РєРѕРІРёС… Р·Р°РїРёСЃС–РІ Р· РєР»Р°СЃРѕРј %d
-%s with class %d deleted %d accounts with class %d that has been inactive for %d days.|%s Р· РєР»Р°СЃРѕРј %d РІРёРґР°Р»РёРІ(Р»Р°) %d РѕР±Р»С–РєРѕРІРёС… Р·Р°РїРёСЃС–РІ Р· РєР»Р°СЃРѕРј %d СЏРєС– Р±СѓР»Рё РЅРµР°РєС‚РёРІРЅС– РїСЂРѕС‚СЏРіРѕРј %d РґРЅС–РІ.
-Add command permission|Р’СЃС‚Р°РЅРѕРІРёС‚Рё РїР°СЂР°РјРµС‚СЂРё РґРѕСЃС‚СѓРїСѓ РєРѕРјР°РЅРґРё
-Delete command permission|Р’РёРґР°Р»РёС‚Рё РїР°СЂР°РјРµС‚СЂРё РґРѕСЃС‚СѓРїСѓ РєРѕРјР°РЅРґРё
-Command permission list|РЎРїРёСЃРѕРє РїР°СЂР°РјРµС‚СЂС–РІ РґРѕСЃС‚СѓРїСѓ РєРѕРјР°РЅРґ
-Modified command permission with class %d: %s|Р—РјС–РЅРµРЅРѕ РїР°СЂР°РјРµС‚СЂРё РґРѕСЃС‚СѓРїСѓ РєРѕРјР°РЅРґРё Р· РєР»Р°СЃРѕРј %d: %s
-Added command permission with class %d: %s|Р’СЃС‚Р°РЅРѕРІР»РµРЅРѕ РїР°СЂР°РјРµС‚СЂРё РґРѕСЃС‚СѓРїСѓ РєРѕРјР°РЅРґРё Р· РєР»Р°СЃРѕРј %d: %s
-Deleted command permission: %s|Р’РёРґР°Р»РµРЅРѕ РїР°СЂР°РјРµС‚СЂРё РґРѕСЃС‚СѓРїСѓ РєРѕРјР°РЅРґРё: %s
-Couldn't delete command permission because not found: %s|РџР°СЂР°РјРµС‚СЂ РЅРµ Р·РЅР°Р№РґРµРЅРѕ, РЅС–С‡РѕРіРѕ РІРёРґР°Р»СЏС‚Рё: %s
-Command permission list is empty.|РЎРїРёСЃРѕРє РїР°СЂР°РјРµС‚СЂС–РІ РґРѕСЃС‚СѓРїСѓ РєРѕРјР°РЅРґ РїРѕСЂРѕР¶РЅС–Р№.
-Total search rank points: %d|Р—Р°РіР°Р»СЊРЅР° РєС–Р»СЊРєС–СЃС‚СЊ Р±Р°Р»С–РІ РўРћРџ РїРѕС€СѓРєСѓ: %d
+Add command notification exception|Додати виняток команди сповіщення
+Delete command notification exception|Видалити виняток команди сповіщення
+Command notification exception list|Список вийнятків команди сповіщення
+Added command notification exception entry: %s|Додано вийняток команди сповіщення: %s
+Couldn't add command notification exception entry because already exists: %s|Такий вийняток вже існує: %s
+Deleted command notification exception entry: %s|Видалено виняток команди сповіщення: %s
+Couldn't delete command notification exception entry because not found: %s|Вийняток виняток команди сповіщення не знайдено, нічого видаляти: %s
+Command notification exception list is empty.|Список вийнятків команди сповіщення порожній.
+Couldn't add chatroom because nick is already in use: %s|Не можливо додати кімнату, таке ім`я вже використовується: %s
+Query results|Результати запиту
+Connections from your IP aren't allowed for another %d seconds.|Зачекайте %d секунд перед наступною спробою з`єднання.
+Executed shell command didn't return any status code: %s|Виконана shell команда не повернула жодного статус коду: %s
+Returned status code: %s|Статус код: %s
+Added by: %s|Додано: %s
+publisher|журналіст
+Release list is empty.|Список релізів порожній.
+Last %d releases|Останні %d релізів
+No releases by requested publisher were found: %s|Жодного реліза запитаного журналіста не знайдено: %s
+Last %d releases published by %s|Останні %d релізів опубліковані %s
+No releases by requested category were found: %s|Жодного релізу за запитаною категорією не знайдено: %s
+Last %d releases by category %s|Останні %d релізів категорії %s
+No releases by requested search string were found: %s|Жодного релізу за пошуковим запитом не знайдено: %s
+time|час
+Known search types are: %s|Відомі типи пошуку: %s
+Configuration variable %s can't be empty.|Значення конфігурації %s не може бути порожнім.
+Deleted from share rank list: %s|Видалено зі списку ТОП шари: %s
+Not found in share rank list: %s|Не знайдено в списку ТОП шари: %s
+Your share rank|Ваша позиція в ТОП шари
+Top %d share rankers|ТОП %d найбільших шар
+You have to share %s and reconnect to get started.|Вам потрібно розшарити %s та перез`єднатися чтоб прийняти участь.
+Share rank list is empty.|Список ТОП шари порожній.
+Your share rank is: %s|Ваша позиція в ТОП шари: %s
+Custom nick can't be longer than %d characters.|Введений нік не повинен бути довше за %d символів.
+Delete custom nick|Видалити підробний нік
+Deleted user from custom nick list: %s|Видалено користувача зі списку підробних ніків: %s
+Couldn't delete user from custom nick list because not found: %s|Користувач не знайдений, нічого видаляти: %s
+Selected type requires extra parameters. Please refer to manual for more information.|Обраний тип потребує додаткових параметрів, зверніться до інструкції за інформацією.
+Size of registered users table: %d [ %s: %d @ %s ]|Розмір талиці обікових записів користувачів: %d [ %s: %d @ %s ]
+Deleted %d accounts with class %d|Видалено %d облікових записів з класом %d
+%s with class %d deleted %d accounts with class %d that has been inactive for %d days.|%s з класом %d видалив(ла) %d облікових записів з класом %d які були неактивні протягом %d днів.
+Add command permission|Встановити параметри доступу команди
+Delete command permission|Видалити параметри доступу команди
+Command permission list|Список параметрів доступу команд
+Modified command permission with class %d: %s|Змінено параметри доступу команди з класом %d: %s
+Added command permission with class %d: %s|Встановлено параметри доступу команди з класом %d: %s
+Deleted command permission: %s|Видалено параметри доступу команди: %s
+Couldn't delete command permission because not found: %s|Параметр не знайдено, нічого видаляти: %s
+Command permission list is empty.|Список параметрів доступу команд порожній.
+Total search rank points: %d|Загальна кількість балів ТОП пошуку: %d
 Please use following commands to finish update process|
 Moving file: %s|
-Please visit %s to download the script manually.|Р’С–РґРІС–РґР°Р№С‚Рµ %s С‰РѕР± Р·Р°РІР°РЅС‚Р°Р¶РёС‚Рё СЃРєСЂРёРїС‚ РІСЂСѓС‡РЅСѓ.
+Please visit %s to download the script manually.|Відвідайте %s щоб завантажити скрипт вручну.
 Modified forbidden IP address with ban time %s: %s|
 Added forbidden IP address with ban time %s: %s|
-Deleted forbidden IP address: %s|Р’РёРґР°Р»РµРЅР° Р·Р°Р±РѕСЂРѕРЅРµРЅР° IP Р°РґСЂРµСЃР°: %s
-Couldn't delete forbidden IP address because not found: %s|Р—Р°Р±РѕСЂРѕРЅРµРЅР° IP Р°РґСЂРµСЃР° РЅРµ Р·РЅР°Р№РґРµРЅР°, РЅС–С‡РѕРіРѕ РІРёРґР°Р»СЏС‚Рё: %s
-Forbidden IP address list|РЎРїРёСЃРѕРє Р·Р°Р±РѕСЂРѕРЅРµРЅРёС… IP Р°РґСЂРµСЃ
-Forbidden IP address list is empty.|РЎРїРёСЃРѕРє Р·Р°Р±РѕСЂРѕРЅРµРЅРёС… IP Р°РґСЂРµСЃ РїРѕСЂРѕР¶РЅС–Р№.
+Deleted forbidden IP address: %s|Видалена заборонена IP адреса: %s
+Couldn't delete forbidden IP address because not found: %s|Заборонена IP адреса не знайдена, нічого видаляти: %s
+Forbidden IP address list|Список заборонених IP адрес
+Forbidden IP address list is empty.|Список заборонених IP адрес порожній.
 %s with IP %s and class %d allowed due to forbidden IP address exception: %s|
-Couldn't delete category because not found: %s|РўР°РєР° РєР°С‚РµРіРѕСЂС–СЏ РЅРµ Р·РЅР°Р№РґРµРЅР°, РЅС–С‡РѕРіРѕ РІРёРґР°Р»СЏС‚Рё: %s
+Couldn't delete category because not found: %s|Така категорія не знайдена, нічого видаляти: %s
 User redirected due to spam: %s|
 %s redirected due to bad search request.|
-You can download me from: %s|Р’Рё РјРѕР¶РµС‚Рµ Р·Р°РІР°РЅС‚Р°Р¶РёС‚Рё РјРµРЅРµ Р·: %s
-%s is registered with class %d and has been automatically unregistered and deleted from other tables.|%s Р·Р°СЂРµС”СЃС‚СЂРѕРІР°РЅРѕ Р· РєР»Р°СЃРѕРј %d С– Р±СѓР»Рѕ РІРёРґР°Р»РµРЅРѕ Р· СѓСЃС–С… С‚Р°Р±Р»РёС†СЊ Р±Р°Р·Рё РґР°РЅРёС….
-PiB|РџР‘
-TiB|TР‘
-GiB|Р“Р‘
-MiB|РњР‘
-KiB|РљР‘
-B|Р‘
-EiB|Р•Р‘
+You can download me from: %s|Ви можете завантажити мене з: %s
+%s is registered with class %d and has been automatically unregistered and deleted from other tables.|%s зареєстровано з класом %d і було видалено з усіх таблиць бази даних.
+PiB|ПБ
+TiB|TБ
+GiB|ГБ
+MiB|МБ
+KiB|КБ
+B|Б
+EiB|ЕБ
 Get user's real nick|
-Requested nick wasn't found in custom nick list.|Р—Р°РїРёС‚Р°РЅРёР№ РЅС–Рє РЅРµ Р·РЅР°Р№РґРµРЅРѕ СЃРµСЂРµРґ СЃРїРёСЃРєСѓ РїС–РґСЂРѕР±РЅРёС… РЅС–РєС–РІ.
-Requested nick belongs to a user who is %s: %s|Р—Р°РїРёС‚Р°РЅРёР№ РЅС–Рє РЅР°Р»РµР¶РёС‚СЊ РєРѕСЂРёСЃС‚СѓРІР°С‡Сѓ СЏРєРёР№ %s: %s
-offline|РЅРµ РІ РјРµСЂРµР¶С–
-online|РІ РјРµСЂРµР¶С–
-Clean up ranks|РћС‡РёСЃС‚РёС‚Рё РІСЃС– РўРћРџ С‚Р°Р±Р»РёС†С–
-limit|РѕР±РјРµР¶РµРЅРЅСЏ
-%s with class %d deleted %d chat ranks lower than %d.|%s Р· РєР»Р°СЃРѕРј %d РІРёРґР°Р»РёРІ(Р»Р°) %d РїРѕР·РёС†С–С— РўРћРџ С‡Р°С‚ РЅРёР¶С‡С– Р·Р° %d.
-%s with class %d deleted %d share ranks lower than %s.|%s Р· РєР»Р°СЃРѕРј %d РІРёРґР°Р»РёРІ(Р»Р°) %d РїРѕР·РёС†С–С— РўРћРџ С€Р°СЂРё СЂРѕР·РјС–СЂ СЏРєРёС… РЅРёР¶С‡С– Р·Р° %s.
-%s with class %d deleted %d operator ranks lower than %d.|%s Р· РєР»Р°СЃРѕРј %d РІРёРґР°Р»РёРІ(Р»Р°) %d РїРѕР·РёС†С–С— РўРћРџ РѕРїРµСЂР°С‚РѕСЂС–РІ РЅРёР¶С‡С– Р·Р° %d.
-Size of chat ranks table: %d [ %s: %d @ %s ]|Р РѕР·РјС–СЂ С‚Р°Р±Р»РёС†С– РўРћРџ С‡Р°С‚: %d [ %s: %d @ %s ]
-Size of share ranks table: %d [ %s: %d @ %s ]|Р РѕР·РјС–СЂ С‚Р°Р±Р»РёС†С– РўРћРџ С€Р°СЂРё: %d [ %s: %d @ %s ]
-Size of operator ranks table: %d [ %s: %d @ %s ]|Р РѕР·РјС–СЂ С‚Р°Р±Р»РёС†С– РўРћРџ РѕРїРµСЂР°С‚РѕСЂС–РІ: %d [ %s: %d @ %s ]
-content|РєРѕРЅС‚РµРЅС‚
-destination|РїСЂРёР·РЅР°С‡РµРЅРЅСЏ
-interval|С–РЅС‚РµСЂРІР°Р»
-Add reminder|Р”РѕРґР°С‚Рё РЅР°РіР°РґСѓРІР°РЅРЅСЏ
-Delete reminder|Р’РёРґР°Р»РёС‚Рё РЅР°РіР°РґСѓРІР°РЅРЅСЏ
-Reminder list|РЎРїРёСЃРѕРє РЅР°РіР°РґСѓРІР°РЅСЊ
-Reminder list is empty.|РЎРїРёСЃРѕРє РЅР°РіР°РґСѓРІР°РЅСЊ РїРѕСЂРѕР¶РЅС–Р№.
+Requested nick wasn't found in custom nick list.|Запитаний нік не знайдено серед списку підробних ніків.
+Requested nick belongs to a user who is %s: %s|Запитаний нік належить користувачу який %s: %s
+offline|не в мережі
+online|в мережі
+Clean up ranks|Очистити всі ТОП таблиці
+limit|обмеження
+%s with class %d deleted %d chat ranks lower than %d.|%s з класом %d видалив(ла) %d позиції ТОП чат нижчі за %d.
+%s with class %d deleted %d share ranks lower than %s.|%s з класом %d видалив(ла) %d позиції ТОП шари розмір яких нижчі за %s.
+%s with class %d deleted %d operator ranks lower than %d.|%s з класом %d видалив(ла) %d позиції ТОП операторів нижчі за %d.
+Size of chat ranks table: %d [ %s: %d @ %s ]|Розмір таблиці ТОП чат: %d [ %s: %d @ %s ]
+Size of share ranks table: %d [ %s: %d @ %s ]|Розмір таблиці ТОП шари: %d [ %s: %d @ %s ]
+Size of operator ranks table: %d [ %s: %d @ %s ]|Розмір таблиці ТОП операторів: %d [ %s: %d @ %s ]
+content|контент
+destination|призначення
+interval|інтервал
+Add reminder|Додати нагадування
+Delete reminder|Видалити нагадування
+Reminder list|Список нагадувань
+Reminder list is empty.|Список нагадувань порожній.
 Known destinations are: %s|
-Known interval is: %s|Р’С–РґРѕРјС– Р·РЅР°С‡РµРЅРЅСЏ С–РЅС‚РµСЂРІР°Р»С–РІ: %s
-Modified reminder: %s|РќР°РіР°РґСѓРІР°РЅРЅСЏ РІС–РґСЂРµРґР°РіРѕРІР°РЅРѕ: %s
-Added reminder: %s|РќР°РіР°РґСѓРІР°РЅРЅСЏ РґРѕРґР°РЅРѕ: %s
-Deleted reminder: %s|РќР°РіР°РґСѓРІР°РЅРЅСЏ РІРёРґР°Р»РµРЅРѕ: %s
-Reminder not found: %s|РќР°РіР°РґСѓРІР°РЅРЅСЏ РЅРµ Р·РЅР°Р№РґРµРЅРѕ: %s
-Identifier: %s|Р†РґРµРЅС‚РёС„С–РєР°С‚РѕСЂ: %s
-Content: %s|РљРѕРЅС‚РµРЅС‚: %s
-Interval: %d of %d|Р†РЅС‚РµСЂРІР°Р»: %d of %d
-Destination: %s|РџСЂРёР·РЅР°С‡РµРЅРЅСЏ: %s
-Raw command|Raw РєРѕРјР°РЅРґР°
-PM|РџРџ
-MC|Р“Р§
-reply|РІС–РґРїРѕРІС–РґСЊ
-Add chat responder|Р”РѕРґР°С‚Рё С‡Р°С‚-РІС–РґРїРѕРІС–РґР°С‡
-Delete chat responder|Р’РёРґР°Р»РёС‚Рё С‡Р°С‚-РІС–РґРїРѕРІС–РґР°С‡
-Main chat responder list|РЎРїРёСЃРѕРє С‡Р°С‚-РІС–РґРїРѕРІС–РґР°С‡Р°
-Main chat responder list is empty.|РЎРїРёРѕРє С‡Р°С‚-РІС–РґРїРѕРІС–РґР°С‡Р° РїРѕСЂРѕР¶РЅС–Р№.
-%s with class %d deleted %d operator chat history messages.|%s Р· РєР»Р°СЃРѕРј %d РІРёРґР°Р»РёРІ(Р»Р°) %d РїРѕРІС–РґРѕРјР»РµРЅСЊ С–СЃС‚РѕСЂС–С— РѕРїРµСЂР°С‚РѕСЂСЃСЊРєРѕРіРѕ С‡Р°С‚Сѓ.
-Search in user log|РџРѕС€СѓРє РІ СЋР·РµСЂ Р»РѕРіР°С…
-Added chat responder: %s|Р§Р°С‚-РІС–РґРїРѕРІС–РґР°С‡ РґРѕРґР°РЅРѕ: %s
-Deleted chat responder with ID: %d|Р’РёРґР°Р»РµРЅРѕ С‡Р°С‚-РІС–РґРїРѕРІС–РґР°С‡ Р· ID: %d
-Couldn't delete chat responder because ID not found: %d|ID С‡Р°С‚-РІС–РґРїРѕРІС–РґР°С‡Р° РЅРµ Р·РЅР°Р№РґРµРЅРѕ, РЅС–С‡РѕРіРѕ РІРёРґР°Р»СЏС‚Рё: %d
-Responder|Р§Р°С‚-РІС–РґРїРѕРІС–РґР°С‡
-Reply|Р’С–РґРїРѕРІС–РґСЊ
-Add chat responder exception|Р”РѕРґР°С‚Рё РІРёРєР»СЋС‡РµРЅРЅСЏ С‡Р°С‚-РІС–РґРїРѕРІС–РґР°С‡Р°
-Delete chat responder exception|Р’РёРґР°Р»РёС‚Рё РІРёРєР»СЋС‡РµРЅРЅСЏ С‡Р°С‚-РІС–РґРїРѕРІС–РґР°С‡Р°
-Chat responder exception list|РЎРїРёСЃРѕРє РІРёРєР»СЋС‡РµРЅСЊ С‡Р°С‚-РІС–РґРїРѕРІС–РґР°С‡Р°
-Chat responder exception list is empty.|РЎРїРёСЃРѕРє РІРёРєР»СЋС‡РµРЅСЊ С‡Р°С‚-РІС–РґРїРѕРІС–РґР°С‡Р° РїРѕСЂРѕР¶РЅС–Р№.
-Couldn't add chat responder exception because already exists: %s|РўР°РєРµ РІРёРєР»СЋС‡РµРЅРЅСЏ РІР¶Рµ С–СЃРЅСѓС”: %s
-Added chat responder exception: %s|Р”РѕРґР°РЅРѕ РІРёРєР»СЋС‡РµРЅРЅСЏ С‡Р°С‚-РІС–РґРїРѕРІС–РґР°С‡Р°: %s
-Deleted chat responder exception: %s|Р’РёРґР°Р»РµРЅРѕ РІРёРєР»СЋС‡РµРЅРЅСЏ С‡Р°С‚-РІС–РґРїРѕРІС–РґР°С‡Р°: %s
-Couldn't delete chat responder exception because not found: %s|Р’РёРєР»СЋС‡РµРЅРЅСЏ РЅРµ Р·РЅР°Р№РґРµРЅРѕ, РЅС–С‡РѕРіРѕ РІРёРґР°Р»СЏС‚Рё: %s
-command|РєРѕРјР°РЅРґР°
-Customize script command|РџРµСЂРµР№РјРµРЅСѓРІР°С‚Рё РєРѕРјР°РЅРґСѓ СЃРєСЂРёРїС‚Сѓ
-Customized script command: %s => %s|РљРѕРјР°РЅРґР° СЃРєСЂРёРїС‚Сѓ РїРµСЂРµР№РјРµРЅРѕРІР°РЅР°: %s => %s
-Unknown script command: %s|РќРµРІС–РґРѕРјР° РєРѕРјР°РЅРґР° СЃРєСЂРёРїС‚Сѓ: %s
-Requested nick is real.|Р—Р°РїРёС‚Р°РЅРёР№ РЅС–Рє РІРёРєРѕСЂРёСЃС‚РѕРІСѓС”С‚СЊСЃСЏ С–СЃРЅСѓСЋС‡РёРј СЋР·РµСЂРѕРј.
-%s with class %d customized script command: %s => %s|%s Р· РєР»Р°СЃРѕРј %d РїРµСЂРµР№РјРµРЅСѓРІР°РІ(Р»Р°) РєРѕРјР°РЅРґСѓ СЃРєСЂРёРїС‚Сѓ: %s => %s
-Reset all custom commands|РЎРєРёРЅСѓС‚Рё РІСЃС– РѕРїРµСЂР°С†С–С— Р· РєРѕРјР°РЅРґР°РјРё СЃРєСЂРёРїС‚Сѓ
-%d custom commands were reset.|%d РєРѕРјР°РЅРґ Р±СѓР»Рѕ СЃРєРёРЅСѓС‚Рѕ.
+Known interval is: %s|Відомі значення інтервалів: %s
+Modified reminder: %s|Нагадування відредаговано: %s
+Added reminder: %s|Нагадування додано: %s
+Deleted reminder: %s|Нагадування видалено: %s
+Reminder not found: %s|Нагадування не знайдено: %s
+Identifier: %s|Ідентифікатор: %s
+Content: %s|Контент: %s
+Interval: %d of %d|Інтервал: %d of %d
+Destination: %s|Призначення: %s
+Raw command|Raw команда
+PM|ПП
+MC|ГЧ
+reply|відповідь
+Add chat responder|Додати чат-відповідач
+Delete chat responder|Видалити чат-відповідач
+Main chat responder list|Список чат-відповідача
+Main chat responder list is empty.|Спиок чат-відповідача порожній.
+%s with class %d deleted %d operator chat history messages.|%s з класом %d видалив(ла) %d повідомлень історії операторського чату.
+Search in user log|Пошук в юзер логах
+Added chat responder: %s|Чат-відповідач додано: %s
+Deleted chat responder with ID: %d|Видалено чат-відповідач з ID: %d
+Couldn't delete chat responder because ID not found: %d|ID чат-відповідача не знайдено, нічого видаляти: %d
+Responder|Чат-відповідач
+Reply|Відповідь
+Add chat responder exception|Додати виключення чат-відповідача
+Delete chat responder exception|Видалити виключення чат-відповідача
+Chat responder exception list|Список виключень чат-відповідача
+Chat responder exception list is empty.|Список виключень чат-відповідача порожній.
+Couldn't add chat responder exception because already exists: %s|Таке виключення вже існує: %s
+Added chat responder exception: %s|Додано виключення чат-відповідача: %s
+Deleted chat responder exception: %s|Видалено виключення чат-відповідача: %s
+Couldn't delete chat responder exception because not found: %s|Виключення не знайдено, нічого видаляти: %s
+command|команда
+Customize script command|Перейменувати команду скрипту
+Customized script command: %s => %s|Команда скрипту перейменована: %s => %s
+Unknown script command: %s|Невідома команда скрипту: %s
+Requested nick is real.|Запитаний нік використовується існуючим юзером.
+%s with class %d customized script command: %s => %s|%s з класом %d перейменував(ла) команду скрипту: %s => %s
+Reset all custom commands|Скинути всі операції з командами скрипту
+%d custom commands were reset.|%d команд було скинуто.
 %s tables are now deleted and script is locked.|
-Please unload the script and remove it from scripts directory.|Р’РёРІР°РЅС‚Р°Р¶С‚Рµ СЃРєСЂРёРїС‚ С‚Р° РІРёРґР°Р»С–С‚СЊ Р№РѕРіРѕ Р· РїР°РїРєРё Scripts РІР°С€РѕРіРѕ С…Р°Р±Сѓ.
-Good luck.|Р’СЊРѕРіРѕ РЅР°Р№РєСЂР°С‰РѕРіРѕ!
-Please unload the script to finish.|Р”Р»СЏ Р·Р°РІРµСЂС€РµРЅРЅСЏ РѕРїРµСЂР°С†С–С— РІРёРІР°РЅС‚Р°Р¶С‚Рµ СЃРєСЂРёРїС‚.
-%s with IP %s and class %d sent message to %s: %s|%s Р· IP %s С‚Р° РєР»Р°СЃРѕРј %d РІС–РґРїСЂР°РІРёРІ(Р»Р°) РїРѕРІС–РґРѕРјР»РµРЅРЅСЏ %s: %s
-Script uptime: %s|Р§Р°СЃ Р±РµР·РїРµСЂРµСЂРІРЅРѕС— СЂРѕР±РѕС‚Рё СЃРєСЂРёРїС‚Сѓ: %s
-month|РјС–СЃСЏС†СЊ
-months|РјС–СЃСЏС†С–РІ
-day|РґРµРЅСЊ
-hour|РіРѕРґРёРЅР°
-hours|РіРѕРґРёРЅ
-Top %d used words|РўРћРџ %d РЅР°Р№С‡Р°СЃС‚С–С€Рµ РІРёРєРѕСЂРёСЃС‚РѕРІСѓРІР°РЅРёС… СЃР»С–РІ
-Deleted from word rank list: %s|Р’РёРґР°Р»РµРЅРѕ Р·С– СЃРїРёСЃРєСѓ РўРћРџ СЃР»С–РІ: %s
-Not found in word rank list: %s|РќРµ Р·РЅР°Р№РґРµРЅРѕ РІ СЃРїРёСЃРєСѓ РўРћРџ СЃР»С–РІ: %s
-%s with class %d deleted %d word ranks lower than %d.|%s Р· РєР»Р°СЃРѕРј %d РІРёРґР°Р»РёРІ(Р»Р°) %d РїРѕР·РёС†С–Р№ РўРћРџ СЃР»С–РІ РЅРёР¶С‡Рµ Р·Р° %d.
-Size of word ranks table: %d [ %s: %d @ %s ]|Р РѕР·РјС–СЂ С‚Р°Р±Р»РёС†С– РўРћРџ СЃР»С–РІ: %d [ %s: %d @ %s ]
-Total word rank points: %d|Р—Р°РіР°Р»СЊРЅР° РєС–Р»СЊРєС–СЃС‚СЊ Р±Р°Р»С–РІ РўРћРџ СЃР»С–РІ: %d
-Word rank list is empty.|РЎРїРёСЃРѕРє РўРћРџ СЃР»С–РІ РїРѕСЂРѕР¶РЅС–Р№.
-%s with class %d registered new user with class %d: %s|%s Р· РєР»Р°СЃРѕРј %d Р·Р°СЂРµС”СЃС‚СЂСѓРІР°РІ(Р»Р°) РЅРѕРІРѕРіРѕ РєРѕСЂРёСЃС‚СѓРІР°С‡Р° Р· РєР»Р°СЃРѕРј %d: %s
-%s with class %d deleted registered user with class %d: %s|%s Р· РєР»Р°СЃРѕРј %d РІРёРґР°Р»РёРІ(Р»Р°) РѕР±Р»С–РєРѕРІРёР№ Р·Р°РїРёСЃ РєРѕСЂРёСЃС‚СѓРІР°С‡Р° Р· РєР»Р°СЃРѕРј %d: %s
-%s with class %d changed user class from %d to %d: %s|%s Р· РєР»Р°СЃРѕРј %d Р·РјС–РЅРёРІ(Р»Р°) РєР»Р°СЃ Р·Р°СЂРµС”СЃС‚СЂРѕРІР°РЅРѕРіРѕ СѓС‡Р°СЃРЅРёРєР° Р· %d РЅР° %d: %s
+Please unload the script and remove it from scripts directory.|Вивантажте скрипт та видаліть його з папки Scripts вашого хабу.
+Good luck.|Вього найкращого!
+Please unload the script to finish.|Для завершення операції вивантажте скрипт.
+%s with IP %s and class %d sent message to %s: %s|%s з IP %s та класом %d відправив(ла) повідомлення %s: %s
+Script uptime: %s|Час безперервної роботи скрипту: %s
+month|місяць
+months|місяців
+day|день
+hour|година
+hours|годин
+Top %d used words|ТОП %d найчастіше використовуваних слів
+Deleted from word rank list: %s|Видалено зі списку ТОП слів: %s
+Not found in word rank list: %s|Не знайдено в списку ТОП слів: %s
+%s with class %d deleted %d word ranks lower than %d.|%s з класом %d видалив(ла) %d позицій ТОП слів нижче за %d.
+Size of word ranks table: %d [ %s: %d @ %s ]|Розмір таблиці ТОП слів: %d [ %s: %d @ %s ]
+Total word rank points: %d|Загальна кількість балів ТОП слів: %d
+Word rank list is empty.|Список ТОП слів порожній.
+%s with class %d registered new user with class %d: %s|%s з класом %d зареєстрував(ла) нового користувача з класом %d: %s
+%s with class %d deleted registered user with class %d: %s|%s з класом %d видалив(ла) обліковий запис користувача з класом %d: %s
+%s with class %d changed user class from %d to %d: %s|%s з класом %d змінив(ла) клас зареєстрованого учасника з %d на %d: %s
 %s with IP %s and class %d allowed due to fake share exception: %s|
 %s with IP %s and class %d allowed due to clone exception: %s|
 %s with IP %s and class %d allowed due to same IP exception: %s|
-seconds|СЃРµРєСѓРЅРґ
-Add news item|Р”РѕРґР°С‚Рё РЅРѕРІРёРЅСѓ
-Delete news items|Р’РёРґР°Р»РёС‚Рё РЅРѕРІРёРЅРё
-Read hub news|Р§РёС‚Р°С‚Рё РЅРѕРІРёРЅРё С…Р°Р±Сѓ
-Added news item: %s|Р”РѕРґР°РЅР° РЅРѕРІРёРЅР°: %s
-Hub news list is empty.|РЎРїРёСЃРѕРє РЅРѕРІРёРЅ С…Р°Р±Сѓ РїРѕСЂРѕР¶РЅС–Р№.
-Deleted %d news items.|Р’РёРґР°Р»РµРЅРѕ %d РЅРѕРІРёРЅ.
-Couldn't delete news items because not found: %s|РќРµРјРѕР¶Р»РёРІРѕ РІРёРґР°Р»РёС‚Рё РЅРѕРІРёРЅРё, РЅРµ Р·РЅР°Р№РґРµРЅРѕ:: %s
-Last %d news items|РћСЃС‚Р°РЅРЅС– %d РЅРѕРІРёРЅ
+seconds|секунд
+Add news item|Додати новину
+Delete news items|Видалити новини
+Read hub news|Читати новини хабу
+Added news item: %s|Додана новина: %s
+Hub news list is empty.|Список новин хабу порожній.
+Deleted %d news items.|Видалено %d новин.
+Couldn't delete news items because not found: %s|Неможливо видалити новини, не знайдено:: %s
+Last %d news items|Останні %d новин
 By %s on %s: %s|By %s on %s: %s
-There are no main chat history messages written by you.|РќРµРјР°С” Р·Р±РµСЂРµР¶РµРЅРѕС— С–СЃС‚РѕСЂС–С— РІР°С€РёС… РїРѕРІС–РґРѕРјР»РµРЅСЊ.
-Last %d main chat messages written by you|РћСЃС‚Р°РЅРЅС– %d РїРѕРІС–РґРѕРјР»РµРЅСЊ РіРѕР»РѕРІРЅРѕРіРѕ С‡Р°С‚Сѓ РЅР°РїРёСЃР°РЅС– РІР°РјРё
-Your main chat history|Р’Р°С€Р° С–СЃС‚РѕСЂС–СЏ РіРѕР»РѕРІРЅРѕРіРѕ С‡Р°С‚Сѓ
-Script memory usage: %s|Р’РёРєРѕСЂРёСЃС‚Р°РЅРЅСЏ РїР°Рј`СЏС‚С– СЃРєСЂРёРїС‚РѕРј: %s
+There are no main chat history messages written by you.|Немає збереженої історії ваших повідомлень.
+Last %d main chat messages written by you|Останні %d повідомлень головного чату написані вами
+Your main chat history|Ваша історія головного чату
+Script memory usage: %s|Використання пам`яті скриптом: %s
 Failed to load translation file %s: %s|
-Force custom nick for user|РџСЂРёРјСѓСЃРѕРІРёР№ РїС–РґСЂРѕР±РЅРёР№ РЅС–Рє РґР»СЏ РєРѕСЂРёСЃС‚СѓРІР°С‡Р°
+Force custom nick for user|Примусовий підробний нік для користувача
 Either the feature is disabled or user that you're trying to set welcome message for doesn't have access to it.|
-name|С–Рј`СЏ
-category|РєР°С‚РµРіРѕСЂС–СЏ
+name|ім`я
+category|категорія
 tth|tth
-Add new release|Р”РѕРґР°С‚Рё РЅРѕРІРёР№ СЂРµР»С–Р·
-Delete releases|Р’РёРґР°Р»РёС‚Рё СЂРµР»С–Р·Рё
-List of available releases|РЎРїРёСЃРѕРє С–СЃРЅСѓСЋС‡РёС… СЂРµР»С–Р·С–РІ
-Find release by name or category|Р—РЅР°Р№С‚Рё СЂРµР»С–Р· Р·Р° С–Рј`СЏРј Р°Р±Рѕ РєР°С‚РµРіРѕСЂС–С”СЋ
-equation|РІРёСЂР°Р·
-Calculate an equation|РџРѕСЂР°С…СѓРІР°С‚Рё РІРёСЂР°Р·
-Both numbers must be either pi or numbers.|Р’СЃС– С‡РёСЃР»Р° РјР°СЋС‚СЊ Р±СѓС‚Рё `Рїi` Р°Р±Рѕ С‡РёСЃР»Р°РјРё.
-Known operations are: %s|Р’С–РґРѕРјС– РѕРїРµСЂР°С†С–С—: %s
-Your logout message: %s|Р’Р°С€Рµ РїРѕРІС–РґРѕРјР»РµРЅРЅСЏ РїСЂРё РІРёС…РѕРґС–: %s
-Force welcome message for user|РџСЂРёРјСѓСЃРѕРІРµ РІС–С‚Р°Р»СЊРЅРµ РїРѕРІС–РґРѕРјР»РµРЅРЅСЏ РґР»СЏ РєРѕСЂРёСЃС‚СѓРІР°С‡Р°
-Login message set for %s: %s|РџСЂРёРІС–С‚Р°РЅРЅСЏ РІС…РѕРґСѓ РІСЃС‚Р°РЅРѕРІР»РµРЅРµ РґР»СЏ %s: %s
+Add new release|Додати новий реліз
+Delete releases|Видалити релізи
+List of available releases|Список існуючих релізів
+Find release by name or category|Знайти реліз за ім`ям або категорією
+equation|вираз
+Calculate an equation|Порахувати вираз
+Both numbers must be either pi or numbers.|Всі числа мають бути `пi` або числами.
+Known operations are: %s|Відомі операції: %s
+Your logout message: %s|Ваше повідомлення при виході: %s
+Force welcome message for user|Примусове вітальне повідомлення для користувача
+Login message set for %s: %s|Привітання входу встановлене для %s: %s
 Change nick of a registered user|
-User is not registered: %s|РљРѕСЂРёСЃС‚СѓРІР°С‡ РЅРµ Р·Р°СЂРµС”СЃС‚СЂРѕРІР°РЅРёР№: %s
-You are now going to be disconnected from the hub in order for your new nick to apply: %s|Р—Р°СЂР°Р· РІР°Рј РЅРµРѕР±С…С–РґРЅРѕ РїРµСЂРµР·'С”РґРЅР°С‚РёСЃСЏ Р· С…Р°Р±РѕРј РґР»СЏ Р·Р°РґС–СЏРЅРЅСЏ РЅРѕРІРѕРіРѕ РЅС–РєСѓ: %s
-Renamed account %s: %s|РћР±Р»С–РєРѕРІРёР№ Р·Р°РїРёСЃ РїРµСЂРµР№РјРµРЅРѕРІР°РЅРѕ %s: %s
-%s with class %d renamed account %s: %s|%s Р· РєР»Р°СЃРѕРј %d РїРµСЂРµР№РјРµРЅСѓРІР°РІ(Р»Р°) РѕР±Р»С–РєРѕРІРёР№ Р·Р°РїРёСЃ %s: %s
-Your login message deleted.|Р’Р°С€Рµ РІС–С‚Р°Р»СЊРЅРµ РїРѕРІС–РґРѕРјР»РµРЅРЅСЏ РїСЂРё РІС…РѕРґС– РІРёРґР°Р»РµРЅРѕ.
-Your logout message deleted.|Р’Р°С€Рµ РІС–С‚Р°Р»СЊРЅРµ РїРѕРІС–РґРѕРјР»РµРЅРЅСЏ РїСЂРё РІРёС…РѕРґС– РІРёРґР°Р»РµРЅРѕ.
-%s with class %d deleted his login message.|%s Р· РєР»Р°СЃРѕРј %d РІРёРґР°Р»РёРІ(Р»Р°) СЃРІРѕС” РїСЂРёРІС–С‚Р°Р»СЊРЅРµ РїРѕРІС–РґРѕРјР»РµРЅРЅСЏ РїСЂРё РІС…РѕРґС–.
-%s with class %d deleted his logout message.|%s Р· РєР»Р°СЃРѕРј %d РІРёРґР°Р»РёРІ(Р»Р°) СЃРІРѕРµ РїСЂРёРІС–С‚Р°Р»СЊРЅРµ РїРѕРІС–РґРѕРјР»РµРЅРЅСЏ РїСЂРё РІРёС…РѕРґС–.
-Logout message set for %s: %s|РџСЂРёРІС–С‚Р°РЅРЅСЏ РїСЂРё РІРёС…РѕРґС– РІСЃС‚Р°РЅРѕРІР»РµРЅРѕ %s: %s
-%s with class %d changed login message for %s: %s|%s Р· РєР»Р°СЃРѕРј %d Р·РјС–РЅРёРІ(Р»Р°) РїСЂРёРІС–С‚Р°Р»СЊРЅРµ РїРѕРІС–РґРѕРјР»РµРЅРЅСЏ РїСЂРё РІС…РѕРґС– РґР»СЏ %s: %s
-%s with class %d changed logout message for %s: %s|%s Р· РєР»Р°СЃРѕРј %d Р·РјС–РЅРёРІ(Р»Р°) РїСЂРёРІС–С‚Р°Р»СЊРЅРµ РїРѕРІС–РґРѕРјР»РµРЅРЅСЏ РїСЂРё РІРёС…РѕРґС– РґР»СЏ %s: %s
-Login message deleted for user: %s|РџСЂРёРІС–С‚Р°Р»СЊРЅРµ РїРѕРІС–РґРѕРјР»РµРЅРЅСЏ РїСЂРё РІС…РѕРґС– РІРёРґР°Р»РµРЅРѕ РґР»СЏ: %s
-Logout message deleted for user: %s|РџСЂРёРІС–С‚Р°Р»СЊРЅРµ РїРѕРІС–РґРѕРјР»РµРЅРЅСЏ РїСЂРё РІРёС…РѕРґС– РІРёРґР°Р»РµРЅРѕ РґР»СЏ: %s
-%s with class %d deleted login message for user: %s|%s Р· РєР»Р°СЃРѕРј %d РІРёРґР°Р»РёРІ(Р»Р°) РїСЂРёРІС–С‚Р°Р»СЊРЅРµ РїРѕРІС–РґРѕРјР»РµРЅРЅСЏ РїСЂРё РІС…РѕРґС– РґР»СЏ: %s
-%s with class %d deleted logout message for user: %s|%s Р· РєР»Р°СЃРѕРј %d РІРёРґР°Р»РёРІ(Р»Р°) РїСЂРёРІС–С‚Р°Р»СЊРЅРµ РїРѕРІС–РґРѕРјР»РµРЅРЅСЏ РїСЂРё РІРёС…РѕРґС– РґР»СЏ: %s
-%s with class %d deleted welcome messages for user: %s|%s Р· РєР»Р°СЃРѕРј %d РІРёРґР°Р»РёРІ(Р»Р°) РІСЃС– РїСЂРёРІС–С‚Р°Р»СЊРЅС– РїРѕРІС–РґРѕРјР»РµРЅРЅСЏ РґР»СЏ: %s
-minute|С…РІРёР»РёРЅР°
-Last %d releases by search string %s|РћСЃС‚Р°РЅРЅС– %d СЂРµР»С–Р·С–РІ С‰Рѕ РІС–РґРїРѕРІС–РґР°СЋС‚СЊ РїРѕС€СѓРєРѕРІРѕРјСѓ Р·Р°РїРёС‚Сѓ %s
-Modified release: %s|Р РµР»С–Р· Р·РјС–РЅРµРЅРѕ: %s
-Added release: %s|Р РµР»С–Р· РґРѕРґР°РЅРѕ: %s
-Deleted release: %s|Р РµР»С–Р· РІРёРґР°Р»РµРЅРѕ: %s
-Couldn't delete release because not found: %s|РќРµРјРѕР¶Р»РёРІРѕ РІРёРґР°Р»РёС‚Рё СЂРµР»С–Р·, РЅРµ Р·РЅР°Р№РґРµРЅРѕ: %s
-Reminder preview|РџРµСЂРµРґРѕРіР»СЏРґ РЅР°РіР°РґСѓРІР°РЅРЅСЏ
-Preview of %s reminder: %s|РџРµСЂРµРґРѕРіР»СЏРґ %s РЅР°РіР°РґСѓРІР°РЅРЅСЏ: %s
-Specified nick is already in use.|Р’РєР°Р·Р°РЅРёР№ РЅС–Рє РІР¶Рµ РІРёРєРѕСЂРёСЃС‚РѕРІСѓС”С‚СЊСЃСЏ.
+User is not registered: %s|Користувач не зареєстрований: %s
+You are now going to be disconnected from the hub in order for your new nick to apply: %s|Зараз вам необхідно перез'єднатися з хабом для задіяння нового ніку: %s
+Renamed account %s: %s|Обліковий запис перейменовано %s: %s
+%s with class %d renamed account %s: %s|%s з класом %d перейменував(ла) обліковий запис %s: %s
+Your login message deleted.|Ваше вітальне повідомлення при вході видалено.
+Your logout message deleted.|Ваше вітальне повідомлення при виході видалено.
+%s with class %d deleted his login message.|%s з класом %d видалив(ла) своє привітальне повідомлення при вході.
+%s with class %d deleted his logout message.|%s з класом %d видалив(ла) свое привітальне повідомлення при виході.
+Logout message set for %s: %s|Привітання при виході встановлено %s: %s
+%s with class %d changed login message for %s: %s|%s з класом %d змінив(ла) привітальне повідомлення при вході для %s: %s
+%s with class %d changed logout message for %s: %s|%s з класом %d змінив(ла) привітальне повідомлення при виході для %s: %s
+Login message deleted for user: %s|Привітальне повідомлення при вході видалено для: %s
+Logout message deleted for user: %s|Привітальне повідомлення при виході видалено для: %s
+%s with class %d deleted login message for user: %s|%s з класом %d видалив(ла) привітальне повідомлення при вході для: %s
+%s with class %d deleted logout message for user: %s|%s з класом %d видалив(ла) привітальне повідомлення при виході для: %s
+%s with class %d deleted welcome messages for user: %s|%s з класом %d видалив(ла) всі привітальні повідомлення для: %s
+minute|хвилина
+Last %d releases by search string %s|Останні %d релізів що відповідають пошуковому запиту %s
+Modified release: %s|Реліз змінено: %s
+Added release: %s|Реліз додано: %s
+Deleted release: %s|Реліз видалено: %s
+Couldn't delete release because not found: %s|Неможливо видалити реліз, не знайдено: %s
+Reminder preview|Передогляд нагадування
+Preview of %s reminder: %s|Передогляд %s нагадування: %s
+Specified nick is already in use.|Вказаний нік вже використовується.
 Live user location statistics by country|
-All time user location statistics|РЎС‚Р°С‚РёСЃС‚РёРєР° РјС–СЃС†РµР·РЅР°С…РѕРґР¶РµРЅРЅСЏ РєРѕСЂРёСЃС‚СѓРІР°С‡Р° Р·Р° РІРµСЃСЊ С‡Р°СЃ
-This feature requires %s or later installed on your system.|Р¦СЏ С„СѓРЅРєС†С–СЏ РїРѕС‚СЂРµР±СѓС” %s Р°Р±Рѕ РїС–Р·РЅС–С€РѕС— РІРµСЂСЃС–С— РІСЃС‚Р°РЅРѕРІР»РµРЅРѕС— Сѓ РІР°С€С–Р№ СЃРёСЃС‚РµРјС–.
-Total count since %s: %d|Р—Р°РіР°Р»СЊРЅР° РєС–Р»СЊРєС–СЃС‚СЊ РІС–Рґ %s: %d
-Unknown country|РќРµРІС–РґРѕРјР° РєСЂР°С—РЅР°
-No users in the hub.|РќРµРјР°С” РєРѕСЂРёСЃС‚СѓРІР°С‡С–РІ РЅР° С…Р°Р±С–.
-User location statistics table is empty.|РўР°Р±Р»РёС†СЏ СЃС‚Р°С‚РёСЃС‚РёРєРё РјС–СЃС†РµР·РЅР°С…РѕРґР¶РµРЅРЅСЏ РєРѕСЂРёСЃС‚СѓРІР°С‡Р° РїРѕСЂРѕР¶РЅСЏ.
-Total count: %d|Р—Р°РіР°Р»СЊРЅР° РєС–Р»СЊРєС–СЃС‚СЊ: %d
-Deleted all rows: %s|Р’РёРґР°Р»РµРЅРѕ РІСЃС– Р·Р°РїРёСЃРё: %s
-%s with class %d deleted all user location entries.|%s Р· РєР»Р°СЃРѕРј %d РІРёРґР°Р»РёРІ(Р»Р°) РІСЃСЋ СЃС‚Р°С‚РёСЃС‚РёРєСѓ РјС–СЃС†РµР·РЅР°С…РѕРґР¶РµРЅРЅСЏ РєРѕСЂРёСЃС‚СѓРІР°С‡С–РІ.
-address|Р°РґСЂРµСЃР°
-owner|РІР»Р°СЃРЅРёРє
-Add friendly hub|Р”РѕРґР°С‚Рё РїР°СЂС‚РЅРµСЂСЃСЊРєРёР№ С…Р°Р±
-Delete friendly hub|Р’РёРґР°Р»РёС‚Рё РїР°СЂС‚РЅРµСЂСЃСЊРєРёР№ С…Р°Р±
-Show friendly hubs|Р’С–РґРѕР±СЂР°Р·РёС‚Рё РїР°СЂС‚РЅРµСЂСЃСЊРєС– С…Р°Р±Рё
-Added friendly hub: %s|Р”РѕРґР°РЅРѕ РїР°СЂС‚РЅРµСЂСЃСЊРєРёР№ С…Р°Р±: %s
-Modified friendly hub: %s|Р—РјС–РЅРµРЅРѕ РїР°СЂС‚РЅРµСЂСЃСЊРєРёР№ С…Р°Р±: %s
-Deleted friendly hub: %s|Р’РёРґР°Р»РµРЅРѕ РїР°СЂС‚РЅРµСЂСЃСЊРєРёР№ С…Р°Р±: %s
-Friendly hub not found: %s|РџР°СЂС‚РЅРµСЂСЃСЊРєРёР№ С…Р°Р± РЅРµ Р·РЅР°Р№РґРµРЅРѕ: %s
-Friendly hublist|РџР°СЂС‚РЅРµСЂСЃСЊРєРёР№ С…Р°Р±Р»РёСЃС‚
-Friendly hublist is empty.|РџР°СЂС‚РЅРµСЂСЃСЊРєРёР№ С…Р°Р±Р»РёСЃС‚ РїРѕСЂРѕР¶РЅС–Р№.
-Executed shell command didn't return any output.|Р’РёРєРѕРЅР°РЅР° shell-РєРѕРјР°РЅРґР° РЅРµ РїРѕРІРµСЂРЅСѓР»Р° Р¶РѕРґРЅРѕРіРѕ СЂРµР·СѓР»СЊС‚Р°С‚Сѓ.
-Returned output|РџРѕРІРµСЂРЅРµРЅРёР№ СЂРµР·СѓР»СЊС‚Р°С‚
-%s renamed %s to: %s|%s РїРµСЂРµР№РјРµРЅРѕРІР°РЅРѕ %s РІ: %s
-%s plugin version: %s|%s РІРµСЂСЃС–СЏ РїР»Р°РіС–РЅР°: %s
-second|СЃРµРєСѓРЅРґР°
-You are now known as: %s|Р’Рё Р·Р°СЂР°Р· РІС–РґРѕРјС– СЏРє: %s
-You renamed %s to: %s|Р’Рё РїРµСЂРµР№РјРµРЅСѓРІР°Р»Рё %s РІ: %s
-Spam exception from %s with IP %s and class %d in MC: %s|РЎРїР°Рј РІРёРєР»СЋС‡РµРЅРЅСЏ %s Р· IP %s С‚Р° РєР»Р°СЃРѕРј %d РІ Р“Р§: %s
+All time user location statistics|Статистика місцезнаходження користувача за весь час
+This feature requires %s or later installed on your system.|Ця функція потребує %s або пізнішої версії встановленої у вашій системі.
+Total count since %s: %d|Загальна кількість від %s: %d
+Unknown country|Невідома країна
+No users in the hub.|Немає користувачів на хабі.
+User location statistics table is empty.|Таблиця статистики місцезнаходження користувача порожня.
+Total count: %d|Загальна кількість: %d
+Deleted all rows: %s|Видалено всі записи: %s
+%s with class %d deleted all user location entries.|%s з класом %d видалив(ла) всю статистику місцезнаходження користувачів.
+address|адреса
+owner|власник
+Add friendly hub|Додати партнерський хаб
+Delete friendly hub|Видалити партнерський хаб
+Show friendly hubs|Відобразити партнерські хаби
+Added friendly hub: %s|Додано партнерський хаб: %s
+Modified friendly hub: %s|Змінено партнерський хаб: %s
+Deleted friendly hub: %s|Видалено партнерський хаб: %s
+Friendly hub not found: %s|Партнерський хаб не знайдено: %s
+Friendly hublist|Партнерський хаблист
+Friendly hublist is empty.|Партнерський хаблист порожній.
+Executed shell command didn't return any output.|Виконана shell-команда не повернула жодного результату.
+Returned output|Повернений результат
+%s renamed %s to: %s|%s перейменовано %s в: %s
+%s plugin version: %s|%s версія плагіна: %s
+second|секунда
+You are now known as: %s|Ви зараз відомі як: %s
+You renamed %s to: %s|Ви перейменували %s в: %s
+Spam exception from %s with IP %s and class %d in MC: %s|Спам виключення %s з IP %s та класом %d в ГЧ: %s
 Spam exception from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s|
-Spam exception from %s with IP %s and class %d in offline message: %s|РЎРїР°Рј РІРёРєР»СЋС‡РµРЅРЅСЏ %s Р· IP %s С‚Р° РєР»Р°СЃРѕРј %d РІ offline РїРѕРІС–РґРѕРјР»РµРЅРЅС–: %s
-Spam exception from %s with IP %s and class %d in report: %s|РЎРїР°Рј РІРёРєР»СЋС‡РµРЅРЅСЏ %s Р· IP %s С‚Р° РєР»Р°СЃРѕРј %d РІ report РїРѕРІС–РґРѕРјР»РµРЅРЅС–: %s
-Spam notification from %s with IP %s and class %d in MC: %s|РЎРїР°Рј СЃРїРѕРІС–С‰РµРЅРЅСЏ РІС–Рґ %s Р· IP %s С‚Р° РєР»Р°СЃРѕРј %d РІ Р“Р§: %s
+Spam exception from %s with IP %s and class %d in offline message: %s|Спам виключення %s з IP %s та класом %d в offline повідомленні: %s
+Spam exception from %s with IP %s and class %d in report: %s|Спам виключення %s з IP %s та класом %d в report повідомленні: %s
+Spam notification from %s with IP %s and class %d in MC: %s|Спам сповіщення від %s з IP %s та класом %d в ГЧ: %s
 Spam notification from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s|
-Spam notification from %s with IP %s and class %d in offline message: %s|РЎРїР°Рј СЃРїРѕРІС–С‰РµРЅРЅСЏ РІС–Рґ %s Р· IP %s С‚Р° РєР»Р°СЃРѕРј %d РІ offline РїРѕРІС–РґРѕРјР»РµРЅРЅС–: %s
-Spam notification from %s with IP %s and class %d in report: %s|РЎРїР°Рј СЃРїРѕРІС–С‰РµРЅРЅСЏ РІС–Рґ %s Р· IP %s С‚Р° РєР»Р°СЃРѕРј %d РІ report РїРѕРІС–РґРѕРјР»РµРЅРЅС–: %s
-Spam from %s with IP %s and class %d in MC: %s|РЎРїР°Рј РІС–Рґ %s Р· IP %s С‚Р° РєР»Р°СЃРѕРј %d РІ Р“Р§: %s
+Spam notification from %s with IP %s and class %d in offline message: %s|Спам сповіщення від %s з IP %s та класом %d в offline повідомленні: %s
+Spam notification from %s with IP %s and class %d in report: %s|Спам сповіщення від %s з IP %s та класом %d в report повідомленні: %s
+Spam from %s with IP %s and class %d in MC: %s|Спам від %s з IP %s та класом %d в ГЧ: %s
 Spam from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s|
-Spam from %s with IP %s and class %d in offline message: %s|РЎРїР°Рј РІС–Рґ %s Р· IP %s С‚Р° РєР»Р°СЃРѕРј %d РІ offline РїРѕРІС–РґРѕРјР»РµРЅРЅС–: %s
-Spam from %s with IP %s and class %d in report: %s|РЎРїР°Рј РІС–Рґ %s Р· IP %s С‚Р° РєР»Р°СЃРѕРј %d РІ report РїРѕРІС–РґРѕРјР»РµРЅРЅС–: %s
-Modified antispam entry with action %d and priority %d to scan in MC: %s|Р—РјС–РЅРµРЅРѕ Р°РЅС‚РёСЃРїР°Рј Р·Р°РїРёСЃ Р· РґС–С”СЋ %d С‚Р° РїСЂС–РѕСЂС–С‚РµС‚РѕРј %d РґР»СЏ СЃРєР°РЅСѓРІР°РЅРЅСЏ РІ Р“Р§: %s
-Modified antispam entry with action %d and priority %d to scan in PM: %s|Р—РјС–РЅРµРЅРѕ Р°РЅС‚РёСЃРїР°Рј Р·Р°РїРёСЃ Р· РґС–С”СЋ %d С‚Р° РїСЂС–РѕСЂС–С‚РµС‚РѕРј %d РґР»СЏ СЃРєР°РЅСѓРІР°РЅРЅСЏ РІ РџРџ: %s
-Modified antispam entry with action %d and priority %d to scan in MC and PM: %s|Р—РјС–РЅРµРЅРѕ Р°РЅС‚РёСЃРїР°Рј Р·Р°РїРёСЃ Р· РґС–С”СЋ %d С‚Р° РїСЂС–РѕСЂС–С‚РµС‚РѕРј %d РґР»СЏ СЃРєР°РЅСѓРІР°РЅРЅСЏ РІ Р“Р§ С‚Р° РџРџ: %s
-Added antispam entry with action %d and priority %d to scan in MC: %s|Р”РѕРґР°РЅРѕ Р°РЅС‚РёСЃРїР°Рј Р·Р°РїРёСЃ Р· РґС–С”СЋ %d С‚Р° РїСЂС–РѕСЂС–С‚РµС‚РѕРј %d РґР»СЏ СЃРєР°РЅСѓРІР°РЅРЅСЏ РІ Р“Р§: %s
-Added antispam entry with action %d and priority %d to scan in PM: %s|Р”РѕРґР°РЅРѕ Р°РЅС‚РёСЃРїР°Рј Р·Р°РїРёСЃ Р· РґС–С”СЋ %d С‚Р° РїСЂС–РѕСЂС–С‚РµС‚РѕРј %d РґР»СЏ СЃРєР°РЅСѓРІР°РЅРЅСЏ РІ РџРџ: %s
-Added antispam entry with action %d and priority %d to scan in MC and PM: %s|Р”РѕРґР°РЅРѕ Р°РЅС‚РёСЃРїР°Рј Р·Р°РїРёСЃ Р· РґС–С”СЋ %d С‚Р° РїСЂС–РѕСЂС–С‚РµС‚РѕРј %d РґР»СЏ СЃРєР°РЅСѓРІР°РЅРЅСЏ РІ Р“Р§ С‚Р° РџРџ: %s
-Search request exception from %s with IP %s and class %d as any file: %s|Р’РёРєР»СЋС‡РµРЅРЅСЏ РїРѕС€СѓРєРѕРІРѕРіРѕ Р·Р°РїРёС‚Сѓ РІС–Рґ %s Р· IP %s С‚Р° РєР»Р°СЃРѕРј %d СЏРє Р±СѓРґСЊ-СЏРєРёР№ С„Р°Р№Р»: %s
-Search request exception from %s with IP %s and class %d as audio file: %s|Р’РёРєР»СЋС‡РµРЅРЅСЏ РїРѕС€СѓРєРѕРІРѕРіРѕ Р·Р°РїРёС‚Сѓ РІС–Рґ %s Р· IP %s С‚Р° РєР»Р°СЃРѕРј %d СЏРє Р°СѓРґС–Рѕ С„Р°Р№Р»: %s
-Search request exception from %s with IP %s and class %d as compressed file: %s|Р’РёРєР»СЋС‡РµРЅРЅСЏ РїРѕС€СѓРєРѕРІРѕРіРѕ Р·Р°РїРёС‚Сѓ РІС–Рґ %s Р· IP %s С‚Р° РєР»Р°СЃРѕРј %d СЏРє Р°СЂС…С–РІ: %s
-Search request exception from %s with IP %s and class %d as document: %s|Р’РёРєР»СЋС‡РµРЅРЅСЏ РїРѕС€СѓРєРѕРІРѕРіРѕ Р·Р°РїРёС‚Сѓ РІС–Рґ %s Р· IP %s С‚Р° РєР»Р°СЃРѕРј %d СЏРє РґРѕРєСѓРјРµРЅС‚: %s
-Search request exception from %s with IP %s and class %d as executable: %s|Р’РёРєР»СЋС‡РµРЅРЅСЏ РїРѕС€СѓРєРѕРІРѕРіРѕ Р·Р°РїРёС‚Сѓ РІС–Рґ %s Р· IP %s С‚Р° РєР»Р°СЃРѕРј %d СЏРє: %s
-Search request exception from %s with IP %s and class %d as picture: %s|Р’РёРєР»СЋС‡РµРЅРЅСЏ РїРѕС€СѓРєРѕРІРѕРіРѕ Р·Р°РїРёС‚Сѓ РІС–Рґ %s Р· IP %s С‚Р° РєР»Р°СЃРѕРј %d СЏРє Р·РѕР±СЂР°Р¶РµРЅРЅСЏ: %s
-Search request exception from %s with IP %s and class %d as video: %s|Р’РёРєР»СЋС‡РµРЅРЅСЏ РїРѕС€СѓРєРѕРІРѕРіРѕ Р·Р°РїРёС‚Сѓ РІС–Рґ %s Р· IP %s С‚Р° РєР»Р°СЃРѕРј %d СЏРє РІС–РґРµРѕ: %s
-Search request exception from %s with IP %s and class %d as folder: %s|Р’РёРєР»СЋС‡РµРЅРЅСЏ РїРѕС€СѓРєРѕРІРѕРіРѕ Р·Р°РїРёС‚Сѓ РІС–Рґ %s Р· IP %s С‚Р° РєР»Р°СЃРѕРј %d СЏРє РїР°РїРєР°: %s
-Search request exception from %s with IP %s and class %d as TTH: %s|Р’РёРєР»СЋС‡РµРЅРЅСЏ РїРѕС€СѓРєРѕРІРѕРіРѕ Р·Р°РїРёС‚Сѓ РІС–Рґ %s Р· IP %s С‚Р° РєР»Р°СЃРѕРј %d СЏРє TTH: %s
-Search request notification from %s with IP %s and class %d as any file: %s|РџРѕРїРµСЂРµРґР¶РµРЅРЅСЏ РїРѕС€СѓРєРѕРІРѕРіРѕ Р·Р°РїРёС‚Сѓ РІС–Рґ %s Р· IP %s С‚Р° РєР»Р°СЃРѕРј %d СЏРє Р±СѓРґСЊ-СЏРєРёР№ С„Р°Р№Р»: %s
-Search request notification from %s with IP %s and class %d as audio file: %s|РџРѕРїРµСЂРµРґР¶РµРЅРЅСЏ РїРѕС€СѓРєРѕРІРѕРіРѕ Р·Р°РїРёС‚Сѓ РІС–Рґ %s Р· IP %s С‚Р° РєР»Р°СЃРѕРј %d СЏРє Р°СѓРґС–Рѕ С„Р°Р№Р»: %s
-Search request notification from %s with IP %s and class %d as compressed file: %s|РџРѕРїРµСЂРµРґР¶РµРЅРЅСЏ РїРѕС€СѓРєРѕРІРѕРіРѕ Р·Р°РїРёС‚Сѓ РІС–Рґ %s Р· IP %s С‚Р° РєР»Р°СЃРѕРј %d СЏРє Р°СЂС…С–РІ: %s
-Search request notification from %s with IP %s and class %d as document: %s|РџРѕРїРµСЂРµРґР¶РµРЅРЅСЏ РїРѕС€СѓРєРѕРІРѕРіРѕ Р·Р°РїРёС‚Сѓ РІС–Рґ %s Р· IP %s С‚Р° РєР»Р°СЃРѕРј %d СЏРє РґРѕРєСѓРјРµРЅС‚: %s
-Search request notification from %s with IP %s and class %d as executable: %s|РџРѕРїРµСЂРµРґР¶РµРЅРЅСЏ РїРѕС€СѓРєРѕРІРѕРіРѕ Р·Р°РїРёС‚Сѓ РІС–Рґ %s Р· IP %s С‚Р° РєР»Р°СЃРѕРј %d СЏРє: %s
-Search request notification from %s with IP %s and class %d as picture: %s|РџРѕРїРµСЂРµРґР¶РµРЅРЅСЏ РїРѕС€СѓРєРѕРІРѕРіРѕ Р·Р°РїРёС‚Сѓ РІС–Рґ %s Р· IP %s С‚Р° РєР»Р°СЃРѕРј %d СЏРє Р·РѕР±СЂР°Р¶РµРЅРЅСЏ: %s
-Search request notification from %s with IP %s and class %d as video: %s|РџРѕРїРµСЂРµРґР¶РµРЅРЅСЏ РїРѕС€СѓРєРѕРІРѕРіРѕ Р·Р°РїРёС‚Сѓ РІС–Рґ %s Р· IP %s С‚Р° РєР»Р°СЃРѕРј %d СЏРє РІС–РґРµРѕ: %s
-Search request notification from %s with IP %s and class %d as folder: %s|РџРѕРїРµСЂРµРґР¶РµРЅРЅСЏ РїРѕС€СѓРєРѕРІРѕРіРѕ Р·Р°РїРёС‚Сѓ РІС–Рґ %s Р· IP %s С‚Р° РєР»Р°СЃРѕРј %d СЏРє РїР°РїРєР°: %s
-Search request notification from %s with IP %s and class %d as TTH: %s|РџРѕРїРµСЂРµРґР¶РµРЅРЅСЏ РїРѕС€СѓРєРѕРІРѕРіРѕ Р·Р°РїРёС‚Сѓ РІС–Рґ %s Р· IP %s С‚Р° РєР»Р°СЃРѕРј %d СЏРє TTH: %s
-Bad search request from %s with IP %s and class %d as any file: %s|Р—Р°Р±РѕСЂРѕРЅРµРЅРёР№ РїРѕС€СѓРєРѕРІРёР№ Р·Р°РїРёС‚ РІС–Рґ %s Р· IP %s С‚Р° РєР»Р°СЃРѕРј %d СЏРє Р±СѓРґСЊ-СЏРєРёР№ С„Р°Р№Р»: %s
-Bad search request from %s with IP %s and class %d as audio file: %s|Р—Р°Р±РѕСЂРѕРЅРµРЅРёР№ РїРѕС€СѓРєРѕРІРёР№ Р·Р°РїРёС‚ РІС–Рґ %s Р· IP %s С‚Р° РєР»Р°СЃРѕРј %d СЏРє Р°СѓРґС–Рѕ С„Р°Р№Р»: %s
-Bad search request from %s with IP %s and class %d as compressed file: %s|Р—Р°Р±РѕСЂРѕРЅРµРЅРёР№ РїРѕС€СѓРєРѕРІРёР№ Р·Р°РїРёС‚ РІС–Рґ %s Р· IP %s С‚Р° РєР»Р°СЃРѕРј %d СЏРє Р°СЂС…С–РІ: %s
-Bad search request from %s with IP %s and class %d as document: %s|Р—Р°Р±РѕСЂРѕРЅРµРЅРёР№ РїРѕС€СѓРєРѕРІРёР№ Р·Р°РїРёС‚ РІС–Рґ %s Р· IP %s С‚Р° РєР»Р°СЃРѕРј %d СЏРє РґРѕРєСѓРјРµРЅС‚: %s
-Bad search request from %s with IP %s and class %d as executable: %s|Р—Р°Р±РѕСЂРѕРЅРµРЅРёР№ РїРѕС€СѓРєРѕРІРёР№ Р·Р°РїРёС‚ РІС–Рґ %s Р· IP %s С‚Р° РєР»Р°СЃРѕРј %d СЏРє : %s
-Bad search request from %s with IP %s and class %d as picture: %s|Р—Р°Р±РѕСЂРѕРЅРµРЅРёР№ РїРѕС€СѓРєРѕРІРёР№ Р·Р°РїРёС‚ РІС–Рґ %s Р· IP %s С‚Р° РєР»Р°СЃРѕРј %d СЏРє Р·РѕР±СЂР°Р¶РµРЅРЅСЏ: %s
-Bad search request from %s with IP %s and class %d as video: %s|Р—Р°Р±РѕСЂРѕРЅРµРЅРёР№ РїРѕС€СѓРєРѕРІРёР№ Р·Р°РїРёС‚ РІС–Рґ %s Р· IP %s С‚Р° РєР»Р°СЃРѕРј %d СЏРє РІС–РґРµРѕ: %s
-Bad search request from %s with IP %s and class %d as folder: %s|Р—Р°Р±РѕСЂРѕРЅРµРЅРёР№ РїРѕС€СѓРєРѕРІРёР№ Р·Р°РїРёС‚ РІС–Рґ %s Р· IP %s С‚Р° РєР»Р°СЃРѕРј %d СЏРє РїР°РїРєР°: %s
-Bad search request from %s with IP %s and class %d as TTH: %s|Р—Р°Р±РѕСЂРѕРЅРµРЅРёР№ РїРѕС€СѓРєРѕРІРёР№ Р·Р°РїРёС‚ РІС–Рґ %s Р· IP %s С‚Р° РєР»Р°СЃРѕРј %d СЏРє TTH: %s
-Modified search filter with action %d and priority %d as any file: %s|Р—РјС–РЅРµРЅРѕ РїРѕС€СѓРєРѕРІРёР№ С„С–Р»СЊС‚СЂ Р· РґС–С”СЋ %d С‚Р° РїСЂС–РѕСЂС–С‚РµС‚РѕРј %d СЏРє Р±СѓРґСЊ-СЏРєРёР№ С„Р°Р№Р»: %s
-Modified search filter with action %d and priority %d as audio file: %s|Р—РјС–РЅРµРЅРѕ РїРѕС€СѓРєРѕРІРёР№ С„С–Р»СЊС‚СЂ Р· РґС–С”СЋ %d С‚Р° РїСЂС–РѕСЂС–С‚РµС‚РѕРј %d СЏРє Р°СѓРґС–Рѕ С„Р°Р№Р»: %s
-Modified search filter with action %d and priority %d as compressed file: %s|Р—РјС–РЅРµРЅРѕ РїРѕС€СѓРєРѕРІРёР№ С„С–Р»СЊС‚СЂ Р· РґС–С”СЋ %d С‚Р° РїСЂС–РѕСЂС–С‚РµС‚РѕРј %d СЏРє Р°СЂС…С–РІ: %s
-Modified search filter with action %d and priority %d as document: %s|Р—РјС–РЅРµРЅРѕ РїРѕС€СѓРєРѕРІРёР№ С„С–Р»СЊС‚СЂ Р· РґС–С”СЋ %d С‚Р° РїСЂС–РѕСЂС–С‚РµС‚РѕРј %d СЏРє РґРѕРєСѓРјРµРЅС‚: %s
-Modified search filter with action %d and priority %d as executable: %s|Р—РјС–РЅРµРЅРѕ РїРѕС€СѓРєРѕРІРёР№ С„С–Р»СЊС‚СЂ Р· РґС–С”СЋ %d С‚Р° РїСЂС–РѕСЂС–С‚РµС‚РѕРј %d СЏРє : %s
-Modified search filter with action %d and priority %d as picture: %s|Р—РјС–РЅРµРЅРѕ РїРѕС€СѓРєРѕРІРёР№ С„С–Р»СЊС‚СЂ Р· РґС–С”СЋ %d С‚Р° РїСЂС–РѕСЂС–С‚РµС‚РѕРј %d СЏРє Р·РѕР±СЂР°Р¶РµРЅРЅСЏ: %s
-Modified search filter with action %d and priority %d as video: %s|Р—РјС–РЅРµРЅРѕ РїРѕС€СѓРєРѕРІРёР№ С„С–Р»СЊС‚СЂ Р· РґС–С”СЋ %d С‚Р° РїСЂС–РѕСЂС–С‚РµС‚РѕРј %d СЏРє РІС–РґРµРѕ: %s
-Modified search filter with action %d and priority %d as folder: %s|Р—РјС–РЅРµРЅРѕ РїРѕС€СѓРєРѕРІРёР№ С„С–Р»СЊС‚СЂ Р· РґС–С”СЋ %d С‚Р° РїСЂС–РѕСЂС–С‚РµС‚РѕРј %d СЏРє РїР°РїРєР°: %s
-Modified search filter with action %d and priority %d as TTH: %s|Р—РјС–РЅРµРЅРѕ РїРѕС€СѓРєРѕРІРёР№ С„С–Р»СЊС‚СЂ Р· РґС–С”СЋ %d С‚Р° РїСЂС–РѕСЂС–С‚РµС‚РѕРј %d СЏРє TTH: %s
-Added search filter with action %d and priority %d as any file: %s|Р”РѕРґР°РЅРѕ РїРѕС€СѓРєРѕРІРёР№ С„С–Р»СЊС‚СЂ Р· РґС–С”СЋ %d С‚Р° РїСЂС–РѕСЂС–С‚РµС‚РѕРј %d СЏРє Р±СѓРґСЊ-СЏРєРёР№ С„Р°Р№Р»: %s
-Added search filter with action %d and priority %d as audio file: %s|Р”РѕРґР°РЅРѕ РїРѕС€СѓРєРѕРІРёР№ С„С–Р»СЊС‚СЂ Р· РґС–С”СЋ %d С‚Р° РїСЂС–РѕСЂС–С‚РµС‚РѕРј %d СЏРє Р°СѓРґС–Рѕ С„Р°Р№Р»: %s
-Added search filter with action %d and priority %d as compressed file: %s|Р”РѕРґР°РЅРѕ РїРѕС€СѓРєРѕРІРёР№ С„С–Р»СЊС‚СЂ Р· РґС–С”СЋ %d С‚Р° РїСЂС–РѕСЂС–С‚РµС‚РѕРј %d СЏРє Р°СЂС…С–РІ: %s
-Added search filter with action %d and priority %d as document: %s|Р”РѕРґР°РЅРѕ РїРѕС€СѓРєРѕРІРёР№ С„С–Р»СЊС‚СЂ Р· РґС–С”СЋ %d С‚Р° РїСЂС–РѕСЂС–С‚РµС‚РѕРј %d СЏРє РґРѕРєСѓРјРµРЅС‚: %s
-Added search filter with action %d and priority %d as executable: %s|Р”РѕРґР°РЅРѕ РїРѕС€СѓРєРѕРІРёР№ С„С–Р»СЊС‚СЂ Р· РґС–С”СЋ %d С‚Р° РїСЂС–РѕСЂС–С‚РµС‚РѕРј %d СЏРє: %s
-Added search filter with action %d and priority %d as picture: %s|Р”РѕРґР°РЅРѕ РїРѕС€СѓРєРѕРІРёР№ С„С–Р»СЊС‚СЂ Р· РґС–С”СЋ %d С‚Р° РїСЂС–РѕСЂС–С‚РµС‚РѕРј %d СЏРє Р·РѕР±СЂР°Р¶РµРЅРЅСЏРІС–РґРµРѕ: %s
-Added search filter with action %d and priority %d as video: %s|Р”РѕРґР°РЅРѕ РїРѕС€СѓРєРѕРІРёР№ С„С–Р»СЊС‚СЂ Р· РґС–С”СЋ %d С‚Р° РїСЂС–РѕСЂС–С‚РµС‚РѕРј %d СЏРє РІС–РґРµРѕ: %s
-Added search filter with action %d and priority %d as folder: %s|Р”РѕРґР°РЅРѕ РїРѕС€СѓРєРѕРІРёР№ С„С–Р»СЊС‚СЂ Р· РґС–С”СЋ %d С‚Р° РїСЂС–РѕСЂС–С‚РµС‚РѕРј %d СЏРє РїР°РїРєР°: %s
-Added search filter with action %d and priority %d as TTH: %s|Р”РѕРґР°РЅРѕ РїРѕС€СѓРєРѕРІРёР№ С„С–Р»СЊС‚СЂ Р· РґС–С”СЋ %d С‚Р° РїСЂС–РѕСЂС–С‚РµС‚РѕРј %d СЏРє TTH: %s
-%s with class %d deleted %d releases older than %d days.|%s Р· РєР»Р°СЃРѕРј %d РІРёРґР°Р»РёРІ(Р»Р°) %d СЂРµР»С–Р·С–РІ С‰Рѕ СЃС‚Р°СЂС–С€С– Р·Р° %d РґРЅС–РІ.
-Size of release table: %d [ %s: %d @ %s ]|Р РѕР·РјС–СЂ С‚Р°Р±Р»РёС†С– Р‘Р” СЂРµР»С–Р·С–РІ: %d [ %s: %d @ %s ]
+Spam from %s with IP %s and class %d in offline message: %s|Спам від %s з IP %s та класом %d в offline повідомленні: %s
+Spam from %s with IP %s and class %d in report: %s|Спам від %s з IP %s та класом %d в report повідомленні: %s
+Modified antispam entry with action %d and priority %d to scan in MC: %s|Змінено антиспам запис з дією %d та пріорітетом %d для сканування в ГЧ: %s
+Modified antispam entry with action %d and priority %d to scan in PM: %s|Змінено антиспам запис з дією %d та пріорітетом %d для сканування в ПП: %s
+Modified antispam entry with action %d and priority %d to scan in MC and PM: %s|Змінено антиспам запис з дією %d та пріорітетом %d для сканування в ГЧ та ПП: %s
+Added antispam entry with action %d and priority %d to scan in MC: %s|Додано антиспам запис з дією %d та пріорітетом %d для сканування в ГЧ: %s
+Added antispam entry with action %d and priority %d to scan in PM: %s|Додано антиспам запис з дією %d та пріорітетом %d для сканування в ПП: %s
+Added antispam entry with action %d and priority %d to scan in MC and PM: %s|Додано антиспам запис з дією %d та пріорітетом %d для сканування в ГЧ та ПП: %s
+Search request exception from %s with IP %s and class %d as any file: %s|Виключення пошукового запиту від %s з IP %s та класом %d як будь-який файл: %s
+Search request exception from %s with IP %s and class %d as audio file: %s|Виключення пошукового запиту від %s з IP %s та класом %d як аудіо файл: %s
+Search request exception from %s with IP %s and class %d as compressed file: %s|Виключення пошукового запиту від %s з IP %s та класом %d як архів: %s
+Search request exception from %s with IP %s and class %d as document: %s|Виключення пошукового запиту від %s з IP %s та класом %d як документ: %s
+Search request exception from %s with IP %s and class %d as executable: %s|Виключення пошукового запиту від %s з IP %s та класом %d як: %s
+Search request exception from %s with IP %s and class %d as picture: %s|Виключення пошукового запиту від %s з IP %s та класом %d як зображення: %s
+Search request exception from %s with IP %s and class %d as video: %s|Виключення пошукового запиту від %s з IP %s та класом %d як відео: %s
+Search request exception from %s with IP %s and class %d as folder: %s|Виключення пошукового запиту від %s з IP %s та класом %d як папка: %s
+Search request exception from %s with IP %s and class %d as TTH: %s|Виключення пошукового запиту від %s з IP %s та класом %d як TTH: %s
+Search request notification from %s with IP %s and class %d as any file: %s|Попередження пошукового запиту від %s з IP %s та класом %d як будь-який файл: %s
+Search request notification from %s with IP %s and class %d as audio file: %s|Попередження пошукового запиту від %s з IP %s та класом %d як аудіо файл: %s
+Search request notification from %s with IP %s and class %d as compressed file: %s|Попередження пошукового запиту від %s з IP %s та класом %d як архів: %s
+Search request notification from %s with IP %s and class %d as document: %s|Попередження пошукового запиту від %s з IP %s та класом %d як документ: %s
+Search request notification from %s with IP %s and class %d as executable: %s|Попередження пошукового запиту від %s з IP %s та класом %d як: %s
+Search request notification from %s with IP %s and class %d as picture: %s|Попередження пошукового запиту від %s з IP %s та класом %d як зображення: %s
+Search request notification from %s with IP %s and class %d as video: %s|Попередження пошукового запиту від %s з IP %s та класом %d як відео: %s
+Search request notification from %s with IP %s and class %d as folder: %s|Попередження пошукового запиту від %s з IP %s та класом %d як папка: %s
+Search request notification from %s with IP %s and class %d as TTH: %s|Попередження пошукового запиту від %s з IP %s та класом %d як TTH: %s
+Bad search request from %s with IP %s and class %d as any file: %s|Заборонений пошуковий запит від %s з IP %s та класом %d як будь-який файл: %s
+Bad search request from %s with IP %s and class %d as audio file: %s|Заборонений пошуковий запит від %s з IP %s та класом %d як аудіо файл: %s
+Bad search request from %s with IP %s and class %d as compressed file: %s|Заборонений пошуковий запит від %s з IP %s та класом %d як архів: %s
+Bad search request from %s with IP %s and class %d as document: %s|Заборонений пошуковий запит від %s з IP %s та класом %d як документ: %s
+Bad search request from %s with IP %s and class %d as executable: %s|Заборонений пошуковий запит від %s з IP %s та класом %d як : %s
+Bad search request from %s with IP %s and class %d as picture: %s|Заборонений пошуковий запит від %s з IP %s та класом %d як зображення: %s
+Bad search request from %s with IP %s and class %d as video: %s|Заборонений пошуковий запит від %s з IP %s та класом %d як відео: %s
+Bad search request from %s with IP %s and class %d as folder: %s|Заборонений пошуковий запит від %s з IP %s та класом %d як папка: %s
+Bad search request from %s with IP %s and class %d as TTH: %s|Заборонений пошуковий запит від %s з IP %s та класом %d як TTH: %s
+Modified search filter with action %d and priority %d as any file: %s|Змінено пошуковий фільтр з дією %d та пріорітетом %d як будь-який файл: %s
+Modified search filter with action %d and priority %d as audio file: %s|Змінено пошуковий фільтр з дією %d та пріорітетом %d як аудіо файл: %s
+Modified search filter with action %d and priority %d as compressed file: %s|Змінено пошуковий фільтр з дією %d та пріорітетом %d як архів: %s
+Modified search filter with action %d and priority %d as document: %s|Змінено пошуковий фільтр з дією %d та пріорітетом %d як документ: %s
+Modified search filter with action %d and priority %d as executable: %s|Змінено пошуковий фільтр з дією %d та пріорітетом %d як : %s
+Modified search filter with action %d and priority %d as picture: %s|Змінено пошуковий фільтр з дією %d та пріорітетом %d як зображення: %s
+Modified search filter with action %d and priority %d as video: %s|Змінено пошуковий фільтр з дією %d та пріорітетом %d як відео: %s
+Modified search filter with action %d and priority %d as folder: %s|Змінено пошуковий фільтр з дією %d та пріорітетом %d як папка: %s
+Modified search filter with action %d and priority %d as TTH: %s|Змінено пошуковий фільтр з дією %d та пріорітетом %d як TTH: %s
+Added search filter with action %d and priority %d as any file: %s|Додано пошуковий фільтр з дією %d та пріорітетом %d як будь-який файл: %s
+Added search filter with action %d and priority %d as audio file: %s|Додано пошуковий фільтр з дією %d та пріорітетом %d як аудіо файл: %s
+Added search filter with action %d and priority %d as compressed file: %s|Додано пошуковий фільтр з дією %d та пріорітетом %d як архів: %s
+Added search filter with action %d and priority %d as document: %s|Додано пошуковий фільтр з дією %d та пріорітетом %d як документ: %s
+Added search filter with action %d and priority %d as executable: %s|Додано пошуковий фільтр з дією %d та пріорітетом %d як: %s
+Added search filter with action %d and priority %d as picture: %s|Додано пошуковий фільтр з дією %d та пріорітетом %d як зображеннявідео: %s
+Added search filter with action %d and priority %d as video: %s|Додано пошуковий фільтр з дією %d та пріорітетом %d як відео: %s
+Added search filter with action %d and priority %d as folder: %s|Додано пошуковий фільтр з дією %d та пріорітетом %d як папка: %s
+Added search filter with action %d and priority %d as TTH: %s|Додано пошуковий фільтр з дією %d та пріорітетом %d як TTH: %s
+%s with class %d deleted %d releases older than %d days.|%s з класом %d видалив(ла) %d релізів що старіші за %d днів.
+Size of release table: %d [ %s: %d @ %s ]|Розмір таблиці БД релізів: %d [ %s: %d @ %s ]
 LRE|LRE
-Code accepted.|РљРѕРґ РїСЂРёР№РЅСЏС‚Рѕ.
-Protection list|РЎРїРёСЃРѕРє Р·Р°С…РёСЃС‚С–РІ
-Added protection entry: %s|Р”РѕРґР°РЅРѕ Р·Р°РїРёСЃ Р·Р°С…РёСЃС‚Сѓ: %s
-Deleted protection entry: %s|Р’РёРґР°Р»РµРЅРѕ Р·Р°РїРёСЃ Р·Р°С…РёСЃС‚Сѓ: %s
-Protection entry already exists: %s|Р—Р°РїРёСЃ Р·Р°С…РёСЃС‚Сѓ РІР¶Рµ С–СЃРЅСѓС”: %s
-Protection entry not found: %s|Р—Р°РїРёСЃ Р·Р°С…РёСЃС‚Сѓ РЅРµ Р·РЅР°Р№РґРµРЅРѕ: %s
-Protection list is empty.|РЎРїРёСЃРѕРє Р·Р°С…РёСЃС‚С–РІ РїРѕСЂРѕР¶РЅС–Р№.
-Missing %s in configuration variable.|Р’С–РґСЃСѓС‚РЅС” %s РІ Р·РЅР°С‡РµРЅРЅС– РєРѕРЅС„С–РіСѓСЂР°С†С–С—.
-Chatroom: %s|Р§Р°С‚-РєС–РјРЅР°С‚Р°: %s
-You've left the chatroom.|Р’Рё Р·Р°Р»РёС€РёР»Рё С‡Р°С‚-РєС–РјРЅР°С‚Сѓ.
-User left the chatroom: %s|РљРѕСЂРёСЃС‚СѓРІР°С‡ Р·Р°Р»РёС€РёРІ С‡Р°С‚-РєС–РјРЅР°С‚Сѓ: %s
-User entered the chatroom: %s|РљРѕСЂРёСЃС‚СѓРІР°С‡ СѓРІС–Р№С€РѕРІ РІ С‡Р°С‚-РєС–РјРЅР°С‚Сѓ: %s
-You've entered %s chatroom.|Р’Рё СѓРІС–Р№С€Р»Рё РІ %s С‡Р°С‚-РєС–РјРЅР°С‚Сѓ.
-You're not member of this chatroom.|Р’Рё РЅРµ СѓС‡Р°СЃРЅРёРє С†С–С”С— С‡Р°С‚-РєС–РјРЅР°С‚Рё.
-You don't have access to this chatroom.|РЈ РІР°СЃ РЅРµРјР°С” РґРѕР·РІРѕР»Сѓ РґР»СЏ РІС…РѕРґСѓ РІ С†СЋ С‡Р°С‚-РєС–РјРЅР°С‚Сѓ.
-Chatroom member list|РЎРїРёСЃРѕРє СѓС‡Р°СЃРЅРёРєС–РІ РєС–РјРЅР°С‚Рё
-Chatroom is empty.|РЎРїРёСЃРѕРє СѓС‡Р°СЃРЅРёРєС–РІ РєС–РјРЅР°С‚Рё РїРѕСЂРѕР¶РЅС–Р№.
-You're already member of this chatroom.|Р’Рё РІР¶Рµ СѓС‡Р°СЃРЅРёРє С†С–С”С— РєС–РјРЅР°С‚Рё.
-Chatroom user commands|РљРѕРјР°РЅРґРё РєРѕСЂРёСЃС‚СѓРІР°С‡С–РІ Сѓ РєС–РјРЅР°С‚С–
+Code accepted.|Код прийнято.
+Protection list|Список захистів
+Added protection entry: %s|Додано запис захисту: %s
+Deleted protection entry: %s|Видалено запис захисту: %s
+Protection entry already exists: %s|Запис захисту вже існує: %s
+Protection entry not found: %s|Запис захисту не знайдено: %s
+Protection list is empty.|Список захистів порожній.
+Missing %s in configuration variable.|Відсутнє %s в значенні конфігурації.
+Chatroom: %s|Чат-кімната: %s
+You've left the chatroom.|Ви залишили чат-кімнату.
+User left the chatroom: %s|Користувач залишив чат-кімнату: %s
+User entered the chatroom: %s|Користувач увійшов в чат-кімнату: %s
+You've entered %s chatroom.|Ви увійшли в %s чат-кімнату.
+You're not member of this chatroom.|Ви не учасник цієї чат-кімнати.
+You don't have access to this chatroom.|У вас немає дозволу для входу в цю чат-кімнату.
+Chatroom member list|Список учасників кімнати
+Chatroom is empty.|Список учасників кімнати порожній.
+You're already member of this chatroom.|Ви вже учасник цієї кімнати.
+Chatroom user commands|Команди користувачів у кімнаті
 Unknown chatroom command, use %s for help.|
-Enter the chatroom|РЈРІС–Р№С‚Рё РІ С‡Р°С‚-РєС–РјРЅР°С‚Сѓ
-Leave the chatroom|Р’РёР№С‚Рё Р· С‡Р°С‚-РєС–РјРЅР°С‚Рё
-Deleted %d rows from country code statistics table: %s|Р’РёРґР°Р»РµРЅРѕ %d Р·Р°РїРёСЃС–РІ Р· Р‘Р” СЃС‚Р°С‚РёСЃС‚РёРєРё РєРѕРґС–РІ РєСЂР°С—РЅ: %s
+Enter the chatroom|Увійти в чат-кімнату
+Leave the chatroom|Вийти з чат-кімнати
+Deleted %d rows from country code statistics table: %s|Видалено %d записів з БД статистики кодів країн: %s
 Force chat mode for user|
-Known chat modes are: %s|Р’С–РґРѕРјС– СЂРµР¶РёРјРё: %s
-mode|СЂРµР¶РёРј
-Changing chat mode for %s: %s => %s|Р—РјС–РЅРµРЅРЅСЏ С‡Р°С‚ СЂРµР¶РёРјСѓ РґР»СЏ %s: %s => %s
-Not found in chat mode list: %s|РќРµ Р·РЅР°Р№РґРµРЅРѕ РІ СЃРїРёСЃРєСѓ СЂРµР¶РёРјС–РІ С‡Р°С‚Сѓ: %s
-Chat mode user list|РЎРїРёСЃРѕРє РєРѕСЂРёСЃС‚СѓРІР°С†СЊРєРёС… СЂРµР¶РёРјС–РІ С‡Р°С‚Сѓ
-Chat mode user list is empty.|РЎРїРёСЃРѕРє РєРѕСЂРёСЃС‚СѓРІР°С†СЊРєРёС… СЂРµР¶РёРјС–РІ С‡Р°С‚Сѓ РїРѕСЂРѕР¶РЅС–Р№.
-%s user lookup|%s РїРѕС€СѓРє РєРѕСЂРёСЃС‚СѓРІР°С‡Р°
-Add IP gag|Р”РѕРґР°С‚Рё IP gag
-Added IP gag: %s|IP gag РґРѕРґР°РЅРѕ: %s
-Modified IP gag: %s|IP gag РІР¶Рµ Р·Р°РїРёСЃР°РЅРѕ: %s
-Deleted IP gag: %s|Р’РёРґР°Р»РµРЅРѕ IP gag: %s
-IP gag not found: %s|IP gag РЅРµ Р·РЅР°Р№РґРµРЅРѕ: %s
-IP gag list|IP gag СЃРїРёСЃРѕРє
-IP gag list is empty.|IP gag СЃРїРёСЃРѕРє РїРѕСЂРѕР¶РЅС–Р№.
-Delete IP gag|Р’РёРґР°Р»РёС‚Рё IP gag
-Main chat is currently disabled for you.|Р“РѕР»РѕРІРЅРёР№ С‡Р°С‚ РІРёРјРєРЅРµРЅРѕ РґР»СЏ РІР°СЃ.
+Known chat modes are: %s|Відомі режими: %s
+mode|режим
+Changing chat mode for %s: %s => %s|Змінення чат режиму для %s: %s => %s
+Not found in chat mode list: %s|Не знайдено в списку режимів чату: %s
+Chat mode user list|Список користувацьких режимів чату
+Chat mode user list is empty.|Список користувацьких режимів чату порожній.
+%s user lookup|%s пошук користувача
+Add IP gag|Додати IP gag
+Added IP gag: %s|IP gag додано: %s
+Modified IP gag: %s|IP gag вже записано: %s
+Deleted IP gag: %s|Видалено IP gag: %s
+IP gag not found: %s|IP gag не знайдено: %s
+IP gag list|IP gag список
+IP gag list is empty.|IP gag список порожній.
+Delete IP gag|Видалити IP gag
+Main chat is currently disabled for you.|Головний чат вимкнено для вас.
 Cleared temporary IP gag list.|
-Show custom script commands|Р’С–РґРѕР±СЂР°Р·РёС‚Рё РЅРµСЃС‚Р°РЅРґР°С‚РЅС– РєРѕРјР°РЅРґРё СЃРєСЂРёРїС‚Сѓ
-Custom script command list|РЎРїРёСЃРѕРє РЅРµСЃС‚Р°РЅРґР°СЂС‚РЅРёС… РєРѕРјР°РЅРґ СЃРєСЂРёРїС‚Сѓ
-Custom script command list is empty.|РЎРїРёСЃРѕРє РЅРµСЃС‚Р°РЅРґР°СЂС‚РЅРёС… РєРѕРјР°РЅРґ СЃРєСЂРёРїС‚Сѓ РїРѕСЂРѕР¶РЅС–Р№.
-Script size: %d lines in %s|Р РѕР·РјС–СЂ СЃРєСЂРёРїС‚Сѓ: %d СЂСЏРґРєС–РІ РІ %s
-Added %s to IP gag list, %d users in total.|Р”РѕРґР°РЅРѕ %s РІ IP gag СЃРїРёСЃРѕРє, %d users in total.
-Flood detected from IP %s last known as %s with class %d in MC: %s|Р’РёСЏРІР»РµРЅРѕ С„Р»СѓРґ Р· IP %s РѕСЃС‚Р°РЅРЅС–Р№ СЂР°Р· РІС–РґРѕРјРёР№ СЏРє %s Р· РєР»Р°СЃРѕРј %d РІ Р“Р§: %s
+Show custom script commands|Відобразити нестандатні команди скрипту
+Custom script command list|Список нестандартних команд скрипту
+Custom script command list is empty.|Список нестандартних команд скрипту порожній.
+Script size: %d lines in %s|Розмір скрипту: %d рядків в %s
+Added %s to IP gag list, %d users in total.|Додано %s в IP gag список, %d users in total.
+Flood detected from IP %s last known as %s with class %d in MC: %s|Виявлено флуд з IP %s останній раз відомий як %s з класом %d в ГЧ: %s
 Flood detected from IP %s last known as %s with class %d in PM to %s with IP %s and class %d: %s|
-Private chat is currently disabled for you.|РџСЂРёРІР°С‚РЅС– РїРѕРІС–РґРѕРјР»РµРЅРЅСЏ РІРёРјРєРЅРµРЅРѕ РґР»СЏ РІР°СЃ.
+Private chat is currently disabled for you.|Приватні повідомлення вимкнено для вас.
 Main chat flood detected from your IP.|
 %d users with IP %s dropped due to flood.|
-No error message specified.|РќРµРјР°С” РІС–РґРїРѕРІС–РґРЅРѕРіРѕ РїРѕРІС–РґРѕРјР»РµРЅРЅСЏ РїСЂРѕ РїРѕРјРёР»РєСѓ.
-Search filter|РџРѕС€СѓРєРѕРІРёР№ С„С–Р»СЊС‚СЂ
-MyINFO check|РџРµСЂРµРІС–СЂРєР° MyINFO
-Authorization|РђРІС‚РѕСЂРёР·Р°С†С–СЏ
-Ranks|Р Р°РЅРіРё
-Welcome messages|РџСЂРёРІС–С‚Р°Р»Р»СЊРЅС– РїРѕРІС–РґРѕРјР»РµРЅРЅСЏ
-Chatrooms|Р§Р°С‚-РєС–РјРЅР°С‚Рё
-Reminders|РќР°РіР°РґСѓРІР°РЅРЅСЏ
-Hub news|РќРѕРІРёРЅРё С…Р°Р±Сѓ
-Chat responder|Р§Р°С‚ РІС–РґРїРѕРІС–РґР°С‡
-Releases|Р РµР»С–Р·Рё
-Offline messenger|Offline РјРµСЃРµРЅРґР¶РµСЂ
-Chat history|Р†СЃС‚РѕСЂС–СЏ С‡Р°С‚Сѓ
-Commands|РљРѕРјР°РЅРґРё
-Custom nicks|РќРµСЃРїСЂР°РІР¶РЅС– РЅС–РєРё
-Registered users|Р—Р°СЂРµС”СЃС‚РѕРІР°РЅС– РєРѕСЂРёСЃС‚СѓРІР°С‡С–
-Hublist|РҐР°Р±Р»РёСЃС‚
-Chat|Р§Р°С‚
+No error message specified.|Немає відповідного повідомлення про помилку.
+Search filter|Пошуковий фільтр
+MyINFO check|Перевірка MyINFO
+Authorization|Авторизація
+Ranks|Ранги
+Welcome messages|Привіталльні повідомлення
+Chatrooms|Чат-кімнати
+Reminders|Нагадування
+Hub news|Новини хабу
+Chat responder|Чат відповідач
+Releases|Релізи
+Offline messenger|Offline месенджер
+Chat history|Історія чату
+Commands|Команди
+Custom nicks|Несправжні ніки
+Registered users|Зареєстовані користувачі
+Hublist|Хаблист
+Chat|Чат
 IP gag|IP gag
-User logger|Р›РѕРіРіРµСЂ СЋР·РµСЂС–РІ
-Other|Р†РЅС€Рµ
-Configuration|РќР°Р»Р°С€С‚СѓРІР°РЅРЅСЏ
-Clear main chat|РћС‡РёСЃС‚РёС‚Рё РіРѕР»РѕРІРЅРёР№ С‡Р°С‚
-Chat cleanup performed by %s|%s РІРёРєРѕРЅР°РІ(Р»Р°) РѕС‡РёСЃС‚РєСѓ РіРѕР»РѕРІРЅРѕРіРѕ С‡Р°С‚Сѓ
-Search in registered users list|РџРѕС€СѓРє РІ СЃРїРёСЃРєСѓ Р·Р°СЂРµС”СЃС‚СЂРѕРІР°РЅРёС… РєРѕСЂРёСЃС‚СѓРІР°С‡С–РІ
-Registered users list statistics|РЎС‚Р°С‚РёСЃС‚РёРєР° Р·Р°СЂРµС”СЃС‚СЂРѕРІР°РЅРёС… РєРѕСЂРёСЃС‚СѓРІР°С‡С–РІ
-Registered users list results for %s|Р РµР·СѓР»СЊС‚Р°С‚Рё Р·С– СЃРїРёСЃРєСѓ Р·Р°СЂРµС”СЃС‚СЂРѕРІР°РЅРёС… РєРѕСЂРёСЃС‚СѓРІР°С‡С–РІ %s
-Class %d: %d|РљР»Р°СЃ %d: %d
-Registered users list is empty.|РЎРїРёСЃРѕРє Р·Р°СЂРµС”СЃС‚СЂРѕРІР°РЅРёС… РєРѕСЂРёСЃС‚СѓРІР°С‡С–РІ РїРѕСЂРѕР¶РЅС–Р№.
+User logger|Логгер юзерів
+Other|Інше
+Configuration|Налаштування
+Clear main chat|Очистити головний чат
+Chat cleanup performed by %s|%s виконав(ла) очистку головного чату
+Search in registered users list|Пошук в списку зареєстрованих користувачів
+Registered users list statistics|Статистика зареєстрованих користувачів
+Registered users list results for %s|Результати зі списку зареєстрованих користувачів %s
+Class %d: %d|Клас %d: %d
+Registered users list is empty.|Список зареєстрованих користувачів порожній.
 This feature requires following binary installed on your system: %s|
-Configuration directory: %s|РЁР»СЏС… РєРѕРЅС„С–РіСѓСЂР°С†С–С—: %s
-%s with IP %s and class %d stated incorrect IP in connect request to %s: %s|%s Р· IP %s С‚Р° РєР»Р°СЃРѕРј %d РІРєР°Р·Р°РЅРѕ РЅРµРєРѕСЂРµРєС‚РЅСѓ IP Р°РґСЂРµСЃСѓ РІ Р·Р°РїРёС‚С– Р·`С”РґРЅР°РЅРЅСЏ РґРѕ %s: %s
-Top %d search requests|РўРѕРї %d РїРѕС€СѓРєРѕРІРёС… Р·Р°РїРёС‚С–РІ
-Search rank list is empty.|РўРѕРї РїРѕС€СѓРєРѕРІРёС… Р·Р°РїРёС‚С–РІ РїРѕСЂРѕР¶РЅС–Р№.
-Deleted from search rank list: %s|Р’РёРґР°Р»РµРЅРѕ Р·С– СЃРїРёСЃРєСѓ РўРћРџ РїРѕС€СѓРєРѕРІРёС… Р·Р°РїРёС‚С–РІ: %s
-Not found in search rank list: %s|РќРµ Р·РЅР°Р№РґРµРЅРѕ РІ СЃРїРёСЃРєСѓ РўРћРџ РїРѕС€СѓРєРѕРІРёС… Р·Р°РїРёС‚С–РІ: %s
-%s with class %d deleted %d search ranks lower than %d.|%s Р· РєР»Р°СЃРѕРј %d РІРёРґР°Р»РёРІ(Р»Р°) %d Р·Р°РїРёСЃС–РІ РўРћРџ РїРѕС€СѓРєРѕРІРёС… Р·Р°РїРёС‚С–РІ РЅРёР¶С‡РёС… Р·Р° %d.
-Size of search ranks table: %d [ %s: %d @ %s ]|Р РѕР·РјС–СЂ С‚Р°Р±Р»РёС†С– Р‘Р” РўРћРџ РїРѕС€СѓРєРѕРІРёС… Р·Р°РїРёС‚С–РІ: %d [ %s: %d @ %s ]
-Size of user location statistics table: %d [ %s: %s ]|Р РѕР·РјС–СЂ С‚Р°Р±Р»РёС†С– Р‘Р” СЃС‚Р°С‚РёСЃС‚РёРєРё РјС–СЃС†РµР·РЅР°С…РѕРґР¶РµРЅРЅСЏ РєРѕСЂРёСЃС‚СѓРІР°С‡С–РІ: %d [ %s: %s ]
-Open files limit: %d|РћР±РјРµР¶РµРЅРЅСЏ РІС–РґРєСЂРёС‚РёС… С„Р°Р№Р»С–РІ: %d
-User information|Р†РЅС„РѕСЂРјР°С†С–СЏ РїСЂРѕ РєРѕСЂРёСЃС‚СѓРІР°С‡Р°
-User not in list: %s|РљРѕСЂРёСЃС‚СѓРІР°С‡ РЅРµ РІ СЃРїРёСЃРєСѓ: %s
-Nick: %s|РќС–Рє: %s
-Description: %s|РћРїРёСЃ: %s
-Tag: %s|РўРµРі: %s
-Mode: %s|Р РµР¶РёРј: %s
-Slots: %s|РЎР»РѕС‚С–РІ: %s
-Hubs: %s|РҐР°Р±С–РІ: %s
-Limiter: %s KiB/s|РћР±РјРµР¶РµРЅРЅСЏ: %s KiB/s
-Connection: %s|РўРёРї Р·`С”РґРЅР°РЅРЅСЏ: %s
-Status: %s|РЎС‚Р°С‚СѓСЃ: %s
+Configuration directory: %s|Шлях конфігурації: %s
+%s with IP %s and class %d stated incorrect IP in connect request to %s: %s|%s з IP %s та класом %d вказано некоректну IP адресу в запиті з`єднання до %s: %s
+Top %d search requests|Топ %d пошукових запитів
+Search rank list is empty.|Топ пошукових запитів порожній.
+Deleted from search rank list: %s|Видалено зі списку ТОП пошукових запитів: %s
+Not found in search rank list: %s|Не знайдено в списку ТОП пошукових запитів: %s
+%s with class %d deleted %d search ranks lower than %d.|%s з класом %d видалив(ла) %d записів ТОП пошукових запитів нижчих за %d.
+Size of search ranks table: %d [ %s: %d @ %s ]|Розмір таблиці БД ТОП пошукових запитів: %d [ %s: %d @ %s ]
+Size of user location statistics table: %d [ %s: %s ]|Розмір таблиці БД статистики місцезнаходження користувачів: %d [ %s: %s ]
+Open files limit: %d|Обмеження відкритих файлів: %d
+User information|Інформація про користувача
+User not in list: %s|Користувач не в списку: %s
+Nick: %s|Нік: %s
+Description: %s|Опис: %s
+Tag: %s|Тег: %s
+Mode: %s|Режим: %s
+Slots: %s|Слотів: %s
+Hubs: %s|Хабів: %s
+Limiter: %s KiB/s|Обмеження: %s KiB/s
+Connection: %s|Тип з`єднання: %s
+Status: %s|Статус: %s
 Email: %s|Email: %s
-Share: %s|РЁР°СЂР°: %s
-Exact share: %s|РўРѕС‡РЅР° С€Р°СЂР°: %s
-Class: %d|РљР»Р°СЃ: %d
+Share: %s|Шара: %s
+Exact share: %s|Точна шара: %s
+Class: %d|Клас: %d
 IP: %s|IP: %s
 DNS: %s|DNS: %s
 Country: %s|
-Client: %s|РљР»С–С”РЅС‚: %s
-Version: %s|Р’РµСЂСЃС–СЏ: %s
-Normal|РќРѕСЂРјР°Р»СЊРЅРёР№
-Away|Р’С–РґСЃСѓС‚РЅС–Р№
-Normal away|РќРѕСЂРјР°Р»СЊРЅРёР№ Р’С–РґСЃСѓС‚РЅС–Р№
-Fileserver|РЎРµСЂРІРµСЂ
-Normal fileserver|РќРѕСЂРјР°Р»СЊРЅРёР№ РЎРµСЂРІРµСЂ
-Away fileserver|РЎРµСЂРІРµСЂ Р’С–РґСЃСѓС‚РЅС–Р№
-Normal away fileserver|РќРѕСЂРјР°Р»СЊРЅРёР№ РЎРµСЂРІРµСЂ Р’С–РґСЃСѓС‚РЅС–РІ
-Fireball|РЁРІРёРґРєС–СЃРЅРёР№
-Normal fireball|РќРѕСЂРјР°Р»СЊРЅРёР№ РЁРІРёРґРєС–СЃРЅРёР№
-Away fireball|Р’С–РґСЃСѓС‚РЅС–Р№ РЁРІРёРґРєС–СЃРЅРёР№
-Normal away fireball|РќРѕСЂРјР°Р»СЊРЅРёР№ Р’С–РґСЃСѓС‚РЅС–Р№ РЁРІРёРґРєС–СЃРЅРёР№
-Fileserver fireball|РЎРµСЂРІРµСЂ РЁРІРёРґРєС–СЃРЅРёР№
-Normal fileserver fireball|РќРѕСЂРјР°Р»СЊРЅРёР№ РЎРµСЂРІРµСЂ РЁРІРёРґРєС–СЃРЅРёР№
-Away fileserver fireball|Р’С–РґСЃСѓС‚РЅС–Р№ РЎРµСЂРІРµСЂ РЁРІРёРґРєС–СЃРЅРёР№
-Normal away fileserver fireball|РќРѕСЂРјР°Р»СЊРЅРёР№ Р’С–РґСЃСѓС‚РЅС–Р№ РЎРµСЂРІРµСЂ РЁРІРёРґРєС–СЃРЅРёР№
+Client: %s|Клієнт: %s
+Version: %s|Версія: %s
+Normal|Нормальний
+Away|Відсутній
+Normal away|Нормальний Відсутній
+Fileserver|Сервер
+Normal fileserver|Нормальний Сервер
+Away fileserver|Сервер Відсутній
+Normal away fileserver|Нормальний Сервер Відсутнів
+Fireball|Швидкісний
+Normal fireball|Нормальний Швидкісний
+Away fireball|Відсутній Швидкісний
+Normal away fireball|Нормальний Відсутній Швидкісний
+Fileserver fireball|Сервер Швидкісний
+Normal fileserver fireball|Нормальний Сервер Швидкісний
+Away fileserver fireball|Відсутній Сервер Швидкісний
+Normal away fileserver fireball|Нормальний Відсутній Сервер Швидкісний
 TLS|TLS
-Normal TLS|РќРѕСЂРјР°Р»СЊРЅРёР№ TLS
-Away TLS|Р’С–РґСЃСѓС‚РЅС–Р№ TLS
-Normal away TLS|РќРѕСЂРјР°Р»СЊРЅРёР№ Р’С–РґСЃСѓС‚РЅС–Р№ TLS
-Fileserver TLS|РЎРµСЂРІРµСЂ TLS
-Normal fileserver TLS|РќРѕСЂРјР°Р»СЊРЅРёР№ РЎРµСЂРІРµСЂ TLS
-Away fileserver TLS|Р’С–РґСЃСѓС‚РЅС–Р№ РЎРµСЂРІРµСЂ TLS
-Normal away fileserver TLS|РќРѕСЂРјР°Р»СЊРЅРёР№ Р’С–РґСЃСѓС‚РЅС–Р№ РЎРµСЂРІРµСЂ TLS
-Fireball TLS|РЁРІРёРґРєС–СЃРЅРёР№ TLS
-Normal fireball TLS|РќРѕСЂРјР°Р»СЊРЅРёР№ РЁРІРёРґРєС–СЃРЅРёР№ TLS
-Away fireball TLS|Р’С–РґСЃСѓС‚РЅС–Р№ РЁРІРёРґРєС–СЃРЅРёР№ TLS
-Normal away fireball TLS|РќРѕСЂРјР°Р»СЊРЅРёР№ Р’С–РґСЃСѓС‚РЅС–Р№ РЁРІРёРґРєС–СЃРЅРёР№ TLS
-Fileserver fireball TLS|РЎРµСЂРІРµСЂ РЁРІРёРґРєС–СЃРЅРёР№ TLS
-Normal fileserver fireball TLS|РќРѕСЂРјР°Р»СЊРЅРёР№ РЎРµСЂРІРµСЂ РЁРІРёРґРєС–СЃРЅРёР№ TLS
-Away fileserver fireball TLS|Р’С–РґСЃСѓС‚РЅС–Р№ РЎРµСЂРІРµСЂ РЁРІРёРґРєС–СЃРЅРёР№ TLS
-Normal away fileserver fireball TLS|РќРѕСЂРјР°Р»СЊРЅРёР№ Р’С–РґСЃСѓС‚РЅС–Р№ РЎРµСЂРІРµСЂ РЁРІРёРґРєС–СЃРЅРёР№ TLS
-Unable to get bot information: %s|РќРµ РІРґР°Р»РѕСЃСЏ РѕС‚СЂРёРјР°С‚Рё С–РЅС„РѕСЂРјР°С†С–СЋ РїСЂРѕ Р±РѕС‚Р°: %s
-Bot information|Р‘РѕС‚ С–РЅС„РѕСЂРјР°С†С–СЏ
-Owner script: %s|Р’Р»Р°СЃРЅРёРє СЃРєСЂРёРїС‚Сѓ: %s
+Normal TLS|Нормальний TLS
+Away TLS|Відсутній TLS
+Normal away TLS|Нормальний Відсутній TLS
+Fileserver TLS|Сервер TLS
+Normal fileserver TLS|Нормальний Сервер TLS
+Away fileserver TLS|Відсутній Сервер TLS
+Normal away fileserver TLS|Нормальний Відсутній Сервер TLS
+Fireball TLS|Швидкісний TLS
+Normal fireball TLS|Нормальний Швидкісний TLS
+Away fireball TLS|Відсутній Швидкісний TLS
+Normal away fireball TLS|Нормальний Відсутній Швидкісний TLS
+Fileserver fireball TLS|Сервер Швидкісний TLS
+Normal fileserver fireball TLS|Нормальний Сервер Швидкісний TLS
+Away fileserver fireball TLS|Відсутній Сервер Швидкісний TLS
+Normal away fileserver fireball TLS|Нормальний Відсутній Сервер Швидкісний TLS
+Unable to get bot information: %s|Не вдалося отримати інформацію про бота: %s
+Bot information|Бот інформація
+Owner script: %s|Власник скрипту: %s
 %s with IP %s and class %d allowed due to forbidden DNS exception: %s|
-In order to use this feature you need to enable DNS lookup. Do it by setting hub configuration variable %s to %d. Please note: Enabling DNS lookup might slow your hub performance down.|Р”Р»СЏ РІРёРєРѕСЂРёСЃС‚Р°РЅРЅСЏ С†С–С”С— С„СѓРЅРєС†С–С— РІР°Рј РЅРµРѕР±С…С–РґРЅРѕ СѓРІС–РјРєРЅСѓС‚Рё РІРёСЏРІР»РµРЅРЅСЏ DNS РЅР° РІР°С€РѕРјСѓ С…Р°Р±С–. Р’СЃС‚Р°РЅРѕРІС–С‚СЊ Р·РЅР°С‡РµРЅРЅСЏ РєРѕРЅС„С–РіСѓСЂР°С†С–С— С…Р°Р±Сѓ %s РЅР° %d Р·С– СЃРїРёСЃРєСѓ !gc. РџРѕРїРµСЂРµРґР¶РµРЅРЅСЏ: РЈРІС–РјРєРЅРµРЅРЅСЏ С†С–С”С— РѕРїС†С–С— Р·РЅРёР¶СѓС” С€РІРёРґРєРѕРґС–СЋ С…Р°Р±Сѓ.
+In order to use this feature you need to enable DNS lookup. Do it by setting hub configuration variable %s to %d. Please note: Enabling DNS lookup might slow your hub performance down.|Для використання цієї функції вам необхідно увімкнути виявлення DNS на вашому хабі. Встановіть значення конфігурації хабу %s на %d зі списку !gc. Попередження: Увімкнення цієї опції знижує швидкодію хабу.
 Modified forbidden DNS with ban time %s: %s|
 Added forbidden DNS with ban time %s: %s|
-Deleted forbidden DNS: %s|Р’РёРґР°Р»РµРЅРѕ Р·Р°Р±РѕСЂРѕРЅРµРЅРёР№ DNS: %s
-Couldn't delete forbidden DNS because not found: %s|РќРµ РІРґР°Р»РѕСЃСЏ РІРёРґР°Р»РёС‚Рё Р·Р°Р±РѕСЂРѕРЅРµРЅРёР№ DNS С‚РѕРјСѓ С‰Рѕ РЅРµ Р·РЅР°Р№РґРµРЅРѕ: %s
-Forbidden DNS list|РЎРїРёСЃРѕРє Р·Р°Р±РѕСЂРѕРЅРµРЅРёС… DNS
-Forbidden DNS list is empty.|РЎРїРёСЃРѕРє Р·Р°Р±РѕСЂРѕРЅРµРЅРёС… DNS РїРѕСЂРѕР¶РЅС–Р№.
-Powered by %s|Р—Р°С…РёС‰РµРЅРѕ Р· %s
-Warning: %s|РЈРІР°РіР°: %s
-Open files limit set to %d is smaller than maximum users configuration which is %d. You can correct this by setting %s to %d or higher and restarting the hub.|РћР±РјРµР¶РµРЅРЅСЏ РІС–РґРєСЂРёС‚РёС… С„Р°Р№Р»С–РІ РІСЃС‚Р°РЅРѕРІР»РµРЅРѕ РЅР° %d РјРµРЅС€Рµ РЅС–Р¶ %d. Р’СЃС‚Р°РЅС–С‚СЊ Р·РЅР°С‡РµРЅРЅСЏ РєРѕРЅС„С–РіСѓСЂР°С†С–С— %s РЅР° %d Р°Р±Рѕ Р±С–Р»СЊС€Рµ С‚Р° РїРµСЂРµР·Р°РІР°РЅС‚Р°Р¶С‚Рµ С…Р°Р±.
-Additional help|Р”РѕРґР°С‚РєРѕРІР° РґРѕРїРѕРјРѕРіР°
+Deleted forbidden DNS: %s|Видалено заборонений DNS: %s
+Couldn't delete forbidden DNS because not found: %s|Не вдалося видалити заборонений DNS тому що не знайдено: %s
+Forbidden DNS list|Список заборонених DNS
+Forbidden DNS list is empty.|Список заборонених DNS порожній.
+Powered by %s|Захищено з %s
+Warning: %s|Увага: %s
+Open files limit set to %d is smaller than maximum users configuration which is %d. You can correct this by setting %s to %d or higher and restarting the hub.|Обмеження відкритих файлів встановлено на %d менше ніж %d. Встаніть значення конфігурації %s на %d або більше та перезавантажте хаб.
+Additional help|Додаткова допомога
 Remove all %s tables and files|
 You can't kick user whose class is higher or equals your own: %s|
-Your topic contains forbidden characters which can't be used for security reason: %s|Р’РєР°Р·Р°РЅР° С‚РµРјР° РјС–СЃС‚РёС‚СЊ РЅРµРґРѕРїСѓСЃС‚РёРјС– СЃРёРјРІРѕР»Рё С– РЅРµ РјРѕР¶Рµ Р±СѓС‚Рё РІСЃС‚Р°РЅРѕРІР»РµРЅР° Р· РјС–СЂРєСѓРІР°РЅСЊ Р±РµР·РїРµРєРё: %s
-Hub uptime: %s|Р‘РµР·РїРµСЂРµСЂРІРЅР° СЂРѕР±РѕС‚Р° С…Р°Р±Сѓ: %s
-User count: %s|РљС–Р»СЊРєС–СЃС‚СЊ РєРѕРёСЃС‚СѓРІР°С‡С–РІ: %s
-Total share: %s|Р—Р°РіР°Р»СЊРЅРёР№ СЂРѕР·РјС–СЂ С€Р°СЂ: %s
-%s with IP %s and class %d tries to speak with IP gag in MC: %s|%s Р· IP %s С‚Р° РєР»Р°СЃРѕРј %d РЅР°РјР°РіР°С”С‚СЊСЃСЏ С‰РѕСЃСЊ СЃРєР°Р·Р°С‚Рё Р· Р·Р°Р±Р»РѕРєРѕРІР°РЅРѕРіРѕ IP РІ Р“Р§: %s
+Your topic contains forbidden characters which can't be used for security reason: %s|Вказана тема містить недопустимі символи і не може бути встановлена з міркувань безпеки: %s
+Hub uptime: %s|Безперервна робота хабу: %s
+User count: %s|Кількість коистувачів: %s
+Total share: %s|Загальний розмір шар: %s
+%s with IP %s and class %d tries to speak with IP gag in MC: %s|%s з IP %s та класом %d намагається щось сказати з заблокованого IP в ГЧ: %s
 %s with IP %s and class %d tries to speak with IP gag in PM to %s with IP %s and class %d: %s|
 Private message replaced for user: %s|
-Command logger|Р›РѕРіРіРµСЂ РєРѕРјР°РЅРґ
-Showing %d entries from command logger|Р’С–РґРѕР±СЂР°Р¶РµРЅРЅСЏ %d Р·Р°РїРёСЃС–РІ Р· Р»РѕРіСѓ РєРѕРјР°РЅРґ
-Command logger is empty.|Р›РѕРі РєРѕРјР°РЅРґ РїРѕСЂРѕР¶РЅС–Р№.
-%s with class %d deleted %d command log entries older than %d days.|%s Р· РєР»Р°СЃРѕРј %d РІРёРґР°Р»РёРІ(Р»Р°) %d Р·Р°РїРёСЃС–РІ Р· Р»РѕРіСѓ РєРѕРјР°РЅРґ С‰Рѕ СЃС‚Р°СЂС€С– Р·Р° %d РґРЅС–РІ.
-Size of command log table: %d [ %s: %d @ %s ]|Р РѕР·РјС–СЂ С‚Р°Р±Р»РёС†С– Р‘Р” Р»РѕРіСѓ РєРѕРјР°РЅРґ: %d [ %s: %d @ %s ]
-password|РїР°СЂРѕР»СЊ
-Modify IP authorization entry|Р—РјС–РЅРёС‚Рё Р·Р°РїРёСЃ IP Р°РІС‚РѕСЂРёР·Р°С†С–С—
-Couldn't modify authorization entry because not found: %d|РќРµРјРѕР¶Р»РёРІРѕ Р·РјС–РЅРёС‚Рё Р·Р°РїРёСЃ Р°РІС‚РѕСЂРёР·Р°С†С–С— С‚РѕРјСѓ С‰Рѕ РЅРµ Р·РЅР°Р№РґРµРЅРѕ: %d
-Uptime: %s|Р‘РµР·РїРµСЂРµСЂРІРЅР° СЂРѕР±РѕС‚Р°: %s
-Enable requested feature and try again.|РЈРІС–РјРєРЅС–С‚СЊ С„СѓРЅРєС†С–СЋ Р·Р°РїРёС‚С–РІ С– СЃРїСЂРѕР±СѓР№С‚Рµ С‰Рµ СЂР°Р·.
-cc|РєРє
+Command logger|Логгер команд
+Showing %d entries from command logger|Відображення %d записів з логу команд
+Command logger is empty.|Лог команд порожній.
+%s with class %d deleted %d command log entries older than %d days.|%s з класом %d видалив(ла) %d записів з логу команд що старші за %d днів.
+Size of command log table: %d [ %s: %d @ %s ]|Розмір таблиці БД логу команд: %d [ %s: %d @ %s ]
+password|пароль
+Modify IP authorization entry|Змінити запис IP авторизації
+Couldn't modify authorization entry because not found: %d|Неможливо змінити запис авторизації тому що не знайдено: %d
+Uptime: %s|Безперервна робота: %s
+Enable requested feature and try again.|Увімкніть функцію запитів і спробуйте ще раз.
+cc|кк
 Modified forbidden country code with ban time %s: %s|
 Added forbidden country code with ban time %s: %s|
-Deleted forbidden country code: %s|Р’РёРґР°Р»РµРЅРѕ Р·Р°Р±РѕСЂРѕРЅРµРЅРёР№ РєРѕРґ РєСЂР°С—РЅРё (РљРљ): %s
-Couldn't delete forbidden country code because not found: %s|РќРµРјРѕР¶Р»РёРІРѕ РІРёРґР°Р»РёС‚Рё Р·Р°Р±РѕСЂРѕРЅРµРЅРёР№ РєРѕРґ РєСЂР°С—РЅРё (РљРљ) С‚РѕРјСѓ С‰Рѕ РЅРµ Р·РЅР°Р№РґРµРЅРёР№: %s
-Forbidden country code list|РЎРїРёСЃРѕРє Р·Р°Р±РѕСЂРѕРЅРµРЅРёС… РєРѕРґС–РІ РєСЂР°С—РЅ (РљРљ)
-Forbidden country code list is empty.|РЎРїРёСЃРѕРє Р·Р°Р±РѕСЂРѕРЅРµРЅРёС… РєРѕРґС–РІ РєСЂР°С—РЅ (РљРљ) РїРѕСЂРѕР¶РЅС–Р№.
+Deleted forbidden country code: %s|Видалено заборонений код країни (КК): %s
+Couldn't delete forbidden country code because not found: %s|Неможливо видалити заборонений код країни (КК) тому що не знайдений: %s
+Forbidden country code list|Список заборонених кодів країн (КК)
+Forbidden country code list is empty.|Список заборонених кодів країн (КК) порожній.
 %s with IP %s and class %d allowed due to forbidden country code exception: %s|
 I'm staying idle due to confusion.|
 Added replacer in MC: %s|
-Deleted chat replacer with ID: %d|Р’РёРґР°Р»РµРЅРѕ С‡Р°С‚ Р·Р°РјС–РЅСЋРІР°С‡ Р· ID: %d
-Couldn't delete chat replacer because ID not found: %d|РќРµРјРѕР¶Р»РёРІРѕ РІРёРґР°Р»РёС‚Рё С‡Р°С‚ Р·Р°РјС–РЅСЋРІР°С‡ С‚РѕРјСѓ С‰Рѕ РЅРµ Р·РЅР°Р№РґРµРЅРѕ: %d
+Deleted chat replacer with ID: %d|Видалено чат замінювач з ID: %d
+Couldn't delete chat replacer because ID not found: %d|Неможливо видалити чат замінювач тому що не знайдено: %d
 Chat replacer list|
 Chat replacer list is empty.|
-Replace|Р—Р°РјС–РЅР°
+Replace|Заміна
 Modified chat replacer exception with type %d: %s|
 Added chat replacer exception with type %d: %s|
 Deleted chat replacer exception with type %d: %s|
-Couldn't delete chat replacer exception because not found: %s|РќРµРјРѕР¶Р»РёРІРѕ РІРёРґР°Р»РёС‚Рё РІРёРєР»СЋС‡РµРЅРЅСЏ С‡Р°С‚ Р·Р°РјС–РЅСЋРІР°С‡Р° С‚РѕРјСѓ С‰Рѕ РЅРµ Р·РЅР°Р№РґРµРЅРѕ: %s
-Chat replacer exception list|РЎРїРёСЃРѕРє РІРёРєР»СЋС‡РµРЅСЊ РІРёРєР»СЋС‡РµРЅРЅСЏ С‡Р°С‚ Р·Р°РјС–РЅСЋРІР°С‡Р°
-Chat replacer exception list is empty.|РЎРїРёСЃРѕРє РІРёРєР»СЋС‡РµРЅСЊ РІРёРєР»СЋС‡РµРЅРЅСЏ С‡Р°С‚ Р·Р°РјС–РЅСЋРІР°С‡Р° РїРѕСЂРѕР¶РЅС–Р№.
-replace|Р·Р°РјС–РЅР°
-Add chat replacer|Р”РѕРґР°С‚Рё С‡Р°С‚ Р·Р°РјС–РЅСЋРІР°С‡
-Delete chat replacer|Р’РёРґР°Р»РёС‚Рё С‡Р°С‚ Р·Р°РјС–РЅСЋРІР°С‡
-Add chat replacer exception|Р”РѕРґР°С‚Рё РІРёРєР»СЋС‡РµРЅРЅСЏ С‡Р°С‚ Р·Р°РјС–РЅСЋРІР°С‡Р°
-Delete chat replacer exception|Р’РёРґР°Р»РёС‚Рё РІРёРєР»СЋС‡РµРЅРЅСЏ С‡Р°С‚ Р·Р°РјС–РЅСЋРІР°С‡Р°
-Chat replacer|Р§Р°С‚ Р·Р°РјС–РЅСЋРІР°С‡
-You need to send another %d main chat messages in order to use hub registration.|Р’РёРєРѕСЂРёСЃС‚РѕРІСѓСЋС‡Рё РєРѕРјР°РЅРґСѓ +regme РЅР°РєР»Р°РґР°СЋС‚СЊСЃСЏ СЃР»С–РґСѓСЋС‡С– РѕР±РјРµР¶РµРЅРЅСЏ: РІР°Рј РїРѕС‚СЂС–Р±РЅРѕ РЅР°РґС–СЃР»Р°С‚Рё РЅРµ РјРµРЅС€Рµ %d РїРѕРІС–РґРѕРјР»РµРЅСЊ РІ РіРѕР»РѕРІРЅРёР№ С‡Р°С‚.
-Please wait another %.1f minutes before using hub registration.|
-In order to use this feature you need to set %s to: %d|Р”Р»СЏ РІРёРєРѕСЂРёСЃС‚Р°РЅРЅСЏ С†С–С”С— РѕРїС†С–С— РІРё РјР°С”С‚Рµ РІСЃС‚Р°РЅРѕРІРёС‚Рё %s РЅР°: %d
-Please reconnect to gain %d minutes of uptime in order to use hub registration.|Р‘СѓРґСЊ-Р»Р°СЃРєР° РїРµСЂРµР·'С”РґРЅР°Р№С‚РµСЃСЏ Р· С…Р°Р±РѕРј РґР»СЏ С„С–РєСЃР°С†С–С— РІР°С€РѕРіРѕ %d С…РІРёР»РёРЅРЅРѕРіРѕ РїРµСЂРµР±СѓРІР°РЅРЅСЏ РЅР° С…Р°Р±С– С‚Р° РјР°С‚Рё РјРѕР¶Р»РёРІС–СЃС‚СЊ Р·Р°СЂРµС”СЃС‚СЂСѓРІР°С‚РёСЃСЏ.
+Couldn't delete chat replacer exception because not found: %s|Неможливо видалити виключення чат замінювача тому що не знайдено: %s
+Chat replacer exception list|Список виключень виключення чат замінювача
+Chat replacer exception list is empty.|Список виключень виключення чат замінювача порожній.
+replace|заміна
+Add chat replacer|Додати чат замінювач
+Delete chat replacer|Видалити чат замінювач
+Add chat replacer exception|Додати виключення чат замінювача
+Delete chat replacer exception|Видалити виключення чат замінювача
+Chat replacer|Чат замінювач
+You need to send another %d main chat messages in order to use hub registration.|Використовуючи команду +regme накладаються слідуючі обмеження: вам потрібно надіслати не менше %d повідомлень в головний чат.
+Please wait another %d seconds before using hub registration.|
+In order to use this feature you need to set %s to: %d|Для використання цієї опції ви маєте встановити %s на: %d
+Please reconnect to gain %d seconds of uptime in order to use hub registration.|
 Dropping %s with IP %s and class %d due to protocol flood detection: %s|
 Protocol flood detected from your client: %s|
 Automatic update check detected stable version of %s available, use following command to update: %s|
 menu|
 Dropping user due to clone detection from IP %s with class %d: %s = %s|
-Configuration variable %s must be a valid IP address.|Р—РЅР°С‡РµРЅРЅСЏ %s РїРѕРІРёРЅРЅРµ Р±СѓС‚Рё РєРѕСЂСЂРµРєС‚РЅРѕСЋ IP Р°РґСЂРµСЃРѕСЋ
-Average share per user: %s|Р РѕР·РјС–СЂ С€Р°СЂРё РІ СЃРµСЂРµРґРЅСЊРѕРјСѓ РЅР° РєРѕСЂРёСЃС‚СѓРІР°С‡Р°: %s
-Don't be stupid.|РќРµ Р±СѓРґСЊС‚Рµ РґСѓСЂРЅРёРјРё :)
-reason|РїСЂРёС‡РёРЅР°
-Add blocked PM entry|Р”РѕРґР°С‚Рё Р·РЅР°С‡РµРЅРЅСЏ С„С–Р»СЊС‚СЂСѓ РџРџ
-Delete blocked PM entry|Р’РёРґР°Р»РёС‚Рё Р·РЅР°С‡РµРЅРЅСЏ С„С–Р»СЊС‚СЂСѓ РџРџ
-List of blocked PM entries|РЎРїРёСЃРѕРє Р·РЅР°С‡РµРЅСЊ С„С–Р»СЊС‚СЂСѓ РџРџ
-Modified blocked PM entry: %s|Р—РјС–РЅРµРЅРѕ Р·РЅР°С‡РµРЅРЅСЏ С„С–Р»СЊС‚СЂСѓ РџРџ: %s
-Added blocked PM entry: %s|Р”РѕРґР°РЅРѕ Р·РЅР°С‡РµРЅРЅСЏ С„С–Р»СЊС‚СЂСѓ РџРџ: %s
-Deleted blocked PM entry: %s|Р’РёРґР°Р»РµРЅРѕ Р·РЅР°С‡РµРЅРЅСЏ С„С–Р»СЊС‚СЂСѓ РџРџ: %s
-Blocked PM list is empty.|РЎРїРёСЃРѕРє Р·РЅР°С‡РµРЅСЊ С„С–Р»СЊС‚СЂСѓ РџРџ РїРѕСЂРѕР¶РЅС–Р№
-Couldn't delete blocked PM entry because not found: %s|РќРµ РІРґР°Р»РѕСЃСЏ РІРёРґР°Р»РёС‚Рё Р·РЅР°С‡РµРЅРЅСЏ С„С–Р»СЊС‚СЂСѓ РџРџ, С‚РѕРјСѓ С‰Рѕ РЅРµ Р·РЅР°Р№РґРµРЅРѕ: %s
-Reason: %s|РџСЂРёС‡РёРЅР°: %s
-You're not allowed to send PM to this user because: %s|Р’Рё РЅРµ РјРѕР¶РµС‚Рµ РЅР°РґСЃРёР»Р°С‚Рё РїСЂРёРІР°С‚РЅС– РїРѕРІС–РґРѕРјР»РµРЅРЅСЏ (РџРџ) С†СЊРѕРјСѓ РєРѕСЂРёСЃС‚СѓРІР°С‡Сѓ С‡РµСЂРµР· С‚Рµ С‰Рѕ: %s
-%s with class %d deleted %d antispam entries with occurrence less than %d.|%s Р· РєР»Р°СЃРѕРј %d РІРёРґР°Р»РёРІ(Р»Р°) %d Р·РЅР°С‡РµРЅРЅСЏ Р°РЅС‚РёСЃРїР°РјСѓ, С‡Р°СЃС‚РѕС‚Р° РїРѕСЏРІРё СЏРєРёС… РјРµРЅС€Р° Р·Р° %d.
-%s with class %d deleted %d search filter entries with occurrence less than %d.|%s Р· РєР»Р°СЃРѕРј %d РІРёРґР°Р»РёРІ(Р»Р°) %d Р·РЅР°С‡РµРЅРЅСЏ РїРѕС€СѓРєРѕРІРѕРіРѕ С„С–Р»СЊС‚СЂСѓ, С‡Р°СЃС‚РѕС‚Р° РїРѕСЏРІРё СЏРєРёС… РјРµРЅС€Р° Р·Р° %d.
-query|Р·Р°РїРёС‚
-Execute MySQL query|Р’РёРєРѕРЅР°С‚Рё MySQL Р·Р°РїРёС‚
-Execute shell command|Р’РёРєРѕРЅР°С‚Рё shell-РєРѕРјР°РЅРґСѓ
-Experts only|РўС–Р»СЊРєРё РґР»СЏ РµРєСЃРїРµСЂС‚С–РІ
+Configuration variable %s must be a valid IP address.|Значення %s повинне бути корректною IP адресою
+Average share per user: %s|Розмір шари в середньому на користувача: %s
+Don't be stupid.|Не будьте дурними :)
+reason|причина
+Add blocked PM entry|Додати значення фільтру ПП
+Delete blocked PM entry|Видалити значення фільтру ПП
+List of blocked PM entries|Список значень фільтру ПП
+Modified blocked PM entry: %s|Змінено значення фільтру ПП: %s
+Added blocked PM entry: %s|Додано значення фільтру ПП: %s
+Deleted blocked PM entry: %s|Видалено значення фільтру ПП: %s
+Blocked PM list is empty.|Список значень фільтру ПП порожній
+Couldn't delete blocked PM entry because not found: %s|Не вдалося видалити значення фільтру ПП, тому що не знайдено: %s
+Reason: %s|Причина: %s
+You're not allowed to send PM to this user because: %s|Ви не можете надсилати приватні повідомлення (ПП) цьому користувачу через те що: %s
+%s with class %d deleted %d antispam entries with occurrence less than %d.|%s з класом %d видалив(ла) %d значення антиспаму, частота появи яких менша за %d.
+%s with class %d deleted %d search filter entries with occurrence less than %d.|%s з класом %d видалив(ла) %d значення пошукового фільтру, частота появи яких менша за %d.
+query|запит
+Execute MySQL query|Виконати MySQL запит
+Execute shell command|Виконати shell-команду
+Experts only|Тільки для експертів
 Add hard IP ban entry|
 Delete hard IP ban entry|
 List of hard IP ban entries|
@@ -1141,7 +1141,7 @@ Low chat uptime of %d seconds from %s with IP %s and class %d in PM to %s with I
 Low chat uptime of %d seconds from %s with IP %s and class %d in MC: %s|
 Low chat uptime of %d seconds from %s with IP %s and class %d in command: %s|
 Low registration uptime from %s with IP %s and class %d: %s|
-%.1f minutes|
+%d seconds|
 Thank you, your report has been accepted.|
 Low search uptime of %d seconds from %s with IP %s and class %d as any file: %s|
 Low search uptime of %d seconds from %s with IP %s and class %d as audio file: %s|

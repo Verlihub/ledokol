@@ -1,7 +1,7 @@
 # Language: lt_LT
 # Charset: CP1257
-# Version: 2.9.0
-# Author: Mindaugas K
+# Version: 2.9.1
+# Author: Trumpy
 # Email: mex@micro.lt
 
 Current topic: %s|Dabartinis topic: %s
@@ -12,37 +12,37 @@ days|dienos
 %s with class %d deleted %d unbans older than %d days.|%s su klase %d istryne %d nuimtus banus senesnius nei %d dienos.
 %s with class %d deleted %d bans older than %d days.|%s su klase %d istryne %d banus senesnius nei %d dienos.
 %s with class %d deleted %d kicks older than %d days.|%s su klase %d istryne %d kickus senesnius nei %d dienos.
-I'm probably away. State your business and I might answer later if you're lucky.|AÑ€ tikriausiai toli. Nurodykite del ko kreipiates ir jeigu pamatysiu sia zinute butinai atsakysiu.
-Perform script update|Vykdyti skripto atnaujinimĞ°
+I'm probably away. State your business and I might answer later if you're lucky.|Ağ tikriausiai toli. Nurodykite del ko kreipiates ir jeigu pamatysiu sia zinute butinai atsakysiu.
+Perform script update|Vykdyti skripto atnaujinimà
 Deleted %d main chat history messages.|Is atminties istrintos %d pagrindinio pokalbiu lango zinutes.
-There are no main chat history messages to remove.|MC istorija tuÑ€Ğ¸ia.
+There are no main chat history messages to remove.|MC istorija tuğèia.
 Deleted %d operator chat history messages.|Is atminties istrintos %d operatoriu pokalbiu lango zinutes.
-There are no operator chat history messages to remove.|OpChat istorija tuÑ€Ğ¸ia.
+There are no operator chat history messages to remove.|OpChat istorija tuğèia.
 %s with class %d deleted %d main chat history messages.|
-Unable to connect to target server. Please try again later.|NeĞ±manoma prisijungti prie serverio, praÑ€ome pamĞ»ginti vĞ»liau.
+Unable to connect to target server. Please try again later.|Neámanoma prisijungti prie serverio, prağome pamëginti vëliau.
 Last %d main chat messages|
-Main chat history is empty.|Main chat istorija tuÑ€Ğ¸ia.
-%s is now known as: %s|%s dabar Ñinomas kaip: %s
+Main chat history is empty.|Main chat istorija tuğèia.
+%s is now known as: %s|%s dabar şinomas kaip: %s
 Last %d operator chat messages|
-Operator chat history is empty.|OpChat istorija tuÑ€Ğ¸ia.
+Operator chat history is empty.|OpChat istorija tuğèia.
 Valid priority is a number from %d to %d.|
 You are using latest version of %s, no update is required.|
-Why would you send offline message to yourself?|KodĞ»l tu nori siÑˆsti offline praneÑ€imus pats sau?
-User %s is online. Sending message directly.|User'is %s prisijungĞ¶s. PraneÑ€imas siunĞ¸iamas tiesiogiai.
-Your offline message stored for user: %s|JÑ‹sÑˆ offline praneÑ€imas vartotojui '%s' iÑ€saugotas
+Why would you send offline message to yourself?|Kodël tu nori siøsti offline praneğimus pats sau?
+User %s is online. Sending message directly.|User'is %s prisijungæs. Praneğimas siunèiamas tiesiogiai.
+Your offline message stored for user: %s|Jûsø offline praneğimas vartotojui '%s' iğsaugotas
 %s with IP %s and class %d sent offline message.|
 priority|
-Offline|PrisijungĞ¶s
-Online|AtsijungĞ¶s
-I sent offline message to you on %s|AÑ€ Jums iÑ€siunĞ¸iau offline praneÑ€imĞ° %s
-My current status|Mano dabartinĞ» bÑ‹sena
+Offline|Prisijungæs
+Online|Atsijungæs
+I sent offline message to you on %s|Ağ Jums iğsiunèiau offline praneğimà %s
+My current status|Mano dabartinë bûsena
 %s with IP %s and class %d received offline messages.|
-Stored offline messages|Saugomi offline praneÑ€imai
-Offline message list is empty.|Offline praneÑ€imÑˆ sĞ°raÑ€as tuÑ€Ğ¸ias.
+Stored offline messages|Saugomi offline praneğimai
+Offline message list is empty.|Offline praneğimø sàrağas tuğèias.
 Deleted %d offline messages.|
-Couldn't delete offline messages because not found: %s|Negaliu iÑ€trinti offline praneÑ€imÑˆ, nes jie nerasti: %s
+Couldn't delete offline messages because not found: %s|Negaliu iğtrinti offline praneğimø, nes jie nerasti: %s
 %s with class %d deleted all offline messages.|
-There are no offline messages to remove.|NĞ»ra offline praneÑ€imÑˆ, kuriuos galtum iÑ€trinti.
+There are no offline messages to remove.|Nëra offline praneğimø, kuriuos galtum iğtrinti.
 No topic is set.|Topic nenustatytas.
 %s with IP %s and class %d allowed due to forbidden nick exception: %s|
 message|
@@ -56,7 +56,7 @@ type|
 User received own message: %s|
 %s with IP %s and class %d allowed due to forbidden share size exception: %s|
 Deleted %d releases from category: %s|
-Why would you want to set empty topic?|KodĞ»l nori nustatyti tuÑ€Ğ¸iĞ° topic?
+Why would you want to set empty topic?|Kodël nori nustatyti tuğèià topic?
 Modified forbidden nick with ban time %s: %s|
 Added forbidden nick with ban time %s: %s|
 Modified forbidden description with ban time %s: %s|
@@ -70,42 +70,42 @@ Added forbidden email with ban time %s: %s|
 Modified forbidden share size with ban time %s: %s|
 Added forbidden share size with ban time %s: %s|
 Couldn't add MyINFO exception because already exists: %s|Couldn't add MyINFO exception, nes toks jau egzistuoja: %s
-Added MyINFO exception: %s|PridĞ»ta MyINFO iÑ€imtis: %s
+Added MyINFO exception: %s|Pridëta MyINFO iğimtis: %s
 and|
-Deleted forbidden nick: %s|PaÑ€alintas draudÑiamas nick: %s
-Couldn't delete forbidden nick because not found: %s|Negaliu paÑ€alinti draudÑiamo nick, nes nerasta: %s
-Deleted forbidden description: %s|PaÑ€alintas draudÑiamas description: %s
-Couldn't delete forbidden description because not found: %s|Negaliu paÑ€alinti draudÑiamo description, nes nerasta: %s
-Deleted forbidden tag: %s|PaÑ€alintas draudÑiamas tag: %s
-Couldn't delete forbidden tag because not found: %s|Negaliu paÑ€alinti draudÑiamo tag, nes nerasta: %s
-Deleted forbidden connection type: %s|PaÑ€alintas draudÑiamas connection type: %s
-Couldn't delete forbidden connection type because not found: %s|Negaliu paÑ€alinti draudÑiamo connection type, nes nerasta: %s
-Deleted forbidden email: %s|PaÑ€alintas draudÑiamas email: %s
-Couldn't delete forbidden email because not found: %s|Negaliu paÑ€alinti draudÑiamo email, nes nerasta: %s
-Deleted forbidden share size: %s|PaÑ€alintas draudÑiamas share size: %s
-Couldn't delete forbidden share size because not found: %s|Negaliu paÑ€alinti draudÑiamo share size, nes nerasta: %s
-Deleted MyINFO exception: %s|PaÑ€alinta MyINFO iÑ€imtis: %s
-Couldn't delete MyINFO exception because not found: %s|Negaliu paÑ€alinti MyINFO iÑ€imties, nes tokia nerasta: %s
-Forbidden nick list|DraudÑiamÑˆ nick sĞ°raÑ€as
-Forbidden nick list is empty.|DraudÑiamÑˆ nick sĞ°raÑ€as tuÑ€Ğ¸ias.
-Forbidden description list|Forbidden description sĞ°raÑ€as
-Forbidden description list is empty.|DraudÑiamÑˆ description list sĞ°raÑ€as tuÑ€Ğ¸ias.
-Forbidden tag list|DraudÑiamÑˆ tag sĞ°raÑ€as
-Forbidden tag list is empty.|DraudÑiamÑˆ tag list sĞ°raÑ€as tuÑ€Ğ¸ias.
-Forbidden connection type list|DraudÑiamÑˆ connection type sĞ°raÑ€as
-Forbidden connection type list is empty.|DraudÑiamÑˆ connection type sĞ°raÑ€as tuÑ€Ğ¸ias.
-Forbidden email list|DraudÑiamÑˆ email sĞ°raÑ€as
-Forbidden email list is empty.|DraudÑiamÑˆ email list sĞ°raÑ€as tuÑ€Ğ¸ias.
-Forbidden share size list|DraudÑiamÑˆ share size sĞ°raÑ€as
-Forbidden share size list is empty.|DraudÑiamÑˆ share size list sĞ°raÑ€as tuÑ€Ğ¸ias.
+Deleted forbidden nick: %s|Pağalintas draudşiamas nick: %s
+Couldn't delete forbidden nick because not found: %s|Negaliu pağalinti draudşiamo nick, nes nerasta: %s
+Deleted forbidden description: %s|Pağalintas draudşiamas description: %s
+Couldn't delete forbidden description because not found: %s|Negaliu pağalinti draudşiamo description, nes nerasta: %s
+Deleted forbidden tag: %s|Pağalintas draudşiamas tag: %s
+Couldn't delete forbidden tag because not found: %s|Negaliu pağalinti draudşiamo tag, nes nerasta: %s
+Deleted forbidden connection type: %s|Pağalintas draudşiamas connection type: %s
+Couldn't delete forbidden connection type because not found: %s|Negaliu pağalinti draudşiamo connection type, nes nerasta: %s
+Deleted forbidden email: %s|Pağalintas draudşiamas email: %s
+Couldn't delete forbidden email because not found: %s|Negaliu pağalinti draudşiamo email, nes nerasta: %s
+Deleted forbidden share size: %s|Pağalintas draudşiamas share size: %s
+Couldn't delete forbidden share size because not found: %s|Negaliu pağalinti draudşiamo share size, nes nerasta: %s
+Deleted MyINFO exception: %s|Pağalinta MyINFO iğimtis: %s
+Couldn't delete MyINFO exception because not found: %s|Negaliu pağalinti MyINFO iğimties, nes tokia nerasta: %s
+Forbidden nick list|Draudşiamø nick sàrağas
+Forbidden nick list is empty.|Draudşiamø nick sàrağas tuğèias.
+Forbidden description list|Forbidden description sàrağas
+Forbidden description list is empty.|Draudşiamø description list sàrağas tuğèias.
+Forbidden tag list|Draudşiamø tag sàrağas
+Forbidden tag list is empty.|Draudşiamø tag list sàrağas tuğèias.
+Forbidden connection type list|Draudşiamø connection type sàrağas
+Forbidden connection type list is empty.|Draudşiamø connection type sàrağas tuğèias.
+Forbidden email list|Draudşiamø email sàrağas
+Forbidden email list is empty.|Draudşiamø email list sàrağas tuğèias.
+Forbidden share size list|Draudşiamø share size sàrağas
+Forbidden share size list is empty.|Draudşiamø share size list sàrağas tuğèias.
 MyINFO exception list|
-MyINFO exception list is empty.|MyINFO exception list sĞ°raÑ€as tuÑ€Ğ¸ias.
+MyINFO exception list is empty.|MyINFO exception list sàrağas tuğèias.
 Deleted %d rows: %s|
-Known types are: %s|Ğ®inomi tipai yra: %s
-No rows to remove: %s|NĞ»ra eiluĞ¸iÑˆ, kurias galĞ»tumĞ»m paÑ€alinti: %s
+Known types are: %s|Şinomi tipai yra: %s
+No rows to remove: %s|Nëra eiluèiø, kurias galëtumëm pağalinti: %s
 date|
 %s with IP %s and class %d used following command: %s|
-context|%s uÑbanintas visam laikui: <%s> %s
+context|%s uşbanintas visam laikui: <%s> %s
 Deleted from chat rank list: %s|
 Not found in chat rank list: %s|
 Deleted from operator rank list: %s|
@@ -128,54 +128,54 @@ Size of user log table: %d [ %s: %d @ %s ]|
 Add protection entry|
 Delete protection entry|
 flags|
-%s dropped due to bad search request.|%s atjungtas uÑ blogĞ° paieÑ€kos uÑklausĞ°.
-This command is either disabled or you don't have access to it.|Ğ i komanda arba atjungta, arba ja naudotis tau neuÑtenka teisiÑˆ.
-Deleted antispam entry: %s|IÑ€trintas antispam Ğ±raÑ€as: %s
-Couldn't delete antispam entry because not found: %s|Negaliu iÑ€trinti antispam Ğ±raÑ€o, nes toks nerastas: %s
-Antispam list|Antispam sĞ°raÑ€as
-Antispam list is empty.|Antispam sĞ°raÑ€as tuÑ€Ğ¸ias.
-Couldn't add antispam exception entry because already exists: %s|Negaliu pridĞ»ti antispam iÑ€imties, nes tokia jau egzustuoja: %s
-Added antispam exception entry: %s|PridĞ»ta antispam iÑ€imtis: %s
-Deleted antispam exception entry: %s|PaÑ€alinta antispam iÑ€imtis: %s
-Couldn't delete antispam exception entry because not found: %s|Negaliu paÑ€alinti antispam iÑ€imties, nes tokia nerasta: %s
-Antispam exception list|Antispam iÑ€imĞ¸iÑˆ sĞ°raÑ€as
-Antispam exception list is empty.|Antispam iÑ€imĞ¸iÑˆ sĞ°raÑ€as tuÑ€Ğ¸ias.
-The user you're trying to send offline message to is a bot. Message is discarded.|Tu bandai paraÑ€yti ÑinutĞ¶ botui. Ğ®inutĞ» atmesta.
+%s dropped due to bad search request.|%s atjungtas uş blogà paieğkos uşklausà.
+This command is either disabled or you don't have access to it.|Ği komanda arba atjungta, arba ja naudotis tau neuştenka teisiø.
+Deleted antispam entry: %s|Iğtrintas antispam árağas: %s
+Couldn't delete antispam entry because not found: %s|Negaliu iğtrinti antispam árağo, nes toks nerastas: %s
+Antispam list|Antispam sàrağas
+Antispam list is empty.|Antispam sàrağas tuğèias.
+Couldn't add antispam exception entry because already exists: %s|Negaliu pridëti antispam iğimties, nes tokia jau egzustuoja: %s
+Added antispam exception entry: %s|Pridëta antispam iğimtis: %s
+Deleted antispam exception entry: %s|Pağalinta antispam iğimtis: %s
+Couldn't delete antispam exception entry because not found: %s|Negaliu pağalinti antispam iğimties, nes tokia nerasta: %s
+Antispam exception list|Antispam iğimèiø sàrağas
+Antispam exception list is empty.|Antispam iğimèiø sàrağas tuğèias.
+The user you're trying to send offline message to is a bot. Message is discarded.|Tu bandai parağyti şinutæ botui. Şinutë atmesta.
 You can't start at user number %d when you only have %d accounts with class %d.|
 Showing %d out of total %d accounts with class %d starting at user number %d|
 There are no accounts with class: %d|
-Known classes are: %s|Ğ®inomos klasĞ»s yra: %s
+Known classes are: %s|Şinomos klasës yra: %s
 %s with class %d sent say message: <%s> %s|
 %s with class %d had bad luck sending say message: <%s> %s|
-You can't talk from nick whose class is higher or equals your own.|Tu negali kalbĞ»ti uÑ userĞ±, kurio klasĞ» yra lygi arba aukÑ€tesnĞ» uÑ tavĞ°jĞ°.
+You can't talk from nick whose class is higher or equals your own.|Tu negali kalbëti uş userá, kurio klasë yra lygi arba aukğtesnë uş tavàjà.
 %s with IP %s and class %d kicked: <%s> %s|
 %s with class %d deleted %d statistics plugin entries older than %d days.|
 offset|
 order|%s unbanned: <%s> %s
-%s didn't get any search results.|%s negaus jokiÑˆ paieÑ€kos rezultatÑˆ.
+%s didn't get any search results.|%s negaus jokiø paieğkos rezultatø.
 Redirected %s with IP %s and class %d to %s: <%s> %s|
 Unknown protocol command from %s with IP %s and class %d: %s|
 Custom nick list|
 %s operator commands|
-Add antispam entry|PridĞ»ti antispam taisyklĞ¶
+Add antispam entry|Pridëti antispam taisyklæ
 Showing last %d lines out of total %d found in %s file|
-Delete antispam entry|PaÑ€alinti antispam taisyklĞ¶
-Add antispam exception entry|PridĞ»ti antispam iÑ€imtĞ±
-Delete antispam exception entry|PaÑ€alinti antispam iÑ€imtĞ±
-Add MyINFO entry|PridĞ»ti MyINFO taisyklĞ¶
-Delete MyINFO entry|PaÑ€alinti MyINFO taisyklĞ¶
-MyINFO list|MyINFO sĞ°raÑ€as
-List of registered users by class|RegistruotÑˆ useriÑˆ sĞ°raÑ€as pagal klasĞ¶
-Speak from other nick|KalbĞ»ti kito nick vardu
-Remove user or word from rank list|PaÑ€alinti userĞ± arbĞ° ÑodĞ± iÑ€ reitingÑˆ lentelĞ»s
+Delete antispam entry|Pağalinti antispam taisyklæ
+Add antispam exception entry|Pridëti antispam iğimtá
+Delete antispam exception entry|Pağalinti antispam iğimtá
+Add MyINFO entry|Pridëti MyINFO taisyklæ
+Delete MyINFO entry|Pağalinti MyINFO taisyklæ
+MyINFO list|MyINFO sàrağas
+List of registered users by class|Registruotø useriø sàrağas pagal klasæ
+Speak from other nick|Kalbëti kito nick vardu
+Remove user or word from rank list|Pağalinti userá arbà şodá iğ reitingø lentelës
 %s with class %d deleted %d user log entries older than %d days.|
-List stored offline messages|Rodyti offline praneÑ€imus
-Delete offline messages by date|Trinti offline praneÑ€imus pagal datĞ°
-Delete all offline messages|Trinti visus offline praneÑ€imus
-class|klasĞ»
-Clean up tables|IÑ€valyti lenteles
+List stored offline messages|Rodyti offline praneğimus
+Delete offline messages by date|Trinti offline praneğimus pagal datà
+Delete all offline messages|Trinti visus offline praneğimus
+class|klasë
+Clean up tables|Iğvalyti lenteles
 Operator chat history|Opchat istorija
-Delete all history messages|Trinti visus istorijos praneÑ€imus
+Delete all history messages|Trinti visus istorijos praneğimus
 Your operator rank|Tavo operatoriaus rangas
 Script configuration variables|Skripto parametrai
 Change configuration variable|Keisti skripto parametrus
@@ -184,10 +184,10 @@ This list of commands|
 %s user commands|
 Current topic|Esamas topic
 Your chat rank|Tavo chat reitingas
-You're not allowed to send private messages.|Tau uÑdrausta siÑˆsti privaĞ¸ias Ñinutes.
-Unknown|NeÑinoma
+You're not allowed to send private messages.|Tau uşdrausta siøsti privaèias şinutes.
+Unknown|Neşinoma
 identifier|identifikatorius
-Offline message to user|Offline praneÑ€imasuseriui
+Offline message to user|Offline praneğimasuseriui
 Main chat history|Main chat istorija
 %s statistics|
 Script version: %s|Skripto versija: %s
@@ -197,68 +197,68 @@ Average message count per user: %.2f|
 lre|
 action|veiksmas
 Changed configuration variable %s: %s => %s|Pakeistas parametras %s: %s => %s
-Configuration variable %s can only be set to: %s|Parametras %s gali bÑ‹ti nustatytas tik Ğ±: %s
+Configuration variable %s can only be set to: %s|Parametras %s gali bûti nustatytas tik á: %s
 or|ar
-Configuration variable %s must be a number.|Parametras %s turi bÑ‹ti skaiĞ¸iusr.
-to|Ğ±
-Unknown configuration variable: %s|NeÑinomas parametras: %s
+Configuration variable %s must be a number.|Parametras %s turi bûti skaièiusr.
+to|á
+Unknown configuration variable: %s|Neşinomas parametras: %s
 %s version: %s|%s versija: %s
 Not installed|Neinstaliuota
 User dropped due to spam: %s|
 variable|parametras
-value|reikÑ€mĞ»
-minutes|minutĞ»s
+value|reikğmë
+minutes|minutës
 %s library version: %s|%s bibliotekos versija: %s
-Reorder right click menu item|%s laikinai iÑ€banintas uÑ %s: <%s> %s
-lines|eilutĞ»s
-Couldn't add rank exception because already exists: %s|Negaliu pridĞ»ti reitingo iÑ€imties, nes toks jau yra: %s
-Added rank exception: %s|PridĞ»ta reitingo iÑ€imtis: %s
-Deleted rank exception: %s|PaÑ€alinta reitingo iÑ€imtis: %s
-Couldn't delete rank exception because not found: %s|Negaliu iÑ€trinti reitingo iÑ€imties, nes tokios nĞ»ra: %s
-Rank exception list|Reitingo iÑ€imĞ¸iÑˆ sĞ°raÑ€as
-Rank exception list is empty.|Reitingo iÑ€imĞ¸iÑˆ sĞ°raÑ€as tuÑ€Ğ¸ias.
-Add rank exception|PridĞ»ti reitingo iÑ€imtĞ±
-Delete rank exception|PaÑ€alinti reitingo iÑ€imtĞ±
+Reorder right click menu item|%s laikinai iğbanintas uş %s: <%s> %s
+lines|eilutës
+Couldn't add rank exception because already exists: %s|Negaliu pridëti reitingo iğimties, nes toks jau yra: %s
+Added rank exception: %s|Pridëta reitingo iğimtis: %s
+Deleted rank exception: %s|Pağalinta reitingo iğimtis: %s
+Couldn't delete rank exception because not found: %s|Negaliu iğtrinti reitingo iğimties, nes tokios nëra: %s
+Rank exception list|Reitingo iğimèiø sàrağas
+Rank exception list is empty.|Reitingo iğimèiø sàrağas tuğèias.
+Add rank exception|Pridëti reitingo iğimtá
+Delete rank exception|Pağalinti reitingo iğimtá
 In order to use this feature you must turn off registered users list cache. Do it by setting hub configuration variable %s to %d and restarting the hub. Please note: Turning cache off is not recommended with large list of registered users.|
 Both|
-Deleted search filter: %s|PaÑ€alintas paieÑ€kos filtras: %s
-Couldn't delete search filter because not found: %s|Negaliu paÑ€alinti paieÑ€kos filtro, nes toks  nerastas: %s
-Search filter list|PaieÑ€kos filtrÑˆ sĞ°raÑ€as
-Search filter list is empty.|PaieÑ€kos filtrÑˆ sĞ°raÑ€as tuÑ€Ğ¸ias.
+Deleted search filter: %s|Pağalintas paieğkos filtras: %s
+Couldn't delete search filter because not found: %s|Negaliu pağalinti paieğkos filtro, nes toks  nerastas: %s
+Search filter list|Paieğkos filtrø sàrağas
+Search filter list is empty.|Paieğkos filtrø sàrağas tuğèias.
 Magnet link: %s|
-Add search filter|PridĞ»ti paieÑ€kos filtrĞ°
-Delete search filter|PaÑ€alinti paieÑ€kos filtrĞ°
-Known actions are: %s|Ğ®inomi veiksmai yra: %s
-Known flags are: %s|Ğ®inomi flag'ai: %s
+Add search filter|Pridëti paieğkos filtrà
+Delete search filter|Pağalinti paieğkos filtrà
+Known actions are: %s|Şinomi veiksmai yra: %s
+Known flags are: %s|Şinomi flag'ai: %s
 Downloading version file: %s|
 Size of kicks table: %d [ %s: %d @ %s ]|
 Size of bans table: %d [ %s: %d @ %s ]|
 Size of unbans table: %d [ %s: %d @ %s ]|
 Size of IP logger plugin table: %d [ %s: %d @ %s ]|
 Size of statistics plugin table: %d [ %s: %d @ %s ]|
-Modified authorization entry: %s @ %s|Pakeistas autorizacijos Ğ±raÑ€as: %s @ %s
-Added authorization entry: %s @ %s|PridĞ»tas autorizacijos Ğ±raÑ€as: %s @ %s
-Deleted authorization entry: %s|PaÑ€alintas autorizacijos Ğ±raÑ€as: %s
-Couldn't delete authorization entry because not found: %s|Negaliu paÑ€alinti autorizacijos Ğ±raÑ€o, nes toks nerastas: %s
-IP authorization list|IP autorizacijÑˆ sĞ°raÑ€as
-IP authorization list is empty.|IP autorizacijÑˆ sĞ°raÑ€as tuÑ€Ğ¸ias.
-Add IP authorization entry|PridĞ»ti IP autorizacijĞ°
-Delete authorization entry|PaÑ€alinti IP autorizacijĞ°
+Modified authorization entry: %s @ %s|Pakeistas autorizacijos árağas: %s @ %s
+Added authorization entry: %s @ %s|Pridëtas autorizacijos árağas: %s @ %s
+Deleted authorization entry: %s|Pağalintas autorizacijos árağas: %s
+Couldn't delete authorization entry because not found: %s|Negaliu pağalinti autorizacijos árağo, nes toks nerastas: %s
+IP authorization list|IP autorizacijø sàrağas
+IP authorization list is empty.|IP autorizacijø sàrağas tuğèias.
+Add IP authorization entry|Pridëti IP autorizacijà
+Delete authorization entry|Pağalinti IP autorizacijà
 ip|
 %s with IP %s and class %d authorized.|
 %s with IP %s and class %d failed authorization and disconnected.|
 Category: %s|Kategorija: %s
 Set custom nick for yourself|Nusistatyti savo custom nick'a
-This nick is registered or in use and therefore can't be used as custom nick: %s|Nick'as registruotas ir todel negali bÑ‹ti naudojamas kaip custom nick'as: %s
-Set your welcome message|Nustatyti savo pasveikinimo tekstĞ°
-Division by zero is forbidden.|Dalyba iÑ€ nulio yra draudÑiama.
-Show your welcome messages|Rodyti tavo pasveikinimo praneÑ€imus
-Welcome message list|Pasveikinimo praneÑ€imÑˆ sĞ°raÑ€as
-Delete user and his welcome messages|IÑ€trinti userĞ± ir jo pasveikinimus
+This nick is registered or in use and therefore can't be used as custom nick: %s|Nick'as registruotas ir todel negali bûti naudojamas kaip custom nick'as: %s
+Set your welcome message|Nustatyti savo pasveikinimo tekstà
+Division by zero is forbidden.|Dalyba iğ nulio yra draudşiama.
+Show your welcome messages|Rodyti tavo pasveikinimo praneğimus
+Welcome message list|Pasveikinimo praneğimø sàrağas
+Delete user and his welcome messages|Iğtrinti userá ir jo pasveikinimus
 Nick|
-Login message|Login praneÑ€imas
-Logout message|Logout praneÑ€imas
-Welcome message list is empty.|PasveikinimÑˆ praneÑ€imÑˆ sĞ°raÑ€as tuÑ€Ğ¸ias.
+Login message|Login praneğimas
+Logout message|Logout praneğimas
+Welcome message list is empty.|Pasveikinimø praneğimø sàrağas tuğèias.
 Welcome messages were deleted for user: %s|
 Couldn't delete user from welcome message list because not found: %s|
 Your login message set: %s|
@@ -295,7 +295,7 @@ Couldn't delete search filter exception entry because not found: %s|
 Search filter exception list is empty.|
 file|
 Read hub logs|Skaityti hub'o logus
-Known files are: %s|Ğ®inomi failai: %s
+Known files are: %s|Şinomi failai: %s
 Log file is empty or does not exist.|
 Add command notification exception|
 Delete command notification exception|
@@ -306,7 +306,7 @@ Deleted command notification exception entry: %s|
 Couldn't delete command notification exception entry because not found: %s|
 Command notification exception list is empty.|
 Couldn't add chatroom because nick is already in use: %s|
-Query results|UÑklausos rezultatai
+Query results|Uşklausos rezultatai
 Connections from your IP aren't allowed for another %d seconds.|
 Executed shell command didn't return any status code: %s|
 Returned status code: %s|
@@ -408,7 +408,7 @@ Main chat responder list|
 Main chat responder list is empty.|
 %s with class %d deleted %d operator chat history messages.|
 Search in user log|
-Added chat responder: %s|PridĞ»tas chat atsakiklis: %s
+Added chat responder: %s|Pridëtas chat atsakiklis: %s
 Deleted chat responder with ID: %d|
 Couldn't delete chat responder because ID not found: %d|
 Responder|Atsakiklis
@@ -431,7 +431,7 @@ Reset all custom commands|
 %d custom commands were reset.|
 %s tables are now deleted and script is locked.|
 Please unload the script and remove it from scripts directory.|
-Good luck.|SĞ»kmĞ»s.
+Good luck.|Sëkmës.
 Please unload the script to finish.|
 %s with IP %s and class %d sent message to %s: %s|
 Script uptime: %s|
@@ -522,22 +522,22 @@ Deleted all rows: %s|
 %s with class %d deleted all user location entries.|
 address|
 owner|
-Add friendly hub|PridĞ»ti draugiÑ€kĞ° hub
-Delete friendly hub|PaÑ€alinti draugiÑ€kĞ° hub
-Show friendly hubs|Rodyti draugiÑ€kus hub
-Added friendly hub: %s|PridĞ»tas draugiÑ€kas hub: %s
-Modified friendly hub: %s|Pakeistas draugiÑ€kas hub: %s
-Deleted friendly hub: %s|PaÑ€alintas draugiÑ€kas hub: %s
-Friendly hub not found: %s|DraugiÑ€kas hub nerastas: %s
-Friendly hublist|DraugiÑ€kÑˆ hub sĞ°raÑ€as
-Friendly hublist is empty.|DraugiÑ€kÑˆ hub sĞ°raÑ€as tuÑ€Ğ¸ias.
-Executed shell command didn't return any output.|Ğ‘vykdyta shell komanda neparaÑ€Ğ» jokio atsakymo.
+Add friendly hub|Pridëti draugiğkà hub
+Delete friendly hub|Pağalinti draugiğkà hub
+Show friendly hubs|Rodyti draugiğkus hub
+Added friendly hub: %s|Pridëtas draugiğkas hub: %s
+Modified friendly hub: %s|Pakeistas draugiğkas hub: %s
+Deleted friendly hub: %s|Pağalintas draugiğkas hub: %s
+Friendly hub not found: %s|Draugiğkas hub nerastas: %s
+Friendly hublist|Draugiğkø hub sàrağas
+Friendly hublist is empty.|Draugiğkø hub sàrağas tuğèias.
+Executed shell command didn't return any output.|Ávykdyta shell komanda neparağë jokio atsakymo.
 Returned output|Komandos atsakymas
-%s renamed %s to: %s|%s pervardintas %s Ğ±: %s
+%s renamed %s to: %s|%s pervardintas %s á: %s
 %s plugin version: %s|%s plugin versija: %s
 second|
-You are now known as: %s|Tu Ñinomas kaip: %s
-You renamed %s to: %s|Tu pervardinai %s Ğ±: %s
+You are now known as: %s|Tu şinomas kaip: %s
+You renamed %s to: %s|Tu pervardinai %s á: %s
 Spam exception from %s with IP %s and class %d in MC: %s|
 Spam exception from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s|
 Spam exception from %s with IP %s and class %d in offline message: %s|
@@ -605,7 +605,7 @@ Added search filter with action %d and priority %d as TTH: %s|
 Size of release table: %d [ %s: %d @ %s ]|
 LRE|
 Code accepted.|Kodas tinkamas.
-Protection list|ProtekcijÑˆ sĞ°raÑ€as
+Protection list|Protekcijø sàrağas
 Added protection entry: %s|
 Deleted protection entry: %s|
 Protection entry already exists: %s|
@@ -613,19 +613,19 @@ Protection entry not found: %s|
 Protection list is empty.|
 Missing %s in configuration variable.|
 Chatroom: %s|
-You've left the chatroom.|Tu palikai pokalbiÑˆ kanalĞ°.
-User left the chatroom: %s|User'is paliko pokalbiÑˆ kanalĞ°: %s
-User entered the chatroom: %s|User'is prisijungĞ» Ğ± pokalbiÑˆ kanalĞ°: %s
-You've entered %s chatroom.|Tu prisijungei Ğ± %s pokalbiÑˆ kanalĞ°.
-You're not member of this chatroom.|Tu nesi Ñ€io kanalo narys.
-You don't have access to this chatroom.|Tu neturi leidimo naudotis Ñ€iuo pokalbiÑˆ kanalu
-Chatroom member list|Kanalo nariÑˆ sĞ°raÑ€as
-Chatroom is empty.|Kanale nieko nĞ»ra.
-You're already member of this chatroom.|Tu jau esi Ñ€io pokalbiÑˆ kanalo narys.
-Chatroom user commands|PokalbiÑˆ kanalo useriÑˆ komandos
+You've left the chatroom.|Tu palikai pokalbiø kanalà.
+User left the chatroom: %s|User'is paliko pokalbiø kanalà: %s
+User entered the chatroom: %s|User'is prisijungë á pokalbiø kanalà: %s
+You've entered %s chatroom.|Tu prisijungei á %s pokalbiø kanalà.
+You're not member of this chatroom.|Tu nesi ğio kanalo narys.
+You don't have access to this chatroom.|Tu neturi leidimo naudotis ğiuo pokalbiø kanalu
+Chatroom member list|Kanalo nariø sàrağas
+Chatroom is empty.|Kanale nieko nëra.
+You're already member of this chatroom.|Tu jau esi ğio pokalbiø kanalo narys.
+Chatroom user commands|Pokalbiø kanalo useriø komandos
 Unknown chatroom command, use %s for help.|
-Enter the chatroom|Prisijungti Ğ± kanalĞ°
-Leave the chatroom|Atsijungti iÑ€ kanalo
+Enter the chatroom|Prisijungti á kanalà
+Leave the chatroom|Atsijungti iğ kanalo
 Deleted %d rows from country code statistics table: %s|
 Force chat mode for user|
 Known chat modes are: %s|
@@ -656,36 +656,36 @@ Private chat is currently disabled for you.|
 Main chat flood detected from your IP.|
 %d users with IP %s dropped due to flood.|
 No error message specified.|
-Search filter|PaieÑ€kos filtras
+Search filter|Paieğkos filtras
 MyINFO check|MyINFO tikrinimas
 Authorization|Autorizacijos
 Ranks|
-Welcome messages|Prisijungimo praneÑ€imai
-Chatrooms|PokalbiÑˆ kambariai
+Welcome messages|Prisijungimo praneğimai
+Chatrooms|Pokalbiø kambariai
 Reminders|Priminimai
 Hub news|Hubo naujienos
 Chat responder|Chat atsakiklis
 Releases|Relyzai
-Offline messenger|Offline ÑinutĞ»s
+Offline messenger|Offline şinutës
 Chat history|Chat istorija
 Commands|Komandos
 Custom nicks|Custom nick'ai
 Registered users|Registruoti useriai
 Hublist|
 Chat|
-IP gag|UÑĞ¸iaupt IP
+IP gag|Uşèiaupt IP
 User logger|
 Other|Kita
-Configuration|KonfigÑ‹racija
-Clear main chat|IÑ€valyti mainchat
-Chat cleanup performed by %s|Chat iÑ€valĞ» %s
-Search in registered users list|PaieÑ€ka tarp registruotÑˆ useriÑˆ
+Configuration|Konfigûracija
+Clear main chat|Iğvalyti mainchat
+Chat cleanup performed by %s|Chat iğvalë %s
+Search in registered users list|Paieğka tarp registruotø useriø
 Registered users list statistics|
 Registered users list results for %s|
 Class %d: %d|
-Registered users list is empty.|NĞ»ra registruotÑˆ useriÑˆ.
+Registered users list is empty.|Nëra registruotø useriø.
 This feature requires following binary installed on your system: %s|
-Configuration directory: %s|KonfigÑ‹racijos katalogas: %s
+Configuration directory: %s|Konfigûracijos katalogas: %s
 %s with IP %s and class %d stated incorrect IP in connect request to %s: %s|
 Top %d search requests|
 Search rank list is empty.|
@@ -808,9 +808,9 @@ Add chat replacer exception|
 Delete chat replacer exception|
 Chat replacer|
 You need to send another %d main chat messages in order to use hub registration.|
-Please wait another %.1f minutes before using hub registration.|
+Please wait another %d seconds before using hub registration.|
 In order to use this feature you need to set %s to: %d|
-Please reconnect to gain %d minutes of uptime in order to use hub registration.|
+Please reconnect to gain %d seconds of uptime in order to use hub registration.|
 Dropping %s with IP %s and class %d due to protocol flood detection: %s|
 Protocol flood detected from your client: %s|
 Automatic update check detected stable version of %s available, use following command to update: %s|
@@ -818,8 +818,8 @@ menu|
 Dropping user due to clone detection from IP %s with class %d: %s = %s|
 Configuration variable %s must be a valid IP address.|
 Average share per user: %s|
-Don't be stupid.|NebÑ‹k durnas.
-reason|prieÑastis
+Don't be stupid.|Nebûk durnas.
+reason|prieşastis
 Add blocked PM entry|
 Delete blocked PM entry|
 List of blocked PM entries|
@@ -866,11 +866,11 @@ IP watch list is empty.|
 Couldn't delete IP watch entry because not found: %s|
 IP watch notification from %s with IP %s: %s|
 unknown nick|
-Country code gag|UÑĞ¸iaupt pagal Ñ€alies kodĞ°
+Country code gag|Uşèiaupt pagal ğalies kodà
 Add country code gag|Pridet sali, kuriai norim uzkist burna
-Added country code gag: %s|UÑkiÑ€ta burna Ñ€iai Ñ€aliai: %s
-Modified country code gag: %s|Pakeista Ñ€alis, kuri negali Ñ€nekĞ»t: %s
-Deleted country code gag: %s|Ğ iai Ñ€aliai vĞ»l leidÑiama Ñ€nekĞ»ti: %s
+Added country code gag: %s|Uşkiğta burna ğiai ğaliai: %s
+Modified country code gag: %s|Pakeista ğalis, kuri negali ğnekët: %s
+Deleted country code gag: %s|Ğiai ğaliai vël leidşiama ğnekëti: %s
 Country code gag not found: %s|
 Country code gag list|
 Country code gag list is empty.|
@@ -901,11 +901,11 @@ Forbidden NMDC version list is empty.|
 %s with IP %s and class %d allowed due to forbidden client supports exception: %s|
 %s with IP %s and class %d allowed due to forbidden NMDC version exception: %s|
 City: %s|Miestas: %s
-IP range: %s - %s|IP RuoÑas: %s - %s
+IP range: %s - %s|IP Ruoşas: %s - %s
 Region: %s|Regionas: %s
 Time zone: %s|Laiko juosta: %s
 Continent: %s|Kontinentas: %s
-Postal code: %s|PaÑ€to kodas: %s
+Postal code: %s|Pağto kodas: %s
 Coordinates: %.4f %.4f|
 Metro code: %d|Metro kodas: %d
 Area code: %d|
@@ -921,7 +921,7 @@ parameter|
 Command parameters %s are always required, while %s are optional.|
 Quoted parameters %s or %s must be used with quotes.|
 IP information|IP informacija
-IP information not available: %s|NĞ»ra IP informacijos: %s
+IP information not available: %s|Nëra IP informacijos: %s
 Message replaced for user with IP %s and class %d in MC: <%s> %s|
 IP %s permanently banned: <%s> %s|
 Nick %s permanently banned: <%s> %s|
@@ -1141,7 +1141,7 @@ Low chat uptime of %d seconds from %s with IP %s and class %d in PM to %s with I
 Low chat uptime of %d seconds from %s with IP %s and class %d in MC: %s|
 Low chat uptime of %d seconds from %s with IP %s and class %d in command: %s|
 Low registration uptime from %s with IP %s and class %d: %s|
-%.1f minutes|
+%d seconds|
 Thank you, your report has been accepted.|
 Low search uptime of %d seconds from %s with IP %s and class %d as any file: %s|
 Low search uptime of %d seconds from %s with IP %s and class %d as audio file: %s|

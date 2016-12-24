@@ -1,0 +1,2 @@
+* Instead of iterating language table as string each time, do this once to create a table with [lang] id, and [original string as find id]
+* Lua 5.3 changes in file:read function and number vs float types

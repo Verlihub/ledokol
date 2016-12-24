@@ -1,90 +1,90 @@
 # Language: fr_FR
 # Charset: CP1252
-# Version: 2.9.0
+# Version: 2.9.1
 # Author: @tlantide
 # Email: chatonhubfrance@gmail.com
 
 Current topic: %s|Topic actuel: %s
-Current topic set by %s: %s|Topic actuel fix–π par %s: %s
-This operation might take very long time depending on how much is going to be removed, please be patient.|Cette op–πration peut prendre tr–∏s longtemps en fonction de combien va –∫tre supprim–π , s'il vous pla–æt soyez patient.
+Current topic set by %s: %s|Topic actuel fixÈ par %s: %s
+This operation might take very long time depending on how much is going to be removed, please be patient.|Cette opÈration peut prendre trËs longtemps en fonction de combien va Ítre supprimÈ , s'il vous plaÓt soyez patient.
 days|jours
-%s with class %d deleted %d IP logger plugin entries older than %d days.|%s de profil %d supprim–πe %d  %s IP enregistr–πe depuis plus de %d  jours.
-%s with class %d deleted %d unbans older than %d days.|%s de profil %d supprim–πe %d d–π-bannir tous les utilisateurs depuis plus de %d jours.
-%s with class %d deleted %d bans older than %d days.|%s de profil %d supprim–πe %d bans –≤g–πs de plus de %d jours.
-%s with class %d deleted %d kicks older than %d days.|%s de profil %d supprim–πe %d kicks –≤g–πs de plus %d jours.
-I'm probably away. State your business and I might answer later if you're lucky.|je suis absent, je ne suis pas constamment derri–∏re mes serveurs, Prenez un ticket –∞ la borne d'accueil et je r–πpondrais d–∏s que je serais l–∞.
-Perform script update|Effectuer la mise –∞ jour du script
-Deleted %d main chat history messages.|Supprim–πe %d les messages de l'historique du chat central.
-There are no main chat history messages to remove.|Il n‚Äôy a pas de message provenant des op–πrateurs –∞ supprimer sur le chat central. 
-Deleted %d operator chat history messages.|Supprim–πe %d l'historique des messages  des chats op–πrateur .
-There are no operator chat history messages to remove.|Il n'y a pas de message d‚Äôhistorique sur le chat central  provenant des op–πrateurs –∞ supprimer .
-%s with class %d deleted %d main chat history messages.|%s de profil %d supprim–π %d l'historique du chat central.
+%s with class %d deleted %d IP logger plugin entries older than %d days.|%s de profil %d supprimÈe %d  %s IP enregistrÈe depuis plus de %d  jours.
+%s with class %d deleted %d unbans older than %d days.|%s de profil %d supprimÈe %d dÈ-bannir tous les utilisateurs depuis plus de %d jours.
+%s with class %d deleted %d bans older than %d days.|%s de profil %d supprimÈe %d bans ‚gÈs de plus de %d jours.
+%s with class %d deleted %d kicks older than %d days.|%s de profil %d supprimÈe %d kicks ‚gÈs de plus %d jours.
+I'm probably away. State your business and I might answer later if you're lucky.|je suis absent, je ne suis pas constamment derriËre mes serveurs, Prenez un ticket ‡ la borne d'accueil et je rÈpondrais dËs que je serais l‡.
+Perform script update|Effectuer la mise ‡ jour du script
+Deleted %d main chat history messages.|SupprimÈe %d les messages de l'historique du chat central.
+There are no main chat history messages to remove.|Il níy a pas de message provenant des opÈrateurs ‡ supprimer sur le chat central. 
+Deleted %d operator chat history messages.|SupprimÈe %d l'historique des messages  des chats opÈrateur .
+There are no operator chat history messages to remove.|Il n'y a pas de message díhistorique sur le chat central  provenant des opÈrateurs ‡ supprimer .
+%s with class %d deleted %d main chat history messages.|%s de profil %d supprimÈ %d l'historique du chat central.
 Unable to connect to target server. Please try again later.|Impossible de connecter sur ce serveur. Recommence plus tard s'il te plait. 
 Last %d main chat messages|Dernier %d messages du chat central
 Main chat history is empty.|L'historique du chat central est vide.
 %s is now known as: %s|%s est connu sous le pseudonyme %s
-Last %d operator chat messages|Dernier % messages sur le chat central provenant d'un op–πrateur
-Operator chat history is empty.|L'historique des messages des op–πrateurs est vide.
-Valid priority is a number from %d to %d.|La priorit–π valide est un nombre de %d –∞ %d .
-You are using latest version of %s, no update is required.|Tu utilises une version ant–πrieure de %s, il n'y a pas de mises –∞ jour pour ton client.
+Last %d operator chat messages|Dernier % messages sur le chat central provenant d'un opÈrateur
+Operator chat history is empty.|L'historique des messages des opÈrateurs est vide.
+Valid priority is a number from %d to %d.|La prioritÈ valide est un nombre de %d ‡ %d .
+You are using latest version of %s, no update is required.|Tu utilises une version antÈrieure de %s, il n'y a pas de mises ‡ jour pour ton client.
 Why would you send offline message to yourself?|Pourquoi veux tu t'envoyer un message ?
-User %s is online. Sending message directly.|l'utilisateur %s est connect–π. Envoies lui  un message directement.
-Your offline message stored for user: %s|Votre message hors ligne stock–πes pour l'utilisateur: %s
-%s with IP %s and class %d sent offline message.|%s avec l'IP %s et le profil %d a envoy–π un message –∞ un utilisateur non connect–π.
-priority|Priorit–π
-Offline|Non connect–π
-Online|Connect–π
+User %s is online. Sending message directly.|l'utilisateur %s est connectÈ. Envoies lui  un message directement.
+Your offline message stored for user: %s|Votre message hors ligne stockÈes pour l'utilisateur: %s
+%s with IP %s and class %d sent offline message.|%s avec l'IP %s et le profil %d a envoyÈ un message ‡ un utilisateur non connectÈ.
+priority|PrioritÈ
+Offline|Non connectÈ
+Online|ConnectÈ
 I sent offline message to you on %s|Je t'adresse un message hors ligne %s
 My current status|Mon statut actuel
-%s with IP %s and class %d received offline messages.|%s avec l' IP %s et le profil %d a re–∑u le message hors ligne.
-Stored offline messages|Message hors ligne enregistr–π
+%s with IP %s and class %d received offline messages.|%s avec l' IP %s et le profil %d a reÁu le message hors ligne.
+Stored offline messages|Message hors ligne enregistrÈ
 Offline message list is empty.|La liste des messages hors ligne est pleine
 Deleted %d offline messages.|Supprimer %d les messages hors lignes
 Couldn't delete offline messages because not found: %s|Impossible de supprimer les messages hors ligne, car introuvable: %s
-%s with class %d deleted all offline messages.|%s avec le profil %d supprim–πs tous les messages hors ligne .
-There are no offline messages to remove.|Il n'y a pas de messages hors ligne –∞ supprimer.
-No topic is set.|Aucun sujet est r–πgl–π .
-%s with IP %s and class %d allowed due to forbidden nick exception: %s|%s %s IP et avec le profil %d est autoris–π et fait parti de l' exception des  pseudonyme interdit: %s
+%s with class %d deleted all offline messages.|%s avec le profil %d supprimÈs tous les messages hors ligne .
+There are no offline messages to remove.|Il n'y a pas de messages hors ligne ‡ supprimer.
+No topic is set.|Aucun sujet est rÈglÈ .
+%s with IP %s and class %d allowed due to forbidden nick exception: %s|%s %s IP et avec le profil %d est autorisÈ et fait parti de l' exception des  pseudonyme interdit: %s
 message|message
-%s with IP %s and class %d allowed due to forbidden description exception: %s|%s %s IP et avec le profil %d permis malgr–πs la description interdite: %s
-User you're trying to kick or redirect is protected: %s|L'utilisateur que vous essayez de kicker ou rediriger est prot–πg–π: %s
-%s with IP %s and class %d allowed due to forbidden tag exception: %s|%s avec IP et le profil %d autoris–π en raison interdit tag exception : %s
+%s with IP %s and class %d allowed due to forbidden description exception: %s|%s %s IP et avec le profil %d permis malgrÈs la description interdite: %s
+User you're trying to kick or redirect is protected: %s|L'utilisateur que vous essayez de kicker ou rediriger est protÈgÈ: %s
+%s with IP %s and class %d allowed due to forbidden tag exception: %s|%s avec IP et le profil %d autorisÈ en raison interdit tag exception : %s
 type|type
-%s with IP %s and class %d allowed due to forbidden connection type exception: %s|%s %s IP et le profil %d autoris–π en raison du type de connexion interdit exception: %s
-%s with class %d changed configuration variable %s: %s => %s|%s avec le profil %d chang–π de configuration de la variable %s: %s => %s
-%s with IP %s and class %d allowed due to forbidden email exception: %s|%s %s IP et de profil %d autoris–π en raison interdit email exception: %s
-User received own message: %s|L'utilisateur a re–∑u son propre message: %s
-%s with IP %s and class %d allowed due to forbidden share size exception: %s|%s IP et de profil %d autoris–π en raison interdit exception de la taille du partage: %s
-Deleted %d releases from category: %s|Supprim–πs %d  release de la cat–πgorie: %s
+%s with IP %s and class %d allowed due to forbidden connection type exception: %s|%s %s IP et le profil %d autorisÈ en raison du type de connexion interdit exception: %s
+%s with class %d changed configuration variable %s: %s => %s|%s avec le profil %d changÈ de configuration de la variable %s: %s => %s
+%s with IP %s and class %d allowed due to forbidden email exception: %s|%s %s IP et de profil %d autorisÈ en raison interdit email exception: %s
+User received own message: %s|L'utilisateur a reÁu son propre message: %s
+%s with IP %s and class %d allowed due to forbidden share size exception: %s|%s IP et de profil %d autorisÈ en raison interdit exception de la taille du partage: %s
+Deleted %d releases from category: %s|SupprimÈs %d  release de la catÈgorie: %s
 Why would you want to set empty topic?|Pourquoi voudriez-vous changer le sujet vide ?
-Modified forbidden nick with ban time %s: %s|Modifi–π le pseudo interdit avec le temps du ban %s: %s
-Added forbidden nick with ban time %s: %s|Ajout–π le pseudo interdit avec le temps de ban %s: %s
-Modified forbidden description with ban time %s: %s|Modifi–π la description interdite avec le temps de ban %s: %s
-Added forbidden description with ban time %s: %s|Ajout–π la description interdite avec le temps de ban %s: %s
-Modified forbidden tag with ban time %s: %s|Modifi–π le tag interdit avec le temps de ban %s: %s
-Added forbidden tag with ban time %s: %s|Ajout–π le tag interdit avec le temps de ban %s: %s
-Modified forbidden connection type with ban time %s: %s|Modifi–π le type de connexion interdite avec le temps de ban %s: %s
-Added forbidden connection type with ban time %s: %s|Ajout–π le type de connexion interdite  avec le temps de ban %s: %s
-Modified forbidden email with ban time %s: %s|Modifi–π l'email interdit avec le temps de ban %s: %s
-Added forbidden email with ban time %s: %s|Ajout–π l'email interdit avec le temps de ban %s: %s
-Modified forbidden share size with ban time %s: %s|Modifi–π la taille de partage interdit avec le temps de ban %s: %s
-Added forbidden share size with ban time %s: %s|Ajout–π la taille de partage interdit avec le temps de ban %s: %s
-Couldn't add MyINFO exception because already exists: %s|Tu ne peux pas rajouter l'exception MyINFO car elle existe d–πj–∞: %s
-Added MyINFO exception: %s|Ajout–π MyINFO d'exception: %s
+Modified forbidden nick with ban time %s: %s|ModifiÈ le pseudo interdit avec le temps du ban %s: %s
+Added forbidden nick with ban time %s: %s|AjoutÈ le pseudo interdit avec le temps de ban %s: %s
+Modified forbidden description with ban time %s: %s|ModifiÈ la description interdite avec le temps de ban %s: %s
+Added forbidden description with ban time %s: %s|AjoutÈ la description interdite avec le temps de ban %s: %s
+Modified forbidden tag with ban time %s: %s|ModifiÈ le tag interdit avec le temps de ban %s: %s
+Added forbidden tag with ban time %s: %s|AjoutÈ le tag interdit avec le temps de ban %s: %s
+Modified forbidden connection type with ban time %s: %s|ModifiÈ le type de connexion interdite avec le temps de ban %s: %s
+Added forbidden connection type with ban time %s: %s|AjoutÈ le type de connexion interdite  avec le temps de ban %s: %s
+Modified forbidden email with ban time %s: %s|ModifiÈ l'email interdit avec le temps de ban %s: %s
+Added forbidden email with ban time %s: %s|AjoutÈ l'email interdit avec le temps de ban %s: %s
+Modified forbidden share size with ban time %s: %s|ModifiÈ la taille de partage interdit avec le temps de ban %s: %s
+Added forbidden share size with ban time %s: %s|AjoutÈ la taille de partage interdit avec le temps de ban %s: %s
+Couldn't add MyINFO exception because already exists: %s|Tu ne peux pas rajouter l'exception MyINFO car elle existe dÈj‡: %s
+Added MyINFO exception: %s|AjoutÈ MyINFO d'exception: %s
 and|et
-Deleted forbidden nick: %s|Supprim–π se pseudonyme interdit: %s
+Deleted forbidden nick: %s|SupprimÈ se pseudonyme interdit: %s
 Couldn't delete forbidden nick because not found: %s|Impossible de supprimer se pseudonyme  interdit car il es introuvable: %s
-Deleted forbidden description: %s|Supprim–π une  description interdite: %s
+Deleted forbidden description: %s|SupprimÈ une  description interdite: %s
 Couldn't delete forbidden description because not found: %s|Impossible de supprimer la description interdite car elle es introuvable: %s
-Deleted forbidden tag: %s|Supprim–π tag interdit: %s
+Deleted forbidden tag: %s|SupprimÈ tag interdit: %s
 Couldn't delete forbidden tag because not found: %s|Impossible de supprimer le tag interdit car il es introuvable: %s
-Deleted forbidden connection type: %s|Supprim–π se  type de connexion interdit: %s
+Deleted forbidden connection type: %s|SupprimÈ se  type de connexion interdit: %s
 Couldn't delete forbidden connection type because not found: %s|Impossible de supprimer le type de connexion interdit car il es introuvable: %s
-Deleted forbidden email: %s|Email interdit supprim–π: %s
+Deleted forbidden email: %s|Email interdit supprimÈ: %s
 Couldn't delete forbidden email because not found: %s|Tu ne peux pas supprimer cet email interdit car il est introuvable: %s
-Deleted forbidden share size: %s|Taille du partage interdit supprim–πe: %s
+Deleted forbidden share size: %s|Taille du partage interdit supprimÈe: %s
 Couldn't delete forbidden share size because not found: %s|Tu ne peux pas supprimer la taille du partage interdit car elle est introuvable: %s
-Deleted MyINFO exception: %s|Exception MyINFO supprim–πe: %s
+Deleted MyINFO exception: %s|Exception MyINFO supprimÈe: %s
 Couldn't delete MyINFO exception because not found: %s|Tu ne peux pas supprimer l'exception MyINFO car elle est introuvable: %s
 Forbidden nick list|La liste des pseudonymes interdit
 Forbidden nick list is empty.|La liste des pseudonymes Interdit est vide .
@@ -100,94 +100,94 @@ Forbidden share size list|Liste des share size
 Forbidden share size list is empty.|Liste des share size est vide.
 MyINFO exception list|Liste d'exception de MyINFO
 MyINFO exception list is empty.|Liste d'exception de MyINFO est vide.
-Deleted %d rows: %s|Supprim–πs %d lignes: %s
+Deleted %d rows: %s|SupprimÈs %d lignes: %s
 Known types are: %s|Les types connus sont: %s
-No rows to remove: %s|Pas de lignes –∞ supprimer: %s
+No rows to remove: %s|Pas de lignes ‡ supprimer: %s
 date|date
-%s with IP %s and class %d used following command: %s|%s avec IP %s et la classe %d a utilis–π commande suivante: %s
+%s with IP %s and class %d used following command: %s|%s avec IP %s et la classe %d a utilisÈ commande suivante: %s
 context|contexte
-Deleted from chat rank list: %s|Supprim–π de la liste Top lignes du chat: %s
+Deleted from chat rank list: %s|SupprimÈ de la liste Top lignes du chat: %s
 Not found in chat rank list: %s|Introuvable dans la liste Top lignes du message central: %s
-Deleted from operator rank list: %s|Supprim–π de la liste Top lignes des op–πrateurs: %s
-Not found in operator rank list: %s|Introuvable dans la liste Top lignes des op–πrateurs: %s
+Deleted from operator rank list: %s|SupprimÈ de la liste Top lignes des opÈrateurs: %s
+Not found in operator rank list: %s|Introuvable dans la liste Top lignes des opÈrateurs: %s
 Antispam|Antispam
 Your chat rank is: %d|Votre  Top lignes de message central est: %d\"
-You have to write something in main chat to get started.|Tu dois –πcrire quelque chose sur le chat central pour commencer.
-Custom nick list is empty.|La liste des pseudonymes personnalis–πe est vide .
+You have to write something in main chat to get started.|Tu dois Ècrire quelque chose sur le chat central pour commencer.
+Custom nick list is empty.|La liste des pseudonymes personnalisÈe est vide .
 Total share rank size: %s|La taille totale de Top lignes: %s
-Your operator rank is: %d|Ton Top lignes d'op–πrateur est: %d
-You have to do some operator actions to get started.|Tu dois faire quelques actions d'op–πrateur pour commencer.
+Your operator rank is: %d|Ton Top lignes d'opÈrateur est: %d
+You have to do some operator actions to get started.|Tu dois faire quelques actions d'opÈrateur pour commencer.
 Top %d chat rankers|Top %d Top lignes du chat central
 Chat rank list is empty.|La liste de Top lignes du chat central est vide.
-Top %d operator rankers|Top %d Top lignes des op–πrateurs
-Operator rank list is empty.|La liste de Top lignes des op–πrateurs est vide.
+Top %d operator rankers|Top %d Top lignes des opÈrateurs
+Operator rank list is empty.|La liste de Top lignes des opÈrateurs est vide.
 string|chaine
-No user results found.|Aucun utilisateur trouv–π  .
-Showing %d user log results|Afficher %d r–πsultat log de l'utilisateur
+No user results found.|Aucun utilisateur trouvÈ  .
+Showing %d user log results|Afficher %d rÈsultat log de l'utilisateur
 Size of user log table: %d [ %s: %d @ %s ]|Taille de la table du log de l'utilisateur: %d [ %s: %d @ %s ]
-Add protection entry|Ajouter une entr–πe de protection
-Delete protection entry|Supprimer l'entr–πe de la protection
+Add protection entry|Ajouter une entrÈe de protection
+Delete protection entry|Supprimer l'entrÈe de la protection
 flags|signaler
-%s dropped due to bad search request.|%s a –πt–π d–πconnecter en raison de la mauvaise requ–∫te de recherche.
-This command is either disabled or you don't have access to it.|Cette commande est d–πsactiv–π ou vous n'y avez pas acc–∏s.
-Deleted antispam entry: %s|Supprim–π cette entr–πe antispam: %s
-Couldn't delete antispam entry because not found: %s|Impossible de supprimer cette entr–πe de spam car elle es introuvable : %s
+%s dropped due to bad search request.|%s a ÈtÈ dÈconnecter en raison de la mauvaise requÍte de recherche.
+This command is either disabled or you don't have access to it.|Cette commande est dÈsactivÈ ou vous n'y avez pas accËs.
+Deleted antispam entry: %s|SupprimÈ cette entrÈe antispam: %s
+Couldn't delete antispam entry because not found: %s|Impossible de supprimer cette entrÈe de spam car elle es introuvable : %s
 Antispam list|Liste Antispam
 Antispam list is empty.|La liste Antispam est vide.
-Couldn't add antispam exception entry because already exists: %s|Impossible d'ajouter cette  entr–πe d'exception antispam parce existe d–πj–∞: %s
-Added antispam exception entry: %s|Ajout–π une entr–πe d'exception antispam: %s
-Deleted antispam exception entry: %s|Supprim–π une entr–πe antispam exception: %s
-Couldn't delete antispam exception entry because not found: %s|Impossible de supprimer l'entr–πe d'exception anti-spam car elle es introuvable: %s
+Couldn't add antispam exception entry because already exists: %s|Impossible d'ajouter cette  entrÈe d'exception antispam parce existe dÈj‡: %s
+Added antispam exception entry: %s|AjoutÈ une entrÈe d'exception antispam: %s
+Deleted antispam exception entry: %s|SupprimÈ une entrÈe antispam exception: %s
+Couldn't delete antispam exception entry because not found: %s|Impossible de supprimer l'entrÈe d'exception anti-spam car elle es introuvable: %s
 Antispam exception list|Liste des exceptions Antispam
 Antispam exception list is empty.|La liste des exceptions Antispam est vide.
-The user you're trying to send offline message to is a bot. Message is discarded.|L'utilisateur –∞ qui tu essaies d'envoyer un message hors ligne est un bot. Le message est refus–π.
+The user you're trying to send offline message to is a bot. Message is discarded.|L'utilisateur ‡ qui tu essaies d'envoyer un message hors ligne est un bot. Le message est refusÈ.
 You can't start at user number %d when you only have %d accounts with class %d.|Tu ne peux pas commencer au nombre d'utilisateur %d puisque tu as seulement %d un compte avec le profil %d
-Showing %d out of total %d accounts with class %d starting at user number %d|Afficher %d le total %d des comptes avec le profil %d commen–∑ant par le num–πro d'utilisateur %d
+Showing %d out of total %d accounts with class %d starting at user number %d|Afficher %d le total %d des comptes avec le profil %d commenÁant par le numÈro d'utilisateur %d
 There are no accounts with class: %d|Il n'y a pas de comptes avec se profil: %d
 Known classes are: %s|Les profil  connues sont: %s
-%s with class %d sent say message: <%s> %s|%s avec le profil %d le message envoy–π dit: <%s> %s
-%s with class %d had bad luck sending say message: <%s> %s|%s avec le profil %d n'a pas de chance avec ce que dit le message envoy–π: <%s> %s
-You can't talk from nick whose class is higher or equals your own.|Tu ne peux pas parler –∞ un pseudonyme qui a un profil plus –πlev–π ou –πgal au tien.
-%s with IP %s and class %d kicked: <%s> %s|%s avec l'IP %s et le profil %d est kick–π: <%s> %s
-%s with class %d deleted %d statistics plugin entries older than %d days.|%s avec le profil %d supprim–π %d des entr–πes de plugin des statistiques plus vieilles que %d jours.
+%s with class %d sent say message: <%s> %s|%s avec le profil %d le message envoyÈ dit: <%s> %s
+%s with class %d had bad luck sending say message: <%s> %s|%s avec le profil %d n'a pas de chance avec ce que dit le message envoyÈ: <%s> %s
+You can't talk from nick whose class is higher or equals your own.|Tu ne peux pas parler ‡ un pseudonyme qui a un profil plus ÈlevÈ ou Ègal au tien.
+%s with IP %s and class %d kicked: <%s> %s|%s avec l'IP %s et le profil %d est kickÈ: <%s> %s
+%s with class %d deleted %d statistics plugin entries older than %d days.|%s avec le profil %d supprimÈ %d des entrÈes de plugin des statistiques plus vieilles que %d jours.
 offset|compenser
 order|ordre
-%s didn't get any search results.|%s ne pas obtenir des r–πsultats de recherche.
-Redirected %s with IP %s and class %d to %s: <%s> %s|Redirig–π %s avec l'IP %s et le profil %d –∞ %s: <%s> %s
+%s didn't get any search results.|%s ne pas obtenir des rÈsultats de recherche.
+Redirected %s with IP %s and class %d to %s: <%s> %s|RedirigÈ %s avec l'IP %s et le profil %d ‡ %s: <%s> %s
 Unknown protocol command from %s with IP %s and class %d: %s|Protocole de commande inconnu de %s avec l'IP %s et le profil %d: %s
-Custom nick list| Liste des pseudonyme Personnalis–π
-%s operator commands|%s commandes op–πrateur
+Custom nick list| Liste des pseudonyme PersonnalisÈ
+%s operator commands|%s commandes opÈrateur
 Add antispam entry|Ajouter une interdiction de spam
-Showing last %d lines out of total %d found in %s file|Afficher les derni–∏res %d total de lignes %d trouv–πes dans %s le fichier
+Showing last %d lines out of total %d found in %s file|Afficher les derniËres %d total de lignes %d trouvÈes dans %s le fichier
 Delete antispam entry|Supprimer une interdiction de spam
 Add antispam exception entry|Ajouter une interdiction d'exception anti-spam
 Delete antispam exception entry|Supprimer une interdiction d'exception anti-spam
 Add MyINFO entry|Ajouter une  interdiction de MyINFO
 Delete MyINFO entry|Supprimer une  interdiction de MyINFO
 MyINFO list|Liste de MyINFO
-List of registered users by class|Liste des utilisateurs enregistr–πs par profil
+List of registered users by class|Liste des utilisateurs enregistrÈs par profil
 Speak from other nick|Parler avec un autre pseudonyme
 Remove user or word from rank list|Supprimer l'utilisateur ou un mot de la liste de Top lignes
-%s with class %d deleted %d user log entries older than %d days.|%s avec le profil %d supprim–π %d de l'entr–πe du log utilisateur plus vieille que %d jours.
-List stored offline messages|Liste stock–π messages hors ligne
+%s with class %d deleted %d user log entries older than %d days.|%s avec le profil %d supprimÈ %d de l'entrÈe du log utilisateur plus vieille que %d jours.
+List stored offline messages|Liste stockÈ messages hors ligne
 Delete offline messages by date|Supprimer les messages hors ligne par date
 Delete all offline messages|Supprimer tous les messages hors ligne
 class|profil
 Clean up tables|Nettoyer les tables
-Operator chat history|Historique de chat central Op–πrateur 
+Operator chat history|Historique de chat central OpÈrateur 
 Delete all history messages|Supprimer tous les messages d'hystorique
-Your operator rank|Votre op–πrateur Top lignes
+Your operator rank|Votre opÈrateur Top lignes
 Script configuration variables|Script configuration variables
 Change configuration variable|Change configuration variable
 nick|pseudonyme
 This list of commands|Liste de commandes
 %s user commands|%s commandes de l'utilisateur
-Current topic|Sujet d'actualit–π
+Current topic|Sujet d'actualitÈ
 Your chat rank|Votre chat central en Top lignes
-You're not allowed to send private messages.|Vous n'–∫tes pas autoris–π –∞ envoyer des messages priv–πs .
+You're not allowed to send private messages.|Vous n'Ítes pas autorisÈ ‡ envoyer des messages privÈs .
 Unknown|Inconnu
 identifier|identifier
-Offline message to user|Un message –∞ l'utilisateur Hors ligne
+Offline message to user|Un message ‡ l'utilisateur Hors ligne
 Main chat history|Historique du chat central
 %s statistics|%s statistiques
 Script version: %s|Script version: %s
@@ -196,101 +196,101 @@ Total operator rank points: %d|Total des points Top lignes de Top lignes: %d
 Average message count per user: %.2f|Nombre moyen de messages par utilisateur: %.2f
 lre|lre
 action|action
-Changed configuration variable %s: %s => %s|Modifi–π la configuration variable %s: %s => %s
-Configuration variable %s can only be set to: %s|Configuration variable %s ne peut –∫tre r–πgl–πe –∞: %s
+Changed configuration variable %s: %s => %s|ModifiÈ la configuration variable %s: %s => %s
+Configuration variable %s can only be set to: %s|Configuration variable %s ne peut Ítre rÈglÈe ‡: %s
 or|ou
-Configuration variable %s must be a number.|Configuration variable %s doit –∫tre un nombre.
-to|–∞
+Configuration variable %s must be a number.|Configuration variable %s doit Ítre un nombre.
+to|‡
 Unknown configuration variable: %s|Configuration variable inconnu: %s
 %s version: %s|%s version: %s
-Not installed|Pas install–π
-User dropped due to spam: %s|L'utilisateur a –πt–∏ d–πconnecter –∞ cause du spam: %s
+Not installed|Pas installÈ
+User dropped due to spam: %s|L'utilisateur a ÈtË dÈconnecter ‡ cause du spam: %s
 variable|variable
 value|valeur
 minutes|minutes
-%s library version: %s|%s biblioth–∏que version: %s
-Reorder right click menu item|R–πorganiser le menu du clic droit
+%s library version: %s|%s bibliothËque version: %s
+Reorder right click menu item|RÈorganiser le menu du clic droit
 lines|lignes
-Couldn't add rank exception because already exists: %s|Impossible d'ajouter une Top lignes d'exception parce existe d–πj–∞: %s
-Added rank exception: %s|Ajout–π une Top lignes d'exception: %s
+Couldn't add rank exception because already exists: %s|Impossible d'ajouter une Top lignes d'exception parce existe dÈj‡: %s
+Added rank exception: %s|AjoutÈ une Top lignes d'exception: %s
 Deleted rank exception: %s|Supprimer une Top lignes d'exception: %s
 Couldn't delete rank exception because not found: %s|Impossible de supprimer Top lignes d'exception car il es  introuvable: %s
 Rank exception list|Liste d'exception Top lignes
 Rank exception list is empty.|La liste des Top lignes d'exception est vide.
-Add rank exception|Ajout–π une Top lignes d'exception
+Add rank exception|AjoutÈ une Top lignes d'exception
 Delete rank exception|Supprimer Top lignes d'exception
-In order to use this feature you must turn off registered users list cache. Do it by setting hub configuration variable %s to %d and restarting the hub. Please note: Turning cache off is not recommended with large list of registered users.|Pour utiliser cette fonctionnalit–π, vous devez d–πsactiver les utilisateurs enregistr–πs liste cache. Faites-le par la mise en configuration du concentrateur variable %s –∞ %d  et le red–πmarrage du moyeu. S'il vous pla–æt noter: Mise hors cache n'est pas recommand–π avec une grande liste des utilisateurs enregistr–πs.
+In order to use this feature you must turn off registered users list cache. Do it by setting hub configuration variable %s to %d and restarting the hub. Please note: Turning cache off is not recommended with large list of registered users.|Pour utiliser cette fonctionnalitÈ, vous devez dÈsactiver les utilisateurs enregistrÈs liste cache. Faites-le par la mise en configuration du concentrateur variable %s ‡ %d  et le redÈmarrage du moyeu. S'il vous plaÓt noter: Mise hors cache n'est pas recommandÈ avec une grande liste des utilisateurs enregistrÈs.
 Both|Both
-Deleted search filter: %s|Supprim–π un filtre de recherche: %s 
+Deleted search filter: %s|SupprimÈ un filtre de recherche: %s 
 Couldn't delete search filter because not found: %s|Impossible de supprimer le filtre de recherche car il es introuvable: %s
 Search filter list|Recherche de filtres dans la liste 
 Search filter list is empty.|La liste de filtre de recherche est vide.
 Magnet link: %s|Magnet link: %s
-Add search filter|Ajout–π un filtre de recherche
+Add search filter|AjoutÈ un filtre de recherche
 Delete search filter|Supprimer un filtre de recherche
 Known actions are: %s|Les Actions sont connues: %s
-Known flags are: %s|Les d–πfinitions connus sont: %s
-Downloading version file: %s|T–πl–πchargement du fichier de version: %s
+Known flags are: %s|Les dÈfinitions connus sont: %s
+Downloading version file: %s|TÈlÈchargement du fichier de version: %s
 Size of kicks table: %d [ %s: %d @ %s ]|Taille de la table des kick: %d [ %s: %d @ %s ]
 Size of bans table: %d [ %s: %d @ %s ]|Taille de la table des bans: %d [ %s: %d @ %s ]
 Size of unbans table: %d [ %s: %d @ %s ]|Taille de la table unbans: %d [ %s: %d @ %s ]
-Size of IP logger plugin table: %d [ %s: %d @ %s ]|Taille de la table IP enregistr–π du plug-in: %d [ %s: %d @ %s ]
+Size of IP logger plugin table: %d [ %s: %d @ %s ]|Taille de la table IP enregistrÈ du plug-in: %d [ %s: %d @ %s ]
 Size of statistics plugin table: %d [ %s: %d @ %s ]|Taille de la table des statistiques du plugin: %d [ %s: %d @ %s ]
-Modified authorization entry: %s @ %s|Modifier une entr–πe d'autorisation: %s @ %s
-Added authorization entry: %s @ %s|Ajout–π une entr–πe d'autorisation : %s @ %s
-Deleted authorization entry: %s|Supprim–π une entr–πe d'autorisation : %s
-Couldn't delete authorization entry because not found: %s|Impossible de supprimer l'entr–πe d'autorisation , car elle es introuvable: %s
+Modified authorization entry: %s @ %s|Modifier une entrÈe d'autorisation: %s @ %s
+Added authorization entry: %s @ %s|AjoutÈ une entrÈe d'autorisation : %s @ %s
+Deleted authorization entry: %s|SupprimÈ une entrÈe d'autorisation : %s
+Couldn't delete authorization entry because not found: %s|Impossible de supprimer l'entrÈe d'autorisation , car elle es introuvable: %s
 IP authorization list|Liste d'autorisation IP
 IP authorization list is empty.|La liste d'autorisation IP est vide .
 Add IP authorization entry|Ajouter une  IP d'autorisation
-Delete authorization entry|Supprimer une entr–πe d'autorisation
+Delete authorization entry|Supprimer une entrÈe d'autorisation
 ip|ip
-%s with IP %s and class %d authorized.|%s avec  IP  %s et le profil %d es autoris–π .
-%s with IP %s and class %d failed authorization and disconnected.|%s IP et le profil  %d n'a pas l'autorisation es d–πconnect–π.
-Category: %s|Cat–πgorie: %s
-Set custom nick for yourself|R–πglez la customisation de votre  pseudonyme 
-This nick is registered or in use and therefore can't be used as custom nick: %s|Ce pseudonyme est enregistr–π ou en cours d'utilisation et ne peut donc pas –∫tre utilis–πcommepseudonyme: %s
-Set your welcome message|R–πglez votre message de bienvenue
-Division by zero is forbidden.|La Division par z–πro est interdite.
+%s with IP %s and class %d authorized.|%s avec  IP  %s et le profil %d es autorisÈ .
+%s with IP %s and class %d failed authorization and disconnected.|%s IP et le profil  %d n'a pas l'autorisation es dÈconnectÈ.
+Category: %s|CatÈgorie: %s
+Set custom nick for yourself|RÈglez la customisation de votre  pseudonyme 
+This nick is registered or in use and therefore can't be used as custom nick: %s|Ce pseudonyme est enregistrÈ ou en cours d'utilisation et ne peut donc pas Ítre utilisÈcommepseudonyme: %s
+Set your welcome message|RÈglez votre message de bienvenue
+Division by zero is forbidden.|La Division par zÈro est interdite.
 Show your welcome messages|Vos messages de bienvenue
 Welcome message list|Liste de message de bienvenue
 Delete user and his welcome messages|Supprimer un utilisateur ainsi que son message d'accueil
 Nick|Pseudonyme
 Login message|Message de connexion
-Logout message|Message de  D–πconnexion
+Logout message|Message de  DÈconnexion
 Welcome message list is empty.|La liste de message de bienvenue est vide.
-Welcome messages were deleted for user: %s|Les messages de bienvenue ont –πt–π supprim–πs pour l'utilisateur: %s
+Welcome messages were deleted for user: %s|Les messages de bienvenue ont ÈtÈ supprimÈs pour l'utilisateur: %s
 Couldn't delete user from welcome message list because not found: %s|Impossible de supprimer un utilisateur de la liste de message de bienvenue car il es introuvable: %s
-Your login message set: %s|Votre message de connexion est  d–πfinie: %s
-%s with class %d changed his login message: %s|%s avec le profil %d a chang–π son message d'ouverture de session: %s
-Your logout message set: %s|Votre message de d–πconnexion est r–πgl–πe: %s
-%s with class %d changed his logout message: %s|%s avec le profil %d a chang–π son message de d–πconnexion: %s
+Your login message set: %s|Votre message de connexion est  dÈfinie: %s
+%s with class %d changed his login message: %s|%s avec le profil %d a changÈ son message d'ouverture de session: %s
+Your logout message set: %s|Votre message de dÈconnexion est rÈglÈe: %s
+%s with class %d changed his logout message: %s|%s avec le profil %d a changÈ son message de dÈconnexion: %s
 You don't have any welcome messages.|Vous n'avez pas de messages de bienvenue.
 Your login message: %s|Votre message d'ouverture de session: %s
 Add chatroom|Ajouter une chatroom
 Chatroom list|Liste des chatroom
-Delete chatroom|Supprim–π une chatroom
+Delete chatroom|SupprimÈ une chatroom
 description|description
 minclass|minclass
 maxclass|maxclass
 Modified chatroom: %s|Modifier chatroom: %s
 Added chatroom: %s|Ajouter chatroom: %s
-Deleted chatroom: %s|Supprim–π chatroom: %s
+Deleted chatroom: %s|SupprimÈ chatroom: %s
 Couldn't delete chatroom because not found: %s|Impossible de supprimer la chatroomt car elle es introuvable: %s
 Chatroom|Chatroom
 Description|Description
 Chatroom list is empty.|La liste des  Chatroom est vide.
 Not found in country code statistics table: %s|Introuvable dans la table des statistiques de code de pays: %s
-Custom nick %s is now owned by real user and therefore has been reset for user: %s|Pseudonyme Personnalis–π %s est maintenant la propri–πt–π de l'utilisateur et a donc –πt–π remis –∞ z–πro pour l'utilisateur: %s
+Custom nick %s is now owned by real user and therefore has been reset for user: %s|Pseudonyme PersonnalisÈ %s est maintenant la propriÈtÈ de l'utilisateur et a donc ÈtÈ remis ‡ zÈro pour l'utilisateur: %s
 %s is registered with class %d.|%s est inscrit avec le profil %d.
-Query executed but didn't return any results.|Requ–∫te ex–πcut–π mais n'a donn–π aucun r–πsultat.
-Published: %s|Publi–π: %s 
+Query executed but didn't return any results.|RequÍte exÈcutÈ mais n'a donnÈ aucun rÈsultat.
+Published: %s|PubliÈ: %s 
 Add search filter exception entry|Ajouter un filtre d'exception
 Delete search filter exception entry|Supprimer le  filtre d'exception
 Search filter exception list|Recherche dans  la  liste d'exception
-Couldn't add search filter exception entry because already exists: %s|Impossible d'ajouter le filtre de recherche d'exception parce il existe d–πj–∞: %s
-Added search filter exception entry: %s|Ajout–π un filtre de  recherche d exception: %s
-Deleted search filter exception entry: %s|Supprim–π un filtre de  recherche d exception: %s
+Couldn't add search filter exception entry because already exists: %s|Impossible d'ajouter le filtre de recherche d'exception parce il existe dÈj‡: %s
+Added search filter exception entry: %s|AjoutÈ un filtre de  recherche d exception: %s
+Deleted search filter exception entry: %s|SupprimÈ un filtre de  recherche d exception: %s
 Couldn't delete search filter exception entry because not found: %s|Impossible de supprimer le filtre de recherche d'exception  car il es introuvable: %s
 Search filter exception list is empty.|La  Liste de Recherche de filtre d'exception est vide.
 file|fichier dossier
@@ -301,86 +301,86 @@ Add command notification exception|Ajouter une commande de notification d'except
 Delete command notification exception|Supprimer une commande de notification d'exception
 Command notification exception list|Liste de notification d'exception de commande
 Added command notification exception entry: %s|Ajout de la commande de notification d'exception: %s
-Couldn't add command notification exception entry because already exists: %s|Impossible d'ajouter une entr–πe de commande de notification d'exception parce elle existe d–πj–∞: %s
-Deleted command notification exception entry: %s|Supprim–π la modification de commande d'exception: %s
+Couldn't add command notification exception entry because already exists: %s|Impossible d'ajouter une entrÈe de commande de notification d'exception parce elle existe dÈj‡: %s
+Deleted command notification exception entry: %s|SupprimÈ la modification de commande d'exception: %s
 Couldn't delete command notification exception entry because not found: %s|Impossible de supprimer la saisie de commande de  notification d'exception car elle es introuvable: %s
 Command notification exception list is empty.|La liste de commandes de notification d'exception est vide.
-Couldn't add chatroom because nick is already in use: %s|Impossible d'ajouter une chatroom parce son pseudonyme est d–πj–∞ utilis–π: %s
-Query results|R–πsultats de la recherche
-Connections from your IP aren't allowed for another %d seconds.|Les Connections de votre IP ne sont pas autoris–πs pendant  %d secondes.
-Executed shell command didn't return any status code: %s|Commande shell ex–πcut–π n'a retourn–π aucun code d'–πtat: %s
-Returned status code: %s|A renvoy–π le code d'–πtat: %s
-Added by: %s|Ajout–π par: %s
-publisher|–πditeur
+Couldn't add chatroom because nick is already in use: %s|Impossible d'ajouter une chatroom parce son pseudonyme est dÈj‡ utilisÈ: %s
+Query results|RÈsultats de la recherche
+Connections from your IP aren't allowed for another %d seconds.|Les Connections de votre IP ne sont pas autorisÈs pendant  %d secondes.
+Executed shell command didn't return any status code: %s|Commande shell exÈcutÈ n'a retournÈ aucun code d'Ètat: %s
+Returned status code: %s|A renvoyÈ le code d'Ètat: %s
+Added by: %s|AjoutÈ par: %s
+publisher|Èditeur
 Release list is empty.|Liste de sortie est vide.
-Last %d releases|Derni–∏res %d releases
-No releases by requested publisher were found: %s|Aucunne releases par –πditeur demand–π ont –πt–π trouv–πs : %s
-Last %d releases published by %s|Dernieres %d releases publi–πs par %s
-No releases by requested category were found: %s|Aucun releases par cat–πgorie demand–πe ont –πt–π trouv–πs : %s
-Last %d releases by category %s|Derni–∏res %d releases par cat–πgorie %s
-No releases by requested search string were found: %s|Aucunne releases de la demande cha–æne de recherche ont –πt–π trouv–πs : %s
+Last %d releases|DerniËres %d releases
+No releases by requested publisher were found: %s|Aucunne releases par Èditeur demandÈ ont ÈtÈ trouvÈs : %s
+Last %d releases published by %s|Dernieres %d releases publiÈs par %s
+No releases by requested category were found: %s|Aucun releases par catÈgorie demandÈe ont ÈtÈ trouvÈs : %s
+Last %d releases by category %s|DerniËres %d releases par catÈgorie %s
+No releases by requested search string were found: %s|Aucunne releases de la demande chaÓne de recherche ont ÈtÈ trouvÈs : %s
 time|Heure
 Known search types are: %s|Les types de recherche connus sont : %s
-Configuration variable %s can't be empty.|La configuration variable %s ne peut pas –∫tre vide .
-Deleted from share rank list: %s|Supprim–π de la liste des share de Top lignes: %s
+Configuration variable %s can't be empty.|La configuration variable %s ne peut pas Ítre vide .
+Deleted from share rank list: %s|SupprimÈ de la liste des share de Top lignes: %s
 Not found in share rank list: %s|Ne se  trouve pas dans la liste share Top lignes: %s
 Your share rank|Votre share Top lignes
 Top %d share rankers|Top %d share Top lignes
 You have to share %s and reconnect to get started.|Vous devez partager %s reconnecter pour commencer.
 Share rank list is empty.|La liste de Partage Top lignes est vide .
 Your share rank is: %s|Votre partage  Top lignes est : %s
-Custom nick can't be longer than %d characters.|La personnalis–π pseudonyme ne pas peut –∫tre plus de %d caract–∏res.
+Custom nick can't be longer than %d characters.|La personnalisÈ pseudonyme ne pas peut Ítre plus de %d caractËres.
 Delete custom nick|Supprimer personnalisation pseudonyme
-Deleted user from custom nick list: %s|Utilisateur supprim–π de la liste des pseudonyme customis–π: %s
+Deleted user from custom nick list: %s|Utilisateur supprimÈ de la liste des pseudonyme customisÈ: %s
 Couldn't delete user from custom nick list because not found: %s|Impossible de supprimer un utilisateur de la liste des customisation de pseudonyme car il es introuvable: %s
-Selected type requires extra parameters. Please refer to manual for more information.|Le type s–πlectionn–π n–πcessite des param–∏tres suppl–πmentaires . S'il vous pla–æt se r–πf–πrer au manuel pour plus d'informations.
+Selected type requires extra parameters. Please refer to manual for more information.|Le type sÈlectionnÈ nÈcessite des paramËtres supplÈmentaires . S'il vous plaÓt se rÈfÈrer au manuel pour plus d'informations.
 Size of registered users table: %d [ %s: %d @ %s ]|La taille de la  table des utilisateurs: %d [ %s: %d @ %s ]
-Deleted %d accounts with class %d|Supprim–π %d comptes avec profil %d
-%s with class %d deleted %d accounts with class %d that has been inactive for %d days.|%s avec le profil %d supprim–π %d les comptes du profil d%  qui a –πt–π inactif pendant %d jours .
+Deleted %d accounts with class %d|SupprimÈ %d comptes avec profil %d
+%s with class %d deleted %d accounts with class %d that has been inactive for %d days.|%s avec le profil %d supprimÈ %d les comptes du profil d%  qui a ÈtÈ inactif pendant %d jours .
 Add command permission|Ajouter commande  d'autorisation
 Delete command permission| Supprimer la Commande de  permission
 Command permission list|Liste des autorisations de commande
-Modified command permission with class %d: %s|Modification de commande ajout–πe avec le profil %d: %s
-Added command permission with class %d: %s|Autorisation de commande ajout–πe avec le profil %d: %s
+Modified command permission with class %d: %s|Modification de commande ajoutÈe avec le profil %d: %s
+Added command permission with class %d: %s|Autorisation de commande ajoutÈe avec le profil %d: %s
 Deleted command permission: %s| Supprimer la Commande de  permission: %s
 Couldn't delete command permission because not found: %s|Impossible de supprimer l'autorisation commande car elle es introuvable:%s
 Command permission list is empty.|Liste des autorisations de commande est vide.
 Total search rank points: %d|Total des points de recherche de Top lignes : %d
-Please use following commands to finish update process|S'il vous pla–æt utiliser les commandes suivantes pour terminer processus de mise –∞ jour
-Moving file: %s|D–πplacement du fichier: %s
-Please visit %s to download the script manually.|S'il vous pla–æt visitez %s pour t–πl–πcharger le script manuellement .
-Modified forbidden IP address with ban time %s: %s|Modifi–π l'adresse IP interdite avec le temps de ban %s: %s
-Added forbidden IP address with ban time %s: %s|Ajout–π l'adresse IP interdite avec le temps de ban %s: %s
-Deleted forbidden IP address: %s|Supprim–π adresse IP interdite: %s
+Please use following commands to finish update process|S'il vous plaÓt utiliser les commandes suivantes pour terminer processus de mise ‡ jour
+Moving file: %s|DÈplacement du fichier: %s
+Please visit %s to download the script manually.|S'il vous plaÓt visitez %s pour tÈlÈcharger le script manuellement .
+Modified forbidden IP address with ban time %s: %s|ModifiÈ l'adresse IP interdite avec le temps de ban %s: %s
+Added forbidden IP address with ban time %s: %s|AjoutÈ l'adresse IP interdite avec le temps de ban %s: %s
+Deleted forbidden IP address: %s|SupprimÈ adresse IP interdite: %s
 Couldn't delete forbidden IP address because not found: %s|Impossible de supprimer l'adresse IP interdite car elle es introuvable: %s
 Forbidden IP address list|Liste d'adresse IP interdite
 Forbidden IP address list is empty.|La liste d'adresses IP Interdite est vide .
-%s with IP %s and class %d allowed due to forbidden IP address exception: %s|%s L' IP et profil %d es autoris–π en raison interdit adresse IP exception: %s
-Couldn't delete category because not found: %s|Impossible de supprimer la cat–πgorie car elle es introuvable: %s
-User redirected due to spam: %s|Utilisateur a –πt–∏  redirig–π –∞ cause de spam: %s
-%s redirected due to bad search request.|%s redirig–π –∞ cause de la mauvaise requ–∫te de recherche .
-You can download me from: %s|Vous pouvez me t–πl–πcharger –∞ partir de: %s
-%s is registered with class %d and has been automatically unregistered and deleted from other tables.|%s est inscrit avec le profil %d et a –πt–π automatiquement enregistr–πes et supprim–πes par les autres tables .
+%s with IP %s and class %d allowed due to forbidden IP address exception: %s|%s L' IP et profil %d es autorisÈ en raison interdit adresse IP exception: %s
+Couldn't delete category because not found: %s|Impossible de supprimer la catÈgorie car elle es introuvable: %s
+User redirected due to spam: %s|Utilisateur a ÈtË  redirigÈ ‡ cause de spam: %s
+%s redirected due to bad search request.|%s redirigÈ ‡ cause de la mauvaise requÍte de recherche .
+You can download me from: %s|Vous pouvez me tÈlÈcharger ‡ partir de: %s
+%s is registered with class %d and has been automatically unregistered and deleted from other tables.|%s est inscrit avec le profil %d et a ÈtÈ automatiquement enregistrÈes et supprimÈes par les autres tables .
 PiB|Petabit
 TiB|Tibit
 GiB|gibioctet
-MiB|m–πgaoctet
+MiB|mÈgaoctet
 KiB|kibioctet
 B|octet
 EiB|exbioctet
-Get user's real nick|Obtenez le r–πel de l'utilisateur
-Requested nick wasn't found in custom nick list.|Pseudonyme demand–π n'a pas –πt–π trouv–π dans la liste des pseudonymes customis–πs.
-Requested nick belongs to a user who is %s: %s|La requette demand–π sur le pseudonyme  appartient –∞ un utilisateur qui est %s: %s
-offline|d–πconnect–π
+Get user's real nick|Obtenez le rÈel de l'utilisateur
+Requested nick wasn't found in custom nick list.|Pseudonyme demandÈ n'a pas ÈtÈ trouvÈ dans la liste des pseudonymes customisÈs.
+Requested nick belongs to a user who is %s: %s|La requette demandÈ sur le pseudonyme  appartient ‡ un utilisateur qui est %s: %s
+offline|dÈconnectÈ
 online|connecter
 Clean up ranks|Nettoyer Top lignes
 limit|limite
-%s with class %d deleted %d chat ranks lower than %d.|%s avec le profil %d a –πt–π supprim–πs %d la discussion Top lignes est inf–πrieure –∞ celle %d.
-%s with class %d deleted %d share ranks lower than %s.|%s avec le profil %d a –πt–π supprim–πs %d le share Top lignes est inf–πrieure –∞ celle %d.
-%s with class %d deleted %d operator ranks lower than %d.|%s avec le profil %d a –πt–π supprim–πs %d la discussion operator Top lignes est inf–πrieure –∞ celle %d.
+%s with class %d deleted %d chat ranks lower than %d.|%s avec le profil %d a ÈtÈ supprimÈs %d la discussion Top lignes est infÈrieure ‡ celle %d.
+%s with class %d deleted %d share ranks lower than %s.|%s avec le profil %d a ÈtÈ supprimÈs %d le share Top lignes est infÈrieure ‡ celle %d.
+%s with class %d deleted %d operator ranks lower than %d.|%s avec le profil %d a ÈtÈ supprimÈs %d la discussion operator Top lignes est infÈrieure ‡ celle %d.
 Size of chat ranks table: %d [ %s: %d @ %s ]|Taille de discussion de Top lignes table: %d [ %s: %d @ %s ]
 Size of share ranks table: %d [ %s: %d @ %s ]|Taille de share table: %d [ %s: %d @ %s ]
-Size of operator ranks table: %d [ %s: %d @ %s ]|Taille de l'op–πrateur Top lignes table: %d [ %s: %d @ %s ]
+Size of operator ranks table: %d [ %s: %d @ %s ]|Taille de l'opÈrateur Top lignes table: %d [ %s: %d @ %s ]
 content|teneur
 destination|destination
 interval|interval
@@ -401,143 +401,143 @@ Destination: %s|Destination: %s
 Raw command|Commande Raw
 PM|Message priver
 MC|Message central
-reply|r–πpondre
-Add chat responder|Ajouter  chat r–πpondeur
-Delete chat responder|Supprimer chat r–πpondeur
-Main chat responder list|Liste de r–πpondeur chat principal
-Main chat responder list is empty.|Liste principale chat r–πpondeur est vide.
-%s with class %d deleted %d operator chat history messages.|%s avec le profil %d a supprim–π %d l'historique des messages du tchat op–πrateur.
+reply|rÈpondre
+Add chat responder|Ajouter  chat rÈpondeur
+Delete chat responder|Supprimer chat rÈpondeur
+Main chat responder list|Liste de rÈpondeur chat principal
+Main chat responder list is empty.|Liste principale chat rÈpondeur est vide.
+%s with class %d deleted %d operator chat history messages.|%s avec le profil %d a supprimÈ %d l'historique des messages du tchat opÈrateur.
 Search in user log|Recherche utilisateur dans le journal 
-Added chat responder: %s|Ajouter chat r–πpondeurr: %s
-Deleted chat responder with ID: %d|Supprim–π le chat r–πpondeur avec ID: %d
-Couldn't delete chat responder because ID not found: %d|Impossible de supprimer le chat r–πpondeur parce ID introuvable: %d
-Responder|R–πpondeur
-Reply|R–πpondre
-Add chat responder exception|Ajouter le chat r–πpondeur exception
-Delete chat responder exception|Supprim–π 
-Chat responder exception list|Liste des chat r–πpondeur exception
-Chat responder exception list is empty.|La liste Chat r–πpondeur exception est vide .
-Couldn't add chat responder exception because already exists: %s|Impossible d'ajouter le chat r–πpondeur exception parce existe d–πj–∞: %s
-Added chat responder exception: %s|Ajout–π le chat r–πpondeur d'exception: %s
-Deleted chat responder exception: %s|Supprim–π le chat r–πpondeur d'exception: %s
-Couldn't delete chat responder exception because not found: %s|Impossible de supprimer le chat r–πpondeur exception car il esintrouvable: %s
+Added chat responder: %s|Ajouter chat rÈpondeurr: %s
+Deleted chat responder with ID: %d|SupprimÈ le chat rÈpondeur avec ID: %d
+Couldn't delete chat responder because ID not found: %d|Impossible de supprimer le chat rÈpondeur parce ID introuvable: %d
+Responder|RÈpondeur
+Reply|RÈpondre
+Add chat responder exception|Ajouter le chat rÈpondeur exception
+Delete chat responder exception|SupprimÈ 
+Chat responder exception list|Liste des chat rÈpondeur exception
+Chat responder exception list is empty.|La liste Chat rÈpondeur exception est vide .
+Couldn't add chat responder exception because already exists: %s|Impossible d'ajouter le chat rÈpondeur exception parce existe dÈj‡: %s
+Added chat responder exception: %s|AjoutÈ le chat rÈpondeur d'exception: %s
+Deleted chat responder exception: %s|SupprimÈ le chat rÈpondeur d'exception: %s
+Couldn't delete chat responder exception because not found: %s|Impossible de supprimer le chat rÈpondeur exception car il esintrouvable: %s
 command|Commande
 Customize script command|Personnalisez le script de commande
 Customized script command: %s => %s|Personnalisez le script de commande
 Unknown script command: %s|Inconnu commande de script: %s
-Requested nick is real.|Requ–∫te pseudonyme est r–πel .
+Requested nick is real.|RequÍte pseudonyme est rÈel .
 %s with class %d customized script command: %s => %s|%s avec le profil %d Personnalisez le script de commande: %s => %s
-Reset all custom commands|Remettre toutes les commandes personnalis–πes
-%d custom commands were reset.|%d commandes personnalis–πes ont –πt–π remis –∞ z–πro.
-%s tables are now deleted and script is locked.|%s les tables sont d–πsormais supprim–πs et le script est verrouill–π.
-Please unload the script and remove it from scripts directory.|S'il vous pla–æt d–πcharger le script et le retirer du dosier scripts.
+Reset all custom commands|Remettre toutes les commandes personnalisÈes
+%d custom commands were reset.|%d commandes personnalisÈes ont ÈtÈ remis ‡ zÈro.
+%s tables are now deleted and script is locked.|%s les tables sont dÈsormais supprimÈs et le script est verrouillÈ.
+Please unload the script and remove it from scripts directory.|S'il vous plaÓt dÈcharger le script et le retirer du dosier scripts.
 Good luck.|Bonne chance.
-Please unload the script to finish.|S'il vous pla–æt d–πcharger le script pour qu'il se termine.
-%s with IP %s and class %d sent message to %s: %s|%s avec IP %s et le profil %d message envoy–π –∞ %s: %s
+Please unload the script to finish.|S'il vous plaÓt dÈcharger le script pour qu'il se termine.
+%s with IP %s and class %d sent message to %s: %s|%s avec IP %s et le profil %d message envoyÈ ‡ %s: %s
 Script uptime: %s|Script disponible: %s
 month|mois
 months|mois
 day|jour
 hour|heure
 hours|heures
-Top %d used words|Top %s des mots utilis–π
-Deleted from word rank list: %s|Supprim–π de la liste des mots de Top lignes: %s
+Top %d used words|Top %s des mots utilisÈ
+Deleted from word rank list: %s|SupprimÈ de la liste des mots de Top lignes: %s
 Not found in word rank list: %s|Ne se trouve pas dans liste de mots de Top lignes: %s
-%s with class %d deleted %d word ranks lower than %d.|%s avec le profil %d supprime %d mot inf–πrieure –∞ celle d%.
+%s with class %d deleted %d word ranks lower than %d.|%s avec le profil %d supprime %d mot infÈrieure ‡ celle d%.
 Size of word ranks table: %d [ %s: %d @ %s ]|Taille de la table de mot Top lignes: %d [ %s: %d @ %s ]
 Total word rank points: %d|Total des points mot de Top lignes: %d
 Word rank list is empty.|La liste des mots de Top lignes est vide .
 %s with class %d registered new user with class %d: %s|%s avec le profil %d enregistre nouvel utilisateur avec le\nprofil %d: %s
-%s with class %d deleted registered user with class %d: %s|%s avec le profil %d surprime un utilisateur enregistr–π avec le profil %d: %s
-%s with class %d changed user class from %d to %d: %s|%s avec le profil %d change le profil user  –∞ partir de %d –∞%d: %s
+%s with class %d deleted registered user with class %d: %s|%s avec le profil %d surprime un utilisateur enregistrÈ avec le profil %d: %s
+%s with class %d changed user class from %d to %d: %s|%s avec le profil %d change le profil user  ‡ partir de %d ‡%d: %s
 %s with IP %s and class %d allowed due to fake share exception: %s|%s avec IP %s et le profil %d permet en raison du faux partage d'exception: %s
-%s with IP %s and class %d allowed due to clone exception: %s|%s avec l'IP %s et le profil %d est exceptionnellement autoris–π au clone: %s
-%s with IP %s and class %d allowed due to same IP exception: %s|%s avec l'IP %s et le profil %d est exceptionnellement autoris–π –∞ la m–∫me IP: %s
+%s with IP %s and class %d allowed due to clone exception: %s|%s avec l'IP %s et le profil %d est exceptionnellement autorisÈ au clone: %s
+%s with IP %s and class %d allowed due to same IP exception: %s|%s avec l'IP %s et le profil %d est exceptionnellement autorisÈ ‡ la mÍme IP: %s
 seconds|secondes
 Add news item|Ajouter de nouveaux articles
 Delete news items|Supprimer les nouveaux articles
-Read hub news|Lire les nouveaut–πs du hub
-Added news item: %s|Nouveaux articles ajout–πs: %s
-Hub news list is empty.|La liste des nouveaut–πs du hub est vide.
-Deleted %d news items.|A supprim–π %d les nouveaux articles.
+Read hub news|Lire les nouveautÈs du hub
+Added news item: %s|Nouveaux articles ajoutÈs: %s
+Hub news list is empty.|La liste des nouveautÈs du hub est vide.
+Deleted %d news items.|A supprimÈ %d les nouveaux articles.
 Couldn't delete news items because not found: %s|Ne peut supprimer les nouveaux articles car introuvables: %s
 Last %d news items|Derniers %d articles nouveaux
 By %s on %s: %s|Par %s sur %s: %s
-There are no main chat history messages written by you.|Il n'y a pas d'historique des messages sur le chat central –πcrits par toi.
-Last %d main chat messages written by you|Derniers %d messages du chat central –πcrits par toi
+There are no main chat history messages written by you.|Il n'y a pas d'historique des messages sur le chat central Ècrits par toi.
+Last %d main chat messages written by you|Derniers %d messages du chat central Ècrits par toi
 Your main chat history|Historique de ton chat central
-Script memory usage: %s|Utilisation de la m–πmoire par le script: %s
+Script memory usage: %s|Utilisation de la mÈmoire par le script: %s
 Failed to load translation file %s: %s|Impossible de charger le fichier de traduction: %s
-Force custom nick for user|Pseudonyme personnalis–π  forcer pour utilisateur
-Either the feature is disabled or user that you're trying to set welcome message for doesn't have access to it.|La fonction est d–πsactiv–πe ou l'utilisateur pour lequel vous essayez de mettre un message de bienvenue n'y a pas acc–∏s.
+Force custom nick for user|Pseudonyme personnalisÈ  forcer pour utilisateur
+Either the feature is disabled or user that you're trying to set welcome message for doesn't have access to it.|La fonction est dÈsactivÈe ou l'utilisateur pour lequel vous essayez de mettre un message de bienvenue n'y a pas accËs.
 name|nom
-category|cat–πgorie
+category|catÈgorie
 tth|tth
 Add new release|Ajouter une nouvelle release
 Delete releases|Supprimer releases
 List of available releases|Liste des releases disponible
-Find release by name or category|Trouver la release par nom ou cat–πgorie
-equation|–πquation
-Calculate an equation|Calculer une –πquation
-Both numbers must be either pi or numbers.|Les deux num–πros doivent –∫tre soit pi ou num–πros.
-Known operations are: %s|Les op–πrations connues sont: %s
-Your logout message: %s|Ton message de d–πconnexion: %s
-Force welcome message for user|Forc–π le message de bienvenue  pour utilisateur
+Find release by name or category|Trouver la release par nom ou catÈgorie
+equation|Èquation
+Calculate an equation|Calculer une Èquation
+Both numbers must be either pi or numbers.|Les deux numÈros doivent Ítre soit pi ou numÈros.
+Known operations are: %s|Les opÈrations connues sont: %s
+Your logout message: %s|Ton message de dÈconnexion: %s
+Force welcome message for user|ForcÈ le message de bienvenue  pour utilisateur
 Login message set for %s: %s|Ensemble de message de connexion pour %s: %s
-Change nick of a registered user|Changer pseudo d'un utilisateur enregistr–π
-User is not registered: %s|L'utilisateur n'est pas enregistr–π: %s
-You are now going to be disconnected from the hub in order for your new nick to apply: %s|Tu vas maintenant –∫tre d–πconnect–π du hub pour mettre ton nouveau pseudonyme: %s
-Renamed account %s: %s|Compte renomm–π %s: %s
-%s with class %d renamed account %s: %s|%s avec le profil %d a renomm–π le compte %s: %s
-Your login message deleted.|Ton message de connexion a –πt–π supprim–π.
-Your logout message deleted.|Ton message de d–πconnexion a –πt–π supprim–π.
-%s with class %d deleted his login message.|%s avec le profil %d a supprim–π son message de connexion.
-%s with class %d deleted his logout message.|%s avec le profil %d a supprim–π son message de d–πconnexion.
+Change nick of a registered user|Changer pseudo d'un utilisateur enregistrÈ
+User is not registered: %s|L'utilisateur n'est pas enregistrÈ: %s
+You are now going to be disconnected from the hub in order for your new nick to apply: %s|Tu vas maintenant Ítre dÈconnectÈ du hub pour mettre ton nouveau pseudonyme: %s
+Renamed account %s: %s|Compte renommÈ %s: %s
+%s with class %d renamed account %s: %s|%s avec le profil %d a renommÈ le compte %s: %s
+Your login message deleted.|Ton message de connexion a ÈtÈ supprimÈ.
+Your logout message deleted.|Ton message de dÈconnexion a ÈtÈ supprimÈ.
+%s with class %d deleted his login message.|%s avec le profil %d a supprimÈ son message de connexion.
+%s with class %d deleted his logout message.|%s avec le profil %d a supprimÈ son message de dÈconnexion.
 Logout message set for %s: %s|Ensemble des messages de connexion pour %s: %s
-%s with class %d changed login message for %s: %s|%s avec le profil %d a chang–π le message de connexion pour %s: %s
-%s with class %d changed logout message for %s: %s|%s avec le profil %d a chang–π le message de d–πconnexion pour %s: %s
-Login message deleted for user: %s|Le message de connexion a –πt–π supprim–π pour l'utilisateur: %s
-Logout message deleted for user: %s|Le message de d–πconnexion a –πt–π supprim–π pour l'utilisateur: %s
-%s with class %d deleted login message for user: %s|%s avec le profil %d a supprim–π le message de connexion de l'utilisateur: %s
-%s with class %d deleted logout message for user: %s|%s avec le profil %d a supprim–π le message de d–πconnexion de l'utilisateur: %s
-%s with class %d deleted welcome messages for user: %s|%s avec le profil %d a supprim–π les messages de bienvenue de l'utilisateur: %s
+%s with class %d changed login message for %s: %s|%s avec le profil %d a changÈ le message de connexion pour %s: %s
+%s with class %d changed logout message for %s: %s|%s avec le profil %d a changÈ le message de dÈconnexion pour %s: %s
+Login message deleted for user: %s|Le message de connexion a ÈtÈ supprimÈ pour l'utilisateur: %s
+Logout message deleted for user: %s|Le message de dÈconnexion a ÈtÈ supprimÈ pour l'utilisateur: %s
+%s with class %d deleted login message for user: %s|%s avec le profil %d a supprimÈ le message de connexion de l'utilisateur: %s
+%s with class %d deleted logout message for user: %s|%s avec le profil %d a supprimÈ le message de dÈconnexion de l'utilisateur: %s
+%s with class %d deleted welcome messages for user: %s|%s avec le profil %d a supprimÈ les messages de bienvenue de l'utilisateur: %s
 minute|minute
-Last %d releases by search string %s|Derni–∏res %d release par s–πrie de recherche %s
-Modified release: %s|Modifi–πe release: %s\"
-Added release: %s|Ajout–πe release: %s
-Deleted release: %s|Release supprim–πe: %s
+Last %d releases by search string %s|DerniËres %d release par sÈrie de recherche %s
+Modified release: %s|ModifiÈe release: %s\"
+Added release: %s|AjoutÈe release: %s
+Deleted release: %s|Release supprimÈe: %s
 Couldn't delete release because not found: %s|ne peut supprimer la sortie car introuvable: %s
-Reminder preview|Rappel de pr–πvisualisation
-Preview of %s reminder: %s|Pr–πvisualisation de %s rappel: %s
-Specified nick is already in use.|Le pseudonyme sp–πcifi–π est d–πj–∞ utilis–π.
+Reminder preview|Rappel de prÈvisualisation
+Preview of %s reminder: %s|PrÈvisualisation de %s rappel: %s
+Specified nick is already in use.|Le pseudonyme spÈcifiÈ est dÈj‡ utilisÈ.
 Live user location statistics by country|Statistiques des utilisateurs vivant par pays
 All time user location statistics|Statistiques de l'utilisateur depuis tout le temps
-This feature requires %s or later installed on your system.|Cette fonction exige % ou install–πe plus tard sur ton syst–∏me
+This feature requires %s or later installed on your system.|Cette fonction exige % ou installÈe plus tard sur ton systËme
 Total count since %s: %d|Compteur total depuis %s: %d
 Unknown country|Pays inconnu
 No users in the hub.|Pas d'utilisateur sur le hub.
-User location statistics table is empty.|La table des statistiques des utilisateurs enregistr–πs est vide.
+User location statistics table is empty.|La table des statistiques des utilisateurs enregistrÈs est vide.
 Total count: %d|Compteur total: %d
-Deleted all rows: %s|Tous les rangs ont –πt–π supprim–πs: %s
-%s with class %d deleted all user location entries.|%s avec le profil %d a supprim–π les entr–πes de tous les utilisateurs enregistr–πs.
+Deleted all rows: %s|Tous les rangs ont ÈtÈ supprimÈs: %s
+%s with class %d deleted all user location entries.|%s avec le profil %d a supprimÈ les entrÈes de tous les utilisateurs enregistrÈs.
 address|addresse
-owner|propri–πtaire
+owner|propriÈtaire
 Add friendly hub|Ajouter un hub amis
 Delete friendly hub|Supprimer un hub amis
 Show friendly hubs|Voir les hub amis
 Added friendly hub: %s|Ajouter un hub amis: %s
 Modified friendly hub: %s|Modifier un hub amis: %s 
-Deleted friendly hub: %s|Supprim–π un hub amis: %s
+Deleted friendly hub: %s|SupprimÈ un hub amis: %s
 Friendly hub not found: %s|Hub amis introuvable: %s
 Friendly hublist|Hub-liste amis
 Friendly hublist is empty.|Hub-liste amis est vide.
-Executed shell command didn't return any output.|La commande shell ex–πcut–πe n'a rendu aucune production.
-Returned output|Sortie renvoy–πe
-%s renamed %s to: %s|%s a –πt–π renomm–π %s en: %s
+Executed shell command didn't return any output.|La commande shell exÈcutÈe n'a rendu aucune production.
+Returned output|Sortie renvoyÈe
+%s renamed %s to: %s|%s a ÈtÈ renommÈ %s en: %s
 %s plugin version: %s|%s plugin version: %s
-second|deuxi–∏me
+second|deuxiËme
 You are now known as: %s|Tu es maintenant connu comme: %s
-You renamed %s to: %s|Tu as renomm–π %s en: %s
+You renamed %s to: %s|Tu as renommÈ %s en: %s
 Spam exception from %s with IP %s and class %d in MC: %s|Exception de spam provenant de %s avec l'IP %s et le profil %d en messagerie centrale: %s
 Spam exception from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s|Spam exception de %s avec IP % set la classe %d dans PM %s avec IP %s et la classe  %d: %s
 Spam exception from %s with IP %s and class %d in offline message: %s|Exception de spam provenant de %s avec l'IP %s et le profil %d en messagerie hors ligne: %s
@@ -550,83 +550,83 @@ Spam from %s with IP %s and class %d in MC: %s|Spam provenant de %s avec l'IP %s
 Spam from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s|Spam de %s avec IP %s et la classe %d dans PM %s avec IP %s et la classe %d: %s
 Spam from %s with IP %s and class %d in offline message: %s|Spam provenant de %s avec l'IP %s et le profil %d dans la messagerie hors ligne: %s
 Spam from %s with IP %s and class %d in report: %s|Spam provenant de %s avec l'IP %s et le profil %d dans le rapport: %s
-Modified antispam entry with action %d and priority %d to scan in MC: %s|Entr–πe d'antispam modifi–πe avec l'action %d et la priorit–π %d du scan en messagerie centrale: %s
-Modified antispam entry with action %d and priority %d to scan in PM: %s|Entr–πe d'antispam modifi–πe avec l'action %d et la priorit–π %d du scan en messagerie priv–πe: %s
-Modified antispam entry with action %d and priority %d to scan in MC and PM: %s|Entr–πe d'antispam modifi–πe avec l'action %d et la priorit–π %d du scan en messagerie centrale et messagerie priv–πe: %s
-Added antispam entry with action %d and priority %d to scan in MC: %s|Entr–πe d'antispam ajout–πe avec l'action %d et la priorit–π %d du scan en messagerie centrale: %s
-Added antispam entry with action %d and priority %d to scan in PM: %s|Entr–πe d'antispam ajout–πe avec l'action %d et la priorit–π %d du scan en messagerie priv–πe: %s
-Added antispam entry with action %d and priority %d to scan in MC and PM: %s|Entr–πe d'antispam ajout–πe avec l'action %d et la priorit–π %d du scan en messagerie centrale et messagerie priv–πe: %s
-Search request exception from %s with IP %s and class %d as any file: %s|Exception de demande de recherche provenant de %s avec l'IP %s et le profil %d –∞ n'importe quel fichier: %s
+Modified antispam entry with action %d and priority %d to scan in MC: %s|EntrÈe d'antispam modifiÈe avec l'action %d et la prioritÈ %d du scan en messagerie centrale: %s
+Modified antispam entry with action %d and priority %d to scan in PM: %s|EntrÈe d'antispam modifiÈe avec l'action %d et la prioritÈ %d du scan en messagerie privÈe: %s
+Modified antispam entry with action %d and priority %d to scan in MC and PM: %s|EntrÈe d'antispam modifiÈe avec l'action %d et la prioritÈ %d du scan en messagerie centrale et messagerie privÈe: %s
+Added antispam entry with action %d and priority %d to scan in MC: %s|EntrÈe d'antispam ajoutÈe avec l'action %d et la prioritÈ %d du scan en messagerie centrale: %s
+Added antispam entry with action %d and priority %d to scan in PM: %s|EntrÈe d'antispam ajoutÈe avec l'action %d et la prioritÈ %d du scan en messagerie privÈe: %s
+Added antispam entry with action %d and priority %d to scan in MC and PM: %s|EntrÈe d'antispam ajoutÈe avec l'action %d et la prioritÈ %d du scan en messagerie centrale et messagerie privÈe: %s
+Search request exception from %s with IP %s and class %d as any file: %s|Exception de demande de recherche provenant de %s avec l'IP %s et le profil %d ‡ n'importe quel fichier: %s
 Search request exception from %s with IP %s and class %d as audio file: %s|Exception de demande de recherche provenant de %s avec l'IP %s et le profil %d au fichier audio: %s
-Search request exception from %s with IP %s and class %d as compressed file: %s|Exception de demande de recherche provenant de %s avec IP %s et le profil %d au fichier compress–π: %s
+Search request exception from %s with IP %s and class %d as compressed file: %s|Exception de demande de recherche provenant de %s avec IP %s et le profil %d au fichier compressÈ: %s
 Search request exception from %s with IP %s and class %d as document: %s|Exception de demande de recherche provenant de %s avec l'IP %s et le profil %d au document: %s
-Search request exception from %s with IP %s and class %d as executable: %s|Exception de demande de recherche provenant de %s avec l'IP %s et le profil %d –∞ l'ex–πcutable: %s
-Search request exception from %s with IP %s and class %d as picture: %s|Exception de demande de recherche provenant de %s avec l'IP %s et le profil %d –∞ l'image: %s
-Search request exception from %s with IP %s and class %d as video: %s|Exception de demande de recherche provenant de %s avec l'IP %s et le profil %d –∞ la vid–πo: %s
+Search request exception from %s with IP %s and class %d as executable: %s|Exception de demande de recherche provenant de %s avec l'IP %s et le profil %d ‡ l'exÈcutable: %s
+Search request exception from %s with IP %s and class %d as picture: %s|Exception de demande de recherche provenant de %s avec l'IP %s et le profil %d ‡ l'image: %s
+Search request exception from %s with IP %s and class %d as video: %s|Exception de demande de recherche provenant de %s avec l'IP %s et le profil %d ‡ la vidÈo: %s
 Search request exception from %s with IP %s and class %d as folder: %s|Exception de demande de recherche provenant de %s avec l'IP %s et le profil %d au dossier: %s
 Search request exception from %s with IP %s and class %d as TTH: %s|Exception de demande de recherche provenant de %s avec l'IP %s et le profil %d au TTH: %s
-Search request notification from %s with IP %s and class %d as any file: %s|Notification de demande de recherche provenant de %s avec l'IP %s et le profil %d –∞ n'importe quel fichier: %s
+Search request notification from %s with IP %s and class %d as any file: %s|Notification de demande de recherche provenant de %s avec l'IP %s et le profil %d ‡ n'importe quel fichier: %s
 Search request notification from %s with IP %s and class %d as audio file: %s|Notification de demande de recherche provenant de %s avec IP %s et le profil %d au fichier audio: %s
-Search request notification from %s with IP %s and class %d as compressed file: %s|Notification de demande de recherche provenant de %s avec 'IP %s et le profil %d au fichier compress–π: %s
+Search request notification from %s with IP %s and class %d as compressed file: %s|Notification de demande de recherche provenant de %s avec 'IP %s et le profil %d au fichier compressÈ: %s
 Search request notification from %s with IP %s and class %d as document: %s|Notification de demande de recherche provenant de %s avec l'IP %s et le profil %d au document: %s
-Search request notification from %s with IP %s and class %d as executable: %s|Notification de demande de recherche provenant de %s avec l''IP %s et le profil %d –∞ l'ex–πcutable:%s
-Search request notification from %s with IP %s and class %d as picture: %s|Notification de demande de recherche provenant de %s avec l'IP %s et le profil %d –∞ l'image: %s
-Search request notification from %s with IP %s and class %d as video: %s|Notification de demande de recherche provenant de %s avec l'IP %s et le profil %d –∞ la vid–πo: %s
+Search request notification from %s with IP %s and class %d as executable: %s|Notification de demande de recherche provenant de %s avec l''IP %s et le profil %d ‡ l'exÈcutable:%s
+Search request notification from %s with IP %s and class %d as picture: %s|Notification de demande de recherche provenant de %s avec l'IP %s et le profil %d ‡ l'image: %s
+Search request notification from %s with IP %s and class %d as video: %s|Notification de demande de recherche provenant de %s avec l'IP %s et le profil %d ‡ la vidÈo: %s
 Search request notification from %s with IP %s and class %d as folder: %s|Notification de demande de recherche provenant de %s avec l'IP %s et le profil %d au fichier: %s
 Search request notification from %s with IP %s and class %d as TTH: %s|Notification de demande de recherche provenant de %s avec l'IP %s et le profil %d au TTH: %s
-Bad search request from %s with IP %s and class %d as any file: %s|Mauvaise demande de recherche provenant de %s avec l'IP %s et le profil %d –∞ n'importe quel fichier: %s
+Bad search request from %s with IP %s and class %d as any file: %s|Mauvaise demande de recherche provenant de %s avec l'IP %s et le profil %d ‡ n'importe quel fichier: %s
 Bad search request from %s with IP %s and class %d as audio file: %s|Mauvaise demande de recherche provenant de %s avec l'IP %s et le profil %d au fichier audio: %s
-Bad search request from %s with IP %s and class %d as compressed file: %s|Mauvaise demande de recherche provenant de %s avec l'IP %s et le profil %d au fichier compress–π: %s
+Bad search request from %s with IP %s and class %d as compressed file: %s|Mauvaise demande de recherche provenant de %s avec l'IP %s et le profil %d au fichier compressÈ: %s
 Bad search request from %s with IP %s and class %d as document: %s|Mauvaise demande de recherche provenant de %s avec l'IP %s et le profil %d au document: %s
-Bad search request from %s with IP %s and class %d as executable: %s|Mauvaise demande de recherche provenant de %s avec l'IP %s et le profil %d –∞ l'ex–πcutable: %s
-Bad search request from %s with IP %s and class %d as picture: %s|Mauvaise demande de recherche provenant de %s avec l'IP %s et le profil %d –∞ l'image: %s
-Bad search request from %s with IP %s and class %d as video: %s|Mauvaise demande de recherche provenant de %s avec l'IP %s et le profil %d –∞ la vid–πo: %s
+Bad search request from %s with IP %s and class %d as executable: %s|Mauvaise demande de recherche provenant de %s avec l'IP %s et le profil %d ‡ l'exÈcutable: %s
+Bad search request from %s with IP %s and class %d as picture: %s|Mauvaise demande de recherche provenant de %s avec l'IP %s et le profil %d ‡ l'image: %s
+Bad search request from %s with IP %s and class %d as video: %s|Mauvaise demande de recherche provenant de %s avec l'IP %s et le profil %d ‡ la vidÈo: %s
 Bad search request from %s with IP %s and class %d as folder: %s|Mauvaise demande de recherche provenant de %s avec l'IP %s et le profil %d au dossier: %s
 Bad search request from %s with IP %s and class %d as TTH: %s|Mauvaise demande de recherche provenant de %s avec l'IP %s et le profil %d au TTH: %s
-Modified search filter with action %d and priority %d as any file: %s|Filtre de recherche modifi–π avec l'action %d et la priorit–π %d –∞ n'importe quel fichier: %s
-Modified search filter with action %d and priority %d as audio file: %s|Filtre de recherche modifi–π avec l'action %d et la priorit–π %d au fichier audio: %s
-Modified search filter with action %d and priority %d as compressed file: %s|Filtre de recherche modifi–π avec l'action %d et la priorit–π %d au fichier compress–π: %s
-Modified search filter with action %d and priority %d as document: %s|Filtre de recherche modifi–π avec l'action %d et la priorit–π %d au document: %s
-Modified search filter with action %d and priority %d as executable: %s|Filtre de recherche modifi–π avec l'action %d et la priorit–π %d –∞ l'ex–πcutable: %
-Modified search filter with action %d and priority %d as picture: %s|Filtre de recherche modifi–π avec l'action %d et la priorit–π %d –∞ l'image: %s
-Modified search filter with action %d and priority %d as video: %s|Filtre de recherche modifi–π avec l'action %d et la priorit–π %d –∞ la vid–πo: %s
-Modified search filter with action %d and priority %d as folder: %s|Filtre de recherche modifi–π avec l'action %d et la priorit–π %d au dossier: %s
-Modified search filter with action %d and priority %d as TTH: %s|Filtre de recherche modifi–π avec l'action %d et la priorit–π %d au TTH: %s
-Added search filter with action %d and priority %d as any file: %s|Filtre de recherche ajout–π avec l'action %d et la priorit–π %d –∞ n'importe quel fichier: %s
-Added search filter with action %d and priority %d as audio file: %s|Filtre de recherche ajout–π avec l'action %d et la priorit–π %d au fichier audio: %s
-Added search filter with action %d and priority %d as compressed file: %s|Filtre de recherche ajout–π avec l'action %d et la priorit–π %d au fichier compress–π: %s
-Added search filter with action %d and priority %d as document: %s|Filtre de recherche ajout–π avec l'action %d et la priorit–π %d au document: %s
-Added search filter with action %d and priority %d as executable: %s|Filtre de recherche ajout–π avec l'action %d et la priorit–π %d –∞ l'ex–πcutable: %s
-Added search filter with action %d and priority %d as picture: %s|Filtre de recherche ajout–π avec l'action %d et la priorit–π %d –∞ l'image: %s
-Added search filter with action %d and priority %d as video: %s|Filtre de recherche ajout–π avec l'action %d et la priorit–π %d –∞ la vid–πo: %s
-Added search filter with action %d and priority %d as folder: %s|Filtre de recherche ajout–π avec l'action %d et la priorit–π %d au dossier: %s
-Added search filter with action %d and priority %d as TTH: %s|Filtre de recherche ajout–π avec l'action %d et la priorit–π %d au TTH: %s
-%s with class %d deleted %d releases older than %d days.|%s avec le profil %d a supprim–π %d les releases vieilles de plus de %d jours.
+Modified search filter with action %d and priority %d as any file: %s|Filtre de recherche modifiÈ avec l'action %d et la prioritÈ %d ‡ n'importe quel fichier: %s
+Modified search filter with action %d and priority %d as audio file: %s|Filtre de recherche modifiÈ avec l'action %d et la prioritÈ %d au fichier audio: %s
+Modified search filter with action %d and priority %d as compressed file: %s|Filtre de recherche modifiÈ avec l'action %d et la prioritÈ %d au fichier compressÈ: %s
+Modified search filter with action %d and priority %d as document: %s|Filtre de recherche modifiÈ avec l'action %d et la prioritÈ %d au document: %s
+Modified search filter with action %d and priority %d as executable: %s|Filtre de recherche modifiÈ avec l'action %d et la prioritÈ %d ‡ l'exÈcutable: %
+Modified search filter with action %d and priority %d as picture: %s|Filtre de recherche modifiÈ avec l'action %d et la prioritÈ %d ‡ l'image: %s
+Modified search filter with action %d and priority %d as video: %s|Filtre de recherche modifiÈ avec l'action %d et la prioritÈ %d ‡ la vidÈo: %s
+Modified search filter with action %d and priority %d as folder: %s|Filtre de recherche modifiÈ avec l'action %d et la prioritÈ %d au dossier: %s
+Modified search filter with action %d and priority %d as TTH: %s|Filtre de recherche modifiÈ avec l'action %d et la prioritÈ %d au TTH: %s
+Added search filter with action %d and priority %d as any file: %s|Filtre de recherche ajoutÈ avec l'action %d et la prioritÈ %d ‡ n'importe quel fichier: %s
+Added search filter with action %d and priority %d as audio file: %s|Filtre de recherche ajoutÈ avec l'action %d et la prioritÈ %d au fichier audio: %s
+Added search filter with action %d and priority %d as compressed file: %s|Filtre de recherche ajoutÈ avec l'action %d et la prioritÈ %d au fichier compressÈ: %s
+Added search filter with action %d and priority %d as document: %s|Filtre de recherche ajoutÈ avec l'action %d et la prioritÈ %d au document: %s
+Added search filter with action %d and priority %d as executable: %s|Filtre de recherche ajoutÈ avec l'action %d et la prioritÈ %d ‡ l'exÈcutable: %s
+Added search filter with action %d and priority %d as picture: %s|Filtre de recherche ajoutÈ avec l'action %d et la prioritÈ %d ‡ l'image: %s
+Added search filter with action %d and priority %d as video: %s|Filtre de recherche ajoutÈ avec l'action %d et la prioritÈ %d ‡ la vidÈo: %s
+Added search filter with action %d and priority %d as folder: %s|Filtre de recherche ajoutÈ avec l'action %d et la prioritÈ %d au dossier: %s
+Added search filter with action %d and priority %d as TTH: %s|Filtre de recherche ajoutÈ avec l'action %d et la prioritÈ %d au TTH: %s
+%s with class %d deleted %d releases older than %d days.|%s avec le profil %d a supprimÈ %d les releases vieilles de plus de %d jours.
 Size of release table: %d [ %s: %d @ %s ]|Taille de la table release: %d [ %s: %d @ %s ]
 LRE|LRE
-Code accepted.|Code accept–π.
-Protection list|Liste des prot–πg–πs
-Added protection entry: %s|Entr–πe des prot–πg–πs ajout–πe: %s
-Deleted protection entry: %s|Entr–πe des prot–πg–πs supprim–πe: %s
-Protection entry already exists: %s|Entr–πe des prot–πg–πs existe d–πj–∞: %s
-Protection entry not found: %s|Entr–πe des prot–πg–πs introuvable: %s
-Protection list is empty.|La liste des prot–πg–πs est vide.
+Code accepted.|Code acceptÈ.
+Protection list|Liste des protÈgÈs
+Added protection entry: %s|EntrÈe des protÈgÈs ajoutÈe: %s
+Deleted protection entry: %s|EntrÈe des protÈgÈs supprimÈe: %s
+Protection entry already exists: %s|EntrÈe des protÈgÈs existe dÈj‡: %s
+Protection entry not found: %s|EntrÈe des protÈgÈs introuvable: %s
+Protection list is empty.|La liste des protÈgÈs est vide.
 Missing %s in configuration variable.|Il manque %s dans la configuration variable.
 Chatroom: %s|Chatroom: %s
-You've left the chatroom.|Tu as quitt–π la salle de chatroom.
-User left the chatroom: %s|L'utilisateur a quitt–π la  chatroom: %s
-User entered the chatroom: %s|L'utilisateur est entr–π dans la chatroom: %s
-You've entered %s chatroom.|Tu es entr–π %s dans la chatroom.
+You've left the chatroom.|Tu as quittÈ la salle de chatroom.
+User left the chatroom: %s|L'utilisateur a quittÈ la  chatroom: %s
+User entered the chatroom: %s|L'utilisateur est entrÈ dans la chatroom: %s
+You've entered %s chatroom.|Tu es entrÈ %s dans la chatroom.
 You're not member of this chatroom.|Tu n'es pas membre de cette chatroom.
-You don't have access to this chatroom.|Tu n'as pas acc–∏s –∞ cette chatroom.
+You don't have access to this chatroom.|Tu n'as pas accËs ‡ cette chatroom.
 Chatroom member list|Liste des membres de la Chatroom
 Chatroom is empty.|La salle Chatroom est vide.
-You're already member of this chatroom.|Tu es d–πj–∞ membre sur cette chatroom.
+You're already member of this chatroom.|Tu es dÈj‡ membre sur cette chatroom.
 Chatroom user commands|Commandes d'utilisateur dans la salle de chat
 Unknown chatroom command, use %s for help.|Commande chatroom inconnu , utilisez %s l'aide.
 Enter the chatroom|Entrer dans la chatroom
 Leave the chatroom|Quitter la Chatroom
-Deleted %d rows from country code statistics table: %s|Supprim–πe %d les rang–πes de la table de statistiques des codes de pays: %s
+Deleted %d rows from country code statistics table: %s|SupprimÈe %d les rangÈes de la table de statistiques des codes de pays: %s
 Force chat mode for user|Force le mode de chat pour l'utilisateur
 Known chat modes are: %s|Les modes de chat connus sont: %s
 mode|mode
@@ -636,41 +636,41 @@ Chat mode user list|Liste d'utilisateur du mode chat
 Chat mode user list is empty.|La liste d'utilisateur du mode chat est vide.
 %s user lookup|%s consultation de l'utilisateur
 Add IP gag|Ajouter une IP bloquer
-Added IP gag: %s|IP bloquer ajout–πe: %s
-Modified IP gag: %s|IP bloquer modifi–πe: %s
-Deleted IP gag: %s|IP bloquer supprim–πe: %s
+Added IP gag: %s|IP bloquer ajoutÈe: %s
+Modified IP gag: %s|IP bloquer modifiÈe: %s
+Deleted IP gag: %s|IP bloquer supprimÈe: %s
 IP gag not found: %s|IP bloquer introuvable:%s
 IP gag list|Liste d'IP bloquer
 IP gag list is empty.|La liste d''IP bloquer est vide.
 Delete IP gag|Supprimer l'IP bloquer
-Main chat is currently disabled for you.|Le chat central est actuellement d–πsactiv–π pour toi.
-Cleared temporary IP gag list.|Liste d'IP bloquer temporairement enlev–πe.
-Show custom script commands|Voir les commandes du script personnalis–π
-Custom script command list|Liste de commande du script personnalis–π
-Custom script command list is empty.|La liste de commande du script personnalis–π est vide.
+Main chat is currently disabled for you.|Le chat central est actuellement dÈsactivÈ pour toi.
+Cleared temporary IP gag list.|Liste d'IP bloquer temporairement enlevÈe.
+Show custom script commands|Voir les commandes du script personnalisÈ
+Custom script command list|Liste de commande du script personnalisÈ
+Custom script command list is empty.|La liste de commande du script personnalisÈ est vide.
 Script size: %d lines in %s|Taille du script: %d lignes en %s
-Added %s to IP gag list, %d users in total.|Ajout %s –∞ la liste des IP bloquer, %d tous les utilisateurs.
-Flood detected from IP %s last known as %s with class %d in MC: %s|Flood d–πtect–π provenant de l'IP %s derni–∏rement connu comme %s avec le profil %d en messagerie centrale: %s
-Flood detected from IP %s last known as %s with class %d in PM to %s with IP %s and class %d: %s|Flood d–πtect–π –∞ partir de IP %s derni–∏re connue sous le nom %s avec la classe %d dans PM %s avec IP %s et la classe %d: %s
-Private chat is currently disabled for you.|Le chat priv–π est actuellement d–πsactiv–π pour toi.
-Main chat flood detected from your IP.|Flood d–πtect–πe sur le central –∞ partir de votre adresse IP
-%d users with IP %s dropped due to flood.|%d utilisateurs avec l'IP %s vir–πs pour cause de flood.
-No error message specified.|Pas de message d'erreur sp–πcifi–π
+Added %s to IP gag list, %d users in total.|Ajout %s ‡ la liste des IP bloquer, %d tous les utilisateurs.
+Flood detected from IP %s last known as %s with class %d in MC: %s|Flood dÈtectÈ provenant de l'IP %s derniËrement connu comme %s avec le profil %d en messagerie centrale: %s
+Flood detected from IP %s last known as %s with class %d in PM to %s with IP %s and class %d: %s|Flood dÈtectÈ ‡ partir de IP %s derniËre connue sous le nom %s avec la classe %d dans PM %s avec IP %s et la classe %d: %s
+Private chat is currently disabled for you.|Le chat privÈ est actuellement dÈsactivÈ pour toi.
+Main chat flood detected from your IP.|Flood dÈtectÈe sur le central ‡ partir de votre adresse IP
+%d users with IP %s dropped due to flood.|%d utilisateurs avec l'IP %s virÈs pour cause de flood.
+No error message specified.|Pas de message d'erreur spÈcifiÈ
 Search filter|Filtre de recherche
-MyINFO check|MyINFO v–πrifier 
+MyINFO check|MyINFO vÈrifier 
 Authorization|Autorisation
 Ranks|Top lignes
 Welcome messages|Messages de bienvenue
 Chatrooms|Chatrooms
 Reminders|Rappels
-Hub news|Nouveaut–πs du hub
-Chat responder|R–πpondeur message
+Hub news|NouveautÈs du hub
+Chat responder|RÈpondeur message
 Releases|Releases
 Offline messenger|Messagerie hors connexion
 Chat history|Historique du chat
 Commands|Commandes
-Custom nicks|Pseudonyme personnalis–πs
-Registered users|Utilisateurs enregistr–πs
+Custom nicks|Pseudonyme personnalisÈs
+Registered users|Utilisateurs enregistrÈs
 Hublist|Liste de hub
 Chat|Chat
 IP gag|IP bloquer
@@ -678,20 +678,20 @@ User logger|Enregistrement d'utilisateur
 Other|Autre
 Configuration|Configuration
 Clear main chat|Nettoyer le chat central
-Chat cleanup performed by %s|Nettoyage du chat ex–πcut–π par %s
-Search in registered users list|Rechercher dans la liste des utilisateurs enregistr–πs
-Registered users list statistics|Liste des statistiques des utilisateurs enregistr–πs
-Registered users list results for %s|R–πsultat de la liste utilisateurs enregistr–πs pour %s
+Chat cleanup performed by %s|Nettoyage du chat exÈcutÈ par %s
+Search in registered users list|Rechercher dans la liste des utilisateurs enregistrÈs
+Registered users list statistics|Liste des statistiques des utilisateurs enregistrÈs
+Registered users list results for %s|RÈsultat de la liste utilisateurs enregistrÈs pour %s
 Class %d: %d|Profil %d: %d
-Registered users list is empty.|La liste des utilisateurs enregistr–πs est vide.
-This feature requires following binary installed on your system: %s|Cette fonction exige d'installer le fichier binaire suivant sur votre syst–∏me: %s
-Configuration directory: %s|R–πpertoire de configuration: %s
-%s with IP %s and class %d stated incorrect IP in connect request to %s: %s|%s avec l'IP %s et le profil %d a donn–π une IP incorrecte –∞ la demande de connexion –∞ %s: %s
-Top %d search requests|Top %d des requ–∏tes de recherche
+Registered users list is empty.|La liste des utilisateurs enregistrÈs est vide.
+This feature requires following binary installed on your system: %s|Cette fonction exige d'installer le fichier binaire suivant sur votre systËme: %s
+Configuration directory: %s|RÈpertoire de configuration: %s
+%s with IP %s and class %d stated incorrect IP in connect request to %s: %s|%s avec l'IP %s et le profil %d a donnÈ une IP incorrecte ‡ la demande de connexion ‡ %s: %s
+Top %d search requests|Top %d des requËtes de recherche
 Search rank list is empty.|La liste de recherche de Top lignes est vide.
-Deleted from search rank list: %s|Supprim–π de la liste de recherche Top lignes: %s
+Deleted from search rank list: %s|SupprimÈ de la liste de recherche Top lignes: %s
 Not found in search rank list: %s|Introuvable dans la liste recherche Top lignes: %s
-%s with class %d deleted %d search ranks lower than %d.|%s avec le profil %d a supprim–π %d les Top lignes de recherche sup–πrieurs –∞ %d.
+%s with class %d deleted %d search ranks lower than %d.|%s avec le profil %d a supprimÈ %d les Top lignes de recherche supÈrieurs ‡ %d.
 Size of search ranks table: %d [ %s: %d @ %s ]|Taille de la table Top lignes de recherche: %d [ %s: %d @ %s ]
 Size of user location statistics table: %d [ %s: %s ]|Taille de la table des statistiques d'emplacement de l'utilisateur: %d [ %s: %s ]
 Open files limit: %d|Limite de fichiers ouverts: %d
@@ -748,56 +748,56 @@ Away fileserver fireball TLS|Distance du serveur de fichiers super rapide TLS
 Normal away fileserver fireball TLS|Distance normale du serveur de fichiers super rapide TLS
 Unable to get bot information: %s|Impossible d'obtenir des informations sur le bot: %s
 Bot information|Informations du bot
-Owner script: %s|Propri–πtaire du script: %s
-%s with IP %s and class %d allowed due to forbidden DNS exception: %s|%s avec l'IP %s et le profil %d est esceptionnellement autoris–π –∞ avoir une DNS interdite: %s
-In order to use this feature you need to enable DNS lookup. Do it by setting hub configuration variable %s to %d. Please note: Enabling DNS lookup might slow your hub performance down.|Pour utiliser cette fonction vous devez la consultation de DNS. Faites le en mettant\nla configuration variable du hub %s –∞ %d. S'il te plait note bien: permettre la consultation de DNS peut ralentir les performances du hub.
-Modified forbidden DNS with ban time %s: %s|Modifi–π la DNS interdite avec le temps de ban %s: %s
-Added forbidden DNS with ban time %s: %s|Ajout–π la DNS interdite avec le temps de ban %s: %s
-Deleted forbidden DNS: %s|La DNS interdite a –πt–π supprim–πe: %s
+Owner script: %s|PropriÈtaire du script: %s
+%s with IP %s and class %d allowed due to forbidden DNS exception: %s|%s avec l'IP %s et le profil %d est esceptionnellement autorisÈ ‡ avoir une DNS interdite: %s
+In order to use this feature you need to enable DNS lookup. Do it by setting hub configuration variable %s to %d. Please note: Enabling DNS lookup might slow your hub performance down.|Pour utiliser cette fonction vous devez la consultation de DNS. Faites le en mettant\nla configuration variable du hub %s ‡ %d. S'il te plait note bien: permettre la consultation de DNS peut ralentir les performances du hub.
+Modified forbidden DNS with ban time %s: %s|ModifiÈ la DNS interdite avec le temps de ban %s: %s
+Added forbidden DNS with ban time %s: %s|AjoutÈ la DNS interdite avec le temps de ban %s: %s
+Deleted forbidden DNS: %s|La DNS interdite a ÈtÈ supprimÈe: %s
 Couldn't delete forbidden DNS because not found: %s|Ne peut supprimer la DNS interdite car introuvable: %s
 Forbidden DNS list|Liste des DNS interdites
 Forbidden DNS list is empty.|La liste des DNS interdites est vide.
-Powered by %s|Actionn–π par %s
+Powered by %s|ActionnÈ par %s
 Warning: %s|Attention: %s
-Open files limit set to %d is smaller than maximum users configuration which is %d. You can correct this by setting %s to %d or higher and restarting the hub.|La limite d'ensemble de fichiers ouvert –∞ %d est plus petit que les configurations utilisateur maximales qui est de %d. Tu peux corriger ceci en mettant %s –∞ %s ou plus –πlev–π et red–πmarrer\nle hub
-Additional help|Aide suppl–πmentaire
+Open files limit set to %d is smaller than maximum users configuration which is %d. You can correct this by setting %s to %d or higher and restarting the hub.|La limite d'ensemble de fichiers ouvert ‡ %d est plus petit que les configurations utilisateur maximales qui est de %d. Tu peux corriger ceci en mettant %s ‡ %s ou plus ÈlevÈ et redÈmarrer\nle hub
+Additional help|Aide supplÈmentaire
 Remove all %s tables and files|Supprimer toutes %s les tables et fichiers
-You can't kick user whose class is higher or equals your own: %s|Tu ne peux pas kicker un utilisateur qui a un profil plus –πlev–π ou –πgal au tien: %s
-Your topic contains forbidden characters which can't be used for security reason: %s|Ton topic contient des caract–∏res interdits qui ne peuvent –∫tre utilis–πs par s–πcurit–π raison: %s
+You can't kick user whose class is higher or equals your own: %s|Tu ne peux pas kicker un utilisateur qui a un profil plus ÈlevÈ ou Ègal au tien: %s
+Your topic contains forbidden characters which can't be used for security reason: %s|Ton topic contient des caractËres interdits qui ne peuvent Ítre utilisÈs par sÈcuritÈ raison: %s
 Hub uptime: %s|Temps de fonctionnement du hub: %s
 User count: %s|Compte d'utilisateur: %s
 Total share: %s|Partage total: %s
-%s with IP %s and class %d tries to speak with IP gag in MC: %s|%s avec l'IP %s et le profil %d essaie de parler avec l'IP b–≤illonn–πe en messagerie centrale: %s
+%s with IP %s and class %d tries to speak with IP gag in MC: %s|%s avec l'IP %s et le profil %d essaie de parler avec l'IP b‚illonnÈe en messagerie centrale: %s
 %s with IP %s and class %d tries to speak with IP gag in PM to %s with IP %s and class %d: %s|%s avec IP %s et la classe %d essaie de parler avec gag IP dans PM %s avec IP %s et la classe %d: %s
-Private message replaced for user: %s|Message priv–π remplac–π pour l'utilisateur: %s
+Private message replaced for user: %s|Message privÈ remplacÈ pour l'utilisateur: %s
 Command logger|Enregistreur de commande
-Showing %d entries from command logger|Afficher %d les entr–πs de l'enregistreur de commande
+Showing %d entries from command logger|Afficher %d les entrÈs de l'enregistreur de commande
 Command logger is empty.|L'enregistreur de commande est vide.
-%s with class %d deleted %d command log entries older than %d days.|%s avec le profil %d a supprim–π %d les entr–πes de log de commande plus vieilles que %d jours.
+%s with class %d deleted %d command log entries older than %d days.|%s avec le profil %d a supprimÈ %d les entrÈes de log de commande plus vieilles que %d jours.
 Size of command log table: %d [ %s: %d @ %s ]|Taille de la table du log de commande: %d [ %s: %d @ %s ]
 password|mot de passe
-Modify IP authorization entry|Modifier l'entr–πe d'autorisation d'IP
-Couldn't modify authorization entry because not found: %d|Ne peut modifier l'entr–πe d'autorisation car introuvable: %d
+Modify IP authorization entry|Modifier l'entrÈe d'autorisation d'IP
+Couldn't modify authorization entry because not found: %d|Ne peut modifier l'entrÈe d'autorisation car introuvable: %d
 Uptime: %s|Temps de fonctionnement: %s
-Enable requested feature and try again.|Permettre la fonction demand–πe et r–πessayer.
+Enable requested feature and try again.|Permettre la fonction demandÈe et rÈessayer.
 cc|tchat central
-Modified forbidden country code with ban time %s: %s|Modifi–π le code de pays interdit avec le temps de ban %s: %s
-Added forbidden country code with ban time %s: %s|Ajout–π le code de pays interdit avec le temps de ban %s: %s
-Deleted forbidden country code: %s|Le code de pays interdit a –πt–π supprim–π: %s
+Modified forbidden country code with ban time %s: %s|ModifiÈ le code de pays interdit avec le temps de ban %s: %s
+Added forbidden country code with ban time %s: %s|AjoutÈ le code de pays interdit avec le temps de ban %s: %s
+Deleted forbidden country code: %s|Le code de pays interdit a ÈtÈ supprimÈ: %s
 Couldn't delete forbidden country code because not found: %s|Ne peut supprimer le code de pays interdit car introuvable: %s
 Forbidden country code list|Liste de code de pays interdit
 Forbidden country code list is empty.|La liste de code de pays interdit est vide.
-%s with IP %s and class %d allowed due to forbidden country code exception: %s|%s avec l'IP %s et le profil %d est autoris–π –∞ avoir une exception de code de pays interdit: %s
-I'm staying idle due to confusion.|Je reste inoccup–π en raison d'une confusion.
-Added replacer in MC: %s|Remplacement en message central ajout–π: %s
-Deleted chat replacer with ID: %d|Le remplacement du tchat a –πt–π supprim–π avec l'ID: %d
+%s with IP %s and class %d allowed due to forbidden country code exception: %s|%s avec l'IP %s et le profil %d est autorisÈ ‡ avoir une exception de code de pays interdit: %s
+I'm staying idle due to confusion.|Je reste inoccupÈ en raison d'une confusion.
+Added replacer in MC: %s|Remplacement en message central ajoutÈ: %s
+Deleted chat replacer with ID: %d|Le remplacement du tchat a ÈtÈ supprimÈ avec l'ID: %d
 Couldn't delete chat replacer because ID not found: %d|Ne peut supprimer le remplacement du tchat car ID introuvable: %s
 Chat replacer list|Liste de remplacement du tchat
 Chat replacer list is empty.|La liste de remplacement du tchat est vide.
 Replace|Remplacer
-Modified chat replacer exception with type %d: %s|Modifi–π l'exception de substitution du chat central  avec le type %d: %s
-Added chat replacer exception with type %d: %s|Ajout–π une exception de substitution au chat central avec le type %d: %s
-Deleted chat replacer exception with type %d: %s|Supprim–π l'exception de substitution du chat central  avec le type %d: %s
+Modified chat replacer exception with type %d: %s|ModifiÈ l'exception de substitution du chat central  avec le type %d: %s
+Added chat replacer exception with type %d: %s|AjoutÈ une exception de substitution au chat central avec le type %d: %s
+Deleted chat replacer exception with type %d: %s|SupprimÈ l'exception de substitution du chat central  avec le type %d: %s
 Couldn't delete chat replacer exception because not found: %s|Ne peut supprimer l'exception du remplacement du tchat car introuvable: %s
 Chat replacer exception list|Liste d'exception de remplacement du tchat
 Chat replacer exception list is empty.|La liste d'exception de remplacement du tchat est vide.
@@ -808,205 +808,205 @@ Add chat replacer exception|Ajouter  un mot d'exception
 Delete chat replacer exception|Supprimer un mot d'exception
 Chat replacer|Remplacer un mot
 You need to send another %d main chat messages in order to use hub registration.|Vous devez envoyer d'autre %d messages en chat central pour utiliser l'enregistrement du hub
-Please wait another %.1f minutes before using hub registration.|S'il te plait patientes encore %.1f minutes avant d'utiliser l'enregistrement du hub.
-In order to use this feature you need to set %s to: %d|Pour utiliser cette fonction vous devez mettre %d –∞: %d
-Please reconnect to gain %d minutes of uptime in order to use hub registration.|S'il te plait reconnecte pour gagner %d minutes de temps de fonctionnement pour utiliser l'enregistrement du hub.
-Dropping %s with IP %s and class %d due to protocol flood detection: %s|Virer %s avec l'IP %s et le profil %d car d–πtection de flood par le protocole: %s
-Protocol flood detected from your client: %s|Le protocole a d–πtect–π du flood vanat de ton client: %s
-Automatic update check detected stable version of %s available, use following command to update: %s|Le contr—Ñle de mise –∞ jour automatique a d–πtect–π une version stable de %s disponible, utiliser la commande suivante pour mettre –∞ jour: %s
+Please wait another %d seconds before using hub registration.|
+In order to use this feature you need to set %s to: %d|Pour utiliser cette fonction vous devez mettre %d ‡: %d
+Please reconnect to gain %d seconds of uptime in order to use hub registration.|
+Dropping %s with IP %s and class %d due to protocol flood detection: %s|Virer %s avec l'IP %s et le profil %d car dÈtection de flood par le protocole: %s
+Protocol flood detected from your client: %s|Le protocole a dÈtectÈ du flood vanat de ton client: %s
+Automatic update check detected stable version of %s available, use following command to update: %s|Le contrÙle de mise ‡ jour automatique a dÈtectÈ une version stable de %s disponible, utiliser la commande suivante pour mettre ‡ jour: %s
 menu|menu
-Dropping user due to clone detection from IP %s with class %d: %s = %s|Virer l'utilisateur car d–πtection de clone de l'IP %s avec le profil %d: %s = %s
-Configuration variable %s must be a valid IP address.|La configuration variable %s doit –∫tre une adresse IP valide.
+Dropping user due to clone detection from IP %s with class %d: %s = %s|Virer l'utilisateur car dÈtection de clone de l'IP %s avec le profil %d: %s = %s
+Configuration variable %s must be a valid IP address.|La configuration variable %s doit Ítre une adresse IP valide.
 Average share per user: %s|Moyenne de partage par utilisateur: %s
 Don't be stupid.|Ne sois pas stupide.
 reason|raison
-Add blocked PM entry|Ajouter l'entr–πe des messages priv–πs bloqu–πs
-Delete blocked PM entry|Supprimer l'entr–πe des messages priv–πs bloqu–πs
-List of blocked PM entries|Liste des entr–πes des messages priv–πs bloqu–πs
-Modified blocked PM entry: %s|L'entr–πe de messages priv–πs bloqu–πs a –πt–π modifi–πe: %s
-Added blocked PM entry: %s|L'entr–πe de messages priv–πs bloqu–πs a –πt–π ajout–πe: %s
-Deleted blocked PM entry: %s|L'entr–πe de messages priv–πs bloqu–πs a –πt–π supprim–πe: %s
-Blocked PM list is empty.|La liste de messages priv–πs bloqu–πs est vide.
-Couldn't delete blocked PM entry because not found: %s|Ne peut supprimer l'entr–πe de message priv–π car introuvable: %s
+Add blocked PM entry|Ajouter l'entrÈe des messages privÈs bloquÈs
+Delete blocked PM entry|Supprimer l'entrÈe des messages privÈs bloquÈs
+List of blocked PM entries|Liste des entrÈes des messages privÈs bloquÈs
+Modified blocked PM entry: %s|L'entrÈe de messages privÈs bloquÈs a ÈtÈ modifiÈe: %s
+Added blocked PM entry: %s|L'entrÈe de messages privÈs bloquÈs a ÈtÈ ajoutÈe: %s
+Deleted blocked PM entry: %s|L'entrÈe de messages privÈs bloquÈs a ÈtÈ supprimÈe: %s
+Blocked PM list is empty.|La liste de messages privÈs bloquÈs est vide.
+Couldn't delete blocked PM entry because not found: %s|Ne peut supprimer l'entrÈe de message privÈ car introuvable: %s
 Reason: %s|Raison: %s
-You're not allowed to send PM to this user because: %s|Tu n'es pas autoris–π –∞ envoyer un message priv–π –∞ cet utilisateur car: %s
-%s with class %d deleted %d antispam entries with occurrence less than %d.|%s avec le profil %d a supprim–π %d les entr–πes antispam inf–πrieures –∞ %d.
-%s with class %d deleted %d search filter entries with occurrence less than %d.|%s avec le profil %d a supprim–π %d les entr–πes de filtre de recherche avec l‚Äôoccurrence inf–πrieure –∞ %d.
-query|requ–∏te
-Execute MySQL query|Ex–πcuter la requ–∏te MySQL
-Execute shell command|Ex–πcuter la commande shell
+You're not allowed to send PM to this user because: %s|Tu n'es pas autorisÈ ‡ envoyer un message privÈ ‡ cet utilisateur car: %s
+%s with class %d deleted %d antispam entries with occurrence less than %d.|%s avec le profil %d a supprimÈ %d les entrÈes antispam infÈrieures ‡ %d.
+%s with class %d deleted %d search filter entries with occurrence less than %d.|%s avec le profil %d a supprimÈ %d les entrÈes de filtre de recherche avec líoccurrence infÈrieure ‡ %d.
+query|requËte
+Execute MySQL query|ExÈcuter la requËte MySQL
+Execute shell command|ExÈcuter la commande shell
 Experts only|Uniquement pour les experts
-Add hard IP ban entry|Ajouter une entr–πe de ban dur d'IP
-Delete hard IP ban entry|Supprimer l'entr–πe de ban dur d'IP
-List of hard IP ban entries|Entr–πes de la liste de ban dur d'IP
-Modified hard IP ban entry: %s|Entr–πe de ban dur d'IP modifi–πe: %s
-Added hard IP ban entry: %s|Entr–πe de ban dur d'IP ajout–πe: %s
-Deleted hard IP ban entry: %s|Entr–πe de ban dur d'IP supprim–πe: %s
+Add hard IP ban entry|Ajouter une entrÈe de ban dur d'IP
+Delete hard IP ban entry|Supprimer l'entrÈe de ban dur d'IP
+List of hard IP ban entries|EntrÈes de la liste de ban dur d'IP
+Modified hard IP ban entry: %s|EntrÈe de ban dur d'IP modifiÈe: %s
+Added hard IP ban entry: %s|EntrÈe de ban dur d'IP ajoutÈe: %s
+Deleted hard IP ban entry: %s|EntrÈe de ban dur d'IP supprimÈe: %s
 Hard IP ban list is empty.|La liste de ban dur d'IP est vide.
-Couldn't delete hard IP ban entry because not found: %s|Ne peut supprimer l'entr–πe de ban dur d'IP car introuvable: %s
-Hard IP ban refused connection from IP %s: %s|Le ban dur d'IP a refus–π la connexion de l'IP %s: %s
+Couldn't delete hard IP ban entry because not found: %s|Ne peut supprimer l'entrÈe de ban dur d'IP car introuvable: %s
+Hard IP ban refused connection from IP %s: %s|Le ban dur d'IP a refusÈ la connexion de l'IP %s: %s
 Please wait another %d seconds before using hub search engine.|S'il te plait, patientes encore %d secondes avant d'utiliser le moteur de recherche du hub.
-Loading %s in memory...|Chargement %s dans la m–πmoire...
-Finished loading %s in memory.|Chargement termin–π %s dans la m–πmoire.
-Unable to locate %s in hub configuration directory.|Impossible de localiser %s dans le r–πpertoire de configuration du hub.
+Loading %s in memory...|Chargement %s dans la mÈmoire...
+Finished loading %s in memory.|Chargement terminÈ %s dans la mÈmoire.
+Unable to locate %s in hub configuration directory.|Impossible de localiser %s dans le rÈpertoire de configuration du hub.
 Add right click menu item|Ajouter un article du menu du click droit
 Delete right click menu item|Supprimer un article du menu du click droit
 List of right click menu items|Liste des articles du menu du click droit
-Blacklisted connection from IP %s dropped: %s|Connexion blacklist–πe de l'IP %s vir–πe: %s
-To add multiple entries with this command you need to separate every entry by space.|Pour ajouter plusieurs entr–πes avec cette commande tu dois s–πparer chaque entr–πe\navec un espace
-Add IP watch entry|Ajouter l'entr–πe d'affichage d'IP
-Delete IP watch entry|Entr–πe d'affichage d'IP supprim–πe
-List of IP watch entries|Liste d'entr–πe d'affichage d'IP
-result|R–πsultat
-Modified IP watch entry: %s|Entr–πe d'affichage d'IP modifi–πe: %s
-Added IP watch entry: %s|Entr–πe d'affichage d'IP ajout–πe: %s
-Known results are: %s|Les r–πsultats connus sont: %s
-Deleted IP watch entry: %s|Entr–πe d'affichage d'IP supprim–πe: %s
+Blacklisted connection from IP %s dropped: %s|Connexion blacklistÈe de l'IP %s virÈe: %s
+To add multiple entries with this command you need to separate every entry by space.|Pour ajouter plusieurs entrÈes avec cette commande tu dois sÈparer chaque entrÈe\navec un espace
+Add IP watch entry|Ajouter l'entrÈe d'affichage d'IP
+Delete IP watch entry|EntrÈe d'affichage d'IP supprimÈe
+List of IP watch entries|Liste d'entrÈe d'affichage d'IP
+result|RÈsultat
+Modified IP watch entry: %s|EntrÈe d'affichage d'IP modifiÈe: %s
+Added IP watch entry: %s|EntrÈe d'affichage d'IP ajoutÈe: %s
+Known results are: %s|Les rÈsultats connus sont: %s
+Deleted IP watch entry: %s|EntrÈe d'affichage d'IP supprimÈe: %s
 IP watch list is empty.|La liste d'affichage d'IP est vide.
-Couldn't delete IP watch entry because not found: %s|Ne peut supprimer l'entr–πe d'affichage de l'IP car introuvable: %s
+Couldn't delete IP watch entry because not found: %s|Ne peut supprimer l'entrÈe d'affichage de l'IP car introuvable: %s
 IP watch notification from %s with IP %s: %s|Notification d'affichage de l'IP de %s avec l'IP %s: %s
 unknown nick|Pseudo inconnu
 Country code gag|Code de pays bloquer
 Add country code gag|Ajouter un code de pays bloquer
-Added country code gag: %s|Code de pays bloquer ajout–π: %s
-Modified country code gag: %s|Code de pays bloquer modifi–π: %s
-Deleted country code gag: %s|Code de pays bloquer supprim–π: %s
+Added country code gag: %s|Code de pays bloquer ajoutÈ: %s
+Modified country code gag: %s|Code de pays bloquer modifiÈ: %s
+Deleted country code gag: %s|Code de pays bloquer supprimÈ: %s
 Country code gag not found: %s|Code de pays bloquer introuvable: %s
 Country code gag list|Liste de code de pays bloquer
-Country code gag list is empty.|La liste de code de pays bloqu–π est vide.
+Country code gag list is empty.|La liste de code de pays bloquÈ est vide.
 Delete country code gag|Supprimer code de pays bloquer
-Cleared country code gag list.|La liste de code de pays bloquer est nettoy–πe.
-%s with IP %s and class %d tries to speak with country code gag in MC: %s|%s avec l'IP %s et le profil %d avec un code de pays b–≤illonn–π essaie de parler sur la messagerie centrale: %s
+Cleared country code gag list.|La liste de code de pays bloquer est nettoyÈe.
+%s with IP %s and class %d tries to speak with country code gag in MC: %s|%s avec l'IP %s et le profil %d avec un code de pays b‚illonnÈ essaie de parler sur la messagerie centrale: %s
 %s with IP %s and class %d tries to speak with country code gag in PM to %s with IP %s and class %d: %s|%s avec IP %s et la classe  %d essaie de parler avec le code pays bloquer dans PM %s avec IP %s et la classe %d: %s
-No reason specified|Aucune raison sp–πcifi–πe
-Automatically deleted %d user log entries older than %d days.|Suppression automatique %d de l'entr–πe de log de l'utilisateur plus vieille que %d jours.
-Main chat message replaced for user: %s|chat central remplac–π pour l'utilisateur: %s
+No reason specified|Aucune raison spÈcifiÈe
+Automatically deleted %d user log entries older than %d days.|Suppression automatique %d de l'entrÈe de log de l'utilisateur plus vieille que %d jours.
+Main chat message replaced for user: %s|chat central remplacÈ pour l'utilisateur: %s
 Unknown protocol command from IP %s before login: %s|Protocole de commande inconnu de l'IP %s avant connexion: %s
-Added %s to hard IP ban list, %d users in total.|Ajout–π %s sur la liste d'interdiction de ban IP, %d utilisateurs au total .
+Added %s to hard IP ban list, %d users in total.|AjoutÈ %s sur la liste d'interdiction de ban IP, %d utilisateurs au total .
 NMDC version: %s|Version de NMDC: %s
 Client supports: %s|Supports de client: %s
-Modified forbidden client supports with ban time %s: %s|Modifi–π les supports de client interdits avec le temps de ban %s: %s
-Added forbidden client supports with ban time %s: %s|Ajout–π les supports de client interdits avec le temps de ban %s: %s
+Modified forbidden client supports with ban time %s: %s|ModifiÈ les supports de client interdits avec le temps de ban %s: %s
+Added forbidden client supports with ban time %s: %s|AjoutÈ les supports de client interdits avec le temps de ban %s: %s
 Modified forbidden NMDC version with ban time %s: %s|Modifier la version interdite NMDC avec le temps de l'interdiction %s: %s
-Added forbidden NMDC version with ban time %s: %s|Ajout–π la version interdite NMDC avec le temps de l'interdiction %s: %s
-Latest version of %s is required in order to use this feature.|La derni–∏re version de %s est exig–πe pour utiliser cette fonction.
-Deleted forbidden client supports: %s|Les supports de client interdits sont supprim–πs: %s
+Added forbidden NMDC version with ban time %s: %s|AjoutÈ la version interdite NMDC avec le temps de l'interdiction %s: %s
+Latest version of %s is required in order to use this feature.|La derniËre version de %s est exigÈe pour utiliser cette fonction.
+Deleted forbidden client supports: %s|Les supports de client interdits sont supprimÈs: %s
 Couldn't delete forbidden client supports because not found: %s|Ne peut pas supprimer les supports de client interdits car introuvables: %s
-Deleted forbidden NMDC version: %s|La version interdite de NMDC a –πt–π effac–πe: %s
+Deleted forbidden NMDC version: %s|La version interdite de NMDC a ÈtÈ effacÈe: %s
 Couldn't delete forbidden NMDC version because not found: %s|Ne peut pas supprimer la version interdite de NMDC car introuvable: %s
 Forbidden client supports list|Liste de supports de client interdits
 Forbidden client supports list is empty.|La liste d'interdiction de supports de client est vide.
 Forbidden NMDC version list|Liste de version interdite de NMDC
 Forbidden NMDC version list is empty.|La liste de version interdite de NMDC est vide.
-%s with IP %s and class %d allowed due to forbidden client supports exception: %s|%s avec l'IP %s et le profil %d est exceptionnellement autoris–π –∞ utiliser les supports de client interdits: %s
-%s with IP %s and class %d allowed due to forbidden NMDC version exception: %s|%s avec l'IP %s et le profil %d est exceptionnellement autoris–π –∞ utiliser une version interdite de NMDC.
+%s with IP %s and class %d allowed due to forbidden client supports exception: %s|%s avec l'IP %s et le profil %d est exceptionnellement autorisÈ ‡ utiliser les supports de client interdits: %s
+%s with IP %s and class %d allowed due to forbidden NMDC version exception: %s|%s avec l'IP %s et le profil %d est exceptionnellement autorisÈ ‡ utiliser une version interdite de NMDC.
 City: %s|Ville: %s
-IP range: %s - %s|Rang–πe d'IP: %s - %s
-Region: %s|R–πgion: %s
+IP range: %s - %s|RangÈe d'IP: %s - %s
+Region: %s|RÈgion: %s
 Time zone: %s|Fuseau horaire: %s
 Continent: %s|Continent: %s
 Postal code: %s|Code postal: %s
-Coordinates: %.4f %.4f|Coordonn–πes: %4f %.4f
+Coordinates: %.4f %.4f|CoordonnÈes: %4f %.4f
 Metro code: %d|Metro code: %d
 Area code: %d|Code indicatif: %d
-Drop users with IP|D–πconnecter les utilisateurs avec l'IP
-No users found with IP: %s|Aucun utilisateur trouv–π avec l'IP: %s
-Dropped %d users with IP: %s|d–πconnect–π %d des utilisateurs avec l'IP: %s
-%s dropped %d users with IP: %s|%s d–πconnect–π %d utilisateurs avec l'IP: %s
+Drop users with IP|DÈconnecter les utilisateurs avec l'IP
+No users found with IP: %s|Aucun utilisateur trouvÈ avec l'IP: %s
+Dropped %d users with IP: %s|dÈconnectÈ %d des utilisateurs avec l'IP: %s
+%s dropped %d users with IP: %s|%s dÈconnectÈ %d utilisateurs avec l'IP: %s
 Live user location statistics by city|Statistiques sur les utilisateurs vivants par ville
 Live user location statistics by city from %s=%s|Statistiques sur les utilisateurs vivants par ville de %s=%s
 No users in the hub from: %s=%s|Pas d'utilisateurs sur le hub de: %s=%s
 Help notes|Notes d'aide
-parameter|param–∏tre
-Command parameters %s are always required, while %s are optional.|Les param–∏tres de commande %s sont toujours requises, tandis que %s sont optionnelles.
-Quoted parameters %s or %s must be used with quotes.|Les param–∏tres cit–πs %s ou %s doivent –∫tre utilis–πs avec les citations.
+parameter|paramËtre
+Command parameters %s are always required, while %s are optional.|Les paramËtres de commande %s sont toujours requises, tandis que %s sont optionnelles.
+Quoted parameters %s or %s must be used with quotes.|Les paramËtres citÈs %s ou %s doivent Ítre utilisÈs avec les citations.
 IP information|Information de l'IP
 IP information not available: %s|Information de l'IP non disponible: %s
-Message replaced for user with IP %s and class %d in MC: <%s> %s|Message remplac–π pour l'utilisateur avec IP %s et la  classe %d in MC: <%s> %s
+Message replaced for user with IP %s and class %d in MC: <%s> %s|Message remplacÈ pour l'utilisateur avec IP %s et la  classe %d in MC: <%s> %s
 IP %s permanently banned: <%s> %s|L'IP %s est bannie en permanence: <%s> %s
 Nick %s permanently banned: <%s> %s|Le pseudonyme %s est banni en permanence: <%s> %s
-Range %s permanently banned: <%s> %s|La rang–πe %s est bannie en permanence: <%s> %s
-Host %s permanently banned: <%s> %s|L'h—Ñte %s est banni en permanence: <%s> %s
+Range %s permanently banned: <%s> %s|La rangÈe %s est bannie en permanence: <%s> %s
+Host %s permanently banned: <%s> %s|L'hÙte %s est banni en permanence: <%s> %s
 Share %s permanently banned: <%s> %s|Le partage %s est banni en permanence: <%s> %s
 Prefix %s permanently banned: <%s> %s|Le prefixe %s est banni en permanence: <%s> %s
-IP %s temporarily banned until %s: <%s> %s|l'IP %s est temporairement bannie jusqu'–∞ %s: <%s> %s
-Nick %s temporarily banned until %s: <%s> %s|Le pseudo %s est temporairement banni jusqu'–∞ %s: <%s> %s
-Range %s temporarily banned until %s: <%s> %s|La rang–πe %s est temporairement bannie jusqu'–∞ %s: <%s> %s
-Host %s temporarily banned until %s: <%s> %s|L'h—Ñte %s est temporairement banni jusqu'–∞ %s: <%s> %s
-Share %s temporarily banned until %s: <%s> %s|Le partage %s est temporairement banni jusqu'–∞ %s: <%s> %s
-Prefix %s temporarily banned until %s: <%s> %s|Le prefixe %s est temporairement banni jusqu'–∞ %s: <%s> %s
-IP %s unbanned: <%s> %s|IP %s d–πbannie: <%s> %s
-Nick %s unbanned: <%s> %s|Pseudo %s d–πbanni: <%s> %s
-Range %s unbanned: <%s> %s|Rang–πe %s d–πbannie: <%s> %s
-Host %s unbanned: <%s> %s|H—Ñte %s d–πbanni: <%s> %s
-Share %s unbanned: <%s> %s|Partage %s d–πbanni: <%s> %s
-Prefix %s unbanned: <%s> %s|Prefixe %s d–πbanni: <%s> %s
+IP %s temporarily banned until %s: <%s> %s|l'IP %s est temporairement bannie jusqu'‡ %s: <%s> %s
+Nick %s temporarily banned until %s: <%s> %s|Le pseudo %s est temporairement banni jusqu'‡ %s: <%s> %s
+Range %s temporarily banned until %s: <%s> %s|La rangÈe %s est temporairement bannie jusqu'‡ %s: <%s> %s
+Host %s temporarily banned until %s: <%s> %s|L'hÙte %s est temporairement banni jusqu'‡ %s: <%s> %s
+Share %s temporarily banned until %s: <%s> %s|Le partage %s est temporairement banni jusqu'‡ %s: <%s> %s
+Prefix %s temporarily banned until %s: <%s> %s|Le prefixe %s est temporairement banni jusqu'‡ %s: <%s> %s
+IP %s unbanned: <%s> %s|IP %s dÈbannie: <%s> %s
+Nick %s unbanned: <%s> %s|Pseudo %s dÈbanni: <%s> %s
+Range %s unbanned: <%s> %s|RangÈe %s dÈbannie: <%s> %s
+Host %s unbanned: <%s> %s|HÙte %s dÈbanni: <%s> %s
+Share %s unbanned: <%s> %s|Partage %s dÈbanni: <%s> %s
+Prefix %s unbanned: <%s> %s|Prefixe %s dÈbanni: <%s> %s
 Known contexts are: %s|Les contextes connus sont: %s
 Known orders are: %s|Les ordres connus sont: %s
-Modified right click menu item: %s|Article du menu du click droit modifi–π: %s
-Added right click menu item: %s|Article du menu du klick droit ajout–π: %s
-Deleted right click menu item: %s|Article du menu du click droit supprim–π: %s
+Modified right click menu item: %s|Article du menu du click droit modifiÈ: %s
+Added right click menu item: %s|Article du menu du klick droit ajoutÈ: %s
+Deleted right click menu item: %s|Article du menu du click droit supprimÈ: %s
 Right click menu item not found: %d|Clic droit menu introuvable: %d
 Right click menu item list is empty.|La liste d'article du menu du Click droit est vide.
 Menu item|Menu de l'article
 Menu command|Menu de commande
 Changed right click menu item order: %s|Changer l'ordre du menu click droit: %s
-Separator or eraser|S–πparateur ou effaceur
-Nick and IP %s unbanned: <%s> %s|Pseudo et IP %s d–πbanni: <%s> %s
-Other %s unbanned: <%s> %s|Autre %s d–πbanni: <%s> %s
+Separator or eraser|SÈparateur ou effaceur
+Nick and IP %s unbanned: <%s> %s|Pseudo et IP %s dÈbanni: <%s> %s
+Other %s unbanned: <%s> %s|Autre %s dÈbanni: <%s> %s
 Vote for user to be kicked|Voter pour kicker un utilisateur
-You don't want to vote for kicking an operator.|Tu ne veux pas voter pour kicker un op–πrateur.
-User voted kick|Kick de l'utilisateur vot–π
-You have already voted for kicking that user.|Tu as d–πj–∞ vot–π pour kicker cet utilisateur.
-%s added vote %d of %d for kicking user with class %d: %s|%s vote ajout–π %d de %d pour kicker l'utilisateur avec le profil %d: %s
-There is an error in following antispam entry pattern|Il y a une erreur dans le mod–∏le d'entr–πe antispam suivant
-Pattern|Mod–∏le
+You don't want to vote for kicking an operator.|Tu ne veux pas voter pour kicker un opÈrateur.
+User voted kick|Kick de l'utilisateur votÈ
+You have already voted for kicking that user.|Tu as dÈj‡ votÈ pour kicker cet utilisateur.
+%s added vote %d of %d for kicking user with class %d: %s|%s vote ajoutÈ %d de %d pour kicker l'utilisateur avec le profil %d: %s
+There is an error in following antispam entry pattern|Il y a une erreur dans le modËle d'entrÈe antispam suivant
+Pattern|ModËle
 Error|Erreur
 Solution|Solution
-There is an error in following search filter pattern|Il y a une erreur dans le mod–∏le de filtre de recherche suivant
-There is an error in following search filter exception pattern|Il y a une erreur dans le mod–∏le d'exception du filtre de recherche suivant
-There is an error in following antispam exception entry pattern|Il y a une erreur dans le mod–∏le d'exception d'entr–πe antispam suivant
-There is an error in following forbidden nick pattern|Il y a une erreur interdite dans le mod–∏le de pseudo suivant
-There is an error in following MyINFO exception pattern|Il y a une erreur dans le mod–∏le d'exception MyINFO suivant
-There is an error in following forbidden description pattern|Il y a une erreur interdite dans le mod–∏le de description suivant
-There is an error in following forbidden tag pattern|Il y a une erreur interdite dans le mod–∏le de tag suivant
-There is an error in following forbidden connection type pattern|Il y a une erreur interdite dans le mod–∏le de genre de connexion suivant
-There is an error in following forbidden email pattern|Il y a une erreur interdite dans le mod–∏le d'email suivant
-There is an error in following forbidden share size pattern|Il y a une erreur interdite dans le mod–∏le taille de partage suivant
-There is an error in following forbidden IP address pattern|Il y a une erreur interdite dans le mod–∏le d'adresse IP suivant
-There is an error in following forbidden country code pattern|Il y a une erreur interdite dans le mod–∏le de code pays suivant
-There is an error in following forbidden DNS pattern|Il ya une erreur interdite dans le mod–∏le de DNS suivant
-There is an error in following forbidden client supports pattern|Il y a une erreur interdite dans le mod–∏le d'assistance de client suivant
-There is an error in following forbidden NMDC version pattern|Il y a une erreur interdite dans le mod–∏le de version NMDC suivant
-Added replacer in PM: %s|Le remplacement en message priv–π a –πt–π ajout–π: %s
-Added replacer in MC and PM: %s|Le remplacement en Message Central et message priv–π a –πt–π ajout–π: %s
-Message replaced for user with IP %s and class %d in PM to %s with IP %s and class %d: <%s> %s|Message remplac–π pour l'utilisateur avec IP %s et la classe %d dans PM %s avec IP %s et la classe %d: <%s> %s 
-Message ignored due to flood detection from %s with IP %s and class %d in MC: %s|Message ignor–π car un flood a –πt–π d–πtect–π de %s avec l'IP %s et le profil %d dans le Message Central: %s
-Users with same IP|Utilisateurs avec la m–∏me IP
-Parameter count mismatch detected in following translation string: %s|Disparit–π de param–∏tre de compte d–πtect–πe dans la s–πrie de traduction suivante: %s
-Infected user detected|Utilisateur infect–π d–πtect–π
-Found files|Fichiers trouv–πs
-Infected user detected with nick %s and IP %s and share %s and spent time: %s|Utilisateur infect–π d–πtect–π avec le pseudo %s et l'IP %s et le partage %s et le temps pass–π %s
-Sadly I don't have access to send infected user information to AVDB, please ask maintainer of this script to add your server IP address to access list. AVDB reporting feature has been automatically disabled.|Malheureusement je n'ai pas d'acc–∏s pour envoyer –∞ AVDB des informations sur un utilisateur infect–π, s'il vous plait \ndemander –∞ la maintenance de ce script d'ajouter l'adresse IP de votre server –∞ la liste d'acc–∏s.\nAVDB a rapport–π la caract–πristique et a mis automatiquement hors service.
-In order to send infected user information to AVDB you need to ask maintainer of this script to add your server IP address to AVDB access list.|Pour envoyer des informations d'utilisateur infect–π –∞ AVDB vous devez demander \"\n–∞ la maintenance de ce script d'ajouter l'adresse IP de votre Server –∞ la liste d'acc–∏s de AVDB.
+There is an error in following search filter pattern|Il y a une erreur dans le modËle de filtre de recherche suivant
+There is an error in following search filter exception pattern|Il y a une erreur dans le modËle d'exception du filtre de recherche suivant
+There is an error in following antispam exception entry pattern|Il y a une erreur dans le modËle d'exception d'entrÈe antispam suivant
+There is an error in following forbidden nick pattern|Il y a une erreur interdite dans le modËle de pseudo suivant
+There is an error in following MyINFO exception pattern|Il y a une erreur dans le modËle d'exception MyINFO suivant
+There is an error in following forbidden description pattern|Il y a une erreur interdite dans le modËle de description suivant
+There is an error in following forbidden tag pattern|Il y a une erreur interdite dans le modËle de tag suivant
+There is an error in following forbidden connection type pattern|Il y a une erreur interdite dans le modËle de genre de connexion suivant
+There is an error in following forbidden email pattern|Il y a une erreur interdite dans le modËle d'email suivant
+There is an error in following forbidden share size pattern|Il y a une erreur interdite dans le modËle taille de partage suivant
+There is an error in following forbidden IP address pattern|Il y a une erreur interdite dans le modËle d'adresse IP suivant
+There is an error in following forbidden country code pattern|Il y a une erreur interdite dans le modËle de code pays suivant
+There is an error in following forbidden DNS pattern|Il ya une erreur interdite dans le modËle de DNS suivant
+There is an error in following forbidden client supports pattern|Il y a une erreur interdite dans le modËle d'assistance de client suivant
+There is an error in following forbidden NMDC version pattern|Il y a une erreur interdite dans le modËle de version NMDC suivant
+Added replacer in PM: %s|Le remplacement en message privÈ a ÈtÈ ajoutÈ: %s
+Added replacer in MC and PM: %s|Le remplacement en Message Central et message privÈ a ÈtÈ ajoutÈ: %s
+Message replaced for user with IP %s and class %d in PM to %s with IP %s and class %d: <%s> %s|Message remplacÈ pour l'utilisateur avec IP %s et la classe %d dans PM %s avec IP %s et la classe %d: <%s> %s 
+Message ignored due to flood detection from %s with IP %s and class %d in MC: %s|Message ignorÈ car un flood a ÈtÈ dÈtectÈ de %s avec l'IP %s et le profil %d dans le Message Central: %s
+Users with same IP|Utilisateurs avec la mËme IP
+Parameter count mismatch detected in following translation string: %s|DisparitÈ de paramËtre de compte dÈtectÈe dans la sÈrie de traduction suivante: %s
+Infected user detected|Utilisateur infectÈ dÈtectÈ
+Found files|Fichiers trouvÈs
+Infected user detected with nick %s and IP %s and share %s and spent time: %s|Utilisateur infectÈ dÈtectÈ avec le pseudo %s et l'IP %s et le partage %s et le temps passÈ %s
+Sadly I don't have access to send infected user information to AVDB, please ask maintainer of this script to add your server IP address to access list. AVDB reporting feature has been automatically disabled.|Malheureusement je n'ai pas d'accËs pour envoyer ‡ AVDB des informations sur un utilisateur infectÈ, s'il vous plait \ndemander ‡ la maintenance de ce script d'ajouter l'adresse IP de votre server ‡ la liste d'accËs.\nAVDB a rapportÈ la caractÈristique et a mis automatiquement hors service.
+In order to send infected user information to AVDB you need to ask maintainer of this script to add your server IP address to AVDB access list.|Pour envoyer des informations d'utilisateur infectÈ ‡ AVDB vous devez demander \"\n‡ la maintenance de ce script d'ajouter l'adresse IP de votre Server ‡ la liste d'accËs de AVDB.
 Antivirus statistics|Statistiques de l'antivirus
-File names used for search|Nom de fichier utilis–π pour rechercher
-File extensions used for search|Fichier d'extensions utilis–π pour rechercher
-Possibly infected users|Possibilit–π d'utilisateurs infect–πs
-Spent time: %s|Temps pass–π: %s
-Infected user logged in with IP %s and share %s: %s|L'utilisateur infect–π s'est connect–π avec l'IP %s et le partage %s: %s
-Loaded %d of %d with totally %d items: %s|Charg–π %d de %d avec tous ces %d articles: %s
-Infected user information sent to %s: %s|Information d'un utilisateur infect–π envoy–π –∞ %s: %s
+File names used for search|Nom de fichier utilisÈ pour rechercher
+File extensions used for search|Fichier d'extensions utilisÈ pour rechercher
+Possibly infected users|PossibilitÈ d'utilisateurs infectÈs
+Spent time: %s|Temps passÈ: %s
+Infected user logged in with IP %s and share %s: %s|L'utilisateur infectÈ s'est connectÈ avec l'IP %s et le partage %s: %s
+Loaded %d of %d with totally %d items: %s|ChargÈ %d de %d avec tous ces %d articles: %s
+Infected user information sent to %s: %s|Information d'un utilisateur infectÈ envoyÈ ‡ %s: %s
 Failed to load information from %s: %s|Impossible de charger l'information de %s: %s
-Failed to send information to %s: %s|Impossible d'envoyer l'information –∞ %s: %s
-Error on executing %s: %s|Erreur –∞ l'ex–πcution %s: %s
-Error on connecting.|Erreur –∞ la connexion.
-Loaded none with totally %d items: %s|Rien n'a –πt–π charg–π avec tous ces %d articles: %s
-Infected user found with IP %s and share %s: %s|Utilisateur infect–π trouv–π avec l'IP %s et partage %s: %s
-Server didn't reply with expected status code.|Le serveur n'a pas r–πpondu avec le code de statut attendu.
+Failed to send information to %s: %s|Impossible d'envoyer l'information ‡ %s: %s
+Error on executing %s: %s|Erreur ‡ l'exÈcution %s: %s
+Error on connecting.|Erreur ‡ la connexion.
+Loaded none with totally %d items: %s|Rien n'a ÈtÈ chargÈ avec tous ces %d articles: %s
+Infected user found with IP %s and share %s: %s|Utilisateur infectÈ trouvÈ avec l'IP %s et partage %s: %s
+Server didn't reply with expected status code.|Le serveur n'a pas rÈpondu avec le code de statut attendu.
 Size of %s: %d @ %s|Taille de %s: %d @ %s
-Clear kick votes for user|Nettoyer les votes kick–πs pour utilisateur
-%s cleared %d of %d votes for kicking user with class %d: %s|%s nettoy–πe %d de %d votes pour utilisateur kick–π avec le profil %d: %s
+Clear kick votes for user|Nettoyer les votes kickÈs pour utilisateur
+%s cleared %d of %d votes for kicking user with class %d: %s|%s nettoyÈe %d de %d votes pour utilisateur kickÈ avec le profil %d: %s
 Vote kick list|Liste de vote kick
 Vote kick list is empty.|La liste de vote des kicks est vide.
 Votes: %d of %d|Votes: %d de %d
@@ -1015,71 +1015,71 @@ Triggers|Triggers
 Add trigger|Ajouter un trigger
 Trigger list|Liste des trigger
 Delete trigger|Supprimer le trigger
-Modified trigger: %s|Trigger modifi–π: %s
+Modified trigger: %s|Trigger modifiÈ: %s
 Added trigger: %s|Ajouter le trigger: %s
 Deleted trigger: %s|Supprimer le trigger: %s
 Trigger not found: %s|Trigger introuvable: %s
 Trigger list is empty.|La liste du trigger est vide.
-Class range: %d to %d|D–πnomination de profil: %d –∞ %d
+Class range: %d to %d|DÈnomination de profil: %d ‡ %d
 Pinger|Pinger
-Guest|Invit–π
-Registered|Enregistr–π
+Guest|InvitÈ
+Registered|EnregistrÈ
 VIP|VIP
-Operator|Op–πrateur
+Operator|OpÈrateur
 Cheef|Chef
 Administrator|Administrateur
 Master|Master
-News item added by %s: %s|Nouvel article ajout–π par %s: %s
-Your connection request is blocked because user that you're trying connect to was detected as virus spreader: %s|Ta demande de connexion a –πt–π bloqu–πe car l'utilisateur auquel tu essaies de te connecter a –πt–π d–πtect–π comme ayant un virus spreader: %s
-Connection requests to following user will be blocked: %s|Les demandes de connexion de l'utilisateur suivant seront bloqu–πes: %s
-Downloading script file: %s|T–πl–πchargement du fichier de script: %s
+News item added by %s: %s|Nouvel article ajoutÈ par %s: %s
+Your connection request is blocked because user that you're trying connect to was detected as virus spreader: %s|Ta demande de connexion a ÈtÈ bloquÈe car l'utilisateur auquel tu essaies de te connecter a ÈtÈ dÈtectÈ comme ayant un virus spreader: %s
+Connection requests to following user will be blocked: %s|Les demandes de connexion de l'utilisateur suivant seront bloquÈes: %s
+Downloading script file: %s|TÈlÈchargement du fichier de script: %s
 Stable version of %s is available: %s|Une version stable de %s est disponible: %s
-Development version of %s is available: %s|Une version de d–πveloppement de %s est disponible: %s
-Translation file loaded: %s|Fichier de traduction charg–π: %s
+Development version of %s is available: %s|Une version de dÈveloppement de %s est disponible: %s
+Translation file loaded: %s|Fichier de traduction chargÈ: %s
 Loaded none of %d with totally %d items: %s|Pas de chargement %d avec tous ces %d articles: %s
-Failed to execute %s with code: %d|Impossible –∞ ex–πcuter %s avec le code: %d
-Failed to execute %s with error: %s|Impossible –∞ ex–πcuter %s avec l'erreur: %s
-Failed to execute %s without code and error.|Impossible d'ex–πcuter %s sans code et erreur.
-Failed to move file: %s|Impossible de d–πplacer le fichier: %s
-Downloading translation file: %s|T–πl–πcharger le fichier de traduction: %s
-File not found on update server: %s|Fichier non trouv–π lors de la mise –∞ jour du server: %s
-File not found on remote server: %s|Fichier non trouv–π sur server distant: %s
+Failed to execute %s with code: %d|Impossible ‡ exÈcuter %s avec le code: %d
+Failed to execute %s with error: %s|Impossible ‡ exÈcuter %s avec l'erreur: %s
+Failed to execute %s without code and error.|Impossible d'exÈcuter %s sans code et erreur.
+Failed to move file: %s|Impossible de dÈplacer le fichier: %s
+Downloading translation file: %s|TÈlÈcharger le fichier de traduction: %s
+File not found on update server: %s|Fichier non trouvÈ lors de la mise ‡ jour du server: %s
+File not found on remote server: %s|Fichier non trouvÈ sur server distant: %s
 File is empty.|Le fichier est vide.
-Force infected user detection|Forcer la d–πtection d'un utilisateur infect–π
-You can't block user whose class is higher or equals your own: %s|Tu ne peux pas bloquer un utilisateur qui a un profil sup–πrieur ou –πgal au tien: %s
-User already blocked: %s|Utilisateur toujours bloqu–π: %s
+Force infected user detection|Forcer la dÈtection d'un utilisateur infectÈ
+You can't block user whose class is higher or equals your own: %s|Tu ne peux pas bloquer un utilisateur qui a un profil supÈrieur ou Ègal au tien: %s
+User already blocked: %s|Utilisateur toujours bloquÈ: %s
 item|article
 Search in %s|Rechercher dans %s
 Antivirus|Antivirus
-Nothing was found in: %s|Rien a –πt–π trouv–π en: %s
+Nothing was found in: %s|Rien a ÈtÈ trouvÈ en: %s
 Searching for %s in %s: %s|Recherche de %s en %s: %s
 Showing %d results from %s|Afficher %d les resultats de %s
 %s module version: %s|%s module version: %s
-This feature requires following module installed on your system: %s|Cette fonction exige le module suivant install–π sur votre syst–∏me: %s
-Failed to start antivirus search server: %s|Impossible de commenc–π la recherche antivirus sur le serveur: %s
-Started antivirus search server: %s|Commenc–π la recherche antivirus sur le serveur: %s
-Stopped antivirus search server: %s|Arr–∫ter la recherche antivirus sur le serveur: %s
-Blocked infected users|Utilisateurs infect–πs bloqu–πs
-Add automatic country chatroom entrance|Ajouter entr–πe de chatroom pays automatique
-Automatic country chatroom entrance list|Liste d'entr–πe de chatroom pays automatique
-Delete automatic country chatroom entrance|Supprimer entr–πe de chatroom pays automatique
-Couldn't add automatic country chatroom entrance because already exists with ID: %d|Impossible d'ajouter l'entr–πe de chatroom pays automatique parce existe d–πj–∞ avec ID: %d
-Added automatic country chatroom entrance for %s: %s|Entr–πe de chatroom sur pays automatique ajout–πe pour %s: %s
-Couldn't delete automatic country chatroom entrance because ID not found: %d|Impossible de supprimer l'entr–πe automatique de chat de pays parce ID introuvable: %d
-Deleted automatic country chatroom entrance with ID: %d|Supprim–π une entr–πe de chatroom de pays automatique avec ID: %d
+This feature requires following module installed on your system: %s|Cette fonction exige le module suivant installÈ sur votre systËme: %s
+Failed to start antivirus search server: %s|Impossible de commencÈ la recherche antivirus sur le serveur: %s
+Started antivirus search server: %s|CommencÈ la recherche antivirus sur le serveur: %s
+Stopped antivirus search server: %s|ArrÍter la recherche antivirus sur le serveur: %s
+Blocked infected users|Utilisateurs infectÈs bloquÈs
+Add automatic country chatroom entrance|Ajouter entrÈe de chatroom pays automatique
+Automatic country chatroom entrance list|Liste d'entrÈe de chatroom pays automatique
+Delete automatic country chatroom entrance|Supprimer entrÈe de chatroom pays automatique
+Couldn't add automatic country chatroom entrance because already exists with ID: %d|Impossible d'ajouter l'entrÈe de chatroom pays automatique parce existe dÈj‡ avec ID: %d
+Added automatic country chatroom entrance for %s: %s|EntrÈe de chatroom sur pays automatique ajoutÈe pour %s: %s
+Couldn't delete automatic country chatroom entrance because ID not found: %d|Impossible de supprimer l'entrÈe automatique de chat de pays parce ID introuvable: %d
+Deleted automatic country chatroom entrance with ID: %d|SupprimÈ une entrÈe de chatroom de pays automatique avec ID: %d
 Automatic country chatroom entrance list is empty.|La liste de pays de chatroom automatique  est vide .
-Please note, following function is required for features available in this version of %s and is currently not available in running version of %s but is available in latest update: %s|S'il vous pla–æt noter , la fonction suivante est n–πcessaire pour les fonctions disponibles dans cette version de % s et n'est pas disponible actuellement en version de % s en cours d'ex–πcution , mais est disponible en derni–∏re mise –∞ jour: %s
+Please note, following function is required for features available in this version of %s and is currently not available in running version of %s but is available in latest update: %s|S'il vous plaÓt noter , la fonction suivante est nÈcessaire pour les fonctions disponibles dans cette version de % s et n'est pas disponible actuellement en version de % s en cours d'exÈcution , mais est disponible en derniËre mise ‡ jour: %s
 note|note
-Access is restricted.|Acc–∏s est limit–π.
+Access is restricted.|AccËs est limitÈ.
 Convert LRE to plain text|LRE convertir en texte
 LRE converted to plain text: %s|LRE converti en texte brut: %s
-Please check your command syntax, something is wrong there.|S' il vous pla–æt v–πrifier votre syntaxe de commande , quelque chose ne va pas.
-Entry used in detection: %s|Entr–πe utilis–πe dans la d–πtection: %s
-Exception used in detection: %s|Exception utilis–π dans la d–πtection: %s
+Please check your command syntax, something is wrong there.|S' il vous plaÓt vÈrifier votre syntaxe de commande , quelque chose ne va pas.
+Entry used in detection: %s|EntrÈe utilisÈe dans la dÈtection: %s
+Exception used in detection: %s|Exception utilisÈ dans la dÈtection: %s
 text|texte
 Delete history messages by text|Supprimer les messages de l'histoire en texte
-Deleted %d main chat history messages by text: %s|Supprim–π %d messages principaux de l'histoire de chat par texte : %s
-%s with class %d deleted %d main chat history messages by text: %s|%s avec la classe %d %d supprim–πs les messages de l'historique chat par texte : %s
+Deleted %d main chat history messages by text: %s|SupprimÈ %d messages principaux de l'histoire de chat par texte : %s
+%s with class %d deleted %d main chat history messages by text: %s|%s avec la classe %d %d supprimÈs les messages de l'historique chat par texte : %s
 Looking for users with nick %s on: %s|Vous cherchez pour les utilisateurs avec nick %s sur: %s
 Looking for users with description %s on: %s|Vous cherchez pour les utilisateurs avec la description %s sur: %s
 Looking for users with client tag %s on: %s|Vous cherchez pour les utilisateurs avec un tag client %s sur: %s
@@ -1093,65 +1093,65 @@ Users with client tag not found in any hubs: %s|Utilisateurs avec le tag client 
 Users with connection type not found in any hubs: %s|Les utilisateurs avec se type de connexion est introuvables dans aucun salons: %s 
 Users with email address not found in any hubs: %s|Les utilisateurs avec cette adresse e-mail ne trouve pas dans tous les salons: %s
 Users with share size not found in any hubs: %s|Les utilisateurs disposant de la taille de partage ne se trouvent dans aucun salons: %s
-Users with IP address not found in any hubs: %s|Les utilisateurs avec cette  adresse IP na pas –πt–∏ trouv–πe dans aucun salons: %s
-Users with nick %s found in following hubs|Les utilisateurs avec les pseudo %s trouv–πs dans les salons
-Users with description %s found in following hubs|Les utilisateurs avec la description suivante %s non pas –πt–π trouv–πs dans les salons
-Users with client tag %s found in following hubs|Les utilisateurs avec le tag client  suivant %s non pas –πt–∏ trouv–πs dans les salons
-Users with connection type %s found in following hubs|Les tilisateurs avec avec se type de connexion suivante %s non pas –πt–∏ trouv–πs dans les salons
-Users with email address %s found in following hubs|Les utilisateurs avec cette email suivante %s non pas –πt–∏ trouv–πs dans les salons
-Users with share size %s found in following hubs|Les utilisateurs avec cette taille de partage suivant %s non pas –πt–∏ trouv–πs dans les salons
-Users with IP address %s found in following hubs|Les utilisateurs avec cette adresse IP suivante %s non pas –πt–∏ trouv–πs dans les salons
-Blocked PM|PM bloqu–πs
+Users with IP address not found in any hubs: %s|Les utilisateurs avec cette  adresse IP na pas ÈtË trouvÈe dans aucun salons: %s
+Users with nick %s found in following hubs|Les utilisateurs avec les pseudo %s trouvÈs dans les salons
+Users with description %s found in following hubs|Les utilisateurs avec la description suivante %s non pas ÈtÈ trouvÈs dans les salons
+Users with client tag %s found in following hubs|Les utilisateurs avec le tag client  suivant %s non pas ÈtË trouvÈs dans les salons
+Users with connection type %s found in following hubs|Les tilisateurs avec avec se type de connexion suivante %s non pas ÈtË trouvÈs dans les salons
+Users with email address %s found in following hubs|Les utilisateurs avec cette email suivante %s non pas ÈtË trouvÈs dans les salons
+Users with share size %s found in following hubs|Les utilisateurs avec cette taille de partage suivant %s non pas ÈtË trouvÈs dans les salons
+Users with IP address %s found in following hubs|Les utilisateurs avec cette adresse IP suivante %s non pas ÈtË trouvÈs dans les salons
+Blocked PM|PM bloquÈs
 Right click menu|Le menu du clic droit
 IP watch|Ip regarder
 Hard IP bans|IP  bannis Interdite 
 Chatroom history|Historique Tchat
 Chatroom history is empty.|L'historique tchat est vide.
 Last %d chatroom messages|Dernier %d messages du tchat
-There are no chatroom history messages to remove: %s|Il n'y a pas d'historique de messages tchat pour –∫tre effacer : %s
-Deleted %d chatroom history messages: %s|Supprim–πs %d l'historique des messages:%s
-%s with class %d deleted %d chatroom history messages: %s|%s avec la classe %d a supprim–πs %d les messages d'historique: %s
-Set your chat mode|R–πglez votre mode chat
-real|r–πel
-Specified country code isn't valid: %s|Code pays sp–πcifi–π est incorrect: %s
+There are no chatroom history messages to remove: %s|Il n'y a pas d'historique de messages tchat pour Ítre effacer : %s
+Deleted %d chatroom history messages: %s|SupprimÈs %d l'historique des messages:%s
+%s with class %d deleted %d chatroom history messages: %s|%s avec la classe %d a supprimÈs %d les messages d'historique: %s
+Set your chat mode|RÈglez votre mode chat
+real|rÈel
+Specified country code isn't valid: %s|Code pays spÈcifiÈ est incorrect: %s
 You can't block user who don't share anything: %s|Vous ne pouvez pas bloquer l'utilisateur qui ne rien partager: %s
 You can't kick user who don't share anything: %s|Vous ne pouvez pas kicker l' utilisateur qui ne partagent rien: %s
-Flood detected from %s with IP %s and class %d in MC: %s|Flood d–πtect–πe de cette %s with IP %s avec le rang %d sur le central: %s
-User dropped due to flood: %s|L'utilisateur a –πt–∏ d–πconnecter en raison des flood: %s
-Main chat flood detected from your nick.|Flood d–πtect–π sur le central –∞ partir de votre pseudo.
-Private chat flood detected from your IP.|Flood d–πtect–πe en priver  –∞ partir de votre adresse IP.
-Sorry, your message has been ignored.|D–πsoler votre message a –πt–π ignorer.
-Disable or enable right click menu item|D–πsactiver ou activer le clic droit  du menu
-Disabled right click menu item: %s|D–πsactiver le clic droit: %s
+Flood detected from %s with IP %s and class %d in MC: %s|Flood dÈtectÈe de cette %s with IP %s avec le rang %d sur le central: %s
+User dropped due to flood: %s|L'utilisateur a ÈtË dÈconnecter en raison des flood: %s
+Main chat flood detected from your nick.|Flood dÈtectÈ sur le central ‡ partir de votre pseudo.
+Private chat flood detected from your IP.|Flood dÈtectÈe en priver  ‡ partir de votre adresse IP.
+Sorry, your message has been ignored.|DÈsoler votre message a ÈtÈ ignorer.
+Disable or enable right click menu item|DÈsactiver ou activer le clic droit  du menu
+Disabled right click menu item: %s|DÈsactiver le clic droit: %s
 Enabled right click menu item: %s|Activer le clic droit du menu: %s
-%s added to search block list.|%s ajout–πe –∞ la recherche bloc liste.
-Your search request is discarded due to previous forbidden search request.|Votre demande de recherche est –πlimin–π en raison de la pr–πc–πdente demande de recherche interdite .
+%s added to search block list.|%s ajoutÈe ‡ la recherche bloc liste.
+Your search request is discarded due to previous forbidden search request.|Votre demande de recherche est ÈliminÈ en raison de la prÈcÈdente demande de recherche interdite .
 Hub URL: %s|Salon URL: %s
 Search filter block list|Filtre de recherche blocklist
-Delete search filter block list entry|Supprimer Recherche entr–πe filtre blocklist
+Delete search filter block list entry|Supprimer Recherche entrÈe filtre blocklist
 Search filter block list is empty.|Le filtre de recherche de block list est vide.
 Deleted search filter block list entry: %s|Le filtre de recherche de block list a ete supprimer: %s
-Couldn't delete search filter block list entry because not found: %s|Impossible de supprimer le filtre de recherche entr–πe de blocklist car il es introuvable: %s
+Couldn't delete search filter block list entry because not found: %s|Impossible de supprimer le filtre de recherche entrÈe de blocklist car il es introuvable: %s
 Yes|Oui
 No|Non
 %s with class %d changed configuration variable %s.%s: %s => %s|%s avec la classe %d modifie les variables de configuration %s.%s: %s => %s
-Please wait another %d seconds before using public chat.|S'il vous pla–æt veuillez  attendre encore %d secondes avant d'utiliser le chat public.
-Please wait another %d seconds before using private chat.|S'il vous pla–æt veuillez  attendre encore %d secondes avant d'utiliser le chat priv–π.
-Low chat uptime of %d seconds from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s|chat en bas temps de fonctionnement de %d secondes de %s avec %s IP et de la classe %d en PM –∞ %s avec %s IP et de la classe %d: %s
-Low chat uptime of %d seconds from %s with IP %s and class %d in MC: %s|Chat en bas de disponibilit–π %d secondes de %s avec IP %s et rang %d dans MC: %s
+Please wait another %d seconds before using public chat.|S'il vous plaÓt veuillez  attendre encore %d secondes avant d'utiliser le chat public.
+Please wait another %d seconds before using private chat.|S'il vous plaÓt veuillez  attendre encore %d secondes avant d'utiliser le chat privÈ.
+Low chat uptime of %d seconds from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s|chat en bas temps de fonctionnement de %d secondes de %s avec %s IP et de la classe %d en PM ‡ %s avec %s IP et de la classe %d: %s
+Low chat uptime of %d seconds from %s with IP %s and class %d in MC: %s|Chat en bas de disponibilitÈ %d secondes de %s avec IP %s et rang %d dans MC: %s
 Low chat uptime of %d seconds from %s with IP %s and class %d in command: %s|Chat en bas temps de fonctionnement de %d secondes de %s avec %s IP et de la classe %d dans la commande: %s
-Low registration uptime from %s with IP %s and class %d: %s|Faible disponibilit–π d'enregistrement de %s avec %s IP et de la classe %d: %s
-%.1f minutes|%.1f minute
-Thank you, your report has been accepted.|Merci, votre rapport a –πt–π accept–π .
-Low search uptime of %d seconds from %s with IP %s and class %d as any file: %s|Recherche faible disponibilit–π de %d secondes de %s avec %s IP et de la classe %d comme tout fichier: %s
-Low search uptime of %d seconds from %s with IP %s and class %d as audio file: %s|Recherche faible disponibilit–π de %d secondes de %s avec %s IP et de la classe %d sous forme de fichier audio: %s
-Low search uptime of %d seconds from %s with IP %s and class %d as compressed file: %s|Recherche faible disponibilit–π de %d secondes de %s avec %s IP et de la classe %d comme fichier compress–π : %s
-Low search uptime of %d seconds from %s with IP %s and class %d as document: %s|Recherche faible disponibilit–π de %d secondes de %s avec %s IP et de la classe %d comme document: %s
-Low search uptime of %d seconds from %s with IP %s and class %d as executable: %s|Recherche faible disponibilit–π de %d secondes de %s avec %s IP et de la classe %d comme ex–πcutable: %s
-Low search uptime of %d seconds from %s with IP %s and class %d as picture: %s|Recherche faible disponibilit–π de %d secondes de %s avec %s IP et de la classe %d comme image: %s
-Low search uptime of %d seconds from %s with IP %s and class %d as video: %s|Recherche faible disponibilit–π de %d secondes de %s avec %s IP et de la classe %d comme la vid–πo: %s
-Low search uptime of %d seconds from %s with IP %s and class %d as folder: %s|Recherche faible disponibilit–π de %d secondes de %s avec %s IP et de la classe %d comme dossier: %s
-Low search uptime of %d seconds from %s with IP %s and class %d as TTH: %s|Recherche faible disponibilit–π de %d secondes de %s avec %s IP et de la classe %d comme TTH: %s
-User dropped: %s|Utilisateur d–πconnect–π: %s
+Low registration uptime from %s with IP %s and class %d: %s|Faible disponibilitÈ d'enregistrement de %s avec %s IP et de la classe %d: %s
+%d seconds|
+Thank you, your report has been accepted.|Merci, votre rapport a ÈtÈ acceptÈ .
+Low search uptime of %d seconds from %s with IP %s and class %d as any file: %s|Recherche faible disponibilitÈ de %d secondes de %s avec %s IP et de la classe %d comme tout fichier: %s
+Low search uptime of %d seconds from %s with IP %s and class %d as audio file: %s|Recherche faible disponibilitÈ de %d secondes de %s avec %s IP et de la classe %d sous forme de fichier audio: %s
+Low search uptime of %d seconds from %s with IP %s and class %d as compressed file: %s|Recherche faible disponibilitÈ de %d secondes de %s avec %s IP et de la classe %d comme fichier compressÈ : %s
+Low search uptime of %d seconds from %s with IP %s and class %d as document: %s|Recherche faible disponibilitÈ de %d secondes de %s avec %s IP et de la classe %d comme document: %s
+Low search uptime of %d seconds from %s with IP %s and class %d as executable: %s|Recherche faible disponibilitÈ de %d secondes de %s avec %s IP et de la classe %d comme exÈcutable: %s
+Low search uptime of %d seconds from %s with IP %s and class %d as picture: %s|Recherche faible disponibilitÈ de %d secondes de %s avec %s IP et de la classe %d comme image: %s
+Low search uptime of %d seconds from %s with IP %s and class %d as video: %s|Recherche faible disponibilitÈ de %d secondes de %s avec %s IP et de la classe %d comme la vidÈo: %s
+Low search uptime of %d seconds from %s with IP %s and class %d as folder: %s|Recherche faible disponibilitÈ de %d secondes de %s avec %s IP et de la classe %d comme dossier: %s
+Low search uptime of %d seconds from %s with IP %s and class %d as TTH: %s|Recherche faible disponibilitÈ de %d secondes de %s avec %s IP et de la classe %d comme TTH: %s
+User dropped: %s|Utilisateur dÈconnectÈ: %s
 %d of %d|%d de %d
 Main chat responder list contains %d items, but none matched your pattern.|Principale liste du chat repondeur contient %d des elements , mais aucun ne correspond a votre modele.

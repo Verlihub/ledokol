@@ -1,6 +1,6 @@
 # Language: cs_CZ
 # Charset: CP1250
-# Version: 2.9.0
+# Version: 2.9.1
 # Author: Uhlik
 # Email: pjanos.uk@gmail.com
 
@@ -808,9 +808,9 @@ Add chat replacer exception|Vlozi vyjimku pro chat replacer
 Delete chat replacer exception|Smaze vyjimku pro chat replacer
 Chat replacer|Chat replacer
 You need to send another %d main chat messages in order to use hub registration.|Musis poslat aspon %d zprav na chat abys mel povolenou registraci.
-Please wait another %.1f minutes before using hub registration.|Prosim pockej jeste %.1f minut pred pouzitim registrace na hubu.
+Please wait another %d seconds before using hub registration.|
 In order to use this feature you need to set %s to: %d|Pro pouziti teto funkce musis nastavit %s na: %d
-Please reconnect to gain %d minutes of uptime in order to use hub registration.|Odpoj se a znovu pripoj k hubu (pouzij CTRL+R) a po %d minutach budes mit povolenou registraci.
+Please reconnect to gain %d seconds of uptime in order to use hub registration.|
 Dropping %s with IP %s and class %d due to protocol flood detection: %s|Odpojuji %s s IP %s a class %d za flood protokolem: %s
 Protocol flood detected from your client: %s|Bylo detekovano floodovani protokolem z tveho klienta: %s
 Automatic update check detected stable version of %s available, use following command to update: %s|Automaticky update check nalezl novou stabilni verzi %s, pro upgrade pouzij: %s
@@ -1141,7 +1141,7 @@ Low chat uptime of %d seconds from %s with IP %s and class %d in PM to %s with I
 Low chat uptime of %d seconds from %s with IP %s and class %d in MC: %s|Kratky chat uptime %d sekund od %s s IP %s a class %d na MC pro %s s IP %s a class %d: %s
 Low chat uptime of %d seconds from %s with IP %s and class %d in command: %s|Kratky chat uptime %d sekund od %s s IP %s a class %d na prikaz: %s
 Low registration uptime from %s with IP %s and class %d: %s|Kratky regustracni uptime pro %s s IP %s a class %d: %s
-%.1f minutes|%.1f minuty
+%d seconds|
 Thank you, your report has been accepted.|Dekuji, tvuj report byl prijat.
 Low search uptime of %d seconds from %s with IP %s and class %d as any file: %s|Kratky hledaci uptime %d sekund pro %s s IP %s a class %d na MC pri hledani jako any file: %s
 Low search uptime of %d seconds from %s with IP %s and class %d as audio file: %s|Kratky hledaci uptime %d sekund pro %s s IP %s a class %d na MC pri hledani jako audio file: %s

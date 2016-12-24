@@ -1,12 +1,12 @@
 # Language: pl_PL
 # Charset: CP1250
-# Version: 2.9.0
+# Version: 2.9.1
 # Author: Zorro
 # Email: zbyszekslyz@hostpl.eu
 
 Current topic: %s|Aktualny topik: %s 
 Current topic set by %s: %s|Obecny topic ustawiony przez %s: %s
-This operation might take very long time depending on how much is going to be removed, please be patient.|Operacja ta moze potrwac bardzo d—ñugo w zaleznosci od tego ile ma byc usunietych, prosimy o cierpliwosc.
+This operation might take very long time depending on how much is going to be removed, please be patient.|Operacja ta moze potrwac bardzo d≥ugo w zaleznosci od tego ile ma byc usunietych, prosimy o cierpliwosc.
 days|dni
 %s with class %d deleted %d IP logger plugin entries older than %d days.|%s z klasa %d usunol %d wpisy pluginu logu IP starsze niz %d dni.
 %s with class %d deleted %d unbans older than %d days.|%s z klasa %d usunol %d unbany starsze niz %d dni.
@@ -539,15 +539,15 @@ second|sekund
 You are now known as: %s|Teraz jestes znany jako: %s
 You renamed %s to: %s|Zmieniles nazwe %s na: %s
 Spam exception from %s with IP %s and class %d in MC: %s|Wyjatek spamu %s z IP %s i klasa %d na glownym czacie: %s
-Spam exception from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s|Wyjatek spamu %s z IP %s i klasy %d na PM do %s z IP %s i klas‚Ññ %d: %s
+Spam exception from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s|Wyjatek spamu %s z IP %s i klasy %d na PM do %s z IP %s i klasπ %d: %s
 Spam exception from %s with IP %s and class %d in offline message: %s|Wyjatek spamu %s z IP %s i klasa %d w wiadomosci offline: %s
 Spam exception from %s with IP %s and class %d in report: %s|Wyjatek spamu %s z IP %s i klasa %d w reporcie: %s
 Spam notification from %s with IP %s and class %d in MC: %s|Powiadomienie o spamie %s z IP %s i klasa %d na glownym czacie: %s
-Spam notification from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s|Zawiadomienie o spamie %s z IP %s i klasy %d na PM do %s z IP %s i klas‚Ññ %d: %s 
+Spam notification from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s|Zawiadomienie o spamie %s z IP %s i klasy %d na PM do %s z IP %s i klasπ %d: %s 
 Spam notification from %s with IP %s and class %d in offline message: %s|Powiadomienie o spamie %s z IP %s i klasa %d w wiadomosci offline: %s
 Spam notification from %s with IP %s and class %d in report: %s|Powiadomienie o spamie %s z IP %s i klasa %d w reporcie: %s
 Spam from %s with IP %s and class %d in MC: %s|Spam z %s z IP %s i klasa %d na glownym czacie: %s
-Spam from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s|Spam %s z IP %s i klasy %d na PM do %s z IP %s i klas‚Ññ %d: %s 
+Spam from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s|Spam %s z IP %s i klasy %d na PM do %s z IP %s i klasπ %d: %s 
 Spam from %s with IP %s and class %d in offline message: %s|Spam z %s z IP %s i klasa %d w wiadomosci offline: %s
 Spam from %s with IP %s and class %d in report: %s|Spam z %s z IP %s i klasa %d w reporcie: %s
 Modified antispam entry with action %d and priority %d to scan in MC: %s|Zmodyfikowane wejscie antyspam z akcja %d oraz priorytetem %d do skanowania na glownym czacie: %s
@@ -795,9 +795,9 @@ Couldn't delete chat replacer because ID not found: %d|Nie mozna usunac replacer
 Chat replacer list|Lista zamiennikow czata.
 Chat replacer list is empty.|Lista zamiennikow czata jest pusta.
 Replace|Replacer
-Modified chat replacer exception with type %d: %s|Zmodyfikowany czat zamiennika z wyj‚Ññtkiem typu  %d: %s
-Added chat replacer exception with type %d: %s|Dodano czat zamiennika z wyj‚Ññtkiem typu %d: %s
-Deleted chat replacer exception with type %d: %s|Skasowany czat zamiennika z wyj‚Ññtkiem typu %d: %s
+Modified chat replacer exception with type %d: %s|Zmodyfikowany czat zamiennika z wyjπtkiem typu  %d: %s
+Added chat replacer exception with type %d: %s|Dodano czat zamiennika z wyjπtkiem typu %d: %s
+Deleted chat replacer exception with type %d: %s|Skasowany czat zamiennika z wyjπtkiem typu %d: %s
 Couldn't delete chat replacer exception because not found: %s|Nie mozna usunac wyjatku replacer czatu, nie znaleziono: %s
 Chat replacer exception list|Lista wyjatkow replacer czatu
 Chat replacer exception list is empty.|Lista wyjatkow replacer czatu jest pusta.
@@ -808,9 +808,9 @@ Add chat replacer exception|Dodaj wyjatek replacer czatu
 Delete chat replacer exception|Usun wyjatek replacer czatu
 Chat replacer|Replacer czatu
 You need to send another %d main chat messages in order to use hub registration.|Musisz wyslac jeszcze %d wiadomosci na czat glowny abyt moc uzyc rejestracji na hubie.
-Please wait another %.1f minutes before using hub registration.|Prosze czekac %.1f minut przed rejestracja huba.
+Please wait another %d seconds before using hub registration.|Prosze czekac %s minut przed rejestracja huba.
 In order to use this feature you need to set %s to: %d|Aby uzyc tej opcji powinienes ustawic %s na: %d
-Please reconnect to gain %d minutes of uptime in order to use hub registration.|Prosze zalogowac sie na hub ponownie by zyskac %d minuty czasu, aby moc uzyc rejestracji na hubie.
+Please reconnect to gain %d seconds of uptime in order to use hub registration.|Prosze zalogowac sie na hub ponownie by zyskac %d minuty czasu, aby moc uzyc rejestracji na hubie.
 Dropping %s with IP %s and class %d due to protocol flood detection: %s|Kopniety %s z IP i klasy %d ze wzgledu na wykrycie protokolu floodu
 Protocol flood detected from your client: %s|Protokol floodowania wykryty od klienta: %s
 Automatic update check detected stable version of %s available, use following command to update: %s|Automatyczne sprawdzanie aktualizacji stabilnej wersji wykryto %s dostepne, uzyj nastepujacych polecen do aktualizacji: %s
@@ -885,8 +885,8 @@ Unknown protocol command from IP %s before login: %s|Nieznana komeda protokolu z
 Added %s to hard IP ban list, %d users in total.|Dodano %s do listy IP ban, %d users w sumie.
 NMDC version: %s|Wersja NMDC: %s
 Client supports: %s|Wspierany klient: %s
-Modified forbidden client supports with ban time %s: %s|Zmodyfikowano florbida klient obs—ñuguje czasu bana
-Added forbidden client supports with ban time %s: %s|Dodano florbida klient obs—ñuguje czasu bana
+Modified forbidden client supports with ban time %s: %s|Zmodyfikowano florbida klient obs≥uguje czasu bana
+Added forbidden client supports with ban time %s: %s|Dodano florbida klient obs≥uguje czasu bana
 Modified forbidden NMDC version with ban time %s: %s|Zmodyfikowano florbida NMDC wersja z czasem ban %s: %s
 Added forbidden NMDC version with ban time %s: %s|Dodano florbida NMDC wersja z czasem ban %s: %s
 Latest version of %s is required in order to use this feature.|Najnowsza wersja z %s jest wymagana, aby uzyc tej funkcji.
@@ -1071,8 +1071,8 @@ Automatic country chatroom entrance list is empty.|Automatyczna lista krajow z p
 Please note, following function is required for features available in this version of %s and is currently not available in running version of %s but is available in latest update: %s|Uwaga, ponizsza funkcja jest wymagana dla funkcji dostepnych w tej wersji %s, a obecnie nie jest dostepny w biezacej wersji %s, ale jest dostepna w najnowszej aktualizacji: %s
 note|uwaga
 Access is restricted.|Dostep jest ograniczony.
-Convert LRE to plain text|Konwersja tekstu na zwyk—ñy LRE
-LRE converted to plain text: %s|LRE przekonwertowane na zwyk—ñy tekst: %s
+Convert LRE to plain text|Konwersja tekstu na zwyk≥y LRE
+LRE converted to plain text: %s|LRE przekonwertowane na zwyk≥y tekst: %s
 Please check your command syntax, something is wrong there.|Prosze sprawdzic skladnie polecenia, cos jest nie tak.
 Entry used in detection: %s|Wpis uzywany w wykrywaniu: %s
 Exception used in detection: %s|Wyjatek stosowany w wykrywaniu: %s
@@ -1107,7 +1107,7 @@ IP watch|Ogladane IP
 Hard IP bans|Zbanowane IP na stale
 Chatroom history|Historia czatu
 Chatroom history is empty.|Historia czatu jest pusta.
-Last %d chatroom messages|Ostatnie %d wiadomo—öci czatu
+Last %d chatroom messages|Ostatnie %d wiadomoúci czatu
 There are no chatroom history messages to remove: %s|Brak wiadomosci historii czatu, aby usunac: %s
 Deleted %d chatroom history messages: %s|Usunieto %d wiadomosci historii czatu: %s
 %s with class %d deleted %d chatroom history messages: %s|%s z klasa %d usunal %d wiadomosci z historii czata: %s
@@ -1124,7 +1124,7 @@ Sorry, your message has been ignored.|Twoja wiadomosc zostala zignorowana
 Disable or enable right click menu item|Wylacz lub wlacz opcje menu prawokliku
 Disabled right click menu item: %s|Wylacz pozycje menu prawokliku: %s
 Enabled right click menu item: %s|Wlacz pozycje menu prawokliku: %s
-%s added to search block list.|%s dodany do wyszukiwa—Å listy zablokowanych
+%s added to search block list.|%s dodany do wyszukiwaÒ listy zablokowanych
 Your search request is discarded due to previous forbidden search request.|Twoje zapytanie wyszukiwania jest usuniete z powodu poprzedniego zakazanego wyszukiwania.
 Hub URL: %s|Adres URL huba: %s
 Search filter block list|Filtr wyszukiwan listy zablokowanych
@@ -1141,7 +1141,7 @@ Low chat uptime of %d seconds from %s with IP %s and class %d in PM to %s with I
 Low chat uptime of %d seconds from %s with IP %s and class %d in MC: %s|Niski czat uptime z %d sekund od %s z IP %s i klasa %d w MC: %s
 Low chat uptime of %d seconds from %s with IP %s and class %d in command: %s|Niski czat uptime z %d sekund od %s z IP %s i klasa %d w komendzie: %s 
 Low registration uptime from %s with IP %s and class %d: %s|Niskie uptime w rejestracji od %s z IP i klasa %d: %s
-%.1f minutes|%.1f minuty
+%d seconds|sekund
 Thank you, your report has been accepted.|Dziekujemy, twoj raport zostal przyjety.
 Low search uptime of %d seconds from %s with IP %s and class %d as any file: %s|Niskie czas wyszukiwania z %d sekund od %s z IP %s i klasa %d w dowolnym pliku: %s
 Low search uptime of %d seconds from %s with IP %s and class %d as audio file: %s|Niskie czas wyszukiwania z %d sekund od %s z IP %s i klasa %d w postaci pliku dzwieku: %s

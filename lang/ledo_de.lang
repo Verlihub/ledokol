@@ -1,6 +1,6 @@
 # Language: de_DE
 # Charset: CP1252
-# Version: 2.9.0
+# Version: 2.9.1
 # Author: Ettore Atalan
 # Email: atalanttore@googlemail.com
 
@@ -13,8 +13,8 @@ days|Tage
 %s with class %d deleted %d bans older than %d days.|
 %s with class %d deleted %d kicks older than %d days.|
 I'm probably away. State your business and I might answer later if you're lucky.|
-Perform script update|Skriptaktualisierung ausfÑŒhren
-Deleted %d main chat history messages.|%d Hauptchatverlaufsnachrichten gelÑ†scht.
+Perform script update|Skriptaktualisierung ausführen
+Deleted %d main chat history messages.|%d Hauptchatverlaufsnachrichten gelöscht.
 There are no main chat history messages to remove.|
 Deleted %d operator chat history messages.|
 There are no operator chat history messages to remove.|
@@ -25,13 +25,13 @@ Main chat history is empty.|Hauptchatverlauf ist leer.
 %s is now known as: %s|%s ist jetzt bekannt als: %s
 Last %d operator chat messages|Letzte %d Betreiber-Chatnachrichten
 Operator chat history is empty.|Betreiberchatchronik ist leer.
-Valid priority is a number from %d to %d.|GÑŒltige PrioritÐ´t ist eine Zahl von %d bis %d.
+Valid priority is a number from %d to %d.|Gültige Priorität ist eine Zahl von %d bis %d.
 You are using latest version of %s, no update is required.|Sie verwenden die neueste Version von %s, keine Aktualisierung ist erforderlich.
 Why would you send offline message to yourself?|
 User %s is online. Sending message directly.|
 Your offline message stored for user: %s|
 %s with IP %s and class %d sent offline message.|
-priority|PrioritÐ´t
+priority|Priorität
 Offline|Offline
 Online|Online
 I sent offline message to you on %s|
@@ -39,7 +39,7 @@ My current status|Mein aktueller Status
 %s with IP %s and class %d received offline messages.|
 Stored offline messages|Gespeicherte Offline-Nachrichten
 Offline message list is empty.|
-Deleted %d offline messages.|%d Offline-Nachrichten gelÑ†scht.
+Deleted %d offline messages.|%d Offline-Nachrichten gelöscht.
 Couldn't delete offline messages because not found: %s|
 %s with class %d deleted all offline messages.|
 There are no offline messages to remove.|Es gibt keine Offline-Nachrichten zum Entfernen.
@@ -70,21 +70,21 @@ Added forbidden email with ban time %s: %s|
 Modified forbidden share size with ban time %s: %s|
 Added forbidden share size with ban time %s: %s|
 Couldn't add MyINFO exception because already exists: %s|
-Added MyINFO exception: %s|HinzugefÑŒgte MyINFO-Ausnahme: %s
+Added MyINFO exception: %s|Hinzugefügte MyINFO-Ausnahme: %s
 and|und
 Deleted forbidden nick: %s|
 Couldn't delete forbidden nick because not found: %s|
-Deleted forbidden description: %s|Verbotene Beschreibung gelÑ†scht: %s
+Deleted forbidden description: %s|Verbotene Beschreibung gelöscht: %s
 Couldn't delete forbidden description because not found: %s|
-Deleted forbidden tag: %s|Verbotenes Schlagwort gelÑ†scht: %s
+Deleted forbidden tag: %s|Verbotenes Schlagwort gelöscht: %s
 Couldn't delete forbidden tag because not found: %s|
 Deleted forbidden connection type: %s|
 Couldn't delete forbidden connection type because not found: %s|
-Deleted forbidden email: %s|Verbotene E-Mail gelÑ†scht: %s
+Deleted forbidden email: %s|Verbotene E-Mail gelöscht: %s
 Couldn't delete forbidden email because not found: %s|
 Deleted forbidden share size: %s|
 Couldn't delete forbidden share size because not found: %s|
-Deleted MyINFO exception: %s|GelÑ†schte MyINFO-Ausnahme: %s
+Deleted MyINFO exception: %s|Gelöschte MyINFO-Ausnahme: %s
 Couldn't delete MyINFO exception because not found: %s|
 Forbidden nick list|
 Forbidden nick list is empty.|
@@ -102,13 +102,13 @@ MyINFO exception list|MyINFO-Ausnahmeliste
 MyINFO exception list is empty.|MyINFO-Ausnahmeliste ist leer.
 Deleted %d rows: %s|
 Known types are: %s|Bekannte Typen sind: %s
-No rows to remove: %s|Keine Zeilen zum LÑ†schen: %s
+No rows to remove: %s|Keine Zeilen zum Löschen: %s
 date|Datum
 %s with IP %s and class %d used following command: %s|
 context|Kontext
-Deleted from chat rank list: %s|GelÑ†scht aus Chatrangliste: %s
+Deleted from chat rank list: %s|Gelöscht aus Chatrangliste: %s
 Not found in chat rank list: %s|Nicht gefunden in Chatrangliste: %s
-Deleted from operator rank list: %s|GelÑ†scht aus Betreiberrangliste: %s
+Deleted from operator rank list: %s|Gelöscht aus Betreiberrangliste: %s
 Not found in operator rank list: %s|Nicht gefunden in Betreiberrangliste: %s
 Antispam|Antispam
 Your chat rank is: %d|
@@ -124,9 +124,9 @@ Operator rank list is empty.|Betreiberrangliste ist leer.
 string|Zeichenkette
 No user results found.|Keine Benutzerergebnisse gefunden.
 Showing %d user log results|%d Benutzerprotokollergebnisse werden angezeigt
-Size of user log table: %d [ %s: %d @ %s ]|GrÑ†Ð¯e der Benutzerprotokolltabelle: %d [ %s: %d @ %s ]
-Add protection entry|Schutzeintrag hinzufÑŒgen
-Delete protection entry|Schutzeintrag lÑ†schen
+Size of user log table: %d [ %s: %d @ %s ]|Größe der Benutzerprotokolltabelle: %d [ %s: %d @ %s ]
+Add protection entry|Schutzeintrag hinzufügen
+Delete protection entry|Schutzeintrag löschen
 flags|
 %s dropped due to bad search request.|
 This command is either disabled or you don't have access to it.|
@@ -135,8 +135,8 @@ Couldn't delete antispam entry because not found: %s|
 Antispam list|Antispam-Liste
 Antispam list is empty.|Antispam-Liste ist leer.
 Couldn't add antispam exception entry because already exists: %s|
-Added antispam exception entry: %s|HinzugefÑŒgter Antispam-Ausnahmeeintrag: %s
-Deleted antispam exception entry: %s|GelÑ†schter Antispam-Ausnahmeeintrag: %s
+Added antispam exception entry: %s|Hinzugefügter Antispam-Ausnahmeeintrag: %s
+Deleted antispam exception entry: %s|Gelöschter Antispam-Ausnahmeeintrag: %s
 Couldn't delete antispam exception entry because not found: %s|
 Antispam exception list|Antispam-Ausnahmeliste
 Antispam exception list is empty.|Antispam-Ausnahmeliste ist leer.
@@ -160,8 +160,8 @@ Custom nick list|
 Add antispam entry|
 Showing last %d lines out of total %d found in %s file|
 Delete antispam entry|
-Add antispam exception entry|Antispam-Ausnahmeeintrag hinzufÑŒgen
-Delete antispam exception entry|Antispam-Ausnahmeeintrag lÑ†schen
+Add antispam exception entry|Antispam-Ausnahmeeintrag hinzufügen
+Delete antispam exception entry|Antispam-Ausnahmeeintrag löschen
 Add MyINFO entry|
 Delete MyINFO entry|
 MyINFO list|
@@ -171,14 +171,14 @@ Remove user or word from rank list|
 %s with class %d deleted %d user log entries older than %d days.|
 List stored offline messages|
 Delete offline messages by date|
-Delete all offline messages|Alle Offline-Nachrichten lÑ†schen
+Delete all offline messages|Alle Offline-Nachrichten löschen
 class|Klasse
-Clean up tables|Tabellen aufrÐ´umen
+Clean up tables|Tabellen aufräumen
 Operator chat history|Betreiberchatchronik
 Delete all history messages|
 Your operator rank|
 Script configuration variables|Skriptkonfigurationsvariablen
-Change configuration variable|Konfigurationsvariable Ð´ndern
+Change configuration variable|Konfigurationsvariable ändern
 nick|
 This list of commands|Diese Liste mit Befehlen
 %s user commands|%s Benutzerbefehle
@@ -196,7 +196,7 @@ Total operator rank points: %d|
 Average message count per user: %.2f|
 lre|
 action|Aktion
-Changed configuration variable %s: %s => %s|Konfigurationsvariable %s geÐ´ndert: %s => %s
+Changed configuration variable %s: %s => %s|Konfigurationsvariable %s geändert: %s => %s
 Configuration variable %s can only be set to: %s|
 or|oder
 Configuration variable %s must be a number.|Konfigurationsvariable %s muss eine Zahl sein.
@@ -221,13 +221,13 @@ Add rank exception|
 Delete rank exception|
 In order to use this feature you must turn off registered users list cache. Do it by setting hub configuration variable %s to %d and restarting the hub. Please note: Turning cache off is not recommended with large list of registered users.|
 Both|Beide
-Deleted search filter: %s|GelÑ†schter Suchfilter: %s
+Deleted search filter: %s|Gelöschter Suchfilter: %s
 Couldn't delete search filter because not found: %s|
 Search filter list|Suchfilterliste
 Search filter list is empty.|Suchfilterliste ist leer.
 Magnet link: %s|
-Add search filter|Suchfilter hinzufÑŒgen
-Delete search filter|Suchfilter lÑ†schen
+Add search filter|Suchfilter hinzufügen
+Delete search filter|Suchfilter löschen
 Known actions are: %s|Bekannte Aktionen sind: %s
 Known flags are: %s|
 Downloading version file: %s|Versionsdatei wird heruntergeladen: %s
@@ -236,14 +236,14 @@ Size of bans table: %d [ %s: %d @ %s ]|
 Size of unbans table: %d [ %s: %d @ %s ]|
 Size of IP logger plugin table: %d [ %s: %d @ %s ]|
 Size of statistics plugin table: %d [ %s: %d @ %s ]|
-Modified authorization entry: %s @ %s|GeÐ´nderter Berechtigungseintrag: %s @ %s
-Added authorization entry: %s @ %s|HinzugefÑŒgter Berechtigungseintrag: %s @ %s
-Deleted authorization entry: %s|GelÑ†schter Berechtigungseintrag: %s
+Modified authorization entry: %s @ %s|Geänderter Berechtigungseintrag: %s @ %s
+Added authorization entry: %s @ %s|Hinzugefügter Berechtigungseintrag: %s @ %s
+Deleted authorization entry: %s|Gelöschter Berechtigungseintrag: %s
 Couldn't delete authorization entry because not found: %s|
 IP authorization list|IP-Berechtigungsliste
 IP authorization list is empty.|IP-Berechtigungsliste ist leer.
-Add IP authorization entry|IP-Berechtigungseintrag hinzufÑŒgen
-Delete authorization entry|IP-Berechtigungseintrag lÑ†schen
+Add IP authorization entry|IP-Berechtigungseintrag hinzufügen
+Delete authorization entry|IP-Berechtigungseintrag löschen
 ip|IP
 %s with IP %s and class %d authorized.|
 %s with IP %s and class %d failed authorization and disconnected.|
@@ -254,7 +254,7 @@ Set your welcome message|
 Division by zero is forbidden.|Division durch Null ist verboten.
 Show your welcome messages|
 Welcome message list|Willkommensnachrichtenliste
-Delete user and his welcome messages|Benutzer und seine Willkommensnachrichten lÑ†schen
+Delete user and his welcome messages|Benutzer und seine Willkommensnachrichten löschen
 Nick|
 Login message|Anmeldenachricht
 Logout message|Abmeldenachricht
@@ -267,15 +267,15 @@ Your logout message set: %s|
 %s with class %d changed his logout message: %s|
 You don't have any welcome messages.|Sie haben keine Willkommensnachrichten.
 Your login message: %s|Ihre Anmeldenachricht: %s
-Add chatroom|Chatraum hinzufÑŒgen
+Add chatroom|Chatraum hinzufügen
 Chatroom list|Chatraumliste
-Delete chatroom|Chatraum lÑ†schen
+Delete chatroom|Chatraum löschen
 description|Beschreibung
 minclass|
 maxclass|
-Modified chatroom: %s|GeÐ´nderter Chatraum: %s
-Added chatroom: %s|Chatraum hinzugefÑŒgt: %s
-Deleted chatroom: %s|Chatraum gelÑ†scht: %s
+Modified chatroom: %s|Geänderter Chatraum: %s
+Added chatroom: %s|Chatraum hinzugefügt: %s
+Deleted chatroom: %s|Chatraum gelöscht: %s
 Couldn't delete chatroom because not found: %s|
 Chatroom|Chatraum
 Description|Beschreibung
@@ -284,33 +284,33 @@ Not found in country code statistics table: %s|
 Custom nick %s is now owned by real user and therefore has been reset for user: %s|
 %s is registered with class %d.|%s ist mit Klasse %d registriert.
 Query executed but didn't return any results.|
-Published: %s|VerÑ†ffentlicht: %s
-Add search filter exception entry|Suchfilterausnahmeeintrag hinzufÑŒgen
-Delete search filter exception entry|Suchfilterausnahmeeintrag lÑ†schen
+Published: %s|Veröffentlicht: %s
+Add search filter exception entry|Suchfilterausnahmeeintrag hinzufügen
+Delete search filter exception entry|Suchfilterausnahmeeintrag löschen
 Search filter exception list|Suchfilterausnahmeliste
 Couldn't add search filter exception entry because already exists: %s|
-Added search filter exception entry: %s|HinzugefÑŒgter Suchfilterausnahmeeintrag: %s
-Deleted search filter exception entry: %s|GelÑ†schter Suchfilterausnahmeeintrag: %s
+Added search filter exception entry: %s|Hinzugefügter Suchfilterausnahmeeintrag: %s
+Deleted search filter exception entry: %s|Gelöschter Suchfilterausnahmeeintrag: %s
 Couldn't delete search filter exception entry because not found: %s|
 Search filter exception list is empty.|Suchfilterausnahmeliste ist leer.
 file|Datei
 Read hub logs|
 Known files are: %s|Bekannte Dateien sind: %s
 Log file is empty or does not exist.|Protokolldatei ist leer oder nicht vorhanden.
-Add command notification exception|Befehlsbenachrichtigungsausnahme hinzufÑŒgen
-Delete command notification exception|Befehlsbenachrichtigungsausnahme lÑ†schen
+Add command notification exception|Befehlsbenachrichtigungsausnahme hinzufügen
+Delete command notification exception|Befehlsbenachrichtigungsausnahme löschen
 Command notification exception list|Befehlsbenachrichtigungsausnahmeliste
-Added command notification exception entry: %s|HinzugefÑŒger Befehlsbenachrichtigungsausnahmeeintrag: %s
+Added command notification exception entry: %s|Hinzugefüger Befehlsbenachrichtigungsausnahmeeintrag: %s
 Couldn't add command notification exception entry because already exists: %s|
-Deleted command notification exception entry: %s|GelÑ†schter Befehlsbenachrichtigungsausnahmeeintrag: %s
+Deleted command notification exception entry: %s|Gelöschter Befehlsbenachrichtigungsausnahmeeintrag: %s
 Couldn't delete command notification exception entry because not found: %s|
 Command notification exception list is empty.|Befehlsbenachrichtigungsausnahmeliste ist leer.
 Couldn't add chatroom because nick is already in use: %s|
 Query results|Suchanfragenergebnisse
 Connections from your IP aren't allowed for another %d seconds.|
 Executed shell command didn't return any status code: %s|
-Returned status code: %s|ZurÑŒckgegebener Statuscode: %s
-Added by: %s|HinzugefÑŒgt von: %s
+Returned status code: %s|Zurückgegebener Statuscode: %s
+Added by: %s|Hinzugefügt von: %s
 publisher|
 Release list is empty.|
 Last %d releases|
@@ -335,14 +335,14 @@ Deleted user from custom nick list: %s|
 Couldn't delete user from custom nick list because not found: %s|
 Selected type requires extra parameters. Please refer to manual for more information.|
 Size of registered users table: %d [ %s: %d @ %s ]|
-Deleted %d accounts with class %d|%d Konten mit Klasse %d gelÑ†scht
+Deleted %d accounts with class %d|%d Konten mit Klasse %d gelöscht
 %s with class %d deleted %d accounts with class %d that has been inactive for %d days.|
-Add command permission|Befehlsberechtigung hinzufÑŒgen
-Delete command permission|Befehlsberechtigung lÑ†schen
+Add command permission|Befehlsberechtigung hinzufügen
+Delete command permission|Befehlsberechtigung löschen
 Command permission list|Befehlsberechtigungsliste
 Modified command permission with class %d: %s|
 Added command permission with class %d: %s|
-Deleted command permission: %s|GelÑ†schte Befehlsberechtigung: %s
+Deleted command permission: %s|Gelöschte Befehlsberechtigung: %s
 Couldn't delete command permission because not found: %s|
 Command permission list is empty.|Befehlsberechtigungsliste ist leer.
 Total search rank points: %d|
@@ -351,10 +351,10 @@ Moving file: %s|Datei verschieben: %s
 Please visit %s to download the script manually.|
 Modified forbidden IP address with ban time %s: %s|
 Added forbidden IP address with ban time %s: %s|
-Deleted forbidden IP address: %s|GelÑ†schte verbotene IP-Adresse: %s
+Deleted forbidden IP address: %s|Gelöschte verbotene IP-Adresse: %s
 Couldn't delete forbidden IP address because not found: %s|
-Forbidden IP address list|Adressliste fÑŒr verbotene IP
-Forbidden IP address list is empty.|Adressliste fÑŒr verbotene IP ist leer.
+Forbidden IP address list|Adressliste für verbotene IP
+Forbidden IP address list is empty.|Adressliste für verbotene IP ist leer.
 %s with IP %s and class %d allowed due to forbidden IP address exception: %s|
 Couldn't delete category because not found: %s|
 User redirected due to spam: %s|
@@ -384,15 +384,15 @@ Size of operator ranks table: %d [ %s: %d @ %s ]|
 content|Inhalt
 destination|Ziel
 interval|Intervall
-Add reminder|Erinnerung hinzufÑŒgen
-Delete reminder|Erinnerung lÑ†schen
+Add reminder|Erinnerung hinzufügen
+Delete reminder|Erinnerung löschen
 Reminder list|Erinnerungsliste
 Reminder list is empty.|Erinnerungsliste ist leer.
 Known destinations are: %s|Bekannte Ziele sind: %s
 Known interval is: %s|Bekanntes Intervall ist: %s
 Modified reminder: %s|
-Added reminder: %s|HinzugefÑŒgte Erinnerung: %s
-Deleted reminder: %s|GelÑ†schte Erinnerung: %s
+Added reminder: %s|Hinzugefügte Erinnerung: %s
+Deleted reminder: %s|Gelöschte Erinnerung: %s
 Reminder not found: %s|Erinnerung nicht gefunden: %s
 Identifier: %s|Identifikator: %s
 Content: %s|Inhalt: %s
@@ -427,11 +427,11 @@ Customized script command: %s => %s|
 Unknown script command: %s|Unbekannter Skriptbefehl: %s
 Requested nick is real.|
 %s with class %d customized script command: %s => %s|
-Reset all custom commands|Alle benutzerdefinierten Befehle zurÑŒcksetzen
-%d custom commands were reset.|%d benutzerdefinierte Befehle wurden zurÑŒckgesetzt.
-%s tables are now deleted and script is locked.|%s Tabellen werden nun gelÑ†scht und das Skript ist gesperrt.
+Reset all custom commands|Alle benutzerdefinierten Befehle zurücksetzen
+%d custom commands were reset.|%d benutzerdefinierte Befehle wurden zurückgesetzt.
+%s tables are now deleted and script is locked.|%s Tabellen werden nun gelöscht und das Skript ist gesperrt.
 Please unload the script and remove it from scripts directory.|
-Good luck.|Viel GlÑŒck.
+Good luck.|Viel Glück.
 Please unload the script to finish.|
 %s with IP %s and class %d sent message to %s: %s|%s mit IP %s und Klasse %d sendete Nachricht an %s: %s
 Script uptime: %s|Skript-Betriebszeit: %s
@@ -440,7 +440,7 @@ months|Monate
 day|Tag
 hour|Stunde
 hours|Stunden
-Top %d used words|%d meistbenutzte WÑ†rter
+Top %d used words|%d meistbenutzte Wörter
 Deleted from word rank list: %s|
 Not found in word rank list: %s|
 %s with class %d deleted %d word ranks lower than %d.|
@@ -482,8 +482,8 @@ Calculate an equation|Gleichung berechnen
 Both numbers must be either pi or numbers.|
 Known operations are: %s|Bekannte Operationen sind: %s
 Your logout message: %s|Ihre Abmeldenachricht: %s
-Force welcome message for user|Willkommensnachricht fÑŒr Benutzer erzwingen
-Login message set for %s: %s|Anmeldenachricht festgelegt fÑŒr %s: %s
+Force welcome message for user|Willkommensnachricht für Benutzer erzwingen
+Login message set for %s: %s|Anmeldenachricht festgelegt für %s: %s
 Change nick of a registered user|
 User is not registered: %s|Benutzer ist nicht registriert: %s
 You are now going to be disconnected from the hub in order for your new nick to apply: %s|
@@ -493,11 +493,11 @@ Your login message deleted.|
 Your logout message deleted.|
 %s with class %d deleted his login message.|
 %s with class %d deleted his logout message.|
-Logout message set for %s: %s|Abmeldenachricht festgelegt fÑŒr %s: %s
+Logout message set for %s: %s|Abmeldenachricht festgelegt für %s: %s
 %s with class %d changed login message for %s: %s|
 %s with class %d changed logout message for %s: %s|
-Login message deleted for user: %s|Anmeldenachricht gelÑ†scht fÑŒr Benutzer: %s
-Logout message deleted for user: %s|Abmeldenachricht gelÑ†scht fÑŒr Benutzer: %s
+Login message deleted for user: %s|Anmeldenachricht gelöscht für Benutzer: %s
+Logout message deleted for user: %s|Abmeldenachricht gelöscht für Benutzer: %s
 %s with class %d deleted login message for user: %s|
 %s with class %d deleted logout message for user: %s|
 %s with class %d deleted welcome messages for user: %s|
@@ -521,7 +521,7 @@ Total count: %d|Gesamtzahl: %d
 Deleted all rows: %s|
 %s with class %d deleted all user location entries.|
 address|Adresse
-owner|EigentÑŒmer
+owner|Eigentümer
 Add friendly hub|
 Delete friendly hub|
 Show friendly hubs|
@@ -532,7 +532,7 @@ Friendly hub not found: %s|
 Friendly hublist|
 Friendly hublist is empty.|
 Executed shell command didn't return any output.|
-Returned output|ZurÑŒckgegebende Ausgabe
+Returned output|Zurückgegebende Ausgabe
 %s renamed %s to: %s|%s hat %s in: %s umbenannt
 %s plugin version: %s|
 second|Sekunde
@@ -606,15 +606,15 @@ Size of release table: %d [ %s: %d @ %s ]|
 LRE|LRE
 Code accepted.|Code angenommen.
 Protection list|Schutzliste
-Added protection entry: %s|HinzugefÑŒgter Schutzeintrag: %s
-Deleted protection entry: %s|GelÑ†schter Schutzeintrag: %s
+Added protection entry: %s|Hinzugefügter Schutzeintrag: %s
+Deleted protection entry: %s|Gelöschter Schutzeintrag: %s
 Protection entry already exists: %s|Schutzeintrag bereits vorhanden: %s
 Protection entry not found: %s|Schutzeintrag nicht gefunden: %s
 Protection list is empty.|Schutzliste ist leer.
 Missing %s in configuration variable.|Fehlendes %s in Konfigurationsvariable.
 Chatroom: %s|Chatraum: %s
 You've left the chatroom.|Sie haben den Chatraum verlassen.
-User left the chatroom: %s|Benutzer verlieÐ¯ den Chatraum: %s
+User left the chatroom: %s|Benutzer verließ den Chatraum: %s
 User entered the chatroom: %s|Benutzer betrat den Chatraum: %s
 You've entered %s chatroom.|Sie haben den Chatraum %s betreten.
 You're not member of this chatroom.|
@@ -627,7 +627,7 @@ Unknown chatroom command, use %s for help.|
 Enter the chatroom|Chatraum betreten
 Leave the chatroom|Chatraum verlassen
 Deleted %d rows from country code statistics table: %s|
-Force chat mode for user|Chatmodus fÑŒr Benutzer erzwingen
+Force chat mode for user|Chatmodus für Benutzer erzwingen
 Known chat modes are: %s|Bekannte Chatmodi sind: %s
 mode|Modus
 Changing chat mode for %s: %s => %s|
@@ -648,7 +648,7 @@ Cleared temporary IP gag list.|
 Show custom script commands|Benutzerdefinierte Skriptbefehle anzeigen
 Custom script command list|Benutzerdefinierte Skriptbefehlsliste
 Custom script command list is empty.|Benutzerdefinierte Skriptbefehlsliste ist leer.
-Script size: %d lines in %s|SkriptgrÑ†Ð¯e: %d Zeilen in %s
+Script size: %d lines in %s|Skriptgröße: %d Zeilen in %s
 Added %s to IP gag list, %d users in total.|
 Flood detected from IP %s last known as %s with class %d in MC: %s|
 Flood detected from IP %s last known as %s with class %d in PM to %s with IP %s and class %d: %s|
@@ -661,7 +661,7 @@ MyINFO check|
 Authorization|Autorisierung
 Ranks|
 Welcome messages|Willkommensnachrichten
-Chatrooms|ChatrÐ´ume
+Chatrooms|Chaträume
 Reminders|
 Hub news|
 Chat responder|
@@ -716,39 +716,39 @@ Country: %s|Land: %s
 Client: %s|Client: %s
 Version: %s|Version: %s
 Normal|Normal
-Away|AuswÐ´rts
-Normal away|Normal auswÐ´rts
+Away|Auswärts
+Normal away|Normal auswärts
 Fileserver|Dateiserver
 Normal fileserver|Normal Dateiserver
-Away fileserver|AuswÐ´rts Dateiserver
-Normal away fileserver|Normal auswÐ´rts Dateiserver
+Away fileserver|Auswärts Dateiserver
+Normal away fileserver|Normal auswärts Dateiserver
 Fireball|Feuerball
 Normal fireball|Normal Feuerball
-Away fireball|AuswÐ´rts Feuerball
-Normal away fireball|Normal auswÐ´rts Feuerball
+Away fireball|Auswärts Feuerball
+Normal away fireball|Normal auswärts Feuerball
 Fileserver fireball|Dateiserver Feuerball
 Normal fileserver fireball|Normal Dateiserver Feuerball
-Away fileserver fireball|AuswÐ´rts Dateiserver Feuerball
-Normal away fileserver fireball|Normal auswÐ´rts Dateiserver Feuerball
+Away fileserver fireball|Auswärts Dateiserver Feuerball
+Normal away fileserver fireball|Normal auswärts Dateiserver Feuerball
 TLS|TLS
 Normal TLS|Normal TLS
-Away TLS|AuswÐ´rts TLS
-Normal away TLS|Normal auswÐ´rts TLS
+Away TLS|Auswärts TLS
+Normal away TLS|Normal auswärts TLS
 Fileserver TLS|Dateiserver TLS
 Normal fileserver TLS|Normal Dateiserver TLS
-Away fileserver TLS|AuswÐ´rts Dateiserver TLS
-Normal away fileserver TLS|Normal auswÐ´rts Dateiserver TLS
+Away fileserver TLS|Auswärts Dateiserver TLS
+Normal away fileserver TLS|Normal auswärts Dateiserver TLS
 Fireball TLS|Feuerball TLS
 Normal fireball TLS|Normal Feuerball TLS
-Away fireball TLS|AuswÐ´rts Feuerball TLS
-Normal away fireball TLS|Normal auswÐ´rts Feuerball TLS
+Away fireball TLS|Auswärts Feuerball TLS
+Normal away fireball TLS|Normal auswärts Feuerball TLS
 Fileserver fireball TLS|Dateiserver Feuerball TLS
 Normal fileserver fireball TLS|Normal Dateiserver Feuerball TLS
-Away fileserver fireball TLS|AuswÐ´rts Dateiserver Feuerball TLS
-Normal away fileserver fireball TLS|Normal auswÐ´rts Dateiserver Feuerball TLS
+Away fileserver fireball TLS|Auswärts Dateiserver Feuerball TLS
+Normal away fileserver fireball TLS|Normal auswärts Dateiserver Feuerball TLS
 Unable to get bot information: %s|
 Bot information|Botinformation
-Owner script: %s|EigentÑŒmerskript: %s
+Owner script: %s|Eigentümerskript: %s
 %s with IP %s and class %d allowed due to forbidden DNS exception: %s|
 In order to use this feature you need to enable DNS lookup. Do it by setting hub configuration variable %s to %d. Please note: Enabling DNS lookup might slow your hub performance down.|
 Modified forbidden DNS with ban time %s: %s|
@@ -760,7 +760,7 @@ Forbidden DNS list is empty.|
 Powered by %s|Bereitgestellt von %s
 Warning: %s|Warnung: %s
 Open files limit set to %d is smaller than maximum users configuration which is %d. You can correct this by setting %s to %d or higher and restarting the hub.|
-Additional help|ZusÐ´tzliche Hilfe
+Additional help|Zusätzliche Hilfe
 Remove all %s tables and files|Alle %s Tabellen und Dateien entfernen
 You can't kick user whose class is higher or equals your own: %s|
 Your topic contains forbidden characters which can't be used for security reason: %s|
@@ -785,8 +785,8 @@ Modified forbidden country code with ban time %s: %s|
 Added forbidden country code with ban time %s: %s|
 Deleted forbidden country code: %s|
 Couldn't delete forbidden country code because not found: %s|
-Forbidden country code list|Liste fÑŒr verbotenen LÐ´ndercode
-Forbidden country code list is empty.|Liste fÑŒr verbotenen LÐ´ndercode ist leer.
+Forbidden country code list|Liste für verbotenen Ländercode
+Forbidden country code list is empty.|Liste für verbotenen Ländercode ist leer.
 %s with IP %s and class %d allowed due to forbidden country code exception: %s|
 I'm staying idle due to confusion.|
 Added replacer in MC: %s|
@@ -804,17 +804,17 @@ Chat replacer exception list is empty.|Chatersetzungs-Ausnahmeliste ist leer.
 replace|ersetzen
 Add chat replacer|
 Delete chat replacer|
-Add chat replacer exception|Chatersetzungs-Ausnahme hinzufÑŒgen
-Delete chat replacer exception|Chatersetzungs-Ausnahme lÑ†schen
+Add chat replacer exception|Chatersetzungs-Ausnahme hinzufügen
+Delete chat replacer exception|Chatersetzungs-Ausnahme löschen
 Chat replacer|
 You need to send another %d main chat messages in order to use hub registration.|
-Please wait another %.1f minutes before using hub registration.|
+Please wait another %d seconds before using hub registration.|
 In order to use this feature you need to set %s to: %d|
-Please reconnect to gain %d minutes of uptime in order to use hub registration.|
+Please reconnect to gain %d seconds of uptime in order to use hub registration.|
 Dropping %s with IP %s and class %d due to protocol flood detection: %s|
 Protocol flood detected from your client: %s|
 Automatic update check detected stable version of %s available, use following command to update: %s|
-menu|MenÑŒ
+menu|Menü
 Dropping user due to clone detection from IP %s with class %d: %s = %s|
 Configuration variable %s must be a valid IP address.|
 Average share per user: %s|
@@ -833,8 +833,8 @@ You're not allowed to send PM to this user because: %s|
 %s with class %d deleted %d antispam entries with occurrence less than %d.|
 %s with class %d deleted %d search filter entries with occurrence less than %d.|
 query|Suchanfrage
-Execute MySQL query|MySQL-Suchanfrage ausfÑŒhren
-Execute shell command|Shellbefehl ausfÑŒhren
+Execute MySQL query|MySQL-Suchanfrage ausführen
+Execute shell command|Shellbefehl ausführen
 Experts only|Nur Experten
 Add hard IP ban entry|
 Delete hard IP ban entry|
@@ -884,7 +884,7 @@ Main chat message replaced for user: %s|
 Unknown protocol command from IP %s before login: %s|
 Added %s to hard IP ban list, %d users in total.|
 NMDC version: %s|NMDC-Version: %s
-Client supports: %s|Client unterstÑŒtzt: %s
+Client supports: %s|Client unterstützt: %s
 Modified forbidden client supports with ban time %s: %s|
 Added forbidden client supports with ban time %s: %s|
 Modified forbidden NMDC version with ban time %s: %s|
@@ -921,7 +921,7 @@ parameter|Parameter
 Command parameters %s are always required, while %s are optional.|
 Quoted parameters %s or %s must be used with quotes.|
 IP information|IP-Information
-IP information not available: %s|IP-Information nicht verfÑŒgbar: %s
+IP information not available: %s|IP-Information nicht verfügbar: %s
 Message replaced for user with IP %s and class %d in MC: <%s> %s|
 IP %s permanently banned: <%s> %s|
 Nick %s permanently banned: <%s> %s|
@@ -948,8 +948,8 @@ Added right click menu item: %s|
 Deleted right click menu item: %s|
 Right click menu item not found: %d|
 Right click menu item list is empty.|
-Menu item|MenÑŒeintrag
-Menu command|MenÑŒbefehl
+Menu item|Menüeintrag
+Menu command|Menübefehl
 Changed right click menu item order: %s|
 Separator or eraser|
 Nick and IP %s unbanned: <%s> %s|
@@ -962,7 +962,7 @@ You have already voted for kicking that user.|
 There is an error in following antispam entry pattern|
 Pattern|Muster
 Error|Fehler
-Solution|LÑ†sung
+Solution|Lösung
 There is an error in following search filter pattern|
 There is an error in following search filter exception pattern|
 There is an error in following antispam exception entry pattern|Es gibt einen Fehler im folgenden Antispam-Ausnahmeeintragsmuster
@@ -990,9 +990,9 @@ Infected user detected with nick %s and IP %s and share %s and spent time: %s|
 Sadly I don't have access to send infected user information to AVDB, please ask maintainer of this script to add your server IP address to access list. AVDB reporting feature has been automatically disabled.|
 In order to send infected user information to AVDB you need to ask maintainer of this script to add your server IP address to AVDB access list.|
 Antivirus statistics|Antivirus-Statistiken
-File names used for search|FÑŒr die Suche verwendete Dateinamen
-File extensions used for search|FÑŒr die Suche verwendete Dateierweiterungen
-Possibly infected users|MÑ†glicherweise infizierte Benutzer
+File names used for search|Für die Suche verwendete Dateinamen
+File extensions used for search|Für die Suche verwendete Dateierweiterungen
+Possibly infected users|Möglicherweise infizierte Benutzer
 Spent time: %s|
 Infected user logged in with IP %s and share %s: %s|
 Loaded %d of %d with totally %d items: %s|
@@ -1004,7 +1004,7 @@ Error on connecting.|
 Loaded none with totally %d items: %s|
 Infected user found with IP %s and share %s: %s|
 Server didn't reply with expected status code.|
-Size of %s: %d @ %s|GrÑ†Ð¯e von %s: %d @ %s
+Size of %s: %d @ %s|Größe von %s: %d @ %s
 Clear kick votes for user|
 %s cleared %d of %d votes for kicking user with class %d: %s|
 Vote kick list|
@@ -1033,15 +1033,15 @@ News item added by %s: %s|
 Your connection request is blocked because user that you're trying connect to was detected as virus spreader: %s|
 Connection requests to following user will be blocked: %s|
 Downloading script file: %s|Skriptdatei wird heruntergeladen: %s
-Stable version of %s is available: %s|Stabile Version von %s ist verfÑŒgbar: %s
-Development version of %s is available: %s|Entwicklungsversion von %s ist verfÑŒgbar: %s
-Translation file loaded: %s|Ð¬bersetzungsdatei geladen: %s
+Stable version of %s is available: %s|Stabile Version von %s ist verfügbar: %s
+Development version of %s is available: %s|Entwicklungsversion von %s ist verfügbar: %s
+Translation file loaded: %s|Übersetzungsdatei geladen: %s
 Loaded none of %d with totally %d items: %s|
 Failed to execute %s with code: %d|
 Failed to execute %s with error: %s|
 Failed to execute %s without code and error.|
 Failed to move file: %s|Fehler beim Verschieben der Datei: %s
-Downloading translation file: %s|Ð¬bersetzungsdatei wird heruntergeladen: %s
+Downloading translation file: %s|Übersetzungsdatei wird heruntergeladen: %s
 File not found on update server: %s|Datei auf Aktualisierungsserver nicht gefunden: %s
 File not found on remote server: %s|Datei auf entferntem Server nicht gefunden: %s
 File is empty.|Datei ist leer.
@@ -1070,7 +1070,7 @@ Deleted automatic country chatroom entrance with ID: %d|
 Automatic country chatroom entrance list is empty.|
 Please note, following function is required for features available in this version of %s and is currently not available in running version of %s but is available in latest update: %s|
 note|Anmerkung
-Access is restricted.|Zugriff ist beschrÐ´nkt.
+Access is restricted.|Zugriff ist beschränkt.
 Convert LRE to plain text|LRE in Klartext konvertieren
 LRE converted to plain text: %s|LRE in Klartext konvertiert: %s
 Please check your command syntax, something is wrong there.|
@@ -1102,7 +1102,7 @@ Users with email address %s found in following hubs|
 Users with share size %s found in following hubs|
 Users with IP address %s found in following hubs|
 Blocked PM|
-Right click menu|Rechtsklick-MenÑŒ
+Right click menu|Rechtsklick-Menü
 IP watch|IP-Beobachtung
 Hard IP bans|
 Chatroom history|Chatraumverlauf
@@ -1141,7 +1141,7 @@ Low chat uptime of %d seconds from %s with IP %s and class %d in PM to %s with I
 Low chat uptime of %d seconds from %s with IP %s and class %d in MC: %s|
 Low chat uptime of %d seconds from %s with IP %s and class %d in command: %s|
 Low registration uptime from %s with IP %s and class %d: %s|
-%.1f minutes|%.1f Minuten
+%d seconds|
 Thank you, your report has been accepted.|
 Low search uptime of %d seconds from %s with IP %s and class %d as any file: %s|
 Low search uptime of %d seconds from %s with IP %s and class %d as audio file: %s|

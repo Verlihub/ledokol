@@ -1,6 +1,6 @@
 # Language: sv_SE
 # Charset: CP1252
-# Version: 2.9.0
+# Version: 2.9.1
 # Author: RoLex
 # Email: webmaster@feardc.net
 
@@ -8,13 +8,13 @@ Current topic: %s|Nuvarande tema: %s
 Current topic set by %s: %s|Nuvarande tema av %s: %s
 This operation might take very long time depending on how much is going to be removed, please be patient.|
 days|dagar
-%s with class %d deleted %d IP logger plugin entries older than %d days.|%s med klass %d tog bort %d rader fr–µn IP logger insticksprogrammet som var –¥ldre –¥n %d dagar.
-%s with class %d deleted %d unbans older than %d days.|%s med klass %d tog bort %s rader fr–µn unban listan som var –¥ldre –¥n %d dagar.
-%s with class %d deleted %d bans older than %d days.|%s med klass %d tog bort %s rader fr–µn ban listan som var –¥ldre –¥n %d dagar.
-%s with class %d deleted %d kicks older than %d days.|%s med klass %d tog bort %s rader fr–µn kick listan som var –¥ldre –¥n %d dagar.
+%s with class %d deleted %d IP logger plugin entries older than %d days.|%s med klass %d tog bort %d rader frÂn IP logger insticksprogrammet som var ‰ldre ‰n %d dagar.
+%s with class %d deleted %d unbans older than %d days.|%s med klass %d tog bort %s rader frÂn unban listan som var ‰ldre ‰n %d dagar.
+%s with class %d deleted %d bans older than %d days.|%s med klass %d tog bort %s rader frÂn ban listan som var ‰ldre ‰n %d dagar.
+%s with class %d deleted %d kicks older than %d days.|%s med klass %d tog bort %s rader frÂn kick listan som var ‰ldre ‰n %d dagar.
 I'm probably away. State your business and I might answer later if you're lucky.|
-Perform script update|Utf—Ür uppdatering av skriptet
-Deleted %d main chat history messages.|Tog bort %d rader fr–µn huvudchatt historiken.
+Perform script update|Utfˆr uppdatering av skriptet
+Deleted %d main chat history messages.|Tog bort %d rader frÂn huvudchatt historiken.
 There are no main chat history messages to remove.|
 Deleted %d operator chat history messages.|
 There are no operator chat history messages to remove.|
@@ -22,7 +22,7 @@ There are no operator chat history messages to remove.|
 Unable to connect to target server. Please try again later.|
 Last %d main chat messages|
 Main chat history is empty.|
-%s is now known as: %s|%s –¥r nu k–¥nd som: %s
+%s is now known as: %s|%s ‰r nu k‰nd som: %s
 Last %d operator chat messages|
 Operator chat history is empty.|
 Valid priority is a number from %d to %d.|
@@ -43,7 +43,7 @@ Deleted %d offline messages.|
 Couldn't delete offline messages because not found: %s|
 %s with class %d deleted all offline messages.|
 There are no offline messages to remove.|
-No topic is set.|Temat –¥r inte satt.
+No topic is set.|Temat ‰r inte satt.
 %s with IP %s and class %d allowed due to forbidden nick exception: %s|
 message|meddelande
 %s with IP %s and class %d allowed due to forbidden description exception: %s|
@@ -144,7 +144,7 @@ The user you're trying to send offline message to is a bot. Message is discarded
 You can't start at user number %d when you only have %d accounts with class %d.|
 Showing %d out of total %d accounts with class %d starting at user number %d|
 There are no accounts with class: %d|
-Known classes are: %s|K–¥nda klasser –¥r: %s
+Known classes are: %s|K‰nda klasser ‰r: %s
 %s with class %d sent say message: <%s> %s|
 %s with class %d had bad luck sending say message: <%s> %s|
 You can't talk from nick whose class is higher or equals your own.|
@@ -185,7 +185,7 @@ This list of commands|
 Current topic|Nuvarande tema
 Your chat rank|
 You're not allowed to send private messages.|
-Unknown|Ok–¥nt
+Unknown|Ok‰nt
 identifier|
 Offline message to user|
 Main chat history|
@@ -220,7 +220,7 @@ Rank exception list is empty.|
 Add rank exception|
 Delete rank exception|
 In order to use this feature you must turn off registered users list cache. Do it by setting hub configuration variable %s to %d and restarting the hub. Please note: Turning cache off is not recommended with large list of registered users.|
-Both|B–µda
+Both|BÂda
 Deleted search filter: %s|
 Couldn't delete search filter because not found: %s|
 Search filter list|
@@ -294,8 +294,8 @@ Deleted search filter exception entry: %s|
 Couldn't delete search filter exception entry because not found: %s|
 Search filter exception list is empty.|
 file|fil
-Read hub logs|L–¥sa hubbloggar
-Known files are: %s|K–¥nda filer –¥r: %s
+Read hub logs|L‰sa hubbloggar
+Known files are: %s|K‰nda filer ‰r: %s
 Log file is empty or does not exist.|
 Add command notification exception|
 Delete command notification exception|
@@ -381,7 +381,7 @@ limit|
 Size of chat ranks table: %d [ %s: %d @ %s ]|
 Size of share ranks table: %d [ %s: %d @ %s ]|
 Size of operator ranks table: %d [ %s: %d @ %s ]|
-content|inneh–µll
+content|innehÂll
 destination|destination
 interval|intervall
 Add reminder|
@@ -808,9 +808,9 @@ Add chat replacer exception|
 Delete chat replacer exception|
 Chat replacer|
 You need to send another %d main chat messages in order to use hub registration.|
-Please wait another %.1f minutes before using hub registration.|
+Please wait another %d seconds before using hub registration.|
 In order to use this feature you need to set %s to: %d|
-Please reconnect to gain %d minutes of uptime in order to use hub registration.|
+Please reconnect to gain %d seconds of uptime in order to use hub registration.|
 Dropping %s with IP %s and class %d due to protocol flood detection: %s|
 Protocol flood detected from your client: %s|
 Automatic update check detected stable version of %s available, use following command to update: %s|
@@ -1141,7 +1141,7 @@ Low chat uptime of %d seconds from %s with IP %s and class %d in PM to %s with I
 Low chat uptime of %d seconds from %s with IP %s and class %d in MC: %s|
 Low chat uptime of %d seconds from %s with IP %s and class %d in command: %s|
 Low registration uptime from %s with IP %s and class %d: %s|
-%.1f minutes|
+%d seconds|
 Thank you, your report has been accepted.|
 Low search uptime of %d seconds from %s with IP %s and class %d as any file: %s|
 Low search uptime of %d seconds from %s with IP %s and class %d as audio file: %s|

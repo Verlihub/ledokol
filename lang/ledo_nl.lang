@@ -1,6 +1,6 @@
 # Language: nl_NL
 # Charset: CP1252
-# Version: 2.9.0
+# Version: 2.9.1
 # Author: Modswat
 # Email: future_dance@hotmail.com
 
@@ -184,7 +184,7 @@ This list of commands|Deze lijst van commando's
 %s user commands|%s gebruikers commands
 Current topic|Huidige topic
 Your chat rank|Je chat rank
-You're not allowed to send private messages.|Het wordt je niet toegestaan om privÐ¹ berichten te versturen.
+You're not allowed to send private messages.|Het wordt je niet toegestaan om privé berichten te versturen.
 Unknown|Onbekend
 identifier|identifier
 Offline message to user|Offline bericht naar gebruiker
@@ -652,7 +652,7 @@ Script size: %d lines in %s|Script grote: %d regels in %s
 Added %s to IP gag list, %d users in total.|Toegevoegd  %s aan IP gag lijst, %d gebruikers in totaal.
 Flood detected from IP %s last known as %s with class %d in MC: %s|Flood gedetecteerd van IP %s laatste bekend als %s met class %d in MC: %s
 Flood detected from IP %s last known as %s with class %d in PM to %s with IP %s and class %d: %s|flood gedetecteerd van ip %s laatst bekende als %s met klasse %d in pm aan %s met ip %s en klasse %d: %s
-Private chat is currently disabled for you.|PrivÐ¹ chat is momenteel uitgeschakeld voor je
+Private chat is currently disabled for you.|Privé chat is momenteel uitgeschakeld voor je
 Main chat flood detected from your IP.|Mainchat flood gedetecteerd van uw ip .
 %d users with IP %s dropped due to flood.|%d gebruikers met IP %s verbinding verbroken tijdens flood.
 No error message specified.|Geen foutmelding aangegeven.
@@ -684,7 +684,7 @@ Registered users list statistics|Geregistreerde gebruikers lijst statistieken
 Registered users list results for %s|Geregistreerde gebruikers lijst resultaten voor %s
 Class %d: %d|Class %d: %d
 Registered users list is empty.|Geregistreerde gebruikers lijst is leeg.
-This feature requires following binary installed on your system: %s|Deze functie vereist volgende binaire geÐ¿nstalleerd op uw systeem: %s
+This feature requires following binary installed on your system: %s|Deze functie vereist volgende binaire geïnstalleerd op uw systeem: %s
 Configuration directory: %s|Configuratie directory: %s
 %s with IP %s and class %d stated incorrect IP in connect request to %s: %s|%s met IP %s en class %d onjuist IP in connect verzoek aan %s: %s
 Top %d search requests|Top %d zoek verzoek
@@ -769,7 +769,7 @@ User count: %s|Gebruikers teller: %s
 Total share: %s|Totale share: %s
 %s with IP %s and class %d tries to speak with IP gag in MC: %s|%s met IP %s enclass %d probeert te spreken met IP gag in MC: %s
 %s with IP %s and class %d tries to speak with IP gag in PM to %s with IP %s and class %d: %s|%s met ip %s en klasse %d probeert met ip gag te spreken pm aan %s met ip %s en klasse %d: %s
-Private message replaced for user: %s|PrivÐ¹ bericht vervangen voor gebruiker: %s
+Private message replaced for user: %s|Privé bericht vervangen voor gebruiker: %s
 Command logger|Command logger
 Showing %d entries from command logger|Laat zien %d regels van command logger
 Command logger is empty.|Command logger is leeg.
@@ -808,9 +808,9 @@ Add chat replacer exception|Chat vervanger uitzondering toevoegen
 Delete chat replacer exception|Chat vervanger uitzondering verwijderen
 Chat replacer|Chat vervanger
 You need to send another %d main chat messages in order to use hub registration.|Stuur een ander %d main chat berichten om de hub registratie te gebruiken.
-Please wait another %.1f minutes before using hub registration.|Even geduld aub  %.1f minuten voordat u hub registratie kunt gebruiken.
+Please wait another %d seconds before using hub registration.|Even geduld aub, wacht %d seconden voordat u hub registratie kunt doen.
 In order to use this feature you need to set %s to: %d|Om deze functie te gebruiken moet je eerst dit instellen %s to: %d
-Please reconnect to gain %d minutes of uptime in order to use hub registration.|Reconnect om %d uptime te verkrijgen en de hub registratie te gebruiken.
+Please reconnect to gain %d seconds of uptime in order to use hub registration.|Gelieve opnieuw te verbinden met %d seconden van uptime te krijgen om hub registratie gebruiken.
 Dropping %s with IP %s and class %d due to protocol flood detection: %s|Verbinding verbreken %s met IP %s en class %d door flood detectie: %s
 Protocol flood detected from your client: %s|Flood dedected  van je client: %s
 Automatic update check detected stable version of %s available, use following command to update: %s|Automatische update check gedetecteerd stabiele versie van %s beschikbaar , gebruik volgende opdracht bij te werken: %s
@@ -906,7 +906,7 @@ Region: %s|Regio: %s
 Time zone: %s|Tijd zone: %s
 Continent: %s|Continent: %s
 Postal code: %s|Postcode: %s
-Coordinates: %.4f %.4f|CoÑ†rdinaten: %.4f %.4f
+Coordinates: %.4f %.4f|Coördinaten: %.4f %.4f
 Metro code: %d|Metro code: %d
 Area code: %d|Net nummer: %d
 Drop users with IP|Verbinding verbreken voor gebruikers met IP
@@ -984,11 +984,11 @@ Message replaced for user with IP %s and class %d in PM to %s with IP %s and cla
 Message ignored due to flood detection from %s with IP %s and class %d in MC: %s|Bericht genegeerd vanwege flood detectie van %s met IP %s en class %d in MC: %s
 Users with same IP|Gebruikers met het zelfde IP adres
 Parameter count mismatch detected in following translation string: %s|Parameter mismatch gedetecteerd in volgende vertaling string: %s
-Infected user detected|GeÐ¿nfecteerde gebruiker gedetecteerd
+Infected user detected|Geïnfecteerde gebruiker gedetecteerd
 Found files|Gevonden bestanden
-Infected user detected with nick %s and IP %s and share %s and spent time: %s|GeÐ¿nfecteerde gebruiker gedetecteerd met nick %s en IP %s en share %s gespendeerde tijd: %s
-Sadly I don't have access to send infected user information to AVDB, please ask maintainer of this script to add your server IP address to access list. AVDB reporting feature has been automatically disabled.|Helaas heb ik geen toegang tot geÐ¿nfecteerde gebruiker informatie om te sturen naar AVDB, vraag onderhouder van dit script naar uw server IP-adres toe te voegen aan toegang lijst. AVDB rapportage functie is automatisch uitgeschakeld 
-In order to send infected user information to AVDB you need to ask maintainer of this script to add your server IP address to AVDB access list.|Om de geÐ¿nfecteerde gebruiker informatie te sturen naar AVDB moet je de beheerder van dit script te vragen om uw server IP-adres toe te voegen aan de toegang lijst AVDB .
+Infected user detected with nick %s and IP %s and share %s and spent time: %s|Geïnfecteerde gebruiker gedetecteerd met nick %s en IP %s en share %s gespendeerde tijd: %s
+Sadly I don't have access to send infected user information to AVDB, please ask maintainer of this script to add your server IP address to access list. AVDB reporting feature has been automatically disabled.|Helaas heb ik geen toegang tot geïnfecteerde gebruiker informatie om te sturen naar AVDB, vraag onderhouder van dit script naar uw server IP-adres toe te voegen aan toegang lijst. AVDB rapportage functie is automatisch uitgeschakeld 
+In order to send infected user information to AVDB you need to ask maintainer of this script to add your server IP address to AVDB access list.|Om de geïnfecteerde gebruiker informatie te sturen naar AVDB moet je de beheerder van dit script te vragen om uw server IP-adres toe te voegen aan de toegang lijst AVDB .
 Antivirus statistics|Antivirus statistieken
 File names used for search|Bestand namen gebruikt om te zoeken
 File extensions used for search|Bestand extensies gebruikt voor zoeken
@@ -1002,7 +1002,7 @@ Failed to send information to %s: %s|Niet gelukt om informatie te versturen naar
 Error on executing %s: %s|Fout bij uitvoeren %s: %s
 Error on connecting.|Fout bij verbinden.
 Loaded none with totally %d items: %s|Geladen nul met totaal %d items: %s
-Infected user found with IP %s and share %s: %s|GeÐ¿nfecteerde gebruiker gedetecteerd met  IP %s en share %s
+Infected user found with IP %s and share %s: %s|Geïnfecteerde gebruiker gedetecteerd met  IP %s en share %s
 Server didn't reply with expected status code.|Server reageerde niet met de verwacht status code
 Size of %s: %d @ %s|Grote van %s: %d @ %s
 Clear kick votes for user|Kik stem voor gebruiker opgeruimd
@@ -1045,7 +1045,7 @@ Downloading translation file: %s|Downloaden van vertalings bestand: %s
 File not found on update server: %s|Bestand niet gevonden op upate server: %s
 File not found on remote server: %s|Bestand niet gevonden op remote server
 File is empty.|Bestand is leeg.
-Force infected user detection|Gedwongen geÐ¿nfecteerde gebruiker detectie
+Force infected user detection|Gedwongen geïnfecteerde gebruiker detectie
 You can't block user whose class is higher or equals your own: %s|Je kunt geen gebruiker blokken met een class hoger of gelijk aan je zelf: %s
 User already blocked: %s|Gebruiker is al geblokt: %s
 item|item
@@ -1055,7 +1055,7 @@ Nothing was found in: %s|Niks gevonden in: %s
 Searching for %s in %s: %s|Zoeken naar %s in %s: %s
 Showing %d results from %s|Resultaten van %s laten zien %d
 %s module version: %s|%s module versie: %s
-This feature requires following module installed on your system: %s|Deze functie vereist volgende module op uw systeem zijn geÐ¿nstalleerd: %s
+This feature requires following module installed on your system: %s|Deze functie vereist volgende module op uw systeem zijn geïnstalleerd: %s
 Failed to start antivirus search server: %s|Niet gelukt te starten met een antivirus \\oek opdracht op de server: %s
 Started antivirus search server: %s|Gestart een antivirus zoektocht op de server: %s
 Stopped antivirus search server: %s|Gestopt antivirus zoektocht op de server: %s
@@ -1136,12 +1136,12 @@ Yes|Ja
 No|Nee
 %s with class %d changed configuration variable %s.%s: %s => %s|%s Met klasse %d gewijzigde configuratie variabele %s.%s: %s => %s
 Please wait another %d seconds before using public chat.|Voordat je de mainchat mag gebruiken wacht %d seconden
-Please wait another %d seconds before using private chat.|Voordat je de privÐ¹ chat mag gebruiken wacht %d seconden
+Please wait another %d seconds before using private chat.|Voordat je de privé chat mag gebruiken wacht %d seconden
 Low chat uptime of %d seconds from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s|Low -chat uptime van %d seconden vanaf %s met IP % s en class % d in PM naar %s met IP %s en class % d: %s
 Low chat uptime of %d seconds from %s with IP %s and class %d in MC: %s|Low -chat uptime van %d seconden vanaf %s met IP %s en klasse %d in MC : %s
 Low chat uptime of %d seconds from %s with IP %s and class %d in command: %s|Low -chat uptime van %d seconden vanaf %s met IP %s en klasse %d in opdracht: %s
 Low registration uptime from %s with IP %s and class %d: %s|Lage registratie uptime van %s met IP %s en class %d: %s
-%.1f minutes|%.1f Minuten
+%d seconds|%d seconden
 Thank you, your report has been accepted.|Dank u , uw rapport is geaccepteerd.
 Low search uptime of %d seconds from %s with IP %s and class %d as any file: %s|Lage zoeken uptime van %d seconden vanaf %s met IP %s en class %d als een bestand : %s
 Low search uptime of %d seconds from %s with IP %s and class %d as audio file: %s|Lage zoeken uptime van %d seconden vanaf %s met IP %s en class %d als audio file: %s
@@ -1153,5 +1153,5 @@ Low search uptime of %d seconds from %s with IP %s and class %d as video: %s|Lag
 Low search uptime of %d seconds from %s with IP %s and class %d as folder: %s|Lage zoeken uptime van %d seconden vanaf %s met IP %s en klasse %d als map: %s
 Low search uptime of %d seconds from %s with IP %s and class %d as TTH: %s|Lage zoeken uptime van %d seconden vanaf %s met IP %s en klasse %d als TTH: %s
 User dropped: %s|Gebruiker gedropt: %s
-%d of %d|
-Main chat responder list contains %d items, but none matched your pattern.|
+%d of %d|%d of %d
+Main chat responder list contains %d items, but none matched your pattern.|Main chat- responder lijst bevat %d items , maar voldoet niet aan je patroon .

@@ -1,366 +1,366 @@
 # Language: tr_TR
 # Charset: CP1254
-# Version: 2.9.0
-# Author: Mauron
+# Version: 2.9.1
+# Author: mauron
 # Email: mauron@vmail.me
 
-Current topic: %s|GÑŒncel konu: %s
-Current topic set by %s: %s|GÑŒncel konu %s tarafÑndan ayarlandÑ: %s
-This operation might take very long time depending on how much is going to be removed, please be patient.|Bu iÑlem kaldÑrÑlacak Ñ†Ñ€elere gÑ†re uzun zaman alabilir, lÑŒtfen sabÑrlÑ olun.
-days|gÑŒn
-%s with class %d deleted %d IP logger plugin entries older than %d days.|%d sÑnÑflÑ %s, %d IP kÑŒtÑŒkleyici eklentisi unsurunu sildi ki bunlar %d gÑŒnden daha eskiydi.
-%s with class %d deleted %d unbans older than %d days.|%d sÑnÑflÑ %s, %d yasaklama kaldÑrÑmÑnÑ sildi ki bunlar %d gÑŒnden daha eskiydi.
-%s with class %d deleted %d bans older than %d days.|%d sÑnÑflÑ %s, %d yasaklamayÑ sildi ki bunlar %d gÑŒnden daha eskiydi.
-%s with class %d deleted %d kicks older than %d days.|%d sÑnÑflÑ %s, %d kovmayÑ sildi ki bunlar %d gÑŒnden daha eskiydi.
-I'm probably away. State your business and I might answer later if you're lucky.|Muhtemelen uzaktayÑm. Ne istedÑ€inizi belirtin ve eÑ€er ÑanslÑysanÑz daha sonra cevap verebilirim.
-Perform script update|Betik gÑŒncellemesini yap
-Deleted %d main chat history messages.|%d ana sohbet mesajÑ tarihĞ·eden silinmiÑtir.
-There are no main chat history messages to remove.|Ana sohbet tarihĞ·esinden kaldÑrÑlacak mesaj yoktur.
-Deleted %d operator chat history messages.|%d operatÑ†r sohbet mesajÑ tarihĞ·eden silinmiÑtir.
-There are no operator chat history messages to remove.|TarihĞ·eden kaldÑrÑlacak operatÑ†r sohbet mesajÑ yoktur.
-%s with class %d deleted %d main chat history messages.|%d sÑnÑflÑ %s %d ana sohbet mesajÑnÑ tarihĞ·eden sildi.
-Unable to connect to target server. Please try again later.|Hedef sunucuya baÑ€lanÑlamadÑ. LÑŒtfen daha sonra tekrar deneyin.
-Last %d main chat messages|Son %d ana sohbet mesajlarÑ
-Main chat history is empty.|Ana sohbet tarihĞ·esi boÑtur.
-%s is now known as: %s|%s artÑk %s olarak bilinir
-Last %d operator chat messages|Son %d operatÑ†r sohbet mesajÑ
-Operator chat history is empty.|OperatÑ†r sohbet tarihĞ·esi boÑtur.
-Valid priority is a number from %d to %d.|GeĞ·erli Ñ†ncelik %d ilĞ² %d arasÑ bir sayÑdÑr.
-You are using latest version of %s, no update is required.|%s yazÑlÑmÑnÑn son sÑŒrÑŒmÑŒnÑŒ kullanÑyorsunuz, gÑŒncelleme gereksizdir.
-Why would you send offline message to yourself?|NiĞ·in kendinize Ğ·evrimdÑÑÑ bir mesaj yollamak isteyesiniz ki?
-User %s is online. Sending message directly.|%s rumuzlu kullanÑcÑ Ğ·evrimiĞ·inde. Mesaj doÑ€rudan gÑ†nderiliyor.
-Your offline message stored for user: %s|Ğ®u kullanÑcÑ iĞ·in Ğ·evrimdÑÑÑ mesajÑnÑz kaydedilmiÑtir: %s
-%s with IP %s and class %d sent offline message.|%s, %s IP adresli ve %d sÑnÑflÑ, Ğ·evrimdÑÑÑ mesaj gÑ†ndermiÑtir.
-priority|Ñ†ncelik
-Offline|Ğ—evrimdÑÑÑ
-Online|Ğ—evrimiĞ·i
-I sent offline message to you on %s|%s tarihinde size Ğ·evrimdÑÑÑ bir mesaj yolladÑm
-My current status|GÑŒncel durumum
-%s with IP %s and class %d received offline messages.|%s, ki %s IP adresli ve %d sÑnÑflÑ, Ğ·evrimdÑÑÑ mesaj aldÑ.
-Stored offline messages|Saklanan Ğ·evrimdÑÑÑ mesajlar
-Offline message list is empty.|Ğ—evrimdÑÑÑ mesaj listesi boÑtur.
-Deleted %d offline messages.|%d Ğ·evrimdÑÑÑ mesaj silindi.
-Couldn't delete offline messages because not found: %s|Ğ—evrimdÑÑÑ mesajlar silinemedi Ğ·ÑŒnkÑŒ bulunamadÑ: %s
-%s with class %d deleted all offline messages.|%d sÑnÑflÑ %s tÑŒm Ğ·evrimdÑÑÑ mesajlarÑ silmiÑtir.
-There are no offline messages to remove.|KaldÑrÑlacak Ğ·evrimdÑÑÑ mesaj yok.
-No topic is set.|HiĞ·bir konu belirtilmemiÑ.
-%s with IP %s and class %d allowed due to forbidden nick exception: %s|%s, ki %s IP adresi ve %d sÑnÑflÑ, yasaklÑ rumuz istisnasÑ nedeniyle kabul edildi: %s
+Current topic: %s|Güncel konu: %s
+Current topic set by %s: %s|Güncel konu %s tarafından ayarlandı: %s
+This operation might take very long time depending on how much is going to be removed, please be patient.|Bu işlem kaldırılacak öğelere göre uzun zaman alabilir, lütfen sabırlı olun.
+days|gün
+%s with class %d deleted %d IP logger plugin entries older than %d days.|%d sınıflı %s, %d IP kütükleyici eklentisi unsurunu sildi ki bunlar %d günden daha eskiydi.
+%s with class %d deleted %d unbans older than %d days.|%d sınıflı %s, %d yasaklama kaldırımını sildi ki bunlar %d günden daha eskiydi.
+%s with class %d deleted %d bans older than %d days.|%d sınıflı %s, %d yasaklamayı sildi ki bunlar %d günden daha eskiydi.
+%s with class %d deleted %d kicks older than %d days.|%d sınıflı %s, %d kovmayı sildi ki bunlar %d günden daha eskiydi.
+I'm probably away. State your business and I might answer later if you're lucky.|Muhtemelen uzaktayım. Ne istedğinizi belirtin ve eğer şanslıysanız daha sonra cevap verebilirim.
+Perform script update|Betik güncellemesini yap
+Deleted %d main chat history messages.|%d ana sohbet mesajı tarihçeden silinmiştir.
+There are no main chat history messages to remove.|Ana sohbet tarihçesinden kaldırılacak mesaj yoktur.
+Deleted %d operator chat history messages.|%d operatör sohbet mesajı tarihçeden silinmiştir.
+There are no operator chat history messages to remove.|Tarihçeden kaldırılacak operatör sohbet mesajı yoktur.
+%s with class %d deleted %d main chat history messages.|%d sınıflı %s %d ana sohbet mesajını tarihçeden sildi.
+Unable to connect to target server. Please try again later.|Hedef sunucuya bağlanılamadı. Lütfen daha sonra tekrar deneyin.
+Last %d main chat messages|Son %d ana sohbet mesajları
+Main chat history is empty.|Ana sohbet tarihçesi boştur.
+%s is now known as: %s|%s artık %s olarak bilinir
+Last %d operator chat messages|Son %d operatör sohbet mesajı
+Operator chat history is empty.|Operatör sohbet tarihçesi boştur.
+Valid priority is a number from %d to %d.|Geçerli öncelik %d ilâ %d arası bir sayıdır.
+You are using latest version of %s, no update is required.|%s yazılımının son sürümünü kullanıyorsunuz, güncelleme gereksizdir.
+Why would you send offline message to yourself?|Niçin kendinize çevrimdışı bir mesaj yollamak isteyesiniz ki?
+User %s is online. Sending message directly.|%s rumuzlu kullanıcı çevrimiçinde. Mesaj doğrudan gönderiliyor.
+Your offline message stored for user: %s|Şu kullanıcı için çevrimdışı mesajınız kaydedilmiştir: %s
+%s with IP %s and class %d sent offline message.|%s, %s IP adresli ve %d sınıflı, çevrimdışı mesaj göndermiştir.
+priority|öncelik
+Offline|Çevrimdışı
+Online|Çevrimiçi
+I sent offline message to you on %s|%s tarihinde size çevrimdışı bir mesaj yolladım
+My current status|Güncel durumum
+%s with IP %s and class %d received offline messages.|%s, ki %s IP adresli ve %d sınıflı, çevrimdışı mesaj aldı.
+Stored offline messages|Saklanan çevrimdışı mesajlar
+Offline message list is empty.|Çevrimdışı mesaj listesi boştur.
+Deleted %d offline messages.|%d çevrimdışı mesaj silindi.
+Couldn't delete offline messages because not found: %s|Çevrimdışı mesajlar silinemedi çünkü bulunamadı: %s
+%s with class %d deleted all offline messages.|%d sınıflı %s tüm çevrimdışı mesajları silmiştir.
+There are no offline messages to remove.|Kaldırılacak çevrimdışı mesaj yok.
+No topic is set.|Hiçbir konu belirtilmemiş.
+%s with IP %s and class %d allowed due to forbidden nick exception: %s|%s, ki %s IP adresi ve %d sınıflı, yasaklı rumuz istisnası nedeniyle kabul edildi: %s
 message|mesaj
-%s with IP %s and class %d allowed due to forbidden description exception: %s|%s, ki %s IP adresli ve %d sÑnÑflÑ, yasaklÑ tanÑmlama istinasÑ sebebiyle kabul edildi: %s
-User you're trying to kick or redirect is protected: %s|Kovmak ya da yeniden yÑ†nlendirmek istediÑ€iniz kullanÑcÑ korunmaktadÑr: %s
-%s with IP %s and class %d allowed due to forbidden tag exception: %s|%s, ki %s IP adresli ve %d sÑnÑflÑ, yasaklÑ etiket istisnasÑ sebebiyle kabul edildi: %s
-type|tÑŒr
-%s with IP %s and class %d allowed due to forbidden connection type exception: %s|%s, ki %s IP adresli ve %d sÑnÑflÑ, yasaklÑ baÑ€lantÑ tÑŒrÑŒ istisnasÑ sebebiyle kabul edildi: %s
-%s with class %d changed configuration variable %s: %s => %s|%d sÑnÑflÑ %s, %s yapÑlandÑrma deÑ€iÑkenini deÑ€iÑtirdi: %s => %s
-%s with IP %s and class %d allowed due to forbidden email exception: %s|%s, ki %s IP adresli ve %d sÑnÑflÑ, yasaklÑ e-posta istisnasÑ sebebiyle kabul edildi: %s
-User received own message: %s|KullanÑcÑ kendi mesajÑnÑ aldÑ: %s
-%s with IP %s and class %d allowed due to forbidden share size exception: %s|%s, ki %s IP adresli ve %d sÑnÑflÑ, yasaklÑ paylaÑÑm istisnasÑ sebebiyle kabul edildi: %s
-Deleted %d releases from category: %s|%d bÑrakÑm Ñu kategoriden silindi: %s
-Why would you want to set empty topic?|NiĞ·in boÑ bir konu belirtmek isteyesiniz ki?
-Modified forbidden nick with ban time %s: %s|YasaklÑ rumuz Ñu yasaklama sÑŒresi ile deÑ€iÑtirildi: %s: %s
-Added forbidden nick with ban time %s: %s|YasaklÑ rumuz Ñu yasaklama sÑŒresi ile eklendi: %s: %s
-Modified forbidden description with ban time %s: %s|YasaklÑ aĞ·Ñklama Ñu yasaklama sÑŒresi ile deÑ€iÑtirildi: %s: %s
-Added forbidden description with ban time %s: %s|YasaklÑ aĞ·Ñklama Ñu yasaklama sÑŒresi ile ilave edildi: %s: %s
-Modified forbidden tag with ban time %s: %s|YasaklÑ etiket Ñu yasaklama sÑŒresi ile deÑ€iÑtirildi: %s: %s
-Added forbidden tag with ban time %s: %s|YasaklÑ etiket Ñu yasaklama sÑŒresi ile eklendi: %s: %s
-Modified forbidden connection type with ban time %s: %s|YasaklÑ baÑ€lantÑ tÑŒrÑŒ Ñu yasaklama sÑŒresi ile deÑ€iÑtirildi: %s: %s
-Added forbidden connection type with ban time %s: %s|YasaklÑ baÑ€lantÑ tÑŒrÑŒ Ñu yasaklama sÑŒresi ile eklendi: %s: %s
-Modified forbidden email with ban time %s: %s|YasaklÑ e-posta Ñu yasaklama sÑŒresi ile deÑ€iÑtirildi: %s: %s
-Added forbidden email with ban time %s: %s|YasaklÑ e-posta Ñu yasaklama sÑŒresi ile eklendi: %s: %s
-Modified forbidden share size with ban time %s: %s|YasaklÑ paylaÑÑm miktarÑ Ñu yasaklama sÑŒresi ile deÑ€iÑtirildi: %s: %s
-Added forbidden share size with ban time %s: %s|YasaklÑ paylaÑÑm miktarÑ Ñu yasaklama sÑŒresi ile eklendi: %s: %s
-Couldn't add MyINFO exception because already exists: %s|MyINFO istisnasÑ eklenemedi Ğ·ÑŒnkÑŒ zaten mevcut: %s
-Added MyINFO exception: %s|MyINFO istisnasÑ eklendi: %s
+%s with IP %s and class %d allowed due to forbidden description exception: %s|%s, ki %s IP adresli ve %d sınıflı, yasaklı tanımlama istinası sebebiyle kabul edildi: %s
+User you're trying to kick or redirect is protected: %s|Kovmak ya da yeniden yönlendirmek istediğiniz kullanıcı korunmaktadır: %s
+%s with IP %s and class %d allowed due to forbidden tag exception: %s|%s, ki %s IP adresli ve %d sınıflı, yasaklı etiket istisnası sebebiyle kabul edildi: %s
+type|tür
+%s with IP %s and class %d allowed due to forbidden connection type exception: %s|%s, ki %s IP adresli ve %d sınıflı, yasaklı bağlantı türü istisnası sebebiyle kabul edildi: %s
+%s with class %d changed configuration variable %s: %s => %s|%d sınıflı %s, %s yapılandırma değişkenini değiştirdi: %s => %s
+%s with IP %s and class %d allowed due to forbidden email exception: %s|%s, ki %s IP adresli ve %d sınıflı, yasaklı e-posta istisnası sebebiyle kabul edildi: %s
+User received own message: %s|Kullanıcı kendi mesajını aldı: %s
+%s with IP %s and class %d allowed due to forbidden share size exception: %s|%s, ki %s IP adresli ve %d sınıflı, yasaklı paylaşım istisnası sebebiyle kabul edildi: %s
+Deleted %d releases from category: %s|%d bırakım şu kategoriden silindi: %s
+Why would you want to set empty topic?|Niçin boş bir konu belirtmek isteyesiniz ki?
+Modified forbidden nick with ban time %s: %s|Yasaklı rumuz şu yasaklama süresi ile değiştirildi: %s: %s
+Added forbidden nick with ban time %s: %s|Yasaklı rumuz şu yasaklama süresi ile eklendi: %s: %s
+Modified forbidden description with ban time %s: %s|Yasaklı açıklama şu yasaklama süresi ile değiştirildi: %s: %s
+Added forbidden description with ban time %s: %s|Yasaklı açıklama şu yasaklama süresi ile ilave edildi: %s: %s
+Modified forbidden tag with ban time %s: %s|Yasaklı etiket şu yasaklama süresi ile değiştirildi: %s: %s
+Added forbidden tag with ban time %s: %s|Yasaklı etiket şu yasaklama süresi ile eklendi: %s: %s
+Modified forbidden connection type with ban time %s: %s|Yasaklı bağlantı türü şu yasaklama süresi ile değiştirildi: %s: %s
+Added forbidden connection type with ban time %s: %s|Yasaklı bağlantı türü şu yasaklama süresi ile eklendi: %s: %s
+Modified forbidden email with ban time %s: %s|Yasaklı e-posta şu yasaklama süresi ile değiştirildi: %s: %s
+Added forbidden email with ban time %s: %s|Yasaklı e-posta şu yasaklama süresi ile eklendi: %s: %s
+Modified forbidden share size with ban time %s: %s|Yasaklı paylaşım miktarı şu yasaklama süresi ile değiştirildi: %s: %s
+Added forbidden share size with ban time %s: %s|Yasaklı paylaşım miktarı şu yasaklama süresi ile eklendi: %s: %s
+Couldn't add MyINFO exception because already exists: %s|MyINFO istisnası eklenemedi çünkü zaten mevcut: %s
+Added MyINFO exception: %s|MyINFO istisnası eklendi: %s
 and|ve
-Deleted forbidden nick: %s|YasaklÑ rumuz silindi: %s
-Couldn't delete forbidden nick because not found: %s|YasaklÑ rumuz silinemedi Ğ·ÑŒnkÑŒ bulunamadÑ: %s
-Deleted forbidden description: %s|YasaklÑ aĞ·Ñklama silindi: %s
-Couldn't delete forbidden description because not found: %s|YasaklÑ aĞ·Ñklama silinemedi Ğ·ÑŒnkÑŒ bulunamadÑ: %s
-Deleted forbidden tag: %s|YasaklÑ etiket silindi: %s
-Couldn't delete forbidden tag because not found: %s|YasaklÑ etiket silinemedi Ğ·ÑŒnkÑŒ bulunamadÑ: %s
-Deleted forbidden connection type: %s|YasaklÑ baÑ€lantÑ tÑŒrÑŒ silindi: %s
-Couldn't delete forbidden connection type because not found: %s|YasaklÑ baÑ€lantÑ tÑŒrÑŒ silinemedi Ğ·ÑŒnkÑŒ bulunamadÑ: %s
-Deleted forbidden email: %s|YasaklÑ e-posta silindi: %s
-Couldn't delete forbidden email because not found: %s|YasaklÑ e-posta silinemedi Ğ·ÑŒnkÑŒ bulunamadÑ: %s
-Deleted forbidden share size: %s|YasaklÑ paylaÑÑm miktarÑ silindi: %s
-Couldn't delete forbidden share size because not found: %s|YasaklÑ paylaÑÑm miktarÑ silinemedi Ğ·ÑŒnkÑŒ bulunamadÑ: %s
-Deleted MyINFO exception: %s|MyINFO istisnasÑ silindi: %s
-Couldn't delete MyINFO exception because not found: %s|MyINFO istisnasÑ silinemedi Ğ·ÑŒnkÑŒ bulunamadÑ: %s
-Forbidden nick list|YasaklÑ rumuz listesi
-Forbidden nick list is empty.|YasaklÑ rumuz listesi boÑtur.
-Forbidden description list|YasaklÑ aĞ·Ñklama listesi
-Forbidden description list is empty.|YasaklÑ aĞ·Ñklama listesi boÑtur.
-Forbidden tag list|YasaklÑ etiket listesi
-Forbidden tag list is empty.|YasaklÑ etiket listesi boÑtur.
-Forbidden connection type list|YasaklÑ baÑ€lantÑ tÑŒrÑŒ listesi
-Forbidden connection type list is empty.|YasaklÑ baÑ€lantÑ tÑŒrÑŒ listesi boÑtur.
-Forbidden email list|YasaklÑ e-posta listesi
-Forbidden email list is empty.|YasaklÑ e-posta listesi boÑtur.
-Forbidden share size list|YasaklÑ paylaÑÑm miktarÑ listesi
-Forbidden share size list is empty.|YasaklÑ paylaÑÑm miktarÑ listesi boÑtur.
+Deleted forbidden nick: %s|Yasaklı rumuz silindi: %s
+Couldn't delete forbidden nick because not found: %s|Yasaklı rumuz silinemedi çünkü bulunamadı: %s
+Deleted forbidden description: %s|Yasaklı açıklama silindi: %s
+Couldn't delete forbidden description because not found: %s|Yasaklı açıklama silinemedi çünkü bulunamadı: %s
+Deleted forbidden tag: %s|Yasaklı etiket silindi: %s
+Couldn't delete forbidden tag because not found: %s|Yasaklı etiket silinemedi çünkü bulunamadı: %s
+Deleted forbidden connection type: %s|Yasaklı bağlantı türü silindi: %s
+Couldn't delete forbidden connection type because not found: %s|Yasaklı bağlantı türü silinemedi çünkü bulunamadı: %s
+Deleted forbidden email: %s|Yasaklı e-posta silindi: %s
+Couldn't delete forbidden email because not found: %s|Yasaklı e-posta silinemedi çünkü bulunamadı: %s
+Deleted forbidden share size: %s|Yasaklı paylaşım miktarı silindi: %s
+Couldn't delete forbidden share size because not found: %s|Yasaklı paylaşım miktarı silinemedi çünkü bulunamadı: %s
+Deleted MyINFO exception: %s|MyINFO istisnası silindi: %s
+Couldn't delete MyINFO exception because not found: %s|MyINFO istisnası silinemedi çünkü bulunamadı: %s
+Forbidden nick list|Yasaklı rumuz listesi
+Forbidden nick list is empty.|Yasaklı rumuz listesi boştur.
+Forbidden description list|Yasaklı açıklama listesi
+Forbidden description list is empty.|Yasaklı açıklama listesi boştur.
+Forbidden tag list|Yasaklı etiket listesi
+Forbidden tag list is empty.|Yasaklı etiket listesi boştur.
+Forbidden connection type list|Yasaklı bağlantı türü listesi
+Forbidden connection type list is empty.|Yasaklı bağlantı türü listesi boştur.
+Forbidden email list|Yasaklı e-posta listesi
+Forbidden email list is empty.|Yasaklı e-posta listesi boştur.
+Forbidden share size list|Yasaklı paylaşım miktarı listesi
+Forbidden share size list is empty.|Yasaklı paylaşım miktarı listesi boştur.
 MyINFO exception list|MyINFO istisna listesi
-MyINFO exception list is empty.|MyINFO istisna listesi boÑtur.
-Deleted %d rows: %s|%d satÑr silindi: %s
-Known types are: %s|Bilinen tÑŒrler ÑunlardÑr: %s
-No rows to remove: %s|KaldÑrÑlacak satÑr yok: %s
+MyINFO exception list is empty.|MyINFO istisna listesi boştur.
+Deleted %d rows: %s|%d satır silindi: %s
+Known types are: %s|Bilinen türler şunlardır: %s
+No rows to remove: %s|Kaldırılacak satır yok: %s
 date|tarih
-%s with IP %s and class %d used following command: %s|%s, ki %s IP adresli ve %d sÑnÑflÑ, Ñu komutu kullandÑ: %s
-context|baÑ€lam
-Deleted from chat rank list: %s|Sohbet dÑŒzey listesinden silindi: %s
-Not found in chat rank list: %s|Sohbet dÑŒzey listesinde bulunamadÑ: %s
-Deleted from operator rank list: %s|OperatÑ†r dÑŒzey listesinden silindi: %s
-Not found in operator rank list: %s|OperatÑ†r dÑŒzey listesinde bulunamadÑ: %s
-Antispam|YÑÑ€Ñn mesaj korumasÑ
-Your chat rank is: %d|Sohbet dÑŒzeyiniz Ñudur: %d
-You have to write something in main chat to get started.|BaÑlamak iĞ·in ana sohbette bir Ñeyler yazmanÑz gerekir.
-Custom nick list is empty.|Ğ¦zel rumuz listesi boÑtur.
-Total share rank size: %s|Toplam paylaÑÑm dÑŒzey boyutu: %s
-Your operator rank is: %d|OperatÑ†r dÑŒzeyiniz Ñudur: %d
-You have to do some operator actions to get started.|BaÑlamak iĞ·in bazÑ operatÑ†r faaliyetlerinde bulunmanÑz gerekir.
-Top %d chat rankers|En ÑŒst dÑŒzey %d sohbetĞ·iler
-Chat rank list is empty.|Sohbet dÑŒzey listesi boÑtur.
-Top %d operator rankers|En ÑŒst dÑŒzey %d operatÑ†rler
-Operator rank list is empty.|OperatÑ†r dÑŒzey listesi boÑtur.
+%s with IP %s and class %d used following command: %s|%s, ki %s IP adresli ve %d sınıflı, şu komutu kullandı: %s
+context|bağlam
+Deleted from chat rank list: %s|Sohbet düzey listesinden silindi: %s
+Not found in chat rank list: %s|Sohbet düzey listesinde bulunamadı: %s
+Deleted from operator rank list: %s|Operatör düzey listesinden silindi: %s
+Not found in operator rank list: %s|Operatör düzey listesinde bulunamadı: %s
+Antispam|Yığın mesaj koruması
+Your chat rank is: %d|Sohbet düzeyiniz şudur: %d
+You have to write something in main chat to get started.|Başlamak için ana sohbette bir şeyler yazmanız gerekir.
+Custom nick list is empty.|Özel rumuz listesi boştur.
+Total share rank size: %s|Toplam paylaşım düzey boyutu: %s
+Your operator rank is: %d|Operatör düzeyiniz şudur: %d
+You have to do some operator actions to get started.|Başlamak için bazı operatör faaliyetlerinde bulunmanız gerekir.
+Top %d chat rankers|En üst düzey %d sohbetçiler
+Chat rank list is empty.|Sohbet düzey listesi boştur.
+Top %d operator rankers|En üst düzey %d operatörler
+Operator rank list is empty.|Operatör düzey listesi boştur.
 string|dizi
-No user results found.|HiĞ·bir kullanÑcÑ sonucu bulunamadÑ.
-Showing %d user log results|%d kullanÑcÑ kÑŒtÑŒk sonucu gÑ†steriliyor
-Size of user log table: %d [ %s: %d @ %s ]|KullanÑcÑ kÑŒtÑŒk tablosunun boyutu: %d [ %s: %d @ %s ]
+No user results found.|Hiçbir kullanıcı sonucu bulunamadı.
+Showing %d user log results|%d kullanıcı kütük sonucu gösteriliyor
+Size of user log table: %d [ %s: %d @ %s ]|Kullanıcı kütük tablosunun boyutu: %d [ %s: %d @ %s ]
 Add protection entry|Koruma unsuru ekle
 Delete protection entry|Koruma unsuru sil
 flags|bayraklar
-%s dropped due to bad search request.|%s ile baÑ€lantÑ kÑ†tÑŒ arama talebi nedeniyle kesildi.
-This command is either disabled or you don't have access to it.|Bu komut ya devre dÑÑÑdÑr ya da ona eriÑiminiz yoktur.
-Deleted antispam entry: %s|YÑÑ€Ñn mesajdan korunma unsuru silindi: %s
-Couldn't delete antispam entry because not found: %s|YÑÑ€Ñn mesajdan korunma unsuru silinemedi Ğ·ÑŒnkÑŒ bulunamadÑ: %s
-Antispam list|YÑÑ€Ñn mesaj koruma listesi
-Antispam list is empty.|YÑÑ€Ñn mesaj koruma listesi boÑtur.
-Couldn't add antispam exception entry because already exists: %s|YÑÑ€Ñn mesajdan korunma istisnasÑ eklenemedi Ğ·ÑŒnkÑŒ zaten mevcut: %s
-Added antispam exception entry: %s|YÑÑ€Ñn mesajdan korunma istisnasÑ eklendi: %s
-Deleted antispam exception entry: %s|YÑÑ€Ñn mesajdan korunma istisnasÑ silindi: %s
-Couldn't delete antispam exception entry because not found: %s|YÑÑ€Ñn mesajdan korunma istisnasÑ silinemedi Ğ·ÑŒnkÑŒ bulunamadÑ: %s
-Antispam exception list|YÑÑ€Ñn mesaj koruma istisna listesi
-Antispam exception list is empty.|YÑÑ€Ñn mesaj koruma istisna listesi boÑtur.
-The user you're trying to send offline message to is a bot. Message is discarded.|Ğ—evrimdÑÑÑ mesajÑ yollamaya Ğ·alÑÑtÑÑ€ÑnÑz kullanÑcÑ bir robottur. Mesaj iptal edilmiÑtir.
-You can't start at user number %d when you only have %d accounts with class %d.|%d kullanÑcÑ numarasÑnda baÑlayamazsÑnÑz Ğ·ÑŒnkÑŒ sadece %d hesabÑnÑz vardÑr %d sÑnÑfÑ ile.
-Showing %d out of total %d accounts with class %d starting at user number %d|%d hesap (toplam %d) ki %d sÑnÑflÑ ve kullanÑcÑ numarasÑ %d sayÑsÑndan baÑlayarak gÑ†steriliyor
-There are no accounts with class: %d|Ğ®u sÑnÑfla hiĞ·bir hesap yoktur: %d
-Known classes are: %s|Bilinen sÑnÑflar ÑunlardÑr: %s
-%s with class %d sent say message: <%s> %s|%d sÑnÑflÑ %s Ñu mesajÑ yolladÑ: <%s> %s
-%s with class %d had bad luck sending say message: <%s> %s|%d sÑnÑflÑ %s Ñu mesajÑ gÑ†nderirken ÑanssÑzlÑÑ€a uÑ€radÑ: <%s> %s
-You can't talk from nick whose class is higher or equals your own.|SÑnÑfÑ kendi sÑnÑfÑnÑza eÑit ya da sÑnÑfÑnÑzdan yÑŒksek olan bir rumuzdan konuÑamazsÑnÑz.
-%s with IP %s and class %d kicked: <%s> %s|%s, %s IP adresli ve %d sÑnÑflÑ, kovdu: <%s> %s
-%s with class %d deleted %d statistics plugin entries older than %d days.|%d sÑnÑflÑ %s, %d istatistik eklenti unsurunu sildi ki bunlar %d gÑŒnden daha eskiydi.
+%s dropped due to bad search request.|%s ile bağlantı kötü arama talebi nedeniyle kesildi.
+This command is either disabled or you don't have access to it.|Bu komut ya devre dışıdır ya da ona erişiminiz yoktur.
+Deleted antispam entry: %s|Yığın mesajdan korunma unsuru silindi: %s
+Couldn't delete antispam entry because not found: %s|Yığın mesajdan korunma unsuru silinemedi çünkü bulunamadı: %s
+Antispam list|Yığın mesaj koruma listesi
+Antispam list is empty.|Yığın mesaj koruma listesi boştur.
+Couldn't add antispam exception entry because already exists: %s|Yığın mesajdan korunma istisnası eklenemedi çünkü zaten mevcut: %s
+Added antispam exception entry: %s|Yığın mesajdan korunma istisnası eklendi: %s
+Deleted antispam exception entry: %s|Yığın mesajdan korunma istisnası silindi: %s
+Couldn't delete antispam exception entry because not found: %s|Yığın mesajdan korunma istisnası silinemedi çünkü bulunamadı: %s
+Antispam exception list|Yığın mesaj koruma istisna listesi
+Antispam exception list is empty.|Yığın mesaj koruma istisna listesi boştur.
+The user you're trying to send offline message to is a bot. Message is discarded.|Çevrimdışı mesajı yollamaya çalıştığınız kullanıcı bir robottur. Mesaj iptal edilmiştir.
+You can't start at user number %d when you only have %d accounts with class %d.|%d kullanıcı numarasında başlayamazsınız çünkü sadece %d hesabınız vardır %d sınıfı ile.
+Showing %d out of total %d accounts with class %d starting at user number %d|%d hesap (toplam %d) ki %d sınıflı ve kullanıcı numarası %d sayısından başlayarak gösteriliyor
+There are no accounts with class: %d|Şu sınıfla hiçbir hesap yoktur: %d
+Known classes are: %s|Bilinen sınıflar şunlardır: %s
+%s with class %d sent say message: <%s> %s|%d sınıflı %s şu mesajı yolladı: <%s> %s
+%s with class %d had bad luck sending say message: <%s> %s|%d sınıflı %s şu mesajı gönderirken şanssızlığa uğradı: <%s> %s
+You can't talk from nick whose class is higher or equals your own.|Sınıfı kendi sınıfınıza eşit ya da sınıfınızdan yüksek olan bir rumuzdan konuşamazsınız.
+%s with IP %s and class %d kicked: <%s> %s|%s, %s IP adresli ve %d sınıflı, kovdu: <%s> %s
+%s with class %d deleted %d statistics plugin entries older than %d days.|%d sınıflı %s, %d istatistik eklenti unsurunu sildi ki bunlar %d günden daha eskiydi.
 offset|dengele
-order|sÑrala
-%s didn't get any search results.|%s hiĞ·bir arama sonucu alamadÑ.
-Redirected %s with IP %s and class %d to %s: <%s> %s|%s, ki %s IP adresli ve %sÑnÑflÑ, %s konumuna yeniden yÑ†nlendirilmiÑtir: <%s> %s
-Unknown protocol command from %s with IP %s and class %d: %s|%s kullanÑcÑsÑndan, ki %s IP adresli ve %d sÑnÑflÑ, bilinmeyen protokol komutu: %s
-Custom nick list|Ğ¦zel rumuz listesi
-%s operator commands|%s operatÑ†r komutu
-Add antispam entry|YÑÑ€Ñn mesajdan korunma unsuru ekle
-Showing last %d lines out of total %d found in %s file|%s dosyasÑnda bulunan son %d satÑr ki toplam %d, gÑ†steriliyor
-Delete antispam entry|YÑÑ€Ñn mesajdan korunma unsuru  sil
-Add antispam exception entry|YÑÑ€Ñn mesajdan korunma istisnasÑ ekle
-Delete antispam exception entry|YÑÑ€Ñn mesajdan korunma istisnasÑnÑ sil
+order|sırala
+%s didn't get any search results.|%s hiçbir arama sonucu alamadı.
+Redirected %s with IP %s and class %d to %s: <%s> %s|%s, ki %s IP adresli ve %sınıflı, %s konumuna yeniden yönlendirilmiştir: <%s> %s
+Unknown protocol command from %s with IP %s and class %d: %s|%s kullanıcısından, ki %s IP adresli ve %d sınıflı, bilinmeyen protokol komutu: %s
+Custom nick list|Özel rumuz listesi
+%s operator commands|%s operatör komutu
+Add antispam entry|Yığın mesajdan korunma unsuru ekle
+Showing last %d lines out of total %d found in %s file|%s dosyasında bulunan son %d satır ki toplam %d, gösteriliyor
+Delete antispam entry|Yığın mesajdan korunma unsuru  sil
+Add antispam exception entry|Yığın mesajdan korunma istisnası ekle
+Delete antispam exception entry|Yığın mesajdan korunma istisnasını sil
 Add MyINFO entry|MyINFO unsuru ekle
 Delete MyINFO entry|MyINFO unsuru sil
 MyINFO list|MyINFO listesi
-List of registered users by class|SÑnÑfa gÑ†re kayÑtlÑ kullanÑcÑ listesi
-Speak from other nick|DiÑ€er rumuzdan konuÑ
-Remove user or word from rank list|KullanÑcÑ ya da kelimeyi sÑralama listesinden kaldÑr
-%s with class %d deleted %d user log entries older than %d days.|%d sÑnÑflÑ %s, %d kullanÑcÑ kÑŒtÑŒk unsurunu sildi ki bunlar %d gÑŒnden daha eskiydi.
-List stored offline messages|Saklanan Ğ·evrimdÑÑÑ mesajlarÑ listele
-Delete offline messages by date|Ğ—evrimdÑÑÑ mesajlarÑ tarihe gÑ†re sil
-Delete all offline messages|TÑŒm Ğ·evrimdÑÑÑ mesajlarÑ sil
-class|sÑnÑf
-Clean up tables|TablolarÑ temizle
-Operator chat history|OperatÑ†r sohbet tarihĞ·esi
-Delete all history messages|TarihĞ·eden tÑŒm mesajlarÑ sil
-Your operator rank|OperatÑ†r dÑŒzeyiniz
-Script configuration variables|Betik yapÑlandÑrma deÑ€iÑkenleri
-Change configuration variable|YapÑlandÑrma deÑ€iÑkenini deÑ€iÑtir
+List of registered users by class|Sınıfa göre kayıtlı kullanıcı listesi
+Speak from other nick|Diğer rumuzdan konuş
+Remove user or word from rank list|Kullanıcı ya da kelimeyi sıralama listesinden kaldır
+%s with class %d deleted %d user log entries older than %d days.|%d sınıflı %s, %d kullanıcı kütük unsurunu sildi ki bunlar %d günden daha eskiydi.
+List stored offline messages|Saklanan çevrimdışı mesajları listele
+Delete offline messages by date|Çevrimdışı mesajları tarihe göre sil
+Delete all offline messages|Tüm çevrimdışı mesajları sil
+class|sınıf
+Clean up tables|Tabloları temizle
+Operator chat history|Operatör sohbet tarihçesi
+Delete all history messages|Tarihçeden tüm mesajları sil
+Your operator rank|Operatör düzeyiniz
+Script configuration variables|Betik yapılandırma değişkenleri
+Change configuration variable|Yapılandırma değişkenini değiştir
 nick|rumuz
 This list of commands|Bu komut listesi
-%s user commands|%s kullanÑcÑ komutu
-Current topic|GÑŒncel konu
-Your chat rank|Sohbet dÑŒzeyiniz
-You're not allowed to send private messages.|Ğ¦zel mesaj gÑ†nderme mÑŒsaadeniz yoktur.
+%s user commands|%s kullanıcı komutu
+Current topic|Güncel konu
+Your chat rank|Sohbet düzeyiniz
+You're not allowed to send private messages.|Özel mesaj gönderme müsaadeniz yoktur.
 Unknown|Bilinmeyen
-identifier|tanÑmlayÑcÑ
-Offline message to user|KullanÑcÑya Ğ·evrimdÑÑÑ mesaj
-Main chat history|Ana sohbet tarihĞ·esi
+identifier|tanımlayıcı
+Offline message to user|Kullanıcıya çevrimdışı mesaj
+Main chat history|Ana sohbet tarihçesi
 %s statistics|%s istatistikleri
-Script version: %s|Betik sÑŒrÑŒmÑŒ: %s
-Total chat rank points: %d|Toplam sohbet dÑŒzey puanÑ: %d
-Total operator rank points: %d|Toplam operatÑ†r dÑŒzey puanÑ: %d
-Average message count per user: %.2f|KullanÑcÑ baÑÑna ortalama mesaj sayÑsÑ: %.2f
+Script version: %s|Betik sürümü: %s
+Total chat rank points: %d|Toplam sohbet düzey puanı: %d
+Total operator rank points: %d|Toplam operatör düzey puanı: %d
+Average message count per user: %.2f|Kullanıcı başına ortalama mesaj sayısı: %.2f
 lre|lre
 action|eylem
-Changed configuration variable %s: %s => %s|YapÑlandÑrma deÑ€iÑkeni %s deÑ€iÑtirildi: %s => %s
-Configuration variable %s can only be set to: %s|YapÑlandÑrma deÑ€iÑkeni %s sadece Ñuna ayarlanabilir: %s
+Changed configuration variable %s: %s => %s|Yapılandırma değişkeni %s değiştirildi: %s => %s
+Configuration variable %s can only be set to: %s|Yapılandırma değişkeni %s sadece şuna ayarlanabilir: %s
 or|veya
-Configuration variable %s must be a number.|YapÑlandÑrma deÑ€iÑkeni %s bir sayÑ olmalÑdÑr.
-to|Ñuna
-Unknown configuration variable: %s|Bilinmeyen yapÑlandÑrma deÑ€iÑkeni: %s
-%s version: %s|% sÑŒrÑŒmÑŒ: %s
-Not installed|Kurulu deÑ€il
-User dropped due to spam: %s|KullanÑcÑnÑn baÑ€lantÑsÑ yÑÑ€Ñn mesaj sebebiyle kesildi: %s
-variable|deÑ€iÑken
-value|deÑ€er
+Configuration variable %s must be a number.|Yapılandırma değişkeni %s bir sayı olmalıdır.
+to|şuna
+Unknown configuration variable: %s|Bilinmeyen yapılandırma değişkeni: %s
+%s version: %s|% sürümü: %s
+Not installed|Kurulu değil
+User dropped due to spam: %s|Kullanıcının bağlantısı yığın mesaj sebebiyle kesildi: %s
+variable|değişken
+value|değer
 minutes|dakika
-%s library version: %s|%s kÑŒtÑŒphane sÑŒrÑŒmÑŒ: %s
-Reorder right click menu item|SaÑ€ tÑklama menÑŒ unsurunu yeniden sÑrala
-lines|satÑr
-Couldn't add rank exception because already exists: %s|DÑŒzey istisnasÑ eklenemedi Ğ·ÑŒnkÑŒ zaten mevcut: %s
-Added rank exception: %s|DÑŒzey istisnasÑ eklendi: %s
-Deleted rank exception: %s|DÑŒzey istisnasÑ silindi: %s
-Couldn't delete rank exception because not found: %s|DÑŒzey istisnasÑ silinemedi Ğ·ÑŒnkÑŒ bulunamadÑ: %s
-Rank exception list|DÑŒzey istisna listesi
-Rank exception list is empty.|DÑŒzey istisna listesi boÑtur.
-Add rank exception|DÑŒzey istisnasÑ ekle
-Delete rank exception|DÑŒzey istisnasÑnÑ sil
-In order to use this feature you must turn off registered users list cache. Do it by setting hub configuration variable %s to %d and restarting the hub. Please note: Turning cache off is not recommended with large list of registered users.|Bu iÑlevi kullanmak iĞ·in kullanÑcÑ listesi tamponunu devre dÑÑÑ bÑrakmanÑz gerekir. Bunu %s hub yapÑlandÑrma deÑ€iÑkenine %d deÑ€erini atayarak ve hub'Ñ tekrar baÑlatarak yapÑn. Not: tamponun devre dÑÑÑ bÑrakÑlmasÑ bÑŒyÑŒk bir kayÑtlÑ kullanÑcÑ listesi olduÑ€unda tavsiye edilmez.
-Both|Ğ­kisi de
+%s library version: %s|%s kütüphane sürümü: %s
+Reorder right click menu item|Sağ tıklama menü unsurunu yeniden sırala
+lines|satır
+Couldn't add rank exception because already exists: %s|Düzey istisnası eklenemedi çünkü zaten mevcut: %s
+Added rank exception: %s|Düzey istisnası eklendi: %s
+Deleted rank exception: %s|Düzey istisnası silindi: %s
+Couldn't delete rank exception because not found: %s|Düzey istisnası silinemedi çünkü bulunamadı: %s
+Rank exception list|Düzey istisna listesi
+Rank exception list is empty.|Düzey istisna listesi boştur.
+Add rank exception|Düzey istisnası ekle
+Delete rank exception|Düzey istisnasını sil
+In order to use this feature you must turn off registered users list cache. Do it by setting hub configuration variable %s to %d and restarting the hub. Please note: Turning cache off is not recommended with large list of registered users.|Bu işlevi kullanmak için kullanıcı listesi tamponunu devre dışı bırakmanız gerekir. Bunu %s hub yapılandırma değişkenine %d değerini atayarak ve hub'ı tekrar başlatarak yapın. Not: tamponun devre dışı bırakılması büyük bir kayıtlı kullanıcı listesi olduğunda tavsiye edilmez.
+Both|İkisi de
 Deleted search filter: %s|Arama filtresi silindi: %s
-Couldn't delete search filter because not found: %s|Arama listesi silinemedi Ğ·ÑŒnkÑŒ bulunamadÑ: %s
+Couldn't delete search filter because not found: %s|Arama listesi silinemedi çünkü bulunamadı: %s
 Search filter list|Arama filtresi listesi
-Search filter list is empty.|Arama filtresi listesi boÑtur.
-Magnet link: %s|Magnet baÑ€lantÑsÑ: %s
+Search filter list is empty.|Arama filtresi listesi boştur.
+Magnet link: %s|Magnet bağlantısı: %s
 Add search filter|Arama filtresi ekle
 Delete search filter|Arama filtresini sil
-Known actions are: %s|Bilinen eylemler ÑunlardÑr: %s
-Known flags are: %s|Bilinen bayraklar ÑunlardÑr: %s
-Downloading version file: %s|SÑŒrÑŒm dosyasÑ inidiriliyor: %s
+Known actions are: %s|Bilinen eylemler şunlardır: %s
+Known flags are: %s|Bilinen bayraklar şunlardır: %s
+Downloading version file: %s|Sürüm dosyası inidiriliyor: %s
 Size of kicks table: %d [ %s: %d @ %s ]|Kovma tablosunun boyutu: %d [ %s: %d @ %s ]
 Size of bans table: %d [ %s: %d @ %s ]|Yasaklama tablosunun boyutu: %d [ %s: %d @ %s ]
-Size of unbans table: %d [ %s: %d @ %s ]|Yasaklama kaldÑrma tablosunun boyutu: %d [ %s: %d @ %s ]
-Size of IP logger plugin table: %d [ %s: %d @ %s ]|IP kÑŒtÑŒkleyicisi eklentisi tablosunun boyutu: %d [ %s: %d @ %s ]
-Size of statistics plugin table: %d [ %s: %d @ %s ]|Ğ­statistik eklentisi tablosunun boyutu: %d [ %s: %d @ %s ]
-Modified authorization entry: %s @ %s|Ğ­zin unsuru deÑ€iÑtirildi: %s @ %s
-Added authorization entry: %s @ %s|Ğ­zin unsuru eklendi: %s @ %s
-Deleted authorization entry: %s|Ğ­zin unsuru silindi: %s
-Couldn't delete authorization entry because not found: %s|Ğ­zin unsuru silinemedi Ğ·ÑŒnkÑŒ bulunamadÑ: %s
+Size of unbans table: %d [ %s: %d @ %s ]|Yasaklama kaldırma tablosunun boyutu: %d [ %s: %d @ %s ]
+Size of IP logger plugin table: %d [ %s: %d @ %s ]|IP kütükleyicisi eklentisi tablosunun boyutu: %d [ %s: %d @ %s ]
+Size of statistics plugin table: %d [ %s: %d @ %s ]|İstatistik eklentisi tablosunun boyutu: %d [ %s: %d @ %s ]
+Modified authorization entry: %s @ %s|İzin unsuru değiştirildi: %s @ %s
+Added authorization entry: %s @ %s|İzin unsuru eklendi: %s @ %s
+Deleted authorization entry: %s|İzin unsuru silindi: %s
+Couldn't delete authorization entry because not found: %s|İzin unsuru silinemedi çünkü bulunamadı: %s
 IP authorization list|IP izin listesi
-IP authorization list is empty.|IP izin listesi boÑtur.
+IP authorization list is empty.|IP izin listesi boştur.
 Add IP authorization entry|IP izin unsuru ekle
 Delete authorization entry|IP izin unsuru sil
 ip|ip
-%s with IP %s and class %d authorized.|%s, %s IP adresli ve %d sÑnÑflÑ, izin verildi.
-%s with IP %s and class %d failed authorization and disconnected.|%s, ki %s IP adresli ve %d sÑnÑflÑ, izin almakta baÑarÑsÑz oldu ve baÑ€lantÑsÑ kesildi.
+%s with IP %s and class %d authorized.|%s, %s IP adresli ve %d sınıflı, izin verildi.
+%s with IP %s and class %d failed authorization and disconnected.|%s, ki %s IP adresli ve %d sınıflı, izin almakta başarısız oldu ve bağlantısı kesildi.
 Category: %s|Kategori: %s
-Set custom nick for yourself|Kendiniz iĞ·in Ñ†zel rumuz ayarlayÑn
-This nick is registered or in use and therefore can't be used as custom nick: %s|Bu rumuz kayÑtlÑ ya da kullanÑmdadÑr ve dolayÑsÑyla Ñ†zel rumuz olarak kullanÑlamaz: %s
-Set your welcome message|HoÑ geldiniz mesajÑnÑzÑ ayarlayÑn
-Division by zero is forbidden.|SÑfÑr ile bÑ†lmek yasaktÑr.
-Show your welcome messages|HoÑ geldiniz mesajlarÑnÑzÑ gÑ†ster
-Welcome message list|HoÑ geldiniz mesaj listesi
-Delete user and his welcome messages|KullanÑcÑyÑ ve hoÑ geldiniz mesajlarÑnÑ sil
+Set custom nick for yourself|Kendiniz için özel rumuz ayarlayın
+This nick is registered or in use and therefore can't be used as custom nick: %s|Bu rumuz kayıtlı ya da kullanımdadır ve dolayısıyla özel rumuz olarak kullanılamaz: %s
+Set your welcome message|Hoş geldiniz mesajınızı ayarlayın
+Division by zero is forbidden.|Sıfır ile bölmek yasaktır.
+Show your welcome messages|Hoş geldiniz mesajlarınızı göster
+Welcome message list|Hoş geldiniz mesaj listesi
+Delete user and his welcome messages|Kullanıcıyı ve hoş geldiniz mesajlarını sil
 Nick|Rumuz
-Login message|GiriÑ mesajÑ
-Logout message|Ğ—ÑkÑÑ mesajÑ
-Welcome message list is empty.|HoÑ geldiniz mesaj listesi boÑtur.
-Welcome messages were deleted for user: %s|Ğ®u kullanÑcÑ iĞ·in hoÑ geldiniz mesajlarÑ silinmiÑtir: %s
-Couldn't delete user from welcome message list because not found: %s|KullanÑcÑ hoÑ geldiniz mesaj listesinden silinemedi Ğ·ÑŒnkÑŒ bulunamadÑ: %s
-Your login message set: %s|GiriÑ mesajÑnÑz ayarlandÑ: %s
-%s with class %d changed his login message: %s|%d sÑnÑflÑ %s giriÑ mesajÑnÑ deÑ€iÑtirdi: %s
-Your logout message set: %s|Ğ—ÑkÑÑ mesajÑnÑz ayarlandÑ: %s
-%s with class %d changed his logout message: %s|%d sÑnÑflÑ %s Ğ·ÑkÑÑ mesajÑnÑ deÑ€iÑtirdi: %s
-You don't have any welcome messages.|Herhangi bir hoÑ geldiniz mesajÑnÑz yoktur.
-Your login message: %s|GiriÑ mesajÑnÑz: %s
+Login message|Giriş mesajı
+Logout message|Çıkış mesajı
+Welcome message list is empty.|Hoş geldiniz mesaj listesi boştur.
+Welcome messages were deleted for user: %s|Şu kullanıcı için hoş geldiniz mesajları silinmiştir: %s
+Couldn't delete user from welcome message list because not found: %s|Kullanıcı hoş geldiniz mesaj listesinden silinemedi çünkü bulunamadı: %s
+Your login message set: %s|Giriş mesajınız ayarlandı: %s
+%s with class %d changed his login message: %s|%d sınıflı %s giriş mesajını değiştirdi: %s
+Your logout message set: %s|Çıkış mesajınız ayarlandı: %s
+%s with class %d changed his logout message: %s|%d sınıflı %s çıkış mesajını değiştirdi: %s
+You don't have any welcome messages.|Herhangi bir hoş geldiniz mesajınız yoktur.
+Your login message: %s|Giriş mesajınız: %s
 Add chatroom|Sohbet salonu ekle
 Chatroom list|Sohbet salonu listesi
 Delete chatroom|Sohbet salonunu sil
-description|tanÑmlama
-minclass|asgarisÑnÑf
-maxclass|azamisÑnÑf
-Modified chatroom: %s|DeÑ€iÑtirilen sohbet salonu: %s
+description|tanımlama
+minclass|asgarisınıf
+maxclass|azamisınıf
+Modified chatroom: %s|Değiştirilen sohbet salonu: %s
 Added chatroom: %s|Eklenen sohbet salonu: %s
 Deleted chatroom: %s|Silinen sohbet salonu: %s
-Couldn't delete chatroom because not found: %s|Sohbet salonu silinemedi Ğ·ÑŒnkÑŒ bulunamadÑ: %s
+Couldn't delete chatroom because not found: %s|Sohbet salonu silinemedi çünkü bulunamadı: %s
 Chatroom|Sohbet salonu
-Description|TanÑmlama
-Chatroom list is empty.|Sohbet salonu listesi boÑtur.
-Not found in country code statistics table: %s|Ğ¬lke kodu istatistik tablosunda bulunamadÑ: %s
-Custom nick %s is now owned by real user and therefore has been reset for user: %s|%s Ñ†zel rumuzuna artÑk gerĞ·ek bir kullanÑcÑ sahiptir ve dolayÑsÑyla bu rumuz Ñu kullanÑcÑ iĞ·in sÑfÑrlanmÑÑtÑr: %s
-%s is registered with class %d.|%s, %d sÑnÑfÑ ile kayÑtlÑdÑr.
-Query executed but didn't return any results.|Sorgu Ğ·alÑÑtÑrÑlmÑÑtÑr ancak hiĞ·bir sonuĞ· vermemiÑtir.
-Published: %s|YayÑnlandÑ: %s
-Add search filter exception entry|Arama filtresi istisnasÑ ekle
-Delete search filter exception entry|Arama filtresi istisnasÑ sil
+Description|Tanımlama
+Chatroom list is empty.|Sohbet salonu listesi boştur.
+Not found in country code statistics table: %s|Ülke kodu istatistik tablosunda bulunamadı: %s
+Custom nick %s is now owned by real user and therefore has been reset for user: %s|%s özel rumuzuna artık gerçek bir kullanıcı sahiptir ve dolayısıyla bu rumuz şu kullanıcı için sıfırlanmıştır: %s
+%s is registered with class %d.|%s, %d sınıfı ile kayıtlıdır.
+Query executed but didn't return any results.|Sorgu çalıştırılmıştır ancak hiçbir sonuç vermemiştir.
+Published: %s|Yayınlandı: %s
+Add search filter exception entry|Arama filtresi istisnası ekle
+Delete search filter exception entry|Arama filtresi istisnası sil
 Search filter exception list|Arama filtresi istisna listesi
-Couldn't add search filter exception entry because already exists: %s|Arama filtresi istisnasÑ eklenemedi Ğ·ÑŒnkÑŒ zaten mevcut: %s
-Added search filter exception entry: %s|Arama filtresi istisnasÑ eklendi: %s
-Deleted search filter exception entry: %s|Arama filtresi istisnasÑ silindi: %s
-Couldn't delete search filter exception entry because not found: %s|Arama filtresi istisnasÑ silinemedi Ğ·ÑŒnkÑŒ bulunamadÑ: %s
-Search filter exception list is empty.|Arama filtresi istisna listesi boÑtur.
+Couldn't add search filter exception entry because already exists: %s|Arama filtresi istisnası eklenemedi çünkü zaten mevcut: %s
+Added search filter exception entry: %s|Arama filtresi istisnası eklendi: %s
+Deleted search filter exception entry: %s|Arama filtresi istisnası silindi: %s
+Couldn't delete search filter exception entry because not found: %s|Arama filtresi istisnası silinemedi çünkü bulunamadı: %s
+Search filter exception list is empty.|Arama filtresi istisna listesi boştur.
 file|dosya
-Read hub logs|Hub kÑŒtÑŒklerini oku
-Known files are: %s|Bilinen dosyalar ÑunlardÑr: %s
-Log file is empty or does not exist.|KÑŒtÑŒk dosyasÑ ya boÑtur ya da mevcut deÑ€ildir.
-Add command notification exception|Komut bildirimi istisnasÑ ekle
-Delete command notification exception|Komut bildirimi istisnasÑnÑ sil
+Read hub logs|Hub kütüklerini oku
+Known files are: %s|Bilinen dosyalar şunlardır: %s
+Log file is empty or does not exist.|Kütük dosyası ya boştur ya da mevcut değildir.
+Add command notification exception|Komut bildirimi istisnası ekle
+Delete command notification exception|Komut bildirimi istisnasını sil
 Command notification exception list|Komut bildirimi istisna listesi
-Added command notification exception entry: %s|Komut bildirimi istisnasÑ eklendi: %s
-Couldn't add command notification exception entry because already exists: %s|Komut bildirimi istisnasÑ eklenemedi Ğ·ÑŒnkÑŒ zaten mevcut: %s
-Deleted command notification exception entry: %s|Komut bildirimi istisnasÑ silindi: %s
-Couldn't delete command notification exception entry because not found: %s|Komut bildirimi istisnasÑ silinemedi Ğ·ÑŒnkÑŒ bulunamadÑ: %s
-Command notification exception list is empty.|Komut bildirimi istisna listesi boÑtur.
-Couldn't add chatroom because nick is already in use: %s|Sohbet salonu eklenemedi Ğ·ÑŒnkÑŒ rumuz halihazÑrda kullanÑmdadÑr: %s
-Query results|Sorgu sonuĞ·larÑ
-Connections from your IP aren't allowed for another %d seconds.|IP adresinizden baÑ€lantÑlara %d saniye boyunca mÑŒsaade edilmeyecektir.
-Executed shell command didn't return any status code: %s|Ğ—alÑÑtÑrÑlan kabuk komutu hiĞ·bir durum kodu geri gÑ†ndermedi: %s
-Returned status code: %s|Geri gÑ†nderilen durum kodu: %s
-Added by: %s|Ğ®u tarafÑndan eklenmiÑtir: %s
-publisher|yayÑmcÑ
-Release list is empty.|BÑrakÑm listesi boÑtur.
-Last %d releases|Son %d bÑrakÑm
-No releases by requested publisher were found: %s|Ğ­stenen yayÑncÑ tarafÑndan hiĞ·bir bÑrakÑm bulunamadÑ: %s
-Last %d releases published by %s|%s tarafÑndan yayÑnlanan son %d bÑrakÑm
-No releases by requested category were found: %s|Ğ­stenen kategoride hiĞ·bir bÑrakÑm bulunamadÑ: %s
-Last %d releases by category %s|%s kategorisinde son %d bÑrakÑm
-No releases by requested search string were found: %s|Ğ­stenen arama dizisine denk gelen hiĞ·bir bÑrakÑm bulunamadÑ: %s
+Added command notification exception entry: %s|Komut bildirimi istisnası eklendi: %s
+Couldn't add command notification exception entry because already exists: %s|Komut bildirimi istisnası eklenemedi çünkü zaten mevcut: %s
+Deleted command notification exception entry: %s|Komut bildirimi istisnası silindi: %s
+Couldn't delete command notification exception entry because not found: %s|Komut bildirimi istisnası silinemedi çünkü bulunamadı: %s
+Command notification exception list is empty.|Komut bildirimi istisna listesi boştur.
+Couldn't add chatroom because nick is already in use: %s|Sohbet salonu eklenemedi çünkü rumuz halihazırda kullanımdadır: %s
+Query results|Sorgu sonuçları
+Connections from your IP aren't allowed for another %d seconds.|IP adresinizden bağlantılara %d saniye boyunca müsaade edilmeyecektir.
+Executed shell command didn't return any status code: %s|Çalıştırılan kabuk komutu hiçbir durum kodu geri göndermedi: %s
+Returned status code: %s|Geri gönderilen durum kodu: %s
+Added by: %s|Şu tarafından eklenmiştir: %s
+publisher|yayımcı
+Release list is empty.|Bırakım listesi boştur.
+Last %d releases|Son %d bırakım
+No releases by requested publisher were found: %s|İstenen yayıncı tarafından hiçbir bırakım bulunamadı: %s
+Last %d releases published by %s|%s tarafından yayınlanan son %d bırakım
+No releases by requested category were found: %s|İstenen kategoride hiçbir bırakım bulunamadı: %s
+Last %d releases by category %s|%s kategorisinde son %d bırakım
+No releases by requested search string were found: %s|İstenen arama dizisine denk gelen hiçbir bırakım bulunamadı: %s
 time|zaman
-Known search types are: %s|Bilinen arama tÑŒrleri ÑunlardÑr: %s
-Configuration variable %s can't be empty.|%s yapÑlandÑrma deÑ€iÑkeni boÑ bÑrakÑlamaz.
-Deleted from share rank list: %s|PaylaÑÑm dÑŒzey listesinden silindi: %s
-Not found in share rank list: %s|PaylaÑÑm dÑŒzey listesinde bulunamadÑ: %s
-Your share rank|PaylaÑÑm dÑŒzeyiniz
-Top %d share rankers|En ÑŒst dÑŒzey %d paylaÑÑmcÑlar
-You have to share %s and reconnect to get started.|BaÑlamak iĞ·in %s paylaÑmanÑz ve tekrar baÑ€lanmanÑz gerekir.
-Share rank list is empty.|PaylaÑÑm dÑŒzey listesi boÑtur.
-Your share rank is: %s|PaylaÑÑm dÑŒzeyiniz Ñudur: %s
-Custom nick can't be longer than %d characters.|Ğ¦zel rumuz %d karakterden uzun olamaz.
-Delete custom nick|Ğ¦zel rumuzu sil
-Deleted user from custom nick list: %s|KullanÑcÑ Ñ†zel rumuz listesinden silindi: %s
-Couldn't delete user from custom nick list because not found: %s|KullanÑcÑ Ñ†zel rumuz listesinden silinemedi Ğ·ÑŒnkÑŒ bulunamadÑ: %s
-Selected type requires extra parameters. Please refer to manual for more information.|SeĞ·ilen tÑŒr ilave parametre gerektirmektedir. Daha fazla bilgi iĞ·in kullanÑm kÑlavuzuna bakÑnÑz.
-Size of registered users table: %d [ %s: %d @ %s ]|KayÑtlÑ kullanÑcÑlar tablosu boyutu: %d [ %s: %d @ %s ]
-Deleted %d accounts with class %d|%d hesap silindi ki onlarÑn sÑnÑfÑ %d idi
-%s with class %d deleted %d accounts with class %d that has been inactive for %d days.|%d sÑnÑflÑ %s, %d hesabÑ sildi ki onlarÑn sÑnÑfÑ %d idi ve %d gÑŒn sÑŒresiyle edilgin olmuÑlardÑ.
+Known search types are: %s|Bilinen arama türleri şunlardır: %s
+Configuration variable %s can't be empty.|%s yapılandırma değişkeni boş bırakılamaz.
+Deleted from share rank list: %s|Paylaşım düzey listesinden silindi: %s
+Not found in share rank list: %s|Paylaşım düzey listesinde bulunamadı: %s
+Your share rank|Paylaşım düzeyiniz
+Top %d share rankers|En üst düzey %d paylaşımcılar
+You have to share %s and reconnect to get started.|Başlamak için %s paylaşmanız ve tekrar bağlanmanız gerekir.
+Share rank list is empty.|Paylaşım düzey listesi boştur.
+Your share rank is: %s|Paylaşım düzeyiniz şudur: %s
+Custom nick can't be longer than %d characters.|Özel rumuz %d karakterden uzun olamaz.
+Delete custom nick|Özel rumuzu sil
+Deleted user from custom nick list: %s|Kullanıcı özel rumuz listesinden silindi: %s
+Couldn't delete user from custom nick list because not found: %s|Kullanıcı özel rumuz listesinden silinemedi çünkü bulunamadı: %s
+Selected type requires extra parameters. Please refer to manual for more information.|Seçilen tür ilave parametre gerektirmektedir. Daha fazla bilgi için kullanım kılavuzuna bakınız.
+Size of registered users table: %d [ %s: %d @ %s ]|Kayıtlı kullanıcılar tablosu boyutu: %d [ %s: %d @ %s ]
+Deleted %d accounts with class %d|%d hesap silindi ki onların sınıfı %d idi
+%s with class %d deleted %d accounts with class %d that has been inactive for %d days.|%d sınıflı %s, %d hesabı sildi ki onların sınıfı %d idi ve %d gün süresiyle edilgin olmuşlardı.
 Add command permission|Komut izni ekle
 Delete command permission|Komut izni sil
 Command permission list|Komut izni listesi
-Modified command permission with class %d: %s|%d sÑnÑfÑ ile komut izni deÑ€iÑtirildi: %s
-Added command permission with class %d: %s|%d sÑnÑfÑ ile komut izni eklendi: %s
+Modified command permission with class %d: %s|%d sınıfı ile komut izni değiştirildi: %s
+Added command permission with class %d: %s|%d sınıfı ile komut izni eklendi: %s
 Deleted command permission: %s|Komut izni silindi: %s
-Couldn't delete command permission because not found: %s|Komut izni silinemedi Ğ·ÑŒnkÑŒ bulunamadÑ: %s
-Command permission list is empty.|Komut izni listesi boÑtur.
-Total search rank points: %d|Toplam arama dÑŒzey puanÑ: %d
-Please use following commands to finish update process|GÑŒncelleme iÑlemini tamamlamak iĞ·in Ñu komutlarÑ kullanÑnÑz
-Moving file: %s|Dosya taÑÑnÑyor: %s
-Please visit %s to download the script manually.|BetiÑ€i elle indirmek iĞ·in %s konumunu ziyaret ediniz.
-Modified forbidden IP address with ban time %s: %s|YasaklÑ IP adresi Ñu yasaklama sÑŒresi ile deÑ€iÑtirildi: %s: %s
-Added forbidden IP address with ban time %s: %s|YasaklÑ IP adresi Ñu yasaklama sÑŒresi ile eklendi: %s: %s
-Deleted forbidden IP address: %s|YasaklÑ IP adresi silindi: %s
-Couldn't delete forbidden IP address because not found: %s|YasaklÑ IP adresi silinemedi Ğ·ÑŒnkÑŒ bulunamadÑ: %s
-Forbidden IP address list|YasaklÑ IP adres listesi
-Forbidden IP address list is empty.|YasaklÑ IP adres listesi boÑtur.
-%s with IP %s and class %d allowed due to forbidden IP address exception: %s|%s, ki %s IP adresli ve %d sÑnÑflÑ, yasaklÑ IP adresi istisnasÑ sebebiyle kabul edildi: %s
-Couldn't delete category because not found: %s|Kategori silinemedi Ğ·ÑŒnkÑŒ bulunamadÑ: %s
-User redirected due to spam: %s|KullanÑcÑ yÑÑ€Ñn mesaj nedeniyle yeniden yÑ†nlendirildi: %s
-%s redirected due to bad search request.|%s kÑ†tÑŒ arama talebi nedeniyle yeniden yÑ†nlendirildi.
-You can download me from: %s|Beni Ñu konumdan inidirebilirsiniz: %s
-%s is registered with class %d and has been automatically unregistered and deleted from other tables.|%s, %d sÑnÑfÑ ile kayÑtlanmÑÑtÑr ve otomatik olarak diÑ€er tablolardan kaydÑ kaldÑrÑlmÑÑ ve silinmiÑtir.
+Couldn't delete command permission because not found: %s|Komut izni silinemedi çünkü bulunamadı: %s
+Command permission list is empty.|Komut izni listesi boştur.
+Total search rank points: %d|Toplam arama düzey puanı: %d
+Please use following commands to finish update process|Güncelleme işlemini tamamlamak için şu komutları kullanınız
+Moving file: %s|Dosya taşınıyor: %s
+Please visit %s to download the script manually.|Betiği elle indirmek için %s konumunu ziyaret ediniz.
+Modified forbidden IP address with ban time %s: %s|Yasaklı IP adresi şu yasaklama süresi ile değiştirildi: %s: %s
+Added forbidden IP address with ban time %s: %s|Yasaklı IP adresi şu yasaklama süresi ile eklendi: %s: %s
+Deleted forbidden IP address: %s|Yasaklı IP adresi silindi: %s
+Couldn't delete forbidden IP address because not found: %s|Yasaklı IP adresi silinemedi çünkü bulunamadı: %s
+Forbidden IP address list|Yasaklı IP adres listesi
+Forbidden IP address list is empty.|Yasaklı IP adres listesi boştur.
+%s with IP %s and class %d allowed due to forbidden IP address exception: %s|%s, ki %s IP adresli ve %d sınıflı, yasaklı IP adresi istisnası sebebiyle kabul edildi: %s
+Couldn't delete category because not found: %s|Kategori silinemedi çünkü bulunamadı: %s
+User redirected due to spam: %s|Kullanıcı yığın mesaj nedeniyle yeniden yönlendirildi: %s
+%s redirected due to bad search request.|%s kötü arama talebi nedeniyle yeniden yönlendirildi.
+You can download me from: %s|Beni şu konumdan inidirebilirsiniz: %s
+%s is registered with class %d and has been automatically unregistered and deleted from other tables.|%s, %d sınıfı ile kayıtlanmıştır ve otomatik olarak diğer tablolardan kaydı kaldırılmış ve silinmiştir.
 PiB|PiB
 TiB|TiB
 GiB|GiB
@@ -368,353 +368,353 @@ MiB|MiB
 KiB|KiB
 B|B
 EiB|EiB
-Get user's real nick|KullanÑcÑnÑn gerĞ·ek rumuzunu al
-Requested nick wasn't found in custom nick list.|Ğ­stenen rumuz Ñ†zel rumuz listesinde bulunamadÑ.
-Requested nick belongs to a user who is %s: %s|Talep edilen rumuz Ñu kullanÑcÑya aittir: %s: %s
-offline|Ğ·evrimdÑÑÑ
-online|Ğ·evrimiĞ·i
-Clean up ranks|DÑŒzeyleri temizle
-limit|sÑnÑr
-%s with class %d deleted %d chat ranks lower than %d.|%d sÑnÑflÑ %s %d sohbet dÑŒzeyini sildi ki onlarÑn dÑŒzeyi %d deÑ€erinden dÑŒÑÑŒktÑŒ. 
-%s with class %d deleted %d share ranks lower than %s.|%d sÑnÑflÑ %s %d paylaÑÑm dÑŒzeyini sildi ki onlarÑn dÑŒzeyi %s deÑ€erinden dÑŒÑÑŒktÑŒ.
-%s with class %d deleted %d operator ranks lower than %d.|%d sÑnÑflÑ %s %d operatÑ†r dÑŒzeyini sildi ki onlarÑn dÑŒzeyi %d deÑ€erinden dÑŒÑÑŒktÑŒ.
-Size of chat ranks table: %d [ %s: %d @ %s ]|Sohbet dÑŒzeyleri tablosunun boyutu: %d [ %s: %d @ %s ]
-Size of share ranks table: %d [ %s: %d @ %s ]|PaylaÑÑm dÑŒzeyleri tablosunun boyutu: %d [ %s: %d @ %s ]
-Size of operator ranks table: %d [ %s: %d @ %s ]|OperatÑ†r dÑŒzeyleri tablosunun boyutu: %d [ %s: %d @ %s ]
-content|iĞ·erik
+Get user's real nick|Kullanıcının gerçek rumuzunu al
+Requested nick wasn't found in custom nick list.|İstenen rumuz özel rumuz listesinde bulunamadı.
+Requested nick belongs to a user who is %s: %s|Talep edilen rumuz şu kullanıcıya aittir: %s: %s
+offline|çevrimdışı
+online|çevrimiçi
+Clean up ranks|Düzeyleri temizle
+limit|sınır
+%s with class %d deleted %d chat ranks lower than %d.|%d sınıflı %s %d sohbet düzeyini sildi ki onların düzeyi %d değerinden düşüktü. 
+%s with class %d deleted %d share ranks lower than %s.|%d sınıflı %s %d paylaşım düzeyini sildi ki onların düzeyi %s değerinden düşüktü.
+%s with class %d deleted %d operator ranks lower than %d.|%d sınıflı %s %d operatör düzeyini sildi ki onların düzeyi %d değerinden düşüktü.
+Size of chat ranks table: %d [ %s: %d @ %s ]|Sohbet düzeyleri tablosunun boyutu: %d [ %s: %d @ %s ]
+Size of share ranks table: %d [ %s: %d @ %s ]|Paylaşım düzeyleri tablosunun boyutu: %d [ %s: %d @ %s ]
+Size of operator ranks table: %d [ %s: %d @ %s ]|Operatör düzeyleri tablosunun boyutu: %d [ %s: %d @ %s ]
+content|içerik
 destination|hedef
-interval|aralÑk
-Add reminder|HatÑrlatÑcÑ ekle
-Delete reminder|HatÑrlatÑcÑyÑ sil
-Reminder list|HatÑrlatÑcÑ listesi
-Reminder list is empty.|HatÑrlatÑcÑ listesi boÑtur.
-Known destinations are: %s|Bilinen hedefler ÑunlardÑr: %s
-Known interval is: %s|Bilinen aralÑk Ñudur: %s
-Modified reminder: %s|DeÑ€iÑtirilen hatÑrlatÑcÑ: %s
-Added reminder: %s|HatÑrlatÑcÑ ekle: %s
-Deleted reminder: %s|SilinmiÑ hatÑrlatÑcÑ: %s
-Reminder not found: %s|HatÑrlatÑcÑ bulunamadÑ: %s
-Identifier: %s|TanÑmlayÑcÑ: %s
-Content: %s|Ğ­Ğ·erik: %s
-Interval: %d of %d|AralÑk: %d ilĞ² %d
+interval|aralık
+Add reminder|Hatırlatıcı ekle
+Delete reminder|Hatırlatıcıyı sil
+Reminder list|Hatırlatıcı listesi
+Reminder list is empty.|Hatırlatıcı listesi boştur.
+Known destinations are: %s|Bilinen hedefler şunlardır: %s
+Known interval is: %s|Bilinen aralık şudur: %s
+Modified reminder: %s|Değiştirilen hatırlatıcı: %s
+Added reminder: %s|Hatırlatıcı ekle: %s
+Deleted reminder: %s|Silinmiş hatırlatıcı: %s
+Reminder not found: %s|Hatırlatıcı bulunamadı: %s
+Identifier: %s|Tanımlayıcı: %s
+Content: %s|İçerik: %s
+Interval: %d of %d|Aralık: %d ilâ %d
 Destination: %s|Hedef: %s
 Raw command|Ham komut
-PM|Ğ¦zel Mesaj
+PM|Özel Mesaj
 MC|Ana Sohbet
 reply|cevap
-Add chat responder|Sohbet cevaplayÑcÑsÑ ekle
-Delete chat responder|Sohbet cevaplayÑcÑsÑnÑ sil
-Main chat responder list|Ana sohbet cevaplayÑcÑ listesi
-Main chat responder list is empty.|Ana sohbet cevaplayÑcÑ listesi boÑtur.
-%s with class %d deleted %d operator chat history messages.|%d sÑnÑflÑ %s %d operatÑ†r sohbet mesajÑnÑ tarihĞ·eden sildi.
-Search in user log|KullanÑcÑ kÑŒtÑŒÑ€ÑŒnde ara
-Added chat responder: %s|Sohbet cevaplayÑcÑsÑ eklendi: %s
-Deleted chat responder with ID: %d|Ğ®u kimlikli sohbet cevaplayÑcÑsÑ silindi: %d
-Couldn't delete chat responder because ID not found: %d|Sohbet cevaplayÑcÑsÑ silinemedi Ğ·ÑŒnkÑŒ kimliÑ€i bulunamadÑ: %d
-Responder|CevaplayÑcÑ
+Add chat responder|Sohbet cevaplayıcısı ekle
+Delete chat responder|Sohbet cevaplayıcısını sil
+Main chat responder list|Ana sohbet cevaplayıcı listesi
+Main chat responder list is empty.|Ana sohbet cevaplayıcı listesi boştur.
+%s with class %d deleted %d operator chat history messages.|%d sınıflı %s %d operatör sohbet mesajını tarihçeden sildi.
+Search in user log|Kullanıcı kütüğünde ara
+Added chat responder: %s|Sohbet cevaplayıcısı eklendi: %s
+Deleted chat responder with ID: %d|Şu kimlikli sohbet cevaplayıcısı silindi: %d
+Couldn't delete chat responder because ID not found: %d|Sohbet cevaplayıcısı silinemedi çünkü kimliği bulunamadı: %d
+Responder|Cevaplayıcı
 Reply|Cevap
-Add chat responder exception|Sohbet cevaplayÑcÑ istisnasÑ ekle
-Delete chat responder exception|Sohbet cevaplayÑcÑ istisnasÑnÑ sil
-Chat responder exception list|Sohbet cevaplayÑcÑ istisna listesi
-Chat responder exception list is empty.|Sohbet cevaplayÑcÑ istisna listesi boÑtur.
-Couldn't add chat responder exception because already exists: %s|Sohbet cevaplayÑcÑ istinasÑ eklenemedi Ğ·ÑŒnkÑŒ zaten mevcut: %s
-Added chat responder exception: %s|Sohbet cevaplayÑcÑ istisnasÑ eklendi: %s
-Deleted chat responder exception: %s|Sohbet cevaplayÑcÑ istisnasÑ silindi: %s
-Couldn't delete chat responder exception because not found: %s|Sohbet cevaplayÑcÑ istisnasÑ silinemedi Ğ·ÑŒnkÑŒ bulunamadÑ: %s
+Add chat responder exception|Sohbet cevaplayıcı istisnası ekle
+Delete chat responder exception|Sohbet cevaplayıcı istisnasını sil
+Chat responder exception list|Sohbet cevaplayıcı istisna listesi
+Chat responder exception list is empty.|Sohbet cevaplayıcı istisna listesi boştur.
+Couldn't add chat responder exception because already exists: %s|Sohbet cevaplayıcı istinası eklenemedi çünkü zaten mevcut: %s
+Added chat responder exception: %s|Sohbet cevaplayıcı istisnası eklendi: %s
+Deleted chat responder exception: %s|Sohbet cevaplayıcı istisnası silindi: %s
+Couldn't delete chat responder exception because not found: %s|Sohbet cevaplayıcı istisnası silinemedi çünkü bulunamadı: %s
 command|komut
-Customize script command|Betik komutunu Ñ†zelleÑtir
-Customized script command: %s => %s|Ğ¦zelleÑtirlmiÑ betik komutu: %s => %s
+Customize script command|Betik komutunu özelleştir
+Customized script command: %s => %s|Özelleştirlmiş betik komutu: %s => %s
 Unknown script command: %s|Bilinmeyen betik komutu: %s
-Requested nick is real.|Talep edilen rumuz gerĞ·ektir.
-%s with class %d customized script command: %s => %s|%d sÑnÑflÑ %s betik komutunu Ñ†zelleÑtirdi: %s => %s
-Reset all custom commands|TÑŒm Ñ†zel komutlarÑ sÑfÑrla
-%d custom commands were reset.|%d Ñ†zel komut sÑfÑrlanmÑÑtÑr.
-%s tables are now deleted and script is locked.|%s tablo artÑk silinmiÑtir ve betik kilitlenmiÑtir.
-Please unload the script and remove it from scripts directory.|LÑŒtfen betiÑ€i kaldÑrÑn ve betikler dizininden silin.
-Good luck.|Ğ­yi Ñanslar.
-Please unload the script to finish.|Tamamlamak iĞ·in betiÑ€i kaldÑrÑn.
-%s with IP %s and class %d sent message to %s: %s|%s, %s IP adresli ve %d sÑnÑflÑ, %s rumuzuna mesaj gÑ†ndermiÑtir: %s
-Script uptime: %s|BetiÑ€in Ğ·alÑÑma sÑŒresi: %s
+Requested nick is real.|Talep edilen rumuz gerçektir.
+%s with class %d customized script command: %s => %s|%d sınıflı %s betik komutunu özelleştirdi: %s => %s
+Reset all custom commands|Tüm özel komutları sıfırla
+%d custom commands were reset.|%d özel komut sıfırlanmıştır.
+%s tables are now deleted and script is locked.|%s tablo artık silinmiştir ve betik kilitlenmiştir.
+Please unload the script and remove it from scripts directory.|Lütfen betiği kaldırın ve betikler dizininden silin.
+Good luck.|İyi şanslar.
+Please unload the script to finish.|Tamamlamak için betiği kaldırın.
+%s with IP %s and class %d sent message to %s: %s|%s, %s IP adresli ve %d sınıflı, %s rumuzuna mesaj göndermiştir: %s
+Script uptime: %s|Betiğin çalışma süresi: %s
 month|ay
 months|ay
-day|gÑŒn
+day|gün
 hour|saat
 hours|saat
-Top %d used words|En Ğ·ok kullanÑlan %d kelime
-Deleted from word rank list: %s|Kelime sÑralamasÑ listesinden silindi: %s
-Not found in word rank list: %s|Kelime sÑralamasÑ listesinde bulunamadÑ: %s
-%s with class %d deleted %d word ranks lower than %d.|%d sÑnÑflÑ %s %d kelime dÑŒzeyini sildi ki onlarÑn dÑŒzeyi %d deÑ€erinden dÑŒÑÑŒktÑŒ.
-Size of word ranks table: %d [ %s: %d @ %s ]|Kelime sÑralamasÑ tablosunun boyutu: %d [ %s: %d @ %s ]
-Total word rank points: %d|Toplam kelime sÑrlamasÑ puanÑ: %d
-Word rank list is empty.|Kelime sÑralama listesi boÑtur.
-%s with class %d registered new user with class %d: %s|%d sÑnÑflÑ %s %d sÑnÑflÑ yeni kullanÑcÑ kayÑt etti: %s
-%s with class %d deleted registered user with class %d: %s|%d sÑnÑflÑ %s %d sÑnÑflÑ kayÑtlÑ kullanÑcÑyÑ sildi: %s
-%s with class %d changed user class from %d to %d: %s|%d sÑnÑflÑ %s kullanÑcÑ sÑnÑfÑnÑ %d deÑ€erinden %d deÑ€erine deÑ€iÑtirdi: %s
-%s with IP %s and class %d allowed due to fake share exception: %s|%s, ki %s IP adresli ve %d sÑnÑflÑ, sahte paylaÑÑm istisnasÑ sebebiyle kabul edildi: %s
-%s with IP %s and class %d allowed due to clone exception: %s|%s, ki %s IP adresli ve %d sÑnÑflÑ, klon istisnasÑ sebebiyle kabul edildi: %s
-%s with IP %s and class %d allowed due to same IP exception: %s|%s, ki %s IP adresli ve %d sÑnÑflÑ, aynÑ IP adresi istinasÑ sebebiyle kabul edildi: %s
+Top %d used words|En çok kullanılan %d kelime
+Deleted from word rank list: %s|Kelime sıralaması listesinden silindi: %s
+Not found in word rank list: %s|Kelime sıralaması listesinde bulunamadı: %s
+%s with class %d deleted %d word ranks lower than %d.|%d sınıflı %s %d kelime düzeyini sildi ki onların düzeyi %d değerinden düşüktü.
+Size of word ranks table: %d [ %s: %d @ %s ]|Kelime sıralaması tablosunun boyutu: %d [ %s: %d @ %s ]
+Total word rank points: %d|Toplam kelime sırlaması puanı: %d
+Word rank list is empty.|Kelime sıralama listesi boştur.
+%s with class %d registered new user with class %d: %s|%d sınıflı %s %d sınıflı yeni kullanıcı kayıt etti: %s
+%s with class %d deleted registered user with class %d: %s|%d sınıflı %s %d sınıflı kayıtlı kullanıcıyı sildi: %s
+%s with class %d changed user class from %d to %d: %s|%d sınıflı %s kullanıcı sınıfını %d değerinden %d değerine değiştirdi: %s
+%s with IP %s and class %d allowed due to fake share exception: %s|%s, ki %s IP adresli ve %d sınıflı, sahte paylaşım istisnası sebebiyle kabul edildi: %s
+%s with IP %s and class %d allowed due to clone exception: %s|%s, ki %s IP adresli ve %d sınıflı, klon istisnası sebebiyle kabul edildi: %s
+%s with IP %s and class %d allowed due to same IP exception: %s|%s, ki %s IP adresli ve %d sınıflı, aynı IP adresi istinası sebebiyle kabul edildi: %s
 seconds|saniye
 Add news item|Haber maddesi ekle
 Delete news items|Haber maddesini sil
 Read hub news|Hub haberlerini oku
 Added news item: %s|Haber maddesi eklendi: %s
-Hub news list is empty.|Hub haberleri listesi boÑtur.
+Hub news list is empty.|Hub haberleri listesi boştur.
 Deleted %d news items.|%d haber maddesi silindi.
-Couldn't delete news items because not found: %s|Haber maddeleri silinemedi Ğ·ÑŒnkÑŒ bulunamadÑ: %s
+Couldn't delete news items because not found: %s|Haber maddeleri silinemedi çünkü bulunamadı: %s
 Last %d news items|Son %d haber maddesi
-By %s on %s: %s|%s tarafÑndan, %s tarihinde: %s
-There are no main chat history messages written by you.|Sizin tarafÑnÑzdan yazÑlan ana sohbet mesajÑ tarihĞ·ede yoktur.
-Last %d main chat messages written by you|TarafÑnÑzdan yazÑlan son %d ana sohbet mesajÑ
-Your main chat history|Ana sohbet tarihĞ·eniz
-Script memory usage: %s|Betik bellek kullanÑmÑ: %s
-Failed to load translation file %s: %s|TercÑŒme dosyasÑnÑn yÑŒklenmesi baÑarÑsÑz oldu: %s: %s
-Force custom nick for user|KullanÑcÑ iĞ·in Ñ†zel rumuzu zorla
-Either the feature is disabled or user that you're trying to set welcome message for doesn't have access to it.|Ya bu iÑlev devre dÑÑÑ bÑrakÑlmÑÑtÑr, ya da hoÑ geldiniz mesajÑ ayarlamak istediÑ€iniz kullanÑcÑnÑn buna eriÑimi yoktur.
+By %s on %s: %s|%s tarafından, %s tarihinde: %s
+There are no main chat history messages written by you.|Sizin tarafınızdan yazılan ana sohbet mesajı tarihçede yoktur.
+Last %d main chat messages written by you|Tarafınızdan yazılan son %d ana sohbet mesajı
+Your main chat history|Ana sohbet tarihçeniz
+Script memory usage: %s|Betik bellek kullanımı: %s
+Failed to load translation file %s: %s|Tercüme dosyasının yüklenmesi başarısız oldu: %s: %s
+Force custom nick for user|Kullanıcı için özel rumuzu zorla
+Either the feature is disabled or user that you're trying to set welcome message for doesn't have access to it.|Ya bu işlev devre dışı bırakılmıştır, ya da hoş geldiniz mesajı ayarlamak istediğiniz kullanıcının buna erişimi yoktur.
 name|isim
 category|kategori
 tth|tth
-Add new release|Yeni bÑrakÑm ekle
-Delete releases|BÑrakÑmlarÑ sil
-List of available releases|Mevcut bÑrakÑmlarÑn listesi
-Find release by name or category|BÑrakÑmÑ isim ya da kategoriyle bul
+Add new release|Yeni bırakım ekle
+Delete releases|Bırakımları sil
+List of available releases|Mevcut bırakımların listesi
+Find release by name or category|Bırakımı isim ya da kategoriyle bul
 equation|denklem
 Calculate an equation|Bir denklem hesapla
-Both numbers must be either pi or numbers.|Ğ­ki sayÑ da ya pi ya da sayÑ olmalÑdÑr.
-Known operations are: %s|Bilinen iÑlemler ÑunlardÑr: %s
-Your logout message: %s|Ğ—ÑkÑÑ mesajÑnÑz: %s
-Force welcome message for user|KullanÑcÑ iĞ·in hoÑ geldiniz mesajÑnÑ zorla
-Login message set for %s: %s|%s iĞ·in giriÑ mesajÑ ayarlandÑ: %s
-Change nick of a registered user|KayÑtlÑ bir kullanÑcÑnÑn rumuzunu deÑ€iÑtir
-User is not registered: %s|KullanÑcÑ kayÑtlÑ deÑ€il: %s
-You are now going to be disconnected from the hub in order for your new nick to apply: %s|Yeni rumuzunuzun uygulamaya girmesi iĞ·in Ñimdi hub ile baÑ€lantÑnÑz kesilecektir: %s
-Renamed account %s: %s|Yeniden adlandÑrÑlan hesap %s: %s
-%s with class %d renamed account %s: %s|%d sÑnÑflÑ %s, %s hesabÑnÑ yeniden adlandÑrdÑ: %s
-Your login message deleted.|GiriÑ mesajÑnÑz silindi.
-Your logout message deleted.|Ğ—ÑkÑÑ mesajÑnÑz silindi.
-%s with class %d deleted his login message.|%d sÑnÑflÑ %s kendi giriÑ mesajÑnÑ sildi.
-%s with class %d deleted his logout message.|%d sÑnÑflÑ %s kendi Ğ·ÑkÑÑ mesajÑnÑ sildi.
-Logout message set for %s: %s|%s iĞ·in Ğ·ÑkÑÑ mesajÑ ayarlandÑ: %s
-%s with class %d changed login message for %s: %s|%d sÑnÑflÑ %s giriÑ mesajÑnÑ %s iĞ·in deÑ€iÑtirdi: %s
-%s with class %d changed logout message for %s: %s|%d sÑnÑflÑ %s Ğ·ÑkÑÑ mesajÑnÑ %s iĞ·in deÑ€iÑtirdi: %s
-Login message deleted for user: %s|Ğ®u kullanÑcÑ iĞ·in giriÑ mesajÑ silindi: %s
-Logout message deleted for user: %s|Ğ®u kullanÑcÑ iĞ·in Ğ·ÑkÑÑ mesajÑ silindi: %s
-%s with class %d deleted login message for user: %s|%d sÑnÑflÑ %s Ñu kullanÑcÑ iĞ·in giriÑ mesajÑnÑ sildi: %s
-%s with class %d deleted logout message for user: %s|%d sÑnÑflÑ %s, Ñu kullanÑcÑ iĞ·in Ğ·ÑkÑÑ mesajÑnÑ sildi: %s
-%s with class %d deleted welcome messages for user: %s|%d sÑnÑflÑ %s Ñu kullanÑcÑ iĞ·in hoÑ geldiniz mesajlarÑnÑ sildi: %s
+Both numbers must be either pi or numbers.|İki sayı da ya pi ya da sayı olmalıdır.
+Known operations are: %s|Bilinen işlemler şunlardır: %s
+Your logout message: %s|Çıkış mesajınız: %s
+Force welcome message for user|Kullanıcı için hoş geldiniz mesajını zorla
+Login message set for %s: %s|%s için giriş mesajı ayarlandı: %s
+Change nick of a registered user|Kayıtlı bir kullanıcının rumuzunu değiştir
+User is not registered: %s|Kullanıcı kayıtlı değil: %s
+You are now going to be disconnected from the hub in order for your new nick to apply: %s|Yeni rumuzunuzun uygulamaya girmesi için şimdi hub ile bağlantınız kesilecektir: %s
+Renamed account %s: %s|Yeniden adlandırılan hesap %s: %s
+%s with class %d renamed account %s: %s|%d sınıflı %s, %s hesabını yeniden adlandırdı: %s
+Your login message deleted.|Giriş mesajınız silindi.
+Your logout message deleted.|Çıkış mesajınız silindi.
+%s with class %d deleted his login message.|%d sınıflı %s kendi giriş mesajını sildi.
+%s with class %d deleted his logout message.|%d sınıflı %s kendi çıkış mesajını sildi.
+Logout message set for %s: %s|%s için çıkış mesajı ayarlandı: %s
+%s with class %d changed login message for %s: %s|%d sınıflı %s giriş mesajını %s için değiştirdi: %s
+%s with class %d changed logout message for %s: %s|%d sınıflı %s çıkış mesajını %s için değiştirdi: %s
+Login message deleted for user: %s|Şu kullanıcı için giriş mesajı silindi: %s
+Logout message deleted for user: %s|Şu kullanıcı için çıkış mesajı silindi: %s
+%s with class %d deleted login message for user: %s|%d sınıflı %s şu kullanıcı için giriş mesajını sildi: %s
+%s with class %d deleted logout message for user: %s|%d sınıflı %s, şu kullanıcı için çıkış mesajını sildi: %s
+%s with class %d deleted welcome messages for user: %s|%d sınıflı %s şu kullanıcı için hoş geldiniz mesajlarını sildi: %s
 minute|dakika
-Last %d releases by search string %s|Son %d bÑrakÑm ki arama kelimesi %s ile
-Modified release: %s|DeÑ€iÑtirilen bÑrakÑm: %s
-Added release: %s|Eklenen bÑrakÑm: %s
-Deleted release: %s|SilinmiÑ bÑrakÑm: %s
-Couldn't delete release because not found: %s|BÑrakÑm silinemedi Ğ·ÑŒnkÑŒ bulunamadÑ: %s
-Reminder preview|HatÑrlatÑcÑ Ñ†nizlemesi
-Preview of %s reminder: %s|%s hatÑrlatÑcÑsÑnÑn Ñ†nizlemesi: %s
-Specified nick is already in use.|Belirtilen rumuz zaten kullanÑmda.
-Live user location statistics by country|CanlÑ ÑŒlke baÑÑna kullanÑcÑ konum istatistikleri
-All time user location statistics|TÑŒm zamanlarÑn kullanÑcÑ konum istatistikleri
-This feature requires %s or later installed on your system.|Bu iÑlev %s ya da daha yenisinin sisteminizde kurulu olmasÑnÑ gerektiriyor.
-Total count since %s: %d|%s tarihinden beri toplam sayÑ: %d
-Unknown country|Bilinmeyen ÑŒlke
-No users in the hub.|Hub'da kullanÑcÑ yok.
-User location statistics table is empty.|KullanÑcÑ konum istatistikleri tablosu boÑtur.
-Total count: %d|Toplam sayÑ: %d
-Deleted all rows: %s|TÑŒm satÑrlar silindi: %s
-%s with class %d deleted all user location entries.|%d sÑnÑflÑ %s tÑŒm kullanÑcÑ konum unsurlarÑnÑ sildi.
+Last %d releases by search string %s|Son %d bırakım ki arama kelimesi %s ile
+Modified release: %s|Değiştirilen bırakım: %s
+Added release: %s|Eklenen bırakım: %s
+Deleted release: %s|Silinmiş bırakım: %s
+Couldn't delete release because not found: %s|Bırakım silinemedi çünkü bulunamadı: %s
+Reminder preview|Hatırlatıcı önizlemesi
+Preview of %s reminder: %s|%s hatırlatıcısının önizlemesi: %s
+Specified nick is already in use.|Belirtilen rumuz zaten kullanımda.
+Live user location statistics by country|Canlı ülke başına kullanıcı konum istatistikleri
+All time user location statistics|Tüm zamanların kullanıcı konum istatistikleri
+This feature requires %s or later installed on your system.|Bu işlev %s ya da daha yenisinin sisteminizde kurulu olmasını gerektiriyor.
+Total count since %s: %d|%s tarihinden beri toplam sayı: %d
+Unknown country|Bilinmeyen ülke
+No users in the hub.|Hub'da kullanıcı yok.
+User location statistics table is empty.|Kullanıcı konum istatistikleri tablosu boştur.
+Total count: %d|Toplam sayı: %d
+Deleted all rows: %s|Tüm satırlar silindi: %s
+%s with class %d deleted all user location entries.|%d sınıflı %s tüm kullanıcı konum unsurlarını sildi.
 address|adres
 owner|sahibi
-Add friendly hub|ArkadaÑ hub ekle
-Delete friendly hub|ArkadaÑ hub sil
-Show friendly hubs|ArkadaÑ hub'larÑ gÑ†ster
-Added friendly hub: %s|ArkadaÑ hub eklendi: %s
-Modified friendly hub: %s|ArkadaÑ hub deÑ€iÑtirildi: %s
-Deleted friendly hub: %s|ArkadaÑ hub silindi: %s
-Friendly hub not found: %s|ArkadaÑ hub bulunamadÑ: %s
-Friendly hublist|ArkadaÑ hub listesi
-Friendly hublist is empty.|ArkadaÑ hub listesi boÑtur.
-Executed shell command didn't return any output.|Ğ—alÑÑtÑrÑlan kabuk komutu hiĞ·bir Ğ·ÑktÑ geri gÑ†ndermemiÑtir.
-Returned output|Geri gÑ†nderilen Ğ·ÑktÑ
-%s renamed %s to: %s|%s, %s unsurunu %s olarak yeniden adlandÑrmÑÑtÑr
-%s plugin version: %s|%s eklenti sÑŒrÑŒmÑŒ: %s
+Add friendly hub|Arkadaş hub ekle
+Delete friendly hub|Arkadaş hub sil
+Show friendly hubs|Arkadaş hub'ları göster
+Added friendly hub: %s|Arkadaş hub eklendi: %s
+Modified friendly hub: %s|Arkadaş hub değiştirildi: %s
+Deleted friendly hub: %s|Arkadaş hub silindi: %s
+Friendly hub not found: %s|Arkadaş hub bulunamadı: %s
+Friendly hublist|Arkadaş hub listesi
+Friendly hublist is empty.|Arkadaş hub listesi boştur.
+Executed shell command didn't return any output.|Çalıştırılan kabuk komutu hiçbir çıktı geri göndermemiştir.
+Returned output|Geri gönderilen çıktı
+%s renamed %s to: %s|%s, %s unsurunu %s olarak yeniden adlandırmıştır
+%s plugin version: %s|%s eklenti sürümü: %s
 second|saniye
-You are now known as: %s|ArtÑk %s olarak biliniyorsunuz
-You renamed %s to: %s|%s rumuzunu %s olarak yeniden adlandÑrdÑnÑz
-Spam exception from %s with IP %s and class %d in MC: %s|Ana sohbette %s kullanÑcÑsÑndan, ki %s IP adresli ve %d sÑnÑflÑ, yÑÑ€Ñn mesaj istisnasÑ: %s
-Spam exception from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s|%s kullanÑcÑsÑndan, ki %s IP adresli ve %d sÑnÑflÑ, %s kullanÑcÑsÑna ki %s IP adresli ve %d sÑnÑflÑ, Ñ†zel sohbette yÑÑ€Ñn mesaj istisnasÑ: %s
-Spam exception from %s with IP %s and class %d in offline message: %s|Ğ—evrimdÑÑÑ mesajda %s kullanÑcÑsÑndan, ki %s IP adresli ve %d sÑnÑflÑ, yÑÑ€Ñn mesaj istisnasÑ: %s
-Spam exception from %s with IP %s and class %d in report: %s|Raporda %s kullanÑcÑsÑndan, ki %s IP adresli ve %d sÑnÑflÑ, yÑÑ€Ñn mesaj istisnasÑ: %s
-Spam notification from %s with IP %s and class %d in MC: %s|Ana sohbette %s kullanÑcÑsÑndan, ki %s IP adresli ve %d sÑnÑflÑ, yÑÑ€Ñn mesaj bildirimi: %s
-Spam notification from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s|%s kullanÑcÑsÑndan, ki %s IP adresli ve %d sÑnÑflÑ, %s kullanÑcÑsÑna ki %s IP adresli ve %d sÑnÑflÑ, Ñ†zel sohbette yÑÑ€Ñn mesaj bildirimi: %s
-Spam notification from %s with IP %s and class %d in offline message: %s|Ğ—evrimdÑÑÑ mesajda %s kullanÑcÑsÑndan, ki %s IP adresli ve %d sÑnÑflÑ, yÑÑ€Ñn mesaj bildirimi: %s
-Spam notification from %s with IP %s and class %d in report: %s|Raporda %s kullanÑcÑsÑndan, ki %s IP adresli ve %d sÑnÑflÑ, yÑÑ€Ñn mesaj bildirimi: %s
-Spam from %s with IP %s and class %d in MC: %s|%s kullanÑcÑsÑndan, ki %s IP adresli ve %d sÑnÑflÑ, ana sohbette yÑÑ€Ñn mesaj: %s
-Spam from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s|%s kullanÑcÑsÑndan, ki %s IP adresli ve %d sÑnÑflÑ, %s kullanÑcÑsÑna, ki %s IP adresli ve %d sÑnÑflÑ, Ñ†zel sohbette yÑÑ€Ñn mesaj: %s
-Spam from %s with IP %s and class %d in offline message: %s|%s kullanÑcÑsÑndan, ki %s IP adresli ve %d sÑnÑflÑ, Ğ·evrimdÑÑÑ mesajda yÑÑ€Ñn mesaj: %s
-Spam from %s with IP %s and class %d in report: %s|%s kullanÑcÑsÑndan, ki %s IP adresli ve %d sÑnÑflÑ, raporda yÑÑ€Ñn mesaj: %s
-Modified antispam entry with action %d and priority %d to scan in MC: %s|YÑÑ€Ñn mesajdan korunma unsuru ana sohbeti taramak iĞ·in %d faaliyeti ve %d Ñ†nceliÑ€i ile deÑ€iÑtirildi: %s
-Modified antispam entry with action %d and priority %d to scan in PM: %s|YÑÑ€Ñn mesajdan korunma unsuru Ñ†zel mesajlarÑ taramak iĞ·in %d faaliyeti ve %d Ñ†nceliÑ€i ile deÑ€iÑtirildi: %s
-Modified antispam entry with action %d and priority %d to scan in MC and PM: %s|YÑÑ€Ñn mesajdan korunma unsuru ana sohbeti ve Ñ†zel mesajlarÑ taramak iĞ·in %d faaliyeti ve %d Ñ†nceliÑ€i ile deÑ€iÑtirildi: %s
-Added antispam entry with action %d and priority %d to scan in MC: %s|%d faaliyeti ve %d Ñ†nceliÑ€i ile ana sohbeti taramak iĞ·in yÑÑ€Ñn mesajdan korunma unsuru eklendi: %s
-Added antispam entry with action %d and priority %d to scan in PM: %s|%d faaliyeti ve %d Ñ†nceliÑ€i ile Ñ†zel mesajlarÑ taramak iĞ·in yÑÑ€Ñn mesajdan korunma unsuru eklendi: %s
-Added antispam entry with action %d and priority %d to scan in MC and PM: %s|%d faaliyeti ve %d Ñ†nceliÑ€i ile ana sohbeti ve Ñ†zel mesajlarÑ taramak iĞ·in yÑÑ€Ñn mesajdan korunma unsuru eklendi: %s
-Search request exception from %s with IP %s and class %d as any file: %s|Herhangi bir dosya olarak %s kullanÑcÑsÑndan, ki %s IP adresli ve %d sÑnÑflÑ, arama talebi istisnasÑ: %s
-Search request exception from %s with IP %s and class %d as audio file: %s|Ses dosyasÑ olarak %s kullanÑcÑsÑndan, ki %s IP adresli ve %d sÑnÑflÑ, arama talebi istisnasÑ: %s
-Search request exception from %s with IP %s and class %d as compressed file: %s|SÑkÑÑtÑrÑlmÑÑ dosya olarak %s kullanÑcÑsÑndan, ki %s IP adresli ve %d sÑnÑflÑ, arama talebi istisnasÑ: %s
-Search request exception from %s with IP %s and class %d as document: %s|Belge olarak %s kullanÑcÑsÑndan, ki %s IP adresli ve %d sÑnÑflÑ, arama talebi istisnasÑ: %s
-Search request exception from %s with IP %s and class %d as executable: %s|Ğ—alÑÑtÑrÑlabilir dosya olarak %s kullanÑcÑsÑndan, ki %s IP adresli ve %d sÑnÑflÑ, arama talebi istisnasÑ: %s
-Search request exception from %s with IP %s and class %d as picture: %s|Resim olarak %s kullanÑcÑsÑndan, ki %s IP adresli ve %d sÑnÑflÑ, arama talebi istisnasÑ: %s
-Search request exception from %s with IP %s and class %d as video: %s|Video olarak %s kullanÑcÑsÑndan, ki %s IP adresli ve %d sÑnÑflÑ, arama talebi istisnasÑ: %s
-Search request exception from %s with IP %s and class %d as folder: %s|KlasÑ†r olarak %s kullanÑcÑsÑndan, ki %s IP adresli ve %d sÑnÑflÑ, arama talebi istisnasÑ: %s
-Search request exception from %s with IP %s and class %d as TTH: %s|%s kullanÑcÑsÑndan, ki %s IP adresli ve %d sÑnÑflÑ, TTH olarak arama talebi istisnasÑ: %s
-Search request notification from %s with IP %s and class %d as any file: %s|%s kullanÑcÑsÑndan, ki %s IP adresli ve %d sÑnÑflÑ, herhangi bir dosya olarak arama talebi bildirimi: %s
-Search request notification from %s with IP %s and class %d as audio file: %s|%s kullanÑcÑsÑndan, ki %s IP adresli ve %d sÑnÑflÑ, ses dosyasÑ olarak arama talebi bildirimi: %s
-Search request notification from %s with IP %s and class %d as compressed file: %s|%s kullanÑcÑsÑndan, ki %s IP adresli ve %d sÑnÑflÑ, sÑkÑÑtÑrÑlmÑÑ dosya olarak arama talebi bildirimi: %s
-Search request notification from %s with IP %s and class %d as document: %s|%s kullanÑcÑsÑndan, ki %s IP adresli ve %d sÑnÑflÑ, belge olarak arama talebi bildirimi: %s
-Search request notification from %s with IP %s and class %d as executable: %s|%s kullanÑcÑsÑndan, ki %s IP adresli ve %d sÑnÑflÑ, Ğ·alÑÑtÑrÑlabilir dosya olarak arama talebi bildirimi: %s
-Search request notification from %s with IP %s and class %d as picture: %s|%s kullanÑcÑsÑndan, ki %s IP adresli ve %d sÑnÑflÑ, resim olarak arama talebi bildirimi: %s
-Search request notification from %s with IP %s and class %d as video: %s|%s kullanÑcÑsÑndan, ki %s IP adresli ve %d sÑnÑflÑ, video olarak arama talebi bildirimi: %s
-Search request notification from %s with IP %s and class %d as folder: %s|%s kullanÑcÑsÑndan, ki %s IP adresli ve %d sÑnÑflÑ, klasÑ†r olarak arama talebi bildirimi: %s
-Search request notification from %s with IP %s and class %d as TTH: %s|%s kullanÑcÑsÑndan, ki %s IP adresli ve %d sÑnÑflÑ, TTH olarak arama talebi bildirimi: %s
-Bad search request from %s with IP %s and class %d as any file: %s|%s kullanÑcÑsÑndan, ki %s IP adresli ve %d sÑnÑflÑ, herhangi bir dosya olarak kÑ†tÑŒ arama talebi: %s
-Bad search request from %s with IP %s and class %d as audio file: %s|%s kullanÑcÑsÑndan, ki %s IP adresli ve %d sÑnÑflÑ, ses dosyasÑ olarak kÑ†tÑŒ arama talebi: %s
-Bad search request from %s with IP %s and class %d as compressed file: %s|%s kullanÑcÑsÑndan, ki %s IP adresli ve %d sÑnÑflÑ, sÑkÑÑtÑrÑlmÑÑ dosya olarak kÑ†tÑŒ arama talebi: %s
-Bad search request from %s with IP %s and class %d as document: %s|%s kullanÑcÑsÑndan, ki %s IP adresli ve %d sÑnÑflÑ, belge olarak kÑ†tÑŒ arama talebi: %s
-Bad search request from %s with IP %s and class %d as executable: %s|%s kullanÑcÑsÑndan, ki %s IP adresli ve %d sÑnÑflÑ, Ğ·alÑÑtÑrÑlabilir dosya olarak kÑ†tÑŒ arama talebi: %s
-Bad search request from %s with IP %s and class %d as picture: %s|%s kullanÑcÑsÑndan, ki %s IP adresli ve %d sÑnÑflÑ, resim olarak kÑ†tÑŒ arama talebi: %s
-Bad search request from %s with IP %s and class %d as video: %s|%s kullanÑcÑsÑndan, ki %s IP adresli ve %d sÑnÑflÑ, video olarak kÑ†tÑŒ arama talebi: %s
-Bad search request from %s with IP %s and class %d as folder: %s|%s kullanÑcÑsÑndan, ki %s IP adresli ve %d sÑnÑflÑ, klasÑ†r dosya olarak kÑ†tÑŒ arama talebi: %s
-Bad search request from %s with IP %s and class %d as TTH: %s|%s kullanÑcÑsÑndan, ki %s IP adresli ve %d sÑnÑflÑ, TTH olarak kÑ†tÑŒ arama talebi: %s
-Modified search filter with action %d and priority %d as any file: %s|Arama filtresi %d faaliyeti ve %d Ñ†nceliÑ€i ile herhangi bir dosya olarak deÑ€iÑtirilmiÑtir: %s
-Modified search filter with action %d and priority %d as audio file: %s|Arama filtresi %d faaliyeti ve %d Ñ†nceliÑ€i ile ses dosyasÑ olarak deÑ€iÑtirildi: %s
-Modified search filter with action %d and priority %d as compressed file: %s|Arama filtresi %d faaliyeti ve %d Ñ†nceliÑ€i ile sÑkÑÑtÑrÑlmÑÑ dosya olarak deÑ€iÑtirildi: %s
-Modified search filter with action %d and priority %d as document: %s|Arama filtresi %d faaliyeti ve %d Ñ†nceliÑ€i ile belge olarak deÑ€iÑtirildi: %s
-Modified search filter with action %d and priority %d as executable: %s|Arama filtresi %d faaliyeti ve %d Ñ†nceliÑ€i ile Ğ·alÑÑtÑrÑlabilir dosya olarak deÑ€iÑtirilmiÑtir: %s
-Modified search filter with action %d and priority %d as picture: %s|Arama filtresi %d faaliyeti ve %d Ñ†nceliÑ€i ile resim olarak deÑ€iÑtirildi: %s
-Modified search filter with action %d and priority %d as video: %s|Arama filtresi %d faaliyeti ve %d Ñ†nceliÑ€i ile video olarak deÑ€iÑtirildi: %s
-Modified search filter with action %d and priority %d as folder: %s|Arama filtresi %d faaliyeti ve %d Ñ†nceliÑ€i ile klasÑ†r olarak deÑ€iÑtirildi: %s
-Modified search filter with action %d and priority %d as TTH: %s|Arama filtresi %d faaliyeti ve %d Ñ†nceliÑ€i ile TTH olarak deÑ€iÑtirildi: %s
-Added search filter with action %d and priority %d as any file: %s|Arama filtresi %d faaliyeti ve %d Ñ†nceliÑ€i ile herhangi bir dosya olarak eklenmiÑtir: %s
-Added search filter with action %d and priority %d as audio file: %s|Arama filtresi %d faaliyeti ve %d Ñ†nceliÑ€i ile ses dosyasÑ olarak eklendi: %s
-Added search filter with action %d and priority %d as compressed file: %s|Arama filtresi %d faaliyeti ve %d Ñ†nceliÑ€i ile sÑkÑÑtÑrÑlmÑÑ dosya olarak eklendi: %s
-Added search filter with action %d and priority %d as document: %s|Arama filtresi %d faaliyeti ve %d Ñ†nceliÑ€i ile belge olarak eklendi: %s
-Added search filter with action %d and priority %d as executable: %s|Arama filtresi %d faaliyeti ve %d Ñ†nceliÑ€i ile Ğ·alÑÑtÑrÑlabilir dosya olarak eklendi: %s
-Added search filter with action %d and priority %d as picture: %s|Arama filtresi %d faaliyeti ve %d Ñ†nceliÑ€i ile resim olarak eklendi: %s
-Added search filter with action %d and priority %d as video: %s|Arama filtresi %d faaliyeti ve %d Ñ†nceliÑ€i ile video olarak eklendi: %s
-Added search filter with action %d and priority %d as folder: %s|Arama filtresi %d faaliyeti ve %d Ñ†nceliÑ€i ile klasÑ†r olarak eklendi: %s
-Added search filter with action %d and priority %d as TTH: %s|Arama filtresi %d faaliyeti ve %d Ñ†nceliÑ€i ile TTH olarak ilave edildi: %s
-%s with class %d deleted %d releases older than %d days.|%s kullanÑcÑsÑ, ki %d sÑnÑflÑ, %d bÑrakÑmÑ sildi ki bunlar %d gÑŒnden eskiydi.
-Size of release table: %d [ %s: %d @ %s ]|BÑrakÑm tablosunun boyutu: %d [ %s: %d @ %s ]
+You are now known as: %s|Artık %s olarak biliniyorsunuz
+You renamed %s to: %s|%s rumuzunu %s olarak yeniden adlandırdınız
+Spam exception from %s with IP %s and class %d in MC: %s|Ana sohbette %s kullanıcısından, ki %s IP adresli ve %d sınıflı, yığın mesaj istisnası: %s
+Spam exception from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s|%s kullanıcısından, ki %s IP adresli ve %d sınıflı, %s kullanıcısına ki %s IP adresli ve %d sınıflı, özel sohbette yığın mesaj istisnası: %s
+Spam exception from %s with IP %s and class %d in offline message: %s|Çevrimdışı mesajda %s kullanıcısından, ki %s IP adresli ve %d sınıflı, yığın mesaj istisnası: %s
+Spam exception from %s with IP %s and class %d in report: %s|Raporda %s kullanıcısından, ki %s IP adresli ve %d sınıflı, yığın mesaj istisnası: %s
+Spam notification from %s with IP %s and class %d in MC: %s|Ana sohbette %s kullanıcısından, ki %s IP adresli ve %d sınıflı, yığın mesaj bildirimi: %s
+Spam notification from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s|%s kullanıcısından, ki %s IP adresli ve %d sınıflı, %s kullanıcısına ki %s IP adresli ve %d sınıflı, özel sohbette yığın mesaj bildirimi: %s
+Spam notification from %s with IP %s and class %d in offline message: %s|Çevrimdışı mesajda %s kullanıcısından, ki %s IP adresli ve %d sınıflı, yığın mesaj bildirimi: %s
+Spam notification from %s with IP %s and class %d in report: %s|Raporda %s kullanıcısından, ki %s IP adresli ve %d sınıflı, yığın mesaj bildirimi: %s
+Spam from %s with IP %s and class %d in MC: %s|%s kullanıcısından, ki %s IP adresli ve %d sınıflı, ana sohbette yığın mesaj: %s
+Spam from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s|%s kullanıcısından, ki %s IP adresli ve %d sınıflı, %s kullanıcısına, ki %s IP adresli ve %d sınıflı, özel sohbette yığın mesaj: %s
+Spam from %s with IP %s and class %d in offline message: %s|%s kullanıcısından, ki %s IP adresli ve %d sınıflı, çevrimdışı mesajda yığın mesaj: %s
+Spam from %s with IP %s and class %d in report: %s|%s kullanıcısından, ki %s IP adresli ve %d sınıflı, raporda yığın mesaj: %s
+Modified antispam entry with action %d and priority %d to scan in MC: %s|Yığın mesajdan korunma unsuru ana sohbeti taramak için %d faaliyeti ve %d önceliği ile değiştirildi: %s
+Modified antispam entry with action %d and priority %d to scan in PM: %s|Yığın mesajdan korunma unsuru özel mesajları taramak için %d faaliyeti ve %d önceliği ile değiştirildi: %s
+Modified antispam entry with action %d and priority %d to scan in MC and PM: %s|Yığın mesajdan korunma unsuru ana sohbeti ve özel mesajları taramak için %d faaliyeti ve %d önceliği ile değiştirildi: %s
+Added antispam entry with action %d and priority %d to scan in MC: %s|%d faaliyeti ve %d önceliği ile ana sohbeti taramak için yığın mesajdan korunma unsuru eklendi: %s
+Added antispam entry with action %d and priority %d to scan in PM: %s|%d faaliyeti ve %d önceliği ile özel mesajları taramak için yığın mesajdan korunma unsuru eklendi: %s
+Added antispam entry with action %d and priority %d to scan in MC and PM: %s|%d faaliyeti ve %d önceliği ile ana sohbeti ve özel mesajları taramak için yığın mesajdan korunma unsuru eklendi: %s
+Search request exception from %s with IP %s and class %d as any file: %s|Herhangi bir dosya olarak %s kullanıcısından, ki %s IP adresli ve %d sınıflı, arama talebi istisnası: %s
+Search request exception from %s with IP %s and class %d as audio file: %s|Ses dosyası olarak %s kullanıcısından, ki %s IP adresli ve %d sınıflı, arama talebi istisnası: %s
+Search request exception from %s with IP %s and class %d as compressed file: %s|Sıkıştırılmış dosya olarak %s kullanıcısından, ki %s IP adresli ve %d sınıflı, arama talebi istisnası: %s
+Search request exception from %s with IP %s and class %d as document: %s|Belge olarak %s kullanıcısından, ki %s IP adresli ve %d sınıflı, arama talebi istisnası: %s
+Search request exception from %s with IP %s and class %d as executable: %s|Çalıştırılabilir dosya olarak %s kullanıcısından, ki %s IP adresli ve %d sınıflı, arama talebi istisnası: %s
+Search request exception from %s with IP %s and class %d as picture: %s|Resim olarak %s kullanıcısından, ki %s IP adresli ve %d sınıflı, arama talebi istisnası: %s
+Search request exception from %s with IP %s and class %d as video: %s|Video olarak %s kullanıcısından, ki %s IP adresli ve %d sınıflı, arama talebi istisnası: %s
+Search request exception from %s with IP %s and class %d as folder: %s|Klasör olarak %s kullanıcısından, ki %s IP adresli ve %d sınıflı, arama talebi istisnası: %s
+Search request exception from %s with IP %s and class %d as TTH: %s|%s kullanıcısından, ki %s IP adresli ve %d sınıflı, TTH olarak arama talebi istisnası: %s
+Search request notification from %s with IP %s and class %d as any file: %s|%s kullanıcısından, ki %s IP adresli ve %d sınıflı, herhangi bir dosya olarak arama talebi bildirimi: %s
+Search request notification from %s with IP %s and class %d as audio file: %s|%s kullanıcısından, ki %s IP adresli ve %d sınıflı, ses dosyası olarak arama talebi bildirimi: %s
+Search request notification from %s with IP %s and class %d as compressed file: %s|%s kullanıcısından, ki %s IP adresli ve %d sınıflı, sıkıştırılmış dosya olarak arama talebi bildirimi: %s
+Search request notification from %s with IP %s and class %d as document: %s|%s kullanıcısından, ki %s IP adresli ve %d sınıflı, belge olarak arama talebi bildirimi: %s
+Search request notification from %s with IP %s and class %d as executable: %s|%s kullanıcısından, ki %s IP adresli ve %d sınıflı, çalıştırılabilir dosya olarak arama talebi bildirimi: %s
+Search request notification from %s with IP %s and class %d as picture: %s|%s kullanıcısından, ki %s IP adresli ve %d sınıflı, resim olarak arama talebi bildirimi: %s
+Search request notification from %s with IP %s and class %d as video: %s|%s kullanıcısından, ki %s IP adresli ve %d sınıflı, video olarak arama talebi bildirimi: %s
+Search request notification from %s with IP %s and class %d as folder: %s|%s kullanıcısından, ki %s IP adresli ve %d sınıflı, klasör olarak arama talebi bildirimi: %s
+Search request notification from %s with IP %s and class %d as TTH: %s|%s kullanıcısından, ki %s IP adresli ve %d sınıflı, TTH olarak arama talebi bildirimi: %s
+Bad search request from %s with IP %s and class %d as any file: %s|%s kullanıcısından, ki %s IP adresli ve %d sınıflı, herhangi bir dosya olarak kötü arama talebi: %s
+Bad search request from %s with IP %s and class %d as audio file: %s|%s kullanıcısından, ki %s IP adresli ve %d sınıflı, ses dosyası olarak kötü arama talebi: %s
+Bad search request from %s with IP %s and class %d as compressed file: %s|%s kullanıcısından, ki %s IP adresli ve %d sınıflı, sıkıştırılmış dosya olarak kötü arama talebi: %s
+Bad search request from %s with IP %s and class %d as document: %s|%s kullanıcısından, ki %s IP adresli ve %d sınıflı, belge olarak kötü arama talebi: %s
+Bad search request from %s with IP %s and class %d as executable: %s|%s kullanıcısından, ki %s IP adresli ve %d sınıflı, çalıştırılabilir dosya olarak kötü arama talebi: %s
+Bad search request from %s with IP %s and class %d as picture: %s|%s kullanıcısından, ki %s IP adresli ve %d sınıflı, resim olarak kötü arama talebi: %s
+Bad search request from %s with IP %s and class %d as video: %s|%s kullanıcısından, ki %s IP adresli ve %d sınıflı, video olarak kötü arama talebi: %s
+Bad search request from %s with IP %s and class %d as folder: %s|%s kullanıcısından, ki %s IP adresli ve %d sınıflı, klasör dosya olarak kötü arama talebi: %s
+Bad search request from %s with IP %s and class %d as TTH: %s|%s kullanıcısından, ki %s IP adresli ve %d sınıflı, TTH olarak kötü arama talebi: %s
+Modified search filter with action %d and priority %d as any file: %s|Arama filtresi %d faaliyeti ve %d önceliği ile herhangi bir dosya olarak değiştirilmiştir: %s
+Modified search filter with action %d and priority %d as audio file: %s|Arama filtresi %d faaliyeti ve %d önceliği ile ses dosyası olarak değiştirildi: %s
+Modified search filter with action %d and priority %d as compressed file: %s|Arama filtresi %d faaliyeti ve %d önceliği ile sıkıştırılmış dosya olarak değiştirildi: %s
+Modified search filter with action %d and priority %d as document: %s|Arama filtresi %d faaliyeti ve %d önceliği ile belge olarak değiştirildi: %s
+Modified search filter with action %d and priority %d as executable: %s|Arama filtresi %d faaliyeti ve %d önceliği ile çalıştırılabilir dosya olarak değiştirilmiştir: %s
+Modified search filter with action %d and priority %d as picture: %s|Arama filtresi %d faaliyeti ve %d önceliği ile resim olarak değiştirildi: %s
+Modified search filter with action %d and priority %d as video: %s|Arama filtresi %d faaliyeti ve %d önceliği ile video olarak değiştirildi: %s
+Modified search filter with action %d and priority %d as folder: %s|Arama filtresi %d faaliyeti ve %d önceliği ile klasör olarak değiştirildi: %s
+Modified search filter with action %d and priority %d as TTH: %s|Arama filtresi %d faaliyeti ve %d önceliği ile TTH olarak değiştirildi: %s
+Added search filter with action %d and priority %d as any file: %s|Arama filtresi %d faaliyeti ve %d önceliği ile herhangi bir dosya olarak eklenmiştir: %s
+Added search filter with action %d and priority %d as audio file: %s|Arama filtresi %d faaliyeti ve %d önceliği ile ses dosyası olarak eklendi: %s
+Added search filter with action %d and priority %d as compressed file: %s|Arama filtresi %d faaliyeti ve %d önceliği ile sıkıştırılmış dosya olarak eklendi: %s
+Added search filter with action %d and priority %d as document: %s|Arama filtresi %d faaliyeti ve %d önceliği ile belge olarak eklendi: %s
+Added search filter with action %d and priority %d as executable: %s|Arama filtresi %d faaliyeti ve %d önceliği ile çalıştırılabilir dosya olarak eklendi: %s
+Added search filter with action %d and priority %d as picture: %s|Arama filtresi %d faaliyeti ve %d önceliği ile resim olarak eklendi: %s
+Added search filter with action %d and priority %d as video: %s|Arama filtresi %d faaliyeti ve %d önceliği ile video olarak eklendi: %s
+Added search filter with action %d and priority %d as folder: %s|Arama filtresi %d faaliyeti ve %d önceliği ile klasör olarak eklendi: %s
+Added search filter with action %d and priority %d as TTH: %s|Arama filtresi %d faaliyeti ve %d önceliği ile TTH olarak ilave edildi: %s
+%s with class %d deleted %d releases older than %d days.|%s kullanıcısı, ki %d sınıflı, %d bırakımı sildi ki bunlar %d günden eskiydi.
+Size of release table: %d [ %s: %d @ %s ]|Bırakım tablosunun boyutu: %d [ %s: %d @ %s ]
 LRE|LRE
-Code accepted.|Kod kabul edilmiÑtir
+Code accepted.|Kod kabul edilmiştir
 Protection list|Koruma listesi
 Added protection entry: %s|Koruma unsuru eklendi: %s
 Deleted protection entry: %s|Koruma unsuru silindi: %s
 Protection entry already exists: %s|Koruma unsuru zaten mevcuttur: %s
-Protection entry not found: %s|Koruma unsuru bulunamadÑ: %s
-Protection list is empty.|Koruma listesi boÑtur.
-Missing %s in configuration variable.|%s yapÑlandÑrma deÑ€iÑkeninde eksiktir.
+Protection entry not found: %s|Koruma unsuru bulunamadı: %s
+Protection list is empty.|Koruma listesi boştur.
+Missing %s in configuration variable.|%s yapılandırma değişkeninde eksiktir.
 Chatroom: %s|Sohbet salonu: %s
-You've left the chatroom.|Sohbet salonundan Ğ·ÑktÑnÑz.
-User left the chatroom: %s|KullanÑcÑ sohbet salonundan Ğ·ÑktÑ: %s
-User entered the chatroom: %s|KullanÑcÑ sohbet salonuna girdi: %s
+You've left the chatroom.|Sohbet salonundan çıktınız.
+User left the chatroom: %s|Kullanıcı sohbet salonundan çıktı: %s
+User entered the chatroom: %s|Kullanıcı sohbet salonuna girdi: %s
 You've entered %s chatroom.|Sohbet salonuna girdiniz.
-You're not member of this chatroom.|Bu sohbet salonunun mensubu deÑ€ilsiniz.
-You don't have access to this chatroom.|Bu sohbet salonuna eriÑiminiz yok.
-Chatroom member list|Sohbet salonu ÑŒye listesi
-Chatroom is empty.|Sohbet salonu boÑtur.
-You're already member of this chatroom.|Bu sohbet salonunun zaten ÑŒyesisiniz.
-Chatroom user commands|Sohbet salonu kullanÑcÑ komutlarÑ
-Unknown chatroom command, use %s for help.|Bilinmeyen sohbet salonu komutu, yardÑm iĞ·in %s kullanÑnÑz.
+You're not member of this chatroom.|Bu sohbet salonunun mensubu değilsiniz.
+You don't have access to this chatroom.|Bu sohbet salonuna erişiminiz yok.
+Chatroom member list|Sohbet salonu üye listesi
+Chatroom is empty.|Sohbet salonu boştur.
+You're already member of this chatroom.|Bu sohbet salonunun zaten üyesisiniz.
+Chatroom user commands|Sohbet salonu kullanıcı komutları
+Unknown chatroom command, use %s for help.|Bilinmeyen sohbet salonu komutu, yardım için %s kullanınız.
 Enter the chatroom|Sohbet salonuna gir
-Leave the chatroom|Sohbet salonundan Ğ·Ñk
-Deleted %d rows from country code statistics table: %s|Ğ¬lke kodu istatistik tablosundan %d satÑr silindi: %s
-Force chat mode for user|KullanÑcÑ iĞ·in sohbet kipini zorla
-Known chat modes are: %s|Bilinen sohbet kipleri ÑunlardÑr: %s
+Leave the chatroom|Sohbet salonundan çık
+Deleted %d rows from country code statistics table: %s|Ülke kodu istatistik tablosundan %d satır silindi: %s
+Force chat mode for user|Kullanıcı için sohbet kipini zorla
+Known chat modes are: %s|Bilinen sohbet kipleri şunlardır: %s
 mode|kip
-Changing chat mode for %s: %s => %s|Sohbet kipi %s iĞ·in deÑ€iÑtiriliyor: %s => %s
-Not found in chat mode list: %s|Sohbet kipi listesinde bulunamadÑ: %s
-Chat mode user list|Sohbet kipi kullanÑcÑ listesi
-Chat mode user list is empty.|Sohbet kipi kullanÑcÑ listesi boÑtur.
-%s user lookup|%s kullanÑcÑ aramasÑ
-Add IP gag|IP susturmasÑ ekle
-Added IP gag: %s|IP susturmasÑ eklendi: %s
-Modified IP gag: %s|IP susturmasÑ deÑ€iÑtirildi: %s
-Deleted IP gag: %s|IP susturmasÑ silindi: %s
-IP gag not found: %s|IP susturmasÑ bulunamadÑ: %s
+Changing chat mode for %s: %s => %s|Sohbet kipi %s için değiştiriliyor: %s => %s
+Not found in chat mode list: %s|Sohbet kipi listesinde bulunamadı: %s
+Chat mode user list|Sohbet kipi kullanıcı listesi
+Chat mode user list is empty.|Sohbet kipi kullanıcı listesi boştur.
+%s user lookup|%s kullanıcı araması
+Add IP gag|IP susturması ekle
+Added IP gag: %s|IP susturması eklendi: %s
+Modified IP gag: %s|IP susturması değiştirildi: %s
+Deleted IP gag: %s|IP susturması silindi: %s
+IP gag not found: %s|IP susturması bulunamadı: %s
 IP gag list|IP susturma listesi
-IP gag list is empty.|IP susturma listesi boÑtur.
-Delete IP gag|IP susturmasÑnÑ sil
-Main chat is currently disabled for you.|Ana sohbet Ñu anda sizin iĞ·in devre dÑÑÑdÑr.
-Cleared temporary IP gag list.|GeĞ·ici IP susturma listesi temizlendi
-Show custom script commands|Ğ¦zel betik komutlarÑnÑ gÑ†ster
-Custom script command list|Ğ¦zel betik komutu listesi
-Custom script command list is empty.|Ğ¦zel betik komutu listesi boÑtur.
-Script size: %d lines in %s|Betik boyutu: %s iĞ·inde %d satÑr
-Added %s to IP gag list, %d users in total.|%s IP susturma listesine eklendi, toplam %d kullanÑcÑ.
-Flood detected from IP %s last known as %s with class %d in MC: %s|%s IP adresinden, ki son olarak %s olarak bilinen ve %d sÑnÑflÑ olan, ana sohbette aÑÑrÑ tekrar tespit edildi: %s
-Flood detected from IP %s last known as %s with class %d in PM to %s with IP %s and class %d: %s|%s IP adresinden, ki son olarak %s olarak bilinen ve %d sÑnÑfÑnda olan, Ñ†zel sohbette %s kullanÑcÑsÑna, ki %s IP adresli ve %d sÑnÑflÑ, aÑÑrÑ tekrar tespit edildi: %s
-Private chat is currently disabled for you.|Ğ¦zel sohbet Ñu anda sizin iĞ·in devre dÑÑÑdÑr.
-Main chat flood detected from your IP.|IP adresinizden ana sohbette aÑÑrÑ tekrar tespit edilmiÑtir.
-%d users with IP %s dropped due to flood.|%s IP adresinden %d kullanÑcÑnÑn baÑ€lantÑsÑ aÑÑrÑ tekrar nedeniyle kesilmiÑtir.
-No error message specified.|HiĞ·bir hata mesajÑ belirtilmemiÑtir.
+IP gag list is empty.|IP susturma listesi boştur.
+Delete IP gag|IP susturmasını sil
+Main chat is currently disabled for you.|Ana sohbet şu anda sizin için devre dışıdır.
+Cleared temporary IP gag list.|Geçici IP susturma listesi temizlendi
+Show custom script commands|Özel betik komutlarını göster
+Custom script command list|Özel betik komutu listesi
+Custom script command list is empty.|Özel betik komutu listesi boştur.
+Script size: %d lines in %s|Betik boyutu: %s içinde %d satır
+Added %s to IP gag list, %d users in total.|%s IP susturma listesine eklendi, toplam %d kullanıcı.
+Flood detected from IP %s last known as %s with class %d in MC: %s|%s IP adresinden, ki son olarak %s olarak bilinen ve %d sınıflı olan, ana sohbette aşırı tekrar tespit edildi: %s
+Flood detected from IP %s last known as %s with class %d in PM to %s with IP %s and class %d: %s|%s IP adresinden, ki son olarak %s olarak bilinen ve %d sınıfında olan, özel sohbette %s kullanıcısına, ki %s IP adresli ve %d sınıflı, aşırı tekrar tespit edildi: %s
+Private chat is currently disabled for you.|Özel sohbet şu anda sizin için devre dışıdır.
+Main chat flood detected from your IP.|IP adresinizden ana sohbette aşırı tekrar tespit edilmiştir.
+%d users with IP %s dropped due to flood.|%s IP adresinden %d kullanıcının bağlantısı aşırı tekrar nedeniyle kesilmiştir.
+No error message specified.|Hiçbir hata mesajı belirtilmemiştir.
 Search filter|Arama filtresi
-MyINFO check|MyINFO kontrolÑŒ
-Authorization|Ğ­zin
-Ranks|DÑŒzeyler
-Welcome messages|HoÑ geldiniz mesajlarÑ
-Chatrooms|Sohbet salonlarÑ
-Reminders|HatÑrlatÑcÑlar
+MyINFO check|MyINFO kontrolü
+Authorization|İzin
+Ranks|Düzeyler
+Welcome messages|Hoş geldiniz mesajları
+Chatrooms|Sohbet salonları
+Reminders|Hatırlatıcılar
 Hub news|Hub haberleri
-Chat responder|Sohbet cevaplayÑcÑsÑ
-Releases|BÑrakÑmlar
-Offline messenger|Ğ—evrimdÑÑÑ haberci
-Chat history|Sohbet tarihĞ·esi
+Chat responder|Sohbet cevaplayıcısı
+Releases|Bırakımlar
+Offline messenger|Çevrimdışı haberci
+Chat history|Sohbet tarihçesi
 Commands|Komutlar
-Custom nicks|Ğ¦zel rumuzlar
-Registered users|KayÑtlÑ kullanÑcÑlar
+Custom nicks|Özel rumuzlar
+Registered users|Kayıtlı kullanıcılar
 Hublist|Hub listesi
 Chat|Sohbet
 IP gag|IP susturucu
-User logger|KullanÑcÑ kÑŒtÑŒkleyici
-Other|DiÑ€er
-Configuration|YapÑlandÑrma
+User logger|Kullanıcı kütükleyici
+Other|Diğer
+Configuration|Yapılandırma
 Clear main chat|Ana sohbeti temizle
-Chat cleanup performed by %s|Sohbet %s tarafÑndan temizlenmiÑtir
-Search in registered users list|KayÑtlÑ kullanÑcÑ listesinde ara
-Registered users list statistics|KayÑtlÑ kullanÑcÑ liste istatistikleri
-Registered users list results for %s|%s iĞ·in kayÑtlÑ kullanÑcÑ liste sonuĞ·larÑ
-Class %d: %d|SÑnÑf %d: %d
-Registered users list is empty.|KayÑtlÑ kullanÑcÑlar listesi boÑtur.
-This feature requires following binary installed on your system: %s|Bu iÑlev Ñu ikili dosyanÑn sisteminizde kurulu olmasÑnÑ gerektiriyor: %s
-Configuration directory: %s|YapÑlandÑrma klasÑ†rÑŒ: %s
-%s with IP %s and class %d stated incorrect IP in connect request to %s: %s|%s, %s IP adresli ve %sÑnÑflÑ, %s ile baÑ€lantÑda yanlÑÑ IP belirtti: %s
-Top %d search requests|En Ğ·ok kullanÑlan %d arama talepleri
-Search rank list is empty.|Arama dÑŒzey listesi boÑtur.
-Deleted from search rank list: %s|Arama dÑŒzey listesinden silindi: %s
-Not found in search rank list: %s|Arama dÑŒzey listesinde bulunamadÑ: %s
-%s with class %d deleted %d search ranks lower than %d.|%d sÑnÑflÑ %s %d arama dÑŒzeyini sildi ki onlarÑn dÑŒzeyi %d deÑ€erinden dÑŒÑÑŒktÑŒ.
-Size of search ranks table: %d [ %s: %d @ %s ]|Arama dÑŒzeyleri tablosunun boyutu: %d [ %s: %d @ %s ]
-Size of user location statistics table: %d [ %s: %s ]|KullanÑcÑ konumu istatistikleri tablosunun boyutu: %d [ %s: %s ]
-Open files limit: %d|AĞ·Ñk dosya sÑnÑrÑ: %d
-User information|KullanÑcÑ bilgileri
-User not in list: %s|KullanÑcÑ listede deÑ€il: %s
+Chat cleanup performed by %s|Sohbet %s tarafından temizlenmiştir
+Search in registered users list|Kayıtlı kullanıcı listesinde ara
+Registered users list statistics|Kayıtlı kullanıcı liste istatistikleri
+Registered users list results for %s|%s için kayıtlı kullanıcı liste sonuçları
+Class %d: %d|Sınıf %d: %d
+Registered users list is empty.|Kayıtlı kullanıcılar listesi boştur.
+This feature requires following binary installed on your system: %s|Bu işlev şu ikili dosyanın sisteminizde kurulu olmasını gerektiriyor: %s
+Configuration directory: %s|Yapılandırma klasörü: %s
+%s with IP %s and class %d stated incorrect IP in connect request to %s: %s|%s, %s IP adresli ve %sınıflı, %s ile bağlantıda yanlış IP belirtti: %s
+Top %d search requests|En çok kullanılan %d arama talepleri
+Search rank list is empty.|Arama düzey listesi boştur.
+Deleted from search rank list: %s|Arama düzey listesinden silindi: %s
+Not found in search rank list: %s|Arama düzey listesinde bulunamadı: %s
+%s with class %d deleted %d search ranks lower than %d.|%d sınıflı %s %d arama düzeyini sildi ki onların düzeyi %d değerinden düşüktü.
+Size of search ranks table: %d [ %s: %d @ %s ]|Arama düzeyleri tablosunun boyutu: %d [ %s: %d @ %s ]
+Size of user location statistics table: %d [ %s: %s ]|Kullanıcı konumu istatistikleri tablosunun boyutu: %d [ %s: %s ]
+Open files limit: %d|Açık dosya sınırı: %d
+User information|Kullanıcı bilgileri
+User not in list: %s|Kullanıcı listede değil: %s
 Nick: %s|Rumuz: %s
-Description: %s|TanÑmlama: %s
+Description: %s|Tanımlama: %s
 Tag: %s|Etiket: %s
 Mode: %s|Kip: %s
 Slots: %s|Oluklar: %s
 Hubs: %s|Hub'lar: %s
-Limiter: %s KiB/s|SÑnÑrlayÑcÑ: %s KiB/s
-Connection: %s|BaÑ€lantÑ: %s
+Limiter: %s KiB/s|Sınırlayıcı: %s KiB/s
+Connection: %s|Bağlantı: %s
 Status: %s|Durum: %s
 Email: %s|E-posta: %s
-Share: %s|PaylaÑÑm: %s
-Exact share: %s|Tam paylaÑÑm: %s
-Class: %d|SÑnÑf: %d
+Share: %s|Paylaşım: %s
+Exact share: %s|Tam paylaşım: %s
+Class: %d|Sınıf: %d
 IP: %s|IP: %s
 DNS: %s|DNS: %s
-Country: %s|Ğ¬lke: %s
-Client: %s|Ğ­stemci: %s
-Version: %s|SÑŒrÑŒm: %s
+Country: %s|Ülke: %s
+Client: %s|İstemci: %s
+Version: %s|Sürüm: %s
 Normal|Normal
 Away|Uzakta
 Normal away|Normal uzakta
@@ -722,14 +722,14 @@ Fileserver|Dosya sunucusu
 Normal fileserver|Normal dosya sunucusu
 Away fileserver|Uzakta dosya sunucusu
 Normal away fileserver|Normal uzakta dosya sunucusu
-Fireball|AteÑ topu
-Normal fireball|Normal ateÑ topu
-Away fireball|Uzakta ateÑ topu
-Normal away fireball|Normal uzakta ateÑ topu
-Fileserver fireball|Dosya sunucusu ateÑ topu
-Normal fileserver fireball|Normal dosya sunucusu ateÑ topu
-Away fileserver fireball|Uzakta dosya sunucusu ateÑ topu
-Normal away fileserver fireball|Normal uzakta dosya sunucusu ateÑ topu
+Fireball|Ateş topu
+Normal fireball|Normal ateş topu
+Away fireball|Uzakta ateş topu
+Normal away fireball|Normal uzakta ateş topu
+Fileserver fireball|Dosya sunucusu ateş topu
+Normal fileserver fireball|Normal dosya sunucusu ateş topu
+Away fileserver fireball|Uzakta dosya sunucusu ateş topu
+Normal away fileserver fireball|Normal uzakta dosya sunucusu ateş topu
 TLS|TLS
 Normal TLS|Normal TLS
 Away TLS|Uzakta TLS
@@ -738,420 +738,420 @@ Fileserver TLS|Dosya sunucusu TLS
 Normal fileserver TLS|Normal dosya sunucusu TLS
 Away fileserver TLS|Uzakta dosya sunucusu TLS
 Normal away fileserver TLS|Normal uzakta dosya sunucusu TLS
-Fireball TLS|AteÑ topu TLS
-Normal fireball TLS|Normal ateÑ topu TLS
-Away fireball TLS|Uzakta ateÑ topu TLS
-Normal away fireball TLS|Normal uzakta ateÑ topu TLS
-Fileserver fireball TLS|Dosya sunucusu ateÑ topu TLS
-Normal fileserver fireball TLS|Normal dosya sunucusu ateÑ topu TLS
-Away fileserver fireball TLS|Uzakta dosya sunucusu ateÑ topu TLS
-Normal away fileserver fireball TLS|Normal uzakta dosya sunucusu ateÑ topu TLS
-Unable to get bot information: %s|Robot bilgisi alÑnamadÑ: %s
+Fireball TLS|Ateş topu TLS
+Normal fireball TLS|Normal ateş topu TLS
+Away fireball TLS|Uzakta ateş topu TLS
+Normal away fireball TLS|Normal uzakta ateş topu TLS
+Fileserver fireball TLS|Dosya sunucusu ateş topu TLS
+Normal fileserver fireball TLS|Normal dosya sunucusu ateş topu TLS
+Away fileserver fireball TLS|Uzakta dosya sunucusu ateş topu TLS
+Normal away fileserver fireball TLS|Normal uzakta dosya sunucusu ateş topu TLS
+Unable to get bot information: %s|Robot bilgisi alınamadı: %s
 Bot information|Robot bilgisi
 Owner script: %s|Sahip betik: %s
-%s with IP %s and class %d allowed due to forbidden DNS exception: %s|%s, %s IP adresli ve %d sÑnÑflÑ, yasak DNS istisnasÑ sebebiyle kabul edilmiÑtir: %s
-In order to use this feature you need to enable DNS lookup. Do it by setting hub configuration variable %s to %d. Please note: Enabling DNS lookup might slow your hub performance down.|Bu iÑlevi kullanmak iĞ·in DNS aramalarÑnÑ etkinleÑtirmeniz gerekir. Bunu %s hub yapÑlandÑrma deÑ€iÑkenine %d deÑ€erini atayarak yapÑn. Not: DNS aramalarÑnÑ etkinleÑtirmek hub performansÑnÑ yavaÑlatabilir. 
-Modified forbidden DNS with ban time %s: %s|YasaklÑ DNS Ñu yasaklama sÑŒresi ile deÑ€iÑtirildi: %s: %s
-Added forbidden DNS with ban time %s: %s|YasaklÑ DNS Ñu yasaklama sÑŒresi ile eklendi: %s: %s
-Deleted forbidden DNS: %s|YasaklÑ DNS silindi: %s
-Couldn't delete forbidden DNS because not found: %s|YasaklÑ DNS silinemedi Ğ·ÑŒnkÑŒ bulunamadÑ: %s
-Forbidden DNS list|YasaklÑ DNS listesi
-Forbidden DNS list is empty.|YasaklÑ DNS listesi boÑtur.
-Powered by %s|%s tarafÑndan desteklenmektedir
-Warning: %s|Ğ­kaz: %s
-Open files limit set to %d is smaller than maximum users configuration which is %d. You can correct this by setting %s to %d or higher and restarting the hub.|AĞ·Ñk dosya sÑnÑrÑ %d olarak ayarlanmÑÑtÑr ve bu %d olan azami kullanÑcÑ yapÑlandÑrmasÑndan dÑŒÑÑŒktÑŒr. Bunu %d deÑ€erine %s atayarak ve hub'Ñ tekrar baÑlatarak dÑŒzeltebilirsiniz.
-Additional help|Ğ­lave yardÑm
-Remove all %s tables and files|TÑŒm %s tablolarÑ ve dosyalarÑ kaldÑr
-You can't kick user whose class is higher or equals your own: %s|SÑnÑfÑ kendi sÑnÑfÑnÑza eÑit ya da sÑnÑfÑnÑzdan yÑŒksek olan bir kullanÑcÑyÑ kovamazsÑnÑz: %s
-Your topic contains forbidden characters which can't be used for security reason: %s|Konunuz gÑŒvenlik nedenlerinden dolayÑ kullanÑlmasÑ yasak olan karakterler iĞ·ermektedir: %s
-Hub uptime: %s|Hub Ğ·alÑÑma sÑŒresi: %s
-User count: %s|KullanÑcÑ sayÑsÑ: %s
-Total share: %s|Toplam paylaÑÑm: %s
-%s with IP %s and class %d tries to speak with IP gag in MC: %s|%s, ki %s IP adresli ve %d sÑnÑflÑ, IP susturmasÑna raÑ€men ana sohbette konuÑmaya Ğ·alÑÑmaktadÑr: %s
-%s with IP %s and class %d tries to speak with IP gag in PM to %s with IP %s and class %d: %s|%s kullanÑcÑsÑ, ki %s IP adresli ve %d sÑnÑflÑ, IP susturmasÑna raÑ€men Ñ†zel sohbette %s kullanÑcÑsÑyla, ki %s IP adresli ve %d sÑnÑflÑ, konuÑmaya Ğ·alÑÑÑyor: %s
-Private message replaced for user: %s|%s kullanÑcÑsÑ iĞ·in Ñ†zel mesaj deÑ€iÑtirildi
-Command logger|Komut kÑŒtÑŒkleyicisi
-Showing %d entries from command logger|Komut kÑŒtÑŒkleyicisinden %d unsur gÑ†steriliyor
-Command logger is empty.|Komut kÑŒtÑŒkleyicisi boÑtur.
-%s with class %d deleted %d command log entries older than %d days.|%d sÑnÑflÑ %s %d komut kÑŒtÑŒk unsurunu sildi ki bunlar %d gÑŒnden daha eskiydi.
-Size of command log table: %d [ %s: %d @ %s ]|Komut kÑŒtÑŒÑ€ÑŒ tablosunun boyutu: %d [ %s: %d @ %s ]
+%s with IP %s and class %d allowed due to forbidden DNS exception: %s|%s, %s IP adresli ve %d sınıflı, yasak DNS istisnası sebebiyle kabul edilmiştir: %s
+In order to use this feature you need to enable DNS lookup. Do it by setting hub configuration variable %s to %d. Please note: Enabling DNS lookup might slow your hub performance down.|Bu işlevi kullanmak için DNS aramalarını etkinleştirmeniz gerekir. Bunu %s hub yapılandırma değişkenine %d değerini atayarak yapın. Not: DNS aramalarını etkinleştirmek hub performansını yavaşlatabilir. 
+Modified forbidden DNS with ban time %s: %s|Yasaklı DNS şu yasaklama süresi ile değiştirildi: %s: %s
+Added forbidden DNS with ban time %s: %s|Yasaklı DNS şu yasaklama süresi ile eklendi: %s: %s
+Deleted forbidden DNS: %s|Yasaklı DNS silindi: %s
+Couldn't delete forbidden DNS because not found: %s|Yasaklı DNS silinemedi çünkü bulunamadı: %s
+Forbidden DNS list|Yasaklı DNS listesi
+Forbidden DNS list is empty.|Yasaklı DNS listesi boştur.
+Powered by %s|%s tarafından desteklenmektedir
+Warning: %s|İkaz: %s
+Open files limit set to %d is smaller than maximum users configuration which is %d. You can correct this by setting %s to %d or higher and restarting the hub.|Açık dosya sınırı %d olarak ayarlanmıştır ve bu %d olan azami kullanıcı yapılandırmasından düşüktür. Bunu %d değerine %s atayarak ve hub'ı tekrar başlatarak düzeltebilirsiniz.
+Additional help|İlave yardım
+Remove all %s tables and files|Tüm %s tabloları ve dosyaları kaldır
+You can't kick user whose class is higher or equals your own: %s|Sınıfı kendi sınıfınıza eşit ya da sınıfınızdan yüksek olan bir kullanıcıyı kovamazsınız: %s
+Your topic contains forbidden characters which can't be used for security reason: %s|Konunuz güvenlik nedenlerinden dolayı kullanılması yasak olan karakterler içermektedir: %s
+Hub uptime: %s|Hub çalışma süresi: %s
+User count: %s|Kullanıcı sayısı: %s
+Total share: %s|Toplam paylaşım: %s
+%s with IP %s and class %d tries to speak with IP gag in MC: %s|%s, ki %s IP adresli ve %d sınıflı, IP susturmasına rağmen ana sohbette konuşmaya çalışmaktadır: %s
+%s with IP %s and class %d tries to speak with IP gag in PM to %s with IP %s and class %d: %s|%s kullanıcısı, ki %s IP adresli ve %d sınıflı, IP susturmasına rağmen özel sohbette %s kullanıcısıyla, ki %s IP adresli ve %d sınıflı, konuşmaya çalışıyor: %s
+Private message replaced for user: %s|%s kullanıcısı için özel mesaj değiştirildi
+Command logger|Komut kütükleyicisi
+Showing %d entries from command logger|Komut kütükleyicisinden %d unsur gösteriliyor
+Command logger is empty.|Komut kütükleyicisi boştur.
+%s with class %d deleted %d command log entries older than %d days.|%d sınıflı %s %d komut kütük unsurunu sildi ki bunlar %d günden daha eskiydi.
+Size of command log table: %d [ %s: %d @ %s ]|Komut kütüğü tablosunun boyutu: %d [ %s: %d @ %s ]
 password|parola
-Modify IP authorization entry|IP izin unsuru deÑ€iÑtir
-Couldn't modify authorization entry because not found: %d|Ğ­zin unsuru deÑ€iÑtirilemedi Ğ·ÑŒnkÑŒ bulunamadÑ: %d
-Uptime: %s|Ğ—alÑÑma sÑŒresi: %s
-Enable requested feature and try again.|Talep edilen iÑlevi etkinleÑtir ve tekrar dene.
-cc|ÑŒk
-Modified forbidden country code with ban time %s: %s|YasaklÑ ÑŒlke kodu Ñu yasaklama sÑŒresi ile deÑ€iÑtirildi: %s: %s
-Added forbidden country code with ban time %s: %s|YasaklÑ ÑŒlke kodu Ñu yasaklama sÑŒresi ile eklendi: %s: %s
-Deleted forbidden country code: %s|YasaklÑ ÑŒlke kodu silindi: %s
-Couldn't delete forbidden country code because not found: %s|YasaklÑ ÑŒlke kodu silinemedi Ğ·ÑŒnkÑŒ bulunamadÑ: %s
-Forbidden country code list|YasaklÑ ÑŒlke kodu listesi
-Forbidden country code list is empty.|YasaklÑ ÑŒlke kodu listesi boÑtur.
-%s with IP %s and class %d allowed due to forbidden country code exception: %s|%s, ki %s IP adresli ve %d sÑnÑflÑ, yasaklÑ ÑŒlke kodu istisnasÑ sebebiyle kabul edildi: %s
-I'm staying idle due to confusion.|KarÑÑÑklÑk sebebiyle boÑta kalÑyorum.
-Added replacer in MC: %s|Ana sohbette deÑ€iÑtirici eklendi: %s
-Deleted chat replacer with ID: %d|Ğ®u kimlikli sohbet deÑ€iÑtiricisi silindi: %d
-Couldn't delete chat replacer because ID not found: %d|Sohbet deÑ€iÑtiricisi silinemedi Ğ·ÑŒnkÑŒ kimliÑ€i bulunamadÑ: %d
-Chat replacer list|Sohbet deÑ€iÑtirici listesi
-Chat replacer list is empty.|Sohbet deÑ€iÑtirici listesi boÑtur.
-Replace|DeÑ€iÑtir
-Modified chat replacer exception with type %d: %s|Sohbet deÑ€iÑtirici istisnasÑ %d tÑŒrÑŒ ile deÑ€iÑtirildi: %s
-Added chat replacer exception with type %d: %s|Sohbet deÑ€iÑtirici istisnasÑ %d tÑŒrÑŒ ile eklendi: %s
-Deleted chat replacer exception with type %d: %s|Sohbet deÑ€iÑtirici istisnasÑ %d tÑŒrÑŒ ile silindi: %s
-Couldn't delete chat replacer exception because not found: %s|Sohbet deÑ€iÑtirici istisnasÑ silinemedi Ğ·ÑŒnkÑŒ bulunamadÑ: %s
-Chat replacer exception list|Sohbet deÑ€iÑtirici istisna listesi
-Chat replacer exception list is empty.|Sohbet deÑ€iÑtirici istisna listesi boÑtur.
-replace|deÑ€iÑtir
-Add chat replacer|Sohbet deÑ€iÑtirici ekle
-Delete chat replacer|Sohbet deÑ€iÑtiricisi sil
-Add chat replacer exception|Sohbet deÑ€iÑtirici istisnasÑ ekle
-Delete chat replacer exception|Sohbet deÑ€iÑtirici istisnasÑ sil
-Chat replacer|Sohbet deÑ€iÑtirici
-You need to send another %d main chat messages in order to use hub registration.|Hub kaydÑnÑ kullanabilmek iĞ·in %d ana sohbet mesajÑ daha gÑ†ndermeniz gerekmektedir.
-Please wait another %.1f minutes before using hub registration.|LÑŒtfen hub kaydÑnÑ kullanmadan Ñ†nce %.1f dakika daha bekleyin.
-In order to use this feature you need to set %s to: %d|Bu iÑlevi kullanmak iĞ·in %s unsurunu Ñu Ñekilde ayarlamanÑz gerekiyor: %d
-Please reconnect to gain %d minutes of uptime in order to use hub registration.|LÑŒtfen hub kaydÑnÑ kullanmak amacÑyla %d dakika Ğ·alÑÑma sÑŒresi edinmek iĞ·in tekrar baÑ€lanÑn.
-Dropping %s with IP %s and class %d due to protocol flood detection: %s|%s, ki %s IP adresli ve %d sÑnÑflÑ, ile aÑÑrÑ protokol tekrarÑ nedeniyle baÑ€lantÑ kesilmiÑtir: %s
-Protocol flood detected from your client: %s|Ğ­stemcinizden protokol aÑÑrÑ tekrarÑ tespit edilmiÑtir: %s
-Automatic update check detected stable version of %s available, use following command to update: %s|Otomatik gÑŒncelleme kontrolÑŒ %s yazÑlÑmÑnÑn yeni kararlÑ sÑŒrÑŒmÑŒ olduÑ€unu belirlemiÑtir, gÑŒncellemek iĞ·in Ñu komutu kullanÑnÑz: %s
-menu|menÑŒ
-Dropping user due to clone detection from IP %s with class %d: %s = %s|%s IP adresinden %d sÑnÑfÑ ile klon tespit edildiÑ€inden kullanÑcÑ ile baÑ€lantÑ kesiliyor: %s = %s
-Configuration variable %s must be a valid IP address.|%s yapÑlandÑrma deÑ€iÑkeni geĞ·erli bir IP adresi olmalÑdÑr.
-Average share per user: %s|KullanÑcÑ baÑÑna ortalama paylaÑÑm: %s
-Don't be stupid.|Geri zekalÑ olmayÑn.
+Modify IP authorization entry|IP izin unsuru değiştir
+Couldn't modify authorization entry because not found: %d|İzin unsuru değiştirilemedi çünkü bulunamadı: %d
+Uptime: %s|Çalışma süresi: %s
+Enable requested feature and try again.|Talep edilen işlevi etkinleştir ve tekrar dene.
+cc|ük
+Modified forbidden country code with ban time %s: %s|Yasaklı ülke kodu şu yasaklama süresi ile değiştirildi: %s: %s
+Added forbidden country code with ban time %s: %s|Yasaklı ülke kodu şu yasaklama süresi ile eklendi: %s: %s
+Deleted forbidden country code: %s|Yasaklı ülke kodu silindi: %s
+Couldn't delete forbidden country code because not found: %s|Yasaklı ülke kodu silinemedi çünkü bulunamadı: %s
+Forbidden country code list|Yasaklı ülke kodu listesi
+Forbidden country code list is empty.|Yasaklı ülke kodu listesi boştur.
+%s with IP %s and class %d allowed due to forbidden country code exception: %s|%s, ki %s IP adresli ve %d sınıflı, yasaklı ülke kodu istisnası sebebiyle kabul edildi: %s
+I'm staying idle due to confusion.|Karışıklık sebebiyle boşta kalıyorum.
+Added replacer in MC: %s|Ana sohbette değiştirici eklendi: %s
+Deleted chat replacer with ID: %d|Şu kimlikli sohbet değiştiricisi silindi: %d
+Couldn't delete chat replacer because ID not found: %d|Sohbet değiştiricisi silinemedi çünkü kimliği bulunamadı: %d
+Chat replacer list|Sohbet değiştirici listesi
+Chat replacer list is empty.|Sohbet değiştirici listesi boştur.
+Replace|Değiştir
+Modified chat replacer exception with type %d: %s|Sohbet değiştirici istisnası %d türü ile değiştirildi: %s
+Added chat replacer exception with type %d: %s|Sohbet değiştirici istisnası %d türü ile eklendi: %s
+Deleted chat replacer exception with type %d: %s|Sohbet değiştirici istisnası %d türü ile silindi: %s
+Couldn't delete chat replacer exception because not found: %s|Sohbet değiştirici istisnası silinemedi çünkü bulunamadı: %s
+Chat replacer exception list|Sohbet değiştirici istisna listesi
+Chat replacer exception list is empty.|Sohbet değiştirici istisna listesi boştur.
+replace|değiştir
+Add chat replacer|Sohbet değiştirici ekle
+Delete chat replacer|Sohbet değiştiricisi sil
+Add chat replacer exception|Sohbet değiştirici istisnası ekle
+Delete chat replacer exception|Sohbet değiştirici istisnası sil
+Chat replacer|Sohbet değiştirici
+You need to send another %d main chat messages in order to use hub registration.|Hub kaydını kullanabilmek için %d ana sohbet mesajı daha göndermeniz gerekmektedir.
+Please wait another %d seconds before using hub registration.|Hub kaydını kullanmadan önce lütfen %d saniye daha bekleyiniz.
+In order to use this feature you need to set %s to: %d|Bu işlevi kullanmak için %s unsurunu şu şekilde ayarlamanız gerekiyor: %d
+Please reconnect to gain %d seconds of uptime in order to use hub registration.|Lütfen hub kaydını kullanmak amacıyla %d saniye çalışma süresi edinmek için tekrar bağlanın.
+Dropping %s with IP %s and class %d due to protocol flood detection: %s|%s, ki %s IP adresli ve %d sınıflı, ile aşırı protokol tekrarı nedeniyle bağlantı kesilmiştir: %s
+Protocol flood detected from your client: %s|İstemcinizden protokol aşırı tekrarı tespit edilmiştir: %s
+Automatic update check detected stable version of %s available, use following command to update: %s|Otomatik güncelleme kontrolü %s yazılımının yeni kararlı sürümü olduğunu belirlemiştir, güncellemek için şu komutu kullanınız: %s
+menu|menü
+Dropping user due to clone detection from IP %s with class %d: %s = %s|%s IP adresinden %d sınıfı ile klon tespit edildiğinden kullanıcı ile bağlantı kesiliyor: %s = %s
+Configuration variable %s must be a valid IP address.|%s yapılandırma değişkeni geçerli bir IP adresi olmalıdır.
+Average share per user: %s|Kullanıcı başına ortalama paylaşım: %s
+Don't be stupid.|Geri zekalı olmayın.
 reason|sebep
-Add blocked PM entry|Engellenen Ñ†zel mesaj unsuru ekle
-Delete blocked PM entry|Engellenen Ñ†zel mesaj unsurunu sil
-List of blocked PM entries|Engellenen Ñ†zel mesaj unsurlarÑ listesi
-Modified blocked PM entry: %s|DeÑ€iÑtirilen engellenmiÑ Ñ†zel mesaj unsuru: %s
-Added blocked PM entry: %s|Engellenen Ñ†zel mesaj unsuru eklendi: %s
-Deleted blocked PM entry: %s|Engellenen Ñ†zel mesaj unsuru silindi: %s
-Blocked PM list is empty.|Engellenen Ñ†zel mesaj listesi boÑtur.
-Couldn't delete blocked PM entry because not found: %s|Engellenen Ñ†zel mesaj unsuru silinemedi Ğ·ÑŒnkÑŒ bulunamadÑ: %s
+Add blocked PM entry|Engellenen özel mesaj unsuru ekle
+Delete blocked PM entry|Engellenen özel mesaj unsurunu sil
+List of blocked PM entries|Engellenen özel mesaj unsurları listesi
+Modified blocked PM entry: %s|Değiştirilen engellenmiş özel mesaj unsuru: %s
+Added blocked PM entry: %s|Engellenen özel mesaj unsuru eklendi: %s
+Deleted blocked PM entry: %s|Engellenen özel mesaj unsuru silindi: %s
+Blocked PM list is empty.|Engellenen özel mesaj listesi boştur.
+Couldn't delete blocked PM entry because not found: %s|Engellenen özel mesaj unsuru silinemedi çünkü bulunamadı: %s
 Reason: %s|Sebep: %s
-You're not allowed to send PM to this user because: %s|Bu kullanÑcÑya Ñ†zel mesaj gÑ†nderme izniniz yok Ğ·ÑŒnkÑŒ: %s
-%s with class %d deleted %d antispam entries with occurrence less than %d.|%d sÑnÑflÑ %s %d yÑÑ€Ñn mesajdan korunma unsurunu sildi ki bunlarÑn oluÑumu %d deÑ€erinden dÑŒÑÑŒktÑŒ.
-%s with class %d deleted %d search filter entries with occurrence less than %d.|%d sÑnÑflÑ %s %d arama filtresi unsurunu sildi ki bunlarÑn oluÑumu %d deÑ€erinden dÑŒÑÑŒktÑŒ.
+You're not allowed to send PM to this user because: %s|Bu kullanıcıya özel mesaj gönderme izniniz yok çünkü: %s
+%s with class %d deleted %d antispam entries with occurrence less than %d.|%d sınıflı %s %d yığın mesajdan korunma unsurunu sildi ki bunların oluşumu %d değerinden düşüktü.
+%s with class %d deleted %d search filter entries with occurrence less than %d.|%d sınıflı %s %d arama filtresi unsurunu sildi ki bunların oluşumu %d değerinden düşüktü.
 query|sorgu
-Execute MySQL query|MySQL sorgusunu Ğ·alÑÑtÑr
-Execute shell command|Kabuk komutunu Ğ·alÑÑtÑr
-Experts only|Sadece uzmanlar iĞ·in
-Add hard IP ban entry|Sert IP yasaÑ€Ñ unsurunu ekle
-Delete hard IP ban entry|Sert IP yasaÑ€Ñ unsurunu sil
-List of hard IP ban entries|Sert IP yasaÑ€Ñ unsurlarÑ listesi
-Modified hard IP ban entry: %s|DeÑ€iÑtirilen sert IP yasaÑ€Ñ unsuru: %s
+Execute MySQL query|MySQL sorgusunu çalıştır
+Execute shell command|Kabuk komutunu çalıştır
+Experts only|Sadece uzmanlar için
+Add hard IP ban entry|Sert IP yasağı unsurunu ekle
+Delete hard IP ban entry|Sert IP yasağı unsurunu sil
+List of hard IP ban entries|Sert IP yasağı unsurları listesi
+Modified hard IP ban entry: %s|Değiştirilen sert IP yasağı unsuru: %s
 Added hard IP ban entry: %s|Sert IP yasaklama unsuru eklendi: %s
-Deleted hard IP ban entry: %s|Sert IP yasaÑ€Ñ unsuru silindi: %s
-Hard IP ban list is empty.|Sert IP yasaklama listesi boÑtur.
-Couldn't delete hard IP ban entry because not found: %s|Sert IP yasaklama unsuru silinemedi Ğ·ÑŒnkÑŒ bulunamadÑ: %s
-Hard IP ban refused connection from IP %s: %s|Sert IP yasaÑ€Ñ %s IP adresinden baÑ€lantÑyÑ reddetti: %s
-Please wait another %d seconds before using hub search engine.|Hub'Ñn arama motorunu kullanmadan Ñ†nce lÑŒtfen %d saniye bekleyin.
-Loading %s in memory...|%s belleÑ€e yÑŒkleniyor...
-Finished loading %s in memory.|%s belleÑ€e yÑŒklendi.
-Unable to locate %s in hub configuration directory.|Hub yapÑlandÑrma klasÑ†rÑŒnde %s bulunamadÑ.
-Add right click menu item|SaÑ€ tÑklama menÑŒ unsuru ekle
-Delete right click menu item|SaÑ€ tÑklama menÑŒ unsurunu sil
-List of right click menu items|SaÑ€ tÑklama menÑŒ unsuru listesi
-Blacklisted connection from IP %s dropped: %s|%s IP adresinden kara listedeki baÑ€lantÑ kesildi: %s
-To add multiple entries with this command you need to separate every entry by space.|Bu komutla Ğ·oklu unsur eklemek iĞ·in her unsuru bir boÑluk ile ayÑrmanÑz gerekmektedir.
+Deleted hard IP ban entry: %s|Sert IP yasağı unsuru silindi: %s
+Hard IP ban list is empty.|Sert IP yasaklama listesi boştur.
+Couldn't delete hard IP ban entry because not found: %s|Sert IP yasaklama unsuru silinemedi çünkü bulunamadı: %s
+Hard IP ban refused connection from IP %s: %s|Sert IP yasağı %s IP adresinden bağlantıyı reddetti: %s
+Please wait another %d seconds before using hub search engine.|Hub'ın arama motorunu kullanmadan önce lütfen %d saniye bekleyin.
+Loading %s in memory...|%s belleğe yükleniyor...
+Finished loading %s in memory.|%s belleğe yüklendi.
+Unable to locate %s in hub configuration directory.|Hub yapılandırma klasöründe %s bulunamadı.
+Add right click menu item|Sağ tıklama menü unsuru ekle
+Delete right click menu item|Sağ tıklama menü unsurunu sil
+List of right click menu items|Sağ tıklama menü unsuru listesi
+Blacklisted connection from IP %s dropped: %s|%s IP adresinden kara listedeki bağlantı kesildi: %s
+To add multiple entries with this command you need to separate every entry by space.|Bu komutla çoklu unsur eklemek için her unsuru bir boşluk ile ayırmanız gerekmektedir.
 Add IP watch entry|IP takibi unsuru ekle
 Delete IP watch entry|IP takibi unsuru sil
 List of IP watch entries|IP takibi unsur listesi
-result|sonuĞ·
-Modified IP watch entry: %s|DeÑ€iÑtirilen IP takibi unsuru: %s
+result|sonuç
+Modified IP watch entry: %s|Değiştirilen IP takibi unsuru: %s
 Added IP watch entry: %s|IP takibi unsuru eklendi: %s
-Known results are: %s|Bilinen sonuĞ·lar ÑunlardÑr: %s
+Known results are: %s|Bilinen sonuçlar şunlardır: %s
 Deleted IP watch entry: %s|IP takibi unsuru silindi: %s
-IP watch list is empty.|IP takibi unsur listesi boÑtur.
-Couldn't delete IP watch entry because not found: %s|IP takibi unsuru silinemedi Ğ·ÑŒnkÑŒ bulunamadÑ: %s
+IP watch list is empty.|IP takibi unsur listesi boştur.
+Couldn't delete IP watch entry because not found: %s|IP takibi unsuru silinemedi çünkü bulunamadı: %s
 IP watch notification from %s with IP %s: %s|%s unsurundan ki %s IP adresli, IP takibi bildirimi: %s
 unknown nick|bilinmeyen rumuz
-Country code gag|Ğ¬lke kodu susturucu
-Add country code gag|Ğ¬lke kodu susturucu ekle
-Added country code gag: %s|Ğ¬lke kodu susturucu eklendi: %s
-Modified country code gag: %s|DeÑ€iÑtirilen ÑŒlke kodu susturucu: %s
-Deleted country code gag: %s|Ğ¬lke kodu susturucusu silindi: %s
-Country code gag not found: %s|Ğ¬lke kodu susturucusu bulunamadÑ: %s
-Country code gag list|Ğ¬lke kodu susturucu listesi
-Country code gag list is empty.|Ğ¬lke kodu susturucu listesi boÑtur.
-Delete country code gag|Ğ¬lke kodu susturucusu sil
-Cleared country code gag list.|Ğ¬lke kodu susturucu listesi temizlendi.
-%s with IP %s and class %d tries to speak with country code gag in MC: %s|%s, ki %s IP adresli ve %d sÑnÑflÑ, ana sohbette ÑŒlke kodu susturmasÑna raÑ€men konuÑmaya Ğ·alÑÑÑyor: %s
-%s with IP %s and class %d tries to speak with country code gag in PM to %s with IP %s and class %d: %s|%s kullanÑcÑsÑ, ki %s IP adresli ve %d sÑnÑflÑ, ÑŒlke kodu susturmasÑna raÑ€men Ñ†zel sohbette %s kullanÑcÑsÑyla, ki %s IP adresli ve %d sÑnÑflÑ, konuÑmaya Ğ·alÑÑÑyor: %s
-No reason specified|HiĞ·bir sebep belirtilmemiÑtir
-Automatically deleted %d user log entries older than %d days.|%d kullanÑcÑ kÑŒtÑŒk unsuru, ki %d gÑŒnden eski, otomatik olarak silinmiÑtir.
-Main chat message replaced for user: %s|Ana sohbet mesajÑ Ñu kullanÑcÑ iĞ·in deÑ€iÑtirilmiÑtir: %s
-Unknown protocol command from IP %s before login: %s|%s IP adresinden giriÑ Ñ†ncesi bilinmeyen protokol komutu: %s
-Added %s to hard IP ban list, %d users in total.|%s sert IP yasaklama listesine eklendi, toplam %d kullanÑcÑ.
-NMDC version: %s|NMDC sÑŒrÑŒmÑŒ: %s
-Client supports: %s|Ğ­stemcinin desteklediÑ€i: %s
-Modified forbidden client supports with ban time %s: %s|YasaklÑ istemci desteÑ€i Ñu yasaklama sÑŒresi ile deÑ€iÑtirildi: %s :%s
-Added forbidden client supports with ban time %s: %s|YasaklÑ istemci desteÑ€i Ñu yasaklama sÑŒresi ile ilave edildi: %s: %s
-Modified forbidden NMDC version with ban time %s: %s|YasaklÑ NMDC sÑŒrÑŒmÑŒ %s yasaklama sÑŒresi ile deÑ€iÑtirildi: %s
-Added forbidden NMDC version with ban time %s: %s|YasaklÑ NMDC sÑŒrÑŒmÑŒ %s yasaklama sÑŒresi ile eklendi: %s
-Latest version of %s is required in order to use this feature.|Bu iÑlevi kullanmak iĞ·in son %s sÑŒrÑŒmÑŒ gereklidir.
-Deleted forbidden client supports: %s|YasaklÑ istemci desteÑ€i silindi: %s
-Couldn't delete forbidden client supports because not found: %s|YasaklÑ istemci desteÑ€i silinemedi Ğ·ÑŒnkÑŒ bulunamadÑ: %s
-Deleted forbidden NMDC version: %s|YasaklÑ NMDC sÑŒrÑŒmÑŒ silindi: %s
-Couldn't delete forbidden NMDC version because not found: %s|YasaklÑ NMDC sÑŒrÑŒmÑŒ silinemedi Ğ·ÑŒnkÑŒ bulunamadÑ: %s
-Forbidden client supports list|YasaklÑ istemci desteÑ€i listesi
-Forbidden client supports list is empty.|YasaklÑ istemci desteÑ€i listesi boÑtur.
-Forbidden NMDC version list|YasaklÑ NMDC sÑŒrÑŒm listesi
-Forbidden NMDC version list is empty.|YasaklÑ NMDC sÑŒrÑŒm listesi boÑtur.
-%s with IP %s and class %d allowed due to forbidden client supports exception: %s|%s, ki %s IP adresli ve %d sÑnÑflÑ, yasaklÑ istemci desteÑ€i istisnasÑ sebebiyle kabul edildi: %s
-%s with IP %s and class %d allowed due to forbidden NMDC version exception: %s|%s, ki %s IP adresli ve %d sÑnÑflÑ, yasaklÑ NMDC sÑŒrÑŒmÑŒ istisnasÑ nedeniyle mÑŒsaade edildi: %s
-City: %s|Ğ¬lke: %s
-IP range: %s - %s|IP alanÑ: %s - %s
-Region: %s|BÑ†gle: %s
+Country code gag|Ülke kodu susturucu
+Add country code gag|Ülke kodu susturucu ekle
+Added country code gag: %s|Ülke kodu susturucu eklendi: %s
+Modified country code gag: %s|Değiştirilen ülke kodu susturucu: %s
+Deleted country code gag: %s|Ülke kodu susturucusu silindi: %s
+Country code gag not found: %s|Ülke kodu susturucusu bulunamadı: %s
+Country code gag list|Ülke kodu susturucu listesi
+Country code gag list is empty.|Ülke kodu susturucu listesi boştur.
+Delete country code gag|Ülke kodu susturucusu sil
+Cleared country code gag list.|Ülke kodu susturucu listesi temizlendi.
+%s with IP %s and class %d tries to speak with country code gag in MC: %s|%s, ki %s IP adresli ve %d sınıflı, ana sohbette ülke kodu susturmasına rağmen konuşmaya çalışıyor: %s
+%s with IP %s and class %d tries to speak with country code gag in PM to %s with IP %s and class %d: %s|%s kullanıcısı, ki %s IP adresli ve %d sınıflı, ülke kodu susturmasına rağmen özel sohbette %s kullanıcısıyla, ki %s IP adresli ve %d sınıflı, konuşmaya çalışıyor: %s
+No reason specified|Hiçbir sebep belirtilmemiştir
+Automatically deleted %d user log entries older than %d days.|%d kullanıcı kütük unsuru, ki %d günden eski, otomatik olarak silinmiştir.
+Main chat message replaced for user: %s|Ana sohbet mesajı şu kullanıcı için değiştirilmiştir: %s
+Unknown protocol command from IP %s before login: %s|%s IP adresinden giriş öncesi bilinmeyen protokol komutu: %s
+Added %s to hard IP ban list, %d users in total.|%s sert IP yasaklama listesine eklendi, toplam %d kullanıcı.
+NMDC version: %s|NMDC sürümü: %s
+Client supports: %s|İstemcinin desteklediği: %s
+Modified forbidden client supports with ban time %s: %s|Yasaklı istemci desteği şu yasaklama süresi ile değiştirildi: %s :%s
+Added forbidden client supports with ban time %s: %s|Yasaklı istemci desteği şu yasaklama süresi ile ilave edildi: %s: %s
+Modified forbidden NMDC version with ban time %s: %s|Yasaklı NMDC sürümü %s yasaklama süresi ile değiştirildi: %s
+Added forbidden NMDC version with ban time %s: %s|Yasaklı NMDC sürümü %s yasaklama süresi ile eklendi: %s
+Latest version of %s is required in order to use this feature.|Bu işlevi kullanmak için son %s sürümü gereklidir.
+Deleted forbidden client supports: %s|Yasaklı istemci desteği silindi: %s
+Couldn't delete forbidden client supports because not found: %s|Yasaklı istemci desteği silinemedi çünkü bulunamadı: %s
+Deleted forbidden NMDC version: %s|Yasaklı NMDC sürümü silindi: %s
+Couldn't delete forbidden NMDC version because not found: %s|Yasaklı NMDC sürümü silinemedi çünkü bulunamadı: %s
+Forbidden client supports list|Yasaklı istemci desteği listesi
+Forbidden client supports list is empty.|Yasaklı istemci desteği listesi boştur.
+Forbidden NMDC version list|Yasaklı NMDC sürüm listesi
+Forbidden NMDC version list is empty.|Yasaklı NMDC sürüm listesi boştur.
+%s with IP %s and class %d allowed due to forbidden client supports exception: %s|%s, ki %s IP adresli ve %d sınıflı, yasaklı istemci desteği istisnası sebebiyle kabul edildi: %s
+%s with IP %s and class %d allowed due to forbidden NMDC version exception: %s|%s, ki %s IP adresli ve %d sınıflı, yasaklı NMDC sürümü istisnası nedeniyle müsaade edildi: %s
+City: %s|Ülke: %s
+IP range: %s - %s|IP alanı: %s - %s
+Region: %s|Bögle: %s
 Time zone: %s|Saat dilimi: %s
-Continent: %s|KÑta: %s
+Continent: %s|Kıta: %s
 Postal code: %s|Posta kodu: %s
 Coordinates: %.4f %.4f|Koordinatlar: %.4f %.4f
 Metro code: %d|Metro kodu: %d
 Area code: %d|Alan kodu: %d
-Drop users with IP|Ğ®u IP'li kullanÑcÑlarla baÑ€lantÑyÑ kes:
-No users found with IP: %s|Ğ®u IP adresiyle hiĞ·bir kullanÑcÑ bulunamadÑ: %s
-Dropped %d users with IP: %s|Ğ®u IP adresli %d kullanÑcÑnÑn baÑ€lantÑsÑ kesildi: %s
-%s dropped %d users with IP: %s|%s, Ñu IP adresli %d kullanÑcÑnÑn baÑ€lantÑsÑnÑ kesti: %s
-Live user location statistics by city|Kente gÑ†re canlÑ kullanÑcÑ konum istatistikleri
-Live user location statistics by city from %s=%s|Kente gÑ†re canlÑ kullanÑcÑ konum istatistikleri, Ñuradan: %s=%s
-No users in the hub from: %s=%s|Ğ®u konumdan hub'da hiĞ·bir kullanÑcÑ yok: %s=%s
-Help notes|YardÑm notlarÑ
+Drop users with IP|Şu IP'li kullanıcılarla bağlantıyı kes:
+No users found with IP: %s|Şu IP adresiyle hiçbir kullanıcı bulunamadı: %s
+Dropped %d users with IP: %s|Şu IP adresli %d kullanıcının bağlantısı kesildi: %s
+%s dropped %d users with IP: %s|%s, şu IP adresli %d kullanıcının bağlantısını kesti: %s
+Live user location statistics by city|Kente göre canlı kullanıcı konum istatistikleri
+Live user location statistics by city from %s=%s|Kente göre canlı kullanıcı konum istatistikleri, şuradan: %s=%s
+No users in the hub from: %s=%s|Şu konumdan hub'da hiçbir kullanıcı yok: %s=%s
+Help notes|Yardım notları
 parameter|parametre
-Command parameters %s are always required, while %s are optional.|%s komut parametreleri daima gereklidir, %s ise isteÑ€e baÑ€lÑdÑr.
-Quoted parameters %s or %s must be used with quotes.|%s ya da %s tÑrnaklÑ parametreleri tÑrnak iÑaretleri ile kullanÑlmalÑdÑr.
+Command parameters %s are always required, while %s are optional.|%s komut parametreleri daima gereklidir, %s ise isteğe bağlıdır.
+Quoted parameters %s or %s must be used with quotes.|%s ya da %s tırnaklı parametreleri tırnak işaretleri ile kullanılmalıdır.
 IP information|IP bilgisi
-IP information not available: %s|IP bilgisi mevcut deÑ€il: %s
-Message replaced for user with IP %s and class %d in MC: <%s> %s|%s Ip adresli ve %d sÑnÑflÑ kullanÑcÑ iĞ·in ana sohbette mesaj deÑ€iÑtirildi: <%s> %s
-IP %s permanently banned: <%s> %s|%s IP adresi daimi olarak yasaklandÑ: <%s> %s
-Nick %s permanently banned: <%s> %s|%s rumuzu daimi olarak yasaklandÑ: <%s> %s
-Range %s permanently banned: <%s> %s|%s alanÑ daimi olarak yasaklandÑ: <%s> %s
-Host %s permanently banned: <%s> %s|%s makinesi daimi olarak yasaklandÑ: <%s> %s
-Share %s permanently banned: <%s> %s|%s paylaÑÑmÑ daimi olarak yasaklandÑ: <%s> %s
-Prefix %s permanently banned: <%s> %s|%s Ñ†neki daimi olarak yasaklandÑ: <%s> %s
-IP %s temporarily banned until %s: <%s> %s|%s IP adresi %s vaktine kadar geĞ·ici olarak yasaklandÑ: <%s> %s
-Nick %s temporarily banned until %s: <%s> %s|%s rumuzu %s vaktine kadar geĞ·ici olarak yasaklandÑ: <%s> %s
-Range %s temporarily banned until %s: <%s> %s|%s alanÑ %s vaktine kadar geĞ·ici olarak yasaklandÑ: <%s> %s
-Host %s temporarily banned until %s: <%s> %s|%s makinesi %s vaktine kadar geĞ·ici olarak yasaklandÑ: <%s> %s
-Share %s temporarily banned until %s: <%s> %s|%s paylaÑÑmÑ %s vaktine kadar geĞ·ici olarak yasaklandÑ: <%s> %s
-Prefix %s temporarily banned until %s: <%s> %s|%s Ñ†neki %s vaktine kadar geĞ·ici olarak yasaklandÑ: <%s> %s
-IP %s unbanned: <%s> %s|%s IP adresinin yasaÑ€Ñ kaldÑrÑldÑ: <%s> %s
-Nick %s unbanned: <%s> %s|%s rumuzunun yasaÑ€Ñ kaldÑrÑldÑ: <%s> %s
-Range %s unbanned: <%s> %s|%s alanÑnÑn yasaÑ€Ñ kaldÑrÑldÑ: <%s> %s
-Host %s unbanned: <%s> %s|%s makinesinin yasaÑ€Ñ kaldÑrÑldÑ: <%s> %s
-Share %s unbanned: <%s> %s|%s paylaÑÑmÑnÑn yasaÑ€Ñ kaldÑrÑldÑ: <%s> %s
-Prefix %s unbanned: <%s> %s|%s Ñ†nekinin yasaÑ€Ñ kaldÑrÑldÑ: <%s> %s
-Known contexts are: %s|Bilinen baÑ€lamlar ÑunlardÑr: %s
-Known orders are: %s|Bilinen emirler ÑunlardÑr: %s
-Modified right click menu item: %s|SaÑ€ tÑklama menÑŒ unsuru deÑ€iÑtirildi: %s
-Added right click menu item: %s|SaÑ€ tÑklama menÑŒ unsuru eklendi: %s
-Deleted right click menu item: %s|SaÑ€ tÑklama menÑŒ unsuru silindi: %s
-Right click menu item not found: %d|SaÑ€ tÑklama menÑŒ unsuru bulunamadÑ: %d
-Right click menu item list is empty.|SaÑ€ tÑklama menÑŒ unsuru listesi boÑtur.
-Menu item|MenÑŒ unsuru
-Menu command|MenÑŒ komutu
-Changed right click menu item order: %s|SaÑ€ tÑklama menÑŒ unsuru sÑralamasÑ deÑ€iÑtirildi: %s
-Separator or eraser|AyÑrÑcÑ veya silgi
-Nick and IP %s unbanned: <%s> %s|%s rumuz ve IP adresinin yasaÑ€Ñ kaldÑrÑldÑ: <%s> %s
-Other %s unbanned: <%s> %s|DiÑ€er %s unsurunun yasaÑ€Ñ kaldÑrÑldÑ: <%s> %s
-Vote for user to be kicked|KullanÑcÑnÑn kovulmasÑ iĞ·in oylama
-You don't want to vote for kicking an operator.|Bir operatÑ†rÑŒn kovulmasÑ iĞ·in oy vermek istemezsiniz.
-User voted kick|KullanÑcÑ oylamasÑ ile kovma
-You have already voted for kicking that user.|Bu kullanÑcÑnÑn kovulmasÑ iĞ·in zaten oy kullandÑnÑz.
-%s added vote %d of %d for kicking user with class %d: %s|%s, %d sayÑlÑ oyu ekledi (gereken %d) ki bu %d sÑnÑflÑ kullanÑcÑyÑ kovmak iĞ·indi: %s
-There is an error in following antispam entry pattern|YÑÑ€Ñn mesajdan korunma girdi Ñ†rÑŒntÑŒsÑŒnÑŒ izlemede bir hata meydana geldi
-Pattern|Ğ¦rÑŒntÑŒ
+IP information not available: %s|IP bilgisi mevcut değil: %s
+Message replaced for user with IP %s and class %d in MC: <%s> %s|%s Ip adresli ve %d sınıflı kullanıcı için ana sohbette mesaj değiştirildi: <%s> %s
+IP %s permanently banned: <%s> %s|%s IP adresi daimi olarak yasaklandı: <%s> %s
+Nick %s permanently banned: <%s> %s|%s rumuzu daimi olarak yasaklandı: <%s> %s
+Range %s permanently banned: <%s> %s|%s alanı daimi olarak yasaklandı: <%s> %s
+Host %s permanently banned: <%s> %s|%s makinesi daimi olarak yasaklandı: <%s> %s
+Share %s permanently banned: <%s> %s|%s paylaşımı daimi olarak yasaklandı: <%s> %s
+Prefix %s permanently banned: <%s> %s|%s öneki daimi olarak yasaklandı: <%s> %s
+IP %s temporarily banned until %s: <%s> %s|%s IP adresi %s vaktine kadar geçici olarak yasaklandı: <%s> %s
+Nick %s temporarily banned until %s: <%s> %s|%s rumuzu %s vaktine kadar geçici olarak yasaklandı: <%s> %s
+Range %s temporarily banned until %s: <%s> %s|%s alanı %s vaktine kadar geçici olarak yasaklandı: <%s> %s
+Host %s temporarily banned until %s: <%s> %s|%s makinesi %s vaktine kadar geçici olarak yasaklandı: <%s> %s
+Share %s temporarily banned until %s: <%s> %s|%s paylaşımı %s vaktine kadar geçici olarak yasaklandı: <%s> %s
+Prefix %s temporarily banned until %s: <%s> %s|%s öneki %s vaktine kadar geçici olarak yasaklandı: <%s> %s
+IP %s unbanned: <%s> %s|%s IP adresinin yasağı kaldırıldı: <%s> %s
+Nick %s unbanned: <%s> %s|%s rumuzunun yasağı kaldırıldı: <%s> %s
+Range %s unbanned: <%s> %s|%s alanının yasağı kaldırıldı: <%s> %s
+Host %s unbanned: <%s> %s|%s makinesinin yasağı kaldırıldı: <%s> %s
+Share %s unbanned: <%s> %s|%s paylaşımının yasağı kaldırıldı: <%s> %s
+Prefix %s unbanned: <%s> %s|%s önekinin yasağı kaldırıldı: <%s> %s
+Known contexts are: %s|Bilinen bağlamlar şunlardır: %s
+Known orders are: %s|Bilinen emirler şunlardır: %s
+Modified right click menu item: %s|Sağ tıklama menü unsuru değiştirildi: %s
+Added right click menu item: %s|Sağ tıklama menü unsuru eklendi: %s
+Deleted right click menu item: %s|Sağ tıklama menü unsuru silindi: %s
+Right click menu item not found: %d|Sağ tıklama menü unsuru bulunamadı: %d
+Right click menu item list is empty.|Sağ tıklama menü unsuru listesi boştur.
+Menu item|Menü unsuru
+Menu command|Menü komutu
+Changed right click menu item order: %s|Sağ tıklama menü unsuru sıralaması değiştirildi: %s
+Separator or eraser|Ayırıcı veya silgi
+Nick and IP %s unbanned: <%s> %s|%s rumuz ve IP adresinin yasağı kaldırıldı: <%s> %s
+Other %s unbanned: <%s> %s|Diğer %s unsurunun yasağı kaldırıldı: <%s> %s
+Vote for user to be kicked|Kullanıcının kovulması için oylama
+You don't want to vote for kicking an operator.|Bir operatörün kovulması için oy vermek istemezsiniz.
+User voted kick|Kullanıcı oylaması ile kovma
+You have already voted for kicking that user.|Bu kullanıcının kovulması için zaten oy kullandınız.
+%s added vote %d of %d for kicking user with class %d: %s|%s, %d sayılı oyu ekledi (gereken %d) ki bu %d sınıflı kullanıcıyı kovmak içindi: %s
+There is an error in following antispam entry pattern|Yığın mesajdan korunma girdi örüntüsünü izlemede bir hata meydana geldi
+Pattern|Örüntü
 Error|Hata
-Solution|Ğ—Ñ†zÑŒm
-There is an error in following search filter pattern|Arama filtresi Ñ†rÑŒntÑŒsÑŒnÑŒ izlemede bir hata meydana geldi
-There is an error in following search filter exception pattern|Arama filtresi istisna Ñ†rÑŒntÑŒsÑŒnÑŒ izlemede bir hata meydana geldi
-There is an error in following antispam exception entry pattern|YÑÑ€Ñn mesajdan korunma istisna unsuru Ñ†rÑŒntÑŒsÑŒnÑŒ izlemede bir hata meydana geldi
-There is an error in following forbidden nick pattern|YasaklÑ rumuz Ñ†rÑŒntÑŒsÑŒnÑŒ izleme bir hata meydana geldi
-There is an error in following MyINFO exception pattern|MyINFO istisnasÑ Ñ†rÑŒntÑŒsÑŒnÑŒn izlenmesinde bir hata meydana geldi
-There is an error in following forbidden description pattern|YasaklÑ tanÑmlama Ñ†rÑŒntÑŒsÑŒnÑŒ izlemede bir hata meydana geldi
-There is an error in following forbidden tag pattern|YasaklÑ etiket Ñ†rÑŒntÑŒsÑŒnÑŒ izlemede bir hata meydana geldi
-There is an error in following forbidden connection type pattern|YasaklÑ baÑ€lantÑ tÑŒrÑŒ Ñ†rÑŒntÑŒsÑŒ izlemede bir hata meydana geldi
-There is an error in following forbidden email pattern|YasaklÑ e-posta Ñ†rÑŒntÑŒsÑŒnÑŒ izlemede bir hata meydana geldi
-There is an error in following forbidden share size pattern|YasaklÑ paylaÑÑm Ñ†rÑŒntÑŒsÑŒ izlemede bir hata meydana geldi
-There is an error in following forbidden IP address pattern|YasaklÑ IP adresi Ñ†rÑŒntÑŒsÑŒnÑŒ izlemede bir hata meydana geldi
-There is an error in following forbidden country code pattern|YasaklÑ ÑŒlke kodu Ñ†rÑŒntÑŒsÑŒnÑŒ izlemede bir hata meydana geldi
-There is an error in following forbidden DNS pattern|YasaklÑ DNS Ñ†rÑŒntÑŒsÑŒnÑŒ izlemede bir hata meydana geldi
-There is an error in following forbidden client supports pattern|YasaklÑ istemci desteÑ€i Ñ†rÑŒntÑŒsÑŒnÑŒ izlemede bir hata meydana geldi
-There is an error in following forbidden NMDC version pattern|YasaklÑ NMDC sÑŒrÑŒm Ñ†rÑŒntÑŒsÑŒnÑŒ izlemede bir hata meydana geldi
-Added replacer in PM: %s|Ğ¦zel mesajda deÑ€iÑtirici ekle: %s
-Added replacer in MC and PM: %s|Ğ¦zel ve ana sohbette deÑ€iÑtirici eklendi: %s
-Message replaced for user with IP %s and class %d in PM to %s with IP %s and class %d: <%s> %s|%s IP adresli ve %d sÑnÑflÑ kullanÑcÑ iĞ·in Ñ†zel sohbette mesaj %s olarak ki %s IP adresi ve %d sÑnÑfÑ olarak deÑ€iÑtirildi: <%s> %s
-Message ignored due to flood detection from %s with IP %s and class %d in MC: %s|%s kullanÑcÑsÑndan ki %s IP adresli ve %d sÑnflÑ, mesaj gÑ†rmezden gelindi Ğ·ÑŒnkÑŒ aÑÑrÑ tekrar tespit edildi: %s
-Users with same IP|AynÑ IP'li kullanÑcÑlar
-Parameter count mismatch detected in following translation string: %s|AÑaÑ€Ñdaki tercÑŒme dizisinde parametre sayÑsÑ uyuÑmazlÑÑ€Ñ tespit edildi: %s
-Infected user detected|KÑ†tÑŒcÑŒl yazÑlÑm bulaÑmÑÑ kullanÑcÑ tespit edildi
+Solution|Çözüm
+There is an error in following search filter pattern|Arama filtresi örüntüsünü izlemede bir hata meydana geldi
+There is an error in following search filter exception pattern|Arama filtresi istisna örüntüsünü izlemede bir hata meydana geldi
+There is an error in following antispam exception entry pattern|Yığın mesajdan korunma istisna unsuru örüntüsünü izlemede bir hata meydana geldi
+There is an error in following forbidden nick pattern|Yasaklı rumuz örüntüsünü izleme bir hata meydana geldi
+There is an error in following MyINFO exception pattern|MyINFO istisnası örüntüsünün izlenmesinde bir hata meydana geldi
+There is an error in following forbidden description pattern|Yasaklı tanımlama örüntüsünü izlemede bir hata meydana geldi
+There is an error in following forbidden tag pattern|Yasaklı etiket örüntüsünü izlemede bir hata meydana geldi
+There is an error in following forbidden connection type pattern|Yasaklı bağlantı türü örüntüsü izlemede bir hata meydana geldi
+There is an error in following forbidden email pattern|Yasaklı e-posta örüntüsünü izlemede bir hata meydana geldi
+There is an error in following forbidden share size pattern|Yasaklı paylaşım örüntüsü izlemede bir hata meydana geldi
+There is an error in following forbidden IP address pattern|Yasaklı IP adresi örüntüsünü izlemede bir hata meydana geldi
+There is an error in following forbidden country code pattern|Yasaklı ülke kodu örüntüsünü izlemede bir hata meydana geldi
+There is an error in following forbidden DNS pattern|Yasaklı DNS örüntüsünü izlemede bir hata meydana geldi
+There is an error in following forbidden client supports pattern|Yasaklı istemci desteği örüntüsünü izlemede bir hata meydana geldi
+There is an error in following forbidden NMDC version pattern|Yasaklı NMDC sürüm örüntüsünü izlemede bir hata meydana geldi
+Added replacer in PM: %s|Özel mesajda değiştirici ekle: %s
+Added replacer in MC and PM: %s|Özel ve ana sohbette değiştirici eklendi: %s
+Message replaced for user with IP %s and class %d in PM to %s with IP %s and class %d: <%s> %s|%s IP adresli ve %d sınıflı kullanıcı için özel sohbette mesaj %s olarak ki %s IP adresi ve %d sınıfı olarak değiştirildi: <%s> %s
+Message ignored due to flood detection from %s with IP %s and class %d in MC: %s|%s kullanıcısından ki %s IP adresli ve %d sınflı, mesaj görmezden gelindi çünkü aşırı tekrar tespit edildi: %s
+Users with same IP|Aynı IP'li kullanıcılar
+Parameter count mismatch detected in following translation string: %s|Aşağıdaki tercüme dizisinde parametre sayısı uyuşmazlığı tespit edildi: %s
+Infected user detected|Kötücül yazılım bulaşmış kullanıcı tespit edildi
 Found files|Bulunan dosyalar
-Infected user detected with nick %s and IP %s and share %s and spent time: %s|KÑ†tÑŒcÑŒl yazÑlÑm bulaÑmÑÑ %s rumuzlu, %s IP adresli, %s paylaÑÑmlÑ kullanÑcÑ tespit edildi, harcadÑÑ€Ñ zaman: %s 
-Sadly I don't have access to send infected user information to AVDB, please ask maintainer of this script to add your server IP address to access list. AVDB reporting feature has been automatically disabled.|Maalesef AVDB'ye kÑ†tÑŒcÑŒl yazÑlÑm bulaÑmÑÑ kullanÑcÑ bilgisi gÑ†nderme eriÑimim yok, bu betiÑ€in geliÑtiricisinden sunucu IP adresinizi eriÑim listesine eklemesini isteyin. AVDB raporlama iÑlevi otomatik olarak devre dÑÑÑ bÑrakÑldÑ. 
-In order to send infected user information to AVDB you need to ask maintainer of this script to add your server IP address to AVDB access list.|AVDB'ye kÑ†tÑŒcÑŒl yazÑlÑm bulaÑmÑÑ kullanÑcÑ bilgisi gÑ†ndermek iĞ·in bu betiÑ€in geliÑtiricisinden sunucu IP adresinizi AVDB eriÑim listesine eklemesini istemeniz gerekmektedir.
-Antivirus statistics|AntivirÑŒs istatistikleri
-File names used for search|Arama iĞ·in kullanÑlan dosya isimleri
-File extensions used for search|Arama iĞ·in kullanÑlan dosya uzantÑlarÑ
-Possibly infected users|KÑ†tÑŒcÑŒl yazÑlÑm bulaÑmÑÑ olmasÑ muhtemel kullanÑcÑlar
+Infected user detected with nick %s and IP %s and share %s and spent time: %s|Kötücül yazılım bulaşmış %s rumuzlu, %s IP adresli, %s paylaşımlı kullanıcı tespit edildi, harcadığı zaman: %s 
+Sadly I don't have access to send infected user information to AVDB, please ask maintainer of this script to add your server IP address to access list. AVDB reporting feature has been automatically disabled.|Maalesef AVDB'ye kötücül yazılım bulaşmış kullanıcı bilgisi gönderme erişimim yok, bu betiğin geliştiricisinden sunucu IP adresinizi erişim listesine eklemesini isteyin. AVDB raporlama işlevi otomatik olarak devre dışı bırakıldı. 
+In order to send infected user information to AVDB you need to ask maintainer of this script to add your server IP address to AVDB access list.|AVDB'ye kötücül yazılım bulaşmış kullanıcı bilgisi göndermek için bu betiğin geliştiricisinden sunucu IP adresinizi AVDB erişim listesine eklemesini istemeniz gerekmektedir.
+Antivirus statistics|Antivirüs istatistikleri
+File names used for search|Arama için kullanılan dosya isimleri
+File extensions used for search|Arama için kullanılan dosya uzantıları
+Possibly infected users|Kötücül yazılım bulaşmış olması muhtemel kullanıcılar
 Spent time: %s|Harcanan vakit: %s
-Infected user logged in with IP %s and share %s: %s|KÑ†tÑŒcÑŒl yazÑlÑm bulaÑmÑÑ kullanÑcÑ %s adresi ile ve %s paylaÑÑmÑ ile giriÑ yaptÑ: %s
-Loaded %d of %d with totally %d items: %s|%d yÑŒklendi ki toplam %d, bÑŒtÑŒnÑŒyle %d unsur: %s
-Infected user information sent to %s: %s|KÑ†tÑŒcÑŒl yazÑlÑm bulaÑmÑÑ kullanÑcÑ bilgisi Ñuna gÑ†nderildi: %s: %s
-Failed to load information from %s: %s|Ğ®undan bilgi yÑŒklemesi baÑarÑsÑz oldu: %s: %s
-Failed to send information to %s: %s|Ğ®una bilgi gÑ†nderilmesi baÑarÑsÑz oldu: %s: %s
-Error on executing %s: %s|%s Ğ·alÑÑtÑrÑlmasÑnda hata: %s
-Error on connecting.|BaÑ€lantÑda hata.
-Loaded none with totally %d items: %s|HiĞ·biri yÑŒklenmedi, bÑŒtÑŒnÑŒyle %d unsur: %s
-Infected user found with IP %s and share %s: %s|KÑ†tÑŒcÑŒl yazÑlÑm bulaÑmÑÑ kullanÑcÑ %s IP adresi ve %s paylaÑÑmÑ tespit edildi: %s
+Infected user logged in with IP %s and share %s: %s|Kötücül yazılım bulaşmış kullanıcı %s adresi ile ve %s paylaşımı ile giriş yaptı: %s
+Loaded %d of %d with totally %d items: %s|%d yüklendi ki toplam %d, bütünüyle %d unsur: %s
+Infected user information sent to %s: %s|Kötücül yazılım bulaşmış kullanıcı bilgisi şuna gönderildi: %s: %s
+Failed to load information from %s: %s|Şundan bilgi yüklemesi başarısız oldu: %s: %s
+Failed to send information to %s: %s|Şuna bilgi gönderilmesi başarısız oldu: %s: %s
+Error on executing %s: %s|%s çalıştırılmasında hata: %s
+Error on connecting.|Bağlantıda hata.
+Loaded none with totally %d items: %s|Hiçbiri yüklenmedi, bütünüyle %d unsur: %s
+Infected user found with IP %s and share %s: %s|Kötücül yazılım bulaşmış kullanıcı %s IP adresi ve %s paylaşımı tespit edildi: %s
 Server didn't reply with expected status code.|Sunucu beklenen durum koduyla cevap vermedi.
 Size of %s: %d @ %s|%s boyutu: %d @ %s
-Clear kick votes for user|KullanÑcÑ iĞ·in kovma oylarÑnÑ temizle
-%s cleared %d of %d votes for kicking user with class %d: %s|%s, %d oyu temizledi (toplam %d) ki bu oylar %d sÑnÑflÑ kullanÑcÑyÑ kovmak iĞ·indi: %s
+Clear kick votes for user|Kullanıcı için kovma oylarını temizle
+%s cleared %d of %d votes for kicking user with class %d: %s|%s, %d oyu temizledi (toplam %d) ki bu oylar %d sınıflı kullanıcıyı kovmak içindi: %s
 Vote kick list|Kovma oy listesi
-Vote kick list is empty.|Kovma oy listesi boÑtur.
+Vote kick list is empty.|Kovma oy listesi boştur.
 Votes: %d of %d|Oylar: %d / %d
 Voters: %s|Oy verenler: %s
 Triggers|Tetikler
 Add trigger|Tetik ekle
 Trigger list|Tetik listesi
 Delete trigger|Tetik sil
-Modified trigger: %s|Tetik deÑ€iÑtirildi: %s
+Modified trigger: %s|Tetik değiştirildi: %s
 Added trigger: %s|Tetik eklendi: %s
 Deleted trigger: %s|Tetik silindi: %s
-Trigger not found: %s|Tetik bulunamadÑ: %s
-Trigger list is empty.|Tetik listesi boÑtur.
-Class range: %d to %d|SÑnÑf alanÑ: %d ilĞ² %d
+Trigger not found: %s|Tetik bulunamadı: %s
+Trigger list is empty.|Tetik listesi boştur.
+Class range: %d to %d|Sınıf alanı: %d ilâ %d
 Pinger|Pingci
 Guest|Misafir
-Registered|KayÑtlÑ
-VIP|VĞ­P
-Operator|OperatÑ†r
-Cheef|Ğ®ef
-Administrator|YÑ†netici
+Registered|Kayıtlı
+VIP|VİP
+Operator|Operatör
+Cheef|Şef
+Administrator|Yönetici
 Master|Usta
-News item added by %s: %s|Yeni haber unsuru %s tarafÑndan eklendi: %s
-Your connection request is blocked because user that you're trying connect to was detected as virus spreader: %s|BaÑ€lantÑ talebiniz durduruldu Ğ·ÑŒnkÑŒ baÑ€lanmaya Ğ·alÑÑtÑÑ€ÑnÑz kullanÑcÑ virÑŒs yayÑcÑ olarak tespit edilmiÑtir: %s
-Connection requests to following user will be blocked: %s|Ğ®u kullanÑcÑya baÑ€lanma talepleri durdurulacaktÑr: %s
-Downloading script file: %s|Betik dosyasÑ indiriliyor: %s
-Stable version of %s is available: %s|%s kararlÑ sÑŒrÑŒmÑŒ mevcuttur: %s
-Development version of %s is available: %s|%s geliÑtirme sÑŒrÑŒmÑŒ mevcuttur: %s
-Translation file loaded: %s|TercÑŒme dosyasÑ yÑŒklendi: %s
-Loaded none of %d with totally %d items: %s|Toplam %d deÑ€erinden hiĞ·biri yÑŒklenmedi, bÑŒtÑŒnÑŒyle %d unsur: %s
-Failed to execute %s with code: %d|%s unsurunun Ğ·alÑÑtÑrÑlmasÑ Ñu kodla baÑarÑsÑz olmuÑtur: %d
-Failed to execute %s with error: %s|%s unsurunun Ğ·alÑÑtÑrÑlmasÑ Ñu hatayla baÑarÑsÑz olmuÑtur: %s
-Failed to execute %s without code and error.|%s unsurunun Ğ·alÑÑtÑrÑlmasÑ kodsuz ve hatasÑz olarak baÑarÑsÑz olmuÑtur.
-Failed to move file: %s|DosyanÑn taÑÑnmasÑ baÑarÑsÑz oldu: %s
-Downloading translation file: %s|TercÑŒme dosyasÑ indiriliyor: %s
-File not found on update server: %s|Dosya gÑŒncelleme sunucusunda bulunamadÑ: %s
-File not found on remote server: %s|Dosya uzaktaki sunucuda bulunamadÑ: %s
-File is empty.|Dosya boÑtur.
-Force infected user detection|KÑ†tÑŒcÑŒl yazÑlÑm bulaÑmÑÑ kullanÑcÑ tespitini zorla
-You can't block user whose class is higher or equals your own: %s|SÑnÑfÑ kendi sÑnÑfÑnÑza eÑit ya da sÑnÑfÑnÑzdan yÑŒksek olan bir kullanÑcÑyÑ bloke edemezsiniz: %s
-User already blocked: %s|KullanÑcÑ zaten bloke edilmiÑtir: %s
+News item added by %s: %s|Yeni haber unsuru %s tarafından eklendi: %s
+Your connection request is blocked because user that you're trying connect to was detected as virus spreader: %s|Bağlantı talebiniz durduruldu çünkü bağlanmaya çalıştığınız kullanıcı virüs yayıcı olarak tespit edilmiştir: %s
+Connection requests to following user will be blocked: %s|Şu kullanıcıya bağlanma talepleri durdurulacaktır: %s
+Downloading script file: %s|Betik dosyası indiriliyor: %s
+Stable version of %s is available: %s|%s kararlı sürümü mevcuttur: %s
+Development version of %s is available: %s|%s geliştirme sürümü mevcuttur: %s
+Translation file loaded: %s|Tercüme dosyası yüklendi: %s
+Loaded none of %d with totally %d items: %s|Toplam %d değerinden hiçbiri yüklenmedi, bütünüyle %d unsur: %s
+Failed to execute %s with code: %d|%s unsurunun çalıştırılması şu kodla başarısız olmuştur: %d
+Failed to execute %s with error: %s|%s unsurunun çalıştırılması şu hatayla başarısız olmuştur: %s
+Failed to execute %s without code and error.|%s unsurunun çalıştırılması kodsuz ve hatasız olarak başarısız olmuştur.
+Failed to move file: %s|Dosyanın taşınması başarısız oldu: %s
+Downloading translation file: %s|Tercüme dosyası indiriliyor: %s
+File not found on update server: %s|Dosya güncelleme sunucusunda bulunamadı: %s
+File not found on remote server: %s|Dosya uzaktaki sunucuda bulunamadı: %s
+File is empty.|Dosya boştur.
+Force infected user detection|Kötücül yazılım bulaşmış kullanıcı tespitini zorla
+You can't block user whose class is higher or equals your own: %s|Sınıfı kendi sınıfınıza eşit ya da sınıfınızdan yüksek olan bir kullanıcıyı bloke edemezsiniz: %s
+User already blocked: %s|Kullanıcı zaten bloke edilmiştir: %s
 item|unsur
 Search in %s|%s konumunda ara
-Antivirus|AntivirÑŒs
-Nothing was found in: %s|Ğ®u konumda hiĞ·bir Ñey bulunamadÑ: %s
-Searching for %s in %s: %s|%s, %s konumunda aranÑyor: %s
-Showing %d results from %s|%d sonuĞ· %s konumundan gÑ†steriliyor
-%s module version: %s|%s Ñ†bek sÑŒrÑŒmÑŒ: %s
-This feature requires following module installed on your system: %s|Bu iÑlev aÑaÑ€Ñdaki Ñ†beÑ€in sisteminizde kurulu olmasÑnÑ gerektirmektedir: %s
-Failed to start antivirus search server: %s|AntivirÑŒs arama sunucusunun baÑlatÑlmasÑ baÑarÑsÑz oldu: %s
-Started antivirus search server: %s|AntivirÑŒs arama sunucusu baÑlatÑldÑ: %s
-Stopped antivirus search server: %s|AntivirÑŒs arama sunucusu durduruldu: %s
-Blocked infected users|Bloke edilen kÑ†tÑŒcÑŒl yazÑlÑm bulaÑmÑÑ kullanÑcÑlar
-Add automatic country chatroom entrance|Otomatik ÑŒlke sohbet odasÑ giriÑi ekle
-Automatic country chatroom entrance list|Otomatik ÑŒlke sohbet odasÑ giriÑ listesi
-Delete automatic country chatroom entrance|Otomatik ÑŒlke sohbet odasÑ giriÑi sil
-Couldn't add automatic country chatroom entrance because already exists with ID: %d|Otomatik ÑŒlke sohbet odasÑ giriÑi eklenemedi Ğ·ÑŒnkÑŒ zaten Ñu kimlikle mevcut: %s
-Added automatic country chatroom entrance for %s: %s|%s iĞ·in otomatik ÑŒlke sohbet odasÑ giriÑi eklendi: %s
-Couldn't delete automatic country chatroom entrance because ID not found: %d|Otomatik ÑŒlke sohbet odasÑ giriÑi silinemedi Ğ·ÑŒnkÑŒ kimliÑ€i bulunamadÑ: %d
-Deleted automatic country chatroom entrance with ID: %d|Ğ®u kimlikli otomatik ÑŒlke sohbet odasÑ giriÑi silindi: %d
-Automatic country chatroom entrance list is empty.|Otomatik ÑŒlke sohbet odasÑ giriÑ listesi boÑtur.
-Please note, following function is required for features available in this version of %s and is currently not available in running version of %s but is available in latest update: %s|AÑaÑ€Ñdaki iÑlev %s yazÑlÑmÑnÑn bu sÑŒrÑŒmÑŒndeki Ñ†zellikler iĞ·in gereklidir ve gÑŒncel olarak Ğ·alÑÑmakta olan %s sÑŒrÑŒmÑŒnde mevcut deÑ€ildir ancak son gÑŒncellemede mevcuttur: %s
+Antivirus|Antivirüs
+Nothing was found in: %s|Şu konumda hiçbir şey bulunamadı: %s
+Searching for %s in %s: %s|%s, %s konumunda aranıyor: %s
+Showing %d results from %s|%d sonuç %s konumundan gösteriliyor
+%s module version: %s|%s öbek sürümü: %s
+This feature requires following module installed on your system: %s|Bu işlev aşağıdaki öbeğin sisteminizde kurulu olmasını gerektirmektedir: %s
+Failed to start antivirus search server: %s|Antivirüs arama sunucusunun başlatılması başarısız oldu: %s
+Started antivirus search server: %s|Antivirüs arama sunucusu başlatıldı: %s
+Stopped antivirus search server: %s|Antivirüs arama sunucusu durduruldu: %s
+Blocked infected users|Bloke edilen kötücül yazılım bulaşmış kullanıcılar
+Add automatic country chatroom entrance|Otomatik ülke sohbet odası girişi ekle
+Automatic country chatroom entrance list|Otomatik ülke sohbet odası giriş listesi
+Delete automatic country chatroom entrance|Otomatik ülke sohbet odası girişi sil
+Couldn't add automatic country chatroom entrance because already exists with ID: %d|Otomatik ülke sohbet odası girişi eklenemedi çünkü zaten şu kimlikle mevcut: %s
+Added automatic country chatroom entrance for %s: %s|%s için otomatik ülke sohbet odası girişi eklendi: %s
+Couldn't delete automatic country chatroom entrance because ID not found: %d|Otomatik ülke sohbet odası girişi silinemedi çünkü kimliği bulunamadı: %d
+Deleted automatic country chatroom entrance with ID: %d|Şu kimlikli otomatik ülke sohbet odası girişi silindi: %d
+Automatic country chatroom entrance list is empty.|Otomatik ülke sohbet odası giriş listesi boştur.
+Please note, following function is required for features available in this version of %s and is currently not available in running version of %s but is available in latest update: %s|Aşağıdaki işlev %s yazılımının bu sürümündeki özellikler için gereklidir ve güncel olarak çalışmakta olan %s sürümünde mevcut değildir ancak son güncellemede mevcuttur: %s
 note|not
-Access is restricted.|EriÑim kÑsÑtlandÑ.
-Convert LRE to plain text|LRE'yi dÑŒz metine dÑ†nÑŒÑtÑŒr
-LRE converted to plain text: %s|LRE dÑŒz metine dÑ†nÑŒÑtÑŒrÑŒldÑŒ: %s
-Please check your command syntax, something is wrong there.|LÑŒtfen komut sÑ†zdizimini kontrol edin, bir Ñeyler yanlÑÑ orada.
-Entry used in detection: %s|Tespitte kullanÑlan unsur: %s
-Exception used in detection: %s|Tespitte kullanÑlan istisna: %s
+Access is restricted.|Erişim kısıtlandı.
+Convert LRE to plain text|LRE'yi düz metine dönüştür
+LRE converted to plain text: %s|LRE düz metine dönüştürüldü: %s
+Please check your command syntax, something is wrong there.|Lütfen komut sözdizimini kontrol edin, bir şeyler yanlış orada.
+Entry used in detection: %s|Tespitte kullanılan unsur: %s
+Exception used in detection: %s|Tespitte kullanılan istisna: %s
 text|metin
-Delete history messages by text|TarihĞ·eden mesajlarÑ metin ile sil
-Deleted %d main chat history messages by text: %s|%d ana sohbet mesajÑ tarihĞ·eden metin ile silindi: %s
-%s with class %d deleted %d main chat history messages by text: %s|%d sÑnÑflÑ %s, %d ana sohbet mesajÑnÑ metin ile tarihĞ·eden sildi: %s
-Looking for users with nick %s on: %s|%s rumuzlu kullanÑcÑlar Ñu konumda aranÑyor: %s
-Looking for users with description %s on: %s|%s tanÑmlamalÑ kullanÑcÑlar Ñu konumda aranÑyor: %s
-Looking for users with client tag %s on: %s|%s istemci etiketli kullanÑcÑlar Ñu konumda aranÑyor: %s
-Looking for users with connection type %s on: %s|%s baÑ€lantÑ tÑŒrÑŒ olan kullanÑcÑlar Ñu konumda aranÑyor: %s
-Looking for users with email address %s on: %s|%s e-posta adresi olan kullanÑcÑlar Ñu konumda aranÑyor: %s
-Looking for users with share size %s on: %s|%s paylaÑÑm boyutlu kullanÑcÑlar Ñu konumda aranÑyor: %s
-Looking for users with IP address %s on: %s|%s IP adresli kullanÑcÑlar Ñu konumda aranÑyor: %s
-Users with nick not found in any hubs: %s|Ğ®u rumuzlu kullanÑcÑlar hiĞ·bir hub'da bulunamadÑ: %s
-Users with description not found in any hubs: %s|Ğ®u tanÑmlamalÑ kullanÑcÑlar hiĞ·bir hub'da bulunamadÑ: %s
-Users with client tag not found in any hubs: %s|Ğ®u istemci etiketli kullanÑcÑlar hiĞ·bir hub'da bulunamadÑ: %s
-Users with connection type not found in any hubs: %s|BaÑ€lantÑ tÑŒrlÑŒ kullanÑcÑlar hiĞ·bir hub'da bulunamadÑ: %s
-Users with email address not found in any hubs: %s|E-posta adresli kullanÑcÑlar hiĞ·bir hub'da bulunamadÑ: %s
-Users with share size not found in any hubs: %s|PaylaÑÑm boyutlu kullanÑcÑlar hiĞ·bir hub'da bulunamadÑ: %s
-Users with IP address not found in any hubs: %s|IP adresli kullanÑcÑlar hiĞ·bir hub'da bulunamadÑ: %s
-Users with nick %s found in following hubs|%s rumuzlu kullanÑcÑlar Ñu hub'larda bulundu
-Users with description %s found in following hubs|%s tanÑmlamalÑ kullanÑcÑlar Ñu hub'larda bulundu
-Users with client tag %s found in following hubs|%s istemci etiketli kullanÑcÑlar Ñu hub'larda bulundu
-Users with connection type %s found in following hubs|%s baÑ€lantÑ tÑŒrlÑŒ kullanÑcÑlar Ñu hub'larda bulundu
-Users with email address %s found in following hubs|%s e-posta adresli kullanÑcÑlar Ñu hub'larda bulundu
-Users with share size %s found in following hubs|%s paylaÑÑm boyutlu kullanÑcÑlar Ñu hub'larda bulundu
-Users with IP address %s found in following hubs|%s IP adresli kullanÑcÑlar Ñu hub'larda bulundu
-Blocked PM|Bloke edilen Ñ†zel mesaj
-Right click menu|SaÑ€ tÑklama menÑŒsÑŒ
+Delete history messages by text|Tarihçeden mesajları metin ile sil
+Deleted %d main chat history messages by text: %s|%d ana sohbet mesajı tarihçeden metin ile silindi: %s
+%s with class %d deleted %d main chat history messages by text: %s|%d sınıflı %s, %d ana sohbet mesajını metin ile tarihçeden sildi: %s
+Looking for users with nick %s on: %s|%s rumuzlu kullanıcılar şu konumda aranıyor: %s
+Looking for users with description %s on: %s|%s tanımlamalı kullanıcılar şu konumda aranıyor: %s
+Looking for users with client tag %s on: %s|%s istemci etiketli kullanıcılar şu konumda aranıyor: %s
+Looking for users with connection type %s on: %s|%s bağlantı türü olan kullanıcılar şu konumda aranıyor: %s
+Looking for users with email address %s on: %s|%s e-posta adresi olan kullanıcılar şu konumda aranıyor: %s
+Looking for users with share size %s on: %s|%s paylaşım boyutlu kullanıcılar şu konumda aranıyor: %s
+Looking for users with IP address %s on: %s|%s IP adresli kullanıcılar şu konumda aranıyor: %s
+Users with nick not found in any hubs: %s|Şu rumuzlu kullanıcılar hiçbir hub'da bulunamadı: %s
+Users with description not found in any hubs: %s|Şu tanımlamalı kullanıcılar hiçbir hub'da bulunamadı: %s
+Users with client tag not found in any hubs: %s|Şu istemci etiketli kullanıcılar hiçbir hub'da bulunamadı: %s
+Users with connection type not found in any hubs: %s|Bağlantı türlü kullanıcılar hiçbir hub'da bulunamadı: %s
+Users with email address not found in any hubs: %s|E-posta adresli kullanıcılar hiçbir hub'da bulunamadı: %s
+Users with share size not found in any hubs: %s|Paylaşım boyutlu kullanıcılar hiçbir hub'da bulunamadı: %s
+Users with IP address not found in any hubs: %s|IP adresli kullanıcılar hiçbir hub'da bulunamadı: %s
+Users with nick %s found in following hubs|%s rumuzlu kullanıcılar şu hub'larda bulundu
+Users with description %s found in following hubs|%s tanımlamalı kullanıcılar şu hub'larda bulundu
+Users with client tag %s found in following hubs|%s istemci etiketli kullanıcılar şu hub'larda bulundu
+Users with connection type %s found in following hubs|%s bağlantı türlü kullanıcılar şu hub'larda bulundu
+Users with email address %s found in following hubs|%s e-posta adresli kullanıcılar şu hub'larda bulundu
+Users with share size %s found in following hubs|%s paylaşım boyutlu kullanıcılar şu hub'larda bulundu
+Users with IP address %s found in following hubs|%s IP adresli kullanıcılar şu hub'larda bulundu
+Blocked PM|Bloke edilen özel mesaj
+Right click menu|Sağ tıklama menüsü
 IP watch|IP takibi
-Hard IP bans|Sert IP yasaklamalarÑ
-Chatroom history|Sohbet odasÑ tarihĞ·esi
-Chatroom history is empty.|Sohbet odasÑ tarihĞ·esi boÑtur.
-Last %d chatroom messages|Son %d sohbet odasÑ mesajlarÑ
-There are no chatroom history messages to remove: %s|KaldÑrÑlacak hiĞ·bir sohbet odasÑ mesajÑ yoktur: %s
-Deleted %d chatroom history messages: %s|%d sohbet odasÑ mesajÑ silindi: %s
-%s with class %d deleted %d chatroom history messages: %s|%d sÑnÑflÑ %s, %d sohbet odasÑ mesajÑnÑ sildi: %s
-Set your chat mode|Sohbet kipinizi ayarlayÑn
+Hard IP bans|Sert IP yasaklamaları
+Chatroom history|Sohbet odası tarihçesi
+Chatroom history is empty.|Sohbet odası tarihçesi boştur.
+Last %d chatroom messages|Son %d sohbet odası mesajları
+There are no chatroom history messages to remove: %s|Kaldırılacak hiçbir sohbet odası mesajı yoktur: %s
+Deleted %d chatroom history messages: %s|%d sohbet odası mesajı silindi: %s
+%s with class %d deleted %d chatroom history messages: %s|%d sınıflı %s, %d sohbet odası mesajını sildi: %s
+Set your chat mode|Sohbet kipinizi ayarlayın
 real|hakiki
-Specified country code isn't valid: %s|Belirtilen ÑŒlke kodu geĞ·erli deÑ€il: %s
-You can't block user who don't share anything: %s|HiĞ·bir Ñey paylaÑmayan kullanÑcÑyÑ engelleyemezsiniz: %s
-You can't kick user who don't share anything: %s|HiĞ·bir Ñey paylaÑmayan kullancÑyÑ kovamazsÑnÑz: %s
-Flood detected from %s with IP %s and class %d in MC: %s|%s kullanÑcÑsÑndan, ki %s IP adresli ve %d sÑnÑflÑ, ana sohbette aÑÑrÑ tekrar tespit edildi: %s
-User dropped due to flood: %s|KullanÑcÑnÑn baÑ€lantÑsÑ aÑÑrÑ tekrar nedeniyle kesildi: %s
-Main chat flood detected from your nick.|Rumuzunuzdan ana sohbette aÑÑrÑ tekrar tespit edilmiÑtir.
-Private chat flood detected from your IP.|IP adresinizden Ñ†zel sohbette aÑÑrÑ tekrar tespit edilmiÑtir.
-Sorry, your message has been ignored.|Ğ¦zÑŒr dileriz, mesajÑnÑz gÑ†rmezden gelinmiÑtir.
-Disable or enable right click menu item|SaÑ€ tÑklama menÑŒ unsurunu etkinleÑtir veya devre dÑÑÑ bÑrak
-Disabled right click menu item: %s|SaÑ€ tÑklama menÑŒ unsuru devre dÑÑÑ bÑrakÑldÑ: %s
-Enabled right click menu item: %s|SaÑ€ tÑklama menÑŒ unsuru etkinleÑtirildi: %s
-%s added to search block list.|%s arama engelleme listesine eklenmiÑtir.
-Your search request is discarded due to previous forbidden search request.|Arama talebiniz, Ñ†nceki yasaklanmÑÑ arama talebi nedeniyle gÑ†rmezden gelindi.
-Hub URL: %s|Hub URL'i (baÑ€lantÑsÑ): %s
+Specified country code isn't valid: %s|Belirtilen ülke kodu geçerli değil: %s
+You can't block user who don't share anything: %s|Hiçbir şey paylaşmayan kullanıcıyı engelleyemezsiniz: %s
+You can't kick user who don't share anything: %s|Hiçbir şey paylaşmayan kullancıyı kovamazsınız: %s
+Flood detected from %s with IP %s and class %d in MC: %s|%s kullanıcısından, ki %s IP adresli ve %d sınıflı, ana sohbette aşırı tekrar tespit edildi: %s
+User dropped due to flood: %s|Kullanıcının bağlantısı aşırı tekrar nedeniyle kesildi: %s
+Main chat flood detected from your nick.|Rumuzunuzdan ana sohbette aşırı tekrar tespit edilmiştir.
+Private chat flood detected from your IP.|IP adresinizden özel sohbette aşırı tekrar tespit edilmiştir.
+Sorry, your message has been ignored.|Özür dileriz, mesajınız görmezden gelinmiştir.
+Disable or enable right click menu item|Sağ tıklama menü unsurunu etkinleştir veya devre dışı bırak
+Disabled right click menu item: %s|Sağ tıklama menü unsuru devre dışı bırakıldı: %s
+Enabled right click menu item: %s|Sağ tıklama menü unsuru etkinleştirildi: %s
+%s added to search block list.|%s arama engelleme listesine eklenmiştir.
+Your search request is discarded due to previous forbidden search request.|Arama talebiniz, önceki yasaklanmış arama talebi nedeniyle görmezden gelindi.
+Hub URL: %s|Hub URL'i (bağlantısı): %s
 Search filter block list|Arama filtresi engelleme listesi
 Delete search filter block list entry|Arama listesi engelleme listesi unsurunu sil
-Search filter block list is empty.|Arama filtresi engelleme listesi boÑtur.
+Search filter block list is empty.|Arama filtresi engelleme listesi boştur.
 Deleted search filter block list entry: %s|Arama filtresi engelleme listesi unsuru silindi: %s
-Couldn't delete search filter block list entry because not found: %s|Arama filtresi engelleme listesi unsuru silinemedi Ğ·ÑŒnkÑŒ bulunamadÑ: %s
+Couldn't delete search filter block list entry because not found: %s|Arama filtresi engelleme listesi unsuru silinemedi çünkü bulunamadı: %s
 Yes|Evet
-No|HayÑr
-%s with class %d changed configuration variable %s.%s: %s => %s|%d sÑnÑflÑ %s yapÑlandÑrma deÑ€iÑkenini deÑ€iÑtirdi %s.%s: %s => %s
-Please wait another %d seconds before using public chat.|Herkese aĞ·Ñk sohbeti kullanmadan Ñ†nce %d saniye daha bekleyiniz.
-Please wait another %d seconds before using private chat.|Ğ¦zel sohbeti kullanmadan Ñ†nce %d saniye daha bekleyiniz.
-Low chat uptime of %d seconds from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s|Ğ¦zel sohbette %d saniyelik dÑŒÑÑŒk sohbet Ğ·alÑÑma sÑŒresi, ki %s unsurundan, %s IP adresli ve %d sÑnÑflÑ, %s unsuruna ki %s IP adresli ve %d sÑnÑflÑ: %s
-Low chat uptime of %d seconds from %s with IP %s and class %d in MC: %s|Ana sohbette %d saniyelik dÑŒÑÑŒk Ğ·alÑÑma sÑŒresi, ki %s unsurundan %s IP adresli ve %d sÑnÑflÑ: %s
-Low chat uptime of %d seconds from %s with IP %s and class %d in command: %s|Komutta %d saniyelik dÑŒÑÑŒk Ğ·alÑÑma sÑŒresi, ki %s unsurundan, %s IP adresli ve %d sÑnÑflÑ: %s
-Low registration uptime from %s with IP %s and class %d: %s|%s unsurundan, ki %s IP adresli ve %d sÑnÑflÑ, dÑŒÑÑŒk kayÑt Ğ·alÑÑma sÑŒresi: %s
-%.1f minutes|%.1f dakika
-Thank you, your report has been accepted.|TeÑekkÑŒr ederiz, raporunuz kabul edilmiÑtir.
-Low search uptime of %d seconds from %s with IP %s and class %d as any file: %s|Herhangi bir dosya olarak %d saniyelik dÑŒÑÑŒk arama Ğ·alÑÑma sÑŒresi, ki %s unsurundan :%s IP adresli ve %d sÑnÑflÑ: %s
-Low search uptime of %d seconds from %s with IP %s and class %d as audio file: %s|Ses dosyasÑ olarak %d saniyelik dÑŒÑÑŒk arama Ğ·alÑÑma sÑŒresi, ki %s unsurundan %s IP adresli ve %d sÑnÑflÑ: %s
-Low search uptime of %d seconds from %s with IP %s and class %d as compressed file: %s|SÑkÑÑtÑrÑlmÑÑ dosya olarak %d saniyelik dÑŒÑÑŒk arama Ğ·alÑÑma sÑŒresi, ki %s unsurundan %s IP adresli ve %d sÑnÑflÑ: %s
-Low search uptime of %d seconds from %s with IP %s and class %d as document: %s|Belge olarak %d saniyelik dÑŒÑÑŒk arama Ğ·alÑÑma sÑŒresi, ki %s unsurundan %s IP adresli ve %d sÑnÑflÑ: %s
-Low search uptime of %d seconds from %s with IP %s and class %d as executable: %s|Ğ—alÑÑtÑrÑlabilir dosya olarak %d saniyelik dÑŒÑÑŒk arama Ğ·alÑÑma sÑŒresi, ki %s unsurundan :%s IP adresli ve %d sÑnÑflÑ: %s
-Low search uptime of %d seconds from %s with IP %s and class %d as picture: %s|Resim dosyasÑ olarak %d saniyelik dÑŒÑÑŒk arama Ğ·alÑÑma sÑŒresi, ki %s unsurundan %s IP adresli ve %d sÑnÑflÑ: %s
-Low search uptime of %d seconds from %s with IP %s and class %d as video: %s|Video olarak %d saniyelik dÑŒÑÑŒk arama Ğ·alÑÑma sÑŒresi, ki %s unsurundan %s IP adresli ve %d sÑnÑflÑ: %s
-Low search uptime of %d seconds from %s with IP %s and class %d as folder: %s|KlasÑ†r olarak %d saniyelik dÑŒÑÑŒk arama Ğ·alÑÑma sÑŒresi, ki %s unsurundan :%s IP adresli ve %d sÑnÑflÑ: %s
-Low search uptime of %d seconds from %s with IP %s and class %d as TTH: %s|TTH olarak %d saniyelik dÑŒÑÑŒk arama Ğ·alÑÑma sÑŒresi, ki %s unsurundan %s IP adresli ve %d sÑnÑflÑ: %s
-User dropped: %s|KullanÑcÑnÑn baÑ€lantÑsÑ kesildi: %s
+No|Hayır
+%s with class %d changed configuration variable %s.%s: %s => %s|%d sınıflı %s yapılandırma değişkenini değiştirdi %s.%s: %s => %s
+Please wait another %d seconds before using public chat.|Herkese açık sohbeti kullanmadan önce %d saniye daha bekleyiniz.
+Please wait another %d seconds before using private chat.|Özel sohbeti kullanmadan önce %d saniye daha bekleyiniz.
+Low chat uptime of %d seconds from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s|Özel sohbette %d saniyelik düşük sohbet çalışma süresi, ki %s unsurundan, %s IP adresli ve %d sınıflı, %s unsuruna ki %s IP adresli ve %d sınıflı: %s
+Low chat uptime of %d seconds from %s with IP %s and class %d in MC: %s|Ana sohbette %d saniyelik düşük çalışma süresi, ki %s unsurundan %s IP adresli ve %d sınıflı: %s
+Low chat uptime of %d seconds from %s with IP %s and class %d in command: %s|Komutta %d saniyelik düşük çalışma süresi, ki %s unsurundan, %s IP adresli ve %d sınıflı: %s
+Low registration uptime from %s with IP %s and class %d: %s|%s unsurundan, ki %s IP adresli ve %d sınıflı, düşük kayıt çalışma süresi: %s
+%d seconds|%d saniye
+Thank you, your report has been accepted.|Teşekkür ederiz, raporunuz kabul edilmiştir.
+Low search uptime of %d seconds from %s with IP %s and class %d as any file: %s|Herhangi bir dosya olarak %d saniyelik düşük arama çalışma süresi, ki %s unsurundan :%s IP adresli ve %d sınıflı: %s
+Low search uptime of %d seconds from %s with IP %s and class %d as audio file: %s|Ses dosyası olarak %d saniyelik düşük arama çalışma süresi, ki %s unsurundan %s IP adresli ve %d sınıflı: %s
+Low search uptime of %d seconds from %s with IP %s and class %d as compressed file: %s|Sıkıştırılmış dosya olarak %d saniyelik düşük arama çalışma süresi, ki %s unsurundan %s IP adresli ve %d sınıflı: %s
+Low search uptime of %d seconds from %s with IP %s and class %d as document: %s|Belge olarak %d saniyelik düşük arama çalışma süresi, ki %s unsurundan %s IP adresli ve %d sınıflı: %s
+Low search uptime of %d seconds from %s with IP %s and class %d as executable: %s|Çalıştırılabilir dosya olarak %d saniyelik düşük arama çalışma süresi, ki %s unsurundan :%s IP adresli ve %d sınıflı: %s
+Low search uptime of %d seconds from %s with IP %s and class %d as picture: %s|Resim dosyası olarak %d saniyelik düşük arama çalışma süresi, ki %s unsurundan %s IP adresli ve %d sınıflı: %s
+Low search uptime of %d seconds from %s with IP %s and class %d as video: %s|Video olarak %d saniyelik düşük arama çalışma süresi, ki %s unsurundan %s IP adresli ve %d sınıflı: %s
+Low search uptime of %d seconds from %s with IP %s and class %d as folder: %s|Klasör olarak %d saniyelik düşük arama çalışma süresi, ki %s unsurundan :%s IP adresli ve %d sınıflı: %s
+Low search uptime of %d seconds from %s with IP %s and class %d as TTH: %s|TTH olarak %d saniyelik düşük arama çalışma süresi, ki %s unsurundan %s IP adresli ve %d sınıflı: %s
+User dropped: %s|Kullanıcının bağlantısı kesildi: %s
 %d of %d|%d ki toplam %d
-Main chat responder list contains %d items, but none matched your pattern.|Ana sohbet cevaplayÑcÑ listesi %d unsur iĞ·ermektedir ancak bunlarÑn hiĞ·biri sizin Ñablonunuzla eÑleÑmemiÑtir.
+Main chat responder list contains %d items, but none matched your pattern.|Ana sohbet cevaplayıcı listesi %d unsur içermektedir ancak bunların hiçbiri sizin şablonunuzla eşleşmemiştir.
