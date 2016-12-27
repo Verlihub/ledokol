@@ -62,8 +62,8 @@ Tzaca, JOE™
 -- global storage variables and tables >>
 ---------------------------------------------------------------------
 
-ver_ledo = "2.9.1" -- ledokol version
-bld_ledo = "26" -- build number
+ver_ledo = "2.9.2" -- ledokol version
+bld_ledo = "27" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -989,7 +989,7 @@ cc_names = {
 -- country names by code table <<
 ---------------------------------------------------------------------
 
-table_lang = ""
+table_lang = {}
 table_resp = {}
 table_lars = {}
 table_rcnn = {}
@@ -1059,6 +1059,14 @@ end
 
 if not VH.GetLuaBots then
 	VH.GetLuaBots = VH.GetBots
+end
+
+function _tostring (val) -- lua 5.3 fix
+	if type (val) == "number" then
+		return string.format ("%d", val)
+	end
+
+	return tostring (val)
 end
 
 ---------------------------------------------------------------------
@@ -1336,7 +1344,7 @@ function Main (file)
 
 					old = false -- update version
 					local tm = os.time () + table_sets ["srvtimediff"]
-					VH:SQLQuery ("insert into `" .. tbl_sql ["stat"] .. "` (`type`, `time`, `count`) values ('ver_ledo', " .. tostring (tm) .. ", '" .. ver_ledo .. "') on duplicate key update `time` = " .. tostring (tm) .. ", `count` = '" .. ver_ledo .. "'")
+					VH:SQLQuery ("insert into `" .. tbl_sql ["stat"] .. "` (`type`, `time`, `count`) values ('ver_ledo', " .. _tostring (tm) .. ", '" .. ver_ledo .. "') on duplicate key update `time` = " .. _tostring (tm) .. ", `count` = '" .. ver_ledo .. "'")
 				end
 			end
 		end
@@ -4602,7 +4610,7 @@ function VH_OnParsedMsgMyINFO (nick, data)
 
 		desc, tag, conn, _, mail, size = parsemyinfo (nil, data)
 		hasinfo = true
-		VH:SQLQuery ("insert into `" .. tbl_sql ["ulog"] .. "` (`time`, `nick`, `ip`, `cc`, `desc`, `tag`, `conn`, `email`, `share`) values (" .. tostring (os.time () + table_sets ["srvtimediff"]) .. ", '" .. repsqlchars (nick) .. "', '" .. repsqlchars (addr) .. "', " .. sqlemptnull (cc, true) .. ", " .. sqlemptnull (desc) .. ", " .. sqlemptnull (tag) .. ", " .. sqlemptnull (conn) .. ", " .. sqlemptnull (mail) .. ", " .. repsqlchars (size) .. ")")
+		VH:SQLQuery ("insert into `" .. tbl_sql ["ulog"] .. "` (`time`, `nick`, `ip`, `cc`, `desc`, `tag`, `conn`, `email`, `share`) values (" .. _tostring (os.time () + table_sets ["srvtimediff"]) .. ", '" .. repsqlchars (nick) .. "', '" .. repsqlchars (addr) .. "', " .. sqlemptnull (cc, true) .. ", " .. sqlemptnull (desc) .. ", " .. sqlemptnull (tag) .. ", " .. sqlemptnull (conn) .. ", " .. sqlemptnull (mail) .. ", " .. repsqlchars (size) .. ")")
 	end
 
 	if table_sets ["micheck"] == 0 or table_sets ["micallall"] == 0 then
@@ -4688,7 +4696,7 @@ function VH_OnUserLogin (nick, uip)
 
 		desc, tag, conn, _, email, size = parsemyinfo (nil, mistr)
 		hasinfo = true
-		VH:SQLQuery ("insert into `" .. tbl_sql ["ulog"] .. "` (`time`, `nick`, `ip`, `cc`, `desc`, `tag`, `conn`, `email`, `share`) values (" .. tostring (os.time () + table_sets ["srvtimediff"]) .. ", '" .. repsqlchars (nick) .. "', '" .. repsqlchars (ip) .. "', " .. sqlemptnull (cc, true) .. ", " .. sqlemptnull (desc) .. ", " .. sqlemptnull (tag) .. ", " .. sqlemptnull (conn) .. ", " .. sqlemptnull (email) .. ", " .. repsqlchars (size) .. ")")
+		VH:SQLQuery ("insert into `" .. tbl_sql ["ulog"] .. "` (`time`, `nick`, `ip`, `cc`, `desc`, `tag`, `conn`, `email`, `share`) values (" .. _tostring (os.time () + table_sets ["srvtimediff"]) .. ", '" .. repsqlchars (nick) .. "', '" .. repsqlchars (ip) .. "', " .. sqlemptnull (cc, true) .. ", " .. sqlemptnull (desc) .. ", " .. sqlemptnull (tag) .. ", " .. sqlemptnull (conn) .. ", " .. sqlemptnull (email) .. ", " .. repsqlchars (size) .. ")")
 	end
 
 	local cls = getclass (nick)
@@ -5314,10 +5322,10 @@ function VH_OnTimer (msec)
 
 		if table_sets ["avsearservaddr"] ~= "" and table_othsets ["serv_udp"] then -- we have search server, todo: dont send to no share, self and similar users
 			if table_refu ["SendToActiveClass"] and table_refu ["SendToPassiveClass"] then -- active request to passive users and passive request to active users
-				VH:SendToPassiveClass ("$Search " .. table_sets ["avsearservaddr"] .. ":" .. tostring (table_sets ["avsearservport"]) .. " F?F?0?1?" .. table_avse [table_othsets ["avnextitem"]] .. "|", 0, table_sets ["scanbelowclass"] - 1)
+				VH:SendToPassiveClass ("$Search " .. table_sets ["avsearservaddr"] .. ":" .. _tostring (table_sets ["avsearservport"]) .. " F?F?0?1?" .. table_avse [table_othsets ["avnextitem"]] .. "|", 0, table_sets ["scanbelowclass"] - 1)
 				VH:SendToActiveClass ("$Search Hub:" .. table_othsets ["sendfrom"] .. " F?F?0?1?" .. table_avse [table_othsets ["avnextitem"]] .. "|", 0, table_sets ["scanbelowclass"] - 1)
 			else -- active request to all users
-				VH:SendToClass ("$Search " .. table_sets ["avsearservaddr"] .. ":" .. tostring (table_sets ["avsearservport"]) .. " F?F?0?1?" .. table_avse [table_othsets ["avnextitem"]] .. "|", 0, table_sets ["scanbelowclass"] - 1)
+				VH:SendToClass ("$Search " .. table_sets ["avsearservaddr"] .. ":" .. _tostring (table_sets ["avsearservport"]) .. " F?F?0?1?" .. table_avse [table_othsets ["avnextitem"]] .. "|", 0, table_sets ["scanbelowclass"] - 1)
 			end
 		elseif table_refu ["SendToActiveClass"] then -- we dont have server
 			VH:SendToActiveClass ("$Search Hub:" .. table_othsets ["sendfrom"] .. " F?F?0?1?" .. table_avse [table_othsets ["avnextitem"]] .. "|", 0, table_sets ["scanbelowclass"] - 1)
@@ -5331,10 +5339,10 @@ function VH_OnTimer (msec)
 
 				if table_sets ["avsearservaddr"] ~= "" and table_othsets ["serv_udp"] then -- we have search server
 					if table_refu ["SendToActiveClass"] and table_refu ["SendToPassiveClass"] then -- active request to passive users and passive request to active users
-						VH:SendToPassiveClass ("$Search " .. table_sets ["avsearservaddr"] .. ":" .. tostring (table_sets ["avsearservport"]) .. " F?F?0?1?" .. table_othsets ["avrandstr"] .. "|", 0, table_sets ["scanbelowclass"] - 1)
+						VH:SendToPassiveClass ("$Search " .. table_sets ["avsearservaddr"] .. ":" .. _tostring (table_sets ["avsearservport"]) .. " F?F?0?1?" .. table_othsets ["avrandstr"] .. "|", 0, table_sets ["scanbelowclass"] - 1)
 						VH:SendToActiveClass ("$Search Hub:" .. table_othsets ["sendfrom"] .. " F?F?0?1?" .. table_othsets ["avrandstr"] .. "|", 0, table_sets ["scanbelowclass"] - 1)
 					else -- active request to all users
-						VH:SendToClass ("$Search " .. table_sets ["avsearservaddr"] .. ":" .. tostring (table_sets ["avsearservport"]) .. " F?F?0?1?" .. table_othsets ["avrandstr"] .. "|", 0, table_sets ["scanbelowclass"] - 1)
+						VH:SendToClass ("$Search " .. table_sets ["avsearservaddr"] .. ":" .. _tostring (table_sets ["avsearservport"]) .. " F?F?0?1?" .. table_othsets ["avrandstr"] .. "|", 0, table_sets ["scanbelowclass"] - 1)
 					end
 				elseif table_refu ["SendToActiveClass"] then -- we dont have server
 					VH:SendToActiveClass ("$Search Hub:" .. table_othsets ["sendfrom"] .. " F?F?0?1?" .. table_othsets ["avrandstr"] .. "|", 0, table_sets ["scanbelowclass"] - 1)
@@ -5412,14 +5420,14 @@ function VH_OnTimer (msec)
 	if table_sets ["enableuserlog"] == 1 and table_sets ["ulogautoclean"] > 0 then -- clean up user logger
 		if os.difftime (st, table_othsets ["ulogcleanmins"]) >= 86400 then -- every 24 hours
 			local secs = os.difftime (st, (table_sets ["ulogautoclean"] * 24 * 60 * 60))
-			local _, rows = VH:SQLQuery ("select `id` from `" .. tbl_sql ["ulog"] .. "` where `time` < " .. tostring (secs))
+			local _, rows = VH:SQLQuery ("select `id` from `" .. tbl_sql ["ulog"] .. "` where `time` < " .. _tostring (secs))
 
 			if rows > 0 then
-				VH:SQLQuery ("delete from `" .. tbl_sql ["ulog"] .. "` where `time` < " .. tostring (secs))
+				VH:SQLQuery ("delete from `" .. tbl_sql ["ulog"] .. "` where `time` < " .. _tostring (secs))
 				opsnotify (table_sets ["classnotiledoact"], gettext ("Automatically deleted %d user log entries older than %d days."):format (rows, table_sets ["ulogautoclean"]))
 				local tdiff = st + table_sets ["srvtimediff"]
-				VH:SQLQuery ("insert into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('lastcleanulog', " .. tostring (tdiff) .. ") on duplicate key update `value` = " .. tostring (tdiff))
-				VH:SQLQuery ("insert into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('limcleanulog', " .. tostring (table_sets ["ulogautoclean"]) .. ") on duplicate key update `value` = " .. tostring (table_sets ["ulogautoclean"]))
+				VH:SQLQuery ("insert into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('lastcleanulog', " .. _tostring (tdiff) .. ") on duplicate key update `value` = " .. _tostring (tdiff))
+				VH:SQLQuery ("insert into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('limcleanulog', " .. _tostring (table_sets ["ulogautoclean"]) .. ") on duplicate key update `value` = " .. _tostring (table_sets ["ulogautoclean"]))
 			end
 
 			table_othsets ["ulogcleanmins"] = st
@@ -6831,10 +6839,10 @@ end
 
 function delacre (nick, data)
 	local id = tonumber (data) or 0
-	local _, rows = VH:SQLQuery ("select `id` from `" .. tbl_sql ["acre"] .. "` where `id` = " .. tostring (id) .. " limit 1")
+	local _, rows = VH:SQLQuery ("select `id` from `" .. tbl_sql ["acre"] .. "` where `id` = " .. _tostring (id) .. " limit 1")
 
 	if rows > 0 then
-		VH:SQLQuery ("delete from `" .. tbl_sql ["acre"] .. "` where `id` = " .. tostring (id) .. " limit 1")
+		VH:SQLQuery ("delete from `" .. tbl_sql ["acre"] .. "` where `id` = " .. _tostring (id) .. " limit 1")
 		commandanswer (nick, gettext ("Deleted automatic country chatroom entrance with ID: %d"):format (id))
 	else
 		commandanswer (nick, gettext ("Couldn't delete automatic country chatroom entrance because ID not found: %d"):format (id))
@@ -6855,7 +6863,7 @@ function listacre (nick)
 			local room = table_sets ["ccroomstyle"]:gsub ("<cc>", reprexpchars (cc)) -- code
 			room = room:gsub ("<cn>", reprexpchars (cc_names [cc] or gettext ("Unknown country"))) -- name
 			room = room:gsub (string.char (32), string.char (160)) -- space
-			list = list .. " [ I: " .. tostring (id) .. " ] [ C: " .. room .. " ] [ N: " .. us .. " ]\r\n"
+			list = list .. " [ I: " .. _tostring (id) .. " ] [ C: " .. room .. " ] [ N: " .. us .. " ]\r\n"
 		end
 
 		commandanswer (nick, gettext ("Automatic country chatroom entrance list") .. ":\r\n\r\n" .. list)
@@ -7017,7 +7025,7 @@ function chatroomhelp ()
 	local txt = " " .. ustrig .. table_cmnds ["chatenter"] .. " - " .. gettext ("Enter the chatroom") .. "\r\n"
 	txt = txt .. " " .. ustrig .. table_cmnds ["chatleave"] .. " - " .. gettext ("Leave the chatroom") .. "\r\n"
 	txt = txt .. " " .. ustrig .. table_cmnds ["chatusers"] .. " - " .. gettext ("Chatroom member list") .. "\r\n"
-	txt = txt .. " " .. ustrig .. table_cmnds ["chathist"] .. " [" .. gettext ("lines") .. "=" .. tostring (table_sets ["histdeflines"]) .. "] - " .. gettext ("Chatroom history") .. "\r\n"
+	txt = txt .. " " .. ustrig .. table_cmnds ["chathist"] .. " [" .. gettext ("lines") .. "=" .. _tostring (table_sets ["histdeflines"]) .. "] - " .. gettext ("Chatroom history") .. "\r\n"
 	txt = txt .. " " .. ustrig .. table_cmnds ["chathelp"] .. " - " .. gettext ("This list of commands") .. "\r\n"
 	return txt
 end
@@ -7076,9 +7084,9 @@ function broadcastccroom (to, nick, data, class) -- country code based chatroom
 
 						for c, x in pairs (v) do
 							if table_sets ["custnickclass"] < 11 then -- use custom nick
-								list = list .. " " .. tostring (c) .. ". " .. (getcustnick (x) or x) .. "\r\n"
+								list = list .. " " .. _tostring (c) .. ". " .. (getcustnick (x) or x) .. "\r\n"
 							else
-								list = list .. " " .. tostring (c) .. ". " .. x .. "\r\n"
+								list = list .. " " .. _tostring (c) .. ". " .. x .. "\r\n"
 							end
 						end
 
@@ -7139,9 +7147,9 @@ function broadcastccroom (to, nick, data, class) -- country code based chatroom
 
 							for c, x in pairs (v) do
 								if table_sets ["custnickclass"] < 11 then -- use custom nick
-									list = list .. " " .. tostring (c) .. ". " .. (getcustnick (x) or x) .. "\r\n"
+									list = list .. " " .. _tostring (c) .. ". " .. (getcustnick (x) or x) .. "\r\n"
 								else
-									list = list .. " " .. tostring (c) .. ". " .. x .. "\r\n"
+									list = list .. " " .. _tostring (c) .. ". " .. x .. "\r\n"
 								end
 							end
 
@@ -7294,9 +7302,9 @@ function broadcastchatroom (to, nick, data, class) -- class based chatroom
 
 								if cl >= minc and cl <= maxc and (not table_refu ["GetUserCC"] or cc == "*" or cc == getcc (x)) and getchatroomignore (x, to) == 0 then
 									if table_sets ["custnickclass"] < 11 then -- use custom nick
-										list = list .. " " .. tostring (c) .. ". " .. (getcustnick (x) or x) .. "\r\n"
+										list = list .. " " .. _tostring (c) .. ". " .. (getcustnick (x) or x) .. "\r\n"
 									else
-										list = list .. " " .. tostring (c) .. ". " .. x .. "\r\n"
+										list = list .. " " .. _tostring (c) .. ". " .. x .. "\r\n"
 									end
 
 									c = c + 1
@@ -7831,7 +7839,7 @@ function logsread (nick, line)
 					show = lito
 				end
 
-				local nule, list = # tostring (lito), ""
+				local nule, list = # _tostring (lito), ""
 				lito = 0
 
 				for line in io.lines (table_othsets ["cfgdir"] .. name) do
@@ -8153,10 +8161,10 @@ function addtrigger (nick, data)
 		local _, rows = VH:SQLQuery ("select `minclass` from `" .. tbl_sql ["trig"] .. "` where `id` = '" .. entry .. "' limit 1")
 
 		if rows > 0 then
-			VH:SQLQuery ("update `" .. tbl_sql ["trig"] .. "` set `content` = '" .. repsqlchars (cont) .. "', `minclass` = " .. tostring (minc) .. ", `maxclass` = " .. tostring (maxc) .. " where `id` = '" .. entry .. "' limit 1")
+			VH:SQLQuery ("update `" .. tbl_sql ["trig"] .. "` set `content` = '" .. repsqlchars (cont) .. "', `minclass` = " .. _tostring (minc) .. ", `maxclass` = " .. _tostring (maxc) .. " where `id` = '" .. entry .. "' limit 1")
 			commandanswer (nick, gettext ("Modified trigger: %s"):format (id))
 		else
-			VH:SQLQuery ("insert into `" .. tbl_sql ["trig"] .. "` (`id`, `content`, `minclass`, `maxclass`) values ('" .. entry .. "', '" .. repsqlchars (cont) .. "', " .. tostring (minc) .. ", " .. tostring (maxc) .. ")")
+			VH:SQLQuery ("insert into `" .. tbl_sql ["trig"] .. "` (`id`, `content`, `minclass`, `maxclass`) values ('" .. entry .. "', '" .. repsqlchars (cont) .. "', " .. _tostring (minc) .. ", " .. _tostring (maxc) .. ")")
 			commandanswer (nick, gettext ("Added trigger: %s"):format (id))
 		end
 	end
@@ -8366,10 +8374,10 @@ function addrcmenu (nick, line)
 
 						if rows > 0 then -- update
 							local _, id = VH:SQLFetch (0)
-							VH:SQLQuery ("update `" .. tbl_sql ["rcmenu"] .. "` set `command` = '" .. repcmnd .."', `type` = " .. tostring (cype) .. ", `cont` = " .. tostring (cont) .. ", `order` = " .. tostring (ord) .. ", `minclass` = " .. tostring (minc) .. ", `maxclass` = " .. tostring (maxc) .. " where `id` = " .. tostring (id))
+							VH:SQLQuery ("update `" .. tbl_sql ["rcmenu"] .. "` set `command` = '" .. repcmnd .."', `type` = " .. _tostring (cype) .. ", `cont` = " .. _tostring (cont) .. ", `order` = " .. _tostring (ord) .. ", `minclass` = " .. _tostring (minc) .. ", `maxclass` = " .. _tostring (maxc) .. " where `id` = " .. _tostring (id))
 							commandanswer (nick, gettext ("Modified right click menu item: %s"):format (menu))
 						else -- add
-							VH:SQLQuery ("insert into `" .. tbl_sql ["rcmenu"] .. "` (`menu`, `command`, `type`, `cont`, `order`, `minclass`, `maxclass`) values ('" .. repmenu .. "', '" .. repcmnd .. "', " .. tostring (cype) .. ", " .. tostring (cont) .. ", " .. tostring (ord) .. ", " .. tostring (minc) .. ", " .. tostring (maxc) .. ")")
+							VH:SQLQuery ("insert into `" .. tbl_sql ["rcmenu"] .. "` (`menu`, `command`, `type`, `cont`, `order`, `minclass`, `maxclass`) values ('" .. repmenu .. "', '" .. repcmnd .. "', " .. _tostring (cype) .. ", " .. _tostring (cont) .. ", " .. _tostring (ord) .. ", " .. _tostring (minc) .. ", " .. _tostring (maxc) .. ")")
 							commandanswer (nick, gettext ("Added right click menu item: %s"):format (menu))
 						end
 					else -- unknown maximum class
@@ -8392,11 +8400,11 @@ end
 ----- ---- --- -- -
 
 function delrcmenu (nick, id)
-	local _, rows = VH:SQLQuery ("select `menu` from `" .. tbl_sql ["rcmenu"] .. "` where `id` = " .. tostring (id))
+	local _, rows = VH:SQLQuery ("select `menu` from `" .. tbl_sql ["rcmenu"] .. "` where `id` = " .. _tostring (id))
 
 	if rows > 0 then
 		local _, menu = VH:SQLFetch (0)
-		VH:SQLQuery ("delete from `" .. tbl_sql ["rcmenu"] .. "` where `id` = " .. tostring (id))
+		VH:SQLQuery ("delete from `" .. tbl_sql ["rcmenu"] .. "` where `id` = " .. _tostring (id))
 		commandanswer (nick, gettext ("Deleted right click menu item: %s"):format (menu))
 	else
 		commandanswer (nick, gettext ("Right click menu item not found: %d"):format (tonumber (id)))
@@ -8421,7 +8429,7 @@ function listrcmenu (nick)
 				list = list .. " " .. gettext ("Menu command") .. ": " .. cmnd .. "\r\n"
 			end
 
-			list = list .. " [ I: " .. tostring (id) .. " ] [ T: " .. tostring (cype) .. " ] [ C: " .. tostring (cont) .. " ] [ O: " .. tostring (ord) .. " ] [ MIC: " .. tostring (minc) .. " ] [ MAC: " .. tostring (maxc) .. " ] [ D: " .. tostring (off) .. " ]\r\n"
+			list = list .. " [ I: " .. _tostring (id) .. " ] [ T: " .. _tostring (cype) .. " ] [ C: " .. _tostring (cont) .. " ] [ O: " .. _tostring (ord) .. " ] [ MIC: " .. _tostring (minc) .. " ] [ MAC: " .. _tostring (maxc) .. " ] [ D: " .. _tostring (off) .. " ]\r\n"
 		end
 
 		commandanswer (nick, gettext ("List of right click menu items") .. ":\r\n" .. list)
@@ -8437,11 +8445,11 @@ function ordrcmenu (nick, line)
 	ord = tonumber (ord)
 
 	if ord >= 0 and ord <= 65535 then
-		local _, rows = VH:SQLQuery ("select `menu` from `" .. tbl_sql ["rcmenu"] .. "` where `id` = " .. tostring (id))
+		local _, rows = VH:SQLQuery ("select `menu` from `" .. tbl_sql ["rcmenu"] .. "` where `id` = " .. _tostring (id))
 
 		if rows > 0 then
 			local _, menu = VH:SQLFetch (0)
-			VH:SQLQuery ("update `" .. tbl_sql ["rcmenu"] .. "` set `order` = " .. tostring (ord) .. " where `id` = " .. tostring (id))
+			VH:SQLQuery ("update `" .. tbl_sql ["rcmenu"] .. "` set `order` = " .. _tostring (ord) .. " where `id` = " .. _tostring (id))
 			commandanswer (nick, gettext ("Changed right click menu item order: %s"):format (menu))
 		else
 			commandanswer (nick, gettext ("Right click menu item not found: %d"):format (tonumber (id)))
@@ -8454,17 +8462,17 @@ end
 ----- ---- --- -- -
 
 function offrcmenu (nick, id)
-	local _, rows = VH:SQLQuery ("select `menu`, `off` from `" .. tbl_sql ["rcmenu"] .. "` where `id` = " .. tostring (id))
+	local _, rows = VH:SQLQuery ("select `menu`, `off` from `" .. tbl_sql ["rcmenu"] .. "` where `id` = " .. _tostring (id))
 
 	if rows > 0 then
 		local _, menu, off = VH:SQLFetch (0)
 		off = tonumber (off or 0) or 0
 
 		if off == 0 then
-			VH:SQLQuery ("update `" .. tbl_sql ["rcmenu"] .. "` set `off` = 1 where `id` = " .. tostring (id))
+			VH:SQLQuery ("update `" .. tbl_sql ["rcmenu"] .. "` set `off` = 1 where `id` = " .. _tostring (id))
 			commandanswer (nick, gettext ("Disabled right click menu item: %s"):format (menu))
 		else
-			VH:SQLQuery ("update `" .. tbl_sql ["rcmenu"] .. "` set `off` = 0 where `id` = " .. tostring (id))
+			VH:SQLQuery ("update `" .. tbl_sql ["rcmenu"] .. "` set `off` = 0 where `id` = " .. _tostring (id))
 			commandanswer (nick, gettext ("Enabled right click menu item: %s"):format (menu))
 		end
 	else
@@ -8487,16 +8495,16 @@ function sendrcmenu (nick, class)
 		end
 	end
 
-	local _, rows = VH:SQLQuery ("select `menu`, `command`, `type`, `cont` from `" .. tbl_sql ["rcmenu"] .. "` where `off` = 0 and `minclass` <= " .. tostring (class) .. " and `maxclass` >= " .. tonumber (class) .. " order by `order` asc, `id` asc")
+	local _, rows = VH:SQLQuery ("select `menu`, `command`, `type`, `cont` from `" .. tbl_sql ["rcmenu"] .. "` where `off` = 0 and `minclass` <= " .. _tostring (class) .. " and `maxclass` >= " .. tonumber (class) .. " order by `order` asc, `id` asc")
 
 	if rows > 0 then
 		for x = 0, rows - 1 do
 			local _, menu, cmnd, cype, cont = VH:SQLFetch (x)
 
 			if cmnd == "" then
-				VH:SendToUser ("$UserCommand " .. tostring (cype) .. " " .. tostring (cont) .. "|", nick)
+				VH:SendToUser ("$UserCommand " .. _tostring (cype) .. " " .. _tostring (cont) .. "|", nick)
 			else
-				VH:SendToUser ("$UserCommand " .. tostring (cype) .. " " .. tostring (cont) .. " " .. menu .. "$<%[mynick]> " .. cmnd .. "&#124;|", nick)
+				VH:SendToUser ("$UserCommand " .. _tostring (cype) .. " " .. _tostring (cont) .. " " .. menu .. "$<%[mynick]> " .. cmnd .. "&#124;|", nick)
 			end
 		end
 	end
@@ -8651,7 +8659,7 @@ end
 
 function addnews (nick, item)
 	local ndate = os.time () + table_sets ["srvtimediff"] -- current time
-	VH:SQLQuery ("insert into `" .. tbl_sql ["news"] .. "` (`date`, `by`, `item`) values (" .. tostring (ndate) .. ", '" .. repsqlchars (nick) .. "', '" .. repsqlchars (item) .. "')")
+	VH:SQLQuery ("insert into `" .. tbl_sql ["news"] .. "` (`date`, `by`, `item`) values (" .. _tostring (ndate) .. ", '" .. repsqlchars (nick) .. "', '" .. repsqlchars (item) .. "')")
 
 	if table_sets ["newsclass"] < 11 then
 		maintoall (gettext ("News item added by %s: %s"):format (nick, item), table_sets ["newsclass"], 10)
@@ -8703,7 +8711,7 @@ function sendnews (nick, num, auto)
 		lnum = 1
 	end
 
-	local _, rows = VH:SQLQuery ("select `date`, `by`, `item` from `" .. tbl_sql ["news"] .. "` order by `date` desc, `id` desc limit " .. tostring (lnum))
+	local _, rows = VH:SQLQuery ("select `date`, `by`, `item` from `" .. tbl_sql ["news"] .. "` order by `date` desc, `id` desc limit " .. _tostring (lnum))
 
 	if rows > 0 then
 		local list = ""
@@ -8761,7 +8769,7 @@ function listresponder (nick, lre)
 			local _, id, msg, repl, maxc, occur = VH:SQLFetch (x)
 
 			if lre == "" or reppatchars (msg):match (repnmdcinchars (lre)) then
-				list = list .. "\r\n " .. gettext ("Responder") .. ": " .. repnmdcoutchars (msg) .. "\r\n " .. gettext ("Reply") .. ": " .. repl .. "\r\n [ I: " .. tostring (id) .. " ] [ C: " .. tostring (maxc) .. " ] [ O: " .. tostring (occur) .. " ]\r\n"
+				list = list .. "\r\n " .. gettext ("Responder") .. ": " .. repnmdcoutchars (msg) .. "\r\n " .. gettext ("Reply") .. ": " .. repl .. "\r\n [ I: " .. _tostring (id) .. " ] [ C: " .. _tostring (maxc) .. " ] [ O: " .. _tostring (occur) .. " ]\r\n"
 				count = count + 1
 			end
 		end
@@ -8869,7 +8877,7 @@ function replyresponder (nick, cls, msg)
 
 			for k, v in pairs (respsel [math.random (cnt)]) do
 				table.insert (table_resp, {[os.time ()] = reptextvars (v, nick, msg)})
-				VH:SQLQuery ("update `" .. tbl_sql ["mcresp"] .. "` set `occurred` = `occurred` + 1 where `id` = " .. tostring (k))
+				VH:SQLQuery ("update `" .. tbl_sql ["mcresp"] .. "` set `occurred` = `occurred` + 1 where `id` = " .. _tostring (k))
 
 				if table_sets ["respskiplast"] == 1 then
 					table_lars.last = k
@@ -8898,7 +8906,7 @@ function addreplacer (nick, item)
 	elseif flags < 0 or flags > 2 then
 		commandanswer (nick, gettext ("Known flags are: %s"):format ("0=ALL, 1=MC " .. gettext ("and") .. " 2=PM"))
 	else
-		VH:SQLQuery ("insert into `" .. tbl_sql ["chatrepl"] .. "` (`message`, `replace`, `maxclass`, `flags`) values ('" .. repsqlchars (repnmdcinchars (data)) .. "', '" .. repsqlchars (repl) .. "', " .. tostring (maxc) .. ", " .. tostring (flags) .. ")")
+		VH:SQLQuery ("insert into `" .. tbl_sql ["chatrepl"] .. "` (`message`, `replace`, `maxclass`, `flags`) values ('" .. repsqlchars (repnmdcinchars (data)) .. "', '" .. repsqlchars (repl) .. "', " .. _tostring (maxc) .. ", " .. _tostring (flags) .. ")")
 		local note = "Added replacer in MC: %s"
 
 		if flags == 0 then
@@ -8914,10 +8922,10 @@ end
 ----- ---- --- -- -
 
 function delreplacer (nick, id)
-	local _, rows = VH:SQLQuery ("select `maxclass` from `" .. tbl_sql ["chatrepl"] .. "` where `id` = " .. tostring (id))
+	local _, rows = VH:SQLQuery ("select `maxclass` from `" .. tbl_sql ["chatrepl"] .. "` where `id` = " .. _tostring (id))
 
 	if rows > 0 then
-		VH:SQLQuery ("delete from `" .. tbl_sql ["chatrepl"] .. "` where `id` = " .. tostring (id))
+		VH:SQLQuery ("delete from `" .. tbl_sql ["chatrepl"] .. "` where `id` = " .. _tostring (id))
 		commandanswer (nick, gettext ("Deleted chat replacer with ID: %d"):format (id))
 	else
 		commandanswer (nick, gettext ("Couldn't delete chat replacer because ID not found: %d"):format (id))
@@ -8934,7 +8942,7 @@ function listreplacer (nick)
 
 		for row = 0, rows - 1 do
 			local _, id, data, repl, maxc, flag, occ = VH:SQLFetch (row)
-			list = list .. "\r\n " .. gettext ("LRE") .. ": " .. repnmdcoutchars (data) .. "\r\n " .. gettext ("Replace") .. ": " .. repl .. "\r\n [ I: " .. tostring (id) .. " ] [ C: " .. tostring (maxc) .. " ] [ F: " .. tostring (flag) .. " ] [ O: " .. tostring (occ) .. " ]\r\n"
+			list = list .. "\r\n " .. gettext ("LRE") .. ": " .. repnmdcoutchars (data) .. "\r\n " .. gettext ("Replace") .. ": " .. repl .. "\r\n [ I: " .. _tostring (id) .. " ] [ C: " .. _tostring (maxc) .. " ] [ F: " .. _tostring (flag) .. " ] [ O: " .. _tostring (occ) .. " ]\r\n"
 		end
 
 		commandanswer (nick, gettext ("Chat replacer list") .. ":\r\n" .. list)
@@ -8956,10 +8964,10 @@ function addreplex (nick, line)
 		local _, rows = VH:SQLQuery ("select `type` from `" .. tbl_sql ["replex"] .. "` where `exception` = '" .. entry .. "'")
 
 		if rows > 0 then
-			VH:SQLQuery ("update `" .. tbl_sql ["replex"] .. "` set `type` = " .. tostring (iype) .. " where `exception` = '" .. entry .. "'")
+			VH:SQLQuery ("update `" .. tbl_sql ["replex"] .. "` set `type` = " .. _tostring (iype) .. " where `exception` = '" .. entry .. "'")
 			commandanswer (nick, gettext ("Modified chat replacer exception with type %d: %s"):format (iype, item))
 		else
-			VH:SQLQuery ("insert into `" .. tbl_sql ["replex"] .. "` (`exception`, `type`) values ('" .. entry .. "', " .. tostring (iype) .. ")")
+			VH:SQLQuery ("insert into `" .. tbl_sql ["replex"] .. "` (`exception`, `type`) values ('" .. entry .. "', " .. _tostring (iype) .. ")")
 			commandanswer (nick, gettext ("Added chat replacer exception with type %d: %s"):format (iype, item))
 		end
 	end
@@ -8992,10 +9000,10 @@ function listreplex (nick)
 			local _, item, iype, occ = VH:SQLFetch (row)
 
 			if row == 0 then
-				olen = # tostring (occ)
+				olen = # _tostring (occ)
 			end
 
-			list = list .. " " .. prezero (# tostring (rows), (row + 1)) .. ". [ T: " .. tostring (iype) .. " ] [ O: " .. prezero (olen, occ) .. " ] " .. repnmdcoutchars (item) .. "\r\n"
+			list = list .. " " .. prezero (# _tostring (rows), (row + 1)) .. ". [ T: " .. _tostring (iype) .. " ] [ O: " .. prezero (olen, occ) .. " ] " .. repnmdcoutchars (item) .. "\r\n"
 		end
 
 		commandanswer (nick, gettext ("Chat replacer exception list") .. ":\r\n\r\n" .. list)
@@ -9038,7 +9046,7 @@ function replchatmsg (nick, addr, class, data, flag)
 		end
 	end
 
-	local _, rows = VH:SQLQuery ("select `id`, `message`, `replace`, `maxclass` from `" .. tbl_sql ["chatrepl"] .. "` where `flags` = 0 or `flags` = " .. tostring (flag))
+	local _, rows = VH:SQLQuery ("select `id`, `message`, `replace`, `maxclass` from `" .. tbl_sql ["chatrepl"] .. "` where `flags` = 0 or `flags` = " .. _tostring (flag))
 
 	if rows > 0 then
 		local repls = {}
@@ -9094,7 +9102,7 @@ function replchatmsg (nick, addr, class, data, flag)
 					end
 
 					if last > 1 then
-						VH:SQLQuery ("update `" .. tbl_sql ["chatrepl"] .. "` set `occurred` = `occurred` + 1 where `id` = " .. tostring (id))
+						VH:SQLQuery ("update `" .. tbl_sql ["chatrepl"] .. "` set `occurred` = `occurred` + 1 where `id` = " .. _tostring (id))
 						done = true
 					end
 				end
@@ -9339,7 +9347,7 @@ function seenlookup (nick, line)
 					local _, _, lous, lohu = line:find ("^([^ ]+)|([^ ]+)$")
 
 					if lous and lohu then
-						list = list .. " " .. tostring (lpos) .. ". " .. repnmdcoutchars (lous) .. " @ dchub://" .. repnmdcoutchars (lohu) .. "/\r\n"
+						list = list .. " " .. _tostring (lpos) .. ". " .. repnmdcoutchars (lous) .. " @ dchub://" .. repnmdcoutchars (lohu) .. "/\r\n"
 						lpos = lpos + 1
 					end
 				end
@@ -9463,7 +9471,7 @@ elseif isbot (user) == true then -- bot
 						info = info .. " " .. string.format (gettext ("Share: %s"), makesize (share)) .. "\r\n" -- share
 
 						if tonumber (share) > 0 then
-							info = info .. " " .. string.format (gettext ("Exact share: %s"), tostring (share) .. " " .. gettext ("B")) .. "\r\n" -- exact share
+							info = info .. " " .. string.format (gettext ("Exact share: %s"), _tostring (share) .. " " .. gettext ("B")) .. "\r\n" -- exact share
 						end
 					end
 
@@ -9617,7 +9625,7 @@ else -- user
 		info = info .. " " .. string.format (gettext ("Share: %s"), makesize (share)) .. "\r\n" -- share
 
 		if tonumber (share) > 0 then
-			info = info .. " " .. string.format (gettext ("Exact share: %s"), tostring (share) .. " " .. gettext ("B")) .. "\r\n" -- exact share
+			info = info .. " " .. string.format (gettext ("Exact share: %s"), _tostring (share) .. " " .. gettext ("B")) .. "\r\n" -- exact share
 		end
 	end
 
@@ -9895,7 +9903,7 @@ function collectstats ()
 	-- users and peak
 
 	local uc = getusercount ()
-	VH:SQLQuery ("insert into `" .. tbl_sql ["stat"] .. "` (`type`, `time`, `count`) values ('users_now', " .. tostring (tm) .. ", " .. tostring (uc) .. ") on duplicate key update `time` = " .. tostring (tm) .. ", `count` = " .. tostring (uc))
+	VH:SQLQuery ("insert into `" .. tbl_sql ["stat"] .. "` (`type`, `time`, `count`) values ('users_now', " .. _tostring (tm) .. ", " .. _tostring (uc) .. ") on duplicate key update `time` = " .. _tostring (tm) .. ", `count` = " .. _tostring (uc))
 	local _, rows = VH:SQLQuery ("select `time`, `count` from `" .. tbl_sql ["stat"] .. "` where `type` = 'users_peak' limit 1")
 
 	if rows > 0 then
@@ -9904,7 +9912,7 @@ function collectstats ()
 		puc = tonumber (puc) or 0
 
 		if uc > puc then
-			VH:SQLQuery ("update `" .. tbl_sql ["stat"] .. "` set `time` = " .. tostring (tm) .. ", `count` = " .. tostring (uc) .. " where `type` = 'users_peak' limit 1")
+			VH:SQLQuery ("update `" .. tbl_sql ["stat"] .. "` set `time` = " .. _tostring (tm) .. ", `count` = " .. _tostring (uc) .. " where `type` = 'users_peak' limit 1")
 
 			if table_sets ["classnotipeakuc"] < 11 then
 				local msg = table_sets ["userrecmsg"]
@@ -9929,13 +9937,13 @@ function collectstats ()
 			end
 		end
 	else
-		VH:SQLQuery ("insert into `" .. tbl_sql ["stat"] .. "` (`type`, `time`, `count`) values ('users_peak', " .. tostring (tm) .. ", " .. tostring (uc) .. ")")
+		VH:SQLQuery ("insert into `" .. tbl_sql ["stat"] .. "` (`type`, `time`, `count`) values ('users_peak', " .. _tostring (tm) .. ", " .. _tostring (uc) .. ")")
 	end
 
 	-- total share and peak
 
 	local ts = gettotsharesize ()
-	VH:SQLQuery ("insert into `" .. tbl_sql ["stat"] .. "` (`type`, `time`, `count`) values ('share_now', " .. tostring (tm) .. ", '" .. tostring (ts) .. "') on duplicate key update `time` = " .. tostring (tm) .. ", `count` = '" .. tostring (ts) .. "'")
+	VH:SQLQuery ("insert into `" .. tbl_sql ["stat"] .. "` (`type`, `time`, `count`) values ('share_now', " .. _tostring (tm) .. ", '" .. _tostring (ts) .. "') on duplicate key update `time` = " .. _tostring (tm) .. ", `count` = '" .. _tostring (ts) .. "'")
 	local _, rows = VH:SQLQuery ("select `time`, `count` from `" .. tbl_sql ["stat"] .. "` where `type` = 'share_peak' limit 1")
 
 	if rows > 0 then
@@ -9944,7 +9952,7 @@ function collectstats ()
 		pts = tonumber (pts) or 0
 
 		if ts > pts then
-			VH:SQLQuery ("update `" .. tbl_sql ["stat"] .. "` set `time` = " .. tostring (tm) .. ", `count` = '" .. tostring (ts) .. "' where `type` = 'share_peak' limit 1")
+			VH:SQLQuery ("update `" .. tbl_sql ["stat"] .. "` set `time` = " .. _tostring (tm) .. ", `count` = '" .. _tostring (ts) .. "' where `type` = 'share_peak' limit 1")
 
 			if table_sets ["classnotipeakts"] < 11 then
 				local msg = table_sets ["sharerecmsg"]
@@ -9969,14 +9977,14 @@ function collectstats ()
 			end
 		end
 	else
-		VH:SQLQuery ("insert into `" .. tbl_sql ["stat"] .. "` (`type`, `time`, `count`) values ('share_peak', " .. tostring (tm) .. ", '" .. tostring (ts) .. "')")
+		VH:SQLQuery ("insert into `" .. tbl_sql ["stat"] .. "` (`type`, `time`, `count`) values ('share_peak', " .. _tostring (tm) .. ", '" .. _tostring (ts) .. "')")
 	end
 
 	-- average share and peak
 
 	if uc > 0 and ts > 0 then
 		local avg = roundint ((ts / uc), 0)
-		VH:SQLQuery ("insert into `" .. tbl_sql ["stat"] .. "` (`type`, `time`, `count`) values ('avgshare_now', " .. tostring (tm) .. ", '" .. tostring (avg) .. "') on duplicate key update `time` = " .. tostring (tm) .. ", `count` = '" .. tostring (avg) .. "'")
+		VH:SQLQuery ("insert into `" .. tbl_sql ["stat"] .. "` (`type`, `time`, `count`) values ('avgshare_now', " .. _tostring (tm) .. ", '" .. _tostring (avg) .. "') on duplicate key update `time` = " .. _tostring (tm) .. ", `count` = '" .. _tostring (avg) .. "'")
 		local _, rows = VH:SQLQuery ("select `count` from `" .. tbl_sql ["stat"] .. "` where `type` = 'avgshare_peak' limit 1")
 
 		if rows > 0 then
@@ -9984,10 +9992,10 @@ function collectstats ()
 			pavg = tonumber (pavg) or 0
 
 			if avg > pavg then
-				VH:SQLQuery ("update `" .. tbl_sql ["stat"] .. "` set `time` = " .. tostring (tm) .. ", `count` = '" .. tostring (avg) .. "' where `type` = 'avgshare_peak' limit 1")
+				VH:SQLQuery ("update `" .. tbl_sql ["stat"] .. "` set `time` = " .. _tostring (tm) .. ", `count` = '" .. _tostring (avg) .. "' where `type` = 'avgshare_peak' limit 1")
 			end
 		else
-			VH:SQLQuery ("insert into `" .. tbl_sql ["stat"] .. "` (`type`, `time`, `count`) values ('avgshare_peak', " .. tostring (tm) .. ", '" .. tostring (avg) .."')")
+			VH:SQLQuery ("insert into `" .. tbl_sql ["stat"] .. "` (`type`, `time`, `count`) values ('avgshare_peak', " .. _tostring (tm) .. ", '" .. _tostring (avg) .."')")
 		end
 	end
 
@@ -9995,7 +10003,7 @@ function collectstats ()
 
 	if table_refu ["GetUpTime"] then
 		local ut = getuptime ()
-		VH:SQLQuery ("insert into `" .. tbl_sql ["stat"] .. "` (`type`, `time`, `count`) values ('uptime_now', " .. tostring (tm) .. ", " .. tostring (ut) .. ") on duplicate key update `time` = " .. tostring (tm) .. ", `count` = " .. tostring (ut))
+		VH:SQLQuery ("insert into `" .. tbl_sql ["stat"] .. "` (`type`, `time`, `count`) values ('uptime_now', " .. _tostring (tm) .. ", " .. _tostring (ut) .. ") on duplicate key update `time` = " .. _tostring (tm) .. ", `count` = " .. _tostring (ut))
 		local _, rows = VH:SQLQuery ("select `count` from `" .. tbl_sql ["stat"] .. "` where `type` = 'uptime_peak' limit 1")
 
 		if rows > 0 then
@@ -10003,17 +10011,17 @@ function collectstats ()
 			put = tonumber (put) or 0
 
 			if ut > put then
-				VH:SQLQuery ("update `" .. tbl_sql ["stat"] .. "` set `time` = " .. tostring (tm) .. ", `count` = " .. tostring (ut) .. " where `type` = 'uptime_peak' limit 1")
+				VH:SQLQuery ("update `" .. tbl_sql ["stat"] .. "` set `time` = " .. _tostring (tm) .. ", `count` = " .. _tostring (ut) .. " where `type` = 'uptime_peak' limit 1")
 			end
 		else
-			VH:SQLQuery ("insert into `" .. tbl_sql ["stat"] .. "` (`type`, `time`, `count`) values ('uptime_peak', " .. tostring (tm) .. ", " .. tostring (ut) .. ")")
+			VH:SQLQuery ("insert into `" .. tbl_sql ["stat"] .. "` (`type`, `time`, `count`) values ('uptime_peak', " .. _tostring (tm) .. ", " .. _tostring (ut) .. ")")
 		end
 	end
 
 	-- memory and peak
 
 	local mu = getmemusg ()
-	VH:SQLQuery ("insert into `" .. tbl_sql ["stat"] .. "` (`type`, `time`, `count`) values ('memory_now', " .. tostring (tm) .. ", " .. tostring (mu) .. ") on duplicate key update `time` = " .. tostring (tm) .. ", `count` = " .. tostring (mu))
+	VH:SQLQuery ("insert into `" .. tbl_sql ["stat"] .. "` (`type`, `time`, `count`) values ('memory_now', " .. _tostring (tm) .. ", " .. _tostring (mu) .. ") on duplicate key update `time` = " .. _tostring (tm) .. ", `count` = " .. _tostring (mu))
 	local _, rows = VH:SQLQuery ("select `count` from `" .. tbl_sql ["stat"] .. "` where `type` = 'memory_peak' limit 1")
 
 	if rows > 0 then
@@ -10021,10 +10029,10 @@ function collectstats ()
 		pmu = tonumber (pmu) or 0
 
 		if mu > pmu then
-			VH:SQLQuery ("update `" .. tbl_sql ["stat"] .. "` set `time` = " .. tostring (tm) .. ", `count` = " .. tostring (mu) .. " where `type` = 'memory_peak' limit 1")
+			VH:SQLQuery ("update `" .. tbl_sql ["stat"] .. "` set `time` = " .. _tostring (tm) .. ", `count` = " .. _tostring (mu) .. " where `type` = 'memory_peak' limit 1")
 		end
 	else
-		VH:SQLQuery ("insert into `" .. tbl_sql ["stat"] .. "` (`type`, `time`, `count`) values ('memory_peak', " .. tostring (tm) .. ", " .. tostring (mu) .. ")")
+		VH:SQLQuery ("insert into `" .. tbl_sql ["stat"] .. "` (`type`, `time`, `count`) values ('memory_peak', " .. _tostring (tm) .. ", " .. _tostring (mu) .. ")")
 	end
 
 	-- nick lists
@@ -10042,9 +10050,9 @@ function collectstats ()
 	end
 
 	nl, ol, bl = repsqlchars (nl), repsqlchars (ol), repsqlchars (bl)
-	VH:SQLQuery ("insert into `" .. tbl_sql ["stat"] .. "` (`type`, `time`, `count`) values ('user_list', " .. tostring (tm) .. ", '" .. nl .. "') on duplicate key update `time` = " .. tostring (tm) .. ", `count` = '" .. nl .. "'")
-	VH:SQLQuery ("insert into `" .. tbl_sql ["stat"] .. "` (`type`, `time`, `count`) values ('operator_list', " .. tostring (tm) .. ", '" .. ol .. "') on duplicate key update `time` = " .. tostring (tm) .. ", `count` = '" .. ol .. "'")
-	VH:SQLQuery ("insert into `" .. tbl_sql ["stat"] .. "` (`type`, `time`, `count`) values ('bot_list', " .. tostring (tm) .. ", '" .. bl .. "') on duplicate key update `time` = " .. tostring (tm) .. ", `count` = '" .. bl .. "'")
+	VH:SQLQuery ("insert into `" .. tbl_sql ["stat"] .. "` (`type`, `time`, `count`) values ('user_list', " .. _tostring (tm) .. ", '" .. nl .. "') on duplicate key update `time` = " .. _tostring (tm) .. ", `count` = '" .. nl .. "'")
+	VH:SQLQuery ("insert into `" .. tbl_sql ["stat"] .. "` (`type`, `time`, `count`) values ('operator_list', " .. _tostring (tm) .. ", '" .. ol .. "') on duplicate key update `time` = " .. _tostring (tm) .. ", `count` = '" .. ol .. "'")
+	VH:SQLQuery ("insert into `" .. tbl_sql ["stat"] .. "` (`type`, `time`, `count`) values ('bot_list', " .. _tostring (tm) .. ", '" .. bl .. "') on duplicate key update `time` = " .. _tostring (tm) .. ", `count` = '" .. bl .. "'")
 end
 
 ----- ---- --- -- -
@@ -10439,7 +10447,7 @@ function deletehistory (nick, text, class)
 		end
 
 		for _, id in pairs (delete) do
-			VH:SQLQuery ("delete from `" .. tbl_sql ["mchist"] .. "` where `id` = " .. tostring (id))
+			VH:SQLQuery ("delete from `" .. tbl_sql ["mchist"] .. "` where `id` = " .. _tostring (id))
 		end
 
 		commandanswer (nick, gettext ("Deleted %d main chat history messages by text: %s"):format (rows, text))
@@ -10459,7 +10467,7 @@ function cleanhistory (nick, limit, auto, class)
 			VH:SQLQuery ("truncate table `" .. tbl_sql ["mchist"] .. "`")
 		elseif rows > limit then
 			rows = rows - limit
-			VH:SQLQuery ("delete from `" .. tbl_sql ["mchist"] .. "` order by `date` asc limit " .. tostring (rows))
+			VH:SQLQuery ("delete from `" .. tbl_sql ["mchist"] .. "` order by `date` asc limit " .. _tostring (rows))
 		end
 
 		if limit == 0 or rows > limit then
@@ -10477,7 +10485,7 @@ function cleanhistory (nick, limit, auto, class)
 			VH:SQLQuery ("truncate table `" .. tbl_sql ["ophist"] .. "`")
 		elseif rows > limit then
 			rows = rows - limit
-			VH:SQLQuery ("delete from `" .. tbl_sql ["ophist"] .. "` order by `date` asc limit " .. tostring (rows))
+			VH:SQLQuery ("delete from `" .. tbl_sql ["ophist"] .. "` order by `date` asc limit " .. _tostring (rows))
 		end
 
 		if limit == 0 or rows > limit then
@@ -10505,7 +10513,7 @@ function cleanroomhistory (room, nick, limit, auto, class)
 					VH:SQLQuery ("delete from `" .. tbl_sql ["crhist"] .. "` where `room` = '" .. item .. "'")
 				elseif rows > limit then
 					rows = rows - limit
-					VH:SQLQuery ("delete from `" .. tbl_sql ["crhist"] .. "` where `room` = '" .. item .. "' order by `date` asc limit " .. tostring (rows))
+					VH:SQLQuery ("delete from `" .. tbl_sql ["crhist"] .. "` where `room` = '" .. item .. "' order by `date` asc limit " .. _tostring (rows))
 				end
 
 				if limit == 0 or rows > limit then
@@ -10540,7 +10548,7 @@ function cleanroomhistory (room, nick, limit, auto, class)
 							VH:SQLQuery ("delete from `" .. tbl_sql ["crhist"] .. "` where `room` = '" .. item .. "'")
 						elseif rows > limit then
 							rows = rows - limit
-							VH:SQLQuery ("delete from `" .. tbl_sql ["crhist"] .. "` where `room` = '" .. item .. "' order by `date` asc limit " .. tostring (rows))
+							VH:SQLQuery ("delete from `" .. tbl_sql ["crhist"] .. "` where `room` = '" .. item .. "' order by `date` asc limit " .. _tostring (rows))
 						end
 
 						if limit == 0 or rows > limit then
@@ -10627,7 +10635,7 @@ function sendmchistory (nick, class, num, auto)
 		lnum = 1
 	end
 
-	local _, rows = VH:SQLQuery ("select `nick`, `ip`, `date`, `message` from `" .. tbl_sql ["mchist"] .. "` order by `date` desc, `id` desc limit " .. tostring (lnum))
+	local _, rows = VH:SQLQuery ("select `nick`, `ip`, `date`, `message` from `" .. tbl_sql ["mchist"] .. "` order by `date` desc, `id` desc limit " .. _tostring (lnum))
 
 	if rows > 0 then
 		local list = ""
@@ -10673,7 +10681,7 @@ function sendophistory (nick, class, num, auto, inop)
 		lnum = 1
 	end
 
-	local _, rows = VH:SQLQuery ("select `nick`, `date`, `message` from `" .. tbl_sql ["ophist"] .. "` where `class` <= " .. tostring (class) .. " order by `date` desc, `id` desc limit " .. tostring (lnum))
+	local _, rows = VH:SQLQuery ("select `nick`, `date`, `message` from `" .. tbl_sql ["ophist"] .. "` where `class` <= " .. _tostring (class) .. " order by `date` desc, `id` desc limit " .. _tostring (lnum))
 
 	if rows > 0 then
 		local list = ""
@@ -10723,7 +10731,7 @@ function sendcrhistory (room, nick, class, num)
 		lnum = 1
 	end
 
-	local _, rows = VH:SQLQuery ("select `nick`, `ip`, `date`, `message` from `" .. tbl_sql ["crhist"] .. "` where `room` = '" .. repsqlchars (room) .. "' order by `date` desc, `id` desc limit " .. tostring (lnum))
+	local _, rows = VH:SQLQuery ("select `nick`, `ip`, `date`, `message` from `" .. tbl_sql ["crhist"] .. "` where `room` = '" .. repsqlchars (room) .. "' order by `date` desc, `id` desc limit " .. _tostring (lnum))
 
 	if rows > 0 then
 		local list = ""
@@ -10755,7 +10763,7 @@ function sendownhistory (nick, class, num)
 		lnum = 1
 	end
 
-	local _, rows = VH:SQLQuery ("select `nick`, `ip`, `date`, `message` from `" .. tbl_sql ["mchist"] .. "` where `realnick` = '" .. repsqlchars (nick) .. "' order by `date` desc, `id` desc limit " .. tostring (lnum))
+	local _, rows = VH:SQLQuery ("select `nick`, `ip`, `date`, `message` from `" .. tbl_sql ["mchist"] .. "` where `realnick` = '" .. repsqlchars (nick) .. "' order by `date` desc, `id` desc limit " .. _tostring (lnum))
 
 	if rows > 0 then
 		local list = ""
@@ -10803,9 +10811,9 @@ function addmchistoryline (nick, real, line, refl)
 	if count >= table_sets ["histlimit"] then
 		VH:SQLQuery ("select `id` from `" .. tbl_sql ["mchist"] .. "` order by `date` asc limit 1") -- get oldest message
 		local _, old_id = VH:SQLFetch (0)
-		VH:SQLQuery ("update `" .. tbl_sql ["mchist"] .. "` set `realnick` = '" .. repsqlchars (real) .. "', `nick` = '" .. repsqlchars (nick) .. "', `ip` = " .. sqlemptnull (valor (addr, "0.0.0.0")) .. ", `date` = " .. tostring (os.time () + table_sets ["srvtimediff"]) .. ", `message` = '" .. repsqlchars (data) .. "' where `id` = " .. tostring (old_id))
+		VH:SQLQuery ("update `" .. tbl_sql ["mchist"] .. "` set `realnick` = '" .. repsqlchars (real) .. "', `nick` = '" .. repsqlchars (nick) .. "', `ip` = " .. sqlemptnull (valor (addr, "0.0.0.0")) .. ", `date` = " .. _tostring (os.time () + table_sets ["srvtimediff"]) .. ", `message` = '" .. repsqlchars (data) .. "' where `id` = " .. _tostring (old_id))
 	else
-		VH:SQLQuery ("insert into `" .. tbl_sql ["mchist"] .. "` (`realnick`, `nick`, `ip`, `date`, `message`) values ('" .. repsqlchars (real) .. "', '" .. repsqlchars (nick) .. "', " .. sqlemptnull (valor (addr, "0.0.0.0")) .. ", " .. tostring (os.time () + table_sets ["srvtimediff"]) .. ", '" .. repsqlchars (data) .. "')")
+		VH:SQLQuery ("insert into `" .. tbl_sql ["mchist"] .. "` (`realnick`, `nick`, `ip`, `date`, `message`) values ('" .. repsqlchars (real) .. "', '" .. repsqlchars (nick) .. "', " .. sqlemptnull (valor (addr, "0.0.0.0")) .. ", " .. _tostring (os.time () + table_sets ["srvtimediff"]) .. ", '" .. repsqlchars (data) .. "')")
 	end
 end
 
@@ -10827,9 +10835,9 @@ function addophistoryline (nick, line, class)
 	if counttable (tbl_sql ["ophist"]) >= table_sets ["histlimit"] then
 		VH:SQLQuery ("select `id` from `" .. tbl_sql ["ophist"] .. "` order by `date` asc limit 1") -- get oldest message
 		local _, old_id = VH:SQLFetch (0)
-		VH:SQLQuery ("update `" .. tbl_sql ["ophist"] .. "` set `nick` = '" .. repsqlchars (nick) .. "', `date` = " .. tostring (os.time () + table_sets ["srvtimediff"]) .. ", `message` = '" .. repsqlchars (line) .. "', `class` = " .. tostring (class) .. " where `id` = " .. tostring (old_id))
+		VH:SQLQuery ("update `" .. tbl_sql ["ophist"] .. "` set `nick` = '" .. repsqlchars (nick) .. "', `date` = " .. _tostring (os.time () + table_sets ["srvtimediff"]) .. ", `message` = '" .. repsqlchars (line) .. "', `class` = " .. _tostring (class) .. " where `id` = " .. _tostring (old_id))
 	else
-		VH:SQLQuery ("insert into `" .. tbl_sql ["ophist"] .. "` (`nick`, `date`, `message`, `class`) values ('" .. repsqlchars (nick) .. "', " .. tostring (os.time () + table_sets ["srvtimediff"]) .. ", '" .. repsqlchars (line) .. "', " .. tostring (class) .. ")")
+		VH:SQLQuery ("insert into `" .. tbl_sql ["ophist"] .. "` (`nick`, `date`, `message`, `class`) values ('" .. repsqlchars (nick) .. "', " .. _tostring (os.time () + table_sets ["srvtimediff"]) .. ", '" .. repsqlchars (line) .. "', " .. _tostring (class) .. ")")
 	end
 end
 
@@ -10846,9 +10854,9 @@ function addcrhistoryline (room, nick, real, line)
 	if counttable (tbl_sql ["crhist"], "`room` = '" .. rep_room .. "'") >= table_sets ["chathistlimit"] then
 		VH:SQLQuery ("select `id` from `" .. tbl_sql ["crhist"] .. "` where `room` = '" .. rep_room .. "' order by `date` asc limit 1") -- get oldest message
 		local _, old_id = VH:SQLFetch (0)
-		VH:SQLQuery ("update `" .. tbl_sql ["crhist"] .. "` set `realnick` = '" .. repsqlchars (real) .. "', `nick` = '" .. repsqlchars (nick) .. "', `ip` = " .. sqlemptnull (valor (addr, "0.0.0.0")) .. ", `date` = " .. tostring (os.time () + table_sets ["srvtimediff"]) .. ", `message` = '" .. repsqlchars (line) .. "' where `id` = " .. tostring (old_id))
+		VH:SQLQuery ("update `" .. tbl_sql ["crhist"] .. "` set `realnick` = '" .. repsqlchars (real) .. "', `nick` = '" .. repsqlchars (nick) .. "', `ip` = " .. sqlemptnull (valor (addr, "0.0.0.0")) .. ", `date` = " .. _tostring (os.time () + table_sets ["srvtimediff"]) .. ", `message` = '" .. repsqlchars (line) .. "' where `id` = " .. _tostring (old_id))
 	else
-		VH:SQLQuery ("insert into `" .. tbl_sql ["crhist"] .. "` (`room`, `realnick`, `nick`, `ip`, `date`, `message`) values ('" .. rep_room .. "', '" .. repsqlchars (real) .. "', '" .. repsqlchars (nick) .. "', " .. sqlemptnull (valor (addr, "0.0.0.0")) .. ", " .. tostring (os.time () + table_sets ["srvtimediff"]) .. ", '" .. repsqlchars (line) .. "')")
+		VH:SQLQuery ("insert into `" .. tbl_sql ["crhist"] .. "` (`room`, `realnick`, `nick`, `ip`, `date`, `message`) values ('" .. rep_room .. "', '" .. repsqlchars (real) .. "', '" .. repsqlchars (nick) .. "', " .. sqlemptnull (valor (addr, "0.0.0.0")) .. ", " .. _tostring (os.time () + table_sets ["srvtimediff"]) .. ", '" .. repsqlchars (line) .. "')")
 	end
 end
 
@@ -10908,8 +10916,8 @@ function listprotentry (nick)
 			local _, ent, occ = VH:SQLFetch (x)
 
 			if x == 0 then
-				rlen = # tostring (rows)
-				olen = # tostring (occ)
+				rlen = # _tostring (rows)
+				olen = # _tostring (occ)
 			end
 
 			list = list .. " " .. prezero (rlen, (x + 1)) .. ". [ O: " .. prezero (olen, occ) .. " ] " .. repnmdcoutchars (ent) .. "\r\n"
@@ -12097,10 +12105,10 @@ function gagipadd (nick, line)
 			local _, rows = VH:SQLQuery ("select `flag` from `" .. tbl_sql ["ipgag"] .. "` where `ip` = '" .. rip .. "' limit 1")
 
 			if rows > 0 then -- modify
-				VH:SQLQuery ("update `" .. tbl_sql ["ipgag"] .. "` set `flag` = " .. tostring (flag) .. " where `ip` = '" .. rip .. "' limit 1")
+				VH:SQLQuery ("update `" .. tbl_sql ["ipgag"] .. "` set `flag` = " .. _tostring (flag) .. " where `ip` = '" .. rip .. "' limit 1")
 				commandanswer (nick, string.format (gettext ("Modified IP gag: %s"), ip))
 			else -- add
-				VH:SQLQuery ("insert into `" .. tbl_sql ["ipgag"] .. "` (`ip`, `flag`) values ('" .. rip .. "', " .. tostring (flag) .. ")")
+				VH:SQLQuery ("insert into `" .. tbl_sql ["ipgag"] .. "` (`ip`, `flag`) values ('" .. rip .. "', " .. _tostring (flag) .. ")")
 				commandanswer (nick, string.format (gettext ("Added IP gag: %s"), ip))
 			end
 
@@ -12169,13 +12177,13 @@ function gagiplist (nick)
 		for x = 0, rows - 1 do
 			local _, ip, flag = VH:SQLFetch (x)
 			count = x + 1
-			list = list .. " " .. tostring (count) .. ". " .. repnmdcoutchars (ip) .. " [ F: " .. flag .. flagname (tonumber (flag)) .. " ] [ T: P ]\r\n"
+			list = list .. " " .. _tostring (count) .. ". " .. repnmdcoutchars (ip) .. " [ F: " .. flag .. flagname (tonumber (flag)) .. " ] [ T: P ]\r\n"
 		end
 	end
 
 	for key, value in pairs (table_igag) do -- temporary list
 		count = count + 1
-		list = list .. " " .. tostring (count) .. ". " .. repnmdcoutchars (key) .. " [ F: " .. tostring (value) .. flagname (value) .. " ] [ T: T ]\r\n"
+		list = list .. " " .. _tostring (count) .. ". " .. repnmdcoutchars (key) .. " [ F: " .. _tostring (value) .. flagname (value) .. " ] [ T: T ]\r\n"
 	end
 
 	if list == "" then
@@ -12240,10 +12248,10 @@ function gagccadd (nick, line)
 		local _, rows = VH:SQLQuery ("select `flag` from `" .. tbl_sql ["ccgag"] .. "` where `item` = '" .. rlre .. "'")
 
 		if rows > 0 then -- modify
-			VH:SQLQuery ("update `" .. tbl_sql ["ccgag"] .. "` set `flag` = " .. tostring (flag) .. " where `item` = '" .. rlre .. "'")
+			VH:SQLQuery ("update `" .. tbl_sql ["ccgag"] .. "` set `flag` = " .. _tostring (flag) .. " where `item` = '" .. rlre .. "'")
 			commandanswer (nick, gettext ("Modified country code gag: %s"):format (lre))
 		else -- add
-			VH:SQLQuery ("insert into `" .. tbl_sql ["ccgag"] .. "` (`item`, `flag`) values ('" .. rlre .. "', " .. tostring (flag) .. ")")
+			VH:SQLQuery ("insert into `" .. tbl_sql ["ccgag"] .. "` (`item`, `flag`) values ('" .. rlre .. "', " .. _tostring (flag) .. ")")
 			commandanswer (nick, gettext ("Added country code gag: %s"):format (lre))
 		end
 	end
@@ -12290,7 +12298,7 @@ function gagcclist (nick)
 
 		for x = 0, rows - 1 do
 			local _, lre, flag = VH:SQLFetch (x)
-			list = list .. " " .. tostring (x + 1) .. ". " .. repnmdcoutchars (lre) .. " [ F: " .. tostring (flag) .. flagname (tonumber (flag)) .. " ]\r\n"
+			list = list .. " " .. _tostring (x + 1) .. ". " .. repnmdcoutchars (lre) .. " [ F: " .. _tostring (flag) .. flagname (tonumber (flag)) .. " ]\r\n"
 		end
 
 		commandanswer (nick, gettext ("Country code gag list") .. ":\r\n\r\n" .. list)
@@ -13130,8 +13138,8 @@ function listmyinfoentry (nick, part)
 				end
 
 				if x == 0 then
-					rlen = # tostring (rows)
-					olen = # tostring (occ)
+					rlen = # _tostring (rows)
+					olen = # _tostring (occ)
 				end
 
 				list = list .. " " .. prezero (rlen, x + 1) .. ". [ O: " .. prezero (olen, occ) .. " ] " .. repnmdcoutchars (item)
@@ -13250,14 +13258,14 @@ function cleanuptable (nick, line, cls)
 
 	elseif ctype == "ulog" then
 		commandanswer (nick, gettext ("This operation might take very long time depending on how much is going to be removed, please be patient."))
-		local _, rows = VH:SQLQuery ("select `id` from `" .. tbl_sql ["ulog"] .. "` where `time` < " .. tostring (seconds))
+		local _, rows = VH:SQLQuery ("select `id` from `" .. tbl_sql ["ulog"] .. "` where `time` < " .. _tostring (seconds))
 
 		if rows > 0 then
-			VH:SQLQuery ("delete from `" .. tbl_sql ["ulog"] .. "` where `time` < " .. tostring (seconds))
+			VH:SQLQuery ("delete from `" .. tbl_sql ["ulog"] .. "` where `time` < " .. _tostring (seconds))
 			commandanswer (nick, gettext ("Deleted %d rows: %s"):format (rows, ctype))
 			opsnotify (table_sets ["classnotiledoact"], gettext ("%s with class %d deleted %d user log entries older than %d days."):format (nick, cls, rows, cdays))
-			VH:SQLQuery ("insert into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('lastcleanulog', " .. tostring (tm) .. ") on duplicate key update `value` = " .. tostring (tm))
-			VH:SQLQuery ("insert into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('limcleanulog', " .. tostring (cdays) .. ") on duplicate key update `value` = " .. tostring (cdays))
+			VH:SQLQuery ("insert into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('lastcleanulog', " .. _tostring (tm) .. ") on duplicate key update `value` = " .. _tostring (tm))
+			VH:SQLQuery ("insert into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('limcleanulog', " .. _tostring (cdays) .. ") on duplicate key update `value` = " .. _tostring (cdays))
 		else
 			commandanswer (nick, gettext ("No rows to remove: %s"):format (ctype))
 		end
@@ -13676,7 +13684,7 @@ VH:SQLQuery ("delete from `"..tbl_sql ["shran"].."` where `rank` < "..cbytes)
 end
 
 commandanswer (nick, string.format (gettext ("Deleted %d rows: %s"), rows, ctype))
-opsnotify (table_sets ["classnotiledoact"], string.format (gettext ("%s with class %d deleted %d share ranks lower than %s."), nick, cls, rows, tostring (climt) .. " " .. gettext ("GiB")))
+opsnotify (table_sets ["classnotiledoact"], string.format (gettext ("%s with class %d deleted %d share ranks lower than %s."), nick, cls, rows, _tostring (climt) .. " " .. gettext ("GiB")))
 VH:SQLQuery ("insert into `"..tbl_sql ["conf"].."` (`variable`, `value`) values ('lastcleanshran', "..tm..") on duplicate key update `value` = "..tm)
 VH:SQLQuery ("insert into `"..tbl_sql ["conf"].."` (`variable`, `value`) values ('limcleanshran', "..climt..") on duplicate key update `value` = "..climt)
 else
@@ -13791,7 +13799,7 @@ if rows > 0 then
 local _, rank = VH:SQLFetch (0)
 commandanswer (nick, string.format (gettext ("Your share rank is: %s"), makesize (rank)))
 else
-commandanswer (nick, string.format (gettext ("You have to share %s and reconnect to get started."), tostring (table_sets ["shareranmin"]) .. " " .. gettext ("GiB")))
+commandanswer (nick, string.format (gettext ("You have to share %s and reconnect to get started."), _tostring (table_sets ["shareranmin"]) .. " " .. gettext ("GiB")))
 end
 end
 
@@ -13978,7 +13986,7 @@ function addsefientry (nick, line)
 			local _, rows = VH:SQLQuery ("select `action` from `" .. tbl_sql ["sefi"] .. "` where `filter` = '" .. entry .. "'")
 
 			if rows > 0 then
-				VH:SQLQuery ("update `" .. tbl_sql ["sefi"] .. "` set `priority` = " .. tostring (prio) .. ", `action` = " .. tostring (act) .. ", `type` = " .. tostring (sype) .. " where `filter` = '" .. entry .. "'")
+				VH:SQLQuery ("update `" .. tbl_sql ["sefi"] .. "` set `priority` = " .. _tostring (prio) .. ", `action` = " .. _tostring (act) .. ", `type` = " .. _tostring (sype) .. " where `filter` = '" .. entry .. "'")
 				local note = "Modified search filter with action %d and priority %d as any file: %s"
 
 				if sype == 2 then
@@ -14001,7 +14009,7 @@ function addsefientry (nick, line)
 
 				commandanswer (nick, gettext (note):format (act, prio, item))
 			else
-				VH:SQLQuery ("insert into `" .. tbl_sql ["sefi"] .. "` (`filter`, `priority`, `action`, `type`) values ('" .. entry .. "', " .. tostring (prio) .. ", " .. tostring (act) .. ", " .. tostring (sype) .. ")")
+				VH:SQLQuery ("insert into `" .. tbl_sql ["sefi"] .. "` (`filter`, `priority`, `action`, `type`) values ('" .. entry .. "', " .. _tostring (prio) .. ", " .. _tostring (act) .. ", " .. _tostring (sype) .. ")")
 				local note = "Added search filter with action %d and priority %d as any file: %s"
 
 				if sype == 2 then
@@ -14054,10 +14062,10 @@ function listsefientry (nick)
 			local _, item, occ, prio, act, sype = VH:SQLFetch (row)
 
 			if row == 0 then
-				olen = # tostring (occ)
+				olen = # _tostring (occ)
 			end
 
-			list = list .. " " .. prezero (# tostring (rows), (row + 1)) .. ". [ P: " .. tostring (prio) .. " ] [ A: " .. tostring (act) .. " ] [ T: " .. tostring (sype) .. " ] [ O: " .. prezero (olen, occ) .. " ] " .. repnmdcoutchars (item) .. "\r\n"
+			list = list .. " " .. prezero (# _tostring (rows), (row + 1)) .. ". [ P: " .. _tostring (prio) .. " ] [ A: " .. _tostring (act) .. " ] [ T: " .. _tostring (sype) .. " ] [ O: " .. prezero (olen, occ) .. " ] " .. repnmdcoutchars (item) .. "\r\n"
 		end
 
 		commandanswer (nick, gettext ("Search filter list") .. ":\r\n\r\n" .. list)
@@ -14116,10 +14124,10 @@ function listsefiexentry (nick)
 			local _, item, occ = VH:SQLFetch (row)
 
 			if row == 0 then
-				olen = # tostring (occ)
+				olen = # _tostring (occ)
 			end
 
-			list = list .. " " .. prezero (# tostring (rows), (row + 1)) .. ". [ O: " .. prezero (olen, occ) .. " ] " .. repnmdcoutchars (item) .. "\r\n"
+			list = list .. " " .. prezero (# _tostring (rows), (row + 1)) .. ". [ O: " .. prezero (olen, occ) .. " ] " .. repnmdcoutchars (item) .. "\r\n"
 		end
 
 		commandanswer (nick, gettext ("Search filter exception list") .. ":\r\n\r\n" .. list)
@@ -14134,7 +14142,7 @@ function listsefiblocks (nick)
 	local list = ""
 
 	for user, data in pairs (table_sefi) do
-		list = list .. " [ N: " .. user .. " ] [ R: " .. data.req .. " ] [ N: " .. tostring (data.num) .. " ] [ S: "
+		list = list .. " [ N: " .. user .. " ] [ R: " .. data.req .. " ] [ N: " .. _tostring (data.num) .. " ] [ S: "
 
 		if data.sil then
 			list = list .. gettext ("Yes")
@@ -14189,7 +14197,7 @@ function addantientry (nick, item)
 			local _, rows = VH:SQLQuery ("select `action` from `" .. tbl_sql ["anti"] .. "` where `antispam` = '" .. entry .. "' limit 1")
 
 			if rows > 0 then
-				VH:SQLQuery ("update `" .. tbl_sql ["anti"] .. "` set `priority` = " .. tostring (prio) .. ", `action` = " .. tostring (aaction) .. ", `flags` = " .. tostring (flags) .. " where `antispam` = '" .. entry .. "' limit 1")
+				VH:SQLQuery ("update `" .. tbl_sql ["anti"] .. "` set `priority` = " .. _tostring (prio) .. ", `action` = " .. _tostring (aaction) .. ", `flags` = " .. _tostring (flags) .. " where `antispam` = '" .. entry .. "' limit 1")
 				local note = "Modified antispam entry with action %d and priority %d to scan in MC and PM: %s"
 
 				if flags == 1 then
@@ -14200,7 +14208,7 @@ function addantientry (nick, item)
 
 				commandanswer (nick, gettext (note):format (aaction, prio, aitem))
 			else
-				VH:SQLQuery ("insert into `" .. tbl_sql ["anti"] .. "` (`antispam`, `priority`, `action`, `flags`) values ('" .. entry .. "', " .. tostring (prio) .. ", " .. tostring (aaction) .. ", " .. tostring (flags) .. ")")
+				VH:SQLQuery ("insert into `" .. tbl_sql ["anti"] .. "` (`antispam`, `priority`, `action`, `flags`) values ('" .. entry .. "', " .. _tostring (prio) .. ", " .. _tostring (aaction) .. ", " .. _tostring (flags) .. ")")
 				local note = "Added antispam entry with action %d and priority %d to scan in MC and PM: %s"
 
 				if flags == 1 then
@@ -14501,7 +14509,7 @@ function findreglist (nick, user)
 
 		for x = 0, rows - 1 do
 			local _, reg, class = VH:SQLFetch (x)
-			list = list .. " " .. prezero (# tostring (rows), x + 1) .. ". " .. reg .. " @ " .. tostring (class) .. "\r\n"
+			list = list .. " " .. prezero (# _tostring (rows), x + 1) .. ". " .. reg .. " @ " .. _tostring (class) .. "\r\n"
 		end
 
 		commandanswer (nick, gettext ("Registered users list results for %s"):format (user) .. ":\r\n\r\n" .. list)
@@ -14560,20 +14568,20 @@ function sendreglist (nick, line)
 	end
 
 	if class == -1 or (class >= 1 and class <= 5) or class == 10 then
-		local _, total = VH:SQLQuery ("select `class` from `reglist` where `class` = " .. tostring (class))
+		local _, total = VH:SQLQuery ("select `class` from `reglist` where `class` = " .. _tostring (class))
 
 		if total > 0 then
 			if from <= 0 or from > total then
 				commandanswer (nick, gettext ("You can't start at user number %d when you only have %d accounts with class %d."):format (from, total, class))
 			else
-				local _, rows = VH:SQLQuery ("select `nick`, `reg_date`, `pwd_change`, `login_last`, `enabled` from `reglist` where `class` = " .. tostring (class) .. " order by `login_last` desc limit " .. tostring (from - 1) .. ", " .. tostring (count))
+				local _, rows = VH:SQLQuery ("select `nick`, `reg_date`, `pwd_change`, `login_last`, `enabled` from `reglist` where `class` = " .. _tostring (class) .. " order by `login_last` desc limit " .. _tostring (from - 1) .. ", " .. _tostring (count))
 
 				if rows > 0 then
 					local list = ""
 
 					for x = 0, rows - 1 do
 						local _, user, reg, pass, last, on = VH:SQLFetch (x)
-						list = list .. " " .. prezero (# tostring (rows), x + 1) .. ". [ R: " .. fromunixtime (reg, true, table_sets ["longdateformat"]) .. " ] [ L: " .. fromunixtime (last, false, table_sets ["longdateformat"]) .. " ] [ P: " .. tostring (pass) .. " ] [ E: " .. tostring (on) .. " ] [ O: " .. getstatus (user) .. " ] " .. user .. "\r\n"
+						list = list .. " " .. prezero (# _tostring (rows), x + 1) .. ". [ R: " .. fromunixtime (reg, true, table_sets ["longdateformat"]) .. " ] [ L: " .. fromunixtime (last, false, table_sets ["longdateformat"]) .. " ] [ P: " .. _tostring (pass) .. " ] [ E: " .. _tostring (on) .. " ] [ O: " .. getstatus (user) .. " ] " .. user .. "\r\n"
 					end
 
 					commandanswer (nick, gettext ("Showing %d out of total %d accounts with class %d starting at user number %d"):format (rows, total, class, from) .. ":\r\n\r\n" .. list)
@@ -18899,7 +18907,7 @@ help = help.." "..optrig..table_cmnds ["offdel"].." <"..gettext ("date").."> - "
 help = help.." "..optrig..table_cmnds ["offclean"].." - "..gettext ("Delete all offline messages").."\r\n\r\n"
 
 	-- history
-	help = help .. " " .. optrig .. table_cmnds ["ophistory"] .. " [" .. gettext ("lines") .. "=" .. tostring (table_sets ["histdeflines"]) .. "] - " .. gettext ("Operator chat history") .. "\r\n"
+	help = help .. " " .. optrig .. table_cmnds ["ophistory"] .. " [" .. gettext ("lines") .. "=" .. _tostring (table_sets ["histdeflines"]) .. "] - " .. gettext ("Operator chat history") .. "\r\n"
 	help = help .. " " .. optrig .. table_cmnds ["histdel"] .. " <" .. gettext ("text") .. "> - " .. gettext ("Delete history messages by text") .. "\r\n"
 	help = help .. " " .. optrig .. table_cmnds ["histclean"] .. " - " .. gettext ("Delete all history messages") .. "\r\n\r\n"
 
@@ -18963,7 +18971,7 @@ help = help.." "..optrig..table_cmnds ["hubdel"].." <"..gettext ("address").."> 
 	-- other
 	help = help .. " " .. optrig .. table_cmnds ["dropip"] .. " <" .. gettext ("ip") .. "> - " .. gettext ("Drop users with IP") .. "\r\n"
 	help = help .. " " .. optrig .. table_cmnds ["oldclean"] .. " <" .. gettext ("type") .. "> <" .. gettext ("days") .. " " .. gettext ("or") .. " *> [" .. gettext ("class") .. "] - " .. gettext ("Clean up tables") .. "\r\n"
-	help = help .. " " .. optrig .. table_cmnds ["readlog"] .. " <" .. gettext ("file") .. "> [" .. gettext ("lines") .. "=" .. tostring (table_othsets ["logdeflines"]) .. "] - " .. gettext ("Read hub logs") .. "\r\n"
+	help = help .. " " .. optrig .. table_cmnds ["readlog"] .. " <" .. gettext ("file") .. "> [" .. gettext ("lines") .. "=" .. _tostring (table_othsets ["logdeflines"]) .. "] - " .. gettext ("Read hub logs") .. "\r\n"
 	help = help .. " " .. optrig .. table_cmnds ["lretoplain"] .. " <" .. gettext ("lre") .. "> - " .. gettext ("Convert LRE to plain text") .. "\r\n\r\n"
 
 	-- general
@@ -19020,8 +19028,8 @@ help = help.." "..ustrig..table_cmnds ["realnick"].." <"..gettext ("nick").."> -
 help = help.." "..ustrig..table_cmnds ["custlist"].." - "..gettext ("Custom nick list").."\r\n\r\n"
 
 	-- chat history
-	help = help .. " " .. ustrig .. table_cmnds ["history"] .. " [" .. gettext ("lines") .. "=" .. tostring (table_sets ["histdeflines"]) .. "] - " .. gettext ("Main chat history") .. "\r\n"
-	help = help .. " " .. ustrig .. table_cmnds ["myhistory"] .. " [" .. gettext ("lines") .. "=" .. tostring (table_sets ["histdeflines"]) .. "] - " .. gettext ("Your main chat history") .. "\r\n\r\n"
+	help = help .. " " .. ustrig .. table_cmnds ["history"] .. " [" .. gettext ("lines") .. "=" .. _tostring (table_sets ["histdeflines"]) .. "] - " .. gettext ("Main chat history") .. "\r\n"
+	help = help .. " " .. ustrig .. table_cmnds ["myhistory"] .. " [" .. gettext ("lines") .. "=" .. _tostring (table_sets ["histdeflines"]) .. "] - " .. gettext ("Your main chat history") .. "\r\n\r\n"
 
 	-- other
 
@@ -19029,7 +19037,7 @@ help = help.." "..ustrig..table_cmnds ["custlist"].." - "..gettext ("Custom nick
 	help = help .. " " .. ustrig .. table_cmnds ["mode"] .. " <" .. gettext ("mode") .. "> - " .. gettext ("Set your chat mode") .. "\r\n"
 	help = help .. " " .. ustrig .. table_cmnds ["offmsg"] .. " <" .. gettext ("nick") .. "> <" .. gettext ("message") .. "> - " .. gettext ("Offline message to user") .. "\r\n"
 	help = help .. " " .. ustrig .. table_cmnds ["calculate"] .. " <" .. gettext ("equation") .. "> - " .. gettext ("Calculate an equation") .. "\r\n"
-	help = help .. " " .. ustrig .. table_cmnds ["hubnews"] .. " [" .. gettext ("lines") .. "=" .. tostring (table_sets ["newsdeflines"]) .. "] - " .. gettext ("Read hub news") .. "\r\n"
+	help = help .. " " .. ustrig .. table_cmnds ["hubnews"] .. " [" .. gettext ("lines") .. "=" .. _tostring (table_sets ["newsdeflines"]) .. "] - " .. gettext ("Read hub news") .. "\r\n"
 	help = help .. " " .. ustrig .. table_cmnds ["showtopic"] .. " - " .. gettext ("Current topic") .. "\r\n"
 	help = help .. " " .. ustrig .. table_cmnds ["showhubs"] .. " - " .. gettext ("Show friendly hubs") .. "\r\n\r\n"
 
@@ -19107,7 +19115,7 @@ end
 	-- users
 
 	local uc = getusercount ()
-	local val = tostring (uc)
+	local val = _tostring (uc)
 
 	if table_sets ["statscollint"] > 0 then
 		local _, rows = VH:SQLQuery ("select `count` from `" .. tbl_sql ["stat"] .. "` where `type` = 'users_peak' limit 1")
@@ -19115,7 +19123,7 @@ end
 		if rows > 0 then
 			local _, puc = VH:SQLFetch (0)
 			puc = tonumber (puc) or 0
-			val = val .. " ][ " .. tostring (puc)
+			val = val .. " ][ " .. _tostring (puc)
 		end
 	end
 
@@ -19958,7 +19966,7 @@ function createsettings ()
 	VH:SQLQuery ("insert ignore into `" .. tbl_sql ["conf"] .. "` (`variable`, `value`) values ('defmyinfnick', 1)")
 	VH:SQLQuery ("insert ignore into `"..tbl_sql ["conf"].."` (`variable`, `value`) values ('allow_shell', 0)")
 	VH:SQLQuery ("insert ignore into `"..tbl_sql ["conf"].."` (`variable`, `value`) values ('allow_sql', 0)")
-	VH:SQLQuery ("insert into `" .. tbl_sql ["stat"] .. "` (`type`, `time`, `count`) values ('ver_ledo', " .. tostring (tm) .. ", '" .. ver_ledo .. "') on duplicate key update `time` = " .. tostring (tm) .. ", `count` = '" .. ver_ledo .. "'")
+	VH:SQLQuery ("insert into `" .. tbl_sql ["stat"] .. "` (`type`, `time`, `count`) values ('ver_ledo', " .. _tostring (tm) .. ", '" .. ver_ledo .. "') on duplicate key update `time` = " .. _tostring (tm) .. ", `count` = '" .. ver_ledo .. "'")
 end
 
 ----- ---- --- -- -
@@ -20008,57 +20016,39 @@ function loadlangfile (nick, pref)
 	local lang = pref or table_sets ["langfileprefix"]
 
 	if lang == "" or lang == "en" then
-		table_lang = ""
+		table_lang = {}
 		table_othsets ["langver"] = "EN"
 		return
 	end
 
 	local lafi = table_othsets ["langfilefmt"]:format (lang)
 	local file, err = io.open (table_othsets ["cfgdir"] .. "scripts/" .. lafi, "r")
+	local data = ""
 
 	if file then
-		table_lang = file:read ("*all")
+		data = file:read ("*all")
 		file:close ()
 
-		if table_lang and table_lang ~= "" then
-			table_othsets ["langver"] = lang:upper ()
-
-			if nick then
-				commandanswer (nick, gettext ("Translation file loaded: %s"):format (lafi))
-			end
-		else
-			table_lang = ""
-			table_othsets ["langver"] = "EN"
-
-			if nick then
-				commandanswer (nick, gettext ("Failed to load translation file %s: %s"):format (lafi, gettext ("File is empty.")))
-			end
+		if nick and (not data or data == "") then
+			commandanswer (nick, gettext ("Failed to load translation file %s: %s"):format (lafi, gettext ("File is empty.")))
 		end
 	else -- try to download
 		if nick then
 			commandanswer (nick, gettext ("Downloading translation file: %s"):format (lafi))
 		end
 
-		local ok = false
-		local res, err, data = getcurl (table_othsets ["updservlang"] .. lafi, nil, true)
+		local res, err = false, nil
+		res, err, data = getcurl (table_othsets ["updservlang"] .. lafi, nil, true)
 
 		if res then
-			if data ~= "" and data:find ("# Version: %d%.%d%.%d") then
+			if data ~= "" and data:match ("# Version: %d%.%d%.%d") then
 				if nick then
 					commandanswer (nick, gettext ("Moving file: %s"):format (lafi))
 				end
 
 				local res, err = os.execute ("mv -f \"" .. table_othsets ["cfgdir"] .. table_othsets ["tmpfile"] .. "\" \"" .. table_othsets ["cfgdir"] .. "scripts/" .. lafi .. "\"")
 
-				if res then
-					ok = true
-					table_lang = data
-					table_othsets ["langver"] = lang:upper ()
-
-					if nick then
-						commandanswer (nick, gettext ("Translation file loaded: %s"):format (lafi))
-					end
-				else
+				if not res then
 					os.remove (table_othsets ["cfgdir"] .. table_othsets ["tmpfile"])
 
 					if nick then
@@ -20075,42 +20065,41 @@ function loadlangfile (nick, pref)
 		elseif nick then
 			commandanswer (nick, err)
 		end
+	end
 
-		if not ok then
-			table_lang = ""
-			table_othsets ["langver"] = "EN"
+	if data and data ~= "" then
+		for line in data:gmatch ("[^\r\n]+") do
+			if # line > 1 and line:sub (1, 1) ~= "#" then
+				local orig, tran = line:match ("^(.+)|(.*)$")
+
+				if orig and tran and # orig > 0 and # tran > 0 then
+					local _, cori = orig:gsub ("%%[%.%dsdf]+", "")
+					local _, ctra = tran:gsub ("%%[%.%dsdf]+", "")
+
+					if cori == ctra then
+						table_lang [orig] = repnmdcoutchars (tran)
+					else
+						opsnotify (table_sets ["classnotiledoact"], gettext ("Parameter count mismatch detected in following translation string: %s"):format (repnmdcoutchars (tran)))
+					end
+				end
+			end
 		end
+
+		table_othsets ["langver"] = lang:upper ()
+
+		if nick then
+			commandanswer (nick, gettext ("Translation file loaded: %s"):format (lafi))
+		end
+	else
+		table_lang = {}
+		table_othsets ["langver"] = "EN"
 	end
 end
 
 ----- ---- --- -- -
 
 function gettext (data)
-	if # table_lang > 0 then
-		for line in table_lang:gmatch ("[^\r\n]+") do
-			if # line > 1 and line:sub (1, 1) ~= "#" then
-				local _, _, orig, tran = line:find ("^(.+)|(.*)$")
-
-				if orig and tran and orig == data then
-					if # tran > 0 then
-						local _, cori = orig:gsub ("%%[%.%dsdf]+", "")
-						local _, ctra = tran:gsub ("%%[%.%dsdf]+", "")
-
-						if cori == ctra then
-							return repnmdcoutchars (tran)
-						else
-							opsnotify (table_sets ["classnotiledoact"], gettext ("Parameter count mismatch detected in following translation string: %s"):format (repnmdcoutchars (tran)))
-							return data
-						end
-					else -- not translated yet
-						return data
-					end
-				end
-			end
-		end
-	end
-
-	return data -- own data is always safe
+	return table_lang [data] or data -- own data is always safe
 end
 
 ----- ---- --- -- -
@@ -20293,7 +20282,7 @@ end
 ----- ---- --- -- -
 
 function loadavdb (st)
-	local res, err, avdb, head = getcurl (table_othsets ["avdbloadurl"] .. "&vers=" .. tostring (table_othsets ["avloadvercount"]) .. "&time=" .. tostring (table_othsets ["avlastloadtime"]) .. "&cotime=0&nosort=1", nil, false, true)
+	local res, err, avdb, head = getcurl (table_othsets ["avdbloadurl"] .. "&vers=" .. _tostring (table_othsets ["avloadvercount"]) .. "&time=" .. _tostring (table_othsets ["avlastloadtime"]) .. "&cotime=0&nosort=1", nil, false, true)
 
 	if res then
 		if head ~= "" then -- parse headers
@@ -20417,7 +20406,7 @@ function avdbreport (nick, addr, size, info, path, spec)
 			uenc [string.char (108, 111, 99, 107)] = data .. string.char (48) .. string.char (tostring (num):byte ()) .. genrandhex (num)
 		end
 
-		local res, err, avre = getcurl (table_othsets ["avdbsendurl"] .. "&size=" .. tostring (shar) .. "&addr=" .. addr, uenc)
+		local res, err, avre = getcurl (table_othsets ["avdbsendurl"] .. "&size=" .. _tostring (shar) .. "&addr=" .. addr, uenc)
 
 		if res then
 			if avre == "1" then
@@ -20673,7 +20662,7 @@ function avdbfinditems (nick, data)
 					if avni and avad and avsi and avti and avpa then
 						avsi = tonumber (avsi)
 						avti = tonumber (avti)
-						back = back .. " [ N: " .. repnmdcoutchars (avni) .. " ] [ I: " .. repnmdcoutchars (avad) .. " ] [ S: " .. tostring (avsi) .. " &#124; " .. makesize (avsi) .. " ] [ T: " .. fromunixtime (avti, false, table_sets ["longdateformat"] .. " " .. table_sets ["timeformat"]) .. " ]"
+						back = back .. " [ N: " .. repnmdcoutchars (avni) .. " ] [ I: " .. repnmdcoutchars (avad) .. " ] [ S: " .. _tostring (avsi) .. " &#124; " .. makesize (avsi) .. " ] [ T: " .. fromunixtime (avti, false, table_sets ["longdateformat"] .. " " .. table_sets ["timeformat"]) .. " ]"
 
 						if avpa ~= "" then
 							back = back .. " [ P: " .. repnmdcoutchars (avpa) .. " ]"
@@ -20736,9 +20725,9 @@ function avsearservstart (addr, port, nick)
 	table_othsets ["serv_udp"] = udp
 
 	if nick then
-		commandanswer (nick, gettext ("Started antivirus search server: %s"):format ((addr or table_sets ["avsearservaddr"]) .. ":" .. tostring (port or table_sets ["avsearservport"])))
+		commandanswer (nick, gettext ("Started antivirus search server: %s"):format ((addr or table_sets ["avsearservaddr"]) .. ":" .. _tostring (port or table_sets ["avsearservport"])))
 	else
-		opsnotify (table_sets ["classnotiav"], gettext ("Started antivirus search server: %s"):format ((addr or table_sets ["avsearservaddr"]) .. ":" .. tostring (port or table_sets ["avsearservport"])))
+		opsnotify (table_sets ["classnotiav"], gettext ("Started antivirus search server: %s"):format ((addr or table_sets ["avsearservaddr"]) .. ":" .. _tostring (port or table_sets ["avsearservport"])))
 	end
 end
 
@@ -20753,9 +20742,9 @@ function avsearservstop (nick)
 	table_othsets ["serv_udp"] = nil
 
 	if nick then
-		commandanswer (nick, gettext ("Stopped antivirus search server: %s"):format (table_sets ["avsearservaddr"] .. ":" .. tostring (table_sets ["avsearservport"])))
+		commandanswer (nick, gettext ("Stopped antivirus search server: %s"):format (table_sets ["avsearservaddr"] .. ":" .. _tostring (table_sets ["avsearservport"])))
 	else
-		opsnotify (table_sets ["classnotiav"], gettext ("Stopped antivirus search server: %s"):format (table_sets ["avsearservaddr"] .. ":" .. tostring (table_sets ["avsearservport"])))
+		opsnotify (table_sets ["classnotiav"], gettext ("Stopped antivirus search server: %s"):format (table_sets ["avsearservaddr"] .. ":" .. _tostring (table_sets ["avsearservport"])))
 	end
 end
 
@@ -20773,7 +20762,7 @@ function avsearservread ()
 		local data, addr, port = table_othsets ["serv_udp"]:receivefrom ()
 
 		if data and addr and port and data ~= "" and addr ~= "" and addr ~= "timeout" then
-			local id = addr .. ":" .. tostring (port)
+			local id = addr .. ":" .. _tostring (port)
 
 			if table_avss [id] then -- rest buffer
 				data = table_avss [id] .. data
@@ -21733,7 +21722,7 @@ end
 ----- ---- --- -- -
 
 function repsqlchars (txt)
-	local ret = tostring (txt)
+	local ret = _tostring (txt)
 	ret = string.gsub (ret, string.char (92), string.char (92, 92)) -- backslash
 	ret = string.gsub (ret, string.char (34), string.char (92, 34)) -- double quote
 	ret = string.gsub (ret, string.char (39), string.char (92, 39)) -- single quote
@@ -22416,11 +22405,11 @@ end
 function prezero (ml, cl)
 	local zr = ""
 
-	for x = 1, ml - # tostring (cl) do
+	for x = 1, ml - # _tostring (cl) do
 		zr = zr .. "0"
 	end
 
-	return zr .. tostring (cl)
+	return zr .. _tostring (cl)
 end
 
 ----- ---- --- -- -
@@ -22479,7 +22468,7 @@ function makesize (bytes)
 		return roundint (b / 1024, 2) .. " " .. gettext ("KiB")
 	end
 
-	return tostring (b) .. " " .. gettext ("B")
+	return _tostring (b) .. " " .. gettext ("B")
 end
 
 ----- ---- --- -- -
@@ -22495,33 +22484,33 @@ function formatuptime (uptime, fmt)
 	else -- long
 		if t.month > 0 then
 			if t.month == 1 then
-				ret = ret .. tostring (t.month) .. " " .. gettext ("month") .. " "
+				ret = ret .. _tostring (t.month) .. " " .. gettext ("month") .. " "
 			else
-				ret = ret .. tostring (t.month) .. " " .. gettext ("months") .. " "
+				ret = ret .. _tostring (t.month) .. " " .. gettext ("months") .. " "
 			end
 		end
 
 		if t.day > 0 then
 			if t.day == 1 then
-				ret = ret .. tostring (t.day) .. " " .. gettext ("day") .. " "
+				ret = ret .. _tostring (t.day) .. " " .. gettext ("day") .. " "
 			else
-				ret = ret .. tostring (t.day) .. " " .. gettext ("days") .. " "
+				ret = ret .. _tostring (t.day) .. " " .. gettext ("days") .. " "
 			end
 		end
 
 		if t.hour > 0 then
 			if t.hour == 1 then
-				ret = ret .. tostring (t.hour) .. " " .. gettext ("hour") .. " "
+				ret = ret .. _tostring (t.hour) .. " " .. gettext ("hour") .. " "
 			else
-				ret = ret .. tostring (t.hour) .. " " .. gettext ("hours") .. " "
+				ret = ret .. _tostring (t.hour) .. " " .. gettext ("hours") .. " "
 			end
 		end
 
 		if t.min > 0 then
 			if t.min == 1 then
-				ret = ret .. tostring (t.min) .. " " .. gettext ("minute") .. " "
+				ret = ret .. _tostring (t.min) .. " " .. gettext ("minute") .. " "
 			else
-				ret = ret .. tostring (t.min) .. " " .. gettext ("minutes") .. " "
+				ret = ret .. _tostring (t.min) .. " " .. gettext ("minutes") .. " "
 			end
 		end
 
@@ -22529,9 +22518,9 @@ function formatuptime (uptime, fmt)
 
 		if ren == 0 or t.sec > 0 then
 			if t.sec == 1 then
-				ret = ret .. tostring (t.sec) .. " " .. gettext ("second")
+				ret = ret .. _tostring (t.sec) .. " " .. gettext ("second")
 			else
-				ret = ret .. tostring (t.sec) .. " " .. gettext ("seconds")
+				ret = ret .. _tostring (t.sec) .. " " .. gettext ("seconds")
 			end
 		elseif ren > 0 then
 			ret = ret:sub (1, -2) -- get rid of the space
@@ -22650,7 +22639,7 @@ function antiscan (nick, class, data, where, to, status)
 		flag = 2
 	end
 
-	local _, rows = VH:SQLQuery ("select `antispam`, `priority`, `action` from `" .. tbl_sql ["anti"] .. "` where `flags` = " .. tostring (flag) .. " or `flags` = 3 order by `priority` desc, `occurred` desc")
+	local _, rows = VH:SQLQuery ("select `antispam`, `priority`, `action` from `" .. tbl_sql ["anti"] .. "` where `flags` = " .. _tostring (flag) .. " or `flags` = 3 order by `priority` desc, `occurred` desc")
 
 	for x = 0, rows - 1 do
 		local _, entry, priority, action = VH:SQLFetch (x)
@@ -22822,7 +22811,7 @@ function antiscan (nick, class, data, where, to, status)
 				VH:KickUser (table_othsets ["sendfrom"], nick, reason .. "     #_ban_" .. table_sets ["seventhacttime"])
 
 			elseif action == 8 then -- gag ip
-				gagipadd (nil, ip .. " " .. tostring (where))
+				gagipadd (nil, ip .. " " .. _tostring (where))
 				opsnotify (table_sets ["classnotianti"], gettext ("Added %s to IP gag list, %d users in total."):format (ip .. tryipcc (ip, nick), # getusersbyip (ip, table_sets ["scanbelowclass"])))
 
 			elseif action == 9 then -- replace
@@ -22883,7 +22872,7 @@ function sefiscan (nick, srch, cls, ip)
 		lsr = tolow (lsr)
 	end
 
-	local _, rows = VH:SQLQuery ("select `filter`, `priority`, `action` from `" .. tbl_sql ["sefi"] .. "` where `type` = " .. tostring (tp) .. " or `type` = 1 order by `priority` desc, `occurred` desc")
+	local _, rows = VH:SQLQuery ("select `filter`, `priority`, `action` from `" .. tbl_sql ["sefi"] .. "` where `type` = " .. _tostring (tp) .. " or `type` = 1 order by `priority` desc, `occurred` desc")
 
 	for x = 0, rows - 1 do
 		local _, ent, prio, act = VH:SQLFetch (x)
