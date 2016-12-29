@@ -2,6 +2,7 @@
 
 [ 27] Improved: Translation speed by parsing language file only once and storing it as a table
 [ 27] Added: Support for Lua 5.3 number to string conversion
+[ 28] Added: More support for Lua 5.3
 
 [ 2.9.1 :: 2016-12-24 ]
 
