@@ -63,7 +63,7 @@ Tzaca, JOE™
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.2" -- ledokol version
-bld_ledo = "28" -- build number
+bld_ledo = "29" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -3362,7 +3362,7 @@ elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.ledosql .. " .+$")
 
 			for x = 0, rows - 1 do
 				local res = { VH:SQLFetch (x) }
-				anentry = anentry .. " " .. prezero (# rows, (x + 1)) .. "."
+				anentry = anentry .. " " .. prezero (# _tostring (rows), (x + 1)) .. "."
 
 				for k, v in pairs (res) do
 					if k > 1 then
@@ -3404,7 +3404,7 @@ elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.ledoshell .. " .+$
 				os.remove (table_othsets.cfgdir .. table_othsets.tmpfile) -- delete temporary file
 			end
 
-			if f and o and (# o > 0) then
+			if f and o and # o > 0 then
 				commandanswer (nick, gettext ("Returned output") .. ":\r\n\r\n" .. repnmdcoutchars (o))
 			else
 				commandanswer (nick, gettext ("Executed shell command didn't return any output."))
@@ -7968,8 +7968,8 @@ local anentry, len = "", 0
 
 for x = 0, rows - 1 do
 local _, entry, class, occurred = VH:SQLFetch (x)
-if x == 0 then len = # occurred end
-anentry = anentry .. " " .. prezero (# rows, (x + 1)) .. ". [ O: " .. prezero (len, occurred) .. " ] " .. repnmdcoutchars (entry) .. " [" .. class .. "]\r\n"
+if x == 0 then len = # _tostring (occurred) end
+anentry = anentry .. " " .. prezero (# _tostring (rows), (x + 1)) .. ". [ O: " .. prezero (len, occurred) .. " ] " .. repnmdcoutchars (entry) .. " [" .. class .. "]\r\n"
 end
 
 commandanswer (nick, gettext ("Command permission list") .. ":\r\n\r\n" .. anentry)
@@ -8016,8 +8016,8 @@ local anentry, len = "", 0
 
 for x = 0, rows - 1 do
 local _, entry, occurred = VH:SQLFetch (x)
-if x == 0 then len = # occurred end
-anentry = anentry .. " " .. prezero (# rows, (x + 1)) .. ". [ O: " .. prezero (len, occurred) .. " ] " .. repnmdcoutchars (entry) .. "\r\n"
+if x == 0 then len = # _tostring (occurred) end
+anentry = anentry .. " " .. prezero (# _tostring (rows), (x + 1)) .. ". [ O: " .. prezero (len, occurred) .. " ] " .. repnmdcoutchars (entry) .. "\r\n"
 end
 
 commandanswer (nick, gettext ("Command notification exception list") .. ":\r\n\r\n" .. anentry)
@@ -8376,7 +8376,7 @@ function listipwat (nick)
 
 		for x = 0, rows - 1 do
 			local _, lre, rsn, res = VH:SQLFetch (x)
-			iwlist = iwlist .. " " .. prezero (# rows, (x + 1)) .. ". " .. repnmdcoutchars (lre) .. " [ R: " .. rsn .. " ] [ R: " .. res .. " ]\r\n"
+			iwlist = iwlist .. " " .. prezero (# _tostring (rows), (x + 1)) .. ". " .. repnmdcoutchars (lre) .. " [ R: " .. rsn .. " ] [ R: " .. res .. " ]\r\n"
 		end
 
 		commandanswer (nick, gettext ("List of IP watch entries") .. ":\r\n\r\n" .. iwlist)
@@ -8570,7 +8570,7 @@ function listnopm (nick)
 
 		for x = 0, rows - 1 do
 			local _, lre, act, cls, rsn = VH:SQLFetch (x)
-			nplist = nplist .. "\r\n " .. prezero (# rows, (x + 1)) .. ". " .. repnmdcoutchars (lre) .. " [ A: " .. act .. " ] [ C: " .. cls .. " ]\r\n " .. gettext ("Reason: %s"):format (rsn) .. "\r\n"
+			nplist = nplist .. "\r\n " .. prezero (# _tostring (rows), (x + 1)) .. ". " .. repnmdcoutchars (lre) .. " [ A: " .. act .. " ] [ C: " .. cls .. " ]\r\n " .. gettext ("Reason: %s"):format (rsn) .. "\r\n"
 		end
 
 		commandanswer (nick, gettext ("List of blocked PM entries") .. ":\r\n" .. nplist)
@@ -8663,7 +8663,7 @@ function listhban (nick)
 
 		for x = 0, rows - 1 do
 			local _, lre, rsn = VH:SQLFetch (x)
-			hblist = hblist .. " " .. prezero (# rows, (x + 1)) .. ". " .. repnmdcoutchars (lre) .. " [ R: " .. rsn .. " ]\r\n"
+			hblist = hblist .. " " .. prezero (# _tostring (rows), (x + 1)) .. ". " .. repnmdcoutchars (lre) .. " [ R: " .. rsn .. " ]\r\n"
 		end
 
 		commandanswer (nick, gettext ("List of hard IP ban entries") .. ":\r\n\r\n" .. hblist)
@@ -8858,8 +8858,8 @@ function listrespex (nick)
 
 		for x = 0, rows - 1 do
 			local _, entry, occurred = VH:SQLFetch (x)
-			if x == 0 then len = # occurred end
-			anentry = anentry .. " " .. prezero (# rows, (x + 1)) .. ". [ O: " .. prezero (len, occurred) .. " ] " .. entry .. "\r\n"
+			if x == 0 then len = # _tostring (occurred) end
+			anentry = anentry .. " " .. prezero (# _tostring (rows), (x + 1)) .. ". [ O: " .. prezero (len, occurred) .. " ] " .. entry .. "\r\n"
 		end
 
 		commandanswer (nick, gettext ("Chat responder exception list") .. ":\r\n\r\n" .. anentry)
@@ -9242,7 +9242,7 @@ if # tth > 0 then
 tth = "\r\n " .. gettext ("Magnet link: %s"):format ("magnet:?xt=urn:tree:tiger:" .. tth)
 end
 
-anentry = anentry .. "\r\n " .. prezero (# rows, (x + 1)) .. ". " .. rel .. "\r\n " .. gettext ("Added by: %s"):format (auth) .. "\r\n " .. gettext ("Published: %s"):format (os.date (table_sets.dateformat .. " " .. table_sets.timeformat, adate)) .. tth .. "\r\n"
+anentry = anentry .. "\r\n " .. prezero (# _tostring (rows), (x + 1)) .. ". " .. rel .. "\r\n " .. gettext ("Added by: %s"):format (auth) .. "\r\n " .. gettext ("Published: %s"):format (os.date (table_sets.dateformat .. " " .. table_sets.timeformat, adate)) .. tth .. "\r\n"
 end
 
 commandanswer (nick, gettext ("Last %d releases by category %s"):format (rows, catst) .. ":\r\n" .. anentry)
@@ -9267,7 +9267,7 @@ if # tth > 0 then
 tth = "\r\n " .. gettext ("Magnet link: %s"):format ("magnet:?xt=urn:tree:tiger:" .. tth)
 end
 
-anentry = anentry .. "\r\n " .. prezero (# rows, (x + 1)) .. ". " .. rel .. "\r\n " .. gettext ("Category: %s"):format (cat) .. "\r\n " .. gettext ("Published: %s"):format (os.date (table_sets.dateformat .. " " .. table_sets.timeformat, adate)) .. tth .. "\r\n"
+anentry = anentry .. "\r\n " .. prezero (# _tostring (rows), (x + 1)) .. ". " .. rel .. "\r\n " .. gettext ("Category: %s"):format (cat) .. "\r\n " .. gettext ("Published: %s"):format (os.date (table_sets.dateformat .. " " .. table_sets.timeformat, adate)) .. tth .. "\r\n"
 end
 
 commandanswer (nick, gettext ("Last %d releases published by %s"):format (rows, catst) .. ":\r\n" .. anentry)
@@ -9289,7 +9289,7 @@ if # tth > 0 then
 tth = "\r\n " .. gettext ("Magnet link: %s"):format ("magnet:?xt=urn:tree:tiger:" .. tth)
 end
 
-anentry = anentry .. "\r\n " .. prezero (# rows, (x + 1)) .. ". " .. rel .. "\r\n " .. gettext ("Category: %s"):format (cat) .. "\r\n " .. gettext ("Added by: %s"):format (auth) .. "\r\n " .. gettext ("Published: %s"):format (os.date (table_sets.dateformat .. " " .. table_sets.timeformat, adate)) .. tth .. "\r\n"
+anentry = anentry .. "\r\n " .. prezero (# _tostring (rows), (x + 1)) .. ". " .. rel .. "\r\n " .. gettext ("Category: %s"):format (cat) .. "\r\n " .. gettext ("Added by: %s"):format (auth) .. "\r\n " .. gettext ("Published: %s"):format (os.date (table_sets.dateformat .. " " .. table_sets.timeformat, adate)) .. tth .. "\r\n"
 end
 
 commandanswer (nick, gettext ("Last %d releases"):format (rows) .. ":\r\n" .. anentry)
@@ -9320,7 +9320,7 @@ function findrelease (nick, line)
 				tth = "\r\n " .. gettext ("Magnet link: %s"):format ("magnet:?xt=urn:tree:tiger:" .. tth)
 			end
 
-			anentry = anentry .. "\r\n " .. prezero (# rows, (x + 1)) .. ". " .. rel .. "\r\n " .. gettext ("Category: %s"):format (cat) .. "\r\n " .. gettext ("Added by: %s"):format (auth) .. "\r\n " .. gettext ("Published: %s"):format (os.date (table_sets.dateformat .. " " .. table_sets.timeformat, adate)) .. tth .. "\r\n"
+			anentry = anentry .. "\r\n " .. prezero (# _tostring (rows), (x + 1)) .. ". " .. rel .. "\r\n " .. gettext ("Category: %s"):format (cat) .. "\r\n " .. gettext ("Added by: %s"):format (auth) .. "\r\n " .. gettext ("Published: %s"):format (os.date (table_sets.dateformat .. " " .. table_sets.timeformat, adate)) .. tth .. "\r\n"
 		end
 
 		commandanswer (nick, gettext ("Last %d releases by search string %s"):format (rows, line) .. ":\r\n" .. anentry)
@@ -10197,11 +10197,11 @@ function listauthentry (nick)
 			local _, id, user, ip, bip, good, bad = VH:SQLFetch (x)
 
 			if x == 0 then
-				len = # good
-				seclen = # bad
+				len = # _tostring (good)
+				seclen = # _tostring (bad)
 			end
 
-			list = list .. " " .. prezero (# rows, (x + 1)) .. ". [ B: " .. prezero (seclen, bad) .. " ] [ G: " .. prezero (len, good) .. " ] [ I: " .. id .. " ] " .. user .. " @ " .. repnmdcoutchars (ip) .. " [ LB: " .. bip .. " ]\r\n"
+			list = list .. " " .. prezero (# _tostring (rows), (x + 1)) .. ". [ B: " .. prezero (seclen, bad) .. " ] [ G: " .. prezero (len, good) .. " ] [ I: " .. id .. " ] " .. user .. " @ " .. repnmdcoutchars (ip) .. " [ LB: " .. bip .. " ]\r\n"
 		end
 
 		commandanswer (nick, gettext ("IP authorization list") .. ":\r\n\r\n" .. list)
@@ -11130,7 +11130,7 @@ function hublistshow (nick)
 				--end
 			--end
 
-			hlist = hlist .. " " .. prezero (# rows, (x + 1)) .. ". " .. name .. " @ dchub://" .. addr .. "/" .. ownr .. sts .. "\r\n" -- todo: allow adding adc, adcs, nmdcs hubs
+			hlist = hlist .. " " .. prezero (# _tostring (rows), (x + 1)) .. ". " .. name .. " @ dchub://" .. addr .. "/" .. ownr .. sts .. "\r\n" -- todo: allow adding adc, adcs, nmdcs hubs
 		end
 
 		commandanswer (nick, gettext ("Friendly hublist") .. ":\r\n\r\n" .. hlist)
@@ -11248,7 +11248,7 @@ local anentry = ""
 
 for x = 0, rows - 1 do
 local _, from, ip, adate = VH:SQLFetch (x)
-anentry = anentry .. " " .. prezero (# rows, (x + 1)) .. ". [ D: " .. os.date (table_sets.dateformat .. " " .. table_sets.timeformat, adate) .. " ] " .. from .. " @ " .. ip .. "\r\n"
+anentry = anentry .. " " .. prezero (# _tostring (rows), (x + 1)) .. ". [ D: " .. os.date (table_sets.dateformat .. " " .. table_sets.timeformat, adate) .. " ] " .. from .. " @ " .. ip .. "\r\n"
 end
 
 commandanswer (nick, gettext ("Stored offline messages") .. ":\r\n\r\n" .. anentry)
@@ -12640,7 +12640,7 @@ function parsemyinfo (nick, info)
 	conn = conn or ""
 	mail = mail or ""
 	size = tonumber (size or 0) or 0
-	local slen = # conn
+	local slen = # _tostring (conn)
 
 	if slen > 0 then
 		sts = (conn:sub (slen):byte () or 1)
@@ -13365,68 +13365,68 @@ end
 
 ----- ---- --- -- -
 
-function altcleanuptable (nick, line, cls)
-	local _, ctype, cdays, seconds, altvar = 0, "", 0, 0, 0
+function altcleanuptable (nick, line, ucls)
+	local cype, days, secs, pcls = "", 0, 0, 0
 
-	if line:find ("^%S+ %* %-%d$") then
-		_, _, ctype, cdays, altvar = line:find ("^(%S+) (%*) (%-%d)$")
-	elseif line:find ("^%S+ %* %d+$") then
-		_, _, ctype, cdays, altvar = line:find ("^(%S+) (%*) (%d+)$")
-	elseif line:find ("^%S+ %d+ %-%d$") then
-		_, _, ctype, cdays, altvar = line:find ("^(%S+) (%d+) (%-%d)$")
-	elseif line:find ("^%S+ %d+ %d+$") then
-		_, _, ctype, cdays, altvar = line:find ("^(%S+) (%d+) (%d+)$")
+	if line:match ("^%S+ %* %-?%d+$") then
+		cype, days, pcls = line:match ("^(%S+) (%*) (%-?%d+)$")
+	elseif line:match ("^%S+ %d+ %-?%d+$") then
+		cype, days, pcls = line:match ("^(%S+) (%d+) (%-?%d+)$")
 	end
 
-	if ctype == "reg" then
-		altvar = tonumber (altvar)
+	if cype == "reg" then
+		pcls = tonumber (pcls)
 
-		if altvar == 10 or altvar == 5 or altvar == 4 or altvar == 3 or altvar == 2 or altvar == 1 or altvar == 0 or altvar == -1 then
-			if cdays ~= "*" then
-				cdays = tonumber (cdays)
-				seconds = os.difftime (os.time (), (cdays * 24 * 3600))
+		if pcls == 10 or pcls == 5 or pcls == 4 or pcls == 3 or pcls == 2 or pcls == 1 or pcls == 0 or pcls == -1 then
+			if days ~= "*" then
+				secs = os.difftime (os.time (), (tonumber (days) * 24 * 3600))
 			end
 
 			commandanswer (nick, gettext ("This operation might take very long time depending on how much is going to be removed, please be patient."))
 			local rows = 0
 
-			if cdays == "*" then
-				_, rows = VH:SQLQuery ("select `nick` from `reglist` where `class` = " .. altvar)
-			elseif cdays == 0 then
-				_, rows = VH:SQLQuery ("select `nick` from `reglist` where `login_last` is null and `class` = " .. altvar)
+			if days == "*" then
+				_, rows = VH:SQLQuery ("select `nick` from `reglist` where `class` = " .. _tostring (pcls))
+			elseif days == 0 then
+				_, rows = VH:SQLQuery ("select `nick` from `reglist` where `login_last` is null and `class` = " .. _tostring (pcls))
 			else
-				_, rows = VH:SQLQuery ("select `nick` from `reglist` where `login_last` is not null and `login_last` < " .. seconds .. " and `class` = " .. altvar)
+				_, rows = VH:SQLQuery ("select `nick` from `reglist` where `login_last` is not null and `login_last` < " .. _tostring (secs) .. " and `class` = " .. _tostring (pcls))
 			end
 
 			if rows > 0 then
-				local anick = ""
+				local list = ""
 
-				for x = 0, rows - 1 do
-					local _, user = VH:SQLFetch (x)
-					anick = anick .. " " .. prezero (# rows, (x + 1)) .. ". " .. user .. "\r\n"
+				for pos = 0, rows - 1 do
+					local _, user = VH:SQLFetch (pos)
+					list = list .. " " .. prezero (# _tostring (rows), (pos + 1)) .. ". " .. user .. "\r\n"
 				end
 
-				if cdays == "*" then
-					VH:SQLQuery ("delete from `reglist` where `class` = " .. altvar)
-				elseif cdays == 0 then
-					VH:SQLQuery ("delete from `reglist` where `login_last` is null and `class` = " .. altvar)
+				if days == "*" then
+					VH:SQLQuery ("delete from `reglist` where `class` = " .. _tostring (pcls))
+				elseif days == 0 then
+					VH:SQLQuery ("delete from `reglist` where `login_last` is null and `class` = " .. _tostring (pcls))
 				else
-					VH:SQLQuery ("delete from `reglist` where `login_last` is not null and `login_last` < " .. seconds .. " and `class` = " .. altvar)
+					VH:SQLQuery ("delete from `reglist` where `login_last` is not null and `login_last` < " .. _tostring (secs) .. " and `class` = " .. _tostring (pcls))
 				end
 
-				commandanswer (nick, gettext ("Deleted %d accounts with class %d"):format (rows, altvar) .. ":\r\n\r\n" .. anick)
-				opsnotify (table_sets.classnotiledoact, gettext ("%s with class %d deleted %d accounts with class %d that has been inactive for %d days."):format (nick, cls, rows, altvar, cdays))
+				if days == "*" then -- workaround
+					days = 0
+				end
+
+				commandanswer (nick, gettext ("Deleted %d accounts with class %d"):format (rows, pcls) .. ":\r\n\r\n" .. list)
+				opsnotify (table_sets.classnotiledoact, gettext ("%s with class %d deleted %d accounts with class %d that has been inactive for %d days."):format (nick, ucls, rows, pcls, days))
+
 				local tm = os.time () + table_sets.srvtimediff
-				VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('lastcleanreg', " .. tm .. ") on duplicate key update `value` = " .. tm)
-				VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('limcleanreg', '" .. cdays .. "') on duplicate key update `value` = '" .. cdays .. "'")
+				VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('lastcleanreg', " .. _tostring (tm) .. ") on duplicate key update `value` = " .. _tostring (tm))
+				VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('limcleanreg', " .. _tostring (days) .. ") on duplicate key update `value` = " .. _tostring (days))
 			else
-				commandanswer (nick, gettext ("No rows to remove: %s"):format (ctype))
+				commandanswer (nick, gettext ("No rows to remove: %s"):format (cype))
 			end
 		else
 			commandanswer (nick, gettext ("Known classes are: %s"):format ("-1, 0, 1, 2, 3, 4, 5 " .. gettext ("and") .. " 10"))
 		end
 	else -- redirect to another type
-		cleanuptable (nick, line, cls)
+		cleanuptable (nick, line, ucls)
 	end
 end
 
@@ -13524,8 +13524,8 @@ if rows > 0 then
 
 	for x = 0, rows - 1 do
 		local _, user, rank = VH:SQLFetch (x)
-		if x == 0 then len = # rank end
-		arank = arank .. " " .. prezero (# rows, (x + 1)) .. ". [ R: " .. prezero (len, rank) .. " ] " .. repnmdcoutchars (user) .. "\r\n"
+		if x == 0 then len = # _tostring (rank) end
+		arank = arank .. " " .. prezero (# _tostring (rows), (x + 1)) .. ". [ R: " .. prezero (len, rank) .. " ] " .. repnmdcoutchars (user) .. "\r\n"
 	end
 
 	commandanswer (nick, gettext ("Top %d search requests"):format (rows) .. ":\r\n\r\n" .. arank)
@@ -13862,8 +13862,8 @@ local arank, len = "", 0
 
 for x = 0, rows - 1 do
 local _, user, rank = VH:SQLFetch (x)
-if x == 0 then len = # rank end
-arank = arank .. " " .. prezero (# rows, (x + 1)) .. ". [ R: " .. prezero (len, rank) .. " ] " .. user .. "\r\n"
+if x == 0 then len = # _tostring (rank) end
+arank = arank .. " " .. prezero (# _tostring (rows), (x + 1)) .. ". [ R: " .. prezero (len, rank) .. " ] " .. user .. "\r\n"
 end
 
 commandanswer (nick, gettext ("Top %d chat rankers"):format (rows) .. ":\r\n\r\n" .. arank)
@@ -13882,7 +13882,7 @@ local arank = ""
 
 for x = 0, rows - 1 do
 local _, user, rank = VH:SQLFetch (x)
-arank = arank .. " " .. prezero (# rows, (x + 1)) .. ". " .. user .. " @ " .. makesize (rank) .. "\r\n"
+arank = arank .. " " .. prezero (# _tostring (rows), (x + 1)) .. ". " .. user .. " @ " .. makesize (rank) .. "\r\n"
 end
 
 commandanswer (nick, gettext ("Top %d share rankers"):format (rows) .. ":\r\n\r\n" .. arank)
@@ -13901,8 +13901,8 @@ local arank, len = "", 0
 
 for x = 0, rows - 1 do
 local _, user, rank = VH:SQLFetch (x)
-if x == 0 then len = # rank end
-arank = arank .. " " .. prezero (# rows, (x + 1)) .. ". [ R: " .. prezero (len, rank) .. " ] " .. user .. "\r\n"
+if x == 0 then len = # _tostring (rank) end
+arank = arank .. " " .. prezero (# _tostring (rows), (x + 1)) .. ". [ R: " .. prezero (len, rank) .. " ] " .. user .. "\r\n"
 end
 
 commandanswer (nick, gettext ("Top %d operator rankers"):format (rows) .. ":\r\n\r\n" .. arank)
@@ -13921,8 +13921,8 @@ if rows > 0 then
 
 	for x = 0, rows - 1 do
 		local _, user, rank = VH:SQLFetch (x)
-		if x == 0 then len = # rank end
-		arank = arank .. " " .. prezero (# rows, (x + 1)) .. ". [ R: " .. prezero (len, rank) .. " ] " .. repnmdcoutchars (user) .. "\r\n"
+		if x == 0 then len = # _tostring (rank) end
+		arank = arank .. " " .. prezero (# _tostring (rows), (x + 1)) .. ". [ R: " .. prezero (len, rank) .. " ] " .. repnmdcoutchars (user) .. "\r\n"
 	end
 
 	commandanswer (nick, gettext ("Top %d used words"):format (rows) .. ":\r\n\r\n" .. arank)
@@ -13970,8 +13970,8 @@ local anentry, len = "", 0
 
 for x = 0, rows - 1 do
 local _, entry, occurred = VH:SQLFetch (x)
-if x == 0 then len = # occurred end
-anentry = anentry .. " " .. prezero (# rows, (x + 1)) .. ". [ O: " .. prezero (len, occurred) .. " ] " .. entry .. "\r\n"
+if x == 0 then len = # _tostring (occurred) end
+anentry = anentry .. " " .. prezero (# _tostring (rows), (x + 1)) .. ". [ O: " .. prezero (len, occurred) .. " ] " .. entry .. "\r\n"
 end
 
 commandanswer (nick, gettext ("Rank exception list") .. ":\r\n\r\n" .. anentry)
@@ -14283,8 +14283,8 @@ if rows > 0 then
 
 	for x = 0, rows - 1 do
 		local _, entry, occurred, prio, aaction, flags = VH:SQLFetch (x)
-		if x == 0 then len = # occurred end
-		anentry = anentry .. " " .. prezero (# rows, (x + 1)) .. ". [ P: " .. prio .. " ] [ A: " .. aaction .. " ] [ F: " .. flags .. " ] [ O: " .. prezero (len, occurred) .. " ] " .. repnmdcoutchars (entry) .. "\r\n"
+		if x == 0 then len = # _tostring (occurred) end
+		anentry = anentry .. " " .. prezero (# _tostring (rows), (x + 1)) .. ". [ P: " .. prio .. " ] [ A: " .. aaction .. " ] [ F: " .. flags .. " ] [ O: " .. prezero (len, occurred) .. " ] " .. repnmdcoutchars (entry) .. "\r\n"
 	end
 
 	commandanswer (nick, gettext ("Antispam list") .. ":\r\n\r\n" .. anentry)
@@ -14341,8 +14341,8 @@ local anentry, len = "", 0
 
 for x = 0, rows - 1 do
 local _, entry, occurred = VH:SQLFetch (x)
-if x == 0 then len = # occurred end
-anentry = anentry .. " " .. prezero (# rows, (x + 1)) .. ". [ O: " .. prezero (len, occurred) .. " ] " .. repnmdcoutchars (entry) .. "\r\n"
+if x == 0 then len = # _tostring (occurred) end
+anentry = anentry .. " " .. prezero (# _tostring (rows), (x + 1)) .. ". [ O: " .. prezero (len, occurred) .. " ] " .. repnmdcoutchars (entry) .. "\r\n"
 end
 
 commandanswer (nick, gettext ("Antispam exception list") .. ":\r\n\r\n" .. anentry)
@@ -14853,7 +14853,7 @@ for k, v in pairs (tbl) do
 end
 
 table.sort (tmp, function (a, b) return a.val > b.val end) -- sorting order
-local ilen = # tmp [1].val -- first highest value
+local ilen = # _tostring (tmp [1].val) -- first highest value
 local stats = ""
 
 for _, v in pairs (tmp) do
@@ -14873,7 +14873,7 @@ function gencitystats (list, count)
 	end
 
 	table.sort (temp, function (a, b) return a.val > b.val end) -- sorting order
-	local num = # temp [1].val -- first highest value
+	local num = # _tostring (temp [1].val) -- first highest value
 	local stats = ""
 
 	for _, v in pairs (temp) do
@@ -15405,7 +15405,7 @@ function sethubconf (nick, ucl, var, val)
 		if val ~= "" then
 			table_othsets.optrig = "["
 
-			for pos = 1, # val do
+			for pos = 1, # _tostring (val) do
 				table_othsets.optrig = table_othsets.optrig .. "%" .. val:sub (pos, pos)
 			end
 
@@ -15416,7 +15416,7 @@ function sethubconf (nick, ucl, var, val)
 		if val ~= "" then
 			table_othsets.ustrig = "["
 
-			for pos = 1, # val do
+			for pos = 1, # _tostring (val) do
 				table_othsets.ustrig = table_othsets.ustrig .. "%" .. val:sub (pos, pos)
 			end
 
@@ -20327,8 +20327,8 @@ end
 function getitemcount (list)
 	local back = 0
 
-	for name, _ in pairs (list) do
-		if # name > 0 then
+	for id, _ in pairs (list) do
+		if # _tostring (id) > 0 then
 			back = back + 1
 		end
 	end
@@ -21159,7 +21159,7 @@ function loadcomponents ()
 				f:close ()
 				os.remove (table_othsets.cfgdir .. table_othsets.tmpfile)
 
-				if ver and (# ver > 0) then
+				if ver and # _tostring (ver) > 0 then
 					_, _, table_othsets.ver_lua = ver:find ("(%d+[%.%d]+)")
 
 					if table_othsets.ver_lua then
@@ -21224,7 +21224,7 @@ function loadcomponents ()
 			f:close ()
 			os.remove (table_othsets.cfgdir .. table_othsets.tmpfile)
 
-			if ver and (# ver > 0) then
+			if ver and # _tostring (ver) > 0 then
 				_, _, table_othsets.ver_iconv = ver:find ("(%d+[%.%d]+)")
 			end
 		end
@@ -21444,7 +21444,7 @@ end
 function getnicklist ()
 local _, nl = VH:GetNickList ()
 
-if nl and (# nl > 13) then
+if nl and # nl > 13 then
 	return nl:sub (11)
 else
 	return
@@ -21568,7 +21568,7 @@ end
 function gethost (nick)
 local _, host = VH:GetUserHost (nick)
 
-if host and (# host > 0) then
+if host and # host > 0 then
 	return host
 else
 	return "[unknown]"
