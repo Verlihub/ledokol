@@ -63,7 +63,7 @@ Tzaca, JOE™
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.2" -- ledokol version
-bld_ledo = "29" -- build number
+bld_ledo = "30" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -5958,12 +5958,18 @@ function VH_OnScriptCommand (name, data, plug, file)
 			nick = repnmdcoutchars (nick)
 			addmchistoryline (nick, nick, repnmdcoutchars (line))
 		end
+
 	elseif name == "opchat_to_all" then -- user sends operator chat message to all
-		local nick, line = data:match ("^<([^ ]+)> (.*)$")
+		local clas, nick, line = nil, "", ""
+
+		if data:match ("^%[%d+%] <[^ ]+> .*$") then
+			clas, nick, line = data:match ("^%[(%d+)%] <([^ ]+)> (.*)$")
+		else
+			nick, line = data:match ("^<([^ ]+)> (.*)$")
+		end
 
 		if nick and line then
-			nick = repnmdcoutchars (nick)
-			addophistoryline (nick, line, getconfig ("opchat_class") or 3)
+			addophistoryline (repnmdcoutchars (nick), repnmdcoutchars (line), clas or getconfig ("opchat_class") or 3)
 		end
 	end
 
