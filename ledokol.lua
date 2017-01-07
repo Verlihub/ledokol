@@ -63,7 +63,7 @@ Tzaca, JOE™
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.2" -- ledokol version
-bld_ledo = "30" -- build number
+bld_ledo = "31" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -334,6 +334,7 @@ table_othsets = {
 	avdbsendurl = "http://www.te-home.net/avdb.php?do=send",
 	avdbloadurl = "http://www.te-home.net/avdb.php?do=load",
 	avdbfindurl = "http://www.te-home.net/avdb.php?do=find",
+	luaman = "http://www.lua.org/manual/5.3/manual.html#6.4.1",
 	cfgdir = "",
 	feednick = "",
 	sendfrom = "",
@@ -1014,6 +1015,8 @@ table_avse = {}
 table_avbl = {}
 table_avss = {}
 table_sefi = {}
+table_sfex = {}
+table_sfbl = {}
 
 table_avfi = {
 	string.char (100, 111, 119, 110, 108, 111, 97, 100),
@@ -1454,6 +1457,7 @@ function Main (file)
 		loadavstr ()
 	end
 
+	loadsefilist () -- load search filter cache, even if disabled
 	math.randomseed (os.time ()) -- randomize
 	return 1
 end
@@ -5045,7 +5049,7 @@ function VH_OnUserLogout (nick, uip)
 	end
 
 	if table_sets.enablesearfilt == 1 and table_sets.sefiblockdel == 1 then -- search filter
-		table_sefi [nick] = nil
+		table_sfbl [nick] = nil
 	end
 
 	return 1
@@ -5151,14 +5155,14 @@ function VH_OnParsedMsgSearch (nick, data)
 			end
 
 			if not prot then
-				local sefi = table_sefi [nick]
+				local sefi = table_sfbl [nick]
 
 				if sefi then
 					if not sefi.sil then
 						maintouser (nick, gettext ("Your search request is discarded due to previous forbidden search request: %s"):format (sefi.req))
 					end
 
-					table_sefi [nick].num = sefi.num + 1
+					table_sfbl [nick].num = sefi.num + 1
 					return 0
 				elseif sefiscan (nick, data, cls, ip) then
 					return 0
@@ -11331,7 +11335,7 @@ function checknick (nick, ucls, aip)
 				local ferr = gettext ("There is an error in following forbidden nick pattern") .. ":\r\n\r\n"
 				ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (entry) .. "\r\n"
 				ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
-				ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+				ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
 				opsnotify (table_sets.classnotiledoact, ferr)
 			elseif fval then
 				VH:SQLQuery ("update `" .. tbl_sql.minick .. "` set `occurred` = `occurred` + 1 where `nick` = '" .. repsqlchars (entry) .. "' limit 1")
@@ -11346,7 +11350,7 @@ function checknick (nick, ucls, aip)
 							local ferr = gettext ("There is an error in following MyINFO exception pattern") .. ":\r\n\r\n"
 							ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (entry) .. "\r\n"
 							ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
-							ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+							ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
 							opsnotify (table_sets.classnotiledoact, ferr)
 						elseif fval then
 							VH:SQLQuery ("update `" .. tbl_sql.miex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (entry) .. "' limit 1")
@@ -11390,7 +11394,7 @@ function checkdesc (nick, desc, ucls, aip)
 				local ferr = gettext ("There is an error in following forbidden description pattern") .. ":\r\n\r\n"
 				ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (entry) .. "\r\n"
 				ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
-				ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+				ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
 				opsnotify (table_sets.classnotiledoact, ferr)
 			elseif fval then
 				VH:SQLQuery ("update `" .. tbl_sql.midesc .. "` set `occurred` = `occurred` + 1 where `description` = '" .. repsqlchars (entry) .. "' limit 1")
@@ -11405,7 +11409,7 @@ function checkdesc (nick, desc, ucls, aip)
 							local ferr = gettext ("There is an error in following MyINFO exception pattern") .. ":\r\n\r\n"
 							ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (entry) .. "\r\n"
 							ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
-							ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+							ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
 							opsnotify (table_sets.classnotiledoact, ferr)
 						elseif fval then
 							VH:SQLQuery ("update `" .. tbl_sql.miex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (entry) .. "' limit 1")
@@ -11449,7 +11453,7 @@ function checktag (nick, tag, ucls, aip)
 				local ferr = gettext ("There is an error in following forbidden tag pattern") .. ":\r\n\r\n"
 				ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (entry) .. "\r\n"
 				ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
-				ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+				ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
 				opsnotify (table_sets.classnotiledoact, ferr)
 			elseif fval then
 				VH:SQLQuery ("update `" .. tbl_sql.mitag .. "` set `occurred` = `occurred` + 1 where `tag` = '" .. repsqlchars (entry) .. "' limit 1")
@@ -11464,7 +11468,7 @@ function checktag (nick, tag, ucls, aip)
 							local ferr = gettext ("There is an error in following MyINFO exception pattern") .. ":\r\n\r\n"
 							ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (entry) .. "\r\n"
 							ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
-							ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+							ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
 							opsnotify (table_sets.classnotiledoact, ferr)
 						elseif fval then
 							VH:SQLQuery ("update `" .. tbl_sql.miex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (entry) .. "' limit 1")
@@ -11535,7 +11539,7 @@ function checkconn (nick, conn, ucls, aip)
 				local ferr = gettext ("There is an error in following forbidden connection type pattern") .. ":\r\n\r\n"
 				ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (entry) .. "\r\n"
 				ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
-				ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+				ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
 				opsnotify (table_sets.classnotiledoact, ferr)
 			elseif fval then
 				VH:SQLQuery ("update `" .. tbl_sql.miconn .. "` set `occurred` = `occurred` + 1 where `connection` = '" .. repsqlchars (entry) .. "' limit 1")
@@ -11550,7 +11554,7 @@ function checkconn (nick, conn, ucls, aip)
 							local ferr = gettext ("There is an error in following MyINFO exception pattern") .. ":\r\n\r\n"
 							ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (entry) .. "\r\n"
 							ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
-							ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+							ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
 							opsnotify (table_sets.classnotiledoact, ferr)
 						elseif fval then
 							VH:SQLQuery ("update `" .. tbl_sql.miex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (entry) .. "' limit 1")
@@ -11594,7 +11598,7 @@ function checkemail (nick, email, ucls, aip)
 				local ferr = gettext ("There is an error in following forbidden email pattern") .. ":\r\n\r\n"
 				ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (entry) .. "\r\n"
 				ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
-				ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+				ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
 				opsnotify (table_sets.classnotiledoact, ferr)
 			elseif fval then
 				VH:SQLQuery ("update `" .. tbl_sql.miemail .. "` set `occurred` = `occurred` + 1 where `email` = '" .. repsqlchars (entry) .. "' limit 1")
@@ -11609,7 +11613,7 @@ function checkemail (nick, email, ucls, aip)
 							local ferr = gettext ("There is an error in following MyINFO exception pattern") .. ":\r\n\r\n"
 							ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (entry) .. "\r\n"
 							ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
-							ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+							ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
 							opsnotify (table_sets.classnotiledoact, ferr)
 						elseif fval then
 							VH:SQLQuery ("update `" .. tbl_sql.miex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (entry) .. "' limit 1")
@@ -11653,7 +11657,7 @@ function checkshare (nick, share, ucls, aip)
 				local ferr = gettext ("There is an error in following forbidden share size pattern") .. ":\r\n\r\n"
 				ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (entry) .. "\r\n"
 				ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
-				ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+				ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
 				opsnotify (table_sets.classnotiledoact, ferr)
 			elseif fval then
 				VH:SQLQuery ("update `" .. tbl_sql.mishare .. "` set `occurred` = `occurred` + 1 where `share` = '" .. repsqlchars (entry) .. "' limit 1")
@@ -11668,7 +11672,7 @@ function checkshare (nick, share, ucls, aip)
 							local ferr = gettext ("There is an error in following MyINFO exception pattern") .. ":\r\n\r\n"
 							ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (entry) .. "\r\n"
 							ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
-							ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+							ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
 							opsnotify (table_sets.classnotiledoact, ferr)
 						elseif fval then
 							VH:SQLQuery ("update `" .. tbl_sql.miex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (entry) .. "' limit 1")
@@ -11712,7 +11716,7 @@ function checkip (nick, aip, ucls)
 				local ferr = gettext ("There is an error in following forbidden IP address pattern") .. ":\r\n\r\n"
 				ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (entry) .. "\r\n"
 				ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
-				ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+				ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
 				opsnotify (table_sets.classnotiledoact, ferr)
 			elseif fval then
 				VH:SQLQuery ("update `" .. tbl_sql.miip .. "` set `occurred` = `occurred` + 1 where `ip` = '" .. repsqlchars (entry) .. "' limit 1")
@@ -11727,7 +11731,7 @@ function checkip (nick, aip, ucls)
 							local ferr = gettext ("There is an error in following MyINFO exception pattern") .. ":\r\n\r\n"
 							ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (entry) .. "\r\n"
 							ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
-							ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+							ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
 							opsnotify (table_sets.classnotiledoact, ferr)
 						elseif fval then
 							VH:SQLQuery ("update `" .. tbl_sql.miex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (entry) .. "' limit 1")
@@ -11777,7 +11781,7 @@ function checkcc (nick, cls)
 				local ferr = gettext ("There is an error in following forbidden country code pattern") .. ":\r\n\r\n"
 				ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (ent) .. "\r\n"
 				ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
-				ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+				ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
 				opsnotify (table_sets.classnotiledoact, ferr)
 			elseif fval then
 				VH:SQLQuery ("update `" .. tbl_sql.micc .. "` set `occurred` = `occurred` + 1 where `cc` = '" .. repsqlchars (ent) .. "' limit 1")
@@ -11792,7 +11796,7 @@ function checkcc (nick, cls)
 							local ferr = gettext ("There is an error in following MyINFO exception pattern") .. ":\r\n\r\n"
 							ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (ent) .. "\r\n"
 							ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
-							ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+							ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
 							opsnotify (table_sets.classnotiledoact, ferr)
 						elseif fval then
 							VH:SQLQuery ("update `" .. tbl_sql.miex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (ent) .. "' limit 1")
@@ -11842,7 +11846,7 @@ function checkdns (nick, cls, ip)
 				local ferr = gettext ("There is an error in following forbidden DNS pattern") .. ":\r\n\r\n"
 				ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (ent) .. "\r\n"
 				ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
-				ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+				ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
 				opsnotify (table_sets.classnotiledoact, ferr)
 			elseif fval then
 				VH:SQLQuery ("update `" .. tbl_sql.midns .. "` set `occurred` = `occurred` + 1 where `dns` = '" .. repsqlchars (ent) .. "' limit 1")
@@ -11857,7 +11861,7 @@ function checkdns (nick, cls, ip)
 							local ferr = gettext ("There is an error in following MyINFO exception pattern") .. ":\r\n\r\n"
 							ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (ent) .. "\r\n"
 							ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
-							ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+							ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
 							opsnotify (table_sets.classnotiledoact, ferr)
 						elseif fval then
 							VH:SQLQuery ("update `" .. tbl_sql.miex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (ent) .. "' limit 1")
@@ -11907,7 +11911,7 @@ function checksup (nick, cls, ip)
 				local ferr = gettext ("There is an error in following forbidden client supports pattern") .. ":\r\n\r\n"
 				ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (ent) .. "\r\n"
 				ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
-				ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+				ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
 				opsnotify (table_sets.classnotiledoact, ferr)
 			elseif fval then
 				VH:SQLQuery ("update `" .. tbl_sql.misup .. "` set `occurred` = `occurred` + 1 where `supports` = '" .. repsqlchars (ent) .. "' limit 1")
@@ -11922,7 +11926,7 @@ function checksup (nick, cls, ip)
 							local ferr = gettext ("There is an error in following MyINFO exception pattern") .. ":\r\n\r\n"
 							ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (ent) .. "\r\n"
 							ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
-							ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+							ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
 							opsnotify (table_sets.classnotiledoact, ferr)
 						elseif fval then
 							VH:SQLQuery ("update `" .. tbl_sql.miex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (ent) .. "' limit 1")
@@ -11972,7 +11976,7 @@ function checkver (nick, cls, ip)
 				local ferr = gettext ("There is an error in following forbidden NMDC version pattern") .. ":\r\n\r\n"
 				ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (ent) .. "\r\n"
 				ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
-				ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+				ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
 				opsnotify (table_sets.classnotiledoact, ferr)
 			elseif fval then
 				VH:SQLQuery ("update `" .. tbl_sql.miver .. "` set `occurred` = `occurred` + 1 where `version` = '" .. repsqlchars (ent) .. "' limit 1")
@@ -11987,7 +11991,7 @@ function checkver (nick, cls, ip)
 							local ferr = gettext ("There is an error in following MyINFO exception pattern") .. ":\r\n\r\n"
 							ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (ent) .. "\r\n"
 							ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
-							ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+							ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
 							opsnotify (table_sets.classnotiledoact, ferr)
 						elseif fval then
 							VH:SQLQuery ("update `" .. tbl_sql.miex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (ent) .. "' limit 1")
@@ -12741,7 +12745,7 @@ function addmyinfoentry (nick, line)
 			local ferr = gettext ("There is an error in following forbidden nick pattern") .. ":\r\n\r\n"
 			ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. item .. "\r\n"
 			ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
-			ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+			ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
 			commandanswer (nick, ferr)
 		else
 			local _, rows = VH:SQLQuery ("select `occurred` from `" .. tbl_sql.minick .. "` where `nick` = '" .. entry .. "'")
@@ -12760,7 +12764,7 @@ function addmyinfoentry (nick, line)
 			local ferr = gettext ("There is an error in following forbidden description pattern") .. ":\r\n\r\n"
 			ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. item .. "\r\n"
 			ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
-			ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+			ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
 			commandanswer (nick, ferr)
 		else
 			local _, rows = VH:SQLQuery ("select `occurred` from `" .. tbl_sql.midesc .. "` where `description` = '" .. entry .. "'")
@@ -12779,7 +12783,7 @@ function addmyinfoentry (nick, line)
 			local ferr = gettext ("There is an error in following forbidden tag pattern") .. ":\r\n\r\n"
 			ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. item .. "\r\n"
 			ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
-			ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+			ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
 			commandanswer (nick, ferr)
 		else
 			local _, rows = VH:SQLQuery ("select `occurred` from `" .. tbl_sql.mitag .. "` where `tag` = '" .. entry .. "'")
@@ -12798,7 +12802,7 @@ function addmyinfoentry (nick, line)
 			local ferr = gettext ("There is an error in following forbidden connection type pattern") .. ":\r\n\r\n"
 			ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. item .. "\r\n"
 			ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
-			ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+			ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
 			commandanswer (nick, ferr)
 		else
 			local _, rows = VH:SQLQuery ("select `occurred` from `" .. tbl_sql.miconn .. "` where `connection` = '" .. entry .. "'")
@@ -12817,7 +12821,7 @@ function addmyinfoentry (nick, line)
 			local ferr = gettext ("There is an error in following forbidden email pattern") .. ":\r\n\r\n"
 			ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. item .. "\r\n"
 			ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
-			ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+			ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
 			commandanswer (nick, ferr)
 		else
 			local _, rows = VH:SQLQuery ("select `occurred` from `" .. tbl_sql.miemail .. "` where `email` = '" .. entry .. "'")
@@ -12836,7 +12840,7 @@ function addmyinfoentry (nick, line)
 			local ferr = gettext ("There is an error in following forbidden share size pattern") .. ":\r\n\r\n"
 			ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. item .. "\r\n"
 			ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
-			ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+			ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
 			commandanswer (nick, ferr)
 		else
 			local _, rows = VH:SQLQuery ("select `occurred` from `" .. tbl_sql.mishare .. "` where `share` = '" .. entry .. "'")
@@ -12855,7 +12859,7 @@ function addmyinfoentry (nick, line)
 			local ferr = gettext ("There is an error in following forbidden IP address pattern") .. ":\r\n\r\n"
 			ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. item .. "\r\n"
 			ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
-			ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+			ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
 			commandanswer (nick, ferr)
 		else
 			local _, rows = VH:SQLQuery ("select `occurred` from `" .. tbl_sql.miip .. "` where `ip` = '" .. entry .. "'")
@@ -12874,7 +12878,7 @@ function addmyinfoentry (nick, line)
 			local ferr = gettext ("There is an error in following forbidden country code pattern") .. ":\r\n\r\n"
 			ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. item .. "\r\n"
 			ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
-			ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+			ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
 			commandanswer (nick, ferr)
 		else
 			local _, rows = VH:SQLQuery ("select `occurred` from `" .. tbl_sql.micc .. "` where `cc` = '" .. entry .. "'")
@@ -12893,7 +12897,7 @@ function addmyinfoentry (nick, line)
 			local ferr = gettext ("There is an error in following forbidden DNS pattern") .. ":\r\n\r\n"
 			ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. item .. "\r\n"
 			ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
-			ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+			ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
 			commandanswer (nick, ferr)
 		else
 			local _, rows = VH:SQLQuery ("select `occurred` from `" .. tbl_sql.midns .. "` where `dns` = '" .. entry .. "'")
@@ -12912,7 +12916,7 @@ function addmyinfoentry (nick, line)
 			local ferr = gettext ("There is an error in following forbidden client supports pattern") .. ":\r\n\r\n"
 			ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. item .. "\r\n"
 			ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
-			ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+			ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
 			commandanswer (nick, ferr)
 		else
 			local _, rows = VH:SQLQuery ("select `occurred` from `" .. tbl_sql.misup .. "` where `supports` = '" .. entry .. "'")
@@ -12931,7 +12935,7 @@ function addmyinfoentry (nick, line)
 			local ferr = gettext ("There is an error in following forbidden NMDC version pattern") .. ":\r\n\r\n"
 			ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. item .. "\r\n"
 			ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
-			ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+			ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
 			commandanswer (nick, ferr)
 		else
 			local _, rows = VH:SQLQuery ("select `occurred` from `" .. tbl_sql.miver .. "` where `version` = '" .. entry .. "'")
@@ -12950,7 +12954,7 @@ function addmyinfoentry (nick, line)
 			local ferr = gettext ("There is an error in following MyINFO exception pattern") .. ":\r\n\r\n"
 			ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. item .. "\r\n"
 			ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
-			ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+			ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
 			commandanswer (nick, ferr)
 		else
 			local _, rows = VH:SQLQuery ("select `occurred` from `" .. tbl_sql.miex .. "` where `exception` = '" .. entry .. "'")
@@ -13215,153 +13219,161 @@ end
 ----- ---- --- -- -
 
 function cleanuptable (nick, line, cls)
-	local ctype, cdays = line:match ("^(%S+) (%d+).*$")
+	local cype, days = line:match ("^(%S+) (%d+).*$")
 
-	if not ctype then
+	if not cype then
 		commandanswer (nick, gettext ("Please check your command syntax, something is wrong there."))
 		return
 	end
 
-	local seconds = os.difftime (os.time (), (tonumber (cdays) * 24 * 3600))
-	local tm = os.time () + table_sets.srvtimediff
+	days = tonumber (days)
+	local secs = _tostring (os.difftime (os.time (), (days * 24 * 3600)))
+	local tm = _tostring (os.time () + table_sets.srvtimediff)
 
-	if ctype == "kick" then
+	if cype == "kick" then
 		commandanswer (nick, gettext ("This operation might take very long time depending on how much is going to be removed, please be patient."))
-		local _, rows = VH:SQLQuery ("select `is_drop` from `kicklist` where `time` < " .. seconds)
+		local _, rows = VH:SQLQuery ("select `is_drop` from `kicklist` where `time` < " .. secs)
 
 		if rows > 0 then
-			VH:SQLQuery ("delete from `kicklist` where `time` < " .. seconds)
-			commandanswer (nick, gettext ("Deleted %d rows: %s"):format (rows, ctype))
-			opsnotify (table_sets.classnotiledoact, gettext ("%s with class %d deleted %d kicks older than %d days."):format (nick, cls, rows, cdays))
+			VH:SQLQuery ("delete from `kicklist` where `time` < " .. secs)
+			commandanswer (nick, gettext ("Deleted %d rows: %s"):format (rows, cype))
+			opsnotify (table_sets.classnotiledoact, gettext ("%s with class %d deleted %d kicks older than %d days."):format (nick, cls, rows, days))
 			VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('lastcleankick', " .. tm .. ") on duplicate key update `value` = " .. tm)
-			VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('limcleankick', " .. cdays .. ") on duplicate key update `value` = " .. cdays)
+			VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('limcleankick', " .. _tostring (days) .. ") on duplicate key update `value` = " .. _tostring (days))
 		else
-			commandanswer (nick, gettext ("No rows to remove: %s"):format (ctype))
+			commandanswer (nick, gettext ("No rows to remove: %s"):format (cype))
 		end
 
-	elseif ctype == "ban" then
+	elseif cype == "ban" then
 		commandanswer (nick, gettext ("This operation might take very long time depending on how much is going to be removed, please be patient."))
-		local _, rows = VH:SQLQuery ("select `ban_type` from `banlist` where `date_start` < " .. seconds)
+		local _, rows = VH:SQLQuery ("select `ban_type` from `banlist` where `date_start` < " .. secs)
 
 		if rows > 0 then
-			VH:SQLQuery ("delete from `banlist` where `date_start` < " .. seconds)
-			commandanswer (nick, gettext ("Deleted %d rows: %s"):format (rows, ctype))
-			opsnotify (table_sets.classnotiledoact, gettext ("%s with class %d deleted %d bans older than %d days."):format (nick, cls, rows, cdays))
+			VH:SQLQuery ("delete from `banlist` where `date_start` < " .. secs)
+			commandanswer (nick, gettext ("Deleted %d rows: %s"):format (rows, cype))
+			opsnotify (table_sets.classnotiledoact, gettext ("%s with class %d deleted %d bans older than %d days."):format (nick, cls, rows, days))
 			VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('lastcleanban', " .. tm .. ") on duplicate key update `value` = " .. tm)
-			VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('limcleanban', " .. cdays .. ") on duplicate key update `value` = " .. cdays)
+			VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('limcleanban', " .. _tostring (days) .. ") on duplicate key update `value` = " .. _tostring (days))
 		else
-			commandanswer (nick, gettext ("No rows to remove: %s"):format (ctype))
+			commandanswer (nick, gettext ("No rows to remove: %s"):format (cype))
 		end
 
-	elseif ctype == "unban" then
+	elseif cype == "unban" then
 		commandanswer (nick, gettext ("This operation might take very long time depending on how much is going to be removed, please be patient."))
-		local _, rows = VH:SQLQuery ("select `ban_type` from `unbanlist` where `date_start` < " .. seconds)
+		local _, rows = VH:SQLQuery ("select `ban_type` from `unbanlist` where `date_start` < " .. secs)
 
 		if rows > 0 then
-			VH:SQLQuery ("delete from `unbanlist` where `date_start` < " .. seconds)
-			commandanswer (nick, gettext ("Deleted %d rows: %s"):format (rows, ctype))
-			opsnotify (table_sets.classnotiledoact, gettext ("%s with class %d deleted %d unbans older than %d days."):format (nick, cls, rows, cdays))
+			VH:SQLQuery ("delete from `unbanlist` where `date_start` < " .. secs)
+			commandanswer (nick, gettext ("Deleted %d rows: %s"):format (rows, cype))
+			opsnotify (table_sets.classnotiledoact, gettext ("%s with class %d deleted %d unbans older than %d days."):format (nick, cls, rows, days))
 			VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('lastcleanunban', " .. tm .. ") on duplicate key update `value` = " .. tm)
-			VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('limcleanunban', " .. cdays .. ") on duplicate key update `value` = " .. cdays)
+			VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('limcleanunban', " .. _tostring (days) .. ") on duplicate key update `value` = " .. _tostring (days))
 		else
-			commandanswer (nick, gettext ("No rows to remove: %s"):format (ctype))
+			commandanswer (nick, gettext ("No rows to remove: %s"):format (cype))
 		end
 
-	elseif ctype == "reg" then
+	elseif cype == "reg" then
 		commandanswer (nick, gettext ("Selected type requires extra parameters. Please refer to manual for more information."))
 
-	elseif ctype == "iplog" then
+	elseif cype == "iplog" then
 		commandanswer (nick, gettext ("This operation might take very long time depending on how much is going to be removed, please be patient."))
-		local _, rows = VH:SQLQuery ("select `id` from `pi_iplog` where `date` < " .. seconds)
+		local _, rows = VH:SQLQuery ("select `id` from `pi_iplog` where `date` < " .. secs)
 
 		if rows > 0 then
-			VH:SQLQuery ("delete from `pi_iplog` where `date` < " .. seconds)
-			commandanswer (nick, gettext ("Deleted %d rows: %s"):format (rows, ctype))
-			opsnotify (table_sets.classnotiledoact, gettext ("%s with class %d deleted %d IP logger plugin entries older than %d days."):format (nick, cls, rows, cdays))
+			VH:SQLQuery ("delete from `pi_iplog` where `date` < " .. secs)
+			commandanswer (nick, gettext ("Deleted %d rows: %s"):format (rows, cype))
+			opsnotify (table_sets.classnotiledoact, gettext ("%s with class %d deleted %d IP logger plugin entries older than %d days."):format (nick, cls, rows, days))
 			VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('lastcleaniplog', " .. tm .. ") on duplicate key update `value` = " .. tm)
-			VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('limcleaniplog', " .. cdays .. ") on duplicate key update `value` = " .. cdays)
+			VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('limcleaniplog', " .. _tostring (days) .. ") on duplicate key update `value` = " .. _tostring (days))
 		else
-			commandanswer (nick, gettext ("No rows to remove: %s"):format (ctype))
+			commandanswer (nick, gettext ("No rows to remove: %s"):format (cype))
 		end
 
-	elseif ctype == "stats" then
+	elseif cype == "stats" then
 		commandanswer (nick, gettext ("This operation might take very long time depending on how much is going to be removed, please be patient."))
-		local _, rows = VH:SQLQuery ("select `realtime` from `pi_stats` where `realtime` < " .. seconds)
+		local _, rows = VH:SQLQuery ("select `realtime` from `pi_stats` where `realtime` < " .. secs)
 
 		if rows > 0 then
-			VH:SQLQuery ("delete from `pi_stats` where `realtime` < " .. seconds)
-			commandanswer (nick, gettext ("Deleted %d rows: %s"):format (rows, ctype))
-			opsnotify (table_sets.classnotiledoact, gettext ("%s with class %d deleted %d statistics plugin entries older than %d days."):format (nick, cls, rows, cdays))
+			VH:SQLQuery ("delete from `pi_stats` where `realtime` < " .. secs)
+			commandanswer (nick, gettext ("Deleted %d rows: %s"):format (rows, cype))
+			opsnotify (table_sets.classnotiledoact, gettext ("%s with class %d deleted %d statistics plugin entries older than %d days."):format (nick, cls, rows, days))
 			VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('lastcleanstats', " .. tm .. ") on duplicate key update `value` = " .. tm)
-			VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('limcleanstats', " .. cdays .. ") on duplicate key update `value` = " .. cdays)
+			VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('limcleanstats', " .. _tostring (days) .. ") on duplicate key update `value` = " .. _tostring (days))
 		else
-			commandanswer (nick, gettext ("No rows to remove: %s"):format (ctype))
+			commandanswer (nick, gettext ("No rows to remove: %s"):format (cype))
 		end
 
-	elseif ctype == "ulog" then
+	elseif cype == "ulog" then
 		commandanswer (nick, gettext ("This operation might take very long time depending on how much is going to be removed, please be patient."))
-		local _, rows = VH:SQLQuery ("select `id` from `" .. tbl_sql.ulog .. "` where `time` < " .. _tostring (seconds))
+		local _, rows = VH:SQLQuery ("select `id` from `" .. tbl_sql.ulog .. "` where `time` < " .. secs)
 
 		if rows > 0 then
-			VH:SQLQuery ("delete from `" .. tbl_sql.ulog .. "` where `time` < " .. _tostring (seconds))
-			commandanswer (nick, gettext ("Deleted %d rows: %s"):format (rows, ctype))
-			opsnotify (table_sets.classnotiledoact, gettext ("%s with class %d deleted %d user log entries older than %d days."):format (nick, cls, rows, cdays))
-			VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('lastcleanulog', " .. _tostring (tm) .. ") on duplicate key update `value` = " .. _tostring (tm))
-			VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('limcleanulog', " .. _tostring (cdays) .. ") on duplicate key update `value` = " .. _tostring (cdays))
+			VH:SQLQuery ("delete from `" .. tbl_sql.ulog .. "` where `time` < " .. secs)
+			commandanswer (nick, gettext ("Deleted %d rows: %s"):format (rows, cype))
+			opsnotify (table_sets.classnotiledoact, gettext ("%s with class %d deleted %d user log entries older than %d days."):format (nick, cls, rows, days))
+			VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('lastcleanulog', " .. tm .. ") on duplicate key update `value` = " .. tm)
+			VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('limcleanulog', " .. _tostring (days) .. ") on duplicate key update `value` = " .. _tostring (days))
 		else
-			commandanswer (nick, gettext ("No rows to remove: %s"):format (ctype))
+			commandanswer (nick, gettext ("No rows to remove: %s"):format (cype))
 		end
 
-	elseif ctype == "clog" then
+	elseif cype == "clog" then
 		commandanswer (nick, gettext ("This operation might take very long time depending on how much is going to be removed, please be patient."))
-		local _, rows = VH:SQLQuery ("select `id` from `" .. tbl_sql.clog .. "` where `time` < " .. seconds)
+		local _, rows = VH:SQLQuery ("select `id` from `" .. tbl_sql.clog .. "` where `time` < " .. secs)
 
 		if rows > 0 then
-			VH:SQLQuery ("delete from `" .. tbl_sql.clog .. "` where `time` < " .. seconds)
-			commandanswer (nick, gettext ("Deleted %d rows: %s"):format (rows, ctype))
-			opsnotify (table_sets.classnotiledoact, gettext ("%s with class %d deleted %d command log entries older than %d days."):format (nick, cls, rows, cdays))
+			VH:SQLQuery ("delete from `" .. tbl_sql.clog .. "` where `time` < " .. secs)
+			commandanswer (nick, gettext ("Deleted %d rows: %s"):format (rows, cype))
+			opsnotify (table_sets.classnotiledoact, gettext ("%s with class %d deleted %d command log entries older than %d days."):format (nick, cls, rows, days))
 			VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('lastcleanclog', " .. tm .. ") on duplicate key update `value` = " .. tm)
-			VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('limcleanclog', " .. cdays .. ") on duplicate key update `value` = " .. cdays)
+			VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('limcleanclog', " .. _tostring (days) .. ") on duplicate key update `value` = " .. _tostring (days))
 		else
-			commandanswer (nick, gettext ("No rows to remove: %s"):format (ctype))
+			commandanswer (nick, gettext ("No rows to remove: %s"):format (cype))
 		end
 
-	elseif ctype == "anti" then
+	elseif cype == "anti" then
 		commandanswer (nick, gettext ("This operation might take very long time depending on how much is going to be removed, please be patient."))
-		local _, rows = VH:SQLQuery ("select `occurred` from `" .. tbl_sql.anti .. "` where `occurred` < " .. cdays)
+		local _, rows = VH:SQLQuery ("select `occurred` from `" .. tbl_sql.anti .. "` where `occurred` < " .. _tostring (days))
 
 		if rows > 0 then
-			VH:SQLQuery ("delete from `" .. tbl_sql.anti .. "` where `occurred` < " .. cdays)
-			commandanswer (nick, gettext ("Deleted %d rows: %s"):format (rows, ctype))
-			opsnotify (table_sets.classnotiledoact, gettext ("%s with class %d deleted %d antispam entries with occurrence less than %d."):format (nick, cls, rows, cdays))
+			VH:SQLQuery ("delete from `" .. tbl_sql.anti .. "` where `occurred` < " .. _tostring (days))
+			commandanswer (nick, gettext ("Deleted %d rows: %s"):format (rows, cype))
+			opsnotify (table_sets.classnotiledoact, gettext ("%s with class %d deleted %d antispam entries with occurrence less than %d."):format (nick, cls, rows, days))
 		else
-			commandanswer (nick, gettext ("No rows to remove: %s"):format (ctype))
+			commandanswer (nick, gettext ("No rows to remove: %s"):format (cype))
 		end
 
-	elseif ctype == "sefi" then
+	elseif cype == "sefi" then
 		commandanswer (nick, gettext ("This operation might take very long time depending on how much is going to be removed, please be patient."))
-		local _, rows = VH:SQLQuery ("select `occurred` from `" .. tbl_sql.sefi .. "` where `occurred` < " .. cdays)
+		local tot = 0
 
-		if rows > 0 then
-			VH:SQLQuery ("delete from `" .. tbl_sql.sefi .. "` where `occurred` < " .. cdays)
-			commandanswer (nick, gettext ("Deleted %d rows: %s"):format (rows, ctype))
-			opsnotify (table_sets.classnotiledoact, gettext ("%s with class %d deleted %d search filter entries with occurrence less than %d."):format (nick, cls, rows, cdays))
-		else
-			commandanswer (nick, gettext ("No rows to remove: %s"):format (ctype))
+		for id = # table_sefi, 1, -1 do
+			if table_sefi [id] and table_sefi [id].occ < days then
+				table.remove (table_sefi, id)
+				VH:SQLQuery ("delete from `" .. tbl_sql.sefi .. "` where `filter` = '" .. repsqlchars (table_sefi [id].ent) .. "'")
+				tot = tot + 1
+			end
 		end
 
-	elseif ctype == "rel" then
+		if tot > 0 then
+			commandanswer (nick, gettext ("Deleted %d rows: %s"):format (tot, cype))
+			opsnotify (table_sets.classnotiledoact, gettext ("%s with class %d deleted %d search filter entries with occurrence less than %d."):format (nick, cls, tot, days))
+		else
+			commandanswer (nick, gettext ("No rows to remove: %s"):format (cype))
+		end
+
+	elseif cype == "rel" then
 		commandanswer (nick, gettext ("This operation might take very long time depending on how much is going to be removed, please be patient."))
-		local _, rows = VH:SQLQuery ("select `date` from `" .. tbl_sql.rel .. "` where `date` < " .. seconds)
+		local _, rows = VH:SQLQuery ("select `date` from `" .. tbl_sql.rel .. "` where `date` < " .. secs)
 
 		if rows > 0 then
-			VH:SQLQuery ("delete from `" .. tbl_sql.rel .. "` where `date` < " .. seconds)
-			commandanswer (nick, gettext ("Deleted %d rows: %s"):format (rows, ctype))
-			opsnotify (table_sets.classnotiledoact, gettext ("%s with class %d deleted %d releases older than %d days."):format (nick, cls, rows, cdays))
+			VH:SQLQuery ("delete from `" .. tbl_sql.rel .. "` where `date` < " .. secs)
+			commandanswer (nick, gettext ("Deleted %d rows: %s"):format (rows, cype))
+			opsnotify (table_sets.classnotiledoact, gettext ("%s with class %d deleted %d releases older than %d days."):format (nick, cls, rows, days))
 			VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('lastcleanrel', " .. tm .. ") on duplicate key update `value` = " .. tm)
-			VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('limcleanrel', " .. cdays .. ") on duplicate key update `value` = " .. cdays)
+			VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('limcleanrel', " .. _tostring (days) .. ") on duplicate key update `value` = " .. _tostring (days))
 		else
-			commandanswer (nick, gettext ("No rows to remove: %s"):format (ctype))
+			commandanswer (nick, gettext ("No rows to remove: %s"):format (cype))
 		end
 
 	else -- unknown type
@@ -14004,75 +14016,37 @@ end
 
 ----- ---- --- -- -
 
-function addsefientry (nick, line)
-	local item, prio, act, sype = line:match ("^(.+) (%d) (%d+) (%d)$")
-	prio, act, sype = tonumber (prio), tonumber (act), tonumber (sype)
+function loadsefilist ()
+	table_sefi, table_sfex = {}, {}
+	local _, rows = VH:SQLQuery ("select * from `" .. tbl_sql.sefi .. "`")
 
-	if act < 0 or act > 9 then -- invalid action
-		commandanswer (nick, gettext ("Known actions are: %s"):format ("0, 1, 2, 3, 4, 5, 6, 7, 8 " .. gettext ("and") .. " 9"))
-	elseif prio < 0 or prio > 9 then -- invalid priority
-		commandanswer (nick, gettext ("Valid priority is a number from %d to %d."):format (0, 9))
-	elseif sype < 1 or sype > 9 then -- invalid search type
-		commandanswer (nick, gettext ("Known search types are: %s"):format ("1, 2, 3, 4, 5, 6, 7, 8 " .. gettext ("and") .. " 9"))
-	else
-		local fres, fval = catchfinderror ("", repnmdcinchars (item))
+	if rows > 0 then
+		for pos = 0, rows - 1 do
+			local _, ent, occ, pri, act, typ = VH:SQLFetch (pos)
 
-		if not fres then
-			local ferr = gettext ("There is an error in following search filter pattern") .. ":\r\n\r\n"
-			ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. item .. "\r\n"
-			ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
-			ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
-			commandanswer (nick, ferr)
-		else
-			local entry = repsqlchars (repnmdcinchars (item))
-			local _, rows = VH:SQLQuery ("select `action` from `" .. tbl_sql.sefi .. "` where `filter` = '" .. entry .. "'")
+			if ent and # ent > 0 then
+				table.insert (table_sefi, {
+					["ent"] = ent,
+					["occ"] = tonumber (occ or 0) or 0,
+					["pri"] = tonumber (pri or 0) or 0,
+					["act"] = tonumber (act or 0) or 0,
+					["typ"] = tonumber (typ or 1) or 1
+				})
+			end
+		end
+	end
 
-			if rows > 0 then
-				VH:SQLQuery ("update `" .. tbl_sql.sefi .. "` set `priority` = " .. _tostring (prio) .. ", `action` = " .. _tostring (act) .. ", `type` = " .. _tostring (sype) .. " where `filter` = '" .. entry .. "'")
-				local note = "Modified search filter with action %d and priority %d as any file: %s"
+	local _, rows = VH:SQLQuery ("select * from `" .. tbl_sql.sefiex .. "`")
 
-				if sype == 2 then
-					note = "Modified search filter with action %d and priority %d as audio file: %s"
-				elseif sype == 3 then
-					note = "Modified search filter with action %d and priority %d as compressed file: %s"
-				elseif sype == 4 then
-					note = "Modified search filter with action %d and priority %d as document: %s"
-				elseif sype == 5 then
-					note = "Modified search filter with action %d and priority %d as executable: %s"
-				elseif sype == 6 then
-					note = "Modified search filter with action %d and priority %d as picture: %s"
-				elseif sype == 7 then
-					note = "Modified search filter with action %d and priority %d as video: %s"
-				elseif sype == 8 then
-					note = "Modified search filter with action %d and priority %d as folder: %s"
-				elseif sype == 9 then
-					note = "Modified search filter with action %d and priority %d as TTH: %s"
-				end
+	if rows > 0 then
+		for pos = 0, rows - 1 do
+			local _, exc, occ = VH:SQLFetch (pos)
 
-				commandanswer (nick, gettext (note):format (act, prio, item))
-			else
-				VH:SQLQuery ("insert into `" .. tbl_sql.sefi .. "` (`filter`, `priority`, `action`, `type`) values ('" .. entry .. "', " .. _tostring (prio) .. ", " .. _tostring (act) .. ", " .. _tostring (sype) .. ")")
-				local note = "Added search filter with action %d and priority %d as any file: %s"
-
-				if sype == 2 then
-					note = "Added search filter with action %d and priority %d as audio file: %s"
-				elseif sype == 3 then
-					note = "Added search filter with action %d and priority %d as compressed file: %s"
-				elseif sype == 4 then
-					note = "Added search filter with action %d and priority %d as document: %s"
-				elseif sype == 5 then
-					note = "Added search filter with action %d and priority %d as executable: %s"
-				elseif sype == 6 then
-					note = "Added search filter with action %d and priority %d as picture: %s"
-				elseif sype == 7 then
-					note = "Added search filter with action %d and priority %d as video: %s"
-				elseif sype == 8 then
-					note = "Added search filter with action %d and priority %d as folder: %s"
-				elseif sype == 9 then
-					note = "Added search filter with action %d and priority %d as TTH: %s"
-				end
-
-				commandanswer (nick, gettext (note):format (act, prio, item))
+			if exc and # exc > 0 then
+				table.insert (table_sfex, {
+					["exc"] = exc,
+					["occ"] = tonumber (occ or 0) or 0
+				})
 			end
 		end
 	end
@@ -14080,102 +14054,224 @@ end
 
 ----- ---- --- -- -
 
-function delsefientry (nick, item)
-	local entry = repsqlchars (repnmdcinchars (item))
-	local _, rows = VH:SQLQuery ("select `occurred` from `" .. tbl_sql.sefi .. "` where `filter` = '" .. entry .. "'")
+function addsefientry (nick, line)
+	local ent, pri, act, typ = line:match ("^(.+) (%d) (%d+) (%d)$")
+	pri, act, typ = tonumber (pri), tonumber (act), tonumber (typ)
 
-	if rows > 0 then
-		VH:SQLQuery ("delete from `" .. tbl_sql.sefi .. "` where `filter` = '" .. entry .. "'")
-		commandanswer (nick, gettext ("Deleted search filter: %s"):format (item))
+	if act < 0 or act > 9 then -- invalid action
+		commandanswer (nick, gettext ("Known actions are: %s"):format ("0, 1, 2, 3, 4, 5, 6, 7, 8 " .. gettext ("and") .. " 9"))
+	elseif pri < 0 or pri > 9 then -- invalid priority
+		commandanswer (nick, gettext ("Valid priority is a number from %d to %d."):format (0, 9))
+	elseif typ < 1 or typ > 9 then -- invalid search type
+		commandanswer (nick, gettext ("Known search types are: %s"):format ("1, 2, 3, 4, 5, 6, 7, 8 " .. gettext ("and") .. " 9"))
 	else
-		commandanswer (nick, gettext ("Couldn't delete search filter because not found: %s"):format (item))
+		local sen = repnmdcinchars (ent)
+		local fres, fval = catchfinderror ("", sen)
+
+		if not fres then
+			local ferr = gettext ("There is an error in following search filter pattern") .. ":\r\n\r\n"
+			ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. ent .. "\r\n"
+			ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
+			ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
+			commandanswer (nick, ferr)
+		else
+			local pos = 0
+
+			for id, item in pairs (table_sefi) do
+				if item.ent == sen then
+					pos = id
+					break
+				end
+			end
+
+			if pos > 0 then
+				table_sefi [pos].pri = pri
+				table_sefi [pos].act = act
+				table_sefi [pos].typ = typ
+				VH:SQLQuery ("update `" .. tbl_sql.sefi .. "` set `priority` = " .. _tostring (pri) .. ", `action` = " .. _tostring (act) .. ", `type` = " .. _tostring (typ) .. " where `filter` = '" .. repsqlchars (sen) .. "'")
+				local note = "Modified search filter with action %d and priority %d as any file: %s"
+
+				if typ == 2 then
+					note = "Modified search filter with action %d and priority %d as audio file: %s"
+				elseif typ == 3 then
+					note = "Modified search filter with action %d and priority %d as compressed file: %s"
+				elseif typ == 4 then
+					note = "Modified search filter with action %d and priority %d as document: %s"
+				elseif typ == 5 then
+					note = "Modified search filter with action %d and priority %d as executable: %s"
+				elseif typ == 6 then
+					note = "Modified search filter with action %d and priority %d as picture: %s"
+				elseif typ == 7 then
+					note = "Modified search filter with action %d and priority %d as video: %s"
+				elseif typ == 8 then
+					note = "Modified search filter with action %d and priority %d as folder: %s"
+				elseif typ == 9 then
+					note = "Modified search filter with action %d and priority %d as TTH: %s"
+				end
+
+				commandanswer (nick, gettext (note):format (act, pri, ent))
+			else
+				table.insert (table_sefi, {
+					["ent"] = sen,
+					["occ"] = 0,
+					["pri"] = pri,
+					["act"] = act,
+					["typ"] = typ
+				})
+
+				VH:SQLQuery ("insert into `" .. tbl_sql.sefi .. "` (`filter`, `priority`, `action`, `type`) values ('" .. repsqlchars (sen) .. "', " .. _tostring (pri) .. ", " .. _tostring (act) .. ", " .. _tostring (typ) .. ")")
+				local note = "Added search filter with action %d and priority %d as any file: %s"
+
+				if typ == 2 then
+					note = "Added search filter with action %d and priority %d as audio file: %s"
+				elseif typ == 3 then
+					note = "Added search filter with action %d and priority %d as compressed file: %s"
+				elseif typ == 4 then
+					note = "Added search filter with action %d and priority %d as document: %s"
+				elseif typ == 5 then
+					note = "Added search filter with action %d and priority %d as executable: %s"
+				elseif typ == 6 then
+					note = "Added search filter with action %d and priority %d as picture: %s"
+				elseif typ == 7 then
+					note = "Added search filter with action %d and priority %d as video: %s"
+				elseif typ == 8 then
+					note = "Added search filter with action %d and priority %d as folder: %s"
+				elseif typ == 9 then
+					note = "Added search filter with action %d and priority %d as TTH: %s"
+				end
+
+				commandanswer (nick, gettext (note):format (act, pri, ent))
+			end
+		end
 	end
+end
+
+----- ---- --- -- -
+
+function delsefientry (nick, ent)
+	local sen = repnmdcinchars (ent)
+
+	for id, item in pairs (table_sefi) do
+		if item.ent == sen then
+			table.remove (table_sefi, id)
+			VH:SQLQuery ("delete from `" .. tbl_sql.sefi .. "` where `filter` = '" .. repsqlchars (sen) .. "'")
+			commandanswer (nick, gettext ("Deleted search filter: %s"):format (ent))
+			return
+		end
+	end
+
+	commandanswer (nick, gettext ("Couldn't delete search filter because not found: %s"):format (ent))
 end
 
 ----- ---- --- -- -
 
 function listsefientry (nick)
-	local _, rows = VH:SQLQuery ("select `filter`, `occurred`, `priority`, `action`, `type` from `" .. tbl_sql.sefi .. "` order by `occurred` desc, `priority` desc")
-
-	if rows > 0 then
-		local list, olen = "", 0
-
-		for row = 0, rows - 1 do
-			local _, item, occ, prio, act, sype = VH:SQLFetch (row)
-
-			if row == 0 then
-				olen = # _tostring (occ)
-			end
-
-			list = list .. " " .. prezero (# _tostring (rows), (row + 1)) .. ". [ P: " .. _tostring (prio) .. " ] [ A: " .. _tostring (act) .. " ] [ T: " .. _tostring (sype) .. " ] [ O: " .. prezero (olen, occ) .. " ] " .. repnmdcoutchars (item) .. "\r\n"
-		end
-
-		commandanswer (nick, gettext ("Search filter list") .. ":\r\n\r\n" .. list)
-	else
+	if # table_sefi == 0 then
 		commandanswer (nick, gettext ("Search filter list is empty."))
+		return
 	end
+
+	local sli = {}
+
+	for id, item in pairs (table_sefi) do
+		sli [id] = item
+	end
+
+	table.sort (sli, function (fit, sit)
+		return fit.occ > sit.occ
+	end)
+
+	table.sort (sli, function (fit, sit)
+		return fit.pri > sit.pri
+	end)
+
+	local list, ole, tot = "", # _tostring (sli [1].occ), # _tostring (# sli)
+
+	for id, item in pairs (sli) do
+		list = list .. " " .. prezero (tot, id) .. ". [ P: " .. _tostring (item.pri) .. " ] [ A: " .. _tostring (item.act) .. " ] [ T: " .. _tostring (item.typ) .. " ] [ O: " .. prezero (ole, item.occ) .. " ] " .. repnmdcoutchars (item.ent) .. "\r\n"
+	end
+
+	commandanswer (nick, gettext ("Search filter list") .. ":\r\n\r\n" .. list)
 end
 
 ----- ---- --- -- -
 
-function addsefiexentry (nick, item)
-	local fres, fval = catchfinderror ("", repnmdcinchars (item))
+function addsefiexentry (nick, exc)
+	local sex = repnmdcinchars (exc)
+	local fres, fval = catchfinderror ("", sex)
 
 	if not fres then
 		local ferr = gettext ("There is an error in following search filter exception pattern") .. ":\r\n\r\n"
-		ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. item .. "\r\n"
+		ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. exc .. "\r\n"
 		ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
-		ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+		ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
 		commandanswer (nick, ferr)
 	else
-		local entry = repsqlchars (repnmdcinchars (item))
-		local _, rows = VH:SQLQuery ("select `occurred` from `" .. tbl_sql.sefiex .. "` where `exception` = '" .. entry .. "' limit 1")
+		local pos = 0
 
-		if rows > 0 then
-			commandanswer (nick, gettext ("Couldn't add search filter exception entry because already exists: %s"):format (item))
+		for id, item in pairs (table_sfex) do
+			if item.exc == sex then
+				pos = id
+				break
+			end
+		end
+
+		if pos > 0 then
+			commandanswer (nick, gettext ("Couldn't add search filter exception entry because already exists: %s"):format (exc))
 		else
-			VH:SQLQuery ("insert into `" .. tbl_sql.sefiex .. "` (`exception`) values ('" .. entry .. "')")
-			commandanswer (nick, gettext ("Added search filter exception entry: %s"):format (item))
+			table.insert (table_sfex, {
+				["exc"] = sex,
+				["occ"] = 0
+			})
+
+			VH:SQLQuery ("insert into `" .. tbl_sql.sefiex .. "` (`exception`) values ('" .. repsqlchars (sex) .. "')")
+			commandanswer (nick, gettext ("Added search filter exception entry: %s"):format (exc))
 		end
 	end
 end
 
 ----- ---- --- -- -
 
-function delsefiexentry (nick, item)
-	local entry = repsqlchars (repnmdcinchars (item))
-	local _, rows = VH:SQLQuery ("select `occurred` from `" .. tbl_sql.sefiex .. "` where `exception` = '" .. entry .. "'")
+function delsefiexentry (nick, exc)
+	local sex = repnmdcinchars (exc)
 
-	if rows > 0 then
-		VH:SQLQuery ("delete from `" .. tbl_sql.sefiex .. "` where `exception` = '" .. entry .. "'")
-		commandanswer (nick, gettext ("Deleted search filter exception entry: %s"):format (item))
-	else
-		commandanswer (nick, gettext ("Couldn't delete search filter exception entry because not found: %s"):format (item))
+	for id, item in pairs (table_sfex) do
+		if item.exc == sex then
+			table.remove (table_sfex, id)
+			VH:SQLQuery ("delete from `" .. tbl_sql.sefiex .. "` where `exception` = '" .. repsqlchars (sex) .. "'")
+			commandanswer (nick, gettext ("Deleted search filter exception entry: %s"):format (exc))
+			return
+		end
 	end
+
+	commandanswer (nick, gettext ("Couldn't delete search filter exception entry because not found: %s"):format (exc))
 end
 
 ----- ---- --- -- -
 
 function listsefiexentry (nick)
-	local _, rows = VH:SQLQuery ("select `exception`, `occurred` from `" .. tbl_sql.sefiex .. "` order by `occurred` desc")
-
-	if rows > 0 then
-		local list, olen = "", 0
-
-		for row = 0, rows - 1 do
-			local _, item, occ = VH:SQLFetch (row)
-
-			if row == 0 then
-				olen = # _tostring (occ)
-			end
-
-			list = list .. " " .. prezero (# _tostring (rows), (row + 1)) .. ". [ O: " .. prezero (olen, occ) .. " ] " .. repnmdcoutchars (item) .. "\r\n"
-		end
-
-		commandanswer (nick, gettext ("Search filter exception list") .. ":\r\n\r\n" .. list)
-	else
+	if # table_sfex == 0 then
 		commandanswer (nick, gettext ("Search filter exception list is empty."))
+		return
 	end
+
+	local sli = {}
+
+	for id, item in pairs (table_sfex) do
+		sli [id] = item
+	end
+
+	table.sort (sli, function (fit, sit)
+		return fit.occ > sit.occ
+	end)
+
+	local list, ole, tot = "", # _tostring (sli [1].occ), # _tostring (# sli)
+
+	for id, item in pairs (sli) do
+		list = list .. " " .. prezero (tot, id) .. ". [ O: " .. prezero (ole, item.occ) .. " ] " .. repnmdcoutchars (item.exc) .. "\r\n"
+	end
+
+	commandanswer (nick, gettext ("Search filter exception list") .. ":\r\n\r\n" .. list)
 end
 
 ----- ---- --- -- -
@@ -14183,7 +14279,7 @@ end
 function listsefiblocks (nick)
 	local list = ""
 
-	for user, data in pairs (table_sefi) do
+	for user, data in pairs (table_sfbl) do
 		list = list .. " [ N: " .. user .. " ] [ R: " .. data.req .. " ] [ N: " .. _tostring (data.num) .. " ] [ S: "
 
 		if data.sil then
@@ -14205,8 +14301,8 @@ end
 ----- ---- --- -- -
 
 function delsefiblock (nick, user)
-	if table_sefi [user] then
-		table_sefi [user] = nil
+	if table_sfbl [user] then
+		table_sfbl [user] = nil
 		commandanswer (nick, gettext ("Deleted search filter block list entry: %s"):format (user))
 	else
 		commandanswer (nick, gettext ("Couldn't delete search filter block list entry because not found: %s"):format (user))
@@ -14232,7 +14328,7 @@ function addantientry (nick, item)
 			local ferr = gettext ("There is an error in following antispam entry pattern") .. ":\r\n\r\n"
 			ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. aitem .. "\r\n"
 			ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
-			ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+			ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
 			commandanswer (nick, ferr)
 		else
 			local entry = repsqlchars (repnmdcinchars (aitem))
@@ -14308,7 +14404,7 @@ function addexentry (nick, item)
 		local ferr = gettext ("There is an error in following antispam exception entry pattern") .. ":\r\n\r\n"
 		ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. item .. "\r\n"
 		ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
-		ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+		ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
 		commandanswer (nick, ferr)
 	else
 		local entry = repsqlchars (repnmdcinchars (item))
@@ -15822,7 +15918,7 @@ end
 		if num then
 			if setto == 0 or setto == 1 then
 				if setto == 0 then -- clean up
-					table_sefi = {}
+					table_sfbl = {}
 				end
 
 				ok = true
@@ -19557,9 +19653,9 @@ VH:SQLQuery ("create table if not exists `" .. tbl_sql.conf .. "` (`variable` va
 	VH:SQLQuery ("create table if not exists `" .. tbl_sql.anti .. "` (`antispam` varchar(255) not null, `occurred` bigint(20) unsigned not null default 0, `priority` tinyint(1) unsigned not null default 0, `action` tinyint(2) unsigned not null default 0, `flags` tinyint(1) unsigned not null default 3, primary key (`antispam`)) engine = myisam default character set utf8 collate utf8_unicode_ci")
 	VH:SQLQuery ("create table if not exists `" .. tbl_sql.antiex .. "` (`exception` varchar(255) not null, `occurred` bigint(20) unsigned not null default 0, primary key (`exception`)) engine = myisam default character set utf8 collate utf8_unicode_ci")
 
--- search filter
-VH:SQLQuery ("create table if not exists `" .. tbl_sql.sefi .. "` (`filter` varchar(255) not null, `occurred` bigint(20) unsigned not null default 0, `priority` tinyint(1) unsigned not null default 0, `action` tinyint(1) unsigned not null default 0, `type` tinyint(1) unsigned not null default 1, primary key (`filter`)) engine = myisam default character set utf8 collate utf8_unicode_ci")
-VH:SQLQuery ("create table if not exists `" .. tbl_sql.sefiex .. "` (`exception` varchar(255) not null, `occurred` bigint(20) unsigned not null default 0, primary key (`exception`)) engine = myisam default character set utf8 collate utf8_unicode_ci")
+	-- search filter
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql.sefi .. "` (`filter` varchar(255) not null primary key, `occurred` bigint(20) unsigned not null default 0, `priority` tinyint(1) unsigned not null default 0, `action` tinyint(1) unsigned not null default 0, `type` tinyint(1) unsigned not null default 1) engine = myisam default character set utf8 collate utf8_unicode_ci")
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql.sefiex .. "` (`exception` varchar(255) not null primary key, `occurred` bigint(20) unsigned not null default 0) engine = myisam default character set utf8 collate utf8_unicode_ci")
 
 	-- myinfo
 	VH:SQLQuery ("create table if not exists `" .. tbl_sql.minick .. "` (`nick` varchar(255) not null primary key, `time` varchar(10) null, `occurred` bigint(20) unsigned not null default 0, `note` varchar(255) null) engine = myisam default character set utf8 collate utf8_unicode_ci")
@@ -19675,11 +19771,11 @@ end
 ----- ---- --- -- -
 
 function renametables ()
-VH:SQLQuery ("alter table `script_ledokol_settings` rename to `" .. tbl_sql.conf .. "`")
-VH:SQLQuery ("alter table `script_ledokol_antispam` rename to `" .. tbl_sql.anti .. "`")
-VH:SQLQuery ("alter table `script_ledokol_exceptions` rename to `" .. tbl_sql.antiex .. "`")
-VH:SQLQuery ("alter table `script_ledokol_searchfilter` rename to `" .. tbl_sql.sefi .. "`")
-VH:SQLQuery ("alter table `script_ledokol_sefiexceptions` rename to `" .. tbl_sql.sefiex .. "`")
+	VH:SQLQuery ("alter table `script_ledokol_settings` rename to `" .. tbl_sql.conf .. "`")
+	VH:SQLQuery ("alter table `script_ledokol_antispam` rename to `" .. tbl_sql.anti .. "`")
+	VH:SQLQuery ("alter table `script_ledokol_exceptions` rename to `" .. tbl_sql.antiex .. "`")
+	VH:SQLQuery ("alter table `script_ledokol_searchfilter` rename to `" .. tbl_sql.sefi .. "`")
+	VH:SQLQuery ("alter table `script_ledokol_sefiexceptions` rename to `" .. tbl_sql.sefiex .. "`")
 	VH:SQLQuery ("alter table `script_ledokol_nicks` rename to `" .. tbl_sql.minick .. "`")
 	VH:SQLQuery ("alter table `script_ledokol_descriptions` rename to `" .. tbl_sql.midesc .. "`")
 	VH:SQLQuery ("alter table `script_ledokol_tags` rename to `" .. tbl_sql.mitag .. "`")
@@ -19688,27 +19784,27 @@ VH:SQLQuery ("alter table `script_ledokol_sefiexceptions` rename to `" .. tbl_sq
 	VH:SQLQuery ("alter table `script_ledokol_shares` rename to `" .. tbl_sql.mishare .. "`")
 	VH:SQLQuery ("alter table `script_ledokol_miips` rename to `" .. tbl_sql.miip .. "`")
 	VH:SQLQuery ("alter table `script_ledokol_myinfoexceptions` rename to `" .. tbl_sql.miex .. "`")
-VH:SQLQuery ("alter table `script_ledokol_authorization` rename to `" .. tbl_sql.auth .. "`")
+	VH:SQLQuery ("alter table `script_ledokol_authorization` rename to `" .. tbl_sql.auth .. "`")
 	VH:SQLQuery ("alter table `script_ledokol_releases` rename to `" .. tbl_sql.rel .. "`")
 	VH:SQLQuery ("alter table `script_ledokol_welcomemessages` rename to `" .. tbl_sql.wm .. "`")
-VH:SQLQuery ("alter table `script_ledokol_customnicks` rename to `" .. tbl_sql.cust .. "`")
-VH:SQLQuery ("alter table `script_ledokol_chatrooms` rename to `" .. tbl_sql.chat .. "`")
-VH:SQLQuery ("alter table `script_ledokol_reminders` rename to `" .. tbl_sql.rem .. "`")
+	VH:SQLQuery ("alter table `script_ledokol_customnicks` rename to `" .. tbl_sql.cust .. "`")
+	VH:SQLQuery ("alter table `script_ledokol_chatrooms` rename to `" .. tbl_sql.chat .. "`")
+	VH:SQLQuery ("alter table `script_ledokol_reminders` rename to `" .. tbl_sql.rem .. "`")
 	VH:SQLQuery ("alter table `script_ledokol_hubnews` rename to `" .. tbl_sql.news .. "`")
-VH:SQLQuery ("alter table `script_ledokol_mcresponder` rename to `" .. tbl_sql.mcresp .. "`")
-VH:SQLQuery ("alter table `script_ledokol_respexceptions` rename to `" .. tbl_sql.respex .. "`")
-VH:SQLQuery ("alter table `script_ledokol_chatranks` rename to `" .. tbl_sql.chran .. "`")
-VH:SQLQuery ("alter table `script_ledokol_opranks` rename to `" .. tbl_sql.opran .. "`")
-VH:SQLQuery ("alter table `script_ledokol_shareranks` rename to `" .. tbl_sql.shran .. "`")
-VH:SQLQuery ("alter table `script_ledokol_wordranks` rename to `" .. tbl_sql.wdran .. "`")
-VH:SQLQuery ("alter table `script_ccstats` rename to `" .. tbl_sql.ccstat .. "`")
-VH:SQLQuery ("alter table `script_ledokol_rankexceptions` rename to `" .. tbl_sql.ranex .. "`")
+	VH:SQLQuery ("alter table `script_ledokol_mcresponder` rename to `" .. tbl_sql.mcresp .. "`")
+	VH:SQLQuery ("alter table `script_ledokol_respexceptions` rename to `" .. tbl_sql.respex .. "`")
+	VH:SQLQuery ("alter table `script_ledokol_chatranks` rename to `" .. tbl_sql.chran .. "`")
+	VH:SQLQuery ("alter table `script_ledokol_opranks` rename to `" .. tbl_sql.opran .. "`")
+	VH:SQLQuery ("alter table `script_ledokol_shareranks` rename to `" .. tbl_sql.shran .. "`")
+	VH:SQLQuery ("alter table `script_ledokol_wordranks` rename to `" .. tbl_sql.wdran .. "`")
+	VH:SQLQuery ("alter table `script_ccstats` rename to `" .. tbl_sql.ccstat .. "`")
+	VH:SQLQuery ("alter table `script_ledokol_rankexceptions` rename to `" .. tbl_sql.ranex .. "`")
 	VH:SQLQuery ("alter table `script_ledokol_offline` rename to `" .. tbl_sql.off .. "`")
 	VH:SQLQuery ("alter table `script_ledokol_mchistory` rename to `" .. tbl_sql.mchist .. "`")
 	VH:SQLQuery ("alter table `script_ledokol_ophistory` rename to `" .. tbl_sql.ophist .. "`")
-VH:SQLQuery ("alter table `script_ledokol_ledocommands` rename to `" .. tbl_sql.ledocmd .. "`")
-VH:SQLQuery ("alter table `script_ledokol_commands` rename to `" .. tbl_sql.cmd .. "`")
-VH:SQLQuery ("alter table `script_ledokol_cmdexceptions` rename to `" .. tbl_sql.cmdex .. "`")
+	VH:SQLQuery ("alter table `script_ledokol_ledocommands` rename to `" .. tbl_sql.ledocmd .. "`")
+	VH:SQLQuery ("alter table `script_ledokol_commands` rename to `" .. tbl_sql.cmd .. "`")
+	VH:SQLQuery ("alter table `script_ledokol_cmdexceptions` rename to `" .. tbl_sql.cmdex .. "`")
 	VH:SQLQuery ("alter table `script_ledokol_userlog` rename to `" .. tbl_sql.ulog .. "`")
 	VH:SQLQuery ("alter table `lua_ledo_mcrepl` rename to `" .. tbl_sql.chatrepl .. "`")
 end
@@ -19735,17 +19831,17 @@ VH:SQLQuery ("alter table `" .. tbl_sql.antiex .. "` engine = myisam") -- engine
 VH:SQLQuery ("alter table `" .. tbl_sql.antiex .. "` change column `exception` `exception` varchar(255) not null") -- exception
 VH:SQLQuery ("alter table `" .. tbl_sql.antiex .. "` change column `occured` `occurred` bigint(20) unsigned not null default 0") -- occurred
 
--- search filter
-VH:SQLQuery ("alter table `" .. tbl_sql.sefi .. "` engine = myisam") -- engine
-VH:SQLQuery ("alter table `" .. tbl_sql.sefi .. "` change column `filter` `filter` varchar(255) not null") -- filter
-VH:SQLQuery ("alter table `" .. tbl_sql.sefi .. "` change column `occured` `occurred` bigint(20) unsigned not null default 0") -- occurred
-VH:SQLQuery ("alter table `" .. tbl_sql.sefi .. "` add column `priority` tinyint(1) unsigned not null default 0 after `occurred`") -- priority
-VH:SQLQuery ("alter table `" .. tbl_sql.sefi .. "` change column `action` `action` tinyint(1) unsigned not null default 0") -- action
-VH:SQLQuery ("alter table `" .. tbl_sql.sefi .. "` add column `type` tinyint(1) unsigned not null default 1 after `action`") -- type
+	-- search filter
+	VH:SQLQuery ("alter table `" .. tbl_sql.sefi .. "` engine = myisam") -- engine
+	VH:SQLQuery ("alter table `" .. tbl_sql.sefi .. "` change column `filter` `filter` varchar(255) not null") -- filter
+	VH:SQLQuery ("alter table `" .. tbl_sql.sefi .. "` change column `occured` `occurred` bigint(20) unsigned not null default 0") -- occurred
+	VH:SQLQuery ("alter table `" .. tbl_sql.sefi .. "` add column `priority` tinyint(1) unsigned not null default 0 after `occurred`") -- priority
+	VH:SQLQuery ("alter table `" .. tbl_sql.sefi .. "` change column `action` `action` tinyint(1) unsigned not null default 0") -- action
+	VH:SQLQuery ("alter table `" .. tbl_sql.sefi .. "` add column `type` tinyint(1) unsigned not null default 1 after `action`") -- type
 
-VH:SQLQuery ("alter table `" .. tbl_sql.sefiex .. "` engine = myisam") -- engine
-VH:SQLQuery ("alter table `" .. tbl_sql.sefiex .. "` change column `exception` `exception` varchar(255) not null") -- exception
-VH:SQLQuery ("alter table `" .. tbl_sql.sefiex .. "` change column `occurred` `occurred` bigint(20) unsigned not null default 0") -- occurred
+	VH:SQLQuery ("alter table `" .. tbl_sql.sefiex .. "` engine = myisam") -- engine
+	VH:SQLQuery ("alter table `" .. tbl_sql.sefiex .. "` change column `exception` `exception` varchar(255) not null") -- exception
+	VH:SQLQuery ("alter table `" .. tbl_sql.sefiex .. "` change column `occurred` `occurred` bigint(20) unsigned not null default 0") -- occurred
 
 	-- myinfo check
 	VH:SQLQuery ("alter table `" .. tbl_sql.minick .. "` engine = myisam") -- engine
@@ -22725,7 +22821,7 @@ function antiscan (nick, class, data, where, to, status)
 			local ferr = gettext ("There is an error in following antispam entry pattern") .. ":\r\n\r\n"
 			ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (entry) .. "\r\n"
 			ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
-			ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+			ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
 			opsnotify (table_sets.classnotiledoact, ferr)
 		elseif fval then
 			VH:SQLQuery ("update `" .. tbl_sql.anti .. "` set `occurred` = `occurred` + 1 where `antispam` = '" .. repsqlchars (entry) .. "' limit 1")
@@ -22738,7 +22834,7 @@ function antiscan (nick, class, data, where, to, status)
 						local ferr = gettext ("There is an error in following antispam exception entry pattern") .. ":\r\n\r\n"
 						ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (value) .. "\r\n"
 						ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
-						ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+						ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
 						opsnotify (table_sets.classnotiledoact, ferr)
 					elseif fval then
 						VH:SQLQuery ("update `" .. tbl_sql.antiex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (value) .. "' limit 1")
@@ -22916,174 +23012,185 @@ end
 
 ----- ---- --- -- -
 
-function sefiscan (nick, srch, cls, ip)
-	local tp, str = srch:match ("^%$Search .* .*%?.*%?.*%?(.*)%?(.*)$")
+function sefiscan (nick, line, clas, addr)
+	if # table_sefi == 0 then
+		return false
+	end
+
+	local typ, str = line:match ("^%$Search .* .*%?.*%?.*%?(.*)%?(.*)$")
 
 	if not str or # str == 0 then
 		return false
 	end
 
-	tp = tonumber (tp or 1) or 1
+	typ = tonumber (typ or 1) or 1
 
-	if tp < 1 or tp > 9 then
-		tp = 1
+	if typ < 1 or typ > 9 then
+		typ = 1
 	end
 
-	local _, rows = VH:SQLQuery ("select `exception` from `" .. tbl_sql.sefiex .. "`")
-	local exlist = {}
-
-	for x = 0, rows - 1 do
-		local _, ent = VH:SQLFetch (x)
-		table.insert (exlist, ent)
-	end
-
-	if tp == 9 and str:sub (1, 4):lower () == "tth:" then -- remove "TTH:"
+	if typ == 9 and str:sub (1, 4):lower () == "tth:" then -- remove tth prefix
 		str = str:sub (5)
 	end
 
 	str = repsrchchars (str)
 	local lsr = str
 
-	if tp ~= 9 then
+	if typ ~= 9 then
 		lsr = tolow (lsr)
 	end
 
-	local _, rows = VH:SQLQuery ("select `filter`, `priority`, `action` from `" .. tbl_sql.sefi .. "` where `type` = " .. _tostring (tp) .. " or `type` = 1 order by `priority` desc, `occurred` desc")
+	local sli = {}
 
-	for x = 0, rows - 1 do
-		local _, ent, prio, act = VH:SQLFetch (x)
-		local fres, fval = catchfinderror (lsr, ent)
+	for id, item in pairs (table_sefi) do
+		if item.typ == 1 or item.typ == typ then
+			table.insert (sli, {
+				["ent"] = item.ent,
+				["occ"] = item.occ,
+				["pri"] = item.pri,
+				["act"] = item.act,
+				["id"] = id
+			})
+		end
+	end
+
+	table.sort (sli, function (fit, sit)
+		return fit.pri > sit.pri
+	end)
+
+	for _, item in pairs (sli) do
+		local fres, fval = catchfinderror (lsr, item.ent)
 
 		if not fres then
 			local ferr = gettext ("There is an error in following search filter pattern") .. ":\r\n\r\n"
-			ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (ent) .. "\r\n"
+			ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (item.ent) .. "\r\n"
 			ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
-			ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+			ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
 			opsnotify (table_sets.classnotiledoact, ferr)
 		elseif fval then
-			VH:SQLQuery ("update `" .. tbl_sql.sefi .. "` set `occurred` = `occurred` + 1 where `filter` = '" .. repsqlchars (ent) .. "'")
+			table_sefi [item.id].occ = item.occ + 1
+			VH:SQLQuery ("update `" .. tbl_sql.sefi .. "` set `occurred` = `occurred` + 1 where `filter` = '" .. repsqlchars (item.ent) .. "'")
 
-			if (tonumber (prio or 0) or 0) < 7 then -- skip for 7, 8 and 9
-				for _, v in pairs (exlist) do
-					local fres, fval = catchfinderror (lsr, v)
+			if item.pri < 7 then -- skip for 7, 8, 9
+				for id, exi in pairs (table_sfex) do
+					local fres, fval = catchfinderror (lsr, exi.exc)
 
 					if not fres then
 						local ferr = gettext ("There is an error in following search filter exception pattern") .. ":\r\n\r\n"
-						ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (v) .. "\r\n"
+						ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (exi.exc) .. "\r\n"
 						ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
-						ferr = ferr .. " " .. gettext ("Solution") .. ": http://www.lua.org/manual/5.2/manual.html#6.4.1\r\n"
+						ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
 						opsnotify (table_sets.classnotiledoact, ferr)
 					elseif fval then
-						VH:SQLQuery ("update `" .. tbl_sql.sefiex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (v) .. "'")
+						table_sfex [id].occ = exi.occ + 1
+						VH:SQLQuery ("update `" .. tbl_sql.sefiex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (exi.exc) .. "'")
 						local note = "Search request exception from %s with IP %s and class %d as any file: %s"
 
-						if tp == 2 then
+						if typ == 2 then
 							note = "Search request exception from %s with IP %s and class %d as audio file: %s"
-						elseif tp == 3 then
+						elseif typ == 3 then
 							note = "Search request exception from %s with IP %s and class %d as compressed file: %s"
-						elseif tp == 4 then
+						elseif typ == 4 then
 							note = "Search request exception from %s with IP %s and class %d as document: %s"
-						elseif tp == 5 then
+						elseif typ == 5 then
 							note = "Search request exception from %s with IP %s and class %d as executable: %s"
-						elseif tp == 6 then
+						elseif typ == 6 then
 							note = "Search request exception from %s with IP %s and class %d as picture: %s"
-						elseif tp == 7 then
+						elseif typ == 7 then
 							note = "Search request exception from %s with IP %s and class %d as video: %s"
-						elseif tp == 8 then
+						elseif typ == 8 then
 							note = "Search request exception from %s with IP %s and class %d as folder: %s"
-						elseif tp == 9 then
+						elseif typ == 9 then
 							note = "Search request exception from %s with IP %s and class %d as TTH: %s"
 						end
 
-						opsnotify (table_sets.classnotiex, gettext (note):format (nick, ip .. tryipcc (ip, nick), cls, str))
+						opsnotify (table_sets.classnotiex, gettext (note):format (nick, addr .. tryipcc (addr, nick), clas, str))
 						return false
 					end
 				end
 			end
 
-			act = tonumber (act or 0) or 0
-
-			if act == 5 then
+			if item.act == 5 then
 				local note = "Search request notification from %s with IP %s and class %d as any file: %s"
 
-				if tp == 2 then
+				if typ == 2 then
 					note = "Search request notification from %s with IP %s and class %d as audio file: %s"
-				elseif tp == 3 then
+				elseif typ == 3 then
 					note = "Search request notification from %s with IP %s and class %d as compressed file: %s"
-				elseif tp == 4 then
+				elseif typ == 4 then
 					note = "Search request notification from %s with IP %s and class %d as document: %s"
-				elseif tp == 5 then
+				elseif typ == 5 then
 					note = "Search request notification from %s with IP %s and class %d as executable: %s"
-				elseif tp == 6 then
+				elseif typ == 6 then
 					note = "Search request notification from %s with IP %s and class %d as picture: %s"
-				elseif tp == 7 then
+				elseif typ == 7 then
 					note = "Search request notification from %s with IP %s and class %d as video: %s"
-				elseif tp == 8 then
+				elseif typ == 8 then
 					note = "Search request notification from %s with IP %s and class %d as folder: %s"
-				elseif tp == 9 then
+				elseif typ == 9 then
 					note = "Search request notification from %s with IP %s and class %d as TTH: %s"
 				end
 
-				opsnotify (table_sets.classnotisefi, gettext (note):format (nick, ip .. tryipcc (ip, nick), cls, str))
+				opsnotify (table_sets.classnotisefi, gettext (note):format (nick, addr .. tryipcc (addr, nick), clas, str))
 				return false
 			end
 
-			if act ~= 4 and act ~= 8 then
-				local rsn = table_sets.searfiltmsg:gsub ("%*", reprexpchars (str))
-				commandanswer (nick, rsn)
+			if item.act ~= 4 and item.act ~= 8 then
+				local why = table_sets.searfiltmsg:gsub ("%*", reprexpchars (str))
+				commandanswer (nick, why)
 			end
 
 			local note = "Bad search request from %s with IP %s and class %d as any file: %s"
 
-			if tp == 2 then
+			if typ == 2 then
 				note = "Bad search request from %s with IP %s and class %d as audio file: %s"
-			elseif tp == 3 then
+			elseif typ == 3 then
 				note = "Bad search request from %s with IP %s and class %d as compressed file: %s"
-			elseif tp == 4 then
+			elseif typ == 4 then
 				note = "Bad search request from %s with IP %s and class %d as document: %s"
-			elseif tp == 5 then
+			elseif typ == 5 then
 				note = "Bad search request from %s with IP %s and class %d as executable: %s"
-			elseif tp == 6 then
+			elseif typ == 6 then
 				note = "Bad search request from %s with IP %s and class %d as picture: %s"
-			elseif tp == 7 then
+			elseif typ == 7 then
 				note = "Bad search request from %s with IP %s and class %d as video: %s"
-			elseif tp == 8 then
+			elseif typ == 8 then
 				note = "Bad search request from %s with IP %s and class %d as folder: %s"
-			elseif tp == 9 then
+			elseif typ == 9 then
 				note = "Bad search request from %s with IP %s and class %d as TTH: %s"
 			end
 
-			opsnotify (table_sets.classnotisefi, gettext (note):format (nick, ip .. tryipcc (ip, nick), cls, str))
+			opsnotify (table_sets.classnotisefi, gettext (note):format (nick, addr .. tryipcc (addr, nick), clas, str))
 
-			if act == 1 then -- drop
+			if item.act == 1 then -- drop
 				opsnotify (table_sets.classnotisefi, gettext ("User dropped due to bad search request: %s"):format (nick))
 				VH:Disconnect (nick)
 
-			elseif act == 2 then -- kick
-				local rsn = table_sets.sefireason:gsub ("%*", reprexpchars (str))
-				VH:KickUser (table_othsets.sendfrom, nick, rsn)
+			elseif item.act == 2 then -- kick
+				local why = table_sets.sefireason:gsub ("%*", reprexpchars (str))
+				VH:KickUser (table_othsets.sendfrom, nick, why)
 
-			elseif act == 3 then -- temporary ban
-				local rsn = table_sets.sefireason:gsub ("%*", reprexpchars (str))
-				VH:KickUser (table_othsets.sendfrom, nick, rsn .. "     #_ban_" .. table_sets.thirdacttime)
+			elseif item.act == 3 then -- temporary ban
+				local why = table_sets.sefireason:gsub ("%*", reprexpchars (str))
+				VH:KickUser (table_othsets.sendfrom, nick, why .. "     #_ban_" .. table_sets.thirdacttime)
 
-			elseif act == 4 then -- silent skip
+			elseif item.act == 4 then -- silent skip
 				opsnotify (table_sets.classnotisefi, gettext ("User didn't get any search results: %s"):format (nick))
 
-			elseif act == 6 then -- redirect
+			elseif item.act == 6 then -- redirect
 				opsnotify (table_sets.classnotisefi, gettext ("User redirected due to bad search request: %s"):format (nick))
 				VH:SendToUser ("$ForceMove " .. table_sets.sixthactaddr .. "|", nick)
 				VH:Disconnect (nick)
 
-			elseif act == 7 then -- permanent ban
-				local rsn = table_sets.sefireason:gsub ("%*", reprexpchars (str))
-				VH:KickUser (table_othsets.sendfrom, nick, rsn .. "     #_ban_" .. table_sets.seventhacttime)
+			elseif item.act == 7 then -- permanent ban
+				local why = table_sets.sefireason:gsub ("%*", reprexpchars (str))
+				VH:KickUser (table_othsets.sendfrom, nick, why .. "     #_ban_" .. table_sets.seventhacttime)
 
-			elseif act == 8 or act == 9 then -- block list
+			elseif item.act == 8 or item.act == 9 then -- block list
 				opsnotify (table_sets.classnotisefi, gettext ("User added to search block list: %s"):format (nick))
 
-				table_sefi [nick] = {
-					sil = (act == 8), -- silent
+				table_sfbl [nick] = {
+					sil = (item.act == 8), -- silent
 					req = str,
 					num = 1
 				}

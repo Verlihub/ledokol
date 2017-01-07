@@ -5,6 +5,7 @@
 [ 28] Added: More support for Lua 5.3
 [ 29] Fixed: Error on registered users list cleanup when using * as number of days, report by KCAHDEP
 [ 30] Added: Class parameter to operator chat message script command
+[ 31] Improved: Search filter cache for better performance, request by FlylinkDC and KCAHDEP
 
 [ 2.9.1 :: 2016-12-24 ]
 
