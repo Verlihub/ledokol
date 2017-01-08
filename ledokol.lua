@@ -63,7 +63,7 @@ Tzaca, JOE™
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.2" -- ledokol version
-bld_ledo = "32" -- build number
+bld_ledo = "33" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -22230,40 +22230,42 @@ end
 
 ----- ---- --- -- -
 
-function repexdots (str)
-	local ret = str
-	ret = ret:gsub ("%.", "%%.")
-	return ret
+function repexdots (data)
+	local safe = _tostring (data)
+	safe = safe:gsub ("%.", "%%.")
+	return safe
 end
 
 ----- ---- --- -- -
 
-function repsqlchars (txt)
-	local ret = _tostring (txt)
-	ret = ret:gsub (string.char (92), string.char (92, 92)) -- backslash
-	ret = ret:gsub (string.char (34), string.char (92, 34)) -- double quote
-	ret = ret:gsub (string.char (39), string.char (92, 39)) -- single quote
-	return ret
+function repsqlchars (data)
+	local safe = _tostring (data)
+	safe = safe:gsub (string.char (92), string.char (92, 92)) -- backslash
+	safe = safe:gsub (string.char (34), string.char (92, 34)) -- double quote
+	safe = safe:gsub (string.char (39), string.char (92, 39)) -- single quote
+	return safe
 end
 
 ----- ---- --- -- -
 
-function repdatechars (txt)
-	local str = txt:gsub ("%-", "%%-")
-	return str
+function repdatechars (data)
+	local safe = _tostring (data)
+	safe = safe:gsub ("%-", "%%-")
+	return safe
 end
 
 ----- ---- --- -- -
 
-function reprexpchars (s)
-	local r = s:gsub ("%%", "%%%%")
-	return r
+function reprexpchars (data)
+	local safe = _tostring (data)
+	safe = safe:gsub ("%%", "%%%%")
+	return safe
 end
 
 ----- ---- --- -- -
 
 function reppatchars (data)
-	local safe = data
+	local safe = _tostring (data)
 	safe = safe:gsub ("%%", "%%%%")
 	safe = safe:gsub ("%^", "%%^")
 	safe = safe:gsub ("%$", "%%$")
@@ -22281,156 +22283,160 @@ end
 
 ----- ---- --- -- -
 
-function tolow (s)
-	local r = s
+function tolow (data)
+	local low = _tostring (data)
 
-	for _, v in pairs (tbl_cyrlet) do -- cyrillic
-		if v.low then
-			r = r:gsub (string.char (v.cyr), reprexpchars (string.char (v.low)))
+	for _, val in pairs (tbl_cyrlet) do -- cyrillic
+		if val.low then
+			low = low:gsub (string.char (val.cyr), reprexpchars (string.char (val.low)))
 		end
 	end
 
-	r = r:lower () -- latin
-	return r
+	low = low:lower () -- latin
+	return low
 end
 
 ----- ---- --- -- -
 
-function repsrchchars (txt)
-	local str = txt:gsub ("%$", " ")
-	return str
+function repsrchchars (data)
+	local safe = _tostring (data)
+	safe = safe:gsub ("%$", " ")
+	return safe
 end
 
 ----- ---- --- -- -
 
-function repnmdcoutchars (txt)
-	local ret = txt:gsub ("%$", "&#36;")
-	ret = ret:gsub ("|", "&#124;")
-	return ret
+function repnmdcoutchars (data) -- todo: add & replacement
+	local safe = _tostring (data)
+	safe = safe:gsub ("%$", "&#36;")
+	safe = safe:gsub ("|", "&#124;")
+	return safe
 end
 
 ----- ---- --- -- -
 
-function repnmdcinchars (txt)
-	local ret = txt:gsub ("&#36;", "$")
-	ret = ret:gsub ("&#124;", "|")
-	return ret
+function repnmdcinchars (data) -- todo: add & replacement
+	local safe = _tostring (data)
+	safe = safe:gsub ("&#36;", "$")
+	safe = safe:gsub ("&#124;", "|")
+	return safe
 end
 
 ----- ---- --- -- -
 
-function repnickchars (txt)
-	local ret = txt:gsub ("<", "_")
-	ret = ret:gsub (">", "_")
-	ret = ret:gsub (string.char (32), string.char (160)) -- space to non-breaking space
-	return ret
+function repnickchars (data)
+	local safe = _tostring (data)
+	safe = safe:gsub ("<", "_")
+	safe = safe:gsub (">", "_")
+	safe = safe:gsub (string.char (32), string.char (160)) -- space to non-breaking space
+	return safe
 end
 
 ----- ---- --- -- -
 
-function repwordranchars (s, stage)
-	local r = ""
+function repwordranchars (data, stage)
+	local safe = _tostring (data)
 
 	if stage == 0 then
-		r = s:gsub (string.char (190), "$") -- three fourths
-		r = r:gsub (string.char (189), "$") -- one half
-		r = r:gsub (string.char (188), "$") -- one fourth
-		r = r:gsub (string.char (187), "$") -- right angle quote
-		r = r:gsub (string.char (182), "$") -- paragraph sign
-		r = r:gsub (string.char (174), "$") -- registered trademark
-		r = r:gsub (string.char (171), "$") -- left angle quote
-		r = r:gsub (string.char (169), "$") -- copyright
-		r = r:gsub (string.char (167), "$") -- section sign
-		r = r:gsub (string.char (166), "$") -- broken vertical bar
-		r = r:gsub (string.char (164), "$") -- general currency sign
-		r = r:gsub (string.char (163), "$") -- pound sterling
-		r = r:gsub (string.char (162), "$") -- cent sign
-		r = r:gsub (string.char (126), "$") -- tilde
-		r = r:gsub (string.char (125), "$") -- right curly brace
-		r = r:gsub (string.char (124), "$") -- vertical bar
-		r = r:gsub (string.char (123), "$") -- left curly brace
-		r = r:gsub ("%" .. string.char (94), "$") -- caret
-		r = r:gsub ("%" .. string.char (93), "$") -- right square bracket
-		r = r:gsub (string.char (92), "$") -- backslash
-		r = r:gsub ("%" .. string.char (91), "$") -- left square bracket
-		r = r:gsub (string.char (64), "$") -- at sign
-		r = r:gsub ("%" .. string.char (63), "$") -- question mark
-		r = r:gsub (string.char (62), "$") -- greater than sign
-		r = r:gsub (string.char (61), "$") -- equals sign
-		r = r:gsub (string.char (60), "$") -- less than sign
-		r = r:gsub (string.char (59), "$") -- semicolon
-		r = r:gsub (string.char (58), "$") -- colon
-		r = r:gsub (string.char (47), "$") -- slash
-		r = r:gsub (string.char (44), "$") -- comma
-		r = r:gsub ("%" .. string.char (43), "$") -- plus sign
-		r = r:gsub ("%" .. string.char (42), "$") -- asterisk
-		r = r:gsub ("%" .. string.char (41), "$") -- right parenthesis
-		r = r:gsub ("%" .. string.char (40), "$") -- left parenthesis
-		r = r:gsub ("%" .. string.char (37), "$") -- percent sign
-		r = r:gsub (string.char (35), "$") -- number sign
-		r = r:gsub (string.char (34), "$") -- double quotation mark
-		r = r:gsub (string.char (33), "$") -- exclamation mark
-		r = r:gsub (string.char (32), "$") -- space
-		r = r:gsub ("\r\n", "$")
-		r = r:gsub ("\r", "$")
-		r = r:gsub ("\n", "$")
-		r = r:gsub ("\t", "$")
+		safe = safe:gsub (string.char (190), "$") -- three fourths
+		safe = safe:gsub (string.char (189), "$") -- one half
+		safe = safe:gsub (string.char (188), "$") -- one fourth
+		safe = safe:gsub (string.char (187), "$") -- right angle quote
+		safe = safe:gsub (string.char (182), "$") -- paragraph sign
+		safe = safe:gsub (string.char (174), "$") -- registered trademark
+		safe = safe:gsub (string.char (171), "$") -- left angle quote
+		safe = safe:gsub (string.char (169), "$") -- copyright
+		safe = safe:gsub (string.char (167), "$") -- section sign
+		safe = safe:gsub (string.char (166), "$") -- broken vertical bar
+		safe = safe:gsub (string.char (164), "$") -- general currency sign
+		safe = safe:gsub (string.char (163), "$") -- pound sterling
+		safe = safe:gsub (string.char (162), "$") -- cent sign
+		safe = safe:gsub (string.char (126), "$") -- tilde
+		safe = safe:gsub (string.char (125), "$") -- right curly brace
+		safe = safe:gsub (string.char (124), "$") -- vertical bar
+		safe = safe:gsub (string.char (123), "$") -- left curly brace
+		safe = safe:gsub ("%" .. string.char (94), "$") -- caret
+		safe = safe:gsub ("%" .. string.char (93), "$") -- right square bracket
+		safe = safe:gsub (string.char (92), "$") -- backslash
+		safe = safe:gsub ("%" .. string.char (91), "$") -- left square bracket
+		safe = safe:gsub (string.char (64), "$") -- at sign
+		safe = safe:gsub ("%" .. string.char (63), "$") -- question mark
+		safe = safe:gsub (string.char (62), "$") -- greater than sign
+		safe = safe:gsub (string.char (61), "$") -- equals sign
+		safe = safe:gsub (string.char (60), "$") -- less than sign
+		safe = safe:gsub (string.char (59), "$") -- semicolon
+		safe = safe:gsub (string.char (58), "$") -- colon
+		safe = safe:gsub (string.char (47), "$") -- slash
+		safe = safe:gsub (string.char (44), "$") -- comma
+		safe = safe:gsub ("%" .. string.char (43), "$") -- plus sign
+		safe = safe:gsub ("%" .. string.char (42), "$") -- asterisk
+		safe = safe:gsub ("%" .. string.char (41), "$") -- right parenthesis
+		safe = safe:gsub ("%" .. string.char (40), "$") -- left parenthesis
+		safe = safe:gsub ("%" .. string.char (37), "$") -- percent sign
+		safe = safe:gsub (string.char (35), "$") -- number sign
+		safe = safe:gsub (string.char (34), "$") -- double quotation mark
+		safe = safe:gsub (string.char (33), "$") -- exclamation mark
+		safe = safe:gsub (string.char (32), "$") -- space
+		safe = safe:gsub ("\r\n", "$")
+		safe = safe:gsub ("\r", "$")
+		safe = safe:gsub ("\n", "$")
+		safe = safe:gsub ("\t", "$")
 	else
-		r = s:gsub ("^[" .. string.char (160) .. "]+", "") -- non-breaking space
-		r = r:gsub ("[" .. string.char (160) .. "]+$", "")
-		r = r:gsub ("^[" .. string.char (95) .. "]+", "") -- underscore
-		r = r:gsub ("[" .. string.char (95) .. "]+$", "")
-		r = r:gsub ("^[%" .. string.char (46) .. "]+", "") -- period
-		r = r:gsub ("[%" .. string.char (46) .. "]+$", "")
-		r = r:gsub ("^[%" .. string.char (45) .. "]+", "") -- hyphen
-		r = r:gsub ("[%" .. string.char (45) .. "]+$", "")
-		r = r:gsub ("^[" .. string.char (38) .. "]+", "") -- ampersand
-		r = r:gsub ("[" .. string.char (38) .. "]+$", "")
-		r = r:gsub ("%" .. string.char (36), "") -- dollar sign
+		safe = safe:gsub ("^[" .. string.char (160) .. "]+", "") -- non-breaking space
+		safe = safe:gsub ("[" .. string.char (160) .. "]+$", "")
+		safe = safe:gsub ("^[" .. string.char (95) .. "]+", "") -- underscore
+		safe = safe:gsub ("[" .. string.char (95) .. "]+$", "")
+		safe = safe:gsub ("^[%" .. string.char (46) .. "]+", "") -- period
+		safe = safe:gsub ("[%" .. string.char (46) .. "]+$", "")
+		safe = safe:gsub ("^[%" .. string.char (45) .. "]+", "") -- hyphen
+		safe = safe:gsub ("[%" .. string.char (45) .. "]+$", "")
+		safe = safe:gsub ("^[" .. string.char (38) .. "]+", "") -- ampersand
+		safe = safe:gsub ("[" .. string.char (38) .. "]+$", "")
+		safe = safe:gsub ("%" .. string.char (36), "") -- dollar sign
 	end
 
-	return r
+	return safe
 end
 
 ----- ---- --- -- -
 
-function reptextvars (str, vick, vata)
+function reptextvars (data, vick, vata)
 	local ntime = os.time () + table_sets.srvtimediff -- current time
-	local txt = str
+	local back = _tostring (data)
 
 	if vick then -- user data is available
 		local vlass = getclass (vick)
 
-		if txt:find ("<nick>", 1, true) then
-			txt = txt:gsub ("<nick>", reprexpchars (vick))
+		if back:find ("<nick>", 1, true) then
+			back = back:gsub ("<nick>", reprexpchars (vick))
 		end
 
-		if txt:find ("<custnick>", 1, true) and table_sets.custnickclass < 11 then
-			txt = txt:gsub ("<custnick>", reprexpchars (getcustnick (vick) or vick))
+		if back:find ("<custnick>", 1, true) and table_sets.custnickclass < 11 then
+			back = back:gsub ("<custnick>", reprexpchars (getcustnick (vick) or vick))
 		end
 
-		if txt:find ("<class>", 1, true) then
-			txt = txt:gsub ("<class>", reprexpchars (_tostring (vlass)))
+		if back:find ("<class>", 1, true) then
+			back = back:gsub ("<class>", reprexpchars (_tostring (vlass)))
 		end
 
-		if txt:find ("<classname>", 1, true) then
-			txt = txt:gsub ("<classname>", reprexpchars (getclassname (vlass)))
+		if back:find ("<classname>", 1, true) then
+			back = back:gsub ("<classname>", reprexpchars (getclassname (vlass)))
 		end
 
-		if txt:find ("<uuptshrt>", 1, true) and table_sets.showuseruptime == 1 and table_usup [vick] then
-			txt = txt:gsub ("<uuptshrt>", reprexpchars (formatuptime (table_usup [vick], true)))
+		if back:find ("<uuptshrt>", 1, true) and table_sets.showuseruptime == 1 and table_usup [vick] then
+			back = back:gsub ("<uuptshrt>", reprexpchars (formatuptime (table_usup [vick], true)))
 		end
 
-		if txt:find ("<uuptlong>", 1, true) and table_sets.showuseruptime == 1 and table_usup [vick] then
-			txt = txt:gsub ("<uuptlong>", reprexpchars (formatuptime (table_usup [vick], false)))
+		if back:find ("<uuptlong>", 1, true) and table_sets.showuseruptime == 1 and table_usup [vick] then
+			back = back:gsub ("<uuptlong>", reprexpchars (formatuptime (table_usup [vick], false)))
 		end
 
-		if txt:find ("<userhost>", 1, true) and getconfig ("dns_lookup") == 1 then
-			txt = txt:gsub ("<userhost>", reprexpchars (gethost (vick)))
+		if back:find ("<userhost>", 1, true) and getconfig ("dns_lookup") == 1 then
+			back = back:gsub ("<userhost>", reprexpchars (gethost (vick)))
 		end
 
-		if txt:find ("<userip>", 1, true) then
-			txt = txt:gsub ("<userip>", reprexpchars (getip (vick)))
+		if back:find ("<userip>", 1, true) then
+			back = back:gsub ("<userip>", reprexpchars (getip (vick)))
 		end
 
 		local nogeo = true
@@ -22441,56 +22447,56 @@ function reptextvars (str, vick, vata)
 			if on and geoip and geoip ["host"] then
 				nogeo = false
 
-				if txt:find ("<geoiprange>", 1, true) and geoip ["range_low"] and geoip ["range_high"] then
-					txt = txt:gsub ("<geoiprange>", reprexpchars (string.format ("%s - %s", geoip ["range_low"], geoip ["range_high"])))
+				if back:find ("<geoiprange>", 1, true) and geoip ["range_low"] and geoip ["range_high"] then
+					back = back:gsub ("<geoiprange>", reprexpchars (string.format ("%s - %s", geoip ["range_low"], geoip ["range_high"])))
 				end
 
-				if txt:find ("<geoipcity>", 1, true) and geoip ["city"] then
-					txt = txt:gsub ("<geoipcity>", reprexpchars (geoip ["city"]))
+				if back:find ("<geoipcity>", 1, true) and geoip ["city"] then
+					back = back:gsub ("<geoipcity>", reprexpchars (geoip ["city"]))
 				end
 
-				if txt:find ("<geoipregcode>", 1, true) and geoip ["region_code"] then
-					txt = txt:gsub ("<geoipregcode>", reprexpchars (geoip ["region_code"]))
+				if back:find ("<geoipregcode>", 1, true) and geoip ["region_code"] then
+					back = back:gsub ("<geoipregcode>", reprexpchars (geoip ["region_code"]))
 				end
 
-				if txt:find ("<geoipregname>", 1, true) and geoip ["region"] then
-					txt = txt:gsub ("<geoipregname>", reprexpchars (geoip ["region"]))
+				if back:find ("<geoipregname>", 1, true) and geoip ["region"] then
+					back = back:gsub ("<geoipregname>", reprexpchars (geoip ["region"]))
 				end
 
-				if txt:find ("<geoipcc>", 1, true) and geoip ["country_code"] then
-					txt = txt:gsub ("<geoipcc>", reprexpchars (geoip ["country_code"]))
+				if back:find ("<geoipcc>", 1, true) and geoip ["country_code"] then
+					back = back:gsub ("<geoipcc>", reprexpchars (geoip ["country_code"]))
 				end
 
-				if txt:find ("<geoipcn>", 1, true) and geoip ["country"] then
-					txt = txt:gsub ("<geoipcn>", reprexpchars (geoip ["country"]))
+				if back:find ("<geoipcn>", 1, true) and geoip ["country"] then
+					back = back:gsub ("<geoipcn>", reprexpchars (geoip ["country"]))
 				end
 
-				if txt:find ("<geoipconcode>", 1, true) and geoip ["continent_code"] then
-					txt = txt:gsub ("<geoipconcode>", reprexpchars (geoip ["continent_code"]))
+				if back:find ("<geoipconcode>", 1, true) and geoip ["continent_code"] then
+					back = back:gsub ("<geoipconcode>", reprexpchars (geoip ["continent_code"]))
 				end
 
-				if txt:find ("<geoipconname>", 1, true) and geoip ["continent"] then
-					txt = txt:gsub ("<geoipconname>", reprexpchars (geoip ["continent"]))
+				if back:find ("<geoipconname>", 1, true) and geoip ["continent"] then
+					back = back:gsub ("<geoipconname>", reprexpchars (geoip ["continent"]))
 				end
 
-				if txt:find ("<geoiptz>", 1, true) and geoip ["time_zone"] then
-					txt = txt:gsub ("<geoiptz>", reprexpchars (geoip ["time_zone"]))
+				if back:find ("<geoiptz>", 1, true) and geoip ["time_zone"] then
+					back = back:gsub ("<geoiptz>", reprexpchars (geoip ["time_zone"]))
 				end
 
-				if txt:find ("<geoipcoord>", 1, true) and geoip ["latitude"] and geoip ["longitude"] then
-					txt = txt:gsub ("<geoipcoord>", reprexpchars (string.format ("%f %f", geoip ["latitude"], geoip ["longitude"])))
+				if back:find ("<geoipcoord>", 1, true) and geoip ["latitude"] and geoip ["longitude"] then
+					back = back:gsub ("<geoipcoord>", reprexpchars (string.format ("%f %f", geoip ["latitude"], geoip ["longitude"])))
 				end
 
-				if txt:find ("<geoippost>", 1, true) and geoip ["postal_code"] then
-					txt = txt:gsub ("<geoippost>", reprexpchars (geoip ["postal_code"]))
+				if back:find ("<geoippost>", 1, true) and geoip ["postal_code"] then
+					back = back:gsub ("<geoippost>", reprexpchars (geoip ["postal_code"]))
 				end
 
-				if txt:find ("<geoipmetro>", 1, true) and geoip ["metro_code"] and geoip ["metro_code"] > 0 then
-					txt = txt:gsub ("<geoipmetro>", reprexpchars (geoip ["metro_code"]))
+				if back:find ("<geoipmetro>", 1, true) and geoip ["metro_code"] and geoip ["metro_code"] > 0 then
+					back = back:gsub ("<geoipmetro>", reprexpchars (geoip ["metro_code"]))
 				end
 
-				if txt:find ("<geoiparea>", 1, true) and geoip ["area_code"] and geoip ["area_code"] > 0 then
-					txt = txt:gsub ("<geoiparea>", reprexpchars (geoip ["area_code"]))
+				if back:find ("<geoiparea>", 1, true) and geoip ["area_code"] and geoip ["area_code"] > 0 then
+					back = back:gsub ("<geoiparea>", reprexpchars (geoip ["area_code"]))
 				end
 			end
 		end
@@ -22498,16 +22504,16 @@ function reptextvars (str, vick, vata)
 		if nogeo and table_refu.GetUserCC then
 			local cc = getcc (vick)
 
-			if txt:find ("<geoipcc>", 1, true) then
-				txt = txt:gsub ("<geoipcc>", reprexpchars (cc))
+			if back:find ("<geoipcc>", 1, true) then
+				back = back:gsub ("<geoipcc>", reprexpchars (cc))
 			end
 
-			if txt:find ("<geoipcn>", 1, true) then
-				txt = txt:gsub ("<geoipcn>", reprexpchars (cc_names [cc] or gettext ("Unknown country")))
+			if back:find ("<geoipcn>", 1, true) then
+				back = back:gsub ("<geoipcn>", reprexpchars (cc_names [cc] or gettext ("Unknown country")))
 			end
 
-			if txt:find ("<geoipcity>", 1, true) and table_refu.GetUserCity then
-				txt = txt:gsub ("<geoipcity>", reprexpchars (getusercity (vick)))
+			if back:find ("<geoipcity>", 1, true) and table_refu.GetUserCity then
+				back = back:gsub ("<geoipcity>", reprexpchars (getusercity (vick)))
 			end
 		end
 
@@ -22516,186 +22522,186 @@ function reptextvars (str, vick, vata)
 		if myinfo then
 			local desc, tag, conn, sts, email, share = parsemyinfo (vick, myinfo)
 
-			if txt:find ("<myinfodesc>", 1, true) then
-				txt = txt:gsub ("<myinfodesc>", reprexpchars (desc))
+			if back:find ("<myinfodesc>", 1, true) then
+				back = back:gsub ("<myinfodesc>", reprexpchars (desc))
 			end
 
-			if txt:find ("<myinfotag>", 1, true) then
-				txt = txt:gsub ("<myinfotag>", reprexpchars (tag))
+			if back:find ("<myinfotag>", 1, true) then
+				back = back:gsub ("<myinfotag>", reprexpchars (tag))
 			end
 
 			if # tag > 0 then
 				local res = parsetag (tag)
 
-				if txt:find ("<tagclient>", 1, true) and res ["cl"] then
-					txt = txt:gsub ("<tagclient>", reprexpchars (res ["cl"]))
+				if back:find ("<tagclient>", 1, true) and res ["cl"] then
+					back = back:gsub ("<tagclient>", reprexpchars (res ["cl"]))
 				end
 
-				if txt:find ("<tagversion>", 1, true) and res ["ve"] then
-					txt = txt:gsub ("<tagversion>", reprexpchars (res ["ve"]))
+				if back:find ("<tagversion>", 1, true) and res ["ve"] then
+					back = back:gsub ("<tagversion>", reprexpchars (res ["ve"]))
 				end
 
-				if txt:find ("<tagmode>", 1, true) and res ["mo"] then
-					txt = txt:gsub ("<tagmode>", reprexpchars (res ["mo"]))
+				if back:find ("<tagmode>", 1, true) and res ["mo"] then
+					back = back:gsub ("<tagmode>", reprexpchars (res ["mo"]))
 				end
 
-				if txt:find ("<taghubs>", 1, true) and res ["hu"] then
-					txt = txt:gsub ("<taghubs>", reprexpchars (res ["hu"]))
+				if back:find ("<taghubs>", 1, true) and res ["hu"] then
+					back = back:gsub ("<taghubs>", reprexpchars (res ["hu"]))
 				end
 
-				if txt:find ("<tagslots>", 1, true) and res ["sl"] then
-					txt = txt:gsub ("<tagslots>", reprexpchars (res ["sl"]))
+				if back:find ("<tagslots>", 1, true) and res ["sl"] then
+					back = back:gsub ("<tagslots>", reprexpchars (res ["sl"]))
 				end
 
-				if txt:find ("<taglimit>", 1, true) and res ["li"] then
-					txt = txt:gsub ("<taglimit>", reprexpchars (res ["li"]))
+				if back:find ("<taglimit>", 1, true) and res ["li"] then
+					back = back:gsub ("<taglimit>", reprexpchars (res ["li"]))
 				end
 			end
 
-			if txt:find ("<myinfoconn>", 1, true) then
-				txt = txt:gsub ("<myinfoconn>", reprexpchars (conn))
+			if back:find ("<myinfoconn>", 1, true) then
+				back = back:gsub ("<myinfoconn>", reprexpchars (conn))
 			end
 
-			if txt:find ("<myinfostat>", 1, true) then
-				txt = txt:gsub ("<myinfostat>", reprexpchars (statustostr (sts)))
+			if back:find ("<myinfostat>", 1, true) then
+				back = back:gsub ("<myinfostat>", reprexpchars (statustostr (sts)))
 			end
 
-			if txt:find ("<myinfomail>", 1, true) then
-				txt = txt:gsub ("<myinfomail>", reprexpchars (email))
+			if back:find ("<myinfomail>", 1, true) then
+				back = back:gsub ("<myinfomail>", reprexpchars (email))
 			end
 
-			if txt:find ("<myinfoshare>", 1, true) then
-				txt = txt:gsub ("<myinfoshare>", reprexpchars (makesize (share)))
+			if back:find ("<myinfoshare>", 1, true) then
+				back = back:gsub ("<myinfoshare>", reprexpchars (makesize (share)))
 			end
 
-			if txt:find ("<myinfoexshar>", 1, true) then
-				txt = txt:gsub ("<myinfoexshar>", reprexpchars (_tostring (share)))
+			if back:find ("<myinfoexshar>", 1, true) then
+				back = back:gsub ("<myinfoexshar>", reprexpchars (_tostring (share)))
 			end
 		end
 
-		if txt:find ("<myinfosupport>", 1, true) and table_refu.GetUserSupports then
+		if back:find ("<myinfosupport>", 1, true) and table_refu.GetUserSupports then
 			local on, sup = VH:GetUserSupports (vick)
 
 			if on and sup then
-				txt = txt:gsub ("<myinfosupport>", reprexpchars (sup))
+				back = back:gsub ("<myinfosupport>", reprexpchars (sup))
 			end
 		end
 
-		if txt:find ("<myinfonmdcver>", 1, true) and table_refu.GetUserVersion then
+		if back:find ("<myinfonmdcver>", 1, true) and table_refu.GetUserVersion then
 			local on, ver = VH:GetUserVersion (vick)
 
 			if on and ver then
-				txt = txt:gsub ("<myinfonmdcver>", reprexpchars (ver))
+				back = back:gsub ("<myinfonmdcver>", reprexpchars (ver))
 			end
 		end
 
-		if txt:find ("<message>", 1, true) then
-			txt = txt:gsub ("<message>", reprexpchars (vata or ""))
+		if back:find ("<message>", 1, true) then
+			back = back:gsub ("<message>", reprexpchars (vata or ""))
 		end
 	end
 
-if txt:find ("<randnick>") then
+if back:find ("<randnick>") then
 	local rnick = getrandomnick ()
-	txt = txt:gsub ("<randnick>", reprexpchars (getcustnick (rnick) or rnick))
+	back = back:gsub ("<randnick>", reprexpchars (getcustnick (rnick) or rnick))
 end
 
-if txt:find ("<date>") then
+if back:find ("<date>") then
 	local var_date = os.date (table_sets.dateformat, ntime)
-	txt = txt:gsub ("<date>", reprexpchars (var_date))
+	back = back:gsub ("<date>", reprexpchars (var_date))
 end
 
-if txt:find ("<time>") then
+if back:find ("<time>") then
 	local var_time = os.date (table_sets.timeformat, ntime)
-	txt = txt:gsub ("<time>", reprexpchars (var_time))
+	back = back:gsub ("<time>", reprexpchars (var_time))
 end
 
-if txt:find ("<hubname>") then
-	txt = txt:gsub ("<hubname>", reprexpchars (getconfig ("hub_name")))
+if back:find ("<hubname>") then
+	back = back:gsub ("<hubname>", reprexpchars (getconfig ("hub_name")))
 end
 
-	if txt:find ("<topic>") then
+	if back:find ("<topic>") then
 		local topic = table_othsets.topicvalue
 
 		if table_refu.GetTopic then
 			topic = VH:GetTopic ()
 		end
 
-		txt = txt:gsub ("<topic>", reprexpchars (topic or ""))
+		back = back:gsub ("<topic>", reprexpchars (topic or ""))
 	end
 
-if txt:find ("<hubdesc>") then
-	txt = txt:gsub ("<hubdesc>", reprexpchars (getconfig ("hub_desc")))
+if back:find ("<hubdesc>") then
+	back = back:gsub ("<hubdesc>", reprexpchars (getconfig ("hub_desc")))
 end
 
-if txt:find ("<hubcat>") then
-	txt = txt:gsub ("<hubcat>", reprexpchars (getconfig ("hub_category")))
+if back:find ("<hubcat>") then
+	back = back:gsub ("<hubcat>", reprexpchars (getconfig ("hub_category")))
 end
 
-if txt:find ("<hubown>") then
-	txt = txt:gsub ("<hubown>", reprexpchars (getconfig ("hub_owner")))
+if back:find ("<hubown>") then
+	back = back:gsub ("<hubown>", reprexpchars (getconfig ("hub_owner")))
 end
 
-if txt:find ("<hubver>") then
-	txt = txt:gsub ("<hubver>", reprexpchars (getconfig ("hub_version")))
+if back:find ("<hubver>") then
+	back = back:gsub ("<hubver>", reprexpchars (getconfig ("hub_version")))
 end
 
-if txt:find ("<optrig>") then
-	txt = txt:gsub ("<optrig>", reprexpchars (getconfig ("cmd_start_op"):sub (1, 1)))
+if back:find ("<optrig>") then
+	back = back:gsub ("<optrig>", reprexpchars (getconfig ("cmd_start_op"):sub (1, 1)))
 end
 
-if txt:find ("<ustrig>") then
-	txt = txt:gsub ("<ustrig>", reprexpchars (getconfig ("cmd_start_user"):sub (1, 1)))
+if back:find ("<ustrig>") then
+	back = back:gsub ("<ustrig>", reprexpchars (getconfig ("cmd_start_user"):sub (1, 1)))
 end
 
-if txt:find ("<hubbot>") then
-	txt = txt:gsub ("<hubbot>", reprexpchars (table_othsets.botnick))
+if back:find ("<hubbot>") then
+	back = back:gsub ("<hubbot>", reprexpchars (table_othsets.botnick))
 end
 
-if txt:find ("<hubopch>") then
-	txt = txt:gsub ("<hubopch>", reprexpchars (table_othsets.opchatnick))
+if back:find ("<hubopch>") then
+	back = back:gsub ("<hubopch>", reprexpchars (table_othsets.opchatnick))
 end
 
-if txt:find ("<hubhost>") then
-	txt = txt:gsub ("<hubhost>", reprexpchars (getconfig ("hub_host")))
+if back:find ("<hubhost>") then
+	back = back:gsub ("<hubhost>", reprexpchars (getconfig ("hub_host")))
 end
 
-if txt:find ("<hubport>") then
-	txt = txt:gsub ("<hubport>", reprexpchars (getconfig ("listen_port")))
+if back:find ("<hubport>") then
+	back = back:gsub ("<hubport>", reprexpchars (getconfig ("listen_port")))
 end
 
-if txt:find ("<hubmaxusr>") then
-	txt = txt:gsub ("<hubmaxusr>", reprexpchars (getconfig ("max_users")))
+if back:find ("<hubmaxusr>") then
+	back = back:gsub ("<hubmaxusr>", reprexpchars (getconfig ("max_users")))
 end
 
-if txt:find ("<hubminsh>") then
-	txt = txt:gsub ("<hubminsh>", reprexpchars (makesize (getconfig ("min_share") * 1048576)))
+if back:find ("<hubminsh>") then
+	back = back:gsub ("<hubminsh>", reprexpchars (makesize (getconfig ("min_share") * 1048576)))
 end
 
-if txt:find ("<hubmaxsh>") then
-	txt = txt:gsub ("<hubmaxsh>", reprexpchars (makesize (getconfig ("max_share") * 1048576)))
+if back:find ("<hubmaxsh>") then
+	back = back:gsub ("<hubmaxsh>", reprexpchars (makesize (getconfig ("max_share") * 1048576)))
 end
 
-	if txt:match ("<ledover>") then
-		txt = txt:gsub ("<ledover>", reprexpchars (ver_ledo .. "." .. bld_ledo))
+	if back:match ("<ledover>") then
+		back = back:gsub ("<ledover>", reprexpchars (ver_ledo .. "." .. bld_ledo))
 	end
 
-if txt:find ("<suptshrt>") then
-	txt = txt:gsub ("<suptshrt>", reprexpchars (formatuptime (table_othsets.uptime, true)))
+if back:find ("<suptshrt>") then
+	back = back:gsub ("<suptshrt>", reprexpchars (formatuptime (table_othsets.uptime, true)))
 end
 
-if txt:find ("<suptlong>") then
-	txt = txt:gsub ("<suptlong>", reprexpchars (formatuptime (table_othsets.uptime, false)))
+if back:find ("<suptlong>") then
+	back = back:gsub ("<suptlong>", reprexpchars (formatuptime (table_othsets.uptime, false)))
 end
 
 if table_refu.GetUpTime then -- hub uptime
 	local ut = os.time () - getuptime ()
 
-	if txt:find ("<huptshrt>") then
-		txt = txt:gsub ("<huptshrt>", reprexpchars (formatuptime (ut, true)))
+	if back:find ("<huptshrt>") then
+		back = back:gsub ("<huptshrt>", reprexpchars (formatuptime (ut, true)))
 	end
 
-	if txt:find ("<huptlong>") then
-		txt = txt:gsub ("<huptlong>", reprexpchars (formatuptime (ut, false)))
+	if back:find ("<huptlong>") then
+		back = back:gsub ("<huptlong>", reprexpchars (formatuptime (ut, false)))
 	end
 
 	local _, rows = VH:SQLQuery ("select `time`, `count` from `" .. tbl_sql.stat .. "` where `type` = 'uptime_peak' limit 1")
@@ -22706,28 +22712,28 @@ if table_refu.GetUpTime then -- hub uptime
 		put = os.time () - tonumber (put)
 	end
 
-	if txt:find ("<peakhuptshrt>") then
-		txt = txt:gsub ("<peakhuptshrt>", reprexpchars (formatuptime (put, true)))
+	if back:find ("<peakhuptshrt>") then
+		back = back:gsub ("<peakhuptshrt>", reprexpchars (formatuptime (put, true)))
 	end
 
-	if txt:find ("<peakhuptlong>") then
-		txt = txt:gsub ("<peakhuptlong>", reprexpchars (formatuptime (put, false)))
+	if back:find ("<peakhuptlong>") then
+		back = back:gsub ("<peakhuptlong>", reprexpchars (formatuptime (put, false)))
 	end
 
-	if txt:find ("<peakhupttime>") then
-		txt = txt:gsub ("<peakhupttime>", reprexpchars (fromunixtime (ptm, false)))
+	if back:find ("<peakhupttime>") then
+		back = back:gsub ("<peakhupttime>", reprexpchars (fromunixtime (ptm, false)))
 	end
 
-	if txt:find ("<peakhuptshrttime>") then
-		txt = txt:gsub ("<peakhuptshrttime>", reprexpchars (fromunixtime (ptm, true)))
+	if back:find ("<peakhuptshrttime>") then
+		back = back:gsub ("<peakhuptshrttime>", reprexpchars (fromunixtime (ptm, true)))
 	end
 end
 
-if txt:find ("<usercnt>") then
-	txt = txt:gsub ("<usercnt>", reprexpchars (getusercount ()))
+if back:find ("<usercnt>") then
+	back = back:gsub ("<usercnt>", reprexpchars (getusercount ()))
 end
 
-if txt:find ("<peakusers>") then
+if back:find ("<peakusers>") then
 	local _, rows = VH:SQLQuery ("select `time`, `count` from `" .. tbl_sql.stat .. "` where `type` = 'users_peak' limit 1")
 	local ptm, puc = ntime, 0
 
@@ -22735,24 +22741,24 @@ if txt:find ("<peakusers>") then
 		_, ptm, puc = VH:SQLFetch (0)
 	end
 
-	txt = txt:gsub ("<peakusers>", reprexpchars (puc))
+	back = back:gsub ("<peakusers>", reprexpchars (puc))
 
-	if txt:find ("<peakuserstime>") then
-		txt = txt:gsub ("<peakuserstime>", reprexpchars (fromunixtime (ptm, false)))
+	if back:find ("<peakuserstime>") then
+		back = back:gsub ("<peakuserstime>", reprexpchars (fromunixtime (ptm, false)))
 	end
 
-	if txt:find ("<peakusersshrttime>") then
-		txt = txt:gsub ("<peakusersshrttime>", reprexpchars (fromunixtime (ptm, true)))
+	if back:find ("<peakusersshrttime>") then
+		back = back:gsub ("<peakusersshrttime>", reprexpchars (fromunixtime (ptm, true)))
 	end
 end
 
 	-- total share
 
-	if txt:find ("<totshare>") then
-		txt = txt:gsub ("<totshare>", reprexpchars (makesize (gettotsharesize ())))
+	if back:find ("<totshare>") then
+		back = back:gsub ("<totshare>", reprexpchars (makesize (gettotsharesize ())))
 	end
 
-	if txt:find ("<peakshare>") then
+	if back:find ("<peakshare>") then
 		local _, rows = VH:SQLQuery ("select `time`, `count` from `" .. tbl_sql.stat .. "` where `type` = 'share_peak' limit 1")
 		local ptm, pts = ntime, 0
 
@@ -22762,31 +22768,31 @@ end
 			pts = tonumber (pts) or 0
 		end
 
-		txt = txt:gsub ("<peakshare>", reprexpchars (makesize (pts)))
+		back = back:gsub ("<peakshare>", reprexpchars (makesize (pts)))
 
-		if txt:find ("<peaksharetime>") then
-			txt = txt:gsub ("<peaksharetime>", reprexpchars (fromunixtime (ptm, false)))
+		if back:find ("<peaksharetime>") then
+			back = back:gsub ("<peaksharetime>", reprexpchars (fromunixtime (ptm, false)))
 		end
 
-		if txt:find ("<peakshareshrttime>") then
-			txt = txt:gsub ("<peakshareshrttime>", reprexpchars (fromunixtime (ptm, true)))
+		if back:find ("<peakshareshrttime>") then
+			back = back:gsub ("<peakshareshrttime>", reprexpchars (fromunixtime (ptm, true)))
 		end
 	end
 
 	-- average share per user
 
-	if txt:find ("<avgshare>") then
+	if back:find ("<avgshare>") then
 		local uc = getusercount ()
 		local ts = gettotsharesize ()
 
 		if uc > 0 and ts > 0 then
-			txt = txt:gsub ("<avgshare>", reprexpchars (makesize (roundint ((ts / uc), 0))))
+			back = back:gsub ("<avgshare>", reprexpchars (makesize (roundint ((ts / uc), 0))))
 		else
-			txt = txt:gsub ("<avgshare>", reprexpchars (makesize (0)))
+			back = back:gsub ("<avgshare>", reprexpchars (makesize (0)))
 		end
 	end
 
-	if txt:find ("<peakavgshare>") then
+	if back:find ("<peakavgshare>") then
 		local _, rows = VH:SQLQuery ("select `time`, `count` from `" .. tbl_sql.stat .. "` where `type` = 'avgshare_peak' limit 1")
 		local pavgtm, pavg = ntime, 0
 
@@ -22796,24 +22802,24 @@ end
 			pavg = tonumber (pavg) or 0
 		end
 
-		txt = txt:gsub ("<peakavgshare>", reprexpchars (makesize (pavg)))
+		back = back:gsub ("<peakavgshare>", reprexpchars (makesize (pavg)))
 
-		if txt:find ("<peakavgsharetime>") then
-			txt = txt:gsub ("<peakavgsharetime>", reprexpchars (fromunixtime (pavgtm, false)))
+		if back:find ("<peakavgsharetime>") then
+			back = back:gsub ("<peakavgsharetime>", reprexpchars (fromunixtime (pavgtm, false)))
 		end
 
-		if txt:find ("<peakavgshareshrttime>") then
-			txt = txt:gsub ("<peakavgshareshrttime>", reprexpchars (fromunixtime (pavgtm, true)))
+		if back:find ("<peakavgshareshrttime>") then
+			back = back:gsub ("<peakavgshareshrttime>", reprexpchars (fromunixtime (pavgtm, true)))
 		end
 	end
 
 	-- memory usage
 
-if txt:find ("<memusg>") then
-	txt = txt:gsub ("<memusg>", reprexpchars (makesize (getmemusg ())))
+if back:find ("<memusg>") then
+	back = back:gsub ("<memusg>", reprexpchars (makesize (getmemusg ())))
 end
 
-if txt:find ("<peakmemusg>") then
+if back:find ("<peakmemusg>") then
 	local _, rows = VH:SQLQuery ("select `time`, `count` from `" .. tbl_sql.stat .. "` where `type` = 'memory_peak' limit 1")
 	local ptm, pmu = ntime, 0
 
@@ -22821,18 +22827,18 @@ if txt:find ("<peakmemusg>") then
 		_, ptm, pmu = VH:SQLFetch (0)
 	end
 
-	txt = txt:gsub ("<peakmemusg>", reprexpchars (makesize (pmu)))
+	back = back:gsub ("<peakmemusg>", reprexpchars (makesize (pmu)))
 
-	if txt:find ("<peakmemusgtime>") then
-		txt = txt:gsub ("<peakmemusgtime>", reprexpchars (fromunixtime (ptm, false)))
+	if back:find ("<peakmemusgtime>") then
+		back = back:gsub ("<peakmemusgtime>", reprexpchars (fromunixtime (ptm, false)))
 	end
 
-	if txt:find ("<peakmemusgshrttime>") then
-		txt = txt:gsub ("<peakmemusgshrttime>", reprexpchars (fromunixtime (ptm, true)))
+	if back:find ("<peakmemusgshrttime>") then
+		back = back:gsub ("<peakmemusgshrttime>", reprexpchars (fromunixtime (ptm, true)))
 	end
 end
 
-return txt
+	return back
 end
 
 ----- ---- --- -- -

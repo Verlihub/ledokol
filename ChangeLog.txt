@@ -2,6 +2,7 @@
 
 [ 29] Fixed: Error on registered users list cleanup when using * as number of days, report by KCAHDEP
 [ 32] Fixed: Error in forbidden country code exception notification
+[ 33] Fixed: More Lua number to string conversion errors, report by Zorro
 [ 27] Added: Support for Lua 5.3 number to string conversion
 [ 28] Added: More support for Lua 5.3
 [ 30] Added: Class parameter to operator chat message script command
