@@ -1,11 +1,13 @@
 [ 2.9.2 :: 2017-##-## ]
 
-[ 27] Improved: Translation speed by parsing language file only once and storing it as a table
+[ 29] Fixed: Error on registered users list cleanup when using * as number of days, report by KCAHDEP
+[ 32] Fixed: Error in forbidden country code exception notification
 [ 27] Added: Support for Lua 5.3 number to string conversion
 [ 28] Added: More support for Lua 5.3
-[ 29] Fixed: Error on registered users list cleanup when using * as number of days, report by KCAHDEP
 [ 30] Added: Class parameter to operator chat message script command
+[ 27] Improved: Translation speed by parsing language file only once and storing it as a table
 [ 31] Improved: Search filter cache for better performance, request by FlylinkDC and KCAHDEP
+[ 32] Improved: Forbidden MyINFO cache for better performance, idea by FlylinkDC and KCAHDEP
 
 [ 2.9.1 :: 2016-12-24 ]
 

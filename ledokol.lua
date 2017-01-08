@@ -63,7 +63,7 @@ Tzaca, JOE™
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.2" -- ledokol version
-bld_ledo = "31" -- build number
+bld_ledo = "32" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -1014,6 +1014,7 @@ table_avus = {}
 table_avse = {}
 table_avbl = {}
 table_avss = {}
+table_myfo = {}
 table_sefi = {}
 table_sfex = {}
 table_sfbl = {}
@@ -1458,6 +1459,7 @@ function Main (file)
 	end
 
 	loadsefilist () -- load search filter cache, even if disabled
+	loadmyfolist () -- load forbidden myinfo cache, even if disabled
 	math.randomseed (os.time ()) -- randomize
 	return 1
 end
@@ -4675,31 +4677,31 @@ function VH_OnParsedMsgMyINFO (nick, data)
 		desc, tag, conn, _, mail, size = parsemyinfo (nil, data)
 	end
 
-	if checkdesc (nick, desc, cls, addr) == 1 then
+	if checkdesc (nick, desc, cls, addr) then
 		return 0
 	end
 
-	if checktag (nick, tag, cls, addr) == 1 then
+	if checktag (nick, tag, cls, addr) then
 		return 0
 	end
 
-	if checkconn (nick, conn, cls, addr) == 1 then
+	if checkconn (nick, conn, cls, addr) then
 		return 0
 	end
 
-	if checkemail (nick, mail, cls, addr) == 1 then
+	if checkemail (nick, mail, cls, addr) then
 		return 0
 	end
 
-	if checkshare (nick, size, cls, addr) == 1 then
+	if checkshare (nick, size, cls, addr) then
 		return 0
 	end
 
-	if checkfake (nick, size, cls, addr) == 1 then
+	if checkfake (nick, size, cls, addr) then
 		return 0
 	end
 
-	if checkclone (nick, size, addr, cls) == 1 then
+	if checkclone (nick, size, addr, cls) then
 		return 0
 	end
 
@@ -4851,35 +4853,35 @@ function VH_OnUserLogin (nick, uip)
 				hasinfo = true
 			end
 
-			if checknick (nick, cls, ip) == 1 then
+			if checknick (nick, cls, ip) then
 				return 0
 			end
 
-			if checkdesc (nick, desc, cls, ip) == 1 then
+			if checkdesc (nick, desc, cls, ip) then
 				return 0
 			end
 
-			if checktag (nick, tag, cls, ip) == 1 then
+			if checktag (nick, tag, cls, ip) then
 				return 0
 			end
 
-			if checkconn (nick, conn, cls, ip) == 1 then
+			if checkconn (nick, conn, cls, ip) then
 				return 0
 			end
 
-			if checkemail (nick, email, cls, ip) == 1 then
+			if checkemail (nick, email, cls, ip) then
 				return 0
 			end
 
-			if checkshare (nick, size, cls, ip) == 1 then
+			if checkshare (nick, size, cls, ip) then
 				return 0
 			end
 
-			if checkip (nick, ip, cls) == 1 then
+			if checkip (nick, ip, cls) then
 				return 0
 			end
 
-			if checkcc (nick, cls) then
+			if checkcc (nick, cls, ip) then
 				return 0
 			end
 
@@ -4895,15 +4897,15 @@ function VH_OnUserLogin (nick, uip)
 				return 0
 			end
 
-			if checkfake (nick, size, cls, ip) == 1 then
+			if checkfake (nick, size, cls, ip) then
 				return 0
 			end
 
-			if checkclone (nick, size, ip, cls) == 1 then
+			if checkclone (nick, size, ip, cls) then
 				return 0
 			end
 
-			if checksameip (nick, ip, cls) == 1 then
+			if checksameip (nick, ip, cls) then
 				return 0
 			end
 		end
@@ -11317,503 +11319,48 @@ end
 
 ----- ---- --- -- -
 
-function checknick (nick, ucls, aip)
-	if table_sets.michnick == 0 then
-		return 0
-	end
-
-	local _, rows = VH:SQLQuery ("select `nick`, `time` from `" .. tbl_sql.minick .. "` order by `occurred` desc")
-
-	if rows > 0 then
-		local lowtxt = tolow (repnmdcinchars (nick))
-
-		for x = 0, rows - 1 do
-			local _, entry, btime = VH:SQLFetch (x)
-			local fres, fval = catchfinderror (lowtxt, entry)
-
-			if not fres then
-				local ferr = gettext ("There is an error in following forbidden nick pattern") .. ":\r\n\r\n"
-				ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (entry) .. "\r\n"
-				ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
-				ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
-				opsnotify (table_sets.classnotiledoact, ferr)
-			elseif fval then
-				VH:SQLQuery ("update `" .. tbl_sql.minick .. "` set `occurred` = `occurred` + 1 where `nick` = '" .. repsqlchars (entry) .. "' limit 1")
-				local _, rows = VH:SQLQuery ("select `exception` from `" .. tbl_sql.miex .. "`")
-
-				if rows > 0 then
-					for x = 0, rows - 1 do
-						local _, entry = VH:SQLFetch (x)
-						local fres, fval = catchfinderror (lowtxt, entry)
-
-						if not fres then
-							local ferr = gettext ("There is an error in following MyINFO exception pattern") .. ":\r\n\r\n"
-							ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (entry) .. "\r\n"
-							ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
-							ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
-							opsnotify (table_sets.classnotiledoact, ferr)
-						elseif fval then
-							VH:SQLQuery ("update `" .. tbl_sql.miex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (entry) .. "' limit 1")
-							opsnotify (table_sets.classnotiex, gettext ("%s with IP %s and class %d allowed due to forbidden nick exception: %s"):format (nick, aip .. tryipcc (aip, nick), ucls, nick))
-							return 0
-						end
-					end
-				end
-
-				if not btime or btime == "" then
-					btime = table_sets.mitbantime
-				end
-
-				local rsn = table_sets.minickmessage:gsub ("%*", reprexpchars (nick))
-				VH:KickUser (table_othsets.sendfrom, nick, rsn .. "     #_ban_" .. btime)
-				return 1
-			end
-		end
-	end
-
-	return 0
-end
-
------ ---- --- -- -
-
-function checkdesc (nick, desc, ucls, aip)
-	if table_sets.michdesc == 0 then
-		return 0
-	end
-
-	local _, rows = VH:SQLQuery ("select `description`, `time` from `" .. tbl_sql.midesc .. "` order by `occurred` desc")
-
-	if rows > 0 then
-		local lowtxt = tolow (repnmdcinchars (desc))
-
-		for x = 0, rows - 1 do
-			local _, entry, btime = VH:SQLFetch (x)
-			local fres, fval = catchfinderror (lowtxt, entry)
-
-			if not fres then
-				local ferr = gettext ("There is an error in following forbidden description pattern") .. ":\r\n\r\n"
-				ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (entry) .. "\r\n"
-				ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
-				ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
-				opsnotify (table_sets.classnotiledoact, ferr)
-			elseif fval then
-				VH:SQLQuery ("update `" .. tbl_sql.midesc .. "` set `occurred` = `occurred` + 1 where `description` = '" .. repsqlchars (entry) .. "' limit 1")
-				local _, rows = VH:SQLQuery ("select `exception` from `" .. tbl_sql.miex .. "`")
-
-				if rows > 0 then
-					for x = 0, rows - 1 do
-						local _, entry = VH:SQLFetch (x)
-						local fres, fval = catchfinderror (lowtxt, entry)
-
-						if not fres then
-							local ferr = gettext ("There is an error in following MyINFO exception pattern") .. ":\r\n\r\n"
-							ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (entry) .. "\r\n"
-							ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
-							ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
-							opsnotify (table_sets.classnotiledoact, ferr)
-						elseif fval then
-							VH:SQLQuery ("update `" .. tbl_sql.miex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (entry) .. "' limit 1")
-							opsnotify (table_sets.classnotiex, gettext ("%s with IP %s and class %d allowed due to forbidden description exception: %s"):format (nick, aip .. tryipcc (aip, nick), ucls, desc))
-							return 0
-						end
-					end
-				end
-
-				if not btime or btime == "" then
-					btime = table_sets.mitbantime
-				end
-
-				local rsn = table_sets.midescmessage:gsub ("%*", reprexpchars (desc))
-				VH:KickUser (table_othsets.sendfrom, nick, rsn .. "     #_ban_" .. btime)
-				return 1
-			end
-		end
-	end
-
-	return 0
-end
-
------ ---- --- -- -
-
-function checktag (nick, tag, ucls, aip)
-	if table_sets.michtag == 0 then
-		return 0
-	end
-
-	local _, rows = VH:SQLQuery ("select `tag`, `time` from `" .. tbl_sql.mitag .. "` order by `occurred` desc")
-
-	if rows > 0 then
-		local lowtxt = tolow (repnmdcinchars (tag))
-
-		for x = 0, rows - 1 do
-			local _, entry, btime = VH:SQLFetch (x)
-			local fres, fval = catchfinderror (lowtxt, entry)
-
-			if not fres then
-				local ferr = gettext ("There is an error in following forbidden tag pattern") .. ":\r\n\r\n"
-				ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (entry) .. "\r\n"
-				ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
-				ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
-				opsnotify (table_sets.classnotiledoact, ferr)
-			elseif fval then
-				VH:SQLQuery ("update `" .. tbl_sql.mitag .. "` set `occurred` = `occurred` + 1 where `tag` = '" .. repsqlchars (entry) .. "' limit 1")
-				local _, rows = VH:SQLQuery ("select `exception` from `" .. tbl_sql.miex .. "`")
-
-				if rows > 0 then
-					for x = 0, rows - 1 do
-						local _, entry = VH:SQLFetch (x)
-						local fres, fval = catchfinderror (lowtxt, entry)
-
-						if not fres then
-							local ferr = gettext ("There is an error in following MyINFO exception pattern") .. ":\r\n\r\n"
-							ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (entry) .. "\r\n"
-							ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
-							ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
-							opsnotify (table_sets.classnotiledoact, ferr)
-						elseif fval then
-							VH:SQLQuery ("update `" .. tbl_sql.miex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (entry) .. "' limit 1")
-							opsnotify (table_sets.classnotiex, gettext ("%s with IP %s and class %d allowed due to forbidden tag exception: %s"):format (nick, aip .. tryipcc (aip, nick), ucls, tag))
-							return 0
-						end
-					end
-				end
-
-				local rsn = table_sets.mitagmessage
-				local res = parsetag (tag)
-
-				if res ["cl"] then -- client
-					rsn = rsn:gsub ("<cl>", reprexpchars (res ["cl"]))
-				end
-
-				if res ["ve"] then -- version
-					rsn = rsn:gsub ("<ve>", reprexpchars (res ["ve"]))
-				end
-
-				if res ["mo"] then -- mode
-					rsn = rsn:gsub ("<mo>", reprexpchars (res ["mo"]))
-				end
-
-				if res ["hu"] then -- hubs
-					rsn = rsn:gsub ("<hu>", reprexpchars (res ["hu"]))
-				end
-
-				if res ["sl"] then -- slots
-					rsn = rsn:gsub ("<sl>", reprexpchars (res ["sl"]))
-				end
-
-				if res ["li"] then -- limiter
-					rsn = rsn:gsub ("<li>", reprexpchars (res ["li"]))
-				end
-
-				if not btime or btime == "" then
-					btime = table_sets.mitbantime
-				end
-
-				rsn = rsn:gsub ("%*", reprexpchars (tag))
-				VH:KickUser (table_othsets.sendfrom, nick, rsn .. "     #_ban_" .. btime)
-				return 1
-			end
-		end
-	end
-
-	return 0
-end
-
------ ---- --- -- -
-
-function checkconn (nick, conn, ucls, aip)
-	if table_sets.michconn == 0 then
-		return 0
-	end
-
-	local _, rows = VH:SQLQuery ("select `connection`, `time` from `" .. tbl_sql.miconn .. "` order by `occurred` desc")
-
-	if rows > 0 then
-		local lowtxt = tolow (repnmdcinchars (conn))
-
-		for x = 0, rows - 1 do
-			local _, entry, btime = VH:SQLFetch (x)
-			local fres, fval = catchfinderror (lowtxt, entry)
-
-			if not fres then
-				local ferr = gettext ("There is an error in following forbidden connection type pattern") .. ":\r\n\r\n"
-				ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (entry) .. "\r\n"
-				ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
-				ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
-				opsnotify (table_sets.classnotiledoact, ferr)
-			elseif fval then
-				VH:SQLQuery ("update `" .. tbl_sql.miconn .. "` set `occurred` = `occurred` + 1 where `connection` = '" .. repsqlchars (entry) .. "' limit 1")
-				local _, rows = VH:SQLQuery ("select `exception` from `" .. tbl_sql.miex .. "`")
-
-				if rows > 0 then
-					for x = 0, rows - 1 do
-						local _, entry = VH:SQLFetch (x)
-						local fres, fval = catchfinderror (lowtxt, entry)
-
-						if not fres then
-							local ferr = gettext ("There is an error in following MyINFO exception pattern") .. ":\r\n\r\n"
-							ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (entry) .. "\r\n"
-							ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
-							ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
-							opsnotify (table_sets.classnotiledoact, ferr)
-						elseif fval then
-							VH:SQLQuery ("update `" .. tbl_sql.miex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (entry) .. "' limit 1")
-							opsnotify (table_sets.classnotiex, gettext ("%s with IP %s and class %d allowed due to forbidden connection type exception: %s"):format (nick, aip .. tryipcc (aip, nick), ucls, conn))
-							return 0
-						end
-					end
-				end
-
-				if not btime or btime == "" then
-					btime = table_sets.mitbantime
-				end
-
-				local rsn = table_sets.miconnmessage:gsub ("%*", reprexpchars (conn))
-				VH:KickUser (table_othsets.sendfrom, nick, rsn .. "     #_ban_" .. btime)
-				return 1
-			end
-		end
-	end
-
-	return 0
-end
-
------ ---- --- -- -
-
-function checkemail (nick, email, ucls, aip)
-	if table_sets.michemail == 0 then
-		return 0
-	end
-
-	local _, rows = VH:SQLQuery ("select `email`, `time` from `" .. tbl_sql.miemail .. "` order by `occurred` desc")
-
-	if rows > 0 then
-		local lowtxt = tolow (repnmdcinchars (email))
-
-		for x = 0, rows - 1 do
-			local _, entry, btime = VH:SQLFetch (x)
-			local fres, fval = catchfinderror (lowtxt, entry)
-
-			if not fres then
-				local ferr = gettext ("There is an error in following forbidden email pattern") .. ":\r\n\r\n"
-				ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (entry) .. "\r\n"
-				ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
-				ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
-				opsnotify (table_sets.classnotiledoact, ferr)
-			elseif fval then
-				VH:SQLQuery ("update `" .. tbl_sql.miemail .. "` set `occurred` = `occurred` + 1 where `email` = '" .. repsqlchars (entry) .. "' limit 1")
-				local _, rows = VH:SQLQuery ("select `exception` from `" .. tbl_sql.miex .. "`")
-
-				if rows > 0 then
-					for x = 0, rows - 1 do
-						local _, entry = VH:SQLFetch (x)
-						local fres, fval = catchfinderror (lowtxt, entry)
-
-						if not fres then
-							local ferr = gettext ("There is an error in following MyINFO exception pattern") .. ":\r\n\r\n"
-							ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (entry) .. "\r\n"
-							ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
-							ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
-							opsnotify (table_sets.classnotiledoact, ferr)
-						elseif fval then
-							VH:SQLQuery ("update `" .. tbl_sql.miex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (entry) .. "' limit 1")
-							opsnotify (table_sets.classnotiex, gettext ("%s with IP %s and class %d allowed due to forbidden email exception: %s"):format (nick, aip .. tryipcc (aip, nick), ucls, email))
-							return 0
-						end
-					end
-				end
-
-				if not btime or btime == "" then
-					btime = table_sets.mitbantime
-				end
-
-				local rsn = table_sets.miemailmessage:gsub ("%*", reprexpchars (email))
-				VH:KickUser (table_othsets.sendfrom, nick, rsn .. "     #_ban_" .. btime)
-				return 1
-			end
-		end
-	end
-
-	return 0
-end
-
------ ---- --- -- -
-
-function checkshare (nick, share, ucls, aip)
-	if table_sets.michshare == 0 then
-		return 0
-	end
-
-	local _, rows = VH:SQLQuery ("select `share`, `time` from `" .. tbl_sql.mishare .. "` order by `occurred` desc")
-
-	if rows > 0 then
-		local lowtxt = repnmdcinchars (share)
-
-		for x = 0, rows - 1 do
-			local _, entry, btime = VH:SQLFetch (x)
-			local fres, fval = catchfinderror (lowtxt, entry)
-
-			if not fres then
-				local ferr = gettext ("There is an error in following forbidden share size pattern") .. ":\r\n\r\n"
-				ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (entry) .. "\r\n"
-				ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
-				ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
-				opsnotify (table_sets.classnotiledoact, ferr)
-			elseif fval then
-				VH:SQLQuery ("update `" .. tbl_sql.mishare .. "` set `occurred` = `occurred` + 1 where `share` = '" .. repsqlchars (entry) .. "' limit 1")
-				local _, rows = VH:SQLQuery ("select `exception` from `" .. tbl_sql.miex .. "`")
-
-				if rows > 0 then
-					for x = 0, rows - 1 do
-						local _, entry = VH:SQLFetch (x)
-						local fres, fval = catchfinderror (lowtxt, entry)
-
-						if not fres then
-							local ferr = gettext ("There is an error in following MyINFO exception pattern") .. ":\r\n\r\n"
-							ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (entry) .. "\r\n"
-							ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
-							ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
-							opsnotify (table_sets.classnotiledoact, ferr)
-						elseif fval then
-							VH:SQLQuery ("update `" .. tbl_sql.miex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (entry) .. "' limit 1")
-							opsnotify (table_sets.classnotiex, gettext ("%s with IP %s and class %d allowed due to forbidden share size exception: %s"):format (nick, aip .. tryipcc (aip, nick), ucls, share))
-							return 0
-						end
-					end
-				end
-
-				if not btime or btime == "" then
-					btime = table_sets.mitbantime
-				end
-
-				local rsn = table_sets.misharemessage:gsub ("%*", reprexpchars (share))
-				VH:KickUser (table_othsets.sendfrom, nick, rsn .. "     #_ban_" .. btime)
-				return 1
-			end
-		end
-	end
-
-	return 0
-end
-
------ ---- --- -- -
-
-function checkip (nick, aip, ucls)
-	if table_sets.michip == 0 or aip == "0.0.0.0" then
-		return 0
-	end
-
-	local _, rows = VH:SQLQuery ("select `ip`, `time` from `" .. tbl_sql.miip .. "` order by `occurred` desc")
-
-	if rows > 0 then
-		local lowtxt = repnmdcinchars (aip)
-
-		for x = 0, rows - 1 do
-			local _, entry, btime = VH:SQLFetch (x)
-			local fres, fval = catchfinderror (lowtxt, entry)
-
-			if not fres then
-				local ferr = gettext ("There is an error in following forbidden IP address pattern") .. ":\r\n\r\n"
-				ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (entry) .. "\r\n"
-				ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
-				ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
-				opsnotify (table_sets.classnotiledoact, ferr)
-			elseif fval then
-				VH:SQLQuery ("update `" .. tbl_sql.miip .. "` set `occurred` = `occurred` + 1 where `ip` = '" .. repsqlchars (entry) .. "' limit 1")
-				local _, rows = VH:SQLQuery ("select `exception` from `" .. tbl_sql.miex .. "`")
-
-				if rows > 0 then
-					for x = 0, rows - 1 do
-						local _, entry = VH:SQLFetch (x)
-						local fres, fval = catchfinderror (lowtxt, entry)
-
-						if not fres then
-							local ferr = gettext ("There is an error in following MyINFO exception pattern") .. ":\r\n\r\n"
-							ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (entry) .. "\r\n"
-							ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
-							ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
-							opsnotify (table_sets.classnotiledoact, ferr)
-						elseif fval then
-							VH:SQLQuery ("update `" .. tbl_sql.miex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (entry) .. "' limit 1")
-							opsnotify (table_sets.classnotiex, gettext ("%s with IP %s and class %d allowed due to forbidden IP address exception: %s"):format (nick, aip .. tryipcc (aip, nick), ucls, aip))
-							return 0
-						end
-					end
-				end
-
-				if not btime or btime == "" then
-					btime = table_sets.mitbantime
-				end
-
-				local rsn = table_sets.miipmessage:gsub ("%*", reprexpchars (aip))
-				VH:KickUser (table_othsets.sendfrom, nick, rsn .. "     #_ban_" .. btime)
-				return 1
-			end
-		end
-	end
-
-	return 0
-end
-
------ ---- --- -- -
-
-function checkcc (nick, cls)
-	if table_sets.michcc == 0 or not table_refu.GetUserCC then
+function checknick (nick, clas, addr)
+	if table_sets.michnick == 0 or # table_myfo.nick == 0 then
 		return false
 	end
 
-	local cc = getcc (nick)
+	local low = tolow (repnmdcinchars (nick))
 
-	if not cc then
-		return false
-	end
+	for id, item in pairs (table_myfo.nick) do
+		local fres, fval = catchfinderror (low, item.ent)
 
-	local _, rows = VH:SQLQuery ("select `cc`, `time` from `" .. tbl_sql.micc .. "` order by `occurred` desc")
+		if not fres then
+			local ferr = gettext ("There is an error in following forbidden nick pattern") .. ":\r\n\r\n"
+			ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (item.ent) .. "\r\n"
+			ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
+			ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
+			opsnotify (table_sets.classnotiledoact, ferr)
 
-	if rows > 0 then
-		local lcc = tolow (repnmdcinchars (cc))
+		elseif fval then
+			table_myfo.nick [id].occ = item.occ + 1
+			VH:SQLQuery ("update `" .. tbl_sql.minick .. "` set `occurred` = `occurred` + 1 where `nick` = '" .. repsqlchars (item.ent) .. "'")
 
-		for x = 0, rows - 1 do
-			local _, ent, btime = VH:SQLFetch (x)
-			local fres, fval = catchfinderror (lcc, ent)
+			for eid, eit in pairs (table_myfo.ex) do
+				local fres, fval = catchfinderror (low, eit.ent)
 
-			if not fres then
-				local ferr = gettext ("There is an error in following forbidden country code pattern") .. ":\r\n\r\n"
-				ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (ent) .. "\r\n"
-				ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
-				ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
-				opsnotify (table_sets.classnotiledoact, ferr)
-			elseif fval then
-				VH:SQLQuery ("update `" .. tbl_sql.micc .. "` set `occurred` = `occurred` + 1 where `cc` = '" .. repsqlchars (ent) .. "' limit 1")
-				local _, rows = VH:SQLQuery ("select `exception` from `" .. tbl_sql.miex .. "`")
+				if not fres then
+					local ferr = gettext ("There is an error in following MyINFO exception pattern") .. ":\r\n\r\n"
+					ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (eit.ent) .. "\r\n"
+					ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
+					ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
+					opsnotify (table_sets.classnotiledoact, ferr)
 
-				if rows > 0 then
-					for x = 0, rows - 1 do
-						local _, ent = VH:SQLFetch (x)
-						local fres, fval = catchfinderror (lcc, ent)
-
-						if not fres then
-							local ferr = gettext ("There is an error in following MyINFO exception pattern") .. ":\r\n\r\n"
-							ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (ent) .. "\r\n"
-							ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
-							ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
-							opsnotify (table_sets.classnotiledoact, ferr)
-						elseif fval then
-							VH:SQLQuery ("update `" .. tbl_sql.miex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (ent) .. "' limit 1")
-							opsnotify (table_sets.classnotiex, gettext ("%s with IP %s and class %d allowed due to forbidden country code exception: %s"):format (nick, ip .. tryipcc (ip, nick), cls, cc .. "=" .. (cc_names [cc] or gettext ("Unknown country"))))
-							return false
-						end
-					end
+				elseif fval then
+					table_myfo.ex [eid].occ = eit.occ + 1
+					VH:SQLQuery ("update `" .. tbl_sql.miex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (eit.ent) .. "'")
+					opsnotify (table_sets.classnotiex, gettext ("%s with IP %s and class %d allowed due to forbidden nick exception: %s"):format (nick, addr .. tryipcc (addr, nick), clas, nick))
+					return false
 				end
-
-				if not btime or btime == "" then
-					btime = table_sets.mitbantime
-				end
-
-				local rsn = table_sets.miccmessage:gsub ("%*", reprexpchars (cc .. "=" .. (cc_names [cc] or gettext ("Unknown country"))))
-				VH:KickUser (table_othsets.sendfrom, nick, rsn .. "     #_ban_" .. btime)
-				return true
 			end
+
+			local why = table_sets.minickmessage:gsub ("%*", reprexpchars (nick))
+			VH:KickUser (table_othsets.sendfrom, nick, why .. "     #_ban_" .. item.tim)
+			return true
 		end
 	end
 
@@ -11822,63 +11369,437 @@ end
 
 ----- ---- --- -- -
 
-function checkdns (nick, cls, ip)
-	if table_sets.michdns == 0 or getconfig ("dns_lookup") == 0 then
+function checkdesc (nick, desc, clas, addr)
+	if table_sets.michdesc == 0 or # table_myfo.desc == 0 then
+		return false
+	end
+
+	local low = tolow (repnmdcinchars (desc))
+
+	for id, item in pairs (table_myfo.desc) do
+		local fres, fval = catchfinderror (low, item.ent)
+
+		if not fres then
+			local ferr = gettext ("There is an error in following forbidden description pattern") .. ":\r\n\r\n"
+			ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (item.ent) .. "\r\n"
+			ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
+			ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
+			opsnotify (table_sets.classnotiledoact, ferr)
+
+		elseif fval then
+			table_myfo.desc [id].occ = item.occ + 1
+			VH:SQLQuery ("update `" .. tbl_sql.midesc .. "` set `occurred` = `occurred` + 1 where `description` = '" .. repsqlchars (item.ent) .. "'")
+
+			for eid, eit in pairs (table_myfo.ex) do
+				local fres, fval = catchfinderror (low, eit.ent)
+
+				if not fres then
+					local ferr = gettext ("There is an error in following MyINFO exception pattern") .. ":\r\n\r\n"
+					ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (eit.ent) .. "\r\n"
+					ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
+					ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
+					opsnotify (table_sets.classnotiledoact, ferr)
+
+				elseif fval then
+					table_myfo.ex [eid].occ = eit.occ + 1
+					VH:SQLQuery ("update `" .. tbl_sql.miex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (eit.ent) .. "'")
+					opsnotify (table_sets.classnotiex, gettext ("%s with IP %s and class %d allowed due to forbidden description exception: %s"):format (nick, addr .. tryipcc (addr, nick), clas, desc))
+					return false
+				end
+			end
+
+			local why = table_sets.midescmessage:gsub ("%*", reprexpchars (desc))
+			VH:KickUser (table_othsets.sendfrom, nick, why .. "     #_ban_" .. item.tim)
+			return true
+		end
+	end
+
+	return false
+end
+
+----- ---- --- -- -
+
+function checktag (nick, tag, clas, addr)
+	if table_sets.michtag == 0 or # table_myfo.tag == 0 then
+		return false
+	end
+
+	local low = tolow (repnmdcinchars (tag))
+
+	for id, item in pairs (table_myfo.tag) do
+		local fres, fval = catchfinderror (low, item.ent)
+
+		if not fres then
+			local ferr = gettext ("There is an error in following forbidden tag pattern") .. ":\r\n\r\n"
+			ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (item.ent) .. "\r\n"
+			ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
+			ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
+			opsnotify (table_sets.classnotiledoact, ferr)
+
+		elseif fval then
+			table_myfo.tag [id].occ = item.occ + 1
+			VH:SQLQuery ("update `" .. tbl_sql.mitag .. "` set `occurred` = `occurred` + 1 where `tag` = '" .. repsqlchars (item.ent) .. "'")
+
+			for eid, eit in pairs (table_myfo.ex) do
+				local fres, fval = catchfinderror (low, eit.ent)
+
+				if not fres then
+					local ferr = gettext ("There is an error in following MyINFO exception pattern") .. ":\r\n\r\n"
+					ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (eit.ent) .. "\r\n"
+					ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
+					ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
+					opsnotify (table_sets.classnotiledoact, ferr)
+
+				elseif fval then
+					table_myfo.ex [eid].occ = eit.occ + 1
+					VH:SQLQuery ("update `" .. tbl_sql.miex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (eit.ent) .. "'")
+					opsnotify (table_sets.classnotiex, gettext ("%s with IP %s and class %d allowed due to forbidden tag exception: %s"):format (nick, addr .. tryipcc (addr, nick), clas, tag))
+					return false
+				end
+			end
+
+			local why = table_sets.mitagmessage
+			local res = parsetag (tag)
+
+			if res ["cl"] then -- client
+				why = why:gsub ("<cl>", reprexpchars (res ["cl"]))
+			end
+
+			if res ["ve"] then -- version
+				why = why:gsub ("<ve>", reprexpchars (res ["ve"]))
+			end
+
+			if res ["mo"] then -- mode
+				why = why:gsub ("<mo>", reprexpchars (res ["mo"]))
+			end
+
+			if res ["hu"] then -- hubs
+				why = why:gsub ("<hu>", reprexpchars (res ["hu"]))
+			end
+
+			if res ["sl"] then -- slots
+				why = why:gsub ("<sl>", reprexpchars (res ["sl"]))
+			end
+
+			if res ["li"] then -- limiter
+				why = why:gsub ("<li>", reprexpchars (res ["li"]))
+			end
+
+			why = why:gsub ("%*", reprexpchars (tag))
+			VH:KickUser (table_othsets.sendfrom, nick, why .. "     #_ban_" .. item.tim)
+			return true
+		end
+	end
+
+	return false
+end
+
+----- ---- --- -- -
+
+function checkconn (nick, conn, clas, addr)
+	if table_sets.michconn == 0 or # table_myfo.conn == 0 then
+		return false
+	end
+
+	local low = tolow (repnmdcinchars (conn))
+
+	for id, item in pairs (table_myfo.conn) do
+		local fres, fval = catchfinderror (low, item.ent)
+
+		if not fres then
+			local ferr = gettext ("There is an error in following forbidden connection type pattern") .. ":\r\n\r\n"
+			ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (item.ent) .. "\r\n"
+			ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
+			ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
+			opsnotify (table_sets.classnotiledoact, ferr)
+
+		elseif fval then
+			table_myfo.conn [id].occ = item.occ + 1
+			VH:SQLQuery ("update `" .. tbl_sql.miconn .. "` set `occurred` = `occurred` + 1 where `connection` = '" .. repsqlchars (item.ent) .. "'")
+
+			for eid, eit in pairs (table_myfo.ex) do
+				local fres, fval = catchfinderror (low, eit.ent)
+
+				if not fres then
+					local ferr = gettext ("There is an error in following MyINFO exception pattern") .. ":\r\n\r\n"
+					ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (eit.ent) .. "\r\n"
+					ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
+					ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
+					opsnotify (table_sets.classnotiledoact, ferr)
+
+				elseif fval then
+					table_myfo.ex [eid].occ = eit.occ + 1
+					VH:SQLQuery ("update `" .. tbl_sql.miex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (eit.ent) .. "'")
+					opsnotify (table_sets.classnotiex, gettext ("%s with IP %s and class %d allowed due to forbidden connection type exception: %s"):format (nick, addr .. tryipcc (addr, nick), clas, conn))
+					return false
+				end
+			end
+
+			local why = table_sets.miconnmessage:gsub ("%*", reprexpchars (conn))
+			VH:KickUser (table_othsets.sendfrom, nick, why .. "     #_ban_" .. item.tim)
+			return true
+		end
+	end
+
+	return false
+end
+
+----- ---- --- -- -
+
+function checkemail (nick, mail, clas, addr)
+	if table_sets.michemail == 0 or # table_myfo.mail == 0 then
+		return false
+	end
+
+	local low = tolow (repnmdcinchars (mail))
+
+	for id, item in pairs (table_myfo.mail) do
+		local fres, fval = catchfinderror (low, item.ent)
+
+		if not fres then
+			local ferr = gettext ("There is an error in following forbidden email pattern") .. ":\r\n\r\n"
+			ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (item.ent) .. "\r\n"
+			ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
+			ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
+			opsnotify (table_sets.classnotiledoact, ferr)
+
+		elseif fval then
+			table_myfo.mail [id].occ = item.occ + 1
+			VH:SQLQuery ("update `" .. tbl_sql.miemail .. "` set `occurred` = `occurred` + 1 where `email` = '" .. repsqlchars (item.ent) .. "'")
+
+			for eid, eit in pairs (table_myfo.ex) do
+				local fres, fval = catchfinderror (low, eit.ent)
+
+				if not fres then
+					local ferr = gettext ("There is an error in following MyINFO exception pattern") .. ":\r\n\r\n"
+					ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (eit.ent) .. "\r\n"
+					ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
+					ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
+					opsnotify (table_sets.classnotiledoact, ferr)
+
+				elseif fval then
+					table_myfo.ex [eid].occ = eit.occ + 1
+					VH:SQLQuery ("update `" .. tbl_sql.miex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (eit.ent) .. "'")
+					opsnotify (table_sets.classnotiex, gettext ("%s with IP %s and class %d allowed due to forbidden email exception: %s"):format (nick, addr .. tryipcc (addr, nick), clas, mail))
+					return false
+				end
+			end
+
+			local why = table_sets.miemailmessage:gsub ("%*", reprexpchars (mail))
+			VH:KickUser (table_othsets.sendfrom, nick, why .. "     #_ban_" .. item.tim)
+			return true
+		end
+	end
+
+	return false
+end
+
+----- ---- --- -- -
+
+function checkshare (nick, shar, clas, addr)
+	if table_sets.michshare == 0 or # table_myfo.shar == 0 then
+		return false
+	end
+
+	local low = repnmdcinchars (shar)
+
+	for id, item in pairs (table_myfo.shar) do
+		local fres, fval = catchfinderror (low, item.ent)
+
+		if not fres then
+			local ferr = gettext ("There is an error in following forbidden share size pattern") .. ":\r\n\r\n"
+			ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (item.ent) .. "\r\n"
+			ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
+			ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
+			opsnotify (table_sets.classnotiledoact, ferr)
+
+		elseif fval then
+			table_myfo.shar [id].occ = item.occ + 1
+			VH:SQLQuery ("update `" .. tbl_sql.mishare .. "` set `occurred` = `occurred` + 1 where `share` = '" .. repsqlchars (item.ent) .. "'")
+
+			for eid, eit in pairs (table_myfo.ex) do
+				local fres, fval = catchfinderror (low, eit.ent)
+
+				if not fres then
+					local ferr = gettext ("There is an error in following MyINFO exception pattern") .. ":\r\n\r\n"
+					ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (eit.ent) .. "\r\n"
+					ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
+					ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
+					opsnotify (table_sets.classnotiledoact, ferr)
+
+				elseif fval then
+					table_myfo.ex [eid].occ = eit.occ + 1
+					VH:SQLQuery ("update `" .. tbl_sql.miex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (eit.ent) .. "'")
+					opsnotify (table_sets.classnotiex, gettext ("%s with IP %s and class %d allowed due to forbidden share size exception: %s"):format (nick, addr .. tryipcc (addr, nick), clas, shar))
+					return false
+				end
+			end
+
+			local why = table_sets.misharemessage:gsub ("%*", reprexpchars (shar))
+			VH:KickUser (table_othsets.sendfrom, nick, why .. "     #_ban_" .. item.tim)
+			return true
+		end
+	end
+
+	return false
+end
+
+----- ---- --- -- -
+
+function checkip (nick, addr, clas)
+	if table_sets.michip == 0 or # addr == 0 or addr == "0.0.0.0" or # table_myfo.addr == 0 then
+		return false
+	end
+
+	local low = repnmdcinchars (addr)
+
+	for id, item in pairs (table_myfo.addr) do
+		local fres, fval = catchfinderror (low, item.ent)
+
+		if not fres then
+			local ferr = gettext ("There is an error in following forbidden IP address pattern") .. ":\r\n\r\n"
+			ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (item.ent) .. "\r\n"
+			ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
+			ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
+			opsnotify (table_sets.classnotiledoact, ferr)
+
+		elseif fval then
+			table_myfo.addr [id].occ = item.occ + 1
+			VH:SQLQuery ("update `" .. tbl_sql.miip .. "` set `occurred` = `occurred` + 1 where `ip` = '" .. repsqlchars (item.ent) .. "'")
+
+			for eid, eit in pairs (table_myfo.ex) do
+				local fres, fval = catchfinderror (low, eit.ent)
+
+				if not fres then
+					local ferr = gettext ("There is an error in following MyINFO exception pattern") .. ":\r\n\r\n"
+					ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (eit.ent) .. "\r\n"
+					ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
+					ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
+					opsnotify (table_sets.classnotiledoact, ferr)
+
+				elseif fval then
+					table_myfo.ex [eid].occ = eit.occ + 1
+					VH:SQLQuery ("update `" .. tbl_sql.miex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (eit.ent) .. "'")
+					opsnotify (table_sets.classnotiex, gettext ("%s with IP %s and class %d allowed due to forbidden IP address exception: %s"):format (nick, addr .. tryipcc (addr, nick), clas, addr))
+					return false
+				end
+			end
+
+			local why = table_sets.miipmessage:gsub ("%*", reprexpchars (addr))
+			VH:KickUser (table_othsets.sendfrom, nick, why .. "     #_ban_" .. item.tim)
+			return true
+		end
+	end
+
+	return false
+end
+
+----- ---- --- -- -
+
+function checkcc (nick, clas, addr)
+	if table_sets.michcc == 0 or not table_refu.GetUserCC or # table_myfo.code == 0 then
+		return false
+	end
+
+	local code = getcc (nick)
+
+	if not code then
+		return false
+	end
+
+	local low = tolow (repnmdcinchars (code))
+
+	for id, item in pairs (table_myfo.code) do
+		local fres, fval = catchfinderror (low, item.ent)
+
+		if not fres then
+			local ferr = gettext ("There is an error in following forbidden country code pattern") .. ":\r\n\r\n"
+			ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (item.ent) .. "\r\n"
+			ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
+			ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
+			opsnotify (table_sets.classnotiledoact, ferr)
+
+		elseif fval then
+			table_myfo.code [id].occ = item.occ + 1
+			VH:SQLQuery ("update `" .. tbl_sql.micc .. "` set `occurred` = `occurred` + 1 where `cc` = '" .. repsqlchars (item.ent) .. "'")
+
+			for eid, eit in pairs (table_myfo.ex) do
+				local fres, fval = catchfinderror (low, eit.ent)
+
+				if not fres then
+					local ferr = gettext ("There is an error in following MyINFO exception pattern") .. ":\r\n\r\n"
+					ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (eit.ent) .. "\r\n"
+					ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
+					ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
+					opsnotify (table_sets.classnotiledoact, ferr)
+
+				elseif fval then
+					table_myfo.ex [eid].occ = eit.occ + 1
+					VH:SQLQuery ("update `" .. tbl_sql.miex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (eit.ent) .. "'")
+					opsnotify (table_sets.classnotiex, gettext ("%s with IP %s and class %d allowed due to forbidden country code exception: %s"):format (nick, addr .. tryipcc (addr, nick), clas, code .. "=" .. (cc_names [code] or gettext ("Unknown country"))))
+					return false
+				end
+			end
+
+			local why = table_sets.miccmessage:gsub ("%*", reprexpchars (code .. "=" .. (cc_names [code] or gettext ("Unknown country"))))
+			VH:KickUser (table_othsets.sendfrom, nick, why .. "     #_ban_" .. item.tim)
+			return true
+		end
+	end
+
+	return false
+end
+
+----- ---- --- -- -
+
+function checkdns (nick, clas, addr)
+	if table_sets.michdns == 0 or getconfig ("dns_lookup") == 0 or # table_myfo.dns == 0 then
 		return false
 	end
 
 	local dns = gethost (nick)
 
-	if dns == "[unknown]" then
+	if not dns or # dns == 0 or dns == "[unknown]" then
 		return false
 	end
 
-	local _, rows = VH:SQLQuery ("select `dns`, `time` from `" .. tbl_sql.midns .. "` order by `occurred` desc")
+	local low = tolow (repnmdcinchars (dns))
 
-	if rows > 0 then
-		local ldns = tolow (repnmdcinchars (dns))
+	for id, item in pairs (table_myfo.dns) do
+		local fres, fval = catchfinderror (low, item.ent)
 
-		for x = 0, rows - 1 do
-			local _, ent, btime = VH:SQLFetch (x)
-			local fres, fval = catchfinderror (ldns, ent)
+		if not fres then
+			local ferr = gettext ("There is an error in following forbidden DNS pattern") .. ":\r\n\r\n"
+			ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (item.ent) .. "\r\n"
+			ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
+			ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
+			opsnotify (table_sets.classnotiledoact, ferr)
 
-			if not fres then
-				local ferr = gettext ("There is an error in following forbidden DNS pattern") .. ":\r\n\r\n"
-				ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (ent) .. "\r\n"
-				ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
-				ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
-				opsnotify (table_sets.classnotiledoact, ferr)
-			elseif fval then
-				VH:SQLQuery ("update `" .. tbl_sql.midns .. "` set `occurred` = `occurred` + 1 where `dns` = '" .. repsqlchars (ent) .. "' limit 1")
-				local _, rows = VH:SQLQuery ("select `exception` from `" .. tbl_sql.miex .. "`")
+		elseif fval then
+			table_myfo.dns [id].occ = item.occ + 1
+			VH:SQLQuery ("update `" .. tbl_sql.midns .. "` set `occurred` = `occurred` + 1 where `dns` = '" .. repsqlchars (item.ent) .. "'")
 
-				if rows > 0 then
-					for x = 0, rows - 1 do
-						local _, ent = VH:SQLFetch (x)
-						local fres, fval = catchfinderror (ldns, ent)
+			for eid, eit in pairs (table_myfo.ex) do
+				local fres, fval = catchfinderror (low, eit.ent)
 
-						if not fres then
-							local ferr = gettext ("There is an error in following MyINFO exception pattern") .. ":\r\n\r\n"
-							ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (ent) .. "\r\n"
-							ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
-							ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
-							opsnotify (table_sets.classnotiledoact, ferr)
-						elseif fval then
-							VH:SQLQuery ("update `" .. tbl_sql.miex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (ent) .. "' limit 1")
-							opsnotify (table_sets.classnotiex, gettext ("%s with IP %s and class %d allowed due to forbidden DNS exception: %s"):format (nick, ip .. tryipcc (ip, nick), cls, dns))
-							return false
-						end
-					end
+				if not fres then
+					local ferr = gettext ("There is an error in following MyINFO exception pattern") .. ":\r\n\r\n"
+					ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (eit.ent) .. "\r\n"
+					ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
+					ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
+					opsnotify (table_sets.classnotiledoact, ferr)
+
+				elseif fval then
+					table_myfo.ex [eid].occ = eit.occ + 1
+					VH:SQLQuery ("update `" .. tbl_sql.miex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (eit.ent) .. "'")
+					opsnotify (table_sets.classnotiex, gettext ("%s with IP %s and class %d allowed due to forbidden DNS exception: %s"):format (nick, addr .. tryipcc (addr, nick), clas, dns))
+					return false
 				end
-
-				if not btime or btime == "" then
-					btime = table_sets.mitbantime
-				end
-
-				local rsn = table_sets.midnsmessage:gsub ("%*", reprexpchars (dns))
-				VH:KickUser (table_othsets.sendfrom, nick, rsn .. "     #_ban_" .. btime)
-				return true
 			end
+
+			local why = table_sets.midnsmessage:gsub ("%*", reprexpchars (dns))
+			VH:KickUser (table_othsets.sendfrom, nick, why .. "     #_ban_" .. item.tim)
+			return true
 		end
 	end
 
@@ -11887,63 +11808,54 @@ end
 
 ----- ---- --- -- -
 
-function checksup (nick, cls, ip)
-	if table_sets.michsup == 0 or not table_refu.GetUserSupports then
+function checksup (nick, clas, addr)
+	if table_sets.michsup == 0 or not table_refu.GetUserSupports or # table_myfo.sup == 0 then
 		return false
 	end
 
 	local on, sup = VH:GetUserSupports (nick)
 
-	if not on or not sup or sup == "" then
+	if not on or not sup or # sup == 0 then
 		return false
 	end
 
-	local _, rows = VH:SQLQuery ("select `supports`, `time` from `" .. tbl_sql.misup .. "` order by `occurred` desc")
+	local low = tolow (repnmdcinchars (sup))
 
-	if rows > 0 then
-		local lsup = tolow (repnmdcinchars (sup))
+	for id, item in pairs (table_myfo.sup) do
+		local fres, fval = catchfinderror (low, item.ent)
 
-		for x = 0, rows - 1 do
-			local _, ent, btime = VH:SQLFetch (x)
-			local fres, fval = catchfinderror (lsup, ent)
+		if not fres then
+			local ferr = gettext ("There is an error in following forbidden client supports pattern") .. ":\r\n\r\n"
+			ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (item.ent) .. "\r\n"
+			ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
+			ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
+			opsnotify (table_sets.classnotiledoact, ferr)
 
-			if not fres then
-				local ferr = gettext ("There is an error in following forbidden client supports pattern") .. ":\r\n\r\n"
-				ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (ent) .. "\r\n"
-				ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
-				ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
-				opsnotify (table_sets.classnotiledoact, ferr)
-			elseif fval then
-				VH:SQLQuery ("update `" .. tbl_sql.misup .. "` set `occurred` = `occurred` + 1 where `supports` = '" .. repsqlchars (ent) .. "' limit 1")
-				local _, rows = VH:SQLQuery ("select `exception` from `" .. tbl_sql.miex .. "`")
+		elseif fval then
+			table_myfo.sup [id].occ = item.occ + 1
+			VH:SQLQuery ("update `" .. tbl_sql.misup .. "` set `occurred` = `occurred` + 1 where `supports` = '" .. repsqlchars (item.ent) .. "'")
 
-				if rows > 0 then
-					for x = 0, rows - 1 do
-						local _, ent = VH:SQLFetch (x)
-						local fres, fval = catchfinderror (lsup, ent)
+			for eid, eit in pairs (table_myfo.ex) do
+				local fres, fval = catchfinderror (low, eit.ent)
 
-						if not fres then
-							local ferr = gettext ("There is an error in following MyINFO exception pattern") .. ":\r\n\r\n"
-							ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (ent) .. "\r\n"
-							ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
-							ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
-							opsnotify (table_sets.classnotiledoact, ferr)
-						elseif fval then
-							VH:SQLQuery ("update `" .. tbl_sql.miex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (ent) .. "' limit 1")
-							opsnotify (table_sets.classnotiex, gettext ("%s with IP %s and class %d allowed due to forbidden client supports exception: %s"):format (nick, ip .. tryipcc (ip, nick), cls, sup))
-							return false
-						end
-					end
+				if not fres then
+					local ferr = gettext ("There is an error in following MyINFO exception pattern") .. ":\r\n\r\n"
+					ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (eit.ent) .. "\r\n"
+					ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
+					ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
+					opsnotify (table_sets.classnotiledoact, ferr)
+
+				elseif fval then
+					table_myfo.ex [eid].occ = eit.occ + 1
+					VH:SQLQuery ("update `" .. tbl_sql.miex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (eit.ent) .. "'")
+					opsnotify (table_sets.classnotiex, gettext ("%s with IP %s and class %d allowed due to forbidden client supports exception: %s"):format (nick, addr .. tryipcc (addr, nick), clas, sup)) -- not escaped, should be safe
+					return false
 				end
-
-				if not btime or btime == "" then
-					btime = table_sets.mitbantime
-				end
-
-				local rsn = table_sets.misupmessage:gsub ("%*", reprexpchars (sup))
-				VH:KickUser (table_othsets.sendfrom, nick, rsn .. "     #_ban_" .. btime)
-				return true
 			end
+
+			local why = table_sets.misupmessage:gsub ("%*", reprexpchars (sup)) -- not escaped, should be safe
+			VH:KickUser (table_othsets.sendfrom, nick, why .. "     #_ban_" .. item.tim)
+			return true
 		end
 	end
 
@@ -11952,61 +11864,142 @@ end
 
 ----- ---- --- -- -
 
-function checkver (nick, cls, ip)
-	if table_sets.michver == 0 or not table_refu.GetUserVersion then
+function checkver (nick, clas, addr)
+	if table_sets.michver == 0 or not table_refu.GetUserVersion or # table_myfo.ver == 0 then
 		return false
 	end
 
 	local on, ver = VH:GetUserVersion (nick)
 
-	if not on or not ver or ver == "" then
+	if not on or not ver or # ver == 0 then
 		return false
 	end
 
-	local _, rows = VH:SQLQuery ("select `version`, `time` from `" .. tbl_sql.miver .. "` order by `occurred` desc")
+	local low = tolow (repnmdcinchars (ver))
 
-	if rows > 0 then
-		local lver = tolow (repnmdcinchars (ver))
+	for id, item in pairs (table_myfo.ver) do
+		local fres, fval = catchfinderror (low, item.ent)
 
-		for x = 0, rows - 1 do
-			local _, ent, btime = VH:SQLFetch (x)
-			local fres, fval = catchfinderror (lver, ent)
+		if not fres then
+			local ferr = gettext ("There is an error in following forbidden NMDC version pattern") .. ":\r\n\r\n"
+			ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (item.ent) .. "\r\n"
+			ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
+			ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
+			opsnotify (table_sets.classnotiledoact, ferr)
 
-			if not fres then
-				local ferr = gettext ("There is an error in following forbidden NMDC version pattern") .. ":\r\n\r\n"
-				ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (ent) .. "\r\n"
-				ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
-				ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
-				opsnotify (table_sets.classnotiledoact, ferr)
-			elseif fval then
-				VH:SQLQuery ("update `" .. tbl_sql.miver .. "` set `occurred` = `occurred` + 1 where `version` = '" .. repsqlchars (ent) .. "' limit 1")
-				local _, rows = VH:SQLQuery ("select `exception` from `" .. tbl_sql.miex .. "`")
+		elseif fval then
+			table_myfo.ver [id].occ = item.occ + 1
+			VH:SQLQuery ("update `" .. tbl_sql.miver .. "` set `occurred` = `occurred` + 1 where `version` = '" .. repsqlchars (item.ent) .. "'")
 
-				if rows > 0 then
-					for x = 0, rows - 1 do
-						local _, ent = VH:SQLFetch (x)
-						local fres, fval = catchfinderror (lver, ent)
+			for eid, eit in pairs (table_myfo.ex) do
+				local fres, fval = catchfinderror (low, eit.ent)
 
-						if not fres then
-							local ferr = gettext ("There is an error in following MyINFO exception pattern") .. ":\r\n\r\n"
-							ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (ent) .. "\r\n"
-							ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
-							ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
-							opsnotify (table_sets.classnotiledoact, ferr)
-						elseif fval then
-							VH:SQLQuery ("update `" .. tbl_sql.miex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (ent) .. "' limit 1")
-							opsnotify (table_sets.classnotiex, gettext ("%s with IP %s and class %d allowed due to forbidden NMDC version exception: %s"):format (nick, ip .. tryipcc (ip, nick), cls, ver))
-							return false
-						end
+				if not fres then
+					local ferr = gettext ("There is an error in following MyINFO exception pattern") .. ":\r\n\r\n"
+					ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (eit.ent) .. "\r\n"
+					ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
+					ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
+					opsnotify (table_sets.classnotiledoact, ferr)
+
+				elseif fval then
+					table_myfo.ex [eid].occ = eit.occ + 1
+					VH:SQLQuery ("update `" .. tbl_sql.miex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (eit.ent) .. "'")
+					opsnotify (table_sets.classnotiex, gettext ("%s with IP %s and class %d allowed due to forbidden NMDC version exception: %s"):format (nick, addr .. tryipcc (addr, nick), clas, ver))
+					return false
+				end
+			end
+
+			local why = table_sets.mivermessage:gsub ("%*", reprexpchars (ver))
+			VH:KickUser (table_othsets.sendfrom, nick, why .. "     #_ban_" .. item.tim)
+			return true
+		end
+	end
+
+	return false
+end
+
+----- ---- --- -- -
+
+function checkfake (nick, shar, clas, addr)
+	if shar < 1048576 then -- skip below 1 gb
+		return false
+	end
+
+	local fake, ssha = false, _tostring (shar)
+
+	if table_sets.michfakenum > 0 then -- same numbers
+		for x = 0, 9 do
+			if ssha:match (_tostring (x):rep (table_sets.michfakenum)) then
+				fake = true
+				break
+			end
+		end
+	end
+
+	if not fake and table_sets.michfakediv == 1 then -- divide by 1 unit, dont check twice
+		if not tostring ((shar + 0.0) / 1048576):match ("%.[^0]+$") or not tostring ((shar + 0.0) / 1073741824):match ("%.[^0]+$") or not tostring ((shar + 0.0) / 1099511627776):match ("%.[^0]+$") then
+			fake = true
+		end
+	end
+
+	if fake then -- check for exception
+		local sssh = repnmdcinchars (ssha)
+
+		for id, item in pairs (table_myfo.ex) do
+			if sssh:match (item.ent) then
+				table_myfo.ex [id].occ = item.occ + 1
+				VH:SQLQuery ("update `" .. tbl_sql.miex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (item.ent) .. "'")
+				opsnotify (table_sets.classnotiex, gettext ("%s with IP %s and class %d allowed due to fake share exception: %s"):format (nick, addr .. tryipcc (addr, nick), clas, ssha .. " " .. gettext ("B")))
+				return false
+			end
+		end
+
+		local why = table_sets.mifakemessage:gsub ("%*", reprexpchars (ssha .. " " .. gettext ("B")))
+		VH:KickUser (table_othsets.sendfrom, nick, why .. "     #_ban_" .. table_sets.mitbantime)
+		return true
+	end
+
+	return false
+end
+
+----- ---- --- -- -
+
+function checkclone (nick, shar, addr, clas)
+	if table_sets.michclone == 0 or tonumber (shar) == 0 or # addr == 0 or addr == "0.0.0.0" then -- skip 0 share
+		return false
+	end
+
+	local ssha = _tostring (shar)
+
+	for user in getnicklist ():gmatch ("[^%$ ]+") do
+		if user ~= nick and getclass (user) < table_sets.scanbelowclass then -- skip user himself and if second user is protected
+			if parsemyinfoshare (getmyinfo (user)) == ssha and getip (user) == addr then -- exact share and ip match
+				local sssh, sadd = repnmdcinchars (shar), repnmdcinchars (addr)
+
+				for id, item in pairs (table_myfo.ex) do
+					if sssh:match (item.ent) or sadd:match (item.ent) then
+						table_myfo.ex [id].occ = item.occ + 1
+						VH:SQLQuery ("update `" .. tbl_sql.miex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (item.ent) .. "'")
+						opsnotify (table_sets.classnotiex, gettext ("%s with IP %s and class %d allowed due to clone exception: %s"):format (nick, addr .. tryipcc (addr, nick), clas, user))
+						return false
 					end
 				end
 
-				if not btime or btime == "" then
-					btime = table_sets.mitbantime
+				local why = table_sets.miclonemessage:gsub ("%*", reprexpchars (user))
+
+				if table_sets.michclone == 1 then
+					maintouser (nick, why)
+					opsnotify (table_sets.classnotimich, gettext ("Dropping user due to clone detection from IP %s with class %d: %s = %s"):format (addr .. tryipcc (addr, nick), clas, nick, user))
+					VH:Disconnect (nick)
+
+				elseif table_sets.michclone == 2 then
+					if table_sets.miclonekicktime ~= "" then
+						why = why .. "     #_ban_" .. table_sets.miclonekicktime
+					end
+
+					VH:KickUser (table_othsets.sendfrom, nick, why)
 				end
 
-				local rsn = table_sets.mivermessage:gsub ("%*", reprexpchars (ver))
-				VH:KickUser (table_othsets.sendfrom, nick, rsn .. "     #_ban_" .. btime)
 				return true
 			end
 		end
@@ -12017,124 +12010,33 @@ end
 
 ----- ---- --- -- -
 
-function checkfake (nick, share, ucls, aip)
-	if share < 1048576 then return 0 end -- skip < 1 gb
-	local isfake = false
-
-	if table_sets.michfakenum > 0 then -- same numbers
-		for x = 0, 9 do
-			if _tostring (share):find (_tostring (x):rep (table_sets.michfakenum)) then
-				isfake = true
-				break
-			end
-		end
+function checksameip (nick, addr, clas)
+	if table_sets.michsameip == 0 or # addr == 0 or addr == "0.0.0.0" then
+		return false
 	end
 
-	if not isfake and table_sets.michfakediv == 1 then -- divide by 1 gb, tb, pb, dont check twice
-		if not tostring ((share + 0.0) / 1048576):find ("%.[^0]+$") or not tostring ((share + 0.0) / 1073741824):find ("%.[^0]+$") or not tostring ((share + 0.0) / 1099511627776):find ("%.[^0]+$") then
-			isfake = true
-		end
-	end
-
-	if isfake then -- is fake, check for exception
-		local _, rows = VH:SQLQuery ("select `exception` from `" .. tbl_sql.miex .. "`")
-
-		if rows > 0 then
-			local sh = repnmdcinchars (_tostring (share))
-
-			for x = 0, rows - 1 do
-				local _, entry = VH:SQLFetch (x)
-
-				if sh:find (entry) then
-					VH:SQLQuery ("update `" .. tbl_sql.miex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (entry) .. "' limit 1")
-					opsnotify (table_sets.classnotiex, gettext ("%s with IP %s and class %d allowed due to fake share exception: %s"):format (nick, aip .. tryipcc (aip, nick), ucls, _tostring (share) .. " " .. gettext ("B")))
-					return 0
-				end
-			end
-		end
-
-		local rsn = table_sets.mifakemessage:gsub ("%*", reprexpchars (_tostring (share) .. " " .. gettext ("B")))
-		VH:KickUser (table_othsets.sendfrom, nick, rsn .. "     #_ban_" .. table_sets.mitbantime)
-		return 1
-	end
-
-	return 0
-end
-
------ ---- --- -- -
-
-function checkclone (nick, share, aip, ucls)
-	if table_sets.michclone == 0 or share == 0 or aip == "0.0.0.0" then return 0 end -- skip
-
-	for user in getnicklist ():gmatch ("([^$]+)%$%$") do
+	for user in getnicklist ():gmatch ("[^%$ ]+") do
 		if user ~= nick and getclass (user) < table_sets.scanbelowclass then -- skip user himself and if second user is protected
-			if parsemyinfoshare (getmyinfo (user)) == share and getip (user) == aip then -- exact share and ip match
-				local _, rows = VH:SQLQuery ("select `exception` from `" .. tbl_sql.miex .. "`")
+			if getip (user) == addr then -- exact ip match
+				local sadd = repnmdcinchars (addr)
 
-				if rows > 0 then
-					for x = 0, rows - 1 do
-						local _, entry = VH:SQLFetch (x)
-
-						if repnmdcinchars (share):find (entry) or repnmdcinchars (aip):find (entry) then
-							VH:SQLQuery ("update `" .. tbl_sql.miex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (entry) .. "' limit 1")
-							opsnotify (table_sets.classnotiex, gettext ("%s with IP %s and class %d allowed due to clone exception: %s"):format (nick, aip .. tryipcc (aip, nick), ucls, user))
-							return 0
-						end
+				for id, item in pairs (table_myfo.ex) do
+					if sadd:match (item.ent) then
+						table_myfo.ex [id].occ = item.occ + 1
+						VH:SQLQuery ("update `" .. tbl_sql.miex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (item.ent) .. "'")
+						opsnotify (table_sets.classnotiex, gettext ("%s with IP %s and class %d allowed due to same IP exception: %s"):format (nick, addr .. tryipcc (addr, nick), clas, user))
+						return false
 					end
 				end
 
-				local rsn = table_sets.miclonemessage:gsub ("%*", reprexpchars (user))
-
-				if table_sets.michclone == 1 then
-					maintouser (nick, rsn)
-					opsnotify (table_sets.classnotimich, gettext ("Dropping user due to clone detection from IP %s with class %d: %s = %s"):format (aip .. tryipcc (aip, nick), ucls, nick, user))
-					VH:Disconnect (nick)
-				elseif table_sets.michclone == 2 then
-					if table_sets.miclonekicktime ~= "" then
-						rsn = rsn .. "     #_ban_" .. table_sets.miclonekicktime
-					end
-
-					VH:KickUser (table_othsets.sendfrom, nick, rsn)
-				end
-
-				return 1
+				local why = table_sets.misameipmessage:gsub ("%*", reprexpchars (user))
+				VH:KickUser (table_othsets.sendfrom, nick, why .. "     #_ban_" .. table_sets.mitbantime)
+				return true
 			end
 		end
 	end
 
-	return 0
-end
-
------ ---- --- -- -
-
-function checksameip (nick, ip, ucls)
-	if table_sets.michsameip == 0 or ip == "0.0.0.0" then return 0 end -- skip
-
-	for user in getnicklist ():gmatch ("([^$]+)%$%$") do
-		if user ~= nick and getclass (user) < table_sets.scanbelowclass then -- skip user himself and if second user is protected
-			if getip (user) == ip then -- exact ip match
-				local _, rows = VH:SQLQuery ("select `exception` from `" .. tbl_sql.miex .. "`")
-
-				if rows > 0 then
-					for x = 0, rows - 1 do
-						local _, entry = VH:SQLFetch (x)
-
-						if repnmdcinchars (ip):find (entry) then
-							VH:SQLQuery ("update `" .. tbl_sql.miex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (entry) .. "' limit 1")
-							opsnotify (table_sets.classnotiex, gettext ("%s with IP %s and class %d allowed due to same IP exception: %s"):format (nick, ip .. tryipcc (ip, nick), ucls, user))
-							return 0
-						end
-					end
-				end
-
-				local rsn = table_sets.misameipmessage:gsub ("%*", reprexpchars (user))
-				VH:KickUser (table_othsets.sendfrom, nick, rsn .. "     #_ban_" .. table_sets.mitbantime)
-				return 1
-			end
-		end
-	end
-
-	return 0
+	return false
 end
 
 ----- ---- --- -- -
@@ -12714,257 +12616,689 @@ end
 
 ----- ---- --- -- -
 
-function addmyinfoentry (nick, line)
-	local _, part, item, btime, note = 0, "", "", "", ""
+function loadmyfolist ()
+	table_myfo = {
+		nick = {},
+		desc = {},
+		tag = {},
+		conn = {},
+		mail = {},
+		shar = {},
+		addr = {},
+		code = {},
+		dns = {},
+		sup = {},
+		ver = {},
+		ex = {}
+	}
 
-	if line:find ("^[^ ]+ \".+\" \"%d+%a\" \".+\"$") then -- <type> <"lre"> <"time"> <"note">
-		_, _, part, item, btime, note = line:find ("^([^ ]+) \"(.+)\" \"(%d+%a)\" \"(.+)\"$")
+	local _, rows = VH:SQLQuery ("select * from `" .. tbl_sql.minick .. "`") -- nick
 
-	elseif line:find ("^[^ ]+ \".+\" \"%d+%a\"$") then -- <type> <"lre"> <"time">
-		_, _, part, item, btime = line:find ("^([^ ]+) \"(.+)\" \"(%d+%a)\"$")
+	if rows > 0 then
+		for pos = 0, rows - 1 do
+			local _, ent, tim, occ, inf = VH:SQLFetch (pos)
 
-	elseif line:find ("^[^ ]+ \".+\" \".+\"$") then -- <type> <"lre"> <"note">
-		_, _, part, item, note = line:find ("^([^ ]+) \"(.+)\" \"(.+)\"$")
+			if ent and # ent > 0 then
+				if not tim or # tim == 0 then
+					tim = table_sets.mitbantime
+				end
 
-	elseif line:find ("^[^ ]+ \".+\"$") then -- <type> <"lre">
-		_, _, part, item = line:find ("^([^ ]+) \"(.+)\"$")
-
-	elseif line:find ("^[^ ]+ .+ %d+%a$") then -- <type> <lre> <time>
-		_, _, part, item, btime = line:find ("^([^ ]+) (.+) (%d+%a)$")
-
-	else -- <type> <lre>
-		_, _, part, item = line:find ("^([^ ]+) (.+)$")
+				table.insert (table_myfo.nick, {
+					["ent"] = ent,
+					["tim"] = tim,
+					["occ"] = tonumber (occ or 0) or 0,
+					["inf"] = inf
+				})
+			end
+		end
 	end
 
-	local entry = repnmdcinchars (item)
-	local fres, fval = catchfinderror ("", entry)
-	entry = repsqlchars (entry)
+	local _, rows = VH:SQLQuery ("select * from `" .. tbl_sql.midesc .. "`") -- description
+
+	if rows > 0 then
+		for pos = 0, rows - 1 do
+			local _, ent, tim, occ, inf = VH:SQLFetch (pos)
+
+			if ent and # ent > 0 then
+				if not tim or # tim == 0 then
+					tim = table_sets.mitbantime
+				end
+
+				table.insert (table_myfo.desc, {
+					["ent"] = ent,
+					["tim"] = tim,
+					["occ"] = tonumber (occ or 0) or 0,
+					["inf"] = inf
+				})
+			end
+		end
+	end
+
+	local _, rows = VH:SQLQuery ("select * from `" .. tbl_sql.mitag .. "`") -- tag
+
+	if rows > 0 then
+		for pos = 0, rows - 1 do
+			local _, ent, tim, occ, inf = VH:SQLFetch (pos)
+
+			if ent and # ent > 0 then
+				if not tim or # tim == 0 then
+					tim = table_sets.mitbantime
+				end
+
+				table.insert (table_myfo.tag, {
+					["ent"] = ent,
+					["tim"] = tim,
+					["occ"] = tonumber (occ or 0) or 0,
+					["inf"] = inf
+				})
+			end
+		end
+	end
+
+	local _, rows = VH:SQLQuery ("select * from `" .. tbl_sql.miconn .. "`") -- connection
+
+	if rows > 0 then
+		for pos = 0, rows - 1 do
+			local _, ent, tim, occ, inf = VH:SQLFetch (pos)
+
+			if ent and # ent > 0 then
+				if not tim or # tim == 0 then
+					tim = table_sets.mitbantime
+				end
+
+				table.insert (table_myfo.conn, {
+					["ent"] = ent,
+					["tim"] = tim,
+					["occ"] = tonumber (occ or 0) or 0,
+					["inf"] = inf
+				})
+			end
+		end
+	end
+
+	local _, rows = VH:SQLQuery ("select * from `" .. tbl_sql.miemail .. "`") -- email
+
+	if rows > 0 then
+		for pos = 0, rows - 1 do
+			local _, ent, tim, occ, inf = VH:SQLFetch (pos)
+
+			if ent and # ent > 0 then
+				if not tim or # tim == 0 then
+					tim = table_sets.mitbantime
+				end
+
+				table.insert (table_myfo.mail, {
+					["ent"] = ent,
+					["tim"] = tim,
+					["occ"] = tonumber (occ or 0) or 0,
+					["inf"] = inf
+				})
+			end
+		end
+	end
+
+	local _, rows = VH:SQLQuery ("select * from `" .. tbl_sql.mishare .. "`") -- share
+
+	if rows > 0 then
+		for pos = 0, rows - 1 do
+			local _, ent, tim, occ, inf = VH:SQLFetch (pos)
+
+			if ent and # _tostring (ent) > 0 then
+				if not tim or # tim == 0 then
+					tim = table_sets.mitbantime
+				end
+
+				table.insert (table_myfo.shar, {
+					["ent"] = _tostring (ent),
+					["tim"] = tim,
+					["occ"] = tonumber (occ or 0) or 0,
+					["inf"] = inf
+				})
+			end
+		end
+	end
+
+	local _, rows = VH:SQLQuery ("select * from `" .. tbl_sql.miip .. "`") -- ip address
+
+	if rows > 0 then
+		for pos = 0, rows - 1 do
+			local _, ent, tim, occ, inf = VH:SQLFetch (pos)
+
+			if ent and # ent > 0 then
+				if not tim or # tim == 0 then
+					tim = table_sets.mitbantime
+				end
+
+				table.insert (table_myfo.addr, {
+					["ent"] = ent,
+					["tim"] = tim,
+					["occ"] = tonumber (occ or 0) or 0,
+					["inf"] = inf
+				})
+			end
+		end
+	end
+
+	local _, rows = VH:SQLQuery ("select * from `" .. tbl_sql.micc .. "`") -- country code
+
+	if rows > 0 then
+		for pos = 0, rows - 1 do
+			local _, ent, tim, occ, inf = VH:SQLFetch (pos)
+
+			if ent and # ent > 0 then
+				if not tim or # tim == 0 then
+					tim = table_sets.mitbantime
+				end
+
+				table.insert (table_myfo.code, {
+					["ent"] = ent,
+					["tim"] = tim,
+					["occ"] = tonumber (occ or 0) or 0,
+					["inf"] = inf
+				})
+			end
+		end
+	end
+
+	local _, rows = VH:SQLQuery ("select * from `" .. tbl_sql.midns .. "`") -- dns
+
+	if rows > 0 then
+		for pos = 0, rows - 1 do
+			local _, ent, tim, occ, inf = VH:SQLFetch (pos)
+
+			if ent and # ent > 0 then
+				if not tim or # tim == 0 then
+					tim = table_sets.mitbantime
+				end
+
+				table.insert (table_myfo.dns, {
+					["ent"] = ent,
+					["tim"] = tim,
+					["occ"] = tonumber (occ or 0) or 0,
+					["inf"] = inf
+				})
+			end
+		end
+	end
+
+	local _, rows = VH:SQLQuery ("select * from `" .. tbl_sql.misup .. "`") -- supports
+
+	if rows > 0 then
+		for pos = 0, rows - 1 do
+			local _, ent, tim, occ, inf = VH:SQLFetch (pos)
+
+			if ent and # ent > 0 then
+				if not tim or # tim == 0 then
+					tim = table_sets.mitbantime
+				end
+
+				table.insert (table_myfo.sup, {
+					["ent"] = ent,
+					["tim"] = tim,
+					["occ"] = tonumber (occ or 0) or 0,
+					["inf"] = inf
+				})
+			end
+		end
+	end
+
+	local _, rows = VH:SQLQuery ("select * from `" .. tbl_sql.miver .. "`") -- nmdc version
+
+	if rows > 0 then
+		for pos = 0, rows - 1 do
+			local _, ent, tim, occ, inf = VH:SQLFetch (pos)
+
+			if ent and # ent > 0 then
+				if not tim or # tim == 0 then
+					tim = table_sets.mitbantime
+				end
+
+				table.insert (table_myfo.ver, {
+					["ent"] = ent,
+					["tim"] = tim,
+					["occ"] = tonumber (occ or 0) or 0,
+					["inf"] = inf
+				})
+			end
+		end
+	end
+
+	local _, rows = VH:SQLQuery ("select * from `" .. tbl_sql.miex .. "`") -- exceptions
+
+	if rows > 0 then
+		for pos = 0, rows - 1 do
+			local _, ent, occ, inf = VH:SQLFetch (pos)
+
+			if ent and # ent > 0 then
+				table.insert (table_myfo.ex, {
+					["ent"] = ent,
+					["occ"] = tonumber (occ or 0) or 0,
+					["inf"] = inf
+				})
+			end
+		end
+	end
+end
+
+----- ---- --- -- -
+
+function addmyinfoentry (nick, line)
+	local part, ent, tim, inf, cti, pos = "", "", "", "", table_sets.mitbantime, 0
+
+	if line:match ("^[^ ]+ \".+\" \"%d+%a\" \".+\"$") then -- <type> <"lre"> <"time"> <"note">
+		part, ent, tim, inf = line:match ("^([^ ]+) \"(.+)\" \"(%d+%a)\" \"(.+)\"$")
+
+	elseif line:match ("^[^ ]+ \".+\" \"%d+%a\"$") then -- <type> <"lre"> <"time">
+		part, ent, tim = line:match ("^([^ ]+) \"(.+)\" \"(%d+%a)\"$")
+
+	elseif line:match ("^[^ ]+ \".+\" \".+\"$") then -- <type> <"lre"> <"note">
+		part, ent, inf = line:match ("^([^ ]+) \"(.+)\" \"(.+)\"$")
+
+	elseif line:match ("^[^ ]+ \".+\"$") then -- <type> <"lre">
+		part, ent = line:match ("^([^ ]+) \"(.+)\"$")
+
+	elseif line:match ("^[^ ]+ .+ %d+%a$") then -- <type> <lre> <time>
+		part, ent, tim = line:match ("^([^ ]+) (.+) (%d+%a)$")
+
+	else -- <type> <lre>
+		part, ent = line:match ("^([^ ]+) (.+)$")
+	end
+
+	if # tim > 0 then
+		cti = tim
+	end
+
+	local sen = repnmdcinchars (ent)
+	local fres, fval = catchfinderror ("", sen)
 
 	if part == "nick" then
 		if not fres then
 			local ferr = gettext ("There is an error in following forbidden nick pattern") .. ":\r\n\r\n"
-			ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. item .. "\r\n"
+			ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. ent .. "\r\n"
 			ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
 			ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
 			commandanswer (nick, ferr)
 		else
-			local _, rows = VH:SQLQuery ("select `occurred` from `" .. tbl_sql.minick .. "` where `nick` = '" .. entry .. "'")
+			for id, item in pairs (table_myfo.nick) do
+				if item.ent == sen then
+					pos = id
+					break
+				end
+			end
 
-			if rows > 0 then
-				VH:SQLQuery ("update `" .. tbl_sql.minick .. "` set `time` = " .. sqlemptnull (btime) .. ", `note` = " .. sqlemptnull (note) .. " where `nick` = '" .. entry .. "'")
-				commandanswer (nick, gettext ("Modified forbidden nick with ban time %s: %s"):format ((valor (btime, "") or table_sets.mitbantime), item))
+			if pos > 0 then
+				table_myfo.nick [pos].tim = cti
+				table_myfo.nick [pos].inf = inf
+				VH:SQLQuery ("update `" .. tbl_sql.minick .. "` set `time` = " .. sqlemptnull (tim) .. ", `note` = " .. sqlemptnull (inf) .. " where `nick` = '" .. repsqlchars (sen) .. "'")
+				commandanswer (nick, gettext ("Modified forbidden nick with ban time %s: %s"):format (cti, ent))
 			else
-				VH:SQLQuery ("insert into `" .. tbl_sql.minick .. "` (`nick`, `time`, `note`) values ('" .. entry .. "', " .. sqlemptnull (btime) .. ", " .. sqlemptnull (note) .. ")")
-				commandanswer (nick, gettext ("Added forbidden nick with ban time %s: %s"):format ((valor (btime, "") or table_sets.mitbantime), item))
+				table.insert (table_myfo.nick, {
+					["ent"] = sen,
+					["tim"] = cti,
+					["occ"] = 0,
+					["not"] = inf
+				})
+
+				VH:SQLQuery ("insert into `" .. tbl_sql.minick .. "` (`nick`, `time`, `note`) values ('" .. repsqlchars (sen) .. "', " .. sqlemptnull (tim) .. ", " .. sqlemptnull (inf) .. ")")
+				commandanswer (nick, gettext ("Added forbidden nick with ban time %s: %s"):format (cti, ent))
 			end
 		end
 
 	elseif part == "desc" then
 		if not fres then
 			local ferr = gettext ("There is an error in following forbidden description pattern") .. ":\r\n\r\n"
-			ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. item .. "\r\n"
+			ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. ent .. "\r\n"
 			ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
 			ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
 			commandanswer (nick, ferr)
 		else
-			local _, rows = VH:SQLQuery ("select `occurred` from `" .. tbl_sql.midesc .. "` where `description` = '" .. entry .. "'")
+			for id, item in pairs (table_myfo.desc) do
+				if item.ent == sen then
+					pos = id
+					break
+				end
+			end
 
-			if rows > 0 then
-				VH:SQLQuery ("update `" .. tbl_sql.midesc .. "` set `time` = " .. sqlemptnull (btime) .. ", `note` = " .. sqlemptnull (note) .. " where `description` = '" .. entry .. "'")
-				commandanswer (nick, gettext ("Modified forbidden description with ban time %s: %s"):format ((valor (btime, "") or table_sets.mitbantime), item))
+			if pos > 0 then
+				table_myfo.desc [pos].tim = cti
+				table_myfo.desc [pos].inf = inf
+				VH:SQLQuery ("update `" .. tbl_sql.midesc .. "` set `time` = " .. sqlemptnull (tim) .. ", `note` = " .. sqlemptnull (inf) .. " where `description` = '" .. repsqlchars (sen) .. "'")
+				commandanswer (nick, gettext ("Modified forbidden description with ban time %s: %s"):format (cti, ent))
 			else
-				VH:SQLQuery ("insert into `" .. tbl_sql.midesc .. "` (`description`, `time`, `note`) values ('" .. entry .. "', " .. sqlemptnull (btime) .. ", " .. sqlemptnull (note) .. ")")
-				commandanswer (nick, gettext ("Added forbidden description with ban time %s: %s"):format ((valor (btime, "") or table_sets.mitbantime), item))
+				table.insert (table_myfo.desc, {
+					["ent"] = sen,
+					["tim"] = cti,
+					["occ"] = 0,
+					["not"] = inf
+				})
+
+				VH:SQLQuery ("insert into `" .. tbl_sql.midesc .. "` (`description`, `time`, `note`) values ('" .. repsqlchars (sen) .. "', " .. sqlemptnull (tim) .. ", " .. sqlemptnull (inf) .. ")")
+				commandanswer (nick, gettext ("Added forbidden description with ban time %s: %s"):format (cti, ent))
 			end
 		end
 
 	elseif part == "tag" then
 		if not fres then
 			local ferr = gettext ("There is an error in following forbidden tag pattern") .. ":\r\n\r\n"
-			ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. item .. "\r\n"
+			ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. ent .. "\r\n"
 			ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
 			ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
 			commandanswer (nick, ferr)
 		else
-			local _, rows = VH:SQLQuery ("select `occurred` from `" .. tbl_sql.mitag .. "` where `tag` = '" .. entry .. "'")
+			for id, item in pairs (table_myfo.tag) do
+				if item.ent == sen then
+					pos = id
+					break
+				end
+			end
 
-			if rows > 0 then
-				VH:SQLQuery ("update `" .. tbl_sql.mitag .. "` set `time` = " .. sqlemptnull (btime) .. ", `note` = " .. sqlemptnull (note) .. " where `tag` = '" .. entry .. "'")
-				commandanswer (nick, gettext ("Modified forbidden tag with ban time %s: %s"):format ((valor (btime, "") or table_sets.mitbantime), item))
+			if pos > 0 then
+				table_myfo.tag [pos].tim = cti
+				table_myfo.tag [pos].inf = inf
+				VH:SQLQuery ("update `" .. tbl_sql.mitag .. "` set `time` = " .. sqlemptnull (tim) .. ", `note` = " .. sqlemptnull (inf) .. " where `tag` = '" .. repsqlchars (sen) .. "'")
+				commandanswer (nick, gettext ("Modified forbidden tag with ban time %s: %s"):format (cti, ent))
 			else
-				VH:SQLQuery ("insert into `" .. tbl_sql.mitag .. "` (`tag`, `time`, `note`) values ('" .. entry .. "', " .. sqlemptnull (btime) .. ", " .. sqlemptnull (note) .. ")")
-				commandanswer (nick, gettext ("Added forbidden tag with ban time %s: %s"):format ((valor (btime, "") or table_sets.mitbantime), item))
+				table.insert (table_myfo.tag, {
+					["ent"] = sen,
+					["tim"] = cti,
+					["occ"] = 0,
+					["not"] = inf
+				})
+
+				VH:SQLQuery ("insert into `" .. tbl_sql.mitag .. "` (`tag`, `time`, `note`) values ('" .. repsqlchars (sen) .. "', " .. sqlemptnull (tim) .. ", " .. sqlemptnull (inf) .. ")")
+				commandanswer (nick, gettext ("Added forbidden tag with ban time %s: %s"):format (cti, ent))
 			end
 		end
 
 	elseif part == "conn" then
 		if not fres then
 			local ferr = gettext ("There is an error in following forbidden connection type pattern") .. ":\r\n\r\n"
-			ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. item .. "\r\n"
+			ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. ent .. "\r\n"
 			ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
 			ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
 			commandanswer (nick, ferr)
 		else
-			local _, rows = VH:SQLQuery ("select `occurred` from `" .. tbl_sql.miconn .. "` where `connection` = '" .. entry .. "'")
+			for id, item in pairs (table_myfo.conn) do
+				if item.ent == sen then
+					pos = id
+					break
+				end
+			end
 
-			if rows > 0 then
-				VH:SQLQuery ("update `" .. tbl_sql.miconn .. "` set `time` = " .. sqlemptnull (btime) .. ", `note` = " .. sqlemptnull (note) .. " where `connection` = '" .. entry .. "'")
-				commandanswer (nick, gettext ("Modified forbidden connection type with ban time %s: %s"):format ((valor (btime, "") or table_sets.mitbantime), item))
+			if pos > 0 then
+				table_myfo.conn [pos].tim = cti
+				table_myfo.conn [pos].inf = inf
+				VH:SQLQuery ("update `" .. tbl_sql.miconn .. "` set `time` = " .. sqlemptnull (tim) .. ", `note` = " .. sqlemptnull (inf) .. " where `connection` = '" .. repsqlchars (sen) .. "'")
+				commandanswer (nick, gettext ("Modified forbidden connection type with ban time %s: %s"):format (cti, ent))
 			else
-				VH:SQLQuery ("insert into `" .. tbl_sql.miconn .. "` (`connection`, `time`, `note`) values ('" .. entry .. "', " .. sqlemptnull (btime) .. ", " .. sqlemptnull (note) .. ")")
-				commandanswer (nick, gettext ("Added forbidden connection type with ban time %s: %s"):format ((valor (btime, "") or table_sets.mitbantime), item))
+				table.insert (table_myfo.conn, {
+					["ent"] = sen,
+					["tim"] = cti,
+					["occ"] = 0,
+					["not"] = inf
+				})
+
+				VH:SQLQuery ("insert into `" .. tbl_sql.miconn .. "` (`connection`, `time`, `note`) values ('" .. repsqlchars (sen) .. "', " .. sqlemptnull (tim) .. ", " .. sqlemptnull (inf) .. ")")
+				commandanswer (nick, gettext ("Added forbidden connection type with ban time %s: %s"):format (cti, ent))
 			end
 		end
 
 	elseif part == "email" then
 		if not fres then
 			local ferr = gettext ("There is an error in following forbidden email pattern") .. ":\r\n\r\n"
-			ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. item .. "\r\n"
+			ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. ent .. "\r\n"
 			ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
 			ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
 			commandanswer (nick, ferr)
 		else
-			local _, rows = VH:SQLQuery ("select `occurred` from `" .. tbl_sql.miemail .. "` where `email` = '" .. entry .. "'")
+			for id, item in pairs (table_myfo.mail) do
+				if item.ent == sen then
+					pos = id
+					break
+				end
+			end
 
-			if rows > 0 then
-				VH:SQLQuery ("update `" .. tbl_sql.miemail .. "` set `time` = " .. sqlemptnull (btime) .. ", `note` = " .. sqlemptnull (note) .. " where `email` = '" .. entry .. "'")
-				commandanswer (nick, gettext ("Modified forbidden email with ban time %s: %s"):format ((valor (btime, "") or table_sets.mitbantime), item))
+			if pos > 0 then
+				table_myfo.mail [pos].tim = cti
+				table_myfo.mail [pos].inf = inf
+				VH:SQLQuery ("update `" .. tbl_sql.miemail .. "` set `time` = " .. sqlemptnull (tim) .. ", `note` = " .. sqlemptnull (inf) .. " where `email` = '" .. repsqlchars (sen) .. "'")
+				commandanswer (nick, gettext ("Modified forbidden email with ban time %s: %s"):format (cti, ent))
 			else
-				VH:SQLQuery ("insert into `" .. tbl_sql.miemail .. "` (`email`, `time`, `note`) values ('" .. entry .. "', " .. sqlemptnull (btime) .. ", " .. sqlemptnull (note) .. ")")
-				commandanswer (nick, gettext ("Added forbidden email with ban time %s: %s"):format ((valor (btime, "") or table_sets.mitbantime), item))
+				table.insert (table_myfo.mail, {
+					["ent"] = sen,
+					["tim"] = cti,
+					["occ"] = 0,
+					["not"] = inf
+				})
+
+				VH:SQLQuery ("insert into `" .. tbl_sql.miemail .. "` (`email`, `time`, `note`) values ('" .. repsqlchars (sen) .. "', " .. sqlemptnull (tim) .. ", " .. sqlemptnull (inf) .. ")")
+				commandanswer (nick, gettext ("Added forbidden email with ban time %s: %s"):format (cti, ent))
 			end
 		end
 
 	elseif part == "share" then
 		if not fres then
 			local ferr = gettext ("There is an error in following forbidden share size pattern") .. ":\r\n\r\n"
-			ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. item .. "\r\n"
+			ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. ent .. "\r\n"
 			ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
 			ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
 			commandanswer (nick, ferr)
 		else
-			local _, rows = VH:SQLQuery ("select `occurred` from `" .. tbl_sql.mishare .. "` where `share` = '" .. entry .. "'")
+			local sse = _tostring (sen)
 
-			if rows > 0 then
-				VH:SQLQuery ("update `" .. tbl_sql.mishare .. "` set `time` = " .. sqlemptnull (btime) .. ", `note` = " .. sqlemptnull (note) .. " where `share` = '" .. entry .. "'")
-				commandanswer (nick, gettext ("Modified forbidden share size with ban time %s: %s"):format ((valor (btime, "") or table_sets.mitbantime), item))
+			for id, item in pairs (table_myfo.shar) do
+				if item.ent == sse then
+					pos = id
+					break
+				end
+			end
+
+			if pos > 0 then
+				table_myfo.shar [pos].tim = cti
+				table_myfo.shar [pos].inf = inf
+				VH:SQLQuery ("update `" .. tbl_sql.mishare .. "` set `time` = " .. sqlemptnull (tim) .. ", `note` = " .. sqlemptnull (inf) .. " where `share` = '" .. repsqlchars (sse) .. "'")
+				commandanswer (nick, gettext ("Modified forbidden share size with ban time %s: %s"):format (cti, ent))
 			else
-				VH:SQLQuery ("insert into `" .. tbl_sql.mishare .. "` (`share`, `time`, `note`) values ('" .. entry .. "', " .. sqlemptnull (btime) .. ", " .. sqlemptnull (note) .. ")")
-				commandanswer (nick, gettext ("Added forbidden share size with ban time %s: %s"):format ((valor (btime, "") or table_sets.mitbantime), item))
+				table.insert (table_myfo.shar, {
+					["ent"] = sse,
+					["tim"] = cti,
+					["occ"] = 0,
+					["not"] = inf
+				})
+
+				VH:SQLQuery ("insert into `" .. tbl_sql.mishare .. "` (`share`, `time`, `note`) values ('" .. repsqlchars (sse) .. "', " .. sqlemptnull (tim) .. ", " .. sqlemptnull (inf) .. ")")
+				commandanswer (nick, gettext ("Added forbidden share size with ban time %s: %s"):format (cti, ent))
 			end
 		end
 
 	elseif part == "ip" then
 		if not fres then
 			local ferr = gettext ("There is an error in following forbidden IP address pattern") .. ":\r\n\r\n"
-			ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. item .. "\r\n"
+			ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. ent .. "\r\n"
 			ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
 			ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
 			commandanswer (nick, ferr)
 		else
-			local _, rows = VH:SQLQuery ("select `occurred` from `" .. tbl_sql.miip .. "` where `ip` = '" .. entry .. "'")
+			for id, item in pairs (table_myfo.addr) do
+				if item.ent == sen then
+					pos = id
+					break
+				end
+			end
 
-			if rows > 0 then
-				VH:SQLQuery ("update `" .. tbl_sql.miip .. "` set `time` = " .. sqlemptnull (btime) .. ", `note` = " .. sqlemptnull (note) .. " where `ip` = '" .. entry .. "'")
-				commandanswer (nick, gettext ("Modified forbidden IP address with ban time %s: %s"):format ((valor (btime, "") or table_sets.mitbantime), item))
+			if pos > 0 then
+				table_myfo.addr [pos].tim = cti
+				table_myfo.addr [pos].inf = inf
+				VH:SQLQuery ("update `" .. tbl_sql.miip .. "` set `time` = " .. sqlemptnull (tim) .. ", `note` = " .. sqlemptnull (inf) .. " where `ip` = '" .. repsqlchars (sen) .. "'")
+				commandanswer (nick, gettext ("Modified forbidden IP address with ban time %s: %s"):format (cti, ent))
 			else
-				VH:SQLQuery ("insert into `" .. tbl_sql.miip .. "` (`ip`, `time`, `note`) values ('" .. entry .. "', " .. sqlemptnull (btime) .. ", " .. sqlemptnull (note) .. ")")
-				commandanswer (nick, gettext ("Added forbidden IP address with ban time %s: %s"):format ((valor (btime, "") or table_sets.mitbantime), item))
+				table.insert (table_myfo.addr, {
+					["ent"] = sen,
+					["tim"] = cti,
+					["occ"] = 0,
+					["not"] = inf
+				})
+
+				VH:SQLQuery ("insert into `" .. tbl_sql.miip .. "` (`ip`, `time`, `note`) values ('" .. repsqlchars (sen) .. "', " .. sqlemptnull (tim) .. ", " .. sqlemptnull (inf) .. ")")
+				commandanswer (nick, gettext ("Added forbidden IP address with ban time %s: %s"):format (cti, ent))
 			end
 		end
 
 	elseif part == "cc" then
 		if not fres then
 			local ferr = gettext ("There is an error in following forbidden country code pattern") .. ":\r\n\r\n"
-			ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. item .. "\r\n"
+			ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. ent .. "\r\n"
 			ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
 			ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
 			commandanswer (nick, ferr)
 		else
-			local _, rows = VH:SQLQuery ("select `occurred` from `" .. tbl_sql.micc .. "` where `cc` = '" .. entry .. "'")
+			for id, item in pairs (table_myfo.code) do
+				if item.ent == sen then
+					pos = id
+					break
+				end
+			end
 
-			if rows > 0 then
-				VH:SQLQuery ("update `" .. tbl_sql.micc .. "` set `time` = " .. sqlemptnull (btime) .. ", `note` = " .. sqlemptnull (note) .. " where `cc` = '" .. entry .. "'")
-				commandanswer (nick, gettext ("Modified forbidden country code with ban time %s: %s"):format ((valor (btime, "") or table_sets.mitbantime), item))
+			if pos > 0 then
+				table_myfo.code [pos].tim = cti
+				table_myfo.code [pos].inf = inf
+				VH:SQLQuery ("update `" .. tbl_sql.micc .. "` set `time` = " .. sqlemptnull (tim) .. ", `note` = " .. sqlemptnull (inf) .. " where `cc` = '" .. repsqlchars (sen) .. "'")
+				commandanswer (nick, gettext ("Modified forbidden country code with ban time %s: %s"):format (cti, ent))
 			else
-				VH:SQLQuery ("insert into `" .. tbl_sql.micc .. "` (`cc`, `time`, `note`) values ('" .. entry .. "', " .. sqlemptnull (btime) .. ", " .. sqlemptnull (note) .. ")")
-				commandanswer (nick, gettext ("Added forbidden country code with ban time %s: %s"):format ((valor (btime, "") or table_sets.mitbantime), item))
+				table.insert (table_myfo.code, {
+					["ent"] = sen,
+					["tim"] = cti,
+					["occ"] = 0,
+					["not"] = inf
+				})
+
+				VH:SQLQuery ("insert into `" .. tbl_sql.micc .. "` (`cc`, `time`, `note`) values ('" .. repsqlchars (sen) .. "', " .. sqlemptnull (tim) .. ", " .. sqlemptnull (inf) .. ")")
+				commandanswer (nick, gettext ("Added forbidden country code with ban time %s: %s"):format (cti, ent))
 			end
 		end
 
 	elseif part == "dns" then
 		if not fres then
 			local ferr = gettext ("There is an error in following forbidden DNS pattern") .. ":\r\n\r\n"
-			ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. item .. "\r\n"
+			ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. ent .. "\r\n"
 			ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
 			ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
 			commandanswer (nick, ferr)
 		else
-			local _, rows = VH:SQLQuery ("select `occurred` from `" .. tbl_sql.midns .. "` where `dns` = '" .. entry .. "'")
+			for id, item in pairs (table_myfo.dns) do
+				if item.ent == sen then
+					pos = id
+					break
+				end
+			end
 
-			if rows > 0 then
-				VH:SQLQuery ("update `" .. tbl_sql.midns .. "` set `time` = " .. sqlemptnull (btime) .. ", `note` = " .. sqlemptnull (note) .. " where `dns` = '" .. entry .. "'")
-				commandanswer (nick, gettext ("Modified forbidden DNS with ban time %s: %s"):format ((valor (btime, "") or table_sets.mitbantime), item))
+			if pos > 0 then
+				table_myfo.dns [pos].tim = cti
+				table_myfo.dns [pos].inf = inf
+				VH:SQLQuery ("update `" .. tbl_sql.midns .. "` set `time` = " .. sqlemptnull (tim) .. ", `note` = " .. sqlemptnull (inf) .. " where `dns` = '" .. repsqlchars (sen) .. "'")
+				commandanswer (nick, gettext ("Modified forbidden DNS with ban time %s: %s"):format (cti, ent))
 			else
-				VH:SQLQuery ("insert into `" .. tbl_sql.midns .. "` (`dns`, `time`, `note`) values ('" .. entry .. "', " .. sqlemptnull (btime) .. ", " .. sqlemptnull (note) .. ")")
-				commandanswer (nick, gettext ("Added forbidden DNS with ban time %s: %s"):format ((valor (btime, "") or table_sets.mitbantime), item))
+				table.insert (table_myfo.dns, {
+					["ent"] = sen,
+					["tim"] = cti,
+					["occ"] = 0,
+					["not"] = inf
+				})
+
+				VH:SQLQuery ("insert into `" .. tbl_sql.midns .. "` (`dns`, `time`, `note`) values ('" .. repsqlchars (sen) .. "', " .. sqlemptnull (tim) .. ", " .. sqlemptnull (inf) .. ")")
+				commandanswer (nick, gettext ("Added forbidden DNS with ban time %s: %s"):format (cti, ent))
 			end
 		end
 
 	elseif part == "sup" then
 		if not fres then
 			local ferr = gettext ("There is an error in following forbidden client supports pattern") .. ":\r\n\r\n"
-			ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. item .. "\r\n"
+			ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. ent .. "\r\n"
 			ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
 			ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
 			commandanswer (nick, ferr)
 		else
-			local _, rows = VH:SQLQuery ("select `occurred` from `" .. tbl_sql.misup .. "` where `supports` = '" .. entry .. "'")
+			for id, item in pairs (table_myfo.sup) do
+				if item.ent == sen then
+					pos = id
+					break
+				end
+			end
 
-			if rows > 0 then
-				VH:SQLQuery ("update `" .. tbl_sql.misup .. "` set `time` = " .. sqlemptnull (btime) .. ", `note` = " .. sqlemptnull (note) .. " where `supports` = '" .. entry .. "'")
-				commandanswer (nick, gettext ("Modified forbidden client supports with ban time %s: %s"):format ((valor (btime, "") or table_sets.mitbantime), item))
+			if pos > 0 then
+				table_myfo.sup [pos].tim = cti
+				table_myfo.sup [pos].inf = inf
+				VH:SQLQuery ("update `" .. tbl_sql.misup .. "` set `time` = " .. sqlemptnull (tim) .. ", `note` = " .. sqlemptnull (inf) .. " where `supports` = '" .. repsqlchars (sen) .. "'")
+				commandanswer (nick, gettext ("Modified forbidden client supports with ban time %s: %s"):format (cti, ent))
 			else
-				VH:SQLQuery ("insert into `" .. tbl_sql.misup .. "` (`supports`, `time`, `note`) values ('" .. entry .. "', " .. sqlemptnull (btime) .. ", " .. sqlemptnull (note) .. ")")
-				commandanswer (nick, gettext ("Added forbidden client supports with ban time %s: %s"):format ((valor (btime, "") or table_sets.mitbantime), item))
+				table.insert (table_myfo.sup, {
+					["ent"] = sen,
+					["tim"] = cti,
+					["occ"] = 0,
+					["not"] = inf
+				})
+
+				VH:SQLQuery ("insert into `" .. tbl_sql.misup .. "` (`supports`, `time`, `note`) values ('" .. repsqlchars (sen) .. "', " .. sqlemptnull (tim) .. ", " .. sqlemptnull (inf) .. ")")
+				commandanswer (nick, gettext ("Added forbidden client supports with ban time %s: %s"):format (cti, ent))
 			end
 		end
 
 	elseif part == "ver" then
 		if not fres then
 			local ferr = gettext ("There is an error in following forbidden NMDC version pattern") .. ":\r\n\r\n"
-			ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. item .. "\r\n"
+			ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. ent .. "\r\n"
 			ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
 			ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
 			commandanswer (nick, ferr)
 		else
-			local _, rows = VH:SQLQuery ("select `occurred` from `" .. tbl_sql.miver .. "` where `version` = '" .. entry .. "'")
+			for id, item in pairs (table_myfo.ver) do
+				if item.ent == sen then
+					pos = id
+					break
+				end
+			end
 
-			if rows > 0 then
-				VH:SQLQuery ("update `" .. tbl_sql.miver .. "` set `time` = " .. sqlemptnull (btime) .. ", `note` = " .. sqlemptnull (note) .. " where `version` = '" .. entry .. "'")
-				commandanswer (nick, gettext ("Modified forbidden NMDC version with ban time %s: %s"):format ((valor (btime, "") or table_sets.mitbantime), item))
+			if pos > 0 then
+				table_myfo.ver [pos].tim = cti
+				table_myfo.ver [pos].inf = inf
+				VH:SQLQuery ("update `" .. tbl_sql.miver .. "` set `time` = " .. sqlemptnull (tim) .. ", `note` = " .. sqlemptnull (inf) .. " where `version` = '" .. repsqlchars (sen) .. "'")
+				commandanswer (nick, gettext ("Modified forbidden NMDC version with ban time %s: %s"):format (cti, ent))
 			else
-				VH:SQLQuery ("insert into `" .. tbl_sql.miver .. "` (`version`, `time`, `note`) values ('" .. entry .. "', " .. sqlemptnull (btime) .. ", " .. sqlemptnull (note) .. ")")
-				commandanswer (nick, gettext ("Added forbidden NMDC version with ban time %s: %s"):format ((valor (btime, "") or table_sets.mitbantime), item))
+				table.insert (table_myfo.ver, {
+					["ent"] = sen,
+					["tim"] = cti,
+					["occ"] = 0,
+					["not"] = inf
+				})
+
+				VH:SQLQuery ("insert into `" .. tbl_sql.miver .. "` (`version`, `time`, `note`) values ('" .. repsqlchars (sen) .. "', " .. sqlemptnull (tim) .. ", " .. sqlemptnull (inf) .. ")")
+				commandanswer (nick, gettext ("Added forbidden NMDC version with ban time %s: %s"):format (cti, ent))
 			end
 		end
 
 	elseif part == "ex" then
 		if not fres then
 			local ferr = gettext ("There is an error in following MyINFO exception pattern") .. ":\r\n\r\n"
-			ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. item .. "\r\n"
+			ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. ent .. "\r\n"
 			ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
 			ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
 			commandanswer (nick, ferr)
 		else
-			local _, rows = VH:SQLQuery ("select `occurred` from `" .. tbl_sql.miex .. "` where `exception` = '" .. entry .. "'")
-
-			if rows > 0 then
-				commandanswer (nick, gettext ("Couldn't add MyINFO exception because already exists: %s"):format (item))
-			else
-				VH:SQLQuery ("insert into `" .. tbl_sql.miex .. "` (`exception`, `note`) values ('" .. entry .. "', " .. sqlemptnull (note) .. ")")
-				commandanswer (nick, gettext ("Added MyINFO exception: %s"):format (item))
+			for id, item in pairs (table_myfo.ex) do
+				if item.ent == sen then
+					commandanswer (nick, gettext ("Couldn't add MyINFO exception because already exists: %s"):format (ent))
+					return
+				end
 			end
+
+			table.insert (table_myfo.ex, {
+				["ent"] = sen,
+				["occ"] = 0,
+				["not"] = inf
+			})
+
+			VH:SQLQuery ("insert into `" .. tbl_sql.miex .. "` (`exception`, `note`) values ('" .. repsqlchars (sen) .. "', " .. sqlemptnull (inf) .. ")")
+			commandanswer (nick, gettext ("Added MyINFO exception: %s"):format (ent))
 		end
 
 	else -- unknown
@@ -12975,128 +13309,154 @@ end
 ----- ---- --- -- -
 
 function delmyinfoentry (nick, line)
-	local _, _, part, item = line:find ("^([^ ]+) (.+)$")
-	local entry = repsqlchars (repnmdcinchars (item))
+	local part, ent = line:match ("^([^ ]+) (.+)$")
+	local sen = repnmdcinchars (ent)
 
 	if part == "nick" then
-		local _, rows = VH:SQLQuery ("select `occurred` from `" .. tbl_sql.minick .. "` where `nick` = '" .. entry .. "'")
-
-		if rows > 0 then
-			VH:SQLQuery ("delete from `" .. tbl_sql.minick .. "` where `nick` = '" .. entry .. "'")
-			commandanswer (nick, gettext ("Deleted forbidden nick: %s"):format (item))
-		else
-			commandanswer (nick, gettext ("Couldn't delete forbidden nick because not found: %s"):format (item))
+		for id, item in pairs (table_myfo.nick) do
+			if item.ent == sen then
+				table.remove (table_myfo.nick, id)
+				VH:SQLQuery ("delete from `" .. tbl_sql.minick .. "` where `nick` = '" .. repsqlchars (sen) .. "'")
+				commandanswer (nick, gettext ("Deleted forbidden nick: %s"):format (ent))
+				return
+			end
 		end
+
+		commandanswer (nick, gettext ("Couldn't delete forbidden nick because not found: %s"):format (ent))
 
 	elseif part == "desc" then
-		local _, rows = VH:SQLQuery ("select `occurred` from `" .. tbl_sql.midesc .. "` where `description` = '" .. entry .. "'")
-
-		if rows > 0 then
-			VH:SQLQuery ("delete from `" .. tbl_sql.midesc .. "` where `description` = '" .. entry .. "'")
-			commandanswer (nick, gettext ("Deleted forbidden description: %s"):format (item))
-		else
-			commandanswer (nick, gettext ("Couldn't delete forbidden description because not found: %s"):format (item))
+		for id, item in pairs (table_myfo.desc) do
+			if item.ent == sen then
+				table.remove (table_myfo.desc, id)
+				VH:SQLQuery ("delete from `" .. tbl_sql.midesc .. "` where `description` = '" .. repsqlchars (sen) .. "'")
+				commandanswer (nick, gettext ("Deleted forbidden description: %s"):format (ent))
+				return
+			end
 		end
+
+		commandanswer (nick, gettext ("Couldn't delete forbidden description because not found: %s"):format (ent))
 
 	elseif part == "tag" then
-		local _, rows = VH:SQLQuery ("select `occurred` from `" .. tbl_sql.mitag .. "` where `tag` = '" .. entry .. "'")
-
-		if rows > 0 then
-			VH:SQLQuery ("delete from `" .. tbl_sql.mitag .. "` where `tag` = '" .. entry .. "'")
-			commandanswer (nick, gettext ("Deleted forbidden tag: %s"):format (item))
-		else
-			commandanswer (nick, gettext ("Couldn't delete forbidden tag because not found: %s"):format (item))
+		for id, item in pairs (table_myfo.tag) do
+			if item.ent == sen then
+				table.remove (table_myfo.tag, id)
+				VH:SQLQuery ("delete from `" .. tbl_sql.mitag .. "` where `tag` = '" .. repsqlchars (sen) .. "'")
+				commandanswer (nick, gettext ("Deleted forbidden tag: %s"):format (ent))
+				return
+			end
 		end
+
+		commandanswer (nick, gettext ("Couldn't delete forbidden tag because not found: %s"):format (ent))
 
 	elseif part == "conn" then
-		local _, rows = VH:SQLQuery ("select `occurred` from `" .. tbl_sql.miconn .. "` where `connection` = '" .. entry .. "'")
-
-		if rows > 0 then
-			VH:SQLQuery ("delete from `" .. tbl_sql.miconn .. "` where `connection` = '" .. entry .. "'")
-			commandanswer (nick, gettext ("Deleted forbidden connection type: %s"):format (item))
-		else
-			commandanswer (nick, gettext ("Couldn't delete forbidden connection type because not found: %s"):format (item))
+		for id, item in pairs (table_myfo.conn) do
+			if item.ent == sen then
+				table.remove (table_myfo.conn, id)
+				VH:SQLQuery ("delete from `" .. tbl_sql.miconn .. "` where `connection` = '" .. repsqlchars (sen) .. "'")
+				commandanswer (nick, gettext ("Deleted forbidden connection type: %s"):format (ent))
+				return
+			end
 		end
+
+		commandanswer (nick, gettext ("Couldn't delete forbidden connection type because not found: %s"):format (ent))
 
 	elseif part == "email" then
-		local _, rows = VH:SQLQuery ("select `occurred` from `" .. tbl_sql.miemail .. "` where `email` = '" .. entry .. "'")
-
-		if rows > 0 then
-			VH:SQLQuery ("delete from `" .. tbl_sql.miemail .. "` where `email` = '" .. entry .. "'")
-			commandanswer (nick, gettext ("Deleted forbidden email: %s"):format (item))
-		else
-			commandanswer (nick, gettext ("Couldn't delete forbidden email because not found: %s"):format (item))
+		for id, item in pairs (table_myfo.mail) do
+			if item.ent == sen then
+				table.remove (table_myfo.mail, id)
+				VH:SQLQuery ("delete from `" .. tbl_sql.miemail .. "` where `email` = '" .. repsqlchars (sen) .. "'")
+				commandanswer (nick, gettext ("Deleted forbidden email: %s"):format (ent))
+				return
+			end
 		end
+
+		commandanswer (nick, gettext ("Couldn't delete forbidden email because not found: %s"):format (ent))
 
 	elseif part == "share" then
-		local _, rows = VH:SQLQuery ("select `occurred` from `" .. tbl_sql.mishare .. "` where `share` = '" .. entry .. "'")
+		local sse = _tostring (sen)
 
-		if rows > 0 then
-			VH:SQLQuery ("delete from `" .. tbl_sql.mishare .. "` where `share` = '" .. entry .. "'")
-			commandanswer (nick, gettext ("Deleted forbidden share size: %s"):format (item))
-		else
-			commandanswer (nick, gettext ("Couldn't delete forbidden share size because not found: %s"):format (item))
+		for id, item in pairs (table_myfo.shar) do
+			if item.ent == sse then
+				table.remove (table_myfo.shar, id)
+				VH:SQLQuery ("delete from `" .. tbl_sql.mishare .. "` where `share` = '" .. repsqlchars (sse) .. "'")
+				commandanswer (nick, gettext ("Deleted forbidden share size: %s"):format (ent))
+				return
+			end
 		end
+
+		commandanswer (nick, gettext ("Couldn't delete forbidden share size because not found: %s"):format (ent))
 
 	elseif part == "ip" then
-		local _, rows = VH:SQLQuery ("select `occurred` from `" .. tbl_sql.miip .. "` where `ip` = '" .. entry .. "'")
-
-		if rows > 0 then
-			VH:SQLQuery ("delete from `" .. tbl_sql.miip .. "` where `ip` = '" .. entry .. "'")
-			commandanswer (nick, gettext ("Deleted forbidden IP address: %s"):format (item))
-		else
-			commandanswer (nick, gettext ("Couldn't delete forbidden IP address because not found: %s"):format (item))
+		for id, item in pairs (table_myfo.addr) do
+			if item.ent == sen then
+				table.remove (table_myfo.addr, id)
+				VH:SQLQuery ("delete from `" .. tbl_sql.miip .. "` where `ip` = '" .. repsqlchars (sen) .. "'")
+				commandanswer (nick, gettext ("Deleted forbidden IP address: %s"):format (ent))
+				return
+			end
 		end
+
+		commandanswer (nick, gettext ("Couldn't delete forbidden IP address because not found: %s"):format (ent))
 
 	elseif part == "cc" then
-		local _, rows = VH:SQLQuery ("select `occurred` from `" .. tbl_sql.micc .. "` where `cc` = '" .. entry .. "'")
-
-		if rows > 0 then
-			VH:SQLQuery ("delete from `" .. tbl_sql.micc .. "` where `cc` = '" .. entry .. "'")
-			commandanswer (nick, gettext ("Deleted forbidden country code: %s"):format (item))
-		else
-			commandanswer (nick, gettext ("Couldn't delete forbidden country code because not found: %s"):format (item))
+		for id, item in pairs (table_myfo.code) do
+			if item.ent == sen then
+				table.remove (table_myfo.code, id)
+				VH:SQLQuery ("delete from `" .. tbl_sql.micc .. "` where `cc` = '" .. repsqlchars (sen) .. "'")
+				commandanswer (nick, gettext ("Deleted forbidden country code: %s"):format (ent))
+				return
+			end
 		end
+
+		commandanswer (nick, gettext ("Couldn't delete forbidden country code because not found: %s"):format (ent))
 
 	elseif part == "dns" then
-		local _, rows = VH:SQLQuery ("select `occurred` from `" .. tbl_sql.midns .. "` where `dns` = '" .. entry .. "'")
-
-		if rows > 0 then
-			VH:SQLQuery ("delete from `" .. tbl_sql.midns .. "` where `dns` = '" .. entry .. "'")
-			commandanswer (nick, gettext ("Deleted forbidden DNS: %s"):format (item))
-		else
-			commandanswer (nick, gettext ("Couldn't delete forbidden DNS because not found: %s"):format (item))
+		for id, item in pairs (table_myfo.dns) do
+			if item.ent == sen then
+				table.remove (table_myfo.dns, id)
+				VH:SQLQuery ("delete from `" .. tbl_sql.midns .. "` where `dns` = '" .. repsqlchars (sen) .. "'")
+				commandanswer (nick, gettext ("Deleted forbidden DNS: %s"):format (ent))
+				return
+			end
 		end
+
+		commandanswer (nick, gettext ("Couldn't delete forbidden DNS because not found: %s"):format (ent))
 
 	elseif part == "sup" then
-		local _, rows = VH:SQLQuery ("select `occurred` from `" .. tbl_sql.misup .. "` where `supports` = '" .. entry .. "'")
-
-		if rows > 0 then
-			VH:SQLQuery ("delete from `" .. tbl_sql.misup .. "` where `supports` = '" .. entry .. "'")
-			commandanswer (nick, gettext ("Deleted forbidden client supports: %s"):format (item))
-		else
-			commandanswer (nick, gettext ("Couldn't delete forbidden client supports because not found: %s"):format (item))
+		for id, item in pairs (table_myfo.sup) do
+			if item.ent == sen then
+				table.remove (table_myfo.sup, id)
+				VH:SQLQuery ("delete from `" .. tbl_sql.misup .. "` where `supports` = '" .. repsqlchars (sen) .. "'")
+				commandanswer (nick, gettext ("Deleted forbidden client supports: %s"):format (ent))
+				return
+			end
 		end
+
+		commandanswer (nick, gettext ("Couldn't delete forbidden client supports because not found: %s"):format (ent))
 
 	elseif part == "ver" then
-		local _, rows = VH:SQLQuery ("select `occurred` from `" .. tbl_sql.miver .. "` where `version` = '" .. entry .. "'")
-
-		if rows > 0 then
-			VH:SQLQuery ("delete from `" .. tbl_sql.miver .. "` where `version` = '" .. entry .. "'")
-			commandanswer (nick, gettext ("Deleted forbidden NMDC version: %s"):format (item))
-		else
-			commandanswer (nick, gettext ("Couldn't delete forbidden NMDC version because not found: %s"):format (item))
+		for id, item in pairs (table_myfo.ver) do
+			if item.ent == sen then
+				table.remove (table_myfo.ver, id)
+				VH:SQLQuery ("delete from `" .. tbl_sql.miver .. "` where `version` = '" .. repsqlchars (sen) .. "'")
+				commandanswer (nick, gettext ("Deleted forbidden NMDC version: %s"):format (ent))
+				return
+			end
 		end
+
+		commandanswer (nick, gettext ("Couldn't delete forbidden NMDC version because not found: %s"):format (ent))
 
 	elseif part == "ex" then
-		local _, rows = VH:SQLQuery ("select `occurred` from `" .. tbl_sql.miex .. "` where `exception` = '" .. entry .. "'")
-
-		if rows > 0 then
-			VH:SQLQuery ("delete from `" .. tbl_sql.miex .. "` where `exception` = '" .. entry .. "'")
-			commandanswer (nick, gettext ("Deleted MyINFO exception: %s"):format (item))
-		else
-			commandanswer (nick, gettext ("Couldn't delete MyINFO exception because not found: %s"):format (item))
+		for id, item in pairs (table_myfo.ex) do
+			if item.ent == sen then
+				table.remove (table_myfo.ex, id)
+				VH:SQLQuery ("delete from `" .. tbl_sql.miex .. "` where `exception` = '" .. repsqlchars (sen) .. "'")
+				commandanswer (nick, gettext ("Deleted MyINFO exception: %s"):format (ent))
+				return
+			end
 		end
+
+		commandanswer (nick, gettext ("Couldn't delete MyINFO exception because not found: %s"):format (ent))
 
 	else -- unknown
 		commandanswer (nick, gettext ("Known types are: %s"):format ("nick, desc, tag, conn, email, share, ip, cc, dns, sup, ver " .. gettext ("and") .. " ex"))
@@ -13106,114 +13466,97 @@ end
 ----- ---- --- -- -
 
 function listmyinfoentry (nick, part)
-	local _, rows, title, nolist = 0, 0, nil, nil
+	local lis, tit, noi = part, "", ""
 
 	if part == "nick" then
-		_, rows = VH:SQLQuery ("select * from `" .. tbl_sql.minick .. "` order by `occurred` desc")
-		title = gettext ("Forbidden nick list")
-		nolist = gettext ("Forbidden nick list is empty.")
+		tit = gettext ("Forbidden nick list")
+		noi = gettext ("Forbidden nick list is empty.")
 
 	elseif part == "desc" then
-		_, rows = VH:SQLQuery ("select * from `" .. tbl_sql.midesc .. "` order by `occurred` desc")
-		title = gettext ("Forbidden description list")
-		nolist = gettext ("Forbidden description list is empty.")
+		tit = gettext ("Forbidden description list")
+		noi = gettext ("Forbidden description list is empty.")
 
 	elseif part == "tag" then
-		_, rows = VH:SQLQuery ("select * from `" .. tbl_sql.mitag .. "` order by `occurred` desc")
-		title = gettext ("Forbidden tag list")
-		nolist = gettext ("Forbidden tag list is empty.")
+		tit = gettext ("Forbidden tag list")
+		noi = gettext ("Forbidden tag list is empty.")
 
 	elseif part == "conn" then
-		_, rows = VH:SQLQuery ("select * from `" .. tbl_sql.miconn .. "` order by `occurred` desc")
-		title = gettext ("Forbidden connection type list")
-		nolist = gettext ("Forbidden connection type list is empty.")
+		tit = gettext ("Forbidden connection type list")
+		noi = gettext ("Forbidden connection type list is empty.")
 
 	elseif part == "email" then
-		_, rows = VH:SQLQuery ("select * from `" .. tbl_sql.miemail .. "` order by `occurred` desc")
-		title = gettext ("Forbidden email list")
-		nolist = gettext ("Forbidden email list is empty.")
+		lis = "mail"
+		tit = gettext ("Forbidden email list")
+		noi = gettext ("Forbidden email list is empty.")
 
 	elseif part == "share" then
-		_, rows = VH:SQLQuery ("select * from `" .. tbl_sql.mishare .. "` order by `occurred` desc")
-		title = gettext ("Forbidden share size list")
-		nolist = gettext ("Forbidden share size list is empty.")
+		lis = "shar"
+		tit = gettext ("Forbidden share size list")
+		noi = gettext ("Forbidden share size list is empty.")
 
 	elseif part == "ip" then
-		_, rows = VH:SQLQuery ("select * from `" .. tbl_sql.miip .. "` order by `occurred` desc")
-		title = gettext ("Forbidden IP address list")
-		nolist = gettext ("Forbidden IP address list is empty.")
+		lis = "addr"
+		tit = gettext ("Forbidden IP address list")
+		noi = gettext ("Forbidden IP address list is empty.")
 
 	elseif part == "cc" then
-		_, rows = VH:SQLQuery ("select * from `" .. tbl_sql.micc .. "` order by `occurred` desc")
-		title = gettext ("Forbidden country code list")
-		nolist = gettext ("Forbidden country code list is empty.")
+		lis = "code"
+		tit = gettext ("Forbidden country code list")
+		noi = gettext ("Forbidden country code list is empty.")
 
 	elseif part == "dns" then
-		_, rows = VH:SQLQuery ("select * from `" .. tbl_sql.midns .. "` order by `occurred` desc")
-		title = gettext ("Forbidden DNS list")
-		nolist = gettext ("Forbidden DNS list is empty.")
+		tit = gettext ("Forbidden DNS list")
+		noi = gettext ("Forbidden DNS list is empty.")
 
 	elseif part == "sup" then
-		_, rows = VH:SQLQuery ("select * from `" .. tbl_sql.misup .. "` order by `occurred` desc")
-		title = gettext ("Forbidden client supports list")
-		nolist = gettext ("Forbidden client supports list is empty.")
+		tit = gettext ("Forbidden client supports list")
+		noi = gettext ("Forbidden client supports list is empty.")
 
 	elseif part == "ver" then
-		_, rows = VH:SQLQuery ("select * from `" .. tbl_sql.miver .. "` order by `occurred` desc")
-		title = gettext ("Forbidden NMDC version list")
-		nolist = gettext ("Forbidden NMDC version list is empty.")
+		tit = gettext ("Forbidden NMDC version list")
+		noi = gettext ("Forbidden NMDC version list is empty.")
 
 	elseif part == "ex" then
-		_, rows = VH:SQLQuery ("select * from `" .. tbl_sql.miex .. "` order by `occurred` desc")
-		title = gettext ("MyINFO exception list")
-		nolist = gettext ("MyINFO exception list is empty.")
+		tit = gettext ("MyINFO exception list")
+		noi = gettext ("MyINFO exception list is empty.")
 
 	else -- unknown
 		commandanswer (nick, gettext ("Known types are: %s"):format ("nick, desc, tag, conn, email, share, ip, cc, dns, sup, ver " .. gettext ("and") .. " ex"))
+		return
 	end
 
-	if title then
-		if rows > 0 then
-			local _, item, btime, occ, note, list, rlen, olen = 0, nil, nil, 0, nil, "", 0, 0
+	if # table_myfo [lis] == 0 then
+		commandanswer (nick, noi)
+		return
+	end
 
-			for x = 0, rows - 1 do
-				if part ~= "ex" then
-					_, item, btime, occ, note = VH:SQLFetch (x)
-				else
-					_, item, occ, note = VH:SQLFetch (x)
-				end
+	local sli = {}
 
-				if x == 0 then
-					rlen = # _tostring (rows)
-					olen = # _tostring (occ)
-				end
+	for id, item in pairs (table_myfo [lis]) do
+		sli [id] = item
+	end
 
-				list = list .. " " .. prezero (rlen, x + 1) .. ". [ O: " .. prezero (olen, occ) .. " ] " .. repnmdcoutchars (item)
+	table.sort (sli, function (fit, sit)
+		return fit.occ > sit.occ
+	end)
 
-				if part ~= "ex" then
-					list = list .. " [ B: "
+	local list, ole, tot = "", # _tostring (sli [1].occ), # _tostring (# sli)
 
-					if btime and btime ~= "" then
-						list = list .. btime
-					else
-						list = list .. table_sets.mitbantime
-					end
+	for id, item in pairs (sli) do
+		list = list .. " " .. prezero (tot, id) .. ". [ O: " .. prezero (ole, item.occ) .. " ] " .. repnmdcoutchars (item.ent)
 
-					list = list .. " ]"
-				end
-
-				if note and note ~= "" then
-					list = list .. " [ N: " .. note .. " ]"
-				end
-
-				list = list .. "\r\n"
-			end
-
-			commandanswer (nick, title .. ":\r\n\r\n" .. list)
-		else
-			commandanswer (nick, nolist)
+		if part ~= "ex" then
+			list = list .. " [ B: " .. item.tim .. " ]"
 		end
+
+		if item.inf and # item.inf > 0 then
+			list = list .. " [ N: " .. item.inf .. " ]"
+		end
+
+		list = list .. "\r\n"
 	end
+
+	commandanswer (nick, tit .. ":\r\n\r\n" .. list)
 end
 
 ----- ---- --- -- -
@@ -14018,7 +14361,7 @@ end
 
 function loadsefilist ()
 	table_sefi, table_sfex = {}, {}
-	local _, rows = VH:SQLQuery ("select * from `" .. tbl_sql.sefi .. "`")
+	local _, rows = VH:SQLQuery ("select * from `" .. tbl_sql.sefi .. "`") -- search filter
 
 	if rows > 0 then
 		for pos = 0, rows - 1 do
@@ -14036,7 +14379,7 @@ function loadsefilist ()
 		end
 	end
 
-	local _, rows = VH:SQLQuery ("select * from `" .. tbl_sql.sefiex .. "`")
+	local _, rows = VH:SQLQuery ("select * from `" .. tbl_sql.sefiex .. "`") -- exceptions
 
 	if rows > 0 then
 		for pos = 0, rows - 1 do
@@ -14181,11 +14524,13 @@ function listsefientry (nick)
 		return fit.occ > sit.occ
 	end)
 
+	local ole = # _tostring (sli [1].occ) -- must be counted before next sort
+
 	table.sort (sli, function (fit, sit)
 		return fit.pri > sit.pri
 	end)
 
-	local list, ole, tot = "", # _tostring (sli [1].occ), # _tostring (# sli)
+	local list, tot = "", # _tostring (# sli)
 
 	for id, item in pairs (sli) do
 		list = list .. " " .. prezero (tot, id) .. ". [ P: " .. _tostring (item.pri) .. " ] [ A: " .. _tostring (item.act) .. " ] [ T: " .. _tostring (item.typ) .. " ] [ O: " .. prezero (ole, item.occ) .. " ] " .. repnmdcoutchars (item.ent) .. "\r\n"
@@ -20126,7 +20471,7 @@ function createsettings ()
 		"('" .. repsqlchars ("^" .. table_othsets.ustrig .. "regme") .. "')")
 	end
 
-	if not getledoconf ("defmyinfnick") then -- add nicks i prefer to forbid
+	if not getledoconf ("defmyinfnick") then -- add dangerous nicks
 		VH:SQLQuery ("insert ignore into `" .. tbl_sql.minick .. "` (`nick`) values ('" .. repsqlchars ("%" .. string.char (173)) .. "')")
 	end
 
