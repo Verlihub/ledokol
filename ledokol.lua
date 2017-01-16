@@ -63,7 +63,7 @@ Tzaca, JOE™
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.2" -- ledokol version
-bld_ledo = "33" -- build number
+bld_ledo = "34" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -368,6 +368,7 @@ table_othsets = {
 	collgarb = os.time (),
 	uptime = os.time (),
 	lasttimenick = nil,
+	ver_hub = {a = 0, b = 0, c = 0, d = 0},
 	ver_lua = nil,
 	ver_luaplug = nil,
 	ver_sql = nil,
@@ -1442,7 +1443,11 @@ function Main (file)
 		local umax = getconfig ("max_users")
 
 		if ulim < umax then
-			VH:SendToClass ("<" .. table_othsets.sendfrom .. "> " .. gettext ("Warning: %s"):format (gettext ("Open files limit set to %d is smaller than maximum users configuration which is %d. You can correct this by setting %s to %d or higher and restarting the hub."):format (ulim, umax, "ulimit -n", umax)) .. "|", 5, 10)
+			if minhubver (1, 0, 2, 15) then
+				VH:SendToClass ("<" .. table_othsets.sendfrom .. "> " .. gettext ("Warning: %s"):format (gettext ("Open files limit set to %d is smaller than maximum users configuration which is %d. You can correct this by setting %s to %d or higher and restarting the hub."):format (ulim, umax, "ulimit -n", umax)) .. "|", 5, 10, getconfig ("delayed_chat"))
+			else
+				VH:SendToClass ("<" .. table_othsets.sendfrom .. "> " .. gettext ("Warning: %s"):format (gettext ("Open files limit set to %d is smaller than maximum users configuration which is %d. You can correct this by setting %s to %d or higher and restarting the hub."):format (ulim, umax, "ulimit -n", umax)) .. "|", 5, 10)
+			end
 		end
 	end
 
@@ -1491,7 +1496,11 @@ function UnLoad ()
 
 	if table_sets.timebotint > 0 and table_othsets.lasttimenick then
 		if table_sets.fasttimebot == 1 then
-			VH:SendToClass ("$Quit " .. table_othsets.lasttimenick .. "|", 0, 10)
+			if minhubver (1, 0, 2, 15) then
+				VH:SendToClass ("$Quit " .. table_othsets.lasttimenick .. "|", 0, 10, getconfig ("delayed_myinfo"))
+			else
+				VH:SendToClass ("$Quit " .. table_othsets.lasttimenick .. "|", 0, 10)
+			end
 		else
 			delhubrobot (table_othsets.lasttimenick)
 		end
@@ -3123,7 +3132,12 @@ return 0
 	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.clear .. "$") then
 		if ucl >= table_sets.clearclass then
 			donotifycmd (nick, data, 0, ucl)
-			VH:SendToClass ("<" .. table_othsets.sendfrom .. "> " .. string.rep ("\r\n", 100) .. " ~ " .. gettext ("Chat cleanup performed by %s"):format (nick) .. " ~\r\n|", 0, 10)
+
+			if minhubver (1, 0, 2, 15) then
+				VH:SendToClass ("<" .. table_othsets.sendfrom .. "> " .. string.rep ("\r\n", 100) .. " ~ " .. gettext ("Chat cleanup performed by %s"):format (nick) .. " ~\r\n|", 0, 10, getconfig ("delayed_chat"))
+			else
+				VH:SendToClass ("<" .. table_othsets.sendfrom .. "> " .. string.rep ("\r\n", 100) .. " ~ " .. gettext ("Chat cleanup performed by %s"):format (nick) .. " ~\r\n|", 0, 10)
+			end
 		else
 			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
@@ -3287,7 +3301,11 @@ elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.ledostats .. "$") 
 
 			if table_sets.timebotint > 0 and table_othsets.lasttimenick then
 				if table_sets.fasttimebot == 1 then
-					VH:SendToClass ("$Quit " .. table_othsets.lasttimenick .. "|", 0, 10)
+					if minhubver (1, 0, 2, 15) then
+						VH:SendToClass ("$Quit " .. table_othsets.lasttimenick .. "|", 0, 10, getconfig ("delayed_myinfo"))
+					else
+						VH:SendToClass ("$Quit " .. table_othsets.lasttimenick .. "|", 0, 10)
+					end
 				else
 					delhubrobot (table_othsets.lasttimenick)
 				end
@@ -3966,7 +3984,12 @@ function VH_OnUserCommand (nick, data)
 						-- nothing to do
 					elseif table_sets.chatuptimeact == 3 then -- message to self
 						opsnotify (table_sets.classnotilowupchat, gettext ("User received own message: %s"):format (nick))
-						VH:SendToUser ("** " .. nick .. " " .. msg .. "|", nick)
+
+						if minhubver (1, 0, 2, 15) then
+							VH:SendToUser ("** " .. nick .. " " .. msg .. "|", nick, getconfig ("delayed_chat"))
+						else
+							VH:SendToUser ("** " .. nick .. " " .. msg .. "|", nick)
+						end
 					end
 
 					return 0
@@ -4091,11 +4114,22 @@ function VH_OnUserCommand (nick, data)
 				pfx = "[ " .. ip .. " ]"
 			end
 
-			VH:SendToClass ("** " .. fakenick .. " " .. cvdat .. "|", 0, 2)
-			VH:SendToClass (pfx .. " ** " .. fakenick .. " " .. cvdat .. "|", 3, 10)
+			if minhubver (1, 0, 2, 15) then
+				VH:SendToClass ("** " .. fakenick .. " " .. cvdat .. "|", 0, 2, getconfig ("delayed_chat"))
+				VH:SendToClass (pfx .. " ** " .. fakenick .. " " .. cvdat .. "|", 3, 10, getconfig ("delayed_chat"))
+			else
+				VH:SendToClass ("** " .. fakenick .. " " .. cvdat .. "|", 0, 2)
+				VH:SendToClass (pfx .. " ** " .. fakenick .. " " .. cvdat .. "|", 3, 10)
+			end
+
 			retval = 0
 		elseif retval == 0 or fakenick ~= nick then -- no ip, only when modified
-			VH:SendToClass ("** " .. fakenick .. " " .. cvdat .. "|", 0, 10)
+			if minhubver (1, 0, 2, 15) then
+				VH:SendToClass ("** " .. fakenick .. " " .. cvdat .. "|", 0, 10, getconfig ("delayed_chat"))
+			else
+				VH:SendToClass ("** " .. fakenick .. " " .. cvdat .. "|", 0, 10)
+			end
+
 			retval = 0
 		end
 
@@ -4126,7 +4160,12 @@ function VH_OnUserCommand (nick, data)
 						-- nothing to do
 					elseif table_sets.chatuptimeact == 3 then -- message to self
 						opsnotify (table_sets.classnotilowupchat, gettext ("User received own message: %s"):format (nick))
-						VH:SendToUser ("** " .. nick .. "|", nick)
+
+						if minhubver (1, 0, 2, 15) then
+							VH:SendToUser ("** " .. nick .. "|", nick, getconfig ("delayed_chat"))
+						else
+							VH:SendToUser ("** " .. nick .. "|", nick)
+						end
 					end
 
 					return 0
@@ -4199,11 +4238,22 @@ function VH_OnUserCommand (nick, data)
 				pfx = "[ " .. ip .. " ]"
 			end
 
-			VH:SendToClass ("** " .. fakenick .. "|", 0, 2)
-			VH:SendToClass (pfx .. " ** " .. fakenick .. "|", 3, 10)
+			if minhubver (1, 0, 2, 15) then
+				VH:SendToClass ("** " .. fakenick .. "|", 0, 2, getconfig ("delayed_chat"))
+				VH:SendToClass (pfx .. " ** " .. fakenick .. "|", 3, 10, getconfig ("delayed_chat"))
+			else
+				VH:SendToClass ("** " .. fakenick .. "|", 0, 2)
+				VH:SendToClass (pfx .. " ** " .. fakenick .. "|", 3, 10)
+			end
+
 			retval = 0
 		elseif fakenick ~= nick then -- no ip, only when modified
-			VH:SendToClass ("** " .. fakenick .. "|", 0, 10)
+			if minhubver (1, 0, 2, 15) then
+				VH:SendToClass ("** " .. fakenick .. "|", 0, 10, getconfig ("delayed_chat"))
+			else
+				VH:SendToClass ("** " .. fakenick .. "|", 0, 10)
+			end
+
 			retval = 0
 		end
 
@@ -4968,7 +5018,11 @@ function VH_OnUserLogin (nick, uip)
 		elseif table_sets.opkeyshare > 0 and size >= (table_sets.opkeyshare * 1073741824) then
 			table_opks [nick] = 2 -- share
 		elseif cls >= table_sets.opkeyself then -- self
-			VH:SendToUser ("$OpList " .. nick .. "$$|", nick)
+			if minhubver (1, 0, 2, 15) then
+				VH:SendToUser ("$OpList " .. nick .. "$$|", nick, getconfig ("delayed_myinfo"))
+			else
+				VH:SendToUser ("$OpList " .. nick .. "$$|", nick)
+			end
 		end
 	end
 
@@ -4980,7 +5034,11 @@ function VH_OnUserLogin (nick, uip)
 		end
 
 		if list ~= "" then
-			VH:SendToClass ("$OpList " .. list .. "|", 0, 10)
+			if minhubver (1, 0, 2, 15) then
+				VH:SendToClass ("$OpList " .. list .. "|", 0, 10, getconfig ("delayed_myinfo"))
+			else
+				VH:SendToClass ("$OpList " .. list .. "|", 0, 10)
+			end
 		end
 	end
 
@@ -5364,15 +5422,32 @@ function VH_OnTimer (msec)
 
 		if table_sets.avsearservaddr ~= "" and table_othsets.serv_udp then -- we have search server, todo: dont send to no share, self and similar users
 			if table_refu.SendToActiveClass and table_refu.SendToPassiveClass then -- active request to passive users and passive request to active users
-				VH:SendToPassiveClass ("$Search " .. table_sets.avsearservaddr .. ":" .. _tostring (table_sets.avsearservport) .. " F?F?0?1?" .. table_avse [table_othsets.avnextitem] .. "|", 0, table_sets.scanbelowclass - 1)
-				VH:SendToActiveClass ("$Search Hub:" .. table_othsets.sendfrom .. " F?F?0?1?" .. table_avse [table_othsets.avnextitem] .. "|", 0, table_sets.scanbelowclass - 1)
+				if minhubver (1, 0, 2, 15) then
+					VH:SendToPassiveClass ("$Search " .. table_sets.avsearservaddr .. ":" .. _tostring (table_sets.avsearservport) .. " F?F?0?1?" .. table_avse [table_othsets.avnextitem] .. "|", 0, table_sets.scanbelowclass - 1, getconfig ("delayed_search"))
+					VH:SendToActiveClass ("$Search Hub:" .. table_othsets.sendfrom .. " F?F?0?1?" .. table_avse [table_othsets.avnextitem] .. "|", 0, table_sets.scanbelowclass - 1, getconfig ("delayed_search"))
+				else
+					VH:SendToPassiveClass ("$Search " .. table_sets.avsearservaddr .. ":" .. _tostring (table_sets.avsearservport) .. " F?F?0?1?" .. table_avse [table_othsets.avnextitem] .. "|", 0, table_sets.scanbelowclass - 1)
+					VH:SendToActiveClass ("$Search Hub:" .. table_othsets.sendfrom .. " F?F?0?1?" .. table_avse [table_othsets.avnextitem] .. "|", 0, table_sets.scanbelowclass - 1)
+				end
 			else -- active request to all users
-				VH:SendToClass ("$Search " .. table_sets.avsearservaddr .. ":" .. _tostring (table_sets.avsearservport) .. " F?F?0?1?" .. table_avse [table_othsets.avnextitem] .. "|", 0, table_sets.scanbelowclass - 1)
+				if minhubver (1, 0, 2, 15) then
+					VH:SendToClass ("$Search " .. table_sets.avsearservaddr .. ":" .. _tostring (table_sets.avsearservport) .. " F?F?0?1?" .. table_avse [table_othsets.avnextitem] .. "|", 0, table_sets.scanbelowclass - 1, getconfig ("delayed_search"))
+				else
+					VH:SendToClass ("$Search " .. table_sets.avsearservaddr .. ":" .. _tostring (table_sets.avsearservport) .. " F?F?0?1?" .. table_avse [table_othsets.avnextitem] .. "|", 0, table_sets.scanbelowclass - 1)
+				end
 			end
 		elseif table_refu.SendToActiveClass then -- we dont have server
-			VH:SendToActiveClass ("$Search Hub:" .. table_othsets.sendfrom .. " F?F?0?1?" .. table_avse [table_othsets.avnextitem] .. "|", 0, table_sets.scanbelowclass - 1)
+			if minhubver (1, 0, 2, 15) then
+				VH:SendToActiveClass ("$Search Hub:" .. table_othsets.sendfrom .. " F?F?0?1?" .. table_avse [table_othsets.avnextitem] .. "|", 0, table_sets.scanbelowclass - 1, getconfig ("delayed_search"))
+			else
+				VH:SendToActiveClass ("$Search Hub:" .. table_othsets.sendfrom .. " F?F?0?1?" .. table_avse [table_othsets.avnextitem] .. "|", 0, table_sets.scanbelowclass - 1)
+			end
 		else -- we have nothing
-			VH:SendToClass ("$Search Hub:" .. table_othsets.sendfrom .. " F?F?0?1?" .. table_avse [table_othsets.avnextitem] .. "|", 0, table_sets.scanbelowclass - 1)
+			if minhubver (1, 0, 2, 15) then
+				VH:SendToClass ("$Search Hub:" .. table_othsets.sendfrom .. " F?F?0?1?" .. table_avse [table_othsets.avnextitem] .. "|", 0, table_sets.scanbelowclass - 1, getconfig ("delayed_search"))
+			else
+				VH:SendToClass ("$Search Hub:" .. table_othsets.sendfrom .. " F?F?0?1?" .. table_avse [table_othsets.avnextitem] .. "|", 0, table_sets.scanbelowclass - 1)
+			end
 		end
 
 		if table_othsets.avnextitem >= # table_avse then
@@ -5381,15 +5456,32 @@ function VH_OnTimer (msec)
 
 				if table_sets.avsearservaddr ~= "" and table_othsets.serv_udp then -- we have search server
 					if table_refu.SendToActiveClass and table_refu.SendToPassiveClass then -- active request to passive users and passive request to active users
-						VH:SendToPassiveClass ("$Search " .. table_sets.avsearservaddr .. ":" .. _tostring (table_sets.avsearservport) .. " F?F?0?1?" .. table_othsets.avrandstr .. "|", 0, table_sets.scanbelowclass - 1)
-						VH:SendToActiveClass ("$Search Hub:" .. table_othsets.sendfrom .. " F?F?0?1?" .. table_othsets.avrandstr .. "|", 0, table_sets.scanbelowclass - 1)
+						if minhubver (1, 0, 2, 15) then
+							VH:SendToPassiveClass ("$Search " .. table_sets.avsearservaddr .. ":" .. _tostring (table_sets.avsearservport) .. " F?F?0?1?" .. table_othsets.avrandstr .. "|", 0, table_sets.scanbelowclass - 1, getconfig ("delayed_search"))
+							VH:SendToActiveClass ("$Search Hub:" .. table_othsets.sendfrom .. " F?F?0?1?" .. table_othsets.avrandstr .. "|", 0, table_sets.scanbelowclass - 1, getconfig ("delayed_search"))
+						else
+							VH:SendToPassiveClass ("$Search " .. table_sets.avsearservaddr .. ":" .. _tostring (table_sets.avsearservport) .. " F?F?0?1?" .. table_othsets.avrandstr .. "|", 0, table_sets.scanbelowclass - 1)
+							VH:SendToActiveClass ("$Search Hub:" .. table_othsets.sendfrom .. " F?F?0?1?" .. table_othsets.avrandstr .. "|", 0, table_sets.scanbelowclass - 1)
+						end
 					else -- active request to all users
-						VH:SendToClass ("$Search " .. table_sets.avsearservaddr .. ":" .. _tostring (table_sets.avsearservport) .. " F?F?0?1?" .. table_othsets.avrandstr .. "|", 0, table_sets.scanbelowclass - 1)
+						if minhubver (1, 0, 2, 15) then
+							VH:SendToClass ("$Search " .. table_sets.avsearservaddr .. ":" .. _tostring (table_sets.avsearservport) .. " F?F?0?1?" .. table_othsets.avrandstr .. "|", 0, table_sets.scanbelowclass - 1, getconfig ("delayed_search"))
+						else
+							VH:SendToClass ("$Search " .. table_sets.avsearservaddr .. ":" .. _tostring (table_sets.avsearservport) .. " F?F?0?1?" .. table_othsets.avrandstr .. "|", 0, table_sets.scanbelowclass - 1)
+						end
 					end
 				elseif table_refu.SendToActiveClass then -- we dont have server
-					VH:SendToActiveClass ("$Search Hub:" .. table_othsets.sendfrom .. " F?F?0?1?" .. table_othsets.avrandstr .. "|", 0, table_sets.scanbelowclass - 1)
+					if minhubver (1, 0, 2, 15) then
+						VH:SendToActiveClass ("$Search Hub:" .. table_othsets.sendfrom .. " F?F?0?1?" .. table_othsets.avrandstr .. "|", 0, table_sets.scanbelowclass - 1, getconfig ("delayed_search"))
+					else
+						VH:SendToActiveClass ("$Search Hub:" .. table_othsets.sendfrom .. " F?F?0?1?" .. table_othsets.avrandstr .. "|", 0, table_sets.scanbelowclass - 1)
+					end
 				else -- we have nothing
-					VH:SendToClass ("$Search Hub:" .. table_othsets.sendfrom .. " F?F?0?1?" .. table_othsets.avrandstr .. "|", 0, table_sets.scanbelowclass - 1)
+					if minhubver (1, 0, 2, 15) then
+						VH:SendToClass ("$Search Hub:" .. table_othsets.sendfrom .. " F?F?0?1?" .. table_othsets.avrandstr .. "|", 0, table_sets.scanbelowclass - 1, getconfig ("delayed_search"))
+					else
+						VH:SendToClass ("$Search Hub:" .. table_othsets.sendfrom .. " F?F?0?1?" .. table_othsets.avrandstr .. "|", 0, table_sets.scanbelowclass - 1)
+					end
 				end
 			end
 
@@ -5519,7 +5611,11 @@ function VH_OnUnknownMsg (nick, data, isnick, ipaddr)
 				end
 
 				if # il > 0 then
-					VH:SendToUser ("$UserIP " .. il .. "|", nick)
+					if minhubver (1, 0, 2, 15) then
+						VH:SendToUser ("$UserIP " .. il .. "|", nick, getconfig ("delayed_myinfo"))
+					else
+						VH:SendToUser ("$UserIP " .. il .. "|", nick)
+					end
 				end
 			end
 		end
@@ -6140,7 +6236,7 @@ function VH_OnParsedMsgPM (from, data, to)
 							local cl = getclass (x)
 
 							if x ~= from and cl == 10 then -- class 10 only
-								VH:SendToUser ("$To: " .. x.." From: " .. to .. " $<" .. from .. "> " .. data .. "|", x)
+								VH:SendToUser ("$To: " .. x .. " From: " .. to .. " $<" .. from .. "> " .. data .. "|", x)
 							end
 						end
 					end
@@ -6348,7 +6444,11 @@ function VH_OnParsedMsgMCTo (from, data, to)
 			if mcto then
 				VH:SendToUser ("$MCTo: " .. to .. " From: " .. from .. " $<" .. custnick .. "> " .. pmdat .. "|", to)
 			else
-				VH:SendToUser ("<" .. custnick .. "> " .. pmdat .. "|", to)
+				if minhubver (1, 0, 2, 15) then
+					VH:SendToUser ("<" .. custnick .. "> " .. pmdat .. "|", to, getconfig ("delayed_chat"))
+				else
+					VH:SendToUser ("<" .. custnick .. "> " .. pmdat .. "|", to)
+				end
 			end
 
 			return 0
@@ -6368,7 +6468,11 @@ function VH_OnParsedMsgMCTo (from, data, to)
 			if mcto then
 				VH:SendToUser ("$MCTo: " .. to .. " From: " .. from .. " $<" .. from .. "> " .. pmdat .. "|", to)
 			else
-				VH:SendToUser ("<" .. from .. "> " .. pmdat .. "|", to)
+				if minhubver (1, 0, 2, 15) then
+					VH:SendToUser ("<" .. from .. "> " .. pmdat .. "|", to, getconfig ("delayed_chat"))
+				else
+					VH:SendToUser ("<" .. from .. "> " .. pmdat .. "|", to)
+				end
 			end
 
 			return 0
@@ -6389,7 +6493,11 @@ function VH_OnParsedMsgMCTo (from, data, to)
 		if mcto then
 			VH:SendToUser ("$MCTo: " .. to .. " From: " .. from .. " $<" .. from .. "> " .. pmdat .. "|", to)
 		else
-			VH:SendToUser ("<" .. from .. "> " .. pmdat .. "|", to)
+			if minhubver (1, 0, 2, 15) then
+				VH:SendToUser ("<" .. from .. "> " .. pmdat .. "|", to, getconfig ("delayed_chat"))
+			else
+				VH:SendToUser ("<" .. from .. "> " .. pmdat .. "|", to)
+			end
 		end
 
 		return 0
@@ -6553,11 +6661,22 @@ function VH_OnParsedMsgChat (nick, data)
 			pfx = "[ " .. ip .. " ]"
 		end
 
-		VH:SendToClass ("<" .. fakenick .. "> " .. cvdat .. "|", 0, 2)
-		VH:SendToClass (pfx .. " <" .. fakenick .. "> " .. cvdat .. "|", 3, 10)
+		if minhubver (1, 0, 2, 15) then
+			VH:SendToClass ("<" .. fakenick .. "> " .. cvdat .. "|", 0, 2, getconfig ("delayed_chat"))
+			VH:SendToClass (pfx .. " <" .. fakenick .. "> " .. cvdat .. "|", 3, 10, getconfig ("delayed_chat"))
+		else
+			VH:SendToClass ("<" .. fakenick .. "> " .. cvdat .. "|", 0, 2)
+			VH:SendToClass (pfx .. " <" .. fakenick .. "> " .. cvdat .. "|", 3, 10)
+		end
+
 		retval = 0
 	elseif retval == 0 or fakenick ~= nick then -- no ip, only when modified
-		VH:SendToClass ("<" .. fakenick .. "> " .. cvdat .. "|", 0, 10)
+		if minhubver (1, 0, 2, 15) then
+			VH:SendToClass ("<" .. fakenick .. "> " .. cvdat .. "|", 0, 10, getconfig ("delayed_chat"))
+		else
+			VH:SendToClass ("<" .. fakenick .. "> " .. cvdat .. "|", 0, 10)
+		end
+
 		retval = 0
 	end
 
@@ -7501,7 +7620,13 @@ function addcustnick (nick, custom)
 
 	if rows > 0 then
 		local _, old = VH:SQLFetch (0)
-		VH:SendToClass ("$Quit " .. old .. "|", 0, 10)
+
+		if minhubver (1, 0, 2, 15) then
+			VH:SendToClass ("$Quit " .. old .. "|", 0, 10, getconfig ("delayed_myinfo"))
+		else
+			VH:SendToClass ("$Quit " .. old .. "|", 0, 10)
+		end
+
 		VH:SQLQuery ("update `" .. tbl_sql.cust .. "` set `custom` = '" .. repsqlchars (custom) .. "' where `nick` = '" .. nnick .. "'")
 	else
 		VH:SQLQuery ("insert into `" .. tbl_sql.cust .. "` (`nick`, `custom`) values ('" .. nnick .. "', '" .. repsqlchars (custom) .. "')")
@@ -7511,7 +7636,11 @@ function addcustnick (nick, custom)
 		--local ip = getip (nick)
 
 		--if ip ~= "0.0.0.0" then
-			--VH:SendToClass ("$UserIP " .. custom .. " " .. ip .. "$$|", 3, 10)
+			--if minhubver (1, 0, 2, 15) then
+				--VH:SendToClass ("$UserIP " .. custom .. " " .. ip .. "$$|", 3, 10, getconfig ("delayed_myinfo"))
+			--else
+				--VH:SendToClass ("$UserIP " .. custom .. " " .. ip .. "$$|", 3, 10)
+			--end
 		--end
 	--end
 end
@@ -7547,7 +7676,11 @@ function cleancustnick (limit, byclass)
 				end
 			end
 
-			VH:SendToClass ("$Quit " .. v.."|", 0, 10)
+			if minhubver (1, 0, 2, 15) then
+				VH:SendToClass ("$Quit " .. v .. "|", 0, 10, getconfig ("delayed_myinfo"))
+			else
+				VH:SendToClass ("$Quit " .. v .. "|", 0, 10)
+			end
 		end
 	end
 end
@@ -7562,7 +7695,11 @@ function delcustnick (nick, cls, quit)
 			table_cust [k] = nil
 
 			if quit then
-				VH:SendToClass ("$Quit " .. v .. "|", 0, 10)
+				if minhubver (1, 0, 2, 15) then
+					VH:SendToClass ("$Quit " .. v .. "|", 0, 10, getconfig ("delayed_myinfo"))
+				else
+					VH:SendToClass ("$Quit " .. v .. "|", 0, 10)
+				end
 			end
 
 			return v
@@ -7578,7 +7715,11 @@ function delcustnick (nick, cls, quit)
 			VH:SQLQuery ("delete from `" .. tbl_sql.cust .. "` where `custom` = '" .. repsqlchars (cust) .. "'")
 
 			if quit then
-				VH:SendToClass ("$Quit " .. cust .. "|", 0, 10)
+				if minhubver (1, 0, 2, 15) then
+					VH:SendToClass ("$Quit " .. cust .. "|", 0, 10, getconfig ("delayed_myinfo"))
+				else
+					VH:SendToClass ("$Quit " .. cust .. "|", 0, 10)
+				end
 			end
 
 			return cust
@@ -7632,14 +7773,22 @@ function opforcecustnick (nick, line)
 				table_cust [onick] = ncust
 
 				if oldcust then
-					VH:SendToClass ("$Quit " .. oldcust .. "|", 0, 10)
+					if minhubver (1, 0, 2, 15) then
+						VH:SendToClass ("$Quit " .. oldcust .. "|", 0, 10, getconfig ("delayed_myinfo"))
+					else
+						VH:SendToClass ("$Quit " .. oldcust .. "|", 0, 10)
+					end
 				end
 
 				--if getconfig ("send_user_ip") == 1 then
 					--local ip = getip (onick)
 
 					--if ip ~= "0.0.0.0" then
-						--VH:SendToClass ("$UserIP " .. ncust .. " " .. ip .. "$$|", 3, 10)
+						--if minhubver (1, 0, 2, 15) then
+							--VH:SendToClass ("$UserIP " .. ncust .. " " .. ip .. "$$|", 3, 10, getconfig ("delayed_myinfo"))
+						--else
+							--VH:SendToClass ("$UserIP " .. ncust .. " " .. ip .. "$$|", 3, 10)
+						--end
 					--end
 				--end
 			else
@@ -7692,7 +7841,11 @@ function opdelcustnick (nick, user)
 			commandanswer (nick, gettext ("Deleted user from custom nick list: %s"):format (orig))
 		end
 
-		VH:SendToClass ("$Quit " .. cust .. "|", 0, 10)
+		if minhubver (1, 0, 2, 15) then
+			VH:SendToClass ("$Quit " .. cust .. "|", 0, 10, getconfig ("delayed_myinfo"))
+		else
+			VH:SendToClass ("$Quit " .. cust .. "|", 0, 10)
+		end
 	else
 		commandanswer (nick, gettext ("Couldn't delete user from custom nick list because not found: %s"):format (user))
 	end
@@ -7837,7 +7990,7 @@ function listcustnick (nick)
 	local list, x = "", 1
 
 	for k, v in pairs (t) do
-		list = list .. " " .. x..". [ O: " .. getstatus (k) .. " ] " .. k.." @ " .. v.."\r\n"
+		list = list .. " " .. x .. ". [ O: " .. getstatus (k) .. " ] " .. k .. " @ " .. v .. "\r\n"
 		x = x + 1
 	end
 
@@ -8047,10 +8200,18 @@ function installtimebot ()
 
 	if table_sets.fasttimebot == 1 then
 		if table_othsets.lasttimenick then
-			VH:SendToClass ("$Quit " .. table_othsets.lasttimenick .. "|", 0, 10)
+			if minhubver (1, 0, 2, 15) then
+				VH:SendToClass ("$Quit " .. table_othsets.lasttimenick .. "|", 0, 10, getconfig ("delayed_myinfo"))
+			else
+				VH:SendToClass ("$Quit " .. table_othsets.lasttimenick .. "|", 0, 10)
+			end
 		end
 
-		VH:SendToClass ("$OpList " .. bottime .. "$$|", 0, 10)
+		if minhubver (1, 0, 2, 15) then
+			VH:SendToClass ("$OpList " .. bottime .. "$$|", 0, 10, getconfig ("delayed_myinfo"))
+		else
+			VH:SendToClass ("$OpList " .. bottime .. "$$|", 0, 10)
+		end
 	else
 		if table_othsets.lasttimenick then
 			delhubrobot (table_othsets.lasttimenick)
@@ -8192,7 +8353,7 @@ function sendreminder ()
 			end
 		end
 
-		VH:SQLQuery ("update `" .. tbl_sql.rem .. "` set `timer` = " .. v.." where `id` = '" .. repk .. "' limit 1")
+		VH:SQLQuery ("update `" .. tbl_sql.rem .. "` set `timer` = " .. v .. " where `id` = '" .. repk .. "' limit 1")
 	end
 end
 
@@ -8422,7 +8583,7 @@ function addrcmenu (nick, line)
 
 						if rows > 0 then -- update
 							local _, id = VH:SQLFetch (0)
-							VH:SQLQuery ("update `" .. tbl_sql.rcmenu .. "` set `command` = '" .. repcmnd .."', `type` = " .. _tostring (cype) .. ", `cont` = " .. _tostring (cont) .. ", `order` = " .. _tostring (ord) .. ", `minclass` = " .. _tostring (minc) .. ", `maxclass` = " .. _tostring (maxc) .. " where `id` = " .. _tostring (id))
+							VH:SQLQuery ("update `" .. tbl_sql.rcmenu .. "` set `command` = '" .. repcmnd .. "', `type` = " .. _tostring (cype) .. ", `cont` = " .. _tostring (cont) .. ", `order` = " .. _tostring (ord) .. ", `minclass` = " .. _tostring (minc) .. ", `maxclass` = " .. _tostring (maxc) .. " where `id` = " .. _tostring (id))
 							commandanswer (nick, gettext ("Modified right click menu item: %s"):format (menu))
 						else -- add
 							VH:SQLQuery ("insert into `" .. tbl_sql.rcmenu .. "` (`menu`, `command`, `type`, `cont`, `order`, `minclass`, `maxclass`) values ('" .. repmenu .. "', '" .. repcmnd .. "', " .. _tostring (cype) .. ", " .. _tostring (cont) .. ", " .. _tostring (ord) .. ", " .. _tostring (minc) .. ", " .. _tostring (maxc) .. ")")
@@ -8738,7 +8899,7 @@ function delnews (nick, adate)
 	for _, v in pairs (t) do
 		-- items might have same timestamp, dont delete duplicates
 		-- or create other way for deletion, for example by id
-		VH:SQLQuery ("delete from `" .. tbl_sql.news .. "` where `date` = " .. v.." limit 1")
+		VH:SQLQuery ("delete from `" .. tbl_sql.news .. "` where `date` = " .. v .. " limit 1")
 	end
 
 	local num = # t
@@ -10043,7 +10204,7 @@ function collectstats ()
 				VH:SQLQuery ("update `" .. tbl_sql.stat .. "` set `time` = " .. _tostring (tm) .. ", `count` = '" .. _tostring (avg) .. "' where `type` = 'avgshare_peak' limit 1")
 			end
 		else
-			VH:SQLQuery ("insert into `" .. tbl_sql.stat .. "` (`type`, `time`, `count`) values ('avgshare_peak', " .. _tostring (tm) .. ", '" .. _tostring (avg) .."')")
+			VH:SQLQuery ("insert into `" .. tbl_sql.stat .. "` (`type`, `time`, `count`) values ('avgshare_peak', " .. _tostring (tm) .. ", '" .. _tostring (avg) .. "')")
 		end
 	end
 
@@ -11031,7 +11192,7 @@ local list = ""
 local x = 1
 
 for k, v in pairs (table_mode) do
-	list = list .. " " .. x..". " .. k.." @ " .. v.."\r\n"
+	list = list .. " " .. x .. ". " .. k .. " @ " .. v .. "\r\n"
 	x = x + 1
 end
 
@@ -11291,7 +11452,7 @@ end
 
 for _, v in pairs (t) do
 	-- same goes here, as for hub news, see comments in delnews
-	VH:SQLQuery ("delete from `" .. tbl_sql.off .. "` where `date` = " .. v.." limit 1")
+	VH:SQLQuery ("delete from `" .. tbl_sql.off .. "` where `date` = " .. v .. " limit 1")
 end
 
 local num = # t
@@ -15098,7 +15259,13 @@ function sendsay (nick, message, ucl)
 
 	if user == table_sets.ledobotnick or user == table_othsets.botnick or user == table_othsets.opchatnick or user == nick or getclass (user) < ucl then
 		opsnotify (table_sets.classnotisay, gettext ("%s with class %d sent say message: <%s> %s"):format (nick, ucl, user, message))
-		VH:SendToClass ("<" .. user .. "> " .. message .. "|", 0, 10)
+
+		if minhubver (1, 0, 2, 15) then
+			VH:SendToClass ("<" .. user .. "> " .. message .. "|", 0, 10, getconfig ("delayed_chat"))
+		else
+			VH:SendToClass ("<" .. user .. "> " .. message .. "|", 0, 10)
+		end
+
 		addmchistoryline (user, nick, message)
 	else
 		opsnotify (table_sets.classnotisay, gettext ("%s with class %d had bad luck sending say message: <%s> %s"):format (nick, ucl, user, message))
@@ -15908,7 +16075,7 @@ local c = 1
 
 for k, v in pairs (table_cmnds) do
 	if v ~= k then
-		list = list .. " " .. c..". " .. k.." => " .. v.."\r\n"
+		list = list .. " " .. c .. ". " .. k .. " => " .. v .. "\r\n"
 		c = c + 1
 	end
 end
@@ -15930,7 +16097,7 @@ for k, v in pairs (table_cmnds) do
 		cnum = cnum + 1
 		table_cmnds [k] = k
 		k = repsqlchars (k)
-		VH:SQLQuery ("update `" .. tbl_sql.ledocmd .. "` set `new` = '" .. k.."' where `original` = '" .. k.."' limit 1")
+		VH:SQLQuery ("update `" .. tbl_sql.ledocmd .. "` set `new` = '" .. k .. "' where `original` = '" .. k .. "' limit 1")
 	end
 end
 
@@ -18985,7 +19152,11 @@ ok = true
 
 if table_sets [tvar] ~= setto and setto == 0 and table_othsets.lasttimenick then
 	if table_sets.fasttimebot == 1 then
-		VH:SendToClass ("$Quit " .. table_othsets.lasttimenick .. "|", 0, 10)
+		if minhubver (1, 0, 2, 15) then
+			VH:SendToClass ("$Quit " .. table_othsets.lasttimenick .. "|", 0, 10, getconfig ("delayed_myinfo"))
+		else
+			VH:SendToClass ("$Quit " .. table_othsets.lasttimenick .. "|", 0, 10)
+		end
 	else
 		delhubrobot (table_othsets.lasttimenick)
 	end
@@ -19055,7 +19226,11 @@ ok = true
 
 if table_sets [tvar] ~= setto and table_othsets.lasttimenick then
 	if table_sets [tvar] == 1 then
-		VH:SendToClass ("$Quit " .. table_othsets.lasttimenick .. "|", 0, 10)
+		if minhubver (1, 0, 2, 15) then
+			VH:SendToClass ("$Quit " .. table_othsets.lasttimenick .. "|", 0, 10, getconfig ("delayed_myinfo"))
+		else
+			VH:SendToClass ("$Quit " .. table_othsets.lasttimenick .. "|", 0, 10)
+		end
 	else
 		delhubrobot (table_othsets.lasttimenick)
 	end
@@ -20109,7 +20284,7 @@ end
 
 function droptables ()
 for _, v in pairs (tbl_sql) do
-	VH:SQLQuery ("drop table `" .. v.."`")
+	VH:SQLQuery ("drop table `" .. v .. "`")
 end
 end
 
@@ -20657,7 +20832,12 @@ end
 
 function addhubrobot (nick, desc, away, mail, share)
 	VH:RegBot (nick, 3, desc, string.char (away), mail, share)
-	--VH:SendToClass ("$UserIP " .. nick .. " 127.0.0.1$$|", 0, 10)
+
+	--if minhubver (1, 0, 2, 15) then
+		--VH:SendToClass ("$UserIP " .. nick .. " 127.0.0.1$$|", 0, 10, getconfig ("delayed_myinfo"))
+	--else
+		--VH:SendToClass ("$UserIP " .. nick .. " 127.0.0.1$$|", 0, 10)
+	--end
 end
 
 ----- ---- --- -- -
@@ -21534,7 +21714,50 @@ end
 
 ----- ---- --- -- -
 
+function minhubver (a, b, c, d)
+	if table_othsets.ver_hub.a > a then
+		return true
+	elseif table_othsets.ver_hub.a < a then
+		return false
+	end
+
+	if table_othsets.ver_hub.b > b then
+		return true
+	elseif table_othsets.ver_hub.b < b then
+		return false
+	end
+
+	if table_othsets.ver_hub.c > c then
+		return true
+	elseif table_othsets.ver_hub.c < c then
+		return false
+	end
+
+	if table_othsets.ver_hub.d > d then
+		return true
+	elseif table_othsets.ver_hub.d < d then
+		return false
+	end
+
+	return true -- all numbers are equal
+end
+
+----- ---- --- -- -
+
 function loadcomponents ()
+	local ver = getconfig ("hub_version")
+
+	if ver and # ver > 0 then
+		local a, b, c, d = ver:match ("^(%d+)%.(%d+)%.(%d+)%.(%d+)$")
+
+		if a and b and c and d then
+			table_othsets.ver_hub.a = tonumber (a)
+			table_othsets.ver_hub.b = tonumber (b)
+			table_othsets.ver_hub.c = tonumber (c)
+			table_othsets.ver_hub.d = tonumber (d)
+		end
+	end
+
 	local _, paths = 0, {"", "/usr/local/bin/", "/usr/bin/"} -- prepare
 
 	-- configuration directory
@@ -21542,11 +21765,20 @@ function loadcomponents ()
 	if VH.GetVHCfgDir then
 		_, table_othsets.cfgdir = VH:GetVHCfgDir ()
 	else
-		VH:SendToClass ("<" .. table_sets.ledobotnick .. "> Warning: Unable to run VH:GetVHCfgDir|", 5, 10)
+		if minhubver (1, 0, 2, 15) then
+			VH:SendToClass ("<" .. table_sets.ledobotnick .. "> Warning: Unable to run VH:GetVHCfgDir|", 5, 10, getconfig ("delayed_chat"))
+		else
+			VH:SendToClass ("<" .. table_sets.ledobotnick .. "> Warning: Unable to run VH:GetVHCfgDir|", 5, 10)
+		end
+
 		table_othsets.cfgdir = os.getenv ("VERLIHUB_CFG")
 
 		if not table_othsets.cfgdir then
-			VH:SendToClass ("<" .. table_sets.ledobotnick .. "> Warning: Unable to get VERLIHUB_CFG|", 5, 10)
+			if minhubver (1, 0, 2, 15) then
+				VH:SendToClass ("<" .. table_sets.ledobotnick .. "> Warning: Unable to get VERLIHUB_CFG|", 5, 10, getconfig ("delayed_chat"))
+			else
+				VH:SendToClass ("<" .. table_sets.ledobotnick .. "> Warning: Unable to get VERLIHUB_CFG|", 5, 10)
+			end
 
 			for _, v in pairs (paths) do
 				local res = os.execute (v .. "vh_getcfg > \"./" .. table_othsets.tmpfile .. "\"")
@@ -21568,7 +21800,12 @@ function loadcomponents ()
 			end
 
 			if not table_othsets.cfgdir or # table_othsets.cfgdir == 0 then
-				VH:SendToClass ("<" .. table_sets.ledobotnick .. "> Error: Unable to run vh_getcfg.sh|", 5, 10)
+				if minhubver (1, 0, 2, 15) then
+					VH:SendToClass ("<" .. table_sets.ledobotnick .. "> Error: Unable to run vh_getcfg|", 5, 10, getconfig ("delayed_chat"))
+				else
+					VH:SendToClass ("<" .. table_sets.ledobotnick .. "> Error: Unable to run vh_getcfg|", 5, 10)
+				end
+
 				return true
 			end
 		end
@@ -21581,7 +21818,12 @@ function loadcomponents ()
 	-- nicklist
 
 	if not VH.GetNickList then
-		VH:SendToClass ("<" .. table_sets.ledobotnick .. "> Error: Unable to run VH:GetNickList|", 5, 10)
+		if minhubver (1, 0, 2, 15) then
+			VH:SendToClass ("<" .. table_sets.ledobotnick .. "> Error: Unable to run VH:GetNickList|", 5, 10, getconfig ("delayed_chat"))
+		else
+			VH:SendToClass ("<" .. table_sets.ledobotnick .. "> Error: Unable to run VH:GetNickList|", 5, 10)
+		end
+
 		return true
 	end
 
@@ -21590,7 +21832,11 @@ function loadcomponents ()
 	table_othsets.ver_luaplug = _PLUGINVERSION
 
 	if not table_othsets.ver_luaplug then
-		VH:SendToClass ("<" .. table_sets.ledobotnick .. "> Warning: Unable to detect Lua plugin version|", 5, 10)
+		if minhubver (1, 0, 2, 15) then
+			VH:SendToClass ("<" .. table_sets.ledobotnick .. "> Warning: Unable to detect Lua plugin version|", 5, 10, getconfig ("delayed_chat"))
+		else
+			VH:SendToClass ("<" .. table_sets.ledobotnick .. "> Warning: Unable to detect Lua plugin version|", 5, 10)
+		end
 	end
 
 	-- lua version
@@ -21618,12 +21864,21 @@ function loadcomponents ()
 	end
 
 	if not table_othsets.ver_lua then
-		VH:SendToClass ("<" .. table_sets.ledobotnick .. "> Warning: Unable to run \"lua -v\"|", 5, 10)
+		if minhubver (1, 0, 2, 15) then
+			VH:SendToClass ("<" .. table_sets.ledobotnick .. "> Warning: Unable to run \"lua -v\"|", 5, 10, getconfig ("delayed_chat"))
+		else
+			VH:SendToClass ("<" .. table_sets.ledobotnick .. "> Warning: Unable to run \"lua -v\"|", 5, 10)
+		end
+
 		table_othsets.ver_lua = _VERSION:sub (5)
 	end
 
 	if not table_othsets.ver_lua then
-		VH:SendToClass ("<" .. table_sets.ledobotnick .. "> Warning: Unable to detect Lua library version|", 5, 10)
+		if minhubver (1, 0, 2, 15) then
+			VH:SendToClass ("<" .. table_sets.ledobotnick .. "> Warning: Unable to detect Lua library version|", 5, 10, getconfig ("delayed_chat"))
+		else
+			VH:SendToClass ("<" .. table_sets.ledobotnick .. "> Warning: Unable to detect Lua library version|", 5, 10)
+		end
 	else
 		if table_othsets.ver_lua:sub (1, 3) == "5.0" then
 			string.gmatch = string.gfind -- lua 5.0 fix
@@ -21636,7 +21891,11 @@ function loadcomponents ()
 	_, table_othsets.ver_sql = VH:SQLFetch (0)
 
 	if not table_othsets.ver_sql then
-		VH:SendToClass ("<" .. table_sets.ledobotnick .. "> Warning: Unable to detect MySQL version|", 5, 10)
+		if minhubver (1, 0, 2, 15) then
+			VH:SendToClass ("<" .. table_sets.ledobotnick .. "> Warning: Unable to detect MySQL version|", 5, 10, getconfig ("delayed_chat"))
+		else
+			VH:SendToClass ("<" .. table_sets.ledobotnick .. "> Warning: Unable to detect MySQL version|", 5, 10)
+		end
 	end
 
 	-- curl version
@@ -21656,7 +21915,11 @@ function loadcomponents ()
 	end
 
 	if not table_othsets.ver_curl then
-		VH:SendToClass ("<" .. table_sets.ledobotnick .. "> Warning: Unable to run \"curl --version\"|", 5, 10)
+		if minhubver (1, 0, 2, 15) then
+			VH:SendToClass ("<" .. table_sets.ledobotnick .. "> Warning: Unable to run \"curl --version\"|", 5, 10, getconfig ("delayed_chat"))
+		else
+			VH:SendToClass ("<" .. table_sets.ledobotnick .. "> Warning: Unable to run \"curl --version\"|", 5, 10)
+		end
 	end
 
 	--[[
@@ -21678,7 +21941,11 @@ function loadcomponents ()
 	end
 
 	if not table_othsets.ver_iconv then
-		VH:SendToClass ("<" .. table_sets.ledobotnick .. "> Warning: Unable to run \"iconv --version\"|", 5, 10)
+		if minhubver (1, 0, 2, 15) then
+			VH:SendToClass ("<" .. table_sets.ledobotnick .. "> Warning: Unable to run \"iconv --version\"|", 5, 10, getconfig ("delayed_chat"))
+		else
+			VH:SendToClass ("<" .. table_sets.ledobotnick .. "> Warning: Unable to run \"iconv --version\"|", 5, 10)
+		end
 	end
 
 	]]--
@@ -21690,12 +21957,20 @@ function loadcomponents ()
 	)
 
 	if not res or not table_othsets.mod_sock then
-		VH:SendToClass ("<" .. table_sets.ledobotnick .. "> Warning: Unable to load LuaSocket module: " .. repnmdcoutchars (err or gettext ("No error message specified.")) .. "|", 5, 10)
+		if minhubver (1, 0, 2, 15) then
+			VH:SendToClass ("<" .. table_sets.ledobotnick .. "> Warning: Unable to load LuaSocket module: " .. repnmdcoutchars (err or gettext ("No error message specified.")) .. "|", 5, 10, getconfig ("delayed_chat"))
+		else
+			VH:SendToClass ("<" .. table_sets.ledobotnick .. "> Warning: Unable to load LuaSocket module: " .. repnmdcoutchars (err or gettext ("No error message specified.")) .. "|", 5, 10)
+		end
 	else
 		table_othsets.ver_sock = table_othsets.mod_sock._VERSION:sub (11) -- luasocket version
 
 		if not table_othsets.ver_sock or table_othsets.ver_sock == "" then
-			VH:SendToClass ("<" .. table_sets.ledobotnick .. "> Warning: Unable to detect LuaSocket module version|", 5, 10)
+			if minhubver (1, 0, 2, 15) then
+				VH:SendToClass ("<" .. table_sets.ledobotnick .. "> Warning: Unable to detect LuaSocket module version|", 5, 10, getconfig ("delayed_chat"))
+			else
+				VH:SendToClass ("<" .. table_sets.ledobotnick .. "> Warning: Unable to detect LuaSocket module version|", 5, 10)
+			end
 		end
 
 		--[[
@@ -21707,7 +21982,11 @@ function loadcomponents ()
 		)
 
 		if not res or not table_othsets.mod_http then
-			VH:SendToClass ("<" .. table_sets.ledobotnick .. "> Warning: Unable to load LuaSocket.HTTP module: " .. repnmdcoutchars (err or gettext ("No error message specified.")) .. "|", 5, 10)
+			if minhubver (1, 0, 2, 15) then
+				VH:SendToClass ("<" .. table_sets.ledobotnick .. "> Warning: Unable to load LuaSocket.HTTP module: " .. repnmdcoutchars (err or gettext ("No error message specified.")) .. "|", 5, 10, getconfig ("delayed_chat"))
+			else
+				VH:SendToClass ("<" .. table_sets.ledobotnick .. "> Warning: Unable to load LuaSocket.HTTP module: " .. repnmdcoutchars (err or gettext ("No error message specified.")) .. "|", 5, 10)
+			end
 		end
 
 		local res, err = pcall ( -- load ltn12
@@ -21717,12 +21996,20 @@ function loadcomponents ()
 		)
 
 		if not res or not table_othsets.mod_ltn12 then
-			VH:SendToClass ("<" .. table_sets.ledobotnick .. "> Warning: Unable to load LuaSocket.LTN12 module: " .. repnmdcoutchars (err or gettext ("No error message specified.")) .. "|", 5, 10)
+			if minhubver (1, 0, 2, 15) then
+				VH:SendToClass ("<" .. table_sets.ledobotnick .. "> Warning: Unable to load LuaSocket.LTN12 module: " .. repnmdcoutchars (err or gettext ("No error message specified.")) .. "|", 5, 10, getconfig ("delayed_chat"))
+			else
+				VH:SendToClass ("<" .. table_sets.ledobotnick .. "> Warning: Unable to load LuaSocket.LTN12 module: " .. repnmdcoutchars (err or gettext ("No error message specified.")) .. "|", 5, 10)
+			end
 		else
 			table_othsets.ver_ltn12 = table_othsets.mod_ltn12._VERSION:sub (7) -- ltn12 version
 
 			if not table_othsets.ver_ltn12 or table_othsets.ver_ltn12 == "" then
-				VH:SendToClass ("<" .. table_sets.ledobotnick .. "> Warning: Unable to detect LuaSocket.LTN12 module version|", 5, 10)
+				if minhubver (1, 0, 2, 15) then
+					VH:SendToClass ("<" .. table_sets.ledobotnick .. "> Warning: Unable to detect LuaSocket.LTN12 module version|", 5, 10, getconfig ("delayed_chat"))
+				else
+					VH:SendToClass ("<" .. table_sets.ledobotnick .. "> Warning: Unable to detect LuaSocket.LTN12 module version|", 5, 10)
+				end
 			end
 		end
 
@@ -21735,7 +22022,11 @@ function loadcomponents ()
 		if VH [name] then
 			table_refu [name] = true
 		else
-			VH:SendToClass ("<" .. table_sets.ledobotnick .. "> " .. gettext ("Please note, following function is required for features available in this version of %s and is currently not available in running version of %s but is available in latest update: %s"):format ("Ledokol", "Verlihub", name) .. "|", 5, 10)
+			if minhubver (1, 0, 2, 15) then
+				VH:SendToClass ("<" .. table_sets.ledobotnick .. "> " .. gettext ("Please note, following function is required for features available in this version of %s and is currently not available in running version of %s but is available in latest update: %s"):format ("Ledokol", "Verlihub", name) .. "|", 5, 10, getconfig ("delayed_chat"))
+			else
+				VH:SendToClass ("<" .. table_sets.ledobotnick .. "> " .. gettext ("Please note, following function is required for features available in this version of %s and is currently not available in running version of %s but is available in latest update: %s"):format ("Ledokol", "Verlihub", name) .. "|", 5, 10)
+			end
 		end
 	end
 
@@ -23266,7 +23557,12 @@ function antiscan (nick, class, data, where, to, status)
 						custnick = getcustnick (nick) or nick
 					end
 
-					VH:SendToClass ("<" .. custnick .. "> " .. table_sets.ninthactrepmsg .. "|", 0, 10)
+					if minhubver (1, 0, 2, 15) then
+						VH:SendToClass ("<" .. custnick .. "> " .. table_sets.ninthactrepmsg .. "|", 0, 10, getconfig ("delayed_chat"))
+					else
+						VH:SendToClass ("<" .. custnick .. "> " .. table_sets.ninthactrepmsg .. "|", 0, 10)
+					end
+
 					addmchistoryline (custnick, nick, table_sets.ninthactrepmsg)
 				elseif where == 2 then
 					local custnick = nick
@@ -23557,7 +23853,11 @@ end
 ----- ---- --- -- -
 
 function maintoself (nick, data)
-	VH:SendToUser ("<" .. nick .. "> " .. data .. "|", nick)
+	if minhubver (1, 0, 2, 15) then
+		VH:SendToUser ("<" .. nick .. "> " .. data .. "|", nick, getconfig ("delayed_chat"))
+	else
+		VH:SendToUser ("<" .. nick .. "> " .. data .. "|", nick)
+	end
 end
 
 ----- ---- --- -- -
@@ -23575,13 +23875,22 @@ end
 ----- ---- --- -- -
 
 function maintouser (to, data)
-	VH:SendToUser ("<" .. table_othsets.sendfrom .. "> " .. data .. "|", to)
+	if minhubver (1, 0, 2, 15) then
+		VH:SendToUser ("<" .. table_othsets.sendfrom .. "> " .. data .. "|", to, getconfig ("delayed_chat"))
+	else
+		VH:SendToUser ("<" .. table_othsets.sendfrom .. "> " .. data .. "|", to)
+	end
 end
 
 ----- ---- --- -- -
 
 function maintoall (data, micl, macl, refl)
-	VH:SendToClass ("<" .. table_othsets.sendfrom .. "> " .. data .. "|", micl, macl)
+	if minhubver (1, 0, 2, 15) then
+		VH:SendToClass ("<" .. table_othsets.sendfrom .. "> " .. data .. "|", micl, macl, getconfig ("delayed_chat"))
+	else
+		VH:SendToClass ("<" .. table_othsets.sendfrom .. "> " .. data .. "|", micl, macl)
+	end
+
 	addmchistoryline (table_othsets.sendfrom, table_othsets.sendfrom, data, refl)
 end
 
@@ -23589,7 +23898,11 @@ end
 
 function commandanswer (to, data) -- todo: replace nmdc characters here instead of each place that calls this function
 	if table_sets.commandstopm == 0 then
-		VH:SendToUser ("<" .. table_othsets.sendfrom .. "> " .. data .. "|", to)
+		if minhubver (1, 0, 2, 15) then
+			VH:SendToUser ("<" .. table_othsets.sendfrom .. "> " .. data .. "|", to, getconfig ("delayed_chat"))
+		else
+			VH:SendToUser ("<" .. table_othsets.sendfrom .. "> " .. data .. "|", to)
+		end
 	else
 		VH:SendToUser ("$To: " .. to .. " From: " .. table_othsets.botnick .. " $<" .. table_othsets.sendfrom .. "> " .. data .. "|", to)
 	end

@@ -6,6 +6,7 @@
 [ 27] Added: Support for Lua 5.3 number to string conversion
 [ 28] Added: More support for Lua 5.3
 [ 30] Added: Class parameter to operator chat message script command
+[ 34] Added: Support for delayed protocol messages, requires Verlihub version 1.0.2.15
 [ 27] Improved: Translation speed by parsing language file only once and storing it as a table
 [ 31] Improved: Search filter cache for better performance, request by FlylinkDC and KCAHDEP
 [ 32] Improved: Forbidden MyINFO cache for better performance, idea by FlylinkDC and KCAHDEP
