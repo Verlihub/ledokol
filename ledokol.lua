@@ -63,7 +63,7 @@ Tzaca, JOE™
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.2" -- ledokol version
-bld_ledo = "34" -- build number
+bld_ledo = "35" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -8704,7 +8704,7 @@ function sendrcmenu (nick, class)
 		end
 	end
 
-	local _, rows = VH:SQLQuery ("select `menu`, `command`, `type`, `cont` from `" .. tbl_sql.rcmenu .. "` where `off` = 0 and `minclass` <= " .. _tostring (class) .. " and `maxclass` >= " .. tonumber (class) .. " order by `order` asc, `id` asc")
+	local _, rows = VH:SQLQuery ("select `menu`, `command`, `type`, `cont` from `" .. tbl_sql.rcmenu .. "` where `off` = 0 and `minclass` <= " .. _tostring (class) .. " and `maxclass` >= " .. _tostring (class) .. " order by `order` asc, `id` asc")
 
 	if rows > 0 then
 		for x = 0, rows - 1 do
