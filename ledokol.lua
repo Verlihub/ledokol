@@ -30,7 +30,7 @@ of the GNU General Public License.
 Author: RoLex
 Email: webmaster@feardc.net
 License: GNU General Public License
-Website: http://ledo.feardc.net/
+Website: https://ledo.feardc.net/
 Support hub: dchub://hub.verlihub.net:7777/
 Description:
 
@@ -5775,7 +5775,7 @@ function VH_OnParsedMsgConnectToMe (nick, othernick, ip, port)
 	end
 
 	--if table_sets.addledobot == 1 and othernick == table_sets.ledobotnick then -- hub doesnt allow this request
-		--maintouser (nick, gettext ("You can download me from: %s"):format ("http://ledo.feardc.net/"))
+		--maintouser (nick, gettext ("You can download me from: %s"):format ("https://ledo.feardc.net/"))
 		--return 0
 	--end
 
@@ -5827,7 +5827,7 @@ function VH_OnParsedMsgRevConnectToMe (nick, othernick)
 	end
 
 	--if table_sets.addledobot == 1 and othernick == table_sets.ledobotnick then -- hub doesnt allow this request
-		--maintouser (nick, gettext ("You can download me from: %s"):format ("http://ledo.feardc.net/"))
+		--maintouser (nick, gettext ("You can download me from: %s"):format ("https://ledo.feardc.net/"))
 		--return 0
 	--end
 
@@ -9515,19 +9515,19 @@ function seenlookup (nick, line)
 
 	if ftype == "nick" or ftype == "desc" or ftype == "tag" or ftype == "conn" or ftype == "mail" or ftype == "share" or ftype == "ip" then
 		if ftype == "nick" then
-			commandanswer (nick, gettext ("Looking for users with nick %s on: %s"):format (ftext, "http://www.te-home.net/?do=hublist"))
+			commandanswer (nick, gettext ("Looking for users with nick %s on: %s"):format (ftext, "https://www.te-home.net/?do=hublist"))
 		elseif ftype == "desc" then
-			commandanswer (nick, gettext ("Looking for users with description %s on: %s"):format (ftext, "http://www.te-home.net/?do=hublist"))
+			commandanswer (nick, gettext ("Looking for users with description %s on: %s"):format (ftext, "https://www.te-home.net/?do=hublist"))
 		elseif ftype == "tag" then
-			commandanswer (nick, gettext ("Looking for users with client tag %s on: %s"):format (ftext, "http://www.te-home.net/?do=hublist"))
+			commandanswer (nick, gettext ("Looking for users with client tag %s on: %s"):format (ftext, "https://www.te-home.net/?do=hublist"))
 		elseif ftype == "conn" then
-			commandanswer (nick, gettext ("Looking for users with connection type %s on: %s"):format (ftext, "http://www.te-home.net/?do=hublist"))
+			commandanswer (nick, gettext ("Looking for users with connection type %s on: %s"):format (ftext, "https://www.te-home.net/?do=hublist"))
 		elseif ftype == "mail" then
-			commandanswer (nick, gettext ("Looking for users with email address %s on: %s"):format (ftext, "http://www.te-home.net/?do=hublist"))
+			commandanswer (nick, gettext ("Looking for users with email address %s on: %s"):format (ftext, "https://www.te-home.net/?do=hublist"))
 		elseif ftype == "share" then
-			commandanswer (nick, gettext ("Looking for users with share size %s on: %s"):format (ftext, "http://www.te-home.net/?do=hublist"))
+			commandanswer (nick, gettext ("Looking for users with share size %s on: %s"):format (ftext, "https://www.te-home.net/?do=hublist"))
 		elseif ftype == "ip" then
-			commandanswer (nick, gettext ("Looking for users with IP address %s on: %s"):format (ftext, "http://www.te-home.net/?do=hublist"))
+			commandanswer (nick, gettext ("Looking for users with IP address %s on: %s"):format (ftext, "https://www.te-home.net/?do=hublist"))
 		end
 
 		local res, err, data = getcurl (table_othsets.seenurl, {[ftype] = ftext})
@@ -15929,7 +15929,7 @@ end
 		sopmenitm (usr, gettext ("User logger") .. "\\" .. gettext ("User information"), table_cmnds.userinfo .. " %[line:<" .. gettext ("nick") .. ">]")
 		sopmenitm (usr, gettext ("User logger") .. "\\" .. gettext ("IP information"), table_cmnds.ipinfo .. " %[line:<" .. gettext ("ip") .. ">]")
 		sopmenitm (usr, gettext ("User logger") .. "\\" .. gettext ("Search in user log"), table_cmnds.ulog .. " %[line:<" .. gettext ("type") .. ">] %[line:<" .. gettext ("string") .. ">] %[line:<" .. gettext ("lines") .. ">]")
-		sopmenitm (usr, gettext ("User logger") .. "\\" .. gettext ("%s user lookup"):format ("http://www.te-home.net/?do=hublist"), table_cmnds.seen .. " %[line:<" .. gettext ("type") .. ">] %[line:<" .. gettext ("text") .. ">]")
+		sopmenitm (usr, gettext ("User logger") .. "\\" .. gettext ("%s user lookup"):format ("https://www.te-home.net/?do=hublist"), table_cmnds.seen .. " %[line:<" .. gettext ("type") .. ">] %[line:<" .. gettext ("text") .. ">]")
 	end
 
 	-- todo: no pm
@@ -19615,7 +19615,7 @@ help = help .. " " .. optrig .. table_cmnds.hubdel .. " <" .. gettext ("address"
 	help = help .. " " .. optrig .. table_cmnds.userinfo .. " <" .. gettext ("nick") .. "> - " .. gettext ("User information") .. "\r\n"
 	help = help .. " " .. optrig .. table_cmnds.ipinfo .. " <" .. gettext ("ip") .. "> - " .. gettext ("IP information") .. "\r\n"
 	help = help .. " " .. optrig .. table_cmnds.ulog .. " <" .. gettext ("type") .. "> <" .. gettext ("string") .. "> <" .. gettext ("lines") .. "> - " .. gettext ("Search in user log") .. "\r\n"
-	help = help .. " " .. optrig .. table_cmnds.seen .. " <" .. gettext ("type") .. "> <" .. gettext ("text") .. "> - " .. gettext ("%s user lookup"):format ("http://www.te-home.net/?do=hublist") .. "\r\n\r\n"
+	help = help .. " " .. optrig .. table_cmnds.seen .. " <" .. gettext ("type") .. "> <" .. gettext ("text") .. "> - " .. gettext ("%s user lookup"):format ("https://www.te-home.net/?do=hublist") .. "\r\n\r\n"
 
 	-- vote kick
 	help = help .. " " .. optrig .. table_cmnds.votekickdel .. " <" .. gettext ("nick") .. "> - " .. gettext ("Clear kick votes for user") .. "\r\n"

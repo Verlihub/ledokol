@@ -1,4 +1,4 @@
-[ 2.9.2 :: 2017-##-## ]
+[ 2.9.2 :: 2017-02-12 ]
 
 [ 29] Fixed: Error on registered users list cleanup when using * as number of days, report by KCAHDEP
 [ 32] Fixed: Error in forbidden country code exception notification

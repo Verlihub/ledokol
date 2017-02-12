@@ -1,6 +1,6 @@
 # Language: fr_FR
 # Charset: CP1252
-# Version: 2.9.1
+# Version: 2.9.2
 # Author: @tlantide
 # Email: chatonhubfrance@gmail.com
 
@@ -808,9 +808,9 @@ Add chat replacer exception|Ajouter  un mot d'exception
 Delete chat replacer exception|Supprimer un mot d'exception
 Chat replacer|Remplacer un mot
 You need to send another %d main chat messages in order to use hub registration.|Vous devez envoyer d'autre %d messages en chat central pour utiliser l'enregistrement du hub
-Please wait another %d seconds before using hub registration.|
+Please wait another %d seconds before using hub registration.|Veuillez attendre quelques %d secondes avant d'utiliser l'enregistrement.
 In order to use this feature you need to set %s to: %d|Pour utiliser cette fonction vous devez mettre %d à: %d
-Please reconnect to gain %d seconds of uptime in order to use hub registration.|
+Please reconnect to gain %d seconds of uptime in order to use hub registration.|Veuillez vous reconnecter dans %d secondes afin d'utiliser l'enregistrement du salon.
 Dropping %s with IP %s and class %d due to protocol flood detection: %s|Virer %s avec l'IP %s et le profil %d car détection de flood par le protocole: %s
 Protocol flood detected from your client: %s|Le protocole a détecté du flood vanat de ton client: %s
 Automatic update check detected stable version of %s available, use following command to update: %s|Le contrôle de mise à jour automatique a détecté une version stable de %s disponible, utiliser la commande suivante pour mettre à jour: %s
@@ -1141,7 +1141,7 @@ Low chat uptime of %d seconds from %s with IP %s and class %d in PM to %s with I
 Low chat uptime of %d seconds from %s with IP %s and class %d in MC: %s|Chat en bas de disponibilité %d secondes de %s avec IP %s et rang %d dans MC: %s
 Low chat uptime of %d seconds from %s with IP %s and class %d in command: %s|Chat en bas temps de fonctionnement de %d secondes de %s avec %s IP et de la classe %d dans la commande: %s
 Low registration uptime from %s with IP %s and class %d: %s|Faible disponibilité d'enregistrement de %s avec %s IP et de la classe %d: %s
-%d seconds|
+%d seconds|%d secondes
 Thank you, your report has been accepted.|Merci, votre rapport a été accepté .
 Low search uptime of %d seconds from %s with IP %s and class %d as any file: %s|Recherche faible disponibilité de %d secondes de %s avec %s IP et de la classe %d comme tout fichier: %s
 Low search uptime of %d seconds from %s with IP %s and class %d as audio file: %s|Recherche faible disponibilité de %d secondes de %s avec %s IP et de la classe %d sous forme de fichier audio: %s
