@@ -16121,6 +16121,10 @@ function setledoconf (nick, ucls, line)
 
 	if num then
 		setto = tonumber (setto)
+
+		if setto == nil then
+			num = false
+		end
 	end
 
 	----- ---- --- -- -
