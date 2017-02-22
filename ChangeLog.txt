@@ -1,3 +1,7 @@
+[ 2.9.3 :: 2017-##-## ]
+
+[ 36] Fixed: Errors on configuration conversion from string to number and vice versa, report by Alexandr
+
 [ 2.9.2 :: 2017-02-12 ]
 
 [ 29] Fixed: Error on registered users list cleanup when using * as number of days, report by KCAHDEP

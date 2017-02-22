@@ -62,8 +62,8 @@ Tzaca, JOE™
 -- global storage variables and tables >>
 ---------------------------------------------------------------------
 
-ver_ledo = "2.9.2" -- ledokol version
-bld_ledo = "35" -- build number
+ver_ledo = "2.9.3" -- ledokol version
+bld_ledo = "36" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -16042,14 +16042,23 @@ end
 ----- ---- --- -- -
 
 function getledoconf (var)
-	local _, rows = VH:SQLQuery ("select `value` from `" .. tbl_sql.conf .. "` where `variable` = '" .. repsqlchars (var) .. "' limit 1")
+	local _, rows = VH:SQLQuery ("select `value` from `" .. tbl_sql.conf .. "` where `variable` = '" .. repsqlchars (var) .. "'")
 
 	if rows > 0 then
-		local _, cfg = VH:SQLFetch (0)
-		return tonumber (cfg) or cfg
-	else
-		return
+		local _, val = VH:SQLFetch (0)
+
+		if table_sets [var] then
+			if type (table_sets [var]) == "number" then
+				val = tonumber (val)
+			end
+		else
+			val = tonumber (val) or val
+		end
+
+		return val
 	end
+
+	return
 end
 
 ----- ---- --- -- -
@@ -16108,12 +16117,10 @@ end
 
 function setledoconf (nick, ucls, line)
 	local tvar, setto = line:match ("^(%S+) (.*)$")
-	local num, ok = true, false
+	local num, ok = (table_sets [tvar] and type (table_sets [tvar]) == "number"), false
 
-	if tonumber (setto) then
+	if num then
 		setto = tonumber (setto)
-	else
-		num = false
 	end
 
 	----- ---- --- -- -
