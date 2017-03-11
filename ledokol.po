@@ -1,10 +1,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ledokol\n"
-"Project-Version: 2.9.2\n"
+"Project-Version: 2.9.3\n"
 "Report-Msgid-Bugs-To: RoLex <webmaster@feardc.net>\n"
-"POT-Creation-Date: 2017-02-12 12:55+0200\n"
-"PO-Revision-Date: 2017-02-12 12:55+0200\n"
+"POT-Creation-Date: 2017-03-11 21:03+0200\n"
+"PO-Revision-Date: 2017-03-11 21:03+0200\n"
 "Last-Translator: RoLex <webmaster@feardc.net>\n"
 "Language-Team: RoLex <webmaster@feardc.net>\n"
 "Language: en_GB\n"
@@ -1933,6 +1933,9 @@ msgstr ""
 msgid "Main chat is currently disabled for you."
 msgstr ""
 
+msgid "Main chat is currently disabled for you because: %s"
+msgstr ""
+
 msgid "Cleared temporary IP gag list."
 msgstr ""
 
@@ -1958,6 +1961,9 @@ msgid "Flood detected from IP %s last known as %s with class %d in PM to %s with
 msgstr ""
 
 msgid "Private chat is currently disabled for you."
+msgstr ""
+
+msgid "Private chat is currently disabled for you because: %s"
 msgstr ""
 
 msgid "Main chat flood detected from your IP."
@@ -2608,7 +2614,13 @@ msgstr ""
 msgid "Added country code gag: %s"
 msgstr ""
 
+msgid "Added country code gag %s with reason: %s"
+msgstr ""
+
 msgid "Modified country code gag: %s"
+msgstr ""
+
+msgid "Modified country code gag %s with reason: %s"
 msgstr ""
 
 msgid "Deleted country code gag: %s"

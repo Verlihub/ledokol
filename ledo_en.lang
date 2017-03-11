@@ -644,6 +644,7 @@ IP gag list|
 IP gag list is empty.|
 Delete IP gag|
 Main chat is currently disabled for you.|
+Main chat is currently disabled for you because: %s|
 Cleared temporary IP gag list.|
 Show custom script commands|
 Custom script command list|
@@ -653,6 +654,7 @@ Added %s to IP gag list, %d users in total.|
 Flood detected from IP %s last known as %s with class %d in MC: %s|
 Flood detected from IP %s last known as %s with class %d in PM to %s with IP %s and class %d: %s|
 Private chat is currently disabled for you.|
+Private chat is currently disabled for you because: %s|
 Main chat flood detected from your IP.|
 %d users with IP %s dropped due to flood.|
 No error message specified.|
@@ -869,7 +871,9 @@ unknown nick|
 Country code gag|
 Add country code gag|
 Added country code gag: %s|
+Added country code gag %s with reason: %s|
 Modified country code gag: %s|
+Modified country code gag %s with reason: %s|
 Deleted country code gag: %s|
 Country code gag not found: %s|
 Country code gag list|

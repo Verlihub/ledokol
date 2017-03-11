@@ -63,7 +63,7 @@ Tzaca, JOE™
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.3" -- ledokol version
-bld_ledo = "36" -- build number
+bld_ledo = "37" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -1062,7 +1062,7 @@ table_avfi = {
 	string.char (48, 49, 32, 46, 109, 112, 51)
 }
 
-table_avex = {
+table_avex = { -- todo: add apk
 	string.char (46, 101, 120, 101),
 	string.char (46, 122, 105, 112),
 	string.char (46, 114, 97, 114)
@@ -1215,7 +1215,7 @@ function Main (file)
 					end
 
 					if ver <= 280 then
-						VH:SQLQuery ("create table if not exists `" .. tbl_sql.ccgag .. "` (`item` varchar(255) not null primary key, `flag` tinyint(1) unsigned not null default 0) engine = myisam default character set utf8 collate utf8_unicode_ci")
+						VH:SQLQuery ("create table if not exists `" .. tbl_sql.ccgag .. "` (`item` varchar(255) not null primary key, `flag` tinyint(1) unsigned not null default 0, `why` varchar(255) null) engine = myisam default character set utf8 collate utf8_unicode_ci")
 						VH:SQLQuery ("create table if not exists `" .. tbl_sql.trig .. "` (`id` varchar(255) not null primary key, `content` text not null, `minclass` tinyint(2) unsigned not null default 0, `maxclass` tinyint(2) unsigned not null default 10) engine = myisam default character set utf8 collate utf8_unicode_ci")
 
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.ledocmd .. "` (`original`, `new`) values ('avstats', '" .. repsqlchars (table_cmnds.avstats) .. "')")
@@ -1378,7 +1378,15 @@ function Main (file)
 					end
 
 					if ver <= 292 then
-						-- todo
+						-- nothing here
+					end
+
+					if ver <= 293 then
+						VH:SQLQuery ("alter table `" .. tbl_sql.ccgag .. "` add column `why` varchar(255) null after `flag`")
+					end
+
+					if ver <= 294 then
+						-- todo: next version
 					end
 
 					-- and so on, todo: dont forget to update this list on every release
@@ -2848,7 +2856,7 @@ elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.clog .. " %d+$") t
 
 	----- ---- --- -- -
 
-	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.gagccadd .. " .+ %d$") then
+	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.gagccadd .. " .+ %d$") or data:match ("^" .. table_othsets.optrig .. table_cmnds.gagccadd .. " \".+\" \".+\" %d$") then
 		if ucl >= table_sets.mincommandclass then
 			donotifycmd (nick, data, 0, ucl)
 			gagccadd (nick, data:sub (# table_cmnds.gagccadd + 3))
@@ -12347,8 +12355,17 @@ end
 ----- ---- --- -- -
 
 function gagccadd (nick, line)
-	local lre, flag = line:match ("^(.+) (%d)$")
-	flag = tonumber (flag)
+	local lre, why, flag = "", "", 0
+
+	if line:match ("^\".+\" \".+\" %d$") then
+		lre, why, flag = line:match ("^\"(.+)\" \"(.+)\" (%d)$")
+	elseif line:match ("^\".+\" %d$") then
+		lre, flag = line:match ("^\"(.+)\" (%d)$")
+	else
+		lre, flag = line:match ("^(.+) (%d)$")
+	end
+
+	flag = tonumber (flag or -1) or -1
 
 	if flag < 0 or flag > 2 then
 		commandanswer (nick, gettext ("Known flags are: %s"):format ("0=ALL, 1=MC " .. gettext ("and") .. " 2=PM"))
@@ -12357,11 +12374,22 @@ function gagccadd (nick, line)
 		local _, rows = VH:SQLQuery ("select `flag` from `" .. tbl_sql.ccgag .. "` where `item` = '" .. rlre .. "'")
 
 		if rows > 0 then -- modify
-			VH:SQLQuery ("update `" .. tbl_sql.ccgag .. "` set `flag` = " .. _tostring (flag) .. " where `item` = '" .. rlre .. "'")
-			commandanswer (nick, gettext ("Modified country code gag: %s"):format (lre))
+			VH:SQLQuery ("update `" .. tbl_sql.ccgag .. "` set `flag` = " .. _tostring (flag) .. ", `why` = " .. sqlemptnull (why) .. " where `item` = '" .. rlre .. "'")
+
+			if # why > 0 then
+				commandanswer (nick, gettext ("Modified country code gag %s with reason: %s"):format (lre, why))
+			else
+				commandanswer (nick, gettext ("Modified country code gag: %s"):format (lre))
+			end
+
 		else -- add
-			VH:SQLQuery ("insert into `" .. tbl_sql.ccgag .. "` (`item`, `flag`) values ('" .. rlre .. "', " .. _tostring (flag) .. ")")
-			commandanswer (nick, gettext ("Added country code gag: %s"):format (lre))
+			VH:SQLQuery ("insert into `" .. tbl_sql.ccgag .. "` (`item`, `flag`, `why`) values ('" .. rlre .. "', " .. _tostring (flag) .. ", " .. sqlemptnull (why) .. ")")
+
+			if # why > 0 then
+				commandanswer (nick, gettext ("Added country code gag %s with reason: %s"):format (lre, why))
+			else
+				commandanswer (nick, gettext ("Added country code gag: %s"):format (lre))
+			end
 		end
 	end
 end
@@ -12400,14 +12428,20 @@ function gagcclist (nick)
 		end
 	end
 
-	local _, rows = VH:SQLQuery ("select `item`, `flag` from `" .. tbl_sql.ccgag .. "`")
+	local _, rows = VH:SQLQuery ("select `item`, `flag`, `why` from `" .. tbl_sql.ccgag .. "`")
 
 	if rows > 0 then
 		local list = ""
 
-		for x = 0, rows - 1 do
-			local _, lre, flag = VH:SQLFetch (x)
-			list = list .. " " .. _tostring (x + 1) .. ". " .. repnmdcoutchars (lre) .. " [ F: " .. _tostring (flag) .. flagname (tonumber (flag)) .. " ]\r\n"
+		for row = 0, rows - 1 do
+			local _, lre, flag, why = VH:SQLFetch (row)
+			list = list .. " " .. _tostring (row + 1) .. ". " .. repnmdcoutchars (lre) .. " [ F: " .. _tostring (flag) .. flagname (tonumber (flag)) .. " ]"
+
+			if why and # why > 0 then
+				list = list .. " [ R: " .. repnmdcoutchars (why) .. " ]"
+			end
+
+			list = list .. "\r\n"
 		end
 
 		commandanswer (nick, gettext ("Country code gag list") .. ":\r\n\r\n" .. list)
@@ -12429,24 +12463,35 @@ function gagccheck (nick, ip, class, to, data)
 		return false
 	end
 
-	local _, rows = VH:SQLQuery ("select `item`, `flag` from `" .. tbl_sql.ccgag .. "`")
+	local _, rows = VH:SQLQuery ("select `item`, `flag`, `why` from `" .. tbl_sql.ccgag .. "`")
 
 	if rows > 0 then
 		cc = cc:lower ()
 
-		for x = 0, rows - 1 do
-			local _, lre, flag = VH:SQLFetch (x)
+		for row = 0, rows - 1 do
+			local _, lre, flag, why = VH:SQLFetch (row)
 
 			if cc:match (lre) then
-				flag = tonumber (flag)
+				flag = tonumber (flag or 0) or 0
 
 				if to and (flag == 0 or flag == 2) then -- pm
-					pmtouser (nick, to, gettext ("Private chat is currently disabled for you."))
+					if why and # why > 0 then
+						pmtouser (nick, to, gettext ("Private chat is currently disabled for you because: %s"):format (repnmdcoutchars (why)))
+					else
+						pmtouser (nick, to, gettext ("Private chat is currently disabled for you."))
+					end
+
 					local toip = getip (to)
 					opsnotify (table_sets.classnotigagip, gettext ("%s with IP %s and class %d tries to speak with country code gag in PM to %s with IP %s and class %d: %s"):format (nick, ip .. tryipcc (ip, nick), class, to, toip .. tryipcc (toip, to), getclass (to), data))
 					return true
+
 				elseif not to and (flag == 0 or flag == 1) then -- mc
-					maintouser (nick, gettext ("Main chat is currently disabled for you."))
+					if why and # why > 0 then
+						maintouser (nick, gettext ("Main chat is currently disabled for you because: %s"):format (repnmdcoutchars (why)))
+					else
+						maintouser (nick, gettext ("Main chat is currently disabled for you."))
+					end
+
 					opsnotify (table_sets.classnotigagip, gettext ("%s with IP %s and class %d tries to speak with country code gag in MC: %s"):format (nick, ip .. tryipcc (ip, nick), class, data))
 					return true
 				end
@@ -15917,7 +15962,7 @@ end
 
 	-- cc gag
 	if ucl >= table_sets.mincommandclass then
-		sopmenitm (usr, gettext ("Country code gag") .. "\\" .. gettext ("Add country code gag"), table_cmnds.gagccadd .. " %[line:<" .. gettext ("lre") .. ">] %[line:<" .. gettext ("flags") .. ">]")
+		sopmenitm (usr, gettext ("Country code gag") .. "\\" .. gettext ("Add country code gag"), table_cmnds.gagccadd .. " \"%[line:<" .. gettext ("lre") .. ">]\" \"%[line:<" .. gettext ("reason") .. ">]\" %[line:<" .. gettext ("flags") .. ">]")
 		sopmenitm (usr, gettext ("Country code gag") .. "\\" .. gettext ("Country code gag list"), table_cmnds.gagcclist)
 		smensep (usr)
 		sopmenitm (usr, gettext ("Country code gag") .. "\\" .. gettext ("Delete country code gag"), table_cmnds.gagccdel .. " %[line:<" .. gettext ("lre") .. " " .. gettext ("or") .. " *>]")
@@ -19618,7 +19663,7 @@ help = help .. " " .. optrig .. table_cmnds.hubdel .. " <" .. gettext ("address"
 	help = help .. " " .. optrig .. table_cmnds.gagipdel .. " <" .. gettext ("lre") .. " " .. gettext ("or") .. " *> - " .. gettext ("Delete IP gag") .. "\r\n\r\n"
 
 	-- cc gag
-	help = help .. " " .. optrig .. table_cmnds.gagccadd .. " <" .. gettext ("lre") .. "> <" .. gettext ("flags") .. "> - " .. gettext ("Add country code gag") .. "\r\n"
+	help = help .. " " .. optrig .. table_cmnds.gagccadd .. " <\"" .. gettext ("lre") .. "\"> [\"" .. gettext ("reason") .. "\"] <" .. gettext ("flags") .. "> - " .. gettext ("Add country code gag") .. "\r\n"
 	help = help .. " " .. optrig .. table_cmnds.gagcclist .. " - " .. gettext ("Country code gag list") .. "\r\n"
 	help = help .. " " .. optrig .. table_cmnds.gagccdel .. " <" .. gettext ("lre") .. " " .. gettext ("or") .. " *> - " .. gettext ("Delete country code gag") .. "\r\n\r\n"
 
@@ -20285,7 +20330,7 @@ VH:SQLQuery ("create table if not exists `" .. tbl_sql.stat .. "` (`type` varcha
 	VH:SQLQuery ("create table if not exists `" .. tbl_sql.ipgag .. "` (`ip` varchar(255) not null, `flag` tinyint(1) unsigned not null default 0, primary key (`ip`)) engine = myisam default character set utf8 collate utf8_unicode_ci")
 
 	-- cc gag
-	VH:SQLQuery ("create table if not exists `" .. tbl_sql.ccgag .. "` (`item` varchar(255) not null primary key, `flag` tinyint(1) unsigned not null default 0) engine = myisam default character set utf8 collate utf8_unicode_ci")
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql.ccgag .. "` (`item` varchar(255) not null primary key, `flag` tinyint(1) unsigned not null default 0, `why` varchar(255) null) engine = myisam default character set utf8 collate utf8_unicode_ci")
 
 	-- right click menu
 	VH:SQLQuery ("create table if not exists `" .. tbl_sql.rcmenu .. "` (`id` bigint(20) unsigned not null auto_increment primary key, `menu` varchar(255) not null, `command` varchar(255) not null, `type` tinyint(3) unsigned not null default 1, `cont` tinyint(2) unsigned not null default 3, `order` smallint(5) unsigned not null default 0, `minclass` tinyint(2) unsigned not null default 0, `maxclass` tinyint(2) unsigned not null default 10, `off` tinyint(1) unsigned not null default 0) engine = myisam default character set utf8 collate utf8_unicode_ci")
@@ -20619,6 +20664,7 @@ VH:SQLQuery ("alter table `" .. tbl_sql.stat .. "` change column `count` `count`
 
 	-- cc gag
 	VH:SQLQuery ("alter table `" .. tbl_sql.ccgag .. "` change column `cc` `item` varchar(255) not null") -- item
+	VH:SQLQuery ("alter table `" .. tbl_sql.ccgag .. "` add column `why` varchar(255) null after `flag`") -- why
 
 	-- right click menu
 	VH:SQLQuery ("alter table `" .. tbl_sql.rcmenu .. "` add column `off` tinyint(1) unsigned not null default 0 after `maxclass`") -- off
