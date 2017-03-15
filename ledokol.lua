@@ -63,7 +63,7 @@ Tzaca, JOE™
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.3" -- ledokol version
-bld_ledo = "37" -- build number
+bld_ledo = "38" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -6004,7 +6004,7 @@ function VH_OnOperatorKicks (op, nick, data)
 
 			if rucl then -- only if registered
 				delledouser (nick)
-				VH:SQLQuery ("delete from `reglist` where `nick` = '" .. repsqlchars (nick) .. "' limit 1")
+				VH:SQLQuery ("delete from `reglist` where `nick` = '" .. repsqlchars (nick) .. "'")
 				opsnotify (table_sets.classnotikick, gettext ("%s is registered with class %d and has been automatically unregistered and deleted from other tables."):format (nick, rucl))
 			end
 		end
@@ -6928,14 +6928,14 @@ function addchatroom (nick, item)
 		commandanswer (nick, gettext ("Known classes are: %s"):format ("0, 1, 2, 3, 4, 5 " .. gettext ("and") .. " 10"))
 	else
 		local entry = repsqlchars (room)
-		local _, rows = VH:SQLQuery ("select `minclass` from `" .. tbl_sql.chat .. "` where `room` = '" .. entry .. "' limit 1")
+		local _, rows = VH:SQLQuery ("select `minclass` from `" .. tbl_sql.chat .. "` where `room` = '" .. entry .. "'")
 
 		if rows > 0 then
-			VH:SQLQuery ("update `" .. tbl_sql.chat .. "` set `description` = '" .. repsqlchars (desc) .. "', `minclass` = " .. minc .. ", `maxclass` = " .. maxc .. ", `cc` = '" .. repsqlchars (cc:upper ()) .. "' where `room` = '" .. entry .. "' limit 1")
+			VH:SQLQuery ("update `" .. tbl_sql.chat .. "` set `description` = '" .. repsqlchars (desc) .. "', `minclass` = " .. _tostring (minc) .. ", `maxclass` = " .. _tostring (maxc) .. ", `cc` = '" .. repsqlchars (cc:upper ()) .. "' where `room` = '" .. entry .. "'")
 			commandanswer (nick, gettext ("Modified chatroom: %s"):format (room))
 		else
 			if getstatus (room) == 0 then
-				VH:SQLQuery ("insert into `" .. tbl_sql.chat .. "` (`room`, `description`, `minclass`, `maxclass`, `cc`) values ('" .. entry .. "', '" .. repsqlchars (desc) .. "', " .. minc .. ", " .. maxc .. ", '" .. repsqlchars (cc:upper ()) .. "')")
+				VH:SQLQuery ("insert into `" .. tbl_sql.chat .. "` (`room`, `description`, `minclass`, `maxclass`, `cc`) values ('" .. entry .. "', '" .. repsqlchars (desc) .. "', " .. _tostring (minc) .. ", " .. _tostring (maxc) .. ", '" .. repsqlchars (cc:upper ()) .. "')")
 				if table_sets.chatrunning == 1 then addhubrobot (room, desc, 1, "", 0) end
 				commandanswer (nick, gettext ("Added chatroom: %s"):format (room))
 			else -- nick is already in use
@@ -7014,10 +7014,10 @@ end
 
 function delacre (nick, data)
 	local id = tonumber (data) or 0
-	local _, rows = VH:SQLQuery ("select `id` from `" .. tbl_sql.acre .. "` where `id` = " .. _tostring (id) .. " limit 1")
+	local _, rows = VH:SQLQuery ("select `id` from `" .. tbl_sql.acre .. "` where `id` = " .. _tostring (id))
 
 	if rows > 0 then
-		VH:SQLQuery ("delete from `" .. tbl_sql.acre .. "` where `id` = " .. _tostring (id) .. " limit 1")
+		VH:SQLQuery ("delete from `" .. tbl_sql.acre .. "` where `id` = " .. _tostring (id))
 		commandanswer (nick, gettext ("Deleted automatic country chatroom entrance with ID: %d"):format (id))
 	else
 		commandanswer (nick, gettext ("Couldn't delete automatic country chatroom entrance because ID not found: %d"):format (id))
@@ -7557,7 +7557,7 @@ end
 ----- ---- --- -- -
 
 function getcustnick (nick)
-	local _, rows = VH:SQLQuery ("select `custom` from `" .. tbl_sql.cust .. "` where `nick` = '" .. repsqlchars (nick) .. "' limit 1")
+	local _, rows = VH:SQLQuery ("select `custom` from `" .. tbl_sql.cust .. "` where `nick` = '" .. repsqlchars (nick) .. "'")
 
 	if rows > 0 then
 		local _, value = VH:SQLFetch (0)
@@ -7755,7 +7755,7 @@ function resetrealnick (nick)
 
 		if rows > 0 then
 			local _, cust = VH:SQLFetch (0)
-			VH:SQLQuery ("delete from `" .. tbl_sql.cust .. "` where `nick` = '" .. repsqlchars (cust) .. "' limit 1")
+			VH:SQLQuery ("delete from `" .. tbl_sql.cust .. "` where `nick` = '" .. repsqlchars (cust) .. "'")
 			maintoall (gettext ("Custom nick %s is now owned by real user and therefore has been reset for user: %s"):format (nick, cust), 0, 10)
 		end
 	end
@@ -8083,7 +8083,7 @@ function checkcmd (nick, class, cmd)
 			local _, entry, cls = VH:SQLFetch (x)
 
 			if rcmd:find (entry) and (class < tonumber (cls)) then
-				VH:SQLQuery ("update `" .. tbl_sql.cmd .. "` set `occurred` = `occurred` + 1 where `command` = '" .. repsqlchars (entry) .. "' limit 1")
+				VH:SQLQuery ("update `" .. tbl_sql.cmd .. "` set `occurred` = `occurred` + 1 where `command` = '" .. repsqlchars (entry) .. "'")
 				commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 				return 0
 			end
@@ -8102,13 +8102,13 @@ class = tonumber (class)
 if class == 11 or class == 10 or class == 5 or class == 4 or class == 3 or class == 2 or class == 1 then -- only if valid class
 local _, _, entry = item:find ("^(.+) %d+$")
 local str = repsqlchars (repnmdcinchars (entry))
-local _, rows = VH:SQLQuery ("select `class` from `" .. tbl_sql.cmd .. "` where `command` = '" .. str .. "' limit 1")
+local _, rows = VH:SQLQuery ("select `class` from `" .. tbl_sql.cmd .. "` where `command` = '" .. str .. "'")
 
 if rows > 0 then
-VH:SQLQuery ("update `" .. tbl_sql.cmd .. "` set `class` = " .. class .. " where `command` = '" .. str .. "' limit 1")
+VH:SQLQuery ("update `" .. tbl_sql.cmd .. "` set `class` = " .. _tostring (class) .. " where `command` = '" .. str .. "'")
 commandanswer (nick, gettext ("Modified command permission with class %d: %s"):format (class, entry))
 else
-VH:SQLQuery ("insert into `" .. tbl_sql.cmd .. "` (`command`, `class`) values ('" .. str .. "', " .. class .. ")")
+VH:SQLQuery ("insert into `" .. tbl_sql.cmd .. "` (`command`, `class`) values ('" .. str .. "', " .. _tostring (class) .. ")")
 commandanswer (nick, gettext ("Added command permission with class %d: %s"):format (class, entry))
 end
 
@@ -8121,10 +8121,10 @@ end
 
 function delcmdentry (nick, item)
 local aitem = repsqlchars (repnmdcinchars (item))
-local _, rows = VH:SQLQuery ("select `class` from `" .. tbl_sql.cmd .. "` where `command` = '" .. aitem .. "' limit 1")
+local _, rows = VH:SQLQuery ("select `class` from `" .. tbl_sql.cmd .. "` where `command` = '" .. aitem .. "'")
 
 if rows > 0 then
-VH:SQLQuery ("delete from `" .. tbl_sql.cmd .. "` where `command` = '" .. aitem .. "' limit 1")
+VH:SQLQuery ("delete from `" .. tbl_sql.cmd .. "` where `command` = '" .. aitem .. "'")
 commandanswer (nick, gettext ("Deleted command permission: %s"):format (item))
 else
 commandanswer (nick, gettext ("Couldn't delete command permission because not found: %s"):format (item))
@@ -8155,7 +8155,7 @@ end
 
 function addcmdexentry (nick, item)
 local entry = repsqlchars (repnmdcinchars (item))
-local _, rows = VH:SQLQuery ("select `occurred` from `" .. tbl_sql.cmdex .. "` where `exception` = '" .. entry .. "' limit 1")
+local _, rows = VH:SQLQuery ("select `occurred` from `" .. tbl_sql.cmdex .. "` where `exception` = '" .. entry .. "'")
 
 if rows > 0 then
 commandanswer (nick, gettext ("Couldn't add command notification exception entry because already exists: %s"):format (item))
@@ -8169,10 +8169,10 @@ end
 
 function delcmdexentry (nick, item)
 local aitem = repsqlchars (repnmdcinchars (item))
-local _, rows = VH:SQLQuery ("select `occurred` from `" .. tbl_sql.cmdex .. "` where `exception` = '" .. aitem .. "' limit 1")
+local _, rows = VH:SQLQuery ("select `occurred` from `" .. tbl_sql.cmdex .. "` where `exception` = '" .. aitem .. "'")
 
 if rows > 0 then
-VH:SQLQuery ("delete from `" .. tbl_sql.cmdex .. "` where `exception` = '" .. aitem .. "' limit 1")
+VH:SQLQuery ("delete from `" .. tbl_sql.cmdex .. "` where `exception` = '" .. aitem .. "'")
 commandanswer (nick, gettext ("Deleted command notification exception entry: %s"):format (item))
 else
 commandanswer (nick, gettext ("Couldn't delete command notification exception entry because not found: %s"):format (item))
@@ -8248,13 +8248,13 @@ function addreminder (nick, item)
 			commandanswer (nick, gettext ("Don't be stupid."))
 		else
 			local entry = repsqlchars (ident)
-			local _, rows = VH:SQLQuery ("select `dest` from `" .. tbl_sql.rem .. "` where `id` = '" .. entry .. "' limit 1")
+			local _, rows = VH:SQLQuery ("select `dest` from `" .. tbl_sql.rem .. "` where `id` = '" .. entry .. "'")
 
 			if rows > 0 then
-				VH:SQLQuery ("update `" .. tbl_sql.rem .. "` set `content` = '" .. repsqlchars (cntnt) .. "', `minclass` = " .. minc .. ", `maxclass` = " .. maxc .. ", `dest` = " .. dest .. ", `interval` = " .. intv .. " where `id` = '" .. entry .. "' limit 1")
+				VH:SQLQuery ("update `" .. tbl_sql.rem .. "` set `content` = '" .. repsqlchars (cntnt) .. "', `minclass` = " .. _tostring (minc) .. ", `maxclass` = " .. _tostring (maxc) .. ", `dest` = " .. _tostring (dest) .. ", `interval` = " .. _tostring (intv) .. " where `id` = '" .. entry .. "'")
 				commandanswer (nick, gettext ("Modified reminder: %s"):format (ident))
 			else
-				VH:SQLQuery ("insert into `" .. tbl_sql.rem .. "` (`id`, `content`, `minclass`, `maxclass`, `dest`, `interval`) values ('" .. entry .. "', '" .. repsqlchars (cntnt) .. "', " .. minc .. ", " .. maxc .. ", " .. dest .. ", " .. intv .. ")")
+				VH:SQLQuery ("insert into `" .. tbl_sql.rem .. "` (`id`, `content`, `minclass`, `maxclass`, `dest`, `interval`) values ('" .. entry .. "', '" .. repsqlchars (cntnt) .. "', " .. _tostring (minc) .. ", " .. _tostring (maxc) .. ", " .. _tostring (dest) .. ", " .. _tostring (intv) .. ")")
 				commandanswer (nick, gettext ("Added reminder: %s"):format (ident))
 			end
 		end
@@ -8265,10 +8265,10 @@ end
 
 function delreminder (nick, item)
 	local aitem = repsqlchars (item)
-	local _, rows = VH:SQLQuery ("select `dest` from `" .. tbl_sql.rem .. "` where `id` = '" .. aitem .. "' limit 1")
+	local _, rows = VH:SQLQuery ("select `dest` from `" .. tbl_sql.rem .. "` where `id` = '" .. aitem .. "'")
 
 	if rows > 0 then
-		VH:SQLQuery ("delete from `" .. tbl_sql.rem .. "` where `id` = '" .. aitem .. "' limit 1")
+		VH:SQLQuery ("delete from `" .. tbl_sql.rem .. "` where `id` = '" .. aitem .. "'")
 		commandanswer (nick, gettext ("Deleted reminder: %s"):format (item))
 	else
 		commandanswer (nick, gettext ("Reminder not found: %s"):format (item))
@@ -8278,7 +8278,7 @@ end
 ----- ---- --- -- -
 
 function showreminder (nick, id)
-	local _, rows = VH:SQLQuery ("select `content` from `" .. tbl_sql.rem .. "` where `id` = '" .. repsqlchars (id) .. "' limit 1")
+	local _, rows = VH:SQLQuery ("select `content` from `" .. tbl_sql.rem .. "` where `id` = '" .. repsqlchars (id) .. "'")
 
 	if rows > 0 then
 		local _, contn = VH:SQLFetch (0)
@@ -8341,7 +8341,7 @@ function sendreminder ()
 		local repk = repsqlchars (k)
 
 		if v == 0 then -- send the reminder
-			local _, rows = VH:SQLQuery ("select `content`, `minclass`, `maxclass`, `dest` from `" .. tbl_sql.rem .. "` where `id` = '" .. repk .. "' limit 1")
+			local _, rows = VH:SQLQuery ("select `content`, `minclass`, `maxclass`, `dest` from `" .. tbl_sql.rem .. "` where `id` = '" .. repk .. "'")
 
 			if rows > 0 then
 				local _, contn, mincl, maxcl, pmf = VH:SQLFetch (0)
@@ -8361,7 +8361,7 @@ function sendreminder ()
 			end
 		end
 
-		VH:SQLQuery ("update `" .. tbl_sql.rem .. "` set `timer` = " .. v .. " where `id` = '" .. repk .. "' limit 1")
+		VH:SQLQuery ("update `" .. tbl_sql.rem .. "` set `timer` = " .. _tostring (v) .. " where `id` = '" .. repk .. "'")
 	end
 end
 
@@ -8375,10 +8375,10 @@ function addtrigger (nick, data)
 		commandanswer (nick, gettext ("Known classes are: %s"):format ("0, 1, 2, 3, 4, 5 " .. gettext ("and") .. " 10"))
 	else
 		local entry = repsqlchars (id)
-		local _, rows = VH:SQLQuery ("select `minclass` from `" .. tbl_sql.trig .. "` where `id` = '" .. entry .. "' limit 1")
+		local _, rows = VH:SQLQuery ("select `minclass` from `" .. tbl_sql.trig .. "` where `id` = '" .. entry .. "'")
 
 		if rows > 0 then
-			VH:SQLQuery ("update `" .. tbl_sql.trig .. "` set `content` = '" .. repsqlchars (cont) .. "', `minclass` = " .. _tostring (minc) .. ", `maxclass` = " .. _tostring (maxc) .. " where `id` = '" .. entry .. "' limit 1")
+			VH:SQLQuery ("update `" .. tbl_sql.trig .. "` set `content` = '" .. repsqlchars (cont) .. "', `minclass` = " .. _tostring (minc) .. ", `maxclass` = " .. _tostring (maxc) .. " where `id` = '" .. entry .. "'")
 			commandanswer (nick, gettext ("Modified trigger: %s"):format (id))
 		else
 			VH:SQLQuery ("insert into `" .. tbl_sql.trig .. "` (`id`, `content`, `minclass`, `maxclass`) values ('" .. entry .. "', '" .. repsqlchars (cont) .. "', " .. _tostring (minc) .. ", " .. _tostring (maxc) .. ")")
@@ -8391,10 +8391,10 @@ end
 
 function deltrigger (nick, id)
 	local entry = repsqlchars (id)
-	local _, rows = VH:SQLQuery ("select `minclass` from `" .. tbl_sql.trig .. "` where `id` = '" .. entry .. "' limit 1")
+	local _, rows = VH:SQLQuery ("select `minclass` from `" .. tbl_sql.trig .. "` where `id` = '" .. entry .. "'")
 
 	if rows > 0 then
-		VH:SQLQuery ("delete from `" .. tbl_sql.trig .. "` where `id` = '" .. entry .. "' limit 1")
+		VH:SQLQuery ("delete from `" .. tbl_sql.trig .. "` where `id` = '" .. entry .. "'")
 		commandanswer (nick, gettext ("Deleted trigger: %s"):format (id))
 	else
 		commandanswer (nick, gettext ("Trigger not found: %s"):format (id))
@@ -8437,7 +8437,7 @@ function checktrigger (nick, data, pm)
 	local _, _, id = data:find ("^" .. table_othsets.ustrig .. "(%S+)")
 
 	if id then
-		local _, rows = VH:SQLQuery ("select `content`, `minclass`, `maxclass` from `" .. tbl_sql.trig .. "` where `id` = '" .. repsqlchars (id) .. "' limit 1")
+		local _, rows = VH:SQLQuery ("select `content`, `minclass`, `maxclass` from `" .. tbl_sql.trig .. "` where `id` = '" .. repsqlchars (id) .. "'")
 
 		if rows > 0 then
 			local _, cont, minc, maxc = VH:SQLFetch (0)
@@ -8467,21 +8467,21 @@ end
 ----- ---- --- -- -
 
 function addnopm (nick, line)
-	local _, _, lre, act, cls, rsn = line:find ("^(%S+) (%d) (%d+) (.+)$")
+	local lre, act, clas, why = line:match ("^(%S+) (%d) (%d+) (.+)$")
 
 	if tonumber (act) > 1 then -- invalid action
 		commandanswer (nick, gettext ("Known actions are: %s"):format ("0 " .. gettext ("and") .. " 1"))
-	elseif (tonumber (cls) > 5 and tonumber (cls) < 10) or tonumber (cls) > 11 then -- invalid class
+	elseif (tonumber (clas) > 5 and tonumber (clas) < 10) or tonumber (clas) > 11 then -- invalid class
 		commandanswer (nick, gettext ("Known classes are: %s"):format ("0, 1, 2, 3, 4, 5, 10 " .. gettext ("and") .. " 11"))
 	else
-		local rlre = repsqlchars (repnmdcinchars (lre))
-		local _, rows = VH:SQLQuery ("select `action` from `" .. tbl_sql.nopm .. "` where `nick` = '" .. rlre .. "' limit 1")
+		local sre = repsqlchars (repnmdcinchars (lre))
+		local _, rows = VH:SQLQuery ("select `action` from `" .. tbl_sql.nopm .. "` where `nick` = '" .. sre .. "'")
 
 		if rows > 0 then -- update
-			VH:SQLQuery ("update `" .. tbl_sql.nopm .. "` set `action` = " .. act .. ", `maxclass` = " .. cls .. ", `reason` = '" .. repsqlchars (rsn) .. "' where `nick` = '" .. rlre .. "' limit 1")
+			VH:SQLQuery ("update `" .. tbl_sql.nopm .. "` set `action` = " .. _tostring (act) .. ", `maxclass` = " .. _tostring (clas) .. ", `reason` = '" .. repsqlchars (why) .. "' where `nick` = '" .. sre .. "'")
 			commandanswer (nick, gettext ("Modified blocked PM entry: %s"):format (lre))
 		else -- add
-			VH:SQLQuery ("insert into `" .. tbl_sql.nopm .. "` (`nick`, `action`, `maxclass`, `reason`) values ('" .. rlre .. "', " .. act .. ", " .. cls .. ", '" .. repsqlchars (rsn) .. "')")
+			VH:SQLQuery ("insert into `" .. tbl_sql.nopm .. "` (`nick`, `action`, `maxclass`, `reason`) values ('" .. sre .. "', " .. _tostring (act) .. ", " .. _tostring (clas) .. ", '" .. repsqlchars (why) .. "')")
 			commandanswer (nick, gettext ("Added blocked PM entry: %s"):format (lre))
 		end
 	end
@@ -8515,19 +8515,19 @@ end
 ----- ---- --- -- -
 
 function addipwat (nick, line)
-	local _, _, lre, rsn, res = line:find ("^(%S+) \"(.+)\" (%d)$")
+	local lre, why, res = line:match ("^(%S+) \"(.+)\" (%d)$")
 
 	if tonumber (res) < 0 or tonumber (res) > 1 then
 		commandanswer (nick, gettext ("Known results are: %s"):format ("0 " .. gettext ("and") .. " 1"))
 	else
-		local rlre = repsqlchars (repnmdcinchars (lre))
-		local _, rows = VH:SQLQuery ("select `result` from `" .. tbl_sql.ipwa .. "` where `ip` = '" .. rlre .. "' limit 1")
+		local sre = repsqlchars (repnmdcinchars (lre))
+		local _, rows = VH:SQLQuery ("select `result` from `" .. tbl_sql.ipwa .. "` where `ip` = '" .. sre .. "'")
 
 		if rows > 0 then -- update
-			VH:SQLQuery ("update `" .. tbl_sql.ipwa .. "` set `reason` = '" .. repsqlchars (rsn) .. "', `result` = " .. res .. " where `ip` = '" .. rlre .. "' limit 1")
+			VH:SQLQuery ("update `" .. tbl_sql.ipwa .. "` set `reason` = '" .. repsqlchars (why) .. "', `result` = " .. _tostring (res) .. " where `ip` = '" .. sre .. "'")
 			commandanswer (nick, gettext ("Modified IP watch entry: %s"):format (lre))
 		else -- add
-			VH:SQLQuery ("insert into `" .. tbl_sql.ipwa .. "` (`ip`, `reason`, `result`) values ('" .. rlre .. "', '" .. repsqlchars (rsn) .. "', " .. res .. ")")
+			VH:SQLQuery ("insert into `" .. tbl_sql.ipwa .. "` (`ip`, `reason`, `result`) values ('" .. sre .. "', '" .. repsqlchars (why) .. "', " .. _tostring (res) .. ")")
 			commandanswer (nick, gettext ("Added IP watch entry: %s"):format (lre))
 		end
 	end
@@ -8537,10 +8537,10 @@ end
 
 function delipwat (nick, line)
 	local rlre = repsqlchars (repnmdcinchars (line))
-	local _, rows = VH:SQLQuery ("select `result` from `" .. tbl_sql.ipwa .. "` where `ip` = '" .. rlre .. "' limit 1")
+	local _, rows = VH:SQLQuery ("select `result` from `" .. tbl_sql.ipwa .. "` where `ip` = '" .. rlre .. "'")
 
 	if rows > 0 then -- delete
-		VH:SQLQuery ("delete from `" .. tbl_sql.ipwa .. "` where `ip` = '" .. rlre .. "' limit 1")
+		VH:SQLQuery ("delete from `" .. tbl_sql.ipwa .. "` where `ip` = '" .. rlre .. "'")
 		commandanswer (nick, gettext ("Deleted IP watch entry: %s"):format (line))
 	else -- not in list
 		commandanswer (nick, gettext ("Couldn't delete IP watch entry because not found: %s"):format (line))
@@ -8731,10 +8731,10 @@ end
 
 function delnopm (nick, line)
 	local rlre = repsqlchars (repnmdcinchars (line))
-	local _, rows = VH:SQLQuery ("select `action` from `" .. tbl_sql.nopm .. "` where `nick` = '" .. rlre .. "' limit 1")
+	local _, rows = VH:SQLQuery ("select `action` from `" .. tbl_sql.nopm .. "` where `nick` = '" .. rlre .. "'")
 
 	if rows > 0 then -- delete
-		VH:SQLQuery ("delete from `" .. tbl_sql.nopm .. "` where `nick` = '" .. rlre .. "' limit 1")
+		VH:SQLQuery ("delete from `" .. tbl_sql.nopm .. "` where `nick` = '" .. rlre .. "'")
 		commandanswer (nick, gettext ("Deleted blocked PM entry: %s"):format (line))
 	else -- not in list
 		commandanswer (nick, gettext ("Couldn't delete blocked PM entry because not found: %s"):format (line))
@@ -8798,10 +8798,10 @@ function addhban (nick, line)
 	for lre in lst:gmatch ("%S+") do
 		cnt = cnt + 1
 		local rlre = repsqlchars (repnmdcinchars (lre))
-		local _, rows = VH:SQLQuery ("select `ip` from `" .. tbl_sql.hban .. "` where `ip` = '" .. rlre .. "' limit 1")
+		local _, rows = VH:SQLQuery ("select `ip` from `" .. tbl_sql.hban .. "` where `ip` = '" .. rlre .. "'")
 
 		if rows > 0 then -- update
-			VH:SQLQuery ("update `" .. tbl_sql.hban .. "` set `reason` = '" .. repsqlchars (rsn) .. "' where `ip` = '" .. rlre .. "' limit 1")
+			VH:SQLQuery ("update `" .. tbl_sql.hban .. "` set `reason` = '" .. repsqlchars (rsn) .. "' where `ip` = '" .. rlre .. "'")
 
 			if nick then
 				commandanswer (nick, gettext ("Modified hard IP ban entry: %s"):format (lre))
@@ -8824,10 +8824,10 @@ end
 
 function delhban (nick, line)
 	local rlre = repsqlchars (repnmdcinchars (line))
-	local _, rows = VH:SQLQuery ("select `ip` from `" .. tbl_sql.hban .. "` where `ip` = '" .. rlre .. "' limit 1")
+	local _, rows = VH:SQLQuery ("select `ip` from `" .. tbl_sql.hban .. "` where `ip` = '" .. rlre .. "'")
 
 	if rows > 0 then -- delete
-		VH:SQLQuery ("delete from `" .. tbl_sql.hban .. "` where `ip` = '" .. rlre .. "' limit 1")
+		VH:SQLQuery ("delete from `" .. tbl_sql.hban .. "` where `ip` = '" .. rlre .. "'")
 		commandanswer (nick, gettext ("Deleted hard IP ban entry: %s"):format (line))
 	else -- not in list
 		commandanswer (nick, gettext ("Couldn't delete hard IP ban entry because not found: %s"):format (line))
@@ -8907,7 +8907,7 @@ function delnews (nick, adate)
 	for _, v in pairs (t) do
 		-- items might have same timestamp, dont delete duplicates
 		-- or create other way for deletion, for example by id
-		VH:SQLQuery ("delete from `" .. tbl_sql.news .. "` where `date` = " .. v .. " limit 1")
+		VH:SQLQuery ("delete from `" .. tbl_sql.news .. "` where `date` = " .. _tostring (v) .. " limit 1")
 	end
 
 	local num = # t
@@ -8955,7 +8955,7 @@ function addresponder (nick, item)
 	maxc = tonumber (maxc)
 
 	if maxc >= 0 and maxc <= 5 or maxc == 10 then
-		VH:SQLQuery ("insert into `" .. tbl_sql.mcresp .. "` (`message`, `reply`, `maxclass`) values ('" .. repsqlchars (repnmdcinchars (msg)) .. "', '" .. repsqlchars (rpl) .. "', " .. maxc .. ")")
+		VH:SQLQuery ("insert into `" .. tbl_sql.mcresp .. "` (`message`, `reply`, `maxclass`) values ('" .. repsqlchars (repnmdcinchars (msg)) .. "', '" .. repsqlchars (rpl) .. "', " .. _tostring (maxc) .. ")")
 		commandanswer (nick, gettext ("Added chat responder: %s"):format (msg))
 	else
 		commandanswer (nick, gettext ("Known classes are: %s"):format ("0, 1, 2, 3, 4, 5 " .. gettext ("and") .. " 10"))
@@ -8965,10 +8965,10 @@ end
 ----- ---- --- -- -
 
 function delresponder (nick, id)
-	local _, rows = VH:SQLQuery ("select `maxclass` from `" .. tbl_sql.mcresp .. "` where `id` = " .. id)
+	local _, rows = VH:SQLQuery ("select `maxclass` from `" .. tbl_sql.mcresp .. "` where `id` = " .. _tostring (id))
 
 	if rows > 0 then
-		VH:SQLQuery ("delete from `" .. tbl_sql.mcresp .. "` where `id` = " .. id)
+		VH:SQLQuery ("delete from `" .. tbl_sql.mcresp .. "` where `id` = " .. _tostring (id))
 		commandanswer (nick, gettext ("Deleted chat responder with ID: %d"):format (id))
 	else
 		commandanswer (nick, gettext ("Couldn't delete chat responder because ID not found: %d"):format (id))
@@ -9346,14 +9346,14 @@ function addrelease (nick, line)
 	end
 
 	local arel = repsqlchars (rel)
-	local _, rows = VH:SQLQuery ("select `date` from `" .. tbl_sql.rel .. "` where `release` = '" .. arel .. "' limit 1")
+	local _, rows = VH:SQLQuery ("select `date` from `" .. tbl_sql.rel .. "` where `release` = '" .. arel .. "'")
 	local ndate = os.time () + table_sets.srvtimediff -- current time
 
 	if rows > 0 then
-		VH:SQLQuery ("update `" .. tbl_sql.rel .. "` set `category` = '" .. repsqlchars (cat) .. "', `tth` = '" .. repsqlchars (tth) .. "', `date` = '" .. ndate .. "' where `release` = '" .. arel .. "' limit 1")
+		VH:SQLQuery ("update `" .. tbl_sql.rel .. "` set `category` = '" .. repsqlchars (cat) .. "', `tth` = '" .. repsqlchars (tth) .. "', `date` = " .. _tostring (ndate) .. " where `release` = '" .. arel .. "'")
 		commandanswer (nick, gettext ("Modified release: %s"):format (rel))
 	else
-		VH:SQLQuery ("insert into `" .. tbl_sql.rel .. "` (`release`, `category`, `tth`, `by`, `date`) values ('" .. arel .. "', '" .. repsqlchars (cat) .. "', '" .. repsqlchars (tth) .. "', '" .. repsqlchars (nick) .. "', '" .. ndate .. "')")
+		VH:SQLQuery ("insert into `" .. tbl_sql.rel .. "` (`release`, `category`, `tth`, `by`, `date`) values ('" .. arel .. "', '" .. repsqlchars (cat) .. "', '" .. repsqlchars (tth) .. "', '" .. repsqlchars (nick) .. "', " .. _tostring (ndate) .. ")")
 		commandanswer (nick, gettext ("Added release: %s"):format (rel))
 	end
 end
@@ -9366,10 +9366,10 @@ local _, _, stype = line:find ("^(%S+) .+$")
 if stype == "rel" then
 local _, _, rel = line:find ("^%S+ (.+)$")
 local arel = repsqlchars (rel)
-local _, rows = VH:SQLQuery ("select `date` from `" .. tbl_sql.rel .. "` where `release` = '" .. arel .. "' limit 1")
+local _, rows = VH:SQLQuery ("select `date` from `" .. tbl_sql.rel .. "` where `release` = '" .. arel .. "'")
 
 if rows > 0 then
-VH:SQLQuery ("delete from `" .. tbl_sql.rel .. "` where `release` = '" .. arel .. "' limit 1")
+VH:SQLQuery ("delete from `" .. tbl_sql.rel .. "` where `release` = '" .. arel .. "'")
 commandanswer (nick, gettext ("Deleted release: %s"):format (rel))
 else
 commandanswer (nick, gettext ("Couldn't delete release because not found: %s"):format (rel))
@@ -9411,7 +9411,7 @@ if stype == "cat" then
 if not catst then
 commandanswer (nick, gettext ("Selected type requires extra parameters. Please refer to manual for more information."))
 else
-local _, rows = VH:SQLQuery ("select `release`, `tth`, `by`, `date` from `" .. tbl_sql.rel .. "` where `category` = '" .. repsqlchars (catst) .. "' order by `date` desc limit " .. lnnum)
+local _, rows = VH:SQLQuery ("select `release`, `tth`, `by`, `date` from `" .. tbl_sql.rel .. "` where `category` = '" .. repsqlchars (catst) .. "' order by `date` desc limit " .. _tostring (lnnum))
 
 if rows > 0 then
 local anentry = ""
@@ -9436,7 +9436,7 @@ elseif stype == "pub" then
 if not catst then
 commandanswer (nick, gettext ("Selected type requires extra parameters. Please refer to manual for more information."))
 else
-local _, rows = VH:SQLQuery ("select `release`, `category`, `tth`, `date` from `" .. tbl_sql.rel .. "` where `by` = '" .. repsqlchars (catst) .. "' order by `date` desc limit " .. lnnum)
+local _, rows = VH:SQLQuery ("select `release`, `category`, `tth`, `date` from `" .. tbl_sql.rel .. "` where `by` = '" .. repsqlchars (catst) .. "' order by `date` desc limit " .. _tostring (lnnum))
 
 if rows > 0 then
 local anentry = ""
@@ -9458,7 +9458,7 @@ end
 end
 
 elseif stype == "all" then
-local _, rows = VH:SQLQuery ("select `release`, `category`, `tth`, `by`, `date` from `" .. tbl_sql.rel .. "` order by `date` desc limit " .. lnnum)
+local _, rows = VH:SQLQuery ("select `release`, `category`, `tth`, `by`, `date` from `" .. tbl_sql.rel .. "` order by `date` desc limit " .. _tostring (lnnum))
 
 if rows > 0 then
 local anentry = ""
@@ -9970,7 +9970,7 @@ end
 function showcmdlog (nick, cls, ln)
 local nn = tonumber (ln)
 if nn < 1 then nn = 1 end
-local _, rows = VH:SQLQuery ("select `time`, `nick`, `class`, `command` from `" .. tbl_sql.clog .. "` where `class` <= " .. cls .. " order by `time` desc limit " .. nn)
+local _, rows = VH:SQLQuery ("select `time`, `nick`, `class`, `command` from `" .. tbl_sql.clog .. "` where `class` <= " .. _tostring (cls) .. " order by `time` desc limit " .. _tostring (nn))
 
 if rows > 0 then
 	local list = ""
@@ -10011,7 +10011,7 @@ function showuserlog (nick, line)
 		str = repsqlchars (str)
 
 		if tp == "all" then -- any part
-			local _, rows = VH:SQLQuery ("select `time`, `nick`, `ip`, `cc`, `desc`, `tag`, `conn`, `email`, `share` from `" .. tbl_sql.ulog .. "` where `nick` like '%" .. str .. "%' or `ip` like '%" .. str .. "%' or `cc` like '%" .. str .. "%' or `desc` like '%" .. str .. "%' or `tag` like '%" .. str .. "%' or `conn` like '%" .. str .. "%' or `email` like '%" .. str .. "%' or `share` like '%" .. str .. "%' order by `time` desc limit " .. lim)
+			local _, rows = VH:SQLQuery ("select `time`, `nick`, `ip`, `cc`, `desc`, `tag`, `conn`, `email`, `share` from `" .. tbl_sql.ulog .. "` where `nick` like '%" .. str .. "%' or `ip` like '%" .. str .. "%' or `cc` like '%" .. str .. "%' or `desc` like '%" .. str .. "%' or `tag` like '%" .. str .. "%' or `conn` like '%" .. str .. "%' or `email` like '%" .. str .. "%' or `share` like '%" .. str .. "%' order by `time` desc limit " .. _tostring (lim))
 
 			if rows > 0 then
 				local res = ""
@@ -10059,7 +10059,7 @@ function showuserlog (nick, line)
 			end
 
 		else -- specific
-			local _, rows = VH:SQLQuery ("select `time`, `nick`, `ip`, `cc`, `desc`, `tag`, `conn`, `email`, `share` from `" .. tbl_sql.ulog .. "` where `" .. tp .. "` like '%" .. str .. "%' order by `time` desc limit " .. lim)
+			local _, rows = VH:SQLQuery ("select `time`, `nick`, `ip`, `cc`, `desc`, `tag`, `conn`, `email`, `share` from `" .. tbl_sql.ulog .. "` where `" .. tp .. "` like '%" .. str .. "%' order by `time` desc limit " .. _tostring (lim))
 
 			if rows > 0 then
 				local res = ""
@@ -10120,8 +10120,8 @@ function collectstats ()
 	-- users and peak
 
 	local uc = getusercount ()
-	VH:SQLQuery ("insert into `" .. tbl_sql.stat .. "` (`type`, `time`, `count`) values ('users_now', " .. _tostring (tm) .. ", " .. _tostring (uc) .. ") on duplicate key update `time` = " .. _tostring (tm) .. ", `count` = " .. _tostring (uc))
-	local _, rows = VH:SQLQuery ("select `time`, `count` from `" .. tbl_sql.stat .. "` where `type` = 'users_peak' limit 1")
+	VH:SQLQuery ("insert into `" .. tbl_sql.stat .. "` (`type`, `time`, `count`) values ('users_now', " .. _tostring (tm) .. ", '" .. _tostring (uc) .. "') on duplicate key update `time` = " .. _tostring (tm) .. ", `count` = '" .. _tostring (uc) .. "'")
+	local _, rows = VH:SQLQuery ("select `time`, `count` from `" .. tbl_sql.stat .. "` where `type` = 'users_peak'")
 
 	if rows > 0 then
 		local _, ptm, puc = VH:SQLFetch (0)
@@ -10129,7 +10129,7 @@ function collectstats ()
 		puc = tonumber (puc) or 0
 
 		if uc > puc then
-			VH:SQLQuery ("update `" .. tbl_sql.stat .. "` set `time` = " .. _tostring (tm) .. ", `count` = " .. _tostring (uc) .. " where `type` = 'users_peak' limit 1")
+			VH:SQLQuery ("update `" .. tbl_sql.stat .. "` set `time` = " .. _tostring (tm) .. ", `count` = '" .. _tostring (uc) .. "' where `type` = 'users_peak'")
 
 			if table_sets.classnotipeakuc < 11 then
 				local msg = table_sets.userrecmsg
@@ -10154,14 +10154,14 @@ function collectstats ()
 			end
 		end
 	else
-		VH:SQLQuery ("insert into `" .. tbl_sql.stat .. "` (`type`, `time`, `count`) values ('users_peak', " .. _tostring (tm) .. ", " .. _tostring (uc) .. ")")
+		VH:SQLQuery ("insert into `" .. tbl_sql.stat .. "` (`type`, `time`, `count`) values ('users_peak', " .. _tostring (tm) .. ", '" .. _tostring (uc) .. "')")
 	end
 
 	-- total share and peak
 
 	local ts = gettotsharesize ()
 	VH:SQLQuery ("insert into `" .. tbl_sql.stat .. "` (`type`, `time`, `count`) values ('share_now', " .. _tostring (tm) .. ", '" .. _tostring (ts) .. "') on duplicate key update `time` = " .. _tostring (tm) .. ", `count` = '" .. _tostring (ts) .. "'")
-	local _, rows = VH:SQLQuery ("select `time`, `count` from `" .. tbl_sql.stat .. "` where `type` = 'share_peak' limit 1")
+	local _, rows = VH:SQLQuery ("select `time`, `count` from `" .. tbl_sql.stat .. "` where `type` = 'share_peak'")
 
 	if rows > 0 then
 		local _, ptm, pts = VH:SQLFetch (0)
@@ -10169,7 +10169,7 @@ function collectstats ()
 		pts = tonumber (pts) or 0
 
 		if ts > pts then
-			VH:SQLQuery ("update `" .. tbl_sql.stat .. "` set `time` = " .. _tostring (tm) .. ", `count` = '" .. _tostring (ts) .. "' where `type` = 'share_peak' limit 1")
+			VH:SQLQuery ("update `" .. tbl_sql.stat .. "` set `time` = " .. _tostring (tm) .. ", `count` = '" .. _tostring (ts) .. "' where `type` = 'share_peak'")
 
 			if table_sets.classnotipeakts < 11 then
 				local msg = table_sets.sharerecmsg
@@ -10202,14 +10202,14 @@ function collectstats ()
 	if uc > 0 and ts > 0 then
 		local avg = roundint ((ts / uc), 0)
 		VH:SQLQuery ("insert into `" .. tbl_sql.stat .. "` (`type`, `time`, `count`) values ('avgshare_now', " .. _tostring (tm) .. ", '" .. _tostring (avg) .. "') on duplicate key update `time` = " .. _tostring (tm) .. ", `count` = '" .. _tostring (avg) .. "'")
-		local _, rows = VH:SQLQuery ("select `count` from `" .. tbl_sql.stat .. "` where `type` = 'avgshare_peak' limit 1")
+		local _, rows = VH:SQLQuery ("select `count` from `" .. tbl_sql.stat .. "` where `type` = 'avgshare_peak'")
 
 		if rows > 0 then
 			local _, pavg = VH:SQLFetch (0)
 			pavg = tonumber (pavg) or 0
 
 			if avg > pavg then
-				VH:SQLQuery ("update `" .. tbl_sql.stat .. "` set `time` = " .. _tostring (tm) .. ", `count` = '" .. _tostring (avg) .. "' where `type` = 'avgshare_peak' limit 1")
+				VH:SQLQuery ("update `" .. tbl_sql.stat .. "` set `time` = " .. _tostring (tm) .. ", `count` = '" .. _tostring (avg) .. "' where `type` = 'avgshare_peak'")
 			end
 		else
 			VH:SQLQuery ("insert into `" .. tbl_sql.stat .. "` (`type`, `time`, `count`) values ('avgshare_peak', " .. _tostring (tm) .. ", '" .. _tostring (avg) .. "')")
@@ -10220,36 +10220,36 @@ function collectstats ()
 
 	if table_refu.GetUpTime then
 		local ut = getuptime ()
-		VH:SQLQuery ("insert into `" .. tbl_sql.stat .. "` (`type`, `time`, `count`) values ('uptime_now', " .. _tostring (tm) .. ", " .. _tostring (ut) .. ") on duplicate key update `time` = " .. _tostring (tm) .. ", `count` = " .. _tostring (ut))
-		local _, rows = VH:SQLQuery ("select `count` from `" .. tbl_sql.stat .. "` where `type` = 'uptime_peak' limit 1")
+		VH:SQLQuery ("insert into `" .. tbl_sql.stat .. "` (`type`, `time`, `count`) values ('uptime_now', " .. _tostring (tm) .. ", '" .. _tostring (ut) .. "') on duplicate key update `time` = " .. _tostring (tm) .. ", `count` = '" .. _tostring (ut) .. "'")
+		local _, rows = VH:SQLQuery ("select `count` from `" .. tbl_sql.stat .. "` where `type` = 'uptime_peak'")
 
 		if rows > 0 then
 			local _, put = VH:SQLFetch (0)
 			put = tonumber (put) or 0
 
 			if ut > put then
-				VH:SQLQuery ("update `" .. tbl_sql.stat .. "` set `time` = " .. _tostring (tm) .. ", `count` = " .. _tostring (ut) .. " where `type` = 'uptime_peak' limit 1")
+				VH:SQLQuery ("update `" .. tbl_sql.stat .. "` set `time` = " .. _tostring (tm) .. ", `count` = '" .. _tostring (ut) .. "' where `type` = 'uptime_peak'")
 			end
 		else
-			VH:SQLQuery ("insert into `" .. tbl_sql.stat .. "` (`type`, `time`, `count`) values ('uptime_peak', " .. _tostring (tm) .. ", " .. _tostring (ut) .. ")")
+			VH:SQLQuery ("insert into `" .. tbl_sql.stat .. "` (`type`, `time`, `count`) values ('uptime_peak', " .. _tostring (tm) .. ", '" .. _tostring (ut) .. "')")
 		end
 	end
 
 	-- memory and peak
 
 	local mu = getmemusg ()
-	VH:SQLQuery ("insert into `" .. tbl_sql.stat .. "` (`type`, `time`, `count`) values ('memory_now', " .. _tostring (tm) .. ", " .. _tostring (mu) .. ") on duplicate key update `time` = " .. _tostring (tm) .. ", `count` = " .. _tostring (mu))
-	local _, rows = VH:SQLQuery ("select `count` from `" .. tbl_sql.stat .. "` where `type` = 'memory_peak' limit 1")
+	VH:SQLQuery ("insert into `" .. tbl_sql.stat .. "` (`type`, `time`, `count`) values ('memory_now', " .. _tostring (tm) .. ", '" .. _tostring (mu) .. "') on duplicate key update `time` = " .. _tostring (tm) .. ", `count` = '" .. _tostring (mu) .. "'")
+	local _, rows = VH:SQLQuery ("select `count` from `" .. tbl_sql.stat .. "` where `type` = 'memory_peak'")
 
 	if rows > 0 then
 		local _, pmu = VH:SQLFetch (0)
 		pmu = tonumber (pmu) or 0
 
 		if mu > pmu then
-			VH:SQLQuery ("update `" .. tbl_sql.stat .. "` set `time` = " .. _tostring (tm) .. ", `count` = " .. _tostring (mu) .. " where `type` = 'memory_peak' limit 1")
+			VH:SQLQuery ("update `" .. tbl_sql.stat .. "` set `time` = " .. _tostring (tm) .. ", `count` = '" .. _tostring (mu) .. "' where `type` = 'memory_peak'")
 		end
 	else
-		VH:SQLQuery ("insert into `" .. tbl_sql.stat .. "` (`type`, `time`, `count`) values ('memory_peak', " .. _tostring (tm) .. ", " .. _tostring (mu) .. ")")
+		VH:SQLQuery ("insert into `" .. tbl_sql.stat .. "` (`type`, `time`, `count`) values ('memory_peak', " .. _tostring (tm) .. ", '" .. _tostring (mu) .. "')")
 	end
 
 	-- nick lists
@@ -10341,11 +10341,11 @@ end
 
 function modauthentry (nick, item)
 	local _, _, id, ip = item:find ("^(%d+) (.+)$")
-	local _, rows = VH:SQLQuery ("select `nick` from `" .. tbl_sql.auth .. "` where `id` = " .. id .. " limit 1")
+	local _, rows = VH:SQLQuery ("select `nick` from `" .. tbl_sql.auth .. "` where `id` = " .. _tostring (id))
 
 	if rows > 0 then
 		local _, user = VH:SQLFetch (0)
-		VH:SQLQuery ("update `" .. tbl_sql.auth .. "` set `ip` = '" .. repsqlchars (repnmdcinchars (ip)) .. "' where `id` = " .. id .. " limit 1")
+		VH:SQLQuery ("update `" .. tbl_sql.auth .. "` set `ip` = '" .. repsqlchars (repnmdcinchars (ip)) .. "' where `id` = " .. _tostring (id))
 		commandanswer (nick, gettext ("Modified authorization entry: %s @ %s"):format (user, ip))
 	else
 		commandanswer (nick, gettext ("Couldn't modify authorization entry because not found: %d"):format (id))
@@ -10355,11 +10355,11 @@ end
 ----- ---- --- -- -
 
 function delauthentry (nick, id)
-	local _, rows = VH:SQLQuery ("select `nick` from `" .. tbl_sql.auth .. "` where `id` = " .. id .. " limit 1")
+	local _, rows = VH:SQLQuery ("select `nick` from `" .. tbl_sql.auth .. "` where `id` = " .. _tostring (id))
 
 	if rows > 0 then
 		local _, user = VH:SQLFetch (0)
-		VH:SQLQuery ("delete from `" .. tbl_sql.auth .. "` where `id` = " .. id .. " limit 1")
+		VH:SQLQuery ("delete from `" .. tbl_sql.auth .. "` where `id` = " .. _tostring (id))
 		commandanswer (nick, gettext ("Deleted authorization entry: %s"):format (user))
 	else
 		commandanswer (nick, gettext ("Couldn't delete authorization entry because not found: %s"):format (id))
@@ -10403,7 +10403,7 @@ function authcheck (nick, cls, uip)
 		local _, id, ip = VH:SQLFetch (x)
 
 		if uip:find (ip) then -- match
-			VH:SQLQuery ("update `" .. tbl_sql.auth .. "` set `good` = `good` + 1 where `id` = " .. id .. " limit 1")
+			VH:SQLQuery ("update `" .. tbl_sql.auth .. "` set `good` = `good` + 1 where `id` = " .. _tostring (id))
 			opsnotify (table_sets.classnotiauth, gettext ("%s with IP %s and class %d authorized."):format (nick, uip .. tryipcc (uip, nick), cls))
 			return false
 		end
@@ -11254,10 +11254,10 @@ function hublistadd (nick, line)
 local _, _, addr, name, ownr = line:find ("^(%S+) \"(.+)\" \"(.*)\"$")
 if not addr:find (":") then addr = addr .. ":411" end
 local raddr = repsqlchars (addr)
-local _, rows = VH:SQLQuery ("select `owner` from `" .. tbl_sql.hubs .. "` where `address` = '" .. raddr .. "' limit 1")
+local _, rows = VH:SQLQuery ("select `owner` from `" .. tbl_sql.hubs .. "` where `address` = '" .. raddr .. "'")
 
 if rows > 0 then -- update
-VH:SQLQuery ("update `" .. tbl_sql.hubs .. "` set `name` = '" .. repsqlchars (name) .. "', `owner` = '" .. repsqlchars (ownr) .. "' where `address` = '" .. raddr .. "' limit 1")
+VH:SQLQuery ("update `" .. tbl_sql.hubs .. "` set `name` = '" .. repsqlchars (name) .. "', `owner` = '" .. repsqlchars (ownr) .. "' where `address` = '" .. raddr .. "'")
 commandanswer (nick, gettext ("Modified friendly hub: %s"):format (addr))
 else -- add
 VH:SQLQuery ("insert into `" .. tbl_sql.hubs .. "` (`address`, `name`, `owner`) values ('" .. raddr .. "', '" .. repsqlchars (name) .. "', '" .. repsqlchars (ownr) .. "')")
@@ -11271,10 +11271,10 @@ function hublistdel (nick, addr)
 local maddr = addr
 if not maddr:find (":") then maddr = maddr .. ":411" end
 local raddr = repsqlchars (maddr)
-local _, rows = VH:SQLQuery ("select `owner` from `" .. tbl_sql.hubs .. "` where `address` = '" .. raddr .. "' limit 1")
+local _, rows = VH:SQLQuery ("select `owner` from `" .. tbl_sql.hubs .. "` where `address` = '" .. raddr .. "'")
 
 if rows > 0 then -- delete
-VH:SQLQuery ("delete from `" .. tbl_sql.hubs .. "` where `address` = '" .. raddr .. "' limit 1")
+VH:SQLQuery ("delete from `" .. tbl_sql.hubs .. "` where `address` = '" .. raddr .. "'")
 commandanswer (nick, gettext ("Deleted friendly hub: %s"):format (maddr))
 else -- not in list
 commandanswer (nick, gettext ("Friendly hub not found: %s"):format (maddr))
@@ -11357,7 +11357,7 @@ function hublistping ()
 	end
 
 	for k, v in pairs (updlist) do
-		VH:SQLQuery ("update `" .. tbl_sql.hubs .. "` set `status` = " .. v .. " where `address` = '" .. repsqlchars (k) .. "' limit 1")
+		VH:SQLQuery ("update `" .. tbl_sql.hubs .. "` set `status` = " .. _tostring (v) .. " where `address` = '" .. repsqlchars (k) .. "'")
 	end
 end
 
@@ -11383,7 +11383,7 @@ function sendoffmsg (from, line, ucls)
 				commandanswer (from, gettext ("User %s is online. Sending message directly."):format (to))
 			else
 				local ndate = os.time () + table_sets.srvtimediff -- current time
-				VH:SQLQuery ("insert into `" .. tbl_sql.off .. "` (`from`, `ip`, `to`, `date`, `message`) values ('" .. repsqlchars (from) .. "', '" .. uip .. "', '" .. repsqlchars (to) .. "', " .. ndate .. ", '" .. repsqlchars (msg) .. "')")
+				VH:SQLQuery ("insert into `" .. tbl_sql.off .. "` (`from`, `ip`, `to`, `date`, `message`) values ('" .. repsqlchars (from) .. "', '" .. uip .. "', '" .. repsqlchars (to) .. "', " .. _tostring (ndate) .. ", '" .. repsqlchars (msg) .. "')")
 				commandanswer (from, gettext ("Your offline message stored for user: %s"):format (to))
 				opsnotify (table_sets.classnotioff, gettext ("%s with IP %s and class %d sent offline message."):format (from, uip .. tryipcc (uip, from), ucls))
 			end
@@ -11460,7 +11460,7 @@ end
 
 for _, v in pairs (t) do
 	-- same goes here, as for hub news, see comments in delnews
-	VH:SQLQuery ("delete from `" .. tbl_sql.off .. "` where `date` = " .. v .. " limit 1")
+	VH:SQLQuery ("delete from `" .. tbl_sql.off .. "` where `date` = " .. _tostring (v) .. " limit 1")
 end
 
 local num = # t
@@ -12219,10 +12219,10 @@ function gagipadd (nick, line)
 			commandanswer (nick, gettext ("Known flags are: %s"):format ("0=ALL, 1=MC " .. gettext ("and") .. " 2=PM"))
 		else
 			local rip = repsqlchars (repnmdcinchars (ip))
-			local _, rows = VH:SQLQuery ("select `flag` from `" .. tbl_sql.ipgag .. "` where `ip` = '" .. rip .. "' limit 1")
+			local _, rows = VH:SQLQuery ("select `flag` from `" .. tbl_sql.ipgag .. "` where `ip` = '" .. rip .. "'")
 
 			if rows > 0 then -- modify
-				VH:SQLQuery ("update `" .. tbl_sql.ipgag .. "` set `flag` = " .. _tostring (flag) .. " where `ip` = '" .. rip .. "' limit 1")
+				VH:SQLQuery ("update `" .. tbl_sql.ipgag .. "` set `flag` = " .. _tostring (flag) .. " where `ip` = '" .. rip .. "'")
 				commandanswer (nick, gettext ("Modified IP gag: %s"):format (ip))
 			else -- add
 				VH:SQLQuery ("insert into `" .. tbl_sql.ipgag .. "` (`ip`, `flag`) values ('" .. rip .. "', " .. _tostring (flag) .. ")")
@@ -12259,10 +12259,10 @@ function gagipdel (nick, ip)
 		end
 
 		local rip = repsqlchars (repnmdcinchars (ip))
-		local _, rows = VH:SQLQuery ("select `flag` from `" .. tbl_sql.ipgag .. "` where `ip` = '" .. rip .. "' limit 1")
+		local _, rows = VH:SQLQuery ("select `flag` from `" .. tbl_sql.ipgag .. "` where `ip` = '" .. rip .. "'")
 
 		if rows > 0 then
-			VH:SQLQuery ("delete from `" .. tbl_sql.ipgag .. "` where `ip` = '" .. rip .. "' limit 1")
+			VH:SQLQuery ("delete from `" .. tbl_sql.ipgag .. "` where `ip` = '" .. rip .. "'")
 			ok = true
 		end
 
@@ -13781,13 +13781,13 @@ function cleanuptable (nick, line, cls)
 
 	if cype == "kick" then
 		commandanswer (nick, gettext ("This operation might take very long time depending on how much is going to be removed, please be patient."))
-		local _, rows = VH:SQLQuery ("select `is_drop` from `kicklist` where `time` < " .. secs)
+		local _, rows = VH:SQLQuery ("select `is_drop` from `kicklist` where `time` < " .. secs) -- is already string
 
 		if rows > 0 then
 			VH:SQLQuery ("delete from `kicklist` where `time` < " .. secs)
 			commandanswer (nick, gettext ("Deleted %d rows: %s"):format (rows, cype))
 			opsnotify (table_sets.classnotiledoact, gettext ("%s with class %d deleted %d kicks older than %d days."):format (nick, cls, rows, days))
-			VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('lastcleankick', " .. tm .. ") on duplicate key update `value` = " .. tm)
+			VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('lastcleankick', " .. tm .. ") on duplicate key update `value` = " .. tm) -- is already string
 			VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('limcleankick', " .. _tostring (days) .. ") on duplicate key update `value` = " .. _tostring (days))
 		else
 			commandanswer (nick, gettext ("No rows to remove: %s"):format (cype))
@@ -14012,10 +14012,10 @@ function chatrankaccept (nick, ucls)
 
 	if ucls < table_sets.chatrankclass then return end -- chat rank
 	local usr = repsqlchars (nick)
-	local _, rows = VH:SQLQuery ("select `nick` from `" .. tbl_sql.ranex .. "` where `nick` = '" .. usr .. "' limit 1")
+	local _, rows = VH:SQLQuery ("select `nick` from `" .. tbl_sql.ranex .. "` where `nick` = '" .. usr .. "'")
 
 	if rows > 0 then
-		VH:SQLQuery ("update `" .. tbl_sql.ranex .. "` set `occurred` = `occurred` + 1 where `nick` = '" .. usr .. "' limit 1")
+		VH:SQLQuery ("update `" .. tbl_sql.ranex .. "` set `occurred` = `occurred` + 1 where `nick` = '" .. usr .. "'")
 	else
 		VH:SQLQuery ("insert into `" .. tbl_sql.chran .. "` (`nick`) values ('" .. usr .. "') on duplicate key update `rank` = `rank` + 1")
 	end
@@ -14027,22 +14027,22 @@ function sharerankaccept (nick, share, ucls)
 if ucls < table_sets.sharerankclass then return end
 if share < (table_sets.shareranmin * 1073741824) then return end -- only users with share
 local usr = repsqlchars (nick)
-local _, rows = VH:SQLQuery ("select `nick` from `" .. tbl_sql.ranex .. "` where `nick` = '" .. usr .. "' limit 1")
+local _, rows = VH:SQLQuery ("select `nick` from `" .. tbl_sql.ranex .. "` where `nick` = '" .. usr .. "'")
 
 if rows > 0 then
-	VH:SQLQuery ("update `" .. tbl_sql.ranex .. "` set `occurred` = `occurred` + 1 where `nick` = '" .. usr .. "' limit 1")
+	VH:SQLQuery ("update `" .. tbl_sql.ranex .. "` set `occurred` = `occurred` + 1 where `nick` = '" .. usr .. "'")
 else
-	local _, rows = VH:SQLQuery ("select `rank` from `" .. tbl_sql.shran .. "` where `nick` = '" .. usr .. "' limit 1")
+	local _, rows = VH:SQLQuery ("select `rank` from `" .. tbl_sql.shran .. "` where `nick` = '" .. usr .. "'")
 
 	if rows > 0 then
 		local _, rank = VH:SQLFetch (0)
 
 		if share > tonumber (rank) then
-			VH:SQLQuery ("update `" .. tbl_sql.shran .. "` set `rank` = " .. share .. " where `nick` = '" .. usr .. "' limit 1")
+			VH:SQLQuery ("update `" .. tbl_sql.shran .. "` set `rank` = " .. share .. " where `nick` = '" .. usr .. "'")
 		end
 
 	else
-		VH:SQLQuery ("insert into `" .. tbl_sql.shran .. "` (`nick`, `rank`) values ('" .. usr .. "', " .. share .. ")")
+		VH:SQLQuery ("insert into `" .. tbl_sql.shran .. "` (`nick`, `rank`) values ('" .. usr .. "', " .. _tostring (share) .. ")")
 	end
 end
 end
@@ -14052,10 +14052,10 @@ end
 function oprankaccept (nick, ucls)
 if ucls < table_sets.oprankclass then return end
 local usr = repsqlchars (nick)
-local _, rows = VH:SQLQuery ("select `nick` from `" .. tbl_sql.ranex .. "` where `nick` = '" .. usr .. "' limit 1")
+local _, rows = VH:SQLQuery ("select `nick` from `" .. tbl_sql.ranex .. "` where `nick` = '" .. usr .. "'")
 
 if rows > 0 then
-	VH:SQLQuery ("update `" .. tbl_sql.ranex .. "` set `occurred` = `occurred` + 1 where `nick` = '" .. usr .. "' limit 1")
+	VH:SQLQuery ("update `" .. tbl_sql.ranex .. "` set `occurred` = `occurred` + 1 where `nick` = '" .. usr .. "'")
 else
 	VH:SQLQuery ("insert into `" .. tbl_sql.opran .. "` (`nick`) values ('" .. usr .. "') on duplicate key update `rank` = `rank` + 1")
 end
@@ -14072,10 +14072,10 @@ if tonumber (tp or 1) == 9 then return end -- skip tth
 str = repsrchchars (str)
 if str:find ("^%s+$") then return end
 local usr = repsqlchars (nick)
-local _, rows = VH:SQLQuery ("select `nick` from `" .. tbl_sql.ranex .. "` where `nick` = '" .. usr .. "' limit 1")
+local _, rows = VH:SQLQuery ("select `nick` from `" .. tbl_sql.ranex .. "` where `nick` = '" .. usr .. "'")
 
 if rows > 0 then
-	VH:SQLQuery ("update `" .. tbl_sql.ranex .. "` set `occurred` = `occurred` + 1 where `nick` = '" .. usr .. "' limit 1")
+	VH:SQLQuery ("update `" .. tbl_sql.ranex .. "` set `occurred` = `occurred` + 1 where `nick` = '" .. usr .. "'")
 else
 	VH:SQLQuery ("insert into `" .. tbl_sql.srran .. "` (`search`) values ('" .. repsqlchars (str) .. "') on duplicate key update `rank` = `rank` + 1")
 end
@@ -14084,7 +14084,7 @@ end
 ----- ---- --- -- -
 
 function searranksendall (nick)
-local _, rows = VH:SQLQuery ("select `search`, `rank` from `" .. tbl_sql.srran .. "` order by `rank` desc limit " .. table_sets.ranklimit)
+local _, rows = VH:SQLQuery ("select `search`, `rank` from `" .. tbl_sql.srran .. "` order by `rank` desc limit " .. _tostring (table_sets.ranklimit))
 
 if rows > 0 then
 	local arank, len = "", 0
@@ -14109,10 +14109,10 @@ function wordrankaccept (nick, ucls, line)
 	end
 
 	local usr = repsqlchars (nick)
-	local _, rows = VH:SQLQuery ("select `nick` from `" .. tbl_sql.ranex .. "` where `nick` = '" .. usr .. "' limit 1")
+	local _, rows = VH:SQLQuery ("select `nick` from `" .. tbl_sql.ranex .. "` where `nick` = '" .. usr .. "'")
 
 	if rows > 0 then
-		VH:SQLQuery ("update `" .. tbl_sql.ranex .. "` set `occurred` = `occurred` + 1 where `nick` = '" .. usr .. "' limit 1")
+		VH:SQLQuery ("update `" .. tbl_sql.ranex .. "` set `occurred` = `occurred` + 1 where `nick` = '" .. usr .. "'")
 	else
 		local str = repwordranchars (repnmdcinchars (line), 0) .. "$"
 
@@ -14152,7 +14152,7 @@ end
 end
 
 for k, _ in pairs (table_delete) do
-VH:SQLQuery ("delete from `" .. tbl_sql.wdran .. "` where `word` = '" .. repsqlchars (k) .. "' limit 1")
+VH:SQLQuery ("delete from `" .. tbl_sql.wdran .. "` where `word` = '" .. repsqlchars (k) .. "'")
 end
 end
 end
@@ -14164,50 +14164,50 @@ local _, _, ctype, cuser = line:find ("^(%S+) (%S+)$")
 local auser = repsqlchars (cuser)
 
 if ctype == "chat" then
-local _, rows = VH:SQLQuery ("select `rank` from `" .. tbl_sql.chran .. "` where `nick` = '" .. auser .. "' limit 1")
+local _, rows = VH:SQLQuery ("select `rank` from `" .. tbl_sql.chran .. "` where `nick` = '" .. auser .. "'")
 
 if rows > 0 then
-VH:SQLQuery ("delete from `" .. tbl_sql.chran .. "` where `nick` = '" .. auser .. "' limit 1")
+VH:SQLQuery ("delete from `" .. tbl_sql.chran .. "` where `nick` = '" .. auser .. "'")
 commandanswer (nick, gettext ("Deleted from chat rank list: %s"):format (cuser))
 else
 commandanswer (nick, gettext ("Not found in chat rank list: %s"):format (cuser))
 end
 
 elseif ctype == "share" then
-local _, rows = VH:SQLQuery ("select `rank` from `" .. tbl_sql.shran .. "` where `nick` = '" .. auser .. "' limit 1")
+local _, rows = VH:SQLQuery ("select `rank` from `" .. tbl_sql.shran .. "` where `nick` = '" .. auser .. "'")
 
 if rows > 0 then
-VH:SQLQuery ("delete from `" .. tbl_sql.shran .. "` where `nick` = '" .. auser .. "' limit 1")
+VH:SQLQuery ("delete from `" .. tbl_sql.shran .. "` where `nick` = '" .. auser .. "'")
 commandanswer (nick, gettext ("Deleted from share rank list: %s"):format (cuser))
 else
 commandanswer (nick, gettext ("Not found in share rank list: %s"):format (cuser))
 end
 
 elseif ctype == "op" then
-local _, rows = VH:SQLQuery ("select `rank` from `" .. tbl_sql.opran .. "` where `nick` = '" .. auser .. "' limit 1")
+local _, rows = VH:SQLQuery ("select `rank` from `" .. tbl_sql.opran .. "` where `nick` = '" .. auser .. "'")
 
 if rows > 0 then
-VH:SQLQuery ("delete from `" .. tbl_sql.opran .. "` where `nick` = '" .. auser .. "' limit 1")
+VH:SQLQuery ("delete from `" .. tbl_sql.opran .. "` where `nick` = '" .. auser .. "'")
 commandanswer (nick, gettext ("Deleted from operator rank list: %s"):format (cuser))
 else
 commandanswer (nick, gettext ("Not found in operator rank list: %s"):format (cuser))
 end
 
 elseif ctype == "sear" then
-	local _, rows = VH:SQLQuery ("select `rank` from `" .. tbl_sql.srran .. "` where `search` = '" .. auser .. "' limit 1")
+	local _, rows = VH:SQLQuery ("select `rank` from `" .. tbl_sql.srran .. "` where `search` = '" .. auser .. "'")
 
 	if rows > 0 then
-		VH:SQLQuery ("delete from `" .. tbl_sql.srran .. "` where `search` = '" .. auser .. "' limit 1")
+		VH:SQLQuery ("delete from `" .. tbl_sql.srran .. "` where `search` = '" .. auser .. "'")
 		commandanswer (nick, gettext ("Deleted from search rank list: %s"):format (cuser))
 	else
 		commandanswer (nick, gettext ("Not found in search rank list: %s"):format (cuser))
 	end
 
 elseif ctype == "word" then
-local _, rows = VH:SQLQuery ("select `rank` from `" .. tbl_sql.wdran .. "` where `word` = '" .. auser .. "' limit 1")
+local _, rows = VH:SQLQuery ("select `rank` from `" .. tbl_sql.wdran .. "` where `word` = '" .. auser .. "'")
 
 if rows > 0 then
-VH:SQLQuery ("delete from `" .. tbl_sql.wdran .. "` where `word` = '" .. auser .. "' limit 1")
+VH:SQLQuery ("delete from `" .. tbl_sql.wdran .. "` where `word` = '" .. auser .. "'")
 commandanswer (nick, gettext ("Deleted from word rank list: %s"):format (cuser))
 else
 commandanswer (nick, gettext ("Not found in word rank list: %s"):format (cuser))
@@ -14250,20 +14250,20 @@ local rows = 0
 if climt == 0 then
 rows = counttable (tbl_sql.chran)
 else
-_, rows = VH:SQLQuery ("select `rank` from `" .. tbl_sql.chran .. "` where `rank` < " .. climt)
+_, rows = VH:SQLQuery ("select `rank` from `" .. tbl_sql.chran .. "` where `rank` < " .. _tostring (climt))
 end
 
 if rows > 0 then
 if climt == 0 then
 VH:SQLQuery ("truncate table `" .. tbl_sql.chran .. "`")
 else
-VH:SQLQuery ("delete from `" .. tbl_sql.chran .. "` where `rank` < " .. climt)
+VH:SQLQuery ("delete from `" .. tbl_sql.chran .. "` where `rank` < " .. _tostring (climt))
 end
 
 commandanswer (nick, gettext ("Deleted %d rows: %s"):format (rows, ctype))
 opsnotify (table_sets.classnotiledoact, gettext ("%s with class %d deleted %d chat ranks lower than %d."):format (nick, cls, rows, climt))
-VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('lastcleanchran', " .. tm .. ") on duplicate key update `value` = " .. tm)
-VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('limcleanchran', " .. climt .. ") on duplicate key update `value` = " .. climt)
+VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('lastcleanchran', " .. _tostring (tm) .. ") on duplicate key update `value` = " .. _tostring (tm))
+VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('limcleanchran', " .. _tostring (climt) .. ") on duplicate key update `value` = " .. _tostring (climt))
 else
 commandanswer (nick, gettext ("No rows to remove: %s"):format (ctype))
 end
@@ -14276,20 +14276,20 @@ if climt == 0 then
 rows = counttable (tbl_sql.shran)
 else
 cbytes = roundint ((climt * 1073741824), 0)
-_, rows = VH:SQLQuery ("select `rank` from `" .. tbl_sql.shran .. "` where `rank` < " .. cbytes)
+_, rows = VH:SQLQuery ("select `rank` from `" .. tbl_sql.shran .. "` where `rank` < " .. _tostring (cbytes))
 end
 
 if rows > 0 then
 if climt == 0 then
 VH:SQLQuery ("truncate table `" .. tbl_sql.shran .. "`")
 else
-VH:SQLQuery ("delete from `" .. tbl_sql.shran .. "` where `rank` < " .. cbytes)
+VH:SQLQuery ("delete from `" .. tbl_sql.shran .. "` where `rank` < " .. _tostring (cbytes))
 end
 
 commandanswer (nick, gettext ("Deleted %d rows: %s"):format (rows, ctype))
 opsnotify (table_sets.classnotiledoact, gettext ("%s with class %d deleted %d share ranks lower than %s."):format (nick, cls, rows, _tostring (climt) .. " " .. gettext ("GiB")))
-VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('lastcleanshran', " .. tm .. ") on duplicate key update `value` = " .. tm)
-VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('limcleanshran', " .. climt .. ") on duplicate key update `value` = " .. climt)
+VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('lastcleanshran', " .. _tostring (tm) .. ") on duplicate key update `value` = " .. _tostring (tm))
+VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('limcleanshran', " .. _tostring (climt) .. ") on duplicate key update `value` = " .. _tostring (climt))
 else
 commandanswer (nick, gettext ("No rows to remove: %s"):format (ctype))
 end
@@ -14301,20 +14301,20 @@ local rows = 0
 if climt == 0 then
 rows = counttable (tbl_sql.opran)
 else
-_, rows = VH:SQLQuery ("select `rank` from `" .. tbl_sql.opran .. "` where `rank` < " .. climt)
+_, rows = VH:SQLQuery ("select `rank` from `" .. tbl_sql.opran .. "` where `rank` < " .. _tostring (climt))
 end
 
 if rows > 0 then
 if climt == 0 then
 VH:SQLQuery ("truncate table `" .. tbl_sql.opran .. "`")
 else
-VH:SQLQuery ("delete from `" .. tbl_sql.opran .. "` where `rank` < " .. climt)
+VH:SQLQuery ("delete from `" .. tbl_sql.opran .. "` where `rank` < " .. _tostring (climt))
 end
 
 commandanswer (nick, gettext ("Deleted %d rows: %s"):format (rows, ctype))
 opsnotify (table_sets.classnotiledoact, gettext ("%s with class %d deleted %d operator ranks lower than %d."):format (nick, cls, rows, climt))
-VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('lastcleanopran', " .. tm .. ") on duplicate key update `value` = " .. tm)
-VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('limcleanopran', " .. climt .. ") on duplicate key update `value` = " .. climt)
+VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('lastcleanopran', " .. _tostring (tm) .. ") on duplicate key update `value` = " .. _tostring (tm))
+VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('limcleanopran', " .. _tostring (climt) .. ") on duplicate key update `value` = " .. _tostring (climt))
 else
 commandanswer (nick, gettext ("No rows to remove: %s"):format (ctype))
 end
@@ -14326,20 +14326,20 @@ elseif ctype == "sear" then
 	if climt == 0 then
 		rows = counttable (tbl_sql.srran)
 	else
-		_, rows = VH:SQLQuery ("select `rank` from `" .. tbl_sql.srran .. "` where `rank` < " .. climt)
+		_, rows = VH:SQLQuery ("select `rank` from `" .. tbl_sql.srran .. "` where `rank` < " .. _tostring (climt))
 	end
 
 	if rows > 0 then
 		if climt == 0 then
 			VH:SQLQuery ("truncate table `" .. tbl_sql.srran .. "`")
 		else
-			VH:SQLQuery ("delete from `" .. tbl_sql.srran .. "` where `rank` < " .. climt)
+			VH:SQLQuery ("delete from `" .. tbl_sql.srran .. "` where `rank` < " .. _tostring (climt))
 		end
 
 		commandanswer (nick, gettext ("Deleted %d rows: %s"):format (rows, ctype))
 		opsnotify (table_sets.classnotiledoact, gettext ("%s with class %d deleted %d search ranks lower than %d."):format (nick, cls, rows, climt))
-		VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('lastcleansrran', " .. tm .. ") on duplicate key update `value` = " .. tm)
-		VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('limcleansrran', " .. climt .. ") on duplicate key update `value` = " .. climt)
+		VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('lastcleansrran', " .. _tostring (tm) .. ") on duplicate key update `value` = " .. _tostring (tm))
+		VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('limcleansrran', " .. _tostring (climt) .. ") on duplicate key update `value` = " .. _tostring (climt))
 	else
 		commandanswer (nick, gettext ("No rows to remove: %s"):format (ctype))
 	end
@@ -14351,27 +14351,27 @@ local rows = 0
 if climt == 0 then
 rows = counttable (tbl_sql.wdran)
 else
-_, rows = VH:SQLQuery ("select `rank` from `" .. tbl_sql.wdran .. "` where `rank` < " .. climt)
+_, rows = VH:SQLQuery ("select `rank` from `" .. tbl_sql.wdran .. "` where `rank` < " .. _tostring (climt))
 end
 
 if rows > 0 then
 if climt == 0 then
 VH:SQLQuery ("truncate table `" .. tbl_sql.wdran .. "`")
 else
-VH:SQLQuery ("delete from `" .. tbl_sql.wdran .. "` where `rank` < " .. climt)
+VH:SQLQuery ("delete from `" .. tbl_sql.wdran .. "` where `rank` < " .. _tostring (climt))
 end
 
 commandanswer (nick, gettext ("Deleted %d rows: %s"):format (rows, ctype))
 opsnotify (table_sets.classnotiledoact, gettext ("%s with class %d deleted %d word ranks lower than %d."):format (nick, cls, rows, climt))
-VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('lastcleanwdran', " .. tm .. ") on duplicate key update `value` = " .. tm)
-VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('limcleanwdran', " .. climt .. ") on duplicate key update `value` = " .. climt)
+VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('lastcleanwdran', " .. _tostring (tm) .. ") on duplicate key update `value` = " .. _tostring (tm))
+VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('limcleanwdran', " .. _tostring (climt) .. ") on duplicate key update `value` = " .. _tostring (climt))
 else
 commandanswer (nick, gettext ("No rows to remove: %s"):format (ctype))
 end
 
 elseif ctype == "cc" then
 VH:SQLQuery ("truncate table `" .. tbl_sql.ccstat .. "`")
-VH:SQLQuery ("update ignore `" .. tbl_sql.conf .. "` set `value` = '" .. (os.time () + table_sets.srvtimediff) .. "' where `variable` = 'date_ccstats' limit 1")
+VH:SQLQuery ("update ignore `" .. tbl_sql.conf .. "` set `value` = '" .. (os.time () + table_sets.srvtimediff) .. "' where `variable` = 'date_ccstats'")
 commandanswer (nick, gettext ("Deleted all rows: %s"):format (ctype))
 opsnotify (table_sets.classnotiledoact, gettext ("%s with class %d deleted all user location entries."):format (nick, cls))
 
@@ -14383,7 +14383,7 @@ end
 ----- ---- --- -- -
 
 function chatranksendown (nick)
-local _, rows = VH:SQLQuery ("select `rank` from `" .. tbl_sql.chran .. "` where `nick` = '" .. repsqlchars (nick) .. "' limit 1")
+local _, rows = VH:SQLQuery ("select `rank` from `" .. tbl_sql.chran .. "` where `nick` = '" .. repsqlchars (nick) .. "'")
 
 if rows > 0 then
 local _, rank = VH:SQLFetch (0)
@@ -14396,7 +14396,7 @@ end
 ----- ---- --- -- -
 
 function shareranksendown (nick)
-local _, rows = VH:SQLQuery ("select `rank` from `" .. tbl_sql.shran .. "` where `nick` = '" .. repsqlchars (nick) .. "' limit 1")
+local _, rows = VH:SQLQuery ("select `rank` from `" .. tbl_sql.shran .. "` where `nick` = '" .. repsqlchars (nick) .. "'")
 
 if rows > 0 then
 local _, rank = VH:SQLFetch (0)
@@ -14409,7 +14409,7 @@ end
 ----- ---- --- -- -
 
 function opranksendown (nick)
-local _, rows = VH:SQLQuery ("select `rank` from `" .. tbl_sql.opran .. "` where `nick` = '" .. repsqlchars (nick) .. "' limit 1")
+local _, rows = VH:SQLQuery ("select `rank` from `" .. tbl_sql.opran .. "` where `nick` = '" .. repsqlchars (nick) .. "'")
 
 if rows > 0 then
 local _, rank = VH:SQLFetch (0)
@@ -14422,7 +14422,7 @@ end
 ----- ---- --- -- -
 
 function chatranksendall (nick)
-local _, rows = VH:SQLQuery ("select `nick`, `rank` from `" .. tbl_sql.chran .. "` order by `rank` desc limit " .. table_sets.ranklimit)
+local _, rows = VH:SQLQuery ("select `nick`, `rank` from `" .. tbl_sql.chran .. "` order by `rank` desc limit " .. _tostring (table_sets.ranklimit))
 
 if rows > 0 then
 local arank, len = "", 0
@@ -14442,7 +14442,7 @@ end
 ----- ---- --- -- -
 
 function shareranksendall (nick)
-local _, rows = VH:SQLQuery ("select `nick`, `rank` from `" .. tbl_sql.shran .. "` order by `rank` desc limit " .. table_sets.ranklimit)
+local _, rows = VH:SQLQuery ("select `nick`, `rank` from `" .. tbl_sql.shran .. "` order by `rank` desc limit " .. _tostring (table_sets.ranklimit))
 
 if rows > 0 then
 local arank = ""
@@ -14461,7 +14461,7 @@ end
 ----- ---- --- -- -
 
 function opranksendall (nick)
-local _, rows = VH:SQLQuery ("select `nick`, `rank` from `" .. tbl_sql.opran .. "` order by `rank` desc limit " .. table_sets.ranklimit)
+local _, rows = VH:SQLQuery ("select `nick`, `rank` from `" .. tbl_sql.opran .. "` order by `rank` desc limit " .. _tostring (table_sets.ranklimit))
 
 if rows > 0 then
 local arank, len = "", 0
@@ -14481,7 +14481,7 @@ end
 ----- ---- --- -- -
 
 function wordranksendall (nick)
-local _, rows = VH:SQLQuery ("select `word`, `rank` from `" .. tbl_sql.wdran .. "` order by `rank` desc limit " .. table_sets.ranklimit)
+local _, rows = VH:SQLQuery ("select `word`, `rank` from `" .. tbl_sql.wdran .. "` order by `rank` desc limit " .. _tostring (table_sets.ranklimit))
 
 if rows > 0 then
 	local arank, len = "", 0
@@ -14502,7 +14502,7 @@ end
 
 function addrankex (nick, item)
 local entry = repsqlchars (item)
-local _, rows = VH:SQLQuery ("select `nick` from `" .. tbl_sql.ranex .. "` where `nick` = '" .. entry .. "' limit 1")
+local _, rows = VH:SQLQuery ("select `nick` from `" .. tbl_sql.ranex .. "` where `nick` = '" .. entry .. "'")
 
 if rows > 0 then
 commandanswer (nick, gettext ("Couldn't add rank exception because already exists: %s"):format (item))
@@ -14517,10 +14517,10 @@ end
 
 function delrankex (nick, item)
 local aitem = repsqlchars (item)
-local _, rows = VH:SQLQuery ("select `nick` from `" .. tbl_sql.ranex .. "` where `nick` = '" .. aitem .. "' limit 1")
+local _, rows = VH:SQLQuery ("select `nick` from `" .. tbl_sql.ranex .. "` where `nick` = '" .. aitem .. "'")
 
 if rows > 0 then
-VH:SQLQuery ("delete from `" .. tbl_sql.ranex .. "` where `nick` = '" .. aitem .. "' limit 1")
+VH:SQLQuery ("delete from `" .. tbl_sql.ranex .. "` where `nick` = '" .. aitem .. "'")
 commandanswer (nick, gettext ("Deleted rank exception: %s"):format (item))
 else
 commandanswer (nick, gettext ("Couldn't delete rank exception because not found: %s"):format (item))
@@ -14883,10 +14883,10 @@ function addantientry (nick, item)
 			commandanswer (nick, ferr)
 		else
 			local entry = repsqlchars (repnmdcinchars (aitem))
-			local _, rows = VH:SQLQuery ("select `action` from `" .. tbl_sql.anti .. "` where `antispam` = '" .. entry .. "' limit 1")
+			local _, rows = VH:SQLQuery ("select `action` from `" .. tbl_sql.anti .. "` where `antispam` = '" .. entry .. "'")
 
 			if rows > 0 then
-				VH:SQLQuery ("update `" .. tbl_sql.anti .. "` set `priority` = " .. _tostring (prio) .. ", `action` = " .. _tostring (aaction) .. ", `flags` = " .. _tostring (flags) .. " where `antispam` = '" .. entry .. "' limit 1")
+				VH:SQLQuery ("update `" .. tbl_sql.anti .. "` set `priority` = " .. _tostring (prio) .. ", `action` = " .. _tostring (aaction) .. ", `flags` = " .. _tostring (flags) .. " where `antispam` = '" .. entry .. "'")
 				local note = "Modified antispam entry with action %d and priority %d to scan in MC and PM: %s"
 
 				if flags == 1 then
@@ -14916,10 +14916,10 @@ end
 
 function delantientry (nick, item)
 local aitem = repsqlchars (repnmdcinchars (item))
-local _, rows = VH:SQLQuery ("select `occurred` from `" .. tbl_sql.anti .. "` where `antispam` = '" .. aitem .. "' limit 1")
+local _, rows = VH:SQLQuery ("select `occurred` from `" .. tbl_sql.anti .. "` where `antispam` = '" .. aitem .. "'")
 
 if rows > 0 then
-	VH:SQLQuery ("delete from `" .. tbl_sql.anti .. "` where `antispam` = '" .. aitem .. "' limit 1")
+	VH:SQLQuery ("delete from `" .. tbl_sql.anti .. "` where `antispam` = '" .. aitem .. "'")
 	commandanswer (nick, gettext ("Deleted antispam entry: %s"):format (item))
 else
 	commandanswer (nick, gettext ("Couldn't delete antispam entry because not found: %s"):format (item))
@@ -14959,7 +14959,7 @@ function addexentry (nick, item)
 		commandanswer (nick, ferr)
 	else
 		local entry = repsqlchars (repnmdcinchars (item))
-		local _, rows = VH:SQLQuery ("select `occurred` from `" .. tbl_sql.antiex .. "` where `exception` = '" .. entry .. "' limit 1")
+		local _, rows = VH:SQLQuery ("select `occurred` from `" .. tbl_sql.antiex .. "` where `exception` = '" .. entry .. "'")
 
 		if rows > 0 then
 			commandanswer (nick, gettext ("Couldn't add antispam exception entry because already exists: %s"):format (item))
@@ -14974,10 +14974,10 @@ end
 
 function delexentry (nick, item)
 local aitem = repsqlchars (repnmdcinchars (item))
-local _, rows = VH:SQLQuery ("select `occurred` from `" .. tbl_sql.antiex .. "` where `exception` = '" .. aitem .. "' limit 1")
+local _, rows = VH:SQLQuery ("select `occurred` from `" .. tbl_sql.antiex .. "` where `exception` = '" .. aitem .. "'")
 
 if rows > 0 then
-VH:SQLQuery ("delete from `" .. tbl_sql.antiex .. "` where `exception` = '" .. aitem .. "' limit 1")
+VH:SQLQuery ("delete from `" .. tbl_sql.antiex .. "` where `exception` = '" .. aitem .. "'")
 commandanswer (nick, gettext ("Deleted antispam exception entry: %s"):format (item))
 else
 commandanswer (nick, gettext ("Couldn't delete antispam exception entry because not found: %s"):format (item))
@@ -15089,8 +15089,8 @@ function savetopic (owner, topic, ucls)
 
 	if table_sets.statscollint > 0 then
 		local tm = os.time () + table_sets.srvtimediff -- current time
-		VH:SQLQuery ("insert into `" .. tbl_sql.stat .. "` (`type`, `time`, `count`) values ('current_topic', " .. tm .. ", " .. repsqlchars (topic or "") .. ") on duplicate key update `time` = " .. tm .. ", `count` = " .. repsqlchars (topic or ""))
-		VH:SQLQuery ("insert into `" .. tbl_sql.stat .. "` (`type`, `time`, `count`) values ('topic_owner', " .. tm .. ", " .. repsqlchars (owner or "") .. ") on duplicate key update `time` = " .. tm .. ", `count` = " .. repsqlchars (owner or ""))
+		VH:SQLQuery ("insert into `" .. tbl_sql.stat .. "` (`type`, `time`, `count`) values ('current_topic', " .. _tostring (tm) .. ", '" .. repsqlchars (topic or "") .. "') on duplicate key update `time` = " .. _tostring (tm) .. ", `count` = '" .. repsqlchars (topic or "") .. "'")
+		VH:SQLQuery ("insert into `" .. tbl_sql.stat .. "` (`type`, `time`, `count`) values ('topic_owner', " .. _tostring (tm) .. ", '" .. repsqlchars (owner or "") .. "') on duplicate key update `time` = " .. _tostring (tm) .. ", `count` = '" .. repsqlchars (owner or "") .. "'")
 	end
 
 	if topic and (table_sets.rolltopicint > 0) then -- rolling topic
@@ -15171,13 +15171,13 @@ end
 
 local rnewn = repsqlchars (newn)
 local roldn = repsqlchars (oldn)
-VH:SQLQuery ("update `reglist` set `nick` = '" .. rnewn .. "' where `nick` = '" .. roldn .. "' limit 1")
+VH:SQLQuery ("update `reglist` set `nick` = '" .. rnewn .. "' where `nick` = '" .. roldn .. "'")
 	VH:SQLQuery ("update `" .. tbl_sql.wm .. "` set `nick` = '" .. rnewn .. "' where `nick` = '" .. roldn .. "'")
-VH:SQLQuery ("update `" .. tbl_sql.cust .. "` set `nick` = '" .. rnewn .. "' where `nick` = '" .. roldn .. "' limit 1")
+VH:SQLQuery ("update `" .. tbl_sql.cust .. "` set `nick` = '" .. rnewn .. "' where `nick` = '" .. roldn .. "'")
 VH:SQLQuery ("update `" .. tbl_sql.auth .. "` set `nick` = '" .. rnewn .. "' where `nick` = '" .. roldn .. "'") -- no limit
-VH:SQLQuery ("update `" .. tbl_sql.chran .. "` set `nick` = '" .. rnewn .. "' where `nick` = '" .. roldn .. "' limit 1")
-VH:SQLQuery ("update `" .. tbl_sql.opran .. "` set `nick` = '" .. rnewn .. "' where `nick` = '" .. roldn .. "' limit 1")
-VH:SQLQuery ("update `" .. tbl_sql.shran .. "` set `nick` = '" .. rnewn .. "' where `nick` = '" .. roldn .. "' limit 1")
+VH:SQLQuery ("update `" .. tbl_sql.chran .. "` set `nick` = '" .. rnewn .. "' where `nick` = '" .. roldn .. "'")
+VH:SQLQuery ("update `" .. tbl_sql.opran .. "` set `nick` = '" .. rnewn .. "' where `nick` = '" .. roldn .. "'")
+VH:SQLQuery ("update `" .. tbl_sql.shran .. "` set `nick` = '" .. rnewn .. "' where `nick` = '" .. roldn .. "'")
 VH:SQLQuery ("update `" .. tbl_sql.off .. "` set `from` = '" .. rnewn .. "' where `from` = '" .. roldn .. "'") -- no limit
 VH:SQLQuery ("update `" .. tbl_sql.news .. "` set `by` = '" .. rnewn .. "' where `by` = '" .. roldn .. "'") -- no limit
 VH:SQLQuery ("update `" .. tbl_sql.rel .. "` set `by` = '" .. rnewn .. "' where `by` = '" .. roldn .. "'") -- no limit
@@ -15289,12 +15289,12 @@ end
 function delledouser (nick)
 	local usr = repsqlchars (nick)
 	VH:SQLQuery ("delete from `" .. tbl_sql.wm .. "` where `nick` = '" .. usr .. "'")
-	VH:SQLQuery ("delete from `" .. tbl_sql.cust .. "` where `nick` = '" .. usr .. "' limit 1")
+	VH:SQLQuery ("delete from `" .. tbl_sql.cust .. "` where `nick` = '" .. usr .. "'")
 	VH:SQLQuery ("delete from `" .. tbl_sql.auth .. "` where `nick` = '" .. usr .. "'")
 	VH:SQLQuery ("delete from `" .. tbl_sql.off .. "` where `from` = '" .. usr .. "'")
-	VH:SQLQuery ("delete from `" .. tbl_sql.chran .. "` where `nick` = '" .. usr .. "' limit 1")
-	VH:SQLQuery ("delete from `" .. tbl_sql.opran .. "` where `nick` = '" .. usr .. "' limit 1")
-	VH:SQLQuery ("delete from `" .. tbl_sql.shran .. "` where `nick` = '" .. usr .. "' limit 1")
+	VH:SQLQuery ("delete from `" .. tbl_sql.chran .. "` where `nick` = '" .. usr .. "'")
+	VH:SQLQuery ("delete from `" .. tbl_sql.opran .. "` where `nick` = '" .. usr .. "'")
+	VH:SQLQuery ("delete from `" .. tbl_sql.shran .. "` where `nick` = '" .. usr .. "'")
 end
 
 ----- ---- --- -- -
@@ -15415,7 +15415,7 @@ elseif ucmd:find ("^" .. table_othsets.ustrig .. "regme%s+.+$") then
 	ucmd = getconfig ("cmd_start_user"):sub (1, 1) .. "regme <" .. gettext ("password") .. ">"
 end
 
-VH:SQLQuery ("insert into `" .. tbl_sql.clog .. "` (`time`, `nick`, `class`, `command`) values (" .. (os.time () + table_sets.srvtimediff) .. ", '" .. repsqlchars (nick) .. "', " .. cls .. ", '" .. repsqlchars (ucmd) .. "')")
+VH:SQLQuery ("insert into `" .. tbl_sql.clog .. "` (`time`, `nick`, `class`, `command`) values (" .. _tostring (os.time () + table_sets.srvtimediff) .. ", '" .. repsqlchars (nick) .. "', " .. _tostring (cls) .. ", '" .. repsqlchars (ucmd) .. "')")
 end
 
 ----- ---- --- -- -
@@ -16115,7 +16115,7 @@ if not table_cmnds [orig] then
 	commandanswer (nick, gettext ("Unknown script command: %s"):format (orig))
 else
 	table_cmnds [orig] = cnew
-	VH:SQLQuery ("update `" .. tbl_sql.ledocmd .. "` set `new` = '" .. repsqlchars (cnew) .. "' where `original` = '" .. repsqlchars (orig) .. "' limit 1")
+	VH:SQLQuery ("update `" .. tbl_sql.ledocmd .. "` set `new` = '" .. repsqlchars (cnew) .. "' where `original` = '" .. repsqlchars (orig) .. "'")
 	commandanswer (nick, gettext ("Customized script command: %s => %s"):format (orig, cnew))
 	opsnotify (table_sets.classnoticom, gettext ("%s with class %d customized script command: %s => %s"):format (nick, ucls, orig, cnew))
 end
@@ -16151,7 +16151,7 @@ for k, v in pairs (table_cmnds) do
 		cnum = cnum + 1
 		table_cmnds [k] = k
 		k = repsqlchars (k)
-		VH:SQLQuery ("update `" .. tbl_sql.ledocmd .. "` set `new` = '" .. k .. "' where `original` = '" .. k .. "' limit 1")
+		VH:SQLQuery ("update `" .. tbl_sql.ledocmd .. "` set `new` = '" .. k .. "' where `original` = '" .. k .. "'")
 	end
 end
 
@@ -17523,7 +17523,7 @@ if setto == 1 then -- set first date
 if not table_refu.GetUserCC then
 commandanswer (nick, gettext ("This feature requires %s or later installed on your system."):format ("Verlihub 0.9.8e"))
 else
-VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('date_ccstats', " .. (os.time () + table_sets.srvtimediff) .. ")")
+VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('date_ccstats', " .. _tostring (os.time () + table_sets.srvtimediff) .. ")")
 end
 end
 
@@ -17574,7 +17574,7 @@ if setto >= 1 and setto <= 102400 then
 ok = true
 
 if setto > table_sets [tvar] then
-VH:SQLQuery ("delete from `" .. tbl_sql.shran .. "` where `rank` < " .. (setto * 1073741824))
+VH:SQLQuery ("delete from `" .. tbl_sql.shran .. "` where `rank` < " .. _tostring (setto * 1073741824))
 end
 
 else
@@ -19460,7 +19460,7 @@ end
 if ok then -- finalize
 commandanswer (nick, gettext ("Changed configuration variable %s: %s => %s"):format (tvar, table_sets [tvar], setto))
 opsnotify (table_sets.classnoticonfig, gettext ("%s with class %d changed configuration variable %s: %s => %s"):format (nick, ucls, tvar, table_sets [tvar], setto))
-VH:SQLQuery ("update `" .. tbl_sql.conf .. "` set `value` = '" .. repsqlchars (setto) .. "' where `variable` = '" .. tvar .. "' limit 1")
+VH:SQLQuery ("update `" .. tbl_sql.conf .. "` set `value` = '" .. repsqlchars (setto) .. "' where `variable` = '" .. tvar .. "'")
 table_sets [tvar] = setto
 oprankaccept (nick, ucls)
 end
@@ -19800,7 +19800,7 @@ function sendstats (nick)
 	local mu = makesize (getmemusg ()) -- memory
 
 if table_sets.statscollint > 0 then
-	local _, rows = VH:SQLQuery ("select `count` from `" .. tbl_sql.stat .. "` where `type` = 'memory_peak' limit 1")
+	local _, rows = VH:SQLQuery ("select `count` from `" .. tbl_sql.stat .. "` where `type` = 'memory_peak'")
 
 	if rows > 0 then
 		local _, pmu = VH:SQLFetch (0)
@@ -19815,7 +19815,7 @@ if table_refu.GetUpTime then -- hub uptime
 	local ut = formatuptime ((os.time () - getuptime ()), true)
 
 	if table_sets.statscollint > 0 then
-		local _, rows = VH:SQLQuery ("select `count` from `" .. tbl_sql.stat .. "` where `type` = 'uptime_peak' limit 1")
+		local _, rows = VH:SQLQuery ("select `count` from `" .. tbl_sql.stat .. "` where `type` = 'uptime_peak'")
 
 		if rows > 0 then
 			local _, put = VH:SQLFetch (0)
@@ -19832,7 +19832,7 @@ end
 	local val = _tostring (uc)
 
 	if table_sets.statscollint > 0 then
-		local _, rows = VH:SQLQuery ("select `count` from `" .. tbl_sql.stat .. "` where `type` = 'users_peak' limit 1")
+		local _, rows = VH:SQLQuery ("select `count` from `" .. tbl_sql.stat .. "` where `type` = 'users_peak'")
 
 		if rows > 0 then
 			local _, puc = VH:SQLFetch (0)
@@ -19849,7 +19849,7 @@ end
 	val = makesize (ts)
 
 	if table_sets.statscollint > 0 then
-		local _, rows = VH:SQLQuery ("select `count` from `" .. tbl_sql.stat .. "` where `type` = 'share_peak' limit 1")
+		local _, rows = VH:SQLQuery ("select `count` from `" .. tbl_sql.stat .. "` where `type` = 'share_peak'")
 
 		if rows > 0 then
 			local _, pts = VH:SQLFetch (0)
@@ -19865,7 +19865,7 @@ end
 		val = makesize (roundint ((ts / uc), 0))
 
 		if table_sets.statscollint > 0 then
-			local _, rows = VH:SQLQuery ("select `count` from `" .. tbl_sql.stat .. "` where `type` = 'avgshare_peak' limit 1")
+			local _, rows = VH:SQLQuery ("select `count` from `" .. tbl_sql.stat .. "` where `type` = 'avgshare_peak'")
 
 			if rows > 0 then
 				local _, pavg = VH:SQLFetch (0)
@@ -20683,14 +20683,14 @@ function createsettings ()
 
 	-- own stuff
 
-	--local _, rows = VH:SQLQuery ("select `variable` from `" .. tbl_sql.conf .. "` where `variable` = 'cmdinstalled' limit 1") -- add commands i prefer to forbid
+	--local _, rows = VH:SQLQuery ("select `variable` from `" .. tbl_sql.conf .. "` where `variable` = 'cmdinstalled'") -- add commands we prefer to forbid
 
 	--if rows == 0 then
 		--VH:SQLQuery ("insert ignore into `" .. tbl_sql.cmd .. "` (`command`) values " ..
 		--"('" .. repsqlchars ("^$") .. "')")
 	--end
 
-	if not getledoconf ("cmdexinstalled") then -- add commands i prefer to except
+	if not getledoconf ("cmdexinstalled") then -- add commands we prefer to except
 		VH:SQLQuery ("insert ignore into `" .. tbl_sql.cmdex .. "` (`exception`) values " ..
 		"('" .. repsqlchars ("^" .. table_othsets.optrig .. "drop .+$") .. "'), " ..
 		"('" .. repsqlchars ("^" .. table_othsets.optrig .. "rpass .+$") .. "'), " ..
@@ -20730,7 +20730,7 @@ function loadsettings ()
 	end
 
 	for k, _ in pairs (table_cmnds) do -- load commands
-		local _, rows = VH:SQLQuery ("select `new` from `" .. tbl_sql.ledocmd .. "` where `original` = '" .. repsqlchars (k) .. "' limit 1")
+		local _, rows = VH:SQLQuery ("select `new` from `" .. tbl_sql.ledocmd .. "` where `original` = '" .. repsqlchars (k) .. "'")
 
 		if rows > 0 then
 			local _, val = VH:SQLFetch (0)
@@ -22139,7 +22139,7 @@ end
 ----- ---- --- -- -
 
 function getregclass (nick)
-	local _, rows = VH:SQLQuery ("select `class` from `reglist` where `nick` = '" .. repsqlchars (nick) .. "' limit 1")
+	local _, rows = VH:SQLQuery ("select `class` from `reglist` where `nick` = '" .. repsqlchars (nick) .. "'")
 
 	if rows > 0 then
 		local _, val = VH:SQLFetch (0)
@@ -23052,7 +23052,7 @@ if table_refu.GetUpTime then -- hub uptime
 		back = back:gsub ("<huptlong>", reprexpchars (formatuptime (ut, false)))
 	end
 
-	local _, rows = VH:SQLQuery ("select `time`, `count` from `" .. tbl_sql.stat .. "` where `type` = 'uptime_peak' limit 1")
+	local _, rows = VH:SQLQuery ("select `time`, `count` from `" .. tbl_sql.stat .. "` where `type` = 'uptime_peak'")
 	local ptm, put = ntime, 0
 
 	if rows > 0 then
@@ -23082,7 +23082,7 @@ if back:find ("<usercnt>") then
 end
 
 if back:find ("<peakusers>") then
-	local _, rows = VH:SQLQuery ("select `time`, `count` from `" .. tbl_sql.stat .. "` where `type` = 'users_peak' limit 1")
+	local _, rows = VH:SQLQuery ("select `time`, `count` from `" .. tbl_sql.stat .. "` where `type` = 'users_peak'")
 	local ptm, puc = ntime, 0
 
 	if rows > 0 then
@@ -23107,7 +23107,7 @@ end
 	end
 
 	if back:find ("<peakshare>") then
-		local _, rows = VH:SQLQuery ("select `time`, `count` from `" .. tbl_sql.stat .. "` where `type` = 'share_peak' limit 1")
+		local _, rows = VH:SQLQuery ("select `time`, `count` from `" .. tbl_sql.stat .. "` where `type` = 'share_peak'")
 		local ptm, pts = ntime, 0
 
 		if rows > 0 then
@@ -23141,7 +23141,7 @@ end
 	end
 
 	if back:find ("<peakavgshare>") then
-		local _, rows = VH:SQLQuery ("select `time`, `count` from `" .. tbl_sql.stat .. "` where `type` = 'avgshare_peak' limit 1")
+		local _, rows = VH:SQLQuery ("select `time`, `count` from `" .. tbl_sql.stat .. "` where `type` = 'avgshare_peak'")
 		local pavgtm, pavg = ntime, 0
 
 		if rows > 0 then
@@ -23168,7 +23168,7 @@ if back:find ("<memusg>") then
 end
 
 if back:find ("<peakmemusg>") then
-	local _, rows = VH:SQLQuery ("select `time`, `count` from `" .. tbl_sql.stat .. "` where `type` = 'memory_peak' limit 1")
+	local _, rows = VH:SQLQuery ("select `time`, `count` from `" .. tbl_sql.stat .. "` where `type` = 'memory_peak'")
 	local ptm, pmu = ntime, 0
 
 	if rows > 0 then
@@ -23437,7 +23437,7 @@ if rows > 0 then
 	end
 
 	for k, _ in pairs (t) do
-		VH:SQLQuery ("delete from `" .. tbl .. "` where `nick` = '" .. repsqlchars (k) .. "' limit 1")
+		VH:SQLQuery ("delete from `" .. tbl .. "` where `nick` = '" .. repsqlchars (k) .. "'")
 	end
 end
 end
@@ -23523,7 +23523,7 @@ function antiscan (nick, class, data, where, to, status)
 			ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
 			opsnotify (table_sets.classnotiledoact, ferr)
 		elseif fval then
-			VH:SQLQuery ("update `" .. tbl_sql.anti .. "` set `occurred` = `occurred` + 1 where `antispam` = '" .. repsqlchars (entry) .. "' limit 1")
+			VH:SQLQuery ("update `" .. tbl_sql.anti .. "` set `occurred` = `occurred` + 1 where `antispam` = '" .. repsqlchars (entry) .. "'")
 
 			if tonumber (priority) < 7 then -- skip exlist for 7, 8 and 9
 				for _, value in pairs (exlist) do
@@ -23536,7 +23536,7 @@ function antiscan (nick, class, data, where, to, status)
 						ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
 						opsnotify (table_sets.classnotiledoact, ferr)
 					elseif fval then
-						VH:SQLQuery ("update `" .. tbl_sql.antiex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (value) .. "' limit 1")
+						VH:SQLQuery ("update `" .. tbl_sql.antiex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (value) .. "'")
 						local note = "Spam exception from %s with IP %s and class %d in MC: %s"
 
 						if where == 2 then
