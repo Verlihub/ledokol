@@ -63,7 +63,7 @@ Tzaca, JOE™
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.3" -- ledokol version
-bld_ledo = "38" -- build number
+bld_ledo = "39" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -1383,6 +1383,7 @@ function Main (file)
 
 					if ver <= 293 then
 						VH:SQLQuery ("alter table `" .. tbl_sql.ccgag .. "` add column `why` varchar(255) null after `flag`")
+						VH:SQLQuery ("alter table `" .. tbl_sql.nopm .. "` change column `password` `password` varchar(255) null") -- not used yet
 					end
 
 					if ver <= 294 then
@@ -20318,7 +20319,7 @@ VH:SQLQuery ("create table if not exists `" .. tbl_sql.hubs .. "` (`address` var
 VH:SQLQuery ("create table if not exists `" .. tbl_sql.stat .. "` (`type` varchar(255) not null, `time` bigint(20) unsigned not null default 0, `count` text not null, primary key (`type`)) engine = myisam default character set utf8 collate utf8_unicode_ci")
 
 	-- no pm
-	VH:SQLQuery ("create table if not exists `" .. tbl_sql.nopm .. "` (`nick` varchar(255) not null, `action` tinyint(1) unsigned not null default 0, `maxclass` tinyint(2) unsigned not null default 2, `password` varchar(255) not null, `reason` text not null, primary key (`nick`)) engine = myisam default character set utf8 collate utf8_unicode_ci")
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql.nopm .. "` (`nick` varchar(255) not null, `action` tinyint(1) unsigned not null default 0, `maxclass` tinyint(2) unsigned not null default 2, `password` varchar(255) null, `reason` text not null, primary key (`nick`)) engine = myisam default character set utf8 collate utf8_unicode_ci") -- password not used yet
 
 	-- hard ban
 	VH:SQLQuery ("create table if not exists `" .. tbl_sql.hban .. "` (`ip` varchar(255) not null, `reason` text not null, primary key (`ip`)) engine = myisam default character set utf8 collate utf8_unicode_ci")
@@ -20651,7 +20652,8 @@ VH:SQLQuery ("alter table `" .. tbl_sql.stat .. "` change column `count` `count`
 
 	-- no pm
 	VH:SQLQuery ("alter table `" .. tbl_sql.nopm .. "` add column `maxclass` tinyint(2) unsigned not null default 2 after `action`") -- maxclass
-	VH:SQLQuery ("alter table `" .. tbl_sql.nopm .. "` add column `password` varchar(255) not null after `maxclass`") -- password
+	VH:SQLQuery ("alter table `" .. tbl_sql.nopm .. "` add column `password` varchar(255) null after `maxclass`") -- password, not used yet
+	VH:SQLQuery ("alter table `" .. tbl_sql.nopm .. "` change column `password` `password` varchar(255) null") -- password
 
 	-- hard ban
 	-- not added
