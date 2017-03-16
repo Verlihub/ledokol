@@ -4,6 +4,7 @@
 [ 38] Fixed: Lua 5.3 number to string conversions in MySQL queries
 [ 39] Fixed: Missing default password value when adding new PM block entry
 [ 37] Added: Optional reason to country code gag
+[ 40] Added: Optional filter parameter to word ranks command, request by Meka][Meka
 
 [ 2.9.2 :: 2017-02-12 ]
 

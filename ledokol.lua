@@ -63,7 +63,7 @@ Tzaca, JOE™
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.3" -- ledokol version
-bld_ledo = "39" -- build number
+bld_ledo = "40" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -2628,19 +2628,19 @@ end
 
 return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
 
-elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.wordranks .. "$") then
-if ucl >= table_sets.wordrankclass then
-donotifycmd (nick, data, 0, ucl)
-wordranksendall (nick)
-else
-commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
-end
+	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.wordranks .. "$") or data:match ("^" .. table_othsets.optrig .. table_cmnds.wordranks .. " %S+$") then
+		if ucl >= table_sets.wordrankclass then
+			donotifycmd (nick, data, 0, ucl)
+			wordranksendall (nick, data:sub (# table_cmnds.wordranks + 3))
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
 
-return 0
+		return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
 
 elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.searranks .. "$") then
 	if ucl >= table_sets.searrankclass then
@@ -4396,19 +4396,19 @@ end
 
 return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
 
-elseif data:match ("^" .. table_othsets.ustrig .. table_cmnds.wordranks .. "$") then
-if ucl >= table_sets.wordrankclass then
-donotifycmd (nick, data, 0, ucl)
-wordranksendall (nick)
-else
-commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
-end
+	elseif data:match ("^" .. table_othsets.ustrig .. table_cmnds.wordranks .. "$") or data:match ("^" .. table_othsets.ustrig .. table_cmnds.wordranks .. " %S+$") then
+		if ucl >= table_sets.wordrankclass then
+			donotifycmd (nick, data, 0, ucl)
+			wordranksendall (nick, data:sub (# table_cmnds.wordranks + 3))
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
 
-return 0
+		return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
 
 elseif data:match ("^" .. table_othsets.ustrig .. table_cmnds.searranks .. "$") then
 	if ucl >= table_sets.searrankclass then
@@ -14481,22 +14481,36 @@ end
 
 ----- ---- --- -- -
 
-function wordranksendall (nick)
-local _, rows = VH:SQLQuery ("select `word`, `rank` from `" .. tbl_sql.wdran .. "` order by `rank` desc limit " .. _tostring (table_sets.ranklimit))
+function wordranksendall (nick, word)
+	local where = ""
 
-if rows > 0 then
-	local arank, len = "", 0
-
-	for x = 0, rows - 1 do
-		local _, user, rank = VH:SQLFetch (x)
-		if x == 0 then len = # _tostring (rank) end
-		arank = arank .. " " .. prezero (# _tostring (rows), (x + 1)) .. ". [ R: " .. prezero (len, rank) .. " ] " .. repnmdcoutchars (user) .. "\r\n"
+	if # word > 0 then
+		where = " where `word` like '%" .. repsqlchars (repnmdcinchars (word)) .. "%'"
 	end
 
-	commandanswer (nick, gettext ("Top %d used words"):format (rows) .. ":\r\n\r\n" .. arank)
-else
-	commandanswer (nick, gettext ("Word rank list is empty."))
-end
+	local _, rows = VH:SQLQuery ("select `word`, `rank` from `" .. tbl_sql.wdran .. "`" .. where .. " order by `rank` desc limit " .. _tostring (table_sets.ranklimit))
+
+	if rows > 0 then
+		local list, mara = "", 0
+
+		for row = 0, rows - 1 do
+			local _, item, rank = VH:SQLFetch (row)
+
+			if row == 0 then
+				mara = # _tostring (rank)
+			end
+
+			list = list .. " " .. prezero (# _tostring (rows), (row + 1)) .. ". [ R: " .. prezero (mara, rank) .. " ] " .. repnmdcoutchars (item) .. "\r\n"
+		end
+
+		if # word > 0 then
+			commandanswer (nick, gettext ("Top %d used words with filter: %s"):format (rows, word) .. "\r\n\r\n" .. list)
+		else
+			commandanswer (nick, gettext ("Top %d used words"):format (rows) .. ":\r\n\r\n" .. list)
+		end
+	else
+		commandanswer (nick, gettext ("Word rank list is empty."))
+	end
 end
 
 ----- ---- --- -- -
@@ -15651,10 +15665,10 @@ susmenitm (usr, gettext ("Ranks") .. "\\" .. gettext ("Top %d search requests"):
 smensep (usr)
 end
 
-if ucl >= table_sets.wordrankclass then
-susmenitm (usr, gettext ("Ranks") .. "\\" .. gettext ("Top %d used words"):format (table_sets.ranklimit), table_cmnds.wordranks)
-smensep (usr)
-end
+	if ucl >= table_sets.wordrankclass then
+		susmenitm (usr, gettext ("Ranks") .. "\\" .. gettext ("Top %d used words"):format (table_sets.ranklimit), table_cmnds.wordranks)
+		smensep (usr)
+	end
 
 	if ucl >= table_sets.ccstatsclass then
 		susmenitm (usr, gettext ("Ranks") .. "\\" .. gettext ("Live user location statistics by country"), table_cmnds.cclive)
@@ -19715,14 +19729,14 @@ help = help .. " " .. optrig .. table_cmnds.hubdel .. " <" .. gettext ("address"
 
 	local ustrig = getconfig ("cmd_start_user"):sub (1, 1)
 
--- ranks
-help = help .. " " .. ustrig .. table_cmnds.mychatrank .. " - " .. gettext ("Your chat rank") .. "\r\n"
-help = help .. " " .. ustrig .. table_cmnds.mysharerank .. " - " .. gettext ("Your share rank") .. "\r\n"
-help = help .. " " .. ustrig .. table_cmnds.chatranks .. " - " .. gettext ("Top %d chat rankers"):format (table_sets.ranklimit) .. "\r\n"
-help = help .. " " .. ustrig .. table_cmnds.shareranks .. " - " .. gettext ("Top %d share rankers"):format (table_sets.ranklimit) .. "\r\n"
-help = help .. " " .. ustrig .. table_cmnds.opranks .. " - " .. gettext ("Top %d operator rankers"):format (table_sets.ranklimit) .. "\r\n"
-help = help .. " " .. ustrig .. table_cmnds.searranks .. " - " .. gettext ("Top %d search requests"):format (table_sets.ranklimit) .. "\r\n"
-help = help .. " " .. ustrig .. table_cmnds.wordranks .. " - " .. gettext ("Top %d used words"):format (table_sets.ranklimit) .. "\r\n"
+	-- ranks
+	help = help .. " " .. ustrig .. table_cmnds.mychatrank .. " - " .. gettext ("Your chat rank") .. "\r\n"
+	help = help .. " " .. ustrig .. table_cmnds.mysharerank .. " - " .. gettext ("Your share rank") .. "\r\n"
+	help = help .. " " .. ustrig .. table_cmnds.chatranks .. " - " .. gettext ("Top %d chat rankers"):format (table_sets.ranklimit) .. "\r\n"
+	help = help .. " " .. ustrig .. table_cmnds.shareranks .. " - " .. gettext ("Top %d share rankers"):format (table_sets.ranklimit) .. "\r\n"
+	help = help .. " " .. ustrig .. table_cmnds.opranks .. " - " .. gettext ("Top %d operator rankers"):format (table_sets.ranklimit) .. "\r\n"
+	help = help .. " " .. ustrig .. table_cmnds.searranks .. " - " .. gettext ("Top %d search requests"):format (table_sets.ranklimit) .. "\r\n"
+	help = help .. " " .. ustrig .. table_cmnds.wordranks .. " [" .. gettext ("word") .. "] - " .. gettext ("Top %d used words"):format (table_sets.ranklimit) .. "\r\n"
 	help = help .. " " .. ustrig .. table_cmnds.cclive .. " - " .. gettext ("Live user location statistics by country") .. "\r\n"
 	help = help .. " " .. ustrig .. table_cmnds.citylive .. " <" .. gettext ("cc") .. "> - " .. gettext ("Live user location statistics by city") .. "\r\n"
 	help = help .. " " .. ustrig .. table_cmnds.cchist .. " - " .. gettext ("All time user location statistics") .. "\r\n\r\n"

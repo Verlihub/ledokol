@@ -1159,3 +1159,5 @@ Low search uptime of %d seconds from %s with IP %s and class %d as TTH: %s|
 User dropped: %s|
 %d of %d|
 Main chat responder list contains %d items, but none matched your pattern.|
+word|
+Top %d used words with filter: %s|
