@@ -63,7 +63,7 @@ Tzaca, JOE™
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.3" -- ledokol version
-bld_ledo = "40" -- build number
+bld_ledo = "41" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -324,7 +324,8 @@ table_othsets = {
 	updserv = "http://ledo.feardc.net/",
 	updservdev = "http://ledo.feardc.net/dev/",
 	updservlang = "http://ledo.feardc.net/lang/",
-	vazhub = "dchub://hub.verlihub.net:7777/",
+	userman = "https://github.com/verlihub/ledokol/wiki",
+	vazhub = "dchub://hub.verlihub.net:7777",
 	tmpfile = "ledokol.data",
 	headfile = "ledokol.head",
 	verfile = "ledokol.ver",
@@ -3225,19 +3226,19 @@ elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.mode .. "$") then
 
 	return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
 
-elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.ledohelp .. "$") then
-if ucl >= table_sets.mincommandclass then
-donotifycmd (nick, data, 0, ucl)
-sendhelp (nick)
-else
-commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
-end
+	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.ledohelp .. "$") then
+		if ucl >= table_sets.mincommandclass then
+			donotifycmd (nick, data, 0, ucl)
+			sendophelp (nick, ucl)
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
 
-return 0
+		return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
 
 elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.ledostats .. "$") then
 	if ucl >= table_sets.mincommandclass then
@@ -3890,6 +3891,8 @@ elseif data:match ("^" .. table_othsets.optrig .. "lstplug.*$") then
 	elseif data:match ("^" .. table_othsets.optrig .. "me ") then
 		return VH_OnUserCommand (nick, data)
 
+	----- ---- --- -- -
+
 	else -- unknown command
 		donotifycmd (nick, data, 0, ucl)
 	end
@@ -4517,6 +4520,18 @@ elseif data:match ("^" .. table_othsets.ustrig .. table_cmnds.mode .. " %S+$") t
 
 	----- ---- --- -- -
 
+	elseif data:match ("^" .. table_othsets.ustrig .. table_cmnds.ledohelp .. "$") then
+		if ucl >= table_sets.minusrcommandclass then
+			donotifycmd (nick, data, 0, ucl)
+			senduserhelp (nick)
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
+
+		return 0
+
+	----- ---- --- -- -
+
 	elseif data:match ("^" .. table_othsets.ustrig .. table_cmnds.rellist .. " %S+ %d+$") or data:match ("^" .. table_othsets.ustrig .. table_cmnds.rellist .. " %S+ %d+ .+$") then
 		if ucl >= table_sets.reluseclass then
 			donotifycmd (nick, data, 0, ucl)
@@ -4649,12 +4664,12 @@ elseif data:match ("^" .. table_othsets.ustrig .. table_cmnds.mode .. " %S+$") t
 
 		return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
 
 	elseif data:match ("^" .. table_othsets.ustrig .. "regme$") or data:match ("^" .. table_othsets.ustrig .. "regme%s+.*$") then
 		return checkregmecmd (nick, ucl, ip)
 
------ ---- --- -- -
+	----- ---- --- -- -
 
 	else -- unknown command
 		donotifycmd (nick, data, 0, ucl)
@@ -4672,6 +4687,17 @@ function VH_OnHubCommand (nick, data, op, pm)
 
 	if checktrigger (nick, data, pm) then
 		return 0
+	end
+
+	if data:match ("^.help$") or data:match ("^.help .*$") then -- send ledokol help aswell, dont return
+		local clas = getclass (nick)
+
+		if clas >= table_sets.mincommandclass then
+			sendophelp (nick, clas, pm)
+
+		elseif clas >= table_sets.minusrcommandclass then
+			senduserhelp (nick, pm)
+		end
 	end
 
 	return 1
@@ -19518,257 +19544,271 @@ end
 
 ----- ---- --- -- -
 
-function sendhelp (nick)
-	local help = "\r\n\r\n .:: " .. gettext ("%s operator commands"):format ("Ledokol") .. ":\r\n\r\n"
-	local optrig = getconfig ("cmd_start_op"):sub (1, 1)
+function sendophelp (nick, clas, pm)
+	local trig = getconfig ("cmd_start_op"):sub (1, 1)
+	local help = ".:: " .. gettext ("%s operator commands"):format ("Ledokol") .. ":\r\n\r\n"
 
 	-- antispam
-	help = help .. " " .. optrig .. table_cmnds.antiadd .. " <" .. gettext ("lre") .. "> <" .. gettext ("priority") .. "> <" .. gettext ("action") .. "> <" .. gettext ("flags") .. "> - " .. gettext ("Add antispam entry") .. "\r\n"
-help = help .. " " .. optrig .. table_cmnds.antilist .. " - " .. gettext ("Antispam list") .. "\r\n"
-help = help .. " " .. optrig .. table_cmnds.antidel .. " <" .. gettext ("lre") .. "> - " .. gettext ("Delete antispam entry") .. "\r\n"
-help = help .. " " .. optrig .. table_cmnds.antiexadd .. " <" .. gettext ("lre") .. "> - " .. gettext ("Add antispam exception entry") .. "\r\n"
-help = help .. " " .. optrig .. table_cmnds.antiexlist .. " - " .. gettext ("Antispam exception list") .. "\r\n"
-help = help .. " " .. optrig .. table_cmnds.antiexdel .. " <" .. gettext ("lre") .. "> - " .. gettext ("Delete antispam exception entry") .. "\r\n\r\n"
+	help = help .. " " .. trig .. table_cmnds.antiadd .. " <" .. gettext ("lre") .. "> <" .. gettext ("priority") .. "> <" .. gettext ("action") .. "> <" .. gettext ("flags") .. "> - " .. gettext ("Add antispam entry") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.antilist .. " - " .. gettext ("Antispam list") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.antidel .. " <" .. gettext ("lre") .. "> - " .. gettext ("Delete antispam entry") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.antiexadd .. " <" .. gettext ("lre") .. "> - " .. gettext ("Add antispam exception entry") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.antiexlist .. " - " .. gettext ("Antispam exception list") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.antiexdel .. " <" .. gettext ("lre") .. "> - " .. gettext ("Delete antispam exception entry") .. "\r\n\r\n"
 
 	-- search filter
-	help = help .. " " .. optrig .. table_cmnds.sefiadd .. " <" .. gettext ("lre") .. "> <" .. gettext ("priority") .. "> <" .. gettext ("action") .. "> <" .. gettext ("type") .. "> - " .. gettext ("Add search filter") .. "\r\n"
-	help = help .. " " .. optrig .. table_cmnds.sefilist .. " - " .. gettext ("Search filter list") .. "\r\n"
-	help = help .. " " .. optrig .. table_cmnds.sefidel .. " <" .. gettext ("lre") .. "> - " .. gettext ("Delete search filter") .. "\r\n"
-	help = help .. " " .. optrig .. table_cmnds.sefiexadd .. " <" .. gettext ("lre") .. "> - " .. gettext ("Add search filter exception entry") .. "\r\n"
-	help = help .. " " .. optrig .. table_cmnds.sefiexlist .. " - " .. gettext ("Search filter exception list") .. "\r\n"
-	help = help .. " " .. optrig .. table_cmnds.sefiexdel .. " <" .. gettext ("lre") .. "> - " .. gettext ("Delete search filter exception entry") .. "\r\n"
-	help = help .. " " .. optrig .. table_cmnds.sefibllist .. " - " .. gettext ("Search filter block list") .. "\r\n"
-	help = help .. " " .. optrig .. table_cmnds.sefibldel .. " <" .. gettext ("nick") .. "> - " .. gettext ("Delete search filter block list entry") .. "\r\n\r\n"
+	help = help .. " " .. trig .. table_cmnds.sefiadd .. " <" .. gettext ("lre") .. "> <" .. gettext ("priority") .. "> <" .. gettext ("action") .. "> <" .. gettext ("type") .. "> - " .. gettext ("Add search filter") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.sefilist .. " - " .. gettext ("Search filter list") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.sefidel .. " <" .. gettext ("lre") .. "> - " .. gettext ("Delete search filter") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.sefiexadd .. " <" .. gettext ("lre") .. "> - " .. gettext ("Add search filter exception entry") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.sefiexlist .. " - " .. gettext ("Search filter exception list") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.sefiexdel .. " <" .. gettext ("lre") .. "> - " .. gettext ("Delete search filter exception entry") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.sefibllist .. " - " .. gettext ("Search filter block list") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.sefibldel .. " <" .. gettext ("nick") .. "> - " .. gettext ("Delete search filter block list entry") .. "\r\n\r\n"
 
 	-- myinfo check
-	help = help .. " " .. optrig .. table_cmnds.myinfadd .. " <" .. gettext ("type") .. "> <\"" .. gettext ("lre") .. "\"> [\"" .. gettext ("time") .. "\"] [\"" .. gettext ("note") .. "\"] - " .. gettext ("Add MyINFO entry") .. "\r\n"
-	help = help .. " " .. optrig .. table_cmnds.myinflist .. " <" .. gettext ("type") .. "> - " .. gettext ("MyINFO list") .. "\r\n"
-	help = help .. " " .. optrig .. table_cmnds.myinfdel .. " <" .. gettext ("type") .. "> <" .. gettext ("lre") .. "> - " .. gettext ("Delete MyINFO entry") .. "\r\n\r\n"
+	help = help .. " " .. trig .. table_cmnds.myinfadd .. " <" .. gettext ("type") .. "> <\"" .. gettext ("lre") .. "\"> [\"" .. gettext ("time") .. "\"] [\"" .. gettext ("note") .. "\"] - " .. gettext ("Add MyINFO entry") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.myinflist .. " <" .. gettext ("type") .. "> - " .. gettext ("MyINFO list") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.myinfdel .. " <" .. gettext ("type") .. "> <" .. gettext ("lre") .. "> - " .. gettext ("Delete MyINFO entry") .. "\r\n\r\n"
 
--- protection list
-help = help .. " " .. optrig .. table_cmnds.protadd .. " <" .. gettext ("lre") .. "> - " .. gettext ("Add protection entry") .. "\r\n"
-help = help .. " " .. optrig .. table_cmnds.protlist .. " - " .. gettext ("Protection list") .. "\r\n"
-help = help .. " " .. optrig .. table_cmnds.protdel .. " <" .. gettext ("lre") .. "> - " .. gettext ("Delete protection entry") .. "\r\n\r\n"
+	-- protection list
+	help = help .. " " .. trig .. table_cmnds.protadd .. " <" .. gettext ("lre") .. "> - " .. gettext ("Add protection entry") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.protlist .. " - " .. gettext ("Protection list") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.protdel .. " <" .. gettext ("lre") .. "> - " .. gettext ("Delete protection entry") .. "\r\n\r\n"
 
--- ip authorization
-help = help .. " " .. optrig .. table_cmnds.authadd .. " <" .. gettext ("nick") .. "> <" .. gettext ("lre") .. "> - " .. gettext ("Add IP authorization entry") .. "\r\n"
-help = help .. " " .. optrig .. table_cmnds.authmod .. " <" .. gettext ("identifier") .. "> <" .. gettext ("lre") .. "> - " .. gettext ("Modify IP authorization entry") .. "\r\n"
-help = help .. " " .. optrig .. table_cmnds.authlist .. " - " .. gettext ("IP authorization list") .. "\r\n"
-help = help .. " " .. optrig .. table_cmnds.authdel .. " <" .. gettext ("identifier") .. "> - " .. gettext ("Delete authorization entry") .. "\r\n\r\n"
+	-- ip authorization
+	help = help .. " " .. trig .. table_cmnds.authadd .. " <" .. gettext ("nick") .. "> <" .. gettext ("lre") .. "> - " .. gettext ("Add IP authorization entry") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.authmod .. " <" .. gettext ("identifier") .. "> <" .. gettext ("lre") .. "> - " .. gettext ("Modify IP authorization entry") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.authlist .. " - " .. gettext ("IP authorization list") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.authdel .. " <" .. gettext ("identifier") .. "> - " .. gettext ("Delete authorization entry") .. "\r\n\r\n"
 
--- ranks
-help = help .. " " .. optrig .. table_cmnds.myoprank .. " - " .. gettext ("Your operator rank") .. "\r\n"
-help = help .. " " .. optrig .. table_cmnds.ranexadd .. " <" .. gettext ("nick") .. "> - " .. gettext ("Add rank exception") .. "\r\n"
-help = help .. " " .. optrig .. table_cmnds.ranexlist .. " - " .. gettext ("Rank exception list") .. "\r\n"
-help = help .. " " .. optrig .. table_cmnds.ranexdel .. " <" .. gettext ("nick") .. "> - " .. gettext ("Delete rank exception") .. "\r\n"
-help = help .. " " .. optrig .. table_cmnds.randel .. " <" .. gettext ("type") .. "> <" .. gettext ("value") .. "> - " .. gettext ("Remove user or word from rank list") .. "\r\n"
-help = help .. " " .. optrig .. table_cmnds.ranclean .. " <" .. gettext ("type") .. "> <" .. gettext ("limit") .. "> - " .. gettext ("Clean up ranks") .. "\r\n\r\n"
+	-- ranks
+	help = help .. " " .. trig .. table_cmnds.myoprank .. " - " .. gettext ("Your operator rank") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.ranexadd .. " <" .. gettext ("nick") .. "> - " .. gettext ("Add rank exception") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.ranexlist .. " - " .. gettext ("Rank exception list") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.ranexdel .. " <" .. gettext ("nick") .. "> - " .. gettext ("Delete rank exception") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.randel .. " <" .. gettext ("type") .. "> <" .. gettext ("value") .. "> - " .. gettext ("Remove user or word from rank list") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.ranclean .. " <" .. gettext ("type") .. "> <" .. gettext ("limit") .. "> - " .. gettext ("Clean up ranks") .. "\r\n\r\n"
 
--- welcome messages
-help = help .. " " .. optrig .. table_cmnds.wmforce .. " <" .. gettext ("type") .. "> <" .. gettext ("nick") .. "> [" .. gettext ("message") .. "] - " .. gettext ("Force welcome message for user") .. "\r\n"
-help = help .. " " .. optrig .. table_cmnds.wmlist .. " - " .. gettext ("Welcome message list") .. "\r\n"
-help = help .. " " .. optrig .. table_cmnds.wmdel .. " <" .. gettext ("nick") .. "> - " .. gettext ("Delete user and his welcome messages") .. "\r\n\r\n"
+	-- welcome messages
+	help = help .. " " .. trig .. table_cmnds.wmforce .. " <" .. gettext ("type") .. "> <" .. gettext ("nick") .. "> [" .. gettext ("message") .. "] - " .. gettext ("Force welcome message for user") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.wmlist .. " - " .. gettext ("Welcome message list") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.wmdel .. " <" .. gettext ("nick") .. "> - " .. gettext ("Delete user and his welcome messages") .. "\r\n\r\n"
 
 	-- chatrooms
-	help = help .. " " .. optrig .. table_cmnds.chatadd .. " <" .. gettext ("nick") .. "> <" .. gettext ("description") .. "> <" .. gettext ("minclass") .. "> <" .. gettext ("maxclass") .. "> <" .. gettext ("cc") .. "> - " .. gettext ("Add chatroom") .. "\r\n"
-	help = help .. " " .. optrig .. table_cmnds.chatlist .. " - " .. gettext ("Chatroom list") .. "\r\n"
-	help = help .. " " .. optrig .. table_cmnds.chatdel .. " <" .. gettext ("nick") .. "> - " .. gettext ("Delete chatroom") .. "\r\n"
-	help = help .. " " .. optrig .. table_cmnds.acreadd .. " <" .. gettext ("cc") .. "> <" .. gettext ("nick") .. "> - " .. gettext ("Add automatic country chatroom entrance") .. "\r\n"
-	help = help .. " " .. optrig .. table_cmnds.acrelist .. " - " .. gettext ("Automatic country chatroom entrance list") .. "\r\n"
-	help = help .. " " .. optrig .. table_cmnds.acredel .. " <" .. gettext ("identifier") .. "> - " .. gettext ("Delete automatic country chatroom entrance") .. "\r\n\r\n"
+	help = help .. " " .. trig .. table_cmnds.chatadd .. " <" .. gettext ("nick") .. "> <" .. gettext ("description") .. "> <" .. gettext ("minclass") .. "> <" .. gettext ("maxclass") .. "> <" .. gettext ("cc") .. "> - " .. gettext ("Add chatroom") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.chatlist .. " - " .. gettext ("Chatroom list") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.chatdel .. " <" .. gettext ("nick") .. "> - " .. gettext ("Delete chatroom") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.acreadd .. " <" .. gettext ("cc") .. "> <" .. gettext ("nick") .. "> - " .. gettext ("Add automatic country chatroom entrance") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.acrelist .. " - " .. gettext ("Automatic country chatroom entrance list") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.acredel .. " <" .. gettext ("identifier") .. "> - " .. gettext ("Delete automatic country chatroom entrance") .. "\r\n\r\n"
 
--- reminders
-help = help .. " " .. optrig .. table_cmnds.remadd .. " <" .. gettext ("identifier") .. "> <" .. gettext ("content") .. "> <" .. gettext ("minclass") .. "> <" .. gettext ("maxclass") .. "> <" .. gettext ("destination") .. "> <" .. gettext ("interval") .. "> - " .. gettext ("Add reminder") .. "\r\n"
-help = help .. " " .. optrig .. table_cmnds.remlist .. " - " .. gettext ("Reminder list") .. "\r\n"
-help = help .. " " .. optrig .. table_cmnds.remshow .. " <" .. gettext ("identifier") .. "> - " .. gettext ("Reminder preview") .. "\r\n"
-help = help .. " " .. optrig .. table_cmnds.remdel .. " <" .. gettext ("identifier") .. "> - " .. gettext ("Delete reminder") .. "\r\n\r\n"
+	-- reminders
+	help = help .. " " .. trig .. table_cmnds.remadd .. " <" .. gettext ("identifier") .. "> <" .. gettext ("content") .. "> <" .. gettext ("minclass") .. "> <" .. gettext ("maxclass") .. "> <" .. gettext ("destination") .. "> <" .. gettext ("interval") .. "> - " .. gettext ("Add reminder") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.remlist .. " - " .. gettext ("Reminder list") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.remshow .. " <" .. gettext ("identifier") .. "> - " .. gettext ("Reminder preview") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.remdel .. " <" .. gettext ("identifier") .. "> - " .. gettext ("Delete reminder") .. "\r\n\r\n"
 
 	-- triggers
-	help = help .. " " .. optrig .. table_cmnds.trigadd .. " <" .. gettext ("identifier") .. "> <\"" .. gettext ("content") .. "\"> <" .. gettext ("minclass") .. "> <" .. gettext ("maxclass") .. "> - " .. gettext ("Add trigger") .. "\r\n"
-	help = help .. " " .. optrig .. table_cmnds.triglist .. " - " .. gettext ("Trigger list") .. "\r\n"
-	help = help .. " " .. optrig .. table_cmnds.trigdel .. " <" .. gettext ("identifier") .. "> - " .. gettext ("Delete trigger") .. "\r\n\r\n"
+	help = help .. " " .. trig .. table_cmnds.trigadd .. " <" .. gettext ("identifier") .. "> <\"" .. gettext ("content") .. "\"> <" .. gettext ("minclass") .. "> <" .. gettext ("maxclass") .. "> - " .. gettext ("Add trigger") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.triglist .. " - " .. gettext ("Trigger list") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.trigdel .. " <" .. gettext ("identifier") .. "> - " .. gettext ("Delete trigger") .. "\r\n\r\n"
 
 	-- no pm
-	help = help .. " " .. optrig .. table_cmnds.nopmadd .. " <" .. gettext ("nick") .. "> <" .. gettext ("action") .. "> <" .. gettext ("maxclass") .. "> <" .. gettext ("reason") .. "> - " .. gettext ("Add blocked PM entry") .. "\r\n"
-	help = help .. " " .. optrig .. table_cmnds.nopmlist .. " - " .. gettext ("List of blocked PM entries") .. "\r\n"
-	help = help .. " " .. optrig .. table_cmnds.nopmdel .. " <" .. gettext ("nick") .. "> - " .. gettext ("Delete blocked PM entry") .. "\r\n\r\n"
+	help = help .. " " .. trig .. table_cmnds.nopmadd .. " <" .. gettext ("nick") .. "> <" .. gettext ("action") .. "> <" .. gettext ("maxclass") .. "> <" .. gettext ("reason") .. "> - " .. gettext ("Add blocked PM entry") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.nopmlist .. " - " .. gettext ("List of blocked PM entries") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.nopmdel .. " <" .. gettext ("nick") .. "> - " .. gettext ("Delete blocked PM entry") .. "\r\n\r\n"
 
 	-- right click menu
-	help = help .. " " .. optrig .. table_cmnds.rcmenuadd .. " <\"" .. gettext ("menu") .. "\"> <\"" .. gettext ("command") .. "\"> <" .. gettext ("type") .. "> <" .. gettext ("context") .. "> <" .. gettext ("order") .. "> <" .. gettext ("minclass") .. "> <" .. gettext ("maxclass") .. "> - " .. gettext ("Add right click menu item") .. "\r\n"
-	help = help .. " " .. optrig .. table_cmnds.rcmenulist .. " - " .. gettext ("List of right click menu items") .. "\r\n"
-	help = help .. " " .. optrig .. table_cmnds.rcmenudel .. " <" .. gettext ("identifier") .. "> - " .. gettext ("Delete right click menu item") .. "\r\n"
-	help = help .. " " .. optrig .. table_cmnds.rcmenuord .. " <" .. gettext ("identifier") .. "> <" .. gettext ("order") .. "> - " .. gettext ("Reorder right click menu item") .. "\r\n"
-	help = help .. " " .. optrig .. table_cmnds.rcmenuoff .. " <" .. gettext ("identifier") .. "> - " .. gettext ("Disable or enable right click menu item") .. "\r\n\r\n"
+	help = help .. " " .. trig .. table_cmnds.rcmenuadd .. " <\"" .. gettext ("menu") .. "\"> <\"" .. gettext ("command") .. "\"> <" .. gettext ("type") .. "> <" .. gettext ("context") .. "> <" .. gettext ("order") .. "> <" .. gettext ("minclass") .. "> <" .. gettext ("maxclass") .. "> - " .. gettext ("Add right click menu item") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.rcmenulist .. " - " .. gettext ("List of right click menu items") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.rcmenudel .. " <" .. gettext ("identifier") .. "> - " .. gettext ("Delete right click menu item") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.rcmenuord .. " <" .. gettext ("identifier") .. "> <" .. gettext ("order") .. "> - " .. gettext ("Reorder right click menu item") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.rcmenuoff .. " <" .. gettext ("identifier") .. "> - " .. gettext ("Disable or enable right click menu item") .. "\r\n\r\n"
 
 	-- ip watch
-	help = help .. " " .. optrig .. table_cmnds.ipwatadd .. " <" .. gettext ("lre") .. "> <\"" .. gettext ("reason") .. "\"> <" .. gettext ("result") .. "> - " .. gettext ("Add IP watch entry") .. "\r\n"
-	help = help .. " " .. optrig .. table_cmnds.ipwatlist .. " - " .. gettext ("List of IP watch entries") .. "\r\n"
-	help = help .. " " .. optrig .. table_cmnds.ipwatdel .. " <" .. gettext ("lre") .. "> - " .. gettext ("Delete IP watch entry") .. "\r\n\r\n"
+	help = help .. " " .. trig .. table_cmnds.ipwatadd .. " <" .. gettext ("lre") .. "> <\"" .. gettext ("reason") .. "\"> <" .. gettext ("result") .. "> - " .. gettext ("Add IP watch entry") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.ipwatlist .. " - " .. gettext ("List of IP watch entries") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.ipwatdel .. " <" .. gettext ("lre") .. "> - " .. gettext ("Delete IP watch entry") .. "\r\n\r\n"
 
 	-- hard ban
-	help = help .. " " .. optrig .. table_cmnds.hban .. " <" .. gettext ("lre") .. "> <\"" .. gettext ("reason") .. "\"> - " .. gettext ("Add hard IP ban entry") .. "\r\n"
-	help = help .. " " .. optrig .. table_cmnds.hbans .. " - " .. gettext ("List of hard IP ban entries") .. "\r\n"
-	help = help .. " " .. optrig .. table_cmnds.hunban .. " <" .. gettext ("lre") .. "> - " .. gettext ("Delete hard IP ban entry") .. "\r\n\r\n"
+	help = help .. " " .. trig .. table_cmnds.hban .. " <" .. gettext ("lre") .. "> <\"" .. gettext ("reason") .. "\"> - " .. gettext ("Add hard IP ban entry") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.hbans .. " - " .. gettext ("List of hard IP ban entries") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.hunban .. " <" .. gettext ("lre") .. "> - " .. gettext ("Delete hard IP ban entry") .. "\r\n\r\n"
 
--- news
-help = help .. " " .. optrig .. table_cmnds.newsadd .. " <" .. gettext ("string") .. "> - " .. gettext ("Add news item") .. "\r\n"
-help = help .. " " .. optrig .. table_cmnds.newsdel .. " <" .. gettext ("date") .. "> - " .. gettext ("Delete news items") .. "\r\n\r\n"
+	-- news
+	help = help .. " " .. trig .. table_cmnds.newsadd .. " <" .. gettext ("string") .. "> - " .. gettext ("Add news item") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.newsdel .. " <" .. gettext ("date") .. "> - " .. gettext ("Delete news items") .. "\r\n\r\n"
 
 	-- chat replacer
-	help = help .. " " .. optrig .. table_cmnds.repladd .. " <\"" .. gettext ("lre") .. "\"> <\"" .. gettext ("replace") .. "\"> <" .. gettext ("maxclass") .. "> [" .. gettext ("flags") .. "] - " .. gettext ("Add chat replacer") .. "\r\n"
-	help = help .. " " .. optrig .. table_cmnds.repllist .. " - " .. gettext ("Chat replacer list") .. "\r\n"
-	help = help .. " " .. optrig .. table_cmnds.repldel .. " <" .. gettext ("identifier") .. "> - " .. gettext ("Delete chat replacer") .. "\r\n"
-	help = help .. " " .. optrig .. table_cmnds.replexadd .. " <" .. gettext ("item") .. "> <" .. gettext ("type") .. "> - " .. gettext ("Add chat replacer exception") .. "\r\n"
-	help = help .. " " .. optrig .. table_cmnds.replexlist .. " - " .. gettext ("Chat replacer exception list") .. "\r\n"
-	help = help .. " " .. optrig .. table_cmnds.replexdel .. " <" .. gettext ("item") .. "> - " .. gettext ("Delete chat replacer exception") .. "\r\n\r\n"
+	help = help .. " " .. trig .. table_cmnds.repladd .. " <\"" .. gettext ("lre") .. "\"> <\"" .. gettext ("replace") .. "\"> <" .. gettext ("maxclass") .. "> [" .. gettext ("flags") .. "] - " .. gettext ("Add chat replacer") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.repllist .. " - " .. gettext ("Chat replacer list") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.repldel .. " <" .. gettext ("identifier") .. "> - " .. gettext ("Delete chat replacer") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.replexadd .. " <" .. gettext ("item") .. "> <" .. gettext ("type") .. "> - " .. gettext ("Add chat replacer exception") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.replexlist .. " - " .. gettext ("Chat replacer exception list") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.replexdel .. " <" .. gettext ("item") .. "> - " .. gettext ("Delete chat replacer exception") .. "\r\n\r\n"
 
 	-- chat responder
-	help = help .. " " .. optrig .. table_cmnds.respadd .. " <\"" .. gettext ("lre") .. "\"> <\"" .. gettext ("reply") .. "\"> <" .. gettext ("maxclass") .. "> - " .. gettext ("Add chat responder") .. "\r\n"
-	help = help .. " " .. optrig .. table_cmnds.resplist .. " [" .. gettext ("lre") .. "] - " .. gettext ("Main chat responder list") .. "\r\n"
-	help = help .. " " .. optrig .. table_cmnds.respdel .. " <" .. gettext ("identifier") .. "> - " .. gettext ("Delete chat responder") .. "\r\n"
-	help = help .. " " .. optrig .. table_cmnds.respexadd .. " <" .. gettext ("nick") .. " " .. gettext ("or") .. " " .. gettext ("ip") .. "> - " .. gettext ("Add chat responder exception") .. "\r\n"
-	help = help .. " " .. optrig .. table_cmnds.respexlist .. " - " .. gettext ("Chat responder exception list") .. "\r\n"
-	help = help .. " " .. optrig .. table_cmnds.respexdel .. " <" .. gettext ("nick") .. " " .. gettext ("or") .. " " .. gettext ("ip") .. "> - " .. gettext ("Delete chat responder exception") .. "\r\n\r\n"
+	help = help .. " " .. trig .. table_cmnds.respadd .. " <\"" .. gettext ("lre") .. "\"> <\"" .. gettext ("reply") .. "\"> <" .. gettext ("maxclass") .. "> - " .. gettext ("Add chat responder") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.resplist .. " [" .. gettext ("lre") .. "] - " .. gettext ("Main chat responder list") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.respdel .. " <" .. gettext ("identifier") .. "> - " .. gettext ("Delete chat responder") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.respexadd .. " <" .. gettext ("nick") .. " " .. gettext ("or") .. " " .. gettext ("ip") .. "> - " .. gettext ("Add chat responder exception") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.respexlist .. " - " .. gettext ("Chat responder exception list") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.respexdel .. " <" .. gettext ("nick") .. " " .. gettext ("or") .. " " .. gettext ("ip") .. "> - " .. gettext ("Delete chat responder exception") .. "\r\n\r\n"
 
--- offline messenger
-help = help .. " " .. optrig .. table_cmnds.offlist .. " - " .. gettext ("List stored offline messages") .. "\r\n"
-help = help .. " " .. optrig .. table_cmnds.offdel .. " <" .. gettext ("date") .. "> - " .. gettext ("Delete offline messages by date") .. "\r\n"
-help = help .. " " .. optrig .. table_cmnds.offclean .. " - " .. gettext ("Delete all offline messages") .. "\r\n\r\n"
+	-- offline messenger
+	help = help .. " " .. trig .. table_cmnds.offlist .. " - " .. gettext ("List stored offline messages") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.offdel .. " <" .. gettext ("date") .. "> - " .. gettext ("Delete offline messages by date") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.offclean .. " - " .. gettext ("Delete all offline messages") .. "\r\n\r\n"
 
 	-- history
-	help = help .. " " .. optrig .. table_cmnds.ophistory .. " [" .. gettext ("lines") .. "=" .. _tostring (table_sets.histdeflines) .. "] - " .. gettext ("Operator chat history") .. "\r\n"
-	help = help .. " " .. optrig .. table_cmnds.histdel .. " <" .. gettext ("text") .. "> - " .. gettext ("Delete history messages by text") .. "\r\n"
-	help = help .. " " .. optrig .. table_cmnds.histclean .. " - " .. gettext ("Delete all history messages") .. "\r\n\r\n"
+	help = help .. " " .. trig .. table_cmnds.ophistory .. " [" .. gettext ("lines") .. "=" .. _tostring (table_sets.histdeflines) .. "] - " .. gettext ("Operator chat history") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.histdel .. " <" .. gettext ("text") .. "> - " .. gettext ("Delete history messages by text") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.histclean .. " - " .. gettext ("Delete all history messages") .. "\r\n\r\n"
 
--- commands
-help = help .. " " .. optrig .. table_cmnds.cmndset .. " <" .. gettext ("command") .. "> <" .. gettext ("command") .. "> - " .. gettext ("Customize script command") .. "\r\n"
-help = help .. " " .. optrig .. table_cmnds.cmndshow .. " - " .. gettext ("Show custom script commands") .. "\r\n"
-help = help .. " " .. optrig .. table_cmnds.cmndreset .. " - " .. gettext ("Reset all custom commands") .. "\r\n"
-help = help .. " " .. optrig .. table_cmnds.clog .. " <" .. gettext ("lines") .. "> - " .. gettext ("Command logger") .. "\r\n"
-help = help .. " " .. optrig .. table_cmnds.cmndadd .. " <" .. gettext ("lre") .. "> <" .. gettext ("class") .. "> - " .. gettext ("Add command permission") .. "\r\n"
-help = help .. " " .. optrig .. table_cmnds.cmndlist .. " - " .. gettext ("Command permission list") .. "\r\n"
-help = help .. " " .. optrig .. table_cmnds.cmnddel .. " <" .. gettext ("lre") .. "> - " .. gettext ("Delete command permission") .. "\r\n"
-help = help .. " " .. optrig .. table_cmnds.cmndexadd .. " <" .. gettext ("lre") .. "> - " .. gettext ("Add command notification exception") .. "\r\n"
-help = help .. " " .. optrig .. table_cmnds.cmndexlist .. " - " .. gettext ("Command notification exception list") .. "\r\n"
-help = help .. " " .. optrig .. table_cmnds.cmndexdel .. " <" .. gettext ("lre") .. "> - " .. gettext ("Delete command notification exception") .. "\r\n\r\n"
+	-- commands
+	help = help .. " " .. trig .. table_cmnds.cmndset .. " <" .. gettext ("command") .. "> <" .. gettext ("command") .. "> - " .. gettext ("Customize script command") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.cmndshow .. " - " .. gettext ("Show custom script commands") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.cmndreset .. " - " .. gettext ("Reset all custom commands") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.clog .. " <" .. gettext ("lines") .. "> - " .. gettext ("Command logger") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.cmndadd .. " <" .. gettext ("lre") .. "> <" .. gettext ("class") .. "> - " .. gettext ("Add command permission") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.cmndlist .. " - " .. gettext ("Command permission list") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.cmnddel .. " <" .. gettext ("lre") .. "> - " .. gettext ("Delete command permission") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.cmndexadd .. " <" .. gettext ("lre") .. "> - " .. gettext ("Add command notification exception") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.cmndexlist .. " - " .. gettext ("Command notification exception list") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.cmndexdel .. " <" .. gettext ("lre") .. "> - " .. gettext ("Delete command notification exception") .. "\r\n\r\n"
 
 	-- custom nicks
-	help = help .. " " .. optrig .. table_cmnds.rename .. " <" .. gettext ("real") .. "> <" .. gettext ("nick") .. "> - " .. gettext ("Force custom nick for user") .. "\r\n"
-	help = help .. " " .. optrig .. table_cmnds.custdel .. " <" .. gettext ("nick") .. "> - " .. gettext ("Delete custom nick") .. "\r\n\r\n"
+	help = help .. " " .. trig .. table_cmnds.rename .. " <" .. gettext ("real") .. "> <" .. gettext ("nick") .. "> - " .. gettext ("Force custom nick for user") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.custdel .. " <" .. gettext ("nick") .. "> - " .. gettext ("Delete custom nick") .. "\r\n\r\n"
 
--- registered users
-help = help .. " " .. optrig .. table_cmnds.regname .. " <" .. gettext ("nick") .. "> <" .. gettext ("nick") .. "> - " .. gettext ("Change nick of a registered user") .. "\r\n"
-help = help .. " " .. optrig .. table_cmnds.reglist .. " <" .. gettext ("class") .. "> <" .. gettext ("offset") .. "> - " .. gettext ("List of registered users by class") .. "\r\n"
-help = help .. " " .. optrig .. table_cmnds.regfind .. " <" .. gettext ("nick") .. "> - " .. gettext ("Search in registered users list") .. "\r\n"
-help = help .. " " .. optrig .. table_cmnds.regstats .. " - " .. gettext ("Registered users list statistics") .. "\r\n\r\n"
+	-- registered users
+	help = help .. " " .. trig .. table_cmnds.regname .. " <" .. gettext ("nick") .. "> <" .. gettext ("nick") .. "> - " .. gettext ("Change nick of a registered user") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.reglist .. " <" .. gettext ("class") .. "> <" .. gettext ("offset") .. "> - " .. gettext ("List of registered users by class") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.regfind .. " <" .. gettext ("nick") .. "> - " .. gettext ("Search in registered users list") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.regstats .. " - " .. gettext ("Registered users list statistics") .. "\r\n\r\n"
 
--- hublist
-help = help .. " " .. optrig .. table_cmnds.hubadd .. " <" .. gettext ("address") .. "> <\"" .. gettext ("name") .. "\"> <\"" .. gettext ("owner") .. "\"> - " .. gettext ("Add friendly hub") .. "\r\n"
-help = help .. " " .. optrig .. table_cmnds.hubdel .. " <" .. gettext ("address") .. "> - " .. gettext ("Delete friendly hub") .. "\r\n\r\n"
+	-- hublist
+	help = help .. " " .. trig .. table_cmnds.hubadd .. " <" .. gettext ("address") .. "> <\"" .. gettext ("name") .. "\"> <\"" .. gettext ("owner") .. "\"> - " .. gettext ("Add friendly hub") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.hubdel .. " <" .. gettext ("address") .. "> - " .. gettext ("Delete friendly hub") .. "\r\n\r\n"
 
 	-- chat
-	help = help .. " " .. optrig .. table_cmnds.mode .. " <" .. gettext ("lre") .. "> <" .. gettext ("mode") .. "> - " .. gettext ("Force chat mode for user") .. "\r\n"
-	help = help .. " " .. optrig .. table_cmnds.mode .. " - " .. gettext ("Chat mode user list") .. "\r\n"
-	help = help .. " " .. optrig .. table_cmnds.say .. " <" .. gettext ("nick") .. "> <" .. gettext ("message") .. "> - " .. gettext ("Speak from other nick") .. "\r\n"
-	help = help .. " " .. optrig .. table_cmnds.clear .. " - " .. gettext ("Clear main chat") .. "\r\n\r\n"
+	help = help .. " " .. trig .. table_cmnds.mode .. " <" .. gettext ("lre") .. "> <" .. gettext ("mode") .. "> - " .. gettext ("Force chat mode for user") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.mode .. " - " .. gettext ("Chat mode user list") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.say .. " <" .. gettext ("nick") .. "> <" .. gettext ("message") .. "> - " .. gettext ("Speak from other nick") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.clear .. " - " .. gettext ("Clear main chat") .. "\r\n\r\n"
 
 	-- ip gag
-	help = help .. " " .. optrig .. table_cmnds.gagipadd .. " <" .. gettext ("lre") .. "> <" .. gettext ("flags") .. "> - " .. gettext ("Add IP gag") .. "\r\n"
-	help = help .. " " .. optrig .. table_cmnds.gagiplist .. " - " .. gettext ("IP gag list") .. "\r\n"
-	help = help .. " " .. optrig .. table_cmnds.gagipdel .. " <" .. gettext ("lre") .. " " .. gettext ("or") .. " *> - " .. gettext ("Delete IP gag") .. "\r\n\r\n"
+	help = help .. " " .. trig .. table_cmnds.gagipadd .. " <" .. gettext ("lre") .. "> <" .. gettext ("flags") .. "> - " .. gettext ("Add IP gag") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.gagiplist .. " - " .. gettext ("IP gag list") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.gagipdel .. " <" .. gettext ("lre") .. " " .. gettext ("or") .. " *> - " .. gettext ("Delete IP gag") .. "\r\n\r\n"
 
 	-- cc gag
-	help = help .. " " .. optrig .. table_cmnds.gagccadd .. " <\"" .. gettext ("lre") .. "\"> [\"" .. gettext ("reason") .. "\"] <" .. gettext ("flags") .. "> - " .. gettext ("Add country code gag") .. "\r\n"
-	help = help .. " " .. optrig .. table_cmnds.gagcclist .. " - " .. gettext ("Country code gag list") .. "\r\n"
-	help = help .. " " .. optrig .. table_cmnds.gagccdel .. " <" .. gettext ("lre") .. " " .. gettext ("or") .. " *> - " .. gettext ("Delete country code gag") .. "\r\n\r\n"
+	help = help .. " " .. trig .. table_cmnds.gagccadd .. " <\"" .. gettext ("lre") .. "\"> [\"" .. gettext ("reason") .. "\"] <" .. gettext ("flags") .. "> - " .. gettext ("Add country code gag") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.gagcclist .. " - " .. gettext ("Country code gag list") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.gagccdel .. " <" .. gettext ("lre") .. " " .. gettext ("or") .. " *> - " .. gettext ("Delete country code gag") .. "\r\n\r\n"
 
 	-- user logger
-	help = help .. " " .. optrig .. table_cmnds.userinfo .. " <" .. gettext ("nick") .. "> - " .. gettext ("User information") .. "\r\n"
-	help = help .. " " .. optrig .. table_cmnds.ipinfo .. " <" .. gettext ("ip") .. "> - " .. gettext ("IP information") .. "\r\n"
-	help = help .. " " .. optrig .. table_cmnds.ulog .. " <" .. gettext ("type") .. "> <" .. gettext ("string") .. "> <" .. gettext ("lines") .. "> - " .. gettext ("Search in user log") .. "\r\n"
-	help = help .. " " .. optrig .. table_cmnds.seen .. " <" .. gettext ("type") .. "> <" .. gettext ("text") .. "> - " .. gettext ("%s user lookup"):format ("https://www.te-home.net/?do=hublist") .. "\r\n\r\n"
+	help = help .. " " .. trig .. table_cmnds.userinfo .. " <" .. gettext ("nick") .. "> - " .. gettext ("User information") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.ipinfo .. " <" .. gettext ("ip") .. "> - " .. gettext ("IP information") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.ulog .. " <" .. gettext ("type") .. "> <" .. gettext ("string") .. "> <" .. gettext ("lines") .. "> - " .. gettext ("Search in user log") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.seen .. " <" .. gettext ("type") .. "> <" .. gettext ("text") .. "> - " .. gettext ("%s user lookup"):format ("https://www.te-home.net/?do=hublist") .. "\r\n\r\n"
 
 	-- vote kick
-	help = help .. " " .. optrig .. table_cmnds.votekickdel .. " <" .. gettext ("nick") .. "> - " .. gettext ("Clear kick votes for user") .. "\r\n"
-	help = help .. " " .. optrig .. table_cmnds.votekicklist .. " - " .. gettext ("Vote kick list") .. "\r\n\r\n"
+	help = help .. " " .. trig .. table_cmnds.votekickdel .. " <" .. gettext ("nick") .. "> - " .. gettext ("Clear kick votes for user") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.votekicklist .. " - " .. gettext ("Vote kick list") .. "\r\n\r\n"
 
 	-- antivirus
-	help = help .. " " .. optrig .. table_cmnds.avstats .. " [" .. gettext ("nick") .. "] - " .. gettext ("Antivirus statistics") .. "\r\n"
-	help = help .. " " .. optrig .. table_cmnds.avdetforce .. " <" .. gettext ("nick") .. "> - " .. gettext ("Force infected user detection") .. "\r\n"
-	help = help .. " " .. optrig .. table_cmnds.avdbfind .. " <" .. gettext ("type") .. "> <" .. gettext ("item") .. "> - " .. gettext ("Search in %s"):format ("AVDB") .. "\r\n\r\n"
+	help = help .. " " .. trig .. table_cmnds.avstats .. " [" .. gettext ("nick") .. "] - " .. gettext ("Antivirus statistics") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.avdetforce .. " <" .. gettext ("nick") .. "> - " .. gettext ("Force infected user detection") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.avdbfind .. " <" .. gettext ("type") .. "> <" .. gettext ("item") .. "> - " .. gettext ("Search in %s"):format ("AVDB") .. "\r\n\r\n"
 
 	-- other
-	help = help .. " " .. optrig .. table_cmnds.dropip .. " <" .. gettext ("ip") .. "> - " .. gettext ("Drop users with IP") .. "\r\n"
-	help = help .. " " .. optrig .. table_cmnds.oldclean .. " <" .. gettext ("type") .. "> <" .. gettext ("days") .. " " .. gettext ("or") .. " *> [" .. gettext ("class") .. "] - " .. gettext ("Clean up tables") .. "\r\n"
-	help = help .. " " .. optrig .. table_cmnds.readlog .. " <" .. gettext ("file") .. "> [" .. gettext ("lines") .. "=" .. _tostring (table_othsets.logdeflines) .. "] - " .. gettext ("Read hub logs") .. "\r\n"
-	help = help .. " " .. optrig .. table_cmnds.lretoplain .. " <" .. gettext ("lre") .. "> - " .. gettext ("Convert LRE to plain text") .. "\r\n\r\n"
+	help = help .. " " .. trig .. table_cmnds.dropip .. " <" .. gettext ("ip") .. "> - " .. gettext ("Drop users with IP") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.oldclean .. " <" .. gettext ("type") .. "> <" .. gettext ("days") .. " " .. gettext ("or") .. " *> [" .. gettext ("class") .. "] - " .. gettext ("Clean up tables") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.readlog .. " <" .. gettext ("file") .. "> [" .. gettext ("lines") .. "=" .. _tostring (table_othsets.logdeflines) .. "] - " .. gettext ("Read hub logs") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.lretoplain .. " <" .. gettext ("lre") .. "> - " .. gettext ("Convert LRE to plain text") .. "\r\n\r\n"
 
 	-- general
-	help = help .. " " .. optrig .. table_cmnds.ledoconf .. " - " .. gettext ("Script configuration variables") .. "\r\n"
-	help = help .. " " .. optrig .. table_cmnds.ledoset .. " <" .. gettext ("variable") .. "> <" .. gettext ("value") .. "> - " .. gettext ("Change configuration variable") .. "\r\n"
-	help = help .. " " .. optrig .. table_cmnds.ledover .. " [force&#124;dev] - " .. gettext ("Perform script update") .. "\r\n"
-	help = help .. " " .. optrig .. table_cmnds.ledohelp .. " - " .. gettext ("This list of commands") .. "\r\n"
-	help = help .. " " .. optrig .. table_cmnds.ledostats .. " - " .. gettext ("%s statistics"):format ("Ledokol") .. "\r\n\r\n"
+	help = help .. " " .. trig .. table_cmnds.ledoconf .. " - " .. gettext ("Script configuration variables") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.ledoset .. " <" .. gettext ("variable") .. "> <" .. gettext ("value") .. "> - " .. gettext ("Change configuration variable") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.ledover .. " [force&#124;dev] - " .. gettext ("Perform script update") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.ledohelp .. " - " .. gettext ("This list of commands") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.ledostats .. " - " .. gettext ("%s statistics"):format ("Ledokol") .. "\r\n\r\n"
 
-	-- experts only commands
-	if getclass (nick) == 10 then
+	if clas == 10 then -- experts only commands
 		help = help .. " .:: " .. gettext ("Experts only") .. ":\r\n\r\n"
 
 		if getledoconf ("allow_sql") == 1 then
-			help = help .. " " .. optrig .. table_cmnds.ledosql .. " <" .. gettext ("query") .. "> - " .. gettext ("Execute MySQL query") .. "\r\n"
+			help = help .. " " .. trig .. table_cmnds.ledosql .. " <" .. gettext ("query") .. "> - " .. gettext ("Execute MySQL query") .. "\r\n"
 		end
 
 		if getledoconf ("allow_shell") == 1 then
-			help = help .. " " .. optrig .. table_cmnds.ledoshell .. " <" .. gettext ("command") .. "> - " .. gettext ("Execute shell command") .. "\r\n"
+			help = help .. " " .. trig .. table_cmnds.ledoshell .. " <" .. gettext ("command") .. "> - " .. gettext ("Execute shell command") .. "\r\n"
 		end
 
-		help = help .. " " .. optrig .. table_cmnds.ledokoluninstallisconfirmed .. " - " .. gettext ("Remove all %s tables and files"):format ("Ledokol") .. "\r\n\r\n"
+		help = help .. " " .. trig .. table_cmnds.ledokoluninstallisconfirmed .. " - " .. gettext ("Remove all %s tables and files"):format ("Ledokol") .. "\r\n\r\n"
 	end
 
-	help = help .. " .:: " .. gettext ("%s user commands"):format ("Ledokol") .. ":\r\n\r\n"
+	-- help notes
+	help = help .. " .:: " .. gettext ("Help notes") .. ":\r\n\r\n"
 
-	local ustrig = getconfig ("cmd_start_user"):sub (1, 1)
+	help = help .. " " .. gettext ("Command parameters %s are always required, while %s are optional."):format ("<" .. gettext ("parameter") .. ">", "[" .. gettext ("parameter") .. "]") .. "\r\n"
+	help = help .. " " .. gettext ("Quoted parameters %s or %s must be used with quotes."):format ("<\"" .. gettext ("parameter") .. "\">", "[\"" .. gettext ("parameter") .. "\"]") .. "\r\n\r\n"
+
+	-- additional help
+	help = help .. " " .. table_othsets.userman .. " - " .. gettext ("User manual") .. "\r\n"
+	help = help .. " " .. table_othsets.vazhub .. " - " .. gettext ("Support hub") .. "\r\n"
+
+	commandanswer (nick, help, pm)
+	senduserhelp (nick, pm)
+end
+
+function senduserhelp (nick, pm)
+	local trig = getconfig ("cmd_start_user"):sub (1, 1)
+	local help = ".:: " .. gettext ("%s user commands"):format ("Ledokol") .. ":\r\n\r\n"
 
 	-- ranks
-	help = help .. " " .. ustrig .. table_cmnds.mychatrank .. " - " .. gettext ("Your chat rank") .. "\r\n"
-	help = help .. " " .. ustrig .. table_cmnds.mysharerank .. " - " .. gettext ("Your share rank") .. "\r\n"
-	help = help .. " " .. ustrig .. table_cmnds.chatranks .. " - " .. gettext ("Top %d chat rankers"):format (table_sets.ranklimit) .. "\r\n"
-	help = help .. " " .. ustrig .. table_cmnds.shareranks .. " - " .. gettext ("Top %d share rankers"):format (table_sets.ranklimit) .. "\r\n"
-	help = help .. " " .. ustrig .. table_cmnds.opranks .. " - " .. gettext ("Top %d operator rankers"):format (table_sets.ranklimit) .. "\r\n"
-	help = help .. " " .. ustrig .. table_cmnds.searranks .. " - " .. gettext ("Top %d search requests"):format (table_sets.ranklimit) .. "\r\n"
-	help = help .. " " .. ustrig .. table_cmnds.wordranks .. " [" .. gettext ("word") .. "] - " .. gettext ("Top %d used words"):format (table_sets.ranklimit) .. "\r\n"
-	help = help .. " " .. ustrig .. table_cmnds.cclive .. " - " .. gettext ("Live user location statistics by country") .. "\r\n"
-	help = help .. " " .. ustrig .. table_cmnds.citylive .. " <" .. gettext ("cc") .. "> - " .. gettext ("Live user location statistics by city") .. "\r\n"
-	help = help .. " " .. ustrig .. table_cmnds.cchist .. " - " .. gettext ("All time user location statistics") .. "\r\n\r\n"
+	help = help .. " " .. trig .. table_cmnds.mychatrank .. " - " .. gettext ("Your chat rank") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.mysharerank .. " - " .. gettext ("Your share rank") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.chatranks .. " - " .. gettext ("Top %d chat rankers"):format (table_sets.ranklimit) .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.shareranks .. " - " .. gettext ("Top %d share rankers"):format (table_sets.ranklimit) .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.opranks .. " - " .. gettext ("Top %d operator rankers"):format (table_sets.ranklimit) .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.searranks .. " - " .. gettext ("Top %d search requests"):format (table_sets.ranklimit) .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.wordranks .. " [" .. gettext ("word") .. "] - " .. gettext ("Top %d used words"):format (table_sets.ranklimit) .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.cclive .. " - " .. gettext ("Live user location statistics by country") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.citylive .. " <" .. gettext ("cc") .. "> - " .. gettext ("Live user location statistics by city") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.cchist .. " - " .. gettext ("All time user location statistics") .. "\r\n\r\n"
 
 	-- releases
-	help = help .. " " .. ustrig .. table_cmnds.reladd .. " <\"" .. gettext ("name") .. "\"> <\"" .. gettext ("category") .. "\"> [" .. gettext ("tth") .. "] - " .. gettext ("Add new release") .. "\r\n"
-	help = help .. " " .. ustrig .. table_cmnds.reldel .. " <" .. gettext ("type") .. "> <" .. gettext ("name") .. "> - " .. gettext ("Delete releases") .. "\r\n"
-	help = help .. " " .. ustrig .. table_cmnds.rellist .. " <" .. gettext ("type") .. "> <" .. gettext ("lines") .. "> [" .. gettext ("category") .. " " .. gettext ("or") .. " " .. gettext ("publisher") .. "] - " .. gettext ("List of available releases") .. "\r\n"
-	help = help .. " " .. ustrig .. table_cmnds.relfind .. " <" .. gettext ("name") .. "> - " .. gettext ("Find release by name or category") .. "\r\n\r\n"
+	help = help .. " " .. trig .. table_cmnds.reladd .. " <\"" .. gettext ("name") .. "\"> <\"" .. gettext ("category") .. "\"> [" .. gettext ("tth") .. "] - " .. gettext ("Add new release") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.reldel .. " <" .. gettext ("type") .. "> <" .. gettext ("name") .. "> - " .. gettext ("Delete releases") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.rellist .. " <" .. gettext ("type") .. "> <" .. gettext ("lines") .. "> [" .. gettext ("category") .. " " .. gettext ("or") .. " " .. gettext ("publisher") .. "] - " .. gettext ("List of available releases") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.relfind .. " <" .. gettext ("name") .. "> - " .. gettext ("Find release by name or category") .. "\r\n\r\n"
 
--- welcome messages
-help = help .. " " .. ustrig .. table_cmnds.wmset .. " <" .. gettext ("type") .. "> [" .. gettext ("message") .. "] - " .. gettext ("Set your welcome message") .. "\r\n"
-help = help .. " " .. ustrig .. table_cmnds.wmshow .. " - " .. gettext ("Show your welcome messages") .. "\r\n\r\n"
+	-- welcome messages
+	help = help .. " " .. trig .. table_cmnds.wmset .. " <" .. gettext ("type") .. "> [" .. gettext ("message") .. "] - " .. gettext ("Set your welcome message") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.wmshow .. " - " .. gettext ("Show your welcome messages") .. "\r\n\r\n"
 
--- custom nicks
-help = help .. " " .. ustrig .. table_cmnds.nick .. " [" .. gettext ("nick") .. "] - " .. gettext ("Set custom nick for yourself") .. "\r\n"
-help = help .. " " .. ustrig .. table_cmnds.realnick .. " <" .. gettext ("nick") .. "> - " .. gettext ("Get user's real nick") .. "\r\n"
-help = help .. " " .. ustrig .. table_cmnds.custlist .. " - " .. gettext ("Custom nick list") .. "\r\n\r\n"
+	-- custom nicks
+	help = help .. " " .. trig .. table_cmnds.nick .. " [" .. gettext ("nick") .. "] - " .. gettext ("Set custom nick for yourself") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.realnick .. " <" .. gettext ("nick") .. "> - " .. gettext ("Get user's real nick") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.custlist .. " - " .. gettext ("Custom nick list") .. "\r\n\r\n"
 
 	-- chat history
-	help = help .. " " .. ustrig .. table_cmnds.history .. " [" .. gettext ("lines") .. "=" .. _tostring (table_sets.histdeflines) .. "] - " .. gettext ("Main chat history") .. "\r\n"
-	help = help .. " " .. ustrig .. table_cmnds.myhistory .. " [" .. gettext ("lines") .. "=" .. _tostring (table_sets.histdeflines) .. "] - " .. gettext ("Your main chat history") .. "\r\n\r\n"
+	help = help .. " " .. trig .. table_cmnds.history .. " [" .. gettext ("lines") .. "=" .. _tostring (table_sets.histdeflines) .. "] - " .. gettext ("Main chat history") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.myhistory .. " [" .. gettext ("lines") .. "=" .. _tostring (table_sets.histdeflines) .. "] - " .. gettext ("Your main chat history") .. "\r\n\r\n"
 
 	-- other
 
-	help = help .. " " .. ustrig .. table_cmnds.votekick .. " <" .. gettext ("nick") .. "> - " .. gettext ("Vote for user to be kicked") .. "\r\n"
-	help = help .. " " .. ustrig .. table_cmnds.mode .. " <" .. gettext ("mode") .. "> - " .. gettext ("Set your chat mode") .. "\r\n"
-	help = help .. " " .. ustrig .. table_cmnds.offmsg .. " <" .. gettext ("nick") .. "> <" .. gettext ("message") .. "> - " .. gettext ("Offline message to user") .. "\r\n"
-	help = help .. " " .. ustrig .. table_cmnds.calculate .. " <" .. gettext ("equation") .. "> - " .. gettext ("Calculate an equation") .. "\r\n"
-	help = help .. " " .. ustrig .. table_cmnds.hubnews .. " [" .. gettext ("lines") .. "=" .. _tostring (table_sets.newsdeflines) .. "] - " .. gettext ("Read hub news") .. "\r\n"
-	help = help .. " " .. ustrig .. table_cmnds.showtopic .. " - " .. gettext ("Current topic") .. "\r\n"
-	help = help .. " " .. ustrig .. table_cmnds.showhubs .. " - " .. gettext ("Show friendly hubs") .. "\r\n\r\n"
+	help = help .. " " .. trig .. table_cmnds.votekick .. " <" .. gettext ("nick") .. "> - " .. gettext ("Vote for user to be kicked") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.mode .. " <" .. gettext ("mode") .. "> - " .. gettext ("Set your chat mode") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.offmsg .. " <" .. gettext ("nick") .. "> <" .. gettext ("message") .. "> - " .. gettext ("Offline message to user") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.calculate .. " <" .. gettext ("equation") .. "> - " .. gettext ("Calculate an equation") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.hubnews .. " [" .. gettext ("lines") .. "=" .. _tostring (table_sets.newsdeflines) .. "] - " .. gettext ("Read hub news") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.showtopic .. " - " .. gettext ("Current topic") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.showhubs .. " - " .. gettext ("Show friendly hubs") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.ledohelp .. " - " .. gettext ("This list of commands") .. "\r\n\r\n"
 
 	help = help .. " .:: " .. gettext ("Chatroom user commands") .. ":\r\n\r\n"
 
@@ -19779,14 +19819,9 @@ help = help .. " " .. ustrig .. table_cmnds.custlist .. " - " .. gettext ("Custo
 	help = help .. " .:: " .. gettext ("Help notes") .. ":\r\n\r\n"
 
 	help = help .. " " .. gettext ("Command parameters %s are always required, while %s are optional."):format ("<" .. gettext ("parameter") .. ">", "[" .. gettext ("parameter") .. "]") .. "\r\n"
-	help = help .. " " .. gettext ("Quoted parameters %s or %s must be used with quotes."):format ("<\"" .. gettext ("parameter") .. "\">", "[\"" .. gettext ("parameter") .. "\"]") .. "\r\n\r\n"
+	help = help .. " " .. gettext ("Quoted parameters %s or %s must be used with quotes."):format ("<\"" .. gettext ("parameter") .. "\">", "[\"" .. gettext ("parameter") .. "\"]") .. "\r\n"
 
-help = help .. " .:: " .. gettext ("Additional help") .. ":\r\n\r\n"
-
-	-- additional help
-	help = help .. " " .. table_othsets.vazhub .. " - VAZ\r\n"
-
-commandanswer (nick, help)
+	commandanswer (nick, help, pm)
 end
 
 ----- ---- --- -- -
@@ -23969,15 +24004,15 @@ end
 
 ----- ---- --- -- -
 
-function commandanswer (to, data) -- todo: replace nmdc characters here instead of each place that calls this function
-	if table_sets.commandstopm == 0 then
-		if minhubver (1, 0, 2, 15) then
-			VH:SendToUser ("<" .. table_othsets.sendfrom .. "> " .. data .. "|", to, getconfig ("delayed_chat"))
-		else
-			VH:SendToUser ("<" .. table_othsets.sendfrom .. "> " .. data .. "|", to)
-		end
-	else
+function commandanswer (to, data, pm) -- todo: replace nmdc characters here instead of each place that calls this function
+	if pm or table_sets.commandstopm == 1 then
 		VH:SendToUser ("$To: " .. to .. " From: " .. table_othsets.botnick .. " $<" .. table_othsets.sendfrom .. "> " .. data .. "|", to)
+
+	elseif minhubver (1, 0, 2, 15) then
+		VH:SendToUser ("<" .. table_othsets.sendfrom .. "> " .. data .. "|", to, getconfig ("delayed_chat"))
+
+	else
+		VH:SendToUser ("<" .. table_othsets.sendfrom .. "> " .. data .. "|", to)
 	end
 end
 

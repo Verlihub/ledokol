@@ -5,6 +5,7 @@
 [ 39] Fixed: Missing default password value when adding new PM block entry
 [ 37] Added: Optional reason to country code gag
 [ 40] Added: Optional filter parameter to word ranks command, request by Meka][Meka
+[ 41] Added: Split help texts and send on hub help command execution
 
 [ 2.9.2 :: 2017-02-12 ]
 
