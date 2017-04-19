@@ -19764,6 +19764,8 @@ function sendophelp (nick, clas, pm)
 	senduserhelp (nick, pm)
 end
 
+----- ---- --- -- -
+
 function senduserhelp (nick, pm)
 	local trig = getconfig ("cmd_start_user"):sub (1, 1)
 	local help = ".:: " .. gettext ("%s user commands"):format ("Ledokol") .. ":\r\n\r\n"
