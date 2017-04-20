@@ -63,7 +63,7 @@ Tzaca, JOE™
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.3" -- ledokol version
-bld_ledo = "41" -- build number
+bld_ledo = "42" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -217,6 +217,7 @@ table_sets = {
 	trigrunning = 0,
 	replrunning = 0,
 	replprotect = 0,
+	repldebug = 0,
 	resprunning = 0,
 	respdelay = 3,
 	respskiplast = 0,
@@ -1384,7 +1385,9 @@ function Main (file)
 
 					if ver <= 293 then
 						VH:SQLQuery ("alter table `" .. tbl_sql.ccgag .. "` add column `why` varchar(255) null after `flag`")
-						VH:SQLQuery ("alter table `" .. tbl_sql.nopm .. "` change column `password` `password` varchar(255) null") -- not used yet
+						VH:SQLQuery ("alter table `" .. tbl_sql.nopm .. "` change column `password` `password` varchar(255) null") -- todo: not used yet
+
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('repldebug', '" .. repsqlchars (table_sets.repldebug) .. "')")
 					end
 
 					if ver <= 294 then
@@ -9346,6 +9349,10 @@ function replchatmsg (nick, addr, class, data, flag)
 					end
 
 					if last > 1 then
+						if table_sets.repldebug == 1 then -- debug
+							opsnotify (table_sets.classnotirepl, gettext ("Entry used in detection: %s"):format (repnmdcoutchars (item.d)))
+						end
+
 						VH:SQLQuery ("update `" .. tbl_sql.chatrepl .. "` set `occurred` = `occurred` + 1 where `id` = " .. _tostring (id))
 						done = true
 					end
@@ -18433,6 +18440,19 @@ end
 
 	----- ---- --- -- -
 
+	elseif tvar == "repldebug" then
+		if num then
+			if setto == 0 or setto == 1 then
+				ok = true
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0 " .. gettext ("or") .. " 1"))
+			end
+		else
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
+		end
+
+	----- ---- --- -- -
+
 	elseif tvar == "resprunning" then
 		if num then
 			if setto == 0 or setto == 1 then
@@ -20143,6 +20163,7 @@ function showledoconf (nick)
 	conf = conf .. "\r\n [::] trigrunning = " .. _tostring (table_sets.trigrunning)
 	conf = conf .. "\r\n [::] replrunning = " .. _tostring (table_sets.replrunning)
 	conf = conf .. "\r\n [::] replprotect = " .. _tostring (table_sets.replprotect)
+	conf = conf .. "\r\n [::] repldebug = " .. _tostring (table_sets.repldebug)
 	conf = conf .. "\r\n [::] resprunning = " .. _tostring (table_sets.resprunning)
 	conf = conf .. "\r\n [::] respdelay = " .. _tostring (table_sets.respdelay)
 	conf = conf .. "\r\n [::] respskiplast = " .. _tostring (table_sets.respskiplast)
