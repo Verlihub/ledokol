@@ -3489,3 +3489,6 @@ msgstr ""
 
 msgid "User manual"
 msgstr ""
+
+msgid "range"
+msgstr ""
