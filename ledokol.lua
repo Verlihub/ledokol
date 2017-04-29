@@ -63,7 +63,7 @@ Tzaca, JOE™
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.3" -- ledokol version
-bld_ledo = "43" -- build number
+bld_ledo = "44" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -75,7 +75,7 @@ table_sets = {
 	commandstopm = 1,
 	scanbelowclass = 3,
 	thirdacttime = "1d",
-	sixthactaddr = "nemesis.te-home.net",
+	sixthactaddr = "hub.verlihub.net:7777",
 	seventhacttime = "",
 	ninthactrepmsg = "Sorry. I won't be spamming this hub again.",
 	enableantispam = 0,
@@ -135,6 +135,7 @@ table_sets = {
 	classnotipeakts = 0,
 	micheck = 1,
 	micallall = 0,
+	michchat = 0,
 	michnick = 1,
 	michdesc = 0,
 	michtag = 0,
@@ -150,6 +151,7 @@ table_sets = {
 	michfakediv = 0,
 	michclone = 0,
 	michsameip = 0,
+	michatmessage = "Forbidden chat nick detected: *",
 	minickmessage = "Forbidden nick detected: *",
 	midescmessage = "Forbidden description detected: *",
 	mitagmessage = "Forbidden tag detected: *",
@@ -336,7 +338,7 @@ table_othsets = {
 	avdbsendurl = "http://www.te-home.net/avdb.php?do=send",
 	avdbloadurl = "http://www.te-home.net/avdb.php?do=load",
 	avdbfindurl = "http://www.te-home.net/avdb.php?do=find",
-	luaman = "http://www.lua.org/manual/5.3/manual.html#6.4.1",
+	luaman = "http://www.lua.org/manual/" .. _VERSION:sub (5) .. "/manual.html#6.4.1",
 	cfgdir = "",
 	feednick = "",
 	sendfrom = "",
@@ -420,6 +422,7 @@ tbl_sql = {
 	antiex = "lua_ledo_antiex",
 	sefi = "lua_ledo_sefi",
 	sefiex = "lua_ledo_sefiex",
+	michat = "lua_ledo_michat",
 	minick = "lua_ledo_minick",
 	midesc = "lua_ledo_midesc",
 	mitag = "lua_ledo_mitag",
@@ -1384,10 +1387,14 @@ function Main (file)
 					end
 
 					if ver <= 293 then
+						VH:SQLQuery ("create table if not exists `" .. tbl_sql.michat .. "` (`chat` varchar(255) not null primary key, `time` varchar(10) null, `occurred` bigint(20) unsigned not null default 0, `note` varchar(255) null) engine = myisam default character set utf8 collate utf8_unicode_ci")
+
 						VH:SQLQuery ("alter table `" .. tbl_sql.ccgag .. "` add column `why` varchar(255) null after `flag`")
 						VH:SQLQuery ("alter table `" .. tbl_sql.nopm .. "` change column `password` `password` varchar(255) null") -- todo: not used yet
 
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('repldebug', '" .. repsqlchars (table_sets.repldebug) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('michchat', '" .. repsqlchars (table_sets.michchat) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('michatmessage', '" .. repsqlchars (table_sets.michatmessage) .. "')")
 					end
 
 					if ver <= 294 then
@@ -2559,16 +2566,16 @@ end
 
 return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
 
-elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.offmsg .. " %S+ .+$") then
-if ucl >= table_sets.offmsgclass then
-sendoffmsg (nick, data:sub (# table_cmnds.offmsg + 3), ucl)
-else
-commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
-end
+	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.offmsg .. " [^ ]+ .+$") then
+		if ucl >= table_sets.offmsgclass then
+			sendoffmsg (nick, data:sub (# table_cmnds.offmsg + 3), ucl)
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
 
-return 0
+		return 0
 
 	----- ---- --- -- -
 
@@ -4060,6 +4067,11 @@ function VH_OnUserCommand (nick, data)
 			if table_sets.checkcmdspam == 0 and antiscan (nick, ucl, msg, 1, nil, nil) == 0 then -- antispam, dont check twice
 				return 0
 			end
+
+			if table_sets.micheck == 1 and ucl < table_sets.scanbelowclass and checkchatnick (nick, ucl, ip) then -- myinfo check
+				return 0
+			end
+
 		elseif table_sets.chatantiflood == 1 then -- update last chat nick
 			table_othsets.chflonenick = nick
 		end
@@ -4220,6 +4232,11 @@ function VH_OnUserCommand (nick, data)
 					return 0
 				end
 			end
+
+			if table_sets.micheck == 1 and ucl < table_sets.scanbelowclass and checkchatnick (nick, ucl, ip) then -- myinfo check
+				return 0
+			end
+
 		elseif table_sets.chatantiflood == 1 then -- update last chat nick
 			table_othsets.chflonenick = nick
 		end
@@ -4474,16 +4491,16 @@ end
 
 return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
 
-elseif data:match ("^" .. table_othsets.ustrig .. table_cmnds.offmsg .. " %S+ .+$") then
-if ucl >= table_sets.offmsgclass then
-sendoffmsg (nick, data:sub (# table_cmnds.offmsg + 3), ucl)
-else
-commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
-end
+	elseif data:match ("^" .. table_othsets.ustrig .. table_cmnds.offmsg .. " [^ ]+ .+$") then
+		if ucl >= table_sets.offmsgclass then
+			sendoffmsg (nick, data:sub (# table_cmnds.offmsg + 3), ucl)
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
 
-return 0
+		return 0
 
 	----- ---- --- -- -
 
@@ -6304,6 +6321,10 @@ function VH_OnParsedMsgPM (from, data, to)
 			if antiscan (from, fcls, data, 2, to, nil) == 0 then -- scan before broadcasting
 				return 0
 			end
+
+			if table_sets.micheck == 1 and fcls < table_sets.scanbelowclass and checkchatnick (from, fcls, ip) then -- myinfo check
+				return 0
+			end
 		end
 
 		if broadcastchatroom (to, from, data, fcls) then -- check chatrooms
@@ -6446,6 +6467,10 @@ function VH_OnParsedMsgMCTo (from, data, to)
 
 	if not prot then -- protection
 		if antiscan (from, fcls, data, 2, to, nil) == 0 then -- antispam
+			return 0
+		end
+
+		if table_sets.micheck == 1 and fcls < table_sets.scanbelowclass and checkchatnick (from, fcls, ip) then -- myinfo check
 			return 0
 		end
 	end
@@ -6630,6 +6655,11 @@ function VH_OnParsedMsgChat (nick, data)
 		if antiscan (nick, ucl, data, 1, nil, nil) == 0 then -- antispam
 			return 0
 		end
+
+		if table_sets.micheck == 1 and ucl < table_sets.scanbelowclass and checkchatnick (nick, ucl, ip) then -- myinfo check
+			return 0
+		end
+
 	elseif table_sets.chatantiflood == 1 then -- update last chat nick
 		table_othsets.chflonenick = nick
 	end
@@ -11399,27 +11429,28 @@ end
 
 ----- ---- --- -- -
 
-function sendoffmsg (from, line, ucls)
-	local _, _, to = line:find ("^(%S+) .+$")
+function sendoffmsg (from, line, clas)
+	local to = line:match ("^([^ ]+) .+$")
 
 	if to:lower () == from:lower () then
 		commandanswer (from, gettext ("Why would you send offline message to yourself?"))
+
 	elseif isbot (to) then
 		commandanswer (from, gettext ("The user you're trying to send offline message to is a bot. Message is discarded."))
-	else
-		local _, _, msg = line:find ("^%S+ (.+)$")
-		local uip = getip (from)
-		local tsts = getstatus (to)
 
-		if isprotected (from, uip) or antiscan (from, ucls, msg, 3, to, tsts) == 1 then
-			if tsts == 1 then
-				offlinepm (from, to, msg)
+	else
+		local text = line:match ("^%S+ (.+)$")
+		local addr, stat = getip (from), getstatus (to)
+
+		if isprotected (from, addr) or antiscan (from, clas, text, 3, to, stat) == 1 or table_sets.micheck == 0 or clas >= table_sets.scanbelowclass or not checkchatnick (from, clas, addr) then -- spam and myinfo checks
+			if stat == 1 then
+				offlinepm (from, to, text)
 				commandanswer (from, gettext ("User %s is online. Sending message directly."):format (to))
+
 			else
-				local ndate = os.time () + table_sets.srvtimediff -- current time
-				VH:SQLQuery ("insert into `" .. tbl_sql.off .. "` (`from`, `ip`, `to`, `date`, `message`) values ('" .. repsqlchars (from) .. "', '" .. uip .. "', '" .. repsqlchars (to) .. "', " .. _tostring (ndate) .. ", '" .. repsqlchars (msg) .. "')")
+				VH:SQLQuery ("insert into `" .. tbl_sql.off .. "` (`from`, `ip`, `to`, `date`, `message`) values ('" .. repsqlchars (from) .. "', '" .. addr .. "', '" .. repsqlchars (to) .. "', " .. _tostring (os.time () + table_sets.srvtimediff) .. ", '" .. repsqlchars (text) .. "')")
 				commandanswer (from, gettext ("Your offline message stored for user: %s"):format (to))
-				opsnotify (table_sets.classnotioff, gettext ("%s with IP %s and class %d sent offline message."):format (from, uip .. tryipcc (uip, from), ucls))
+				opsnotify (table_sets.classnotioff, gettext ("%s with IP %s and class %d sent offline message."):format (from, addr .. tryipcc (addr, from), clas))
 			end
 		end
 	end
@@ -11518,6 +11549,56 @@ opsnotify (table_sets.classnotiledoact, gettext ("%s with class %d deleted all o
 else
 commandanswer (nick, gettext ("There are no offline messages to remove."))
 end
+end
+
+----- ---- --- -- -
+
+function checkchatnick (nick, clas, addr)
+	if table_sets.michchat == 0 or # table_myfo.chat == 0 then
+		return false
+	end
+
+	local low = tolow (repnmdcinchars (nick))
+
+	for id, item in pairs (table_myfo.chat) do
+		local fres, fval = catchfinderror (low, item.ent)
+
+		if not fres then
+			local ferr = gettext ("There is an error in following forbidden chat nick pattern") .. ":\r\n\r\n"
+			ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (item.ent) .. "\r\n"
+			ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
+			ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
+			opsnotify (table_sets.classnotiledoact, ferr)
+
+		elseif fval then
+			table_myfo.chat [id].occ = item.occ + 1
+			VH:SQLQuery ("update `" .. tbl_sql.michat .. "` set `occurred` = `occurred` + 1 where `chat` = '" .. repsqlchars (item.ent) .. "'")
+
+			for eid, eit in pairs (table_myfo.ex) do
+				local fres, fval = catchfinderror (low, eit.ent)
+
+				if not fres then
+					local ferr = gettext ("There is an error in following MyINFO exception pattern") .. ":\r\n\r\n"
+					ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (eit.ent) .. "\r\n"
+					ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
+					ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
+					opsnotify (table_sets.classnotiledoact, ferr)
+
+				elseif fval then
+					table_myfo.ex [eid].occ = eit.occ + 1
+					VH:SQLQuery ("update `" .. tbl_sql.miex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (eit.ent) .. "'")
+					opsnotify (table_sets.classnotiex, gettext ("%s with IP %s and class %d allowed due to forbidden chat nick exception: %s"):format (nick, addr .. tryipcc (addr, nick), clas, nick))
+					return false
+				end
+			end
+
+			local why = table_sets.michatmessage:gsub ("%*", reprexpchars (nick))
+			VH:KickUser (table_othsets.sendfrom, nick, why .. "     #_ban_" .. item.tim)
+			return true
+		end
+	end
+
+	return false
 end
 
 ----- ---- --- -- -
@@ -12860,6 +12941,7 @@ end
 
 function loadmyfolist ()
 	table_myfo = {
+		chat = {},
 		nick = {},
 		desc = {},
 		tag = {},
@@ -12873,6 +12955,27 @@ function loadmyfolist ()
 		ver = {},
 		ex = {}
 	}
+
+	local _, rows = VH:SQLQuery ("select * from `" .. tbl_sql.michat .. "`") -- chat
+
+	if rows > 0 then
+		for pos = 0, rows - 1 do
+			local _, ent, tim, occ, inf = VH:SQLFetch (pos)
+
+			if ent and # ent > 0 then
+				if not tim or # tim == 0 then
+					tim = table_sets.mitbantime
+				end
+
+				table.insert (table_myfo.chat, {
+					["ent"] = ent,
+					["tim"] = tim,
+					["occ"] = tonumber (occ or 0) or 0,
+					["inf"] = inf
+				})
+			end
+		end
+	end
 
 	local _, rows = VH:SQLQuery ("select * from `" .. tbl_sql.minick .. "`") -- nick
 
@@ -13153,7 +13256,40 @@ function addmyinfoentry (nick, line)
 	local sen = repnmdcinchars (ent)
 	local fres, fval = catchfinderror ("", sen)
 
-	if part == "nick" then
+	if part == "chat" then -- chat
+		if not fres then
+			local ferr = gettext ("There is an error in following forbidden chat nick pattern") .. ":\r\n\r\n"
+			ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. ent .. "\r\n"
+			ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
+			ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
+			commandanswer (nick, ferr)
+		else
+			for id, item in pairs (table_myfo.chat) do
+				if item.ent == sen then
+					pos = id
+					break
+				end
+			end
+
+			if pos > 0 then
+				table_myfo.chat [pos].tim = cti
+				table_myfo.chat [pos].inf = inf
+				VH:SQLQuery ("update `" .. tbl_sql.michat .. "` set `time` = " .. sqlemptnull (tim) .. ", `note` = " .. sqlemptnull (inf) .. " where `chat` = '" .. repsqlchars (sen) .. "'")
+				commandanswer (nick, gettext ("Modified forbidden chat nick with ban time %s: %s"):format (cti, ent))
+			else
+				table.insert (table_myfo.chat, {
+					["ent"] = sen,
+					["tim"] = cti,
+					["occ"] = 0,
+					["not"] = inf
+				})
+
+				VH:SQLQuery ("insert into `" .. tbl_sql.michat .. "` (`chat`, `time`, `note`) values ('" .. repsqlchars (sen) .. "', " .. sqlemptnull (tim) .. ", " .. sqlemptnull (inf) .. ")")
+				commandanswer (nick, gettext ("Added forbidden chat nick with ban time %s: %s"):format (cti, ent))
+			end
+		end
+
+	elseif part == "nick" then -- nick
 		if not fres then
 			local ferr = gettext ("There is an error in following forbidden nick pattern") .. ":\r\n\r\n"
 			ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. ent .. "\r\n"
@@ -13544,7 +13680,7 @@ function addmyinfoentry (nick, line)
 		end
 
 	else -- unknown
-		commandanswer (nick, gettext ("Known types are: %s"):format ("nick, desc, tag, conn, email, share, ip, cc, dns, sup, ver " .. gettext ("and") .. " ex"))
+		commandanswer (nick, gettext ("Known types are: %s"):format ("chat, nick, desc, tag, conn, email, share, ip, cc, dns, sup, ver " .. gettext ("and") .. " ex"))
 	end
 end
 
@@ -13554,7 +13690,19 @@ function delmyinfoentry (nick, line)
 	local part, ent = line:match ("^([^ ]+) (.+)$")
 	local sen = repnmdcinchars (ent)
 
-	if part == "nick" then
+	if part == "chat" then -- chat
+		for id, item in pairs (table_myfo.chat) do
+			if item.ent == sen then
+				table.remove (table_myfo.chat, id)
+				VH:SQLQuery ("delete from `" .. tbl_sql.michat .. "` where `chat` = '" .. repsqlchars (sen) .. "'")
+				commandanswer (nick, gettext ("Deleted forbidden chat nick: %s"):format (ent))
+				return
+			end
+		end
+
+		commandanswer (nick, gettext ("Couldn't delete forbidden chat nick because not found: %s"):format (ent))
+
+	elseif part == "nick" then -- nick
 		for id, item in pairs (table_myfo.nick) do
 			if item.ent == sen then
 				table.remove (table_myfo.nick, id)
@@ -13701,7 +13849,7 @@ function delmyinfoentry (nick, line)
 		commandanswer (nick, gettext ("Couldn't delete MyINFO exception because not found: %s"):format (ent))
 
 	else -- unknown
-		commandanswer (nick, gettext ("Known types are: %s"):format ("nick, desc, tag, conn, email, share, ip, cc, dns, sup, ver " .. gettext ("and") .. " ex"))
+		commandanswer (nick, gettext ("Known types are: %s"):format ("chat, nick, desc, tag, conn, email, share, ip, cc, dns, sup, ver " .. gettext ("and") .. " ex"))
 	end
 end
 
@@ -13710,7 +13858,11 @@ end
 function listmyinfoentry (nick, part)
 	local lis, tit, noi = part, "", ""
 
-	if part == "nick" then
+	if part == "chat" then
+		tit = gettext ("Forbidden chat nick list")
+		noi = gettext ("Forbidden chat nick list is empty.")
+
+	elseif part == "nick" then
 		tit = gettext ("Forbidden nick list")
 		noi = gettext ("Forbidden nick list is empty.")
 
@@ -13763,7 +13915,7 @@ function listmyinfoentry (nick, part)
 		noi = gettext ("MyINFO exception list is empty.")
 
 	else -- unknown
-		commandanswer (nick, gettext ("Known types are: %s"):format ("nick, desc, tag, conn, email, share, ip, cc, dns, sup, ver " .. gettext ("and") .. " ex"))
+		commandanswer (nick, gettext ("Known types are: %s"):format ("chat, nick, desc, tag, conn, email, share, ip, cc, dns, sup, ver " .. gettext ("and") .. " ex"))
 		return
 	end
 
@@ -18543,21 +18695,33 @@ else
 commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
 end
 
------ ---- --- -- -
+	----- ---- --- -- -
 
-elseif tvar == "michnick" then
-if num then
-if setto == 0 or setto == 1 then
-ok = true
-else
-commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0 " .. gettext ("or") .. " 1"))
-end
+	elseif tvar == "michchat" then
+		if num then
+			if setto == 0 or setto == 1 then
+				ok = true
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0 " .. gettext ("or") .. " 1"))
+			end
+		else
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
+		end
 
-else
-commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
-end
+	----- ---- --- -- -
 
------ ---- --- -- -
+	elseif tvar == "michnick" then
+		if num then
+			if setto == 0 or setto == 1 then
+				ok = true
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0 " .. gettext ("or") .. " 1"))
+			end
+		else
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
+		end
+
+	----- ---- --- -- -
 
 elseif tvar == "michdesc" then
 if num then
@@ -18817,16 +18981,25 @@ end
 	elseif tvar == "miclonekicktime" then
 		ok = true
 
------ ---- --- -- -
+	----- ---- --- -- -
 
-elseif tvar == "minickmessage" then
-if # setto > 0 then
-ok = true
-else
-commandanswer (nick, gettext ("Configuration variable %s can't be empty."):format (tvar))
-end
+	elseif tvar == "michatmessage" then
+		if # setto > 0 then
+			ok = true
+		else
+			commandanswer (nick, gettext ("Configuration variable %s can't be empty."):format (tvar))
+		end
 
------ ---- --- -- -
+	----- ---- --- -- -
+
+	elseif tvar == "minickmessage" then
+		if # setto > 0 then
+			ok = true
+		else
+			commandanswer (nick, gettext ("Configuration variable %s can't be empty."):format (tvar))
+		end
+
+	----- ---- --- -- -
 
 elseif tvar == "midescmessage" then
 if # setto > 0 then
@@ -20062,6 +20235,7 @@ function showledoconf (nick)
 
 	conf = conf .. "\r\n [::] micheck = " .. _tostring (table_sets.micheck)
 	conf = conf .. "\r\n [::] micallall = " .. _tostring (table_sets.micallall)
+	conf = conf .. "\r\n [::] michchat = " .. _tostring (table_sets.michchat)
 	conf = conf .. "\r\n [::] michnick = " .. _tostring (table_sets.michnick)
 	conf = conf .. "\r\n [::] michdesc = " .. _tostring (table_sets.michdesc)
 	conf = conf .. "\r\n [::] michtag = " .. _tostring (table_sets.michtag)
@@ -20077,6 +20251,7 @@ function showledoconf (nick)
 	conf = conf .. "\r\n [::] michfakediv = " .. _tostring (table_sets.michfakediv)
 	conf = conf .. "\r\n [::] michclone = " .. _tostring (table_sets.michclone)
 	conf = conf .. "\r\n [::] michsameip = " .. _tostring (table_sets.michsameip)
+	conf = conf .. "\r\n [::] michatmessage = " .. _tostring (table_sets.michatmessage)
 	conf = conf .. "\r\n [::] minickmessage = " .. _tostring (table_sets.minickmessage)
 	conf = conf .. "\r\n [::] midescmessage = " .. _tostring (table_sets.midescmessage)
 	conf = conf .. "\r\n [::] mitagmessage = " .. _tostring (table_sets.mitagmessage)
@@ -20309,6 +20484,7 @@ VH:SQLQuery ("create table if not exists `" .. tbl_sql.conf .. "` (`variable` va
 	VH:SQLQuery ("create table if not exists `" .. tbl_sql.sefiex .. "` (`exception` varchar(255) not null primary key, `occurred` bigint(20) unsigned not null default 0) engine = myisam default character set utf8 collate utf8_unicode_ci")
 
 	-- myinfo
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql.michat .. "` (`chat` varchar(255) not null primary key, `time` varchar(10) null, `occurred` bigint(20) unsigned not null default 0, `note` varchar(255) null) engine = myisam default character set utf8 collate utf8_unicode_ci")
 	VH:SQLQuery ("create table if not exists `" .. tbl_sql.minick .. "` (`nick` varchar(255) not null primary key, `time` varchar(10) null, `occurred` bigint(20) unsigned not null default 0, `note` varchar(255) null) engine = myisam default character set utf8 collate utf8_unicode_ci")
 	VH:SQLQuery ("create table if not exists `" .. tbl_sql.midesc .. "` (`description` varchar(255) not null primary key, `time` varchar(10) null, `occurred` bigint(20) unsigned not null default 0, `note` varchar(255) null) engine = myisam default character set utf8 collate utf8_unicode_ci")
 	VH:SQLQuery ("create table if not exists `" .. tbl_sql.mitag .. "` (`tag` varchar(255) not null primary key, `time` varchar(10) null, `occurred` bigint(20) unsigned not null default 0, `note` varchar(255) null) engine = myisam default character set utf8 collate utf8_unicode_ci")

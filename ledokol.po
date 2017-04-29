@@ -3492,3 +3492,27 @@ msgstr ""
 
 msgid "range"
 msgstr ""
+
+msgid "There is an error in following forbidden chat nick pattern"
+msgstr ""
+
+msgid "Modified forbidden chat nick with ban time %s: %s"
+msgstr ""
+
+msgid "Added forbidden chat nick with ban time %s: %s"
+msgstr ""
+
+msgid "Deleted forbidden chat nick: %s"
+msgstr ""
+
+msgid "Couldn't delete forbidden chat nick because not found: %s"
+msgstr ""
+
+msgid "Forbidden chat nick list"
+msgstr ""
+
+msgid "Forbidden chat nick list is empty."
+msgstr ""
+
+msgid "%s with IP %s and class %d allowed due to forbidden chat nick exception: %s"
+msgstr ""

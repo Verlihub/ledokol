@@ -1164,3 +1164,11 @@ Top %d used words with filter: %s|
 Support hub|
 User manual|
 range|
+There is an error in following forbidden chat nick pattern|
+Modified forbidden chat nick with ban time %s: %s|
+Added forbidden chat nick with ban time %s: %s|
+Deleted forbidden chat nick: %s|
+Couldn't delete forbidden chat nick because not found: %s|
+Forbidden chat nick list|
+Forbidden chat nick list is empty.|
+%s with IP %s and class %d allowed due to forbidden chat nick exception: %s|

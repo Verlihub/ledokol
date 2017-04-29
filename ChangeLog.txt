@@ -8,6 +8,7 @@
 [ 41] Added: Split help texts and send on hub help command execution
 [ 42] Added: Replacer debug configuration repldebug, request by KCAHDEP
 [ 43] Added: IP gag now supports single IP, range or LRE, request by KCAHDEP
+[ 44] Added: Forbidden chat nick MyINFO check
 
 [ 2.9.2 :: 2017-02-12 ]
 
