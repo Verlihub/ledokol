@@ -11439,7 +11439,7 @@ function sendoffmsg (from, line, clas)
 		commandanswer (from, gettext ("The user you're trying to send offline message to is a bot. Message is discarded."))
 
 	else
-		local text = line:match ("^%S+ (.+)$")
+		local text = line:match ("^[^ ]+ (.+)$")
 		local addr, stat = getip (from), getstatus (to)
 
 		if isprotected (from, addr) or antiscan (from, clas, text, 3, to, stat) == 1 or table_sets.micheck == 0 or clas >= table_sets.scanbelowclass or not checkchatnick (from, clas, addr) then -- spam and myinfo checks
