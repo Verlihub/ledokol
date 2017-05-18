@@ -10,6 +10,7 @@
 [ 43] Added: IP gag now supports single IP, range or LRE, request by KCAHDEP
 [ 44] Added: Forbidden chat nick MyINFO check
 [ 45] Added: Column support to Team Elite hublist user search
+[ 46] Added: Default type and limit parameters to user logger command, idea by Lord_Zero
 
 [ 2.9.2 :: 2017-02-12 ]
 

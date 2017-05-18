@@ -63,7 +63,7 @@ Tzaca, JOE™
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.3" -- ledokol version
-bld_ledo = "45" -- build number
+bld_ledo = "46" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -2762,7 +2762,7 @@ return 0
 
 	----- ---- --- -- -
 
-	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.ulog .. " %S+ .+ %d+$") then
+	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.ulog .. " .+$") then
 		if ucl >= table_sets.mincommandclass and table_sets.enableuserlog == 1 then
 			donotifycmd (nick, data, 0, ucl)
 			showuserlog (nick, data:sub (# table_cmnds.ulog + 3))
@@ -10074,17 +10074,25 @@ end
 ----- ---- --- -- -
 
 function showuserlog (nick, line)
-	local tp, str, lim = line:match ("^(%S+) (.+) (%d+)$")
+	local typ, str, lim = "nick", line, 100 -- static parameters
 
-	if tp == "nick" or tp == "addr" or tp == "ip" or tp == "code" or tp == "cc" or tp == "desc" or tp == "tag" or tp == "conn" or tp == "mail" or tp == "email" or tp == "size" or tp == "share" or tp == "all" then
-		if tp == "addr" then
-			tp = "ip"
-		elseif tp == "code" then
-			tp = "cc"
-		elseif tp == "mail" then
-			tp = "email"
-		elseif tp == "size" then
-			tp = "share"
+	if line:match ("^%S+ .+ %d+$") then
+		typ, str, lim = line:match ("^(%S+) (.+) (%d+)$")
+	elseif line:match ("^[^ ]+ %d+$") then
+		str, lim = line:match ("^([^ ]+) (%d+)$")
+	elseif line:match ("^%S+ .+$") then
+		typ, str = line:match ("^(%S+) (.+)$")
+	end
+
+	if typ == "nick" or typ == "addr" or typ == "ip" or typ == "code" or typ == "cc" or typ == "desc" or typ == "tag" or typ == "conn" or typ == "mail" or typ == "email" or typ == "size" or typ == "share" or typ == "all" then
+		if typ == "addr" then
+			typ = "ip"
+		elseif typ == "code" then
+			typ = "cc"
+		elseif typ == "mail" then
+			typ = "email"
+		elseif typ == "size" then
+			typ = "share"
 		end
 
 		lim = tonumber (lim)
@@ -10095,7 +10103,7 @@ function showuserlog (nick, line)
 
 		str = repsqlchars (str)
 
-		if tp == "all" then -- any part
+		if typ == "all" then -- any part
 			local _, rows = VH:SQLQuery ("select `time`, `nick`, `ip`, `cc`, `desc`, `tag`, `conn`, `email`, `share` from `" .. tbl_sql.ulog .. "` where `nick` like '%" .. str .. "%' or `ip` like '%" .. str .. "%' or `cc` like '%" .. str .. "%' or `desc` like '%" .. str .. "%' or `tag` like '%" .. str .. "%' or `conn` like '%" .. str .. "%' or `email` like '%" .. str .. "%' or `share` like '%" .. str .. "%' order by `time` desc limit " .. _tostring (lim))
 
 			if rows > 0 then
@@ -10144,7 +10152,7 @@ function showuserlog (nick, line)
 			end
 
 		else -- specific
-			local _, rows = VH:SQLQuery ("select `time`, `nick`, `ip`, `cc`, `desc`, `tag`, `conn`, `email`, `share` from `" .. tbl_sql.ulog .. "` where `" .. tp .. "` like '%" .. str .. "%' order by `time` desc limit " .. _tostring (lim))
+			local _, rows = VH:SQLQuery ("select `time`, `nick`, `ip`, `cc`, `desc`, `tag`, `conn`, `email`, `share` from `" .. tbl_sql.ulog .. "` where `" .. typ .. "` like '%" .. str .. "%' order by `time` desc limit " .. _tostring (lim))
 
 			if rows > 0 then
 				local res = ""
@@ -19927,7 +19935,7 @@ function sendophelp (nick, clas, pm)
 	-- user logger
 	help = help .. " " .. trig .. table_cmnds.userinfo .. " <" .. gettext ("nick") .. "> - " .. gettext ("User information") .. "\r\n"
 	help = help .. " " .. trig .. table_cmnds.ipinfo .. " <" .. gettext ("ip") .. "> - " .. gettext ("IP information") .. "\r\n"
-	help = help .. " " .. trig .. table_cmnds.ulog .. " <" .. gettext ("type") .. "> <" .. gettext ("string") .. "> <" .. gettext ("lines") .. "> - " .. gettext ("Search in user log") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.ulog .. " [" .. gettext ("type") .. "=nick] <" .. gettext ("string") .. "> [" .. gettext ("lines") .. "=100] - " .. gettext ("Search in user log") .. "\r\n" -- static parameters
 	help = help .. " " .. trig .. table_cmnds.seen .. " <" .. gettext ("type") .. "> <" .. gettext ("text") .. "> - " .. gettext ("%s user lookup"):format (table_othsets.hublisturl) .. "\r\n\r\n"
 
 	-- vote kick
