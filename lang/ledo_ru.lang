@@ -1,6 +1,6 @@
 # Language: ru_RU
 # Charset: CP1251
-# Version: 2.9.2
+# Version: 2.9.3
 # Author: KCAHDEP
 # Email: admin@kcahdep.org
 
@@ -191,8 +191,8 @@ Offline message to user|Офлайн сообщение пользователю
 Main chat history|История общего чата
 %s statistics|Статистика %s
 Script version: %s|Версия скрипта: %s
-Total chat rank points: %d|Общее количество очков в чате: %d
-Total operator rank points: %d|Общее количество очков операторов: %d
+Total chat rank points: %d|Общее количество сообщений в чате: %d
+Total operator rank points: %d|Общее количество сообщений операторов: %d
 Average message count per user: %.2f|Среднее количество сообщений в расчёте на одного пользователя: %.2f
 lre|lre
 action|действие
@@ -336,7 +336,7 @@ Couldn't delete user from custom nick list because not found: %s|Невозможно удал
 Selected type requires extra parameters. Please refer to manual for more information.|Выбранный тип требует дополнительных параметров. Пожалуйста, почитайте инструкцию для получения дополнительной информации.
 Size of registered users table: %d [ %s: %d @ %s ]|Размер таблицы регистраций пользователей: %d [ %s: %d @ %s ]
 Deleted %d accounts with class %d|Удалено %d учётных записей с классом %d
-%s with class %d deleted %d accounts with class %d that has been inactive for %d days.|Пользователь %s %d-го класса был удалён %d из таблицы регистраций пользователей %d-го класса в результате неактивности в течение %d дней.
+%s with class %d deleted %d accounts with class %d that has been inactive for %d days.|Пользователь %s %d-го класса удалил %d записей из таблицы регистраций пользователей %d-го класса в результате неактивности в течение %d дней.
 Add command permission|Добавить команду в запрещённые
 Delete command permission|Удалить команду из запрещённых
 Command permission list|Список запрещённых команд
@@ -345,7 +345,7 @@ Added command permission with class %d: %s|Добавлена запрещённая команда класса 
 Deleted command permission: %s|Удалена запрещённая команда: %s
 Couldn't delete command permission because not found: %s|Невозможно удалить запрещённую команду. Не найдена в базе: %s
 Command permission list is empty.|Список запрещённых команд пуст.
-Total search rank points: %d|Итоговое количество очков в таблице популярности поисковых запросов: %d
+Total search rank points: %d|Общее количество поисковых запросов: %d
 Please use following commands to finish update process|Используйте следующие команды для завершения процесса обновления
 Moving file: %s|Перемещаю файл: %s
 Please visit %s to download the script manually.|Пожалуйста посетите %s чтобы загрузить скрипт вручную.
@@ -644,6 +644,7 @@ IP gag list|Список заглушек по IP
 IP gag list is empty.|Список заглушек по IP пуст.
 Delete IP gag|Удалить заглушку по IP
 Main chat is currently disabled for you.|В данный момент общий чат для вас отключён.
+Main chat is currently disabled for you because: %s|Общий чат отключен для вас, причина: %s
 Cleared temporary IP gag list.|Список временных заглушек по IP очищен.
 Show custom script commands|Показать команды скрипта
 Custom script command list|Список переопределённых пользователем команд скрипта
@@ -653,6 +654,7 @@ Added %s to IP gag list, %d users in total.|Адрес %s добавлен в список заглушек 
 Flood detected from IP %s last known as %s with class %d in MC: %s|Обнаружен флуд с IP адреса %s. Текущий пользователь адреса - %s %d-го класса, флудил в MC: %s
 Flood detected from IP %s last known as %s with class %d in PM to %s with IP %s and class %d: %s|Обнаружен флуд с IP адреса %s ранее известным как %s с классом %d в виде личного сообщения пользователю %s c IP адресом %s и классом %d: %s
 Private chat is currently disabled for you.|В данный момент личные сообщения для вас отключены.
+Private chat is currently disabled for you because: %s|Приватный чат отключен для вас, причина: %s
 Main chat flood detected from your IP.|Обнаружен флуд в главный чат от вашего IP адреса.
 %d users with IP %s dropped due to flood.|Пользователь %d with IP %s выкинут за флуд.
 No error message specified.|Сообщений об ошибках не обнаружено.
@@ -869,7 +871,9 @@ unknown nick|Неизвестный ник
 Country code gag|Заглушка по коду страны
 Add country code gag|Добавить заглушку по коду страны
 Added country code gag: %s|Добавлена заглушка по коду страны: %s
+Added country code gag %s with reason: %s|Добавлена заглушка по коду страны %s причина: %s
 Modified country code gag: %s|Изменена заглушка по коду страны: %s
+Modified country code gag %s with reason: %s|Изменена заглушка по коду страны %s причина: %s
 Deleted country code gag: %s|Удалена заглушка по коду страны: %s
 Country code gag not found: %s|Заглушка по коду страны не найдена: %s
 Country code gag list|Список заглушек по коду страны
@@ -1155,3 +1159,16 @@ Low search uptime of %d seconds from %s with IP %s and class %d as TTH: %s|Недос
 User dropped: %s|Пользователь выкинут: %s
 %d of %d|%d из %d
 Main chat responder list contains %d items, but none matched your pattern.|Автоответчик чата содержит %d элементов, но ни один не подходит твоему шаблону.
+word|слово
+Top %d used words with filter: %s|Топ %d используемых слов с фильтром: %s
+Support hub|Поддержка хаба
+User manual|Руководство пользователя
+range|диапазон
+There is an error in following forbidden chat nick pattern|Существует ошибка в следующем шаблоне запрещённого ника в чате
+Modified forbidden chat nick with ban time %s: %s|Изменён запрещённый чат ник с баном %s: %s
+Added forbidden chat nick with ban time %s: %s|Добавлен запрещённый чат ник с баном %s: %s
+Deleted forbidden chat nick: %s|Удален ранее запрещённый чат ник: %s
+Couldn't delete forbidden chat nick because not found: %s|Не могу удалить запрещённый чат ник. Не найден в базе: %s
+Forbidden chat nick list|Список запрещённых чат ников
+Forbidden chat nick list is empty.|Список запрещённых чат ников пуст.
+%s with IP %s and class %d allowed due to forbidden chat nick exception: %s|Пользователь %s с IP-адресом %s и классом %d пропущен с исключением по чат нику: %s

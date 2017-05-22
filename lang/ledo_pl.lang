@@ -1,6 +1,6 @@
 # Language: pl_PL
 # Charset: CP1250
-# Version: 2.9.2
+# Version: 2.9.3
 # Author: Zorro
 # Email: zbyszekslyz@hostpl.eu
 
@@ -644,6 +644,7 @@ IP gag list|Lista gag IP
 IP gag list is empty.|Lista gag IP jest pusta.
 Delete IP gag|Uzun gag IP
 Main chat is currently disabled for you.|Main czat sie obecnie dla ciebie zamkniety.
+Main chat is currently disabled for you because: %s|Glowny czat jest dla Ciebiw wylaczony poniewaz: %s
 Cleared temporary IP gag list.|Wyczyszczono tymczasowa liste gagow IP.
 Show custom script commands|Pokaz komendy skryptu
 Custom script command list|Lista komend skryptu
@@ -653,6 +654,7 @@ Added %s to IP gag list, %d users in total.|Dodano %s do IP Listy Gag, %d Uzytko
 Flood detected from IP %s last known as %s with class %d in MC: %s|Wykryto flood od IP %s ostatnio znany jako %s z klasa %d na glownym czacie: %s
 Flood detected from IP %s last known as %s with class %d in PM to %s with IP %s and class %d: %s|Wykryto flood od %s jako %s z klasa %d na PM do %s z IP %s i klasy %d: %s
 Private chat is currently disabled for you.|Prywatny czat jest obecnie zablokowany dla Ciebie.
+Private chat is currently disabled for you because: %s|Prywatny czat jest dla Ciebie wylaczony poniewaz: %s
 Main chat flood detected from your IP.|Wykryto floodowanie glownego czata z twojego IP
 %d users with IP %s dropped due to flood.|%d Uzytkownicy z IP %s usunieci ze wzgledu na flood.
 No error message specified.|Nie sprecyzowano wiadomosci z bledami.
@@ -869,7 +871,9 @@ unknown nick|nieznany nick
 Country code gag|Kod kraju gaga
 Add country code gag|Dodaj kod kraju gag
 Added country code gag: %s|Dodano kod kraju gag: %s
+Added country code gag %s with reason: %s|Dodano kod kraju do listy gag %s z powodu: %s
 Modified country code gag: %s|Zmodyfikowano kod kraju gag: %s
+Modified country code gag %s with reason: %s|Zmodyfikowano kod kraju z listy gag %s z powodu: %s
 Deleted country code gag: %s|Usunieto kod kraju gag: %s
 Country code gag not found: %s|Kod kraju gag nie znaleziono: %s
 Country code gag list|Lista kod kraju gag
@@ -1155,3 +1159,16 @@ Low search uptime of %d seconds from %s with IP %s and class %d as TTH: %s|Niski
 User dropped: %s|Uzytkownik dropniety: %s
 %d of %d|%d z %d
 Main chat responder list contains %d items, but none matched your pattern.|Glowny czat odpowiadajacy zawiera %d pozycji, ale nie pasuje do Twojego wzoru.
+word|slowo
+Top %d used words with filter: %s|Najczesciej %d uzywane slowo z filtrem: %s
+Support hub|Centrum wsparcia huba
+User manual|Instrukcja obslugi
+range|zasieg
+There is an error in following forbidden chat nick pattern|Wystapil blad w zabronieniu forbida nazwy uzytkownika na czacie
+Modified forbidden chat nick with ban time %s: %s|Zmodyfikowano florbida nick z czasem ban %s: %s
+Added forbidden chat nick with ban time %s: %s|Dodano florbida nick z czasem ban %s: %s
+Deleted forbidden chat nick: %s|Usunieto zakazany nick: %s
+Couldn't delete forbidden chat nick because not found: %s|Nie mozna usunac zakazanego nicku gdyz nie znaleziono go na liscie: %s
+Forbidden chat nick list|Lista zakazanych nickow czata
+Forbidden chat nick list is empty.|Lista zakazanych nickow jest pusta.
+%s with IP %s and class %d allowed due to forbidden chat nick exception: %s|% z IP i klasy %d dozwolone ze wzgledu na zakaz uzytkownika z wyjatkiem: %s

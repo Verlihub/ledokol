@@ -1,4 +1,4 @@
-[ 2.9.3 :: 2017-##-## ]
+[ 2.9.3 :: 2017-05-22 ]
 
 [ 36] Fixed: Errors on configuration conversion from string to number and vice versa, report by Alexandr
 [ 38] Fixed: Lua 5.3 number to string conversions in MySQL queries

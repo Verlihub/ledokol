@@ -1,6 +1,6 @@
 # Language: nl_NL
 # Charset: CP1252
-# Version: 2.9.2
+# Version: 2.9.3
 # Author: Modswat
 # Email: future_dance@hotmail.com
 
@@ -644,6 +644,7 @@ IP gag list|IP gag lijst
 IP gag list is empty.|IP gag lijst is leeg.
 Delete IP gag|Verwijder Ip gag
 Main chat is currently disabled for you.|Main chat  is momenteel uitgeschakeld voor je.
+Main chat is currently disabled for you because: %s|Mainchat is niet toegangkelijk voor je omdat: %s
 Cleared temporary IP gag list.|Opgeruimd tijdelijke IP gag lijst.
 Show custom script commands|Toon custom script commando's
 Custom script command list|Custom script comando lijst
@@ -653,6 +654,7 @@ Added %s to IP gag list, %d users in total.|Toegevoegd  %s aan IP gag lijst, %d 
 Flood detected from IP %s last known as %s with class %d in MC: %s|Flood gedetecteerd van IP %s laatste bekend als %s met class %d in MC: %s
 Flood detected from IP %s last known as %s with class %d in PM to %s with IP %s and class %d: %s|flood gedetecteerd van ip %s laatst bekende als %s met klasse %d in pm aan %s met ip %s en klasse %d: %s
 Private chat is currently disabled for you.|Privé chat is momenteel uitgeschakeld voor je
+Private chat is currently disabled for you because: %s|Prive chat is niet toegangkelijk voor je omdat: %s
 Main chat flood detected from your IP.|Mainchat flood gedetecteerd van uw ip .
 %d users with IP %s dropped due to flood.|%d gebruikers met IP %s verbinding verbroken tijdens flood.
 No error message specified.|Geen foutmelding aangegeven.
@@ -869,7 +871,9 @@ unknown nick|Onbekende nick
 Country code gag|Land code gag
 Add country code gag|Land code gag toevoegen
 Added country code gag: %s|Land code gag toegevoegd: %s
+Added country code gag %s with reason: %s|Toevoegen land code gag %s met rede : %s
 Modified country code gag: %s|Land code gag gewijzigd: %s
+Modified country code gag %s with reason: %s|Gemodificeerde land code gag %s met reden: %s
 Deleted country code gag: %s|Land code gag verwijderd: %s
 Country code gag not found: %s|Land code gag niet gevonden: %s
 Country code gag list|Land code gag lijst
@@ -1155,3 +1159,16 @@ Low search uptime of %d seconds from %s with IP %s and class %d as TTH: %s|Lage 
 User dropped: %s|Gebruiker gedropt: %s
 %d of %d|%d of %d
 Main chat responder list contains %d items, but none matched your pattern.|Main chat- responder lijst bevat %d items , maar voldoet niet aan je patroon .
+word|woord
+Top %d used words with filter: %s|Top gebruikte woorden met filter: %s
+Support hub|Support hub
+User manual|Handleiding
+range|Reeks
+There is an error in following forbidden chat nick pattern|Er is een fout onstaan omdat deze nick verboden tekens bevat
+Modified forbidden chat nick with ban time %s: %s|Gewijzigde verboden chat nick met ban tijd s %s: %s
+Added forbidden chat nick with ban time %s: %s|Toegevoegd verboden nick met ban tijd %s: %s
+Deleted forbidden chat nick: %s|Verwijder verboden nick: %s
+Couldn't delete forbidden chat nick because not found: %s|Kan de verboden nick niet verwijderen omdat deze niet is gevonden: %s
+Forbidden chat nick list|verboden nick lijst
+Forbidden chat nick list is empty.|Verboden nick lijst is leeg
+%s with IP %s and class %d allowed due to forbidden chat nick exception: %s|%s met IP %s en class %d Toegestaan wegens verboden chat nick uitzondering:

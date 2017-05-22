@@ -1,6 +1,6 @@
 # Language: cs_CZ
 # Charset: CP1250
-# Version: 2.9.2
+# Version: 2.9.3
 # Author: Uhlik
 # Email: pjanos.uk@gmail.com
 
@@ -644,6 +644,7 @@ IP gag list|IP gag seznam
 IP gag list is empty.|IP gag seznam je prazdny.
 Delete IP gag|Smaze IP gag
 Main chat is currently disabled for you.|Chat je pro tebe uzamcen.
+Main chat is currently disabled for you because: %s|Chat je pro tebe uzamcen z duvodu: %s
 Cleared temporary IP gag list.|Vycisten seznam IP gagu.
 Show custom script commands|Zobrazi upraveny script prikaz
 Custom script command list|Seznam upraveny script prikazu
@@ -653,6 +654,7 @@ Added %s to IP gag list, %d users in total.|Vlozena %s do IP gag seznamu, celkem
 Flood detected from IP %s last known as %s with class %d in MC: %s|Detekovan flood z IP %s naposledy pripojen jako %s s class %d na MC: %s
 Flood detected from IP %s last known as %s with class %d in PM to %s with IP %s and class %d: %s|Detekovan flood z IP %s naposledy pripojen jako %s s class %d na PM pro %s s IP %s a class %d: %s
 Private chat is currently disabled for you.|Soukromy chat je pro tebe zamcen
+Private chat is currently disabled for you because: %s|Soukromy chat je pro tebe zamcen z duvodu: %s
 Main chat flood detected from your IP.|Main chat flood detekovan z tve IP.
 %d users with IP %s dropped due to flood.|%d uzivatelu s IP %s odpojeno za flood.
 No error message specified.|Nebyla urcena zadna chybova zprava.
@@ -808,9 +810,9 @@ Add chat replacer exception|Vlozi vyjimku pro chat replacer
 Delete chat replacer exception|Smaze vyjimku pro chat replacer
 Chat replacer|Chat replacer
 You need to send another %d main chat messages in order to use hub registration.|Musis poslat aspon %d zprav na chat abys mel povolenou registraci.
-Please wait another %d seconds before using hub registration.|
+Please wait another %d seconds before using hub registration.|Prosim pockej jeste %s sekund pred pouzitim registrace na hubu.
 In order to use this feature you need to set %s to: %d|Pro pouziti teto funkce musis nastavit %s na: %d
-Please reconnect to gain %d seconds of uptime in order to use hub registration.|
+Please reconnect to gain %d seconds of uptime in order to use hub registration.|Odpoj se a znovu pripoj k hubu a po %d sekundach budes mit povolenou registraci.
 Dropping %s with IP %s and class %d due to protocol flood detection: %s|Odpojuji %s s IP %s a class %d za flood protokolem: %s
 Protocol flood detected from your client: %s|Bylo detekovano floodovani protokolem z tveho klienta: %s
 Automatic update check detected stable version of %s available, use following command to update: %s|Automaticky update check nalezl novou stabilni verzi %s, pro upgrade pouzij: %s
@@ -869,7 +871,9 @@ unknown nick|neznamy nick
 Country code gag|Country code gag
 Add country code gag|Vlozi country code gag
 Added country code gag: %s|Vlozen country code gag: %s
+Added country code gag %s with reason: %s|Vlozen country code gag %s s duvodem: %s
 Modified country code gag: %s|Upraven country code gag: %s
+Modified country code gag %s with reason: %s|Upraven country code gag %s s duvodem: %s
 Deleted country code gag: %s|Smazan country code gag: %s
 Country code gag not found: %s|Country code gag %s nenalezen
 Country code gag list|Country code gag seznam
@@ -1141,7 +1145,7 @@ Low chat uptime of %d seconds from %s with IP %s and class %d in PM to %s with I
 Low chat uptime of %d seconds from %s with IP %s and class %d in MC: %s|Kratky chat uptime %d sekund od %s s IP %s a class %d na MC pro %s s IP %s a class %d: %s
 Low chat uptime of %d seconds from %s with IP %s and class %d in command: %s|Kratky chat uptime %d sekund od %s s IP %s a class %d na prikaz: %s
 Low registration uptime from %s with IP %s and class %d: %s|Kratky regustracni uptime pro %s s IP %s a class %d: %s
-%d seconds|
+%d seconds|%d sekund
 Thank you, your report has been accepted.|Dekuji, tvuj report byl prijat.
 Low search uptime of %d seconds from %s with IP %s and class %d as any file: %s|Kratky hledaci uptime %d sekund pro %s s IP %s a class %d na MC pri hledani jako any file: %s
 Low search uptime of %d seconds from %s with IP %s and class %d as audio file: %s|Kratky hledaci uptime %d sekund pro %s s IP %s a class %d na MC pri hledani jako audio file: %s
@@ -1155,3 +1159,16 @@ Low search uptime of %d seconds from %s with IP %s and class %d as TTH: %s|Kratk
 User dropped: %s|Uzivatel dropnut: %s
 %d of %d|%d z %d
 Main chat responder list contains %d items, but none matched your pattern.|Main chat responder seznam obsahuje %d polozek, ale zadna se neshoduje s tvym pozadavkem.
+word|slovo
+Top %d used words with filter: %s|Top %d pouzitych slov s filtrem: %s
+Support hub|Support hub
+User manual|Uzivatelska prirucka
+range|rozsah
+There is an error in following forbidden chat nick pattern|
+Modified forbidden chat nick with ban time %s: %s|
+Added forbidden chat nick with ban time %s: %s|
+Deleted forbidden chat nick: %s|
+Couldn't delete forbidden chat nick because not found: %s|
+Forbidden chat nick list|
+Forbidden chat nick list is empty.|
+%s with IP %s and class %d allowed due to forbidden chat nick exception: %s|

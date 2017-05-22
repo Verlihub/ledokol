@@ -1,6 +1,6 @@
 # Language: fr_FR
 # Charset: CP1252
-# Version: 2.9.2
+# Version: 2.9.3
 # Author: @tlantide
 # Email: chatonhubfrance@gmail.com
 
@@ -644,6 +644,7 @@ IP gag list|Liste d'IP bloquer
 IP gag list is empty.|La liste d''IP bloquer est vide.
 Delete IP gag|Supprimer l'IP bloquer
 Main chat is currently disabled for you.|Le chat central est actuellement désactivé pour toi.
+Main chat is currently disabled for you because: %s|Le chat principal est actuellement désactivé pour vous car: %s
 Cleared temporary IP gag list.|Liste d'IP bloquer temporairement enlevée.
 Show custom script commands|Voir les commandes du script personnalisé
 Custom script command list|Liste de commande du script personnalisé
@@ -653,6 +654,7 @@ Added %s to IP gag list, %d users in total.|Ajout %s à la liste des IP bloquer, 
 Flood detected from IP %s last known as %s with class %d in MC: %s|Flood détecté provenant de l'IP %s dernièrement connu comme %s avec le profil %d en messagerie centrale: %s
 Flood detected from IP %s last known as %s with class %d in PM to %s with IP %s and class %d: %s|Flood détecté à partir de IP %s dernière connue sous le nom %s avec la classe %d dans PM %s avec IP %s et la classe %d: %s
 Private chat is currently disabled for you.|Le chat privé est actuellement désactivé pour toi.
+Private chat is currently disabled for you because: %s|Le message privé est actuellement désactivé pour vous car: %s
 Main chat flood detected from your IP.|Flood détectée sur le central à partir de votre adresse IP
 %d users with IP %s dropped due to flood.|%d utilisateurs avec l'IP %s virés pour cause de flood.
 No error message specified.|Pas de message d'erreur spécifié
@@ -869,7 +871,9 @@ unknown nick|Pseudo inconnu
 Country code gag|Code de pays bloquer
 Add country code gag|Ajouter un code de pays bloquer
 Added country code gag: %s|Code de pays bloquer ajouté: %s
+Added country code gag %s with reason: %s|Ajout du code du pays bloquer %s avec raison: %s
 Modified country code gag: %s|Code de pays bloquer modifié: %s
+Modified country code gag %s with reason: %s|Code du pays modifié bloquer %s avec la raison: %s
 Deleted country code gag: %s|Code de pays bloquer supprimé: %s
 Country code gag not found: %s|Code de pays bloquer introuvable: %s
 Country code gag list|Liste de code de pays bloquer
@@ -1155,3 +1159,16 @@ Low search uptime of %d seconds from %s with IP %s and class %d as TTH: %s|Reche
 User dropped: %s|Utilisateur déconnecté: %s
 %d of %d|%d de %d
 Main chat responder list contains %d items, but none matched your pattern.|Principale liste du chat repondeur contient %d des elements , mais aucun ne correspond a votre modele.
+word|mot
+Top %d used words with filter: %s|Top %d des mots utilisés avec le  filtre: %s
+Support hub|Support hub
+User manual|Manuel utilisateur
+range|range
+There is an error in following forbidden chat nick pattern|Il y a une erreur dans le salon de discussion avec le pseudo interdit
+Modified forbidden chat nick with ban time %s: %s|Modifiication Interdit de discuter avec Nick avec le temps d'interdiction %s: %s
+Added forbidden chat nick with ban time %s: %s|Ajouté le pseudo interdit avec le temps de ban %s: %s
+Deleted forbidden chat nick: %s|Supprimé se pseudonyme interdit: %s
+Couldn't delete forbidden chat nick because not found: %s|Impossible de supprimer se pseudonyme interdit car il es introuvable: %s
+Forbidden chat nick list|La liste des pseudonymes interdit
+Forbidden chat nick list is empty.|La liste des pseudonymes Interdit est vide .
+%s with IP %s and class %d allowed due to forbidden chat nick exception: %s|%s %s IP et avec le profil %d est autorisé et fait parti de l' exception des  pseudonyme interdit: %s

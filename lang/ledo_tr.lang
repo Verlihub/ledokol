@@ -1,7 +1,7 @@
 # Language: tr_TR
 # Charset: CP1254
-# Version: 2.9.2
-# Author: mauron
+# Version: 2.9.3
+# Author: Mauron
 # Email: mauron@vmail.me
 
 Current topic: %s|Güncel konu: %s
@@ -644,6 +644,7 @@ IP gag list|IP susturma listesi
 IP gag list is empty.|IP susturma listesi boþtur.
 Delete IP gag|IP susturmasýný sil
 Main chat is currently disabled for you.|Ana sohbet þu anda sizin için devre dýþýdýr.
+Main chat is currently disabled for you because: %s|Ana sohbet sizin için þimdilik devre dýþý býrakýlmýþtýr çünkü: %s
 Cleared temporary IP gag list.|Geçici IP susturma listesi temizlendi
 Show custom script commands|Özel betik komutlarýný göster
 Custom script command list|Özel betik komutu listesi
@@ -653,6 +654,7 @@ Added %s to IP gag list, %d users in total.|%s IP susturma listesine eklendi, to
 Flood detected from IP %s last known as %s with class %d in MC: %s|%s IP adresinden, ki son olarak %s olarak bilinen ve %d sýnýflý olan, ana sohbette aþýrý tekrar tespit edildi: %s
 Flood detected from IP %s last known as %s with class %d in PM to %s with IP %s and class %d: %s|%s IP adresinden, ki son olarak %s olarak bilinen ve %d sýnýfýnda olan, özel sohbette %s kullanýcýsýna, ki %s IP adresli ve %d sýnýflý, aþýrý tekrar tespit edildi: %s
 Private chat is currently disabled for you.|Özel sohbet þu anda sizin için devre dýþýdýr.
+Private chat is currently disabled for you because: %s|Özel sohbet þu anda sizin için devre dýþýdýr çünkü: %s
 Main chat flood detected from your IP.|IP adresinizden ana sohbette aþýrý tekrar tespit edilmiþtir.
 %d users with IP %s dropped due to flood.|%s IP adresinden %d kullanýcýnýn baðlantýsý aþýrý tekrar nedeniyle kesilmiþtir.
 No error message specified.|Hiçbir hata mesajý belirtilmemiþtir.
@@ -869,7 +871,9 @@ unknown nick|bilinmeyen rumuz
 Country code gag|Ülke kodu susturucu
 Add country code gag|Ülke kodu susturucu ekle
 Added country code gag: %s|Ülke kodu susturucu eklendi: %s
+Added country code gag %s with reason: %s|Ülke kodu susturucu %s, %s sebebiyle eklenmiþtir
 Modified country code gag: %s|Deðiþtirilen ülke kodu susturucu: %s
+Modified country code gag %s with reason: %s|Ülke kodu susturucu %s, %s sebebiyle deðiþtirilmiþtir
 Deleted country code gag: %s|Ülke kodu susturucusu silindi: %s
 Country code gag not found: %s|Ülke kodu susturucusu bulunamadý: %s
 Country code gag list|Ülke kodu susturucu listesi
@@ -1155,3 +1159,16 @@ Low search uptime of %d seconds from %s with IP %s and class %d as TTH: %s|TTH o
 User dropped: %s|Kullanýcýnýn baðlantýsý kesildi: %s
 %d of %d|%d ki toplam %d
 Main chat responder list contains %d items, but none matched your pattern.|Ana sohbet cevaplayýcý listesi %d unsur içermektedir ancak bunlarýn hiçbiri sizin þablonunuzla eþleþmemiþtir.
+word|kelime
+Top %d used words with filter: %s|En çok kullanýlan %d kelime, filtreyle: %s
+Support hub|Destek hub'ý
+User manual|Kullanýcý kýlavuzu
+range|alan
+There is an error in following forbidden chat nick pattern|Þu yasaklý sohbet rumuz örüntüsünde bir hata var
+Modified forbidden chat nick with ban time %s: %s|Yasaklý sohbet rumuzu yasaklama süresi deðiþtirildi %s: %s
+Added forbidden chat nick with ban time %s: %s|Yasaklý sohbet rumuzu yasaklama süresi ile ilave edildi %s: %s
+Deleted forbidden chat nick: %s|Yasaklý sohbet rumuzu silindi: %s
+Couldn't delete forbidden chat nick because not found: %s|Yasaklý sohbet rumuzu silinemedi çünkü bulunamadý: %s
+Forbidden chat nick list|Yasaklý sohbet rumuzu listesi
+Forbidden chat nick list is empty.|Yasaklý rumuz listesi boþtur.
+%s with IP %s and class %d allowed due to forbidden chat nick exception: %s|%s, ki %s IP adresli ve %d sýnýflý, yasaklý sohbet rumuzu istisnasý sebebiyle kabul edildi: %s

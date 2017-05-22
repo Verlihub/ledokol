@@ -1,6 +1,6 @@
 # Language: lt_LT
 # Charset: CP1257
-# Version: 2.9.2
+# Version: 2.9.3
 # Author: Trumpy
 # Email: mex@micro.lt
 
@@ -644,6 +644,7 @@ IP gag list|
 IP gag list is empty.|
 Delete IP gag|
 Main chat is currently disabled for you.|
+Main chat is currently disabled for you because: %s|
 Cleared temporary IP gag list.|
 Show custom script commands|
 Custom script command list|
@@ -653,6 +654,7 @@ Added %s to IP gag list, %d users in total.|
 Flood detected from IP %s last known as %s with class %d in MC: %s|
 Flood detected from IP %s last known as %s with class %d in PM to %s with IP %s and class %d: %s|
 Private chat is currently disabled for you.|
+Private chat is currently disabled for you because: %s|
 Main chat flood detected from your IP.|
 %d users with IP %s dropped due to flood.|
 No error message specified.|
@@ -869,7 +871,9 @@ unknown nick|
 Country code gag|Uþèiaupt pagal ðalies kodà
 Add country code gag|Pridet sali, kuriai norim uzkist burna
 Added country code gag: %s|Uþkiðta burna ðiai ðaliai: %s
+Added country code gag %s with reason: %s|
 Modified country code gag: %s|Pakeista ðalis, kuri negali ðnekët: %s
+Modified country code gag %s with reason: %s|
 Deleted country code gag: %s|Ðiai ðaliai vël leidþiama ðnekëti: %s
 Country code gag not found: %s|
 Country code gag list|
@@ -1155,3 +1159,16 @@ Low search uptime of %d seconds from %s with IP %s and class %d as TTH: %s|
 User dropped: %s|
 %d of %d|
 Main chat responder list contains %d items, but none matched your pattern.|
+word|
+Top %d used words with filter: %s|
+Support hub|
+User manual|
+range|
+There is an error in following forbidden chat nick pattern|
+Modified forbidden chat nick with ban time %s: %s|
+Added forbidden chat nick with ban time %s: %s|
+Deleted forbidden chat nick: %s|
+Couldn't delete forbidden chat nick because not found: %s|
+Forbidden chat nick list|
+Forbidden chat nick list is empty.|
+%s with IP %s and class %d allowed due to forbidden chat nick exception: %s|
