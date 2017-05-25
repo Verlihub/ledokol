@@ -1,3 +1,7 @@
+[ 2.9.4 :: 2017-##-## ]
+
+[ 47] Fixed: User logger command parameters when searched string is a number
+
 [ 2.9.3 :: 2017-05-22 ]
 
 [ 36] Fixed: Errors on configuration conversion from string to number and vice versa, report by Alexandr

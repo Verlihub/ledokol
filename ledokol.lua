@@ -62,8 +62,8 @@ Tzaca, JOE™
 -- global storage variables and tables >>
 ---------------------------------------------------------------------
 
-ver_ledo = "2.9.3" -- ledokol version
-bld_ledo = "46" -- build number
+ver_ledo = "2.9.4" -- ledokol version
+bld_ledo = "47" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -10074,17 +10074,27 @@ end
 ----- ---- --- -- -
 
 function showuserlog (nick, line)
+	local condtest = function (dat)
+		return (dat == "nick" or dat == "addr" or dat == "ip" or dat == "code" or dat == "cc" or dat == "desc" or dat == "tag" or dat == "conn" or dat == "mail" or dat == "email" or dat == "size" or dat == "share" or dat == "all")
+	end
+
 	local typ, str, lim = "nick", line, 100 -- static parameters
 
 	if line:match ("^%S+ .+ %d+$") then
 		typ, str, lim = line:match ("^(%S+) (.+) (%d+)$")
 	elseif line:match ("^[^ ]+ %d+$") then
 		str, lim = line:match ("^([^ ]+) (%d+)$")
+
+		if condtest (str) then
+			typ = str
+			str = _tostring (lim)
+			lim = 100 -- update it
+		end
 	elseif line:match ("^%S+ .+$") then
 		typ, str = line:match ("^(%S+) (.+)$")
 	end
 
-	if typ == "nick" or typ == "addr" or typ == "ip" or typ == "code" or typ == "cc" or typ == "desc" or typ == "tag" or typ == "conn" or typ == "mail" or typ == "email" or typ == "size" or typ == "share" or typ == "all" then
+	if condtest (typ) then
 		if typ == "addr" then
 			typ = "ip"
 		elseif typ == "code" then
