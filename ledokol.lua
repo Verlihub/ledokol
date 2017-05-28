@@ -63,7 +63,7 @@ Tzaca, JOE™
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.4" -- ledokol version
-bld_ledo = "47" -- build number
+bld_ledo = "48" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -86,6 +86,8 @@ table_sets = {
 	antikreason = "Spam detected: *",
 	antimessage = "Your message wasn't sent due to spam detection. Please contact the hub administration if you disagree with this decision.",
 	enablesearfilt = 0,
+	addsefifeed = 0,
+	sefifeednick = "#" .. string.char (160) .. "Search",
 	sefiblockdel = 1,
 	sefireason = "Forbidden search request detected: *",
 	searfiltmsg = "Your search request is forbidden and therefore discarded: *",
@@ -1399,6 +1401,11 @@ function Main (file)
 					end
 
 					if ver <= 294 then
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('addsefifeed', '" .. repsqlchars (table_sets.addsefifeed) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('sefifeednick', '" .. repsqlchars (table_sets.sefifeednick) .. "')")
+					end
+
+					if ver <= 295 then
 						-- todo: next version
 					end
 
@@ -1444,6 +1451,10 @@ function Main (file)
 		end
 
 		table_othsets.sendfrom = table_othsets.botnick
+	end
+
+	if table_sets.enablesearfilt == 1 and table_sets.addsefifeed == 1 then -- search filter feed
+		addhubrobot (table_sets.sefifeednick, "", 2, "", 0)
 	end
 
 	if table_sets.chatrunning == 1 then
@@ -1529,6 +1540,10 @@ function UnLoad ()
 
 	if table_sets.addledobot == 1 then
 		delhubrobot (table_sets.ledobotnick)
+	end
+
+	if table_sets.enablesearfilt == 1 and table_sets.addsefifeed == 1 then -- search filter feed
+		delhubrobot (table_sets.sefifeednick)
 	end
 
 	return 1
@@ -3336,6 +3351,10 @@ elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.ledostats .. "$") 
 
 			if table_sets.addledobot == 1 then
 				delhubrobot (table_sets.ledobotnick)
+			end
+
+			if table_sets.enablesearfilt == 1 and table_sets.addsefifeed == 1 then -- search filter feed
+				delhubrobot (table_sets.sefifeednick)
 			end
 
 			if table_sets.addspecialver == 1 then
@@ -6242,7 +6261,7 @@ function VH_OnParsedMsgPM (from, data, to)
 				addophistoryline (from, data, 3) -- log operator chat
 			end
 		else
-			opsnotify (table_sets.classnotibotpm, gettext ("%s with IP %s and class %d sent message to %s: %s"):format (from, ip .. tryipcc (ip, from), fcls, table_othsets.opchatnick, data))
+			opsnotify (table_sets.classnotibotpm, gettext ("%s with IP %s and class %d sent message to %s: %s"):format (from, ip .. tryipcc (ip, from), fcls, to, data))
 		end
 
 	----- ---- --- -- -
@@ -6273,10 +6292,10 @@ function VH_OnParsedMsgPM (from, data, to)
 					savecmdlog (from, fcls, data, true)
 				end
 			else
-				opsnotify (table_sets.classnotibotpm, gettext ("%s with IP %s and class %d sent message to %s: %s"):format (from, ip .. tryipcc (ip, from), fcls, table_othsets.botnick, data))
+				opsnotify (table_sets.classnotibotpm, gettext ("%s with IP %s and class %d sent message to %s: %s"):format (from, ip .. tryipcc (ip, from), fcls, to, data))
 			end
 		else
-			opsnotify (table_sets.classnotibotpm, gettext ("%s with IP %s and class %d sent message to %s: %s"):format (from, ip .. tryipcc (ip, from), fcls, table_othsets.botnick, data))
+			opsnotify (table_sets.classnotibotpm, gettext ("%s with IP %s and class %d sent message to %s: %s"):format (from, ip .. tryipcc (ip, from), fcls, to, data))
 		end
 
 	----- ---- --- -- -
@@ -6302,17 +6321,25 @@ function VH_OnParsedMsgPM (from, data, to)
 					VH_OnOperatorCommand (from, data)
 				end
 			else
-				opsnotify (table_sets.classnotibotpm, gettext ("%s with IP %s and class %d sent message to %s: %s"):format (from, ip .. tryipcc (ip, from), fcls, table_sets.ledobotnick, data))
-				VH:SendToUser ("$To: " .. from .. " From: " .. table_sets.ledobotnick .. " $<" .. table_sets.ledobotnick .. "> " .. gettext ("I'm probably away. State your business and I might answer later if you're lucky.") .. "|", from)
+				opsnotify (table_sets.classnotibotpm, gettext ("%s with IP %s and class %d sent message to %s: %s"):format (from, ip .. tryipcc (ip, from), fcls, to, data))
+				VH:SendToUser ("$To: " .. from .. " From: " .. to .. " $<" .. to .. "> " .. gettext ("I'm probably away. State your business and I might answer later if you're lucky.") .. "|", from)
 			end
+		end
+
+	----- ---- --- -- -
+
+	elseif to == table_sets.sefifeednick then -- search filter feed
+		if table_sets.enablesearfilt == 1 and table_sets.addsefifeed == 1 and fcls < 3 then
+			opsnotify (table_sets.classnotibotpm, gettext ("%s with IP %s and class %d sent message to %s: %s"):format (from, ip .. tryipcc (ip, from), fcls, to, data))
+			VH:SendToUser ("$To: " .. from .. " From: " .. to .. " $<" .. to .. "> " .. gettext ("I'm probably away. State your business and I might answer later if you're lucky.") .. "|", from)
 		end
 
 	----- ---- --- -- -
 
 	elseif table_othsets.lasttimenick and (to == table_othsets.lasttimenick) then -- time bot
 		if table_sets.timebotint > 0 then
-			opsnotify (table_sets.classnotibotpm, gettext ("%s with IP %s and class %d sent message to %s: %s"):format (from, ip .. tryipcc (ip, from), fcls, table_othsets.lasttimenick, data))
-			VH:SendToUser ("$To: " .. from .. " From: " .. table_othsets.lasttimenick .. " $<" .. table_othsets.lasttimenick .. "> " .. gettext ("I'm probably away. State your business and I might answer later if you're lucky.") .. "|", from)
+			opsnotify (table_sets.classnotibotpm, gettext ("%s with IP %s and class %d sent message to %s: %s"):format (from, ip .. tryipcc (ip, from), fcls, to, data))
+			VH:SendToUser ("$To: " .. from .. " From: " .. to .. " $<" .. to .. "> " .. gettext ("I'm probably away. State your business and I might answer later if you're lucky.") .. "|", from)
 		end
 
 	----- ---- --- -- -
@@ -16726,16 +16753,68 @@ end
 	elseif tvar == "enablesearfilt" then
 		if num then
 			if setto == 0 or setto == 1 then
-				if setto == 0 then -- clean up
-					table_sfbl = {}
-				end
-
 				ok = true
+
+				if table_sets [tvar] ~= setto then
+					if setto == 0 then -- clean up
+						table_sfbl = {}
+					end
+
+					if table_sets.addsefifeed == 1 then
+						if setto == 0 then
+							delhubrobot (table_sets.sefifeednick)
+						else
+							addhubrobot (table_sets.sefifeednick, "", 2, "", 0)
+						end
+					end
+				end
 			else
 				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0 " .. gettext ("or") .. " 1"))
 			end
 		else
 			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
+		end
+
+	----- ---- --- -- -
+
+	elseif tvar == "addsefifeed" then
+		if num then
+			if setto == 0 or setto == 1 then
+				ok = true
+
+				if table_sets [tvar] ~= setto and table_sets.enablesearfilt == 1 then
+					if setto == 0 then
+						delhubrobot (table_sets.sefifeednick)
+					else
+						addhubrobot (table_sets.sefifeednick, "", 2, "", 0)
+					end
+				end
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0 " .. gettext ("or") .. " 1"))
+			end
+		else
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
+		end
+
+	----- ---- --- -- -
+
+	elseif tvar == "sefifeednick" then
+		if # setto > 0 then
+			setto = repnickchars (setto)
+
+			if setto == table_sets [tvar] or getstatus (setto) == 1 then -- isbot (setto)
+				commandanswer (nick, gettext ("Specified nick is already in use."))
+				return
+			end
+
+			ok = true
+
+			if table_sets.enablesearfilt == 1 and table_sets.addsefifeed == 1 then
+				delhubrobot (table_sets [tvar])
+				addhubrobot (setto, "", 2, "", 0)
+			end
+		else
+			commandanswer (nick, gettext ("Configuration variable %s can't be empty."):format (tvar))
 		end
 
 	----- ---- --- -- -
@@ -17888,19 +17967,18 @@ else
 commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
 end
 
------ ---- --- -- -
+	----- ---- --- -- -
 
-elseif tvar == "classnotisefi" then
-if num then
-if (setto >= 0 and setto <= 5) or setto == 10 or setto == 11 then
-ok = true
-else
-commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0, 1, 2, 3, 4, 5, 10 " .. gettext ("or") .. " 11"))
-end
-
-else
-commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
-end
+	elseif tvar == "classnotisefi" then
+		if num then
+			if (setto >= 0 and setto <= 5) or setto == 10 or setto == 11 then
+				ok = true
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0, 1, 2, 3, 4, 5, 10 " .. gettext ("or") .. " 11"))
+			end
+		else
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
+		end
 
 	----- ---- --- -- -
 
@@ -20219,6 +20297,8 @@ function showledoconf (nick)
 	conf = conf .. "\r\n"
 
 	conf = conf .. "\r\n [::] enablesearfilt = " .. _tostring (table_sets.enablesearfilt)
+	conf = conf .. "\r\n [::] addsefifeed = " .. _tostring (table_sets.addsefifeed)
+	conf = conf .. "\r\n [::] sefifeednick = " .. _tostring (table_sets.sefifeednick)
 	conf = conf .. "\r\n [::] sefiblockdel = " .. _tostring (table_sets.sefiblockdel)
 	conf = conf .. "\r\n [::] sefireason = " .. _tostring (table_sets.sefireason)
 	conf = conf .. "\r\n [::] searfiltmsg = " .. _tostring (table_sets.searfiltmsg)
@@ -24099,7 +24179,7 @@ function sefiscan (nick, line, clas, addr)
 							note = "Search request exception from %s with IP %s and class %d as TTH: %s"
 						end
 
-						opsnotify (table_sets.classnotiex, gettext (note):format (nick, addr .. tryipcc (addr, nick), clas, str))
+						sefinotify (table_sets.classnotiex, gettext (note):format (nick, addr .. tryipcc (addr, nick), clas, str))
 						return false
 					end
 				end
@@ -24126,7 +24206,7 @@ function sefiscan (nick, line, clas, addr)
 					note = "Search request notification from %s with IP %s and class %d as TTH: %s"
 				end
 
-				opsnotify (table_sets.classnotisefi, gettext (note):format (nick, addr .. tryipcc (addr, nick), clas, str))
+				sefinotify (table_sets.classnotisefi, gettext (note):format (nick, addr .. tryipcc (addr, nick), clas, str))
 				return false
 			end
 
@@ -24155,10 +24235,10 @@ function sefiscan (nick, line, clas, addr)
 				note = "Bad search request from %s with IP %s and class %d as TTH: %s"
 			end
 
-			opsnotify (table_sets.classnotisefi, gettext (note):format (nick, addr .. tryipcc (addr, nick), clas, str))
+			sefinotify (table_sets.classnotisefi, gettext (note):format (nick, addr .. tryipcc (addr, nick), clas, str))
 
 			if item.act == 1 then -- drop
-				opsnotify (table_sets.classnotisefi, gettext ("User dropped due to bad search request: %s"):format (nick))
+				sefinotify (table_sets.classnotisefi, gettext ("User dropped due to bad search request: %s"):format (nick))
 				VH:Disconnect (nick)
 
 			elseif item.act == 2 then -- kick
@@ -24170,10 +24250,10 @@ function sefiscan (nick, line, clas, addr)
 				VH:KickUser (table_othsets.sendfrom, nick, why .. "     #_ban_" .. table_sets.thirdacttime)
 
 			elseif item.act == 4 then -- silent skip
-				opsnotify (table_sets.classnotisefi, gettext ("User didn't get any search results: %s"):format (nick))
+				sefinotify (table_sets.classnotisefi, gettext ("User didn't get any search results: %s"):format (nick))
 
 			elseif item.act == 6 then -- redirect
-				opsnotify (table_sets.classnotisefi, gettext ("User redirected due to bad search request: %s"):format (nick))
+				sefinotify (table_sets.classnotisefi, gettext ("User redirected due to bad search request: %s"):format (nick))
 				VH:SendToUser ("$ForceMove " .. table_sets.sixthactaddr .. "|", nick)
 				VH:Disconnect (nick)
 
@@ -24182,7 +24262,7 @@ function sefiscan (nick, line, clas, addr)
 				VH:KickUser (table_othsets.sendfrom, nick, why .. "     #_ban_" .. table_sets.seventhacttime)
 
 			elseif item.act == 8 or item.act == 9 then -- block list
-				opsnotify (table_sets.classnotisefi, gettext ("User added to search block list: %s"):format (nick))
+				sefinotify (table_sets.classnotisefi, gettext ("User added to search block list: %s"):format (nick))
 
 				table_sfbl [nick] = {
 					sil = (item.act == 8), -- silent
@@ -24253,6 +24333,20 @@ function commandanswer (to, data, pm) -- todo: replace nmdc characters here inst
 
 	else
 		VH:SendToUser ("<" .. table_othsets.sendfrom .. "> " .. data .. "|", to)
+	end
+end
+
+----- ---- --- -- -
+
+function sefinotify (micl, data) -- todo: replace nmdc characters here instead of each place that calls this function
+	if micl == 11 then
+		return
+	end
+
+	if table_sets.addsefifeed == 1 then
+		VH:SendPMToAll ("[" .. prezero (2, micl) .. "] " .. data, table_sets.sefifeednick, micl, 10)
+	else
+		opsnotify (micl, data)
 	end
 end
 
