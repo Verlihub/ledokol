@@ -63,7 +63,7 @@ Tzaca, JOE™
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.4" -- ledokol version
-bld_ledo = "48" -- build number
+bld_ledo = "49" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -2884,7 +2884,7 @@ elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.clog .. " %d+$") t
 
 	----- ---- --- -- -
 
-	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.gagccadd .. " .+ %d$") or data:match ("^" .. table_othsets.optrig .. table_cmnds.gagccadd .. " \".+\" \".+\" %d$") then
+	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.gagccadd .. " .+ %d$") or data:match ("^" .. table_othsets.optrig .. table_cmnds.gagccadd .. " \".+\" \".*\" %d$") then
 		if ucl >= table_sets.mincommandclass then
 			donotifycmd (nick, data, 0, ucl)
 			gagccadd (nick, data:sub (# table_cmnds.gagccadd + 3))
@@ -12540,8 +12540,8 @@ end
 function gagccadd (nick, line)
 	local lre, why, flag = "", "", 0
 
-	if line:match ("^\".+\" \".+\" %d$") then
-		lre, why, flag = line:match ("^\"(.+)\" \"(.+)\" (%d)$")
+	if line:match ("^\".+\" \".*\" %d$") then
+		lre, why, flag = line:match ("^\"(.+)\" \"(.*)\" (%d)$")
 	elseif line:match ("^\".+\" %d$") then
 		lre, flag = line:match ("^\"(.+)\" (%d)$")
 	else
