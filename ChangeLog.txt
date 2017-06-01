@@ -3,6 +3,7 @@
 [ 47] Fixed: User logger command parameters when searched string is a number
 [ 49] Fixed: Country code gag reason parameter could not be empty, report by KCAHDEP
 [ 48] Added: Separate feed for search filter notifications
+[ 50] Added: Antispam debug uses operator note to specify entry that caused detection when user is banned, request by KCAHDEP
 
 [ 2.9.3 :: 2017-05-22 ]
 

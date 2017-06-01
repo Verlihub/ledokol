@@ -63,7 +63,7 @@ Tzaca, JOE™
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.4" -- ledokol version
-bld_ledo = "49" -- build number
+bld_ledo = "50" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -24039,11 +24039,21 @@ function antiscan (nick, class, data, where, to, status)
 
 			elseif action == 2 then -- kick
 				local reason = table_sets.antikreason:gsub ("%*", reprexpchars (data))
-				VH:KickUser (table_othsets.sendfrom, nick, reason)
+
+				if table_sets.antispamdebug == 1 and minhubver (1, 0, 4, 1) then
+					VH:KickUser (table_othsets.sendfrom, nick, reason, gettext ("Entry used in detection: %s"):format (repnmdcoutchars (entry))) -- operator note
+				else
+					VH:KickUser (table_othsets.sendfrom, nick, reason)
+				end
 
 			elseif action == 3 then -- temporary ban, kick using thirdacttime
 				local reason = table_sets.antikreason:gsub ("%*", reprexpchars (data))
-				VH:KickUser (table_othsets.sendfrom, nick, reason .. "     #_ban_" .. table_sets.thirdacttime)
+
+				if table_sets.antispamdebug == 1 and minhubver (1, 0, 4, 1) then
+					VH:KickUser (table_othsets.sendfrom, nick, reason .. "     #_ban_" .. table_sets.seventhacttime, gettext ("Entry used in detection: %s"):format (repnmdcoutchars (entry))) -- operator note
+				else
+					VH:KickUser (table_othsets.sendfrom, nick, reason .. "     #_ban_" .. table_sets.seventhacttime)
+				end
 
 			elseif action == 4 then -- spam to self
 				opsnotify (table_sets.classnotianti, gettext ("User received own message: %s"):format (nick))
@@ -24055,7 +24065,12 @@ function antiscan (nick, class, data, where, to, status)
 
 			elseif action == 7 then -- permanent ban, kick using seventhacttime
 				local reason = table_sets.antikreason:gsub ("%*", reprexpchars (data))
-				VH:KickUser (table_othsets.sendfrom, nick, reason .. "     #_ban_" .. table_sets.seventhacttime)
+
+				if table_sets.antispamdebug == 1 and minhubver (1, 0, 4, 1) then
+					VH:KickUser (table_othsets.sendfrom, nick, reason .. "     #_ban_" .. table_sets.seventhacttime, gettext ("Entry used in detection: %s"):format (repnmdcoutchars (entry))) -- operator note
+				else
+					VH:KickUser (table_othsets.sendfrom, nick, reason .. "     #_ban_" .. table_sets.seventhacttime)
+				end
 
 			elseif action == 8 then -- gag ip
 				gagipadd (nil, ip .. " " .. _tostring (where))
