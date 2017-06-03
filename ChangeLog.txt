@@ -4,6 +4,7 @@
 [ 49] Fixed: Country code gag reason parameter could not be empty, report by KCAHDEP
 [ 48] Added: Separate feed for search filter notifications
 [ 50] Added: Antispam debug uses operator note to specify entry that caused detection when user is banned, request by KCAHDEP
+[ 51] Added: sefiblockmsg configuration to disable block list notification
 
 [ 2.9.3 :: 2017-05-22 ]
 

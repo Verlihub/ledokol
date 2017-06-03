@@ -63,7 +63,7 @@ Tzaca, JOE™
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.4" -- ledokol version
-bld_ledo = "50" -- build number
+bld_ledo = "51" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -88,6 +88,7 @@ table_sets = {
 	enablesearfilt = 0,
 	addsefifeed = 0,
 	sefifeednick = "#" .. string.char (160) .. "Search",
+	sefiblockmsg = 1,
 	sefiblockdel = 1,
 	sefireason = "Forbidden search request detected: *",
 	searfiltmsg = "Your search request is forbidden and therefore discarded: *",
@@ -1403,6 +1404,7 @@ function Main (file)
 					if ver <= 294 then
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('addsefifeed', '" .. repsqlchars (table_sets.addsefifeed) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('sefifeednick', '" .. repsqlchars (table_sets.sefifeednick) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('sefiblockmsg', '" .. repsqlchars (table_sets.sefiblockmsg) .. "')")
 					end
 
 					if ver <= 295 then
@@ -16819,6 +16821,19 @@ end
 
 	----- ---- --- -- -
 
+	elseif tvar == "sefiblockmsg" then
+		if num then
+			if setto == 0 or setto == 1 then
+				ok = true
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0 " .. gettext ("or") .. " 1"))
+			end
+		else
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
+		end
+
+	----- ---- --- -- -
+
 	elseif tvar == "sefiblockdel" then
 		if num then
 			if setto == 0 or setto == 1 then
@@ -20299,6 +20314,7 @@ function showledoconf (nick)
 	conf = conf .. "\r\n [::] enablesearfilt = " .. _tostring (table_sets.enablesearfilt)
 	conf = conf .. "\r\n [::] addsefifeed = " .. _tostring (table_sets.addsefifeed)
 	conf = conf .. "\r\n [::] sefifeednick = " .. _tostring (table_sets.sefifeednick)
+	conf = conf .. "\r\n [::] sefiblockmsg = " .. _tostring (table_sets.sefiblockmsg)
 	conf = conf .. "\r\n [::] sefiblockdel = " .. _tostring (table_sets.sefiblockdel)
 	conf = conf .. "\r\n [::] sefireason = " .. _tostring (table_sets.sefireason)
 	conf = conf .. "\r\n [::] searfiltmsg = " .. _tostring (table_sets.searfiltmsg)
@@ -24277,7 +24293,9 @@ function sefiscan (nick, line, clas, addr)
 				VH:KickUser (table_othsets.sendfrom, nick, why .. "     #_ban_" .. table_sets.seventhacttime)
 
 			elseif item.act == 8 or item.act == 9 then -- block list
-				sefinotify (table_sets.classnotisefi, gettext ("User added to search block list: %s"):format (nick))
+				if table_sets.sefiblockmsg == 1 then
+					sefinotify (table_sets.classnotisefi, gettext ("User added to search block list: %s"):format (nick))
+				end
 
 				table_sfbl [nick] = {
 					sil = (item.act == 8), -- silent
