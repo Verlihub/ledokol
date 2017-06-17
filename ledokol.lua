@@ -9758,7 +9758,7 @@ function whoislookup (nick, addr)
 		if data and # data > 0 then
 			data = data:gsub ("^%s+", "")
 			data = data:gsub ("%s+$", "")
-			commandanswer (nick, gettext ("%s result"):format ("WHOIS") .. ":\r\n\r\n" .. repnmdcoutchars (data) .. "\r\n")
+			commandanswer (nick, gettext ("%s result"):format ("WHOIS") .. ":\r\n\r\n" .. repnmdcoutchars (data) .. "\r\n") -- mysqlfromutf8 (data, "cp1252")
 		else
 			commandanswer (nick, gettext ("%s lookup didn't return anything."):format ("WHOIS"))
 		end
@@ -23005,6 +23005,32 @@ function getmysqlmd5 (data)
 	end
 
 	return data
+end
+
+----- ---- --- -- -
+
+function mysqltoutf8 (data, enc)
+	local _, res = VH:SQLQuery ("select convert(_" .. repsqlchars (enc) .. "'" .. repsqlchars (data) .. "' using utf8)")
+
+	if res and res > 0 then
+		_, res = VH:SQLFetch (0)
+		return res
+	end
+
+	return nil
+end
+
+----- ---- --- -- -
+
+function mysqlfromutf8 (data, enc)
+	local _, res = VH:SQLQuery ("select convert(_utf8'" .. repsqlchars (data) .. "' using " .. repsqlchars (enc) .. ")")
+
+	if res and res > 0 then
+		_, res = VH:SQLFetch (0)
+		return res
+	end
+
+	return nil
 end
 
 ----- ---- --- -- -
