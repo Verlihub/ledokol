@@ -63,7 +63,7 @@ Tzaca, JOE™
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.4" -- ledokol version
-bld_ledo = "51" -- build number
+bld_ledo = "52" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -621,6 +621,7 @@ table_cmnds = {
 	ipinfo = "ipinfo",
 	ulog = "ulog",
 	seen = "seen",
+	whois = "whois",
 	clog = "clog",
 	dropip = "dropip",
 	votekick = "votekick",
@@ -1405,6 +1406,8 @@ function Main (file)
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('addsefifeed', '" .. repsqlchars (table_sets.addsefifeed) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('sefifeednick', '" .. repsqlchars (table_sets.sefifeednick) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('sefiblockmsg', '" .. repsqlchars (table_sets.sefiblockmsg) .. "')")
+
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.ledocmd .. "` (`original`, `new`) values ('whois', '" .. repsqlchars (table_cmnds.whois) .. "')")
 					end
 
 					if ver <= 295 then
@@ -2831,6 +2834,18 @@ elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.clog .. " %d+$") t
 		if ucl >= table_sets.mincommandclass then
 			donotifycmd (nick, data, 0, ucl)
 			seenlookup (nick, data:sub (# table_cmnds.seen + 3))
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
+
+		return 0
+
+	----- ---- --- -- -
+
+	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.whois .. " [%w%.%-]+$") then
+		if ucl >= table_sets.mincommandclass then
+			donotifycmd (nick, data, 0, ucl)
+			whoislookup (nick, data:sub (# table_cmnds.whois + 3))
 		else
 			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
@@ -9727,6 +9742,33 @@ end
 
 ----- ---- --- -- -
 
+function whoislookup (nick, addr)
+	local res, err = os.execute ("whois \"" .. addr .. "\" > \"" .. table_othsets.cfgdir .. table_othsets.tmpfile .. "\" 2>&1")
+
+	if res then
+		local file = io.open (table_othsets.cfgdir .. table_othsets.tmpfile, "r")
+		local data = ""
+
+		if file then
+			data = file:read ("*all")
+			file:close ()
+			os.remove (table_othsets.cfgdir .. table_othsets.tmpfile) -- delete temporary file
+		end
+
+		if data and # data > 0 then
+			data = data:gsub ("^%s+", "")
+			data = data:gsub ("%s+$", "")
+			commandanswer (nick, gettext ("%s result"):format ("WHOIS") .. ":\r\n\r\n" .. repnmdcoutchars (data) .. "\r\n")
+		else
+			commandanswer (nick, gettext ("%s lookup didn't return anything."):format ("WHOIS"))
+		end
+	else
+		commandanswer (nick, gettext ("Failed to execute %s with error: %s"):format ("WHOIS", repnmdcoutchars (err or gettext ("No error message specified."))))
+	end
+end
+
+----- ---- --- -- -
+
 function dropip (nick, ip)
 	local num = dropallbyip (ip)
 
@@ -16245,6 +16287,7 @@ end
 		sopmenitm (usr, gettext ("User logger") .. "\\" .. gettext ("IP information"), table_cmnds.ipinfo .. " %[line:<" .. gettext ("ip") .. ">]")
 		sopmenitm (usr, gettext ("User logger") .. "\\" .. gettext ("Search in user log"), table_cmnds.ulog .. " %[line:<" .. gettext ("type") .. ">] %[line:<" .. gettext ("string") .. ">] %[line:<" .. gettext ("lines") .. ">]")
 		sopmenitm (usr, gettext ("User logger") .. "\\" .. gettext ("%s user lookup"):format (table_othsets.hublisturl), table_cmnds.seen .. " %[line:<" .. gettext ("type") .. ">] %[line:<" .. gettext ("text") .. ">]")
+		sopmenitm (usr, gettext ("User logger") .. "\\" .. gettext ("%s lookup"):format ("WHOIS"), table_cmnds.whois .. " %[line:<" .. gettext ("address") .. ">]")
 	end
 
 	-- todo: no pm
@@ -20039,7 +20082,8 @@ function sendophelp (nick, clas, pm)
 	help = help .. " " .. trig .. table_cmnds.userinfo .. " <" .. gettext ("nick") .. "> - " .. gettext ("User information") .. "\r\n"
 	help = help .. " " .. trig .. table_cmnds.ipinfo .. " <" .. gettext ("ip") .. "> - " .. gettext ("IP information") .. "\r\n"
 	help = help .. " " .. trig .. table_cmnds.ulog .. " [" .. gettext ("type") .. "=nick] <" .. gettext ("string") .. "> [" .. gettext ("lines") .. "=100] - " .. gettext ("Search in user log") .. "\r\n" -- static parameters
-	help = help .. " " .. trig .. table_cmnds.seen .. " <" .. gettext ("type") .. "> <" .. gettext ("text") .. "> - " .. gettext ("%s user lookup"):format (table_othsets.hublisturl) .. "\r\n\r\n"
+	help = help .. " " .. trig .. table_cmnds.seen .. " <" .. gettext ("type") .. "> <" .. gettext ("text") .. "> - " .. gettext ("%s user lookup"):format (table_othsets.hublisturl) .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.whois .. " <" .. gettext ("address") .. "> - " .. gettext ("%s lookup"):format ("WHOIS") .. "\r\n\r\n"
 
 	-- vote kick
 	help = help .. " " .. trig .. table_cmnds.votekickdel .. " <" .. gettext ("nick") .. "> - " .. gettext ("Clear kick votes for user") .. "\r\n"

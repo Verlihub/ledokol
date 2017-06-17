@@ -1,10 +1,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ledokol\n"
-"Project-Version: 2.9.3\n"
+"Project-Version: 2.9.4\n"
 "Report-Msgid-Bugs-To: RoLex <webmaster@feardc.net>\n"
-"POT-Creation-Date: 2017-04-19 11:05+0200\n"
-"PO-Revision-Date: 2017-04-19 11:05+0200\n"
+"POT-Creation-Date: 2017-06-17 11:05+0200\n"
+"PO-Revision-Date: 2017-06-17 11:05+0200\n"
 "Last-Translator: RoLex <webmaster@feardc.net>\n"
 "Language-Team: RoLex <webmaster@feardc.net>\n"
 "Language: en_GB\n"
@@ -3010,12 +3010,6 @@ msgstr ""
 msgid "Failed to send information to %s: %s"
 msgstr ""
 
-msgid "Error on executing %s: %s"
-msgstr ""
-
-msgid "Error on connecting."
-msgstr ""
-
 msgid "Loaded none with totally %d items: %s"
 msgstr ""
 
@@ -3515,4 +3509,13 @@ msgid "Forbidden chat nick list is empty."
 msgstr ""
 
 msgid "%s with IP %s and class %d allowed due to forbidden chat nick exception: %s"
+msgstr ""
+
+msgid "%s lookup"
+msgstr ""
+
+msgid "%s lookup didn't return anything."
+msgstr ""
+
+msgid "%s result"
 msgstr ""

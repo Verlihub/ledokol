@@ -1003,8 +1003,6 @@ Loaded %d of %d with totally %d items: %s|
 Infected user information sent to %s: %s|
 Failed to load information from %s: %s|
 Failed to send information to %s: %s|
-Error on executing %s: %s|
-Error on connecting.|
 Loaded none with totally %d items: %s|
 Infected user found with IP %s and share %s: %s|
 Server didn't reply with expected status code.|
@@ -1172,3 +1170,6 @@ Couldn't delete forbidden chat nick because not found: %s|
 Forbidden chat nick list|
 Forbidden chat nick list is empty.|
 %s with IP %s and class %d allowed due to forbidden chat nick exception: %s|
+%s lookup|
+%s lookup didn't return anything.|
+%s result|
