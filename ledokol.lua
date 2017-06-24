@@ -63,7 +63,7 @@ Tzaca, JOE™
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.4" -- ledokol version
-bld_ledo = "52" -- build number
+bld_ledo = "53" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -14244,7 +14244,8 @@ function altcleanuptable (nick, line, ucls)
 
 		if pcls == 10 or pcls == 5 or pcls == 4 or pcls == 3 or pcls == 2 or pcls == 1 or pcls == 0 or pcls == -1 then
 			if days ~= "*" then
-				secs = os.difftime (os.time (), (tonumber (days) * 24 * 3600))
+				days = tonumber (days)
+				secs = os.difftime (os.time (), (days * 24 * 3600))
 			end
 
 			commandanswer (nick, gettext ("This operation might take very long time depending on how much is going to be removed, please be patient."))

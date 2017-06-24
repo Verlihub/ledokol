@@ -6,6 +6,7 @@
 [ 50] Added: Antispam debug uses operator note to specify entry that caused detection when user is banned, request by KCAHDEP
 [ 51] Added: sefiblockmsg configuration to disable block list notification
 [ 52] Added: WHOIS lookup using system command
+[ 53] Fixed: Invalid comparison of number of days parameter in registered users list cleanup command
 
 [ 2.9.3 :: 2017-05-22 ]
 
