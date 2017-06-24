@@ -63,7 +63,7 @@ Tzaca, JOE™
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.4" -- ledokol version
-bld_ledo = "53" -- build number
+bld_ledo = "54" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -3684,13 +3684,13 @@ return 0
 
 	----- ---- --- -- -
 
-	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.histclean .. "$") then
+	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.histclean .. "$") or data:match ("^" .. table_othsets.optrig .. table_cmnds.histclean .. " %a+$") then
 		if ucl >= table_sets.mincommandclass then
 			if table_sets.classnotiledoact == 11 then
 				donotifycmd (nick, data, 0, ucl)
 			end
 
-			cleanhistory (nick, 0, false, ucl)
+			cleanhistory (nick, data:sub (# table_cmnds.histclean + 3), 0, false, ucl)
 		else
 			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
@@ -10850,42 +10850,58 @@ end
 
 ----- ---- --- -- -
 
-function cleanhistory (nick, limit, auto, class)
-	local rows = counttable (tbl_sql.mchist)
-
-	if rows > 0 then
-		if limit == 0 then
-			VH:SQLQuery ("truncate table `" .. tbl_sql.mchist .. "`")
-		elseif rows > limit then
-			rows = rows - limit
-			VH:SQLQuery ("delete from `" .. tbl_sql.mchist .. "` order by `date` asc limit " .. _tostring (rows))
-		end
-
-		if limit == 0 or rows > limit then
-			commandanswer (nick, gettext ("Deleted %d main chat history messages."):format (rows))
-			opsnotify (table_sets.classnotiledoact, gettext ("%s with class %d deleted %d main chat history messages."):format (nick, class, rows))
-		end
-	elseif not auto then
-		commandanswer (nick, gettext ("There are no main chat history messages to remove."))
+function cleanhistory (nick, sype, limit, auto, class)
+	if sype == "" then
+		sype = "all"
 	end
 
-	rows = counttable (tbl_sql.ophist)
+	if sype == "all" or sype == "mc" then -- main chat
+		local rows = counttable (tbl_sql.mchist)
 
-	if rows > 0 then
-		if limit == 0 then
-			VH:SQLQuery ("truncate table `" .. tbl_sql.ophist .. "`")
-		elseif rows > limit then
-			rows = rows - limit
-			VH:SQLQuery ("delete from `" .. tbl_sql.ophist .. "` order by `date` asc limit " .. _tostring (rows))
+		if rows > 0 then
+			if limit == 0 then
+				VH:SQLQuery ("truncate table `" .. tbl_sql.mchist .. "`")
+			elseif rows > limit then
+				rows = rows - limit
+				VH:SQLQuery ("delete from `" .. tbl_sql.mchist .. "` order by `date` asc limit " .. _tostring (rows))
+			end
+
+			if limit == 0 or rows > limit then
+				commandanswer (nick, gettext ("Deleted %d main chat history messages."):format (rows))
+				opsnotify (table_sets.classnotiledoact, gettext ("%s with class %d deleted %d main chat history messages."):format (nick, class, rows))
+			end
+		elseif not auto then
+			commandanswer (nick, gettext ("There are no main chat history messages to remove."))
 		end
 
-		if limit == 0 or rows > limit then
-			commandanswer (nick, gettext ("Deleted %d operator chat history messages."):format (rows))
-			opsnotify (table_sets.classnotiledoact, gettext ("%s with class %d deleted %d operator chat history messages."):format (nick, class, rows))
+		if sype == "mc" then
+			return
 		end
-	elseif not auto then
-		commandanswer (nick, gettext ("There are no operator chat history messages to remove."))
 	end
+
+	if sype == "all" or sype == "op" then -- operator chat
+		local rows = counttable (tbl_sql.ophist)
+
+		if rows > 0 then
+			if limit == 0 then
+				VH:SQLQuery ("truncate table `" .. tbl_sql.ophist .. "`")
+			elseif rows > limit then
+				rows = rows - limit
+				VH:SQLQuery ("delete from `" .. tbl_sql.ophist .. "` order by `date` asc limit " .. _tostring (rows))
+			end
+
+			if limit == 0 or rows > limit then
+				commandanswer (nick, gettext ("Deleted %d operator chat history messages."):format (rows))
+				opsnotify (table_sets.classnotiledoact, gettext ("%s with class %d deleted %d operator chat history messages."):format (nick, class, rows))
+			end
+		elseif not auto then
+			commandanswer (nick, gettext ("There are no operator chat history messages to remove."))
+		end
+
+		return -- no condition
+	end
+
+	commandanswer (nick, gettext ("Known types are: %s"):format ("mc, op " .. gettext ("and") .. " all"))
 end
 
 ----- ---- --- -- -
@@ -16171,7 +16187,7 @@ end
 		end
 
 		sopmenitm (usr, gettext ("Chat history") .. "\\" .. gettext ("Delete history messages by text"), table_cmnds.histdel .. " %[line:<" .. gettext ("text") .. ">]")
-		sopmenitm (usr, gettext ("Chat history") .. "\\" .. gettext ("Delete all history messages"), table_cmnds.histclean)
+		sopmenitm (usr, gettext ("Chat history") .. "\\" .. gettext ("Delete all history messages"), table_cmnds.histclean .. " %[line:<" .. gettext ("type") .. ">]")
 	end
 
 -- commands
@@ -19497,7 +19513,7 @@ end
 		if num then
 			if setto >= 0 and setto <= 10000 then
 				if setto ~= table_sets [tvar] then -- clean up
-					cleanhistory (nick, setto, true, ucls)
+					cleanhistory (nick, "", setto, true, ucls)
 				end
 
 				ok = true
@@ -20035,7 +20051,7 @@ function sendophelp (nick, clas, pm)
 	-- history
 	help = help .. " " .. trig .. table_cmnds.ophistory .. " [" .. gettext ("lines") .. "=" .. _tostring (table_sets.histdeflines) .. "] - " .. gettext ("Operator chat history") .. "\r\n"
 	help = help .. " " .. trig .. table_cmnds.histdel .. " <" .. gettext ("text") .. "> - " .. gettext ("Delete history messages by text") .. "\r\n"
-	help = help .. " " .. trig .. table_cmnds.histclean .. " - " .. gettext ("Delete all history messages") .. "\r\n\r\n"
+	help = help .. " " .. trig .. table_cmnds.histclean .. " [" .. gettext ("type") .. "=all] - " .. gettext ("Delete all history messages") .. "\r\n\r\n"
 
 	-- commands
 	help = help .. " " .. trig .. table_cmnds.cmndset .. " <" .. gettext ("command") .. "> <" .. gettext ("command") .. "> - " .. gettext ("Customize script command") .. "\r\n"
