@@ -63,7 +63,7 @@ Tzaca, JOE™
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.4" -- ledokol version
-bld_ledo = "54" -- build number
+bld_ledo = "55" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -1663,7 +1663,7 @@ function VH_OnOperatorCommand (nick, data)
 
 	----- ---- --- -- -
 
-	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.acreadd .. " [%a][%a%d] [^ ]+$") then
+	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.acreadd .. " [%a%-][%a%d%-] [^ ]+$") then
 		if ucl >= table_sets.mincommandclass then
 			donotifycmd (nick, data, 0, ucl)
 			addacre (nick, data:sub (# table_cmnds.acreadd + 3))
@@ -7097,7 +7097,7 @@ end
 ----- ---- --- -- -
 
 function addacre (nick, data)
-	local _, _, cc, us = data:find ("^([%a][%a%d]) ([^ ]+)$")
+	local cc, us = data:match ("^([%a%-][%a%d%-]) ([^ ]+)$")
 	cc = cc:upper ()
 	local ccrep = repsqlchars (cc)
 	local usrep = repsqlchars (us)
@@ -7109,7 +7109,13 @@ function addacre (nick, data)
 	else
 		VH:SQLQuery ("insert into `" .. tbl_sql.acre .. "` (`cc`, `nick`) values ('" .. ccrep .. "', '" .. usrep .. "')")
 		local room = table_sets.ccroomstyle:gsub ("<cc>", reprexpchars (cc)) -- code
-		room = room:gsub ("<cn>", reprexpchars (cc_names [cc] or gettext ("Unknown country"))) -- name
+
+		if cc == "--" then
+			room = room:gsub ("<cn>", reprexpchars (gettext ("No entrance"))) -- name
+		else
+			room = room:gsub ("<cn>", reprexpchars (cc_names [cc] or gettext ("Unknown country"))) -- name
+		end
+
 		room = room:gsub (string.char (32), string.char (160)) -- space
 		commandanswer (nick, gettext ("Added automatic country chatroom entrance for %s: %s"):format (room, us))
 	end
@@ -7132,7 +7138,7 @@ end
 ----- ---- --- -- -
 
 function listacre (nick)
-	local _, rows = VH:SQLQuery ("select * from `" .. tbl_sql.acre .. "` order by `id` asc")
+	local _, rows = VH:SQLQuery ("select * from `" .. tbl_sql.acre .. "` order by `nick` asc, `cc` asc")
 
 	if rows > 0 then
 		local list = ""
@@ -7141,7 +7147,13 @@ function listacre (nick)
 			local _, id, cc, us = VH:SQLFetch (x)
 			cc = cc:upper ()
 			local room = table_sets.ccroomstyle:gsub ("<cc>", reprexpchars (cc)) -- code
-			room = room:gsub ("<cn>", reprexpchars (cc_names [cc] or gettext ("Unknown country"))) -- name
+
+			if cc == "--" then
+				room = room:gsub ("<cn>", reprexpchars (gettext ("No entrance"))) -- name
+			else
+				room = room:gsub ("<cn>", reprexpchars (cc_names [cc] or gettext ("Unknown country"))) -- name
+			end
+
 			room = room:gsub (string.char (32), string.char (160)) -- space
 			list = list .. " [ I: " .. _tostring (id) .. " ] [ C: " .. room .. " ] [ N: " .. us .. " ]\r\n"
 		end
@@ -7227,6 +7239,12 @@ function addccroommember (nick, class)
 		return
 	end
 
+	local _, rows = VH:SQLQuery ("select `id` from `" .. tbl_sql.acre .. "` where `nick` = '" .. repsqlchars (nick) .. "' and `cc` = '" .. repsqlchars ("--") .. "'")
+
+	if rows > 0 then
+		return
+	end
+
 	local room = table_sets.ccroomstyle:gsub ("<cc>", reprexpchars (cc)) -- create room nick
 	room = room:gsub ("<cn>", reprexpchars (cc_names [cc] or gettext ("Unknown country")))
 	room = room:gsub (string.char (32), string.char (160)) -- space to non-breaking space
@@ -7275,11 +7293,16 @@ function addccroomacre (nick, class)
 		return
 	end
 
-	local _, rows = VH:SQLQuery ("select `cc` from `" .. tbl_sql.acre .. "` where `nick` = '" .. repsqlchars (nick) .. "'")
+	local _, rows = VH:SQLQuery ("select `cc` from `" .. tbl_sql.acre .. "` where `nick` = '" .. repsqlchars (nick) .. "' order by `cc` asc")
 
 	if rows > 0 then
-		for x = 0, rows - 1 do
-			local _, cc = VH:SQLFetch (x)
+		for pos = 0, rows - 1 do
+			local _, cc = VH:SQLFetch (pos)
+
+			if pos == 0 and cc == "--" then -- is selected first
+				return
+			end
+
 			cc = cc:upper ()
 			local room = table_sets.ccroomstyle:gsub ("<cc>", reprexpchars (cc)) -- code
 			room = room:gsub ("<cn>", reprexpchars (cc_names [cc] or gettext ("Unknown country"))) -- name

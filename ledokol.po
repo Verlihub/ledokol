@@ -3519,3 +3519,6 @@ msgstr ""
 
 msgid "%s result"
 msgstr ""
+
+msgid "No entrance"
+msgstr ""
