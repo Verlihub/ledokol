@@ -9,6 +9,7 @@
 [ 53] Fixed: Invalid comparison of number of days parameter in registered users list cleanup command
 [ 54] Added: History cleanup type parameter, request by Mank
 [ 55] Added: Disability of automatic country chatroom entrance with code --, request by Pasha
+[ 56] Added: GeoIP ASN information to ipinfo command
 
 [ 2.9.3 :: 2017-05-22 ]
 
