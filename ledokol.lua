@@ -9905,9 +9905,9 @@ else -- user
 		info = info .. " " .. gettext ("Nick: %s"):format (user) .. "\r\n"
 	end
 
-		if table_sets.showuseruptime == 1 and table_usup [user] then -- uptime
-			info = info .. " " .. gettext ("Uptime: %s"):format (formatuptime (table_usup [user], false)) .. "\r\n"
-		end
+	if table_sets.showuseruptime == 1 and table_usup [user] then -- uptime
+		info = info .. " " .. gettext ("Uptime: %s"):format (formatuptime (table_usup [user], false)) .. "\r\n"
+	end
 
 	info = info .. " " .. gettext ("Class: %d"):format (class) .. "\r\n" -- class
 
@@ -9921,62 +9921,70 @@ else -- user
 		local on, geoip = VH:GetUserGeoIP (user)
 
 		if on and geoip and geoip ["host"] then
-			if geoip ["range_low"] and geoip ["range_high"] then
-				info = info .. " " .. gettext ("IP range: %s - %s"):format (geoip ["range_low"], geoip ["range_high"]) .. "\r\n" -- range
+			if geoip ["range_low"] and geoip ["range_high"] then -- range
+				info = info .. " " .. gettext ("IP range: %s - %s"):format (repnmdcoutchars (geoip ["range_low"]), repnmdcoutchars (geoip ["range_high"])) .. "\r\n"
 			end
 
-			if geoip ["country_code"] then
+			if table_refu.GetIPASN then -- asn
+				local ok, asn = VH:GetIPASN (ip)
+
+				if ok and asn and asn ~= "" then
+					info = info .. " " .. gettext ("ASN: %s"):format (repnmdcoutchars (asn)) .. "\r\n"
+				end
+			end
+
+			if geoip ["country_code"] then -- country code and country
 				local extra = ""
 
 				if geoip ["country"] then
-					extra = "=" .. geoip ["country"]
+					extra = "=" .. repnmdcoutchars (geoip ["country"])
 				end
 
-				info = info .. " " .. gettext ("Country: %s"):format (geoip ["country_code"] .. extra) .. "\r\n" -- country code and country
+				info = info .. " " .. gettext ("Country: %s"):format (repnmdcoutchars (geoip ["country_code"]) .. extra) .. "\r\n"
 			end
 
-			if geoip ["city"] then
-				info = info .. " " .. gettext ("City: %s"):format (geoip ["city"]) .. "\r\n" -- city
+			if geoip ["city"] then -- city
+				info = info .. " " .. gettext ("City: %s"):format (repnmdcoutchars (geoip ["city"])) .. "\r\n"
 			end
 
-			if geoip ["region_code"] then
+			if geoip ["region_code"] then -- region code and region
 				local extra = ""
 
 				if geoip ["region"] then
-					extra = "=" .. geoip ["region"]
+					extra = "=" .. repnmdcoutchars (geoip ["region"])
 				end
 
-				info = info .. " " .. gettext ("Region: %s"):format (geoip ["region_code"] .. extra) .. "\r\n" -- region code and region
+				info = info .. " " .. gettext ("Region: %s"):format (repnmdcoutchars (geoip ["region_code"]) .. extra) .. "\r\n"
 			end
 
-			if geoip ["continent_code"] then
+			if geoip ["continent_code"] then -- continent code and continent
 				local extra = ""
 
 				if geoip ["continent"] then
-					extra = "=" .. geoip ["continent"]
+					extra = "=" .. repnmdcoutchars (geoip ["continent"])
 				end
 
-				info = info .. " " .. gettext ("Continent: %s"):format (geoip ["continent_code"] .. extra) .. "\r\n" -- continent code and continent
+				info = info .. " " .. gettext ("Continent: %s"):format (repnmdcoutchars (geoip ["continent_code"]) .. extra) .. "\r\n"
 			end
 
-			if geoip ["time_zone"] then
-				info = info .. " " .. gettext ("Time zone: %s"):format (geoip ["time_zone"]) .. "\r\n" -- time zone
+			if geoip ["time_zone"] then -- time zone
+				info = info .. " " .. gettext ("Time zone: %s"):format (repnmdcoutchars (geoip ["time_zone"])) .. "\r\n"
 			end
 
-			if geoip ["latitude"] and geoip ["longitude"] then
-				info = info .. " " .. gettext ("Coordinates: %.4f %.4f"):format (geoip ["latitude"], geoip ["longitude"]) .. "\r\n" -- latitude and longitude
+			if geoip ["latitude"] and geoip ["longitude"] then -- latitude and longitude
+				info = info .. " " .. gettext ("Coordinates: %.4f %.4f"):format (geoip ["latitude"], geoip ["longitude"]) .. "\r\n"
 			end
 
-			if geoip ["postal_code"] then
-				info = info .. " " .. gettext ("Postal code: %s"):format (geoip ["postal_code"]) .. "\r\n" -- postal code
+			if geoip ["postal_code"] then -- postal code
+				info = info .. " " .. gettext ("Postal code: %s"):format (repnmdcoutchars (geoip ["postal_code"])) .. "\r\n"
 			end
 
-			if geoip ["metro_code"] and geoip ["metro_code"] > 0 then
-				info = info .. " " .. gettext ("Metro code: %d"):format (geoip ["metro_code"]) .. "\r\n" -- metro code
+			if geoip ["metro_code"] and geoip ["metro_code"] > 0 then -- metro code
+				info = info .. " " .. gettext ("Metro code: %d"):format (geoip ["metro_code"]) .. "\r\n"
 			end
 
-			if geoip ["area_code"] and geoip ["area_code"] > 0 then
-				info = info .. " " .. gettext ("Area code: %d"):format (geoip ["area_code"]) .. "\r\n" -- area code
+			if geoip ["area_code"] and geoip ["area_code"] > 0 then -- area code
+				info = info .. " " .. gettext ("Area code: %d"):format (geoip ["area_code"]) .. "\r\n"
 			end
 		end
 	end
