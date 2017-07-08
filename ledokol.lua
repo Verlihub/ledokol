@@ -9929,6 +9929,10 @@ else -- user
 				local ok, asn = VH:GetIPASN (ip)
 
 				if ok and asn and asn ~= "" then
+					if asn:match ("^AS%d+") then
+						asn = "https://ipinfo.io/" .. asn
+					end
+
 					info = info .. " " .. gettext ("ASN: %s"):format (repnmdcoutchars (asn)) .. "\r\n"
 				end
 			end
@@ -10092,6 +10096,10 @@ function showipinfo (nick, ip)
 				local ok, asn = VH:GetIPASN (ip)
 
 				if ok and asn and asn ~= "" then
+					if asn:match ("^AS%d+") then
+						asn = "https://ipinfo.io/" .. asn
+					end
+
 					info = info .. " " .. gettext ("ASN: %s"):format (repnmdcoutchars (asn)) .. "\r\n"
 				end
 			end
