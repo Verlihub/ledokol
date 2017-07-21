@@ -63,7 +63,7 @@ Tzaca, JOE™
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.4" -- ledokol version
-bld_ledo = "56" -- build number
+bld_ledo = "57" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -310,6 +310,7 @@ table_sets = {
 	instusermenu = 0,
 	instrcmenu = 0,
 	usermenuname = ".:: Ledokol menu",
+	autosendhelp = 1,
 	tolowcharcase = 0,
 	translitmode = 0,
 	langfileprefix = ""
@@ -1407,6 +1408,7 @@ function Main (file)
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('addsefifeed', '" .. repsqlchars (table_sets.addsefifeed) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('sefifeednick', '" .. repsqlchars (table_sets.sefifeednick) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('sefiblockmsg', '" .. repsqlchars (table_sets.sefiblockmsg) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('autosendhelp', '" .. repsqlchars (table_sets.autosendhelp) .. "')")
 
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.ledocmd .. "` (`original`, `new`) values ('whois', '" .. repsqlchars (table_cmnds.whois) .. "')")
 					end
@@ -4748,13 +4750,14 @@ function VH_OnHubCommand (nick, data, op, pm)
 	end
 
 	if data:match ("^.help$") or data:match ("^.help .*$") then -- send ledokol help aswell, dont return
-		local clas = getclass (nick)
+		if table_sets.autosendhelp == 1 then
+			local clas = getclass (nick)
 
-		if clas >= table_sets.mincommandclass then
-			sendophelp (nick, clas, pm)
-
-		elseif clas >= table_sets.minusrcommandclass then
-			senduserhelp (nick, pm)
+			if clas >= table_sets.mincommandclass then
+				sendophelp (nick, clas, pm)
+			elseif clas >= table_sets.minusrcommandclass then
+				senduserhelp (nick, pm)
+			end
 		end
 	end
 
@@ -16860,6 +16863,19 @@ end
 
 	----- ---- --- -- -
 
+	elseif tvar == "autosendhelp" then
+		if num then
+			if setto == 0 or setto == 1 then
+				ok = true
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0 " .. gettext ("or") .. " 1"))
+			end
+		else
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
+		end
+
+	----- ---- --- -- -
+
 	elseif tvar == "enablesearfilt" then
 		if num then
 			if setto == 0 or setto == 1 then
@@ -20699,6 +20715,7 @@ function showledoconf (nick)
 	conf = conf .. "\r\n [::] instusermenu = " .. _tostring (table_sets.instusermenu)
 	conf = conf .. "\r\n [::] instrcmenu = " .. _tostring (table_sets.instrcmenu)
 	conf = conf .. "\r\n [::] usermenuname = " .. _tostring (table_sets.usermenuname)
+	conf = conf .. "\r\n [::] autosendhelp = " .. _tostring (table_sets.autosendhelp)
 	conf = conf .. "\r\n [::] enablecmdlog = " .. _tostring (table_sets.enablecmdlog)
 	conf = conf .. "\r\n"
 
