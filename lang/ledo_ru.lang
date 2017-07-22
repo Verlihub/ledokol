@@ -20,7 +20,7 @@ Deleted %d operator chat history messages.|Удалено %d сообщений из истории чата 
 There are no operator chat history messages to remove.|Нет сообщений для удаления из истории чата операторов.
 %s with class %d deleted %d main chat history messages.|Пользователь %s %d-го класса удалил %d записей из истории общего чата.
 Unable to connect to target server. Please try again later.|Невозможно подключится к серверу. Попробуйте повторить попытку позже.
-Last %d main chat messages|Последние %d сообщений из истории общего  чата
+Last %d main chat messages|Последние %d сообщений из истории общего чата
 Main chat history is empty.|Нет ни одного сообщения в истории общего чата.
 %s is now known as: %s|%s теперь известен как: %s
 Last %d operator chat messages|Последние %d сообщений из чата операторов
@@ -683,7 +683,7 @@ Clear main chat|Очистить главный чат
 Chat cleanup performed by %s|Зачистку чата проводил %s
 Search in registered users list|Поиск в таблице регистраций
 Registered users list statistics|Статистика пользователей в таблице регистрации
-Registered users list results for %s|Список зарегистрированных пользователей для  %s
+Registered users list results for %s|Список зарегистрированных пользователей для %s
 Class %d: %d|Класс %d: %d
 Registered users list is empty.|Список зарегистрированных пользователей пуст.
 This feature requires following binary installed on your system: %s|Данная функция требует следующий установленный файл в вашей системе: %s
@@ -922,7 +922,7 @@ Live user location statistics by city from %s=%s|Статистика, в реальном времени,
 No users in the hub from: %s=%s|На хабе нет пользователей из: %s=%s
 Help notes|Вспомогательные примечания
 parameter|параметр
-Command parameters %s are always required, while %s are optional.|Параметры команды %s  требуются всегда, в то время как для %s не обязательны.
+Command parameters %s are always required, while %s are optional.|Параметры команды %s требуются всегда, в то время как для %s не обязательны.
 Quoted parameters %s or %s must be used with quotes.|Цитируемые параметры %s или %s должны быть в кавычках.
 IP information|Информация по IP
 IP information not available: %s|Информации по IP не обнаружено: %s
@@ -1121,7 +1121,7 @@ Specified country code isn't valid: %s|Указанный код страны не действителен: %s
 You can't block user who don't share anything: %s|Вы не можете заблокировать пользователя чья шара пуста: %s
 You can't kick user who don't share anything: %s|Вы не можете кикнуть пользователя чья шара пуста: %s
 Flood detected from %s with IP %s and class %d in MC: %s|Обнаружен флуд от пользователя %s с IP адресом %s и классом %d в главный чат: %s
-User dropped due to flood: %s|Пользователь  выкинут из-за флуда: %s
+User dropped due to flood: %s|Пользователь выкинут из-за флуда: %s
 Main chat flood detected from your nick.|Обнаружен флуд в главный чат от вашего ника.
 Private chat flood detected from your IP.|Обнаружен флуд в виде личного сообщения от вашего IP адреса.
 Sorry, your message has been ignored.|Извините, ваше сообщение было игнорировано.
