@@ -5443,20 +5443,27 @@ function VH_OnUpdateClass (nick, oldclass, newclass, op)
 		return 1
 	end
 
-	if table_sets.regnewpubenable == 1 and tonumber (newclass) > tonumber (oldclass) then -- public registration notification
+	oldclass = tonumber (oldclass)
+	newclass = tonumber (newclass)
+
+	if oldclass >= table_sets.opkeyclass and newclass < table_sets.opkeyclass then -- operator keys
+		table_opks [nick] = nil
+	end
+
+	if table_sets.regnewpubenable == 1 and newclass > oldclass then -- public registration notification
 		local noti = ""
 
-		if tonumber (newclass) == 1 and table_sets.regnewpubmsgreg ~= "" then
+		if newclass == 1 and table_sets.regnewpubmsgreg ~= "" then
 			noti = table_sets.regnewpubmsgreg:gsub ("<nick>", reprexpchars (nick))
-		elseif tonumber (newclass) == 2 and table_sets.regnewpubmsgvip ~= "" then
+		elseif newclass == 2 and table_sets.regnewpubmsgvip ~= "" then
 			noti = table_sets.regnewpubmsgvip:gsub ("<nick>", reprexpchars (nick))
-		elseif tonumber (newclass) == 3 and table_sets.regnewpubmsgop ~= "" then
+		elseif newclass == 3 and table_sets.regnewpubmsgop ~= "" then
 			noti = table_sets.regnewpubmsgop:gsub ("<nick>", reprexpchars (nick))
-		elseif tonumber (newclass) == 4 and table_sets.regnewpubmsgcheef ~= "" then
+		elseif newclass == 4 and table_sets.regnewpubmsgcheef ~= "" then
 			noti = table_sets.regnewpubmsgcheef:gsub ("<nick>", reprexpchars (nick))
-		elseif tonumber (newclass) == 5 and table_sets.regnewpubmsgadmin ~= "" then
+		elseif newclass == 5 and table_sets.regnewpubmsgadmin ~= "" then
 			noti = table_sets.regnewpubmsgadmin:gsub ("<nick>", reprexpchars (nick))
-		elseif tonumber (newclass) == 10 and table_sets.regnewpubmsgmaster ~= "" then
+		elseif newclass == 10 and table_sets.regnewpubmsgmaster ~= "" then
 			noti = table_sets.regnewpubmsgmaster:gsub ("<nick>", reprexpchars (nick))
 		end
 
@@ -5468,7 +5475,7 @@ function VH_OnUpdateClass (nick, oldclass, newclass, op)
 	local opclass = getclass (op) -- registration notification
 	opsnotify (table_sets.classnotireg, gettext ("%s with class %d changed user class from %d to %d: %s"):format (op, opclass, oldclass, newclass, nick))
 
-	if table_sets.oprankclass ~= 11 and tonumber (oldclass) >= table_sets.oprankclass and tonumber (newclass) < table_sets.oprankclass then
+	if table_sets.oprankclass ~= 11 and oldclass >= table_sets.oprankclass and newclass < table_sets.oprankclass then
 		if nick ~= op then
 			oprankaccept (op, opclass)
 		end
