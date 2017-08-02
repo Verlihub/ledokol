@@ -63,7 +63,7 @@ Tzaca, JOE™
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.4" -- ledokol version
-bld_ledo = "57" -- build number
+bld_ledo = "58" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -3989,32 +3989,26 @@ function VH_OnUserCommand (nick, data)
 
 	savecmdlog (nick, ucl, data, false) -- command logger
 
-	-- kick command for vips
+	if data:match ("^" .. table_othsets.ustrig .. "kick%s+([^ ]+)%s*(.*)$") and table_sets.enablevipkick == 1 and ucl == 2 then -- kick command for vips
+		local who, why = data:match ("^" .. table_othsets.ustrig .. "kick%s+([^ ]+)%s*(.*)$")
 
-	if data:match ("^" .. table_othsets.ustrig .. "kick%s+(%S+)%s*(.*)$") and table_sets.enablevipkick == 1 and ucl == 2 then
-		local _, _, usr, rsn = data:find ("^" .. table_othsets.ustrig .. "kick%s+(%S+)%s*(.*)$")
-
-		if getstatus (usr) == 1 then
-			local ucls = getclass (usr)
-
-			if ucls < 2 then -- only users with lower class
-				local uip = getip (usr)
-
-				if not isprotected (usr, uip) then
-					if rsn == "" then
-						rsn = gettext ("No reason specified")
+		if getstatus (who) == 1 then
+			if getclass (who) < 2 then -- only users with lower class
+				if not isprotected (who, getip (who)) then
+					if why == "" then
+						why = gettext ("No reason specified")
 					end
 
-					commandanswer (nick, gettext ("%s with IP %s and class %d kicked: <%s> %s"):format (usr, uip .. tryipcc (uip, usr), ucls, nick, rsn))
-					VH:KickUser (nick, usr, rsn) -- kick using vips nick
+					commandanswer (nick, gettext ("%s was kicked with reason: %s"):format (who, why)) -- simple reply to sender
+					VH:KickUser (table_othsets.sendfrom, who, why) -- kick using bot nick due to rights
 				else -- protected
-					commandanswer (nick, gettext ("User you're trying to kick or redirect is protected: %s"):format (usr))
+					commandanswer (nick, gettext ("User you're trying to kick or redirect is protected: %s"):format (who))
 				end
 			else
-				commandanswer (nick, gettext ("You can't kick user whose class is higher or equals your own: %s"):format (usr))
+				commandanswer (nick, gettext ("You can't kick user whose class is higher or equals your own: %s"):format (who))
 			end
 		else -- not in list
-			commandanswer (nick, gettext ("User not in list: %s"):format (usr))
+			commandanswer (nick, gettext ("User not in list: %s"):format (who))
 		end
 
 		return 0
