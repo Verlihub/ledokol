@@ -8548,7 +8548,7 @@ function listtrigger (nick)
 			local dale = # data
 
 			if dale > 100 then
-				data = data:sub (1, dale) .. " [ .. .]"
+				data = data:sub (1, dale) .. " [...]"
 			end
 
 			list = list .. "\r\n " .. gettext ("Identifier: %s"):format (id) .. "\r\n " .. gettext ("Class range: %d to %d"):format (minc, maxc) .. "\r\n " .. gettext ("Content: %s"):format (repnmdcoutchars (data)) .. "\r\n"
@@ -11108,7 +11108,7 @@ function sendmchistory (nick, class, num, auto)
 				end
 
 				if table_sets.histautolinemax > 0 and # text > table_sets.histautolinemax then
-					text = text:sub (1, table_sets.histautolinemax) .. " [ .. .]"
+					text = text:sub (1, table_sets.histautolinemax) .. " [...]"
 				end
 			end
 
@@ -11154,7 +11154,7 @@ function sendophistory (nick, class, num, auto, inop)
 				end
 
 				if table_sets.histautolinemax > 0 and # text > table_sets.histautolinemax then
-					text = text:sub (1, table_sets.histautolinemax) .. " [ .. .]"
+					text = text:sub (1, table_sets.histautolinemax) .. " [...]"
 				end
 			end
 
@@ -17701,7 +17701,7 @@ end
 					table_blst = {} -- flush
 					ok = true
 				elseif table_sets [tvar] == 0 then -- load
-					commandanswer (nick, gettext ("Loading %s in memory .. ."):format ("blacklist.txt"))
+					commandanswer (nick, gettext ("Loading %s in memory..."):format ("blacklist.txt"))
 
 					if loadblacklist () then
 						ok = true
