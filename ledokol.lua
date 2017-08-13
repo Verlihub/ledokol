@@ -4000,6 +4000,7 @@ function VH_OnUserCommand (nick, data)
 					end
 
 					commandanswer (nick, gettext ("%s was kicked with reason: %s"):format (who, why)) -- simple reply to sender
+					donotifycmd (nick, data, 0, ucl) -- exception
 					VH:KickUser (table_othsets.sendfrom, who, why) -- kick using bot nick due to rights
 				else -- protected
 					commandanswer (nick, gettext ("User you're trying to kick or redirect is protected: %s"):format (who))
