@@ -13,6 +13,7 @@
 [ 55] Added: Disability of automatic country chatroom entrance with code --, request by Pasha
 [ 56] Added: GeoIP ASN information to userinfo and ipinfo commands
 [ 57] Added: autosendhelp configuration to disable display of command list on hub help command, request by Reanimator®
+[ 59] Added: norepltoops configuration to disable chat replacer in PM to operators, request by sirtrifanoff
 
 [ 2.9.3 :: 2017-05-22 ]
 

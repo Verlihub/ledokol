@@ -63,7 +63,7 @@ Tzaca, JOE™
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.4" -- ledokol version
-bld_ledo = "58" -- build number
+bld_ledo = "59" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -223,6 +223,7 @@ table_sets = {
 	replrunning = 0,
 	replprotect = 0,
 	repldebug = 0,
+	norepltoops = 0,
 	resprunning = 0,
 	respdelay = 3,
 	respskiplast = 0,
@@ -1409,6 +1410,7 @@ function Main (file)
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('sefifeednick', '" .. repsqlchars (table_sets.sefifeednick) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('sefiblockmsg', '" .. repsqlchars (table_sets.sefiblockmsg) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('autosendhelp', '" .. repsqlchars (table_sets.autosendhelp) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('norepltoops', '" .. repsqlchars (table_sets.norepltoops) .. "')")
 
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.ledocmd .. "` (`original`, `new`) values ('whois', '" .. repsqlchars (table_cmnds.whois) .. "')")
 					end
@@ -6397,7 +6399,7 @@ function VH_OnParsedMsgPM (from, data, to)
 
 		local pmdat = data
 
-		if table_sets.replrunning == 1 and (table_sets.replprotect == 0 or not prot) then -- replacer
+		if table_sets.replrunning == 1 and (table_sets.replprotect == 0 or not prot) and (table_sets.norepltoops == 0 or getclass (to) < 3) then -- replacer
 			pmdat = replchatmsg (from, ip, fcls, pmdat, 2)
 		end
 
@@ -6532,7 +6534,7 @@ function VH_OnParsedMsgMCTo (from, data, to)
 
 	local pmdat = data
 
-	if table_sets.replrunning == 1 and (table_sets.replprotect == 0 or not prot) then -- replacer
+	if table_sets.replrunning == 1 and (table_sets.replprotect == 0 or not prot) and (table_sets.norepltoops == 0 or getclass (to) < 3) then -- replacer
 		pmdat = replchatmsg (from, ip, fcls, pmdat, 2)
 	end
 
@@ -16594,19 +16596,18 @@ function setledoconf (nick, ucls, line)
 			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
 		end
 
------ ---- --- -- -
+	----- ---- --- -- -
 
-elseif tvar == "allowspamtoops" then
-if num then
-if setto == 0 or setto == 1 then
-ok = true
-else
-commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0 " .. gettext ("or") .. " 1"))
-end
-
-else
-commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
-end
+	elseif tvar == "allowspamtoops" then
+		if num then
+			if setto == 0 or setto == 1 then
+				ok = true
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0 " .. gettext ("or") .. " 1"))
+			end
+		else
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
+		end
 
 	----- ---- --- -- -
 
@@ -16866,6 +16867,19 @@ end
 	----- ---- --- -- -
 
 	elseif tvar == "autosendhelp" then
+		if num then
+			if setto == 0 or setto == 1 then
+				ok = true
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0 " .. gettext ("or") .. " 1"))
+			end
+		else
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
+		end
+
+	----- ---- --- -- -
+
+	elseif tvar == "norepltoops" then
 		if num then
 			if setto == 0 or setto == 1 then
 				ok = true
@@ -20603,6 +20617,7 @@ function showledoconf (nick)
 	conf = conf .. "\r\n [::] replrunning = " .. _tostring (table_sets.replrunning)
 	conf = conf .. "\r\n [::] replprotect = " .. _tostring (table_sets.replprotect)
 	conf = conf .. "\r\n [::] repldebug = " .. _tostring (table_sets.repldebug)
+	conf = conf .. "\r\n [::] norepltoops = " .. _tostring (table_sets.norepltoops)
 	conf = conf .. "\r\n [::] resprunning = " .. _tostring (table_sets.resprunning)
 	conf = conf .. "\r\n [::] respdelay = " .. _tostring (table_sets.respdelay)
 	conf = conf .. "\r\n [::] respskiplast = " .. _tostring (table_sets.respskiplast)
