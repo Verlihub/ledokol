@@ -63,7 +63,7 @@ Tzaca, JOE™
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.4" -- ledokol version
-bld_ledo = "59" -- build number
+bld_ledo = "60" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -479,6 +479,7 @@ tbl_sql = {
 	ipwa = "lua_ledo_ipwa",
 	ipgag = "lua_ledo_ipgag",
 	ccgag = "lua_ledo_ccgag",
+	citygag = "lua_ledo_citygag",
 	rcmenu = "lua_ledo_rcmenu"
 }
 
@@ -636,6 +637,9 @@ table_cmnds = {
 	gagccadd = "gagccadd",
 	gagccdel = "gagccdel",
 	gagcclist = "gagcclist",
+	gagcityadd = "gagcityadd",
+	gagcitydel = "gagcitydel",
+	gagcitylist = "gagcitylist",
 	hubadd = "hubadd",
 	hubdel = "hubdel",
 	showhubs = "showhubs",
@@ -1406,6 +1410,8 @@ function Main (file)
 					end
 
 					if ver <= 294 then
+						VH:SQLQuery ("create table if not exists `" .. tbl_sql.citygag .. "` (`item` varchar(255) not null primary key, `flag` tinyint(1) unsigned not null default 0, `why` varchar(255) null) engine = myisam default character set utf8 collate utf8_unicode_ci")
+
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('addsefifeed', '" .. repsqlchars (table_sets.addsefifeed) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('sefifeednick', '" .. repsqlchars (table_sets.sefifeednick) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('sefiblockmsg', '" .. repsqlchars (table_sets.sefiblockmsg) .. "')")
@@ -2940,6 +2946,42 @@ elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.clog .. " %d+$") t
 
 		return 0
 
+	----- ---- --- -- -
+
+	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.gagcityadd .. " .+ %d$") or data:match ("^" .. table_othsets.optrig .. table_cmnds.gagcityadd .. " \".+\" \".*\" %d$") then
+		if ucl >= table_sets.mincommandclass then
+			donotifycmd (nick, data, 0, ucl)
+			gagcityadd (nick, data:sub (# table_cmnds.gagcityadd + 3))
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
+
+		return 0
+
+	----- ---- --- -- -
+
+	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.gagcitydel .. " .+$") then
+		if ucl >= table_sets.mincommandclass then
+			donotifycmd (nick, data, 0, ucl)
+			gagcitydel (nick, data:sub (# table_cmnds.gagcitydel + 3))
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
+
+		return 0
+
+	----- ---- --- -- -
+
+	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.gagcitylist .. "$") then
+		if ucl >= table_sets.mincommandclass then
+			donotifycmd (nick, data, 0, ucl)
+			gagcitylist (nick)
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
+
+		return 0
+
 ----- ---- --- -- -
 
 elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.wmdel .. " %S+$") then
@@ -3983,6 +4025,10 @@ function VH_OnUserCommand (nick, data)
 		if gagccheck (nick, ip, ucl, nil, data) then
 			return 0
 		end
+
+		if gagcitycheck (nick, ip, ucl, nil, data) then
+			return 0
+		end
 	end
 
 	if table_sets.checkcmdspam == 1 and antiscan (nick, ucl, data, 1, nil, nil) == 0 then -- check command spam
@@ -4097,6 +4143,10 @@ function VH_OnUserCommand (nick, data)
 				end
 
 				if gagccheck (nick, ip, ucl, nil, msg) then
+					return 0
+				end
+
+				if gagcitycheck (nick, ip, ucl, nil, msg) then
 					return 0
 				end
 			end
@@ -4266,6 +4316,10 @@ function VH_OnUserCommand (nick, data)
 				end
 
 				if gagccheck (nick, ip, ucl, nil, data) then
+					return 0
+				end
+
+				if gagcitycheck (nick, ip, ucl, nil, data) then
 					return 0
 				end
 			end
@@ -6265,6 +6319,10 @@ function VH_OnParsedMsgPM (from, data, to)
 		if gagccheck (from, ip, fcls, to, data) then
 			return 0
 		end
+
+		if gagcitycheck (from, ip, fcls, to, data) then
+			return 0
+		end
 	--elseif table_sets.chatantiflood == 1 then -- update last chat nick, pm not supported
 		--table_othsets.chflonenick = from
 	end
@@ -6514,6 +6572,10 @@ function VH_OnParsedMsgMCTo (from, data, to)
 		if gagccheck (from, ip, fcls, to, data) then
 			return 0
 		end
+
+		if gagcitycheck (from, ip, fcls, to, data) then
+			return 0
+		end
 	--elseif table_sets.chatantiflood == 1 then -- update last chat nick, mcto not supported
 		--table_othsets.chflonenick = from
 	end
@@ -6702,6 +6764,10 @@ function VH_OnParsedMsgChat (nick, data)
 		end
 
 		if gagccheck (nick, ip, ucl, nil, data) then
+			return 0
+		end
+
+		if gagcitycheck (nick, ip, ucl, nil, data) then
 			return 0
 		end
 
@@ -12804,6 +12870,158 @@ end
 
 ----- ---- --- -- -
 
+function gagcityadd (nick, line)
+	local lre, why, flag = "", "", 0
+
+	if line:match ("^\".+\" \".*\" %d$") then
+		lre, why, flag = line:match ("^\"(.+)\" \"(.*)\" (%d)$")
+	elseif line:match ("^\".+\" %d$") then
+		lre, flag = line:match ("^\"(.+)\" (%d)$")
+	else
+		lre, flag = line:match ("^(.+) (%d)$")
+	end
+
+	flag = tonumber (flag or -1) or -1
+
+	if flag < 0 or flag > 2 then
+		commandanswer (nick, gettext ("Known flags are: %s"):format ("0=ALL, 1=MC " .. gettext ("and") .. " 2=PM"))
+	else
+		local rlre = repsqlchars (repnmdcinchars (lre))
+		local _, rows = VH:SQLQuery ("select `flag` from `" .. tbl_sql.citygag .. "` where `item` = '" .. rlre .. "'")
+
+		if rows > 0 then -- modify
+			VH:SQLQuery ("update `" .. tbl_sql.citygag .. "` set `flag` = " .. _tostring (flag) .. ", `why` = " .. sqlemptnull (why) .. " where `item` = '" .. rlre .. "'")
+
+			if # why > 0 then
+				commandanswer (nick, gettext ("Modified city gag %s with reason: %s"):format (lre, why))
+			else
+				commandanswer (nick, gettext ("Modified city gag: %s"):format (lre))
+			end
+
+		else -- add
+			VH:SQLQuery ("insert into `" .. tbl_sql.citygag .. "` (`item`, `flag`, `why`) values ('" .. rlre .. "', " .. _tostring (flag) .. ", " .. sqlemptnull (why) .. ")")
+
+			if # why > 0 then
+				commandanswer (nick, gettext ("Added city gag %s with reason: %s"):format (lre, why))
+			else
+				commandanswer (nick, gettext ("Added city gag: %s"):format (lre))
+			end
+		end
+	end
+end
+
+----- ---- --- -- -
+
+function gagcitydel (nick, lre)
+	if lre == "*" then
+		VH:SQLQuery ("truncate table `" .. tbl_sql.citygag .. "`")
+		commandanswer (nick, gettext ("Cleared city gag list."))
+	else
+		local rlre = repsqlchars (repnmdcinchars (lre))
+		local _, rows = VH:SQLQuery ("select `flag` from `" .. tbl_sql.citygag .. "` where `item` = '" .. rlre .. "'")
+
+		if rows > 0 then
+			VH:SQLQuery ("delete from `" .. tbl_sql.citygag .. "` where `item` = '" .. rlre .. "'")
+			commandanswer (nick, gettext ("Deleted city gag: %s"):format (lre))
+		else -- not in list
+			commandanswer (nick, gettext ("City gag not found: %s"):format (lre))
+		end
+	end
+end
+
+----- ---- --- -- -
+
+function gagcitylist (nick)
+	local function flagname (flag)
+		if flag == 0 then
+			return "=ALL"
+		elseif flag == 1 then
+			return "=MC"
+		elseif flag == 2 then
+			return "=PM"
+		else
+			return "=??"
+		end
+	end
+
+	local _, rows = VH:SQLQuery ("select `item`, `flag`, `why` from `" .. tbl_sql.citygag .. "`")
+
+	if rows > 0 then
+		local list = ""
+
+		for row = 0, rows - 1 do
+			local _, lre, flag, why = VH:SQLFetch (row)
+			list = list .. " " .. _tostring (row + 1) .. ". " .. repnmdcoutchars (lre) .. " [ F: " .. _tostring (flag) .. flagname (tonumber (flag)) .. " ]"
+
+			if why and # why > 0 then
+				list = list .. " [ R: " .. repnmdcoutchars (why) .. " ]"
+			end
+
+			list = list .. "\r\n"
+		end
+
+		commandanswer (nick, gettext ("City gag list") .. ":\r\n\r\n" .. list)
+	else
+		commandanswer (nick, gettext ("City gag list is empty."))
+	end
+end
+
+----- ---- --- -- -
+
+function gagcitycheck (nick, ip, class, to, data)
+	if class >= table_sets.scanbelowclass then
+		return false
+	end
+
+	local city = getusercity (nick)
+
+	if not city then
+		return false
+	end
+
+	local _, rows = VH:SQLQuery ("select `item`, `flag`, `why` from `" .. tbl_sql.citygag .. "`")
+
+	if rows > 0 then
+		city = city:lower ()
+
+		for row = 0, rows - 1 do
+			local _, lre, flag, why = VH:SQLFetch (row)
+
+			if city:match (lre) then
+				flag = tonumber (flag or 0) or 0
+
+				if to and (flag == 0 or flag == 2) then -- pm
+					if why and # why > 0 then
+						pmtouser (nick, to, gettext ("Private chat is currently disabled for you because: %s"):format (repnmdcoutchars (why)))
+					else
+						pmtouser (nick, to, gettext ("Private chat is currently disabled for you."))
+					end
+
+					local toip = getip (to)
+					opsnotify (table_sets.classnotigagip, gettext ("%s with IP %s and class %d tries to speak with city gag in PM to %s with IP %s and class %d: %s"):format (nick, ip .. tryipcc (ip, nick), class, to, toip .. tryipcc (toip, to), getclass (to), data))
+					return true
+
+				elseif not to and (flag == 0 or flag == 1) then -- mc
+					if why and # why > 0 then
+						maintouser (nick, gettext ("Main chat is currently disabled for you because: %s"):format (repnmdcoutchars (why)))
+					else
+						maintouser (nick, gettext ("Main chat is currently disabled for you."))
+					end
+
+					opsnotify (table_sets.classnotigagip, gettext ("%s with IP %s and class %d tries to speak with city gag in MC: %s"):format (nick, ip .. tryipcc (ip, nick), class, data))
+					return true
+				end
+
+				break
+			end
+		end
+	end
+
+	return false
+end
+
+----- ---- --- -- -
+
 function detprotoflood (pref, prot, nick, ip, class)
 	if table_sets ["protoflood" .. pref .. "cnt"] == 0 then -- disabled
 		return false
@@ -16345,11 +16563,21 @@ end
 	end
 
 	-- cc gag
+
 	if ucl >= table_sets.mincommandclass then
 		sopmenitm (usr, gettext ("Country code gag") .. "\\" .. gettext ("Add country code gag"), table_cmnds.gagccadd .. " \"%[line:<" .. gettext ("lre") .. ">]\" \"%[line:<" .. gettext ("reason") .. ">]\" %[line:<" .. gettext ("flags") .. ">]")
 		sopmenitm (usr, gettext ("Country code gag") .. "\\" .. gettext ("Country code gag list"), table_cmnds.gagcclist)
 		smensep (usr)
 		sopmenitm (usr, gettext ("Country code gag") .. "\\" .. gettext ("Delete country code gag"), table_cmnds.gagccdel .. " %[line:<" .. gettext ("lre") .. " " .. gettext ("or") .. " *>]")
+	end
+
+	-- city gag
+
+	if ucl >= table_sets.mincommandclass then
+		sopmenitm (usr, gettext ("City gag") .. "\\" .. gettext ("Add city gag"), table_cmnds.gagcityadd .. " \"%[line:<" .. gettext ("lre") .. ">]\" \"%[line:<" .. gettext ("reason") .. ">]\" %[line:<" .. gettext ("flags") .. ">]")
+		sopmenitm (usr, gettext ("City gag") .. "\\" .. gettext ("City gag list"), table_cmnds.gagcitylist)
+		smensep (usr)
+		sopmenitm (usr, gettext ("City gag") .. "\\" .. gettext ("Delete city gag"), table_cmnds.gagcitydel .. " %[line:<" .. gettext ("lre") .. " " .. gettext ("or") .. " *>]")
 	end
 
 	-- user logger
@@ -20171,9 +20399,16 @@ function sendophelp (nick, clas, pm)
 	help = help .. " " .. trig .. table_cmnds.gagipdel .. " <" .. gettext ("lre") .. " " .. gettext ("or") .. " *> - " .. gettext ("Delete IP gag") .. "\r\n\r\n"
 
 	-- cc gag
+
 	help = help .. " " .. trig .. table_cmnds.gagccadd .. " <\"" .. gettext ("lre") .. "\"> [\"" .. gettext ("reason") .. "\"] <" .. gettext ("flags") .. "> - " .. gettext ("Add country code gag") .. "\r\n"
 	help = help .. " " .. trig .. table_cmnds.gagcclist .. " - " .. gettext ("Country code gag list") .. "\r\n"
 	help = help .. " " .. trig .. table_cmnds.gagccdel .. " <" .. gettext ("lre") .. " " .. gettext ("or") .. " *> - " .. gettext ("Delete country code gag") .. "\r\n\r\n"
+
+	-- city gag
+
+	help = help .. " " .. trig .. table_cmnds.gagcityadd .. " <\"" .. gettext ("lre") .. "\"> [\"" .. gettext ("reason") .. "\"] <" .. gettext ("flags") .. "> - " .. gettext ("Add city gag") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.gagcitylist .. " - " .. gettext ("City gag list") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.gagcitydel .. " <" .. gettext ("lre") .. " " .. gettext ("or") .. " *> - " .. gettext ("Delete city gag") .. "\r\n\r\n"
 
 	-- user logger
 	help = help .. " " .. trig .. table_cmnds.userinfo .. " <" .. gettext ("nick") .. "> - " .. gettext ("User information") .. "\r\n"
@@ -20860,6 +21095,9 @@ VH:SQLQuery ("create table if not exists `" .. tbl_sql.stat .. "` (`type` varcha
 
 	-- cc gag
 	VH:SQLQuery ("create table if not exists `" .. tbl_sql.ccgag .. "` (`item` varchar(255) not null primary key, `flag` tinyint(1) unsigned not null default 0, `why` varchar(255) null) engine = myisam default character set utf8 collate utf8_unicode_ci")
+
+	-- city gag
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql.citygag .. "` (`item` varchar(255) not null primary key, `flag` tinyint(1) unsigned not null default 0, `why` varchar(255) null) engine = myisam default character set utf8 collate utf8_unicode_ci")
 
 	-- right click menu
 	VH:SQLQuery ("create table if not exists `" .. tbl_sql.rcmenu .. "` (`id` bigint(20) unsigned not null auto_increment primary key, `menu` varchar(255) not null, `command` varchar(255) not null, `type` tinyint(3) unsigned not null default 1, `cont` tinyint(2) unsigned not null default 3, `order` smallint(5) unsigned not null default 0, `minclass` tinyint(2) unsigned not null default 0, `maxclass` tinyint(2) unsigned not null default 10, `off` tinyint(1) unsigned not null default 0) engine = myisam default character set utf8 collate utf8_unicode_ci")

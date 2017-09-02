@@ -1176,3 +1176,17 @@ Forbidden chat nick list is empty.|
 No entrance|
 ASN: %s|
 %s was kicked with reason: %s|
+City gag|
+Add city gag|
+City gag list|
+Delete city gag|
+Modified city gag %s with reason: %s|
+Modified city gag: %s|
+Added city gag %s with reason: %s|
+Added city gag: %s|
+Cleared city gag list.|
+Deleted city gag: %s|
+City gag not found: %s|
+City gag list is empty.|
+%s with IP %s and class %d tries to speak with city gag in PM to %s with IP %s and class %d: %s|
+%s with IP %s and class %d tries to speak with city gag in MC: %s|
