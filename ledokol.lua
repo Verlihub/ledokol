@@ -63,7 +63,7 @@ Tzaca, JOE™
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.4" -- ledokol version
-bld_ledo = "60" -- build number
+bld_ledo = "61" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -114,6 +114,7 @@ table_sets = {
 	classnotilowupreg = 3,
 	classnotilowupsear = 3,
 	classnotilowupchat = 3,
+	classnotichatcode = 3,
 	classnoticom = 10,
 	classnotisay = 5,
 	classnotirepl = 3,
@@ -1417,6 +1418,7 @@ function Main (file)
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('sefiblockmsg', '" .. repsqlchars (table_sets.sefiblockmsg) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('autosendhelp', '" .. repsqlchars (table_sets.autosendhelp) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('norepltoops', '" .. repsqlchars (table_sets.norepltoops) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('classnotichatcode', '" .. repsqlchars (table_sets.classnotichatcode) .. "')")
 
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.ledocmd .. "` (`original`, `new`) values ('whois', '" .. repsqlchars (table_cmnds.whois) .. "')")
 					end
@@ -4078,7 +4080,7 @@ function VH_OnUserCommand (nick, data)
 				local dif = os.time () - table_usup [nick]
 
 				if dif < table_sets.chatuptime then
-					opsnotify (table_sets.classnotilowupchat, gettext ("Low chat uptime of %d seconds from %s with IP %s and class %d in command: %s"):format (dif, nick, ip .. tryipcc (ip, nick), ucl, "+me " .. msg))
+					opsnotify (table_sets.classnotilowupchat, gettext ("Low chat uptime of %d seconds from %s with IP %s and class %d in command: %s"):format (dif, nick, ip .. tryipcc (ip, nick), ucl, getconfig ("cmd_start_user"):sub (1, 1) .. "me " .. msg))
 
 					if table_sets.chatuptimeact == 0 then -- message
 						maintouser (nick, gettext ("Please wait another %d seconds before using public chat."):format (table_sets.chatuptime - dif))
@@ -4113,6 +4115,7 @@ function VH_OnUserCommand (nick, data)
 
 					local txt = table_sets.codetext:gsub ("<code>", reprexpchars (vcode))
 					maintouser (nick, txt)
+					opsnotify (table_sets.classnotichatcode, gettext ("%s with IP %s and class %d tried to speak in MC without chat code: <%s> %s"):format (nick, ip, ucl, nick, getconfig ("cmd_start_user"):sub (1, 1) .. "me " .. msg))
 					return 0
 				elseif table_code [nick]["lock"] then
 					local rcode = table_code [nick]["code"]
@@ -4127,6 +4130,7 @@ function VH_OnUserCommand (nick, data)
 					else
 						local txt = table_sets.codetext:gsub ("<code>", reprexpchars (table_code [nick]["vcode"]))
 						maintouser (nick, txt)
+						opsnotify (table_sets.classnotichatcode, gettext ("%s with IP %s and class %d tried to speak in MC without chat code: <%s> %s"):format (nick, ip, ucl, nick, getconfig ("cmd_start_user"):sub (1, 1) .. "me " .. msg))
 					end
 
 					return 0
@@ -4263,7 +4267,7 @@ function VH_OnUserCommand (nick, data)
 				local dif = os.time () - table_usup [nick]
 
 				if dif < table_sets.chatuptime then
-					opsnotify (table_sets.classnotilowupchat, gettext ("Low chat uptime of %d seconds from %s with IP %s and class %d in command: %s"):format (dif, nick, ip .. tryipcc (ip, nick), ucl, "+me"))
+					opsnotify (table_sets.classnotilowupchat, gettext ("Low chat uptime of %d seconds from %s with IP %s and class %d in command: %s"):format (dif, nick, ip .. tryipcc (ip, nick), ucl, getconfig ("cmd_start_user"):sub (1, 1) .. "me"))
 
 					if table_sets.chatuptimeact == 0 then -- message
 						maintouser (nick, gettext ("Please wait another %d seconds before using public chat."):format (table_sets.chatuptime - dif))
@@ -4298,10 +4302,12 @@ function VH_OnUserCommand (nick, data)
 
 					local txt = table_sets.codetext:gsub ("<code>", reprexpchars (vcode))
 					maintouser (nick, txt)
+					opsnotify (table_sets.classnotichatcode, gettext ("%s with IP %s and class %d tried to speak in MC without chat code: <%s> %s"):format (nick, ip, ucl, nick, getconfig ("cmd_start_user"):sub (1, 1) .. "me"))
 					return 0
 				elseif table_code [nick]["lock"] then
 					local txt = table_sets.codetext:gsub ("<code>", reprexpchars (table_code [nick]["vcode"]))
 					maintouser (nick, txt)
+					opsnotify (table_sets.classnotichatcode, gettext ("%s with IP %s and class %d tried to speak in MC without chat code: <%s> %s"):format (nick, ip, ucl, nick, getconfig ("cmd_start_user"):sub (1, 1) .. "me"))
 					return 0
 				end
 			end
@@ -6240,8 +6246,10 @@ function VH_OnParsedMsgPM (from, data, to)
 	end
 
 	local ip = getip (from)
+	local toip = getip (to)
 	local prot = isprotected (from, ip)
 	local fcls = getclass (from)
+	local tcls = getclass (to)
 
 	if fcls == -1 and to == table_othsets.botnick and data:match ("^" .. table_othsets.ustrig .. "report .+$") then
 		return 1
@@ -6257,8 +6265,7 @@ function VH_OnParsedMsgPM (from, data, to)
 			local dif = os.time () - table_usup [from]
 
 			if dif < table_sets.chatuptime then
-				local toip = getip (to)
-				opsnotify (table_sets.classnotilowupchat, gettext ("Low chat uptime of %d seconds from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s"):format (dif, from, ip .. tryipcc (ip, from), fcls, to, toip .. tryipcc (toip, to), getclass (to), data))
+				opsnotify (table_sets.classnotilowupchat, gettext ("Low chat uptime of %d seconds from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s"):format (dif, from, ip .. tryipcc (ip, from), fcls, to, toip .. tryipcc (toip, to), tcls, data))
 
 				if table_sets.chatuptimeact == 0 then -- message
 					pmtouser (from, to, gettext ("Please wait another %d seconds before using private chat."):format (table_sets.chatuptime - dif))
@@ -6288,6 +6295,7 @@ function VH_OnParsedMsgPM (from, data, to)
 
 				local txt = table_sets.codetext:gsub ("<code>", reprexpchars (vcode))
 				pmtouser (from, to, txt)
+				opsnotify (table_sets.classnotichatcode, gettext ("%s with IP %s and class %d tried to speak without chat code in PM to %s with IP %s and class %d."):format (from, ip, fcls, to, toip, tcls))
 				return 0
 			elseif table_code [from]["lock"] then
 				local rcode = table_code [from]["code"]
@@ -6302,6 +6310,7 @@ function VH_OnParsedMsgPM (from, data, to)
 				else
 					local txt = table_sets.codetext:gsub ("<code>", reprexpchars (table_code [from]["vcode"]))
 					pmtouser (from, to, txt)
+					opsnotify (table_sets.classnotichatcode, gettext ("%s with IP %s and class %d tried to speak without chat code in PM to %s with IP %s and class %d."):format (from, ip, fcls, to, toip, tcls))
 				end
 
 				return 0
@@ -6457,7 +6466,7 @@ function VH_OnParsedMsgPM (from, data, to)
 
 		local pmdat = data
 
-		if table_sets.replrunning == 1 and (table_sets.replprotect == 0 or not prot) and (table_sets.norepltoops == 0 or getclass (to) < 3) then -- replacer
+		if table_sets.replrunning == 1 and (table_sets.replprotect == 0 or not prot) and (table_sets.norepltoops == 0 or tcls < 3) then -- replacer
 			pmdat = replchatmsg (from, ip, fcls, pmdat, 2)
 		end
 
@@ -6466,21 +6475,18 @@ function VH_OnParsedMsgPM (from, data, to)
 
 			if custnick then
 				if data ~= pmdat then
-					local toip = getip (to)
-					opsnotify (table_sets.classnotirepl, gettext ("Message replaced for user with IP %s and class %d in PM to %s with IP %s and class %d: <%s> %s"):format (ip .. tryipcc (ip, from), fcls, to, toip .. tryipcc (toip, to), getclass (to), from, data))
+					opsnotify (table_sets.classnotirepl, gettext ("Message replaced for user with IP %s and class %d in PM to %s with IP %s and class %d: <%s> %s"):format (ip .. tryipcc (ip, from), fcls, to, toip .. tryipcc (toip, to), tcls, from, data))
 				end
 
 				VH:SendToUser ("$To: " .. to .. " From: " .. from .. " $<" .. custnick .. "> " .. pmdat .. "|", to)
 				return 0
 			elseif data ~= pmdat then
-				local toip = getip (to)
-				opsnotify (table_sets.classnotirepl, gettext ("Message replaced for user with IP %s and class %d in PM to %s with IP %s and class %d: <%s> %s"):format (ip .. tryipcc (ip, from), fcls, to, toip .. tryipcc (toip, to), getclass (to), from, data))
+				opsnotify (table_sets.classnotirepl, gettext ("Message replaced for user with IP %s and class %d in PM to %s with IP %s and class %d: <%s> %s"):format (ip .. tryipcc (ip, from), fcls, to, toip .. tryipcc (toip, to), tcls, from, data))
 				VH:SendToUser ("$To: " .. to .. " From: " .. from .. " $<" .. from .. "> " .. pmdat .. "|", to)
 				return 0
 			end
 		elseif data ~= pmdat then
-			local toip = getip (to)
-			opsnotify (table_sets.classnotirepl, gettext ("Message replaced for user with IP %s and class %d in PM to %s with IP %s and class %d: <%s> %s"):format (ip .. tryipcc (ip, from), fcls, to, toip .. tryipcc (toip, to), getclass (to), from, data))
+			opsnotify (table_sets.classnotirepl, gettext ("Message replaced for user with IP %s and class %d in PM to %s with IP %s and class %d: <%s> %s"):format (ip .. tryipcc (ip, from), fcls, to, toip .. tryipcc (toip, to), tcls, from, data))
 			VH:SendToUser ("$To: " .. to .. " From: " .. from .. " $<" .. from .. "> " .. pmdat .. "|", to)
 			return 0
 		end
@@ -6497,8 +6503,10 @@ function VH_OnParsedMsgMCTo (from, data, to)
 	end
 
 	local ip = getip (from)
+	local toip = getip (to)
 	local prot = isprotected (from, ip)
 	local fcls = getclass (from)
+	local tcls = getclass (to)
 
 	if not prot then -- protection
 		if fcls < table_sets.pmminclass then
@@ -6510,8 +6518,7 @@ function VH_OnParsedMsgMCTo (from, data, to)
 			local dif = os.time () - table_usup [from]
 
 			if dif < table_sets.chatuptime then
-				local toip = getip (to)
-				opsnotify (table_sets.classnotilowupchat, gettext ("Low chat uptime of %d seconds from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s"):format (dif, from, ip .. tryipcc (ip, from), fcls, to, toip .. tryipcc (toip, to), getclass (to), data))
+				opsnotify (table_sets.classnotilowupchat, gettext ("Low chat uptime of %d seconds from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s"):format (dif, from, ip .. tryipcc (ip, from), fcls, to, toip .. tryipcc (toip, to), tcls, data))
 
 				if table_sets.chatuptimeact == 0 then -- message
 					maintouser (from, gettext ("Please wait another %d seconds before using private chat."):format (table_sets.chatuptime - dif))
@@ -6541,6 +6548,7 @@ function VH_OnParsedMsgMCTo (from, data, to)
 
 				local txt = table_sets.codetext:gsub ("<code>", reprexpchars (vcode))
 				maintouser (from, txt)
+				opsnotify (table_sets.classnotichatcode, gettext ("%s with IP %s and class %d tried to speak without chat code in PM to %s with IP %s and class %d."):format (from, ip, fcls, to, toip, tcls))
 				return 0
 			elseif table_code [from]["lock"] then
 				local rcode = table_code [from]["code"]
@@ -6555,6 +6563,7 @@ function VH_OnParsedMsgMCTo (from, data, to)
 				else
 					local txt = table_sets.codetext:gsub ("<code>", reprexpchars (table_code [from]["vcode"]))
 					maintouser (from, txt)
+					opsnotify (table_sets.classnotichatcode, gettext ("%s with IP %s and class %d tried to speak without chat code in PM to %s with IP %s and class %d."):format (from, ip, fcls, to, toip, tcls))
 				end
 
 				return 0
@@ -6596,7 +6605,7 @@ function VH_OnParsedMsgMCTo (from, data, to)
 
 	local pmdat = data
 
-	if table_sets.replrunning == 1 and (table_sets.replprotect == 0 or not prot) and (table_sets.norepltoops == 0 or getclass (to) < 3) then -- replacer
+	if table_sets.replrunning == 1 and (table_sets.replprotect == 0 or not prot) and (table_sets.norepltoops == 0 or tcls < 3) then -- replacer
 		pmdat = replchatmsg (from, ip, fcls, pmdat, 2)
 	end
 
@@ -6605,8 +6614,7 @@ function VH_OnParsedMsgMCTo (from, data, to)
 
 		if custnick then
 			if data ~= pmdat then
-				local toip = getip (to)
-				opsnotify (table_sets.classnotirepl, gettext ("Message replaced for user with IP %s and class %d in PM to %s with IP %s and class %d: <%s> %s"):format (ip .. tryipcc (ip, from), fcls, to, toip .. tryipcc (toip, to), getclass (to), from, data))
+				opsnotify (table_sets.classnotirepl, gettext ("Message replaced for user with IP %s and class %d in PM to %s with IP %s and class %d: <%s> %s"):format (ip .. tryipcc (ip, from), fcls, to, toip .. tryipcc (toip, to), tcls, from, data))
 			end
 
 			local mcto = false
@@ -6631,8 +6639,7 @@ function VH_OnParsedMsgMCTo (from, data, to)
 
 			return 0
 		elseif data ~= pmdat then
-			local toip = getip (to)
-			opsnotify (table_sets.classnotirepl, gettext ("Message replaced for user with IP %s and class %d in PM to %s with IP %s and class %d: <%s> %s"):format (ip .. tryipcc (ip, from), fcls, to, toip .. tryipcc (toip, to), getclass (to), from, data))
+			opsnotify (table_sets.classnotirepl, gettext ("Message replaced for user with IP %s and class %d in PM to %s with IP %s and class %d: <%s> %s"):format (ip .. tryipcc (ip, from), fcls, to, toip .. tryipcc (toip, to), tcls, from, data))
 			local mcto = false
 
 			if table_refu.InUserSupports then -- check if client supports mcto
@@ -6656,8 +6663,7 @@ function VH_OnParsedMsgMCTo (from, data, to)
 			return 0
 		end
 	elseif data ~= pmdat then
-		local toip = getip (to)
-		opsnotify (table_sets.classnotirepl, gettext ("Message replaced for user with IP %s and class %d in PM to %s with IP %s and class %d: <%s> %s"):format (ip .. tryipcc (ip, from), fcls, to, toip .. tryipcc (toip, to), getclass (to), from, data))
+		opsnotify (table_sets.classnotirepl, gettext ("Message replaced for user with IP %s and class %d in PM to %s with IP %s and class %d: <%s> %s"):format (ip .. tryipcc (ip, from), fcls, to, toip .. tryipcc (toip, to), tcls, from, data))
 		local mcto = false
 
 		if table_refu.InUserSupports then -- check if client supports mcto
@@ -6735,6 +6741,7 @@ function VH_OnParsedMsgChat (nick, data)
 
 				local txt = table_sets.codetext:gsub ("<code>", reprexpchars (vcode))
 				maintouser (nick, txt)
+				opsnotify (table_sets.classnotichatcode, gettext ("%s with IP %s and class %d tried to speak in MC without chat code: <%s> %s"):format (nick, ip, ucl, nick, data))
 				return 0
 			elseif table_code [nick]["lock"] then
 				local rcode = table_code [nick]["code"]
@@ -6749,6 +6756,7 @@ function VH_OnParsedMsgChat (nick, data)
 				else
 					local txt = table_sets.codetext:gsub ("<code>", reprexpchars (table_code [nick]["vcode"]))
 					maintouser (nick, txt)
+					opsnotify (table_sets.classnotichatcode, gettext ("%s with IP %s and class %d tried to speak in MC without chat code: <%s> %s"):format (nick, ip, ucl, nick, data))
 				end
 
 				return 0
@@ -8099,7 +8107,7 @@ function setcustnick (nick, custom, ucl)
 			local dif = os.time () - table_usup [nick]
 
 			if dif < table_sets.chatuptime then
-				opsnotify (table_sets.classnotilowupchat, gettext ("Low chat uptime of %d seconds from %s with IP %s and class %d in command: %s"):format (dif, nick, ip .. tryipcc (ip, nick), ucl, "+" .. table_cmnds.nick .. " " .. custom))
+				opsnotify (table_sets.classnotilowupchat, gettext ("Low chat uptime of %d seconds from %s with IP %s and class %d in command: %s"):format (dif, nick, ip .. tryipcc (ip, nick), ucl, getconfig ("cmd_start_user"):sub (1, 1) .. table_cmnds.nick .. " " .. custom))
 
 				if table_sets.chatuptimeact == 0 then -- message
 					maintouser (nick, gettext ("Please wait another %d seconds before using public chat."):format (table_sets.chatuptime - dif))
@@ -8129,10 +8137,12 @@ function setcustnick (nick, custom, ucl)
 
 				local txt = table_sets.codetext:gsub ("<code>", reprexpchars (vcode))
 				maintouser (nick, txt)
+				opsnotify (table_sets.classnotichatcode, gettext ("%s with IP %s and class %d tried to speak in MC without chat code: <%s> %s"):format (nick, ip, ucl, nick, getconfig ("cmd_start_user"):sub (1, 1) .. table_cmnds.nick .. " " .. custom))
 				return
 			elseif table_code [nick]["lock"] then
 				local txt = table_sets.codetext:gsub ("<code>", reprexpchars (table_code [nick]["vcode"]))
 				maintouser (nick, txt)
+				opsnotify (table_sets.classnotichatcode, gettext ("%s with IP %s and class %d tried to speak in MC without chat code: <%s> %s"):format (nick, ip, ucl, nick, getconfig ("cmd_start_user"):sub (1, 1) .. table_cmnds.nick .. " " .. custom))
 				return
 			end
 		end
@@ -18458,6 +18468,19 @@ elseif tvar == "classnotigagip" then
 
 	----- ---- --- -- -
 
+	elseif tvar == "classnotichatcode" then
+		if num then
+			if setto >= 0 and setto <= 5 or setto == 10 or setto == 11 then
+				ok = true
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0, 1, 2, 3, 4, 5, 10 " .. gettext ("or") .. " 11"))
+			end
+		else
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
+		end
+
+	----- ---- --- -- -
+
 elseif tvar == "classnoticom" then
 if num then
 if (setto >= 0 and setto <= 5) or setto == 10 or setto == 11 then
@@ -20720,6 +20743,7 @@ function showledoconf (nick)
 	conf = conf .. "\r\n [::] classnotilowupreg = " .. _tostring (table_sets.classnotilowupreg)
 	conf = conf .. "\r\n [::] classnotilowupsear = " .. _tostring (table_sets.classnotilowupsear)
 	conf = conf .. "\r\n [::] classnotilowupchat = " .. _tostring (table_sets.classnotilowupchat)
+	conf = conf .. "\r\n [::] classnotichatcode = " .. _tostring (table_sets.classnotichatcode)
 	conf = conf .. "\r\n [::] classnoticom = " .. _tostring (table_sets.classnoticom)
 	conf = conf .. "\r\n [::] classnotisay = " .. _tostring (table_sets.classnotisay)
 	conf = conf .. "\r\n [::] classnotirepl = " .. _tostring (table_sets.classnotirepl)
