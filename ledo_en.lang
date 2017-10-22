@@ -792,8 +792,8 @@ Forbidden country code list is empty.|
 %s with IP %s and class %d allowed due to forbidden country code exception: %s|
 I'm staying idle due to confusion.|
 Added replacer in MC: %s|
-Deleted chat replacer with ID: %d|
-Couldn't delete chat replacer because ID not found: %d|
+Deleted chat replacer with ID %d: %s|
+Couldn't delete chat replacer because not found: %s|
 Chat replacer list|
 Chat replacer list is empty.|
 Replace|

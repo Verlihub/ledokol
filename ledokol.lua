@@ -63,7 +63,7 @@ Tzaca, JOE™
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.4" -- ledokol version
-bld_ledo = "61" -- build number
+bld_ledo = "62" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -2120,7 +2120,7 @@ return 0
 
 	----- ---- --- -- -
 
-	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.repldel .. " %d+$") then
+	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.repldel .. " .+$") then
 		if ucl >= table_sets.mincommandclass then
 			donotifycmd (nick, data, 0, ucl)
 			delreplacer (nick, data:sub (# table_cmnds.repldel + 3))
@@ -9350,14 +9350,28 @@ end
 
 ----- ---- --- -- -
 
-function delreplacer (nick, id)
-	local _, rows = VH:SQLQuery ("select `maxclass` from `" .. tbl_sql.chatrepl .. "` where `id` = " .. _tostring (id))
+function delreplacer (nick, line)
+	if line:match ("^%d+$") then -- try removing by id
+		local _, rows = VH:SQLQuery ("select `message` from `" .. tbl_sql.chatrepl .. "` where `id` = " .. _tostring (line))
+
+		if rows > 0 then
+			local _, lre = VH:SQLFetch (0)
+			VH:SQLQuery ("delete from `" .. tbl_sql.chatrepl .. "` where `id` = " .. _tostring (line))
+			commandanswer (nick, gettext ("Deleted chat replacer with ID %d: %s"):format (line, repnmdcoutchars (lre)))
+			return
+		--else
+			--commandanswer (nick, gettext ("Couldn't delete chat replacer because ID not found: %d"):format (line))
+		end
+	end
+
+	local _, rows = VH:SQLQuery ("select `id` from `" .. tbl_sql.chatrepl .. "` where `message` = " .. repsqlchars (repnmdcinchars (line))) -- try removing by lre
 
 	if rows > 0 then
+		local _, id = VH:SQLFetch (0)
 		VH:SQLQuery ("delete from `" .. tbl_sql.chatrepl .. "` where `id` = " .. _tostring (id))
-		commandanswer (nick, gettext ("Deleted chat replacer with ID: %d"):format (id))
+		commandanswer (nick, gettext ("Deleted chat replacer with ID %d: %s"):format (id, line))
 	else
-		commandanswer (nick, gettext ("Couldn't delete chat replacer because ID not found: %d"):format (id))
+		commandanswer (nick, gettext ("Couldn't delete chat replacer because not found: %s"):format (line))
 	end
 end
 
@@ -20361,7 +20375,7 @@ function sendophelp (nick, clas, pm)
 	-- chat replacer
 	help = help .. " " .. trig .. table_cmnds.repladd .. " <\"" .. gettext ("lre") .. "\"> <\"" .. gettext ("replace") .. "\"> <" .. gettext ("maxclass") .. "> [" .. gettext ("flags") .. "] - " .. gettext ("Add chat replacer") .. "\r\n"
 	help = help .. " " .. trig .. table_cmnds.repllist .. " - " .. gettext ("Chat replacer list") .. "\r\n"
-	help = help .. " " .. trig .. table_cmnds.repldel .. " <" .. gettext ("identifier") .. "> - " .. gettext ("Delete chat replacer") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.repldel .. " <" .. gettext ("identifier") .. " " .. gettext ("or") .. " " .. gettext ("lre") .. "> - " .. gettext ("Delete chat replacer") .. "\r\n"
 	help = help .. " " .. trig .. table_cmnds.replexadd .. " <" .. gettext ("item") .. "> <" .. gettext ("type") .. "> - " .. gettext ("Add chat replacer exception") .. "\r\n"
 	help = help .. " " .. trig .. table_cmnds.replexlist .. " - " .. gettext ("Chat replacer exception list") .. "\r\n"
 	help = help .. " " .. trig .. table_cmnds.replexdel .. " <" .. gettext ("item") .. "> - " .. gettext ("Delete chat replacer exception") .. "\r\n\r\n"
