@@ -9364,7 +9364,7 @@ function delreplacer (nick, line)
 		end
 	end
 
-	local _, rows = VH:SQLQuery ("select `id` from `" .. tbl_sql.chatrepl .. "` where `message` = " .. repsqlchars (repnmdcinchars (line))) -- try removing by lre
+	local _, rows = VH:SQLQuery ("select `id` from `" .. tbl_sql.chatrepl .. "` where `message` = '" .. repsqlchars (repnmdcinchars (line)) .. "'") -- try removing by lre
 
 	if rows > 0 then
 		local _, id = VH:SQLFetch (0)
