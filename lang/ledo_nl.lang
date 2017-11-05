@@ -1,6 +1,6 @@
 # Language: nl_NL
 # Charset: CP1252
-# Version: 2.9.3
+# Version: 2.9.4
 # Author: Modswat
 # Email: future_dance@hotmail.com
 
@@ -358,8 +358,8 @@ Forbidden IP address list is empty.|forbidden IP address lijst is leeg.
 %s with IP %s and class %d allowed due to forbidden IP address exception: %s|%s met IP %s en class %d toegestaan op grond van forbidden IP address exception: %s
 Couldn't delete category because not found: %s|Kon categorie niet verwijderen omdat deze is niet gevonden: %s
 User redirected due to spam: %s|Gebruiker gedropt wegens spam: %s
-%s redirected due to bad search request.|%s omgeleid als gevolg van slechte zoekopdracht.
-You can download me from: %s|Je kunt mij downloaden van: %s
+%s redirected due to bad search request.|
+You can download me from: %s|
 %s is registered with class %d and has been automatically unregistered and deleted from other tables.|%s is geregistreerd met class %d en is automatisch afgemeld en verwijderd uit andere tabellen .
 PiB|PiB
 TiB|TiB
@@ -792,8 +792,8 @@ Forbidden country code list is empty.|Verboden land code lijst is leeg.
 %s with IP %s and class %d allowed due to forbidden country code exception: %s|%s met IP %s en class %d toegestaan op grond van verboden land code uitzondering: %s
 I'm staying idle due to confusion.|Ik blijf inactief, te wijten aan verwarring.
 Added replacer in MC: %s|Toegevoegd vervanger in MC: %s
-Deleted chat replacer with ID: %d|Verwijder chat- vervanger met ID: %d
-Couldn't delete chat replacer because ID not found: %d|Kan chat- vervanger niet verwijderen omdat ID niet is gevonden: %d
+Deleted chat replacer with ID %d: %s|
+Couldn't delete chat replacer because not found: %s|
 Chat replacer list|Chat vervanger list
 Chat replacer list is empty.|Chat vervanger lijst is leeg.
 Replace|Vervang
@@ -1003,8 +1003,6 @@ Loaded %d of %d with totally %d items: %s|Geladen %d of %d met totaal %d items: 
 Infected user information sent to %s: %s|Geinfecteerde gebruiker informatie verzonden aan %s: %s
 Failed to load information from %s: %s|Niet gelukt informatie te laden van %s: %s
 Failed to send information to %s: %s|Niet gelukt om informatie te versturen naar %s: %s
-Error on executing %s: %s|Fout bij uitvoeren %s: %s
-Error on connecting.|Fout bij verbinden.
 Loaded none with totally %d items: %s|Geladen nul met totaal %d items: %s
 Infected user found with IP %s and share %s: %s|Geïnfecteerde gebruiker gedetecteerd met  IP %s en share %s
 Server didn't reply with expected status code.|Server reageerde niet met de verwacht status code
@@ -1172,3 +1170,24 @@ Couldn't delete forbidden chat nick because not found: %s|Kan de verboden nick n
 Forbidden chat nick list|verboden nick lijst
 Forbidden chat nick list is empty.|Verboden nick lijst is leeg
 %s with IP %s and class %d allowed due to forbidden chat nick exception: %s|%s met IP %s en class %d Toegestaan wegens verboden chat nick uitzondering:
+%s lookup|Opzoeken
+%s lookup didn't return anything.|Opzoeken leverde niks op,
+%s result|Resultaat
+No entrance|Geen toegang
+ASN: %s|
+%s was kicked with reason: %s|
+City gag|
+Add city gag|
+City gag list|
+Delete city gag|
+Modified city gag %s with reason: %s|
+Modified city gag: %s|
+Added city gag %s with reason: %s|
+Added city gag: %s|
+Cleared city gag list.|
+Deleted city gag: %s|
+City gag not found: %s|
+%s with IP %s and class %d tries to speak with city gag in PM to %s with IP %s and class %d: %s|
+%s with IP %s and class %d tries to speak with city gag in MC: %s|
+%s with IP %s and class %d tried to speak in MC without chat code: <%s> %s|
+%s with IP %s and class %d tried to speak without chat code in PM to %s with IP %s and class %d.|

@@ -1,6 +1,6 @@
 # Language: fr_FR
 # Charset: CP1252
-# Version: 2.9.3
+# Version: 2.9.4
 # Author: @tlantide
 # Email: chatonhubfrance@gmail.com
 
@@ -792,8 +792,8 @@ Forbidden country code list is empty.|La liste de code de pays interdit est vide
 %s with IP %s and class %d allowed due to forbidden country code exception: %s|%s avec l'IP %s et le profil %d est autorisé à avoir une exception de code de pays interdit: %s
 I'm staying idle due to confusion.|Je reste inoccupé en raison d'une confusion.
 Added replacer in MC: %s|Remplacement en message central ajouté: %s
-Deleted chat replacer with ID: %d|Le remplacement du tchat a été supprimé avec l'ID: %d
-Couldn't delete chat replacer because ID not found: %d|Ne peut supprimer le remplacement du tchat car ID introuvable: %s
+Deleted chat replacer with ID %d: %s|Supprimé chat remplacement avec ID 1 %d: %s
+Couldn't delete chat replacer because not found: %s|Impossible de supprimer le substitut de discussion car introuvable: 1 %s
 Chat replacer list|Liste de remplacement du tchat
 Chat replacer list is empty.|La liste de remplacement du tchat est vide.
 Replace|Remplacer
@@ -1003,8 +1003,6 @@ Loaded %d of %d with totally %d items: %s|Chargé %d de %d avec tous ces %d artic
 Infected user information sent to %s: %s|Information d'un utilisateur infecté envoyé à %s: %s
 Failed to load information from %s: %s|Impossible de charger l'information de %s: %s
 Failed to send information to %s: %s|Impossible d'envoyer l'information à %s: %s
-Error on executing %s: %s|Erreur à l'exécution %s: %s
-Error on connecting.|Erreur à la connexion.
 Loaded none with totally %d items: %s|Rien n'a été chargé avec tous ces %d articles: %s
 Infected user found with IP %s and share %s: %s|Utilisateur infecté trouvé avec l'IP %s et partage %s: %s
 Server didn't reply with expected status code.|Le serveur n'a pas répondu avec le code de statut attendu.
@@ -1172,3 +1170,24 @@ Couldn't delete forbidden chat nick because not found: %s|Impossible de supprime
 Forbidden chat nick list|La liste des pseudonymes interdit
 Forbidden chat nick list is empty.|La liste des pseudonymes Interdit est vide .
 %s with IP %s and class %d allowed due to forbidden chat nick exception: %s|%s %s IP et avec le profil %d est autorisé et fait parti de l' exception des  pseudonyme interdit: %s
+%s lookup|chercher
+%s lookup didn't return anything.|La recherche n'a rien renvoyé.
+%s result|Résultat
+No entrance|Aucune entrée
+ASN: %s|ASN: %s
+%s was kicked with reason: %s|%s A été kicker avec raison: %s
+City gag|Ville gag
+Add city gag|Ajouter gag de ville
+City gag list|La liste des ville gag
+Delete city gag|Supprimer ville gag
+Modified city gag %s with reason: %s|Modifier ville gag %s pour la raison: %s
+Modified city gag: %s|Modifier ville gag: %s
+Added city gag %s with reason: %s|Ajouter ville gag %s pour la raison: %s
+Added city gag: %s|Ajoutée ville gag: %s
+Cleared city gag list.|Effacé la liste des villes gag.
+Deleted city gag: %s|Supprimer la ville gag: %s
+City gag not found: %s|La liste des villes gag est vide.
+%s with IP %s and class %d tries to speak with city gag in PM to %s with IP %s and class %d: %s|%s avec IP %s avec le rang %dessaie de parler avec le gag de la ville en PM à %s avec IP %s avec le rang %d: %s
+%s with IP %s and class %d tries to speak with city gag in MC: %s|%savec l'IP%set le rang%dessaie de parler avec la ville Gag dans Mc:%s
+%s with IP %s and class %d tried to speak in MC without chat code: <%s> %s|%s avec IP%set classe %dessaye de parler en MC sans code de chat: <%s> %s 
+%s with IP %s and class %d tried to speak without chat code in PM to %s with IP %s and class %d.|%savec IP%s et classe%d essayé de parler sans code de chat dans PM à%s avec IP%s et classe%d.

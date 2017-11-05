@@ -1,6 +1,6 @@
 # Language: ro_RO
 # Charset: CP1250
-# Version: 2.9.3
+# Version: 2.9.4
 # Author: S0RiN
 # Email: rusu_sorin_con@yahoo.com
 
@@ -792,8 +792,8 @@ Forbidden country code list is empty.|Lista cu interziceri pe cod de þarã este g
 %s with IP %s and class %d allowed due to forbidden country code exception: %s|%s cu IP %s ºi clasa %d are permisiune datoritã excepþiei la interzicere pe cod de þarã: %s
 I'm staying idle due to confusion.|Sunt inactiv datoritã unei confuzii a clientului DC.
 Added replacer in MC: %s|Replacer adãugat pentru MC: %s
-Deleted chat replacer with ID: %d|ªtergere replacer de chat cu ID: %d
-Couldn't delete chat replacer because ID not found: %d|Nu se poate ºterge replacerul de chat pentru cã nu s-a gãsit ID: %d
+Deleted chat replacer with ID %d: %s|ªtergere replacer de chat cu ID %d: %s 
+Couldn't delete chat replacer because not found: %s|Nu s-a putut ºterge replacer-ul de chat pentru cã nu se gãseºte: %s
 Chat replacer list|Lista cu replacere de chat
 Chat replacer list is empty.|Lista cu replacere de chat, este goalã.
 Replace|Schimb
@@ -1003,8 +1003,6 @@ Loaded %d of %d with totally %d items: %s|Încãrcare a %d din %d cu total %d arti
 Infected user information sent to %s: %s|Informaþiile despre utilizatorul infestat cu viruºi trimise la %s: %s
 Failed to load information from %s: %s|Eºuare a încãrcãrii diagnosticului cãtre: %s: %s
 Failed to send information to %s: %s|Eºuare a trimiterii diagnosticului cãtre %s: %s
-Error on executing %s: %s|Eroare de executare %s: %s
-Error on connecting.|Eroare de conectare.
 Loaded none with totally %d items: %s|Încãrcare nulã cu totalul %d articole: %s
 Infected user found with IP %s and share %s: %s|Detectare utilizator virusat, cu IP %s ºi share %s: %s
 Server didn't reply with expected status code.|Serverul nu rãspunde cu codul status aºteptat.
@@ -1172,3 +1170,24 @@ Couldn't delete forbidden chat nick because not found: %s|Nu s-a putut ºterge ni
 Forbidden chat nick list|Lista cu nick-uri de chat interzise
 Forbidden chat nick list is empty.|Lista cu nick-uri de chat interzise, e goalã.
 %s with IP %s and class %d allowed due to forbidden chat nick exception: %s|%s cu IP %s ºi clasa %d permis datoritã excepþiei de interdicþe pe nick: %s
+%s lookup|%s cãutare
+%s lookup didn't return anything.|%s cãutarea nu a dat nici un rezultat
+%s result|%s rezultat
+No entrance|Fãrã intrãri
+ASN: %s|ASN: 1 %s
+%s was kicked with reason: %s|%s a fost lovit pentru %s
+City gag|Gag pe oraº
+Add city gag|Adãugare gag pe oraº
+City gag list|Lista de gaguri pe oraº
+Delete city gag|ªtergere gag pe oraº
+Modified city gag %s with reason: %s|Modificare gag pe oraº %s cu motiv %s
+Modified city gag: %s|Gag pe oraº modificat %s
+Added city gag %s with reason: %s|Adãugat gag pe oraº %s cu motiv %s
+Added city gag: %s|Gag pe oraº adãugat %s
+Cleared city gag list.|Lista gaguri pe oraº curãþatã.
+Deleted city gag: %s|ªters gag pe oraº: %s
+City gag not found: %s|Lista cu gaguri pe oraº e goalã.
+%s with IP %s and class %d tries to speak with city gag in PM to %s with IP %s and class %d: %s|%s cu IP %s ºi clasa %d încearcã sã scrie cu gag pe oraº în PM cãtre %s cu IP %s ºi clasa %d : %s
+%s with IP %s and class %d tries to speak with city gag in MC: %s|%s cu IP %s ºi clasa %d încearcã sã scrie cu gag pe oraº în MC: %s
+%s with IP %s and class %d tried to speak in MC without chat code: <%s> %s|%s cu IP %s ºi clasa %d încearcã sã scrie în main-chat fãrã a scrie codul: <%s> %s
+%s with IP %s and class %d tried to speak without chat code in PM to %s with IP %s and class %d.|%s cu IP %s ºi clasa %d încearcã sã scrie fãrã cod de chat în privat la %s cu IP %s ºi clasa %d .

@@ -1,6 +1,6 @@
 # Language: ru_RU
 # Charset: CP1251
-# Version: 2.9.3
+# Version: 2.9.4
 # Author: KCAHDEP
 # Email: admin@kcahdep.org
 
@@ -792,8 +792,8 @@ Forbidden country code list is empty.|Список запрещённых кодов стран пуст.
 %s with IP %s and class %d allowed due to forbidden country code exception: %s|Пользователь %s с IP адресом %s и классом %d пропущен с исключением по запрещённому коду страны: %s
 I'm staying idle due to confusion.|Я простаиваю из-за путаницы.
 Added replacer in MC: %s|Замена выражений в главный чат добавлена: %s
-Deleted chat replacer with ID: %d|Удалена замена для выражения в чате с ID: %d
-Couldn't delete chat replacer because ID not found: %d|Невозможно удалить замену для выражения в чате с ID. Не найдено в базе: %d
+Deleted chat replacer with ID %d: %s|Удален пункт замены сообщений в чате с ID %d: %s
+Couldn't delete chat replacer because not found: %s|Невозможно удалить пункт замены сообщений в чате потому что не найдено: %s
 Chat replacer list|Список замен выражений
 Chat replacer list is empty.|Список замен выражений пуст.
 Replace|Замена для выражения
@@ -871,15 +871,15 @@ unknown nick|Неизвестный ник
 Country code gag|Заглушка по коду страны
 Add country code gag|Добавить заглушку по коду страны
 Added country code gag: %s|Добавлена заглушка по коду страны: %s
-Added country code gag %s with reason: %s|Добавлена заглушка по коду страны %s причина: %s
+Added country code gag %s with reason: %s|Добавлена заглушка по коду страны %s с причиной: %s
 Modified country code gag: %s|Изменена заглушка по коду страны: %s
-Modified country code gag %s with reason: %s|Изменена заглушка по коду страны %s причина: %s
+Modified country code gag %s with reason: %s|Изменена заглушка по коду страны %s с причиной: %s
 Deleted country code gag: %s|Удалена заглушка по коду страны: %s
 Country code gag not found: %s|Заглушка по коду страны не найдена: %s
 Country code gag list|Список заглушек по коду страны
 Country code gag list is empty.|Список заглушек по коду страны пуст.
 Delete country code gag|Удалить заглушку по коду страны
-Cleared country code gag list.|Очистка списка заглушенных по коду стран
+Cleared country code gag list.|Список заглушенных по коду страны очищен.
 %s with IP %s and class %d tries to speak with country code gag in MC: %s|Пользователь %s с IP %s и классом %d с заглушкой по коду страны пытается отправить сообщение в общий чат: %s
 %s with IP %s and class %d tries to speak with country code gag in PM to %s with IP %s and class %d: %s|Пользователь %s c IP адресом %s и классом %d пытался отправить сообщение несмотря на заглушку по коду страны в виде личного сообщения пользователю %s с IP адресом %s и классом %d: %s
 No reason specified|Нет указанных причин
@@ -956,7 +956,7 @@ Menu item|Пункт меню
 Menu command|Команда меню
 Changed right click menu item order: %s|Изменён пункт меню правой кнопки мыши: %s
 Separator or eraser|Разделитель или стиратель
-Nick and IP %s unbanned: <%s> %s|Бан по нику с IP %s снят: <%s> %s
+Nick and IP %s unbanned: <%s> %s|Бан по нику и IP-адресу %s снят: <%s> %s
 Other %s unbanned: <%s> %s|Бан неизвестного типа %s снят: <%s> %s
 Vote for user to be kicked|Голосовать за кик пользователя
 You don't want to vote for kicking an operator.|Не думаю что вы хотите голосовать за кик оператора.
@@ -1003,8 +1003,6 @@ Loaded %d of %d with totally %d items: %s|Загружено %d из %d итого %d пунктов: %
 Infected user information sent to %s: %s|Информация о заражённом пользователе отправлена в %s: %s
 Failed to load information from %s: %s|Не удалось загрузить информацию из %s: %s
 Failed to send information to %s: %s|Не удалось отправить информацию в %s: %s
-Error on executing %s: %s|Ошибка при выполнении %s: %s
-Error on connecting.|Ошибка при подключении.
 Loaded none with totally %d items: %s|Не загружено ни одного итого %d пунктов: %s
 Infected user found with IP %s and share %s: %s|Заражённый пользователь найден с IP адресом %s и шарой %s: %s
 Server didn't reply with expected status code.|Сервер не ответил ожидаемым кодом статуса.
@@ -1172,3 +1170,24 @@ Couldn't delete forbidden chat nick because not found: %s|Не могу удалить запрещ
 Forbidden chat nick list|Список запрещённых чат ников
 Forbidden chat nick list is empty.|Список запрещённых чат ников пуст.
 %s with IP %s and class %d allowed due to forbidden chat nick exception: %s|Пользователь %s с IP-адресом %s и классом %d пропущен с исключением по чат нику: %s
+%s lookup|Проверка %s
+%s lookup didn't return anything.|Проверка %s не дала результатов.
+%s result|Результаты %s
+No entrance|Входа нет
+ASN: %s|ASN: %s
+%s was kicked with reason: %s|%s был кикнут с причиной: %s
+City gag|Заглушка по городу
+Add city gag|Добавить заглушку по городу
+City gag list|Список заглушек по городу
+Delete city gag|Удалить заглушку по городу
+Modified city gag %s with reason: %s|Изменена заглушка по городу %s с причиной: %s
+Modified city gag: %s|Изменена заглушка по городу: %s
+Added city gag %s with reason: %s|Добавлена заглушка по городу %s с причиной: %s
+Added city gag: %s|Добавлена заглушка по городу: %s
+Cleared city gag list.|Список заглушенных по городу очищен.
+Deleted city gag: %s|Удалена заглушка по городу: %s
+City gag not found: %s|Список заглушек по городу пуст.
+%s with IP %s and class %d tries to speak with city gag in PM to %s with IP %s and class %d: %s|Пользователь %s c IP адресом %s и классом %d пытался отправить сообщение несмотря на заглушку по городу в виде личного сообщения пользователю %s с IP адресом %s и классом %d: %s
+%s with IP %s and class %d tries to speak with city gag in MC: %s|Пользователь %s с IP адресом %s и классом %d пытался отправить сообщение в главный чат несмотря на заглушку по городу: %s
+%s with IP %s and class %d tried to speak in MC without chat code: <%s> %s|%s с IP %s и классом %d пытался отправить сообщение в главный чат без защитного кода: <%s> %s
+%s with IP %s and class %d tried to speak without chat code in PM to %s with IP %s and class %d.|%s с IP %s и классом %d пытался говорить без защитного кода в виде личного сообщения пользователю %s с IP %s и классом %d.

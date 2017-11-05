@@ -1,20 +1,20 @@
-# Language: sv_SE
-# Charset: CP1252
+# Language: el_GR
+# Charset: CP1253
 # Version: 2.9.4
-# Author: RoLex
-# Email: webmaster@feardc.net
+# Author: Marinus Savoritias
+# Email: msavorritias@gmail.com
 
-Current topic: %s|Nuvarande tema: %s
-Current topic set by %s: %s|Nuvarande tema av %s: %s
+Current topic: %s|
+Current topic set by %s: %s|
 This operation might take very long time depending on how much is going to be removed, please be patient.|
-days|dagar
-%s with class %d deleted %d IP logger plugin entries older than %d days.|%s med klass %d tog bort %d rader från IP logger insticksprogrammet som var äldre än %d dagar.
-%s with class %d deleted %d unbans older than %d days.|%s med klass %d tog bort %s rader från unban listan som var äldre än %d dagar.
-%s with class %d deleted %d bans older than %d days.|%s med klass %d tog bort %s rader från ban listan som var äldre än %d dagar.
-%s with class %d deleted %d kicks older than %d days.|%s med klass %d tog bort %s rader från kick listan som var äldre än %d dagar.
+days|
+%s with class %d deleted %d IP logger plugin entries older than %d days.|
+%s with class %d deleted %d unbans older than %d days.|
+%s with class %d deleted %d bans older than %d days.|
+%s with class %d deleted %d kicks older than %d days.|
 I'm probably away. State your business and I might answer later if you're lucky.|
-Perform script update|Utför uppdatering av skriptet
-Deleted %d main chat history messages.|Tog bort %d rader från huvudchatt historiken.
+Perform script update|
+Deleted %d main chat history messages.|
 There are no main chat history messages to remove.|
 Deleted %d operator chat history messages.|
 There are no operator chat history messages to remove.|
@@ -22,7 +22,7 @@ There are no operator chat history messages to remove.|
 Unable to connect to target server. Please try again later.|
 Last %d main chat messages|
 Main chat history is empty.|
-%s is now known as: %s|%s är nu känd som: %s
+%s is now known as: %s|
 Last %d operator chat messages|
 Operator chat history is empty.|
 Valid priority is a number from %d to %d.|
@@ -31,25 +31,25 @@ Why would you send offline message to yourself?|
 User %s is online. Sending message directly.|
 Your offline message stored for user: %s|
 %s with IP %s and class %d sent offline message.|
-priority|prioritet
+priority|
 Offline|
 Online|
 I sent offline message to you on %s|
-My current status|Mitt nuvarande status
+My current status|
 %s with IP %s and class %d received offline messages.|
-Stored offline messages|Sparade offline meddelande
+Stored offline messages|
 Offline message list is empty.|
 Deleted %d offline messages.|
 Couldn't delete offline messages because not found: %s|
 %s with class %d deleted all offline messages.|
 There are no offline messages to remove.|
-No topic is set.|Temat är inte satt.
+No topic is set.|
 %s with IP %s and class %d allowed due to forbidden nick exception: %s|
-message|meddelande
+message|
 %s with IP %s and class %d allowed due to forbidden description exception: %s|
 User you're trying to kick or redirect is protected: %s|
 %s with IP %s and class %d allowed due to forbidden tag exception: %s|
-type|typ
+type|
 %s with IP %s and class %d allowed due to forbidden connection type exception: %s|
 %s with class %d changed configuration variable %s: %s => %s|
 %s with IP %s and class %d allowed due to forbidden email exception: %s|
@@ -71,7 +71,7 @@ Modified forbidden share size with ban time %s: %s|
 Added forbidden share size with ban time %s: %s|
 Couldn't add MyINFO exception because already exists: %s|
 Added MyINFO exception: %s|
-and|och
+and|
 Deleted forbidden nick: %s|
 Couldn't delete forbidden nick because not found: %s|
 Deleted forbidden description: %s|
@@ -103,7 +103,7 @@ MyINFO exception list is empty.|
 Deleted %d rows: %s|
 Known types are: %s|
 No rows to remove: %s|
-date|datum
+date|
 %s with IP %s and class %d used following command: %s|
 context|
 Deleted from chat rank list: %s|
@@ -144,7 +144,7 @@ The user you're trying to send offline message to is a bot. Message is discarded
 You can't start at user number %d when you only have %d accounts with class %d.|
 Showing %d out of total %d accounts with class %d starting at user number %d|
 There are no accounts with class: %d|
-Known classes are: %s|Kända klasser är: %s
+Known classes are: %s|
 %s with class %d sent say message: <%s> %s|
 %s with class %d had bad luck sending say message: <%s> %s|
 You can't talk from nick whose class is higher or equals your own.|
@@ -172,20 +172,20 @@ Remove user or word from rank list|
 List stored offline messages|
 Delete offline messages by date|
 Delete all offline messages|
-class|klass
+class|
 Clean up tables|
 Operator chat history|
 Delete all history messages|
 Your operator rank|
 Script configuration variables|
 Change configuration variable|
-nick|nick
+nick|
 This list of commands|
 %s user commands|
-Current topic|Nuvarande tema
+Current topic|
 Your chat rank|
 You're not allowed to send private messages.|
-Unknown|Okänt
+Unknown|
 identifier|
 Offline message to user|
 Main chat history|
@@ -198,19 +198,19 @@ lre|
 action|
 Changed configuration variable %s: %s => %s|
 Configuration variable %s can only be set to: %s|
-or|eller
+or|
 Configuration variable %s must be a number.|
-to|till
+to|
 Unknown configuration variable: %s|
 %s version: %s|
-Not installed|Inte installerat
+Not installed|
 User dropped due to spam: %s|
 variable|
 value|
-minutes|minuter
+minutes|
 %s library version: %s|
 Reorder right click menu item|
-lines|rader
+lines|
 Couldn't add rank exception because already exists: %s|
 Added rank exception: %s|
 Deleted rank exception: %s|
@@ -220,7 +220,7 @@ Rank exception list is empty.|
 Add rank exception|
 Delete rank exception|
 In order to use this feature you must turn off registered users list cache. Do it by setting hub configuration variable %s to %d and restarting the hub. Please note: Turning cache off is not recommended with large list of registered users.|
-Both|Båda
+Both|
 Deleted search filter: %s|
 Couldn't delete search filter because not found: %s|
 Search filter list|
@@ -244,7 +244,7 @@ IP authorization list|
 IP authorization list is empty.|
 Add IP authorization entry|
 Delete authorization entry|
-ip|ip
+ip|
 %s with IP %s and class %d authorized.|
 %s with IP %s and class %d failed authorization and disconnected.|
 Category: %s|
@@ -255,7 +255,7 @@ Division by zero is forbidden.|
 Show your welcome messages|
 Welcome message list|
 Delete user and his welcome messages|
-Nick|Nick
+Nick|
 Login message|
 Logout message|
 Welcome message list is empty.|
@@ -270,9 +270,9 @@ Your login message: %s|
 Add chatroom|
 Chatroom list|
 Delete chatroom|
-description|beskrivning
-minclass|minklass
-maxclass|maxklass
+description|
+minclass|
+maxclass|
 Modified chatroom: %s|
 Added chatroom: %s|
 Deleted chatroom: %s|
@@ -293,9 +293,9 @@ Added search filter exception entry: %s|
 Deleted search filter exception entry: %s|
 Couldn't delete search filter exception entry because not found: %s|
 Search filter exception list is empty.|
-file|fil
-Read hub logs|Läsa hubbloggar
-Known files are: %s|Kända filer är: %s
+file|
+Read hub logs|
+Known files are: %s|
 Log file is empty or does not exist.|
 Add command notification exception|
 Delete command notification exception|
@@ -310,16 +310,16 @@ Query results|
 Connections from your IP aren't allowed for another %d seconds.|
 Executed shell command didn't return any status code: %s|
 Returned status code: %s|
-Added by: %s|Tillagt av: %s
+Added by: %s|
 publisher|
 Release list is empty.|
-Last %d releases|Senaste %s releaser
+Last %d releases|
 No releases by requested publisher were found: %s|
 Last %d releases published by %s|
 No releases by requested category were found: %s|
 Last %d releases by category %s|
 No releases by requested search string were found: %s|
-time|tid
+time|
 Known search types are: %s|
 Configuration variable %s can't be empty.|
 Deleted from share rank list: %s|
@@ -361,13 +361,13 @@ User redirected due to spam: %s|
 %s redirected due to bad search request.|
 You can download me from: %s|
 %s is registered with class %d and has been automatically unregistered and deleted from other tables.|
-PiB|PiB
-TiB|TiB
-GiB|GiB
-MiB|MiB
-KiB|KiB
-B|B
-EiB|EiB
+PiB|
+TiB|
+GiB|
+MiB|
+KiB|
+B|
+EiB|
 Get user's real nick|
 Requested nick wasn't found in custom nick list.|
 Requested nick belongs to a user who is %s: %s|
@@ -381,9 +381,9 @@ limit|
 Size of chat ranks table: %d [ %s: %d @ %s ]|
 Size of share ranks table: %d [ %s: %d @ %s ]|
 Size of operator ranks table: %d [ %s: %d @ %s ]|
-content|innehåll
-destination|destination
-interval|intervall
+content|
+destination|
+interval|
 Add reminder|
 Delete reminder|
 Reminder list|
@@ -399,9 +399,9 @@ Content: %s|
 Interval: %d of %d|
 Destination: %s|
 Raw command|
-PM|PM
-MC|MC
-reply|svar
+PM|
+MC|
+reply|
 Add chat responder|
 Delete chat responder|
 Main chat responder list|
@@ -412,7 +412,7 @@ Added chat responder: %s|
 Deleted chat responder with ID: %d|
 Couldn't delete chat responder because ID not found: %d|
 Responder|
-Reply|Svar
+Reply|
 Add chat responder exception|
 Delete chat responder exception|
 Chat responder exception list|
@@ -421,7 +421,7 @@ Couldn't add chat responder exception because already exists: %s|
 Added chat responder exception: %s|
 Deleted chat responder exception: %s|
 Couldn't delete chat responder exception because not found: %s|
-command|kommando
+command|
 Customize script command|
 Customized script command: %s => %s|
 Unknown script command: %s|

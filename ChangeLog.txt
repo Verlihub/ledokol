@@ -1,4 +1,4 @@
-[ 2.9.4 :: 2017-10-29 ]
+[ 2.9.4 :: 2017-11-05 ]
 
 [ 47] Fixed: User logger command parameters when searched string is a number
 [ 49] Fixed: Country code gag reason parameter could not be empty, report by KCAHDEP

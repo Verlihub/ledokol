@@ -1,150 +1,150 @@
-# Language: sv_SE
-# Charset: CP1252
+# Language: be_BY
+# Charset: CP1251
 # Version: 2.9.4
-# Author: RoLex
-# Email: webmaster@feardc.net
+# Author: Iska Play
+# Email: vorbissmcgregor@gmail.com
 
-Current topic: %s|Nuvarande tema: %s
-Current topic set by %s: %s|Nuvarande tema av %s: %s
-This operation might take very long time depending on how much is going to be removed, please be patient.|
-days|dagar
-%s with class %d deleted %d IP logger plugin entries older than %d days.|%s med klass %d tog bort %d rader frеn IP logger insticksprogrammet som var дldre дn %d dagar.
-%s with class %d deleted %d unbans older than %d days.|%s med klass %d tog bort %s rader frеn unban listan som var дldre дn %d dagar.
-%s with class %d deleted %d bans older than %d days.|%s med klass %d tog bort %s rader frеn ban listan som var дldre дn %d dagar.
-%s with class %d deleted %d kicks older than %d days.|%s med klass %d tog bort %s rader frеn kick listan som var дldre дn %d dagar.
-I'm probably away. State your business and I might answer later if you're lucky.|
-Perform script update|Utfцr uppdatering av skriptet
-Deleted %d main chat history messages.|Tog bort %d rader frеn huvudchatt historiken.
-There are no main chat history messages to remove.|
-Deleted %d operator chat history messages.|
-There are no operator chat history messages to remove.|
-%s with class %d deleted %d main chat history messages.|
-Unable to connect to target server. Please try again later.|
-Last %d main chat messages|
-Main chat history is empty.|
-%s is now known as: %s|%s дr nu kдnd som: %s
-Last %d operator chat messages|
-Operator chat history is empty.|
-Valid priority is a number from %d to %d.|
-You are using latest version of %s, no update is required.|
-Why would you send offline message to yourself?|
-User %s is online. Sending message directly.|
-Your offline message stored for user: %s|
-%s with IP %s and class %d sent offline message.|
-priority|prioritet
-Offline|
-Online|
-I sent offline message to you on %s|
-My current status|Mitt nuvarande status
-%s with IP %s and class %d received offline messages.|
-Stored offline messages|Sparade offline meddelande
-Offline message list is empty.|
-Deleted %d offline messages.|
-Couldn't delete offline messages because not found: %s|
-%s with class %d deleted all offline messages.|
-There are no offline messages to remove.|
-No topic is set.|Temat дr inte satt.
-%s with IP %s and class %d allowed due to forbidden nick exception: %s|
-message|meddelande
-%s with IP %s and class %d allowed due to forbidden description exception: %s|
-User you're trying to kick or redirect is protected: %s|
-%s with IP %s and class %d allowed due to forbidden tag exception: %s|
-type|typ
-%s with IP %s and class %d allowed due to forbidden connection type exception: %s|
-%s with class %d changed configuration variable %s: %s => %s|
-%s with IP %s and class %d allowed due to forbidden email exception: %s|
-User received own message: %s|
-%s with IP %s and class %d allowed due to forbidden share size exception: %s|
-Deleted %d releases from category: %s|
-Why would you want to set empty topic?|
-Modified forbidden nick with ban time %s: %s|
-Added forbidden nick with ban time %s: %s|
-Modified forbidden description with ban time %s: %s|
-Added forbidden description with ban time %s: %s|
-Modified forbidden tag with ban time %s: %s|
-Added forbidden tag with ban time %s: %s|
-Modified forbidden connection type with ban time %s: %s|
-Added forbidden connection type with ban time %s: %s|
-Modified forbidden email with ban time %s: %s|
-Added forbidden email with ban time %s: %s|
-Modified forbidden share size with ban time %s: %s|
-Added forbidden share size with ban time %s: %s|
-Couldn't add MyINFO exception because already exists: %s|
-Added MyINFO exception: %s|
-and|och
-Deleted forbidden nick: %s|
-Couldn't delete forbidden nick because not found: %s|
-Deleted forbidden description: %s|
-Couldn't delete forbidden description because not found: %s|
-Deleted forbidden tag: %s|
-Couldn't delete forbidden tag because not found: %s|
-Deleted forbidden connection type: %s|
-Couldn't delete forbidden connection type because not found: %s|
-Deleted forbidden email: %s|
-Couldn't delete forbidden email because not found: %s|
-Deleted forbidden share size: %s|
-Couldn't delete forbidden share size because not found: %s|
-Deleted MyINFO exception: %s|
-Couldn't delete MyINFO exception because not found: %s|
-Forbidden nick list|
-Forbidden nick list is empty.|
-Forbidden description list|
-Forbidden description list is empty.|
-Forbidden tag list|
-Forbidden tag list is empty.|
-Forbidden connection type list|
-Forbidden connection type list is empty.|
-Forbidden email list|
-Forbidden email list is empty.|
-Forbidden share size list|
-Forbidden share size list is empty.|
-MyINFO exception list|
-MyINFO exception list is empty.|
-Deleted %d rows: %s|
-Known types are: %s|
-No rows to remove: %s|
-date|datum
-%s with IP %s and class %d used following command: %s|
-context|
-Deleted from chat rank list: %s|
-Not found in chat rank list: %s|
-Deleted from operator rank list: %s|
-Not found in operator rank list: %s|
-Antispam|
-Your chat rank is: %d|
-You have to write something in main chat to get started.|
-Custom nick list is empty.|
+Current topic: %s|Бягучая тэма: %s
+Current topic set by %s: %s|Бягучую тэму распачаў: %s: %s
+This operation might take very long time depending on how much is going to be removed, please be patient.|Гэтая аперацыя можа працягвацца даволі доўгі час, у залежнасці ад таго, наколькі многа будзе выдалена, калі ласка, будзьце цярплівымі.
+days|дзён
+%s with class %d deleted %d IP logger plugin entries older than %d days.|%s класа %d выдаліў(-ла) %d запісаў плагіну журналу IP старэйшых за %d дзён.
+%s with class %d deleted %d unbans older than %d days.|%s класа %d выдаліў(-ла) %d разбанаў старэйшых за %d дзён.
+%s with class %d deleted %d bans older than %d days.|%s класа %d выдаліў(-ла) %d банаў старэйшых за %d дзён.
+%s with class %d deleted %d kicks older than %d days.|%s класа %d выдаліў(-ла) %d кікаў старэйшых за %d дзён.
+I'm probably away. State your business and I might answer later if you're lucky.|Магчыма я заняты. Заяві аб сабе і, можа, я адкажу пазней, калі табе пашанцуе.
+Perform script update|Ажыццявіць абнаўленне сцэнароў 
+Deleted %d main chat history messages.|Выдалена %d паведамленняў з гісторыі галоўнага чату.
+There are no main chat history messages to remove.|У гісторыі галоўнага чату няма паведамленняў, якія можна былоб выдаліць.
+Deleted %d operator chat history messages.|Выдалена %d паведамленняў з гісторыі чату аператараў.
+There are no operator chat history messages to remove.|У гісторыі чату аператараў няма паведамленняў, якія можна былоб выдаліць.
+%s with class %d deleted %d main chat history messages.| %s класа %d выдаліў(-ла) %d паведамленняў з гісторыі галоўнага чату.
+Unable to connect to target server. Please try again later.|Немагчыма злучыцца з мэтавым серверам. Калі ласка, паспрабуйце пазней.
+Last %d main chat messages|Апошнія %s паведамленняў галоўнага чату.
+Main chat history is empty.|Гісторыя галоўнага чату пустая.
+%s is now known as: %s|%s вяомы як \"%s\"
+Last %d operator chat messages|Апошнія %s паведамленняў чату аператараў
+Operator chat history is empty.|Гісторыя чату аператараў пустая.
+Valid priority is a number from %d to %d.|Прыдатны прыярытэт - гэта лік ад %d да %d.
+You are using latest version of %s, no update is required.|Вы карыстаецеся апошняй версіяй %s, абнаўленне непатрэбнае.
+Why would you send offline message to yourself?|Чаму вы адсылаеце афлайн-паведамленне сабе?
+User %s is online. Sending message directly.|Карыстальнік%s знаходзіцца анлайн. Паведамленне будзе адпраўлена наўпрост.
+Your offline message stored for user: %s|Вашае афлайн-паведамленне захавана для карыстальніка %s
+%s with IP %s and class %d sent offline message.|%s класа %d з IP %s даслаў афлайн-паведамленне.
+priority|прыярытэт
+Offline|Афлайн
+Online|Анлайн
+I sent offline message to you on %s|Я даслаў вам афлайн паведамленне на %s
+My current status|Мой бягучы статус
+%s with IP %s and class %d received offline messages.|%s класа %d з IP %s атрымаў афлайн-паведамленне.
+Stored offline messages|Захоўваемыя афлайн-паведамленні
+Offline message list is empty.|Спіс афлайн-паведамленняў пусты.
+Deleted %d offline messages.|Выдалена %d афлайн-паведамленняў.
+Couldn't delete offline messages because not found: %s|Немагчыма выдаліць афлайн-паведамленні, бо ня знойдзена: %s
+%s with class %d deleted all offline messages.|%s класа %d выдаліў(-ла) ўсе афлайн-паведамленні.
+There are no offline messages to remove.|Афлайн паведамленні адсутнічаюць.
+No topic is set.|Не створана ніводнай тэмы.
+%s with IP %s and class %d allowed due to forbidden nick exception: %s|%s класа %d з IP %s дазволены з-за  забароненага выключэння ў нікнейме: %s
+message|паведамленне
+%s with IP %s and class %d allowed due to forbidden description exception: %s|%s класа %d з IP %s дазволены з-за забароненага выключэння ў апісанні: %s
+User you're trying to kick or redirect is protected: %s|Карыстальнік, якога вы спрабуеце кікнуць або перанакіравацць ахаваны: %s
+%s with IP %s and class %d allowed due to forbidden tag exception: %s|%s класа %d з IP %s дазволены з-за забароненага выключэння ў тэгу: %s
+type|тып
+%s with IP %s and class %d allowed due to forbidden connection type exception: %s|%s класа %d з IP %s дазволены з-за забароненага выключэння тыпу злучэння: %s
+%s with class %d changed configuration variable %s: %s => %s|%s класа %d змяніў зменную канфігурацыі %s:%s => %s
+%s with IP %s and class %d allowed due to forbidden email exception: %s|%s класа %d з IP %s дазволены з-за забароненага выключэння ў e-mail: %s
+User received own message: %s|Карыстальнік атрымаў сваё ж паведамленне: %s
+%s with IP %s and class %d allowed due to forbidden share size exception: %s|%s класа %d з IP %s дазволены з-за забароненага выключэння памеру дзялення: %s
+Deleted %d releases from category: %s|Выдалена %d рэлізаў з катэгорыі: %s
+Why would you want to set empty topic?|Чаму вы жадаеце стварыць пустую тэму?
+Modified forbidden nick with ban time %s: %s|Зменены забаронены нікнейм з часам бану %s: %s
+Added forbidden nick with ban time %s: %s|Дадазены забаронены нікнейм з часам бану %s: %s
+Modified forbidden description with ban time %s: %s|Зменена забароненае апісанне з часам бану %s: %s
+Added forbidden description with ban time %s: %s|Дададзена забароненае апісанне з часам бану %s: %s
+Modified forbidden tag with ban time %s: %s|Зменены забаронены тэг з часам бану %s: %s
+Added forbidden tag with ban time %s: %s|Дададзены забаронены тэг з часам бану %s: %s
+Modified forbidden connection type with ban time %s: %s|Зменены забаронены тып злучэння з часам бану %s: %s
+Added forbidden connection type with ban time %s: %s|Дададзены забаронены тэг з часам бану %s: %s
+Modified forbidden email with ban time %s: %s|Зменены забаронены e-mail з часам бану %s: %s
+Added forbidden email with ban time %s: %s|Дададзены забаронены e-mail з часам бану %s: %s
+Modified forbidden share size with ban time %s: %s|Зменены забаронены памер дзялення з часам бану %s: %s
+Added forbidden share size with ban time %s: %s|Дададзены забаронены памер дзялення з часам бану %s: %s
+Couldn't add MyINFO exception because already exists: %s|Немагчыма дадаць выключэнне MyINFO, бо ўжо існуе: %s
+Added MyINFO exception: %s|Дададзена выключэнне MyINFO: %s
+and|ды
+Deleted forbidden nick: %s|Выдалены забаронены нікнейм: %s
+Couldn't delete forbidden nick because not found: %s|Немагчыма выдаліць забаронены нікнейм, т. я. ён не знойдзены: %s
+Deleted forbidden description: %s|Выдалена забароненае апісанне: %s
+Couldn't delete forbidden description because not found: %s|Немагчыма выдаліць забароненае апісанне, т. я. яно не знойдзена: %s
+Deleted forbidden tag: %s|Выдалены забаронены тэг: %s
+Couldn't delete forbidden tag because not found: %s|Немагчыма выдаліць забаронены тэг, т. я. ён не знойдзены: %s
+Deleted forbidden connection type: %s|Выдалены забаронены тып злучэння: %s
+Couldn't delete forbidden connection type because not found: %s|Немагчыма выдаліць забаронены тып злучэння, т. я. ён не знойдзены: %s
+Deleted forbidden email: %s|Выдалены забаронены e-mail: %s
+Couldn't delete forbidden email because not found: %s|Немагчыма выдаліць забаронены e-mail, т. я. ён не знойдзены: %s
+Deleted forbidden share size: %s|Выдалены забаронены памер дзялення: %s
+Couldn't delete forbidden share size because not found: %s|Немагчыма выдаліць забаронены памер дзялення, т. я. ён не знойдзены: %s
+Deleted MyINFO exception: %s|Выдаленае выключэнне MyINFO: %s
+Couldn't delete MyINFO exception because not found: %s|Немагчыма выдаліць выключэнне MyINFO, т. я. яно не знойдзена: %s
+Forbidden nick list|Спіс забароненых нікнеймаў
+Forbidden nick list is empty.|Спіс забароненых нікнеймаў пусты.
+Forbidden description list|Спіс забароненых апісанняў
+Forbidden description list is empty.|Спіс забароненых апісанняў пусты.
+Forbidden tag list|Спіс забароненых тэгаў
+Forbidden tag list is empty.|Спіс забароненых тэгаў пусты.
+Forbidden connection type list|Спіс забароненых тыпаў злучэння
+Forbidden connection type list is empty.|Спіс забароненых тыпаў злучэння пусты.
+Forbidden email list|Спіс забароненых e-mail
+Forbidden email list is empty.|Спіс забароненых e-mail пусты.
+Forbidden share size list|Спіс забароненых памераў дзялення
+Forbidden share size list is empty.|Спіс забароненых памераў дзялення пусты.
+MyINFO exception list|Спіс выключэнняў MyINFO
+MyINFO exception list is empty.|Спіс выключэнняў MyINFO пусты
+Deleted %d rows: %s|Выдалена %d радоў: %s
+Known types are: %s|Вядомыя тыпы: %s
+No rows to remove: %s|Няма радоў для выдалення: %s
+date|дата
+%s with IP %s and class %d used following command: %s|%s класа %d з IP %s выкарыстаў наступную каманду: %s
+context|кантэкст
+Deleted from chat rank list: %s|Выдалены(-а) са спісу рангаў чату: %s
+Not found in chat rank list: %s|Не знойдзены(-а) ў спісе рангаў чату: %s
+Deleted from operator rank list: %s|Выдалены(-а) са спісу рангаў аператараў: %s
+Not found in operator rank list: %s|Не знойдзены(-а) у спісе рангаў аператараў: %s
+Antispam|Антыспам
+Your chat rank is: %d|Ваш ранг у чаце: %d
+You have to write something in main chat to get started.|Каб пачаць, напішыце што-небудзь у галоўным чаце.
+Custom nick list is empty.|Спіс карыстальніцкіх нікнеймаў пусты.
 Total share rank size: %s|
-Your operator rank is: %d|
-You have to do some operator actions to get started.|
-Top %d chat rankers|
-Chat rank list is empty.|
-Top %d operator rankers|
-Operator rank list is empty.|
-string|
-No user results found.|
-Showing %d user log results|
-Size of user log table: %d [ %s: %d @ %s ]|
-Add protection entry|
-Delete protection entry|
-flags|
-%s dropped due to bad search request.|
-This command is either disabled or you don't have access to it.|
-Deleted antispam entry: %s|
-Couldn't delete antispam entry because not found: %s|
-Antispam list|
-Antispam list is empty.|
-Couldn't add antispam exception entry because already exists: %s|
-Added antispam exception entry: %s|
-Deleted antispam exception entry: %s|
-Couldn't delete antispam exception entry because not found: %s|
-Antispam exception list|
-Antispam exception list is empty.|
-The user you're trying to send offline message to is a bot. Message is discarded.|
+Your operator rank is: %d|Ваш ранг апэратара: %d
+You have to do some operator actions to get started.|Каб пачаць, зрабіце якое-небудзь аператарскае дзеянне.
+Top %d chat rankers|ТОП-%d людзей ў чаце
+Chat rank list is empty.|Рангі чата адсутнічаюць.
+Top %d operator rankers|ТОП-%d аператараў чату
+Operator rank list is empty.|Рангі аператараў адсутнічаюць.
+string|радок
+No user results found.|Не знойдзена карыстальніцкіх рэзультатаў.
+Showing %d user log results|Паказваюцца апошнія %d карыстальніцкіх рэзультатаў з журналу.
+Size of user log table: %d [ %s: %d @ %s ]|Памер табліцы карыстальніцкага журналу: %d [ %s: %d @ %s ]
+Add protection entry|Дадаць запіс аховы
+Delete protection entry|Выдаліць запіс аховы
+flags|сцяжкі
+%s dropped due to bad search request.|%s выранены(-а) з-за дрэннага пошуковага запыту.
+This command is either disabled or you don't have access to it.|Гэтая каманда забаронена або вы не маеце доступу да яе.
+Deleted antispam entry: %s|Выдалены запіс антыспаму: %s
+Couldn't delete antispam entry because not found: %s|Немагчыма выдаліць запіс антыспаму, т. я. ён не знойдзены: %s
+Antispam list|Спіс антыспаму
+Antispam list is empty.|Спіс антыспаму пусты.
+Couldn't add antispam exception entry because already exists: %s|Немагчыма дадаць запіс выключэння антыспаму, бо ўжо існуе: %s
+Added antispam exception entry: %s|Дададзены запіс выключэння антыспаму: %s
+Deleted antispam exception entry: %s|Выдалены запіс выключэння антыспаму: %s
+Couldn't delete antispam exception entry because not found: %s|Немагчыма выдаліць запіс выключэння антыспаму, бо не існуе: %s
+Antispam exception list|Спіс выключэнняў антыспаму
+Antispam exception list is empty.|Спіс выключэнняў антыспаму пусты.
+The user you're trying to send offline message to is a bot. Message is discarded.|Карыстальнік, якому вы спрабуеце даслаць афлайн-паведамленне,- бот. Паведамленне адхіленае.
 You can't start at user number %d when you only have %d accounts with class %d.|
 Showing %d out of total %d accounts with class %d starting at user number %d|
 There are no accounts with class: %d|
-Known classes are: %s|Kдnda klasser дr: %s
+Known classes are: %s|
 %s with class %d sent say message: <%s> %s|
 %s with class %d had bad luck sending say message: <%s> %s|
 You can't talk from nick whose class is higher or equals your own.|
@@ -172,20 +172,20 @@ Remove user or word from rank list|
 List stored offline messages|
 Delete offline messages by date|
 Delete all offline messages|
-class|klass
+class|
 Clean up tables|
 Operator chat history|
 Delete all history messages|
 Your operator rank|
 Script configuration variables|
 Change configuration variable|
-nick|nick
+nick|
 This list of commands|
 %s user commands|
-Current topic|Nuvarande tema
+Current topic|
 Your chat rank|
 You're not allowed to send private messages.|
-Unknown|Okдnt
+Unknown|
 identifier|
 Offline message to user|
 Main chat history|
@@ -198,19 +198,19 @@ lre|
 action|
 Changed configuration variable %s: %s => %s|
 Configuration variable %s can only be set to: %s|
-or|eller
+or|
 Configuration variable %s must be a number.|
-to|till
+to|
 Unknown configuration variable: %s|
 %s version: %s|
-Not installed|Inte installerat
+Not installed|
 User dropped due to spam: %s|
 variable|
 value|
-minutes|minuter
+minutes|
 %s library version: %s|
 Reorder right click menu item|
-lines|rader
+lines|
 Couldn't add rank exception because already exists: %s|
 Added rank exception: %s|
 Deleted rank exception: %s|
@@ -220,7 +220,7 @@ Rank exception list is empty.|
 Add rank exception|
 Delete rank exception|
 In order to use this feature you must turn off registered users list cache. Do it by setting hub configuration variable %s to %d and restarting the hub. Please note: Turning cache off is not recommended with large list of registered users.|
-Both|Bеda
+Both|
 Deleted search filter: %s|
 Couldn't delete search filter because not found: %s|
 Search filter list|
@@ -244,7 +244,7 @@ IP authorization list|
 IP authorization list is empty.|
 Add IP authorization entry|
 Delete authorization entry|
-ip|ip
+ip|
 %s with IP %s and class %d authorized.|
 %s with IP %s and class %d failed authorization and disconnected.|
 Category: %s|
@@ -255,7 +255,7 @@ Division by zero is forbidden.|
 Show your welcome messages|
 Welcome message list|
 Delete user and his welcome messages|
-Nick|Nick
+Nick|
 Login message|
 Logout message|
 Welcome message list is empty.|
@@ -270,9 +270,9 @@ Your login message: %s|
 Add chatroom|
 Chatroom list|
 Delete chatroom|
-description|beskrivning
-minclass|minklass
-maxclass|maxklass
+description|
+minclass|
+maxclass|
 Modified chatroom: %s|
 Added chatroom: %s|
 Deleted chatroom: %s|
@@ -293,9 +293,9 @@ Added search filter exception entry: %s|
 Deleted search filter exception entry: %s|
 Couldn't delete search filter exception entry because not found: %s|
 Search filter exception list is empty.|
-file|fil
-Read hub logs|Lдsa hubbloggar
-Known files are: %s|Kдnda filer дr: %s
+file|
+Read hub logs|
+Known files are: %s|
 Log file is empty or does not exist.|
 Add command notification exception|
 Delete command notification exception|
@@ -310,16 +310,16 @@ Query results|
 Connections from your IP aren't allowed for another %d seconds.|
 Executed shell command didn't return any status code: %s|
 Returned status code: %s|
-Added by: %s|Tillagt av: %s
+Added by: %s|
 publisher|
 Release list is empty.|
-Last %d releases|Senaste %s releaser
+Last %d releases|
 No releases by requested publisher were found: %s|
 Last %d releases published by %s|
 No releases by requested category were found: %s|
 Last %d releases by category %s|
 No releases by requested search string were found: %s|
-time|tid
+time|
 Known search types are: %s|
 Configuration variable %s can't be empty.|
 Deleted from share rank list: %s|
@@ -361,13 +361,13 @@ User redirected due to spam: %s|
 %s redirected due to bad search request.|
 You can download me from: %s|
 %s is registered with class %d and has been automatically unregistered and deleted from other tables.|
-PiB|PiB
-TiB|TiB
-GiB|GiB
-MiB|MiB
-KiB|KiB
-B|B
-EiB|EiB
+PiB|
+TiB|
+GiB|
+MiB|
+KiB|
+B|
+EiB|
 Get user's real nick|
 Requested nick wasn't found in custom nick list.|
 Requested nick belongs to a user who is %s: %s|
@@ -381,9 +381,9 @@ limit|
 Size of chat ranks table: %d [ %s: %d @ %s ]|
 Size of share ranks table: %d [ %s: %d @ %s ]|
 Size of operator ranks table: %d [ %s: %d @ %s ]|
-content|innehеll
-destination|destination
-interval|intervall
+content|
+destination|
+interval|
 Add reminder|
 Delete reminder|
 Reminder list|
@@ -399,9 +399,9 @@ Content: %s|
 Interval: %d of %d|
 Destination: %s|
 Raw command|
-PM|PM
-MC|MC
-reply|svar
+PM|
+MC|
+reply|
 Add chat responder|
 Delete chat responder|
 Main chat responder list|
@@ -412,7 +412,7 @@ Added chat responder: %s|
 Deleted chat responder with ID: %d|
 Couldn't delete chat responder because ID not found: %d|
 Responder|
-Reply|Svar
+Reply|
 Add chat responder exception|
 Delete chat responder exception|
 Chat responder exception list|
@@ -421,7 +421,7 @@ Couldn't add chat responder exception because already exists: %s|
 Added chat responder exception: %s|
 Deleted chat responder exception: %s|
 Couldn't delete chat responder exception because not found: %s|
-command|kommando
+command|
 Customize script command|
 Customized script command: %s => %s|
 Unknown script command: %s|

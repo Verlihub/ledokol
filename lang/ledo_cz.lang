@@ -1,6 +1,6 @@
 # Language: cs_CZ
 # Charset: CP1250
-# Version: 2.9.3
+# Version: 2.9.4
 # Author: Uhlik
 # Email: pjanos.uk@gmail.com
 
@@ -792,8 +792,8 @@ Forbidden country code list is empty.|Seznam zakazanych country code je prazdny.
 %s with IP %s and class %d allowed due to forbidden country code exception: %s|%s s IP %s a class %d vstup povolen diky vyjimce pro zakazane country code: %s
 I'm staying idle due to confusion.|Nechapu pozadavek.
 Added replacer in MC: %s|Vlozen chat replacer: %s
-Deleted chat replacer with ID: %d|Smazan chat replacer s ID: %d
-Couldn't delete chat replacer because ID not found: %d|Nemohu smazat chat replacer protoze ID nebylo nalezeno: %d
+Deleted chat replacer with ID %d: %s|
+Couldn't delete chat replacer because not found: %s|
 Chat replacer list|Seznam pro chat replacer
 Chat replacer list is empty.|Seznam pro chat replacer je prazdny.
 Replace|Nahradit
@@ -1003,8 +1003,6 @@ Loaded %d of %d with totally %d items: %s|Nahrano %d z %d z celkove %d polozek: 
 Infected user information sent to %s: %s|Informace o infikovanem uzivateli odeslany na %s: %s
 Failed to load information from %s: %s|Nepodarilo se nahrat informace z %s: %s
 Failed to send information to %s: %s|Nepodarilo se odeslat informace na %s: %s
-Error on executing %s: %s|Chyba pri provadeni %s: %s
-Error on connecting.|Chyba pri pripojovani.
 Loaded none with totally %d items: %s|Nenahrano nic z celkem %d polozek: %s
 Infected user found with IP %s and share %s: %s|Nalezen infikovany uzivatel s IP %s a sdilenim %s: %s
 Server didn't reply with expected status code.|Server neodpovedel ocekavanym stavovym kodem.
@@ -1172,3 +1170,24 @@ Couldn't delete forbidden chat nick because not found: %s|
 Forbidden chat nick list|
 Forbidden chat nick list is empty.|
 %s with IP %s and class %d allowed due to forbidden chat nick exception: %s|
+%s lookup|
+%s lookup didn't return anything.|
+%s result|
+No entrance|
+ASN: %s|
+%s was kicked with reason: %s|
+City gag|
+Add city gag|
+City gag list|
+Delete city gag|
+Modified city gag %s with reason: %s|
+Modified city gag: %s|
+Added city gag %s with reason: %s|
+Added city gag: %s|
+Cleared city gag list.|
+Deleted city gag: %s|
+City gag not found: %s|
+%s with IP %s and class %d tries to speak with city gag in PM to %s with IP %s and class %d: %s|
+%s with IP %s and class %d tries to speak with city gag in MC: %s|
+%s with IP %s and class %d tried to speak in MC without chat code: <%s> %s|
+%s with IP %s and class %d tried to speak without chat code in PM to %s with IP %s and class %d.|

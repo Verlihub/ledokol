@@ -1,6 +1,6 @@
 # Language: uk_UA
 # Charset: CP1251
-# Version: 2.9.3
+# Version: 2.9.4
 # Author: Neolo
 # Email: admin@nlight.org.ua
 
@@ -792,8 +792,8 @@ Forbidden country code list is empty.|Список заборонених кодів країн (КК) порожн
 %s with IP %s and class %d allowed due to forbidden country code exception: %s|
 I'm staying idle due to confusion.|
 Added replacer in MC: %s|
-Deleted chat replacer with ID: %d|Видалено чат замінювач з ID: %d
-Couldn't delete chat replacer because ID not found: %d|Неможливо видалити чат замінювач тому що не знайдено: %d
+Deleted chat replacer with ID %d: %s|
+Couldn't delete chat replacer because not found: %s|
 Chat replacer list|
 Chat replacer list is empty.|
 Replace|Заміна
@@ -1003,8 +1003,6 @@ Loaded %d of %d with totally %d items: %s|
 Infected user information sent to %s: %s|
 Failed to load information from %s: %s|
 Failed to send information to %s: %s|
-Error on executing %s: %s|
-Error on connecting.|
 Loaded none with totally %d items: %s|
 Infected user found with IP %s and share %s: %s|
 Server didn't reply with expected status code.|
@@ -1172,3 +1170,24 @@ Couldn't delete forbidden chat nick because not found: %s|
 Forbidden chat nick list|
 Forbidden chat nick list is empty.|
 %s with IP %s and class %d allowed due to forbidden chat nick exception: %s|
+%s lookup|
+%s lookup didn't return anything.|
+%s result|
+No entrance|
+ASN: %s|
+%s was kicked with reason: %s|
+City gag|
+Add city gag|
+City gag list|
+Delete city gag|
+Modified city gag %s with reason: %s|
+Modified city gag: %s|
+Added city gag %s with reason: %s|
+Added city gag: %s|
+Cleared city gag list.|
+Deleted city gag: %s|
+City gag not found: %s|
+%s with IP %s and class %d tries to speak with city gag in PM to %s with IP %s and class %d: %s|
+%s with IP %s and class %d tries to speak with city gag in MC: %s|
+%s with IP %s and class %d tried to speak in MC without chat code: <%s> %s|
+%s with IP %s and class %d tried to speak without chat code in PM to %s with IP %s and class %d.|

@@ -1,6 +1,6 @@
 # Language: pl_PL
 # Charset: CP1250
-# Version: 2.9.3
+# Version: 2.9.4
 # Author: Zorro
 # Email: zbyszekslyz@hostpl.eu
 
@@ -792,8 +792,8 @@ Forbidden country code list is empty.|Lista zakazanych kodow krajow jest pusta.
 %s with IP %s and class %d allowed due to forbidden country code exception: %s|%s z IP i klasy %d dozwolone ze wzgledu na florbid kodem kraju z wyjatkiem: %s
 I'm staying idle due to confusion.|Zostaje bezczynny z poowodu bledu.
 Added replacer in MC: %s|Dodano zamiennik w MC: %s
-Deleted chat replacer with ID: %d|Usunieto replacer czatu z ID: %d
-Couldn't delete chat replacer because ID not found: %d|Nie mozna usunac replacer czatu poniewaz nie znaleziono ID: %d
+Deleted chat replacer with ID %d: %s|
+Couldn't delete chat replacer because not found: %s|
 Chat replacer list|Lista zamiennikow czata.
 Chat replacer list is empty.|Lista zamiennikow czata jest pusta.
 Replace|Replacer
@@ -1003,8 +1003,6 @@ Loaded %d of %d with totally %d items: %s|Zaladowany %d z %d z calkowitej %d poz
 Infected user information sent to %s: %s|Zainfekowane informacje wysylane do uzytkownika %s: %s
 Failed to load information from %s: %s|Nie udalo sie zaladowac informacji od %s: %s
 Failed to send information to %s: %s|Nie udalo sie wyslac informacji do %s: %s
-Error on executing %s: %s|Blad wykonania %s: %s
-Error on connecting.|Blad polaczenia.
 Loaded none with totally %d items: %s|Zaden zaladowany z calkowitej %d pozycji: %d
 Infected user found with IP %s and share %s: %s|Znaleziono zainfekowanego uzytkownika o IP %s i z udostepnieniem %s: %s
 Server didn't reply with expected status code.|Serwer nie odpowiada na odpowiedz o kod statusu.
@@ -1072,7 +1070,7 @@ Added automatic country chatroom entrance for %s: %s|Dodano automatycznie do pok
 Couldn't delete automatic country chatroom entrance because ID not found: %d|Nie mozna usunac automatycznie z pokoju wejscia z kraju poniewaz nie znaleziono ID z kraju: %d
 Deleted automatic country chatroom entrance with ID: %d|Skreslone automatycznie z pokoju wejscie z krajuo ID: %d
 Automatic country chatroom entrance list is empty.|Automatyczna lista krajow z pokojow jest pusta.
-Please note, following function is required for features available in this version of %s and is currently not available in running version of %s but is available in latest update: %s|Uwaga, ponizsza funkcja jest wymagana dla funkcji dostepnych w tej wersji %s, a obecnie nie jest dostepny w biezacej wersji %s, ale jest dostepna w najnowszej aktualizacji: %s
+Please note, following function is required for features available in this version of %s and is currently not available in running version of %s but is available in latest update: %s|Uwaga, ponizsza funkcja jest wymagana dla funkcji dostepnych w tej wersji %s, a obecnie nie jest dostepny w biezacej wersji %s, ale bedzie dostepna w najnowszej aktualizacji: %s
 note|uwaga
 Access is restricted.|Dostep jest ograniczony.
 Convert LRE to plain text|Konwersja tekstu na zwyk³y LRE
@@ -1172,3 +1170,24 @@ Couldn't delete forbidden chat nick because not found: %s|Nie mozna usunac zakaz
 Forbidden chat nick list|Lista zakazanych nickow czata
 Forbidden chat nick list is empty.|Lista zakazanych nickow jest pusta.
 %s with IP %s and class %d allowed due to forbidden chat nick exception: %s|% z IP i klasy %d dozwolone ze wzgledu na zakaz uzytkownika z wyjatkiem: %s
+%s lookup|%swyszukiwanie
+%s lookup didn't return anything.|%swyszukiwanie zwrocilo pusty wynik
+%s result|%s wynik
+No entrance|Brak wejscia
+ASN: %s|ASN: %s
+%s was kicked with reason: %s|%s zosta³ wykopany z powodu: %s
+City gag|Miasto gag
+Add city gag|Dodaj gag na miasto
+City gag list|Lista gag miast
+Delete city gag|Usun gag miast
+Modified city gag %s with reason: %s|Zmodyfikowana gag miast %sz powodu: %s
+Modified city gag: %s|Modyfikacja gag miasta: %s
+Added city gag %s with reason: %s|Dodano gag miasta %s z powodu: %s
+Added city gag: %s|Dodano gag miasta: %s
+Cleared city gag list.|Wyczysc liste gag miast.
+Deleted city gag: %s|Usunieto gag miasta: %s
+City gag not found: %s|Lista gag miast jest pusta.
+%s with IP %s and class %d tries to speak with city gag in PM to %s with IP %s and class %d: %s|%sz IP %si klasa %dprubuje porozmawiaæ z gag miastem na PM %s z IP %si klasa %d: %s
+%s with IP %s and class %d tries to speak with city gag in MC: %s|%s z IP %s i klasa %dprubuje porozmawiaæ z gag miastem na MC: %s
+%s with IP %s and class %d tried to speak in MC without chat code: <%s> %s|
+%s with IP %s and class %d tried to speak without chat code in PM to %s with IP %s and class %d.|

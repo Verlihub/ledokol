@@ -1,6 +1,6 @@
 # Language: tr_TR
 # Charset: CP1254
-# Version: 2.9.3
+# Version: 2.9.4
 # Author: Mauron
 # Email: mauron@vmail.me
 
@@ -792,8 +792,8 @@ Forbidden country code list is empty.|Yasaklý ülke kodu listesi boþtur.
 %s with IP %s and class %d allowed due to forbidden country code exception: %s|%s, ki %s IP adresli ve %d sýnýflý, yasaklý ülke kodu istisnasý sebebiyle kabul edildi: %s
 I'm staying idle due to confusion.|Karýþýklýk sebebiyle boþta kalýyorum.
 Added replacer in MC: %s|Ana sohbette deðiþtirici eklendi: %s
-Deleted chat replacer with ID: %d|Þu kimlikli sohbet deðiþtiricisi silindi: %d
-Couldn't delete chat replacer because ID not found: %d|Sohbet deðiþtiricisi silinemedi çünkü kimliði bulunamadý: %d
+Deleted chat replacer with ID %d: %s|
+Couldn't delete chat replacer because not found: %s|
 Chat replacer list|Sohbet deðiþtirici listesi
 Chat replacer list is empty.|Sohbet deðiþtirici listesi boþtur.
 Replace|Deðiþtir
@@ -1003,8 +1003,6 @@ Loaded %d of %d with totally %d items: %s|%d yüklendi ki toplam %d, bütünüyle %d
 Infected user information sent to %s: %s|Kötücül yazýlým bulaþmýþ kullanýcý bilgisi þuna gönderildi: %s: %s
 Failed to load information from %s: %s|Þundan bilgi yüklemesi baþarýsýz oldu: %s: %s
 Failed to send information to %s: %s|Þuna bilgi gönderilmesi baþarýsýz oldu: %s: %s
-Error on executing %s: %s|%s çalýþtýrýlmasýnda hata: %s
-Error on connecting.|Baðlantýda hata.
 Loaded none with totally %d items: %s|Hiçbiri yüklenmedi, bütünüyle %d unsur: %s
 Infected user found with IP %s and share %s: %s|Kötücül yazýlým bulaþmýþ kullanýcý %s IP adresi ve %s paylaþýmý tespit edildi: %s
 Server didn't reply with expected status code.|Sunucu beklenen durum koduyla cevap vermedi.
@@ -1172,3 +1170,24 @@ Couldn't delete forbidden chat nick because not found: %s|Yasaklý sohbet rumuzu 
 Forbidden chat nick list|Yasaklý sohbet rumuzu listesi
 Forbidden chat nick list is empty.|Yasaklý rumuz listesi boþtur.
 %s with IP %s and class %d allowed due to forbidden chat nick exception: %s|%s, ki %s IP adresli ve %d sýnýflý, yasaklý sohbet rumuzu istisnasý sebebiyle kabul edildi: %s
+%s lookup|%s arama
+%s lookup didn't return anything.|%s aramasý herhangi bir sonuç bulamadý.
+%s result|%s sonuç
+No entrance|Giriþ yok
+ASN: %s|ASN: %s
+%s was kicked with reason: %s|%s þu sebeple kovuldu: %s
+City gag|Kent susturmasý
+Add city gag|Kent susturmasý ekle
+City gag list|Kent susturma listesi
+Delete city gag|Kent susturmasýný sil
+Modified city gag %s with reason: %s|%s kent susturmasý þu sebeple deðiþtirildi: %s
+Modified city gag: %s|Deðiþtirilen kent susturulmasý: %s
+Added city gag %s with reason: %s|%s kent susturmasý þu sebeple eklenmiþtir: %s
+Added city gag: %s|Eklenen kent susturmasý: %s
+Cleared city gag list.|Kent susturma listesi temizlendi.
+Deleted city gag: %s|Kaldýrýlan kent susturmasý: %s
+City gag not found: %s|Kent susturma listesi boþtur.
+%s with IP %s and class %d tries to speak with city gag in PM to %s with IP %s and class %d: %s|, ki IP adresi %s ve sýnýfý %d özel sohbette kent susturmasýna raðmen %s ile ki IP adresi %s ve sýnýfý %s konuþmaya çalýþýyor: %s
+%s with IP %s and class %d tries to speak with city gag in MC: %s|Ana sohbette %s ki IP adresi %s ve sýnýfý %d kent susturmasýna raðmen konuþmaya çalýþmaktadýr: %s
+%s with IP %s and class %d tried to speak in MC without chat code: <%s> %s|%s ki IP adresi %s ve sýnýfý %d sohbet kodsuz ana sohbette konuþmaya çalýþtý: <%s> %s
+%s with IP %s and class %d tried to speak without chat code in PM to %s with IP %s and class %d.|%s ki IP adresi %s ve sýnýfý %d sohbet kodsuz özel sohbette %s ile, ki IP adresi %s ve sýnýfý %d, konuþmaya çalýþtý.
