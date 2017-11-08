@@ -62,8 +62,8 @@ Tzaca, JOE™
 -- global storage variables and tables >>
 ---------------------------------------------------------------------
 
-ver_ledo = "2.9.4" -- ledokol version
-bld_ledo = "62" -- build number
+ver_ledo = "2.9.5" -- ledokol version
+bld_ledo = "63" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -5485,6 +5485,10 @@ end
 function VH_OnDelReg (nick, class, op)
 	if table_othsets.locked then
 		return 1
+	end
+
+	if tonumber (class) >= table_sets.opkeyclass then -- operator keys
+		table_opks [nick] = nil
 	end
 
 	local opclass = getclass (op) -- registration notification
@@ -18871,26 +18875,26 @@ end
 
 	----- ---- --- -- -
 
-elseif tvar == "opkeyclass" then
-	if num then
-		if (setto >= 0 and setto <= 2) or setto == 11 then
-			if setto == 11 then -- flush
-				for k, v in pairs (table_opks) do
-					if v == 1 then -- class
-						table_opks [k] = nil
+	elseif tvar == "opkeyclass" then
+		if num then
+			if (setto >= 0 and setto <= 2) or setto == 11 then
+				if setto == 11 then -- flush
+					for k, v in pairs (table_opks) do
+						if v == 1 then -- class
+							table_opks [k] = nil
+						end
 					end
 				end
+
+				ok = true
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0, 1, 2 " .. gettext ("or") .. " 11"))
 			end
-
-			ok = true
 		else
-			commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0, 1, 2 " .. gettext ("or") .. " 11"))
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
 		end
-	else
-		commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
-	end
 
------ ---- --- -- -
+	----- ---- --- -- -
 
 	elseif tvar == "opkeyself" then
 		if num then
