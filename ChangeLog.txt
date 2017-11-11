@@ -1,14 +1,15 @@
-[ 2.9.5 :: ####-##-## ]
+[ 2.9.5 :: 2017-12-30 ]
 
-[ 63] Fixed: Operator list appearance after removing user with opkeyclass condition, report by sirtrifanoff
+[ 63] Fixed: Operator list appearance after removing user with opkeyclass condition, report by KCAHDEP
+[ 64] Added: CTM uptime with actions
 
 [ 2.9.4 :: 2017-11-05 ]
 
 [ 47] Fixed: User logger command parameters when searched string is a number
 [ 49] Fixed: Country code gag reason parameter could not be empty, report by KCAHDEP
 [ 53] Fixed: Invalid comparison of number of days parameter in registered users list cleanup command
-[ 58] Fixed: Fake operator key not disappearing after setting a lower class on user, report by sirtrifanoff
-[ 58] Changed: VIP kicks are again made with bot nick due to rights restriction and command reservation in Verlihub, report by sirtrifanoff
+[ 58] Fixed: Fake operator key not disappearing after setting a lower class on user, report by KCAHDEP
+[ 58] Changed: VIP kicks are again made with bot nick due to rights restriction and command reservation in Verlihub, report by KCAHDEP
 [ 48] Added: Separate feed for search filter notifications
 [ 50] Added: Antispam debug uses operator note to specify entry that caused detection when user is banned, request by KCAHDEP
 [ 51] Added: sefiblockmsg configuration to disable block list notification
@@ -17,10 +18,10 @@
 [ 55] Added: Disability of automatic country chatroom entrance with code --, request by Pasha
 [ 56] Added: GeoIP ASN information to userinfo and ipinfo commands
 [ 57] Added: autosendhelp configuration to disable display of command list on hub help command, request by Reanimator®
-[ 59] Added: norepltoops configuration to disable chat replacer in PM to operators, request by sirtrifanoff
-[ 60] Added: City gag feature, request by sirtrifanoff
+[ 59] Added: norepltoops configuration to disable chat replacer in PM to operators, request by KCAHDEP
+[ 60] Added: City gag feature, request by KCAHDEP
 [ 61] Added: Chat code feed notification, request by Alexandr
-[ 62] Added: Chat replacer can be removed by LRE, request by sirtrifanoff
+[ 62] Added: Chat replacer can be removed by LRE, request by KCAHDEP
 
 [ 2.9.3 :: 2017-05-22 ]
 

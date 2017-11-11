@@ -63,7 +63,7 @@ Tzaca, JOE™
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.5" -- ledokol version
-bld_ledo = "63" -- build number
+bld_ledo = "64" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -113,6 +113,7 @@ table_sets = {
 	classnotigagip = 3,
 	classnotilowupreg = 3,
 	classnotilowupsear = 3,
+	classnotilowupctm = 3,
 	classnotilowupchat = 3,
 	classnotichatcode = 3,
 	classnoticom = 10,
@@ -192,6 +193,8 @@ table_sets = {
 	regmeuptime = 0,
 	searchuptime = 0,
 	searuptimeact = 0,
+	ctmuptime = 0,
+	ctmuptimeact = 0,
 	showuseruptime = 0,
 	custnickclass = 3,
 	custlistclass = 0,
@@ -1424,6 +1427,12 @@ function Main (file)
 					end
 
 					if ver <= 295 then
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('ctmuptime', '" .. repsqlchars (table_sets.ctmuptime) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('ctmuptimeact', '" .. repsqlchars (table_sets.ctmuptimeact) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('classnotilowupctm', '" .. repsqlchars (table_sets.classnotilowupctm) .. "')")
+					end
+
+					if ver <= 296 then
 						-- todo: next version
 					end
 
@@ -5915,40 +5924,75 @@ end
 
 ----- ---- --- -- -
 
-function VH_OnParsedMsgConnectToMe (nick, othernick, ip, port)
+function VH_OnParsedMsgConnectToMe (nick, other, ip, port)
 	if table_othsets.locked then
 		return 1
 	end
 
-	local class, haveclass = 0, false
+	local addr, haveaddr = "", false
 
-	if table_sets.enableipwatch == 1 and checkipwat (nick, getip (nick), "$ConnectToMe " .. othernick .. " " .. ip .. ":" .. port) then -- ip watch
-		return 0
-	end
-
-	if (table_sets.avdbloadint > 0 or table_sets.avsearchint > 0) and table_sets.avdetaction == 0 and table_avbl [othernick] then
-		if not haveclass then
-			class = getclass (nick)
-			haveclass = true
+	if table_sets.enableipwatch == 1 then -- ip watch
+		if not haveaddr then
+			addr, haveaddr = getip (nick), true
 		end
 
-		if class < 3 then
-			maintouser (nick, gettext ("Your connection request is blocked because user that you're trying connect to was detected as virus spreader: %s"): format (othernick))
+		if checkipwat (nick, addr, "$ConnectToMe " .. other .. " " .. ip .. ":" .. port) then
 			return 0
 		end
 	end
 
-	--if table_sets.addledobot == 1 and othernick == table_sets.ledobotnick then -- hub doesnt allow this request
+	local class, haveclass = 0, false
+
+	if table_sets.ctmuptime > 0 and table_sets.showuseruptime == 1 then -- ctm uptime
+		if not haveclass then
+			class, haveclass = getclass (nick), true
+		end
+
+		if class < table_sets.scanbelowclass then
+			if table_usup [nick] then
+				local dif = os.time () - table_usup [nick]
+
+				if dif < table_sets.ctmuptime then
+					if not haveaddr then
+						addr, haveaddr = getip (nick), true
+					end
+
+					opsnotify (table_sets.classnotilowupctm, gettext ("Low connection attempt uptime of %d seconds from %s with IP %s and class %d to user: %s"):format (dif, nick, addr .. tryipcc (addr, nick), class, other))
+
+					if table_sets.ctmuptimeact == 0 then -- message
+						maintouser (nick, gettext ("Please wait another %d seconds before connecting to other users."):format (table_sets.ctmuptime - dif))
+					elseif table_sets.ctmuptimeact == 1 then -- drop
+						opsnotify (table_sets.classnotilowupctm, gettext ("User dropped: %s"):format (nick))
+						VH:Disconnect (nick)
+					end
+
+					return 0
+				end
+			end
+		end
+	end
+
+	if (table_sets.avdbloadint > 0 or table_sets.avsearchint > 0) and table_sets.avdetaction == 0 and table_avbl [other] then
+		if not haveclass then
+			class, haveclass = getclass (nick), true
+		end
+
+		if class < 3 then
+			maintouser (nick, gettext ("Your connection request is blocked because user that you're trying connect to was detected as virus spreader: %s"): format (other))
+			return 0
+		end
+	end
+
+	--if table_sets.addledobot == 1 and other == table_sets.ledobotnick then -- hub doesnt allow this request
 		--maintouser (nick, gettext ("You can download me from: %s"):format ("https://ledo.feardc.net/"))
 		--return 0
 	--end
 
 	if not haveclass then
-		class = getclass (nick)
-		haveclass = true
+		class, haveclass = getclass (nick), true
 	end
 
-	if table_sets.ctmminclass > class then
+	if table_sets.ctmminclass > class then -- ctm minimum class
 		if table_ctmb [nick] then
 			if os.difftime (os.time (), table_ctmb [nick]) >= table_sets.ctmmsginterval then
 				table_ctmb [nick] = os.time () -- reset
@@ -5967,40 +6011,75 @@ end
 
 ----- ---- --- -- -
 
-function VH_OnParsedMsgRevConnectToMe (nick, othernick)
+function VH_OnParsedMsgRevConnectToMe (nick, other)
 	if table_othsets.locked then
 		return 1
 	end
 
-	local class, haveclass = 0, false
+	local addr, haveaddr = "", false
 
-	if table_sets.enableipwatch == 1 and checkipwat (nick, getip (nick), "$RevConnectToMe " .. othernick .. " " .. nick) then -- ip watch
-		return 0
-	end
-
-	if (table_sets.avdbloadint > 0 or table_sets.avsearchint > 0) and table_sets.avdetaction == 0 and table_avbl [othernick] then
-		if not haveclass then
-			class = getclass (nick)
-			haveclass = true
+	if table_sets.enableipwatch == 1 then -- ip watch
+		if not haveaddr then
+			addr, haveaddr = getip (nick), true
 		end
 
-		if class < 3 then
-			maintouser (nick, gettext ("Your connection request is blocked because user that you're trying connect to was detected as virus spreader: %s"): format (othernick))
+		if checkipwat (nick, addr, "$RevConnectToMe " .. other .. " " .. nick) then
 			return 0
 		end
 	end
 
-	--if table_sets.addledobot == 1 and othernick == table_sets.ledobotnick then -- hub doesnt allow this request
+	local class, haveclass = 0, false
+
+	if table_sets.ctmuptime > 0 and table_sets.showuseruptime == 1 then -- ctm uptime
+		if not haveclass then
+			class, haveclass = getclass (nick), true
+		end
+
+		if class < table_sets.scanbelowclass then
+			if table_usup [nick] then
+				local dif = os.time () - table_usup [nick]
+
+				if dif < table_sets.ctmuptime then
+					if not haveaddr then
+						addr, haveaddr = getip (nick), true
+					end
+
+					opsnotify (table_sets.classnotilowupctm, gettext ("Low connection attempt uptime of %d seconds from %s with IP %s and class %d to user: %s"):format (dif, nick, addr .. tryipcc (addr, nick), class, other))
+
+					if table_sets.ctmuptimeact == 0 then -- message
+						maintouser (nick, gettext ("Please wait another %d seconds before connecting to other users."):format (table_sets.ctmuptime - dif))
+					elseif table_sets.ctmuptimeact == 1 then -- drop
+						opsnotify (table_sets.classnotilowupctm, gettext ("User dropped: %s"):format (nick))
+						VH:Disconnect (nick)
+					end
+
+					return 0
+				end
+			end
+		end
+	end
+
+	if (table_sets.avdbloadint > 0 or table_sets.avsearchint > 0) and table_sets.avdetaction == 0 and table_avbl [other] then
+		if not haveclass then
+			class, haveclass = getclass (nick), true
+		end
+
+		if class < 3 then
+			maintouser (nick, gettext ("Your connection request is blocked because user that you're trying connect to was detected as virus spreader: %s"): format (other))
+			return 0
+		end
+	end
+
+	--if table_sets.addledobot == 1 and other == table_sets.ledobotnick then -- hub doesnt allow this request
 		--maintouser (nick, gettext ("You can download me from: %s"):format ("https://ledo.feardc.net/"))
 		--return 0
 	--end
 
 	if not haveclass then
-		class = getclass (nick)
-		haveclass = true
+		class, haveclass = getclass (nick), true
 	end
 
-	if table_sets.ctmminclass > class then
+	if table_sets.ctmminclass > class then -- ctm minimum class
 		if table_ctmb [nick] then
 			if os.difftime (os.time (), table_ctmb [nick]) >= table_sets.ctmmsginterval then
 				table_ctmb [nick] = os.time () -- reset
@@ -17569,7 +17648,37 @@ end
 
 	----- ---- --- -- -
 
+	elseif tvar == "ctmuptime" then
+		if num then
+			if setto >= 0 and setto <= 86400 then
+				if setto > 0 and table_sets.showuseruptime == 0 then
+					commandanswer (nick, gettext ("In order to use this feature you need to set %s to: %d"):format ("showuseruptime", 1))
+				end
+
+				ok = true
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0 " .. gettext ("to") .. " 86400"))
+			end
+		else
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
+		end
+
+	----- ---- --- -- -
+
 	elseif tvar == "searuptimeact" then
+		if num then
+			if setto == 0 or setto == 1 then
+				ok = true
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0 " .. gettext ("or") .. " 1"))
+			end
+		else
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
+		end
+
+	----- ---- --- -- -
+
+	elseif tvar == "ctmuptimeact" then
 		if num then
 			if setto == 0 or setto == 1 then
 				ok = true
@@ -18449,7 +18558,7 @@ elseif tvar == "classnotigagip" then
 
 	elseif tvar == "classnotilowupreg" then
 		if num then
-			if setto >= 0 and setto <= 5 or setto == 10 or setto == 11 then
+			if (setto >= 0 and setto <= 5) or setto == 10 or setto == 11 then
 				ok = true
 			else
 				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0, 1, 2, 3, 4, 5, 10 " .. gettext ("or") .. " 11"))
@@ -18462,7 +18571,20 @@ elseif tvar == "classnotigagip" then
 
 	elseif tvar == "classnotilowupsear" then
 		if num then
-			if setto >= 0 and setto <= 5 or setto == 10 or setto == 11 then
+			if (setto >= 0 and setto <= 5) or setto == 10 or setto == 11 then
+				ok = true
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0, 1, 2, 3, 4, 5, 10 " .. gettext ("or") .. " 11"))
+			end
+		else
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
+		end
+
+	----- ---- --- -- -
+
+	elseif tvar == "classnotilowupctm" then
+		if num then
+			if (setto >= 0 and setto <= 5) or setto == 10 or setto == 11 then
 				ok = true
 			else
 				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0, 1, 2, 3, 4, 5, 10 " .. gettext ("or") .. " 11"))
@@ -18475,7 +18597,7 @@ elseif tvar == "classnotigagip" then
 
 	elseif tvar == "classnotilowupchat" then
 		if num then
-			if setto >= 0 and setto <= 5 or setto == 10 or setto == 11 then
+			if (setto >= 0 and setto <= 5) or setto == 10 or setto == 11 then
 				ok = true
 			else
 				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0, 1, 2, 3, 4, 5, 10 " .. gettext ("or") .. " 11"))
@@ -18488,7 +18610,7 @@ elseif tvar == "classnotigagip" then
 
 	elseif tvar == "classnotichatcode" then
 		if num then
-			if setto >= 0 and setto <= 5 or setto == 10 or setto == 11 then
+			if (setto >= 0 and setto <= 5) or setto == 10 or setto == 11 then
 				ok = true
 			else
 				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0, 1, 2, 3, 4, 5, 10 " .. gettext ("or") .. " 11"))
@@ -20760,6 +20882,7 @@ function showledoconf (nick)
 	conf = conf .. "\r\n [::] classnotigagip = " .. _tostring (table_sets.classnotigagip)
 	conf = conf .. "\r\n [::] classnotilowupreg = " .. _tostring (table_sets.classnotilowupreg)
 	conf = conf .. "\r\n [::] classnotilowupsear = " .. _tostring (table_sets.classnotilowupsear)
+	conf = conf .. "\r\n [::] classnotilowupctm = " .. _tostring (table_sets.classnotilowupctm)
 	conf = conf .. "\r\n [::] classnotilowupchat = " .. _tostring (table_sets.classnotilowupchat)
 	conf = conf .. "\r\n [::] classnotichatcode = " .. _tostring (table_sets.classnotichatcode)
 	conf = conf .. "\r\n [::] classnoticom = " .. _tostring (table_sets.classnoticom)
@@ -20849,6 +20972,8 @@ function showledoconf (nick)
 	conf = conf .. "\r\n [::] regmeuptime = " .. _tostring (table_sets.regmeuptime)
 	conf = conf .. "\r\n [::] searchuptime = " .. _tostring (table_sets.searchuptime)
 	conf = conf .. "\r\n [::] searuptimeact = " .. _tostring (table_sets.searuptimeact)
+	conf = conf .. "\r\n [::] ctmuptime = " .. _tostring (table_sets.ctmuptime)
+	conf = conf .. "\r\n [::] ctmuptimeact = " .. _tostring (table_sets.ctmuptimeact)
 	conf = conf .. "\r\n [::] showuseruptime = " .. _tostring (table_sets.showuseruptime)
 	conf = conf .. "\r\n"
 
