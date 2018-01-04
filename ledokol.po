@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: Ledokol\n"
 "Project-Version: 2.9.5\n"
 "Report-Msgid-Bugs-To: RoLex <webmaster@feardc.net>\n"
-"POT-Creation-Date: 2017-11-11 00:00+0200\n"
-"PO-Revision-Date: 2017-11-11 00:00+0200\n"
+"POT-Creation-Date: 2018-01-04 00:00+0200\n"
+"PO-Revision-Date: 2018-01-04 00:00+0200\n"
 "Last-Translator: RoLex <webmaster@feardc.net>\n"
 "Language-Team: RoLex <webmaster@feardc.net>\n"
 "Language: en_GB\n"
@@ -3578,4 +3578,7 @@ msgid "Low connection attempt uptime of %d seconds from %s with IP %s and class 
 msgstr ""
 
 msgid "Please wait another %d seconds before connecting to other users."
+msgstr ""
+
+msgid "path"
 msgstr ""

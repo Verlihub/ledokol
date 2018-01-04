@@ -1,7 +1,9 @@
-[ 2.9.5 :: 2017-12-30 ]
+[ 2.9.5 :: 2018-##-## ]
 
 [ 63] Fixed: Operator list appearance after removing user with opkeyclass condition, report by KCAHDEP
 [ 64] Added: CTM uptime with actions
+[ 65] Added: More keywords to AVDB search server requests
+[ 65] Added: Optional path parameter to avdetforce command
 
 [ 2.9.4 :: 2017-11-05 ]
 

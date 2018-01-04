@@ -2,7 +2,7 @@
 --[[ license agreement >>
 ---------------------------------------------------------------------
 
-Copyright © 2007-2017 RoLex
+Copyright © 2007-2018 RoLex
 
 Ledokol is free software; You can redistribute it
 and modify it under the terms of the GNU General
@@ -63,7 +63,7 @@ Tzaca, JOE™
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.5" -- ledokol version
-bld_ledo = "64" -- build number
+bld_ledo = "65" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -1080,7 +1080,8 @@ table_avfi = {
 	string.char (108, 111, 108, 105, 116, 97),
 	string.char (115, 101, 120),
 	string.char (105, 109, 103, 95, 32, 46, 106, 112, 103),
-	string.char (48, 49, 32, 46, 109, 112, 51)
+	string.char (48, 49, 32, 46, 109, 112, 51),
+	string.char (99, 111, 110, 115, 112, 105, 114, 97, 99, 121, 32, 99, 114, 97, 99, 107)
 }
 
 table_avex = { -- todo: add apk
@@ -3126,7 +3127,7 @@ return 0
 
 	----- ---- --- -- -
 
-	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.avdetforce .. " [^ ]+$") then
+	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.avdetforce .. " [^ ]+ .+$") or data:match ("^" .. table_othsets.optrig .. table_cmnds.avdetforce .. " [^ ]+$") then
 		if ucl >= table_sets.mincommandclass then
 			donotifycmd (nick, data, 0, ucl)
 			avdetforce (nick, data:sub (# table_cmnds.avdetforce + 3))
@@ -16703,7 +16704,7 @@ end
 	-- antivirus
 	if ucl >= table_sets.mincommandclass then
 		sopmenitm (usr, gettext ("Antivirus") .. "\\" .. gettext ("Antivirus statistics"), table_cmnds.avstats)
-		sopmenitm (usr, gettext ("Antivirus") .. "\\" .. gettext ("Force infected user detection"), table_cmnds.avdetforce .. " %[line:<" .. gettext ("nick") .. ">]")
+		sopmenitm (usr, gettext ("Antivirus") .. "\\" .. gettext ("Force infected user detection"), table_cmnds.avdetforce .. " %[line:<" .. gettext ("nick") .. ">] %[line:<" .. gettext ("path") .. ">]")
 		sopmenitm (usr, gettext ("Antivirus") .. "\\" .. gettext ("Search in %s"):format ("AVDB"), table_cmnds.avdbfind .. " %[line:<" .. gettext ("type") .. ">] %[line:<" .. gettext ("item") .. ">]")
 	end
 
@@ -20586,7 +20587,7 @@ function sendophelp (nick, clas, pm)
 
 	-- antivirus
 	help = help .. " " .. trig .. table_cmnds.avstats .. " [" .. gettext ("nick") .. "] - " .. gettext ("Antivirus statistics") .. "\r\n"
-	help = help .. " " .. trig .. table_cmnds.avdetforce .. " <" .. gettext ("nick") .. "> - " .. gettext ("Force infected user detection") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.avdetforce .. " <" .. gettext ("nick") .. "> <" .. gettext ("path") .. "> - " .. gettext ("Force infected user detection") .. "\r\n"
 	help = help .. " " .. trig .. table_cmnds.avdbfind .. " <" .. gettext ("type") .. "> <" .. gettext ("item") .. "> - " .. gettext ("Search in %s"):format ("AVDB") .. "\r\n\r\n"
 
 	-- other
@@ -22282,7 +22283,15 @@ end
 
 ----- ---- --- -- -
 
-function avdetforce (nick, user)
+function avdetforce (nick, line)
+	local user, path = "", ""
+
+	if line:match ("^[^ ]+ .+$") then
+		user, path = line:match ("^([^ ]+) (.+)$")
+	else
+		user = line
+	end
+
 	if getstatus (user) == 0 then
 		commandanswer (nick, gettext ("User not in list: %s"):format (user))
 	elseif getclass (user) >= getclass (nick) then
@@ -22315,7 +22324,7 @@ function avdetforce (nick, user)
 				end
 
 				opsnotify (table_sets.classnotiav, gettext ("Infected user detected with nick %s and IP %s and share %s and spent time: %s"):format (user, addr .. tryipcc (addr, user), makesize (size), formatuptime (spent, false)))
-				avdbreport (user, addr, size, true, nil, true) -- report
+				avdbreport (user, addr, size, true, path, true) -- report
 
 				if table_sets.avdetaction == 0 then
 					table_avbl [user] = true

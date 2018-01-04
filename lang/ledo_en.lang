@@ -1194,3 +1194,4 @@ City gag list is empty.|
 %s with IP %s and class %d tried to speak without chat code in PM to %s with IP %s and class %d.|
 Low connection attempt uptime of %d seconds from %s with IP %s and class %d to user: %s|
 Please wait another %d seconds before connecting to other users.|
+path|
