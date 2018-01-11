@@ -4734,6 +4734,7 @@ elseif data:match ("^" .. table_othsets.ustrig .. table_cmnds.mode .. " %S+$") t
 
 	elseif data:match ("^" .. table_othsets.ustrig .. table_cmnds.nick .. "$") or data:match ("^" .. table_othsets.ustrig .. table_cmnds.nick .. " .+$") then
 		if ucl >= table_sets.custnickclass then
+			donotifycmd (nick, data, 0, ucl)
 			setcustnick (nick, data:sub (# table_cmnds.nick + 3), ucl)
 		else
 			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
