@@ -4,6 +4,7 @@
 [ 64] Added: CTM uptime with actions
 [ 65] Added: More keywords to AVDB search server requests
 [ 65] Added: Optional path parameter to avdetforce command
+[ 66] Added: Command notification for custom nick change, request by KCAHDEP
 
 [ 2.9.4 :: 2017-11-05 ]
 

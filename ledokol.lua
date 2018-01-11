@@ -63,7 +63,7 @@ Tzaca, JOE™
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.5" -- ledokol version
-bld_ledo = "65" -- build number
+bld_ledo = "66" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -2649,6 +2649,7 @@ return 0
 
 	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.nick .. "$") or data:match ("^" .. table_othsets.optrig .. table_cmnds.nick .. " .+$") then
 		if ucl >= table_sets.custnickclass then
+			donotifycmd (nick, data, 0, ucl)
 			setcustnick (nick, data:sub (# table_cmnds.nick + 3), ucl)
 		else
 			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
