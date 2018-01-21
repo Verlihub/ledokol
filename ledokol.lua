@@ -52,7 +52,7 @@ Doxtur, chaos, sphinx, Zorro, W1ZaRd, S0RiN, MaxFox, Krzychu,
 @tlantide, Ettore Atalan, Trumpy, Modswat, KCAHDEP, mauron, DiegoZ,
 Mank, Nickel, Lord_Zero, Meka][Meka, Ger, PetterOSS, Marcel, PPK,
 madkid, Aeolide, Jaguar, Toecutter, SCALOlàz, FlylinkDC, Men_VAf,
-Tzaca, JOE™
+Tzaca, JOE™, Foxtrot, Deivis
 
 ---------------------------------------------------------------------
 ]]-- special thanks to <<
@@ -63,7 +63,7 @@ Tzaca, JOE™
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.5" -- ledokol version
-bld_ledo = "66" -- build number
+bld_ledo = "67" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -235,6 +235,9 @@ table_sets = {
 	newsautolines = 0,
 	newsdeflines = 25,
 	chatrankclass = 11,
+	chranprizeclass = 11,
+	chranprizecount = 1000,
+	chranprizetext = "Please welcome our new chat prize winner with rank <rank>: <nick>",
 	sharerankclass = 11,
 	shareranmin = 500,
 	oprankclass = 11,
@@ -416,7 +419,8 @@ table_refu = {
 	GetUserHubURL = false,
 	SendToActiveClass = false,
 	SendToPassiveClass = false,
-	InUserSupports = false
+	InUserSupports = false,
+	SetRegClass = false
 }
 
 ---------------------------------------------------------------------
@@ -1431,6 +1435,9 @@ function Main (file)
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('ctmuptime', '" .. repsqlchars (table_sets.ctmuptime) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('ctmuptimeact', '" .. repsqlchars (table_sets.ctmuptimeact) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('classnotilowupctm', '" .. repsqlchars (table_sets.classnotilowupctm) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('chranprizeclass', '" .. repsqlchars (table_sets.chranprizeclass) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('chranprizecount', '" .. repsqlchars (table_sets.chranprizecount) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('chranprizetext', '" .. repsqlchars (table_sets.chranprizetext) .. "')")
 					end
 
 					if ver <= 296 then
@@ -14697,8 +14704,8 @@ end
 
 ----- ---- --- -- -
 
-function chatrankaccept (nick, ucls)
-	if table_sets.regmechatcnt > 0 and ucls == 0 then -- regme limiter
+function chatrankaccept (nick, class)
+	if table_sets.regmechatcnt > 0 and class == 0 then -- registration limiter
 		if table_regm [nick] then
 			if table_regm [nick] < table_sets.regmechatcnt then
 				table_regm [nick] = table_regm [nick] + 1
@@ -14708,14 +14715,42 @@ function chatrankaccept (nick, ucls)
 		end
 	end
 
-	if ucls < table_sets.chatrankclass then return end -- chat rank
-	local usr = repsqlchars (nick)
-	local _, rows = VH:SQLQuery ("select `nick` from `" .. tbl_sql.ranex .. "` where `nick` = '" .. usr .. "'")
+	if class < table_sets.chatrankclass then -- chat rank
+		return
+	end
+
+	local user = repsqlchars (nick)
+	local _, rows = VH:SQLQuery ("select `nick` from `" .. tbl_sql.ranex .. "` where `nick` = '" .. user .. "'")
 
 	if rows > 0 then
-		VH:SQLQuery ("update `" .. tbl_sql.ranex .. "` set `occurred` = `occurred` + 1 where `nick` = '" .. usr .. "'")
-	else
-		VH:SQLQuery ("insert into `" .. tbl_sql.chran .. "` (`nick`) values ('" .. usr .. "') on duplicate key update `rank` = `rank` + 1")
+		VH:SQLQuery ("update `" .. tbl_sql.ranex .. "` set `occurred` = `occurred` + 1 where `nick` = '" .. user .. "'")
+		return
+	end
+
+	VH:SQLQuery ("insert into `" .. tbl_sql.chran .. "` (`nick`) values ('" .. user .. "') on duplicate key update `rank` = `rank` + 1")
+
+	if table_sets.chranprizeclass < 11 and class < table_sets.chranprizeclass and table_sets.chranprizecount > 0 then -- chat rank prize
+		local _, rows = VH:SQLQuery ("select `rank` from `" .. tbl_sql.chran .. "` where `nick` = '" .. user .. "'")
+
+		if rows > 0 then
+			local _, rank = VH:SQLFetch (0)
+
+			if rank and tonumber (rank) and tonumber (rank) >= table_sets.chranprizecount then
+				if class == 0 then
+					VH:AddRegUser (nick, "", table_sets.chranprizeclass) -- password must be set by user, hub should send message to user
+				elseif table_refu.SetRegClass then
+					VH:SetRegClass (nick, table_sets.chranprizeclass)
+				end
+
+				if class == 0 or table_refu.SetRegClass then
+					local noti = table_sets.chranprizetext
+					noti = noti:gsub ("<nick>", reprexpchars (nick))
+					noti = noti:gsub ("<class>", _tostring (table_sets.chranprizeclass))
+					noti = noti:gsub ("<rank>", _tostring (rank))
+					maintoall (noti, 0, 10)
+				end
+			end
+		end
 	end
 end
 
@@ -18259,22 +18294,59 @@ elseif tvar == "enablecmdlog" then
 
 	]]--
 
------ ---- --- -- -
+	----- ---- --- -- -
 
-elseif tvar == "chatrankclass" then
-if num then
-if (setto >= 0 and setto <= 5) or setto == 10 or setto == 11 then
-ok = true
-if setto > table_sets [tvar] then cleantablebyclass (setto, tbl_sql.chran) end
-else
-commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0, 1, 2, 3, 4, 5, 10 " .. gettext ("or") .. " 11"))
-end
+	elseif tvar == "chatrankclass" then
+		if num then
+			if (setto >= 0 and setto <= 5) or setto == 10 or setto == 11 then
+				ok = true
 
-else
-commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
-end
+				if setto > table_sets [tvar] then
+					cleantablebyclass (setto, tbl_sql.chran)
+				end
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0, 1, 2, 3, 4, 5, 10 " .. gettext ("or") .. " 11"))
+			end
+		else
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
+		end
 
------ ---- --- -- -
+	----- ---- --- -- -
+
+	elseif tvar == "chranprizeclass" then
+		if num then
+			if (setto >= 1 and setto <= 3) or setto == 11 then
+				ok = true
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "1, 2, 3 " .. gettext ("or") .. " 11"))
+			end
+		else
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
+		end
+
+	----- ---- --- -- -
+
+	elseif tvar == "chranprizecount" then
+		if num then
+			if setto >= 0 and setto <= 100000 then
+				ok = true
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0 " .. gettext ("to") .. " 100000"))
+			end
+		else
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
+		end
+
+	----- ---- --- -- -
+
+	elseif tvar == "chranprizetext" then
+		if # setto > 0 then
+			ok = true
+		else
+			commandanswer (nick, gettext ("Configuration variable %s can't be empty."):format (tvar))
+		end
+
+	----- ---- --- -- -
 
 elseif tvar == "oprankclass" then
 if num then
@@ -21034,6 +21106,9 @@ function showledoconf (nick)
 	conf = conf .. "\r\n"
 
 	conf = conf .. "\r\n [::] chatrankclass = " .. _tostring (table_sets.chatrankclass)
+	conf = conf .. "\r\n [::] chranprizeclass = " .. _tostring (table_sets.chranprizeclass)
+	conf = conf .. "\r\n [::] chranprizecount = " .. _tostring (table_sets.chranprizecount)
+	conf = conf .. "\r\n [::] chranprizetext = " .. _tostring (table_sets.chranprizetext)
 	conf = conf .. "\r\n [::] sharerankclass = " .. _tostring (table_sets.sharerankclass)
 	conf = conf .. "\r\n [::] shareranmin = " .. _tostring (table_sets.shareranmin)
 	conf = conf .. "\r\n [::] oprankclass = " .. _tostring (table_sets.oprankclass)
