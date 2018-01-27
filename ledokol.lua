@@ -63,7 +63,7 @@ Tzaca, JOE™, Foxtrot, Deivis
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.5" -- ledokol version
-bld_ledo = "67" -- build number
+bld_ledo = "68" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -752,14 +752,13 @@ tbl_cyrlet = {
 ---------------------------------------------------------------------
 
 cc_names = {
-	L1 = "Local Network",
+	L1 = "Local Network", -- custom
 	P1 = "Private Network",
 	A1 = "Anonymous Proxy",
 	A2 = "Satellite Provider",
 	O1 = "Other Country",
 	SU = "Soviet Union",
-	EU = "European Union",
-	AD = "Andorra",
+	AD = "Andorra", -- official
 	AE = "United Arab Emirates",
 	AF = "Afghanistan",
 	AG = "Antigua and Barbuda",
@@ -767,14 +766,14 @@ cc_names = {
 	AL = "Albania",
 	AM = "Armenia",
 	AO = "Angola",
-	AP = "Asia/Pacific Region",
+	AP = "Asia",
 	AQ = "Antarctica",
 	AR = "Argentina",
 	AS = "American Samoa",
 	AT = "Austria",
 	AU = "Australia",
 	AW = "Aruba",
-	AX = "Aland Islands",
+	AX = "Aland",
 	AZ = "Azerbaijan",
 	BA = "Bosnia and Herzegovina",
 	BB = "Barbados",
@@ -785,25 +784,24 @@ cc_names = {
 	BH = "Bahrain",
 	BI = "Burundi",
 	BJ = "Benin",
-	BL = "Saint Bartelemey",
+	BL = "Saint-Barthelemy",
 	BM = "Bermuda",
-	BN = "Brunei Darussalam",
+	BN = "Brunei",
 	BO = "Bolivia",
-	BQ = "Bonaire, Saint Eustatius and Saba",
+	BQ = "Bonaire, Sint Eustatius, and Saba",
 	BR = "Brazil",
 	BS = "Bahamas",
 	BT = "Bhutan",
-	BV = "Bouvet Island",
 	BW = "Botswana",
 	BY = "Belarus",
 	BZ = "Belize",
 	CA = "Canada",
-	CC = "Cocos (Keeling) Islands",
-	CD = "Congo, The Democratic Republic of the",
+	CC = "Cocos [Keeling] Islands",
+	CD = "Congo",
 	CF = "Central African Republic",
-	CG = "Congo",
+	CG = "Republic of the Congo",
 	CH = "Switzerland",
-	CI = "Cote d'Ivoire",
+	CI = "Ivory Coast",
 	CK = "Cook Islands",
 	CL = "Chile",
 	CM = "Cameroon",
@@ -811,11 +809,11 @@ cc_names = {
 	CO = "Colombia",
 	CR = "Costa Rica",
 	CU = "Cuba",
-	CV = "Cape Verde",
+	CV = "Cabo Verde",
 	CW = "Curacao",
 	CX = "Christmas Island",
 	CY = "Cyprus",
-	CZ = "Czech Republic",
+	CZ = "Czechia",
 	DE = "Germany",
 	DJ = "Djibouti",
 	DK = "Denmark",
@@ -832,8 +830,8 @@ cc_names = {
 	EU = "Europe",
 	FI = "Finland",
 	FJ = "Fiji",
-	FK = "Falkland Islands (Malvinas)",
-	FM = "Micronesia, Federated States of",
+	FK = "Falkland Islands",
+	FM = "Federated States of Micronesia",
 	FO = "Faroe Islands",
 	FR = "France",
 	GA = "Gabon",
@@ -868,45 +866,45 @@ cc_names = {
 	IN = "India",
 	IO = "British Indian Ocean Territory",
 	IQ = "Iraq",
-	IR = "Iran, Islamic Republic of",
+	IR = "Iran",
 	IS = "Iceland",
 	IT = "Italy",
 	JE = "Jersey",
 	JM = "Jamaica",
-	JO = "Jordan",
+	JO = "Hashemite Kingdom of Jordan",
 	JP = "Japan",
 	KE = "Kenya",
 	KG = "Kyrgyzstan",
 	KH = "Cambodia",
 	KI = "Kiribati",
 	KM = "Comoros",
-	KN = "Saint Kitts and Nevis",
-	KP = "Korea, Democratic People's Republic of",
-	KR = "Korea, Republic of",
+	KN = "St Kitts and Nevis",
+	KP = "North Korea",
+	KR = "Republic of Korea",
 	KW = "Kuwait",
 	KY = "Cayman Islands",
 	KZ = "Kazakhstan",
-	LA = "Lao People's Democratic Republic",
+	LA = "Laos",
 	LB = "Lebanon",
 	LC = "Saint Lucia",
 	LI = "Liechtenstein",
 	LK = "Sri Lanka",
 	LR = "Liberia",
 	LS = "Lesotho",
-	LT = "Lithuania",
+	LT = "Republic of Lithuania",
 	LU = "Luxembourg",
 	LV = "Latvia",
-	LY = "Libyan Arab Jamahiriya",
+	LY = "Libya",
 	MA = "Morocco",
 	MC = "Monaco",
-	MD = "Moldova, Republic of",
+	MD = "Republic of Moldova",
 	ME = "Montenegro",
 	MF = "Saint Martin",
 	MG = "Madagascar",
 	MH = "Marshall Islands",
 	MK = "Macedonia",
 	ML = "Mali",
-	MM = "Myanmar",
+	MM = "Myanmar [Burma]",
 	MN = "Mongolia",
 	MO = "Macao",
 	MP = "Northern Mariana Islands",
@@ -941,9 +939,9 @@ cc_names = {
 	PK = "Pakistan",
 	PL = "Poland",
 	PM = "Saint Pierre and Miquelon",
-	PN = "Pitcairn",
+	PN = "Pitcairn Islands",
 	PR = "Puerto Rico",
-	PS = "Palestinian Territory",
+	PS = "Palestine",
 	PT = "Portugal",
 	PW = "Palau",
 	PY = "Paraguay",
@@ -951,7 +949,7 @@ cc_names = {
 	RE = "Reunion",
 	RO = "Romania",
 	RS = "Serbia",
-	RU = "Russian Federation",
+	RU = "Russia",
 	RW = "Rwanda",
 	SA = "Saudi Arabia",
 	SB = "Solomon Islands",
@@ -972,7 +970,7 @@ cc_names = {
 	ST = "Sao Tome and Principe",
 	SV = "El Salvador",
 	SX = "Sint Maarten",
-	SY = "Syrian Arab Republic",
+	SY = "Syria",
 	SZ = "Swaziland",
 	TC = "Turks and Caicos Islands",
 	TD = "Chad",
@@ -981,7 +979,7 @@ cc_names = {
 	TH = "Thailand",
 	TJ = "Tajikistan",
 	TK = "Tokelau",
-	TL = "Timor-Leste",
+	TL = "East Timor",
 	TM = "Turkmenistan",
 	TN = "Tunisia",
 	TO = "Tonga",
@@ -989,22 +987,23 @@ cc_names = {
 	TT = "Trinidad and Tobago",
 	TV = "Tuvalu",
 	TW = "Taiwan",
-	TZ = "Tanzania, United Republic of",
+	TZ = "Tanzania",
 	UA = "Ukraine",
 	UG = "Uganda",
-	UM = "United States Minor Outlying Islands",
+	UM = "U.S. Minor Outlying Islands",
 	US = "United States",
 	UY = "Uruguay",
 	UZ = "Uzbekistan",
-	VA = "Holy See (Vatican City State)",
+	VA = "Vatican City",
 	VC = "Saint Vincent and the Grenadines",
 	VE = "Venezuela",
-	VG = "Virgin Islands, British",
-	VI = "Virgin Islands, U.S.",
+	VG = "British Virgin Islands",
+	VI = "U.S. Virgin Islands",
 	VN = "Vietnam",
 	VU = "Vanuatu",
 	WF = "Wallis and Futuna",
 	WS = "Samoa",
+	XK = "Kosovo",
 	YE = "Yemen",
 	YT = "Mayotte",
 	ZA = "South Africa",
@@ -23333,6 +23332,24 @@ function getcc (nick)
 	else
 		return cc:upper ()
 	end
+end
+
+----- ---- --- -- -
+
+function getcn (code)
+	local back = gettext ("Unknown country")
+
+	if getconfig ("mmdb_names_lang") ~= "" then
+		-- there is no way to get country name from country code yet
+	else
+		local name = cc_names [code]
+
+		if name and # name > 0 then
+			back = name
+		end
+	end
+
+	return back
 end
 
 ----- ---- --- -- -
