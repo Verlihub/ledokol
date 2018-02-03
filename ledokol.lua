@@ -63,7 +63,7 @@ Tzaca, JOE™, Foxtrot, Deivis
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.5" -- ledokol version
-bld_ledo = "68" -- build number
+bld_ledo = "69" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -195,6 +195,7 @@ table_sets = {
 	searuptimeact = 0,
 	ctmuptime = 0,
 	ctmuptimeact = 0,
+	ctmuptimemsg = 1,
 	showuseruptime = 0,
 	custnickclass = 3,
 	custlistclass = 0,
@@ -1433,6 +1434,7 @@ function Main (file)
 					if ver <= 295 then
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('ctmuptime', '" .. repsqlchars (table_sets.ctmuptime) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('ctmuptimeact', '" .. repsqlchars (table_sets.ctmuptimeact) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('ctmuptimemsg', '" .. repsqlchars (table_sets.ctmuptimemsg) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('classnotilowupctm', '" .. repsqlchars (table_sets.classnotilowupctm) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('chranprizeclass', '" .. repsqlchars (table_sets.chranprizeclass) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('chranprizecount', '" .. repsqlchars (table_sets.chranprizecount) .. "')")
@@ -5969,7 +5971,9 @@ function VH_OnParsedMsgConnectToMe (nick, other, ip, port)
 					opsnotify (table_sets.classnotilowupctm, gettext ("Low connection attempt uptime of %d seconds from %s with IP %s and class %d to user: %s"):format (dif, nick, addr .. tryipcc (addr, nick), class, other))
 
 					if table_sets.ctmuptimeact == 0 then -- message
-						maintouser (nick, gettext ("Please wait another %d seconds before connecting to other users."):format (table_sets.ctmuptime - dif))
+						if table_sets.ctmuptimemsg == 1 then
+							maintouser (nick, gettext ("Please wait another %d seconds before connecting to other users."):format (table_sets.ctmuptime - dif))
+						end
 					elseif table_sets.ctmuptimeact == 1 then -- drop
 						opsnotify (table_sets.classnotilowupctm, gettext ("User dropped: %s"):format (nick))
 						VH:Disconnect (nick)
@@ -6056,7 +6060,9 @@ function VH_OnParsedMsgRevConnectToMe (nick, other)
 					opsnotify (table_sets.classnotilowupctm, gettext ("Low connection attempt uptime of %d seconds from %s with IP %s and class %d to user: %s"):format (dif, nick, addr .. tryipcc (addr, nick), class, other))
 
 					if table_sets.ctmuptimeact == 0 then -- message
-						maintouser (nick, gettext ("Please wait another %d seconds before connecting to other users."):format (table_sets.ctmuptime - dif))
+						if table_sets.ctmuptimemsg == 1 then
+							maintouser (nick, gettext ("Please wait another %d seconds before connecting to other users."):format (table_sets.ctmuptime - dif))
+						end
 					elseif table_sets.ctmuptimeact == 1 then -- drop
 						opsnotify (table_sets.classnotilowupctm, gettext ("User dropped: %s"):format (nick))
 						VH:Disconnect (nick)
@@ -17728,6 +17734,19 @@ end
 
 	----- ---- --- -- -
 
+	elseif tvar == "ctmuptimemsg" then
+		if num then
+			if setto == 0 or setto == 1 then
+				ok = true
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0 " .. gettext ("or") .. " 1"))
+			end
+		else
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
+		end
+
+	----- ---- --- -- -
+
 elseif tvar == "showtopicowner" then
 if num then
 if setto == 0 or setto == 1 then
@@ -21048,6 +21067,7 @@ function showledoconf (nick)
 	conf = conf .. "\r\n [::] searuptimeact = " .. _tostring (table_sets.searuptimeact)
 	conf = conf .. "\r\n [::] ctmuptime = " .. _tostring (table_sets.ctmuptime)
 	conf = conf .. "\r\n [::] ctmuptimeact = " .. _tostring (table_sets.ctmuptimeact)
+	conf = conf .. "\r\n [::] ctmuptimemsg = " .. _tostring (table_sets.ctmuptimemsg)
 	conf = conf .. "\r\n [::] showuseruptime = " .. _tostring (table_sets.showuseruptime)
 	conf = conf .. "\r\n"
 
