@@ -193,9 +193,10 @@ table_sets = {
 	regmeuptime = 0,
 	searchuptime = 0,
 	searuptimeact = 0,
+	searuptimemsg = 5,
 	ctmuptime = 0,
 	ctmuptimeact = 0,
-	ctmuptimemsg = 1,
+	ctmuptimemsg = 5,
 	showuseruptime = 0,
 	custnickclass = 3,
 	custlistclass = 0,
@@ -1030,6 +1031,7 @@ table_voki = {}
 table_flod = {addr = {}, nick = {}}
 table_opks = {}
 table_usup = {}
+table_uumd = {sear = {}, ctm = {}}
 table_cust = {}
 table_ctmb = {}
 table_regm = {}
@@ -1435,6 +1437,7 @@ function Main (file)
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('ctmuptime', '" .. repsqlchars (table_sets.ctmuptime) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('ctmuptimeact', '" .. repsqlchars (table_sets.ctmuptimeact) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('ctmuptimemsg', '" .. repsqlchars (table_sets.ctmuptimemsg) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('searuptimemsg', '" .. repsqlchars (table_sets.searuptimemsg) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('classnotilowupctm', '" .. repsqlchars (table_sets.classnotilowupctm) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('chranprizeclass', '" .. repsqlchars (table_sets.chranprizeclass) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('chranprizecount', '" .. repsqlchars (table_sets.chranprizecount) .. "')")
@@ -5235,6 +5238,8 @@ function VH_OnUserLogout (nick, uip)
 
 	if table_sets.showuseruptime == 1 then -- user uptime
 		table_usup [nick] = nil
+		table_uumd.sear [nick] = nil
+		table_uumd.ctm [nick] = nil
 	end
 
 	if table_sets.regmechatcnt > 0 then -- regme limit
@@ -5316,52 +5321,61 @@ function VH_OnParsedMsgSearch (nick, data)
 			prot, gotprot = isprotected (nick, ip), true
 
 			if table_usup [nick] then
-				local dif = os.time () - table_usup [nick]
+				local now = os.time ()
+				local dif = now - table_usup [nick]
 
 				if dif < table_sets.searchuptime then
-					if table_sets.classnotilowupsear < 11 then
-						local sype, sear = data:match ("^%$Search .* .*%?.*%?.*%?(.*)%?(.*)$")
+					local seno = table_sets.searuptimemsg ~= 0 and (not table_uumd.sear [nick] or os.difftime (now, table_uumd.sear [nick]) >= table_sets.searuptimemsg)
 
-						if sype and sear then
-							sype = tonumber (sype or 1) or 1
+					if seno then
+						if table_sets.classnotilowupsear < 11 then
+							local sype, sear = data:match ("^%$Search .* .*%?.*%?.*%?(.*)%?(.*)$")
 
-							if sype < 1 or sype > 9 then
+							if sype and sear then
+								sype = tonumber (sype or 1) or 1
+
+								if sype < 1 or sype > 9 then
+									sype = 1
+								end
+
+								if sype == 9 and sear:sub (1, 4):lower () == "tth:" then -- remove "TTH:"
+									sear = sear:sub (5)
+								end
+							else
 								sype = 1
+								sear = ""
 							end
 
-							if sype == 9 and sear:sub (1, 4):lower () == "tth:" then -- remove "TTH:"
-								sear = sear:sub (5)
+							local note = "Low search uptime of %d seconds from %s with IP %s and class %d as any file: %s"
+
+							if sype == 2 then
+								note = "Low search uptime of %d seconds from %s with IP %s and class %d as audio file: %s"
+							elseif sype == 3 then
+								note = "Low search uptime of %d seconds from %s with IP %s and class %d as compressed file: %s"
+							elseif sype == 4 then
+								note = "Low search uptime of %d seconds from %s with IP %s and class %d as document: %s"
+							elseif sype == 5 then
+								note = "Low search uptime of %d seconds from %s with IP %s and class %d as executable: %s"
+							elseif sype == 6 then
+								note = "Low search uptime of %d seconds from %s with IP %s and class %d as picture: %s"
+							elseif sype == 7 then
+								note = "Low search uptime of %d seconds from %s with IP %s and class %d as video: %s"
+							elseif sype == 8 then
+								note = "Low search uptime of %d seconds from %s with IP %s and class %d as folder: %s"
+							elseif sype == 9 then
+								note = "Low search uptime of %d seconds from %s with IP %s and class %d as TTH: %s"
 							end
-						else
-							sype = 1
-							sear = ""
+
+							opsnotify (table_sets.classnotilowupsear, gettext (note):format (dif, nick, ip .. tryipcc (ip, nick), cls, repsrchchars (sear)))
 						end
 
-						local note = "Low search uptime of %d seconds from %s with IP %s and class %d as any file: %s"
-
-						if sype == 2 then
-							note = "Low search uptime of %d seconds from %s with IP %s and class %d as audio file: %s"
-						elseif sype == 3 then
-							note = "Low search uptime of %d seconds from %s with IP %s and class %d as compressed file: %s"
-						elseif sype == 4 then
-							note = "Low search uptime of %d seconds from %s with IP %s and class %d as document: %s"
-						elseif sype == 5 then
-							note = "Low search uptime of %d seconds from %s with IP %s and class %d as executable: %s"
-						elseif sype == 6 then
-							note = "Low search uptime of %d seconds from %s with IP %s and class %d as picture: %s"
-						elseif sype == 7 then
-							note = "Low search uptime of %d seconds from %s with IP %s and class %d as video: %s"
-						elseif sype == 8 then
-							note = "Low search uptime of %d seconds from %s with IP %s and class %d as folder: %s"
-						elseif sype == 9 then
-							note = "Low search uptime of %d seconds from %s with IP %s and class %d as TTH: %s"
-						end
-
-						opsnotify (table_sets.classnotilowupsear, gettext (note):format (dif, nick, ip .. tryipcc (ip, nick), cls, repsrchchars (sear)))
+						table_uumd.sear [nick] = now
 					end
 
 					if table_sets.searuptimeact == 0 then -- message
-						maintouser (nick, gettext ("Please wait another %d seconds before using hub search engine."):format (table_sets.searchuptime - dif))
+						if seno then
+							maintouser (nick, gettext ("Please wait another %d seconds before using hub search engine."):format (table_sets.searchuptime - dif))
+						end
 					elseif table_sets.searuptimeact == 1 then -- drop
 						opsnotify (table_sets.classnotilowupsear, gettext ("User dropped: %s"):format (nick))
 						VH:Disconnect (nick)
@@ -5961,17 +5975,23 @@ function VH_OnParsedMsgConnectToMe (nick, other, ip, port)
 
 		if class < table_sets.scanbelowclass then
 			if table_usup [nick] then
-				local dif = os.time () - table_usup [nick]
+				local now = os.time ()
+				local dif = now - table_usup [nick]
 
 				if dif < table_sets.ctmuptime then
 					if not haveaddr then
 						addr, haveaddr = getip (nick), true
 					end
 
-					opsnotify (table_sets.classnotilowupctm, gettext ("Low connection attempt uptime of %d seconds from %s with IP %s and class %d to user: %s"):format (dif, nick, addr .. tryipcc (addr, nick), class, other))
+					local seno = table_sets.ctmuptimemsg ~= 0 and (not table_uumd.ctm [nick] or os.difftime (now, table_uumd.ctm [nick]) >= table_sets.ctmuptimemsg)
+
+					if seno then
+						opsnotify (table_sets.classnotilowupctm, gettext ("Low connection attempt uptime of %d seconds from %s with IP %s and class %d to user: %s"):format (dif, nick, addr .. tryipcc (addr, nick), class, other))
+						table_uumd.ctm [nick] = now
+					end
 
 					if table_sets.ctmuptimeact == 0 then -- message
-						if table_sets.ctmuptimemsg == 1 then
+						if seno then
 							maintouser (nick, gettext ("Please wait another %d seconds before connecting to other users."):format (table_sets.ctmuptime - dif))
 						end
 					elseif table_sets.ctmuptimeact == 1 then -- drop
@@ -6050,17 +6070,23 @@ function VH_OnParsedMsgRevConnectToMe (nick, other)
 
 		if class < table_sets.scanbelowclass then
 			if table_usup [nick] then
-				local dif = os.time () - table_usup [nick]
+				local now = os.time ()
+				local dif = now - table_usup [nick]
 
 				if dif < table_sets.ctmuptime then
 					if not haveaddr then
 						addr, haveaddr = getip (nick), true
 					end
 
-					opsnotify (table_sets.classnotilowupctm, gettext ("Low connection attempt uptime of %d seconds from %s with IP %s and class %d to user: %s"):format (dif, nick, addr .. tryipcc (addr, nick), class, other))
+					local seno = table_sets.ctmuptimemsg ~= 0 and (not table_uumd.ctm [nick] or os.difftime (now, table_uumd.ctm [nick]) >= table_sets.ctmuptimemsg)
+
+					if seno then
+						opsnotify (table_sets.classnotilowupctm, gettext ("Low connection attempt uptime of %d seconds from %s with IP %s and class %d to user: %s"):format (dif, nick, addr .. tryipcc (addr, nick), class, other))
+						table_uumd.ctm [nick] = now
+					end
 
 					if table_sets.ctmuptimeact == 0 then -- message
-						if table_sets.ctmuptimemsg == 1 then
+						if seno then
 							maintouser (nick, gettext ("Please wait another %d seconds before connecting to other users."):format (table_sets.ctmuptime - dif))
 						end
 					elseif table_sets.ctmuptimeact == 1 then -- drop
@@ -17679,6 +17705,8 @@ end
 			if setto >= 0 and setto <= 86400 then
 				if setto > 0 and table_sets.showuseruptime == 0 then
 					commandanswer (nick, gettext ("In order to use this feature you need to set %s to: %d"):format ("showuseruptime", 1))
+				elseif setto == 0 then
+					table_uumd.sear = {}
 				end
 
 				ok = true
@@ -17696,6 +17724,8 @@ end
 			if setto >= 0 and setto <= 86400 then
 				if setto > 0 and table_sets.showuseruptime == 0 then
 					commandanswer (nick, gettext ("In order to use this feature you need to set %s to: %d"):format ("showuseruptime", 1))
+				elseif setto == 0 then
+					table_uumd.ctm = {}
 				end
 
 				ok = true
@@ -17736,10 +17766,31 @@ end
 
 	elseif tvar == "ctmuptimemsg" then
 		if num then
-			if setto == 0 or setto == 1 then
+			if setto >= 0 and setto <= 60 then
+				if setto == 0 then
+					table_uumd.ctm = {}
+				end
+
 				ok = true
 			else
-				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0 " .. gettext ("or") .. " 1"))
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0 " .. gettext ("to") .. " 60"))
+			end
+		else
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
+		end
+
+	----- ---- --- -- -
+
+	elseif tvar == "searuptimemsg" then
+		if num then
+			if setto >= 0 and setto <= 60 then
+				if setto == 0 then
+					table_uumd.sear = {}
+				end
+
+				ok = true
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0 " .. gettext ("to") .. " 60"))
 			end
 		else
 			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
@@ -18468,7 +18519,7 @@ else
 commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
 end
 
------ ---- --- -- -
+	----- ---- --- -- -
 
 	elseif tvar == "showuseruptime" then
 		if num then
@@ -18477,6 +18528,7 @@ end
 
 				if setto == 0 then -- flush
 					table_usup = {}
+					table_uumd = {sear = {}, ctm = {}}
 				end
 			else
 				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0 " .. gettext ("or") .. " 1"))
@@ -18485,7 +18537,7 @@ end
 			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
 		end
 
------ ---- --- -- -
+	----- ---- --- -- -
 
 elseif tvar == "ranklimit" then
 if num then
@@ -21065,6 +21117,7 @@ function showledoconf (nick)
 	conf = conf .. "\r\n [::] regmeuptime = " .. _tostring (table_sets.regmeuptime)
 	conf = conf .. "\r\n [::] searchuptime = " .. _tostring (table_sets.searchuptime)
 	conf = conf .. "\r\n [::] searuptimeact = " .. _tostring (table_sets.searuptimeact)
+	conf = conf .. "\r\n [::] searuptimemsg = " .. _tostring (table_sets.searuptimemsg)
 	conf = conf .. "\r\n [::] ctmuptime = " .. _tostring (table_sets.ctmuptime)
 	conf = conf .. "\r\n [::] ctmuptimeact = " .. _tostring (table_sets.ctmuptimeact)
 	conf = conf .. "\r\n [::] ctmuptimemsg = " .. _tostring (table_sets.ctmuptimemsg)
