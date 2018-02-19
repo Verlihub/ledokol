@@ -63,7 +63,7 @@ Tzaca, JOE™, Foxtrot, Deivis
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.5" -- ledokol version
-bld_ledo = "69" -- build number
+bld_ledo = "70" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -16472,7 +16472,7 @@ end
 
 	-- chatrooms
 	if ucl >= table_sets.mincommandclass then
-		sopmenitm (usr, gettext ("Chatrooms") .. "\\" .. gettext ("Add chatroom"), table_cmnds.chatadd .. " %[line:<" .. gettext ("nick") .. ">] %[line:<" .. gettext ("description") .. ">] %[line:<" .. gettext ("minclass") .. ">] %[line:<" .. gettext ("maxclass") .. ">] %[line:<" .. gettext ("cc") .. ">]")
+		sopmenitm (usr, gettext ("Chatrooms") .. "\\" .. gettext ("Add chatroom"), table_cmnds.chatadd .. " %[line:<" .. gettext ("nick") .. ">] %[line:<" .. gettext ("description") .. ">] %[line:<" .. gettext ("minclass") .. ">] %[line:<" .. gettext ("maxclass") .. ">] %[line:<" .. gettext ("cc") .. " " .. gettext ("or") .. " *>]")
 		sopmenitm (usr, gettext ("Chatrooms") .. "\\" .. gettext ("Chatroom list"), table_cmnds.chatlist)
 		smensep (usr)
 		sopmenitm (usr, gettext ("Chatrooms") .. "\\" .. gettext ("Delete chatroom"), table_cmnds.chatdel .. " %[line:<" .. gettext ("nick") .. ">]")
@@ -20599,7 +20599,7 @@ function sendophelp (nick, clas, pm)
 	help = help .. " " .. trig .. table_cmnds.wmdel .. " <" .. gettext ("nick") .. "> - " .. gettext ("Delete user and his welcome messages") .. "\r\n\r\n"
 
 	-- chatrooms
-	help = help .. " " .. trig .. table_cmnds.chatadd .. " <" .. gettext ("nick") .. "> <" .. gettext ("description") .. "> <" .. gettext ("minclass") .. "> <" .. gettext ("maxclass") .. "> <" .. gettext ("cc") .. "> - " .. gettext ("Add chatroom") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.chatadd .. " <" .. gettext ("nick") .. "> <" .. gettext ("description") .. "> <" .. gettext ("minclass") .. "> <" .. gettext ("maxclass") .. "> <" .. gettext ("cc") .. " " .. gettext ("or") .. " *> - " .. gettext ("Add chatroom") .. "\r\n"
 	help = help .. " " .. trig .. table_cmnds.chatlist .. " - " .. gettext ("Chatroom list") .. "\r\n"
 	help = help .. " " .. trig .. table_cmnds.chatdel .. " <" .. gettext ("nick") .. "> - " .. gettext ("Delete chatroom") .. "\r\n"
 	help = help .. " " .. trig .. table_cmnds.acreadd .. " <" .. gettext ("cc") .. "> <" .. gettext ("nick") .. "> - " .. gettext ("Add automatic country chatroom entrance") .. "\r\n"

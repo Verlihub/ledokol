@@ -1,6 +1,6 @@
 # Language: tr_TR
 # Charset: CP1254
-# Version: 2.9.4
+# Version: 2.9.5
 # Author: Mauron
 # Email: mauron@vmail.me
 
@@ -792,8 +792,8 @@ Forbidden country code list is empty.|Yasaklý ülke kodu listesi boþtur.
 %s with IP %s and class %d allowed due to forbidden country code exception: %s|%s, ki %s IP adresli ve %d sýnýflý, yasaklý ülke kodu istisnasý sebebiyle kabul edildi: %s
 I'm staying idle due to confusion.|Karýþýklýk sebebiyle boþta kalýyorum.
 Added replacer in MC: %s|Ana sohbette deðiþtirici eklendi: %s
-Deleted chat replacer with ID %d: %s|
-Couldn't delete chat replacer because not found: %s|
+Deleted chat replacer with ID %d: %s|%d kimlikli sohbet deðiþtiricisi silindi: %s
+Couldn't delete chat replacer because not found: %s|Sohbet deðiþtiricisi silinemedi çünkü bulunamadý: %s
 Chat replacer list|Sohbet deðiþtirici listesi
 Chat replacer list is empty.|Sohbet deðiþtirici listesi boþtur.
 Replace|Deðiþtir
@@ -1191,3 +1191,6 @@ City gag not found: %s|Kent susturma listesi boþtur.
 %s with IP %s and class %d tries to speak with city gag in MC: %s|Ana sohbette %s ki IP adresi %s ve sýnýfý %d kent susturmasýna raðmen konuþmaya çalýþmaktadýr: %s
 %s with IP %s and class %d tried to speak in MC without chat code: <%s> %s|%s ki IP adresi %s ve sýnýfý %d sohbet kodsuz ana sohbette konuþmaya çalýþtý: <%s> %s
 %s with IP %s and class %d tried to speak without chat code in PM to %s with IP %s and class %d.|%s ki IP adresi %s ve sýnýfý %d sohbet kodsuz özel sohbette %s ile, ki IP adresi %s ve sýnýfý %d, konuþmaya çalýþtý.
+Low connection attempt uptime of %d seconds from %s with IP %s and class %d to user: %s|%d saniyelik düþük baðlantý teþebbüsü süresi, ki %s unsurundan %sIP adresli ve %d sýnýflý, þu kullanýcýya: %s
+Please wait another %d seconds before connecting to other users.|Lütfen diðer kullanýcýlara baðlanmadan önce %d saniye daha bekleyin.
+path|yol

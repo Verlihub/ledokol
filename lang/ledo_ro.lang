@@ -1,6 +1,6 @@
 # Language: ro_RO
 # Charset: CP1250
-# Version: 2.9.4
+# Version: 2.9.5
 # Author: S0RiN
 # Email: rusu_sorin_con@yahoo.com
 
@@ -1191,3 +1191,6 @@ City gag not found: %s|Lista cu gaguri pe oraº e goalã.
 %s with IP %s and class %d tries to speak with city gag in MC: %s|%s cu IP %s ºi clasa %d încearcã sã scrie cu gag pe oraº în MC: %s
 %s with IP %s and class %d tried to speak in MC without chat code: <%s> %s|%s cu IP %s ºi clasa %d încearcã sã scrie în main-chat fãrã a scrie codul: <%s> %s
 %s with IP %s and class %d tried to speak without chat code in PM to %s with IP %s and class %d.|%s cu IP %s ºi clasa %d încearcã sã scrie fãrã cod de chat în privat la %s cu IP %s ºi clasa %d .
+Low connection attempt uptime of %d seconds from %s with IP %s and class %d to user: %s|Încercare de conectare în curs %d secunde, de la %s cu IP %s ºi clasa %d la utilizatorul %s 
+Please wait another %d seconds before connecting to other users.|Te rog sã aºtepþi încã %d secunde înainte sã încerci sã te conectezi la un alt utilizator.
+path|pachet

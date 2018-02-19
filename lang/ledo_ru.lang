@@ -1,8 +1,8 @@
 # Language: ru_RU
 # Charset: CP1251
-# Version: 2.9.4
+# Version: 2.9.5
 # Author: KCAHDEP
-# Email: admin@kcahdep.org
+# Email: admin@milenahub.ru
 
 Current topic: %s|ƒанна€ тема: %s
 Current topic set by %s: %s|ƒанна€ тема установленна€ %s: %s
@@ -1079,7 +1079,7 @@ Please check your command syntax, something is wrong there.|ѕожалуйста проверьте
 Entry used in detection: %s|ѕункт использованный дл€ детекта: %s
 Exception used in detection: %s|»сключение использованное дл€ детекта: %s
 text|текст
-Delete history messages by text|”далить сообщени€ из истории чата по тексту
+Delete history messages by text|”далить сообщени€ из истории чата по нику/тексту
 Deleted %d main chat history messages by text: %s|”далено %d сообщений из истории общего чата с текстом: %s
 %s with class %d deleted %d main chat history messages by text: %s|%s с классом %d удалил %d записей из истории общего чата с текстом: %s
 Looking for users with nick %s on: %s|¬ыполн€ю поиск пользователей с ником %s на: %s
@@ -1191,3 +1191,6 @@ City gag not found: %s|—писок заглушек по городу пуст.
 %s with IP %s and class %d tries to speak with city gag in MC: %s|ѕользователь %s с IP адресом %s и классом %d пыталс€ отправить сообщение в главный чат несмотр€ на заглушку по городу: %s
 %s with IP %s and class %d tried to speak in MC without chat code: <%s> %s|%s с IP %s и классом %d пыталс€ отправить сообщение в главный чат без защитного кода: <%s> %s
 %s with IP %s and class %d tried to speak without chat code in PM to %s with IP %s and class %d.|%s с IP %s и классом %d пыталс€ говорить без защитного кода в виде личного сообщени€ пользователю %s с IP %s и классом %d.
+Low connection attempt uptime of %d seconds from %s with IP %s and class %d to user: %s|Ќедостаточный аптайм в %d секунд дл€ попытки соединени€ от %s c IP %s и классом %d пользователю: %s
+Please wait another %d seconds before connecting to other users.|ѕожалуйста подождите %d секунд прежде чем подключатьс€ к другим пользовател€м.
+path|путь

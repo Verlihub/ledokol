@@ -1,4 +1,4 @@
-[ 2.9.5 :: 2018-##-## ]
+[ 2.9.5 :: 2018-02-19 ]
 
 [ 63] Fixed: Operator list appearance after removing user with opkeyclass condition, report by KCAHDEP
 [ 64] Added: CTM uptime with actions
