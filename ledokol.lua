@@ -62,8 +62,8 @@ Tzaca, JOE™, Foxtrot, Deivis
 -- global storage variables and tables >>
 ---------------------------------------------------------------------
 
-ver_ledo = "2.9.5" -- ledokol version
-bld_ledo = "70" -- build number
+ver_ledo = "2.9.6" -- ledokol version
+bld_ledo = "71" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -103,6 +103,7 @@ table_sets = {
 	avsearservaddr = "",
 	avsearservport = 4112,
 	avdetaction = 0,
+	avdetblockmsg = 5,
 	avkicktext = "Virus spreaders are not welcome here _ban_30d",
 	classnotianti = 3,
 	classnotiex = 3,
@@ -1031,7 +1032,7 @@ table_voki = {}
 table_flod = {addr = {}, nick = {}}
 table_opks = {}
 table_usup = {}
-table_uumd = {sear = {}, ctm = {}}
+table_uumd = {sear = {}, ctm = {}, avdb = {}}
 table_cust = {}
 table_ctmb = {}
 table_regm = {}
@@ -1445,6 +1446,10 @@ function Main (file)
 					end
 
 					if ver <= 296 then
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('avdetblockmsg', '" .. repsqlchars (table_sets.avdetblockmsg) .. "')")
+					end
+
+					if ver <= 297 then
 						-- todo: next version
 					end
 
@@ -5240,6 +5245,19 @@ function VH_OnUserLogout (nick, uip)
 		table_usup [nick] = nil
 		table_uumd.sear [nick] = nil
 		table_uumd.ctm [nick] = nil
+
+		for id, _ in pairs (table_uumd.avdb) do
+			local pos, aser, bser = id:find ("|", 1, true), "", ""
+
+			if pos then
+				aser, bser = id:sub (1, pos - 1), id:sub (pos + 1)
+
+				if aser == nick or bser == nick then
+					table_uumd.avdb [id] = nil
+					break
+				end
+			end
+		end
 	end
 
 	if table_sets.regmechatcnt > 0 then -- regme limit
@@ -5966,7 +5984,7 @@ function VH_OnParsedMsgConnectToMe (nick, other, ip, port)
 		end
 	end
 
-	local class, haveclass = 0, false
+	local class, haveclass, now = 0, false, os.time ()
 
 	if table_sets.ctmuptime > 0 and table_sets.showuseruptime == 1 then -- ctm uptime
 		if not haveclass then
@@ -5975,7 +5993,6 @@ function VH_OnParsedMsgConnectToMe (nick, other, ip, port)
 
 		if class < table_sets.scanbelowclass then
 			if table_usup [nick] then
-				local now = os.time ()
 				local dif = now - table_usup [nick]
 
 				if dif < table_sets.ctmuptime then
@@ -6011,7 +6028,13 @@ function VH_OnParsedMsgConnectToMe (nick, other, ip, port)
 		end
 
 		if class < 3 then
-			maintouser (nick, gettext ("Your connection request is blocked because user that you're trying connect to was detected as virus spreader: %s"): format (other))
+			local key = other .. "|" .. nick
+
+			if table_sets.avdetblockmsg ~= 0 and (not table_uumd.avdb [key] or os.difftime (now, table_uumd.avdb [key]) >= table_sets.avdetblockmsg) then
+				maintouser (nick, gettext ("Your connection request is blocked because user that you're trying connect to was detected as virus spreader: %s"): format (other))
+				table_uumd.avdb [key] = now
+			end
+
 			return 0
 		end
 	end
@@ -6061,7 +6084,7 @@ function VH_OnParsedMsgRevConnectToMe (nick, other)
 		end
 	end
 
-	local class, haveclass = 0, false
+	local class, haveclass, now = 0, false, os.time ()
 
 	if table_sets.ctmuptime > 0 and table_sets.showuseruptime == 1 then -- ctm uptime
 		if not haveclass then
@@ -6070,7 +6093,6 @@ function VH_OnParsedMsgRevConnectToMe (nick, other)
 
 		if class < table_sets.scanbelowclass then
 			if table_usup [nick] then
-				local now = os.time ()
 				local dif = now - table_usup [nick]
 
 				if dif < table_sets.ctmuptime then
@@ -6106,7 +6128,13 @@ function VH_OnParsedMsgRevConnectToMe (nick, other)
 		end
 
 		if class < 3 then
-			maintouser (nick, gettext ("Your connection request is blocked because user that you're trying connect to was detected as virus spreader: %s"): format (other))
+			local key = other .. "|" .. nick
+
+			if table_sets.avdetblockmsg ~= 0 and (not table_uumd.avdb [key] or os.difftime (now, table_uumd.avdb [key]) >= table_sets.avdetblockmsg) then
+				maintouser (nick, gettext ("Your connection request is blocked because user that you're trying connect to was detected as virus spreader: %s"): format (other))
+				table_uumd.avdb [key] = now
+			end
+
 			return 0
 		end
 	end
@@ -17781,6 +17809,23 @@ end
 
 	----- ---- --- -- -
 
+	elseif tvar == "avdetblockmsg" then
+		if num then
+			if setto >= 0 and setto <= 60 then
+				if setto == 0 then
+					table_uumd.avdb = {}
+				end
+
+				ok = true
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0 " .. gettext ("to") .. " 60"))
+			end
+		else
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
+		end
+
+	----- ---- --- -- -
+
 	elseif tvar == "searuptimemsg" then
 		if num then
 			if setto >= 0 and setto <= 60 then
@@ -18528,7 +18573,7 @@ end
 
 				if setto == 0 then -- flush
 					table_usup = {}
-					table_uumd = {sear = {}, ctm = {}}
+					table_uumd = {sear = {}, ctm = {}, avdb = {}}
 				end
 			else
 				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0 " .. gettext ("or") .. " 1"))
@@ -21015,6 +21060,7 @@ function showledoconf (nick)
 	conf = conf .. "\r\n [::] avsearservaddr = " .. _tostring (table_sets.avsearservaddr)
 	conf = conf .. "\r\n [::] avsearservport = " .. _tostring (table_sets.avsearservport)
 	conf = conf .. "\r\n [::] avdetaction = " .. _tostring (table_sets.avdetaction)
+	conf = conf .. "\r\n [::] avdetblockmsg = " .. _tostring (table_sets.avdetblockmsg)
 	conf = conf .. "\r\n [::] avkicktext = " .. _tostring (table_sets.avkicktext)
 	conf = conf .. "\r\n"
 

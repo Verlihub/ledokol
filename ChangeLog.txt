@@ -1,6 +1,11 @@
+[ 2.9.6 :: 2018-##-## ]
+
+[ 71] Added: AVDB detection connection block message delay to avoid flood, report by KCAHDEP
+
 [ 2.9.5 :: 2018-02-19 ]
 
 [ 63] Fixed: Operator list appearance after removing user with opkeyclass condition, report by KCAHDEP
+[ 70] Fixed: Some help messages, report by KCAHDEP
 [ 64] Added: CTM uptime with actions
 [ 65] Added: More keywords to AVDB search server requests
 [ 65] Added: Optional path parameter to avdetforce command
