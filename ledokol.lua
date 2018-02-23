@@ -4142,7 +4142,7 @@ function VH_OnUserCommand (nick, data)
 
 					local txt = table_sets.codetext:gsub ("<code>", reprexpchars (vcode))
 					maintouser (nick, txt)
-					opsnotify (table_sets.classnotichatcode, gettext ("%s with IP %s and class %d tried to speak in MC without chat code: <%s> %s"):format (nick, ip, ucl, nick, getconfig ("cmd_start_user"):sub (1, 1) .. "me " .. msg))
+					opsnotify (table_sets.classnotichatcode, gettext ("%s with IP %s and class %d tried to speak in MC without chat code: <%s> %s"):format (nick, ip .. tryipcc (ip, nick), ucl, nick, getconfig ("cmd_start_user"):sub (1, 1) .. "me " .. msg))
 					return 0
 				elseif table_code [nick]["lock"] then
 					local rcode = table_code [nick]["code"]
@@ -4157,7 +4157,7 @@ function VH_OnUserCommand (nick, data)
 					else
 						local txt = table_sets.codetext:gsub ("<code>", reprexpchars (table_code [nick]["vcode"]))
 						maintouser (nick, txt)
-						opsnotify (table_sets.classnotichatcode, gettext ("%s with IP %s and class %d tried to speak in MC without chat code: <%s> %s"):format (nick, ip, ucl, nick, getconfig ("cmd_start_user"):sub (1, 1) .. "me " .. msg))
+						opsnotify (table_sets.classnotichatcode, gettext ("%s with IP %s and class %d tried to speak in MC without chat code: <%s> %s"):format (nick, ip .. tryipcc (ip, nick), ucl, nick, getconfig ("cmd_start_user"):sub (1, 1) .. "me " .. msg))
 					end
 
 					return 0
@@ -4329,12 +4329,12 @@ function VH_OnUserCommand (nick, data)
 
 					local txt = table_sets.codetext:gsub ("<code>", reprexpchars (vcode))
 					maintouser (nick, txt)
-					opsnotify (table_sets.classnotichatcode, gettext ("%s with IP %s and class %d tried to speak in MC without chat code: <%s> %s"):format (nick, ip, ucl, nick, getconfig ("cmd_start_user"):sub (1, 1) .. "me"))
+					opsnotify (table_sets.classnotichatcode, gettext ("%s with IP %s and class %d tried to speak in MC without chat code: <%s> %s"):format (nick, ip .. tryipcc (ip, nick), ucl, nick, getconfig ("cmd_start_user"):sub (1, 1) .. "me"))
 					return 0
 				elseif table_code [nick]["lock"] then
 					local txt = table_sets.codetext:gsub ("<code>", reprexpchars (table_code [nick]["vcode"]))
 					maintouser (nick, txt)
-					opsnotify (table_sets.classnotichatcode, gettext ("%s with IP %s and class %d tried to speak in MC without chat code: <%s> %s"):format (nick, ip, ucl, nick, getconfig ("cmd_start_user"):sub (1, 1) .. "me"))
+					opsnotify (table_sets.classnotichatcode, gettext ("%s with IP %s and class %d tried to speak in MC without chat code: <%s> %s"):format (nick, ip .. tryipcc (ip, nick), ucl, nick, getconfig ("cmd_start_user"):sub (1, 1) .. "me"))
 					return 0
 				end
 			end
@@ -6447,7 +6447,7 @@ function VH_OnParsedMsgPM (from, data, to)
 
 				local txt = table_sets.codetext:gsub ("<code>", reprexpchars (vcode))
 				pmtouser (from, to, txt)
-				opsnotify (table_sets.classnotichatcode, gettext ("%s with IP %s and class %d tried to speak without chat code in PM to %s with IP %s and class %d."):format (from, ip, fcls, to, toip, tcls))
+				opsnotify (table_sets.classnotichatcode, gettext ("%s with IP %s and class %d tried to speak without chat code in PM to %s with IP %s and class %d."):format (from, ip .. tryipcc (ip, from), fcls, to, toip, tcls))
 				return 0
 			elseif table_code [from]["lock"] then
 				local rcode = table_code [from]["code"]
@@ -6462,7 +6462,7 @@ function VH_OnParsedMsgPM (from, data, to)
 				else
 					local txt = table_sets.codetext:gsub ("<code>", reprexpchars (table_code [from]["vcode"]))
 					pmtouser (from, to, txt)
-					opsnotify (table_sets.classnotichatcode, gettext ("%s with IP %s and class %d tried to speak without chat code in PM to %s with IP %s and class %d."):format (from, ip, fcls, to, toip, tcls))
+					opsnotify (table_sets.classnotichatcode, gettext ("%s with IP %s and class %d tried to speak without chat code in PM to %s with IP %s and class %d."):format (from, ip .. tryipcc (ip, from), fcls, to, toip, tcls))
 				end
 
 				return 0
@@ -6700,7 +6700,7 @@ function VH_OnParsedMsgMCTo (from, data, to)
 
 				local txt = table_sets.codetext:gsub ("<code>", reprexpchars (vcode))
 				maintouser (from, txt)
-				opsnotify (table_sets.classnotichatcode, gettext ("%s with IP %s and class %d tried to speak without chat code in PM to %s with IP %s and class %d."):format (from, ip, fcls, to, toip, tcls))
+				opsnotify (table_sets.classnotichatcode, gettext ("%s with IP %s and class %d tried to speak without chat code in PM to %s with IP %s and class %d."):format (from, ip .. tryipcc (ip, from), fcls, to, toip, tcls))
 				return 0
 			elseif table_code [from]["lock"] then
 				local rcode = table_code [from]["code"]
@@ -6715,7 +6715,7 @@ function VH_OnParsedMsgMCTo (from, data, to)
 				else
 					local txt = table_sets.codetext:gsub ("<code>", reprexpchars (table_code [from]["vcode"]))
 					maintouser (from, txt)
-					opsnotify (table_sets.classnotichatcode, gettext ("%s with IP %s and class %d tried to speak without chat code in PM to %s with IP %s and class %d."):format (from, ip, fcls, to, toip, tcls))
+					opsnotify (table_sets.classnotichatcode, gettext ("%s with IP %s and class %d tried to speak without chat code in PM to %s with IP %s and class %d."):format (from, ip .. tryipcc (ip, from), fcls, to, toip, tcls))
 				end
 
 				return 0
@@ -6893,7 +6893,7 @@ function VH_OnParsedMsgChat (nick, data)
 
 				local txt = table_sets.codetext:gsub ("<code>", reprexpchars (vcode))
 				maintouser (nick, txt)
-				opsnotify (table_sets.classnotichatcode, gettext ("%s with IP %s and class %d tried to speak in MC without chat code: <%s> %s"):format (nick, ip, ucl, nick, data))
+				opsnotify (table_sets.classnotichatcode, gettext ("%s with IP %s and class %d tried to speak in MC without chat code: <%s> %s"):format (nick, ip .. tryipcc (ip, nick), ucl, nick, data))
 				return 0
 			elseif table_code [nick]["lock"] then
 				local rcode = table_code [nick]["code"]
@@ -6908,7 +6908,7 @@ function VH_OnParsedMsgChat (nick, data)
 				else
 					local txt = table_sets.codetext:gsub ("<code>", reprexpchars (table_code [nick]["vcode"]))
 					maintouser (nick, txt)
-					opsnotify (table_sets.classnotichatcode, gettext ("%s with IP %s and class %d tried to speak in MC without chat code: <%s> %s"):format (nick, ip, ucl, nick, data))
+					opsnotify (table_sets.classnotichatcode, gettext ("%s with IP %s and class %d tried to speak in MC without chat code: <%s> %s"):format (nick, ip .. tryipcc (ip, nick), ucl, nick, data))
 				end
 
 				return 0
@@ -8289,12 +8289,12 @@ function setcustnick (nick, custom, ucl)
 
 				local txt = table_sets.codetext:gsub ("<code>", reprexpchars (vcode))
 				maintouser (nick, txt)
-				opsnotify (table_sets.classnotichatcode, gettext ("%s with IP %s and class %d tried to speak in MC without chat code: <%s> %s"):format (nick, ip, ucl, nick, getconfig ("cmd_start_user"):sub (1, 1) .. table_cmnds.nick .. " " .. custom))
+				opsnotify (table_sets.classnotichatcode, gettext ("%s with IP %s and class %d tried to speak in MC without chat code: <%s> %s"):format (nick, ip .. tryipcc (ip, nick), ucl, nick, getconfig ("cmd_start_user"):sub (1, 1) .. table_cmnds.nick .. " " .. custom))
 				return
 			elseif table_code [nick]["lock"] then
 				local txt = table_sets.codetext:gsub ("<code>", reprexpchars (table_code [nick]["vcode"]))
 				maintouser (nick, txt)
-				opsnotify (table_sets.classnotichatcode, gettext ("%s with IP %s and class %d tried to speak in MC without chat code: <%s> %s"):format (nick, ip, ucl, nick, getconfig ("cmd_start_user"):sub (1, 1) .. table_cmnds.nick .. " " .. custom))
+				opsnotify (table_sets.classnotichatcode, gettext ("%s with IP %s and class %d tried to speak in MC without chat code: <%s> %s"):format (nick, ip .. tryipcc (ip, nick), ucl, nick, getconfig ("cmd_start_user"):sub (1, 1) .. table_cmnds.nick .. " " .. custom))
 				return
 			end
 		end
