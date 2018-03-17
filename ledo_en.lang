@@ -1195,3 +1195,7 @@ City gag list is empty.|
 Low connection attempt uptime of %d seconds from %s with IP %s and class %d to user: %s|
 Please wait another %d seconds before connecting to other users.|
 path|
+Search in history messages|
+Show history lines at position|
+No main chat history messages found.|
+Found %d main chat messages|

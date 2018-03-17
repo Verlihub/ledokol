@@ -1,10 +1,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ledokol\n"
-"Project-Version: 2.9.5\n"
+"Project-Version: 2.9.6\n"
 "Report-Msgid-Bugs-To: RoLex <webmaster@feardc.net>\n"
-"POT-Creation-Date: 2018-02-19 00:00+0200\n"
-"PO-Revision-Date: 2018-02-19 00:00+0200\n"
+"POT-Creation-Date: 2018-03-17 00:00+0200\n"
+"PO-Revision-Date: 2018-03-17 00:00+0200\n"
 "Last-Translator: RoLex <webmaster@feardc.net>\n"
 "Language-Team: RoLex <webmaster@feardc.net>\n"
 "Language: en_GB\n"
@@ -3581,4 +3581,16 @@ msgid "Please wait another %d seconds before connecting to other users."
 msgstr ""
 
 msgid "path"
+msgstr ""
+
+msgid "Search in history messages"
+msgstr ""
+
+msgid "Show history lines at position"
+msgstr ""
+
+msgid "No main chat history messages found."
+msgstr ""
+
+msgid "Found %d main chat messages"
 msgstr ""

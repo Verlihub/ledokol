@@ -63,7 +63,7 @@ Tzaca, JOE™, Foxtrot, Deivis
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.6" -- ledokol version
-bld_ledo = "71" -- build number
+bld_ledo = "72" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -573,6 +573,8 @@ table_cmnds = {
 	rellist = "rellist",
 	relfind = "relfind",
 	histdel = "histdel",
+	histfind = "histfind",
+	histline = "histline",
 	histclean = "histclean",
 	ophistory = "ophistory",
 	history = "history",
@@ -1447,6 +1449,9 @@ function Main (file)
 
 					if ver <= 296 then
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('avdetblockmsg', '" .. repsqlchars (table_sets.avdetblockmsg) .. "')")
+
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.ledocmd .. "` (`original`, `new`) values ('histfind', '" .. repsqlchars (table_cmnds.histfind) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.ledocmd .. "` (`original`, `new`) values ('histline', '" .. repsqlchars (table_cmnds.histline) .. "')")
 					end
 
 					if ver <= 297 then
@@ -3742,6 +3747,30 @@ commandanswer (nick, gettext ("This command is either disabled or you don't have
 end
 
 return 0
+
+	----- ---- --- -- -
+
+	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.histfind .. " .+$") or data:match ("^" .. table_othsets.optrig .. table_cmnds.histfind .. " .+ %d+$") then
+		if ucl >= table_sets.mincommandclass then
+			donotifycmd (nick, data, 0, ucl)
+			findhistory (nick, data:sub (# table_cmnds.histfind + 3), ucl)
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
+
+		return 0
+
+	----- ---- --- -- -
+
+	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.histline .. " .+$") or data:match ("^" .. table_othsets.optrig .. table_cmnds.histline .. " .+ %d+$") then
+		if ucl >= table_sets.mincommandclass then
+			donotifycmd (nick, data, 0, ucl)
+			historylines (nick, data:sub (# table_cmnds.histline + 3), ucl)
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
+
+		return 0
 
 	----- ---- --- -- -
 
@@ -11122,6 +11151,139 @@ end
 
 ----- ---- --- -- -
 
+function findhistory (nick, line, class)
+	local text, lim = line, 100 -- static parameters
+
+	if line:match ("^.+ %d+$") then
+		text, lim = line:match ("^(.+) (%d+)$")
+	end
+
+	if tonumber (lim) < 1 then
+		lim = 1
+	end
+
+	local safe = repsqlchars (text)
+	local _, rows = VH:SQLQuery ("select `nick`, `ip`, `date`, `message` from `" .. tbl_sql.mchist .. "` where `message` like '%" .. safe .. "%' or `nick` like '%" .. safe .. "%' or `realnick` like '%" .. safe .. "%' order by `date` desc, `id` desc limit " .. _tostring (lim))
+
+	if rows > 0 then
+		local list = ""
+
+		for row = 0, rows - 1 do
+			local _, user, addr, stamp, mess = VH:SQLFetch (row)
+
+			--if table_sets.histautonewlinedel == 1 then -- truncate message
+				--mess = mess:gsub ("[\r\n]", "")
+			--end
+
+			--if table_sets.histautolinemax > 0 and # mess > table_sets.histautolinemax then
+				--mess = mess:sub (1, table_sets.histautolinemax) .. " [...]"
+			--end
+
+			if class >= table_sets.histshowipclass and addr and # addr > 0 then
+				list = " " .. os.date (table_sets.dateformat .. " " .. table_sets.timeformat, stamp) .. " &#124; " .. addr .. ": <" .. user .. "> " .. mess .. "\r\n" .. list
+			else
+				list = " " .. os.date (table_sets.dateformat .. " " .. table_sets.timeformat, stamp) .. ": <" .. user .. "> " .. mess .. "\r\n" .. list
+			end
+		end
+
+		commandanswer (nick, gettext ("Found %d main chat messages"):format (rows) .. ":\r\n\r\n" .. list)
+	else
+		commandanswer (nick, gettext ("No main chat history messages found."))
+	end
+end
+
+----- ---- --- -- -
+
+function historylines (nick, line, class)
+	local form, lim = line, 10 -- static parameters
+
+	if line:match ("^.+ %d+$") then
+		form, lim = line:match ("^(.+) (%d+)$")
+	end
+
+	if tonumber (lim) < 1 then
+		lim = 1
+	end
+
+	local _, rows = VH:SQLQuery ("select `date` from `" .. tbl_sql.mchist .. "` order by `date` desc, `id` desc")
+
+	if rows > 0 then
+		local sorm, pos = repdatechars (form), 0
+
+		for row = 0, rows - 1 do
+			local _, stamp = VH:SQLFetch (row)
+
+			if os.date (table_sets.dateformat .. " " .. table_sets.timeformat, stamp):find (sorm) then
+				pos = tonumber (stamp)
+				break
+			end
+		end
+
+		if pos > 0 then
+			local list, count = "", 0
+			local _, rows = VH:SQLQuery ("select `nick`, `ip`, `date`, `message` from `" .. tbl_sql.mchist .. "` where `date` > " .. _tostring (pos) .. " order by `date` asc, `id` asc limit " .. _tostring (lim))
+
+			if rows > 0 then
+				count = rows
+
+				for row = 0, rows - 1 do
+					local _, user, addr, stamp, mess = VH:SQLFetch (row)
+
+					--if table_sets.histautonewlinedel == 1 then -- truncate message
+						--mess = mess:gsub ("[\r\n]", "")
+					--end
+
+					--if table_sets.histautolinemax > 0 and # mess > table_sets.histautolinemax then
+						--mess = mess:sub (1, table_sets.histautolinemax) .. " [...]"
+					--end
+
+					if class >= table_sets.histshowipclass and addr and # addr > 0 then
+						list = list .. " " .. os.date (table_sets.dateformat .. " " .. table_sets.timeformat, stamp) .. " &#124; " .. addr .. ": <" .. user .. "> " .. mess .. "\r\n"
+					else
+						list = list .. " " .. os.date (table_sets.dateformat .. " " .. table_sets.timeformat, stamp) .. ": <" .. user .. "> " .. mess .. "\r\n"
+					end
+				end
+			end
+
+			local _, rows = VH:SQLQuery ("select `nick`, `ip`, `date`, `message` from `" .. tbl_sql.mchist .. "` where `date` <= " .. _tostring (pos) .. " order by `date` desc, `id` desc limit " .. _tostring (lim + 1)) -- +1
+
+			if rows > 0 then
+				count = count + rows
+
+				for row = 0, rows - 1 do
+					local _, user, addr, stamp, mess = VH:SQLFetch (row)
+
+					--if table_sets.histautonewlinedel == 1 then -- truncate message
+						--mess = mess:gsub ("[\r\n]", "")
+					--end
+
+					--if table_sets.histautolinemax > 0 and # mess > table_sets.histautolinemax then
+						--mess = mess:sub (1, table_sets.histautolinemax) .. " [...]"
+					--end
+
+					if class >= table_sets.histshowipclass and addr and # addr > 0 then
+						list = " " .. os.date (table_sets.dateformat .. " " .. table_sets.timeformat, stamp) .. " &#124; " .. addr .. ": <" .. user .. "> " .. mess .. "\r\n" .. list
+					else
+						list = " " .. os.date (table_sets.dateformat .. " " .. table_sets.timeformat, stamp) .. ": <" .. user .. "> " .. mess .. "\r\n" .. list
+					end
+				end
+			end
+
+			if count > 0 then
+				commandanswer (nick, gettext ("Found %d main chat messages"):format (count) .. ":\r\n\r\n" .. list)
+			else
+				commandanswer (nick, gettext ("No main chat history messages found."))
+			end
+		else
+			commandanswer (nick, gettext ("No main chat history messages found."))
+		end
+	else
+		commandanswer (nick, gettext ("No main chat history messages found."))
+	end
+end
+
+----- ---- --- -- -
+
 function deletehistory (nick, text, class)
 	local data = repsqlchars (text)
 	local _, rows = VH:SQLQuery ("select `id` from `" .. tbl_sql.mchist .. "` where `message` like '%" .. data .. "%' or `nick` like '%" .. data .. "%' or `realnick` like '%" .. data .. "%'")
@@ -16665,6 +16827,9 @@ end
 
 		sopmenitm (usr, gettext ("Chat history") .. "\\" .. gettext ("Delete history messages by text"), table_cmnds.histdel .. " %[line:<" .. gettext ("text") .. ">]")
 		sopmenitm (usr, gettext ("Chat history") .. "\\" .. gettext ("Delete all history messages"), table_cmnds.histclean .. " %[line:<" .. gettext ("type") .. ">]")
+		smensep (usr)
+		sopmenitm (usr, gettext ("Chat history") .. "\\" .. gettext ("Search in history messages"), table_cmnds.histfind .. " %[line:<" .. gettext ("text") .. ">] %[line:<" .. gettext ("lines") .. ">]")
+		sopmenitm (usr, gettext ("Chat history") .. "\\" .. gettext ("Show history lines at position"), table_cmnds.histline .. " %[line:<" .. gettext ("date") .. ">] %[line:<" .. gettext ("lines") .. ">]")
 	end
 
 -- commands
@@ -20712,7 +20877,9 @@ function sendophelp (nick, clas, pm)
 	-- history
 	help = help .. " " .. trig .. table_cmnds.ophistory .. " [" .. gettext ("lines") .. "=" .. _tostring (table_sets.histdeflines) .. "] - " .. gettext ("Operator chat history") .. "\r\n"
 	help = help .. " " .. trig .. table_cmnds.histdel .. " <" .. gettext ("text") .. "> - " .. gettext ("Delete history messages by text") .. "\r\n"
-	help = help .. " " .. trig .. table_cmnds.histclean .. " [" .. gettext ("type") .. "=all] - " .. gettext ("Delete all history messages") .. "\r\n\r\n"
+	help = help .. " " .. trig .. table_cmnds.histclean .. " [" .. gettext ("type") .. "=all] - " .. gettext ("Delete all history messages") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.histfind .. " <" .. gettext ("text") .. "> [" .. gettext ("lines") .. "=100] - " .. gettext ("Search in history messages") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.histline .. " <" .. gettext ("date") .. "> [" .. gettext ("lines") .. "=10] - " .. gettext ("Show history lines at position") .. "\r\n\r\n"
 
 	-- commands
 	help = help .. " " .. trig .. table_cmnds.cmndset .. " <" .. gettext ("command") .. "> <" .. gettext ("command") .. "> - " .. gettext ("Customize script command") .. "\r\n"
