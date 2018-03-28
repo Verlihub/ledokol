@@ -63,7 +63,7 @@ Tzaca, JOE™, Foxtrot, Deivis
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.6" -- ledokol version
-bld_ledo = "72" -- build number
+bld_ledo = "73" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -1356,7 +1356,7 @@ function Main (file)
 					end
 
 					if ver <= 287 then
-						VH:SQLQuery ("create table if not exists `" .. tbl_sql.ulog .. "` (`id` bigint(20) unsigned not null auto_increment primary key, `time` bigint(20) unsigned not null, `nick` varchar(255) not null, `ip` varchar(15) not null, `cc` varchar(2) null, `desc` varchar(255) null, `tag` varchar(255) null, `conn` varchar(255) null, `email` varchar(255) null, `share` bigint(20) unsigned not null default 0) engine = myisam default character set utf8 collate utf8_unicode_ci")
+						VH:SQLQuery ("create table if not exists `" .. tbl_sql.ulog .. "` (`id` bigint(20) unsigned not null auto_increment primary key, `time` bigint(20) unsigned not null, `out` bigint(20) unsigned not null default 0, `nick` varchar(255) not null, `ip` varchar(15) not null, `cc` varchar(2) null, `desc` varchar(255) null, `tag` varchar(255) null, `conn` varchar(255) null, `email` varchar(255) null, `share` bigint(20) unsigned not null default 0, `nmdc` varchar(255) null, `sups` varchar(255) null) engine = myisam default character set utf8 collate utf8_unicode_ci")
 
 						VH:SQLQuery ("alter table `" .. tbl_sql.ulog .. "` add column `cc` varchar(2) null after `ip`")
 						VH:SQLQuery ("alter table `" .. tbl_sql.ulog .. "` change column `desc` `desc` varchar(255) null")
@@ -1448,6 +1448,10 @@ function Main (file)
 					end
 
 					if ver <= 296 then
+						VH:SQLQuery ("alter table `" .. tbl_sql.ulog .. "` add column `out` bigint(20) unsigned not null default 0 after `time`")
+						VH:SQLQuery ("alter table `" .. tbl_sql.ulog .. "` add column `nmdc` varchar(255) null after `share`")
+						VH:SQLQuery ("alter table `" .. tbl_sql.ulog .. "` add column `sups` varchar(255) null after `nmdc`")
+
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('avdetblockmsg', '" .. repsqlchars (table_sets.avdetblockmsg) .. "')")
 
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.ledocmd .. "` (`original`, `new`) values ('histfind', '" .. repsqlchars (table_cmnds.histfind) .. "')")
@@ -4912,7 +4916,25 @@ function VH_OnParsedMsgMyINFO (nick, data)
 
 		desc, tag, conn, _, mail, size = parsemyinfo (nil, data)
 		hasinfo = true
-		VH:SQLQuery ("insert into `" .. tbl_sql.ulog .. "` (`time`, `nick`, `ip`, `cc`, `desc`, `tag`, `conn`, `email`, `share`) values (" .. _tostring (os.time () + table_sets.srvtimediff) .. ", '" .. repsqlchars (nick) .. "', '" .. repsqlchars (addr) .. "', " .. sqlemptnull (cc, true) .. ", " .. sqlemptnull (desc) .. ", " .. sqlemptnull (tag) .. ", " .. sqlemptnull (conn) .. ", " .. sqlemptnull (mail) .. ", " .. repsqlchars (size) .. ")")
+		local nmdc, sups = "", ""
+
+		if table_refu.GetUserVersion then -- nmdc version
+			local on, temp = VH:GetUserVersion (nick)
+
+			if on and temp and temp ~= "" then
+				nmdc = temp
+			end
+		end
+
+		if table_refu.GetUserSupports then -- supports
+			local on, temp = VH:GetUserSupports (nick)
+
+			if on and temp and temp ~= "" then
+				sups = temp
+			end
+		end
+
+		VH:SQLQuery ("insert into `" .. tbl_sql.ulog .. "` (`time`, `out`, `nick`, `ip`, `cc`, `desc`, `tag`, `conn`, `email`, `share`, `nmdc`, `sups`) values (" .. _tostring (os.time () + table_sets.srvtimediff) .. ", 1, '" .. repsqlchars (nick) .. "', '" .. repsqlchars (addr) .. "', " .. sqlemptnull (cc, true) .. ", " .. sqlemptnull (desc) .. ", " .. sqlemptnull (tag) .. ", " .. sqlemptnull (conn) .. ", " .. sqlemptnull (mail) .. ", " .. repsqlchars (size) .. ", " .. sqlemptnull (nmdc) .. ", " .. sqlemptnull (sups) .. ")")
 	end
 
 	if table_sets.micheck == 0 or table_sets.micallall == 0 then
@@ -4998,7 +5020,25 @@ function VH_OnUserLogin (nick, uip)
 
 		desc, tag, conn, _, email, size = parsemyinfo (nil, mistr)
 		hasinfo = true
-		VH:SQLQuery ("insert into `" .. tbl_sql.ulog .. "` (`time`, `nick`, `ip`, `cc`, `desc`, `tag`, `conn`, `email`, `share`) values (" .. _tostring (os.time () + table_sets.srvtimediff) .. ", '" .. repsqlchars (nick) .. "', '" .. repsqlchars (ip) .. "', " .. sqlemptnull (cc, true) .. ", " .. sqlemptnull (desc) .. ", " .. sqlemptnull (tag) .. ", " .. sqlemptnull (conn) .. ", " .. sqlemptnull (email) .. ", " .. repsqlchars (size) .. ")")
+		local nmdc, sups = "", ""
+
+		if table_refu.GetUserVersion then -- nmdc version
+			local on, temp = VH:GetUserVersion (nick)
+
+			if on and temp and temp ~= "" then
+				nmdc = temp
+			end
+		end
+
+		if table_refu.GetUserSupports then -- supports
+			local on, temp = VH:GetUserSupports (nick)
+
+			if on and temp and temp ~= "" then
+				sups = temp
+			end
+		end
+
+		VH:SQLQuery ("insert into `" .. tbl_sql.ulog .. "` (`time`, `out`, `nick`, `ip`, `cc`, `desc`, `tag`, `conn`, `email`, `share`, `nmdc`, `sups`) values (" .. _tostring (os.time () + table_sets.srvtimediff) .. ", 1, '" .. repsqlchars (nick) .. "', '" .. repsqlchars (ip) .. "', " .. sqlemptnull (cc, true) .. ", " .. sqlemptnull (desc) .. ", " .. sqlemptnull (tag) .. ", " .. sqlemptnull (conn) .. ", " .. sqlemptnull (email) .. ", " .. repsqlchars (size) .. ", " .. sqlemptnull (nmdc) .. ", " .. sqlemptnull (sups) .. ")")
 	end
 
 	local cls = getclass (nick)
@@ -5262,6 +5302,10 @@ end
 function VH_OnUserLogout (nick, uip)
 	if table_othsets.locked or table_othsets.restart then
 		return 1
+	end
+
+	if table_sets.enableuserlog == 1 then -- user logger
+		VH:SQLQuery ("update `" .. tbl_sql.ulog .. "` set `out` = " .. _tostring (os.time () + table_sets.srvtimediff) .. " where `nick` = '" .. repsqlchars (nick) .. "' order by `time` desc limit 1")
 	end
 
 	local cls = getclass (nick)
@@ -10472,7 +10516,7 @@ end
 
 function showuserlog (nick, line)
 	local condtest = function (dat)
-		return (dat == "nick" or dat == "addr" or dat == "ip" or dat == "code" or dat == "cc" or dat == "desc" or dat == "tag" or dat == "conn" or dat == "mail" or dat == "email" or dat == "size" or dat == "share" or dat == "all")
+		return (dat == "nick" or dat == "addr" or dat == "ip" or dat == "code" or dat == "cc" or dat == "desc" or dat == "tag" or dat == "conn" or dat == "mail" or dat == "email" or dat == "size" or dat == "share" or dat == "nmdc" or dat == "ver" or dat == "sups" or dat == "all")
 	end
 
 	local typ, str, lim = "nick", line, 100 -- static parameters
@@ -10500,6 +10544,8 @@ function showuserlog (nick, line)
 			typ = "email"
 		elseif typ == "size" then
 			typ = "share"
+		elseif typ == "ver" then
+			typ = "nmdc"
 		end
 
 		lim = tonumber (lim)
@@ -10511,16 +10557,26 @@ function showuserlog (nick, line)
 		str = repsqlchars (str)
 
 		if typ == "all" then -- any part
-			local _, rows = VH:SQLQuery ("select `time`, `nick`, `ip`, `cc`, `desc`, `tag`, `conn`, `email`, `share` from `" .. tbl_sql.ulog .. "` where `nick` like '%" .. str .. "%' or `ip` like '%" .. str .. "%' or `cc` like '%" .. str .. "%' or `desc` like '%" .. str .. "%' or `tag` like '%" .. str .. "%' or `conn` like '%" .. str .. "%' or `email` like '%" .. str .. "%' or `share` like '%" .. str .. "%' order by `time` desc limit " .. _tostring (lim))
+			local _, rows = VH:SQLQuery ("select `time`, `out`, `nick`, `ip`, `cc`, `desc`, `tag`, `conn`, `email`, `share`, `nmdc`, `sups` from `" .. tbl_sql.ulog .. "` where `nick` like '%" .. str .. "%' or `ip` like '%" .. str .. "%' or `cc` like '%" .. str .. "%' or `desc` like '%" .. str .. "%' or `tag` like '%" .. str .. "%' or `conn` like '%" .. str .. "%' or `email` like '%" .. str .. "%' or `share` like '%" .. str .. "%' or `nmdc` like '%" .. str .. "%' or `sups` like '%" .. str .. "%' order by `time` desc limit " .. _tostring (lim))
 
 			if rows > 0 then
 				local res = ""
 
-				for x = 0, rows - 1 do
-					local _, rtime, rnick, rip, rcc, rdesc, rtag, rconn, remail, rshare = VH:SQLFetch (x)
+				for row = 0, rows - 1 do
+					local _, rtime, rout, rnick, rip, rcc, rdesc, rtag, rconn, remail, rshare, rnmdc, rsups = VH:SQLFetch (row)
 					rnick = repnmdcoutchars (rnick)
 					rip = repnmdcoutchars (rip)
-					res = res .. " [ O: " .. fromunixtime (rtime, false) .. " ] [ N: " .. rnick .. " ]"
+					res = res .. " [ O: " .. fromunixtime (rtime, false) .. " ] [ O: " -- online, offline
+
+					if tonumber (rout) == 0 then
+						res = res .. gettext ("Unknown")
+					elseif tonumber (rout) == 1 then
+						res = res .. gettext ("Online")
+					else
+						res = res .. fromunixtime (rout, false)
+					end
+
+					res = res .. " ] [ N: " .. rnick .. " ]"
 
 					if rip ~= "0.0.0.0" then
 						res = res .. " [ I: " .. rip .. tryipcc (rip, rnick) .. " ]"
@@ -10547,7 +10603,15 @@ function showuserlog (nick, line)
 					end
 
 					if (tonumber (rshare or 0) or 0) > 0 then
-						res = res .. " [ S: " .. repnmdcoutchars (rshare) .. " ]"
+						res = res .. " [ S: " .. repnmdcoutchars (rshare) .. " ]" -- share
+					end
+
+					if rnmdc and rnmdc ~= "" then
+						res = res .. " [ V: " .. repnmdcoutchars (rnmdc) .. " ]"
+					end
+
+					if rsups and rsups ~= "" then
+						res = res .. " [ S: " .. repnmdcoutchars (rsups) .. " ]" -- supports
 					end
 
 					res = res .. "\r\n"
@@ -10559,16 +10623,26 @@ function showuserlog (nick, line)
 			end
 
 		else -- specific
-			local _, rows = VH:SQLQuery ("select `time`, `nick`, `ip`, `cc`, `desc`, `tag`, `conn`, `email`, `share` from `" .. tbl_sql.ulog .. "` where `" .. typ .. "` like '%" .. str .. "%' order by `time` desc limit " .. _tostring (lim))
+			local _, rows = VH:SQLQuery ("select `time`, `out`, `nick`, `ip`, `cc`, `desc`, `tag`, `conn`, `email`, `share`, `nmdc`, `sups` from `" .. tbl_sql.ulog .. "` where `" .. typ .. "` like '%" .. str .. "%' order by `time` desc limit " .. _tostring (lim))
 
 			if rows > 0 then
 				local res = ""
 
-				for x = 0, rows - 1 do
-					local _, rtime, rnick, rip, rcc, rdesc, rtag, rconn, remail, rshare = VH:SQLFetch (x)
+				for row = 0, rows - 1 do
+					local _, rtime, rout, rnick, rip, rcc, rdesc, rtag, rconn, remail, rshare, rnmdc, rsups = VH:SQLFetch (row)
 					rnick = repnmdcoutchars (rnick)
 					rip = repnmdcoutchars (rip)
-					res = res .. " [ O: " .. fromunixtime (rtime, false) .. " ] [ N: " .. rnick .. " ]"
+					res = res .. " [ O: " .. fromunixtime (rtime, false) .. " ] [ O: " -- online, offline
+
+					if tonumber (rout) == 0 then
+						res = res .. gettext ("Unknown")
+					elseif tonumber (rout) == 1 then
+						res = res .. gettext ("Online")
+					else
+						res = res .. fromunixtime (rout, false)
+					end
+
+					res = res .. " ] [ N: " .. rnick .. " ]"
 
 					if rip ~= "0.0.0.0" then
 						res = res .. " [ I: " .. rip .. tryipcc (rip, rnick) .. " ]"
@@ -10595,7 +10669,15 @@ function showuserlog (nick, line)
 					end
 
 					if (tonumber (rshare or 0) or 0) > 0 then
-						res = res .. " [ S: " .. repnmdcoutchars (rshare) .. " ]"
+						res = res .. " [ S: " .. repnmdcoutchars (rshare) .. " ]" -- share
+					end
+
+					if rnmdc and rnmdc ~= "" then
+						res = res .. " [ V: " .. repnmdcoutchars (rnmdc) .. " ]"
+					end
+
+					if rsups and rsups ~= "" then
+						res = res .. " [ S: " .. repnmdcoutchars (rsups) .. " ]" -- supports
 					end
 
 					res = res .. "\r\n"
@@ -10608,7 +10690,7 @@ function showuserlog (nick, line)
 		end
 
 	else -- unknown type
-		commandanswer (nick, gettext ("Known types are: %s"):format ("nick, addr, code, desc, tag, conn, mail, size " .. gettext ("and") .. " all"))
+		commandanswer (nick, gettext ("Known types are: %s"):format ("nick, addr, code, desc, tag, conn, mail, size, nmdc, sups " .. gettext ("and") .. " all"))
 	end
 end
 
@@ -21597,7 +21679,7 @@ VH:SQLQuery ("create table if not exists `" .. tbl_sql.cmd .. "` (`command` varc
 VH:SQLQuery ("create table if not exists `" .. tbl_sql.cmdex .. "` (`exception` varchar(255) not null, `occurred` bigint(20) unsigned not null default 0, primary key (`exception`)) engine = myisam default character set utf8 collate utf8_unicode_ci")
 
 	-- user log
-	VH:SQLQuery ("create table if not exists `" .. tbl_sql.ulog .. "` (`id` bigint(20) unsigned not null auto_increment primary key, `time` bigint(20) unsigned not null, `nick` varchar(255) not null, `ip` varchar(15) not null, `cc` varchar(2) null, `desc` varchar(255) null, `tag` varchar(255) null, `conn` varchar(255) null, `email` varchar(255) null, `share` bigint(20) unsigned not null default 0) engine = myisam default character set utf8 collate utf8_unicode_ci")
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql.ulog .. "` (`id` bigint(20) unsigned not null auto_increment primary key, `time` bigint(20) unsigned not null, `out` bigint(20) unsigned not null default 0, `nick` varchar(255) not null, `ip` varchar(15) not null, `cc` varchar(2) null, `desc` varchar(255) null, `tag` varchar(255) null, `conn` varchar(255) null, `email` varchar(255) null, `share` bigint(20) unsigned not null default 0, `nmdc` varchar(255) null, `sups` varchar(255) null) engine = myisam default character set utf8 collate utf8_unicode_ci")
 
 -- command log
 VH:SQLQuery ("create table if not exists `" .. tbl_sql.clog .. "` (`id` bigint(20) unsigned not null auto_increment, `time` bigint(20) unsigned not null, `nick` varchar(255) not null, `class` tinyint(2) unsigned not null, `command` text not null, primary key (`id`)) engine = myisam default character set utf8 collate utf8_unicode_ci")
@@ -21927,12 +22009,15 @@ VH:SQLQuery ("alter table `" .. tbl_sql.cmdex .. "` change column `occurred` `oc
 
 	-- user log
 	VH:SQLQuery ("alter table `" .. tbl_sql.ulog .. "` change column `time` `time` bigint(20) unsigned not null") -- time
+	VH:SQLQuery ("alter table `" .. tbl_sql.ulog .. "` add column `out` bigint(20) unsigned not null default 0 after `time`") -- out
 	VH:SQLQuery ("alter table `" .. tbl_sql.ulog .. "` add column `cc` varchar(2) null after `ip`") -- cc
 	VH:SQLQuery ("alter table `" .. tbl_sql.ulog .. "` change column `desc` `desc` varchar(255) null") -- desc
 	VH:SQLQuery ("alter table `" .. tbl_sql.ulog .. "` change column `tag` `tag` varchar(255) null") -- tag
 	VH:SQLQuery ("alter table `" .. tbl_sql.ulog .. "` change column `conn` `conn` varchar(255) null") -- conn
 	VH:SQLQuery ("alter table `" .. tbl_sql.ulog .. "` change column `email` `email` varchar(255) null") -- email
 	VH:SQLQuery ("alter table `" .. tbl_sql.ulog .. "` change column `share` `share` bigint(20) unsigned not null default 0") -- share
+	VH:SQLQuery ("alter table `" .. tbl_sql.ulog .. "` add column `nmdc` varchar(255) null after `share`") -- nmdc
+	VH:SQLQuery ("alter table `" .. tbl_sql.ulog .. "` add column `sups` varchar(255) null after `nmdc`") -- sups
 
 -- command log
 -- not added
