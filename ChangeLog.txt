@@ -3,6 +3,8 @@
 [ 71] Added: AVDB detection connection block message delay to avoid flood, report by KCAHDEP
 [ 72] Added: Main chat history search functionality
 [ 73] Added: Client NMDC version, supports and user logout time fields to user logger, request by dimetro
+[ 74] Added: Command logger search functionality, request by KCAHDEP
+[ 74] Added: Replace asterisk with spam message in antimessage configuration, request by KCAHDEP
 
 [ 2.9.5 :: 2018-02-19 ]
 

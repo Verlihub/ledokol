@@ -63,7 +63,7 @@ Tzaca, JOE™, Foxtrot, Deivis
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.6" -- ledokol version
-bld_ledo = "73" -- build number
+bld_ledo = "74" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -640,6 +640,7 @@ table_cmnds = {
 	seen = "seen",
 	whois = "whois",
 	clog = "clog",
+	clogfind = "clogfind",
 	dropip = "dropip",
 	votekick = "votekick",
 	votekickdel = "votekickdel",
@@ -1456,6 +1457,7 @@ function Main (file)
 
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.ledocmd .. "` (`original`, `new`) values ('histfind', '" .. repsqlchars (table_cmnds.histfind) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.ledocmd .. "` (`original`, `new`) values ('histline', '" .. repsqlchars (table_cmnds.histline) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.ledocmd .. "` (`original`, `new`) values ('clogfind', '" .. repsqlchars (table_cmnds.clogfind) .. "')")
 					end
 
 					if ver <= 297 then
@@ -2843,15 +2845,27 @@ return 0
 
 	----- ---- --- -- -
 
-elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.clog .. " %d+$") then
-	if ucl >= table_sets.mincommandclass and table_sets.enablecmdlog > 0 then
-		donotifycmd (nick, data, 0, ucl)
-		showcmdlog (nick, ucl, data:sub (# table_cmnds.clog + 3))
-	else
-		commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
-	end
+	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.clog .. " %d+$") then
+		if ucl >= table_sets.mincommandclass and table_sets.enablecmdlog > 0 then
+			donotifycmd (nick, data, 0, ucl)
+			showcmdlog (nick, ucl, data:sub (# table_cmnds.clog + 3))
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
 
-	return 0
+		return 0
+
+	----- ---- --- -- -
+
+	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.clogfind .. " .+$") or data:match ("^" .. table_othsets.optrig .. table_cmnds.clogfind .. " .+ %d+$") then
+		if ucl >= table_sets.mincommandclass and table_sets.enablecmdlog > 0 then
+			donotifycmd (nick, data, 0, ucl)
+			findcmdlog (nick, data:sub (# table_cmnds.clogfind + 3), ucl)
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
+
+		return 0
 
 	----- ---- --- -- -
 
@@ -10493,23 +10507,57 @@ end
 
 ----- ---- --- -- -
 
-function showcmdlog (nick, cls, ln)
-local nn = tonumber (ln)
-if nn < 1 then nn = 1 end
-local _, rows = VH:SQLQuery ("select `time`, `nick`, `class`, `command` from `" .. tbl_sql.clog .. "` where `class` <= " .. _tostring (cls) .. " order by `time` desc limit " .. _tostring (nn))
+function showcmdlog (nick, class, num)
+	local lim = tonumber (num)
 
-if rows > 0 then
-	local list = ""
-
-	for x = 0, rows - 1 do
-		local _, tm, usr, ucl, cmd = VH:SQLFetch (x)
-		list = list .. " " .. os.date (table_sets.dateformat .. " " .. table_sets.timeformat, tm) .. ": [" .. prezero (2, ucl) .. "] <" .. usr .. "> " .. cmd .. "\r\n"
+	if lim < 1 then
+		lim = 1
 	end
 
-	commandanswer (nick, gettext ("Showing %d entries from command logger"):format (rows) .. ":\r\n\r\n" .. list)
-else
-	commandanswer (nick, gettext ("Command logger is empty."))
+	local _, rows = VH:SQLQuery ("select `time`, `nick`, `class`, `command` from `" .. tbl_sql.clog .. "` where `class` <= " .. _tostring (class) .. " order by `time` desc limit " .. _tostring (lim))
+
+	if rows > 0 then
+		local list = ""
+
+		for row = 0, rows - 1 do
+			local _, stamp, user, ucl, data = VH:SQLFetch (row)
+			list = list .. " " .. os.date (table_sets.dateformat .. " " .. table_sets.timeformat, stamp) .. ": [" .. prezero (2, ucl) .. "] <" .. user .. "> " .. data .. "\r\n"
+		end
+
+		commandanswer (nick, gettext ("Showing %d entries from command logger"):format (rows) .. ":\r\n\r\n" .. list)
+	else
+		commandanswer (nick, gettext ("Command logger is empty."))
+	end
 end
+
+----- ---- --- -- -
+
+function findcmdlog (nick, line, class)
+	local text, lim = line, 100 -- static parameters
+
+	if line:match ("^.+ %d+$") then
+		text, lim = line:match ("^(.+) (%d+)$")
+	end
+
+	if tonumber (lim) < 1 then
+		lim = 1
+	end
+
+	local safe = repsqlchars (text)
+	local _, rows = VH:SQLQuery ("select `time`, `nick`, `class`, `command` from `" .. tbl_sql.clog .. "` where `class` <= " .. _tostring (class) .. " and (`command` like '%" .. safe .. "%' or `nick` like '%" .. safe .. "%') order by `time` desc limit " .. _tostring (lim))
+
+	if rows > 0 then
+		local list = ""
+
+		for row = 0, rows - 1 do
+			local _, stamp, user, ucl, data = VH:SQLFetch (row)
+			list = list .. " " .. os.date (table_sets.dateformat .. " " .. table_sets.timeformat, stamp) .. ": [" .. prezero (2, ucl) .. "] <" .. user .. "> " .. data .. "\r\n"
+		end
+
+		commandanswer (nick, gettext ("Found %d command logs"):format (rows) .. ":\r\n\r\n" .. list)
+	else
+		commandanswer (nick, gettext ("No command logs found."))
+	end
 end
 
 ----- ---- --- -- -
@@ -16923,6 +16971,7 @@ smensep (usr)
 sopmenitm (usr, gettext ("Commands") .. "\\" .. gettext ("Reset all custom commands"), table_cmnds.cmndreset)
 smensep (usr)
 sopmenitm (usr, gettext ("Commands") .. "\\" .. gettext ("Command logger"), table_cmnds.clog .. " %[line:<" .. gettext ("lines") .. ">]")
+sopmenitm (usr, gettext ("Commands") .. "\\" .. gettext ("Search in command logs"), table_cmnds.clogfind .. " %[line:<" .. gettext ("text") .. ">] %[line:<" .. gettext ("lines") .. ">]")
 smensep (usr)
 sopmenitm (usr, gettext ("Commands") .. "\\" .. gettext ("Add command permission"), table_cmnds.cmndadd .. " %[line:<" .. gettext ("lre") .. ">] %[line:<" .. gettext ("class") .. ">]")
 sopmenitm (usr, gettext ("Commands") .. "\\" .. gettext ("Command permission list"), table_cmnds.cmndlist)
@@ -19516,14 +19565,14 @@ elseif tvar == "opkeyshare" then
 
 	----- ---- --- -- -
 
-elseif tvar == "antimessage" then
-if # setto > 0 then
-ok = true
-else
-commandanswer (nick, gettext ("Configuration variable %s can't be empty."):format (tvar))
-end
+	elseif tvar == "antimessage" then
+		if # setto > 0 then
+			ok = true
+		else
+			commandanswer (nick, gettext ("Configuration variable %s can't be empty."):format (tvar))
+		end
 
------ ---- --- -- -
+	----- ---- --- -- -
 
 elseif tvar == "usermenuname" then
 if # setto > 0 then
@@ -20968,6 +21017,7 @@ function sendophelp (nick, clas, pm)
 	help = help .. " " .. trig .. table_cmnds.cmndshow .. " - " .. gettext ("Show custom script commands") .. "\r\n"
 	help = help .. " " .. trig .. table_cmnds.cmndreset .. " - " .. gettext ("Reset all custom commands") .. "\r\n"
 	help = help .. " " .. trig .. table_cmnds.clog .. " <" .. gettext ("lines") .. "> - " .. gettext ("Command logger") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.clogfind .. " <" .. gettext ("text") .. "> [" .. gettext ("lines") .. "=100] - " .. gettext ("Search in command logs") .. "\r\n"
 	help = help .. " " .. trig .. table_cmnds.cmndadd .. " <" .. gettext ("lre") .. "> <" .. gettext ("class") .. "> - " .. gettext ("Add command permission") .. "\r\n"
 	help = help .. " " .. trig .. table_cmnds.cmndlist .. " - " .. gettext ("Command permission list") .. "\r\n"
 	help = help .. " " .. trig .. table_cmnds.cmnddel .. " <" .. gettext ("lre") .. "> - " .. gettext ("Delete command permission") .. "\r\n"
@@ -25065,16 +25115,19 @@ function antiscan (nick, class, data, where, to, status)
 
 					VH:SendToUser ("$To: " .. to .. " From: " .. nick .. " $<" .. custnick .. "> " .. table_sets.ninthactrepmsg .. "|", to)
 				elseif where == 3 or where == 4 then
-					commandanswer (nick, table_sets.antimessage)
+					local why = table_sets.antimessage:gsub ("%*", reprexpchars (data))
+					commandanswer (nick, why)
 				end
 
 			else
+				local why = table_sets.antimessage:gsub ("%*", reprexpchars (data))
+
 				if where == 1 then
-					maintouser (nick, table_sets.antimessage)
+					maintouser (nick, why)
 				elseif where == 2 then
-					pmtouser (nick, to, table_sets.antimessage)
+					pmtouser (nick, to, why)
 				elseif where == 3 or where == 4 then
-					commandanswer (nick, table_sets.antimessage)
+					commandanswer (nick, why)
 				end
 			end
 
