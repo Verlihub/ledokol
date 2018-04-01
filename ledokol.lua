@@ -5318,9 +5318,9 @@ function VH_OnUserLogout (nick, uip)
 		return 1
 	end
 
-	if table_sets.enableuserlog == 1 then -- user logger
-		VH:SQLQuery ("update `" .. tbl_sql.ulog .. "` set `out` = " .. _tostring (os.time () + table_sets.srvtimediff) .. " where `nick` = '" .. repsqlchars (nick) .. "' order by `time` desc limit 1")
-	end
+	--if table_sets.enableuserlog == 1 then -- user logger, todo: fix high cpu usage
+		--VH:SQLQuery ("update `" .. tbl_sql.ulog .. "` set `out` = " .. _tostring (os.time () + table_sets.srvtimediff) .. " where `nick` = '" .. repsqlchars (nick) .. "' order by `time` desc limit 1")
+	--end
 
 	local cls = getclass (nick)
 
