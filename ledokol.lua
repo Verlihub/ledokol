@@ -1050,6 +1050,7 @@ table_myfo = {}
 table_sefi = {}
 table_sfex = {}
 table_sfbl = {}
+table_laul = {}
 
 table_avfi = {
 	string.char (100, 111, 119, 110, 108, 111, 97, 100),
@@ -4948,7 +4949,7 @@ function VH_OnParsedMsgMyINFO (nick, data)
 			end
 		end
 
-		VH:SQLQuery ("insert into `" .. tbl_sql.ulog .. "` (`time`, `out`, `nick`, `ip`, `cc`, `desc`, `tag`, `conn`, `email`, `share`, `nmdc`, `sups`) values (" .. _tostring (os.time () + table_sets.srvtimediff) .. ", 1, '" .. repsqlchars (nick) .. "', '" .. repsqlchars (addr) .. "', " .. sqlemptnull (cc, true) .. ", " .. sqlemptnull (desc) .. ", " .. sqlemptnull (tag) .. ", " .. sqlemptnull (conn) .. ", " .. sqlemptnull (mail) .. ", " .. repsqlchars (size) .. ", " .. sqlemptnull (nmdc) .. ", " .. sqlemptnull (sups) .. ")")
+		VH:SQLQuery ("insert into `" .. tbl_sql.ulog .. "` (`time`, `out`, `nick`, `ip`, `cc`, `desc`, `tag`, `conn`, `email`, `share`, `nmdc`, `sups`) values (" .. _tostring (os.time () + table_sets.srvtimediff) .. ", 2, '" .. repsqlchars (nick) .. "', '" .. repsqlchars (addr) .. "', " .. sqlemptnull (cc, true) .. ", " .. sqlemptnull (desc) .. ", " .. sqlemptnull (tag) .. ", " .. sqlemptnull (conn) .. ", " .. sqlemptnull (mail) .. ", " .. repsqlchars (size) .. ", " .. sqlemptnull (nmdc) .. ", " .. sqlemptnull (sups) .. ")")
 	end
 
 	if table_sets.micheck == 0 or table_sets.micallall == 0 then
@@ -5053,6 +5054,16 @@ function VH_OnUserLogin (nick, uip)
 		end
 
 		VH:SQLQuery ("insert into `" .. tbl_sql.ulog .. "` (`time`, `out`, `nick`, `ip`, `cc`, `desc`, `tag`, `conn`, `email`, `share`, `nmdc`, `sups`) values (" .. _tostring (os.time () + table_sets.srvtimediff) .. ", 1, '" .. repsqlchars (nick) .. "', '" .. repsqlchars (ip) .. "', " .. sqlemptnull (cc, true) .. ", " .. sqlemptnull (desc) .. ", " .. sqlemptnull (tag) .. ", " .. sqlemptnull (conn) .. ", " .. sqlemptnull (email) .. ", " .. repsqlchars (size) .. ", " .. sqlemptnull (nmdc) .. ", " .. sqlemptnull (sups) .. ")")
+		local _, rows = VH:SQLQuery ("select last_insert_id()")
+
+		if rows > 0 then
+			local _, last = VH:SQLFetch (0)
+			last = tonumber (last or 0) or 0
+
+			if last > 0 then
+				table_laul [nick] = last
+			end
+		end
 	end
 
 	local cls = getclass (nick)
@@ -5318,9 +5329,9 @@ function VH_OnUserLogout (nick, uip)
 		return 1
 	end
 
-	--if table_sets.enableuserlog == 1 then -- user logger, todo: fix high cpu usage
-		--VH:SQLQuery ("update `" .. tbl_sql.ulog .. "` set `out` = " .. _tostring (os.time () + table_sets.srvtimediff) .. " where `nick` = '" .. repsqlchars (nick) .. "' order by `time` desc limit 1")
-	--end
+	if table_sets.enableuserlog == 1 and table_laul [nick] then -- user logger
+		VH:SQLQuery ("update `" .. tbl_sql.ulog .. "` set `out` = " .. _tostring (os.time () + table_sets.srvtimediff) .. " where `id` = " .. _tostring (table_laul [nick]))
+	end
 
 	local cls = getclass (nick)
 
@@ -10615,11 +10626,14 @@ function showuserlog (nick, line)
 					rnick = repnmdcoutchars (rnick)
 					rip = repnmdcoutchars (rip)
 					res = res .. " [ O: " .. fromunixtime (rtime, false) .. " ] [ O: " -- online, offline
+					rout = tonumber (rout or 0) or 0
 
-					if tonumber (rout) == 0 then
+					if rout == 0 then
 						res = res .. gettext ("Unknown")
-					elseif tonumber (rout) == 1 then
+					elseif rout == 1 then
 						res = res .. gettext ("Online")
+					elseif rout == 2 then
+						res = res .. gettext ("Unavailable")
 					else
 						res = res .. fromunixtime (rout, false)
 					end
@@ -10681,11 +10695,14 @@ function showuserlog (nick, line)
 					rnick = repnmdcoutchars (rnick)
 					rip = repnmdcoutchars (rip)
 					res = res .. " [ O: " .. fromunixtime (rtime, false) .. " ] [ O: " -- online, offline
+					rout = tonumber (rout or 0) or 0
 
-					if tonumber (rout) == 0 then
+					if rout == 0 then
 						res = res .. gettext ("Unknown")
-					elseif tonumber (rout) == 1 then
+					elseif rout == 1 then
 						res = res .. gettext ("Online")
+					elseif rout == 2 then
+						res = res .. gettext ("Unavailable")
 					else
 						res = res .. fromunixtime (rout, false)
 					end
@@ -18446,11 +18463,15 @@ else
 commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
 end
 
------ ---- --- -- -
+	----- ---- --- -- -
 
 	elseif tvar == "enableuserlog" then
 		if num then
 			if setto == 0 or setto == 1 then
+				if setto == 0 then -- clear
+					table_laul = {}
+				end
+
 				ok = true
 			else
 				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0 " .. gettext ("or") .. " 1"))
@@ -18459,7 +18480,7 @@ end
 			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
 		end
 
------ ---- --- -- -
+	----- ---- --- -- -
 
 	elseif tvar == "ulogautoclean" then
 		if num then
