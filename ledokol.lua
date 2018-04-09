@@ -63,7 +63,7 @@ Tzaca, JOE™, Foxtrot, Deivis
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.6" -- ledokol version
-bld_ledo = "74" -- build number
+bld_ledo = "75" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -10641,7 +10641,7 @@ function showuserlog (nick, line)
 					res = res .. " ] [ N: " .. rnick .. " ]"
 
 					if rip ~= "0.0.0.0" then
-						res = res .. " [ I: " .. rip .. tryipcc (rip, rnick) .. " ]"
+						res = res .. " [ I: " .. rip .. tryipcc (rip) .. " ]"
 					end
 
 					if rcc and rcc ~= "" then
@@ -10710,7 +10710,7 @@ function showuserlog (nick, line)
 					res = res .. " ] [ N: " .. rnick .. " ]"
 
 					if rip ~= "0.0.0.0" then
-						res = res .. " [ I: " .. rip .. tryipcc (rip, rnick) .. " ]"
+						res = res .. " [ I: " .. rip .. tryipcc (rip) .. " ]"
 					end
 
 					if rcc and rcc ~= "" then

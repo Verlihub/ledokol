@@ -1,5 +1,6 @@
 [ 2.9.6 :: 2018-##-## ]
 
+[ 75] Fixed: User log list contains wrong country code for given IP address
 [ 71] Added: AVDB detection connection block message delay to avoid flood, report by KCAHDEP
 [ 72] Added: Main chat history search functionality
 [ 73] Added: Client NMDC version, supports and user logout time fields to user logger, request by dimetro
