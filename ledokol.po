@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: Ledokol\n"
 "Project-Version: 2.9.6\n"
 "Report-Msgid-Bugs-To: RoLex <webmaster@feardc.net>\n"
-"POT-Creation-Date: 2018-04-01 00:00+0200\n"
-"PO-Revision-Date: 2018-04-01 00:00+0200\n"
+"POT-Creation-Date: 2018-05-13 00:00+0200\n"
+"PO-Revision-Date: 2018-05-13 00:00+0200\n"
 "Last-Translator: RoLex <webmaster@feardc.net>\n"
 "Language-Team: RoLex <webmaster@feardc.net>\n"
 "Language: en_GB\n"
@@ -3605,4 +3605,16 @@ msgid "Found %d command logs"
 msgstr ""
 
 msgid "Unavailable"
+msgstr ""
+
+msgid "Clone information"
+msgstr ""
+
+msgid "No clones detected."
+msgstr ""
+
+msgid "%d users with IP %s and shared bytes %d: %s"
+msgstr ""
+
+msgid "Total number of clones: %d"
 msgstr ""

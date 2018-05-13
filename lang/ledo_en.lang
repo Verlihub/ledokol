@@ -1203,3 +1203,7 @@ Search in command logs|
 No command logs found.|
 Found %d command logs|
 Unavailable|
+Clone information|
+No clones detected.|
+%d users with IP %s and shared bytes %d: %s|
+Total number of clones: %d|

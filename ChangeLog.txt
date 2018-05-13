@@ -6,6 +6,7 @@
 [ 73] Added: Client NMDC version, supports and user logout time fields to user logger, request by dimetro
 [ 74] Added: Command logger search functionality, request by KCAHDEP
 [ 74] Added: Replace asterisk with spam message in antimessage configuration, request by KCAHDEP
+[ 76] Added: cloneinfo command to list online user clones
 
 [ 2.9.5 :: 2018-02-19 ]
 

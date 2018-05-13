@@ -63,7 +63,7 @@ Tzaca, JOE™, Foxtrot, Deivis
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.6" -- ledokol version
-bld_ledo = "75" -- build number
+bld_ledo = "76" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -634,11 +634,12 @@ table_cmnds = {
 	wmdel = "wmdel",
 	wmset = "wmset",
 	wmshow = "wmshow",
-	userinfo = "userinfo",
+	cloneinfo = "cloneinfo",
 	ipinfo = "ipinfo",
 	ulog = "ulog",
 	seen = "seen",
 	whois = "whois",
+	userinfo = "userinfo",
 	clog = "clog",
 	clogfind = "clogfind",
 	dropip = "dropip",
@@ -1459,6 +1460,7 @@ function Main (file)
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.ledocmd .. "` (`original`, `new`) values ('histfind', '" .. repsqlchars (table_cmnds.histfind) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.ledocmd .. "` (`original`, `new`) values ('histline', '" .. repsqlchars (table_cmnds.histline) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.ledocmd .. "` (`original`, `new`) values ('clogfind', '" .. repsqlchars (table_cmnds.clogfind) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.ledocmd .. "` (`original`, `new`) values ('cloneinfo', '" .. repsqlchars (table_cmnds.cloneinfo) .. "')")
 					end
 
 					if ver <= 297 then
@@ -2874,6 +2876,18 @@ return 0
 		if ucl >= table_sets.mincommandclass then
 			donotifycmd (nick, data, 0, ucl)
 			showuserinfo (nick, data:sub (# table_cmnds.userinfo + 3))
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
+
+		return 0
+
+	----- ---- --- -- -
+
+	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.cloneinfo .. "$") then
+		if ucl >= table_sets.mincommandclass then
+			donotifycmd (nick, data, 0, ucl)
+			showcloneinfo (nick)
 		else
 			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
@@ -10153,6 +10167,45 @@ end
 
 ----- ---- --- -- -
 
+function showcloneinfo (nick)
+	local cist = {}
+
+	for user in getnicklist ():gmatch ("[^%$ ]+") do
+		local addr = getip (user)
+
+		if addr ~= "0.0.0.0" then -- skip bots
+			local id = addr .. "_" .. parsemyinfoshare (getmyinfo (user))
+
+			if not cist [id] then
+				cist [id] = {}
+			end
+
+			table.insert (cist [id], user)
+		end
+	end
+
+	local list, tot = "", 0
+
+	for id, data in pairs (cist) do
+		local num = # data
+
+		if num > 1 then
+			local pos = id:find ("_", 1, true)
+			local addr = id:sub (1, pos - 1)
+			list = list .. " " .. gettext ("%d users with IP %s and shared bytes %d: %s"):format (num, addr .. tryipcc (addr), id:sub (pos + 1), table.concat (data, " ")) .. "\r\n"
+			tot = tot + num
+		end
+	end
+
+	if tot > 0 then
+		commandanswer (nick, gettext ("Clone information") .. ":\r\n\r\n" .. list .. "\r\n " .. gettext ("Total number of clones: %d"):format (tot) .. "\r\n")
+	else
+		commandanswer (nick, gettext ("No clones detected."))
+	end
+end
+
+----- ---- --- -- -
+
 function showuserinfo (nick, usr)
 local user = getcsnick (usr)
 
@@ -17105,6 +17158,7 @@ end
 		sopmenitm (usr, gettext ("User logger") .. "\\" .. gettext ("Search in user log"), table_cmnds.ulog .. " %[line:<" .. gettext ("type") .. ">] %[line:<" .. gettext ("string") .. ">] %[line:<" .. gettext ("lines") .. ">]")
 		sopmenitm (usr, gettext ("User logger") .. "\\" .. gettext ("%s user lookup"):format (table_othsets.hublisturl), table_cmnds.seen .. " %[line:<" .. gettext ("type") .. ">] %[line:<" .. gettext ("text") .. ">]")
 		sopmenitm (usr, gettext ("User logger") .. "\\" .. gettext ("%s lookup"):format ("WHOIS"), table_cmnds.whois .. " %[line:<" .. gettext ("address") .. ">]")
+		sopmenitm (usr, gettext ("User logger") .. "\\" .. gettext ("Clone information"), table_cmnds.cloneinfo)
 	end
 
 	-- todo: no pm
@@ -21088,7 +21142,8 @@ function sendophelp (nick, clas, pm)
 	help = help .. " " .. trig .. table_cmnds.ipinfo .. " <" .. gettext ("ip") .. "> - " .. gettext ("IP information") .. "\r\n"
 	help = help .. " " .. trig .. table_cmnds.ulog .. " [" .. gettext ("type") .. "=nick] <" .. gettext ("string") .. "> [" .. gettext ("lines") .. "=100] - " .. gettext ("Search in user log") .. "\r\n" -- static parameters
 	help = help .. " " .. trig .. table_cmnds.seen .. " <" .. gettext ("type") .. "> <" .. gettext ("text") .. "> - " .. gettext ("%s user lookup"):format (table_othsets.hublisturl) .. "\r\n"
-	help = help .. " " .. trig .. table_cmnds.whois .. " <" .. gettext ("address") .. "> - " .. gettext ("%s lookup"):format ("WHOIS") .. "\r\n\r\n"
+	help = help .. " " .. trig .. table_cmnds.whois .. " <" .. gettext ("address") .. "> - " .. gettext ("%s lookup"):format ("WHOIS") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.cloneinfo .. " - " .. gettext ("Clone information") .. "\r\n\r\n"
 
 	-- vote kick
 	help = help .. " " .. trig .. table_cmnds.votekickdel .. " <" .. gettext ("nick") .. "> - " .. gettext ("Clear kick votes for user") .. "\r\n"
