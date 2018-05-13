@@ -10193,7 +10193,7 @@ function showcloneinfo (nick)
 			local pos = id:find ("_", 1, true)
 			local addr = id:sub (1, pos - 1)
 			list = list .. " " .. gettext ("%d users with IP %s and shared bytes %d: %s"):format (num, addr .. tryipcc (addr), id:sub (pos + 1), table.concat (data, " ")) .. "\r\n"
-			tot = tot + num
+			tot = tot + num - 1
 		end
 	end
 
