@@ -63,7 +63,7 @@ Tzaca, JOE™, Foxtrot, Deivis
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.6" -- ledokol version
-bld_ledo = "76" -- build number
+bld_ledo = "77" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -3616,7 +3616,7 @@ elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.ledoshell .. " .+$
 
 	return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
 
 	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.oldclean .. " %S+ %d+$") then
 		if ucl >= table_sets.mincommandclass then
@@ -17175,8 +17175,8 @@ end
 	if ucl >= table_sets.mincommandclass then
 		sopmenitm (usr, gettext ("Other") .. "\\" .. gettext ("Drop users with IP"), table_cmnds.dropip .. " %[line:<" .. gettext ("ip") .. ">]")
 		smensep (usr)
-		sopmenitm (usr, gettext ("Other") .. "\\" .. gettext ("Clean up tables"), table_cmnds.oldclean .. " %[line:<" .. gettext ("type") .. ">] %[line:<" .. gettext ("days") .. " " .. gettext ("or") .. " *>] %[line:<" .. gettext ("class") .. ">]")
-		--sopmenitm (usr, gettext ("Other") .. "\\" .. gettext ("Clean up tables"), table_cmnds.oldclean .. " %[line:<" .. gettext ("type") .. ">] %[line:<" .. gettext ("days") .. ">]")
+		sopmenitm (usr, gettext ("Other") .. "\\" .. gettext ("Clean up tables"), table_cmnds.oldclean .. " %[line:<" .. gettext ("type") .. ">] %[line:<" .. gettext ("days") .. ">]")
+		sopmenitm (usr, gettext ("Other") .. "\\" .. gettext ("Clean up registered users table"), table_cmnds.oldclean .. " reg %[line:<" .. gettext ("days") .. " " .. gettext ("or") .. " *>] %[line:<" .. gettext ("class") .. ">]")
 		sopmenitm (usr, gettext ("Other") .. "\\" .. gettext ("Read hub logs"), table_cmnds.readlog .. " %[line:<" .. gettext ("file") .. ">] %[line:<" .. gettext ("lines") .. ">]")
 		smensep (usr)
 		sopmenitm (usr, gettext ("Other") .. "\\" .. gettext ("Convert LRE to plain text"), table_cmnds.lretoplain .. " %[line:<" .. gettext ("lre") .. ">]")

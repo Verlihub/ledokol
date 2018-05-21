@@ -1207,3 +1207,4 @@ Clone information|
 No clones detected.|
 %d users with IP %s and shared bytes %d: %s|
 Total number of clones: %d|
+Clean up registered users table|

@@ -3618,3 +3618,6 @@ msgstr ""
 
 msgid "Total number of clones: %d"
 msgstr ""
+
+msgid "Clean up registered users table"
+msgstr ""
