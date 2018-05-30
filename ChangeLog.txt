@@ -8,6 +8,7 @@
 [ 74] Added: Replace asterisk with spam message in antimessage configuration, request by KCAHDEP
 [ 76] Added: cloneinfo command to list online user clones
 [ 77] Added: Separate command menu item for cleanup of registered users table, request by KCAHDEP
+[ 78] Added: Also remove user from Ledokol tables when cleaning up registered users table, request by KCAHDEP
 
 [ 2.9.5 :: 2018-02-19 ]
 

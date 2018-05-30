@@ -63,7 +63,7 @@ Tzaca, JOE™, Foxtrot, Deivis
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.6" -- ledokol version
-bld_ledo = "77" -- build number
+bld_ledo = "78" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -5655,11 +5655,13 @@ function VH_OnDelReg (nick, class, op)
 		table_opks [nick] = nil
 	end
 
-	local opclass = getclass (op) -- registration notification
-	opsnotify (table_sets.classnotireg, gettext ("%s with class %d deleted registered user with class %d: %s"):format (op, opclass, class, nick))
+	if op then
+		local opclass = getclass (op) -- registration notification
+		opsnotify (table_sets.classnotireg, gettext ("%s with class %d deleted registered user with class %d: %s"):format (op, opclass, class, nick))
 
-	if nick ~= op then
-		oprankaccept (op, opclass)
+		if nick ~= op then
+			oprankaccept (op, opclass)
+		end
 	end
 
 	delledouser (nick) -- remove user from ledokol tables
@@ -15092,6 +15094,7 @@ function altcleanuptable (nick, line, ucls)
 				for pos = 0, rows - 1 do
 					local _, user = VH:SQLFetch (pos)
 					list = list .. " " .. prezero (# _tostring (rows), (pos + 1)) .. ". " .. user .. "\r\n"
+					VH_OnDelReg (user, pcls) -- also remove from ledokol tables
 				end
 
 				if days == "*" then
