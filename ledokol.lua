@@ -15089,12 +15089,11 @@ function altcleanuptable (nick, line, ucls)
 			end
 
 			if rows > 0 then
-				local list = ""
+				local temp, list = {}, ""
 
 				for pos = 0, rows - 1 do
 					local _, user = VH:SQLFetch (pos)
-					list = list .. " " .. prezero (# _tostring (rows), (pos + 1)) .. ". " .. user .. "\r\n"
-					VH_OnDelReg (user, pcls) -- also remove from ledokol tables
+					table.insert (temp, user)
 				end
 
 				if days == "*" then
@@ -15103,6 +15102,11 @@ function altcleanuptable (nick, line, ucls)
 					VH:SQLQuery ("delete from `reglist` where `login_last` is null and `class` = " .. _tostring (pcls))
 				else
 					VH:SQLQuery ("delete from `reglist` where `login_last` is not null and `login_last` < " .. _tostring (secs) .. " and `class` = " .. _tostring (pcls))
+				end
+
+				for pos, user in pairs (temp) do -- also remove from ledokol tables
+					VH_OnDelReg (user, pcls)
+					list = list .. " " .. prezero (# _tostring (rows), (pos + 1)) .. ". " .. user .. "\r\n"
 				end
 
 				if days == "*" then -- workaround
