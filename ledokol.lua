@@ -10013,7 +10013,7 @@ function sendrelease (nick)
 
 		for pos = 0, rows - 1 do
 			local _, uri, auth, stamp = VH:SQLFetch (pos)
-			list = list .. gettext ("Release by %s on %s: %s"):format (auth, os.date (table_sets.dateformat .. " " .. table_sets.timeformat, stamp), uri) .. "\r\n"
+			list = list .. " " .. gettext ("By %s on %s: %s"):format (auth, os.date (table_sets.dateformat .. " " .. table_sets.timeformat, stamp), uri) .. "\r\n"
 		end
 
 		maintouser (nick, gettext ("Last %d releases"):format (rows) .. ":\r\n\r\n" .. list)

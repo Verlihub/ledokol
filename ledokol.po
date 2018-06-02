@@ -3624,6 +3624,3 @@ msgstr ""
 
 msgid "Please specify complete magnet URI."
 msgstr ""
-
-msgid "Release by %s on %s: %s"
-msgstr ""
