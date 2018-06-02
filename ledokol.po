@@ -3627,6 +3627,3 @@ msgstr ""
 
 msgid "Release by %s on %s: %s"
 msgstr ""
-
-msgid "Last %d releases"
-msgstr ""

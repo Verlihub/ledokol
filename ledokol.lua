@@ -10016,7 +10016,7 @@ function sendrelease (nick)
 			list = list .. gettext ("Release by %s on %s: %s"):format (auth, os.date (table_sets.dateformat .. " " .. table_sets.timeformat, stamp), uri) .. "\r\n"
 		end
 
-		commandanswer (nick, gettext ("Last %d releases"):format (rows) .. ":\r\n\r\n" .. list)
+		maintouser (nick, gettext ("Last %d releases"):format (rows) .. ":\r\n\r\n" .. list)
 	end
 end
 
