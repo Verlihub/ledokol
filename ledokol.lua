@@ -9857,10 +9857,20 @@ function addrelease (nick, line)
 
 		if rows > 0 then
 			VH:SQLQuery ("update `" .. tbl_sql.rel .. "` set `category` = '" .. repsqlchars (cat) .. "', `tth` = '" .. repsqlchars (uri) .. "', `date` = " .. _tostring (stamp) .. " where `release` = '" .. safe .. "'")
-			commandanswer (nick, gettext ("Modified release: %s"):format (rel))
+
+			if table_sets.reluseclass < 11 then
+				maintoall (gettext ("Release modified within category %s by %s: %s"):format (cat, nick, uri), table_sets.reluseclass, 10)
+			else
+				commandanswer (nick, gettext ("Modified release: %s"):format (rel))
+			end
 		else
 			VH:SQLQuery ("insert into `" .. tbl_sql.rel .. "` (`release`, `category`, `tth`, `by`, `date`) values ('" .. safe .. "', '" .. repsqlchars (cat) .. "', '" .. repsqlchars (uri) .. "', '" .. repsqlchars (nick) .. "', " .. _tostring (stamp) .. ")")
-			commandanswer (nick, gettext ("Added release: %s"):format (rel))
+
+			if table_sets.reluseclass < 11 then
+				maintoall (gettext ("Release added within category %s by %s: %s"):format (cat, nick, uri), table_sets.reluseclass, 10)
+			else
+				commandanswer (nick, gettext ("Added release: %s"):format (rel))
+			end
 		end
 	else
 		commandanswer (nick, gettext ("Please specify complete magnet URI."))
@@ -9879,7 +9889,12 @@ function delrelease (nick, line)
 
 		if rows > 0 then
 			VH:SQLQuery ("delete from `" .. tbl_sql.rel .. "` where `release` = '" .. safe .. "'")
-			commandanswer (nick, gettext ("Deleted release: %s"):format (rel))
+
+			if table_sets.reluseclass < 11 then
+				maintoall (gettext ("Release deleted by %s: %s"):format (nick, rel), table_sets.reluseclass, 10)
+			else
+				commandanswer (nick, gettext ("Deleted release: %s"):format (rel))
+			end
 		else
 			commandanswer (nick, gettext ("Couldn't delete release because not found: %s"):format (rel))
 		end
@@ -9891,7 +9906,12 @@ function delrelease (nick, line)
 
 		if rows > 0 then
 			VH:SQLQuery ("delete from `" .. tbl_sql.rel .. "` where `category` = '" .. safe .. "'") -- no limit
-			commandanswer (nick, gettext ("Deleted %d releases from category: %s"):format (rows, cat))
+
+			if table_sets.reluseclass < 11 then
+				maintoall (gettext ("Release category deleted by %s: %s"):format (nick, cat), table_sets.reluseclass, 10)
+			else
+				commandanswer (nick, gettext ("Deleted %d releases from category: %s"):format (rows, cat))
+			end
 		else
 			commandanswer (nick, gettext ("Couldn't delete category because not found: %s"):format (cat))
 		end

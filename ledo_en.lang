@@ -1209,3 +1209,7 @@ Total number of clones: %d|
 Clean up registered users table|
 magnet|
 Please specify complete magnet URI.|
+Release modified within category %s by %s: %s|
+Release added within category %s by %s: %s|
+Release deleted by %s: %s|
+Release category deleted by %s: %s|
