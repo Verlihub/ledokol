@@ -676,7 +676,7 @@ msgstr ""
 msgid "Search filter list is empty."
 msgstr ""
 
-msgid "Magnet link: %s"
+msgid "Magnet URI: %s"
 msgstr ""
 
 msgid "Add search filter"
@@ -1415,9 +1415,6 @@ msgid "name"
 msgstr ""
 
 msgid "category"
-msgstr ""
-
-msgid "tth"
 msgstr ""
 
 msgid "Add new release"
@@ -3620,4 +3617,16 @@ msgid "Total number of clones: %d"
 msgstr ""
 
 msgid "Clean up registered users table"
+msgstr ""
+
+msgid "magnet"
+msgstr ""
+
+msgid "Please specify complete magnet URI."
+msgstr ""
+
+msgid "Release by %s on %s: %s"
+msgstr ""
+
+msgid "Last %d releases"
 msgstr ""

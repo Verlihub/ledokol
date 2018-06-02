@@ -225,7 +225,7 @@ Deleted search filter: %s|
 Couldn't delete search filter because not found: %s|
 Search filter list|
 Search filter list is empty.|
-Magnet link: %s|
+Magnet URI: %s|
 Add search filter|
 Delete search filter|
 Known actions are: %s|
@@ -472,7 +472,6 @@ Force custom nick for user|
 Either the feature is disabled or user that you're trying to set welcome message for doesn't have access to it.|
 name|
 category|
-tth|
 Add new release|
 Delete releases|
 List of available releases|
@@ -1208,3 +1207,7 @@ No clones detected.|
 %d users with IP %s and shared bytes %d: %s|
 Total number of clones: %d|
 Clean up registered users table|
+magnet|
+Please specify complete magnet URI.|
+Release by %s on %s: %s|
+Last %d releases|
