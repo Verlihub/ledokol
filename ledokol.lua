@@ -15059,8 +15059,8 @@ function cleanuptable (nick, line, cls)
 
 		for id = # table_sefi, 1, -1 do
 			if table_sefi [id] and table_sefi [id].occ < days then
-				table.remove (table_sefi, id)
 				VH:SQLQuery ("delete from `" .. tbl_sql.sefi .. "` where `filter` = '" .. repsqlchars (table_sefi [id].ent) .. "'")
+				table.remove (table_sefi, id)
 				tot = tot + 1
 			end
 		end
