@@ -1,7 +1,6 @@
 [ 2.9.6 :: 2018-##-## ]
 
 [ 75] Fixed: User log list contains wrong country code for given IP address
-[ 79] Added: More features to release bot
 [ 71] Added: AVDB detection connection block message delay to avoid flood, report by KCAHDEP
 [ 72] Added: Main chat history search functionality
 [ 73] Added: Client NMDC version, supports and user logout time fields to user logger, request by dimetro
@@ -10,6 +9,8 @@
 [ 76] Added: cloneinfo command to list online user clones
 [ 77] Added: Separate command menu item for cleanup of registered users table, request by KCAHDEP
 [ 78] Added: Also remove user from Ledokol tables when cleaning up registered users table, request by KCAHDEP
+[ 79] Added: More features to release bot
+[ 80] Added: Support for new script commands required for cooperation with Blacklist script
 
 [ 2.9.5 :: 2018-02-19 ]
 

@@ -63,7 +63,7 @@ Tzaca, JOE™, Foxtrot, Deivis
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.6" -- ledokol version
-bld_ledo = "79" -- build number
+bld_ledo = "80" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -6485,12 +6485,67 @@ function VH_OnScriptCommand (name, data, plug, file)
 		return 1
 	end
 
-	if name == "chat_to_all" then -- user sends chat message to all
+	if name == "are_you_there" and data == "ledokol" and plug == "python" and file:sub (-12) == "blacklist.py" then -- blacklist script checks our status
+		VH:ScriptCommand ("yes_im_here", "ledokol")
+
+	elseif name == "remove_history_line" and # data > 0 and plug == "python" and file:sub (-12) == "blacklist.py" then -- blacklist script wants to remove last main chat history line from user, dont ask why
+		if table_sets.histlimit > 0 then
+			local nick, line = data:match ("^<([^ ]+)> (.*)$")
+
+			if nick and line then
+				VH:SQLQuery ("delete from `" .. tbl_sql.mchist .. "` where `realnick` = '" .. repsqlchars (nick) .. "' and `message` = '" .. repsqlchars (line) .. "' order by `date` desc limit 1") -- only last one
+			end
+		end
+
+	elseif name == "chat_to_all" then -- user sends main chat message to all
 		local nick, line = data:match ("^<([^ ]+)> (.*)$")
 
 		if nick and line then
 			nick = repnmdcoutchars (nick)
 			addmchistoryline (nick, nick, repnmdcoutchars (line))
+		end
+
+	elseif name == "delayed_chat_to_all" then -- user sends delayed main chat message to all
+		local nick, line = data:match ("^<([^ ]+)> (.*)$")
+
+		if nick and line and getstatus (nick) == 1 and VH_OnParsedMsgChat (nick, line) == 1 then
+			if minhubver (1, 0, 2, 15) then
+				VH:SendToClass (data .. "|", 0, 10, getconfig ("delayed_chat"))
+			else
+				VH:SendToClass (data .. "|", 0, 10)
+			end
+		end
+
+	elseif name == "delayed_pm_to_user" then -- user sends delayed private message to user
+		local to, nick, line = data:match ("^%$To: ([^ ]+) From: ([^ ]+) %$<[^ ]+> (.*)$")
+
+		if to and nick and line and getstatus (to) == 1 and getstatus (nick) == 1 and VH_OnParsedMsgPM (nick, line, to) == 1 then
+			VH:SendToUser (data .. "|", to)
+		end
+
+	elseif name == "delayed_mcto_to_user" then -- user sends delayed private main chat message to user
+		local to, nick, line = data:match ("^%$MCTo: ([^ ]+) From: ([^ ]+) %$<[^ ]+> (.*)$")
+
+		if to and nick and line and getstatus (to) == 1 and getstatus (nick) == 1 and VH_OnParsedMsgMCTo (nick, line, to) == 1 then
+			local mcto = false
+
+			if table_refu.InUserSupports then -- check if client supports mcto
+				local on, has = VH:InUserSupports (to, "MCTo")
+
+				if on and has and tonumber (has) == 1 then
+					mcto = true
+				end
+			end
+
+			if mcto then
+				VH:SendToUser (data .. "|", to)
+			else
+				if minhubver (1, 0, 2, 15) then
+					VH:SendToUser ("<" .. nick .. "> " .. data .. "|", to, getconfig ("delayed_chat"))
+				else
+					VH:SendToUser ("<" .. nick .. "> " .. data .. "|", to)
+				end
+			end
 		end
 
 	elseif name == "opchat_to_all" then -- user sends operator chat message to all
@@ -6541,11 +6596,14 @@ function VH_OnParsedMsgPM (from, data, to)
 
 				if table_sets.chatuptimeact == 0 then -- message
 					pmtouser (from, to, gettext ("Please wait another %d seconds before using private chat."):format (table_sets.chatuptime - dif))
+
 				elseif table_sets.chatuptimeact == 1 then -- drop
 					opsnotify (table_sets.classnotilowupchat, gettext ("User dropped: %s"):format (from))
 					VH:Disconnect (from)
+
 				--elseif table_sets.chatuptimeact == 2 then -- silent
 					-- nothing to do
+
 				elseif table_sets.chatuptimeact == 3 then -- message to self
 					opsnotify (table_sets.classnotilowupchat, gettext ("User received own message: %s"):format (from))
 					-- not needed for private messages
@@ -6569,6 +6627,7 @@ function VH_OnParsedMsgPM (from, data, to)
 				pmtouser (from, to, txt)
 				opsnotify (table_sets.classnotichatcode, gettext ("%s with IP %s and class %d tried to speak without chat code in PM to %s with IP %s and class %d."):format (from, ip .. tryipcc (ip, from), fcls, to, toip, tcls))
 				return 0
+
 			elseif table_code [from]["lock"] then
 				local rcode = table_code [from]["code"]
 
@@ -6604,6 +6663,7 @@ function VH_OnParsedMsgPM (from, data, to)
 		if gagcitycheck (from, ip, fcls, to, data) then
 			return 0
 		end
+
 	--elseif table_sets.chatantiflood == 1 then -- update last chat nick, pm not supported
 		--table_othsets.chflonenick = from
 	end
@@ -6621,6 +6681,7 @@ function VH_OnParsedMsgPM (from, data, to)
 				end
 
 				return 0
+
 			elseif not VH_OnOpChatMessage then -- backward compatibility
 				addophistoryline (from, data, 3) -- log operator chat
 			end
@@ -6643,21 +6704,26 @@ function VH_OnParsedMsgPM (from, data, to)
 						commandanswer (from, gettext ("This command is either disabled or you don't have access to it."))
 						return 0
 					end
+
 				elseif data:match ("^" .. table_othsets.optrig .. "lualist.*$") or data:match ("^" .. table_othsets.optrig .. "luainfo.*$") or data:match ("^" .. table_othsets.optrig .. "luaversion.*$") then
 					donotifycmd (from, data, 0, fcls)
 					savecmdlog (from, fcls, data, true)
+
 				elseif data:match ("^" .. table_othsets.optrig .. "offplug .*$") or data:match ("^" .. table_othsets.optrig .. "onplug .*$") or data:match ("^" .. table_othsets.optrig .. "replug .*$") or data:match ("^" .. table_othsets.optrig .. "modplug .*$") or data:match ("^" .. table_othsets.optrig .. "addplug .*$") or data:match ("^" .. table_othsets.optrig .. "delplug .*$") then
 					if fcls >= getconfig ("plugin_mod_class") then -- check the permissions
 						donotifycmd (from, data, 0, fcls)
 						savecmdlog (from, fcls, data, true)
 					end
+
 				elseif data:match ("^" .. table_othsets.optrig .. "lstplug.*$") then
 					donotifycmd (from, data, 0, fcls)
 					savecmdlog (from, fcls, data, true)
 				end
+
 			else
 				opsnotify (table_sets.classnotibotpm, gettext ("%s with IP %s and class %d sent message to %s: %s"):format (from, ip .. tryipcc (ip, from), fcls, to, data))
 			end
+
 		else
 			opsnotify (table_sets.classnotibotpm, gettext ("%s with IP %s and class %d sent message to %s: %s"):format (from, ip .. tryipcc (ip, from), fcls, to, data))
 		end
@@ -6680,10 +6746,12 @@ function VH_OnParsedMsgPM (from, data, to)
 						end
 					end
 				end
+
 			elseif fcls >= 3 then
 				if data:sub (1, 1):find (table_othsets.optrig) then -- accept operator command
 					VH_OnOperatorCommand (from, data)
 				end
+
 			else
 				opsnotify (table_sets.classnotibotpm, gettext ("%s with IP %s and class %d sent message to %s: %s"):format (from, ip .. tryipcc (ip, from), fcls, to, data))
 				VH:SendToUser ("$To: " .. from .. " From: " .. to .. " $<" .. to .. "> " .. gettext ("I'm probably away. State your business and I might answer later if you're lucky.") .. "|", from)
@@ -6752,11 +6820,13 @@ function VH_OnParsedMsgPM (from, data, to)
 
 				VH:SendToUser ("$To: " .. to .. " From: " .. from .. " $<" .. custnick .. "> " .. pmdat .. "|", to)
 				return 0
+
 			elseif data ~= pmdat then
 				opsnotify (table_sets.classnotirepl, gettext ("Message replaced for user with IP %s and class %d in PM to %s with IP %s and class %d: <%s> %s"):format (ip .. tryipcc (ip, from), fcls, to, toip .. tryipcc (toip, to), tcls, from, data))
 				VH:SendToUser ("$To: " .. to .. " From: " .. from .. " $<" .. from .. "> " .. pmdat .. "|", to)
 				return 0
 			end
+
 		elseif data ~= pmdat then
 			opsnotify (table_sets.classnotirepl, gettext ("Message replaced for user with IP %s and class %d in PM to %s with IP %s and class %d: <%s> %s"):format (ip .. tryipcc (ip, from), fcls, to, toip .. tryipcc (toip, to), tcls, from, data))
 			VH:SendToUser ("$To: " .. to .. " From: " .. from .. " $<" .. from .. "> " .. pmdat .. "|", to)
@@ -6794,11 +6864,13 @@ function VH_OnParsedMsgMCTo (from, data, to)
 
 				if table_sets.chatuptimeact == 0 then -- message
 					maintouser (from, gettext ("Please wait another %d seconds before using private chat."):format (table_sets.chatuptime - dif))
+
 				elseif table_sets.chatuptimeact == 1 then -- drop
 					opsnotify (table_sets.classnotilowupchat, gettext ("User dropped: %s"):format (from))
 					VH:Disconnect (from)
 				--elseif table_sets.chatuptimeact == 2 then -- silent
 					-- nothing to do
+
 				elseif table_sets.chatuptimeact == 3 then -- message to self
 					opsnotify (table_sets.classnotilowupchat, gettext ("User received own message: %s"):format (from))
 					-- not needed for private messages
@@ -6822,6 +6894,7 @@ function VH_OnParsedMsgMCTo (from, data, to)
 				maintouser (from, txt)
 				opsnotify (table_sets.classnotichatcode, gettext ("%s with IP %s and class %d tried to speak without chat code in PM to %s with IP %s and class %d."):format (from, ip .. tryipcc (ip, from), fcls, to, toip, tcls))
 				return 0
+
 			elseif table_code [from]["lock"] then
 				local rcode = table_code [from]["code"]
 
@@ -6857,6 +6930,7 @@ function VH_OnParsedMsgMCTo (from, data, to)
 		if gagcitycheck (from, ip, fcls, to, data) then
 			return 0
 		end
+
 	--elseif table_sets.chatantiflood == 1 then -- update last chat nick, mcto not supported
 		--table_othsets.chflonenick = from
 	end
@@ -15939,13 +16013,7 @@ function listsefientry (nick)
 		return fit.occ > sit.occ
 	end)
 
-	local ole = # _tostring (sli [1].occ) -- must be counted before next sort
-
-	table.sort (sli, function (fit, sit)
-		return fit.pri > sit.pri
-	end)
-
-	local list, tot = "", # _tostring (# sli)
+	local list, tot, ole = "", # _tostring (# sli), # _tostring (sli [1].occ)
 
 	for id, item in pairs (sli) do
 		list = list .. " " .. prezero (tot, id) .. ". [ P: " .. _tostring (item.pri) .. " ] [ A: " .. _tostring (item.act) .. " ] [ T: " .. _tostring (item.typ) .. " ] [ O: " .. prezero (ole, item.occ) .. " ] " .. repnmdcoutchars (item.ent) .. "\r\n"
@@ -17540,7 +17608,7 @@ end
 
 	elseif tvar == "chathistlimit" then
 		if num then
-			if setto >= 0 and setto <= 10000 then
+			if setto >= 0 and setto <= 1000000 then
 				if setto ~= table_sets [tvar] then -- clean up
 					cleanroomhistory (nil, nick, setto, true, ucls)
 				end
@@ -20596,7 +20664,7 @@ end
 
 	elseif tvar == "histlimit" then
 		if num then
-			if setto >= 0 and setto <= 10000 then
+			if setto >= 0 and setto <= 1000000 then
 				if setto ~= table_sets [tvar] then -- clean up
 					cleanhistory (nick, "", setto, true, ucls)
 				end
