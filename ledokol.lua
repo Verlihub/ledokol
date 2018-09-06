@@ -6485,10 +6485,10 @@ function VH_OnScriptCommand (name, data, plug, file)
 		return 1
 	end
 
-	if name == "are_you_there" and data == "ledokol" and plug == "python" and file:sub (-12) == "blacklist.py" then -- blacklist script checks our status
+	if name == "are_you_there" and data == "ledokol" then -- blacklist script checks our status, plug == "python" and file:sub (-12) == "blacklist.py"
 		VH:ScriptCommand ("yes_im_here", "ledokol")
 
-	elseif name == "remove_history_line" and # data > 0 and plug == "python" and file:sub (-12) == "blacklist.py" then -- blacklist script wants to remove last main chat history line from user, dont ask why
+	elseif name == "remove_history_line" and # data > 0 then -- blacklist script wants to remove last main chat history line from user, dont ask why, plug == "python" and file:sub (-12) == "blacklist.py"
 		if table_sets.histlimit > 0 then
 			local nick, line = data:match ("^<([^ ]+)> (.*)$")
 
@@ -6501,14 +6501,15 @@ function VH_OnScriptCommand (name, data, plug, file)
 		local nick, line = data:match ("^<([^ ]+)> (.*)$")
 
 		if nick and line then
-			nick = repnmdcoutchars (nick)
-			addmchistoryline (nick, nick, repnmdcoutchars (line))
+			addmchistoryline (nick, nick, line) -- repnmdcoutchars (nick), repnmdcoutchars (line)
 		end
 
 	elseif name == "delayed_chat_to_all" then -- user sends delayed main chat message to all
 		local nick, line = data:match ("^<([^ ]+)> (.*)$")
 
-		if nick and line and getstatus (nick) == 1 and VH_OnParsedMsgChat (nick, line) == 1 then
+		if nick and line and getstatus (nick) == 1 then
+			addmchistoryline (nick, nick, line)
+
 			if minhubver (1, 0, 2, 15) then
 				VH:SendToClass (data .. "|", 0, 10, getconfig ("delayed_chat"))
 			else
@@ -6517,16 +6518,16 @@ function VH_OnScriptCommand (name, data, plug, file)
 		end
 
 	elseif name == "delayed_pm_to_user" then -- user sends delayed private message to user
-		local to, nick, line = data:match ("^%$To: ([^ ]+) From: ([^ ]+) %$<[^ ]+> (.*)$")
+		local to, nick = data:match ("^%$To: ([^ ]+) From: ([^ ]+) %$<[^ ]+> .*$")
 
-		if to and nick and line and getstatus (to) == 1 and getstatus (nick) == 1 and VH_OnParsedMsgPM (nick, line, to) == 1 then
+		if to and nick and getstatus (to) == 1 and getstatus (nick) == 1 then
 			VH:SendToUser (data .. "|", to)
 		end
 
 	elseif name == "delayed_mcto_to_user" then -- user sends delayed private main chat message to user
 		local to, nick, line = data:match ("^%$MCTo: ([^ ]+) From: ([^ ]+) %$<[^ ]+> (.*)$")
 
-		if to and nick and line and getstatus (to) == 1 and getstatus (nick) == 1 and VH_OnParsedMsgMCTo (nick, line, to) == 1 then
+		if to and nick and line and getstatus (to) == 1 and getstatus (nick) == 1 then
 			local mcto = false
 
 			if table_refu.InUserSupports then -- check if client supports mcto
@@ -6540,11 +6541,7 @@ function VH_OnScriptCommand (name, data, plug, file)
 			if mcto then
 				VH:SendToUser (data .. "|", to)
 			else
-				if minhubver (1, 0, 2, 15) then
-					VH:SendToUser ("<" .. nick .. "> " .. data .. "|", to, getconfig ("delayed_chat"))
-				else
-					VH:SendToUser ("<" .. nick .. "> " .. data .. "|", to)
-				end
+				VH:SendToUser ("<" .. nick .. "> " .. line .. "|", to)
 			end
 		end
 
@@ -6558,7 +6555,7 @@ function VH_OnScriptCommand (name, data, plug, file)
 		end
 
 		if nick and line then
-			addophistoryline (repnmdcoutchars (nick), repnmdcoutchars (line), clas or getconfig ("opchat_class") or 3)
+			addophistoryline (nick, line, clas or getconfig ("opchat_class") or 3) -- repnmdcoutchars (nick), repnmdcoutchars (line)
 		end
 	end
 
