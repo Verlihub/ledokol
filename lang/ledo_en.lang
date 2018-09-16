@@ -1213,3 +1213,6 @@ Release modified within category %s by %s: %s|
 Release added within category %s by %s: %s|
 Release deleted by %s: %s|
 Release category deleted by %s: %s|
+Someone from your IP address have already voted for kicking that user.|
+Timeout was reached on %d of %d votes for kicking user with class %d: %s|
+User with class %d left the hub on %d of %d votes for kicking him: %s|

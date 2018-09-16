@@ -11,6 +11,7 @@
 [ 78] Added: Also remove user from Ledokol tables when cleaning up registered users table, request by KCAHDEP
 [ 79] Added: More features to release bot
 [ 80] Added: Support for new script commands required for cooperation with Blacklist script
+[ 81] Added: Vote kicks are checked against voters IP address, request by KCAHDEP
 
 [ 2.9.5 :: 2018-02-19 ]
 

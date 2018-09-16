@@ -63,7 +63,7 @@ Tzaca, JOE™, Foxtrot, Deivis
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.6" -- ledokol version
-bld_ledo = "80" -- build number
+bld_ledo = "81" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -209,6 +209,7 @@ table_sets = {
 	enablevipkick = 0,
 	votekickclass = 11,
 	votekickcount = 5,
+	votekickclean = 60,
 	reluseclass = 0,
 	relmodclass = 3,
 	relautolines = 0,
@@ -1458,6 +1459,7 @@ function Main (file)
 
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('avdetblockmsg', '" .. repsqlchars (table_sets.avdetblockmsg) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('relautolines', '" .. repsqlchars (table_sets.relautolines) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('votekickclean', '" .. repsqlchars (table_sets.votekickclean) .. "')")
 
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.ledocmd .. "` (`original`, `new`) values ('histfind', '" .. repsqlchars (table_cmnds.histfind) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.ledocmd .. "` (`original`, `new`) values ('histline', '" .. repsqlchars (table_cmnds.histline) .. "')")
@@ -5396,6 +5398,11 @@ function VH_OnUserLogout (nick, uip)
 		delcustnick (nick, cls, true)
 	end
 
+	if table_sets.votekickclass < 11 and table_voki [nick] then -- vote kicks
+		maintoall (gettext ("User with class %d left the hub on %d of %d votes for kicking him: %s"):format (getclass (nick), table_voki [nick].vote, table_sets.votekickcount, nick), 0, 10) -- notify all users
+		table_voki [nick] = nil
+	end
+
 	if table_sets.ipconantiflint > 0 and cls < table_sets.scanbelowclass then -- ip connect antiflood
 		local ip = getip (nick)
 
@@ -5416,10 +5423,6 @@ function VH_OnUserLogout (nick, uip)
 
 	if cls >= table_sets.opkeyclass or table_sets.opkeyshare > 0 then -- operator keys
 		table_opks [nick] = nil
-	end
-
-	if table_sets.votekickclass < 11 then -- vote kicks
-		table_voki [nick] = nil
 	end
 
 	if table_sets.enablesearfilt == 1 and table_sets.sefiblockdel == 1 then -- search filter
@@ -5836,6 +5839,23 @@ function VH_OnTimer (msec)
 	if table_sets.avdbloadint > 0 and table_othsets.ver_curl and os.difftime (st, table_othsets.avlastloadtick) >= (table_sets.avdbloadint * 60) then -- antivirus load
 		loadavdb (st)
 		table_othsets.avlastloadtick = st
+	end
+
+	if table_sets.votekickclass < 11 then -- vote kicks
+		local dels = {}
+
+		for nick, data in pairs (table_voki) do
+			if os.difftime (st, data.time) >= table_sets.votekickclean then
+				maintoall (gettext ("Timeout was reached on %d of %d votes for kicking user with class %d: %s"):format (table_voki [nick].vote, table_sets.votekickcount, getclass (nick), nick), 0, 10) -- notify all users
+				table.insert (dels, nick)
+			end
+		end
+
+		if # dels > 0 then
+			for _, nick in pairs (dels) do
+				table_voki [nick] = nil
+			end
+		end
 	end
 
 	if table_sets.remrunning == 1 then -- reminder
@@ -16281,32 +16301,46 @@ end
 ----- ---- --- -- -
 
 function votekickuser (nick, usni)
-	if getstatus (usni) == 1 then
-		local user = getcsnick (usni) or usni
+	local user = getcsnick (usni) or usni
+
+	if getstatus (user) == 1 then
 		local class = getclass (user)
 
 		if class < 3 then
 			if not isprotected (user, getip (user)) then
+				local addr = getip (nick)
+
 				if table_voki [user] then -- add vote
-					for _, val in pairs (table_voki [user]["u"]) do
+					for _, val in pairs (table_voki [user].nili) do
 						if val == nick then
 							commandanswer (nick, gettext ("You have already voted for kicking that user."))
 							return
 						end
 					end
 
-					table_voki [user]["c"] = table_voki [user]["c"] + 1
-					table.insert (table_voki [user]["u"], nick)
+					for _, val in pairs (table_voki [user].adli) do
+						if val == addr then
+							commandanswer (nick, gettext ("Someone from your IP address have already voted for kicking that user."))
+							return
+						end
+					end
+
+					table_voki [user].vote = table_voki [user].vote + 1
+					table_voki [user].time = os.time ()
+					table.insert (table_voki [user].nili, nick)
+					table.insert (table_voki [user].adli, addr)
 				else -- new vote
 					table_voki [user] = {
-						["c"] = 1,
-						["u"] = {nick}
+						vote = 1,
+						time = os.time (),
+						nili = {nick},
+						adli = {addr}
 					}
 				end
 
-				maintoall (gettext ("%s added vote %d of %d for kicking user with class %d: %s"):format (nick, table_voki [user]["c"], table_sets.votekickcount, class, user), 0, 10) -- notify all users
+				maintoall (gettext ("%s added vote %d of %d for kicking user with class %d: %s"):format (nick, table_voki [user].vote, table_sets.votekickcount, class, user), 0, 10) -- notify all users
 
-				if table_voki [user]["c"] >= table_sets.votekickcount then -- kick user
+				if table_voki [user].vote >= table_sets.votekickcount then -- kick user
 					table_voki [user] = nil
 					VH:KickUser (table_othsets.sendfrom, user, gettext ("User voted kick"))
 				end
@@ -16317,24 +16351,24 @@ function votekickuser (nick, usni)
 			commandanswer (nick, gettext ("You don't want to vote for kicking an operator."))
 		end
 	else -- not in list
-		commandanswer (nick, gettext ("User not in list: %s"):format (usni))
+		commandanswer (nick, gettext ("User not in list: %s"):format (user))
 	end
 end
 
 ----- ---- --- -- -
 
 function votekickdel (nick, usni)
-	if getstatus (usni) == 1 then
-		local user = getcsnick (usni) or usni
+	local user = getcsnick (usni) or usni
 
+	if getstatus (user) == 1 then
 		if table_voki [user] then
-			maintoall (gettext ("%s cleared %d of %d votes for kicking user with class %d: %s"):format (nick, table_voki [user]["c"], table_sets.votekickcount, getclass (user), user), 0, 10) -- notify all users
+			maintoall (gettext ("%s cleared %d of %d votes for kicking user with class %d: %s"):format (nick, table_voki [user].vote, table_sets.votekickcount, getclass (user), user), 0, 10) -- notify all users
 			table_voki [user] = nil
 		else -- not in list
 			commandanswer (nick, gettext ("User not in list: %s"):format (user))
 		end
 	else -- not in list
-		commandanswer (nick, gettext ("User not in list: %s"):format (usni))
+		commandanswer (nick, gettext ("User not in list: %s"):format (user))
 	end
 end
 
@@ -16344,7 +16378,7 @@ function votekicklist (nick)
 	local list = ""
 
 	for user, data in pairs (table_voki) do
-		list = list .. " " .. gettext ("Nick: %s"):format (user) .. " &#124; " .. gettext ("Class: %d"):format (getclass (user)) .. " &#124; " .. gettext ("Votes: %d of %d"):format (data ["c"], table_sets.votekickcount) .. " &#124; " .. gettext ("Voters: %s"):format (table.concat (data ["u"], " ")) .. "\r\n"
+		list = list .. " " .. gettext ("Nick: %s"):format (user) .. " &#124; " .. gettext ("Class: %d"):format (getclass (user)) .. " &#124; " .. gettext ("Votes: %d of %d"):format (data.vote, table_sets.votekickcount) .. " &#124; " .. gettext ("Voters: %s"):format (table.concat (data.nili, " ")) .. "\r\n"
 	end
 
 	if # list > 0 then
@@ -20315,6 +20349,19 @@ end
 
 	----- ---- --- -- -
 
+	elseif tvar == "votekickclean" then
+		if num then
+			if setto >= 0 and setto <= 1440 then
+				ok = true
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0 " .. gettext ("to") .. " 1440"))
+			end
+		else
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
+		end
+
+	----- ---- --- -- -
+
 	elseif tvar == "mitbantime" then
 		ok = true
 
@@ -21677,6 +21724,7 @@ function showledoconf (nick)
 	conf = conf .. "\r\n [::] enablevipkick = " .. _tostring (table_sets.enablevipkick)
 	conf = conf .. "\r\n [::] votekickclass = " .. _tostring (table_sets.votekickclass)
 	conf = conf .. "\r\n [::] votekickcount = " .. _tostring (table_sets.votekickcount)
+	conf = conf .. "\r\n [::] votekickclean = " .. _tostring (table_sets.votekickclean)
 	conf = conf .. "\r\n"
 
 	conf = conf .. "\r\n [::] reluseclass = " .. _tostring (table_sets.reluseclass)
