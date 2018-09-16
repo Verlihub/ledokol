@@ -3645,3 +3645,6 @@ msgstr ""
 
 msgid "User with class %d left the hub on %d of %d votes for kicking him: %s"
 msgstr ""
+
+msgid "IP list: %s"
+msgstr ""

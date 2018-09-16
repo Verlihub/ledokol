@@ -5845,7 +5845,7 @@ function VH_OnTimer (msec)
 		local dels = {}
 
 		for nick, data in pairs (table_voki) do
-			if os.difftime (st, data.time) >= table_sets.votekickclean then
+			if os.difftime (st, data.time) >= table_sets.votekickclean * 60 then
 				maintoall (gettext ("Timeout was reached on %d of %d votes for kicking user with class %d: %s"):format (table_voki [nick].vote, table_sets.votekickcount, getclass (nick), nick), 0, 10) -- notify all users
 				table.insert (dels, nick)
 			end
@@ -16378,7 +16378,7 @@ function votekicklist (nick)
 	local list = ""
 
 	for user, data in pairs (table_voki) do
-		list = list .. " " .. gettext ("Nick: %s"):format (user) .. " &#124; " .. gettext ("Class: %d"):format (getclass (user)) .. " &#124; " .. gettext ("Votes: %d of %d"):format (data.vote, table_sets.votekickcount) .. " &#124; " .. gettext ("Voters: %s"):format (table.concat (data.nili, " ")) .. "\r\n"
+		list = list .. " " .. gettext ("Nick: %s"):format (user) .. " &#124; " .. gettext ("Class: %d"):format (getclass (user)) .. " &#124; " .. gettext ("Votes: %d of %d"):format (data.vote, table_sets.votekickcount) .. " &#124; " .. gettext ("Voters: %s"):format (table.concat (data.nili, " ")) .. " &#124; " .. gettext ("IP list: %s"):format (table.concat (data.adli, " ")) .. "\r\n"
 	end
 
 	if # list > 0 then
