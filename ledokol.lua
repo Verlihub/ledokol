@@ -5398,10 +5398,10 @@ function VH_OnUserLogout (nick, uip)
 		delcustnick (nick, cls, true)
 	end
 
-	if table_sets.votekickclass < 11 and table_voki [nick] then -- vote kicks
-		maintoall (gettext ("User with class %d left the hub on %d of %d votes for kicking him: %s"):format (getclass (nick), table_voki [nick].vote, table_sets.votekickcount, nick), 0, 10) -- notify all users
-		table_voki [nick] = nil
-	end
+	--if table_sets.votekickclass < 11 and table_voki [nick] then -- vote kicks
+		--maintoall (gettext ("User with class %d left the hub on %d of %d votes for kicking him: %s"):format (getclass (nick), table_voki [nick].vote, table_sets.votekickcount, nick), 0, 10) -- notify all users
+		--table_voki [nick] = nil
+	--end
 
 	if table_sets.ipconantiflint > 0 and cls < table_sets.scanbelowclass then -- ip connect antiflood
 		local ip = getip (nick)
