@@ -1215,5 +1215,5 @@ Release deleted by %s: %s|
 Release category deleted by %s: %s|
 Someone from your IP address have already voted for kicking that user.|
 Timeout was reached on %d of %d votes for kicking user with class %d: %s|
-User with class %d left the hub on %d of %d votes for kicking him: %s|
 IP list: %s|
+First vote can't be negative.|

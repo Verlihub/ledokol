@@ -3339,9 +3339,9 @@ elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.mode .. " %S+$") t
 
 	return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
 
-	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.votekick .. " %S+$") then
+	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.votekick .. " %S+$") or data:match ("^" .. table_othsets.optrig .. table_cmnds.votekick .. " %S+ [%+%-]$") then
 		if ucl >= table_sets.votekickclass then
 			-- donotifycmd (nick, data, 0, ucl)
 			votekickuser (nick, data:sub (# table_cmnds.votekick + 3))
@@ -4527,7 +4527,7 @@ function VH_OnUserCommand (nick, data)
 
 	----- ---- --- -- -
 
-	elseif data:match ("^" .. table_othsets.ustrig .. table_cmnds.votekick .. " %S+$") then
+	elseif data:match ("^" .. table_othsets.ustrig .. table_cmnds.votekick .. " %S+$") or data:match ("^" .. table_othsets.ustrig .. table_cmnds.votekick .. " %S+ [%+%-]$") then
 		if ucl >= table_sets.votekickclass then
 			-- donotifycmd (nick, data, 0, ucl)
 			votekickuser (nick, data:sub (# table_cmnds.votekick + 3))
@@ -5397,11 +5397,6 @@ function VH_OnUserLogout (nick, uip)
 	if table_sets.savecustnicks == 0 then -- only if not saving
 		delcustnick (nick, cls, true)
 	end
-
-	--if table_sets.votekickclass < 11 and table_voki [nick] then -- vote kicks
-		--maintoall (gettext ("User with class %d left the hub on %d of %d votes for kicking him: %s"):format (getclass (nick), table_voki [nick].vote, table_sets.votekickcount, nick), 0, 10) -- notify all users
-		--table_voki [nick] = nil
-	--end
 
 	if table_sets.ipconantiflint > 0 and cls < table_sets.scanbelowclass then -- ip connect antiflood
 		local ip = getip (nick)
@@ -16300,7 +16295,13 @@ end
 
 ----- ---- --- -- -
 
-function votekickuser (nick, usni)
+function votekickuser (nick, line)
+	local usni, plus = line, "+"
+
+	if line:match ("^%S+ [%+%-]$") then
+		usni, plus = line:match ("^(%S+) ([%+%-])$")
+	end
+
 	local user = getcsnick (usni) or usni
 
 	if getstatus (user) == 1 then
@@ -16311,36 +16312,48 @@ function votekickuser (nick, usni)
 				local addr = getip (nick)
 
 				if table_voki [user] then -- add vote
-					for _, val in pairs (table_voki [user].nili) do
-						if val == nick then
-							commandanswer (nick, gettext ("You have already voted for kicking that user."))
-							return
-						end
+					local old = table_voki [user].nili [nick]
+
+					if old and plus == old then
+						commandanswer (nick, gettext ("You have already voted for kicking that user."))
+						return
 					end
 
-					for _, val in pairs (table_voki [user].adli) do
-						if val == addr then
-							commandanswer (nick, gettext ("Someone from your IP address have already voted for kicking that user."))
-							return
-						end
+					old = table_voki [user].adli [addr]
+
+					if old and plus == old then
+						commandanswer (nick, gettext ("Someone from your IP address have already voted for kicking that user."))
+						return
 					end
 
-					table_voki [user].vote = table_voki [user].vote + 1
+					if plus == "+" then
+						table_voki [user].vote = table_voki [user].vote + 1
+					else
+						table_voki [user].vote = table_voki [user].vote - 1
+					end
+
 					table_voki [user].time = os.time ()
-					table.insert (table_voki [user].nili, nick)
-					table.insert (table_voki [user].adli, addr)
+					table_voki [user].nili [nick] = plus
+					table_voki [user].adli [addr] = plus
+
+				elseif plus == "-" then -- negative vote
+					commandanswer (nick, gettext ("First vote can't be negative."))
+					return
+
 				else -- new vote
 					table_voki [user] = {
 						vote = 1,
 						time = os.time (),
-						nili = {nick},
-						adli = {addr}
+						nili = {[nick] = plus},
+						adli = {[addr] = plus}
 					}
 				end
 
 				maintoall (gettext ("%s added vote %d of %d for kicking user with class %d: %s"):format (nick, table_voki [user].vote, table_sets.votekickcount, class, user), 0, 10) -- notify all users
 
-				if table_voki [user].vote >= table_sets.votekickcount then -- kick user
+				if table_voki [user].vote == 0 then -- reset vote
+					table_voki [user] = nil
+				elseif table_voki [user].vote >= table_sets.votekickcount then -- kick user
 					table_voki [user] = nil
 					VH:KickUser (table_othsets.sendfrom, user, gettext ("User voted kick"))
 				end
@@ -16378,7 +16391,25 @@ function votekicklist (nick)
 	local list = ""
 
 	for user, data in pairs (table_voki) do
-		list = list .. " " .. gettext ("Nick: %s"):format (user) .. " &#124; " .. gettext ("Class: %d"):format (getclass (user)) .. " &#124; " .. gettext ("Votes: %d of %d"):format (data.vote, table_sets.votekickcount) .. " &#124; " .. gettext ("Voters: %s"):format (table.concat (data.nili, " ")) .. " &#124; " .. gettext ("IP list: %s"):format (table.concat (data.adli, " ")) .. "\r\n"
+		local nili, adli = "", ""
+
+		for vous, plus in pairs (data.nili) do
+			if # nili > 0 then
+				nili = nili .. " "
+			end
+
+			nili = nili .. vous
+		end
+
+		for vous, plus in pairs (data.adli) do
+			if # adli > 0 then
+				adli = adli .. " "
+			end
+
+			adli = adli .. vous
+		end
+
+		list = list .. " " .. gettext ("Nick: %s"):format (user) .. " &#124; " .. gettext ("Class: %d"):format (getclass (user)) .. " &#124; " .. gettext ("Votes: %d of %d"):format (data.vote, table_sets.votekickcount) .. " &#124; " .. gettext ("Voters: %s"):format (nili) .. " &#124; " .. gettext ("IP list: %s"):format (adli) .. "\r\n"
 	end
 
 	if # list > 0 then
@@ -21399,7 +21430,7 @@ function senduserhelp (nick, pm)
 
 	-- other
 
-	help = help .. " " .. trig .. table_cmnds.votekick .. " <" .. gettext ("nick") .. "> - " .. gettext ("Vote for user to be kicked") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.votekick .. " <" .. gettext ("nick") .. "> [+/-] - " .. gettext ("Vote for user to be kicked") .. "\r\n"
 	help = help .. " " .. trig .. table_cmnds.mode .. " <" .. gettext ("mode") .. "> - " .. gettext ("Set your chat mode") .. "\r\n"
 	help = help .. " " .. trig .. table_cmnds.offmsg .. " <" .. gettext ("nick") .. "> <" .. gettext ("message") .. "> - " .. gettext ("Offline message to user") .. "\r\n"
 	help = help .. " " .. trig .. table_cmnds.calculate .. " <" .. gettext ("equation") .. "> - " .. gettext ("Calculate an equation") .. "\r\n"
