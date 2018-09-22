@@ -210,6 +210,10 @@ table_sets = {
 	votekickclass = 11,
 	votekickcount = 5,
 	votekickclean = 60,
+	voteplustext = "<nick> added vote <count> of <total> for kicking user with class <class>: <user>",
+	voteminustext = "<nick> removed vote <count> of <total> for kicking user with class <class>: <user>",
+	votecleartext = "<nick> cleared <count> of <total> votes for kicking user with class <class>: <user>",
+	votetimetext = "Timeout was reached on <count> of <total> votes for kicking user with class <class>: <user>",
 	reluseclass = 0,
 	relmodclass = 3,
 	relautolines = 0,
@@ -1460,6 +1464,10 @@ function Main (file)
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('avdetblockmsg', '" .. repsqlchars (table_sets.avdetblockmsg) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('relautolines', '" .. repsqlchars (table_sets.relautolines) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('votekickclean', '" .. repsqlchars (table_sets.votekickclean) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('voteplustext', '" .. repsqlchars (table_sets.voteplustext) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('voteminustext', '" .. repsqlchars (table_sets.voteminustext) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('votecleartext', '" .. repsqlchars (table_sets.votecleartext) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('votetimetext', '" .. repsqlchars (table_sets.votetimetext) .. "')")
 
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.ledocmd .. "` (`original`, `new`) values ('histfind', '" .. repsqlchars (table_cmnds.histfind) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.ledocmd .. "` (`original`, `new`) values ('histline', '" .. repsqlchars (table_cmnds.histline) .. "')")
@@ -5841,7 +5849,12 @@ function VH_OnTimer (msec)
 
 		for nick, data in pairs (table_voki) do
 			if os.difftime (st, data.time) >= table_sets.votekickclean * 60 then
-				maintoall (gettext ("Timeout was reached on %d of %d votes for kicking user with class %d: %s"):format (table_voki [nick].vote, table_sets.votekickcount, getclass (nick), nick), 0, 10) -- notify all users
+				local noti = table_sets.votetimetext
+				noti = noti:gsub ("<count>", _tostring (table_voki [nick].vote))
+				noti = noti:gsub ("<total>", _tostring (table_sets.votekickcount))
+				noti = noti:gsub ("<class>", _tostring (getclass (nick)))
+				noti = noti:gsub ("<user>", reprexpchars (nick))
+				maintoall (noti, 0, 10) -- notify all users
 				table.insert (dels, nick)
 			end
 		end
@@ -16309,7 +16322,7 @@ function votekickuser (nick, line)
 
 		if class < 3 then
 			if not isprotected (user, getip (user)) then
-				local addr = getip (nick)
+				local addr, noti = getip (nick), table_sets.voteplustext
 
 				if table_voki [user] then -- add vote
 					local old = table_voki [user].nili [nick]
@@ -16329,6 +16342,7 @@ function votekickuser (nick, line)
 					if plus == "+" then
 						table_voki [user].vote = table_voki [user].vote + 1
 					else
+						noti = table_sets.voteminustext
 						table_voki [user].vote = table_voki [user].vote - 1
 					end
 
@@ -16349,7 +16363,12 @@ function votekickuser (nick, line)
 					}
 				end
 
-				maintoall (gettext ("%s added vote %d of %d for kicking user with class %d: %s"):format (nick, table_voki [user].vote, table_sets.votekickcount, class, user), 0, 10) -- notify all users
+				noti = noti:gsub ("<nick>", reprexpchars (nick))
+				noti = noti:gsub ("<count>", _tostring (table_voki [user].vote))
+				noti = noti:gsub ("<total>", _tostring (table_sets.votekickcount))
+				noti = noti:gsub ("<class>", _tostring (class))
+				noti = noti:gsub ("<user>", reprexpchars (user))
+				maintoall (noti, 0, 10) -- notify all users
 
 				if table_voki [user].vote == 0 then -- reset vote
 					table_voki [user] = nil
@@ -16375,7 +16394,13 @@ function votekickdel (nick, usni)
 
 	if getstatus (user) == 1 then
 		if table_voki [user] then
-			maintoall (gettext ("%s cleared %d of %d votes for kicking user with class %d: %s"):format (nick, table_voki [user].vote, table_sets.votekickcount, getclass (user), user), 0, 10) -- notify all users
+			local noti = table_sets.votecleartext
+			noti = noti:gsub ("<nick>", reprexpchars (nick))
+			noti = noti:gsub ("<count>", _tostring (table_voki [user].vote))
+			noti = noti:gsub ("<total>", _tostring (table_sets.votekickcount))
+			noti = noti:gsub ("<class>", _tostring (getclass (user)))
+			noti = noti:gsub ("<user>", reprexpchars (user))
+			maintoall (noti, 0, 10) -- notify all users
 			table_voki [user] = nil
 		else -- not in list
 			commandanswer (nick, gettext ("User not in list: %s"):format (user))
@@ -20393,6 +20418,42 @@ end
 
 	----- ---- --- -- -
 
+	elseif tvar == "voteplustext" then
+		if # setto > 0 then
+			ok = true
+		else
+			commandanswer (nick, gettext ("Configuration variable %s can't be empty."):format (tvar))
+		end
+
+	----- ---- --- -- -
+
+	elseif tvar == "voteminustext" then
+		if # setto > 0 then
+			ok = true
+		else
+			commandanswer (nick, gettext ("Configuration variable %s can't be empty."):format (tvar))
+		end
+
+	----- ---- --- -- -
+
+	elseif tvar == "votecleartext" then
+		if # setto > 0 then
+			ok = true
+		else
+			commandanswer (nick, gettext ("Configuration variable %s can't be empty."):format (tvar))
+		end
+
+	----- ---- --- -- -
+
+	elseif tvar == "votetimetext" then
+		if # setto > 0 then
+			ok = true
+		else
+			commandanswer (nick, gettext ("Configuration variable %s can't be empty."):format (tvar))
+		end
+
+	----- ---- --- -- -
+
 	elseif tvar == "mitbantime" then
 		ok = true
 
@@ -21756,6 +21817,10 @@ function showledoconf (nick)
 	conf = conf .. "\r\n [::] votekickclass = " .. _tostring (table_sets.votekickclass)
 	conf = conf .. "\r\n [::] votekickcount = " .. _tostring (table_sets.votekickcount)
 	conf = conf .. "\r\n [::] votekickclean = " .. _tostring (table_sets.votekickclean)
+	conf = conf .. "\r\n [::] voteplustext = " .. _tostring (table_sets.voteplustext)
+	conf = conf .. "\r\n [::] voteminustext = " .. _tostring (table_sets.voteminustext)
+	conf = conf .. "\r\n [::] votecleartext = " .. _tostring (table_sets.votecleartext)
+	conf = conf .. "\r\n [::] votetimetext = " .. _tostring (table_sets.votetimetext)
 	conf = conf .. "\r\n"
 
 	conf = conf .. "\r\n [::] reluseclass = " .. _tostring (table_sets.reluseclass)

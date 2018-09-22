@@ -2884,9 +2884,6 @@ msgstr ""
 msgid "You have already voted for kicking that user."
 msgstr ""
 
-msgid "%s added vote %d of %d for kicking user with class %d: %s"
-msgstr ""
-
 msgid "There is an error in following antispam entry pattern"
 msgstr ""
 
@@ -3020,9 +3017,6 @@ msgid "Size of %s: %d @ %s"
 msgstr ""
 
 msgid "Clear kick votes for user"
-msgstr ""
-
-msgid "%s cleared %d of %d votes for kicking user with class %d: %s"
 msgstr ""
 
 msgid "Vote kick list"
@@ -3638,9 +3632,6 @@ msgid "Release category deleted by %s: %s"
 msgstr ""
 
 msgid "Someone from your IP address have already voted for kicking that user."
-msgstr ""
-
-msgid "Timeout was reached on %d of %d votes for kicking user with class %d: %s"
 msgstr ""
 
 msgid "IP list: %s"

@@ -961,7 +961,6 @@ Vote for user to be kicked|
 You don't want to vote for kicking an operator.|
 User voted kick|
 You have already voted for kicking that user.|
-%s added vote %d of %d for kicking user with class %d: %s|
 There is an error in following antispam entry pattern|
 Pattern|
 Error|
@@ -1007,7 +1006,6 @@ Infected user found with IP %s and share %s: %s|
 Server didn't reply with expected status code.|
 Size of %s: %d @ %s|
 Clear kick votes for user|
-%s cleared %d of %d votes for kicking user with class %d: %s|
 Vote kick list|
 Vote kick list is empty.|
 Votes: %d of %d|
@@ -1214,6 +1212,5 @@ Release added within category %s by %s: %s|
 Release deleted by %s: %s|
 Release category deleted by %s: %s|
 Someone from your IP address have already voted for kicking that user.|
-Timeout was reached on %d of %d votes for kicking user with class %d: %s|
 IP list: %s|
 First vote can't be negative.|
