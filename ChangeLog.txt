@@ -12,6 +12,8 @@
 [ 79] Added: More features to release bot
 [ 80] Added: Support for new script commands required for cooperation with Blacklist script
 [ 81] Added: Vote kicks are checked against voters IP address, request by KCAHDEP
+[ 82] Added: Allow custom URL protocol in friendly hublist, request by Alexandr
+[ 82] Added: clonemove command to redirect all online user clones except first one to specified address
 
 [ 2.9.5 :: 2018-02-19 ]
 

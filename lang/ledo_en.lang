@@ -1214,3 +1214,6 @@ Release category deleted by %s: %s|
 Someone from your IP address have already voted for kicking that user.|
 IP list: %s|
 First vote can't be negative.|
+You can't vote for kicking yourself.|
+Redirect all clones|
+Number of redirected clones: %d|

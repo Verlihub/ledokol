@@ -63,7 +63,7 @@ Tzaca, JOE™, Foxtrot, Deivis
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.6" -- ledokol version
-bld_ledo = "81" -- build number
+bld_ledo = "82" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -641,6 +641,7 @@ table_cmnds = {
 	wmset = "wmset",
 	wmshow = "wmshow",
 	cloneinfo = "cloneinfo",
+	clonemove = "clonemove",
 	ipinfo = "ipinfo",
 	ulog = "ulog",
 	seen = "seen",
@@ -1473,6 +1474,7 @@ function Main (file)
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.ledocmd .. "` (`original`, `new`) values ('histline', '" .. repsqlchars (table_cmnds.histline) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.ledocmd .. "` (`original`, `new`) values ('clogfind', '" .. repsqlchars (table_cmnds.clogfind) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.ledocmd .. "` (`original`, `new`) values ('cloneinfo', '" .. repsqlchars (table_cmnds.cloneinfo) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.ledocmd .. "` (`original`, `new`) values ('clonemove', '" .. repsqlchars (table_cmnds.clonemove) .. "')")
 					end
 
 					if ver <= 297 then
@@ -2908,6 +2910,18 @@ return 0
 
 	----- ---- --- -- -
 
+	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.clonemove .. " %S+$") then
+		if ucl >= table_sets.mincommandclass then
+			donotifycmd (nick, data, 0, ucl)
+			moveclones (nick, data:sub (# table_cmnds.clonemove + 3))
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
+
+		return 0
+
+	----- ---- --- -- -
+
 	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.ipinfo .. " %d+%.%d+%.%d+%.%d+$") then
 		if ucl >= table_sets.mincommandclass then
 			donotifycmd (nick, data, 0, ucl)
@@ -3076,43 +3090,43 @@ end
 
 return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
 
-elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.hubadd .. " %S+ \".+\" \".*\"$") then
-if ucl >= table_sets.mincommandclass then
-donotifycmd (nick, data, 0, ucl)
-hublistadd (nick, data:sub (# table_cmnds.hubadd + 3))
-else
-commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
-end
+	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.hubadd .. " %S+ \".+\" \".*\"$") then
+		if ucl >= table_sets.mincommandclass then
+			donotifycmd (nick, data, 0, ucl)
+			hublistadd (nick, data:sub (# table_cmnds.hubadd + 3))
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
 
-return 0
+		return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
 
-elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.hubdel .. " %S+$") then
-if ucl >= table_sets.mincommandclass then
-donotifycmd (nick, data, 0, ucl)
-hublistdel (nick, data:sub (# table_cmnds.hubdel + 3))
-else
-commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
-end
+	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.hubdel .. " %S+$") then
+		if ucl >= table_sets.mincommandclass then
+			donotifycmd (nick, data, 0, ucl)
+			hublistdel (nick, data:sub (# table_cmnds.hubdel + 3))
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
 
-return 0
+		return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
 
-elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.showhubs .. "$") then
-if ucl >= table_sets.minusrcommandclass then
-donotifycmd (nick, data, 0, ucl)
-hublistshow (nick)
-else
-commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
-end
+	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.showhubs .. "$") then
+		if ucl >= table_sets.minusrcommandclass then
+			donotifycmd (nick, data, 0, ucl)
+			hublistshow (nick)
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
 
-return 0
+		return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
 
 elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.regname .. " %S+ %S+$") then
 if ucl >= table_sets.mincommandclass then
@@ -4677,17 +4691,17 @@ end
 
 return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
 
-elseif data:match ("^" .. table_othsets.ustrig .. table_cmnds.showhubs .. "$") then
-if ucl >= table_sets.minusrcommandclass then
-donotifycmd (nick, data, 0, ucl)
-hublistshow (nick)
-else
-commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
-end
+	elseif data:match ("^" .. table_othsets.ustrig .. table_cmnds.showhubs .. "$") then
+		if ucl >= table_sets.minusrcommandclass then
+			donotifycmd (nick, data, 0, ucl)
+			hublistshow (nick)
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
 
-return 0
+		return 0
 
 	----- ---- --- -- -
 
@@ -5849,12 +5863,15 @@ function VH_OnTimer (msec)
 
 		for nick, data in pairs (table_voki) do
 			if os.difftime (st, data.time) >= table_sets.votekickclean * 60 then
-				local noti = table_sets.votetimetext
-				noti = noti:gsub ("<count>", _tostring (table_voki [nick].vote))
-				noti = noti:gsub ("<total>", _tostring (table_sets.votekickcount))
-				noti = noti:gsub ("<class>", _tostring (getclass (nick)))
-				noti = noti:gsub ("<user>", reprexpchars (nick))
-				maintoall (noti, 0, 10) -- notify all users
+				if getstatus (nick) == 1 then -- only if still online
+					local noti = table_sets.votetimetext
+					noti = noti:gsub ("<count>", _tostring (table_voki [nick].vote))
+					noti = noti:gsub ("<total>", _tostring (table_sets.votekickcount))
+					noti = noti:gsub ("<class>", _tostring (getclass (nick)))
+					noti = noti:gsub ("<user>", reprexpchars (nick))
+					maintoall (noti, 0, 10) -- notify all users
+				end
+
 				table.insert (dels, nick)
 			end
 		end
@@ -10302,6 +10319,49 @@ end
 
 ----- ---- --- -- -
 
+function moveclones (nick, url)
+	local cist = {}
+
+	for user in getnicklist ():gmatch ("[^%$ ]+") do
+		local addr = getip (user)
+
+		if addr ~= "0.0.0.0" then -- skip bots
+			local shar = parsemyinfoshare (getmyinfo (user))
+
+			if shar > 0 then -- only users with share
+				local id = addr .. "_" .. _tostring (shar)
+
+				if not cist [id] then
+					cist [id] = {}
+				end
+
+				table.insert (cist [id], user)
+			end
+		end
+	end
+
+	local tot = 0
+
+	for id, data in pairs (cist) do
+		local num = # data
+
+		if num > 1 then
+			for pos = 2, num do
+				VH:SendToUser ("$ForceMove " .. url .. "|", data [pos])
+				tot = tot + 1
+			end
+		end
+	end
+
+	if tot > 0 then
+		commandanswer (nick, gettext ("Number of redirected clones: %d"):format (tot))
+	else
+		commandanswer (nick, gettext ("No clones detected."))
+	end
+end
+
+----- ---- --- -- -
+
 function showcloneinfo (nick)
 	local cist = {}
 
@@ -10309,7 +10369,7 @@ function showcloneinfo (nick)
 		local addr = getip (user)
 
 		if addr ~= "0.0.0.0" then -- skip bots
-			local id = addr .. "_" .. parsemyinfoshare (getmyinfo (user))
+			local id = addr .. "_" .. _tostring (parsemyinfoshare (getmyinfo (user)))
 
 			if not cist [id] then
 				cist [id] = {}
@@ -12235,34 +12295,48 @@ end
 ----- ---- --- -- -
 
 function hublistadd (nick, line)
-local _, _, addr, name, ownr = line:find ("^(%S+) \"(.+)\" \"(.*)\"$")
-if not addr:find (":") then addr = addr .. ":411" end
-local raddr = repsqlchars (addr)
-local _, rows = VH:SQLQuery ("select `owner` from `" .. tbl_sql.hubs .. "` where `address` = '" .. raddr .. "'")
+	local addr, name, own = line:match ("^(%S+) \"(.+)\" \"(.*)\"$")
 
-if rows > 0 then -- update
-VH:SQLQuery ("update `" .. tbl_sql.hubs .. "` set `name` = '" .. repsqlchars (name) .. "', `owner` = '" .. repsqlchars (ownr) .. "' where `address` = '" .. raddr .. "'")
-commandanswer (nick, gettext ("Modified friendly hub: %s"):format (addr))
-else -- add
-VH:SQLQuery ("insert into `" .. tbl_sql.hubs .. "` (`address`, `name`, `owner`) values ('" .. raddr .. "', '" .. repsqlchars (name) .. "', '" .. repsqlchars (ownr) .. "')")
-commandanswer (nick, gettext ("Added friendly hub: %s"):format (addr))
-end
+	if not addr:match ("^%a+://") then
+		addr = "dchub://" .. addr
+	end
+
+	if not addr:match (":%d+$") then
+		addr = addr .. ":411"
+	end
+
+	local raddr = repsqlchars (addr)
+	local _, rows = VH:SQLQuery ("select `owner` from `" .. tbl_sql.hubs .. "` where `address` = '" .. raddr .. "'")
+
+	if rows > 0 then -- update
+		VH:SQLQuery ("update `" .. tbl_sql.hubs .. "` set `name` = '" .. repsqlchars (name) .. "', `owner` = '" .. repsqlchars (own) .. "' where `address` = '" .. raddr .. "'")
+		commandanswer (nick, gettext ("Modified friendly hub: %s"):format (addr))
+	else -- add
+		VH:SQLQuery ("insert into `" .. tbl_sql.hubs .. "` (`address`, `name`, `owner`) values ('" .. raddr .. "', '" .. repsqlchars (name) .. "', '" .. repsqlchars (own) .. "')")
+		commandanswer (nick, gettext ("Added friendly hub: %s"):format (addr))
+	end
 end
 
 ----- ---- --- -- -
 
 function hublistdel (nick, addr)
-local maddr = addr
-if not maddr:find (":") then maddr = maddr .. ":411" end
-local raddr = repsqlchars (maddr)
-local _, rows = VH:SQLQuery ("select `owner` from `" .. tbl_sql.hubs .. "` where `address` = '" .. raddr .. "'")
+	if not addr:match ("^%a+://") then
+		addr = "dchub://" .. addr
+	end
 
-if rows > 0 then -- delete
-VH:SQLQuery ("delete from `" .. tbl_sql.hubs .. "` where `address` = '" .. raddr .. "'")
-commandanswer (nick, gettext ("Deleted friendly hub: %s"):format (maddr))
-else -- not in list
-commandanswer (nick, gettext ("Friendly hub not found: %s"):format (maddr))
-end
+	if not addr:match (":%d+$") then
+		addr = addr .. ":411"
+	end
+
+	local raddr = repsqlchars (addr)
+	local _, rows = VH:SQLQuery ("select `owner` from `" .. tbl_sql.hubs .. "` where `address` = '" .. raddr .. "'")
+
+	if rows > 0 then -- delete
+		VH:SQLQuery ("delete from `" .. tbl_sql.hubs .. "` where `address` = '" .. raddr .. "'")
+		commandanswer (nick, gettext ("Deleted friendly hub: %s"):format (addr))
+	else -- not in list
+		commandanswer (nick, gettext ("Friendly hub not found: %s"):format (addr))
+	end
 end
 
 ----- ---- --- -- -
@@ -12271,18 +12345,21 @@ function hublistshow (nick)
 	local _, rows = VH:SQLQuery ("select `address`, `name`, `owner`, `status` from `" .. tbl_sql.hubs .. "` order by `status` desc, `name` asc")
 
 	if rows > 0 then -- ok
-		local hlist = ""
+		local list = ""
 
-		for x = 0, rows - 1 do
-			local _, addr, name, ownr, sts = VH:SQLFetch (x)
-			local pos = addr:find (":")
+		for pos = 0, rows - 1 do
+			local _, addr, name, own, sts = VH:SQLFetch (pos)
 
-			if addr:sub (pos + 1) == "411" then
-				addr = addr:sub (1, pos - 1)
+			if not addr:match ("^%a+://") then
+				addr = "dchub://" .. addr
 			end
 
-			if ownr ~= "" then
-				ownr = " [ O: " .. ownr .. " ]"
+			if addr:match (":411$") then
+				addr = addr:sub (1, -5)
+			end
+
+			if own ~= "" then
+				own = " [ O: " .. own .. " ]"
 			end
 
 			--if not table_othsets.mod_sock or table_sets.hublistpingint == 0 then
@@ -12295,10 +12372,10 @@ function hublistshow (nick)
 				--end
 			--end
 
-			hlist = hlist .. " " .. prezero (# _tostring (rows), (x + 1)) .. ". " .. name .. " @ dchub://" .. addr .. "/" .. ownr .. sts .. "\r\n" -- todo: allow adding adc, adcs, nmdcs hubs
+			list = list .. " " .. prezero (# _tostring (rows), (pos + 1)) .. ". " .. name .. " @ " .. addr .. own .. sts .. "\r\n"
 		end
 
-		commandanswer (nick, gettext ("Friendly hublist") .. ":\r\n\r\n" .. hlist)
+		commandanswer (nick, gettext ("Friendly hublist") .. ":\r\n\r\n" .. list)
 	else -- empty
 		commandanswer (nick, gettext ("Friendly hublist is empty."))
 	end
@@ -16322,6 +16399,11 @@ function votekickuser (nick, line)
 
 		if class < 3 then
 			if not isprotected (user, getip (user)) then
+				if user == nick then -- cant vote for himself
+					commandanswer (nick, gettext ("You can't vote for kicking yourself."))
+					return
+				end
+
 				local addr, noti = getip (nick), table_sets.voteplustext
 
 				if table_voki [user] then -- add vote
@@ -17280,21 +17362,20 @@ sopmenitm (usr, gettext ("Registered users") .. "\\" .. gettext ("Search in regi
 sopmenitm (usr, gettext ("Registered users") .. "\\" .. gettext ("Registered users list statistics"), table_cmnds.regstats)
 end
 
--- hublist
+	-- hublist
+	if ucl >= table_sets.mincommandclass then
+		sopmenitm (usr, gettext ("Hublist") .. "\\" .. gettext ("Add friendly hub"), table_cmnds.hubadd .. " %[line:<" .. gettext ("address") .. ">] \"%[line:<" .. gettext ("name") .. ">]\" \"%[line:<" .. gettext ("owner") .. ">]\"")
+		smensep (usr)
+		sopmenitm (usr, gettext ("Hublist") .. "\\" .. gettext ("Delete friendly hub"), table_cmnds.hubdel .. " %[line:<" .. gettext ("address") .. ">]")
+	end
 
-if ucl >= table_sets.mincommandclass then
-sopmenitm (usr, gettext ("Hublist") .. "\\" .. gettext ("Add friendly hub"), table_cmnds.hubadd .. " %[line:<" .. gettext ("address") .. ">] \"%[line:<" .. gettext ("name") .. ">]\" \"%[line:<" .. gettext ("owner") .. ">]\"")
-smensep (usr)
-sopmenitm (usr, gettext ("Hublist") .. "\\" .. gettext ("Delete friendly hub"), table_cmnds.hubdel .. " %[line:<" .. gettext ("address") .. ">]")
-end
+	if ucl >= table_sets.minusrcommandclass then
+		if ucl >= table_sets.mincommandclass then
+			smensep (usr)
+		end
 
-if ucl >= table_sets.minusrcommandclass then
-if ucl >= table_sets.mincommandclass then
-smensep (usr)
-end
-
-susmenitm (usr, gettext ("Hublist") .. "\\" .. gettext ("Show friendly hubs"), table_cmnds.showhubs)
-end
+		susmenitm (usr, gettext ("Hublist") .. "\\" .. gettext ("Show friendly hubs"), table_cmnds.showhubs)
+	end
 
 	-- chat
 	if ucl >= table_sets.chatmodeclass then
@@ -17354,6 +17435,7 @@ end
 		sopmenitm (usr, gettext ("User logger") .. "\\" .. gettext ("%s user lookup"):format (table_othsets.hublisturl), table_cmnds.seen .. " %[line:<" .. gettext ("type") .. ">] %[line:<" .. gettext ("text") .. ">]")
 		sopmenitm (usr, gettext ("User logger") .. "\\" .. gettext ("%s lookup"):format ("WHOIS"), table_cmnds.whois .. " %[line:<" .. gettext ("address") .. ">]")
 		sopmenitm (usr, gettext ("User logger") .. "\\" .. gettext ("Clone information"), table_cmnds.cloneinfo)
+		sopmenitm (usr, gettext ("User logger") .. "\\" .. gettext ("Redirect all clones"), table_cmnds.clonemove .. " %[line:<" .. gettext ("address") .. ">]")
 	end
 
 	-- todo: no pm
@@ -21400,7 +21482,8 @@ function sendophelp (nick, clas, pm)
 	help = help .. " " .. trig .. table_cmnds.ulog .. " [" .. gettext ("type") .. "=nick] <" .. gettext ("string") .. "> [" .. gettext ("lines") .. "=100] - " .. gettext ("Search in user log") .. "\r\n" -- static parameters
 	help = help .. " " .. trig .. table_cmnds.seen .. " <" .. gettext ("type") .. "> <" .. gettext ("text") .. "> - " .. gettext ("%s user lookup"):format (table_othsets.hublisturl) .. "\r\n"
 	help = help .. " " .. trig .. table_cmnds.whois .. " <" .. gettext ("address") .. "> - " .. gettext ("%s lookup"):format ("WHOIS") .. "\r\n"
-	help = help .. " " .. trig .. table_cmnds.cloneinfo .. " - " .. gettext ("Clone information") .. "\r\n\r\n"
+	help = help .. " " .. trig .. table_cmnds.cloneinfo .. " - " .. gettext ("Clone information") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.clonemove .. " <" .. gettext ("address") .. "> - " .. gettext ("Redirect all clones") .. "\r\n\r\n"
 
 	-- vote kick
 	help = help .. " " .. trig .. table_cmnds.votekickdel .. " <" .. gettext ("nick") .. "> - " .. gettext ("Clear kick votes for user") .. "\r\n"
@@ -21490,7 +21573,6 @@ function senduserhelp (nick, pm)
 	help = help .. " " .. trig .. table_cmnds.myhistory .. " [" .. gettext ("lines") .. "=" .. _tostring (table_sets.histdeflines) .. "] - " .. gettext ("Your main chat history") .. "\r\n\r\n"
 
 	-- other
-
 	help = help .. " " .. trig .. table_cmnds.votekick .. " <" .. gettext ("nick") .. "> [+/-] - " .. gettext ("Vote for user to be kicked") .. "\r\n"
 	help = help .. " " .. trig .. table_cmnds.mode .. " <" .. gettext ("mode") .. "> - " .. gettext ("Set your chat mode") .. "\r\n"
 	help = help .. " " .. trig .. table_cmnds.offmsg .. " <" .. gettext ("nick") .. "> <" .. gettext ("message") .. "> - " .. gettext ("Offline message to user") .. "\r\n"

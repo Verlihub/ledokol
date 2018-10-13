@@ -3639,3 +3639,12 @@ msgstr ""
 
 msgid "First vote can't be negative."
 msgstr ""
+
+msgid "You can't vote for kicking yourself."
+msgstr ""
+
+msgid "Redirect all clones"
+msgstr ""
+
+msgid "Number of redirected clones: %d"
+msgstr ""
