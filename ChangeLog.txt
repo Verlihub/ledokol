@@ -1,6 +1,7 @@
 [ 2.9.6 :: 2018-##-## ]
 
 [ 75] Fixed: User log list contains wrong country code for given IP address
+[ 84] Changed: Ledokol user agent for HTTP requests to Mozilla compatible
 [ 71] Added: AVDB detection connection block message delay to avoid flood, report by KCAHDEP
 [ 72] Added: Main chat history search functionality
 [ 73] Added: Client NMDC version, supports and user logout time fields to user logger, request by dimetro
@@ -14,6 +15,8 @@
 [ 81] Added: Vote kicks are checked against voters IP address, request by KCAHDEP
 [ 82] Added: Allow custom URL protocol in friendly hublist, request by Alexandr
 [ 82] Added: clonemove command to redirect all online user clones except first one to specified address
+[ 83] Added: Search result filter as an addition to search request filter
+[ 83] Added: Public proxy lookup for chat messages, similar to Blacklist functionality
 
 [ 2.9.5 :: 2018-02-19 ]
 

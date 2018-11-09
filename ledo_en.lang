@@ -1124,7 +1124,7 @@ Disable or enable right click menu item|
 Disabled right click menu item: %s|
 Enabled right click menu item: %s|
 %s added to search block list.|
-Your search request is discarded due to previous forbidden search request.|
+Your search request is discarded due to previous forbidden search request or result: %s|
 Hub URL: %s|
 Search filter block list|
 Delete search filter block list entry|
@@ -1217,3 +1217,48 @@ First vote can't be negative.|
 You can't vote for kicking yourself.|
 Redirect all clones|
 Number of redirected clones: %d|
+Your search result is discarded due to previous forbidden search result or request: %s|
+Search result exception from %s with IP %s and class %d as any file: %s|
+Search result notification from %s with IP %s and class %d as any file: %s|
+Bad search result from %s with IP %s and class %d as any file: %s|
+User dropped due to bad search result: %s|
+User didn't send any search results: %s|
+User redirected due to bad search result: %s|
+Search result exception from %s with IP %s and class %d as folder: %s|
+Search result notification from %s with IP %s and class %d as folder: %s|
+Bad search result from %s with IP %s and class %d as folder: %s|
+Search result exception from %s with IP %s and class %d as TTH: %s|
+Search result notification from %s with IP %s and class %d as TTH: %s|
+Bad search result from %s with IP %s and class %d as TTH: %s|
+Resetting proxy lookup daily quote limit: %d|
+Your message will be delayed for proxy lookup of your IP address.|
+You're not allowed to chat due to public proxy detection of your IP address.|
+Proxy lookup daily quote limit reached on chat message from user with IP %s: %s|
+Proxy lookup queue limit reached on chat message from user with IP %s: %s|
+Blocking private main chat message from %s with IP %s detected as public proxy to %s with IP %s: %s|
+Blocking main chat message from %s with IP %s detected as public proxy: %s|
+Blocking private chat message from %s with IP %s detected as public proxy to %s with IP %s: %s|
+Blocking third person main chat message from %s with IP %s detected as public proxy: %s|
+Blocking offline private chat message from %s with IP %s detected as public proxy to %s with IP %s: %s|
+Main chat message from %s with IP %s will be delayed for proxy lookup: %s|
+Private chat message from %s with IP %s to %s with IP %s will be delayed for proxy lookup.|
+Private main chat message from %s with IP %s to %s with IP %s will be delayed for proxy lookup.|
+Third person main chat message from %s with IP %s will be delayed for proxy lookup: %s|
+Offline private chat message from %s with IP %s to %s with IP %s will be delayed for proxy lookup.|
+In order to use this feature you need to set %s to your email address.|
+Failed to execute %s for proxy lookup of IP %s with code: %d|
+Failed to execute %s for proxy lookup of IP %s with error: %s|
+Failed to execute %s for proxy lookup of IP %s without code and error.|
+Failed proxy lookup of IP %s with unknown result data: %s|
+Failed proxy lookup of IP %s without result data.|
+Failed proxy lookup of IP %s without result file.|
+Failed proxy lookup of IP %s with result: %s|
+Invalid request|
+Invalid IP|
+Private IP|
+Under maintenance|
+Request banned|
+Invalid email|
+Not enough matches for proxy lookup of IP %s: %d of %d|
+Public proxy detected on IP: %s|
+Public proxy detected on IP %s with ASN: %s|

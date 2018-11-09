@@ -63,7 +63,7 @@ Tzaca, JOE™, Foxtrot, Deivis
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.6" -- ledokol version
-bld_ledo = "82" -- build number
+bld_ledo = "84" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -90,8 +90,8 @@ table_sets = {
 	sefifeednick = "#" .. string.char (160) .. "Search",
 	sefiblockmsg = 1,
 	sefiblockdel = 1,
-	sefireason = "Forbidden search request detected: *",
-	searfiltmsg = "Your search request is forbidden and therefore discarded: *",
+	sefireason = "Forbidden search request or result detected: *",
+	searfiltmsg = "Your search request or result is forbidden and therefore discarded: *",
 	avsearchint = 30,
 	avfilediff = 256,
 	avfilecount = 30,
@@ -112,6 +112,7 @@ table_sets = {
 	classnotimich = 3,
 	classnotiflood = 3,
 	classnotigagip = 3,
+	classnotichin = 3,
 	classnotilowupreg = 3,
 	classnotilowupsear = 3,
 	classnotilowupctm = 3,
@@ -313,6 +314,13 @@ table_sets = {
 	codecharsep = "",
 	codetext = "Please specify chat security code: <code>",
 	pmminclass = 0,
+	chatintelon = 0,
+	chatintelact = 1,
+	chatintelmatch = 99,
+	chatintelqueue = 100,
+	chatintelquote = 500,
+	chatintelmaxreq = 1,
+	chatintelemail = "",
 	ctmminclass = 0,
 	ctmmsginterval = 300,
 	ctmblockmsg = "You aren't allowed to connect to other users.",
@@ -360,7 +368,7 @@ table_othsets = {
 	avdbsendurl = "http://www.te-home.net/avdb.php?do=send",
 	avdbloadurl = "http://www.te-home.net/avdb.php?do=load",
 	avdbfindurl = "http://www.te-home.net/avdb.php?do=find",
-	luaman = "http://www.lua.org/manual/" .. _VERSION:sub (5) .. "/manual.html#6.4.1",
+	luaman = "https://www.lua.org/manual/" .. _VERSION:sub (5) .. "/manual.html#6.4.1",
 	cfgdir = "",
 	feednick = "",
 	sendfrom = "",
@@ -378,11 +386,21 @@ table_othsets = {
 	avloaddelcount = 0,
 	avnextitem = 1,
 	avrandstr = "",
+	useragent = "Mozilla/5.0 (compatible; Ledokol/" .. ver_ledo .. "." .. bld_ledo .. "; +https://ledo.feardc.net/)",
+	chinurl = "http://check.getipintel.net/check.php?contact=%s&ip=%s",
+	chindir = "chatintel",
+	chincount = 0,
+	chinquotetime = 0,
+	chinquotewait = 60 * 60 * 24,
+	chinskipchecks = false,
 	chflallcount = 0,
 	chflalltime = os.time (),
 	chflonenick = "",
 	chflonecount = 0,
 	chflonetime = os.time (),
+	lastsrstr = "",
+	lastsrdir = "",
+	lastsrtth = "",
 	lastupdcheck = 0,
 	remseconds = os.time (),
 	timebotseconds = os.time (),
@@ -1059,6 +1077,7 @@ table_sefi = {}
 table_sfex = {}
 table_sfbl = {}
 table_laul = {}
+table_chin = {}
 
 table_avfi = {
 	string.char (100, 111, 119, 110, 108, 111, 97, 100),
@@ -1469,6 +1488,14 @@ function Main (file)
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('voteminustext', '" .. repsqlchars (table_sets.voteminustext) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('votecleartext', '" .. repsqlchars (table_sets.votecleartext) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('votetimetext', '" .. repsqlchars (table_sets.votetimetext) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('chatintelon', '" .. repsqlchars (table_sets.chatintelon) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('chatintelemail', '" .. repsqlchars (table_sets.chatintelemail) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('chatintelact', '" .. repsqlchars (table_sets.chatintelact) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('chatintelmatch', '" .. repsqlchars (table_sets.chatintelmatch) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('chatintelqueue', '" .. repsqlchars (table_sets.chatintelqueue) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('chatintelquote', '" .. repsqlchars (table_sets.chatintelquote) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('chatintelmaxreq', '" .. repsqlchars (table_sets.chatintelmaxreq) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('classnotichin', '" .. repsqlchars (table_sets.classnotichin) .. "')")
 
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.ledocmd .. "` (`original`, `new`) values ('histfind', '" .. repsqlchars (table_cmnds.histfind) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.ledocmd .. "` (`original`, `new`) values ('histline', '" .. repsqlchars (table_cmnds.histline) .. "')")
@@ -1525,7 +1552,7 @@ function Main (file)
 		table_othsets.sendfrom = table_othsets.botnick
 	end
 
-	if table_sets.enablesearfilt == 1 and table_sets.addsefifeed == 1 then -- search filter feed
+	if table_sets.enablesearfilt >= 1 and table_sets.addsefifeed == 1 then -- search filter feed
 		addhubrobot (table_sets.sefifeednick, "", 2, "", 0)
 	end
 
@@ -1557,6 +1584,10 @@ function Main (file)
 
 	if table_sets.addspecialver == 1 then -- special version
 		VH:SetConfig ((VH.ConfName or "config"), "hub_version_special", gettext ("Powered by %s"):format ("Ledokol " .. ver_ledo .. "." .. bld_ledo))
+	end
+
+	if table_sets.chatintelon == 1 and table_sets.chatintelemail ~= "" and table_othsets.ver_curl then -- chat intelligence
+		os.execute ("mkdir \"" .. table_othsets.cfgdir .. table_othsets.chindir .. "\"")
 	end
 
 	if table_sets.avsearchint > 0 then -- antivirus search
@@ -1614,7 +1645,7 @@ function UnLoad ()
 		delhubrobot (table_sets.ledobotnick)
 	end
 
-	if table_sets.enablesearfilt == 1 and table_sets.addsefifeed == 1 then -- search filter feed
+	if table_sets.enablesearfilt >= 1 and table_sets.addsefifeed == 1 then -- search filter feed
 		delhubrobot (table_sets.sefifeednick)
 	end
 
@@ -3510,7 +3541,7 @@ elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.ledostats .. "$") 
 				delhubrobot (table_sets.ledobotnick)
 			end
 
-			if table_sets.enablesearfilt == 1 and table_sets.addsefifeed == 1 then -- search filter feed
+			if table_sets.enablesearfilt >= 1 and table_sets.addsefifeed == 1 then -- search filter feed
 				delhubrobot (table_sets.sefifeednick)
 			end
 
@@ -4132,52 +4163,57 @@ function VH_OnUserCommand (nick, data)
 		return 0
 	end
 
-	local ip = getip (nick)
+	local addr = getip (nick)
 
-	if table_sets.chatfloodcmdgag == 1 then -- check ip gag
-		if gagipcheck (nick, ip, ucl, nil, data) then
+	if not table_othsets.chinskipchecks then -- used by chat intelligence
+		if table_sets.chatfloodcmdgag == 1 then -- check ip gag
+			if gagipcheck (nick, addr, ucl, nil, data) then
+				return 0
+			end
+
+			if gagccheck (nick, addr, ucl, nil, data) then
+				return 0
+			end
+
+			if gagcitycheck (nick, addr, ucl, nil, data) then
+				return 0
+			end
+		end
+
+		if table_sets.checkcmdspam == 1 and antiscan (nick, ucl, data, 1, nil, nil) == 0 then -- check command spam
 			return 0
 		end
 
-		if gagccheck (nick, ip, ucl, nil, data) then
-			return 0
-		end
+		savecmdlog (nick, ucl, data, false) -- command logger
 
-		if gagcitycheck (nick, ip, ucl, nil, data) then
-			return 0
-		end
-	end
+		if data:match ("^" .. table_othsets.ustrig .. "kick%s+([^ ]+)%s*(.*)$") and table_sets.enablevipkick == 1 and ucl == 2 then -- kick command for vips
+			local who, why = data:match ("^" .. table_othsets.ustrig .. "kick%s+([^ ]+)%s*(.*)$")
 
-	if table_sets.checkcmdspam == 1 and antiscan (nick, ucl, data, 1, nil, nil) == 0 then -- check command spam
-		return 0
-	end
+			if getstatus (who) == 1 then
+				if getclass (who) < 2 then -- only users with lower class
+					if not isprotected (who, getip (who)) then
+						if why == "" then
+							why = gettext ("No reason specified")
+						end
 
-	savecmdlog (nick, ucl, data, false) -- command logger
+						commandanswer (nick, gettext ("%s was kicked with reason: %s"):format (who, why)) -- simple reply to sender
+						donotifycmd (nick, data, 0, ucl) -- exception
+						VH:KickUser (table_othsets.sendfrom, who, why) -- kick using bot nick due to rights
 
-	if data:match ("^" .. table_othsets.ustrig .. "kick%s+([^ ]+)%s*(.*)$") and table_sets.enablevipkick == 1 and ucl == 2 then -- kick command for vips
-		local who, why = data:match ("^" .. table_othsets.ustrig .. "kick%s+([^ ]+)%s*(.*)$")
-
-		if getstatus (who) == 1 then
-			if getclass (who) < 2 then -- only users with lower class
-				if not isprotected (who, getip (who)) then
-					if why == "" then
-						why = gettext ("No reason specified")
+					else -- protected
+						commandanswer (nick, gettext ("User you're trying to kick or redirect is protected: %s"):format (who))
 					end
 
-					commandanswer (nick, gettext ("%s was kicked with reason: %s"):format (who, why)) -- simple reply to sender
-					donotifycmd (nick, data, 0, ucl) -- exception
-					VH:KickUser (table_othsets.sendfrom, who, why) -- kick using bot nick due to rights
-				else -- protected
-					commandanswer (nick, gettext ("User you're trying to kick or redirect is protected: %s"):format (who))
+				else
+					commandanswer (nick, gettext ("You can't kick user whose class is higher or equals your own: %s"):format (who))
 				end
-			else
-				commandanswer (nick, gettext ("You can't kick user whose class is higher or equals your own: %s"):format (who))
-			end
-		else -- not in list
-			commandanswer (nick, gettext ("User not in list: %s"):format (who))
-		end
 
-		return 0
+			else -- not in list
+				commandanswer (nick, gettext ("User not in list: %s"):format (who))
+			end
+
+			return 0
+		end
 	end
 
 	-- process +me command
@@ -4187,115 +4223,125 @@ function VH_OnUserCommand (nick, data)
 			return 1
 		end
 
-		local msg = data:sub (# "me" + 3)
-		local prot = isprotected (nick, ip)
+		local msg, prot = data:sub (# "me" + 3), isprotected (nick, addr)
 
-		if not prot then -- protection
-			if table_sets.chatuptime > 0 and table_sets.showuseruptime == 1 and ucl < table_sets.scanbelowclass and table_usup [nick] then -- chat uptime
-				local dif = os.time () - table_usup [nick]
+		if not table_othsets.chinskipchecks then -- used by chat intelligence
+			if not prot then -- protection
+				if table_sets.chatuptime > 0 and table_sets.showuseruptime == 1 and ucl < table_sets.scanbelowclass and table_usup [nick] then -- chat uptime
+					local dif = os.time () - table_usup [nick]
 
-				if dif < table_sets.chatuptime then
-					opsnotify (table_sets.classnotilowupchat, gettext ("Low chat uptime of %d seconds from %s with IP %s and class %d in command: %s"):format (dif, nick, ip .. tryipcc (ip, nick), ucl, getconfig ("cmd_start_user"):sub (1, 1) .. "me " .. msg))
+					if dif < table_sets.chatuptime then
+						opsnotify (table_sets.classnotilowupchat, gettext ("Low chat uptime of %d seconds from %s with IP %s and class %d in command: %s"):format (dif, nick, addr .. tryipcc (addr, nick), ucl, getconfig ("cmd_start_user"):sub (1, 1) .. "me " .. msg))
 
-					if table_sets.chatuptimeact == 0 then -- message
-						maintouser (nick, gettext ("Please wait another %d seconds before using public chat."):format (table_sets.chatuptime - dif))
-					elseif table_sets.chatuptimeact == 1 then -- drop
-						opsnotify (table_sets.classnotilowupchat, gettext ("User dropped: %s"):format (nick))
-						VH:Disconnect (nick)
-					--elseif table_sets.chatuptimeact == 2 then -- silent
-						-- nothing to do
-					elseif table_sets.chatuptimeact == 3 then -- message to self
-						opsnotify (table_sets.classnotilowupchat, gettext ("User received own message: %s"):format (nick))
+						if table_sets.chatuptimeact == 0 then -- message
+							maintouser (nick, gettext ("Please wait another %d seconds before using public chat."):format (table_sets.chatuptime - dif))
 
-						if minhubver (1, 0, 2, 15) then
-							VH:SendToUser ("** " .. nick .. " " .. msg .. "|", nick, getconfig ("delayed_chat"))
-						else
-							VH:SendToUser ("** " .. nick .. " " .. msg .. "|", nick)
+						elseif table_sets.chatuptimeact == 1 then -- drop
+							opsnotify (table_sets.classnotilowupchat, gettext ("User dropped: %s"):format (nick))
+							VH:Disconnect (nick)
+
+						--elseif table_sets.chatuptimeact == 2 then -- silent
+							-- nothing to do
+
+						elseif table_sets.chatuptimeact == 3 then -- message to self
+							opsnotify (table_sets.classnotilowupchat, gettext ("User received own message: %s"):format (nick))
+
+							if minhubver (1, 0, 2, 15) then
+								VH:SendToUser ("** " .. nick .. " " .. msg .. "|", nick, getconfig ("delayed_chat"))
+							else
+								VH:SendToUser ("** " .. nick .. " " .. msg .. "|", nick)
+							end
 						end
-					end
 
-					return 0
+						return 0
+					end
 				end
-			end
 
-			if table_sets.chatcodeon > 0 and (table_sets.chatcodeflag == 0 or table_sets.chatcodeflag == 1) and ucl <= table_sets.codemaxclass then -- chatcode
-				if not table_code [nick] then
-					local vcode, code = genchatcode ()
+				if table_sets.chatcodeon > 0 and (table_sets.chatcodeflag == 0 or table_sets.chatcodeflag == 1) and ucl <= table_sets.codemaxclass then -- chatcode
+					if not table_code [nick] then
+						local vcode, code = genchatcode ()
 
-					table_code [nick] = {
-						["vcode"] = vcode,
-						["code"] = code,
-						["lock"] = true
-					}
+						table_code [nick] = {
+							["vcode"] = vcode,
+							["code"] = code,
+							["lock"] = true
+						}
 
-					local txt = table_sets.codetext:gsub ("<code>", reprexpchars (vcode))
-					maintouser (nick, txt)
-					opsnotify (table_sets.classnotichatcode, gettext ("%s with IP %s and class %d tried to speak in MC without chat code: <%s> %s"):format (nick, ip .. tryipcc (ip, nick), ucl, nick, getconfig ("cmd_start_user"):sub (1, 1) .. "me " .. msg))
-					return 0
-				elseif table_code [nick]["lock"] then
-					local rcode = table_code [nick]["code"]
-
-					if table_sets.chatcodeon == 2 then -- accept lower case
-						rcode = rcode:lower ()
-					end
-
-					if msg == rcode or msg == table_code [nick]["code"] then
-						table_code [nick]["lock"] = false
-						maintouser (nick, gettext ("Code accepted."))
-					else
-						local txt = table_sets.codetext:gsub ("<code>", reprexpchars (table_code [nick]["vcode"]))
+						local txt = table_sets.codetext:gsub ("<code>", reprexpchars (vcode))
 						maintouser (nick, txt)
-						opsnotify (table_sets.classnotichatcode, gettext ("%s with IP %s and class %d tried to speak in MC without chat code: <%s> %s"):format (nick, ip .. tryipcc (ip, nick), ucl, nick, getconfig ("cmd_start_user"):sub (1, 1) .. "me " .. msg))
+						opsnotify (table_sets.classnotichatcode, gettext ("%s with IP %s and class %d tried to speak in MC without chat code: <%s> %s"):format (nick, addr .. tryipcc (addr, nick), ucl, nick, getconfig ("cmd_start_user"):sub (1, 1) .. "me " .. msg))
+						return 0
+
+					elseif table_code [nick]["lock"] then
+						local rcode = table_code [nick]["code"]
+
+						if table_sets.chatcodeon == 2 then -- accept lower case
+							rcode = rcode:lower ()
+						end
+
+						if msg == rcode or msg == table_code [nick]["code"] then
+							table_code [nick]["lock"] = false
+							maintouser (nick, gettext ("Code accepted."))
+
+						else
+							local txt = table_sets.codetext:gsub ("<code>", reprexpchars (table_code [nick]["vcode"]))
+							maintouser (nick, txt)
+							opsnotify (table_sets.classnotichatcode, gettext ("%s with IP %s and class %d tried to speak in MC without chat code: <%s> %s"):format (nick, addr .. tryipcc (addr, nick), ucl, nick, getconfig ("cmd_start_user"):sub (1, 1) .. "me " .. msg))
+						end
+
+						return 0
+					end
+				end
+
+				if detchatflood (nick, ucl, addr, msg, nil) then -- flood detection
+					return 0
+				end
+
+				if table_sets.chatfloodcmdgag == 0 then -- ip gag, dont check twice
+					if gagipcheck (nick, addr, ucl, nil, msg) then
+						return 0
 					end
 
-					return 0
-				end
-			end
+					if gagccheck (nick, addr, ucl, nil, msg) then
+						return 0
+					end
 
-			if detchatflood (nick, ucl, ip, msg, nil) then -- flood detection
-				return 0
-			end
-
-			if table_sets.chatfloodcmdgag == 0 then -- ip gag, dont check twice
-				if gagipcheck (nick, ip, ucl, nil, msg) then
-					return 0
+					if gagcitycheck (nick, addr, ucl, nil, msg) then
+						return 0
+					end
 				end
 
-				if gagccheck (nick, ip, ucl, nil, msg) then
+				if table_sets.checkcmdspam == 0 and antiscan (nick, ucl, msg, 1, nil, nil) == 0 then -- antispam, dont check twice
 					return 0
 				end
 
-				if gagcitycheck (nick, ip, ucl, nil, msg) then
+				if table_sets.micheck == 1 and ucl < table_sets.scanbelowclass and checkchatnick (nick, ucl, addr) then -- myinfo check
 					return 0
 				end
-			end
 
-			if table_sets.checkcmdspam == 0 and antiscan (nick, ucl, msg, 1, nil, nil) == 0 then -- antispam, dont check twice
-				return 0
-			end
+				if chatintelcheck (nick, addr, ucl, "", getconfig ("cmd_start_user"):sub (1, 1) .. "me " .. msg, 4) then -- chat intelligence
+					return 0
+				end
 
-			if table_sets.micheck == 1 and ucl < table_sets.scanbelowclass and checkchatnick (nick, ucl, ip) then -- myinfo check
-				return 0
+			elseif table_sets.chatantiflood == 1 then -- update last chat nick
+				table_othsets.chflonenick = nick
 			end
-
-		elseif table_sets.chatantiflood == 1 then -- update last chat nick
-			table_othsets.chflonenick = nick
 		end
 
-		local fakenick = nick
+		local fake = nick
 
 		if table_sets.funrandomchat == 1 then
-			fakenick = getrandomnick ()
+			fake = getrandomnick ()
 
 			if table_sets.custnickclass < 11 then
-				fakenick = getcustnick (fakenick) or fakenick -- use custom nick
+				fake = getcustnick (fake) or fake -- use custom nick
 			end
+
 		elseif table_sets.custnickclass < 11 then
-			fakenick = getcustnick (nick) or nick
+			fake = getcustnick (nick) or nick
 		end
 
-		local cvdat = msg
-		local retval = 1
+		local cvdat, retval = msg, 1
 
 		if table_sets.translitmode > 0 then -- convert translit
 			cvdat = convtranslit (cvdat, table_sets.translitmode)
@@ -4317,14 +4363,14 @@ function VH_OnUserCommand (nick, data)
 			end
 		end
 
-		cvdat = modusrmode (nick, ip, cvdat) -- chat mode
+		cvdat = modusrmode (nick, addr, cvdat) -- chat mode
 
 		if table_sets.replrunning == 1 and (table_sets.replprotect == 0 or not prot) then -- replacer
 			local norepl = cvdat
-			cvdat = replchatmsg (nick, ip, ucl, cvdat, 1)
+			cvdat = replchatmsg (nick, addr, ucl, cvdat, 1)
 
 			if norepl ~= cvdat then
-				opsnotify (table_sets.classnotirepl, gettext ("Message replaced for user with IP %s and class %d in MC: <%s> %s"):format (ip .. tryipcc (ip, nick), ucl, nick, "+me " .. msg))
+				opsnotify (table_sets.classnotirepl, gettext ("Message replaced for user with IP %s and class %d in MC: <%s> %s"):format (addr .. tryipcc (addr, nick), ucl, nick, "+me " .. msg))
 			end
 		end
 
@@ -4333,175 +4379,212 @@ function VH_OnUserCommand (nick, data)
 		end
 
 		if table_sets.useripinchat > 0 then -- ip in chat
-			local pfx = ""
+			local pref = ""
 
 			if table_sets.useripinchat == 2 and table_refu.GetUserCC then
-				local cc = getcc (nick)
+				local code = getcc (nick)
 
-				if not cc or cc == "--" then
-					cc = "??"
+				if not code or code == "" or code == "--" then
+					code = "??"
 				end
 
-				pfx = "[ " .. ip .. " &#124; " .. cc .. " ]"
+				pref = "[ " .. addr .. " &#124; " .. code .. " ]"
+
 			else
-				pfx = "[ " .. ip .. " ]"
+				pref = "[ " .. addr .. " ]"
 			end
 
 			if minhubver (1, 0, 2, 15) then
-				VH:SendToClass ("** " .. fakenick .. " " .. cvdat .. "|", 0, 2, getconfig ("delayed_chat"))
-				VH:SendToClass (pfx .. " ** " .. fakenick .. " " .. cvdat .. "|", 3, 10, getconfig ("delayed_chat"))
+				VH:SendToClass ("** " .. fake .. " " .. cvdat .. "|", 0, 2, getconfig ("delayed_chat"))
+				VH:SendToClass (pref .. " ** " .. fake .. " " .. cvdat .. "|", 3, 10, getconfig ("delayed_chat"))
+
 			else
-				VH:SendToClass ("** " .. fakenick .. " " .. cvdat .. "|", 0, 2)
-				VH:SendToClass (pfx .. " ** " .. fakenick .. " " .. cvdat .. "|", 3, 10)
+				VH:SendToClass ("** " .. fake .. " " .. cvdat .. "|", 0, 2)
+				VH:SendToClass (pref .. " ** " .. fake .. " " .. cvdat .. "|", 3, 10)
 			end
 
 			retval = 0
-		elseif retval == 0 or fakenick ~= nick then -- no ip, only when modified
+
+		elseif retval == 0 or fake ~= nick then -- no ip, only when modified
 			if minhubver (1, 0, 2, 15) then
-				VH:SendToClass ("** " .. fakenick .. " " .. cvdat .. "|", 0, 10, getconfig ("delayed_chat"))
+				VH:SendToClass ("** " .. fake .. " " .. cvdat .. "|", 0, 10, getconfig ("delayed_chat"))
 			else
-				VH:SendToClass ("** " .. fakenick .. " " .. cvdat .. "|", 0, 10)
+				VH:SendToClass ("** " .. fake .. " " .. cvdat .. "|", 0, 10)
 			end
 
 			retval = 0
 		end
 
-		addmchistoryline (fakenick, nick, getconfig ("cmd_start_user"):sub (1, 1) .. "me " .. cvdat)
-		replyresponder (fakenick, ucl, cvdat)
+		if table_othsets.chinskipchecks and retval == 1 then -- send delayed message manually
+			if minhubver (1, 0, 2, 15) then
+				VH:SendToClass ("** " .. fake .. " " .. cvdat .. "|", 0, 10, getconfig ("delayed_chat"))
+			else
+				VH:SendToClass ("** " .. fake .. " " .. cvdat .. "|", 0, 10)
+			end
+
+			retval = 0
+		end
+
+		addmchistoryline (fake, nick, getconfig ("cmd_start_user"):sub (1, 1) .. "me " .. cvdat)
+		replyresponder (fake, ucl, cvdat)
 		chatrankaccept (nick, ucl)
 		wordrankaccept (nick, ucl, cvdat)
 		return retval
 
 	elseif data:match ("^" .. table_othsets.ustrig .. "me$") then
-		if getconfig ("disable_me_cmd") ~= 0 then
-			return 1
-		end
+		if not table_othsets.chinskipchecks then -- used by chat intelligence
+			if getconfig ("disable_me_cmd") ~= 0 then
+				return 1
+			end
 
-		if not isprotected (nick, ip) then -- protection
-			if table_sets.chatuptime > 0 and table_sets.showuseruptime == 1 and ucl < table_sets.scanbelowclass and table_usup [nick] then -- chat uptime
-				local dif = os.time () - table_usup [nick]
+			if not isprotected (nick, addr) then -- protection
+				if table_sets.chatuptime > 0 and table_sets.showuseruptime == 1 and ucl < table_sets.scanbelowclass and table_usup [nick] then -- chat uptime
+					local dif = os.time () - table_usup [nick]
 
-				if dif < table_sets.chatuptime then
-					opsnotify (table_sets.classnotilowupchat, gettext ("Low chat uptime of %d seconds from %s with IP %s and class %d in command: %s"):format (dif, nick, ip .. tryipcc (ip, nick), ucl, getconfig ("cmd_start_user"):sub (1, 1) .. "me"))
+					if dif < table_sets.chatuptime then
+						opsnotify (table_sets.classnotilowupchat, gettext ("Low chat uptime of %d seconds from %s with IP %s and class %d in command: %s"):format (dif, nick, addr .. tryipcc (addr, nick), ucl, getconfig ("cmd_start_user"):sub (1, 1) .. "me"))
 
-					if table_sets.chatuptimeact == 0 then -- message
-						maintouser (nick, gettext ("Please wait another %d seconds before using public chat."):format (table_sets.chatuptime - dif))
-					elseif table_sets.chatuptimeact == 1 then -- drop
-						opsnotify (table_sets.classnotilowupchat, gettext ("User dropped: %s"):format (nick))
-						VH:Disconnect (nick)
-					--elseif table_sets.chatuptimeact == 2 then -- silent
-						-- nothing to do
-					elseif table_sets.chatuptimeact == 3 then -- message to self
-						opsnotify (table_sets.classnotilowupchat, gettext ("User received own message: %s"):format (nick))
+						if table_sets.chatuptimeact == 0 then -- message
+							maintouser (nick, gettext ("Please wait another %d seconds before using public chat."):format (table_sets.chatuptime - dif))
 
-						if minhubver (1, 0, 2, 15) then
-							VH:SendToUser ("** " .. nick .. "|", nick, getconfig ("delayed_chat"))
-						else
-							VH:SendToUser ("** " .. nick .. "|", nick)
+						elseif table_sets.chatuptimeact == 1 then -- drop
+							opsnotify (table_sets.classnotilowupchat, gettext ("User dropped: %s"):format (nick))
+							VH:Disconnect (nick)
+
+						--elseif table_sets.chatuptimeact == 2 then -- silent
+							-- nothing to do
+
+						elseif table_sets.chatuptimeact == 3 then -- message to self
+							opsnotify (table_sets.classnotilowupchat, gettext ("User received own message: %s"):format (nick))
+
+							if minhubver (1, 0, 2, 15) then
+								VH:SendToUser ("** " .. nick .. "|", nick, getconfig ("delayed_chat"))
+							else
+								VH:SendToUser ("** " .. nick .. "|", nick)
+							end
 						end
+
+						return 0
+					end
+				end
+
+				if table_sets.chatcodeon > 0 and (table_sets.chatcodeflag == 0 or table_sets.chatcodeflag == 1) and ucl <= table_sets.codemaxclass then -- chatcode
+					if not table_code [nick] then
+						local vcode, code = genchatcode ()
+
+						table_code [nick] = {
+							["vcode"] = vcode,
+							["code"] = code,
+							["lock"] = true
+						}
+
+						local txt = table_sets.codetext:gsub ("<code>", reprexpchars (vcode))
+						maintouser (nick, txt)
+						opsnotify (table_sets.classnotichatcode, gettext ("%s with IP %s and class %d tried to speak in MC without chat code: <%s> %s"):format (nick, addr .. tryipcc (addr, nick), ucl, nick, getconfig ("cmd_start_user"):sub (1, 1) .. "me"))
+						return 0
+
+					elseif table_code [nick]["lock"] then
+						local txt = table_sets.codetext:gsub ("<code>", reprexpchars (table_code [nick]["vcode"]))
+						maintouser (nick, txt)
+						opsnotify (table_sets.classnotichatcode, gettext ("%s with IP %s and class %d tried to speak in MC without chat code: <%s> %s"):format (nick, addr .. tryipcc (addr, nick), ucl, nick, getconfig ("cmd_start_user"):sub (1, 1) .. "me"))
+						return 0
+					end
+				end
+
+				if detchatflood (nick, ucl, addr, data, nil) then -- flood detection
+					return 0
+				end
+
+				if table_sets.chatfloodcmdgag == 0 then -- ip gag, dont check twice
+					if gagipcheck (nick, addr, ucl, nil, data) then
+						return 0
 					end
 
-					return 0
+					if gagccheck (nick, addr, ucl, nil, data) then
+						return 0
+					end
+
+					if gagcitycheck (nick, addr, ucl, nil, data) then
+						return 0
+					end
 				end
-			end
 
-			if table_sets.chatcodeon > 0 and (table_sets.chatcodeflag == 0 or table_sets.chatcodeflag == 1) and ucl <= table_sets.codemaxclass then -- chatcode
-				if not table_code [nick] then
-					local vcode, code = genchatcode ()
-
-					table_code [nick] = {
-						["vcode"] = vcode,
-						["code"] = code,
-						["lock"] = true
-					}
-
-					local txt = table_sets.codetext:gsub ("<code>", reprexpchars (vcode))
-					maintouser (nick, txt)
-					opsnotify (table_sets.classnotichatcode, gettext ("%s with IP %s and class %d tried to speak in MC without chat code: <%s> %s"):format (nick, ip .. tryipcc (ip, nick), ucl, nick, getconfig ("cmd_start_user"):sub (1, 1) .. "me"))
-					return 0
-				elseif table_code [nick]["lock"] then
-					local txt = table_sets.codetext:gsub ("<code>", reprexpchars (table_code [nick]["vcode"]))
-					maintouser (nick, txt)
-					opsnotify (table_sets.classnotichatcode, gettext ("%s with IP %s and class %d tried to speak in MC without chat code: <%s> %s"):format (nick, ip .. tryipcc (ip, nick), ucl, nick, getconfig ("cmd_start_user"):sub (1, 1) .. "me"))
-					return 0
-				end
-			end
-
-			if detchatflood (nick, ucl, ip, data, nil) then -- flood detection
-				return 0
-			end
-
-			if table_sets.chatfloodcmdgag == 0 then -- ip gag, dont check twice
-				if gagipcheck (nick, ip, ucl, nil, data) then
+				if table_sets.micheck == 1 and ucl < table_sets.scanbelowclass and checkchatnick (nick, ucl, addr) then -- myinfo check
 					return 0
 				end
 
-				if gagccheck (nick, ip, ucl, nil, data) then
+				if chatintelcheck (nick, addr, ucl, "", data, 4) then -- chat intelligence
 					return 0
 				end
 
-				if gagcitycheck (nick, ip, ucl, nil, data) then
-					return 0
-				end
+			elseif table_sets.chatantiflood == 1 then -- update last chat nick
+				table_othsets.chflonenick = nick
 			end
-
-			if table_sets.micheck == 1 and ucl < table_sets.scanbelowclass and checkchatnick (nick, ucl, ip) then -- myinfo check
-				return 0
-			end
-
-		elseif table_sets.chatantiflood == 1 then -- update last chat nick
-			table_othsets.chflonenick = nick
 		end
 
-		local fakenick = nick
+		local fake = nick
 
 		if table_sets.funrandomchat == 1 then
-			fakenick = getrandomnick ()
+			fake = getrandomnick ()
 
 			if table_sets.custnickclass < 11 then
-				fakenick = getcustnick (fakenick) or fakenick -- use custom nick
+				fake = getcustnick (fake) or fake -- use custom nick
 			end
+
 		elseif table_sets.custnickclass < 11 then
-			fakenick = getcustnick (nick) or nick
+			fake = getcustnick (nick) or nick
 		end
 
 		local retval = 1
 
 		if table_sets.useripinchat > 0 then -- ip in chat
-			local pfx = ""
+			local pref = ""
 
 			if table_sets.useripinchat == 2 and table_refu.GetUserCC then
-				local cc = getcc (nick)
+				local code = getcc (nick)
 
-				if not cc or cc == "--" then
-					cc = "??"
+				if not code or code == "" or code == "--" then
+					code = "??"
 				end
 
-				pfx = "[ " .. ip .. " &#124; " .. cc .. " ]"
+				pref = "[ " .. addr .. " &#124; " .. code .. " ]"
+
 			else
-				pfx = "[ " .. ip .. " ]"
+				pref = "[ " .. addr .. " ]"
 			end
 
 			if minhubver (1, 0, 2, 15) then
-				VH:SendToClass ("** " .. fakenick .. "|", 0, 2, getconfig ("delayed_chat"))
-				VH:SendToClass (pfx .. " ** " .. fakenick .. "|", 3, 10, getconfig ("delayed_chat"))
+				VH:SendToClass ("** " .. fake .. "|", 0, 2, getconfig ("delayed_chat"))
+				VH:SendToClass (pref .. " ** " .. fake .. "|", 3, 10, getconfig ("delayed_chat"))
+
 			else
-				VH:SendToClass ("** " .. fakenick .. "|", 0, 2)
-				VH:SendToClass (pfx .. " ** " .. fakenick .. "|", 3, 10)
+				VH:SendToClass ("** " .. fake .. "|", 0, 2)
+				VH:SendToClass (pref .. " ** " .. fake .. "|", 3, 10)
 			end
 
 			retval = 0
-		elseif fakenick ~= nick then -- no ip, only when modified
+
+		elseif fake ~= nick then -- no ip, only when modified
 			if minhubver (1, 0, 2, 15) then
-				VH:SendToClass ("** " .. fakenick .. "|", 0, 10, getconfig ("delayed_chat"))
+				VH:SendToClass ("** " .. fake .. "|", 0, 10, getconfig ("delayed_chat"))
 			else
-				VH:SendToClass ("** " .. fakenick .. "|", 0, 10)
+				VH:SendToClass ("** " .. fake .. "|", 0, 10)
 			end
 
 			retval = 0
 		end
 
-		addmchistoryline (fakenick, nick, data)
+		if table_othsets.chinskipchecks and retval == 1 then -- send delayed message manually
+			if minhubver (1, 0, 2, 15) then
+				VH:SendToClass ("** " .. fake .. "|", 0, 10, getconfig ("delayed_chat"))
+			else
+				VH:SendToClass ("** " .. fake .. "|", 0, 10)
+			end
+
+			retval = 0
+		end
+
+		addmchistoryline (fake, nick, data)
 		chatrankaccept (nick, ucl)
 		return retval
 	end
@@ -4522,7 +4605,7 @@ function VH_OnUserCommand (nick, data)
 				local dif = os.time () - table_usup [nick]
 
 				if dif < table_sets.chatuptime then
-					opsnotify (table_sets.classnotilowupchat, gettext ("Low chat uptime of %d seconds from %s with IP %s and class %d in command: %s"):format (dif, nick, ip .. tryipcc (ip, nick), ucl, "+report " .. msg))
+					opsnotify (table_sets.classnotilowupchat, gettext ("Low chat uptime of %d seconds from %s with IP %s and class %d in command: %s"):format (dif, nick, addr .. tryipcc (addr, nick), ucl, "+report " .. msg))
 
 					if table_sets.chatuptimeact == 0 then -- message
 						maintouser (nick, gettext ("Please wait another %d seconds before using public chat."):format (table_sets.chatuptime - dif))
@@ -4540,7 +4623,7 @@ function VH_OnUserCommand (nick, data)
 				end
 			end
 
-			if table_sets.allowspamtoops == 1 or isprotected (nick, getip (nick)) then
+			if table_sets.allowspamtoops == 1 or isprotected (nick, addr) then
 				return 1
 			end
 
@@ -4900,7 +4983,7 @@ elseif data:match ("^" .. table_othsets.ustrig .. table_cmnds.mode .. " %S+$") t
 	----- ---- --- -- -
 
 	elseif data:match ("^" .. table_othsets.ustrig .. "regme$") or data:match ("^" .. table_othsets.ustrig .. "regme%s+.*$") then
-		return checkregmecmd (nick, ucl, ip)
+		return checkregmecmd (nick, ucl, addr)
 
 	----- ---- --- -- -
 
@@ -5368,7 +5451,7 @@ end
 
 ----- ---- --- -- -
 
-function VH_OnUserLogout (nick, uip)
+function VH_OnUserLogout (nick, ip) -- ip available only on new versions, todo: make use of it
 	if table_othsets.locked or table_othsets.restart then
 		return 1
 	end
@@ -5377,7 +5460,15 @@ function VH_OnUserLogout (nick, uip)
 		VH:SQLQuery ("update `" .. tbl_sql.ulog .. "` set `out` = " .. _tostring (os.time () + table_sets.srvtimediff) .. " where `id` = " .. _tostring (table_laul [nick]))
 	end
 
-	local cls = getclass (nick)
+	if table_sets.chatintelon == 1 and table_sets.chatintelemail ~= "" and table_othsets.ver_curl then -- chat intelligence
+		local addr = getip (nick)
+
+		if table_chin [addr] then
+			table_chin [addr]["nick"][nick] = nil
+		end
+	end
+
+	local clas = getclass (nick)
 
 	if (table_sets.avdbloadint > 0 or table_sets.avsearchint > 0) and table_sets.avdetaction == 0 then
 		table_avbl [nick] = nil
@@ -5409,7 +5500,7 @@ function VH_OnUserLogout (nick, uip)
 	if table_faau [nick] then -- dont send logout message
 		table_faau [nick] = nil
 	else
-		sendwelcomeout (nick, cls)
+		sendwelcomeout (nick, clas)
 	end
 
 	if table_sets.chatcodeon > 0 then -- chatcode
@@ -5417,14 +5508,14 @@ function VH_OnUserLogout (nick, uip)
 	end
 
 	if table_sets.savecustnicks == 0 then -- only if not saving
-		delcustnick (nick, cls, true)
+		delcustnick (nick, clas, true)
 	end
 
-	if table_sets.ipconantiflint > 0 and cls < table_sets.scanbelowclass then -- ip connect antiflood
-		local ip = getip (nick)
+	if table_sets.ipconantiflint > 0 and clas < table_sets.scanbelowclass then -- ip connect antiflood
+		local addr = getip (nick)
 
-		if not isprotected (nick, ip) and (not table_rcnn [ip] or os.difftime (os.time (), table_rcnn [ip]) >= table_sets.ipconantiflint) then
-			table_rcnn [ip] = os.time () -- set delay
+		if not isprotected (nick, addr) and (not table_rcnn [addr] or os.difftime (os.time (), table_rcnn [addr]) >= table_sets.ipconantiflint) then
+			table_rcnn [addr] = os.time () -- set delay
 		end
 	end
 
@@ -5434,15 +5525,15 @@ function VH_OnUserLogout (nick, uip)
 		table_prfl.ctm [nick] = nil
 	end
 
-	if table_sets.ctmminclass > cls then -- ctm block
+	if table_sets.ctmminclass > clas then -- ctm block
 		table_ctmb [nick] = nil
 	end
 
-	if cls >= table_sets.opkeyclass or table_sets.opkeyshare > 0 then -- operator keys
+	if clas >= table_sets.opkeyclass or table_sets.opkeyshare > 0 then -- operator keys
 		table_opks [nick] = nil
 	end
 
-	if table_sets.enablesearfilt == 1 and table_sets.sefiblockdel == 1 then -- search filter
+	if table_sets.enablesearfilt >= 1 and table_sets.sefiblockdel == 1 then -- search filter
 		table_sfbl [nick] = nil
 	end
 
@@ -5543,7 +5634,7 @@ function VH_OnParsedMsgSearch (nick, data)
 		end
 	end
 
-	if table_sets.enablesearfilt == 1 then -- search filter
+	if table_sets.enablesearfilt >= 1 then -- search request filter
 		if not gotcls then
 			cls, gotcls = getclass (nick), true
 		end
@@ -5562,7 +5653,7 @@ function VH_OnParsedMsgSearch (nick, data)
 
 				if sefi then
 					if not sefi.sil then
-						maintouser (nick, gettext ("Your search request is discarded due to previous forbidden search request: %s"):format (sefi.req))
+						maintouser (nick, gettext ("Your search request is discarded due to previous forbidden search request or result: %s"):format (sefi.req))
 					end
 
 					table_sfbl [nick].num = sefi.num + 1
@@ -5593,7 +5684,29 @@ function VH_OnParsedMsgSR (nick, data)
 		return 0
 	end
 
-	-- todo: add search results filter
+	if table_sets.enablesearfilt == 2 then -- search result filter
+		local clas = getclass (nick)
+
+		if clas < table_sets.scanbelowclass then
+			local addr = getip (nick)
+
+			if not isprotected (nick, addr) then
+				local sefi = table_sfbl [nick]
+
+				if sefi then
+					if not sefi.sil then
+						maintouser (nick, gettext ("Your search result is discarded due to previous forbidden search result or request: %s"):format (sefi.req))
+					end
+
+					table_sfbl [nick].num = sefi.num + 1
+					return 0
+				elseif sefiscan (nick, data, clas, addr, true) then
+					return 0
+				end
+			end
+		end
+	end
+
 	return 1
 end
 
@@ -5763,15 +5876,199 @@ function VH_OnTimer (msec)
 		return 1
 	end
 
-	local st = os.time () -- current time
+	local now = os.time () -- current time
+
+	if table_sets.chatintelon == 1 and table_sets.chatintelemail ~= "" and table_othsets.ver_curl then -- chat intelligence
+		local size, dels = 0, {}
+
+		for addr, item in pairs (table_chin) do
+			if item.stat == 0 then -- ready for lookup
+				if size < table_sets.chatintelmaxreq then -- maximum requests
+					local send, face, name = true, getconfig ("listen_ip"), table_othsets.cfgdir .. table_othsets.chindir .. "/" .. addr
+
+					if face and # face >= 7 and # face <= 15 and face ~= "0.0.0.0" then -- interface address
+						face = " --interface " .. face
+					else
+						face = ""
+					end
+
+					os.remove (name) -- remove old file
+					local res, err, code = os.execute ("curl -G -L --max-redirs 1 --retry 2 --connect-timeout 3 -m 10" .. face .. " -A \"" .. table_othsets.useragent .. "\" -s -o \"" .. name .. "\" \"" .. table_othsets.chinurl:format (table_sets.chatintelemail, addr) .. "\"")
+
+					if res then
+						local file, err = io.open (name, "r") -- make use of err, it could be permission
+
+						if file then
+							local data = file:read ("*all")
+							file:close ()
+							os.remove (name)
+
+							if data and # data > 0 then
+								data = tonumber (data)
+
+								if type (data) == "number" then
+									-- todo: see if os.execute ("curl &") is faster
+									--table_chin [addr]["time"] = now
+
+									if data < 0 then
+										local note = _tostring (data)
+
+										if data == -1 then
+											note = gettext ("Invalid request")
+										elseif data == -2 then
+											note = gettext ("Invalid IP")
+										elseif data == -3 then
+											note = gettext ("Private IP")
+										elseif data == -4 then
+											note = gettext ("Under maintenance")
+										elseif data == -5 then
+											note = gettext ("Request banned")
+										elseif data == -6 then
+											note = gettext ("Invalid email")
+										end
+
+										opsnotify (table_sets.classnotichin, gettext ("Failed proxy lookup of IP %s with result: %s"):format (addr .. tryipcc (addr), note))
+										table.insert (dels, addr)
+									end
+
+									if data >= 0 then
+										data = roundint (data * 100)
+									end
+
+									if data >= table_sets.chatintelmatch then
+										local note = ""
+
+										if table_refu.GetIPASN then -- asn
+											local ok, asn = VH:GetIPASN (addr)
+
+											if ok and asn and asn ~= "" then
+												if asn:match ("^AS%d+") then
+													asn = "https://ipinfo.io/" .. asn
+												end
+
+												note = gettext ("Public proxy detected on IP %s with ASN: %s"):format (addr .. tryipcc (addr), repnmdcoutchars (asn))
+											end
+										end
+
+										if note == "" then
+											note = gettext ("Public proxy detected on IP: %s"):format (addr .. tryipcc (addr))
+										end
+
+										opsnotify (table_sets.classnotichin, note)
+										send = false
+										table_chin [addr]["stat"] = 2
+
+									else
+										opsnotify (table_sets.classnotichin, gettext ("Not enough matches for proxy lookup of IP %s: %d of %d"):format (addr .. tryipcc (addr), data, table_sets.chatintelmatch))
+										table_chin [addr]["stat"] = 4
+									end
+								else
+									opsnotify (table_sets.classnotichin, gettext ("Failed proxy lookup of IP %s with unknown result data: %s"):format (addr .. tryipcc (addr), repnmdcoutchars (data)))
+									table.insert (dels, addr)
+								end
+							else
+								opsnotify (table_sets.classnotichin, gettext ("Failed proxy lookup of IP %s without result data."):format (addr .. tryipcc (addr)))
+								table.insert (dels, addr)
+							end
+						else
+							opsnotify (table_sets.classnotichin, gettext ("Failed proxy lookup of IP %s without result file."):format (addr .. tryipcc (addr)))
+							table.insert (dels, addr)
+						end
+
+					else -- execute error
+						if code ~= nil then
+							code = tonumber (code) or -1
+						end
+
+						if code ~= -1 then -- http://curl.haxx.se/docs/manpage.html
+							opsnotify (table_sets.classnotichin, gettext ("Failed to execute %s for proxy lookup of IP %s with code: %d"):format ("cURL", addr .. tryipcc (addr), code))
+						elseif err and err ~= "" then
+							opsnotify (table_sets.classnotichin, gettext ("Failed to execute %s for proxy lookup of IP %s with error: %s"):format ("cURL", addr .. tryipcc (addr), repnmdcoutchars (err)))
+						else
+							opsnotify (table_sets.classnotichin, gettext ("Failed to execute %s for proxy lookup of IP %s without code and error."):format ("cURL", addr .. tryipcc (addr)))
+						end
+
+						table.insert (dels, addr)
+					end
+
+					table_othsets.chinskipchecks = true
+
+					for nick, nili in pairs (item ["nick"]) do
+						for targ, tali in pairs (nili) do
+							for _, tada in pairs (tali) do
+								if send then -- send delayed messages
+									if targ == 1 then -- mc
+										VH_OnParsedMsgChat (nick, tada ["data"])
+
+									elseif targ == 2 then -- pm
+										VH_OnParsedMsgPM (nick, tada ["data"], tada ["nick"])
+
+									elseif targ == 3 then -- mcto
+										VH_OnParsedMsgMCTo (nick, tada ["data"], tada ["nick"])
+
+									elseif targ == 4 then -- me
+										VH_OnUserCommand (nick, tada ["data"])
+
+									elseif targ == 5 then -- offline
+										sendoffmsg (nick, tada ["nick"] .. " " .. tada ["data"], getclass (nick))
+									end
+
+								else -- block delayed messages
+									if targ == 2 then -- pm
+										VH:SendToUser ("$To: " .. nick .. " From: " .. tada ["nick"] .. " $<" .. table_othsets.sendfrom .. "> " .. gettext ("You're not allowed to chat due to public proxy detection of your IP address.") .. "|", nick)
+									elseif minhubver (1, 0, 2, 15) then
+										VH:SendToUser ("<" .. table_othsets.sendfrom .. "> " .. gettext ("You're not allowed to chat due to public proxy detection of your IP address.") .. "|", nick, getconfig ("delayed_chat"))
+									else
+										VH:SendToUser ("<" .. table_othsets.sendfrom .. "> " .. gettext ("You're not allowed to chat due to public proxy detection of your IP address.") .. "|", nick)
+									end
+
+									local oddr = getip (tada ["nick"])
+
+									if targ == 1 then -- mc
+										opsnotify (table_sets.classnotichin, gettext ("Blocking main chat message from %s with IP %s detected as public proxy: %s"):format (nick, addr .. tryipcc (addr, nick), tada ["data"]))
+									elseif targ == 2 then -- pm
+										opsnotify (table_sets.classnotichin, gettext ("Blocking private chat message from %s with IP %s detected as public proxy to %s with IP %s: %s"):format (nick, addr .. tryipcc (addr, nick), tada ["nick"], oddr .. tryipcc (oddr, tada ["nick"]), tada ["data"]))
+									elseif targ == 3 then -- mcto
+										opsnotify (table_sets.classnotichin, gettext ("Blocking private main chat message from %s with IP %s detected as public proxy to %s with IP %s: %s"):format (nick, addr .. tryipcc (addr, nick), tada ["nick"], oddr .. tryipcc (oddr, tada ["nick"]), tada ["data"]))
+									elseif targ == 4 then -- me
+										opsnotify (table_sets.classnotichin, gettext ("Blocking third person main chat message from %s with IP %s detected as public proxy: %s"):format (nick, addr .. tryipcc (addr, nick), tada ["data"]))
+									elseif targ == 5 then -- offline
+										opsnotify (table_sets.classnotichin, gettext ("Blocking offline private chat message from %s with IP %s detected as public proxy to %s with IP %s: %s"):format (nick, addr .. tryipcc (addr, nick), tada ["nick"], oddr .. tryipcc (oddr, tada ["nick"]), tada ["data"]))
+									end
+								end
+							end
+						end
+
+						if not send and table_sets.chatintelact == 2 then -- drop only once
+							table_chin [addr]["stat"] = 3
+							opsnotify (table_sets.classnotichin, gettext ("User dropped: %s"):format (nick))
+							VH:Disconnect (nick) -- todo: can we drop user here? maybe drop him at the end of this function, create drop flag
+						end
+					end
+
+					table_othsets.chinskipchecks = false
+					size = size + 1
+				end
+
+			--elseif item.stat == 1 then
+				 -- todo: see if os.execute ("curl &") is faster
+			end
+
+			table_chin [addr]["nick"] = {} -- clear, todo: see if os.execute ("curl &") is faster
+		end
+
+		for _, addr in pairs (dels) do -- delete errored
+			table_chin [addr] = nil
+		end
+	end
 
 	if table_sets.avsearchint > 0 and table_sets.avsearservaddr ~= "" then -- antivirus search server
 		avsearservread () -- todo: read every second?
 	end
 
-	if table_sets.avsearchint > 0 and os.difftime (st, table_othsets.avlastseartick) >= table_sets.avsearchint then -- antivirus search
+	if table_sets.avsearchint > 0 and os.difftime (now, table_othsets.avlastseartick) >= table_sets.avsearchint then -- antivirus search
 		for nick, data in pairs (table_avus) do
-			if os.difftime (st, data [""]) >= table_sets.avuserfree * 60 then
+			if os.difftime (now, data [""]) >= table_sets.avuserfree * 60 then
 				table_avus [nick] = nil
 			end
 		end
@@ -5850,19 +6147,19 @@ function VH_OnTimer (msec)
 			table_othsets.avnextitem = table_othsets.avnextitem + 1
 		end
 
-		table_othsets.avlastseartick = st
+		table_othsets.avlastseartick = now
 	end
 
-	if table_sets.avdbloadint > 0 and table_othsets.ver_curl and os.difftime (st, table_othsets.avlastloadtick) >= (table_sets.avdbloadint * 60) then -- antivirus load
-		loadavdb (st)
-		table_othsets.avlastloadtick = st
+	if table_sets.avdbloadint > 0 and table_othsets.ver_curl and os.difftime (now, table_othsets.avlastloadtick) >= (table_sets.avdbloadint * 60) then -- antivirus load
+		loadavdb (now)
+		table_othsets.avlastloadtick = now
 	end
 
 	if table_sets.votekickclass < 11 then -- vote kicks
 		local dels = {}
 
 		for nick, data in pairs (table_voki) do
-			if os.difftime (st, data.time) >= table_sets.votekickclean * 60 then
+			if os.difftime (now, data.time) >= table_sets.votekickclean * 60 then
 				if getstatus (nick) == 1 then -- only if still online
 					local noti = table_sets.votetimetext
 					noti = noti:gsub ("<count>", _tostring (table_voki [nick].vote))
@@ -5884,14 +6181,14 @@ function VH_OnTimer (msec)
 	end
 
 	if table_sets.remrunning == 1 then -- reminder
-		if os.difftime (st, table_othsets.remseconds) >= 60 then
-			table_othsets.remseconds = st
+		if os.difftime (now, table_othsets.remseconds) >= 60 then
+			table_othsets.remseconds = now
 			sendreminder ()
 		end
 	end
 
 	if table_sets.timebotint > 0 then -- time bot
-		if os.difftime (st, table_othsets.timebotseconds) >= table_sets.timebotint then
+		if os.difftime (now, table_othsets.timebotseconds) >= table_sets.timebotint then
 			installtimebot ()
 		end
 	end
@@ -5901,7 +6198,7 @@ function VH_OnTimer (msec)
 			table_othsets.topicvalue = VH:GetTopic ()
 		end
 
-		if table_othsets.topicvalue and (table_othsets.topicvalue ~= "") and (os.difftime (st, table_othsets.rolltopicsecs) >= table_sets.rolltopicint) then
+		if table_othsets.topicvalue and (table_othsets.topicvalue ~= "") and (os.difftime (now, table_othsets.rolltopicsecs) >= table_sets.rolltopicint) then
 			rolltopic ()
 		end
 	end
@@ -5909,7 +6206,7 @@ function VH_OnTimer (msec)
 	if table_sets.resprunning == 1 then -- chat responder
 		for k, v in pairs (table_resp) do
 			for t, s in pairs (v) do
-				if os.difftime (st, t) >= table_sets.respdelay then
+				if os.difftime (now, t) >= table_sets.respdelay then
 					maintoall (s, 0, 10) -- finally send the message
 					table_resp [k] = nil -- free up queue
 					break
@@ -5919,44 +6216,44 @@ function VH_OnTimer (msec)
 	end
 
 	--if table_othsets.mod_sock and (table_sets.hublistpingint > 0) then -- hublist pinger
-		--if os.difftime (st, table_othsets.hubpingmins) >= (table_sets.hublistpingint * 60) then
+		--if os.difftime (now, table_othsets.hubpingmins) >= (table_sets.hublistpingint * 60) then
 			--hublistping ()
-			--table_othsets.hubpingmins = st -- reset
+			--table_othsets.hubpingmins = now -- reset
 		--end
 	--end
 
 	if table_sets.statscollint > 0 then -- statistics
-		if os.difftime (st, table_othsets.statscollmins) >= (table_sets.statscollint * 60) then
+		if os.difftime (now, table_othsets.statscollmins) >= (table_sets.statscollint * 60) then
 			collectstats ()
-			table_othsets.statscollmins = st -- reset
+			table_othsets.statscollmins = now -- reset
 		end
 	end
 
 	if table_sets.enableuserlog == 1 and table_sets.ulogautoclean > 0 then -- clean up user logger
-		if os.difftime (st, table_othsets.ulogcleanmins) >= 86400 then -- every 24 hours
-			local secs = os.difftime (st, (table_sets.ulogautoclean * 24 * 60 * 60))
+		if os.difftime (now, table_othsets.ulogcleanmins) >= 86400 then -- every 24 hours
+			local secs = os.difftime (now, (table_sets.ulogautoclean * 24 * 60 * 60))
 			local _, rows = VH:SQLQuery ("select `id` from `" .. tbl_sql.ulog .. "` where `time` < " .. _tostring (secs))
 
 			if rows > 0 then
 				VH:SQLQuery ("delete from `" .. tbl_sql.ulog .. "` where `time` < " .. _tostring (secs))
 				opsnotify (table_sets.classnotiledoact, gettext ("Automatically deleted %d user log entries older than %d days."):format (rows, table_sets.ulogautoclean))
-				local tdiff = st + table_sets.srvtimediff
+				local tdiff = now + table_sets.srvtimediff
 				VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('lastcleanulog', " .. _tostring (tdiff) .. ") on duplicate key update `value` = " .. _tostring (tdiff))
 				VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('limcleanulog', " .. _tostring (table_sets.ulogautoclean) .. ") on duplicate key update `value` = " .. _tostring (table_sets.ulogautoclean))
 			end
 
-			table_othsets.ulogcleanmins = st
+			table_othsets.ulogcleanmins = now
 		end
 	end
 
-	if table_sets.autoupdcheck > 0 and table_othsets.ver_curl and table_sets.classnotiledoact ~= 11 and os.difftime (st, table_othsets.lastupdcheck) >= (table_sets.autoupdcheck * 3600) then -- automatic update check
+	if table_sets.autoupdcheck > 0 and table_othsets.ver_curl and table_sets.classnotiledoact ~= 11 and os.difftime (now, table_othsets.lastupdcheck) >= (table_sets.autoupdcheck * 3600) then -- automatic update check
 		autoupdatecheck ()
-		table_othsets.lastupdcheck = st -- reset
+		table_othsets.lastupdcheck = now -- reset
 	end
 
-	if os.difftime (st, table_othsets.collgarb) >= 900 then -- collect garbage every 15 minutes
+	if os.difftime (now, table_othsets.collgarb) >= 900 then -- collect garbage every 15 minutes
 		if table_othsets.ver_lua:sub (1, 3) == "5.0" then collectgarbage () else collectgarbage ("collect") end
-		table_othsets.collgarb = st -- reset
+		table_othsets.collgarb = now -- reset
 	end
 
 	return 1
@@ -6196,7 +6493,7 @@ function VH_OnParsedMsgConnectToMe (nick, other, ip, port)
 			local key = other .. "|" .. nick
 
 			if table_sets.avdetblockmsg ~= 0 and (not table_uumd.avdb [key] or os.difftime (now, table_uumd.avdb [key]) >= table_sets.avdetblockmsg) then
-				maintouser (nick, gettext ("Your connection request is blocked because user that you're trying connect to was detected as virus spreader: %s"): format (other))
+				maintouser (nick, gettext ("Your connection request is blocked because user that you're trying connect to was detected as virus spreader: %s"):format (other))
 				table_uumd.avdb [key] = now
 			end
 
@@ -6296,7 +6593,7 @@ function VH_OnParsedMsgRevConnectToMe (nick, other)
 			local key = other .. "|" .. nick
 
 			if table_sets.avdetblockmsg ~= 0 and (not table_uumd.avdb [key] or os.difftime (now, table_uumd.avdb [key]) >= table_sets.avdetblockmsg) then
-				maintouser (nick, gettext ("Your connection request is blocked because user that you're trying connect to was detected as virus spreader: %s"): format (other))
+				maintouser (nick, gettext ("Your connection request is blocked because user that you're trying connect to was detected as virus spreader: %s"):format (other))
 				table_uumd.avdb [key] = now
 			end
 
@@ -6614,100 +6911,116 @@ function VH_OnParsedMsgPM (from, data, to)
 		return 1
 	end
 
-	local ip = getip (from)
-	local toip = getip (to)
-	local prot = isprotected (from, ip)
-	local fcls = getclass (from)
-	local tcls = getclass (to)
+	local addr, tddr, fcls, tcls = getip (from), getip (to), getclass (from), getclass (to)
+	local prot = isprotected (from, addr)
 
 	if fcls == -1 and to == table_othsets.botnick and data:match ("^" .. table_othsets.ustrig .. "report .+$") then
 		return 1
 	end
 
-	if not prot then -- protection
-		if fcls < table_sets.pmminclass and to ~= table_othsets.botnick then
-			pmtouser (from, to, gettext ("You're not allowed to send private messages."))
-			return 0
-		end
-
-		if table_sets.chatuptime > 0 and table_sets.showuseruptime == 1 and fcls < table_sets.scanbelowclass and table_usup [from] then -- chat uptime
-			local dif = os.time () - table_usup [from]
-
-			if dif < table_sets.chatuptime then
-				opsnotify (table_sets.classnotilowupchat, gettext ("Low chat uptime of %d seconds from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s"):format (dif, from, ip .. tryipcc (ip, from), fcls, to, toip .. tryipcc (toip, to), tcls, data))
-
-				if table_sets.chatuptimeact == 0 then -- message
-					pmtouser (from, to, gettext ("Please wait another %d seconds before using private chat."):format (table_sets.chatuptime - dif))
-
-				elseif table_sets.chatuptimeact == 1 then -- drop
-					opsnotify (table_sets.classnotilowupchat, gettext ("User dropped: %s"):format (from))
-					VH:Disconnect (from)
-
-				--elseif table_sets.chatuptimeact == 2 then -- silent
-					-- nothing to do
-
-				elseif table_sets.chatuptimeact == 3 then -- message to self
-					opsnotify (table_sets.classnotilowupchat, gettext ("User received own message: %s"):format (from))
-					-- not needed for private messages
-				end
-
+	if not table_othsets.chinskipchecks then -- used by chat intelligence
+		if not prot then -- protection
+			if fcls < table_sets.pmminclass and to ~= table_othsets.botnick then
+				pmtouser (from, to, gettext ("You're not allowed to send private messages."))
 				return 0
 			end
-		end
 
-		if table_sets.chatcodeon > 0 and (table_sets.chatcodeflag == 0 or table_sets.chatcodeflag == 2) and fcls <= table_sets.codemaxclass then -- chatcode
-			if not table_code [from] then
-				local vcode, code = genchatcode ()
+			if table_sets.chatuptime > 0 and table_sets.showuseruptime == 1 and fcls < table_sets.scanbelowclass and table_usup [from] then -- chat uptime
+				local dif = os.time () - table_usup [from]
 
-				table_code [from] = {
-					["vcode"] = vcode,
-					["code"] = code,
-					["lock"] = true
-				}
+				if dif < table_sets.chatuptime then
+					opsnotify (table_sets.classnotilowupchat, gettext ("Low chat uptime of %d seconds from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s"):format (dif, from, addr .. tryipcc (addr, from), fcls, to, tddr .. tryipcc (tddr, to), tcls, data))
 
-				local txt = table_sets.codetext:gsub ("<code>", reprexpchars (vcode))
-				pmtouser (from, to, txt)
-				opsnotify (table_sets.classnotichatcode, gettext ("%s with IP %s and class %d tried to speak without chat code in PM to %s with IP %s and class %d."):format (from, ip .. tryipcc (ip, from), fcls, to, toip, tcls))
-				return 0
+					if table_sets.chatuptimeact == 0 then -- message
+						pmtouser (from, to, gettext ("Please wait another %d seconds before using private chat."):format (table_sets.chatuptime - dif))
 
-			elseif table_code [from]["lock"] then
-				local rcode = table_code [from]["code"]
+					elseif table_sets.chatuptimeact == 1 then -- drop
+						opsnotify (table_sets.classnotilowupchat, gettext ("User dropped: %s"):format (from))
+						VH:Disconnect (from)
 
-				if table_sets.chatcodeon == 2 then -- accept lower case
-					rcode = rcode:lower ()
+					--elseif table_sets.chatuptimeact == 2 then -- silent
+						-- nothing to do
+
+					elseif table_sets.chatuptimeact == 3 then -- message to self
+						opsnotify (table_sets.classnotilowupchat, gettext ("User received own message: %s"):format (from))
+						-- not needed for private messages
+					end
+
+					return 0
 				end
+			end
 
-				if data == rcode or data == table_code [from]["code"] then
-					table_code [from]["lock"] = false
-					pmtouser (from, to, gettext ("Code accepted."))
-				else
-					local txt = table_sets.codetext:gsub ("<code>", reprexpchars (table_code [from]["vcode"]))
+			if table_sets.chatcodeon > 0 and (table_sets.chatcodeflag == 0 or table_sets.chatcodeflag == 2) and fcls <= table_sets.codemaxclass then -- chatcode
+				if not table_code [from] then
+					local vcode, code = genchatcode ()
+
+					table_code [from] = {
+						["vcode"] = vcode,
+						["code"] = code,
+						["lock"] = true
+					}
+
+					local txt = table_sets.codetext:gsub ("<code>", reprexpchars (vcode))
 					pmtouser (from, to, txt)
-					opsnotify (table_sets.classnotichatcode, gettext ("%s with IP %s and class %d tried to speak without chat code in PM to %s with IP %s and class %d."):format (from, ip .. tryipcc (ip, from), fcls, to, toip, tcls))
-				end
+					opsnotify (table_sets.classnotichatcode, gettext ("%s with IP %s and class %d tried to speak without chat code in PM to %s with IP %s and class %d."):format (from, addr .. tryipcc (addr, from), fcls, to, tddr, tcls))
+					return 0
 
+				elseif table_code [from]["lock"] then
+					local rcode = table_code [from]["code"]
+
+					if table_sets.chatcodeon == 2 then -- accept lower case
+						rcode = rcode:lower ()
+					end
+
+					if data == rcode or data == table_code [from]["code"] then
+						table_code [from]["lock"] = false
+						pmtouser (from, to, gettext ("Code accepted."))
+
+					else
+						local txt = table_sets.codetext:gsub ("<code>", reprexpchars (table_code [from]["vcode"]))
+						pmtouser (from, to, txt)
+						opsnotify (table_sets.classnotichatcode, gettext ("%s with IP %s and class %d tried to speak without chat code in PM to %s with IP %s and class %d."):format (from, addr .. tryipcc (addr, from), fcls, to, tddr, tcls))
+					end
+
+					return 0
+				end
+			end
+
+			if detchatflood (from, fcls, addr, data, to) then -- flood detection
 				return 0
 			end
-		end
 
-		if detchatflood (from, fcls, ip, data, to) then -- flood detection
-			return 0
-		end
+			if gagipcheck (from, addr, fcls, to, data) then
+				return 0
+			end
 
-		if gagipcheck (from, ip, fcls, to, data) then
-			return 0
-		end
+			if gagccheck (from, addr, fcls, to, data) then
+				return 0
+			end
 
-		if gagccheck (from, ip, fcls, to, data) then
-			return 0
-		end
+			if gagcitycheck (from, addr, fcls, to, data) then
+				return 0
+			end
 
-		if gagcitycheck (from, ip, fcls, to, data) then
-			return 0
-		end
+			if antiscan (from, fcls, data, 2, to, nil) == 0 then -- antispam
+				return 0
+			end
 
-	--elseif table_sets.chatantiflood == 1 then -- update last chat nick, pm not supported
-		--table_othsets.chflonenick = from
+			if table_sets.micheck == 1 and fcls < table_sets.scanbelowclass and checkchatnick (from, fcls, addr) then -- myinfo check
+				return 0
+			end
+
+			if checknopm (from, fcls, to) then -- no pm
+				return 0
+			end
+
+			if chatintelcheck (from, addr, fcls, to, data:match ("^%$To: [^ ]+ From: [^ ]+ %$<[^ ]+> (.*)$") or repnmdcoutchars (data), 2) then -- chat intelligence
+				return 0
+			end
+
+		--elseif table_sets.chatantiflood == 1 then -- update last chat nick, todo: pm not supported
+			--table_othsets.chflonenick = from
+		end
 	end
 
 	----- ---- --- -- -
@@ -6727,8 +7040,9 @@ function VH_OnParsedMsgPM (from, data, to)
 			elseif not VH_OnOpChatMessage then -- backward compatibility
 				addophistoryline (from, data, 3) -- log operator chat
 			end
+
 		else
-			opsnotify (table_sets.classnotibotpm, gettext ("%s with IP %s and class %d sent message to %s: %s"):format (from, ip .. tryipcc (ip, from), fcls, to, data))
+			opsnotify (table_sets.classnotibotpm, gettext ("%s with IP %s and class %d sent message to %s: %s"):format (from, addr .. tryipcc (addr, from), fcls, to, data))
 		end
 
 	----- ---- --- -- -
@@ -6736,6 +7050,7 @@ function VH_OnParsedMsgPM (from, data, to)
 	elseif to == table_othsets.botnick then -- hub security
 		if data:sub (1, 1):match (table_othsets.ustrig) then
 			-- skip
+
 		elseif data:sub (1, 1):match (table_othsets.optrig) then
 			if fcls >= 3 then -- operator command
 				if data:match ("^" .. table_othsets.optrig .. "luaload .*$") or data:match ("^" .. table_othsets.optrig .. "luaunload .*$") or data:match ("^" .. table_othsets.optrig .. "luareload .*$") then
@@ -6763,11 +7078,11 @@ function VH_OnParsedMsgPM (from, data, to)
 				end
 
 			else
-				opsnotify (table_sets.classnotibotpm, gettext ("%s with IP %s and class %d sent message to %s: %s"):format (from, ip .. tryipcc (ip, from), fcls, to, data))
+				opsnotify (table_sets.classnotibotpm, gettext ("%s with IP %s and class %d sent message to %s: %s"):format (from, addr .. tryipcc (addr, from), fcls, to, data))
 			end
 
 		else
-			opsnotify (table_sets.classnotibotpm, gettext ("%s with IP %s and class %d sent message to %s: %s"):format (from, ip .. tryipcc (ip, from), fcls, to, data))
+			opsnotify (table_sets.classnotibotpm, gettext ("%s with IP %s and class %d sent message to %s: %s"):format (from, addr .. tryipcc (addr, from), fcls, to, data))
 		end
 
 	----- ---- --- -- -
@@ -6777,14 +7092,11 @@ function VH_OnParsedMsgPM (from, data, to)
 			if fcls == 10 then
 				if data:sub (1, 1):find (table_othsets.optrig) then -- accept operator command
 					VH_OnOperatorCommand (from, data)
-				else
-					for x in getnicklist ():gmatch ("([^$]+)%$%$") do
-						if not isbot (x) then
-							local cl = getclass (x)
 
-							if x ~= from and cl == 10 then -- class 10 only
-								VH:SendToUser ("$To: " .. x .. " From: " .. to .. " $<" .. from .. "> " .. data .. "|", x)
-							end
+				else
+					for user in getnicklist ():gmatch ("[^ %$]+") do
+						if not isbot (user) and user ~= from and getclass (user) == 10 then -- class 10 only
+							VH:SendToUser ("$To: " .. user .. " From: " .. to .. " $<" .. from .. "> " .. data .. "|", user)
 						end
 					end
 				end
@@ -6795,7 +7107,7 @@ function VH_OnParsedMsgPM (from, data, to)
 				end
 
 			else
-				opsnotify (table_sets.classnotibotpm, gettext ("%s with IP %s and class %d sent message to %s: %s"):format (from, ip .. tryipcc (ip, from), fcls, to, data))
+				opsnotify (table_sets.classnotibotpm, gettext ("%s with IP %s and class %d sent message to %s: %s"):format (from, addr .. tryipcc (addr, from), fcls, to, data))
 				VH:SendToUser ("$To: " .. from .. " From: " .. to .. " $<" .. to .. "> " .. gettext ("I'm probably away. State your business and I might answer later if you're lucky.") .. "|", from)
 			end
 		end
@@ -6803,8 +7115,8 @@ function VH_OnParsedMsgPM (from, data, to)
 	----- ---- --- -- -
 
 	elseif to == table_sets.sefifeednick then -- search filter feed
-		if table_sets.enablesearfilt == 1 and table_sets.addsefifeed == 1 and fcls < 3 then
-			opsnotify (table_sets.classnotibotpm, gettext ("%s with IP %s and class %d sent message to %s: %s"):format (from, ip .. tryipcc (ip, from), fcls, to, data))
+		if table_sets.enablesearfilt >= 1 and table_sets.addsefifeed == 1 and fcls < 3 then
+			opsnotify (table_sets.classnotibotpm, gettext ("%s with IP %s and class %d sent message to %s: %s"):format (from, addr .. tryipcc (addr, from), fcls, to, data))
 			VH:SendToUser ("$To: " .. from .. " From: " .. to .. " $<" .. to .. "> " .. gettext ("I'm probably away. State your business and I might answer later if you're lucky.") .. "|", from)
 		end
 
@@ -6812,23 +7124,13 @@ function VH_OnParsedMsgPM (from, data, to)
 
 	elseif table_othsets.lasttimenick and (to == table_othsets.lasttimenick) then -- time bot
 		if table_sets.timebotint > 0 then
-			opsnotify (table_sets.classnotibotpm, gettext ("%s with IP %s and class %d sent message to %s: %s"):format (from, ip .. tryipcc (ip, from), fcls, to, data))
+			opsnotify (table_sets.classnotibotpm, gettext ("%s with IP %s and class %d sent message to %s: %s"):format (from, addr .. tryipcc (addr, from), fcls, to, data))
 			VH:SendToUser ("$To: " .. from .. " From: " .. to .. " $<" .. to .. "> " .. gettext ("I'm probably away. State your business and I might answer later if you're lucky.") .. "|", from)
 		end
 
 	----- ---- --- -- -
 
 	else -- other
-		if not prot then -- protection
-			if antiscan (from, fcls, data, 2, to, nil) == 0 then -- scan before broadcasting
-				return 0
-			end
-
-			if table_sets.micheck == 1 and fcls < table_sets.scanbelowclass and checkchatnick (from, fcls, ip) then -- myinfo check
-				return 0
-			end
-		end
-
 		if broadcastchatroom (to, from, data, fcls) then -- check chatrooms
 			return 0
 		end
@@ -6837,41 +7139,28 @@ function VH_OnParsedMsgPM (from, data, to)
 			return 0
 		end
 
-		-- todo: send pm to real nick when is sent to custom nick, do it after all checks and replaces
-		--if broadcastcustnick (to, from, data) then -- check custom nicks
+		--if broadcastcustnick (to, from, data) then -- check custom nicks, todo: send pm to real nick when is sent to custom nick, do it after all checks and replaces
 			--return 0
 		--end
 
-		if checknopm (from, fcls, to) then -- no pm
-			return 0
-		end
-
-		local pmdat = data
+		local fake, pmdat = from, data
 
 		if table_sets.replrunning == 1 and (table_sets.replprotect == 0 or not prot) and (table_sets.norepltoops == 0 or tcls < 3) then -- replacer
-			pmdat = replchatmsg (from, ip, fcls, pmdat, 2)
+			pmdat = replchatmsg (from, addr, fcls, pmdat, 2)
 		end
 
 		if table_sets.custnickclass < 11 then -- use custom nick for sender in receivers message
-			local custnick = getcustnick (from)
+			fake = getcustnick (from) or fake
+		end
 
-			if custnick then
-				if data ~= pmdat then
-					opsnotify (table_sets.classnotirepl, gettext ("Message replaced for user with IP %s and class %d in PM to %s with IP %s and class %d: <%s> %s"):format (ip .. tryipcc (ip, from), fcls, to, toip .. tryipcc (toip, to), tcls, from, data))
-				end
+		local moda = data ~= pmdat -- only if modified
 
-				VH:SendToUser ("$To: " .. to .. " From: " .. from .. " $<" .. custnick .. "> " .. pmdat .. "|", to)
-				return 0
-
-			elseif data ~= pmdat then
-				opsnotify (table_sets.classnotirepl, gettext ("Message replaced for user with IP %s and class %d in PM to %s with IP %s and class %d: <%s> %s"):format (ip .. tryipcc (ip, from), fcls, to, toip .. tryipcc (toip, to), tcls, from, data))
-				VH:SendToUser ("$To: " .. to .. " From: " .. from .. " $<" .. from .. "> " .. pmdat .. "|", to)
-				return 0
+		if moda or fake ~= from or table_othsets.chinskipchecks then -- send delayed message manually aswell
+			if moda then
+				opsnotify (table_sets.classnotirepl, gettext ("Message replaced for user with IP %s and class %d in PM to %s with IP %s and class %d: <%s> %s"):format (addr .. tryipcc (addr, from), fcls, to, tddr .. tryipcc (tddr, to), tcls, from, data))
 			end
 
-		elseif data ~= pmdat then
-			opsnotify (table_sets.classnotirepl, gettext ("Message replaced for user with IP %s and class %d in PM to %s with IP %s and class %d: <%s> %s"):format (ip .. tryipcc (ip, from), fcls, to, toip .. tryipcc (toip, to), tcls, from, data))
-			VH:SendToUser ("$To: " .. to .. " From: " .. from .. " $<" .. from .. "> " .. pmdat .. "|", to)
+			VH:SendToUser ("$To: " .. to .. " From: " .. from .. " $<" .. fake .. "> " .. pmdat .. "|", to)
 			return 0
 		end
 	end
@@ -6886,190 +7175,143 @@ function VH_OnParsedMsgMCTo (from, data, to)
 		return 1
 	end
 
-	local ip = getip (from)
-	local toip = getip (to)
-	local prot = isprotected (from, ip)
-	local fcls = getclass (from)
-	local tcls = getclass (to)
+	local addr, tddr, fcls, tcls = getip (from), getip (to), getclass (from), getclass (to)
+	local prot = isprotected (from, addr)
 
-	if not prot then -- protection
-		if fcls < table_sets.pmminclass then
-			maintouser (from, gettext ("You're not allowed to send private messages."))
-			return 0
-		end
-
-		if table_sets.chatuptime > 0 and table_sets.showuseruptime == 1 and fcls < table_sets.scanbelowclass and table_usup [from] then -- chat uptime
-			local dif = os.time () - table_usup [from]
-
-			if dif < table_sets.chatuptime then
-				opsnotify (table_sets.classnotilowupchat, gettext ("Low chat uptime of %d seconds from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s"):format (dif, from, ip .. tryipcc (ip, from), fcls, to, toip .. tryipcc (toip, to), tcls, data))
-
-				if table_sets.chatuptimeact == 0 then -- message
-					maintouser (from, gettext ("Please wait another %d seconds before using private chat."):format (table_sets.chatuptime - dif))
-
-				elseif table_sets.chatuptimeact == 1 then -- drop
-					opsnotify (table_sets.classnotilowupchat, gettext ("User dropped: %s"):format (from))
-					VH:Disconnect (from)
-				--elseif table_sets.chatuptimeact == 2 then -- silent
-					-- nothing to do
-
-				elseif table_sets.chatuptimeact == 3 then -- message to self
-					opsnotify (table_sets.classnotilowupchat, gettext ("User received own message: %s"):format (from))
-					-- not needed for private messages
-				end
-
+	if not table_othsets.chinskipchecks then -- used by chat intelligence
+		if not prot then -- protection
+			if fcls < table_sets.pmminclass then
+				maintouser (from, gettext ("You're not allowed to send private messages."))
 				return 0
 			end
-		end
 
-		if table_sets.chatcodeon > 0 and (table_sets.chatcodeflag == 0 or table_sets.chatcodeflag == 2) and fcls <= table_sets.codemaxclass then -- chatcode
-			if not table_code [from] then
-				local vcode, code = genchatcode ()
+			if table_sets.chatuptime > 0 and table_sets.showuseruptime == 1 and fcls < table_sets.scanbelowclass and table_usup [from] then -- chat uptime
+				local dif = os.time () - table_usup [from]
 
-				table_code [from] = {
-					["vcode"] = vcode,
-					["code"] = code,
-					["lock"] = true
-				}
+				if dif < table_sets.chatuptime then
+					opsnotify (table_sets.classnotilowupchat, gettext ("Low chat uptime of %d seconds from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s"):format (dif, from, addr .. tryipcc (addr, from), fcls, to, tddr .. tryipcc (tddr, to), tcls, data))
 
-				local txt = table_sets.codetext:gsub ("<code>", reprexpchars (vcode))
-				maintouser (from, txt)
-				opsnotify (table_sets.classnotichatcode, gettext ("%s with IP %s and class %d tried to speak without chat code in PM to %s with IP %s and class %d."):format (from, ip .. tryipcc (ip, from), fcls, to, toip, tcls))
-				return 0
+					if table_sets.chatuptimeact == 0 then -- message
+						maintouser (from, gettext ("Please wait another %d seconds before using private chat."):format (table_sets.chatuptime - dif))
 
-			elseif table_code [from]["lock"] then
-				local rcode = table_code [from]["code"]
+					elseif table_sets.chatuptimeact == 1 then -- drop
+						opsnotify (table_sets.classnotilowupchat, gettext ("User dropped: %s"):format (from))
+						VH:Disconnect (from)
 
-				if table_sets.chatcodeon == 2 then -- accept lower case
-					rcode = rcode:lower ()
+					--elseif table_sets.chatuptimeact == 2 then -- silent
+						-- nothing to do
+
+					elseif table_sets.chatuptimeact == 3 then -- message to self
+						opsnotify (table_sets.classnotilowupchat, gettext ("User received own message: %s"):format (from)) -- not needed for private messages
+					end
+
+					return 0
 				end
+			end
 
-				if data == rcode or data == table_code [from]["code"] then
-					table_code [from]["lock"] = false
-					maintouser (from, gettext ("Code accepted."))
-				else
-					local txt = table_sets.codetext:gsub ("<code>", reprexpchars (table_code [from]["vcode"]))
+			if table_sets.chatcodeon > 0 and (table_sets.chatcodeflag == 0 or table_sets.chatcodeflag == 2) and fcls <= table_sets.codemaxclass then -- chatcode
+				if not table_code [from] then
+					local vcode, code = genchatcode ()
+
+					table_code [from] = {
+						["vcode"] = vcode,
+						["code"] = code,
+						["lock"] = true
+					}
+
+					local txt = table_sets.codetext:gsub ("<code>", reprexpchars (vcode))
 					maintouser (from, txt)
-					opsnotify (table_sets.classnotichatcode, gettext ("%s with IP %s and class %d tried to speak without chat code in PM to %s with IP %s and class %d."):format (from, ip .. tryipcc (ip, from), fcls, to, toip, tcls))
-				end
+					opsnotify (table_sets.classnotichatcode, gettext ("%s with IP %s and class %d tried to speak without chat code in PM to %s with IP %s and class %d."):format (from, addr .. tryipcc (addr, from), fcls, to, tddr, tcls))
+					return 0
 
+				elseif table_code [from]["lock"] then
+					local rcode = table_code [from]["code"]
+
+					if table_sets.chatcodeon == 2 then -- accept lower case
+						rcode = rcode:lower ()
+					end
+
+					if data == rcode or data == table_code [from]["code"] then
+						table_code [from]["lock"] = false
+						maintouser (from, gettext ("Code accepted."))
+
+					else
+						local txt = table_sets.codetext:gsub ("<code>", reprexpchars (table_code [from]["vcode"]))
+						maintouser (from, txt)
+						opsnotify (table_sets.classnotichatcode, gettext ("%s with IP %s and class %d tried to speak without chat code in PM to %s with IP %s and class %d."):format (from, addr .. tryipcc (addr, from), fcls, to, tddr, tcls))
+					end
+
+					return 0
+				end
+			end
+
+			if detchatflood (from, fcls, addr, data, to) then -- flood detection
 				return 0
 			end
-		end
 
-		if detchatflood (from, fcls, ip, data, to) then -- flood detection
-			return 0
-		end
+			if gagipcheck (from, addr, fcls, to, data) then
+				return 0
+			end
 
-		if gagipcheck (from, ip, fcls, to, data) then
-			return 0
-		end
+			if gagccheck (from, addr, fcls, to, data) then
+				return 0
+			end
 
-		if gagccheck (from, ip, fcls, to, data) then
-			return 0
-		end
+			if gagcitycheck (from, addr, fcls, to, data) then
+				return 0
+			end
 
-		if gagcitycheck (from, ip, fcls, to, data) then
-			return 0
-		end
+			if antiscan (from, fcls, data, 2, to, nil) == 0 then -- antispam
+				return 0
+			end
 
-	--elseif table_sets.chatantiflood == 1 then -- update last chat nick, mcto not supported
-		--table_othsets.chflonenick = from
+			if table_sets.micheck == 1 and fcls < table_sets.scanbelowclass and checkchatnick (from, fcls, addr) then -- myinfo check
+				return 0
+			end
+
+			if checknopm (from, fcls, to) then -- no pm
+				return 0
+			end
+
+			if chatintelcheck (from, addr, fcls, to, data:match ("^%$MCTo: [^ ]+ From: [^ ]+ %$<[^ ]+> (.*)$") or repnmdcoutchars (data), 3) then -- chat intelligence
+				return 0
+			end
+
+		--elseif table_sets.chatantiflood == 1 then -- update last chat nick, mcto not supported
+			--table_othsets.chflonenick = from
+		end
 	end
 
-	if not prot then -- protection
-		if antiscan (from, fcls, data, 2, to, nil) == 0 then -- antispam
-			return 0
-		end
-
-		if table_sets.micheck == 1 and fcls < table_sets.scanbelowclass and checkchatnick (from, fcls, ip) then -- myinfo check
-			return 0
-		end
-	end
-
-	if checknopm (from, fcls, to) then -- no pm
-		return 0
-	end
-
-	local pmdat = data
+	local fake, pmdat = from, data
 
 	if table_sets.replrunning == 1 and (table_sets.replprotect == 0 or not prot) and (table_sets.norepltoops == 0 or tcls < 3) then -- replacer
-		pmdat = replchatmsg (from, ip, fcls, pmdat, 2)
+		pmdat = replchatmsg (from, addr, fcls, pmdat, 2)
 	end
 
 	if table_sets.custnickclass < 11 then -- use custom nick for sender in receivers message
-		local custnick = getcustnick (from)
+		fake = getcustnick (from) or fake
+	end
 
-		if custnick then
-			if data ~= pmdat then
-				opsnotify (table_sets.classnotirepl, gettext ("Message replaced for user with IP %s and class %d in PM to %s with IP %s and class %d: <%s> %s"):format (ip .. tryipcc (ip, from), fcls, to, toip .. tryipcc (toip, to), tcls, from, data))
-			end
+	local moda = data ~= pmdat -- only if modified
 
-			local mcto = false
-
-			if table_refu.InUserSupports then -- check if client supports mcto
-				local on, has = VH:InUserSupports (to, "MCTo")
-
-				if on and has and tonumber (has) == 1 then
-					mcto = true
-				end
-			end
-
-			if mcto then
-				VH:SendToUser ("$MCTo: " .. to .. " From: " .. from .. " $<" .. custnick .. "> " .. pmdat .. "|", to)
-			else
-				if minhubver (1, 0, 2, 15) then
-					VH:SendToUser ("<" .. custnick .. "> " .. pmdat .. "|", to, getconfig ("delayed_chat"))
-				else
-					VH:SendToUser ("<" .. custnick .. "> " .. pmdat .. "|", to)
-				end
-			end
-
-			return 0
-		elseif data ~= pmdat then
-			opsnotify (table_sets.classnotirepl, gettext ("Message replaced for user with IP %s and class %d in PM to %s with IP %s and class %d: <%s> %s"):format (ip .. tryipcc (ip, from), fcls, to, toip .. tryipcc (toip, to), tcls, from, data))
-			local mcto = false
-
-			if table_refu.InUserSupports then -- check if client supports mcto
-				local on, has = VH:InUserSupports (to, "MCTo")
-
-				if on and has and tonumber (has) == 1 then
-					mcto = true
-				end
-			end
-
-			if mcto then
-				VH:SendToUser ("$MCTo: " .. to .. " From: " .. from .. " $<" .. from .. "> " .. pmdat .. "|", to)
-			else
-				if minhubver (1, 0, 2, 15) then
-					VH:SendToUser ("<" .. from .. "> " .. pmdat .. "|", to, getconfig ("delayed_chat"))
-				else
-					VH:SendToUser ("<" .. from .. "> " .. pmdat .. "|", to)
-				end
-			end
-
-			return 0
+	if moda or fake ~= from or table_othsets.chinskipchecks then -- send delayed message manually aswell
+		if moda then
+			opsnotify (table_sets.classnotirepl, gettext ("Message replaced for user with IP %s and class %d in PM to %s with IP %s and class %d: <%s> %s"):format (addr .. tryipcc (addr, from), fcls, to, tddr .. tryipcc (tddr, to), tcls, from, data))
 		end
-	elseif data ~= pmdat then
-		opsnotify (table_sets.classnotirepl, gettext ("Message replaced for user with IP %s and class %d in PM to %s with IP %s and class %d: <%s> %s"):format (ip .. tryipcc (ip, from), fcls, to, toip .. tryipcc (toip, to), tcls, from, data))
-		local mcto = false
 
-		if table_refu.InUserSupports then -- check if client supports mcto
+		if table_refu.InUserSupports then -- check if other user supports mcto
 			local on, has = VH:InUserSupports (to, "MCTo")
 
 			if on and has and tonumber (has) == 1 then
-				mcto = true
+				VH:SendToUser ("$MCTo: " .. to .. " From: " .. from .. " $<" .. fake .. "> " .. pmdat .. "|", to)
+				return 0
 			end
 		end
 
-		if mcto then
-			VH:SendToUser ("$MCTo: " .. to .. " From: " .. from .. " $<" .. from .. "> " .. pmdat .. "|", to)
+		if minhubver (1, 0, 2, 15) then
+			VH:SendToUser ("<" .. fake .. "> " .. pmdat .. "|", to, getconfig ("delayed_chat"))
 		else
-			if minhubver (1, 0, 2, 15) then
-				VH:SendToUser ("<" .. from .. "> " .. pmdat .. "|", to, getconfig ("delayed_chat"))
-			else
-				VH:SendToUser ("<" .. from .. "> " .. pmdat .. "|", to)
-			end
+			VH:SendToUser ("<" .. fake .. "> " .. pmdat .. "|", to)
 		end
 
 		return 0
@@ -7085,120 +7327,130 @@ function VH_OnParsedMsgChat (nick, data)
 		return 1
 	end
 
-	local ucl = getclass (nick)
+	local clas = getclass (nick)
 
-	if ucl < getconfig ("mainchat_class") then
+	if clas < getconfig ("mainchat_class") then
 		return 1
 	end
 
-	local ip = getip (nick)
-	local prot = isprotected (nick, ip)
+	local addr = getip (nick)
+	local prot = isprotected (nick, addr)
 
-	if not prot then -- protection
-		if table_sets.chatuptime > 0 and table_sets.showuseruptime == 1 and ucl < table_sets.scanbelowclass and table_usup [nick] then -- chat uptime
-			local dif = os.time () - table_usup [nick]
+	if not table_othsets.chinskipchecks then -- used by chat intelligence
+		if not prot then -- protection
+			if table_sets.chatuptime > 0 and table_sets.showuseruptime == 1 and clas < table_sets.scanbelowclass and table_usup [nick] then -- chat uptime
+				local dif = os.time () - table_usup [nick]
 
-			if dif < table_sets.chatuptime then
-				opsnotify (table_sets.classnotilowupchat, gettext ("Low chat uptime of %d seconds from %s with IP %s and class %d in MC: %s"):format (dif, nick, ip .. tryipcc (ip, nick), ucl, data))
+				if dif < table_sets.chatuptime then
+					opsnotify (table_sets.classnotilowupchat, gettext ("Low chat uptime of %d seconds from %s with IP %s and class %d in MC: %s"):format (dif, nick, addr .. tryipcc (addr, nick), clas, data))
 
-				if table_sets.chatuptimeact == 0 then -- message
-					maintouser (nick, gettext ("Please wait another %d seconds before using public chat."):format (table_sets.chatuptime - dif))
-				elseif table_sets.chatuptimeact == 1 then -- drop
-					opsnotify (table_sets.classnotilowupchat, gettext ("User dropped: %s"):format (nick))
-					VH:Disconnect (nick)
-				--elseif table_sets.chatuptimeact == 2 then -- silent
-					-- nothing to do
-				elseif table_sets.chatuptimeact == 3 then -- message to self
-					opsnotify (table_sets.classnotilowupchat, gettext ("User received own message: %s"):format (nick))
-					maintoself (nick, data)
+					if table_sets.chatuptimeact == 0 then -- message
+						maintouser (nick, gettext ("Please wait another %d seconds before using public chat."):format (table_sets.chatuptime - dif))
+
+					elseif table_sets.chatuptimeact == 1 then -- drop
+						opsnotify (table_sets.classnotilowupchat, gettext ("User dropped: %s"):format (nick))
+						VH:Disconnect (nick)
+
+					--elseif table_sets.chatuptimeact == 2 then -- silent
+						-- nothing to do
+
+					elseif table_sets.chatuptimeact == 3 then -- message to self
+						opsnotify (table_sets.classnotilowupchat, gettext ("User received own message: %s"):format (nick))
+						maintoself (nick, data)
+					end
+
+					return 0
 				end
-
-				return 0
 			end
-		end
 
-		if table_sets.chatcodeon > 0 and (table_sets.chatcodeflag == 0 or table_sets.chatcodeflag == 1) and ucl <= table_sets.codemaxclass then -- chatcode
-			if not table_code [nick] then
-				local vcode, code = genchatcode ()
+			if table_sets.chatcodeon > 0 and (table_sets.chatcodeflag == 0 or table_sets.chatcodeflag == 1) and clas <= table_sets.codemaxclass then -- chatcode
+				if not table_code [nick] then
+					local vcode, code = genchatcode ()
 
-				table_code [nick] = {
-					["vcode"] = vcode,
-					["code"] = code,
-					["lock"] = true
-				}
+					table_code [nick] = {
+						["vcode"] = vcode,
+						["code"] = code,
+						["lock"] = true
+					}
 
-				local txt = table_sets.codetext:gsub ("<code>", reprexpchars (vcode))
-				maintouser (nick, txt)
-				opsnotify (table_sets.classnotichatcode, gettext ("%s with IP %s and class %d tried to speak in MC without chat code: <%s> %s"):format (nick, ip .. tryipcc (ip, nick), ucl, nick, data))
-				return 0
-			elseif table_code [nick]["lock"] then
-				local rcode = table_code [nick]["code"]
-
-				if table_sets.chatcodeon == 2 then -- accept lower case
-					rcode = rcode:lower ()
-				end
-
-				if data == rcode or data == table_code [nick]["code"] then
-					table_code [nick]["lock"] = false
-					maintouser (nick, gettext ("Code accepted."))
-				else
-					local txt = table_sets.codetext:gsub ("<code>", reprexpchars (table_code [nick]["vcode"]))
+					local txt = table_sets.codetext:gsub ("<code>", reprexpchars (vcode))
 					maintouser (nick, txt)
-					opsnotify (table_sets.classnotichatcode, gettext ("%s with IP %s and class %d tried to speak in MC without chat code: <%s> %s"):format (nick, ip .. tryipcc (ip, nick), ucl, nick, data))
-				end
+					opsnotify (table_sets.classnotichatcode, gettext ("%s with IP %s and class %d tried to speak in MC without chat code: <%s> %s"):format (nick, addr .. tryipcc (addr, nick), clas, nick, data))
+					return 0
 
+				elseif table_code [nick]["lock"] then
+					local rcode = table_code [nick]["code"]
+
+					if table_sets.chatcodeon == 2 then -- accept lower case
+						rcode = rcode:lower ()
+					end
+
+					if data == rcode or data == table_code [nick]["code"] then
+						table_code [nick]["lock"] = false
+						maintouser (nick, gettext ("Code accepted."))
+					else
+						local txt = table_sets.codetext:gsub ("<code>", reprexpchars (table_code [nick]["vcode"]))
+						maintouser (nick, txt)
+						opsnotify (table_sets.classnotichatcode, gettext ("%s with IP %s and class %d tried to speak in MC without chat code: <%s> %s"):format (nick, addr .. tryipcc (addr, nick), clas, nick, data))
+					end
+
+					return 0
+				end
+			end
+
+			if detchatflood (nick, clas, addr, data, nil) then -- flood detection
 				return 0
 			end
-		end
 
-		if detchatflood (nick, ucl, ip, data, nil) then -- flood detection
-			return 0
-		end
+			if gagipcheck (nick, addr, clas, nil, data) then
+				return 0
+			end
 
-		if gagipcheck (nick, ip, ucl, nil, data) then
-			return 0
-		end
+			if gagccheck (nick, addr, clas, nil, data) then
+				return 0
+			end
 
-		if gagccheck (nick, ip, ucl, nil, data) then
-			return 0
-		end
+			if gagcitycheck (nick, addr, clas, nil, data) then
+				return 0
+			end
 
-		if gagcitycheck (nick, ip, ucl, nil, data) then
-			return 0
-		end
+			if antiscan (nick, clas, data, 1, nil, nil) == 0 then -- antispam
+				return 0
+			end
 
-		if antiscan (nick, ucl, data, 1, nil, nil) == 0 then -- antispam
-			return 0
-		end
+			if table_sets.micheck == 1 and clas < table_sets.scanbelowclass and checkchatnick (nick, clas, addr) then -- myinfo check
+				return 0
+			end
 
-		if table_sets.micheck == 1 and ucl < table_sets.scanbelowclass and checkchatnick (nick, ucl, ip) then -- myinfo check
-			return 0
-		end
+			if chatintelcheck (nick, addr, clas, "", data:match ("^<[^ ]+> (.*)$") or repnmdcoutchars (data), 1) then -- chat intelligence
+				return 0
+			end
 
-	elseif table_sets.chatantiflood == 1 then -- update last chat nick
-		table_othsets.chflonenick = nick
+		elseif table_sets.chatantiflood == 1 then -- update last chat nick
+			table_othsets.chflonenick = nick
+		end
 	end
 
-	local fakenick = nick
+	local fake = nick
 
 	if table_sets.funrandomchat == 1 then
-		fakenick = getrandomnick ()
+		fake = getrandomnick ()
 
 		if table_sets.custnickclass < 11 then
-			fakenick = getcustnick (fakenick) or fakenick -- use custom nick
+			fake = getcustnick (fake) or fake -- use custom nick
 		end
+
 	elseif table_sets.custnickclass < 11 then
-		fakenick = getcustnick (nick) or nick
+		fake = getcustnick (nick) or nick
 	end
 
-	local cvdat = data
-	local retval = 1
+	local cvdat, retval = data, 1
 
 	if table_sets.translitmode > 0 then -- convert translit
 		cvdat = convtranslit (cvdat, table_sets.translitmode)
 
 		if data ~= cvdat then -- only when modified
-			if antiscan (nick, ucl, cvdat, 1, nil, nil) == 0 then -- spam detection after translit conversion
+			if antiscan (nick, clas, cvdat, 1, nil, nil) == 0 then -- spam detection after translit conversion
 				return 0
 			end
 
@@ -7206,7 +7458,7 @@ function VH_OnParsedMsgChat (nick, data)
 		end
 	end
 
-	if table_sets.tolowcharcase == 1 and ucl < 3 then -- convert char case
+	if table_sets.tolowcharcase == 1 and clas < 3 then -- convert char case
 		cvdat = convcaps (cvdat, true)
 
 		if data ~= cvdat then -- only when modified
@@ -7214,59 +7466,70 @@ function VH_OnParsedMsgChat (nick, data)
 		end
 	end
 
-	cvdat = modusrmode (nick, ip, cvdat) -- chat mode
+	cvdat = modusrmode (nick, addr, cvdat) -- chat mode
 
 	if table_sets.replrunning == 1 and (table_sets.replprotect == 0 or not prot) then -- replacer
 		local norepl = cvdat
-		cvdat = replchatmsg (nick, ip, ucl, cvdat, 1)
+		cvdat = replchatmsg (nick, addr, clas, cvdat, 1)
 
 		if norepl ~= cvdat then
-			opsnotify (table_sets.classnotirepl, gettext ("Message replaced for user with IP %s and class %d in MC: <%s> %s"):format (ip .. tryipcc (ip, nick), ucl, nick, data))
+			opsnotify (table_sets.classnotirepl, gettext ("Message replaced for user with IP %s and class %d in MC: <%s> %s"):format (addr .. tryipcc (addr, nick), clas, nick, data))
 		end
 	end
 
-	if data ~= cvdat then
-		retval = 0 -- only when modified
+	if data ~= cvdat then -- only when modified
+		retval = 0
 	end
 
 	if table_sets.useripinchat > 0 then -- ip in chat
-		local pfx = ""
+		local pref = ""
 
 		if table_sets.useripinchat == 2 and table_refu.GetUserCC then
-			local cc = getcc (nick)
+			local code = getcc (nick)
 
-			if not cc or cc == "--" then
-				cc = "??"
+			if not code or code == "" or code == "--" then
+				code = "??"
 			end
 
-			pfx = "[ " .. ip .. " &#124; " .. cc .. " ]"
+			pref = "[ " .. addr .. " &#124; " .. code .. " ]"
 		else
-			pfx = "[ " .. ip .. " ]"
+			pref = "[ " .. addr .. " ]"
 		end
 
 		if minhubver (1, 0, 2, 15) then
-			VH:SendToClass ("<" .. fakenick .. "> " .. cvdat .. "|", 0, 2, getconfig ("delayed_chat"))
-			VH:SendToClass (pfx .. " <" .. fakenick .. "> " .. cvdat .. "|", 3, 10, getconfig ("delayed_chat"))
+			VH:SendToClass ("<" .. fake .. "> " .. cvdat .. "|", 0, 2, getconfig ("delayed_chat"))
+			VH:SendToClass (pref .. " <" .. fake .. "> " .. cvdat .. "|", 3, 10, getconfig ("delayed_chat"))
 		else
-			VH:SendToClass ("<" .. fakenick .. "> " .. cvdat .. "|", 0, 2)
-			VH:SendToClass (pfx .. " <" .. fakenick .. "> " .. cvdat .. "|", 3, 10)
+			VH:SendToClass ("<" .. fake .. "> " .. cvdat .. "|", 0, 2)
+			VH:SendToClass (pref .. " <" .. fake .. "> " .. cvdat .. "|", 3, 10)
 		end
 
 		retval = 0
-	elseif retval == 0 or fakenick ~= nick then -- no ip, only when modified
+
+	elseif retval == 0 or fake ~= nick then -- no ip, only when modified
 		if minhubver (1, 0, 2, 15) then
-			VH:SendToClass ("<" .. fakenick .. "> " .. cvdat .. "|", 0, 10, getconfig ("delayed_chat"))
+			VH:SendToClass ("<" .. fake .. "> " .. cvdat .. "|", 0, 10, getconfig ("delayed_chat"))
 		else
-			VH:SendToClass ("<" .. fakenick .. "> " .. cvdat .. "|", 0, 10)
+			VH:SendToClass ("<" .. fake .. "> " .. cvdat .. "|", 0, 10)
 		end
 
 		retval = 0
 	end
 
-	addmchistoryline (fakenick, nick, cvdat)
-	replyresponder (fakenick, ucl, cvdat)
-	chatrankaccept (nick, ucl)
-	wordrankaccept (nick, ucl, cvdat)
+	if table_othsets.chinskipchecks and retval == 1 then -- send delayed message manually
+		if minhubver (1, 0, 2, 15) then
+			VH:SendToClass ("<" .. fake .. "> " .. cvdat .. "|", 0, 10, getconfig ("delayed_chat"))
+		else
+			VH:SendToClass ("<" .. fake .. "> " .. cvdat .. "|", 0, 10)
+		end
+
+		retval = 0
+	end
+
+	addmchistoryline (fake, nick, cvdat)
+	replyresponder (fake, clas, cvdat)
+	chatrankaccept (nick, clas)
+	wordrankaccept (nick, clas, cvdat)
 	return retval
 end
 
@@ -12436,19 +12699,30 @@ function sendoffmsg (from, line, clas)
 		commandanswer (from, gettext ("The user you're trying to send offline message to is a bot. Message is discarded."))
 
 	else
-		local text = line:match ("^[^ ]+ (.+)$")
-		local addr, stat = getip (from), getstatus (to)
+		local addr, stat, text = getip (from), getstatus (to), line:match ("^[^ ]+ (.+)$")
 
-		if isprotected (from, addr) or antiscan (from, clas, text, 3, to, stat) == 1 or table_sets.micheck == 0 or clas >= table_sets.scanbelowclass or not checkchatnick (from, clas, addr) then -- spam and myinfo checks
-			if stat == 1 then
-				offlinepm (from, to, text)
-				commandanswer (from, gettext ("User %s is online. Sending message directly."):format (to))
-
-			else
-				VH:SQLQuery ("insert into `" .. tbl_sql.off .. "` (`from`, `ip`, `to`, `date`, `message`) values ('" .. repsqlchars (from) .. "', '" .. addr .. "', '" .. repsqlchars (to) .. "', " .. _tostring (os.time () + table_sets.srvtimediff) .. ", '" .. repsqlchars (text) .. "')")
-				commandanswer (from, gettext ("Your offline message stored for user: %s"):format (to))
-				opsnotify (table_sets.classnotioff, gettext ("%s with IP %s and class %d sent offline message."):format (from, addr .. tryipcc (addr, from), clas))
+		if not table_othsets.chinskipchecks and not isprotected (from, addr) then -- used by chat intelligence
+			if antiscan (from, clas, text, 3, to, stat) == 0 then -- antispam
+				return
 			end
+
+			if clas < table_sets.scanbelowclass and table_sets.micheck == 1 and checkchatnick (from, clas, addr) then -- myinfo check
+				return
+			end
+
+			if chatintelcheck (from, addr, clas, to, text, 5) then -- chat intelligence
+				return
+			end
+		end
+
+		if stat == 1 then
+			commandanswer (from, gettext ("User %s is online. Sending message directly."):format (to))
+			offlinepm (from, to, text)
+
+		else
+			VH:SQLQuery ("insert into `" .. tbl_sql.off .. "` (`from`, `ip`, `to`, `date`, `message`) values ('" .. repsqlchars (from) .. "', '" .. addr .. "', '" .. repsqlchars (to) .. "', " .. _tostring (os.time () + table_sets.srvtimediff) .. ", '" .. repsqlchars (text) .. "')")
+			commandanswer (from, gettext ("Your offline message stored for user: %s"):format (to))
+			opsnotify (table_sets.classnotioff, gettext ("%s with IP %s and class %d sent offline message."):format (from, addr .. tryipcc (addr, from), clas))
 		end
 	end
 end
@@ -12546,6 +12820,159 @@ opsnotify (table_sets.classnotiledoact, gettext ("%s with class %d deleted all o
 else
 commandanswer (nick, gettext ("There are no offline messages to remove."))
 end
+end
+
+----- ---- --- -- -
+
+function chatintelcheck (nick, addr, clas, to, data, targ)
+	if table_sets.chatintelon == 0 or table_sets.chatintelemail == "" or clas >= table_sets.scanbelowclass or not table_othsets.ver_curl then
+		return false
+	end
+
+	local size = 0
+
+	for uddr, item in pairs (table_chin) do
+		if addr == uddr then -- address already queued
+			if item.stat < 2 then -- still checking
+				if not item ["nick"][nick] then
+					table_chin [addr]["nick"][nick] = { [1] = {}, [2] = {}, [3] = {}, [4] = {}, [5] = {} }
+				end
+
+				table.insert (table_chin [addr]["nick"][nick][targ], {
+					["nick"] = to,
+					["data"] = data
+				})
+
+				if targ == 2 then -- pm
+					VH:SendToUser ("$To: " .. nick .. " From: " .. to .. " $<" .. table_othsets.sendfrom .. "> " .. gettext ("Your message will be delayed for proxy lookup of your IP address.") .. "|", nick)
+				elseif minhubver (1, 0, 2, 15) then
+					VH:SendToUser ("<" .. table_othsets.sendfrom .. "> " .. gettext ("Your message will be delayed for proxy lookup of your IP address.") .. "|", nick, getconfig ("delayed_chat"))
+				else
+					VH:SendToUser ("<" .. table_othsets.sendfrom .. "> " .. gettext ("Your message will be delayed for proxy lookup of your IP address.") .. "|", nick)
+				end
+
+				local oddr = getip (to)
+
+				if targ == 1 then -- mc
+					opsnotify (table_sets.classnotichin, gettext ("Main chat message from %s with IP %s will be delayed for proxy lookup: %s"):format (nick, addr .. tryipcc (addr, nick), data))
+				elseif targ == 2 then -- pm
+					opsnotify (table_sets.classnotichin, gettext ("Private chat message from %s with IP %s to %s with IP %s will be delayed for proxy lookup."):format (nick, addr .. tryipcc (addr, nick), to, oddr .. tryipcc (oddr, to))) -- dont show message
+				elseif targ == 3 then -- mcto
+					opsnotify (table_sets.classnotichin, gettext ("Private main chat message from %s with IP %s to %s with IP %s will be delayed for proxy lookup."):format (nick, addr .. tryipcc (addr, nick), to, oddr .. tryipcc (oddr, to))) -- dont show message
+				elseif targ == 4 then -- me
+					opsnotify (table_sets.classnotichin, gettext ("Third person main chat message from %s with IP %s will be delayed for proxy lookup: %s"):format (nick, addr .. tryipcc (addr, nick), data))
+				elseif targ == 5 then -- offline
+					opsnotify (table_sets.classnotichin, gettext ("Offline private chat message from %s with IP %s to %s with IP %s will be delayed for proxy lookup."):format (nick, addr .. tryipcc (addr, nick), to, oddr .. tryipcc (oddr, to))) -- dont show message
+				end
+
+				return true
+
+			elseif item.stat == 2 or item.stat == 3 then -- block message and drop user
+				if targ == 2 then -- pm
+					VH:SendToUser ("$To: " .. nick .. " From: " .. to .. " $<" .. table_othsets.sendfrom .. "> " .. gettext ("You're not allowed to chat due to public proxy detection of your IP address.") .. "|", nick)
+				elseif minhubver (1, 0, 2, 15) then
+					VH:SendToUser ("<" .. table_othsets.sendfrom .. "> " .. gettext ("You're not allowed to chat due to public proxy detection of your IP address.") .. "|", nick, getconfig ("delayed_chat"))
+				else
+					VH:SendToUser ("<" .. table_othsets.sendfrom .. "> " .. gettext ("You're not allowed to chat due to public proxy detection of your IP address.") .. "|", nick)
+				end
+
+				local oddr = getip (to)
+
+				if targ == 1 then -- mc
+					opsnotify (table_sets.classnotichin, gettext ("Blocking main chat message from %s with IP %s detected as public proxy: %s"):format (nick, addr .. tryipcc (addr, nick), data))
+				elseif targ == 2 then -- pm
+					opsnotify (table_sets.classnotichin, gettext ("Blocking private chat message from %s with IP %s detected as public proxy to %s with IP %s: %s"):format (nick, addr .. tryipcc (addr, nick), to, oddr .. tryipcc (oddr, to), data))
+				elseif targ == 3 then -- mcto
+					opsnotify (table_sets.classnotichin, gettext ("Blocking private main chat message from %s with IP %s detected as public proxy to %s with IP %s: %s"):format (nick, addr .. tryipcc (addr, nick), to, oddr .. tryipcc (oddr, to), data))
+				elseif targ == 4 then -- me
+					opsnotify (table_sets.classnotichin, gettext ("Blocking third person main chat message from %s with IP %s detected as public proxy: %s"):format (nick, addr .. tryipcc (addr, nick), data))
+				elseif targ == 5 then -- offline
+					opsnotify (table_sets.classnotichin, gettext ("Blocking offline private chat message from %s with IP %s detected as public proxy to %s with IP %s: %s"):format (nick, addr .. tryipcc (addr, nick), to, oddr .. tryipcc (oddr, to), data))
+				end
+
+				if item.stat == 3 or table_sets.chatintelact == 2 then -- drop user
+					opsnotify (table_sets.classnotichin, gettext ("User dropped: %s"):format (nick))
+					VH:Disconnect (nick)
+				end
+
+				return true
+
+			elseif item.stat == 4 then -- exception
+				return false
+			end
+
+		elseif item.stat == 0 then -- count queue
+			size = size + 1
+		end
+	end
+
+	if size < table_sets.chatintelqueue then -- queue size
+		local now = os.time ()
+
+		if table_othsets.chincount == 0 then -- daily quote
+			table_othsets.chinquotetime = now
+
+		elseif table_othsets.chincount >= table_sets.chatintelquote then
+			if os.difftime (now, table_othsets.chinquotetime) >= table_othsets.chinquotewait then
+				opsnotify (table_sets.classnotichin, gettext ("Resetting proxy lookup daily quote limit: %d"):format (table_sets.chatintelquote))
+				table_othsets.chincount = 0
+
+			else
+				opsnotify (table_sets.classnotichin, gettext ("Proxy lookup daily quote limit reached on chat message from user with IP %s: %s"):format (addr .. tryipcc (addr, nick), nick))
+				return false
+			end
+		end
+
+		if targ == 2 then -- pm
+			VH:SendToUser ("$To: " .. nick .. " From: " .. to .. " $<" .. table_othsets.sendfrom .. "> " .. gettext ("Your message will be delayed for proxy lookup of your IP address.") .. "|", nick)
+		elseif minhubver (1, 0, 2, 15) then
+			VH:SendToUser ("<" .. table_othsets.sendfrom .. "> " .. gettext ("Your message will be delayed for proxy lookup of your IP address.") .. "|", nick, getconfig ("delayed_chat"))
+		else
+			VH:SendToUser ("<" .. table_othsets.sendfrom .. "> " .. gettext ("Your message will be delayed for proxy lookup of your IP address.") .. "|", nick)
+		end
+
+		local oddr = getip (to)
+
+		if targ == 1 then -- mc
+			opsnotify (table_sets.classnotichin, gettext ("Main chat message from %s with IP %s will be delayed for proxy lookup: %s"):format (nick, addr .. tryipcc (addr, nick), data))
+		elseif targ == 2 then -- pm
+			opsnotify (table_sets.classnotichin, gettext ("Private chat message from %s with IP %s to %s with IP %s will be delayed for proxy lookup."):format (nick, addr .. tryipcc (addr, nick), to, oddr .. tryipcc (oddr, to))) -- dont show message
+		elseif targ == 3 then -- mcto
+			opsnotify (table_sets.classnotichin, gettext ("Private main chat message from %s with IP %s to %s with IP %s will be delayed for proxy lookup."):format (nick, addr .. tryipcc (addr, nick), to, oddr .. tryipcc (oddr, to))) -- dont show message
+		elseif targ == 4 then -- me
+			opsnotify (table_sets.classnotichin, gettext ("Third person main chat message from %s with IP %s will be delayed for proxy lookup: %s"):format (nick, addr .. tryipcc (addr, nick), data))
+		elseif targ == 5 then -- offline
+			opsnotify (table_sets.classnotichin, gettext ("Offline private chat message from %s with IP %s to %s with IP %s will be delayed for proxy lookup."):format (nick, addr .. tryipcc (addr, nick), to, oddr .. tryipcc (oddr, to))) -- dont show message
+		end
+
+		table_othsets.chincount = table_othsets.chincount + 1
+
+		table_chin [addr] = { -- add to queue
+			["stat"] = 0,
+			--["time"] = 0, -- todo: use this is we use os.execute ("curl &")
+			["nick"] = {
+				[nick] = {
+					[1] = {}, -- main chat message
+					[2] = {}, -- private message
+					[3] = {}, -- private main chat message
+					[4] = {}, -- me command
+					[5] = {} -- offline message
+				}
+			}
+		}
+
+		table.insert (table_chin [addr]["nick"][nick][targ], {
+			["nick"] = to,
+			["data"] = data
+		})
+
+		return true
+
+	else
+		opsnotify (table_sets.classnotichin, gettext ("Proxy lookup queue limit reached on chat message from user with IP %s: %s"):format (addr .. tryipcc (addr, nick), nick))
+	end
+
+	return false
 end
 
 ----- ---- --- -- -
@@ -17970,12 +18397,18 @@ end
 
 	elseif tvar == "enablesearfilt" then
 		if num then
-			if setto == 0 or setto == 1 then
+			if setto >= 0 and setto <= 2 then
 				ok = true
 
 				if table_sets [tvar] ~= setto then
 					if setto == 0 then -- clean up
 						table_sfbl = {}
+
+						if table_sets [tvar] == 2 then
+							table_othsets.lastsrstr = ""
+							table_othsets.lastsrdir = ""
+							table_othsets.lastsrtth = ""
+						end
 					end
 
 					if table_sets.addsefifeed == 1 then
@@ -17987,7 +18420,7 @@ end
 					end
 				end
 			else
-				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0 " .. gettext ("or") .. " 1"))
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0 " .. gettext ("to") .. " 2"))
 			end
 		else
 			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
@@ -18000,7 +18433,7 @@ end
 			if setto == 0 or setto == 1 then
 				ok = true
 
-				if table_sets [tvar] ~= setto and table_sets.enablesearfilt == 1 then
+				if table_sets [tvar] ~= setto and table_sets.enablesearfilt >= 1 then
 					if setto == 0 then
 						delhubrobot (table_sets.sefifeednick)
 					else
@@ -18027,7 +18460,7 @@ end
 
 			ok = true
 
-			if table_sets.enablesearfilt == 1 and table_sets.addsefifeed == 1 then
+			if table_sets.enablesearfilt >= 1 and table_sets.addsefifeed == 1 then
 				delhubrobot (table_sets [tvar])
 				addhubrobot (setto, "", 2, "", 0)
 			end
@@ -18749,6 +19182,108 @@ end
 else
 commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
 end
+
+	----- ---- --- -- -
+
+	elseif tvar == "chatintelon" then
+		if num then
+			if setto == 0 or setto == 1 then
+				if setto == 0 then -- clear
+					table_chin = {}
+				elseif setto == 1 and not table_othsets.ver_curl then
+					commandanswer (nick, gettext ("This feature requires following binary installed on your system: %s"):format ("cURL"))
+				else
+					if setto == 1 and table_sets.chatintelemail == "" then
+						commandanswer (nick, gettext ("In order to use this feature you need to set %s to your email address."):format ("chatintelemail"))
+					end
+
+					os.execute ("mkdir \"" .. table_othsets.cfgdir .. table_othsets.chindir .. "\"")
+					ok = true
+				end
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0 " .. gettext ("or") .. " 1"))
+			end
+		else
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
+		end
+
+	----- ---- --- -- -
+
+	elseif tvar == "chatintelemail" then
+		if # setto > 0 then
+			if chatintelon == 1 and table_othsets.ver_curl and table_sets.chatintelemail == "" then
+				os.execute ("mkdir \"" .. table_othsets.cfgdir .. table_othsets.chindir .. "\"")
+			end
+
+			ok = true
+		else
+			commandanswer (nick, gettext ("Configuration variable %s can't be empty."):format (tvar))
+		end
+
+	----- ---- --- -- -
+
+	elseif tvar == "chatintelact" then
+		if num then
+			if setto >= 0 and setto <= 2 then
+				ok = true
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0 " .. gettext ("to") .. " 2"))
+			end
+		else
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
+		end
+
+	----- ---- --- -- -
+
+	elseif tvar == "chatintelqueue" then
+		if num then
+			if setto >= 1 and setto <= 10000 then
+				ok = true
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "1 " .. gettext ("to") .. " 10000"))
+			end
+		else
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
+		end
+
+	----- ---- --- -- -
+
+	elseif tvar == "chatintelmatch" then
+		if num then
+			if setto >= 1 and setto <= 100 then
+				ok = true
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "1 " .. gettext ("to") .. " 100"))
+			end
+		else
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
+		end
+
+	----- ---- --- -- -
+
+	elseif tvar == "chatintelquote" then
+		if num then
+			if setto >= 1 and setto <= 500000 then
+				ok = true
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "1 " .. gettext ("to") .. " 500000"))
+			end
+		else
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
+		end
+
+	----- ---- --- -- -
+
+	elseif tvar == "chatintelmaxreq" then
+		if num then
+			if setto >= 1 and setto <= 100 then
+				ok = true
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "1 " .. gettext ("to") .. " 100"))
+			end
+		else
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
+		end
 
 	----- ---- --- -- -
 
@@ -19566,21 +20101,33 @@ else
 commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
 end
 
------ ---- --- -- -
+	----- ---- --- -- -
 
-elseif tvar == "classnotibadctm" then
-	if num then
-		if (setto >= 0 and setto <= 5) or setto == 10 or setto == 11 then
-			ok = true
+	elseif tvar == "classnotibadctm" then
+		if num then
+			if (setto >= 0 and setto <= 5) or setto == 10 or setto == 11 then
+				ok = true
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0, 1, 2, 3, 4, 5, 10 " .. gettext ("or") .. " 11"))
+			end
 		else
-			commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0, 1, 2, 3, 4, 5, 10 " .. gettext ("or") .. " 11"))
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
 		end
 
-	else
-		commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
-	end
+	----- ---- --- -- -
 
------ ---- --- -- -
+	elseif tvar == "classnotichin" then
+		if num then
+			if (setto >= 0 and setto <= 5) or setto == 10 or setto == 11 then
+				ok = true
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0, 1, 2, 3, 4, 5, 10 " .. gettext ("or") .. " 11"))
+			end
+		else
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
+		end
+
+	----- ---- --- -- -
 
 elseif tvar == "classnotiunk" then
 if num then
@@ -21785,6 +22332,7 @@ function showledoconf (nick)
 	conf = conf .. "\r\n [::] classnotimich = " .. _tostring (table_sets.classnotimich)
 	conf = conf .. "\r\n [::] classnotiflood = " .. _tostring (table_sets.classnotiflood)
 	conf = conf .. "\r\n [::] classnotigagip = " .. _tostring (table_sets.classnotigagip)
+	conf = conf .. "\r\n [::] classnotichin = " .. _tostring (table_sets.classnotichin)
 	conf = conf .. "\r\n [::] classnotilowupreg = " .. _tostring (table_sets.classnotilowupreg)
 	conf = conf .. "\r\n [::] classnotilowupsear = " .. _tostring (table_sets.classnotilowupsear)
 	conf = conf .. "\r\n [::] classnotilowupctm = " .. _tostring (table_sets.classnotilowupctm)
@@ -22042,6 +22590,15 @@ function showledoconf (nick)
 	conf = conf .. "\r\n [::] codecharsep = " .. _tostring (table_sets.codecharsep)
 	conf = conf .. "\r\n [::] codetext = " .. _tostring (table_sets.codetext)
 	conf = conf .. "\r\n [::] pmminclass = " .. _tostring (table_sets.pmminclass)
+	conf = conf .. "\r\n"
+
+	conf = conf .. "\r\n [::] chatintelon = " .. _tostring (table_sets.chatintelon)
+	conf = conf .. "\r\n [::] chatintelact = " .. _tostring (table_sets.chatintelact)
+	conf = conf .. "\r\n [::] chatintelmatch = " .. _tostring (table_sets.chatintelmatch)
+	conf = conf .. "\r\n [::] chatintelqueue = " .. _tostring (table_sets.chatintelqueue)
+	conf = conf .. "\r\n [::] chatintelquote = " .. _tostring (table_sets.chatintelquote)
+	conf = conf .. "\r\n [::] chatintelmaxreq = " .. _tostring (table_sets.chatintelmaxreq)
+	conf = conf .. "\r\n [::] chatintelemail = " .. _tostring (table_sets.chatintelemail)
 	conf = conf .. "\r\n"
 
 	conf = conf .. "\r\n [::] ctmminclass = " .. _tostring (table_sets.ctmminclass)
@@ -23006,7 +23563,7 @@ function avdbreport (nick, addr, size, info, path, spec)
 		end
 
 		if not spec then
-			local data = getmysqlmd5 (string.char (97, 118, 100, 98, 45, 115, 101, 110, 100, 58, 76, 101, 100, 111, 107, 111, 108, 47) .. string.char (ver_ledo:byte (1, # ver_ledo)) .. string.char (46) .. string.char (bld_ledo:byte (1, # bld_ledo)))
+			local data = getmysqlmd5 (string.char (97, 118, 100, 98, 45, 115, 101, 110, 100, 58, 77, 111, 122, 105, 108, 108, 97, 47, 53, 46, 48, 32, 40, 99, 111, 109, 112, 97, 116, 105, 98, 108, 101, 59, 32, 76, 101, 100, 111, 107, 111, 108, 47) .. string.char (ver_ledo:byte (1, # ver_ledo)) .. string.char (46) .. string.char (bld_ledo:byte (1, # bld_ledo)) .. string.char (59, 32, 43, 104, 116, 116, 112, 115, 58, 47, 47, 108, 101, 100, 111, 46, 102, 101, 97, 114, 100, 99, 46, 110, 101, 116, 47, 41))
 			local num = math.random (1, 9)
 
 			for pos = 2, num do
@@ -23957,7 +24514,7 @@ end
 ----- ---- --- -- -
 
 function catchfinderror (data, lre)
-	return pcall (string.find, data, lre)
+	return pcall (string.match, data, lre) -- find
 end
 
 ----- ---- --- -- -
@@ -24113,6 +24670,10 @@ end
 ----- ---- --- -- -
 
 function getip (nick)
+	if not nick or # nick == 0 then
+		return "0.0.0.0"
+	end
+
 	local _, ip = VH:GetUserIP (nick)
 
 	if ip and # ip >= 7 and # ip <= 15 then
@@ -24199,7 +24760,11 @@ end
 ----- ---- --- -- -
 
 function tryipcc (addr, nick)
-	if nick then
+	if addr == "0.0.0.0" then
+		return ""
+	end
+
+	if nick and # nick > 0 then
 		local res, code = VH:GetUserCC (nick)
 
 		if res and code then
@@ -24341,7 +24906,7 @@ function getcurl (url, enc, del, reh)
 		rehreq = " -D \"" .. table_othsets.cfgdir .. table_othsets.headfile .. "\""
 	end
 
-	local res, err, code = os.execute ("curl -G -L --max-redirs 1 --retry 3 --connect-timeout 5 -m 30" .. face .. " -A \"Ledokol/" .. ver_ledo .. "." .. bld_ledo .. "\" -s -o \"" .. table_othsets.cfgdir .. table_othsets.tmpfile .. "\"" .. rehreq .. urlenc .. " \"" .. url .. "\"")
+	local res, err, code = os.execute ("curl -G -L --max-redirs 1 --retry 3 --connect-timeout 5 -m 30" .. face .. " -A \"" .. table_othsets.useragent .. "\" -s -o \"" .. table_othsets.cfgdir .. table_othsets.tmpfile .. "\"" .. rehreq .. urlenc .. " \"" .. url .. "\"")
 
 	if res then
 		local head = ""
@@ -25642,14 +26207,355 @@ end
 
 ----- ---- --- -- -
 
-function sefiscan (nick, line, clas, addr)
+function sefiscan (nick, line, clas, addr, issr)
 	if # table_sefi == 0 then
 		return false
 	end
 
-	local typ, str = line:match ("^%$Search .* .*%?.*%?.*%?(.*)%?(.*)$")
+	if issr then -- search result
+		local str, tth = line:match ("^%$SR [^ ]+ (.+) %d+/%d+" .. string.char (5) .. "(.*) %(.+%)" .. string.char (5) .. "[^ ]+$")
 
-	if not str or # str == 0 then
+		if not str or not tth or # str == 0 then
+			return false
+		end
+
+		local dir = str:match ("^(.+)" .. string.char (5) .. "%d+$") -- remove file size
+
+		if dir then
+			local fipa, sepa = dir:match ("^(.*)\\([^\\]+)$")
+
+			if fipa and sepa then
+				dir = fipa
+				str = sepa
+			else
+				str = dir
+			end
+		else
+			dir = str
+			str = ""
+		end
+
+		if # tth > 0 and tth:sub (1, 4) == "TTH:" then -- remove tth prefix
+			tth = tth:sub (5)
+		else
+			tth = ""
+		end
+
+		local lsr, ldi, lha, sli = "", "", "", {}
+
+		if # str > 0 then
+			local last = str .. "@" .. nick
+
+			if last == table_othsets.lastsrstr then
+				return false
+			end
+
+			table_othsets.lastsrstr = last
+			str = repsrchchars (str)
+			lsr = tolow (str)
+		end
+
+		if # dir > 0 then
+			local last = dir .. "@" .. nick
+
+			if last == table_othsets.lastsrdir then
+				return false
+			end
+
+			table_othsets.lastsrdir = last
+			dir = repsrchchars (dir)
+			ldi = tolow (dir)
+		end
+
+		if # tth > 0 then
+			local last = tth .. "@" .. nick
+
+			if last == table_othsets.lastsrtth then
+				return false
+			end
+
+			table_othsets.lastsrtth = last
+			tth = repsrchchars (tth)
+			lha = tolow (tth)
+		end
+
+		for id, item in pairs (table_sefi) do
+			if (item.typ == 1 and (# str > 0 or # dir > 0 or # tth > 0)) or (item.typ == 8 and # dir > 0) or (item.typ == 9 and # tth > 0) then
+				table.insert (sli, {
+					["ent"] = item.ent,
+					["typ"] = item.typ,
+					["occ"] = item.occ,
+					["pri"] = item.pri,
+					["act"] = item.act,
+					["id"] = id
+				})
+			end
+		end
+
+		table.sort (sli, function (fit, sit)
+			return fit.pri > sit.pri
+		end)
+
+		for _, item in pairs (sli) do
+			if item.typ == 1 and # str > 0 then -- match file
+				local fres, fval = catchfinderror (lsr, item.ent)
+
+				if not fres then
+					local ferr = gettext ("There is an error in following search filter pattern") .. ":\r\n\r\n"
+					ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (item.ent) .. "\r\n"
+					ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
+					ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
+					opsnotify (table_sets.classnotiledoact, ferr)
+				elseif fval then
+					table_sefi [item.id].occ = item.occ + 1
+					VH:SQLQuery ("update `" .. tbl_sql.sefi .. "` set `occurred` = `occurred` + 1 where `filter` = '" .. repsqlchars (item.ent) .. "'")
+
+					if item.pri < 7 then -- skip for 7, 8, 9
+						for id, exi in pairs (table_sfex) do
+							local fres, fval = catchfinderror (lsr, exi.exc)
+
+							if not fres then
+								local ferr = gettext ("There is an error in following search filter exception pattern") .. ":\r\n\r\n"
+								ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (exi.exc) .. "\r\n"
+								ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
+								ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
+								opsnotify (table_sets.classnotiledoact, ferr)
+							elseif fval then
+								table_sfex [id].occ = exi.occ + 1
+								VH:SQLQuery ("update `" .. tbl_sql.sefiex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (exi.exc) .. "'")
+								sefinotify (table_sets.classnotiex, gettext ("Search result exception from %s with IP %s and class %d as any file: %s"):format (nick, addr .. tryipcc (addr, nick), clas, str))
+								return false
+							end
+						end
+					end
+
+					if item.act == 5 then
+						sefinotify (table_sets.classnotisefi, gettext ("Search result notification from %s with IP %s and class %d as any file: %s"):format (nick, addr .. tryipcc (addr, nick), clas, str))
+						return false
+					end
+
+					if item.act ~= 4 and item.act ~= 8 then
+						local why = table_sets.searfiltmsg:gsub ("%*", reprexpchars (str))
+						commandanswer (nick, why)
+					end
+
+					sefinotify (table_sets.classnotisefi, gettext ("Bad search result from %s with IP %s and class %d as any file: %s"):format (nick, addr .. tryipcc (addr, nick), clas, str))
+
+					if item.act == 1 then -- drop
+						sefinotify (table_sets.classnotisefi, gettext ("User dropped due to bad search result: %s"):format (nick))
+						VH:Disconnect (nick)
+
+					elseif item.act == 2 then -- kick
+						local why = table_sets.sefireason:gsub ("%*", reprexpchars (str))
+						VH:KickUser (table_othsets.sendfrom, nick, why)
+
+					elseif item.act == 3 then -- temporary ban
+						local why = table_sets.sefireason:gsub ("%*", reprexpchars (str))
+						VH:KickUser (table_othsets.sendfrom, nick, why .. "     #_ban_" .. table_sets.thirdacttime)
+
+					elseif item.act == 4 then -- silent skip
+						sefinotify (table_sets.classnotisefi, gettext ("User didn't send any search results: %s"):format (nick))
+
+					elseif item.act == 6 then -- redirect
+						sefinotify (table_sets.classnotisefi, gettext ("User redirected due to bad search result: %s"):format (nick))
+						VH:SendToUser ("$ForceMove " .. table_sets.sixthactaddr .. "|", nick)
+						VH:Disconnect (nick)
+
+					elseif item.act == 7 then -- permanent ban
+						local why = table_sets.sefireason:gsub ("%*", reprexpchars (str))
+						VH:KickUser (table_othsets.sendfrom, nick, why .. "     #_ban_" .. table_sets.seventhacttime)
+
+					elseif item.act == 8 or item.act == 9 then -- block list
+						if table_sets.sefiblockmsg == 1 then
+							sefinotify (table_sets.classnotisefi, gettext ("User added to search block list: %s"):format (nick))
+						end
+
+						table_sfbl [nick] = {
+							sil = (item.act == 8), -- silent
+							req = str,
+							num = 1
+						}
+					end
+
+					return true
+				end
+			end
+
+			if (item.typ == 1 or item.typ == 8) and # dir > 0 then -- match directory
+				local fres, fval = catchfinderror (ldi, item.ent)
+
+				if not fres then
+					local ferr = gettext ("There is an error in following search filter pattern") .. ":\r\n\r\n"
+					ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (item.ent) .. "\r\n"
+					ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
+					ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
+					opsnotify (table_sets.classnotiledoact, ferr)
+				elseif fval then
+					table_sefi [item.id].occ = item.occ + 1
+					VH:SQLQuery ("update `" .. tbl_sql.sefi .. "` set `occurred` = `occurred` + 1 where `filter` = '" .. repsqlchars (item.ent) .. "'")
+
+					if item.pri < 7 then -- skip for 7, 8, 9
+						for id, exi in pairs (table_sfex) do
+							local fres, fval = catchfinderror (ldi, exi.exc)
+
+							if not fres then
+								local ferr = gettext ("There is an error in following search filter exception pattern") .. ":\r\n\r\n"
+								ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (exi.exc) .. "\r\n"
+								ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
+								ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
+								opsnotify (table_sets.classnotiledoact, ferr)
+							elseif fval then
+								table_sfex [id].occ = exi.occ + 1
+								VH:SQLQuery ("update `" .. tbl_sql.sefiex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (exi.exc) .. "'")
+								sefinotify (table_sets.classnotiex, gettext ("Search result exception from %s with IP %s and class %d as folder: %s"):format (nick, addr .. tryipcc (addr, nick), clas, dir))
+								return false
+							end
+						end
+					end
+
+					if item.act == 5 then
+						sefinotify (table_sets.classnotisefi, gettext ("Search result notification from %s with IP %s and class %d as folder: %s"):format (nick, addr .. tryipcc (addr, nick), clas, dir))
+						return false
+					end
+
+					if item.act ~= 4 and item.act ~= 8 then
+						local why = table_sets.searfiltmsg:gsub ("%*", reprexpchars (dir))
+						commandanswer (nick, why)
+					end
+
+					sefinotify (table_sets.classnotisefi, gettext ("Bad search result from %s with IP %s and class %d as folder: %s"):format (nick, addr .. tryipcc (addr, nick), clas, dir))
+
+					if item.act == 1 then -- drop
+						sefinotify (table_sets.classnotisefi, gettext ("User dropped due to bad search result: %s"):format (nick))
+						VH:Disconnect (nick)
+
+					elseif item.act == 2 then -- kick
+						local why = table_sets.sefireason:gsub ("%*", reprexpchars (dir))
+						VH:KickUser (table_othsets.sendfrom, nick, why)
+
+					elseif item.act == 3 then -- temporary ban
+						local why = table_sets.sefireason:gsub ("%*", reprexpchars (dir))
+						VH:KickUser (table_othsets.sendfrom, nick, why .. "     #_ban_" .. table_sets.thirdacttime)
+
+					elseif item.act == 4 then -- silent skip
+						sefinotify (table_sets.classnotisefi, gettext ("User didn't send any search results: %s"):format (nick))
+
+					elseif item.act == 6 then -- redirect
+						sefinotify (table_sets.classnotisefi, gettext ("User redirected due to bad search result: %s"):format (nick))
+						VH:SendToUser ("$ForceMove " .. table_sets.sixthactaddr .. "|", nick)
+						VH:Disconnect (nick)
+
+					elseif item.act == 7 then -- permanent ban
+						local why = table_sets.sefireason:gsub ("%*", reprexpchars (dir))
+						VH:KickUser (table_othsets.sendfrom, nick, why .. "     #_ban_" .. table_sets.seventhacttime)
+
+					elseif item.act == 8 or item.act == 9 then -- block list
+						if table_sets.sefiblockmsg == 1 then
+							sefinotify (table_sets.classnotisefi, gettext ("User added to search block list: %s"):format (nick))
+						end
+
+						table_sfbl [nick] = {
+							sil = (item.act == 8), -- silent
+							req = dir,
+							num = 1
+						}
+					end
+
+					return true
+				end
+			end
+
+			if item.typ == 9 and # tth > 0 then -- match tth
+				local fres, fval = catchfinderror (lha, item.ent)
+
+				if not fres then
+					local ferr = gettext ("There is an error in following search filter pattern") .. ":\r\n\r\n"
+					ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (item.ent) .. "\r\n"
+					ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
+					ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
+					opsnotify (table_sets.classnotiledoact, ferr)
+				elseif fval then
+					table_sefi [item.id].occ = item.occ + 1
+					VH:SQLQuery ("update `" .. tbl_sql.sefi .. "` set `occurred` = `occurred` + 1 where `filter` = '" .. repsqlchars (item.ent) .. "'")
+
+					if item.pri < 7 then -- skip for 7, 8, 9
+						for id, exi in pairs (table_sfex) do
+							local fres, fval = catchfinderror (lha, exi.exc)
+
+							if not fres then
+								local ferr = gettext ("There is an error in following search filter exception pattern") .. ":\r\n\r\n"
+								ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (exi.exc) .. "\r\n"
+								ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
+								ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
+								opsnotify (table_sets.classnotiledoact, ferr)
+							elseif fval then
+								table_sfex [id].occ = exi.occ + 1
+								VH:SQLQuery ("update `" .. tbl_sql.sefiex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (exi.exc) .. "'")
+								sefinotify (table_sets.classnotiex, gettext ("Search result exception from %s with IP %s and class %d as TTH: %s"):format (nick, addr .. tryipcc (addr, nick), clas, tth))
+								return false
+							end
+						end
+					end
+
+					if item.act == 5 then
+						sefinotify (table_sets.classnotisefi, gettext ("Search result notification from %s with IP %s and class %d as TTH: %s"):format (nick, addr .. tryipcc (addr, nick), clas, tth))
+						return false
+					end
+
+					if item.act ~= 4 and item.act ~= 8 then
+						local why = table_sets.searfiltmsg:gsub ("%*", reprexpchars (tth))
+						commandanswer (nick, why)
+					end
+
+					sefinotify (table_sets.classnotisefi, gettext ("Bad search result from %s with IP %s and class %d as TTH: %s"):format (nick, addr .. tryipcc (addr, nick), clas, tth))
+
+					if item.act == 1 then -- drop
+						sefinotify (table_sets.classnotisefi, gettext ("User dropped due to bad search result: %s"):format (nick))
+						VH:Disconnect (nick)
+
+					elseif item.act == 2 then -- kick
+						local why = table_sets.sefireason:gsub ("%*", reprexpchars (tth))
+						VH:KickUser (table_othsets.sendfrom, nick, why)
+
+					elseif item.act == 3 then -- temporary ban
+						local why = table_sets.sefireason:gsub ("%*", reprexpchars (tth))
+						VH:KickUser (table_othsets.sendfrom, nick, why .. "     #_ban_" .. table_sets.thirdacttime)
+
+					elseif item.act == 4 then -- silent skip
+						sefinotify (table_sets.classnotisefi, gettext ("User didn't send any search results: %s"):format (nick))
+
+					elseif item.act == 6 then -- redirect
+						sefinotify (table_sets.classnotisefi, gettext ("User redirected due to bad search result: %s"):format (nick))
+						VH:SendToUser ("$ForceMove " .. table_sets.sixthactaddr .. "|", nick)
+						VH:Disconnect (nick)
+
+					elseif item.act == 7 then -- permanent ban
+						local why = table_sets.sefireason:gsub ("%*", reprexpchars (tth))
+						VH:KickUser (table_othsets.sendfrom, nick, why .. "     #_ban_" .. table_sets.seventhacttime)
+
+					elseif item.act == 8 or item.act == 9 then -- block list
+						if table_sets.sefiblockmsg == 1 then
+							sefinotify (table_sets.classnotisefi, gettext ("User added to search block list: %s"):format (nick))
+						end
+
+						table_sfbl [nick] = {
+							sil = (item.act == 8), -- silent
+							req = tth,
+							num = 1
+						}
+					end
+
+					return true
+				end
+			end
+		end
+	
+		return false
+	end
+
+	local typ, str = line:match ("^%$Search [^ ]+ [TF]%?[TF]%?%d+%?(%d+)%?(.+)$")
+
+	if not typ or not str or # str == 0 then
 		return false
 	end
 
@@ -25659,7 +26565,7 @@ function sefiscan (nick, line, clas, addr)
 		typ = 1
 	end
 
-	if typ == 9 and str:sub (1, 4):lower () == "tth:" then -- remove tth prefix
+	if typ == 9 and str:sub (1, 4) == "TTH:" then -- remove tth prefix
 		str = str:sub (5)
 	end
 
