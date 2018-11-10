@@ -1587,7 +1587,7 @@ function Main (file)
 	end
 
 	if table_sets.chatintelon == 1 and table_sets.chatintelemail ~= "" and table_othsets.ver_curl then -- chat intelligence
-		os.execute ("mkdir \"" .. table_othsets.cfgdir .. table_othsets.chindir .. "\"")
+		os.execute ("mkdir -p \"" .. table_othsets.cfgdir .. table_othsets.chindir .. "\"")
 	end
 
 	if table_sets.avsearchint > 0 then -- antivirus search
@@ -19249,7 +19249,7 @@ end
 						commandanswer (nick, gettext ("In order to use this feature you need to set %s to your email address."):format ("chatintelemail"))
 					end
 
-					os.execute ("mkdir \"" .. table_othsets.cfgdir .. table_othsets.chindir .. "\"")
+					os.execute ("mkdir -p \"" .. table_othsets.cfgdir .. table_othsets.chindir .. "\"")
 					ok = true
 				end
 			else
@@ -19264,7 +19264,7 @@ end
 	elseif tvar == "chatintelemail" then
 		if # setto > 0 then
 			if chatintelon == 1 and table_othsets.ver_curl and table_sets.chatintelemail == "" then
-				os.execute ("mkdir \"" .. table_othsets.cfgdir .. table_othsets.chindir .. "\"")
+				os.execute ("mkdir -p \"" .. table_othsets.cfgdir .. table_othsets.chindir .. "\"")
 			end
 
 			ok = true
