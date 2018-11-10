@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: Ledokol\n"
 "Project-Version: 2.9.6\n"
 "Report-Msgid-Bugs-To: RoLex <webmaster@feardc.net>\n"
-"POT-Creation-Date: 2018-11-09 00:00+0200\n"
-"PO-Revision-Date: 2018-11-09 00:00+0200\n"
+"POT-Creation-Date: 2018-11-10 00:00+0200\n"
+"PO-Revision-Date: 2018-11-10 00:00+0200\n"
 "Last-Translator: RoLex <webmaster@feardc.net>\n"
 "Language-Team: RoLex <webmaster@feardc.net>\n"
 "Language: en_GB\n"
@@ -3782,4 +3782,25 @@ msgid "Public proxy detected on IP: %s"
 msgstr ""
 
 msgid "Public proxy detected on IP %s with ASN: %s"
+msgstr ""
+
+msgid "Unsent main chat message from logged out user %s with IP %s before finishing proxy lookup: %s"
+msgstr ""
+
+msgid "Unsent private chat message from logged out user %s with IP %s to %s with IP %s before finishing proxy lookup: %s"
+msgstr ""
+
+msgid "Unsent private main chat message from logged out user %s with IP %s to %s with IP %s before finishing proxy lookup: %s"
+msgstr ""
+
+msgid "Unsent third person main chat message from logged out user %s with IP %s before finishing proxy lookup: %s"
+msgstr ""
+
+msgid "Unsent offline private chat message from logged out user %s with IP %s to %s with IP %s before finishing proxy lookup: %s"
+msgstr ""
+
+msgid "%s logged in with IP %s previously detected as public proxy."
+msgstr ""
+
+msgid "%s logged in with IP %s previously detected as public proxy with ASN: %s"
 msgstr ""

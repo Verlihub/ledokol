@@ -5135,17 +5135,17 @@ function VH_OnUserLogin (nick, uip)
 		return 1
 	end
 
-	local mistr, ip, cc, desc, tag, conn, email, size, prot, hasip, hascc, hasinfo, hasprot, hasmistr, _ = "", "", "", "", "", "", "", 0, false, false, false, false, false, false, 0
+	local mistr, addr, cc, desc, tag, conn, email, size, prot, hasip, hascc, hasinfo, hasprot, hasmistr, _ = "", "", "", "", "", "", "", 0, false, false, false, false, false, false, 0
 
 	if table_sets.enableipwatch == 1 then -- ip watch
 		mistr, hasmistr = getmyinfo (nick), true
-		ip, hasip = (uip or getip (nick)), true
-		checkipwat (nick, ip, mistr) -- dont return 0, its a login sequence
+		addr, hasip = (uip or getip (nick)), true
+		checkipwat (nick, addr, mistr) -- dont return 0, its a login sequence
 	end
 
 	if table_sets.enableuserlog == 1 then -- user logger
 		if not hasip then
-			ip, hasip = (uip or getip (nick)), true
+			addr, hasip = (uip or getip (nick)), true
 		end
 
 		if table_refu.GetUserCC then -- and not hascc
@@ -5176,7 +5176,7 @@ function VH_OnUserLogin (nick, uip)
 			end
 		end
 
-		VH:SQLQuery ("insert into `" .. tbl_sql.ulog .. "` (`time`, `out`, `nick`, `ip`, `cc`, `desc`, `tag`, `conn`, `email`, `share`, `nmdc`, `sups`) values (" .. _tostring (os.time () + table_sets.srvtimediff) .. ", 1, '" .. repsqlchars (nick) .. "', '" .. repsqlchars (ip) .. "', " .. sqlemptnull (cc, true) .. ", " .. sqlemptnull (desc) .. ", " .. sqlemptnull (tag) .. ", " .. sqlemptnull (conn) .. ", " .. sqlemptnull (email) .. ", " .. repsqlchars (size) .. ", " .. sqlemptnull (nmdc) .. ", " .. sqlemptnull (sups) .. ")")
+		VH:SQLQuery ("insert into `" .. tbl_sql.ulog .. "` (`time`, `out`, `nick`, `ip`, `cc`, `desc`, `tag`, `conn`, `email`, `share`, `nmdc`, `sups`) values (" .. _tostring (os.time () + table_sets.srvtimediff) .. ", 1, '" .. repsqlchars (nick) .. "', '" .. repsqlchars (addr) .. "', " .. sqlemptnull (cc, true) .. ", " .. sqlemptnull (desc) .. ", " .. sqlemptnull (tag) .. ", " .. sqlemptnull (conn) .. ", " .. sqlemptnull (email) .. ", " .. repsqlchars (size) .. ", " .. sqlemptnull (nmdc) .. ", " .. sqlemptnull (sups) .. ")")
 		local _, rows = VH:SQLQuery ("select last_insert_id()")
 
 		if rows > 0 then
@@ -5197,17 +5197,17 @@ function VH_OnUserLogin (nick, uip)
 
 	if table_sets.ipconantiflint > 0 and cls < table_sets.scanbelowclass then -- ip connect antiflood
 		if not hasip then
-			ip, hasip = (uip or getip (nick)), true
+			addr, hasip = (uip or getip (nick)), true
 		end
 
-		prot, hasprot = isprotected (nick, ip), true
+		prot, hasprot = isprotected (nick, addr), true
 
 		if not prot then -- protection
-			if table_rcnn [ip] then
-				local dif = os.difftime (os.time (), table_rcnn [ip])
+			if table_rcnn [addr] then
+				local dif = os.difftime (os.time (), table_rcnn [addr])
 
 				if dif >= table_sets.ipconantiflint then
-					table_rcnn [ip] = nil -- delete
+					table_rcnn [addr] = nil -- delete
 				else
 					maintouser (nick, gettext ("Connections from your IP aren't allowed for another %d seconds."):format (table_sets.ipconantiflint - dif))
 
@@ -5219,19 +5219,19 @@ function VH_OnUserLogin (nick, uip)
 					return 0
 				end
 			else -- add
-				table_rcnn [ip] = os.time ()
+				table_rcnn [addr] = os.time ()
 			end
 		end
 	end
 
 	if table_sets.avdbloadint > 0 and cls < table_sets.scanbelowclass then -- antivirus load
 		if not hasprot then
-			prot, hasprot = isprotected (nick, ip), true
+			prot, hasprot = isprotected (nick, addr), true
 		end
 
 		if not prot then
 			if not hasip then
-				ip, hasip = (uip or getip (nick)), true
+				addr, hasip = (uip or getip (nick)), true
 			end
 
 			if not hasinfo then
@@ -5245,9 +5245,9 @@ function VH_OnUserLogin (nick, uip)
 
 			if size > 0 then
 				for _, data in pairs (table_avlo) do
-					if (nick == data ["nick"] and ip == data ["addr"]) or (nick == data ["nick"] and size == data ["size"]) or (ip == data ["addr"] and size == data ["size"]) then -- nick + ip, nick + share, ip + share
-						opsnotify (table_sets.classnotiav, gettext ("Infected user logged in with IP %s and share %s: %s"):format (ip .. tryipcc (ip, nick), makesize (size), nick))
-						avdbreport (nick, ip, size, true) -- antivirus database
+					if (nick == data ["nick"] and addr == data ["addr"]) or (nick == data ["nick"] and size == data ["size"]) or (addr == data ["addr"] and size == data ["size"]) then -- nick + ip, nick + share, ip + share
+						opsnotify (table_sets.classnotiav, gettext ("Infected user logged in with IP %s and share %s: %s"):format (addr .. tryipcc (addr, nick), makesize (size), nick))
+						avdbreport (nick, addr, size, true) -- antivirus database
 
 						if table_sets.avdetaction == 0 then
 							table_avbl [nick] = true
@@ -5270,10 +5270,10 @@ function VH_OnUserLogin (nick, uip)
 
 	if table_sets.authrunning == 1 then -- ip authorization
 		if not hasip then
-			ip, hasip = (uip or getip (nick)), true
+			addr, hasip = (uip or getip (nick)), true
 		end
 
-		if authcheck (nick, cls, ip) then
+		if authcheck (nick, cls, addr) then
 			if cls >= table_sets.welcomeclass then -- dont send logout message
 				table_faau [nick] = 1
 			end
@@ -5284,11 +5284,11 @@ function VH_OnUserLogin (nick, uip)
 
 	if table_sets.micheck == 1 and cls < table_sets.scanbelowclass then -- myinfo check
 		if not hasip then
-			ip, hasip = (uip or getip (nick)), true
+			addr, hasip = (uip or getip (nick)), true
 		end
 
 		if not hasprot then
-			prot = isprotected (nick, ip)
+			prot = isprotected (nick, addr)
 		end
 
 		if not prot then -- protection
@@ -5301,61 +5301,91 @@ function VH_OnUserLogin (nick, uip)
 				hasinfo = true
 			end
 
-			if checknick (nick, cls, ip) then
+			if checknick (nick, cls, addr) then
 				return 0
 			end
 
-			if checkdesc (nick, desc, cls, ip) then
+			if checkdesc (nick, desc, cls, addr) then
 				return 0
 			end
 
-			if checktag (nick, tag, cls, ip) then
+			if checktag (nick, tag, cls, addr) then
 				return 0
 			end
 
-			if checkconn (nick, conn, cls, ip) then
+			if checkconn (nick, conn, cls, addr) then
 				return 0
 			end
 
-			if checkemail (nick, email, cls, ip) then
+			if checkemail (nick, email, cls, addr) then
 				return 0
 			end
 
-			if checkshare (nick, size, cls, ip) then
+			if checkshare (nick, size, cls, addr) then
 				return 0
 			end
 
-			if checkip (nick, ip, cls) then
+			if checkip (nick, addr, cls) then
 				return 0
 			end
 
-			if checkcc (nick, cls, ip) then
+			if checkcc (nick, cls, addr) then
 				return 0
 			end
 
-			if checkdns (nick, cls, ip) then
+			if checkdns (nick, cls, addr) then
 				return 0
 			end
 
-			if checksup (nick, cls, ip) then
+			if checksup (nick, cls, addr) then
 				return 0
 			end
 
-			if checkver (nick, cls, ip) then
+			if checkver (nick, cls, addr) then
 				return 0
 			end
 
-			if checkfake (nick, size, cls, ip) then
+			if checkfake (nick, size, cls, addr) then
 				return 0
 			end
 
-			if checkclone (nick, size, ip, cls) then
+			if checkclone (nick, size, addr, cls) then
 				return 0
 			end
 
-			if checksameip (nick, ip, cls) then
+			if checksameip (nick, addr, cls) then
 				return 0
 			end
+		end
+	end
+
+	if table_sets.chatintelon == 1 and table_sets.chatintelemail ~= "" and table_othsets.ver_curl then -- chat intelligence
+		if not hasip then
+			addr, hasip = (uip or getip (nick)), true
+		end
+
+		local item = table_chin [addr]
+
+		if item and (item.stat == 2 or item.stat == 3) then -- notify about proxy user
+			local note = ""
+
+			if table_refu.GetIPASN then -- asn
+				local ok, asn = VH:GetIPASN (addr)
+
+				if ok and asn and asn ~= "" then
+					if asn:match ("^AS%d+") then
+						asn = "https://ipinfo.io/" .. asn
+					end
+
+					note = gettext ("%s logged in with IP %s previously detected as public proxy with ASN: %s"):format (nick, addr .. tryipcc (addr, nick), repnmdcoutchars (asn))
+				end
+			end
+
+			if note == "" then
+				note = gettext ("%s logged in with IP %s previously detected as public proxy."):format (nick, addr .. tryipcc (addr, nick))
+			end
+
+			opsnotify (table_sets.classnotichin, note)
 		end
 	end
 
@@ -5406,11 +5436,11 @@ function VH_OnUserLogin (nick, uip)
 	end
 
 	if not hasip then
-		ip, hasip = (uip or getip (nick)), true
+		addr, hasip = (uip or getip (nick)), true
 	end
 
 	sendwelcomein (nick, cls)
-	autosendoffmsg (nick, cls, ip)
+	autosendoffmsg (nick, cls, addr)
 	addccroommember (nick, cls)
 	addccroomacre (nick, cls)
 
@@ -5463,8 +5493,30 @@ function VH_OnUserLogout (nick, ip) -- ip available only on new versions, todo: 
 	if table_sets.chatintelon == 1 and table_sets.chatintelemail ~= "" and table_othsets.ver_curl then -- chat intelligence
 		local addr = getip (nick)
 
-		if table_chin [addr] then
-			table_chin [addr]["nick"][nick] = nil
+		if addr ~= "0.0.0.0" then
+			local item = table_chin [addr]
+
+			if item and item ["nick"][nick] then -- notify about unsent messages, they could be from spam bot that leaves the hub right after spam
+				for targ, tali in pairs (item ["nick"][nick]) do
+					for _, tada in pairs (tali) do
+						local oddr = getip (tada ["nick"])
+
+						if targ == 1 then -- mc
+							opsnotify (table_sets.classnotichin, gettext ("Unsent main chat message from logged out user %s with IP %s before finishing proxy lookup: %s"):format (nick, addr .. tryipcc (addr, nick), tada ["data"]))
+						elseif targ == 2 then -- pm
+							opsnotify (table_sets.classnotichin, gettext ("Unsent private chat message from logged out user %s with IP %s to %s with IP %s before finishing proxy lookup: %s"):format (nick, addr .. tryipcc (addr, nick), tada ["nick"], oddr .. tryipcc (oddr, tada ["nick"]), tada ["data"]))
+						elseif targ == 3 then -- mcto
+							opsnotify (table_sets.classnotichin, gettext ("Unsent private main chat message from logged out user %s with IP %s to %s with IP %s before finishing proxy lookup: %s"):format (nick, addr .. tryipcc (addr, nick), tada ["nick"], oddr .. tryipcc (oddr, tada ["nick"]), tada ["data"]))
+						elseif targ == 4 then -- me
+							opsnotify (table_sets.classnotichin, gettext ("Unsent third person main chat message from logged out user %s with IP %s before finishing proxy lookup: %s"):format (nick, addr .. tryipcc (addr, nick), tada ["data"]))
+						elseif targ == 5 then -- offline
+							opsnotify (table_sets.classnotichin, gettext ("Unsent offline private chat message from logged out user %s with IP %s to %s with IP %s before finishing proxy lookup: %s"):format (nick, addr .. tryipcc (addr, nick), tada ["nick"], oddr .. tryipcc (oddr, tada ["nick"]), tada ["data"]))
+						end
+					end
+				end
+
+				table_chin [addr]["nick"][nick] = nil
+			end
 		end
 	end
 

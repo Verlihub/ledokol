@@ -1262,3 +1262,10 @@ Invalid email|
 Not enough matches for proxy lookup of IP %s: %d of %d|
 Public proxy detected on IP: %s|
 Public proxy detected on IP %s with ASN: %s|
+Unsent main chat message from logged out user %s with IP %s before finishing proxy lookup: %s|
+Unsent private chat message from logged out user %s with IP %s to %s with IP %s before finishing proxy lookup: %s|
+Unsent private main chat message from logged out user %s with IP %s to %s with IP %s before finishing proxy lookup: %s|
+Unsent third person main chat message from logged out user %s with IP %s before finishing proxy lookup: %s|
+Unsent offline private chat message from logged out user %s with IP %s to %s with IP %s before finishing proxy lookup: %s|
+%s logged in with IP %s previously detected as public proxy.|
+%s logged in with IP %s previously detected as public proxy with ASN: %s|
