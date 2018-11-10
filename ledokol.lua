@@ -19242,6 +19242,7 @@ end
 			if setto == 0 or setto == 1 then
 				if setto == 0 then -- clear
 					table_chin = {}
+					ok = true
 				elseif setto == 1 and not table_othsets.ver_curl then
 					commandanswer (nick, gettext ("This feature requires following binary installed on your system: %s"):format ("cURL"))
 				else
