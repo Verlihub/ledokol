@@ -63,7 +63,7 @@ Tzaca, JOE™, Foxtrot, Deivis
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.6" -- ledokol version
-bld_ledo = "84" -- build number
+bld_ledo = "85" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -92,6 +92,8 @@ table_sets = {
 	sefiblockdel = 1,
 	sefireason = "Forbidden search request or result detected: *",
 	searfiltmsg = "Your search request or result is forbidden and therefore discarded: *",
+	seardupfilt = 0,
+	seardupsecs = 10,
 	avsearchint = 30,
 	avfilediff = 256,
 	avfilecount = 30,
@@ -386,6 +388,8 @@ table_othsets = {
 	avloaddelcount = 0,
 	avnextitem = 1,
 	avrandstr = "",
+	seartotcount = 0,
+	seardupcount = 0,
 	useragent = "Mozilla/5.0 (compatible; Ledokol/" .. ver_ledo .. "." .. bld_ledo .. "; +https://ledo.feardc.net/)",
 	chinurl = "http://check.getipintel.net/check.php?contact=%s&ip=%s",
 	chindir = "chatintel",
@@ -1076,6 +1080,7 @@ table_myfo = {}
 table_sefi = {}
 table_sfex = {}
 table_sfbl = {}
+table_sdbl = {}
 table_laul = {}
 table_chin = {}
 
@@ -1496,6 +1501,8 @@ function Main (file)
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('chatintelquote', '" .. repsqlchars (table_sets.chatintelquote) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('chatintelmaxreq', '" .. repsqlchars (table_sets.chatintelmaxreq) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('classnotichin', '" .. repsqlchars (table_sets.classnotichin) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('seardupfilt', '" .. repsqlchars (table_sets.seardupfilt) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('seardupsecs', '" .. repsqlchars (table_sets.seardupsecs) .. "')")
 
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.ledocmd .. "` (`original`, `new`) values ('histfind', '" .. repsqlchars (table_cmnds.histfind) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.ledocmd .. "` (`original`, `new`) values ('histline', '" .. repsqlchars (table_cmnds.histline) .. "')")
@@ -5481,9 +5488,15 @@ end
 
 ----- ---- --- -- -
 
-function VH_OnUserLogout (nick, ip) -- ip available only on new versions, todo: make use of it
+function VH_OnUserLogout (nick, ip) -- ip available only on new versions
 	if table_othsets.locked or table_othsets.restart then
 		return 1
+	end
+
+	local addr, hasip = "", false
+
+	if ip and ip ~= "" then
+		addr, hasip = ip, true
 	end
 
 	if table_sets.enableuserlog == 1 and table_laul [nick] then -- user logger
@@ -5491,7 +5504,9 @@ function VH_OnUserLogout (nick, ip) -- ip available only on new versions, todo: 
 	end
 
 	if table_sets.chatintelon == 1 and table_sets.chatintelemail ~= "" and table_othsets.ver_curl then -- chat intelligence
-		local addr = getip (nick)
+		if not hasip then
+			addr, hasip = (getip (nick)), true
+		end
 
 		if addr ~= "0.0.0.0" then
 			local item = table_chin [addr]
@@ -5564,7 +5579,9 @@ function VH_OnUserLogout (nick, ip) -- ip available only on new versions, todo: 
 	end
 
 	if table_sets.ipconantiflint > 0 and clas < table_sets.scanbelowclass then -- ip connect antiflood
-		local addr = getip (nick)
+		if not hasip then
+			addr, hasip = (getip (nick)), true
+		end
 
 		if not isprotected (nick, addr) and (not table_rcnn [addr] or os.difftime (os.time (), table_rcnn [addr]) >= table_sets.ipconantiflint) then
 			table_rcnn [addr] = os.time () -- set delay
@@ -5585,8 +5602,16 @@ function VH_OnUserLogout (nick, ip) -- ip available only on new versions, todo: 
 		table_opks [nick] = nil
 	end
 
-	if table_sets.enablesearfilt >= 1 and table_sets.sefiblockdel == 1 then -- search filter
+	if table_sets.enablesearfilt >= 1 and table_sets.sefiblockdel == 1 then -- search string filter
 		table_sfbl [nick] = nil
+	end
+
+	if table_sets.seardupfilt == 1 then -- search duplicate filter
+		if not hasip then
+			addr, hasip = (getip (nick)), true
+		end
+
+		table_sdbl [addr] = nil
 	end
 
 	return 1
@@ -5599,12 +5624,12 @@ function VH_OnParsedMsgSearch (nick, data)
 		return 1
 	end
 
-	local cls, ip, prot, gotcls, gotip, gotprot = 0, "", false, false, false, false
+	local cls, addr, prot, gotcls, gotip, gotprot = 0, "", false, false, false, false
 
 	if table_sets.enableipwatch == 1 then -- ip watch
-		ip, gotip = getip (nick), true
+		addr, gotip = getip (nick), true
 
-		if checkipwat (nick, ip, data) then
+		if checkipwat (nick, addr, data) then
 			return 0
 		end
 	end
@@ -5614,10 +5639,10 @@ function VH_OnParsedMsgSearch (nick, data)
 
 		if cls < table_sets.scanbelowclass then
 			if not gotip then
-				ip, gotip = getip (nick), true
+				addr, gotip = getip (nick), true
 			end
 
-			prot, gotprot = isprotected (nick, ip), true
+			prot, gotprot = isprotected (nick, addr), true
 
 			if table_usup [nick] then
 				local now = os.time ()
@@ -5665,7 +5690,7 @@ function VH_OnParsedMsgSearch (nick, data)
 								note = "Low search uptime of %d seconds from %s with IP %s and class %d as TTH: %s"
 							end
 
-							opsnotify (table_sets.classnotilowupsear, gettext (note):format (dif, nick, ip .. tryipcc (ip, nick), cls, repsrchchars (sear)))
+							opsnotify (table_sets.classnotilowupsear, gettext (note):format (dif, nick, addr .. tryipcc (addr, nick), cls, repsrchchars (sear)))
 						end
 
 						table_uumd.sear [nick] = now
@@ -5686,6 +5711,41 @@ function VH_OnParsedMsgSearch (nick, data)
 		end
 	end
 
+	if table_sets.seardupfilt == 1 then -- search duplicate filter
+		if not gotcls then
+			cls, gotcls = getclass (nick), true
+		end
+
+		if cls < table_sets.scanbelowclass then
+			if not gotip then
+				addr, gotip = getip (nick), true
+			end
+
+			if not gotprot then
+				prot, gotprot = isprotected (nick, addr), true
+			end
+
+			if not prot then
+				local pars = data:match ("^%$Search [^ ]+ ([^ ]+)$")
+
+				if pars then
+					local now = os.time ()
+					table_othsets.seartotcount = table_othsets.seartotcount + 1
+
+					if table_sdbl [addr] and table_sdbl [addr]["pars"] == pars and os.difftime (now, table_sdbl [addr]["last"]) < table_sets.seardupsecs then
+						table_othsets.seardupcount = table_othsets.seardupcount + 1
+						return 0
+					end
+
+					table_sdbl [addr] = {
+						["last"] = now,
+						["pars"] = pars
+					}
+				end
+			end
+		end
+	end
+
 	if table_sets.enablesearfilt >= 1 then -- search request filter
 		if not gotcls then
 			cls, gotcls = getclass (nick), true
@@ -5693,11 +5753,11 @@ function VH_OnParsedMsgSearch (nick, data)
 
 		if cls < table_sets.scanbelowclass then
 			if not gotip then
-				ip = getip (nick)
+				addr, gotip = getip (nick), true
 			end
 
 			if not gotprot then
-				prot = isprotected (nick, ip)
+				prot, gotprot = isprotected (nick, addr), true
 			end
 
 			if not prot then
@@ -5710,7 +5770,7 @@ function VH_OnParsedMsgSearch (nick, data)
 
 					table_sfbl [nick].num = sefi.num + 1
 					return 0
-				elseif sefiscan (nick, data, cls, ip) then
+				elseif sefiscan (nick, data, cls, addr) then
 					return 0
 				end
 			end
@@ -18548,6 +18608,38 @@ end
 
 	----- ---- --- -- -
 
+	elseif tvar == "seardupfilt" then
+		if num then
+			if setto == 0 or setto == 1 then
+				if setto == 0 then
+					table_sdbl = {} -- clear
+					table_othsets.seartotcount = 0
+					table_othsets.seardupcount = 0
+				end
+
+				ok = true
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0 " .. gettext ("or") .. " 1"))
+			end
+		else
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
+		end
+
+	----- ---- --- -- -
+
+	elseif tvar == "seardupsecs" then
+		if num then
+			if setto >= 1 and setto <= 60 then
+				ok = true
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "1 " .. gettext ("to") .. " 60"))
+			end
+		else
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
+		end
+
+	----- ---- --- -- -
+
 	elseif tvar == "avfilediff" then
 		if num then
 			if setto >= 0 and setto <= 10240 then
@@ -22221,32 +22313,32 @@ function sendstats (nick)
 	stats = stats .. "\r\n " .. gettext ("Script uptime: %s"):format (formatuptime (table_othsets.uptime, false))
 	local mu = makesize (getmemusg ()) -- memory
 
-if table_sets.statscollint > 0 then
-	local _, rows = VH:SQLQuery ("select `count` from `" .. tbl_sql.stat .. "` where `type` = 'memory_peak'")
-
-	if rows > 0 then
-		local _, pmu = VH:SQLFetch (0)
-		mu = mu .. " ][ " .. makesize (pmu)
-	end
-end
-
-stats = stats .. "\r\n " .. gettext ("Script memory usage: %s"):format (mu)
-stats = stats .. "\r\n " .. gettext ("Script size: %d lines in %s"):format (getownlinecnt (), makesize (getownsize (false, nil)))
-
-if table_refu.GetUpTime then -- hub uptime
-	local ut = formatuptime ((os.time () - getuptime ()), true)
-
 	if table_sets.statscollint > 0 then
-		local _, rows = VH:SQLQuery ("select `count` from `" .. tbl_sql.stat .. "` where `type` = 'uptime_peak'")
+		local _, rows = VH:SQLQuery ("select `count` from `" .. tbl_sql.stat .. "` where `type` = 'memory_peak'")
 
 		if rows > 0 then
-			local _, put = VH:SQLFetch (0)
-			ut = ut .. " ][ " .. formatuptime ((os.time () - tonumber (put)), true)
+			local _, pmu = VH:SQLFetch (0)
+			mu = mu .. " ][ " .. makesize (pmu)
 		end
 	end
 
-	stats = stats .. "\r\n " .. gettext ("Hub uptime: %s"):format (ut)
-end
+	stats = stats .. "\r\n " .. gettext ("Script memory usage: %s"):format (mu)
+	stats = stats .. "\r\n " .. gettext ("Script size: %d lines in %s"):format (getownlinecnt (), makesize (getownsize (false, nil)))
+
+	if table_refu.GetUpTime then -- hub uptime
+		local ut = formatuptime ((os.time () - getuptime ()), true)
+
+		if table_sets.statscollint > 0 then
+			local _, rows = VH:SQLQuery ("select `count` from `" .. tbl_sql.stat .. "` where `type` = 'uptime_peak'")
+
+			if rows > 0 then
+				local _, put = VH:SQLFetch (0)
+				ut = ut .. " ][ " .. formatuptime ((os.time () - tonumber (put)), true)
+			end
+		end
+
+		stats = stats .. "\r\n " .. gettext ("Hub uptime: %s"):format (ut)
+	end
 
 	-- users
 
@@ -22299,33 +22391,49 @@ end
 		stats = stats .. "\r\n " .. gettext ("Average share per user: %s"):format (val)
 	end
 
-stats = stats .. "\r\n " .. gettext ("Configuration directory: %s"):format (table_othsets.cfgdir)
-stats = stats .. "\r\n " .. gettext ("Open files limit: %d"):format ((getulimit () or 0))
-stats = stats .. "\r\n"
-stats = stats .. "\r\n " .. gettext ("Total chat rank points: %d"):format (cntchatran)
-stats = stats .. "\r\n " .. gettext ("Total share rank size: %s"):format (makesize (countranks (tbl_sql.shran)))
-stats = stats .. "\r\n " .. gettext ("Total operator rank points: %d"):format (countranks (tbl_sql.opran))
-stats = stats .. "\r\n " .. gettext ("Total search rank points: %d"):format (countranks (tbl_sql.srran))
-stats = stats .. "\r\n " .. gettext ("Total word rank points: %d"):format (countranks (tbl_sql.wdran))
-stats = stats .. "\r\n " .. gettext ("Average message count per user: %.2f"):format (mesperuser)
-stats = stats .. "\r\n"
-stats = stats .. "\r\n " .. gettext ("Size of kicks table: %d [ %s: %d @ %s ]"):format (counttable ("kicklist"), "C", (getledoconf ("limcleankick") or 0), fromunixtime ((getledoconf ("lastcleankick") or 0), true))
-stats = stats .. "\r\n " .. gettext ("Size of bans table: %d [ %s: %d @ %s ]"):format (counttable ("banlist"), "C", (getledoconf ("limcleanban") or 0), fromunixtime ((getledoconf ("lastcleanban") or 0), true))
-stats = stats .. "\r\n " .. gettext ("Size of unbans table: %d [ %s: %d @ %s ]"):format (counttable ("unbanlist"), "C", (getledoconf ("limcleanunban") or 0), fromunixtime ((getledoconf ("lastcleanunban") or 0), true))
-stats = stats .. "\r\n " .. gettext ("Size of registered users table: %d [ %s: %d @ %s ]"):format (counttable ("reglist"), "C", (getledoconf ("limcleanreg") or 0), fromunixtime ((getledoconf ("lastcleanreg") or 0), true))
-	stats = stats .. "\r\n " .. gettext ("Size of user log table: %d [ %s: %d @ %s ]"):format (counttable (tbl_sql.ulog), "C", (getledoconf ("limcleanulog") or 0), fromunixtime ((getledoconf ("lastcleanulog") or 0), true))
-stats = stats .. "\r\n " .. gettext ("Size of command log table: %d [ %s: %d @ %s ]"):format (counttable (tbl_sql.clog), "C", (getledoconf ("limcleanclog") or 0), fromunixtime ((getledoconf ("lastcleanclog") or 0), true))
-stats = stats .. "\r\n " .. gettext ("Size of release table: %d [ %s: %d @ %s ]"):format (counttable (tbl_sql.rel), "C", (getledoconf ("limcleanrel") or 0), fromunixtime ((getledoconf ("lastcleanrel") or 0), true))
-stats = stats .. "\r\n " .. gettext ("Size of chat ranks table: %d [ %s: %d @ %s ]"):format (counttable (tbl_sql.chran), "C", (getledoconf ("limcleanchran") or 0), fromunixtime ((getledoconf ("lastcleanchran") or 0), true))
-stats = stats .. "\r\n " .. gettext ("Size of share ranks table: %d [ %s: %d @ %s ]"):format (counttable (tbl_sql.shran), "C", (getledoconf ("limcleanshran") or 0), fromunixtime ((getledoconf ("lastcleanshran") or 0), true))
-stats = stats .. "\r\n " .. gettext ("Size of operator ranks table: %d [ %s: %d @ %s ]"):format (counttable (tbl_sql.opran), "C", (getledoconf ("limcleanopran") or 0), fromunixtime ((getledoconf ("lastcleanopran") or 0), true))
-stats = stats .. "\r\n " .. gettext ("Size of search ranks table: %d [ %s: %d @ %s ]"):format (counttable (tbl_sql.srran), "C", (getledoconf ("limcleansrran") or 0), fromunixtime ((getledoconf ("lastcleansrran") or 0), true))
-stats = stats .. "\r\n " .. gettext ("Size of word ranks table: %d [ %s: %d @ %s ]"):format (counttable (tbl_sql.wdran), "C", (getledoconf ("limcleanwdran") or 0), fromunixtime ((getledoconf ("lastcleanwdran") or 0), true))
-stats = stats .. "\r\n " .. gettext ("Size of user location statistics table: %d [ %s: %s ]"):format (counttable (tbl_sql.ccstat), "C", fromunixtime ((getledoconf ("date_ccstats") or 0), true))
-stats = stats .. "\r\n " .. gettext ("Size of IP logger plugin table: %d [ %s: %d @ %s ]"):format (counttable ("pi_iplog"), "C", (getledoconf ("limcleaniplog") or 0), fromunixtime ((getledoconf ("lastcleaniplog") or 0), true))
-stats = stats .. "\r\n " .. gettext ("Size of statistics plugin table: %d [ %s: %d @ %s ]"):format (counttable ("pi_stats"), "C", (getledoconf ("limcleanstats") or 0), fromunixtime ((getledoconf ("lastcleanstats") or 0), true)) .. "\r\n"
+	stats = stats .. "\r\n " .. gettext ("Configuration directory: %s"):format (table_othsets.cfgdir)
+	stats = stats .. "\r\n " .. gettext ("Open files limit: %d"):format ((getulimit () or 0))
+	stats = stats .. "\r\n"
+	stats = stats .. "\r\n " .. gettext ("Total chat rank points: %d"):format (cntchatran)
+	stats = stats .. "\r\n " .. gettext ("Total share rank size: %s"):format (makesize (countranks (tbl_sql.shran)))
+	stats = stats .. "\r\n " .. gettext ("Total operator rank points: %d"):format (countranks (tbl_sql.opran))
+	stats = stats .. "\r\n " .. gettext ("Total search rank points: %d"):format (countranks (tbl_sql.srran))
+	stats = stats .. "\r\n " .. gettext ("Total word rank points: %d"):format (countranks (tbl_sql.wdran))
+	stats = stats .. "\r\n " .. gettext ("Average message count per user: %.2f"):format (mesperuser)
+	stats = stats .. "\r\n"
 
-commandanswer (nick, stats)
+	-- search duplicate filter
+
+	if table_sets.seardupfilt == 1 then
+		local proc = 0
+
+		if table_othsets.seardupcount > 0 and table_othsets.seartotcount > 0 then
+			proc = (table_othsets.seardupcount / table_othsets.seartotcount) * 100
+		end
+
+		stats = stats .. "\r\n " .. gettext ("Filtered search request duplicates: %d of %d"):format (table_othsets.seardupcount, table_othsets.seartotcount) .. string.format (" [ %.0f%% ]", proc)
+		stats = stats .. "\r\n"
+	end
+
+	-- mysql table sizes
+
+	stats = stats .. "\r\n " .. gettext ("Size of kicks table: %d [ %s: %d @ %s ]"):format (counttable ("kicklist"), "C", (getledoconf ("limcleankick") or 0), fromunixtime ((getledoconf ("lastcleankick") or 0), true))
+	stats = stats .. "\r\n " .. gettext ("Size of bans table: %d [ %s: %d @ %s ]"):format (counttable ("banlist"), "C", (getledoconf ("limcleanban") or 0), fromunixtime ((getledoconf ("lastcleanban") or 0), true))
+	stats = stats .. "\r\n " .. gettext ("Size of unbans table: %d [ %s: %d @ %s ]"):format (counttable ("unbanlist"), "C", (getledoconf ("limcleanunban") or 0), fromunixtime ((getledoconf ("lastcleanunban") or 0), true))
+	stats = stats .. "\r\n " .. gettext ("Size of registered users table: %d [ %s: %d @ %s ]"):format (counttable ("reglist"), "C", (getledoconf ("limcleanreg") or 0), fromunixtime ((getledoconf ("lastcleanreg") or 0), true))
+	stats = stats .. "\r\n " .. gettext ("Size of user log table: %d [ %s: %d @ %s ]"):format (counttable (tbl_sql.ulog), "C", (getledoconf ("limcleanulog") or 0), fromunixtime ((getledoconf ("lastcleanulog") or 0), true))
+	stats = stats .. "\r\n " .. gettext ("Size of command log table: %d [ %s: %d @ %s ]"):format (counttable (tbl_sql.clog), "C", (getledoconf ("limcleanclog") or 0), fromunixtime ((getledoconf ("lastcleanclog") or 0), true))
+	stats = stats .. "\r\n " .. gettext ("Size of release table: %d [ %s: %d @ %s ]"):format (counttable (tbl_sql.rel), "C", (getledoconf ("limcleanrel") or 0), fromunixtime ((getledoconf ("lastcleanrel") or 0), true))
+	stats = stats .. "\r\n " .. gettext ("Size of chat ranks table: %d [ %s: %d @ %s ]"):format (counttable (tbl_sql.chran), "C", (getledoconf ("limcleanchran") or 0), fromunixtime ((getledoconf ("lastcleanchran") or 0), true))
+	stats = stats .. "\r\n " .. gettext ("Size of share ranks table: %d [ %s: %d @ %s ]"):format (counttable (tbl_sql.shran), "C", (getledoconf ("limcleanshran") or 0), fromunixtime ((getledoconf ("lastcleanshran") or 0), true))
+	stats = stats .. "\r\n " .. gettext ("Size of operator ranks table: %d [ %s: %d @ %s ]"):format (counttable (tbl_sql.opran), "C", (getledoconf ("limcleanopran") or 0), fromunixtime ((getledoconf ("lastcleanopran") or 0), true))
+	stats = stats .. "\r\n " .. gettext ("Size of search ranks table: %d [ %s: %d @ %s ]"):format (counttable (tbl_sql.srran), "C", (getledoconf ("limcleansrran") or 0), fromunixtime ((getledoconf ("lastcleansrran") or 0), true))
+	stats = stats .. "\r\n " .. gettext ("Size of word ranks table: %d [ %s: %d @ %s ]"):format (counttable (tbl_sql.wdran), "C", (getledoconf ("limcleanwdran") or 0), fromunixtime ((getledoconf ("lastcleanwdran") or 0), true))
+	stats = stats .. "\r\n " .. gettext ("Size of user location statistics table: %d [ %s: %s ]"):format (counttable (tbl_sql.ccstat), "C", fromunixtime ((getledoconf ("date_ccstats") or 0), true))
+	stats = stats .. "\r\n " .. gettext ("Size of IP logger plugin table: %d [ %s: %d @ %s ]"):format (counttable ("pi_iplog"), "C", (getledoconf ("limcleaniplog") or 0), fromunixtime ((getledoconf ("lastcleaniplog") or 0), true))
+	stats = stats .. "\r\n " .. gettext ("Size of statistics plugin table: %d [ %s: %d @ %s ]"):format (counttable ("pi_stats"), "C", (getledoconf ("limcleanstats") or 0), fromunixtime ((getledoconf ("lastcleanstats") or 0), true)) .. "\r\n"
+
+	commandanswer (nick, stats)
 end
 
 ----- ---- --- -- -
@@ -22361,6 +22469,8 @@ function showledoconf (nick)
 	conf = conf .. "\r\n [::] sefiblockdel = " .. _tostring (table_sets.sefiblockdel)
 	conf = conf .. "\r\n [::] sefireason = " .. _tostring (table_sets.sefireason)
 	conf = conf .. "\r\n [::] searfiltmsg = " .. _tostring (table_sets.searfiltmsg)
+	conf = conf .. "\r\n [::] seardupfilt = " .. _tostring (table_sets.seardupfilt)
+	conf = conf .. "\r\n [::] seardupsecs = " .. _tostring (table_sets.seardupsecs)
 	conf = conf .. "\r\n"
 
 	conf = conf .. "\r\n [::] avsearchint = " .. _tostring (table_sets.avsearchint)

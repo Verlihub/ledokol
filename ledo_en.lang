@@ -1269,3 +1269,4 @@ Unsent third person main chat message from logged out user %s with IP %s before 
 Unsent offline private chat message from logged out user %s with IP %s to %s with IP %s before finishing proxy lookup: %s|
 %s logged in with IP %s previously detected as public proxy.|
 %s logged in with IP %s previously detected as public proxy with ASN: %s|
+Filtered search request duplicates: %d of %d|

@@ -17,6 +17,7 @@
 [ 82] Added: clonemove command to redirect all online user clones except first one to specified address
 [ 83] Added: Search result filter as an addition to search request filter
 [ 83] Added: Public proxy lookup for chat messages, similar to Blacklist functionality
+[ 85] Added: Search request duplicate filter, request by KCAHDEP
 
 [ 2.9.5 :: 2018-02-19 ]
 
