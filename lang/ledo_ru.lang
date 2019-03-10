@@ -1,6 +1,6 @@
 # Language: ru_RU
 # Charset: CP1251
-# Version: 2.9.5
+# Version: 2.9.6
 # Author: KCAHDEP
 # Email: admin@milenahub.ru
 
@@ -123,7 +123,7 @@ Top %d operator rankers|Список из %d наиболее активных операторов
 Operator rank list is empty.|Список наиболее активных операторов пуст.
 string|строка
 No user results found.|Пользователей не найдено.
-Showing %d user log results|Отображено %d результатов
+Showing %d user log results|Отображено %d результатов лога пользователя.
 Size of user log table: %d [ %s: %d @ %s ]|Размер таблицы логов пользователя: %d [ %s: %d @ %s ]
 Add protection entry|Добавить пользователя в список защищённых пользователей
 Delete protection entry|Удалить пользователя из списка защищённых пользователей
@@ -131,13 +131,13 @@ flags|флаги
 %s dropped due to bad search request.|Пользователь %s отключён за попытку поиска запрещённой информации.
 This command is either disabled or you don't have access to it.|Команда отключена либо вы не имеете достаточно прав на её использование.
 Deleted antispam entry: %s|Удалена ранее установленная запись антиспама: %s
-Couldn't delete antispam entry because not found: %s|Не могу удалить запись антиспама. Не найдено в базе: %s
+Couldn't delete antispam entry because not found: %s|Невозможно удалить запись антиспама, так как не найдено в базе: %s
 Antispam list|Список антиспама
 Antispam list is empty.|Список антиспама пуст.
-Couldn't add antispam exception entry because already exists: %s|Не могу добавить запись в исключения антиспама поскольку такая запись уже существует: %s
-Added antispam exception entry: %s|Добавлена запись в исключения для антиспама: %s
-Deleted antispam exception entry: %s|Удалена запись из исключений для антиспама: %s
-Couldn't delete antispam exception entry because not found: %s|Невозможно удалить запись из исключений для антиспама. Не найдена в базе: %s
+Couldn't add antispam exception entry because already exists: %s|Невозможно добавить запись в исключения антиспама, поскольку такая запись уже существует: %s
+Added antispam exception entry: %s|Добавлена запись для исключения антиспама: %s
+Deleted antispam exception entry: %s|Удалена запись из исключений антиспама: %s
+Couldn't delete antispam exception entry because not found: %s|Невозможно удалить запись из исключений для антиспама, так как не найдена в базе: %s
 Antispam exception list|Список исключений для антиспама
 Antispam exception list is empty.|Список исключений для антиспама пуст.
 The user you're trying to send offline message to is a bot. Message is discarded.|Пользователь попытался отправить офлайн сообщение боту. Действие отменено.
@@ -158,7 +158,7 @@ Unknown protocol command from %s with IP %s and class %d: %s|Неизвестная команда
 Custom nick list|Список временных ников
 %s operator commands|Команды %s для операторов
 Add antispam entry|Добавить запись антиспама
-Showing last %d lines out of total %d found in %s file|Показано %d из %d строк, найденных в файле %s
+Showing last %d lines out of total %d found in %s file|Показано последние %d из %d строк, найденных в файле %s
 Delete antispam entry|Удалить запись антиспама
 Add antispam exception entry|Добавить запись исключения для антиспама
 Delete antispam exception entry|Удалить запись исключения для антиспама
@@ -214,7 +214,7 @@ lines|количество
 Couldn't add rank exception because already exists: %s|Невозможно добавить исключение пользователя из списка рангов потому что такая запись уже существует: %s
 Added rank exception: %s|Добавлено исключение для списка рангов: %s
 Deleted rank exception: %s|Удалено исключение из списка рангов: %s
-Couldn't delete rank exception because not found: %s|Невозможно удалить исключение пользователя из списка рангов. Не найдено в базе: %s
+Couldn't delete rank exception because not found: %s|Невозможно удалить исключение пользователя из списка рангов, так как не найдено в базе: %s
 Rank exception list|Список исключений для подсчёта рейтинга
 Rank exception list is empty.|Список исключений для подсчёта рейтинга пуст.
 Add rank exception|Добавить исключение из подсчёта рейтинга
@@ -222,10 +222,10 @@ Delete rank exception|Удалить исключение из подсчёта рейтинга
 In order to use this feature you must turn off registered users list cache. Do it by setting hub configuration variable %s to %d and restarting the hub. Please note: Turning cache off is not recommended with large list of registered users.|Чтобы использовать эту функцию вы должны отключить кеширование списка пользователей. Сделайте это, выставив конфигурационную переменную хаба %s в %d и перезапустите хаб. Пожалуйста, помните: отключёние кеширования списка пользователей нежелательно при большом количестве пользователей.
 Both|Оба
 Deleted search filter: %s|Удален фильтр поиска: %s
-Couldn't delete search filter because not found: %s|Невозможно удалить фильтр поиска. Не найдено в базе: %s
+Couldn't delete search filter because not found: %s|Невозможно удалить фильтр поиска, так как не найден в базе: %s
 Search filter list|Список фильтров поиска
 Search filter list is empty.|Список фильтров поиска пуст.
-Magnet link: %s|Магнет-ссылка: %s
+Magnet URI: %s|Магнет-ссылка: %s
 Add search filter|Добавить фильтр поиска
 Delete search filter|Удалить фильтр поиска
 Known actions are: %s|Известные действия: %s
@@ -239,7 +239,7 @@ Size of statistics plugin table: %d [ %s: %d @ %s ]|Размер таблицы плагина stati
 Modified authorization entry: %s @ %s|Изменить запись авторизации: %s @ %s
 Added authorization entry: %s @ %s|Добавить запись авторизации: %s @ %s
 Deleted authorization entry: %s|Удалить запись авторизации: %s
-Couldn't delete authorization entry because not found: %s|Невозможно удалить запись авторизации. Не найдено в базе: %s
+Couldn't delete authorization entry because not found: %s|Невозможно удалить запись авторизации, так как не найдено в базе: %s
 IP authorization list|Список авторизаций по IP
 IP authorization list is empty.|Список авторизаций по IP пуст.
 Add IP authorization entry|Добавить запись авторизации по IP
@@ -259,8 +259,8 @@ Nick|Ник
 Login message|Сообщение при входе
 Logout message|Сообщение при выходе
 Welcome message list is empty.|Список приветственных сообщений пуст.
-Welcome messages were deleted for user: %s|Приветственное сообщение пользователя было удалено: %s
-Couldn't delete user from welcome message list because not found: %s|Невозможно удалить пользователя из списка приветственных сообщений. Не найден в базе: %s
+Welcome messages were deleted for user: %s|Приветственное сообщение для пользователя было удалено: %s
+Couldn't delete user from welcome message list because not found: %s|Невозможно удалить пользователя из списка приветственных сообщений, так как не найден в базе: %s
 Your login message set: %s|Ваше сообщение при входе установлено: %s
 %s with class %d changed his login message: %s|Пользователь %s %d-го класса изменил своё сообщение при входе: %s
 Your logout message set: %s|Ваше сообщение при выходе установлено: %s
@@ -472,7 +472,6 @@ Force custom nick for user|Принудительно сменить ник пользователю
 Either the feature is disabled or user that you're trying to set welcome message for doesn't have access to it.|Данная функция либо отключена, либо пользователь, к которому вы хотите её применить, не имеет к ней доступа.
 name|имя
 category|категория
-tth|tth
 Add new release|Добавлен новый релиз
 Delete releases|Удалить релизы
 List of available releases|Список доступных релизов
@@ -614,7 +613,7 @@ Protection list is empty.|Список защищённых пользователей пуст.
 Missing %s in configuration variable.|Пропущена %s в конфигурационной переменной.
 Chatroom: %s|Чат-рум: %s
 You've left the chatroom.|Вы покинули чат-рум.
-User left the chatroom: %s|Пользователь %s покинул чат-рум
+User left the chatroom: %s|Пользователь %s покинул чат-рум.
 User entered the chatroom: %s|Пользователь %s подключился к чат-руму
 You've entered %s chatroom.|Вы подключились к чат-руму %s.
 You're not member of this chatroom.|Вы не являетесь пользователем данного чат-рума.
@@ -697,7 +696,7 @@ Not found in search rank list: %s|Не найдено в списке популярности поисковых зап
 Size of search ranks table: %d [ %s: %d @ %s ]|Размер таблицы популярности поисковых запросов: %d [ %s: %d @ %s ]
 Size of user location statistics table: %d [ %s: %s ]|Размер таблицы с данными о географическом положении пользователей: %d [ %s: %s ]
 Open files limit: %d|Лимит открытых файлов: %d
-User information|Информация пользователя
+User information|Информация о пользователе
 User not in list: %s|Пользователь не обнаружен: %s
 Nick: %s|Ник: %s
 Description: %s|Описание: %s
@@ -708,7 +707,7 @@ Hubs: %s|Хабы: %s
 Limiter: %s KiB/s|Ограничения скорости: %s Кб/с
 Connection: %s|Соединение: %s
 Status: %s|Статус: %s
-Email: %s|Электронный почтовый адрес: %s
+Email: %s|Электронная почта: %s
 Share: %s|Шара: %s
 Exact share: %s|Точный размер шары: %s
 Class: %d|Класс: %d
@@ -962,7 +961,6 @@ Vote for user to be kicked|Голосовать за кик пользователя
 You don't want to vote for kicking an operator.|Не думаю что вы хотите голосовать за кик оператора.
 User voted kick|Кик по голосованию пользователей
 You have already voted for kicking that user.|Вы уже проголосовали за кик этого пользователя.
-%s added vote %d of %d for kicking user with class %d: %s|Пользователь %s добавил голосование %d из %d за кик юзера с классом %d: %s
 There is an error in following antispam entry pattern|Существует ошибка в следующем шаблоне антиспама
 Pattern|Шаблон
 Error|Ошибка
@@ -1008,7 +1006,6 @@ Infected user found with IP %s and share %s: %s|Заражённый пользователь найден с
 Server didn't reply with expected status code.|Сервер не ответил ожидаемым кодом статуса.
 Size of %s: %d @ %s|Размер %s: %d @ %s
 Clear kick votes for user|Очистить голоса для кика пользователя
-%s cleared %d of %d votes for kicking user with class %d: %s|%s очистил %d из %d голосов для кика пользователя с %d классом: %s
 Vote kick list|Список голосов за кик
 Vote kick list is empty.|Список голосов за кик пуст.
 Votes: %d of %d|Голосов: %d из %d
@@ -1040,7 +1037,7 @@ Development version of %s is available: %s|Разрабатываемая версия %s доступна: %
 Translation file loaded: %s|Файл с переводом загружен: %s
 Loaded none of %d with totally %d items: %s|Не загружено ни одного из %d итого %d пунктов: %s
 Failed to execute %s with code: %d|Не удалось выполнить %s с кодом: %d
-Failed to execute %s with error: %s|Не удалось выполнить %s с ошибкой: %d
+Failed to execute %s with error: %s|Не удалось выполнить %s с ошибкой: %s
 Failed to execute %s without code and error.|Не удалось выполнить %s без кода и сообщения.
 Failed to move file: %s|Не удалось переместить файл: %s
 Downloading translation file: %s|Загружаю файл с переводом: %s
@@ -1127,7 +1124,7 @@ Disable or enable right click menu item|Закрыть или открыть пункт меню правой кн
 Disabled right click menu item: %s|Пункт меню правой кнопки мыши закрыт: %s
 Enabled right click menu item: %s|Пункт меню правой кнопки мыши открыт: %s
 %s added to search block list.|%s добавлен в поисковый блок список.
-Your search request is discarded due to previous forbidden search request.|Ваш поисковый запрос заблокирован по причине ранее отправленного запрещённого поискового запроса.
+Your search request is discarded due to previous forbidden search request or result: %s|Ваш поисковый запрос отклоняется из-за предыдущего запрещённого поискового запроса или результата: %s
 Hub URL: %s|Адрес хаба: %s
 Search filter block list|Список блокировки поискового фильтра
 Delete search filter block list entry|Удалить пункт из списка блокировки поискового фильтра
@@ -1194,3 +1191,81 @@ City gag not found: %s|Список заглушек по городу пуст.
 Low connection attempt uptime of %d seconds from %s with IP %s and class %d to user: %s|Недостаточный аптайм в %d секунд для попытки соединения от %s c IP %s и классом %d пользователю: %s
 Please wait another %d seconds before connecting to other users.|Пожалуйста подождите %d секунд прежде чем подключаться к другим пользователям.
 path|путь
+Search in history messages|Поиск в сообщениях истории чата
+Show history lines at position|Показать историю чата по позиции
+No main chat history messages found.|Не найдено сообщений из истории чата.
+Found %d main chat messages|Найдено %d сообщений из истории чата
+Search in command logs|Поиск в логах команд
+No command logs found.|Не найдено логов команд.
+Found %d command logs|Найдено %d логов команд
+Unavailable|Недоступно
+Clone information|Информация о клонах
+No clones detected.|Клоны не найдены.
+%d users with IP %s and shared bytes %d: %s|%d пользователей с IP %s и шарой в %d байт: %s
+Total number of clones: %d|Общее количество клонов: %s
+Clean up registered users table|Очистить таблицу зарегистрированных пользователей
+magnet|магнет
+Please specify complete magnet URI.|Пожалуйста укажите полную магнет-ссылку.
+Release modified within category %s by %s: %s|Релиз изменён в категории %s пользователем %s: %s
+Release added within category %s by %s: %s|Релиз добавлен в категорию %s пользователем %s: %s
+Release deleted by %s: %s|Релиз удалён пользователем %s: %s
+Release category deleted by %s: %s|Категория релизов удалена пользователем %s: %s
+Someone from your IP address have already voted for kicking that user.|Кто-то с вашего IP адреса уже проголосовал за кик этого пользователя.
+IP list: %s|Сприсок IP: %s
+First vote can't be negative.|Первый голос не может быть отрицательным.
+You can't vote for kicking yourself.|Вы не можете голосовать за кик самого себя.
+Redirect all clones|Перенаправить всех клонов
+Number of redirected clones: %d|Количество перенаправленных клонов: %d
+Your search result is discarded due to previous forbidden search result or request: %s|Результаты поиска будут отклонены из-за предыдущих запрещённых результатов поиска или запросов: %s
+Search result exception from %s with IP %s and class %d as any file: %s|Обнаружено исключение результатов поиска от пользователя %s с IP-адреса %s класс пользователя: %d, исключение обнаружено в категории \"любые файлы\": %s
+Search result notification from %s with IP %s and class %d as any file: %s|Уведомление о результатах поиска от пользователя %s с IP-адреса %s класс пользователя: %d в категории \"любые файлы\": %s
+Bad search result from %s with IP %s and class %d as any file: %s|Запрещённый результат поиска от пользователя %s с IP-адреса %s класс пользователя: %d в категории \"любые файлы\": %s
+User dropped due to bad search result: %s|Пользователь: %s отключён из-за запрещённого результата поиска
+User didn't send any search results: %s|Пользователь: %s не отправил результаты поиска
+User redirected due to bad search result: %s|Перенаправление пользователя: %s из-за запрещённого результата поиска
+Search result exception from %s with IP %s and class %d as folder: %s|Обнаружено исключение результатов поиска от пользователя: %s с IP-адреса %s класс пользователя: %d, исключение обнаружено в категории \"папки\": %s
+Search result notification from %s with IP %s and class %d as folder: %s|Уведомление о результатах поиска от пользователя %s с IP-адреса %s класс пользователя: %d в категории \"папки\": %s
+Bad search result from %s with IP %s and class %d as folder: %s|Запрещённый результат поиска от пользователя %s с IP-адреса %s класс пользователя: %d в категории \"папки\": %s
+Search result exception from %s with IP %s and class %d as TTH: %s|Обнаружено исключение результатов поиска от пользователя: %s с IP-адреса %s класс пользователя: %d, исключение обнаружено в категории \"TTH\": %s
+Search result notification from %s with IP %s and class %d as TTH: %s|Уведомление о результатах поиска от пользователя %s с IP-адреса %s класс пользователя: %d в категории \"TTH\": %s
+Bad search result from %s with IP %s and class %d as TTH: %s|Запрещённый результат поиска от пользователя: %s с IP-адреса %s класс пользователя: %d в категории \"TTH\": %s
+Resetting proxy lookup daily quote limit: %d|Сброс ограничения ежедневной квоты на запросы для определения прокси: %d
+Your message will be delayed for proxy lookup of your IP address.|Ваше сообщение будет задержано на время определения вашего IP на наличие публичного прокси.
+You're not allowed to chat due to public proxy detection of your IP address.|У вас нет прав на общение в чате потому что ваш IP определён как публичный прокси.
+Proxy lookup daily quote limit reached on chat message from user with IP %s: %s|Достигнуто ограничение ежедневной квоты на запросы для определения прокси во время сообщения от пользователя с IP %s: %s
+Proxy lookup queue limit reached on chat message from user with IP %s: %s|Достигнуто ограничение очереди на запросы для определения прокси во время сообщения от пользователя с IP %s: %s
+Blocking private main chat message from %s with IP %s detected as public proxy to %s with IP %s: %s|Блокировка личного сообщения в общий чат от %s с IP %s обнаруженного как публичный прокси пользователю %s с IP %s: %s
+Blocking main chat message from %s with IP %s detected as public proxy: %s|Блокировка сообщения в общий чат от %s с IP %s обнаруженного как публичный прокси: %s
+Blocking private chat message from %s with IP %s detected as public proxy to %s with IP %s: %s|Блокировка личного сообщения от %s с IP %s обнаруженного как публичный прокси пользователю %s с IP %s: %s
+Blocking third person main chat message from %s with IP %s detected as public proxy: %s|Блокировка сообщения от третьего лица в общий чат от %s с IP %s обнаруженного как публичный прокси: %s
+Blocking offline private chat message from %s with IP %s detected as public proxy to %s with IP %s: %s|Блокировка личного оффлайн сообщения от %s с IP %s обнаруженного как публичный прокси пользователю %s с IP %s: %s
+Main chat message from %s with IP %s will be delayed for proxy lookup: %s|Сообщение в основной чат от %s с IP %s будет отложено для определения прокси: %s
+Private chat message from %s with IP %s to %s with IP %s will be delayed for proxy lookup.|Личное сообщение от %s с IP %s пользователю %s с IP %s будет отложено для определения прокси.
+Private main chat message from %s with IP %s to %s with IP %s will be delayed for proxy lookup.|Личное сообщение в общий чат от %s с IP %s пользователю %s с IP %s будет отложено для определения прокси.
+Third person main chat message from %s with IP %s will be delayed for proxy lookup: %s|Сообщение от третьего лица в основной чат от %s с IP %s будет отложено для определения прокси: %s
+Offline private chat message from %s with IP %s to %s with IP %s will be delayed for proxy lookup.|Личное оффлайн сообщение от %s с IP %s пользователю %s с IP %s будет отложено для определения прокси.
+In order to use this feature you need to set %s to your email address.|Для использования этой функции необходимо установить %s на ваш адрес электронной почты.
+Failed to execute %s for proxy lookup of IP %s with code: %d|Не удалось выполнить %s для определения прокси IP %s с кодом: %d
+Failed to execute %s for proxy lookup of IP %s with error: %s|Не удалось выполнить %s для определения прокси IP %s с ошибкой: %s
+Failed to execute %s for proxy lookup of IP %s without code and error.|Не удалось выполнить %s для определения прокси IP %s без кода и ошибки.
+Failed proxy lookup of IP %s with unknown result data: %s|Неудачное определение прокси IP %s с неизвестными данными результата: %s
+Failed proxy lookup of IP %s without result data.|Неудачное определение прокси IP %s без данных результата.
+Failed proxy lookup of IP %s without result file.|Неудачное определение прокси IP %s без файла с результатом.
+Failed proxy lookup of IP %s with result: %s|Неудачное определение прокси IP %s с результатом: %s
+Invalid request|Неверный запрос
+Invalid IP|Неверный IP
+Private IP|Частный IP
+Under maintenance|На техобслуживании
+Request banned|Запрос запрещен
+Invalid email|Неверный адрес электронной почты
+Not enough matches for proxy lookup of IP %s: %d of %d|Недостаточно совпадений для определения прокси IP %s: %d из %d
+Public proxy detected on IP: %s|Обнаружен публичный прокси на IP-адресе: %s
+Public proxy detected on IP %s with ASN: %s|Публичный прокси обнаружен на IP %s с ASN: %s
+Unsent main chat message from logged out user %s with IP %s before finishing proxy lookup: %s|Неотправленное сообщение в общий чат от вышедшего с хаба пользователя %s с IP %s до окончания проверки прокси: %s
+Unsent private chat message from logged out user %s with IP %s to %s with IP %s before finishing proxy lookup: %s|Неотправленное личное сообщение от вышедшего с хаба пользователя %s с IP %s пользователю %s с IP %s до окончания проверки прокси: %s
+Unsent private main chat message from logged out user %s with IP %s to %s with IP %s before finishing proxy lookup: %s|Неотправленное личное сообщение в общий чат от вышедшего с хаба пользователя %s с IP %s пользователю %s с IP %s до окончания проверки прокси: %s
+Unsent third person main chat message from logged out user %s with IP %s before finishing proxy lookup: %s|Неотправленное сообщение от третьего лица в общий чат от вышедшего с хаба пользователя %s с IP %s до окончания проверки прокси: %s
+Unsent offline private chat message from logged out user %s with IP %s to %s with IP %s before finishing proxy lookup: %s|Неотправленное личное оффлайн сообщение от вышедшего с хаба пользователя %s с IP %s пользователю %s с IP %s до окончания проверки прокси: %s
+%s logged in with IP %s previously detected as public proxy.|%s зашёл на хаб с IP %s ранее обнаруженным как прокси.
+%s logged in with IP %s previously detected as public proxy with ASN: %s|%s зашёл на хаб с IP %s ранее обнаруженным как прокси с ASN: %s
+Filtered search request duplicates: %d of %d|Дубликаты отфильтрованных поисковых запросов: %dиз %d

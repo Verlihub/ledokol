@@ -1,6 +1,6 @@
 # Language: lt_LT
 # Charset: CP1257
-# Version: 2.9.5
+# Version: 2.9.6
 # Author: Mindaugas K
 # Email: mex@micro.lt
 
@@ -225,7 +225,7 @@ Deleted search filter: %s|Paðalintas paieðkos filtras: %s
 Couldn't delete search filter because not found: %s|Negaliu paðalinti paieðkos filtro, nes toks  nerastas: %s
 Search filter list|Paieðkos filtrø sàraðas
 Search filter list is empty.|Paieðkos filtrø sàraðas tuðèias.
-Magnet link: %s|
+Magnet URI: %s|
 Add search filter|Pridëti paieðkos filtrà
 Delete search filter|Paðalinti paieðkos filtrà
 Known actions are: %s|Þinomi veiksmai yra: %s
@@ -472,7 +472,6 @@ Force custom nick for user|
 Either the feature is disabled or user that you're trying to set welcome message for doesn't have access to it.|
 name|
 category|
-tth|
 Add new release|
 Delete releases|
 List of available releases|
@@ -962,7 +961,6 @@ Vote for user to be kicked|
 You don't want to vote for kicking an operator.|
 User voted kick|
 You have already voted for kicking that user.|
-%s added vote %d of %d for kicking user with class %d: %s|
 There is an error in following antispam entry pattern|
 Pattern|
 Error|
@@ -1008,7 +1006,6 @@ Infected user found with IP %s and share %s: %s|
 Server didn't reply with expected status code.|
 Size of %s: %d @ %s|
 Clear kick votes for user|
-%s cleared %d of %d votes for kicking user with class %d: %s|
 Vote kick list|
 Vote kick list is empty.|
 Votes: %d of %d|
@@ -1127,7 +1124,7 @@ Disable or enable right click menu item|
 Disabled right click menu item: %s|
 Enabled right click menu item: %s|
 %s added to search block list.|
-Your search request is discarded due to previous forbidden search request.|
+Your search request is discarded due to previous forbidden search request or result: %s|
 Hub URL: %s|
 Search filter block list|
 Delete search filter block list entry|
@@ -1194,3 +1191,81 @@ City gag not found: %s|
 Low connection attempt uptime of %d seconds from %s with IP %s and class %d to user: %s|
 Please wait another %d seconds before connecting to other users.|
 path|
+Search in history messages|
+Show history lines at position|
+No main chat history messages found.|
+Found %d main chat messages|
+Search in command logs|
+No command logs found.|
+Found %d command logs|
+Unavailable|
+Clone information|
+No clones detected.|
+%d users with IP %s and shared bytes %d: %s|
+Total number of clones: %d|
+Clean up registered users table|
+magnet|
+Please specify complete magnet URI.|
+Release modified within category %s by %s: %s|
+Release added within category %s by %s: %s|
+Release deleted by %s: %s|
+Release category deleted by %s: %s|
+Someone from your IP address have already voted for kicking that user.|
+IP list: %s|
+First vote can't be negative.|
+You can't vote for kicking yourself.|
+Redirect all clones|
+Number of redirected clones: %d|
+Your search result is discarded due to previous forbidden search result or request: %s|
+Search result exception from %s with IP %s and class %d as any file: %s|
+Search result notification from %s with IP %s and class %d as any file: %s|
+Bad search result from %s with IP %s and class %d as any file: %s|
+User dropped due to bad search result: %s|
+User didn't send any search results: %s|
+User redirected due to bad search result: %s|
+Search result exception from %s with IP %s and class %d as folder: %s|
+Search result notification from %s with IP %s and class %d as folder: %s|
+Bad search result from %s with IP %s and class %d as folder: %s|
+Search result exception from %s with IP %s and class %d as TTH: %s|
+Search result notification from %s with IP %s and class %d as TTH: %s|
+Bad search result from %s with IP %s and class %d as TTH: %s|
+Resetting proxy lookup daily quote limit: %d|
+Your message will be delayed for proxy lookup of your IP address.|
+You're not allowed to chat due to public proxy detection of your IP address.|
+Proxy lookup daily quote limit reached on chat message from user with IP %s: %s|
+Proxy lookup queue limit reached on chat message from user with IP %s: %s|
+Blocking private main chat message from %s with IP %s detected as public proxy to %s with IP %s: %s|
+Blocking main chat message from %s with IP %s detected as public proxy: %s|
+Blocking private chat message from %s with IP %s detected as public proxy to %s with IP %s: %s|
+Blocking third person main chat message from %s with IP %s detected as public proxy: %s|
+Blocking offline private chat message from %s with IP %s detected as public proxy to %s with IP %s: %s|
+Main chat message from %s with IP %s will be delayed for proxy lookup: %s|
+Private chat message from %s with IP %s to %s with IP %s will be delayed for proxy lookup.|
+Private main chat message from %s with IP %s to %s with IP %s will be delayed for proxy lookup.|
+Third person main chat message from %s with IP %s will be delayed for proxy lookup: %s|
+Offline private chat message from %s with IP %s to %s with IP %s will be delayed for proxy lookup.|
+In order to use this feature you need to set %s to your email address.|
+Failed to execute %s for proxy lookup of IP %s with code: %d|
+Failed to execute %s for proxy lookup of IP %s with error: %s|
+Failed to execute %s for proxy lookup of IP %s without code and error.|
+Failed proxy lookup of IP %s with unknown result data: %s|
+Failed proxy lookup of IP %s without result data.|
+Failed proxy lookup of IP %s without result file.|
+Failed proxy lookup of IP %s with result: %s|
+Invalid request|
+Invalid IP|
+Private IP|
+Under maintenance|
+Request banned|
+Invalid email|
+Not enough matches for proxy lookup of IP %s: %d of %d|
+Public proxy detected on IP: %s|
+Public proxy detected on IP %s with ASN: %s|
+Unsent main chat message from logged out user %s with IP %s before finishing proxy lookup: %s|
+Unsent private chat message from logged out user %s with IP %s to %s with IP %s before finishing proxy lookup: %s|
+Unsent private main chat message from logged out user %s with IP %s to %s with IP %s before finishing proxy lookup: %s|
+Unsent third person main chat message from logged out user %s with IP %s before finishing proxy lookup: %s|
+Unsent offline private chat message from logged out user %s with IP %s to %s with IP %s before finishing proxy lookup: %s|
+%s logged in with IP %s previously detected as public proxy.|
+%s logged in with IP %s previously detected as public proxy with ASN: %s|
+Filtered search request duplicates: %d of %d|

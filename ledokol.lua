@@ -2,7 +2,7 @@
 --[[ license agreement >>
 ---------------------------------------------------------------------
 
-Copyright © 2007-2018 RoLex
+Copyright © 2007-2019 RoLex
 
 Ledokol is free software; You can redistribute it
 and modify it under the terms of the GNU General
@@ -51,7 +51,7 @@ Hungarista, Stefani, Aethra, netcelli, TheBoss, Maximum, BulleT,
 Doxtur, chaos, sphinx, Zorro, W1ZaRd, S0RiN, MaxFox, Krzychu,
 @tlantide, Ettore Atalan, Trumpy, Modswat, KCAHDEP, mauron, DiegoZ,
 Mank, Nickel, Lord_Zero, Meka][Meka, Ger, PetterOSS, Marcel, PPK,
-madkid, Aeolide, Jaguar, Toecutter, SCALOlàz, FlylinkDC, Men_VAf,
+madkid, Aeolide, Jaguar, Toecutter, SCALOlàz, FlylinkDC-dev, Men_VAf,
 Tzaca, JOE™, Foxtrot, Deivis
 
 ---------------------------------------------------------------------
@@ -63,7 +63,7 @@ Tzaca, JOE™, Foxtrot, Deivis
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.6" -- ledokol version
-bld_ledo = "85" -- build number
+bld_ledo = "86" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -691,6 +691,7 @@ table_cmnds = {
 	ledostats = "ledostats",
 	ledover = "ledover",
 	ledoconf = "ledoconf",
+	ledocofi = "ledocofi",
 	ledoset = "ledoset",
 	ledokoluninstallisconfirmed = "ledokoluninstallisconfirmed",
 	ledosql = "ledosql",
@@ -1509,6 +1510,7 @@ function Main (file)
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.ledocmd .. "` (`original`, `new`) values ('clogfind', '" .. repsqlchars (table_cmnds.clogfind) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.ledocmd .. "` (`original`, `new`) values ('cloneinfo', '" .. repsqlchars (table_cmnds.cloneinfo) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.ledocmd .. "` (`original`, `new`) values ('clonemove', '" .. repsqlchars (table_cmnds.clonemove) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.ledocmd .. "` (`original`, `new`) values ('ledocofi', '" .. repsqlchars (table_cmnds.ledocofi) .. "')")
 					end
 
 					if ver <= 297 then
@@ -3579,32 +3581,44 @@ elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.ledostats .. "$") 
 
 	----- ---- --- -- -
 
-elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.ledoset .. " %S+ .*$") then
-if ucl >= table_sets.mincommandclass then
-if table_sets.classnoticonfig == 11 then
-donotifycmd (nick, data, 0, ucl)
-end
+	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.ledoset .. " %S+ .*$") then
+		if ucl >= table_sets.mincommandclass then
+			if table_sets.classnoticonfig == 11 then
+				donotifycmd (nick, data, 0, ucl)
+			end
 
-setledoconf (nick, ucl, data:sub (# table_cmnds.ledoset + 3))
-else
-commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
-end
+			setledoconf (nick, ucl, data:sub (# table_cmnds.ledoset + 3))
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
 
-return 0
+		return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
 
-elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.ledoconf .. "$") then
-if ucl >= table_sets.mincommandclass then
-donotifycmd (nick, data, 0, ucl)
-showledoconf (nick)
-else
-commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
-end
+	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.ledocofi .. " .+$") then
+		if ucl >= table_sets.mincommandclass then
+			donotifycmd (nick, data, 0, ucl)
+			findledoconf (nick, data:sub (# table_cmnds.ledocofi + 3))
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
 
-return 0
+		return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
+
+	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.ledoconf .. "$") then
+		if ucl >= table_sets.mincommandclass then
+			donotifycmd (nick, data, 0, ucl)
+			showledoconf (nick)
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
+
+		return 0
+
+	----- ---- --- -- -
 
 elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.ledosql .. " .+$") then
 
@@ -8333,7 +8347,6 @@ end
 ----- ---- --- -- -
 
 --[[
-
 function broadcastcustnick (to, nick, data)
 	if table_sets.custnickclass == 11 then
 		return false
@@ -8348,7 +8361,6 @@ function broadcastcustnick (to, nick, data)
 
 	return false
 end
-
 ]]--
 
 ----- ---- --- -- -
@@ -8550,25 +8562,21 @@ end
 
 ----- ---- --- -- -
 
-function getrealnick (nick, custom)
-	local rnick = findcustnick (custom)
+function getrealnick (nick, cust)
+	local real = findcustnick (cust)
 
-	if not rnick then
-		if getstatus (custom) == 1 then
+	if not real then
+		if getstatus (cust) == 1 then
 			commandanswer (nick, gettext ("Requested nick is real."))
 		else
 			commandanswer (nick, gettext ("Requested nick wasn't found in custom nick list."))
 		end
 	else
-		local stsword = ""
-
-		if getstatus (rnick) == 1 then
-			stsword = gettext ("online")
+		if getstatus (real) == 1 then
+			commandanswer (nick, gettext ("Requested nick belongs to a user who is online: %s"):format (real))
 		else
-			stsword = gettext ("offline")
+			commandanswer (nick, gettext ("Requested nick belongs to a user who is offline: %s"):format (real))
 		end
-
-		commandanswer (nick, gettext ("Requested nick belongs to a user who is %s: %s"):format (stsword, rnick)) -- todo: split translation
 	end
 end
 
@@ -12841,30 +12849,32 @@ end
 
 ----- ---- --- -- -
 
-function autosendoffmsg (to, ucls, tip)
-if table_sets.offmsgclass ~= 11 then
-local user = repsqlchars (to)
-local _, rows = VH:SQLQuery ("select `from`, `date`, `message` from `" .. tbl_sql.off .. "` where `to` = '" .. user .. "' order by `date` asc, `from` asc")
+function autosendoffmsg (nick, clas, addr)
+	if clas < table_sets.offmsgclass then
+		return
+	end
 
-if rows > 0 then
-for x = 0, rows - 1 do
-local _, from, adate, msg = VH:SQLFetch (x)
-offlinepm (from, to, gettext ("I sent offline message to you on %s"):format (os.date (table_sets.dateformat .. " " .. table_sets.timeformat, adate)) .. ":\r\n\r\n" .. msg .. "\r\n")
-local sts = ""
+	local user = repsqlchars (nick)
+	local _, rows = VH:SQLQuery ("select `from`, `date`, `message` from `" .. tbl_sql.off .. "` where `to` = '" .. user .. "' order by `date` asc, `from` asc")
 
-if getstatus (from) == 0 then
-sts = gettext ("Offline")
-else
-sts = gettext ("Online")
-end
+	if rows > 0 then
+		for row = 0, rows - 1 do
+			local _, from, stamp, text = VH:SQLFetch (row)
+			offlinepm (from, nick, gettext ("I sent offline message to you on %s"):format (os.date (table_sets.dateformat .. " " .. table_sets.timeformat, stamp)) .. ":\r\n\r\n" .. text .. "\r\n")
+			local stat = ""
 
-offlinepm (from, to, gettext ("My current status") .. ": " .. sts)
-end
+			if getstatus (from) == 0 then
+				stat = gettext ("Offline")
+			else
+				stat = gettext ("Online")
+			end
 
-opsnotify (table_sets.classnotioff, gettext ("%s with IP %s and class %d received offline messages."):format (to, tip .. tryipcc (tip, to), ucls))
-VH:SQLQuery ("delete from `" .. tbl_sql.off .. "` where `to` = '" .. user .. "'") -- remove all stored message to that user
-end
-end
+			offlinepm (from, nick, gettext ("My current status") .. ": " .. stat)
+		end
+
+		opsnotify (table_sets.classnotioff, gettext ("%s with IP %s and class %d received offline messages."):format (nick, addr .. tryipcc (addr, nick), clas))
+		VH:SQLQuery ("delete from `" .. tbl_sql.off .. "` where `to` = '" .. user .. "'") -- remove all stored message to that user
+	end
 end
 
 ----- ---- --- -- -
@@ -18010,6 +18020,7 @@ end
 	-- general
 	if ucl >= table_sets.mincommandclass then
 		sopmenitm (usr, gettext ("Configuration") .. "\\" .. gettext ("Script configuration variables"), table_cmnds.ledoconf)
+		sopmenitm (usr, gettext ("Configuration") .. "\\" .. gettext ("Find configuration variables"), table_cmnds.ledocofi .. " %[line:<" .. gettext ("name") .. ">]")
 		sopmenitm (usr, gettext ("Configuration") .. "\\" .. gettext ("Change configuration variable"), table_cmnds.ledoset .. " %[line:<" .. gettext ("variable") .. ">] %[line:<" .. gettext ("value") .. ">]")
 		sopmenitm (usr, gettext ("Configuration") .. "\\" .. gettext ("Perform script update"), table_cmnds.ledover)
 		sopmenitm (usr, gettext ("Configuration") .. "\\" .. gettext ("This list of commands"), table_cmnds.ledohelp)
@@ -18671,7 +18682,7 @@ end
 			if setto >= 0 and setto <= 3 then
 				ok = true
 			else
-				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0, 1 " .. gettext ("or") .. " 3"))
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0, 1, 2 " .. gettext ("or") .. " 3"))
 			end
 		else
 			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
@@ -20860,20 +20871,22 @@ end
 
 	----- ---- --- -- -
 
-elseif tvar == "custmaxlen" then
-if num then
-if setto >= 3 and setto <= 64 then
-ok = true
-if setto < table_sets [tvar] then cleancustnick (setto, 0) end
-else
-commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "3 " .. gettext ("to") .. " 64"))
-end
+	elseif tvar == "custmaxlen" then
+		if num then
+			if setto >= 3 and setto <= 64 then
+				ok = true
 
-else
-commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
-end
+				if setto < table_sets [tvar] then
+					cleancustnick (setto, 0)
+				end
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "3 " .. gettext ("to") .. " 64"))
+			end
+		else
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
+		end
 
------ ---- --- -- -
+	----- ---- --- -- -
 
 elseif tvar == "micheck" then
 if num then
@@ -22194,6 +22207,7 @@ function sendophelp (nick, clas, pm)
 
 	-- general
 	help = help .. " " .. trig .. table_cmnds.ledoconf .. " - " .. gettext ("Script configuration variables") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.ledocofi .. " <" .. gettext ("name") .. "> - " .. gettext ("Find configuration variables") .. "\r\n"
 	help = help .. " " .. trig .. table_cmnds.ledoset .. " <" .. gettext ("variable") .. "> <" .. gettext ("value") .. "> - " .. gettext ("Change configuration variable") .. "\r\n"
 	help = help .. " " .. trig .. table_cmnds.ledover .. " [force&#124;dev] - " .. gettext ("Perform script update") .. "\r\n"
 	help = help .. " " .. trig .. table_cmnds.ledohelp .. " - " .. gettext ("This list of commands") .. "\r\n"
@@ -22411,7 +22425,7 @@ function sendstats (nick)
 			proc = (table_othsets.seardupcount / table_othsets.seartotcount) * 100
 		end
 
-		stats = stats .. "\r\n " .. gettext ("Filtered search request duplicates: %d of %d"):format (table_othsets.seardupcount, table_othsets.seartotcount) .. string.format (" [ %.0f%% ]", proc)
+		stats = stats .. "\r\n " .. gettext ("Filtered search request duplicates: %d of %d"):format (table_othsets.seardupcount, table_othsets.seartotcount) .. " [ " .. roundint (proc, 0) .. "% ]"
 		stats = stats .. "\r\n"
 	end
 
@@ -22434,6 +22448,25 @@ function sendstats (nick)
 	stats = stats .. "\r\n " .. gettext ("Size of statistics plugin table: %d [ %s: %d @ %s ]"):format (counttable ("pi_stats"), "C", (getledoconf ("limcleanstats") or 0), fromunixtime ((getledoconf ("lastcleanstats") or 0), true)) .. "\r\n"
 
 	commandanswer (nick, stats)
+end
+
+----- ---- --- -- -
+
+function findledoconf (nick, name)
+	local list, num, lona = "", 0, name:lower ()
+
+	for var, val in pairs (table_sets) do
+		if var:find (lona, 1, true) then -- plain text
+			list = list .. " [::] " .. var .. " = " .. _tostring (val) .. "\r\n"
+			num = num + 1
+		end
+	end
+
+	if num > 0 then
+		commandanswer (nick, gettext ("Found %d configuration variables"):format (num) .. ":\r\n\r\n" .. list)
+	else
+		commandanswer (nick, gettext ("No configuration variables found."))
+	end
 end
 
 ----- ---- --- -- -
@@ -24697,10 +24730,10 @@ end
 ----- ---- --- -- -
 
 function getcsnick (nick)
-	local lusr = tolow (nick)
+	local loni = tolow (nick)
 
-	for user in getnicklist ():gmatch ("([^%$ ]+)") do
-		if tolow (user) == lusr then
+	for user in getnicklist ():gmatch ("[^%$ ]+") do
+		if tolow (user) == loni then
 			return user
 		end
 	end

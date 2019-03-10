@@ -1,6 +1,6 @@
 # Language: ro_RO
 # Charset: CP1250
-# Version: 2.9.5
+# Version: 2.9.6
 # Author: S0RiN
 # Email: rusu_sorin_con@yahoo.com
 
@@ -225,7 +225,7 @@ Deleted search filter: %s|Filtrul de cãutare: %s a fost ºters.
 Couldn't delete search filter because not found: %s|Nu poþi ºterge filtrul de cãutare: %s pentru cã nu a fost gãsit.
 Search filter list|Lista de filtre de cãutare
 Search filter list is empty.|Lista de filtre de cãutare este goalã.
-Magnet link: %s|Magnet link: %s
+Magnet URI: %s|Adresã magnet: %s
 Add search filter|Filtru de cãutare adãugat
 Delete search filter|Filtru de cãutare ºters
 Known actions are: %s|Acþiunea cunoscutã este: %s
@@ -472,7 +472,6 @@ Force custom nick for user|Forþare personalizare nick pentru utilizator
 Either the feature is disabled or user that you're trying to set welcome message for doesn't have access to it.|Caracteristica pe care vrei sã o utilizezi pentru a seta mesaj de întâmpinare utilizator, este dezactivatã sau nu ai acces la ea.
 name|nume
 category|categorie
-tth|tth
 Add new release|Adaugã noi realizãri
 Delete releases|ªterge lansãri
 List of available releases|Lista de lansãri disponibile
@@ -962,7 +961,6 @@ Vote for user to be kicked|Vot pentru a fi kick-uit un utilizator
 You don't want to vote for kicking an operator.|Tu nu vrei sã votezi pentru a fi kick-uit un operator.
 User voted kick|Utilizatorul a votat pentru kick
 You have already voted for kicking that user.|Ai votat deja pentru a fi kick-uit acest user.
-%s added vote %d of %d for kicking user with class %d: %s|%s a adãugat votul %d din %d pentru a fi kick-uit utilizatorul %s cu clasa: %d
 There is an error in following antispam entry pattern|Aici este o eroare în urmãrirea intrãrii antispam a bazei de adresã IP
 Pattern|Baza adresei IP
 Error|Eroare
@@ -1008,7 +1006,6 @@ Infected user found with IP %s and share %s: %s|Detectare utilizator virusat, cu
 Server didn't reply with expected status code.|Serverul nu rãspunde cu codul status aºteptat.
 Size of %s: %d @ %s|Dimensiune a %s: %d @ %s
 Clear kick votes for user|ªtergere a voturilor pentru kick-uire utilizator
-%s cleared %d of %d votes for kicking user with class %d: %s|%s a ºters %d din %d voturi pentru kick-uire utilizator cu clasa %d: %s
 Vote kick list|Lista voturilor pentru kick
 Vote kick list is empty.|Lista voturilor pentru kick, este goalã.
 Votes: %d of %d|Vot: %d din %d
@@ -1127,7 +1124,7 @@ Disable or enable right click menu item|Dezactiveazã sau activeazã articol al me
 Disabled right click menu item: %s|Dezactivare articol al meniului de click dreapta: %s
 Enabled right click menu item: %s|Activare articol al meniului de click dreapta: %s
 %s added to search block list.|%s adãugat în lista de blocãri ale cãutãrilor.
-Your search request is discarded due to previous forbidden search request.|Cãutarea ta este respinsã din cauza unei cãutãri anterioare pe filã interzisã.
+Your search request is discarded due to previous forbidden search request or result: %s|Cãutarea ta este blocatã din cauza cererilor sau rezultatelor interzise anterioare: %s
 Hub URL: %s|Hub URL: %s
 Search filter block list|Lista filtrului de blocare a cãutãrilor
 Delete search filter block list entry|ªtergerea listei filtrului de blocare a cãutãrilor
@@ -1194,3 +1191,81 @@ City gag not found: %s|Lista cu gaguri pe oraº e goalã.
 Low connection attempt uptime of %d seconds from %s with IP %s and class %d to user: %s|Încercare de conectare în curs %d secunde, de la %s cu IP %s ºi clasa %d la utilizatorul %s 
 Please wait another %d seconds before connecting to other users.|Te rog sã aºtepþi încã %d secunde înainte sã încerci sã te conectezi la un alt utilizator.
 path|pachet
+Search in history messages|Cãutare în istoricul mesajelor
+Show history lines at position|Aratã liniile istoricului ºi poziþia
+No main chat history messages found.|Nu s-au gãsit mesaje ale istoricului chat-ului principal.
+Found %d main chat messages|S-a gãsit %d mesaj/e ale chat-ului principal
+Search in command logs|Cãutare loguri comenzi
+No command logs found.|Nu s-au gãsit loguri pentru comenzi.
+Found %d command logs|S-a gãsit %d log pentru comenzi
+Unavailable|Indisponibil
+Clone information|Informaþie despre clone
+No clones detected.|Nu s-au detectat clone.
+%d users with IP %s and shared bytes %d: %s|%d utilizator cu IP %s ºi cifra de share %d : %s
+Total number of clones: %d|Numãrul total de clone: %d
+Clean up registered users table|Curãþarea registrului de utilizatori
+magnet|magnet
+Please specify complete magnet URI.|Te rugãm sã menþionezi adresa magnet URL completã.
+Release modified within category %s by %s: %s|Eliberarea a fost modificatã în cadrul categoriei %s by %s: %s 
+Release added within category %s by %s: %s|Eliberarea a fost adãugatã în cadrul categoriei %s by %s: %s
+Release deleted by %s: %s|Eliberare ºtearsã de %s: %s
+Release category deleted by %s: %s|Categorie de eliberãri ºtearsã de %s: %s
+Someone from your IP address have already voted for kicking that user.|Cineva cu adresa ta IP a votat deja kick-uirea acestui utilizator.
+IP list: %s|Lista de IP-uri: %s
+First vote can't be negative.|?????? ????? ?? ????? ???? ?????????????.
+You can't vote for kicking yourself.|Nu poþi vota sã-þi dai singur kick.
+Redirect all clones|Redirecþioneazã toate clonele
+Number of redirected clones: %d|Numãrul clonelor redirecþionate: %d
+Your search result is discarded due to previous forbidden search result or request: %s|Rezultatul cãutãrii tale este blocat din cauza cãutãrilor sau rezultatelor anterioare interzise: %s
+Search result exception from %s with IP %s and class %d as any file: %s|Excepþie pe rezultatul cãutãrii de la %s cu IP %s ºi clasa %d pe fila de orice tip: %s
+Search result notification from %s with IP %s and class %d as any file: %s|Notificare a rezultatului cãutãrii de la %s cu IP %s ºi clasa %d pe fila de orice tip: %s
+Bad search result from %s with IP %s and class %d as any file: %s|Rezultat cãutare rea de la %s cu IP %s ºi clasa %d pe fila de orice tip: %s
+User dropped due to bad search result: %s|Utilizator deconectat pentru rezultat cãutare rea: %s
+User didn't send any search results: %s|Utilizatorul nu a trimis nici un rezultat al cãutãrii: %s
+User redirected due to bad search result: %s|Utilizator redirecþionat din cauza rezultatului unei cãutãri rele: %s
+Search result exception from %s with IP %s and class %d as folder: %s|Excepþie pe rezultatul cãutãrii de la %s cu IP %s ºi clasa %d ca dosar: %s
+Search result notification from %s with IP %s and class %d as folder: %s|Notificare rezultat cãutare de la %s cu IP %s ºi clasa %d ca dosar: %s
+Bad search result from %s with IP %s and class %d as folder: %s|Rezultat cãutare rea de la %s cu IP %s ºi clasa %d ca dosar: %s
+Search result exception from %s with IP %s and class %d as TTH: %s|Excepþie rezultat cãutare de la %s cu IP %s ºi clasa %d ca TTH: %s
+Search result notification from %s with IP %s and class %d as TTH: %s|Notificare rezultat cãutare de la %s cu IP %s ºi clasa %d ca TTH: %s
+Bad search result from %s with IP %s and class %d as TTH: %s|Rezultat cãutare rea de la %s cu IP %s ºi clasa %d ca TTH: %s
+Resetting proxy lookup daily quote limit: %d|Resetarea limitei zilnice a cotaþiei cãutãrilor: %d
+Your message will be delayed for proxy lookup of your IP address.|Mesajul tãu va fi întârziat pentru cãutarea de pe IP-ul tãu proxy.
+You're not allowed to chat due to public proxy detection of your IP address.|Nu-þi este permis accesul la chat-ul public datoritã IP-ului tãu proxy.
+Proxy lookup daily quote limit reached on chat message from user with IP %s: %s|Limita zilnicã de cãutare cu proxy depãºitã în mesaj pe chat de userul cu IP: %s: %s
+Proxy lookup queue limit reached on chat message from user with IP %s: %s|Limita listei de cãutare proxy a fost atinsã cu mesajul de chat de la utilizatorul cu IP %s: %s
+Blocking private main chat message from %s with IP %s detected as public proxy to %s with IP %s: %s|Blocare mesaj personal cãtre chat-ul principal de la %s cu IP %s detectat ca public proxy de la %s cu IP %s: %s
+Blocking main chat message from %s with IP %s detected as public proxy: %s|Blocare mesaj pentru mainul principal de la %s cu IP %s detectat ca public proxy: %s
+Blocking private chat message from %s with IP %s detected as public proxy to %s with IP %s: %s|Blocare mesaj privat de la %s cu IP %s detectat ca public proxy cãtre %s cu IP %s: %s
+Blocking third person main chat message from %s with IP %s detected as public proxy: %s|Blocare mesaj a treia persoanã de la %s cu IP %s detectat ca public proxy: %s
+Blocking offline private chat message from %s with IP %s detected as public proxy to %s with IP %s: %s|Blocare mesaj privat offline de la %s cu IP %s detectat ca public proxy cãtre %s cu IP %s: %s
+Main chat message from %s with IP %s will be delayed for proxy lookup: %s|Mesaj chat principal de la %s cu IP %s va fi întârziat pentru verificare proxy: %s
+Private chat message from %s with IP %s to %s with IP %s will be delayed for proxy lookup.|Mesaj privat de la %s cu IP %s cãtre %s cu IP %s va fi întârziat pentru verificare proxy.
+Private main chat message from %s with IP %s to %s with IP %s will be delayed for proxy lookup.|Mesaj personal în chat-ul principal de la %s cu IP %s cãtre %s cu IP %s va fi întârziat pentru verificare proxy.
+Third person main chat message from %s with IP %s will be delayed for proxy lookup: %s|Mesaj al treilea persoanã în chat principal de la %s cu IP %s va fi întârziat pentru verificare proxy: %s
+Offline private chat message from %s with IP %s to %s with IP %s will be delayed for proxy lookup.|Mesaj privat offline de la %s cu IP %s cãtre %s cu IP %s va fi întârziat pentru verificare proxy.
+In order to use this feature you need to set %s to your email address.|Pentru a utiliza aceastã caracteristicã trebuie sã setezi %s la adresa ta de e-mail.
+Failed to execute %s for proxy lookup of IP %s with code: %d|Eºec în execuþia %s pentru verificare proxy pe IP %s cu cod: %d 
+Failed to execute %s for proxy lookup of IP %s with error: %s|Eºec în execuþia %s pentru verificare proxy pe IP %s cu eroare: %s
+Failed to execute %s for proxy lookup of IP %s without code and error.|Eºec în execuþia %s pentru verificare proxy pe IP %s fãrã cod ºi eroare.
+Failed proxy lookup of IP %s with unknown result data: %s|Eºec verificare proxy pe IP %s cu date rezultate necunoscute: %s
+Failed proxy lookup of IP %s without result data.|Eºec verificare proxy pe IP %s fãrã date rezultate.
+Failed proxy lookup of IP %s without result file.|Eºec verificare proxy pe IP %s fãrã filã rezultat.
+Failed proxy lookup of IP %s with result: %s|Eºec verificare proxy pe IP %s cu rezultat: %s
+Invalid request|Cerere invalidã
+Invalid IP|IP invalid
+Private IP|IP privat
+Under maintenance|Sub lucrãri de întreþinere
+Request banned|Cerere banatã
+Invalid email|E-mail invalid
+Not enough matches for proxy lookup of IP %s: %d of %d|Nu sunt destule potriviri pentru verificarea proxy pe IP %s: %d pe %d
+Public proxy detected on IP: %s|Proxy public detectat pe IP: %s
+Public proxy detected on IP %s with ASN: %s|Proxy public detectat pe IP %s cu ASN: %s
+Unsent main chat message from logged out user %s with IP %s before finishing proxy lookup: %s|Mesaj pentru chat principal netransmis pentru utilizator ieºit %s cu IP %s înainte de terminarea cãutãrii proxy: %s
+Unsent private chat message from logged out user %s with IP %s to %s with IP %s before finishing proxy lookup: %s|Mesaj pentru chat privat netransmis pentru utilizator ieºit %s cu IP %s cãtre %s cu IP %s înainte de terminarea cãutãrii proxy: %s
+Unsent private main chat message from logged out user %s with IP %s to %s with IP %s before finishing proxy lookup: %s|Mesaj pentru chat principal privat netransmis pentru utilizator ieºit %s cu IP %s cãtre %s cu IP %s înainte de terminarea cãutãrii proxy: %s
+Unsent third person main chat message from logged out user %s with IP %s before finishing proxy lookup: %s|Mesaj pentru chat principal netransmis de cãtre un al treilea utilizator ieºit %s cu IP %s înainte de terminarea cãutãrii proxy: %s
+Unsent offline private chat message from logged out user %s with IP %s to %s with IP %s before finishing proxy lookup: %s|Mesaj offline privat netransmis de cãtre utilizator ieºit %s cu IP %s cãtre %s cu IP %s înainte de terminarea cãutãrii proxy: %s
+%s logged in with IP %s previously detected as public proxy.|%s logat pe hub cu IP %s anterior detectat cu public proxy.
+%s logged in with IP %s previously detected as public proxy with ASN: %s|%s logat pe hub cu IP %s anterior detectat cu public proxy cu ASN: %s
+Filtered search request duplicates: %d of %d|Dublura %d a cãutãrii filtrate: %d

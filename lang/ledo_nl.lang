@@ -1,7 +1,7 @@
 # Language: nl_NL
 # Charset: CP1252
-# Version: 2.9.5
-# Author: Modswat
+# Version: 2.9.6
+# Author: Marcel
 # Email: future_dance@hotmail.com
 
 Current topic: %s|Huidige topic gemaakt door %s: %s
@@ -225,7 +225,7 @@ Deleted search filter: %s|Verwijderde zoek filter: %s
 Couldn't delete search filter because not found: %s| Het verwijderen van de zoek filter niet gelukt, omdat deze niet is gevonden: %s
 Search filter list|Zoek filter lijst
 Search filter list is empty.|Zoek filter lijst is leeg.
-Magnet link: %s|Magnet link: %s
+Magnet URI: %s|Magnet URI: %s
 Add search filter|Toevoegen zoek filter
 Delete search filter|Verwijder zoek filter
 Known actions are: %s|Bekend acties zijn: %s
@@ -359,7 +359,7 @@ Forbidden IP address list is empty.|forbidden IP address lijst is leeg.
 Couldn't delete category because not found: %s|Kon categorie niet verwijderen omdat deze is niet gevonden: %s
 User redirected due to spam: %s|Gebruiker gedropt wegens spam: %s
 %s redirected due to bad search request.|%s omgeleid vanwege een slecht zoekverzoek.
-You can download me from: %s|
+You can download me from: %s|Je kunt van mij downloaden: %s
 %s is registered with class %d and has been automatically unregistered and deleted from other tables.|%s is geregistreerd met class %d en is automatisch afgemeld en verwijderd uit andere tabellen .
 PiB|PiB
 TiB|TiB
@@ -472,7 +472,6 @@ Force custom nick for user|Dwing custom nick voor gebruiker
 Either the feature is disabled or user that you're trying to set welcome message for doesn't have access to it.|Of de functie is uitgeschakeld of de gebruiker waar van je probeert een welkomstbericht in te stellen heeft geen toegang hier voor.
 name|naam
 category|category
-tth|tth
 Add new release|Nieuwe release toevoegen
 Delete releases|Verwijder releases
 List of available releases|Lijst van beschikbare releases.
@@ -962,7 +961,6 @@ Vote for user to be kicked|Stem voor gebruiker om gekikt te worden
 You don't want to vote for kicking an operator.|Je kunt niet te stemmen om een Operator te kikken
 User voted kick|Gebruikers kunnen stemmen om te kikken
 You have already voted for kicking that user.|Je hebt al gestemd om een gebruiker te kikken .
-%s added vote %d of %d for kicking user with class %d: %s|%s stem toegevoegd %d om %d gebruiker te kikken met class %d: %s
 There is an error in following antispam entry pattern|Er zit een fout in de volgende antispam patroon
 Pattern|Pattern
 Error|Error
@@ -1008,7 +1006,6 @@ Infected user found with IP %s and share %s: %s|Geïnfecteerde gebruiker gedetect
 Server didn't reply with expected status code.|Server reageerde niet met de verwacht status code
 Size of %s: %d @ %s|Grote van %s: %d @ %s
 Clear kick votes for user|Kik stem voor gebruiker opgeruimd
-%s cleared %d of %d votes for kicking user with class %d: %s|%s opgeruimd %d van %d stemmen om gebruiker te kikken %d: %s
 Vote kick list|Stem kik lijst
 Vote kick list is empty.|Stem kik lijst is leeg
 Votes: %d of %d|Stemmen: %d of %d
@@ -1127,7 +1124,7 @@ Disable or enable right click menu item|Uitzetten of verwijderen van het right c
 Disabled right click menu item: %s|Aanzetten right click menu item: %s
 Enabled right click menu item: %s|Uitzetten right click menu item: %s
 %s added to search block list.|%s toegevoegd aan zoek blok lijst
-Your search request is discarded due to previous forbidden search request.|Zoek aanvraag afgebroken door verboden zoek aanvraag.
+Your search request is discarded due to previous forbidden search request or result: %s|Uw zoekopdracht wordt verwijderd vanwege een vorig verboden zoekverzoek of resultaat:%s
 Hub URL: %s|Hub URL: %s
 Search filter block list|Zoekfilter block lijst
 Delete search filter block list entry|Verwijder zoekfilter blok lijstvermelding
@@ -1194,3 +1191,81 @@ City gag not found: %s|Stad gag lijst is leeg.
 Low connection attempt uptime of %d seconds from %s with IP %s and class %d to user: %s|Lage verbindingspoging uptime van %d seconden van %smet IP %s en klasse %d naar gebruiker: %s
 Please wait another %d seconds before connecting to other users.|Wacht alsjeblieft nog een %d seconden voordat je verbinding maakt met een gebruiker.
 path|path
+Search in history messages|Zoek in geschiedenis berichten
+Show history lines at position|Toon geschiedenisregels op positie
+No main chat history messages found.|Geen berichten gevonden over de belangrijkste chatgeschiedenis.
+Found %d main chat messages|Gevonden %d mainchat berichten
+Search in command logs|Zoeken in commando logs
+No command logs found.|Geen commando logs gevonden
+Found %d command logs|Gevonden %d commando logs
+Unavailable|Niet beschikbaar
+Clone information|Kloon informatie
+No clones detected.|Geen kloons gevonden.
+%d users with IP %s and shared bytes %d: %s|%d gebruikers met IP %s en gedeelde bytes %d : %s
+Total number of clones: %d|Totaal aantal kloons: %d
+Clean up registered users table|Geregistreerde gebruikers database tabel clean up
+magnet|magnet
+Please specify complete magnet URI.|Geef de volledige magneet-URI op.
+Release modified within category %s by %s: %s|Release gewijzigd in categorie %s door %s:%s
+Release added within category %s by %s: %s|Release toegevoegd binnen categorie %s door %s:%s
+Release deleted by %s: %s|Release verwijderd door%s:%s
+Release category deleted by %s: %s|Release category verwijded door %s:%s
+Someone from your IP address have already voted for kicking that user.|Iemand met je IP-adres heeft al gestemd voor het kicken van die gebruiker.
+IP list: %s|IP lijst: %s
+First vote can't be negative.|Eerste stem kan niet negatief zijn.
+You can't vote for kicking yourself.|Je kunt niet stemmen op jezelf om jezelf te kicken.
+Redirect all clones|Leid alle klonen om
+Number of redirected clones: %d|Aantal omgeleide klonen:%d
+Your search result is discarded due to previous forbidden search result or request: %s|Uw zoekresultaat wordt verwijderd vanwege het vorige verboden zoekresultaat of verzoek:%s
+Search result exception from %s with IP %s and class %d as any file: %s|Uitzondering voor zoekresultaat van%s met IP%s en class %dals elk bestand:%s
+Search result notification from %s with IP %s and class %d as any file: %s|Meld melding van zoekresultaat van%smet IP%sen class%dals elk bestand:%s
+Bad search result from %s with IP %s and class %d as any file: %s|Slecht zoek resultaat van %s met IP %s en cass %d als elk bestand: %s
+User dropped due to bad search result: %s|Gebruiker gedropt vanwege slecht zoekresultaat:%s
+User didn't send any search results: %s|De gebruiker heeft geen zoekresultaten verzonden:%s
+User redirected due to bad search result: %s|Gebruiker omgeleid vanwege slecht zoekresultaat:%s
+Search result exception from %s with IP %s and class %d as folder: %s|Uitzondering voor zoekresultaat van%s met IP %s en class %dals map: %s
+Search result notification from %s with IP %s and class %d as folder: %s|Meld melding van zoekresultaat van %s met IP %s en class %d als map: %s
+Bad search result from %s with IP %s and class %d as folder: %s|Slecht zoek resultaat van %s met IP %s en class %d als map: %s
+Search result exception from %s with IP %s and class %d as TTH: %s|Zoekopdracht uitzondering van %s met IP %s en class %d als TTH: %s
+Search result notification from %s with IP %s and class %d as TTH: %s|Zoekopdracht uitzondering kennisgeving van %s met IP %s en class %d als TTH: %s
+Bad search result from %s with IP %s and class %d as TTH: %s|Slecht zoek resultaat van %s met IP %s en class %d als TTH: %s
+Resetting proxy lookup daily quote limit: %d|Resulteringslimiet voor proxy-lookup dagelijks opnieuw instellen: %d
+Your message will be delayed for proxy lookup of your IP address.|Uw bericht wordt vertraagd voor proxy-opzoeken van uw IP-adres.
+You're not allowed to chat due to public proxy detection of your IP address.|U mag niet chatten vanwege openbare proxydetectie van uw IP-adres.
+Proxy lookup daily quote limit reached on chat message from user with IP %s: %s|Dagelijkse citaatlimiet voor proxy-lookup bereikt bij chatbericht van gebruiker met IP %s:%s
+Proxy lookup queue limit reached on chat message from user with IP %s: %s|Proxy lookup-wachtrijlimiet bereikt bij chatbericht van gebruiker met IP%s:%s
+Blocking private main chat message from %s with IP %s detected as public proxy to %s with IP %s: %s|Blokkering privé hoofdchatbericht van %s met IP %sgedetecteerd als publieke proxy van %s met IP %s:%s
+Blocking main chat message from %s with IP %s detected as public proxy: %s|Blokkeer chatbericht van %s met IP %s gedetecteerd als openbare proxy: %s
+Blocking private chat message from %s with IP %s detected as public proxy to %s with IP %s: %s|Blokkeer privebericht van %s met IP %sgedetecteerd als openbare proxy van %s met IP %s:%s
+Blocking third person main chat message from %s with IP %s detected as public proxy: %s|Blokkeer bericht van derden van %s met IP %s gedetecteerd als publieke proxy: %s
+Blocking offline private chat message from %s with IP %s detected as public proxy to %s with IP %s: %s|Blokkeer offline prive bericht van %s met IP %sgedecteerd als publieke proxy van %s me IP %s:%s
+Main chat message from %s with IP %s will be delayed for proxy lookup: %s|Mainchat bericht van %s met IP %sis vertraagd door proxyzoeken: %s
+Private chat message from %s with IP %s to %s with IP %s will be delayed for proxy lookup.|Prive bericht van %smet IP %snaar%s met IP%s is vertraagd door proxy zoeken.
+Private main chat message from %s with IP %s to %s with IP %s will be delayed for proxy lookup.|Prive main chat bericht van%s met IP %s naar%s met IP%s is vertraagd door proxy zoeken.
+Third person main chat message from %s with IP %s will be delayed for proxy lookup: %s|Mainchat bericht van derden van%s met IP%s is vertraagd door proxy zoeken: %s
+Offline private chat message from %s with IP %s to %s with IP %s will be delayed for proxy lookup.|Offline prive bericht van%s met IP%s naar%s met IP %s is vertraagd door proxy zoeken.
+In order to use this feature you need to set %s to your email address.|Om deze functie te gebruiken moet je instellen %s je email adres.
+Failed to execute %s for proxy lookup of IP %s with code: %d|Kan niet uitvoeren%svoor proxy zoeken voor IP %smet code: %d
+Failed to execute %s for proxy lookup of IP %s with error: %s|Kan niet uitvoeren%svoor proxy zoeken van IP%s met fout: %s
+Failed to execute %s for proxy lookup of IP %s without code and error.|Kan niet uitvoeren %s voor proxy zoeken met IP%s zonder code en fout.
+Failed proxy lookup of IP %s with unknown result data: %s|Fout proxy zoeken van IP%smet onbekend resulaat data: %s
+Failed proxy lookup of IP %s without result data.|Fout proxy zoeken van IP %s zonder zoekresultaat.
+Failed proxy lookup of IP %s without result file.|Fout proxy zoeken van IP %s zonder resultaat bestand.
+Failed proxy lookup of IP %s with result: %s|Fout proxy zoeken van IP %s met resultaat: %s
+Invalid request|Ongeldig verzoek
+Invalid IP|Ongeldig IP
+Private IP|Prive IP
+Under maintenance|Onderhoud!!
+Request banned|Verzoek verbannen
+Invalid email|Ongeldige email
+Not enough matches for proxy lookup of IP %s: %d of %d|Niet genoeg overeenkomsten voor proxy zoeken van IP %s:%d van%d
+Public proxy detected on IP: %s|Publieke proxy gedetecteerd van IP: %s
+Public proxy detected on IP %s with ASN: %s|Publieke proxy gedetecteerd van IP %s met ASN: %s
+Unsent main chat message from logged out user %s with IP %s before finishing proxy lookup: %s|Niet verzonden mainchatbericht van aangemelde gebruiker %s met IP%s voordat u het proxy zoeken voltooit: %s
+Unsent private chat message from logged out user %s with IP %s to %s with IP %s before finishing proxy lookup: %s|Niet verzonden prive bericht van aangemelde gebruiker %smet IP%s naar%s met IP%s voordat u het proxy zoeken voltooit: %s
+Unsent private main chat message from logged out user %s with IP %s to %s with IP %s before finishing proxy lookup: %s|Niet verzonden prive bericht van aangemelde gebruiker %smet IP%s naar %s met IP%s voordat u het proxy zoeken voltooit: %s
+Unsent third person main chat message from logged out user %s with IP %s before finishing proxy lookup: %s|Niet verzonden mainchat bericht door derden van aangemelde gebruiker %s met IP%svoordat u het proxy zoeken voltooit: %s
+Unsent offline private chat message from logged out user %s with IP %s to %s with IP %s before finishing proxy lookup: %s|Niet verzonden prive bericht van aangemelde gebruiker %s met IP %s naar%s met IP%svoor dat u het proxy zoeken voltooit: %s
+%s logged in with IP %s previously detected as public proxy.|%s aangemeld met IP %s eerder gedetecteerd als openbare proxy.
+%s logged in with IP %s previously detected as public proxy with ASN: %s|%saangemeld met IP%s eerder gedetecteerd als openbare proxy met ASN: %s
+Filtered search request duplicates: %d of %d|Gefilterde duplicaten van zoekverzoeken: %dvan %d

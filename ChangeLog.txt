@@ -1,4 +1,4 @@
-[ 2.9.6 :: 2018-##-## ]
+[ 2.9.6 :: 2019-03-10 ]
 
 [ 75] Fixed: User log list contains wrong country code for given IP address
 [ 84] Changed: Ledokol user agent for HTTP requests to Mozilla compatible
@@ -18,6 +18,7 @@
 [ 83] Added: Search result filter as an addition to search request filter
 [ 83] Added: Public proxy lookup for chat messages, similar to Blacklist functionality
 [ 85] Added: Search request duplicate filter, request by KCAHDEP
+[ 86] Added: ledocofi command to find configuration variables
 
 [ 2.9.5 :: 2018-02-19 ]
 

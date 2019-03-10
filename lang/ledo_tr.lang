@@ -1,6 +1,6 @@
 # Language: tr_TR
 # Charset: CP1254
-# Version: 2.9.5
+# Version: 2.9.6
 # Author: Mauron
 # Email: mauron@vmail.me
 
@@ -225,7 +225,7 @@ Deleted search filter: %s|Arama filtresi silindi: %s
 Couldn't delete search filter because not found: %s|Arama listesi silinemedi çünkü bulunamadý: %s
 Search filter list|Arama filtresi listesi
 Search filter list is empty.|Arama filtresi listesi boþtur.
-Magnet link: %s|Magnet baðlantýsý: %s
+Magnet URI: %s|Magnet URI: %s
 Add search filter|Arama filtresi ekle
 Delete search filter|Arama filtresini sil
 Known actions are: %s|Bilinen eylemler þunlardýr: %s
@@ -472,7 +472,6 @@ Force custom nick for user|Kullanýcý için özel rumuzu zorla
 Either the feature is disabled or user that you're trying to set welcome message for doesn't have access to it.|Ya bu iþlev devre dýþý býrakýlmýþtýr, ya da hoþ geldiniz mesajý ayarlamak istediðiniz kullanýcýnýn buna eriþimi yoktur.
 name|isim
 category|kategori
-tth|tth
 Add new release|Yeni býrakým ekle
 Delete releases|Býrakýmlarý sil
 List of available releases|Mevcut býrakýmlarýn listesi
@@ -962,7 +961,6 @@ Vote for user to be kicked|Kullanýcýnýn kovulmasý için oylama
 You don't want to vote for kicking an operator.|Bir operatörün kovulmasý için oy vermek istemezsiniz.
 User voted kick|Kullanýcý oylamasý ile kovma
 You have already voted for kicking that user.|Bu kullanýcýnýn kovulmasý için zaten oy kullandýnýz.
-%s added vote %d of %d for kicking user with class %d: %s|%s, %d sayýlý oyu ekledi (gereken %d) ki bu %d sýnýflý kullanýcýyý kovmak içindi: %s
 There is an error in following antispam entry pattern|Yýðýn mesajdan korunma girdi örüntüsünü izlemede bir hata meydana geldi
 Pattern|Örüntü
 Error|Hata
@@ -1008,7 +1006,6 @@ Infected user found with IP %s and share %s: %s|Kötücül yazýlým bulaþmýþ kullaný
 Server didn't reply with expected status code.|Sunucu beklenen durum koduyla cevap vermedi.
 Size of %s: %d @ %s|%s boyutu: %d @ %s
 Clear kick votes for user|Kullanýcý için kovma oylarýný temizle
-%s cleared %d of %d votes for kicking user with class %d: %s|%s, %d oyu temizledi (toplam %d) ki bu oylar %d sýnýflý kullanýcýyý kovmak içindi: %s
 Vote kick list|Kovma oy listesi
 Vote kick list is empty.|Kovma oy listesi boþtur.
 Votes: %d of %d|Oylar: %d / %d
@@ -1127,7 +1124,7 @@ Disable or enable right click menu item|Sað týklama menü unsurunu etkinleþtir ve
 Disabled right click menu item: %s|Sað týklama menü unsuru devre dýþý býrakýldý: %s
 Enabled right click menu item: %s|Sað týklama menü unsuru etkinleþtirildi: %s
 %s added to search block list.|%s arama engelleme listesine eklenmiþtir.
-Your search request is discarded due to previous forbidden search request.|Arama talebiniz, önceki yasaklanmýþ arama talebi nedeniyle görmezden gelindi.
+Your search request is discarded due to previous forbidden search request or result: %s|Arama talebiniz, önceki yasak arama isteði veya sonucu nedeniyle iptal edildi: %s
 Hub URL: %s|Hub URL'i (baðlantýsý): %s
 Search filter block list|Arama filtresi engelleme listesi
 Delete search filter block list entry|Arama listesi engelleme listesi unsurunu sil
@@ -1194,3 +1191,81 @@ City gag not found: %s|Kent susturma listesi boþtur.
 Low connection attempt uptime of %d seconds from %s with IP %s and class %d to user: %s|%d saniyelik düþük baðlantý teþebbüsü süresi, ki %s unsurundan %sIP adresli ve %d sýnýflý, þu kullanýcýya: %s
 Please wait another %d seconds before connecting to other users.|Lütfen diðer kullanýcýlara baðlanmadan önce %d saniye daha bekleyin.
 path|yol
+Search in history messages|Mesaj tarihçesinde ara
+Show history lines at position|Þu konumdaki tarihçe satýrlarýný göster
+No main chat history messages found.|Hiçbir ana sohbet tarihçe mesajý bulunamadý.
+Found %d main chat messages|%d ana sohbet mesajý bulundu
+Search in command logs|Komut kütüklerinde ara
+No command logs found.|Hiçbir komut kütüðü bulunamadý.
+Found %d command logs|%d komut kütüðü bulundu
+Unavailable|Mevcut deðil
+Clone information|Klon bilgisi
+No clones detected.|Hiçbir klon tespit edilmedi.
+%d users with IP %s and shared bytes %d: %s|%d kullanýcý þu IP adresiyle %s ve paylaþýlan baytlarla %d: %s
+Total number of clones: %d|Toplam klon sayýsý: %d
+Clean up registered users table|Kayýtlý kullanýcýlar tablosunu temizle
+magnet|magnet
+Please specify complete magnet URI.|Lütfen eksiksiz magnet URI'sini belirtin.
+Release modified within category %s by %s: %s|Bu sürüm, %s kategorisi içinde %s tarafýndan deðiþtirildi: %s
+Release added within category %s by %s: %s|Sürüm %s kategorisinde %s tarafýndan eklendi: %s
+Release deleted by %s: %s|Sürüm %s tarafýndan silindi: %s
+Release category deleted by %s: %s|Sürüm kategorisi %s tarafýndan silindi: %s
+Someone from your IP address have already voted for kicking that user.|Sizin IP adresinizden birisi bu kullanýcýyý kovmak için zaten oy verdi.
+IP list: %s|IP listesi: %s
+First vote can't be negative.|Ýlk oy negatif olamaz.
+You can't vote for kicking yourself.|Kendinizi kovmak yönünde oy veremezsiniz.
+Redirect all clones|Tüm klonlarý yeniden yönlendir
+Number of redirected clones: %d|Yeniden yönlendirilen klon sayýsý: %d
+Your search result is discarded due to previous forbidden search result or request: %s|Arama sonucunuz, önceki yasak arama sonucu veya talebi sebebiyle reddedildi: %s
+Search result exception from %s with IP %s and class %d as any file: %s|%s unsurundan arama sonucu istisnasý, ki IP adresi %sve sýnýfý %d, herhangi bir dosya olarak: %s
+Search result notification from %s with IP %s and class %d as any file: %s|%s unsurundan arama sonucu bildirimi, ki IP adresi %s ve sýnýfý %d, herhangi bir dosya olarak: %s
+Bad search result from %s with IP %s and class %d as any file: %s|%s unsurundan kötü arama sonucu, ki IP adresi %s ve sýnýfý %d, herhangi bir dosya olarak: %s
+User dropped due to bad search result: %s|Kötü arama sonucu sebebiyle kullanýcý düþtü: %s
+User didn't send any search results: %s|Kullanýcý herhangi bir arama sonucu göndermedi: %s
+User redirected due to bad search result: %s|Kötü arama sonucu sebebiyle kullanýcý yeniden yönlendirildi: %s
+Search result exception from %s with IP %s and class %d as folder: %s|%s unsurundan arama sonuç istisnasý, ki IP adresi %s ve sýnýfý %d, klasör olarak: %s
+Search result notification from %s with IP %s and class %d as folder: %s|%s unsurundan arama sonucu bildirimi, ki IP adresi %s ve sýnýfý %d, klasör olarak: %s
+Bad search result from %s with IP %s and class %d as folder: %s|%s unsurundan kötü arama sonucu, ki IP adresi %s ve sýnýfý %d, klasör olarak: %s
+Search result exception from %s with IP %s and class %d as TTH: %s|%s unsurundan arama sonuç istisnasý, ki IP adresi %s ve sýnýfý %d, TTH olarak: %s
+Search result notification from %s with IP %s and class %d as TTH: %s|%s unsurundan arama sonuç bildirimi, ki IP adresi %s ve sýnýfý %d, TTH olarak: %s
+Bad search result from %s with IP %s and class %d as TTH: %s|%s unsurundan kötü arama sonucu, ki IP adresi %s ve sýnýfý %d, TTH olarak: %s
+Resetting proxy lookup daily quote limit: %d|Vekil sunucu arama günlük alýntý sýnýrý sýfýrlanýyor: %d
+Your message will be delayed for proxy lookup of your IP address.|IP adresinizin vekil aramasý için mesajýnýz gecikiyor.
+You're not allowed to chat due to public proxy detection of your IP address.|Sohbet etmenize, IP adresinizde herkese açýk vekil tespit edildiðinden izin verilmiyor.
+Proxy lookup daily quote limit reached on chat message from user with IP %s: %s|%s IP adresli kullanýcýdan sohbet mesajýnda vekil arama günlük alýntý sýnýrýna eriþildi: %s
+Proxy lookup queue limit reached on chat message from user with IP %s: %s|%sIP adresli kullanýcýdan sohbet mesajýnda vekil arama kuyruk sýnýrýna eriþildi: %s
+Blocking private main chat message from %s with IP %s detected as public proxy to %s with IP %s: %s|%sunsurundan, ki IP adresi %s, özel ana sohbet mesajý engelleniyor, çünkü bu adres %s unsuruna, ki IP adresi %s, herkese açýk vekil olarak tespit edildi: %s
+Blocking main chat message from %s with IP %s detected as public proxy: %s|%s unsurundan, ki IP adresi %s, ana sohbet mesajý engelleniyor çünkü bu adres herkese açýk vekil olarak tespit edildi: %s
+Blocking private chat message from %s with IP %s detected as public proxy to %s with IP %s: %s|%sunsurundan, ki IP adresi %s, özel sohbet mesajý engelleniyor, çünkü bu adres %s unsuruna, ki IP adresi %s, herkese açýk vekil olarak tespit edildi: %s
+Blocking third person main chat message from %s with IP %s detected as public proxy: %s|%s unsurundan, ki IP adresi %s, üçüncü kiþi ana sohbet mesajý engelleniyor çünkü bu adres herkese açýk vekil olarak tespit edildi: %s
+Blocking offline private chat message from %s with IP %s detected as public proxy to %s with IP %s: %s|%sunsurundan, ki IP adresi %s, çevrimdýþý özel sohbet mesajý engelleniyor, çünkü bu adres %s unsuruna, ki IP adresi %s, herkese açýk vekil olarak tespit edildi: %s
+Main chat message from %s with IP %s will be delayed for proxy lookup: %s|%s unsurundan, ki IP adresi %s, ana sohbet mesajý vekil aramasý için geciktirilecek: %s
+Private chat message from %s with IP %s to %s with IP %s will be delayed for proxy lookup.|%s unsurundan, ki IP adresi %s, %s unsuruna, ki IP adresi %s, özel sohbet mesajý vekil aramasý için geciktirilecek.
+Private main chat message from %s with IP %s to %s with IP %s will be delayed for proxy lookup.|%s unsurundan, ki IP adresi %s, %s unsuruna, ki IP adresi %s, özel ana sohbet mesajý vekil aramasý için geciktirilecek.
+Third person main chat message from %s with IP %s will be delayed for proxy lookup: %s|%s unsurundan, ki IP adresi %s, üçüncü kiþi ana sohbet mesajý vekil aramasý için geciktirilecek: %s
+Offline private chat message from %s with IP %s to %s with IP %s will be delayed for proxy lookup.|%s unsurundan, ki IP adresi %s, %s unsuruna, ki IP adresi %s, çevrimdýþý özel sohbet mesajý vekil aramasý için geciktirilecek.
+In order to use this feature you need to set %s to your email address.|Bu iþlevi kullanmak için %s unsurunu e-posta adresinize ayarlamanýz gerekir.
+Failed to execute %s for proxy lookup of IP %s with code: %d|%s unsurunun %s IP adresinin vekil aramasý için çalýþtýrýlmasý baþarýsýz oldu, þu kodla: %d
+Failed to execute %s for proxy lookup of IP %s with error: %s|%s unsurunun %s IP adresinin vekil aramasý için çalýþtýrýlmasý baþarýsýz oldu, þu hatayla: %s 
+Failed to execute %s for proxy lookup of IP %s without code and error.|%s unsurunun %s IP adresinin vekil aramasý için çalýþtýrýlmasý baþarýsýz oldu, hata veya kod olmaksýzýn.
+Failed proxy lookup of IP %s with unknown result data: %s|%s IP adresi için vekil aramasý bilinmeyen sonuç verisiyle baþarýsýz oldu: %s
+Failed proxy lookup of IP %s without result data.|%s IP adresi için vekil aramasý sonuç verisi olmaksýzýn baþarýsýz oldu.
+Failed proxy lookup of IP %s without result file.|%sadresi için vekil aramasý sonuç dosyasý olmaksýzýn baþarýsýz oldu.
+Failed proxy lookup of IP %s with result: %s|%s IP adresi için vekil aramasý þu sonuçla baþarýsýz oldu: %s
+Invalid request|Geçersiz talep
+Invalid IP|Geçersiz IP
+Private IP|Özel IP
+Under maintenance|Bakýmda
+Request banned|Talep yasaklandý
+Invalid email|Geçersiz e-posta
+Not enough matches for proxy lookup of IP %s: %d of %d|%s IP adresinin vekil aramasý için yeterli eþleþme yok. %d, toplam %d
+Public proxy detected on IP: %s|IP adresinde herkese açýk vekil tespit edildi: %s
+Public proxy detected on IP %s with ASN: %s|%s IP adresinde herkese açýk vekil tespit edildi, þu ASN ile: %s
+Unsent main chat message from logged out user %s with IP %s before finishing proxy lookup: %s|Vekil aramasý sona ermeden çýkýþ yapmýþ %s kullanýcýsýndan, ki IP adresi %s, gönderilmemiþ ana sohbet mesajý: %s
+Unsent private chat message from logged out user %s with IP %s to %s with IP %s before finishing proxy lookup: %s|Vekil aramasý sona ermeden çýkýþ yapmýþ %s kullanýcýsýndan, ki IP adresi %s, %s kullanýcýsýna, ki IP adresi %s, gönderilmemiþ özel sohbet mesajý: %s
+Unsent private main chat message from logged out user %s with IP %s to %s with IP %s before finishing proxy lookup: %s|Vekil aramasý sona ermeden çýkýþ yapmýþ %s kullanýcýsýndan, ki IP adresi %s, %s kullanýcýsýna, ki IP adresi %s, gönderilmemiþ özel ana sohbet mesajý: %s
+Unsent third person main chat message from logged out user %s with IP %s before finishing proxy lookup: %s|Vekil aramasý sona ermeden çýkýþ yapmýþ %s kullanýcýsýndan, ki IP adresi %s, gönderilmemiþ üçüncü kiþi ana sohbet mesajý: %s
+Unsent offline private chat message from logged out user %s with IP %s to %s with IP %s before finishing proxy lookup: %s|Vekil aramasý sona ermeden çýkýþ yapmýþ %s kullanýcýsýndan, ki IP adresi %s, %s kullanýcýsýna, ki IP adresi %s, gönderilmemiþ çevrimdýþý özel sohbet mesajý: %s
+%s logged in with IP %s previously detected as public proxy.|%s kullanýcýsý daha önce herkese açýk vekil olarak tespit edilen %s IP adresi ile giriþ yaptý.
+%s logged in with IP %s previously detected as public proxy with ASN: %s|%s kullanýcýsý daha önce ASN ile herkese açýk vekil olarak tespit edilen %s IP adresi ile giriþ yaptý: %s
+Filtered search request duplicates: %d of %d|Arama talebi kopyalarý filtrelendi: %d, toplam talep %d
