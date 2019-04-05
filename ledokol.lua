@@ -51,7 +51,7 @@ Hungarista, Stefani, Aethra, netcelli, TheBoss, Maximum, BulleT,
 Doxtur, chaos, sphinx, Zorro, W1ZaRd, S0RiN, MaxFox, Krzychu,
 @tlantide, Ettore Atalan, Trumpy, Modswat, KCAHDEP, mauron, DiegoZ,
 Mank, Nickel, Lord_Zero, Meka][Meka, Ger, PetterOSS, Marcel, PPK,
-madkid, Aeolide, Jaguar, Toecutter, SCALOlàz, FlylinkDC-dev, Men_VAf,
+madkid, Aeolide, Jaguar, Toecutter, SCALOlaz, FlylinkDC-dev, Men_VAf,
 Tzaca, JOE™, Foxtrot, Deivis
 
 ---------------------------------------------------------------------
@@ -62,8 +62,8 @@ Tzaca, JOE™, Foxtrot, Deivis
 -- global storage variables and tables >>
 ---------------------------------------------------------------------
 
-ver_ledo = "2.9.6" -- ledokol version
-bld_ledo = "86" -- build number
+ver_ledo = "2.9.7" -- ledokol version
+bld_ledo = "87" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -1624,10 +1624,6 @@ function UnLoad ()
 		avsearservstop ()
 	end
 
-	if table_othsets.restart then
-		return 1
-	end
-
 	resetcustnicks ()
 
 	if table_sets.chatrunning == 1 then
@@ -1658,6 +1654,7 @@ function UnLoad ()
 		delhubrobot (table_sets.sefifeednick)
 	end
 
+	table_othsets.restart = true
 	return 1
 end
 
@@ -4108,41 +4105,30 @@ elseif data:match ("^" .. table_othsets.optrig .. "topic $") or data:match ("^" 
 
 	----- ---- --- -- -
 
-	elseif data:match ("^" .. table_othsets.optrig .. "restart$") or data:match ("^" .. table_othsets.optrig .. "quit$") or data:match ("^" .. table_othsets.optrig .. "core_dump$") then
-		if ucl == 10 then
+	elseif data:match ("^" .. table_othsets.optrig .. "luaload .*$") or data:match ("^" .. table_othsets.optrig .. "luaunload .*$") or data:match ("^" .. table_othsets.optrig .. "luareload .*$") then
+		if ucl >= getconfig ("plugin_mod_class") then -- use plugin permission for lua scripts too
 			donotifycmd (nick, data, 0, ucl)
-			table_othsets.restart = true
-		--else
-			--commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
-			--return 0
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+			return 0
 		end
 
 	----- ---- --- -- -
 
-elseif data:match ("^" .. table_othsets.optrig .. "luaload .*$") or data:match ("^" .. table_othsets.optrig .. "luaunload .*$") or data:match ("^" .. table_othsets.optrig .. "luareload .*$") then
-	if ucl >= getconfig ("plugin_mod_class") then -- use plugin permission for lua scripts too
+	elseif data:match ("^" .. table_othsets.optrig .. "lualist.*$") or data:match ("^" .. table_othsets.optrig .. "luainfo.*$") or data:match ("^" .. table_othsets.optrig .. "luaversion.*$") then
 		donotifycmd (nick, data, 0, ucl)
-	else
-		commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
-		return 0
-	end
 
------ ---- --- -- -
+	----- ---- --- -- -
 
-elseif data:match ("^" .. table_othsets.optrig .. "lualist.*$") or data:match ("^" .. table_othsets.optrig .. "luainfo.*$") or data:match ("^" .. table_othsets.optrig .. "luaversion.*$") then
-	donotifycmd (nick, data, 0, ucl)
+	elseif data:match ("^" .. table_othsets.optrig .. "offplug .*$") or data:match ("^" .. table_othsets.optrig .. "onplug .*$") or data:match ("^" .. table_othsets.optrig .. "replug .*$") or data:match ("^" .. table_othsets.optrig .. "modplug .*$") or data:match ("^" .. table_othsets.optrig .. "addplug .*$") or data:match ("^" .. table_othsets.optrig .. "delplug .*$") then
+		if ucl >= getconfig ("plugin_mod_class") then -- check the permissions
+			donotifycmd (nick, data, 0, ucl)
+		end
 
------ ---- --- -- -
+	----- ---- --- -- -
 
-elseif data:match ("^" .. table_othsets.optrig .. "offplug .*$") or data:match ("^" .. table_othsets.optrig .. "onplug .*$") or data:match ("^" .. table_othsets.optrig .. "replug .*$") or data:match ("^" .. table_othsets.optrig .. "modplug .*$") or data:match ("^" .. table_othsets.optrig .. "addplug .*$") or data:match ("^" .. table_othsets.optrig .. "delplug .*$") then
-	if ucl >= getconfig ("plugin_mod_class") then -- check the permissions
+	elseif data:match ("^" .. table_othsets.optrig .. "lstplug.*$") then
 		donotifycmd (nick, data, 0, ucl)
-	end
-
------ ---- --- -- -
-
-elseif data:match ("^" .. table_othsets.optrig .. "lstplug.*$") then
-	donotifycmd (nick, data, 0, ucl)
 
 	----- ---- --- -- -
 
@@ -6012,7 +5998,7 @@ function VH_OnTimer (msec)
 				if size < table_sets.chatintelmaxreq then -- maximum requests
 					local send, face, name = true, getconfig ("listen_ip"), table_othsets.cfgdir .. table_othsets.chindir .. "/" .. addr
 
-					if face and # face >= 7 and # face <= 15 and face ~= "0.0.0.0" then -- interface address
+					if face and # face >= 7 and # face <= 15 and face ~= "0.0.0.0" and face ~= "127.0.0.1" then -- interface address
 						face = " --interface " .. face
 					else
 						face = ""
@@ -25090,7 +25076,7 @@ function getcurl (url, enc, del, reh)
 
 	local face = getconfig ("listen_ip") -- use local address
 
-	if face and # face >= 7 and # face <= 15 and face ~= "0.0.0.0" then
+	if face and # face >= 7 and # face <= 15 and face ~= "0.0.0.0" and face ~= "127.0.0.1" then
 		face = " --interface " .. face
 	else
 		face = ""
