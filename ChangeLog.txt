@@ -1,3 +1,8 @@
+[ 2.9.7 :: 2019-##-## ]
+
+[ 87] Fixed: Properly unload script when called by hub
+[ 88] Added: Secure connection information to user information
+
 [ 2.9.6 :: 2019-03-10 ]
 
 [ 75] Fixed: User log list contains wrong country code for given IP address

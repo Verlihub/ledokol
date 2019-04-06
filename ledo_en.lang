@@ -1,6 +1,6 @@
 # Language: en_GB
 # Charset: CP1252
-# Version: 2.9.6
+# Version: 2.9.7
 # Author: RoLex
 # Email: webmaster@feardc.net
 
@@ -1272,3 +1272,4 @@ Filtered search request duplicates: %d of %d|
 Find configuration variables|
 Found %d configuration variables|
 No configuration variables found.|
+Secure connection: %s|

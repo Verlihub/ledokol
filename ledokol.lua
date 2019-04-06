@@ -63,7 +63,7 @@ Tzaca, JOE™, Foxtrot, Deivis
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.7" -- ledokol version
-bld_ledo = "87" -- build number
+bld_ledo = "88" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -451,6 +451,7 @@ table_refu = {
 	SendToActiveClass = false,
 	SendToPassiveClass = false,
 	InUserSupports = false,
+	IsSecConn = false,
 	SetRegClass = false
 }
 
@@ -10771,277 +10772,286 @@ end
 ----- ---- --- -- -
 
 function showuserinfo (nick, usr)
-local user = getcsnick (usr)
+	local user = getcsnick (usr)
 
-if not user then -- not in list
-	commandanswer (nick, gettext ("User not in list: %s"):format (usr))
-elseif isbot (user) then -- bot
-	if table_refu.GetLuaBots then
-		local bots = VH:GetLuaBots ()
-		local info = ""
+	if not user then -- not in list
+		commandanswer (nick, gettext ("User not in list: %s"):format (usr))
 
-		if bots then
-			for _, v in pairs (bots) do
-				if user == v ["sNick"] then
-					info = info .. " " .. gettext ("Nick: %s"):format (user) .. "\r\n" -- nick
+	elseif isbot (user) then -- bot
+		if table_refu.GetLuaBots then
+			local bots = VH:GetLuaBots ()
+			local info = ""
 
-					if v ["iClass"] then -- class
-						info = info .. " " .. gettext ("Class: %d"):format (v ["iClass"]) .. "\r\n"
-					end
+			if bots then
+				for _, v in pairs (bots) do
+					if user == v ["sNick"] then
+						info = info .. " " .. gettext ("Nick: %s"):format (user) .. "\r\n" -- nick
 
-					if v ["sScriptname"] then -- script
-						info = info .. " " .. gettext ("Owner script: %s"):format (v ["sScriptname"]) .. "\r\n"
-					end
+						if v ["iClass"] then -- class
+							info = info .. " " .. gettext ("Class: %d"):format (v ["iClass"]) .. "\r\n"
+						end
 
-					if v ["sMyINFO"] then -- myinfo
-						local desc, tag, conn, sts, email, share = parsemyinfo (user, v ["sMyINFO"])
-						info = info .. " " .. gettext ("Description: %s"):format (desc) .. "\r\n" -- description
-						info = info .. " " .. gettext ("Tag: %s"):format (tag) .. "\r\n" -- tag
+						if v ["sScriptname"] then -- script
+							info = info .. " " .. gettext ("Owner script: %s"):format (v ["sScriptname"]) .. "\r\n"
+						end
 
-						if # tag > 0 then -- tag information
-							local res = parsetag (tag)
+						if v ["sMyINFO"] then -- myinfo
+							local desc, tag, conn, sts, email, share = parsemyinfo (user, v ["sMyINFO"])
+							info = info .. " " .. gettext ("Description: %s"):format (desc) .. "\r\n" -- description
+							info = info .. " " .. gettext ("Tag: %s"):format (tag) .. "\r\n" -- tag
 
-							if res ["cl"] then -- client
-								info = info .. " " .. gettext ("Client: %s"):format (res ["cl"]) .. "\r\n"
+							if # tag > 0 then -- tag information
+								local res = parsetag (tag)
+
+								if res ["cl"] then -- client
+									info = info .. " " .. gettext ("Client: %s"):format (res ["cl"]) .. "\r\n"
+								end
+
+								if res ["ve"] then -- version
+									info = info .. " " .. gettext ("Version: %s"):format (res ["ve"]) .. "\r\n"
+								end
+
+								if res ["mo"] then -- mode
+									info = info .. " " .. gettext ("Mode: %s"):format (res ["mo"]) .. "\r\n"
+								end
+
+								if res ["hu"] then -- hubs
+									info = info .. " " .. gettext ("Hubs: %s"):format (res ["hu"]) .. "\r\n"
+								end
+
+								if res ["sl"] then -- slots
+									info = info .. " " .. gettext ("Slots: %s"):format (res ["sl"]) .. "\r\n"
+								end
+
+								if res ["li"] then -- limiter
+									info = info .. " " .. gettext ("Limiter: %s KiB/s"):format (res ["li"]) .. "\r\n"
+								end
 							end
 
-							if res ["ve"] then -- version
-								info = info .. " " .. gettext ("Version: %s"):format (res ["ve"]) .. "\r\n"
-							end
+							info = info .. " " .. gettext ("Connection: %s"):format (conn) .. "\r\n" -- connection
+							info = info .. " " .. gettext ("Status: %s"):format (statustostr (sts)) .. "\r\n" -- status
+							info = info .. " " .. gettext ("Email: %s"):format (email) .. "\r\n" -- email
+							info = info .. " " .. gettext ("Share: %s"):format (makesize (share)) .. "\r\n" -- share
 
-							if res ["mo"] then -- mode
-								info = info .. " " .. gettext ("Mode: %s"):format (res ["mo"]) .. "\r\n"
-							end
-
-							if res ["hu"] then -- hubs
-								info = info .. " " .. gettext ("Hubs: %s"):format (res ["hu"]) .. "\r\n"
-							end
-
-							if res ["sl"] then -- slots
-								info = info .. " " .. gettext ("Slots: %s"):format (res ["sl"]) .. "\r\n"
-							end
-
-							if res ["li"] then -- limiter
-								info = info .. " " .. gettext ("Limiter: %s KiB/s"):format (res ["li"]) .. "\r\n"
+							if tonumber (share) > 0 then
+								info = info .. " " .. gettext ("Exact share: %s"):format (_tostring (share) .. " " .. gettext ("B")) .. "\r\n" -- exact share
 							end
 						end
 
-						info = info .. " " .. gettext ("Connection: %s"):format (conn) .. "\r\n" -- connection
-						info = info .. " " .. gettext ("Status: %s"):format (statustostr (sts)) .. "\r\n" -- status
-						info = info .. " " .. gettext ("Email: %s"):format (email) .. "\r\n" -- email
-						info = info .. " " .. gettext ("Share: %s"):format (makesize (share)) .. "\r\n" -- share
-
-						if tonumber (share) > 0 then
-							info = info .. " " .. gettext ("Exact share: %s"):format (_tostring (share) .. " " .. gettext ("B")) .. "\r\n" -- exact share
-						end
+						break
 					end
-
-					break
 				end
 			end
-		end
 
-		if info == "" then
-			commandanswer (nick, gettext ("Unable to get bot information: %s"):format (user))
+			if info == "" then
+				commandanswer (nick, gettext ("Unable to get bot information: %s"):format (user))
+			else
+				commandanswer (nick, gettext ("Bot information") .. ":\r\n\r\n" .. info)
+			end
+
 		else
-			commandanswer (nick, gettext ("Bot information") .. ":\r\n\r\n" .. info)
+			commandanswer (nick, gettext ("Unable to get bot information: %s"):format (user))
 		end
 
-	else
-		commandanswer (nick, gettext ("Unable to get bot information: %s"):format (user))
-	end
+	else -- user
+		local info = ""
+		local class = getclass (user)
+		local ip = getip (user)
 
-else -- user
-	local info = ""
-	local class = getclass (user)
-	local ip = getip (user)
+		if table_sets.custnickclass < 11 then -- nick
+			local cn = getcustnick (user)
 
-	if table_sets.custnickclass < 11 then -- nick
-		local cn = getcustnick (user)
+			if cn then
+				info = info .. " " .. gettext ("Nick: %s"):format (user .. " @ " .. cn) .. "\r\n"
+			else
+				info = info .. " " .. gettext ("Nick: %s"):format (user) .. "\r\n"
+			end
 
-		if cn then
-			info = info .. " " .. gettext ("Nick: %s"):format (user .. " @ " .. cn) .. "\r\n"
 		else
 			info = info .. " " .. gettext ("Nick: %s"):format (user) .. "\r\n"
 		end
 
-	else
-		info = info .. " " .. gettext ("Nick: %s"):format (user) .. "\r\n"
-	end
+		if table_sets.showuseruptime == 1 and table_usup [user] then -- uptime
+			info = info .. " " .. gettext ("Uptime: %s"):format (formatuptime (table_usup [user], false)) .. "\r\n"
+		end
 
-	if table_sets.showuseruptime == 1 and table_usup [user] then -- uptime
-		info = info .. " " .. gettext ("Uptime: %s"):format (formatuptime (table_usup [user], false)) .. "\r\n"
-	end
+		info = info .. " " .. gettext ("Class: %d"):format (class) .. "\r\n" -- class
 
-	info = info .. " " .. gettext ("Class: %d"):format (class) .. "\r\n" -- class
+		if getconfig ("dns_lookup") ~= 0 then
+			info = info .. " " .. gettext ("DNS: %s"):format (gethost (user)) .. "\r\n" -- dns
+		end
 
-	if getconfig ("dns_lookup") ~= 0 then
-		info = info .. " " .. gettext ("DNS: %s"):format (gethost (user)) .. "\r\n" -- dns
-	end
+		info = info .. " " .. gettext ("IP: %s"):format (ip) .. "\r\n" -- ip
 
-	info = info .. " " .. gettext ("IP: %s"):format (ip) .. "\r\n" -- ip
+		if table_refu.IsSecConn then
+			local on, sec = VH:IsSecConn (user)
 
-	if table_refu.GetUserGeoIP then
-		local on, geoip = VH:GetUserGeoIP (user)
-
-		if on and geoip and geoip ["host"] then
-			if geoip ["range_low"] and geoip ["range_high"] then -- range
-				info = info .. " " .. gettext ("IP range: %s - %s"):format (repnmdcoutchars (geoip ["range_low"]), repnmdcoutchars (geoip ["range_high"])) .. "\r\n"
+			if on then
+				info = info .. " " .. gettext ("Secure connection: %s"):format (sec and gettext ("Yes") or gettext ("No")) .. "\r\n"
 			end
+		end
 
-			if table_refu.GetIPASN then -- asn
-				local ok, asn = VH:GetIPASN (ip)
+		if table_refu.GetUserGeoIP then
+			local on, geoip = VH:GetUserGeoIP (user)
 
-				if ok and asn and asn ~= "" then
-					if asn:match ("^AS%d+") then
-						asn = "https://ipinfo.io/" .. asn
+			if on and geoip and geoip ["host"] then
+				if geoip ["range_low"] and geoip ["range_high"] then -- range
+					info = info .. " " .. gettext ("IP range: %s - %s"):format (repnmdcoutchars (geoip ["range_low"]), repnmdcoutchars (geoip ["range_high"])) .. "\r\n"
+				end
+
+				if table_refu.GetIPASN then -- asn
+					local ok, asn = VH:GetIPASN (ip)
+
+					if ok and asn and asn ~= "" then
+						if asn:match ("^AS%d+") then
+							asn = "https://ipinfo.io/" .. asn
+						end
+
+						info = info .. " " .. gettext ("ASN: %s"):format (repnmdcoutchars (asn)) .. "\r\n"
+					end
+				end
+
+				if geoip ["country_code"] then -- country code and country
+					local extra = ""
+
+					if geoip ["country"] then
+						extra = "=" .. repnmdcoutchars (geoip ["country"])
 					end
 
-					info = info .. " " .. gettext ("ASN: %s"):format (repnmdcoutchars (asn)) .. "\r\n"
+					info = info .. " " .. gettext ("Country: %s"):format (repnmdcoutchars (geoip ["country_code"]) .. extra) .. "\r\n"
+				end
+
+				if geoip ["city"] then -- city
+					info = info .. " " .. gettext ("City: %s"):format (repnmdcoutchars (geoip ["city"])) .. "\r\n"
+				end
+
+				if geoip ["region_code"] then -- region code and region
+					local extra = ""
+
+					if geoip ["region"] then
+						extra = "=" .. repnmdcoutchars (geoip ["region"])
+					end
+
+					info = info .. " " .. gettext ("Region: %s"):format (repnmdcoutchars (geoip ["region_code"]) .. extra) .. "\r\n"
+				end
+
+				if geoip ["continent_code"] then -- continent code and continent
+					local extra = ""
+
+					if geoip ["continent"] then
+						extra = "=" .. repnmdcoutchars (geoip ["continent"])
+					end
+
+					info = info .. " " .. gettext ("Continent: %s"):format (repnmdcoutchars (geoip ["continent_code"]) .. extra) .. "\r\n"
+				end
+
+				if geoip ["time_zone"] then -- time zone
+					info = info .. " " .. gettext ("Time zone: %s"):format (repnmdcoutchars (geoip ["time_zone"])) .. "\r\n"
+				end
+
+				if geoip ["latitude"] and geoip ["longitude"] then -- latitude and longitude
+					info = info .. " " .. gettext ("Coordinates: %.4f %.4f"):format (geoip ["latitude"], geoip ["longitude"]) .. "\r\n"
+				end
+
+				if geoip ["postal_code"] then -- postal code
+					info = info .. " " .. gettext ("Postal code: %s"):format (repnmdcoutchars (geoip ["postal_code"])) .. "\r\n"
+				end
+
+				if geoip ["metro_code"] and geoip ["metro_code"] > 0 then -- metro code
+					info = info .. " " .. gettext ("Metro code: %d"):format (geoip ["metro_code"]) .. "\r\n"
+				end
+
+				if geoip ["area_code"] and geoip ["area_code"] > 0 then -- area code
+					info = info .. " " .. gettext ("Area code: %d"):format (geoip ["area_code"]) .. "\r\n"
+				end
+			end
+		end
+
+		local mi = getmyinfo (user)
+
+		if mi then
+			local desc, tag, conn, sts, email, share = parsemyinfo (user, mi)
+			info = info .. " " .. gettext ("Description: %s"):format (desc) .. "\r\n" -- description
+			info = info .. " " .. gettext ("Tag: %s"):format (tag) .. "\r\n" -- tag
+
+			if # tag > 0 then -- tag information
+				local res = parsetag (tag)
+
+				if res ["cl"] then -- client
+					info = info .. " " .. gettext ("Client: %s"):format (res ["cl"]) .. "\r\n"
+				end
+
+				if res ["ve"] then -- version
+					info = info .. " " .. gettext ("Version: %s"):format (res ["ve"]) .. "\r\n"
+				end
+
+				if res ["mo"] then -- mode
+					info = info .. " " .. gettext ("Mode: %s"):format (res ["mo"]) .. "\r\n"
+				end
+
+				if res ["hu"] then -- hubs
+					info = info .. " " .. gettext ("Hubs: %s"):format (res ["hu"]) .. "\r\n"
+				end
+
+				if res ["sl"] then -- slots
+					info = info .. " " .. gettext ("Slots: %s"):format (res ["sl"]) .. "\r\n"
+				end
+
+				if res ["li"] then -- limiter
+					info = info .. " " .. gettext ("Limiter: %s KiB/s"):format (res ["li"]) .. "\r\n"
 				end
 			end
 
-			if geoip ["country_code"] then -- country code and country
-				local extra = ""
+			info = info .. " " .. gettext ("Connection: %s"):format (conn) .. "\r\n" -- connection
+			info = info .. " " .. gettext ("Status: %s"):format (statustostr (sts)) .. "\r\n" -- status
+			info = info .. " " .. gettext ("Email: %s"):format (email) .. "\r\n" -- email
+			info = info .. " " .. gettext ("Share: %s"):format (makesize (share)) .. "\r\n" -- share
 
-				if geoip ["country"] then
-					extra = "=" .. repnmdcoutchars (geoip ["country"])
+			if tonumber (share) > 0 then
+				info = info .. " " .. gettext ("Exact share: %s"):format (_tostring (share) .. " " .. gettext ("B")) .. "\r\n" -- exact share
+			end
+		end
+
+		if table_refu.GetUserSupports then
+			local on, sup = VH:GetUserSupports (user)
+
+			if on and sup and sup ~= "" then
+				info = info .. " " .. gettext ("Client supports: %s"):format (sup) .. "\r\n" -- supports
+			end
+		end
+
+		if table_refu.GetUserVersion then
+			local on, ver = VH:GetUserVersion (user)
+
+			if on and ver and ver ~= "" then
+				info = info .. " " .. gettext ("NMDC version: %s"):format (ver) .. "\r\n" -- version
+			end
+		end
+
+		if table_refu.GetUserHubURL then
+			local on, url = VH:GetUserHubURL (user)
+
+			if on and url and url ~= "" then
+				info = info .. " " .. gettext ("Hub URL: %s"):format (url) .. "\r\n" -- hub url
+			end
+		end
+
+		local usli = getusersbyip (ip)
+
+		if # usli > 1 then
+			info = info .. " " .. gettext ("Users with same IP") .. ":" -- users with same ip
+
+			for _, usni in pairs (usli) do
+				if usni ~= user then
+					info = info .. " " .. usni
 				end
-
-				info = info .. " " .. gettext ("Country: %s"):format (repnmdcoutchars (geoip ["country_code"]) .. extra) .. "\r\n"
 			end
 
-			if geoip ["city"] then -- city
-				info = info .. " " .. gettext ("City: %s"):format (repnmdcoutchars (geoip ["city"])) .. "\r\n"
-			end
-
-			if geoip ["region_code"] then -- region code and region
-				local extra = ""
-
-				if geoip ["region"] then
-					extra = "=" .. repnmdcoutchars (geoip ["region"])
-				end
-
-				info = info .. " " .. gettext ("Region: %s"):format (repnmdcoutchars (geoip ["region_code"]) .. extra) .. "\r\n"
-			end
-
-			if geoip ["continent_code"] then -- continent code and continent
-				local extra = ""
-
-				if geoip ["continent"] then
-					extra = "=" .. repnmdcoutchars (geoip ["continent"])
-				end
-
-				info = info .. " " .. gettext ("Continent: %s"):format (repnmdcoutchars (geoip ["continent_code"]) .. extra) .. "\r\n"
-			end
-
-			if geoip ["time_zone"] then -- time zone
-				info = info .. " " .. gettext ("Time zone: %s"):format (repnmdcoutchars (geoip ["time_zone"])) .. "\r\n"
-			end
-
-			if geoip ["latitude"] and geoip ["longitude"] then -- latitude and longitude
-				info = info .. " " .. gettext ("Coordinates: %.4f %.4f"):format (geoip ["latitude"], geoip ["longitude"]) .. "\r\n"
-			end
-
-			if geoip ["postal_code"] then -- postal code
-				info = info .. " " .. gettext ("Postal code: %s"):format (repnmdcoutchars (geoip ["postal_code"])) .. "\r\n"
-			end
-
-			if geoip ["metro_code"] and geoip ["metro_code"] > 0 then -- metro code
-				info = info .. " " .. gettext ("Metro code: %d"):format (geoip ["metro_code"]) .. "\r\n"
-			end
-
-			if geoip ["area_code"] and geoip ["area_code"] > 0 then -- area code
-				info = info .. " " .. gettext ("Area code: %d"):format (geoip ["area_code"]) .. "\r\n"
-			end
+			info = info .. "\r\n"
 		end
+
+		commandanswer (nick, gettext ("User information") .. ":\r\n\r\n" .. info)
 	end
-
-	local mi = getmyinfo (user)
-
-	if mi then
-		local desc, tag, conn, sts, email, share = parsemyinfo (user, mi)
-		info = info .. " " .. gettext ("Description: %s"):format (desc) .. "\r\n" -- description
-		info = info .. " " .. gettext ("Tag: %s"):format (tag) .. "\r\n" -- tag
-
-		if # tag > 0 then -- tag information
-			local res = parsetag (tag)
-
-			if res ["cl"] then -- client
-				info = info .. " " .. gettext ("Client: %s"):format (res ["cl"]) .. "\r\n"
-			end
-
-			if res ["ve"] then -- version
-				info = info .. " " .. gettext ("Version: %s"):format (res ["ve"]) .. "\r\n"
-			end
-
-			if res ["mo"] then -- mode
-				info = info .. " " .. gettext ("Mode: %s"):format (res ["mo"]) .. "\r\n"
-			end
-
-			if res ["hu"] then -- hubs
-				info = info .. " " .. gettext ("Hubs: %s"):format (res ["hu"]) .. "\r\n"
-			end
-
-			if res ["sl"] then -- slots
-				info = info .. " " .. gettext ("Slots: %s"):format (res ["sl"]) .. "\r\n"
-			end
-
-			if res ["li"] then -- limiter
-				info = info .. " " .. gettext ("Limiter: %s KiB/s"):format (res ["li"]) .. "\r\n"
-			end
-		end
-
-		info = info .. " " .. gettext ("Connection: %s"):format (conn) .. "\r\n" -- connection
-		info = info .. " " .. gettext ("Status: %s"):format (statustostr (sts)) .. "\r\n" -- status
-		info = info .. " " .. gettext ("Email: %s"):format (email) .. "\r\n" -- email
-		info = info .. " " .. gettext ("Share: %s"):format (makesize (share)) .. "\r\n" -- share
-
-		if tonumber (share) > 0 then
-			info = info .. " " .. gettext ("Exact share: %s"):format (_tostring (share) .. " " .. gettext ("B")) .. "\r\n" -- exact share
-		end
-	end
-
-	if table_refu.GetUserSupports then
-		local on, sup = VH:GetUserSupports (user)
-
-		if on and sup and sup ~= "" then
-			info = info .. " " .. gettext ("Client supports: %s"):format (sup) .. "\r\n" -- supports
-		end
-	end
-
-	if table_refu.GetUserVersion then
-		local on, ver = VH:GetUserVersion (user)
-
-		if on and ver and ver ~= "" then
-			info = info .. " " .. gettext ("NMDC version: %s"):format (ver) .. "\r\n" -- version
-		end
-	end
-
-	if table_refu.GetUserHubURL then
-		local on, url = VH:GetUserHubURL (user)
-
-		if on and url and url ~= "" then
-			info = info .. " " .. gettext ("Hub URL: %s"):format (url) .. "\r\n" -- hub url
-		end
-	end
-
-	local usli = getusersbyip (ip)
-
-	if # usli > 1 then
-		info = info .. " " .. gettext ("Users with same IP") .. ":" -- users with same ip
-
-		for _, usni in pairs (usli) do
-			if usni ~= user then
-				info = info .. " " .. usni
-			end
-		end
-
-		info = info .. "\r\n"
-	end
-
-	commandanswer (nick, gettext ("User information") .. ":\r\n\r\n" .. info)
-end
 end
 
 ----- ---- --- -- -
