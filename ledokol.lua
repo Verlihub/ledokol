@@ -63,7 +63,7 @@ Tzaca, JOE™, Foxtrot, Deivis
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.7" -- ledokol version
-bld_ledo = "88" -- build number
+bld_ledo = "89" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -190,6 +190,7 @@ table_sets = {
 	regnewpubmsgcheef = "Please say hello to our new cheef: <nick>",
 	regnewpubmsgadmin = "Please say hello to our new administrator: <nick>",
 	regnewpubmsgmaster = "Please say hello to our new master: <nick>",
+	badpassbanmult = 0,
 	regkickaction = 1,
 	chatuptime = 0,
 	chatuptimeact = 0,
@@ -452,6 +453,8 @@ table_refu = {
 	SendToPassiveClass = false,
 	InUserSupports = false,
 	IsSecConn = false,
+	GetTLSVer = false,
+	PassTempBan = false,
 	SetRegClass = false
 }
 
@@ -1085,6 +1088,7 @@ table_sfbl = {}
 table_sdbl = {}
 table_laul = {}
 table_chin = {}
+table_bapa = {}
 
 table_avfi = {
 	string.char (100, 111, 119, 110, 108, 111, 97, 100),
@@ -1515,6 +1519,10 @@ function Main (file)
 					end
 
 					if ver <= 297 then
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('badpassbanmult', '" .. repsqlchars (table_sets.badpassbanmult) .. "')")
+					end
+
+					if ver <= 298 then
 						-- todo: next version
 					end
 
@@ -5145,9 +5153,17 @@ function VH_OnUserLogin (nick, uip)
 
 	local mistr, addr, cc, desc, tag, conn, email, size, prot, hasip, hascc, hasinfo, hasprot, hasmistr, _ = "", "", "", "", "", "", "", 0, false, false, false, false, false, false, 0
 
-	if table_sets.enableipwatch == 1 then -- ip watch
-		mistr, hasmistr = getmyinfo (nick), true
+	if table_sets.badpassbanmult > 0 and table_refu.PassTempBan then -- bad password ban multiplier
 		addr, hasip = (uip or getip (nick)), true
+		table_bapa [nick + addr] = nil
+	end
+
+	if table_sets.enableipwatch == 1 then -- ip watch
+		if not hasip then
+			addr, hasip = (uip or getip (nick)), true
+		end
+
+		mistr, hasmistr = getmyinfo (nick), true
 		checkipwat (nick, addr, mistr) -- dont return 0, its a login sequence
 	end
 
@@ -6738,6 +6754,27 @@ function VH_OnParsedMsgRevConnectToMe (nick, other)
 	end
 
 	return 1
+end
+
+----- ---- --- -- -
+
+function VH_OnBadPass (nick, addr)
+	if table_othsets.locked or table_sets.badpassbanmult == 0 or not table_refu.PassTempBan then
+		return 1
+	end
+
+	local id = nick .. addr
+	local mult = table_bapa [id]
+
+	if not mult then
+		table_bapa [id] = 1
+		return 1
+	end
+
+	mult = mult + 1
+	table_bapa [id] = mult
+	VH:PassTempBan (addr, (mult * table_sets.badpassbanmult))
+	return 0
 end
 
 ----- ---- --- -- -
@@ -10883,7 +10920,16 @@ function showuserinfo (nick, usr)
 
 		info = info .. " " .. gettext ("IP: %s"):format (ip) .. "\r\n" -- ip
 
-		if table_refu.IsSecConn then
+		if table_refu.GetTLSVer then
+			local on, ver = VH:GetTLSVer (user)
+
+			if on and ver and ver ~= "" and ver ~= "0.0" then
+				info = info .. " " .. gettext ("TLS version: %s"):format (ver) .. "\r\n"
+			else
+				info = info .. " " .. gettext ("Secure connection: %s"):format (gettext ("No")) .. "\r\n"
+			end
+
+		elseif table_refu.IsSecConn then
 			local on, sec = VH:IsSecConn (user)
 
 			if on then
@@ -18880,7 +18926,26 @@ end
 			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
 		end
 
------ ---- --- -- -
+	----- ---- --- -- -
+
+	elseif tvar == "badpassbanmult" then
+		if num then
+			if setto >= 0 and setto <= 1000 then
+				if setto == 0 then -- clear
+					table_bapa = {}
+				elseif not table_refu.PassTempBan then
+					commandanswer (nick, gettext ("This feature requires %s or later installed on your system."):format ("Verlihub 1.2.0.5"))
+				end
+
+				ok = true
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0 " .. gettext ("to") .. " 1000"))
+			end
+		else
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
+		end
+
+	----- ---- --- -- -
 
 	elseif tvar == "regkickaction" then
 		if num then
@@ -22610,6 +22675,7 @@ function showledoconf (nick)
 	conf = conf .. "\r\n [::] regnewpubmsgmaster = " .. _tostring (table_sets.regnewpubmsgmaster)
 	conf = conf .. "\r\n"
 
+	conf = conf .. "\r\n [::] badpassbanmult = " .. _tostring (table_sets.badpassbanmult)
 	conf = conf .. "\r\n [::] regkickaction = " .. _tostring (table_sets.regkickaction)
 	conf = conf .. "\r\n [::] chatuptime = " .. _tostring (table_sets.chatuptime)
 	conf = conf .. "\r\n [::] chatuptimeact = " .. _tostring (table_sets.chatuptimeact)

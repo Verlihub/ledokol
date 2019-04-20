@@ -1273,3 +1273,4 @@ Find configuration variables|
 Found %d configuration variables|
 No configuration variables found.|
 Secure connection: %s|
+TLS version: %s|
