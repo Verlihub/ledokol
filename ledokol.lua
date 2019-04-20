@@ -5155,7 +5155,7 @@ function VH_OnUserLogin (nick, uip)
 
 	if table_sets.badpassbanmult > 0 and table_refu.PassTempBan then -- bad password ban multiplier
 		addr, hasip = (uip or getip (nick)), true
-		table_bapa [nick + addr] = nil
+		table_bapa [nick .. addr] = nil
 	end
 
 	if table_sets.enableipwatch == 1 then -- ip watch
