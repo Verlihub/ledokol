@@ -63,7 +63,7 @@ Tzaca, JOE™, Foxtrot, Deivis
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.7" -- ledokol version
-bld_ledo = "89" -- build number
+bld_ledo = "90" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -6033,7 +6033,14 @@ function VH_OnTimer (msec)
 							os.remove (name)
 
 							if data and # data > 0 then
-								data = tonumber (data)
+								local temp = tonumber (data)
+
+								if not temp then
+									temp = data:gsub ("%.", "%,")
+									temp = tonumber (data)
+								end
+
+								data = temp
 
 								if type (data) == "number" then
 									-- todo: see if os.execute ("curl &") is faster

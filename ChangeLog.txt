@@ -1,6 +1,7 @@
 [ 2.9.7 :: 2019-##-## ]
 
 [ 87] Fixed: Properly unload script when called by hub
+[ 90] Fixed: Public proxy lookup for hubs with different locale and decimal separator, report by Master
 [ 88] Added: Secure connection information to user information
 [ 89] Added: TLS version information to user information
 [ 89] Added: badpassbanmult configuration to multiply incorrect password ban time each time, request by KCAHDEP
