@@ -6036,8 +6036,8 @@ function VH_OnTimer (msec)
 								local temp = tonumber (data)
 
 								if not temp then
-									temp = data:gsub ("%.", "%,")
-									temp = tonumber (data)
+									temp = data:gsub ("%.", ",")
+									temp = tonumber (temp)
 								end
 
 								data = temp
