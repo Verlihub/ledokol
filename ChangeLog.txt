@@ -2,9 +2,11 @@
 
 [ 87] Fixed: Properly unload script when called by hub
 [ 90] Fixed: Public proxy lookup for hubs with different locale and decimal separator, report by Master
+[ 91] Fixed: Faster rank table cleanup when disabling, report by KCAHDEP
 [ 88] Added: Secure connection information to user information
 [ 89] Added: TLS version information to user information
 [ 89] Added: badpassbanmult configuration to multiply incorrect password ban time each time, request by KCAHDEP
+[ 91] Added: Remove kick vote when voter is logging out, request by KCAHDEP
 
 [ 2.9.6 :: 2019-03-10 ]
 

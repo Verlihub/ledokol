@@ -63,7 +63,7 @@ Tzaca, JOE™, Foxtrot, Deivis
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.7" -- ledokol version
-bld_ledo = "90" -- build number
+bld_ledo = "91" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -5520,9 +5520,54 @@ function VH_OnUserLogout (nick, ip) -- ip available only on new versions
 		VH:SQLQuery ("update `" .. tbl_sql.ulog .. "` set `out` = " .. _tostring (os.time () + table_sets.srvtimediff) .. " where `id` = " .. _tostring (table_laul [nick]))
 	end
 
+	if table_sets.votekickclass < 11 then -- vote kicks
+		local dels = {}
+
+		for user, data in pairs (table_voki) do
+			local plus = table_voki [user].nili [nick]
+
+			if plus then
+				local noti = table_sets.voteminustext
+
+				if plus == "+" then
+					table_voki [user].vote = table_voki [user].vote - 1
+				elseif plus == "-" then
+					noti = table_sets.voteplustext
+					table_voki [user].vote = table_voki [user].vote + 1
+				end
+
+				if getstatus (user) == 1 then -- only if still online
+					noti = noti:gsub ("<nick>", reprexpchars (nick))
+					noti = noti:gsub ("<count>", _tostring (table_voki [user].vote))
+					noti = noti:gsub ("<total>", _tostring (table_sets.votekickcount))
+					noti = noti:gsub ("<class>", _tostring (getclass (user)))
+					noti = noti:gsub ("<user>", reprexpchars (user))
+					maintoall (noti, 0, 10) -- notify all users
+				end
+
+				if table_voki [user].vote == 0 then -- reset vote
+					table.insert (dels, user)
+				else
+					if not hasip then
+						addr, hasip = getip (nick), true
+					end
+
+					table_voki [user].nili [nick] = nil
+					table_voki [user].adli [addr] = nil
+				end
+			end
+		end
+
+		if # dels > 0 then
+			for _, user in pairs (dels) do
+				table_voki [user] = nil
+			end
+		end
+	end
+
 	if table_sets.chatintelon == 1 and table_sets.chatintelemail ~= "" and table_othsets.ver_curl then -- chat intelligence
 		if not hasip then
-			addr, hasip = (getip (nick)), true
+			addr, hasip = getip (nick), true
 		end
 
 		if addr ~= "0.0.0.0" then
@@ -5597,7 +5642,7 @@ function VH_OnUserLogout (nick, ip) -- ip available only on new versions
 
 	if table_sets.ipconantiflint > 0 and clas < table_sets.scanbelowclass then -- ip connect antiflood
 		if not hasip then
-			addr, hasip = (getip (nick)), true
+			addr, hasip = getip (nick), true
 		end
 
 		if not isprotected (nick, addr) and (not table_rcnn [addr] or os.difftime (os.time (), table_rcnn [addr]) >= table_sets.ipconantiflint) then
@@ -5625,7 +5670,7 @@ function VH_OnUserLogout (nick, ip) -- ip available only on new versions
 
 	if table_sets.seardupfilt == 1 then -- search duplicate filter
 		if not hasip then
-			addr, hasip = (getip (nick)), true
+			addr, hasip = getip (nick), true
 		end
 
 		table_sdbl [addr] = nil
@@ -26160,24 +26205,29 @@ end
 
 ----- ---- --- -- -
 
-function cleantablebyclass (limit, tbl)
-local _, rows = VH:SQLQuery ("select `nick` from `" .. tbl .. "`")
+function cleantablebyclass (clas, name)
+	if clas == 11 then
+		VH:SQLQuery ("truncate table `" .. name .. "`")
+		return
+	end
 
-if rows > 0 then
-	local t = {}
+	local _, rows = VH:SQLQuery ("select `nick` from `" .. name .. "`")
 
-	for x = 0, rows - 1 do
-		local _, usr = VH:SQLFetch (x)
+	if rows > 0 then
+		local temp = {}
 
-		if getclass (usr) < limit then
-			t [usr] = x
+		for row = 0, rows - 1 do
+			local _, user = VH:SQLFetch (row)
+
+			if getclass (user) < clas then
+				temp [user] = row
+			end
+		end
+
+		for user, _ in pairs (temp) do
+			VH:SQLQuery ("delete from `" .. name .. "` where `nick` = '" .. repsqlchars (user) .. "'")
 		end
 	end
-
-	for k, _ in pairs (t) do
-		VH:SQLQuery ("delete from `" .. tbl .. "` where `nick` = '" .. repsqlchars (k) .. "'")
-	end
-end
 end
 
 ----- ---- --- -- -
