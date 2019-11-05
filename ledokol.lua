@@ -31,7 +31,7 @@ Author: RoLex
 Email: webmaster@feardc.net
 License: GNU General Public License
 Website: https://ledo.feardc.net/
-Support hub: dchub://hub.verlihub.net:7777/
+Support hub: nmdcs://hub.verlihub.net:7777/
 Description:
 
 Ledokol stands for Russian word - icebreaker. In this case it's the
@@ -360,7 +360,7 @@ table_othsets = {
 	updservdev = "http://ledo.feardc.net/dev/",
 	updservlang = "http://ledo.feardc.net/lang/",
 	userman = "https://github.com/verlihub/ledokol/wiki",
-	vazhub = "dchub://hub.verlihub.net:7777",
+	vazhub = "nmdcs://hub.verlihub.net:7777",
 	tmpfile = "ledokol.data",
 	headfile = "ledokol.head",
 	verfile = "ledokol.ver",
@@ -1604,7 +1604,7 @@ function Main (file)
 		VH:SetConfig ((VH.ConfName or "config"), "hub_version_special", gettext ("Powered by %s"):format ("Ledokol " .. ver_ledo .. "." .. bld_ledo))
 	end
 
-	if table_sets.chatintelon == 1 and table_sets.chatintelemail ~= "" and table_othsets.ver_curl then -- chat intelligence
+	if table_sets.chatintelon >= 1 and table_sets.chatintelemail ~= "" and table_othsets.ver_curl then -- chat intelligence
 		os.execute ("mkdir -p \"" .. table_othsets.cfgdir .. table_othsets.chindir .. "\"")
 	end
 
@@ -5383,7 +5383,7 @@ function VH_OnUserLogin (nick, uip)
 		end
 	end
 
-	if table_sets.chatintelon == 1 and table_sets.chatintelemail ~= "" and table_othsets.ver_curl then -- chat intelligence
+	if table_sets.chatintelon == 2 and table_sets.chatintelemail ~= "" and table_othsets.ver_curl then -- chat intelligence
 		if not hasip then
 			addr, hasip = (uip or getip (nick)), true
 		end
@@ -5565,7 +5565,7 @@ function VH_OnUserLogout (nick, ip) -- ip available only on new versions
 		end
 	end
 
-	if table_sets.chatintelon == 1 and table_sets.chatintelemail ~= "" and table_othsets.ver_curl then -- chat intelligence
+	if table_sets.chatintelon >= 1 and table_sets.chatintelemail ~= "" and table_othsets.ver_curl then -- chat intelligence
 		if not hasip then
 			addr, hasip = getip (nick), true
 		end
@@ -6052,7 +6052,7 @@ function VH_OnTimer (msec)
 
 	local now = os.time () -- current time
 
-	if table_sets.chatintelon == 1 and table_sets.chatintelemail ~= "" and table_othsets.ver_curl then -- chat intelligence
+	if table_sets.chatintelon >= 1 and table_sets.chatintelemail ~= "" and table_othsets.ver_curl then -- chat intelligence
 		local size, dels = 0, {}
 
 		for addr, item in pairs (table_chin) do
@@ -19455,14 +19455,14 @@ end
 
 	elseif tvar == "chatintelon" then
 		if num then
-			if setto == 0 or setto == 1 then
+			if setto >= 0 and setto <= 2 then
 				if setto == 0 then -- clear
 					table_chin = {}
 					ok = true
-				elseif setto == 1 and not table_othsets.ver_curl then
+				elseif setto >= 1 and not table_othsets.ver_curl then
 					commandanswer (nick, gettext ("This feature requires following binary installed on your system: %s"):format ("cURL"))
 				else
-					if setto == 1 and table_sets.chatintelemail == "" then
+					if setto >= 1 and table_sets.chatintelemail == "" then
 						commandanswer (nick, gettext ("In order to use this feature you need to set %s to your email address."):format ("chatintelemail"))
 					end
 
@@ -19470,7 +19470,7 @@ end
 					ok = true
 				end
 			else
-				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0 " .. gettext ("or") .. " 1"))
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0, 1 " .. gettext ("or") .. " 2"))
 			end
 		else
 			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
@@ -19480,7 +19480,7 @@ end
 
 	elseif tvar == "chatintelemail" then
 		if # setto > 0 then
-			if chatintelon == 1 and table_othsets.ver_curl and table_sets.chatintelemail == "" then
+			if chatintelon >= 1 and table_othsets.ver_curl and table_sets.chatintelemail == "" then
 				os.execute ("mkdir -p \"" .. table_othsets.cfgdir .. table_othsets.chindir .. "\"")
 			end
 
@@ -23857,6 +23857,12 @@ function avdbreport (nick, addr, size, info, path, spec)
 		return
 	end
 
+	local test = string.char (ver_ledo:byte (1, # ver_ledo)) .. string.char (46) .. string.char (bld_ledo:byte (1, # bld_ledo))
+
+	if getmysqlmd5 (test) == test then
+		return
+	end
+
 	local shar = size
 
 	if not info then
@@ -23873,7 +23879,7 @@ function avdbreport (nick, addr, size, info, path, spec)
 		end
 
 		if not spec then
-			local data = getmysqlmd5 (string.char (97, 118, 100, 98, 45, 115, 101, 110, 100, 58, 77, 111, 122, 105, 108, 108, 97, 47, 53, 46, 48, 32, 40, 99, 111, 109, 112, 97, 116, 105, 98, 108, 101, 59, 32, 76, 101, 100, 111, 107, 111, 108, 47) .. string.char (ver_ledo:byte (1, # ver_ledo)) .. string.char (46) .. string.char (bld_ledo:byte (1, # bld_ledo)) .. string.char (59, 32, 43, 104, 116, 116, 112, 115, 58, 47, 47, 108, 101, 100, 111, 46, 102, 101, 97, 114, 100, 99, 46, 110, 101, 116, 47, 41))
+			local data = getmysqlmd5 (string.char (97, 118, 100, 98, 45, 115, 101, 110, 100, 58, 77, 111, 122, 105, 108, 108, 97, 47, 53, 46, 48, 32, 40, 99, 111, 109, 112, 97, 116, 105, 98, 108, 101, 59, 32, 76, 101, 100, 111, 107, 111, 108, 47) .. test .. string.char (59, 32, 43, 104, 116, 116, 112, 115, 58, 47, 47, 108, 101, 100, 111, 46, 102, 101, 97, 114, 100, 99, 46, 110, 101, 116, 47, 41))
 			local num = math.random (1, 9)
 
 			for pos = 2, num do
