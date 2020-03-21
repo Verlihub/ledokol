@@ -2,7 +2,7 @@
 --[[ license agreement >>
 ---------------------------------------------------------------------
 
-Copyright © 2007-2019 RoLex
+Copyright © 2007-2020 RoLex
 
 Ledokol is free software; You can redistribute it
 and modify it under the terms of the GNU General
@@ -63,7 +63,7 @@ Tzaca, JOE™, Foxtrot, Deivis
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.7" -- ledokol version
-bld_ledo = "91" -- build number
+bld_ledo = "92" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -105,6 +105,7 @@ table_sets = {
 	avsearservaddr = "",
 	avsearservport = 4112,
 	avdetaction = 0,
+	avdetclass = 5,
 	avdetblockmsg = 5,
 	avkicktext = "Virus spreaders are not welcome here _ban_30d",
 	classnotianti = 3,
@@ -1520,6 +1521,7 @@ function Main (file)
 
 					if ver <= 297 then
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('badpassbanmult', '" .. repsqlchars (table_sets.badpassbanmult) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('avdetclass', '" .. repsqlchars (table_sets.avdetclass) .. "')")
 					end
 
 					if ver <= 298 then
@@ -3243,7 +3245,7 @@ return 0
 	----- ---- --- -- -
 
 	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.avstats .. "$") or data:match ("^" .. table_othsets.optrig .. table_cmnds.avstats .. " [^ ]+$") then
-		if ucl >= table_sets.mincommandclass and table_sets.avsearchint > 0 then
+		if ucl >= table_sets.avdetclass and table_sets.avsearchint > 0 then
 			donotifycmd (nick, data, 0, ucl)
 			showavstats (nick, data:sub (# table_cmnds.avstats + 3))
 		else
@@ -3255,7 +3257,7 @@ return 0
 	----- ---- --- -- -
 
 	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.avdetforce .. " [^ ]+ .+$") or data:match ("^" .. table_othsets.optrig .. table_cmnds.avdetforce .. " [^ ]+$") then
-		if ucl >= table_sets.mincommandclass then
+		if ucl >= table_sets.avdetclass then
 			donotifycmd (nick, data, 0, ucl)
 			avdetforce (nick, data:sub (# table_cmnds.avdetforce + 3))
 		else
@@ -3267,7 +3269,7 @@ return 0
 	----- ---- --- -- -
 
 	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.avdbfind .. " %S+ .+$") then
-		if ucl >= table_sets.mincommandclass then
+		if ucl >= table_sets.avdetclass then
 			donotifycmd (nick, data, 0, ucl)
 			avdbfinditems (nick, data:sub (# table_cmnds.avdbfind + 3))
 		else
@@ -18085,7 +18087,7 @@ end
 	-- todo: rc menu
 
 	-- antivirus
-	if ucl >= table_sets.mincommandclass then
+	if ucl >= table_sets.avdetclass then
 		sopmenitm (usr, gettext ("Antivirus") .. "\\" .. gettext ("Antivirus statistics"), table_cmnds.avstats)
 		sopmenitm (usr, gettext ("Antivirus") .. "\\" .. gettext ("Force infected user detection"), table_cmnds.avdetforce .. " %[line:<" .. gettext ("nick") .. ">] %[line:<" .. gettext ("path") .. ">]")
 		sopmenitm (usr, gettext ("Antivirus") .. "\\" .. gettext ("Search in %s"):format ("AVDB"), table_cmnds.avdbfind .. " %[line:<" .. gettext ("type") .. ">] %[line:<" .. gettext ("item") .. ">]")
@@ -18937,6 +18939,19 @@ end
 				ok = true
 			else
 				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0 " .. gettext ("or") .. " 1"))
+			end
+		else
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
+		end
+
+	----- ---- --- -- -
+
+	elseif tvar == "avdetclass" then
+		if num then
+			if (setto >= 3 and setto <= 5) or setto == 10 then
+				ok = true
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "3, 4, 5 " .. gettext ("or") .. " 10"))
 			end
 		else
 			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
@@ -22630,6 +22645,7 @@ function showledoconf (nick)
 	conf = conf .. "\r\n [::] avsearservaddr = " .. _tostring (table_sets.avsearservaddr)
 	conf = conf .. "\r\n [::] avsearservport = " .. _tostring (table_sets.avsearservport)
 	conf = conf .. "\r\n [::] avdetaction = " .. _tostring (table_sets.avdetaction)
+	conf = conf .. "\r\n [::] avdetclass = " .. _tostring (table_sets.avdetclass)
 	conf = conf .. "\r\n [::] avdetblockmsg = " .. _tostring (table_sets.avdetblockmsg)
 	conf = conf .. "\r\n [::] avkicktext = " .. _tostring (table_sets.avkicktext)
 	conf = conf .. "\r\n"

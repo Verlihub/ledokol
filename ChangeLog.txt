@@ -1,4 +1,4 @@
-[ 2.9.7 :: 2019-##-## ]
+[ 2.9.7 :: 2020-##-## ]
 
 [ 87] Fixed: Properly unload script when called by hub
 [ 90] Fixed: Public proxy lookup for hubs with different locale and decimal separator, report by Master
@@ -8,6 +8,7 @@
 [ 89] Added: badpassbanmult configuration to multiply incorrect password ban time each time, request by KCAHDEP
 [ 91] Added: Remove kick vote when voter is logging out, request by KCAHDEP
 [ 91] Added: Set chatintelon to 2 to notify logged in users previously detected as public proxy
+[ 92] Added: avdetclass configuration to separate antivirus command restriction
 
 [ 2.9.6 :: 2019-03-10 ]
 
