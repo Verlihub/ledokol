@@ -63,7 +63,7 @@ Tzaca, JOE™, Foxtrot, Deivis
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.7" -- ledokol version
-bld_ledo = "92" -- build number
+bld_ledo = "93" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -3374,10 +3374,14 @@ return 0
 		if ucl >= table_sets.clearclass then
 			donotifycmd (nick, data, 0, ucl)
 
-			if minhubver (1, 0, 2, 15) then
-				VH:SendToClass ("<" .. table_othsets.sendfrom .. "> " .. string.rep ("\r\n", 100) .. " ~ " .. gettext ("Chat cleanup performed by %s"):format (nick) .. " ~\r\n|", 0, 10, getconfig ("delayed_chat"))
+			if VH.SendToChat then
+				VH:SendToChat (table_othsets.sendfrom, string.rep ("\r\n", 100) .. " ~ " .. gettext ("Chat cleanup performed by %s"):format (nick) .. " ~\r\n|", 0, 10)
 			else
-				VH:SendToClass ("<" .. table_othsets.sendfrom .. "> " .. string.rep ("\r\n", 100) .. " ~ " .. gettext ("Chat cleanup performed by %s"):format (nick) .. " ~\r\n|", 0, 10)
+				if minhubver (1, 0, 2, 15) then
+					VH:SendToClass ("<" .. table_othsets.sendfrom .. "> " .. string.rep ("\r\n", 100) .. " ~ " .. gettext ("Chat cleanup performed by %s"):format (nick) .. " ~\r\n|", 0, 10, getconfig ("delayed_chat"))
+				else
+					VH:SendToClass ("<" .. table_othsets.sendfrom .. "> " .. string.rep ("\r\n", 100) .. " ~ " .. gettext ("Chat cleanup performed by %s"):format (nick) .. " ~\r\n|", 0, 10)
+				end
 			end
 		else
 			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
@@ -4412,19 +4416,19 @@ function VH_OnUserCommand (nick, data)
 				pref = "[ " .. addr .. " ]"
 			end
 
-			if minhubver (1, 0, 2, 15) then
-				VH:SendToClass ("** " .. fake .. " " .. cvdat .. "|", 0, 2, getconfig ("delayed_chat"))
-				VH:SendToClass (pref .. " ** " .. fake .. " " .. cvdat .. "|", 3, 10, getconfig ("delayed_chat"))
+			if minhubver (1, 0, 2, 15) then -- note: nochat users will get this
+				VH:SendToClass ("** " .. fake .. " " .. cvdat .. "|", 0, (getconfig ("user_ip_class") or 3) - 1, getconfig ("delayed_chat"))
+				VH:SendToClass (pref .. " ** " .. fake .. " " .. cvdat .. "|", (getconfig ("user_ip_class") or 3), 10, getconfig ("delayed_chat"))
 
 			else
-				VH:SendToClass ("** " .. fake .. " " .. cvdat .. "|", 0, 2)
-				VH:SendToClass (pref .. " ** " .. fake .. " " .. cvdat .. "|", 3, 10)
+				VH:SendToClass ("** " .. fake .. " " .. cvdat .. "|", 0, (getconfig ("user_ip_class") or 3) - 1)
+				VH:SendToClass (pref .. " ** " .. fake .. " " .. cvdat .. "|", (getconfig ("user_ip_class") or 3), 10)
 			end
 
 			retval = 0
 
 		elseif retval == 0 or fake ~= nick then -- no ip, only when modified
-			if minhubver (1, 0, 2, 15) then
+			if minhubver (1, 0, 2, 15) then -- note: nochat users will get this
 				VH:SendToClass ("** " .. fake .. " " .. cvdat .. "|", 0, 10, getconfig ("delayed_chat"))
 			else
 				VH:SendToClass ("** " .. fake .. " " .. cvdat .. "|", 0, 10)
@@ -4434,7 +4438,7 @@ function VH_OnUserCommand (nick, data)
 		end
 
 		if table_othsets.chinskipchecks and retval == 1 then -- send delayed message manually
-			if minhubver (1, 0, 2, 15) then
+			if minhubver (1, 0, 2, 15) then -- note: nochat users will get this
 				VH:SendToClass ("** " .. fake .. " " .. cvdat .. "|", 0, 10, getconfig ("delayed_chat"))
 			else
 				VH:SendToClass ("** " .. fake .. " " .. cvdat .. "|", 0, 10)
@@ -4571,19 +4575,19 @@ function VH_OnUserCommand (nick, data)
 				pref = "[ " .. addr .. " ]"
 			end
 
-			if minhubver (1, 0, 2, 15) then
-				VH:SendToClass ("** " .. fake .. "|", 0, 2, getconfig ("delayed_chat"))
-				VH:SendToClass (pref .. " ** " .. fake .. "|", 3, 10, getconfig ("delayed_chat"))
+			if minhubver (1, 0, 2, 15) then -- note: nochat users will get this
+				VH:SendToClass ("** " .. fake .. "|", 0, (getconfig ("user_ip_class") or 3) - 1, getconfig ("delayed_chat"))
+				VH:SendToClass (pref .. " ** " .. fake .. "|", (getconfig ("user_ip_class") or 3), 10, getconfig ("delayed_chat"))
 
 			else
-				VH:SendToClass ("** " .. fake .. "|", 0, 2)
-				VH:SendToClass (pref .. " ** " .. fake .. "|", 3, 10)
+				VH:SendToClass ("** " .. fake .. "|", 0, (getconfig ("user_ip_class") or 3) - 1)
+				VH:SendToClass (pref .. " ** " .. fake .. "|", (getconfig ("user_ip_class") or 3), 10)
 			end
 
 			retval = 0
 
 		elseif fake ~= nick then -- no ip, only when modified
-			if minhubver (1, 0, 2, 15) then
+			if minhubver (1, 0, 2, 15) then -- note: nochat users will get this
 				VH:SendToClass ("** " .. fake .. "|", 0, 10, getconfig ("delayed_chat"))
 			else
 				VH:SendToClass ("** " .. fake .. "|", 0, 10)
@@ -4593,7 +4597,7 @@ function VH_OnUserCommand (nick, data)
 		end
 
 		if table_othsets.chinskipchecks and retval == 1 then -- send delayed message manually
-			if minhubver (1, 0, 2, 15) then
+			if minhubver (1, 0, 2, 15) then -- note: nochat users will get this
 				VH:SendToClass ("** " .. fake .. "|", 0, 10, getconfig ("delayed_chat"))
 			else
 				VH:SendToClass ("** " .. fake .. "|", 0, 10)
@@ -7056,10 +7060,14 @@ function VH_OnScriptCommand (name, data, plug, file)
 		if nick and line and getstatus (nick) == 1 then
 			addmchistoryline (nick, nick, line)
 
-			if minhubver (1, 0, 2, 15) then
-				VH:SendToClass (data .. "|", 0, 10, getconfig ("delayed_chat"))
+			if VH.SendToChat then
+				VH:SendToChat (nick, line, 0, 10)
 			else
-				VH:SendToClass (data .. "|", 0, 10)
+				if minhubver (1, 0, 2, 15) then
+					VH:SendToClass (data .. "|", 0, 10, getconfig ("delayed_chat"))
+				else
+					VH:SendToClass (data .. "|", 0, 10)
+				end
 			end
 		end
 
@@ -7701,30 +7709,48 @@ function VH_OnParsedMsgChat (nick, data)
 		end
 
 		if minhubver (1, 0, 2, 15) then
-			VH:SendToClass ("<" .. fake .. "> " .. cvdat .. "|", 0, 2, getconfig ("delayed_chat"))
-			VH:SendToClass (pref .. " <" .. fake .. "> " .. cvdat .. "|", 3, 10, getconfig ("delayed_chat"))
+			if VH.SendToChat then
+				VH:SendToChat (fake, cvdat, 0, (getconfig ("user_ip_class") or 3) - 1)
+			else
+				VH:SendToClass ("<" .. fake .. "> " .. cvdat .. "|", 0, (getconfig ("user_ip_class") or 3) - 1, getconfig ("delayed_chat"))
+			end
+
+			VH:SendToClass (pref .. " <" .. fake .. "> " .. cvdat .. "|", (getconfig ("user_ip_class") or 3), 10, getconfig ("delayed_chat")) -- note: nochat users will get this
 		else
-			VH:SendToClass ("<" .. fake .. "> " .. cvdat .. "|", 0, 2)
-			VH:SendToClass (pref .. " <" .. fake .. "> " .. cvdat .. "|", 3, 10)
+			if VH.SendToChat then
+				VH:SendToChat (fake, cvdat, 0, (getconfig ("user_ip_class") or 3) - 1)
+			else
+				VH:SendToClass ("<" .. fake .. "> " .. cvdat .. "|", 0, (getconfig ("user_ip_class") or 3) - 1)
+			end
+
+			VH:SendToClass (pref .. " <" .. fake .. "> " .. cvdat .. "|", (getconfig ("user_ip_class") or 3), 10) -- note: nochat users will get this
 		end
 
 		retval = 0
 
 	elseif retval == 0 or fake ~= nick then -- no ip, only when modified
-		if minhubver (1, 0, 2, 15) then
-			VH:SendToClass ("<" .. fake .. "> " .. cvdat .. "|", 0, 10, getconfig ("delayed_chat"))
+		if VH.SendToChat then
+			VH:SendToChat (fake, cvdat, 0, 10)
 		else
-			VH:SendToClass ("<" .. fake .. "> " .. cvdat .. "|", 0, 10)
+			if minhubver (1, 0, 2, 15) then
+				VH:SendToClass ("<" .. fake .. "> " .. cvdat .. "|", 0, 10, getconfig ("delayed_chat"))
+			else
+				VH:SendToClass ("<" .. fake .. "> " .. cvdat .. "|", 0, 10)
+			end
 		end
 
 		retval = 0
 	end
 
 	if table_othsets.chinskipchecks and retval == 1 then -- send delayed message manually
-		if minhubver (1, 0, 2, 15) then
-			VH:SendToClass ("<" .. fake .. "> " .. cvdat .. "|", 0, 10, getconfig ("delayed_chat"))
+		if VH.SendToChat then
+			VH:SendToChat (fake, cvdat, 0, 10)
 		else
-			VH:SendToClass ("<" .. fake .. "> " .. cvdat .. "|", 0, 10)
+			if minhubver (1, 0, 2, 15) then
+				VH:SendToClass ("<" .. fake .. "> " .. cvdat .. "|", 0, 10, getconfig ("delayed_chat"))
+			else
+				VH:SendToClass ("<" .. fake .. "> " .. cvdat .. "|", 0, 10)
+			end
 		end
 
 		retval = 0
@@ -17396,10 +17422,14 @@ function sendsay (nick, message, ucl)
 	if user == table_sets.ledobotnick or user == table_othsets.botnick or user == table_othsets.opchatnick or user == nick or getclass (user) < ucl then
 		opsnotify (table_sets.classnotisay, gettext ("%s with class %d sent say message: <%s> %s"):format (nick, ucl, user, message))
 
-		if minhubver (1, 0, 2, 15) then
-			VH:SendToClass ("<" .. user .. "> " .. message .. "|", 0, 10, getconfig ("delayed_chat"))
+		if VH.SendToChat then
+			VH:SendToChat (user, message, 0, 10)
 		else
-			VH:SendToClass ("<" .. user .. "> " .. message .. "|", 0, 10)
+			if minhubver (1, 0, 2, 15) then
+				VH:SendToClass ("<" .. user .. "> " .. message .. "|", 0, 10, getconfig ("delayed_chat"))
+			else
+				VH:SendToClass ("<" .. user .. "> " .. message .. "|", 0, 10)
+			end
 		end
 
 		addmchistoryline (user, nick, message)
@@ -19783,21 +19813,20 @@ end
 			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
 		end
 
------ ---- --- -- -
+	----- ---- --- -- -
 
-elseif tvar == "useripinchat" then
-	if num then
-		if setto >= 0 and setto <= 2 then
-			ok = true
+	elseif tvar == "useripinchat" then
+		if num then
+			if setto >= 0 and setto <= 2 then
+				ok = true
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0, 1 " .. gettext ("or") .. " 2"))
+			end
 		else
-			commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0, 1 " .. gettext ("or") .. " 2"))
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
 		end
 
-	else
-		commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
-	end
-
------ ---- --- -- -
+	----- ---- --- -- -
 
 elseif tvar == "enablecmdlog" then
 	if num then
@@ -26424,10 +26453,14 @@ function antiscan (nick, class, data, where, to, status)
 						custnick = getcustnick (nick) or nick
 					end
 
-					if minhubver (1, 0, 2, 15) then
-						VH:SendToClass ("<" .. custnick .. "> " .. table_sets.ninthactrepmsg .. "|", 0, 10, getconfig ("delayed_chat"))
+					if VH.SendToChat then
+						VH:SendToChat (custnick, table_sets.ninthactrepmsg, 0, 10)
 					else
-						VH:SendToClass ("<" .. custnick .. "> " .. table_sets.ninthactrepmsg .. "|", 0, 10)
+						if minhubver (1, 0, 2, 15) then
+							VH:SendToClass ("<" .. custnick .. "> " .. table_sets.ninthactrepmsg .. "|", 0, 10, getconfig ("delayed_chat"))
+						else
+							VH:SendToClass ("<" .. custnick .. "> " .. table_sets.ninthactrepmsg .. "|", 0, 10)
+						end
 					end
 
 					addmchistoryline (custnick, nick, table_sets.ninthactrepmsg)
@@ -27113,10 +27146,14 @@ end
 ----- ---- --- -- -
 
 function maintoall (data, micl, macl, refl)
-	if minhubver (1, 0, 2, 15) then
-		VH:SendToClass ("<" .. table_othsets.sendfrom .. "> " .. data .. "|", micl, macl, getconfig ("delayed_chat"))
+	if VH.SendToChat then
+		VH:SendToChat (table_othsets.sendfrom, data, micl, macl)
 	else
-		VH:SendToClass ("<" .. table_othsets.sendfrom .. "> " .. data .. "|", micl, macl)
+		if minhubver (1, 0, 2, 15) then
+			VH:SendToClass ("<" .. table_othsets.sendfrom .. "> " .. data .. "|", micl, macl, getconfig ("delayed_chat"))
+		else
+			VH:SendToClass ("<" .. table_othsets.sendfrom .. "> " .. data .. "|", micl, macl)
+		end
 	end
 
 	addmchistoryline (table_othsets.sendfrom, table_othsets.sendfrom, data, refl)
