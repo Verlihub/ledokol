@@ -24002,7 +24002,7 @@ function showavstats (nick, user)
 		stats = stats .. " " .. gettext ("File names used for search") .. ":\r\n\r\n"
 
 		local sext = table_avse [table_othsets.avnextitem]:gsub ("%$", " ")
-		local _, _, sextfi, sextex = sext:find ("^(.+) (% .. +)$")
+		local _, _, sextfi, sextex = sext:find ("^(.+) (%..+)$")
 
 		for _, avfi in pairs (table_avfi) do
 			stats = stats .. "\t" .. avfi
