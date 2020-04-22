@@ -6,6 +6,7 @@
 [ 93] Fixed: Correctly send main chat messages to users in chat list only, report by Delion
 [ 93] Fixed: User IP in chat feature now relies on user_ip_class configuration when possible
 [ 94] Fixed: Automated replace consequence, probably first of
+[ 95] Fixed: Lua error, report by KCAHDEP
 [ 88] Added: Secure connection information to user information
 [ 89] Added: TLS version information to user information
 [ 89] Added: badpassbanmult configuration to multiply incorrect password ban time each time, request by KCAHDEP

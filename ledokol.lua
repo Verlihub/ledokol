@@ -63,7 +63,7 @@ Tzaca, JOE™, Foxtrot, Deivis
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.7" -- ledokol version
-bld_ledo = "93" -- build number
+bld_ledo = "95" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -19525,7 +19525,7 @@ end
 
 	elseif tvar == "chatintelemail" then
 		if # setto > 0 then
-			if chatintelon >= 1 and table_othsets.ver_curl and table_sets.chatintelemail == "" then
+			if table_sets.chatintelon >= 1 and table_othsets.ver_curl and table_sets.chatintelemail == "" then
 				os.execute ("mkdir -p \"" .. table_othsets.cfgdir .. table_othsets.chindir .. "\"")
 			end
 
