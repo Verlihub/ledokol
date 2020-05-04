@@ -63,7 +63,7 @@ Tzaca, JOE™, Foxtrot, Deivis
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.7" -- ledokol version
-bld_ledo = "95" -- build number
+bld_ledo = "96" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -307,6 +307,7 @@ table_sets = {
 	--hublistpingint = 0,
 	--hubpingtimeout = 1,
 	enableuserlog = 0,
+	ulogouttime = 0,
 	ulogautoclean = 30,
 	logallmyinfos = 0,
 	enableipwatch = 0,
@@ -1522,6 +1523,7 @@ function Main (file)
 					if ver <= 297 then
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('badpassbanmult', '" .. repsqlchars (table_sets.badpassbanmult) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('avdetclass', '" .. repsqlchars (table_sets.avdetclass) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('ulogouttime', '" .. repsqlchars (table_sets.ulogouttime) .. "')")
 					end
 
 					if ver <= 298 then
@@ -5094,7 +5096,7 @@ function VH_OnParsedMsgMyINFO (nick, data)
 			end
 		end
 
-		VH:SQLQuery ("insert into `" .. tbl_sql.ulog .. "` (`time`, `out`, `nick`, `ip`, `cc`, `desc`, `tag`, `conn`, `email`, `share`, `nmdc`, `sups`) values (" .. _tostring (os.time () + table_sets.srvtimediff) .. ", 2, '" .. repsqlchars (nick) .. "', '" .. repsqlchars (addr) .. "', " .. sqlemptnull (cc, true) .. ", " .. sqlemptnull (desc) .. ", " .. sqlemptnull (tag) .. ", " .. sqlemptnull (conn) .. ", " .. sqlemptnull (mail) .. ", " .. repsqlchars (size) .. ", " .. sqlemptnull (nmdc) .. ", " .. sqlemptnull (sups) .. ")")
+		VH:SQLQuery ("insert into `" .. tbl_sql.ulog .. "` (`time`" .. ((table_sets.ulogouttime == 1) and ", `out`" or "") .. ", `nick`, `ip`, `cc`, `desc`, `tag`, `conn`, `email`, `share`, `nmdc`, `sups`) values (" .. _tostring (os.time () + table_sets.srvtimediff) .. ((table_sets.ulogouttime == 1) and ", 2" or "") .. ", '" .. repsqlchars (nick) .. "', '" .. repsqlchars (addr) .. "', " .. sqlemptnull (cc, true) .. ", " .. sqlemptnull (desc) .. ", " .. sqlemptnull (tag) .. ", " .. sqlemptnull (conn) .. ", " .. sqlemptnull (mail) .. ", " .. repsqlchars (size) .. ", " .. sqlemptnull (nmdc) .. ", " .. sqlemptnull (sups) .. ")")
 	end
 
 	if table_sets.micheck == 0 or table_sets.micallall == 0 then
@@ -5206,15 +5208,18 @@ function VH_OnUserLogin (nick, uip)
 			end
 		end
 
-		VH:SQLQuery ("insert into `" .. tbl_sql.ulog .. "` (`time`, `out`, `nick`, `ip`, `cc`, `desc`, `tag`, `conn`, `email`, `share`, `nmdc`, `sups`) values (" .. _tostring (os.time () + table_sets.srvtimediff) .. ", 1, '" .. repsqlchars (nick) .. "', '" .. repsqlchars (addr) .. "', " .. sqlemptnull (cc, true) .. ", " .. sqlemptnull (desc) .. ", " .. sqlemptnull (tag) .. ", " .. sqlemptnull (conn) .. ", " .. sqlemptnull (email) .. ", " .. repsqlchars (size) .. ", " .. sqlemptnull (nmdc) .. ", " .. sqlemptnull (sups) .. ")")
-		local _, rows = VH:SQLQuery ("select last_insert_id()")
+		VH:SQLQuery ("insert into `" .. tbl_sql.ulog .. "` (`time`" .. ((table_sets.ulogouttime == 1) and ", `out`" or "") .. ", `nick`, `ip`, `cc`, `desc`, `tag`, `conn`, `email`, `share`, `nmdc`, `sups`) values (" .. _tostring (os.time () + table_sets.srvtimediff) .. ((table_sets.ulogouttime == 1) and ", 1" or "") .. ", '" .. repsqlchars (nick) .. "', '" .. repsqlchars (addr) .. "', " .. sqlemptnull (cc, true) .. ", " .. sqlemptnull (desc) .. ", " .. sqlemptnull (tag) .. ", " .. sqlemptnull (conn) .. ", " .. sqlemptnull (email) .. ", " .. repsqlchars (size) .. ", " .. sqlemptnull (nmdc) .. ", " .. sqlemptnull (sups) .. ")")
 
-		if rows > 0 then
-			local _, last = VH:SQLFetch (0)
-			last = tonumber (last or 0) or 0
+		if table_sets.ulogouttime == 1 then -- out time
+			local _, rows = VH:SQLQuery ("select last_insert_id()")
 
-			if last > 0 then
-				table_laul [nick] = last
+			if rows > 0 then
+				local _, last = VH:SQLFetch (0)
+				last = tonumber (last or 0) or 0
+
+				if last > 0 then
+					table_laul [nick] = last
+				end
 			end
 		end
 	end
@@ -5522,8 +5527,9 @@ function VH_OnUserLogout (nick, ip) -- ip available only on new versions
 		addr, hasip = ip, true
 	end
 
-	if table_sets.enableuserlog == 1 and table_laul [nick] then -- user logger
+	if table_sets.enableuserlog == 1 and table_sets.ulogouttime == 1 and table_laul [nick] then -- user logger, out time
 		VH:SQLQuery ("update `" .. tbl_sql.ulog .. "` set `out` = " .. _tostring (os.time () + table_sets.srvtimediff) .. " where `id` = " .. _tostring (table_laul [nick]))
+		table_laul [nick] = nil
 	end
 
 	if table_sets.votekickclass < 11 then -- vote kicks
@@ -11378,17 +11384,21 @@ function showuserlog (nick, line)
 					local _, rtime, rout, rnick, rip, rcc, rdesc, rtag, rconn, remail, rshare, rnmdc, rsups = VH:SQLFetch (row)
 					rnick = repnmdcoutchars (rnick)
 					rip = repnmdcoutchars (rip)
-					res = res .. " [ O: " .. fromunixtime (rtime, false) .. " ] [ O: " -- online, offline
-					rout = tonumber (rout or 0) or 0
+					res = res .. " [ O: " .. fromunixtime (rtime, false) -- online
 
-					if rout == 0 then
-						res = res .. gettext ("Unknown")
-					elseif rout == 1 then
-						res = res .. gettext ("Online")
-					elseif rout == 2 then
-						res = res .. gettext ("Unavailable")
-					else
-						res = res .. fromunixtime (rout, false)
+					if table_sets.ulogouttime == 1 then -- out time
+						res = res .. " ] [ O: " -- offline
+						rout = tonumber (rout or 0) or 0
+
+						if rout == 0 then
+							res = res .. gettext ("Unknown")
+						elseif rout == 1 then
+							res = res .. gettext ("Online")
+						elseif rout == 2 then
+							res = res .. gettext ("Unavailable")
+						else
+							res = res .. fromunixtime (rout, false)
+						end
 					end
 
 					res = res .. " ] [ N: " .. rnick .. " ]"
@@ -11447,17 +11457,21 @@ function showuserlog (nick, line)
 					local _, rtime, rout, rnick, rip, rcc, rdesc, rtag, rconn, remail, rshare, rnmdc, rsups = VH:SQLFetch (row)
 					rnick = repnmdcoutchars (rnick)
 					rip = repnmdcoutchars (rip)
-					res = res .. " [ O: " .. fromunixtime (rtime, false) .. " ] [ O: " -- online, offline
-					rout = tonumber (rout or 0) or 0
+					res = res .. " [ O: " .. fromunixtime (rtime, false) -- online
 
-					if rout == 0 then
-						res = res .. gettext ("Unknown")
-					elseif rout == 1 then
-						res = res .. gettext ("Online")
-					elseif rout == 2 then
-						res = res .. gettext ("Unavailable")
-					else
-						res = res .. fromunixtime (rout, false)
+					if table_sets.ulogouttime == 1 then -- out time
+						res = res .. " ] [ O: " -- offline
+						rout = tonumber (rout or 0) or 0
+
+						if rout == 0 then
+							res = res .. gettext ("Unknown")
+						elseif rout == 1 then
+							res = res .. gettext ("Online")
+						elseif rout == 2 then
+							res = res .. gettext ("Unavailable")
+						else
+							res = res .. fromunixtime (rout, false)
+						end
 					end
 
 					res = res .. " ] [ N: " .. rnick .. " ]"
@@ -19662,6 +19676,23 @@ end
 
 	----- ---- --- -- -
 
+	elseif tvar == "ulogouttime" then
+		if num then
+			if setto == 0 or setto == 1 then
+				if setto == 0 then -- clear
+					table_laul = {}
+				end
+
+				ok = true
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0 " .. gettext ("or") .. " 1"))
+			end
+		else
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
+		end
+
+	----- ---- --- -- -
+
 	elseif tvar == "ulogautoclean" then
 		if num then
 			if setto >= 0 and setto <= 365 then
@@ -22932,6 +22963,7 @@ function showledoconf (nick)
 	conf = conf .. "\r\n"
 
 	conf = conf .. "\r\n [::] enableuserlog = " .. _tostring (table_sets.enableuserlog)
+	conf = conf .. "\r\n [::] ulogouttime = " .. _tostring (table_sets.ulogouttime)
 	conf = conf .. "\r\n [::] ulogautoclean = " .. _tostring (table_sets.ulogautoclean)
 	conf = conf .. "\r\n [::] logallmyinfos = " .. _tostring (table_sets.logallmyinfos)
 	conf = conf .. "\r\n [::] enableipwatch = " .. _tostring (table_sets.enableipwatch)
