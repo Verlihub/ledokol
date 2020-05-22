@@ -14,6 +14,7 @@
 [ 91] Added: Set chatintelon to 2 to notify logged in users previously detected as public proxy
 [ 92] Added: avdetclass configuration to separate antivirus command restriction
 [ 96] Added: ulogouttime configuration to disable logout time recording for user logger
+[ 97] Removed: Predefined MySQL character set, collation and engine to use system defaults
 
 [ 2.9.6 :: 2019-03-10 ]
 

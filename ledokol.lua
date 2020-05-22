@@ -63,7 +63,7 @@ Tzaca, JOE™, Foxtrot, Deivis
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.7" -- ledokol version
-bld_ledo = "96" -- build number
+bld_ledo = "97" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -1234,8 +1234,8 @@ function Main (file)
 
 				if ver and ver > 274 then -- new style since 2.7.5
 					if ver <= 275 then
-						VH:SQLQuery ("create table if not exists `" .. tbl_sql.misup .. "` (`supports` varchar(255) not null primary key, `time` varchar(10) null, `occurred` bigint(20) unsigned not null default 0, `note` varchar(255) null) engine = myisam default character set utf8 collate utf8_unicode_ci")
-						VH:SQLQuery ("create table if not exists `" .. tbl_sql.miver .. "` (`version` varchar(255) not null primary key, `time` varchar(10) null, `occurred` bigint(20) unsigned not null default 0, `note` varchar(255) null) engine = myisam default character set utf8 collate utf8_unicode_ci")
+						VH:SQLQuery ("create table if not exists `" .. tbl_sql.misup .. "` (`supports` varchar(255) not null primary key, `time` varchar(10) null, `occurred` bigint(20) unsigned not null default 0, `note` varchar(255) null)")
+						VH:SQLQuery ("create table if not exists `" .. tbl_sql.miver .. "` (`version` varchar(255) not null primary key, `time` varchar(10) null, `occurred` bigint(20) unsigned not null default 0, `note` varchar(255) null)")
 
 						VH:SQLQuery ("alter table `" .. tbl_sql.anti .. "` change column `action` `action` tinyint(2) unsigned not null default 0")
 
@@ -1259,7 +1259,7 @@ function Main (file)
 					end
 
 					if ver <= 277 then
-						VH:SQLQuery ("create table if not exists `" .. tbl_sql.rcmenu .. "` (`id` bigint(20) unsigned not null auto_increment primary key, `menu` varchar(255) not null, `command` varchar(255) not null, `type` tinyint(3) unsigned not null default 1, `cont` tinyint(2) unsigned not null default 3, `order` smallint(5) unsigned not null default 0, `minclass` tinyint(2) unsigned not null default 0, `maxclass` tinyint(2) unsigned not null default 10) engine = myisam default character set utf8 collate utf8_unicode_ci")
+						VH:SQLQuery ("create table if not exists `" .. tbl_sql.rcmenu .. "` (`id` bigint(20) unsigned not null auto_increment primary key, `menu` varchar(255) not null, `command` varchar(255) not null, `type` tinyint(3) unsigned not null default 1, `cont` tinyint(2) unsigned not null default 3, `order` smallint(5) unsigned not null default 0, `minclass` tinyint(2) unsigned not null default 0, `maxclass` tinyint(2) unsigned not null default 10)")
 
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('antibelowclass', '" .. repsqlchars (table_sets.antibelowclass) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('longdateformat', '" .. repsqlchars (table_sets.longdateformat) .. "')")
@@ -1288,8 +1288,8 @@ function Main (file)
 					end
 
 					if ver <= 280 then
-						VH:SQLQuery ("create table if not exists `" .. tbl_sql.ccgag .. "` (`item` varchar(255) not null primary key, `flag` tinyint(1) unsigned not null default 0, `why` varchar(255) null) engine = myisam default character set utf8 collate utf8_unicode_ci")
-						VH:SQLQuery ("create table if not exists `" .. tbl_sql.trig .. "` (`id` varchar(255) not null primary key, `content` text not null, `minclass` tinyint(2) unsigned not null default 0, `maxclass` tinyint(2) unsigned not null default 10) engine = myisam default character set utf8 collate utf8_unicode_ci")
+						VH:SQLQuery ("create table if not exists `" .. tbl_sql.ccgag .. "` (`item` varchar(255) not null primary key, `flag` tinyint(1) unsigned not null default 0, `why` varchar(255) null)")
+						VH:SQLQuery ("create table if not exists `" .. tbl_sql.trig .. "` (`id` varchar(255) not null primary key, `content` text not null, `minclass` tinyint(2) unsigned not null default 0, `maxclass` tinyint(2) unsigned not null default 10)")
 
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.ledocmd .. "` (`original`, `new`) values ('avstats', '" .. repsqlchars (table_cmnds.avstats) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.ledocmd .. "` (`original`, `new`) values ('votekickdel', '" .. repsqlchars (table_cmnds.votekickdel) .. "')")
@@ -1325,7 +1325,7 @@ function Main (file)
 					end
 
 					if ver <= 283 then
-						VH:SQLQuery ("create table if not exists `" .. tbl_sql.acre .. "` (`id` bigint(20) unsigned not null auto_increment primary key, `cc` varchar(2) not null, `nick` varchar(255) not null) engine = myisam default character set utf8 collate utf8_unicode_ci")
+						VH:SQLQuery ("create table if not exists `" .. tbl_sql.acre .. "` (`id` bigint(20) unsigned not null auto_increment primary key, `cc` varchar(2) not null, `nick` varchar(255) not null)")
 
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('avsearservaddr', '" .. repsqlchars (table_sets.avsearservaddr) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('avsearservport', '" .. repsqlchars (table_sets.avsearservport) .. "')")
@@ -1379,7 +1379,7 @@ function Main (file)
 					end
 
 					if ver <= 286 then
-						VH:SQLQuery ("create table if not exists `" .. tbl_sql.crhist .. "` (`id` bigint(20) unsigned not null auto_increment primary key, `room` varchar(255) not null, `realnick` varchar(255) not null, `nick` varchar(255) not null, `ip` varchar(15) null, `date` bigint(20) unsigned not null, `message` text not null) engine = myisam default character set utf8 collate utf8_unicode_ci")
+						VH:SQLQuery ("create table if not exists `" .. tbl_sql.crhist .. "` (`id` bigint(20) unsigned not null auto_increment primary key, `room` varchar(255) not null, `realnick` varchar(255) not null, `nick` varchar(255) not null, `ip` varchar(15) null, `date` bigint(20) unsigned not null, `message` text not null)")
 
 						VH:SQLQuery ("alter table `" .. tbl_sql.news .. "` change column `date` `date` bigint(20) unsigned not null")
 						VH:SQLQuery ("alter table `" .. tbl_sql.rel .. "` change column `date` `date` bigint(20) unsigned not null")
@@ -1398,7 +1398,7 @@ function Main (file)
 					end
 
 					if ver <= 287 then
-						VH:SQLQuery ("create table if not exists `" .. tbl_sql.ulog .. "` (`id` bigint(20) unsigned not null auto_increment primary key, `time` bigint(20) unsigned not null, `out` bigint(20) unsigned not null default 0, `nick` varchar(255) not null, `ip` varchar(15) not null, `cc` varchar(2) null, `desc` varchar(255) null, `tag` varchar(255) null, `conn` varchar(255) null, `email` varchar(255) null, `share` bigint(20) unsigned not null default 0, `nmdc` varchar(255) null, `sups` varchar(255) null) engine = myisam default character set utf8 collate utf8_unicode_ci")
+						VH:SQLQuery ("create table if not exists `" .. tbl_sql.ulog .. "` (`id` bigint(20) unsigned not null auto_increment primary key, `time` bigint(20) unsigned not null, `out` bigint(20) unsigned not null default 0, `nick` varchar(255) not null, `ip` varchar(15) not null, `cc` varchar(2) null, `desc` varchar(255) null, `tag` varchar(255) null, `conn` varchar(255) null, `email` varchar(255) null, `share` bigint(20) unsigned not null default 0, `nmdc` varchar(255) null, `sups` varchar(255) null)")
 
 						VH:SQLQuery ("alter table `" .. tbl_sql.ulog .. "` add column `cc` varchar(2) null after `ip`")
 						VH:SQLQuery ("alter table `" .. tbl_sql.ulog .. "` change column `desc` `desc` varchar(255) null")
@@ -1455,7 +1455,7 @@ function Main (file)
 					end
 
 					if ver <= 293 then
-						VH:SQLQuery ("create table if not exists `" .. tbl_sql.michat .. "` (`chat` varchar(255) not null primary key, `time` varchar(10) null, `occurred` bigint(20) unsigned not null default 0, `note` varchar(255) null) engine = myisam default character set utf8 collate utf8_unicode_ci")
+						VH:SQLQuery ("create table if not exists `" .. tbl_sql.michat .. "` (`chat` varchar(255) not null primary key, `time` varchar(10) null, `occurred` bigint(20) unsigned not null default 0, `note` varchar(255) null)")
 
 						VH:SQLQuery ("alter table `" .. tbl_sql.ccgag .. "` add column `why` varchar(255) null after `flag`")
 						VH:SQLQuery ("alter table `" .. tbl_sql.nopm .. "` change column `password` `password` varchar(255) null") -- todo: not used yet
@@ -1466,7 +1466,7 @@ function Main (file)
 					end
 
 					if ver <= 294 then
-						VH:SQLQuery ("create table if not exists `" .. tbl_sql.citygag .. "` (`item` varchar(255) not null primary key, `flag` tinyint(1) unsigned not null default 0, `why` varchar(255) null) engine = myisam default character set utf8 collate utf8_unicode_ci")
+						VH:SQLQuery ("create table if not exists `" .. tbl_sql.citygag .. "` (`item` varchar(255) not null primary key, `flag` tinyint(1) unsigned not null default 0, `why` varchar(255) null)")
 
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('addsefifeed', '" .. repsqlchars (table_sets.addsefifeed) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('sefifeednick', '" .. repsqlchars (table_sets.sefifeednick) .. "')")
@@ -23015,121 +23015,121 @@ end
 
 function createtables ()
 -- settings
-VH:SQLQuery ("create table if not exists `" .. tbl_sql.conf .. "` (`variable` varchar(255) not null, `value` text not null, primary key (`variable`)) engine = myisam default character set utf8 collate utf8_unicode_ci")
+VH:SQLQuery ("create table if not exists `" .. tbl_sql.conf .. "` (`variable` varchar(255) not null, `value` text not null, primary key (`variable`))")
 
 	-- antispam
-	VH:SQLQuery ("create table if not exists `" .. tbl_sql.anti .. "` (`antispam` varchar(255) not null, `occurred` bigint(20) unsigned not null default 0, `priority` tinyint(1) unsigned not null default 0, `action` tinyint(2) unsigned not null default 0, `flags` tinyint(1) unsigned not null default 3, primary key (`antispam`)) engine = myisam default character set utf8 collate utf8_unicode_ci")
-	VH:SQLQuery ("create table if not exists `" .. tbl_sql.antiex .. "` (`exception` varchar(255) not null, `occurred` bigint(20) unsigned not null default 0, primary key (`exception`)) engine = myisam default character set utf8 collate utf8_unicode_ci")
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql.anti .. "` (`antispam` varchar(255) not null, `occurred` bigint(20) unsigned not null default 0, `priority` tinyint(1) unsigned not null default 0, `action` tinyint(2) unsigned not null default 0, `flags` tinyint(1) unsigned not null default 3, primary key (`antispam`))")
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql.antiex .. "` (`exception` varchar(255) not null, `occurred` bigint(20) unsigned not null default 0, primary key (`exception`))")
 
 	-- search filter
-	VH:SQLQuery ("create table if not exists `" .. tbl_sql.sefi .. "` (`filter` varchar(255) not null primary key, `occurred` bigint(20) unsigned not null default 0, `priority` tinyint(1) unsigned not null default 0, `action` tinyint(1) unsigned not null default 0, `type` tinyint(1) unsigned not null default 1) engine = myisam default character set utf8 collate utf8_unicode_ci")
-	VH:SQLQuery ("create table if not exists `" .. tbl_sql.sefiex .. "` (`exception` varchar(255) not null primary key, `occurred` bigint(20) unsigned not null default 0) engine = myisam default character set utf8 collate utf8_unicode_ci")
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql.sefi .. "` (`filter` varchar(255) not null primary key, `occurred` bigint(20) unsigned not null default 0, `priority` tinyint(1) unsigned not null default 0, `action` tinyint(1) unsigned not null default 0, `type` tinyint(1) unsigned not null default 1)")
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql.sefiex .. "` (`exception` varchar(255) not null primary key, `occurred` bigint(20) unsigned not null default 0)")
 
 	-- myinfo
-	VH:SQLQuery ("create table if not exists `" .. tbl_sql.michat .. "` (`chat` varchar(255) not null primary key, `time` varchar(10) null, `occurred` bigint(20) unsigned not null default 0, `note` varchar(255) null) engine = myisam default character set utf8 collate utf8_unicode_ci")
-	VH:SQLQuery ("create table if not exists `" .. tbl_sql.minick .. "` (`nick` varchar(255) not null primary key, `time` varchar(10) null, `occurred` bigint(20) unsigned not null default 0, `note` varchar(255) null) engine = myisam default character set utf8 collate utf8_unicode_ci")
-	VH:SQLQuery ("create table if not exists `" .. tbl_sql.midesc .. "` (`description` varchar(255) not null primary key, `time` varchar(10) null, `occurred` bigint(20) unsigned not null default 0, `note` varchar(255) null) engine = myisam default character set utf8 collate utf8_unicode_ci")
-	VH:SQLQuery ("create table if not exists `" .. tbl_sql.mitag .. "` (`tag` varchar(255) not null primary key, `time` varchar(10) null, `occurred` bigint(20) unsigned not null default 0, `note` varchar(255) null) engine = myisam default character set utf8 collate utf8_unicode_ci")
-	VH:SQLQuery ("create table if not exists `" .. tbl_sql.miconn .. "` (`connection` varchar(255) not null primary key, `time` varchar(10) null, `occurred` bigint(20) unsigned not null default 0, `note` varchar(255) null) engine = myisam default character set utf8 collate utf8_unicode_ci")
-	VH:SQLQuery ("create table if not exists `" .. tbl_sql.miemail .. "` (`email` varchar(255) not null primary key, `time` varchar(10) null, `occurred` bigint(20) unsigned not null default 0, `note` varchar(255) null) engine = myisam default character set utf8 collate utf8_unicode_ci")
-	VH:SQLQuery ("create table if not exists `" .. tbl_sql.mishare .. "` (`share` varchar(255) not null primary key, `time` varchar(10) null, `occurred` bigint(20) unsigned not null default 0, `note` varchar(255) null) engine = myisam default character set utf8 collate utf8_unicode_ci")
-	VH:SQLQuery ("create table if not exists `" .. tbl_sql.miip .. "` (`ip` varchar(255) not null primary key, `time` varchar(10) null, `occurred` bigint(20) unsigned not null default 0, `note` varchar(255) null) engine = myisam default character set utf8 collate utf8_unicode_ci")
-	VH:SQLQuery ("create table if not exists `" .. tbl_sql.micc .. "` (`cc` varchar(255) not null primary key, `time` varchar(10) null, `occurred` bigint(20) unsigned not null default 0, `note` varchar(255) null) engine = myisam default character set utf8 collate utf8_unicode_ci")
-	VH:SQLQuery ("create table if not exists `" .. tbl_sql.midns .. "` (`dns` varchar(255) not null primary key, `time` varchar(10) null, `occurred` bigint(20) unsigned not null default 0, `note` varchar(255) null) engine = myisam default character set utf8 collate utf8_unicode_ci")
-	VH:SQLQuery ("create table if not exists `" .. tbl_sql.misup .. "` (`supports` varchar(255) not null primary key, `time` varchar(10) null, `occurred` bigint(20) unsigned not null default 0, `note` varchar(255) null) engine = myisam default character set utf8 collate utf8_unicode_ci")
-	VH:SQLQuery ("create table if not exists `" .. tbl_sql.miver .. "` (`version` varchar(255) not null primary key, `time` varchar(10) null, `occurred` bigint(20) unsigned not null default 0, `note` varchar(255) null) engine = myisam default character set utf8 collate utf8_unicode_ci")
-	VH:SQLQuery ("create table if not exists `" .. tbl_sql.miex .. "` (`exception` varchar(255) not null primary key, `occurred` bigint(20) unsigned not null default 0, `note` varchar(255) null) engine = myisam default character set utf8 collate utf8_unicode_ci")
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql.michat .. "` (`chat` varchar(255) not null primary key, `time` varchar(10) null, `occurred` bigint(20) unsigned not null default 0, `note` varchar(255) null)")
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql.minick .. "` (`nick` varchar(255) not null primary key, `time` varchar(10) null, `occurred` bigint(20) unsigned not null default 0, `note` varchar(255) null)")
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql.midesc .. "` (`description` varchar(255) not null primary key, `time` varchar(10) null, `occurred` bigint(20) unsigned not null default 0, `note` varchar(255) null)")
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql.mitag .. "` (`tag` varchar(255) not null primary key, `time` varchar(10) null, `occurred` bigint(20) unsigned not null default 0, `note` varchar(255) null)")
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql.miconn .. "` (`connection` varchar(255) not null primary key, `time` varchar(10) null, `occurred` bigint(20) unsigned not null default 0, `note` varchar(255) null)")
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql.miemail .. "` (`email` varchar(255) not null primary key, `time` varchar(10) null, `occurred` bigint(20) unsigned not null default 0, `note` varchar(255) null)")
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql.mishare .. "` (`share` varchar(255) not null primary key, `time` varchar(10) null, `occurred` bigint(20) unsigned not null default 0, `note` varchar(255) null)")
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql.miip .. "` (`ip` varchar(255) not null primary key, `time` varchar(10) null, `occurred` bigint(20) unsigned not null default 0, `note` varchar(255) null)")
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql.micc .. "` (`cc` varchar(255) not null primary key, `time` varchar(10) null, `occurred` bigint(20) unsigned not null default 0, `note` varchar(255) null)")
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql.midns .. "` (`dns` varchar(255) not null primary key, `time` varchar(10) null, `occurred` bigint(20) unsigned not null default 0, `note` varchar(255) null)")
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql.misup .. "` (`supports` varchar(255) not null primary key, `time` varchar(10) null, `occurred` bigint(20) unsigned not null default 0, `note` varchar(255) null)")
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql.miver .. "` (`version` varchar(255) not null primary key, `time` varchar(10) null, `occurred` bigint(20) unsigned not null default 0, `note` varchar(255) null)")
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql.miex .. "` (`exception` varchar(255) not null primary key, `occurred` bigint(20) unsigned not null default 0, `note` varchar(255) null)")
 
 	-- welcome messages
-	VH:SQLQuery ("create table if not exists `" .. tbl_sql.wm .. "` (`nick` varchar(255) not null primary key, `in` text null default null, `out` text null default null) engine = myisam default character set utf8 collate utf8_unicode_ci")
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql.wm .. "` (`nick` varchar(255) not null primary key, `in` text null default null, `out` text null default null)")
 
 -- custom nicks
-VH:SQLQuery ("create table if not exists `" .. tbl_sql.cust .. "` (`nick` varchar(255) not null, `custom` varchar(255) not null, primary key (`nick`)) engine = myisam default character set utf8 collate utf8_unicode_ci")
+VH:SQLQuery ("create table if not exists `" .. tbl_sql.cust .. "` (`nick` varchar(255) not null, `custom` varchar(255) not null, primary key (`nick`))")
 
 	-- chatrooms
-	VH:SQLQuery ("create table if not exists `" .. tbl_sql.chat .. "` (`room` varchar(255) not null, `description` varchar(255) not null, `minclass` tinyint(2) unsigned not null default 0, `maxclass` tinyint(2) unsigned not null default 10, `cc` varchar(2) not null default '*', primary key (`room`)) engine = myisam default character set utf8 collate utf8_unicode_ci")
-	VH:SQLQuery ("create table if not exists `" .. tbl_sql.acre .. "` (`id` bigint(20) unsigned not null auto_increment primary key, `cc` varchar(2) not null, `nick` varchar(255) not null) engine = myisam default character set utf8 collate utf8_unicode_ci")
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql.chat .. "` (`room` varchar(255) not null, `description` varchar(255) not null, `minclass` tinyint(2) unsigned not null default 0, `maxclass` tinyint(2) unsigned not null default 10, `cc` varchar(2) not null default '*', primary key (`room`))")
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql.acre .. "` (`id` bigint(20) unsigned not null auto_increment primary key, `cc` varchar(2) not null, `nick` varchar(255) not null)")
 
 -- reminders
-VH:SQLQuery ("create table if not exists `" .. tbl_sql.rem .. "` (`id` varchar(255) not null, `content` text not null, `minclass` tinyint(2) unsigned not null default 0, `maxclass` tinyint(2) unsigned not null default 10, `dest` tinyint(1) unsigned not null default 0, `interval` smallint(5) unsigned not null default 10080, `timer` smallint(5) unsigned not null default 0, primary key (`id`)) engine = myisam default character set utf8 collate utf8_unicode_ci")
+VH:SQLQuery ("create table if not exists `" .. tbl_sql.rem .. "` (`id` varchar(255) not null, `content` text not null, `minclass` tinyint(2) unsigned not null default 0, `maxclass` tinyint(2) unsigned not null default 10, `dest` tinyint(1) unsigned not null default 0, `interval` smallint(5) unsigned not null default 10080, `timer` smallint(5) unsigned not null default 0, primary key (`id`))")
 
 	-- triggers
-	VH:SQLQuery ("create table if not exists `" .. tbl_sql.trig .. "` (`id` varchar(255) not null primary key, `content` text not null, `minclass` tinyint(2) unsigned not null default 0, `maxclass` tinyint(2) unsigned not null default 10) engine = myisam default character set utf8 collate utf8_unicode_ci")
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql.trig .. "` (`id` varchar(255) not null primary key, `content` text not null, `minclass` tinyint(2) unsigned not null default 0, `maxclass` tinyint(2) unsigned not null default 10)")
 
 	-- news
-	VH:SQLQuery ("create table if not exists `" .. tbl_sql.news .. "` (`id` bigint(20) unsigned not null auto_increment primary key, `date` bigint(20) unsigned not null, `by` varchar(255) not null, `item` text not null) engine = myisam default character set utf8 collate utf8_unicode_ci")
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql.news .. "` (`id` bigint(20) unsigned not null auto_increment primary key, `date` bigint(20) unsigned not null, `by` varchar(255) not null, `item` text not null)")
 
 	-- chat replacer
-	VH:SQLQuery ("create table if not exists `" .. tbl_sql.chatrepl .. "` (`id` bigint(20) unsigned not null auto_increment primary key, `message` varchar(255) not null, `replace` text not null, `maxclass` tinyint(2) unsigned not null default 10, `flags` tinyint(1) unsigned not null default 1, `occurred` bigint(20) unsigned not null default 0) engine = myisam default character set utf8 collate utf8_unicode_ci")
-	VH:SQLQuery ("create table if not exists `" .. tbl_sql.replex .. "` (`exception` varchar(255) not null primary key, `type` tinyint(1) not null default 0, `occurred` bigint(20) unsigned not null default 0) engine = myisam default character set utf8 collate utf8_unicode_ci")
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql.chatrepl .. "` (`id` bigint(20) unsigned not null auto_increment primary key, `message` varchar(255) not null, `replace` text not null, `maxclass` tinyint(2) unsigned not null default 10, `flags` tinyint(1) unsigned not null default 1, `occurred` bigint(20) unsigned not null default 0)")
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql.replex .. "` (`exception` varchar(255) not null primary key, `type` tinyint(1) not null default 0, `occurred` bigint(20) unsigned not null default 0)")
 
 -- chat responder
-VH:SQLQuery ("create table if not exists `" .. tbl_sql.mcresp .. "` (`id` bigint(20) unsigned not null auto_increment, `message` varchar(255) not null, `reply` text not null, `maxclass` tinyint(2) unsigned not null default 10, `occurred` bigint(20) unsigned not null default 0, primary key (`id`)) engine = myisam default character set utf8 collate utf8_unicode_ci")
-VH:SQLQuery ("create table if not exists `" .. tbl_sql.respex .. "` (`exception` varchar(255) not null, `occurred` bigint(20) unsigned not null default 0, primary key (`exception`)) engine = myisam default character set utf8 collate utf8_unicode_ci")
+VH:SQLQuery ("create table if not exists `" .. tbl_sql.mcresp .. "` (`id` bigint(20) unsigned not null auto_increment, `message` varchar(255) not null, `reply` text not null, `maxclass` tinyint(2) unsigned not null default 10, `occurred` bigint(20) unsigned not null default 0, primary key (`id`))")
+VH:SQLQuery ("create table if not exists `" .. tbl_sql.respex .. "` (`exception` varchar(255) not null, `occurred` bigint(20) unsigned not null default 0, primary key (`exception`))")
 
 -- ip authorization
-VH:SQLQuery ("create table if not exists `" .. tbl_sql.auth .. "` (`id` bigint(20) unsigned not null auto_increment, `nick` varchar(255) not null, `ip` varchar(255) not null, `badip` varchar(15) not null default '0.0.0.0', `good` bigint(20) unsigned not null default 0, `bad` bigint(20) unsigned not null default 0, primary key (`id`)) engine = myisam default character set utf8 collate utf8_unicode_ci")
+VH:SQLQuery ("create table if not exists `" .. tbl_sql.auth .. "` (`id` bigint(20) unsigned not null auto_increment, `nick` varchar(255) not null, `ip` varchar(255) not null, `badip` varchar(15) not null default '0.0.0.0', `good` bigint(20) unsigned not null default 0, `bad` bigint(20) unsigned not null default 0, primary key (`id`))")
 
 	-- releases
-	VH:SQLQuery ("create table if not exists `" .. tbl_sql.rel .. "` (`release` varchar(255) not null primary key, `category` varchar(255) not null, `tth` varchar(255) not null, `by` varchar(255) not null, `date` bigint(20) unsigned not null) engine = myisam default character set utf8 collate utf8_unicode_ci")
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql.rel .. "` (`release` varchar(255) not null primary key, `category` varchar(255) not null, `tth` varchar(255) not null, `by` varchar(255) not null, `date` bigint(20) unsigned not null)")
 
 -- ranks
-VH:SQLQuery ("create table if not exists `" .. tbl_sql.chran .. "` (`nick` varchar(255) not null, `rank` bigint(20) unsigned not null default 1, primary key (`nick`)) engine = myisam default character set utf8 collate utf8_unicode_ci")
-VH:SQLQuery ("create table if not exists `" .. tbl_sql.opran .. "` (`nick` varchar(255) not null, `rank` bigint(20) unsigned not null default 1, primary key (`nick`)) engine = myisam default character set utf8 collate utf8_unicode_ci")
-VH:SQLQuery ("create table if not exists `" .. tbl_sql.shran .. "` (`nick` varchar(255) not null, `rank` bigint(20) unsigned not null default 1, primary key (`nick`)) engine = myisam default character set utf8 collate utf8_unicode_ci")
-VH:SQLQuery ("create table if not exists `" .. tbl_sql.srran .. "` (`search` varchar(255) not null, `rank` bigint(20) unsigned not null default 1, primary key (`search`)) engine = myisam default character set utf8 collate utf8_unicode_ci")
-VH:SQLQuery ("create table if not exists `" .. tbl_sql.wdran .. "` (`word` varchar(255) not null, `rank` bigint(20) unsigned not null default 1, primary key (`word`)) engine = myisam default character set utf8 collate utf8_unicode_ci")
-VH:SQLQuery ("create table if not exists `" .. tbl_sql.ccstat .. "` (`nick` varchar(255) not null, `cc` varchar(2) not null, primary key (`nick`)) engine = myisam default character set utf8 collate utf8_unicode_ci")
-VH:SQLQuery ("create table if not exists `" .. tbl_sql.ranex .. "` (`nick` varchar(255) not null, `occurred` bigint(20) unsigned not null default 0, primary key (`nick`)) engine = myisam default character set utf8 collate utf8_unicode_ci")
+VH:SQLQuery ("create table if not exists `" .. tbl_sql.chran .. "` (`nick` varchar(255) not null, `rank` bigint(20) unsigned not null default 1, primary key (`nick`))")
+VH:SQLQuery ("create table if not exists `" .. tbl_sql.opran .. "` (`nick` varchar(255) not null, `rank` bigint(20) unsigned not null default 1, primary key (`nick`))")
+VH:SQLQuery ("create table if not exists `" .. tbl_sql.shran .. "` (`nick` varchar(255) not null, `rank` bigint(20) unsigned not null default 1, primary key (`nick`))")
+VH:SQLQuery ("create table if not exists `" .. tbl_sql.srran .. "` (`search` varchar(255) not null, `rank` bigint(20) unsigned not null default 1, primary key (`search`))")
+VH:SQLQuery ("create table if not exists `" .. tbl_sql.wdran .. "` (`word` varchar(255) not null, `rank` bigint(20) unsigned not null default 1, primary key (`word`))")
+VH:SQLQuery ("create table if not exists `" .. tbl_sql.ccstat .. "` (`nick` varchar(255) not null, `cc` varchar(2) not null, primary key (`nick`))")
+VH:SQLQuery ("create table if not exists `" .. tbl_sql.ranex .. "` (`nick` varchar(255) not null, `occurred` bigint(20) unsigned not null default 0, primary key (`nick`))")
 
 	-- offline messenger
-	VH:SQLQuery ("create table if not exists `" .. tbl_sql.off .. "` (`id` bigint(20) unsigned not null auto_increment primary key, `from` varchar(255) not null, `ip` varchar(15) not null, `to` varchar(255) not null, `date` bigint(20) unsigned not null, `message` text not null) engine = myisam default character set utf8 collate utf8_unicode_ci")
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql.off .. "` (`id` bigint(20) unsigned not null auto_increment primary key, `from` varchar(255) not null, `ip` varchar(15) not null, `to` varchar(255) not null, `date` bigint(20) unsigned not null, `message` text not null)")
 
 	-- chat history
-	VH:SQLQuery ("create table if not exists `" .. tbl_sql.mchist .. "` (`id` bigint(20) unsigned not null auto_increment primary key, `realnick` varchar(255) not null, `nick` varchar(255) not null, `ip` varchar(15) null, `date` bigint(20) unsigned not null, `message` text not null) engine = myisam default character set utf8 collate utf8_unicode_ci")
-	VH:SQLQuery ("create table if not exists `" .. tbl_sql.ophist .. "` (`id` bigint(20) unsigned not null auto_increment primary key, `nick` varchar(255) not null, `date` bigint(20) unsigned not null, `message` text not null, `class` tinyint(2) unsigned not null default 10) engine = myisam default character set utf8 collate utf8_unicode_ci")
-	VH:SQLQuery ("create table if not exists `" .. tbl_sql.crhist .. "` (`id` bigint(20) unsigned not null auto_increment primary key, `room` varchar(255) not null, `realnick` varchar(255) not null, `nick` varchar(255) not null, `ip` varchar(15) null, `date` bigint(20) unsigned not null, `message` text not null) engine = myisam default character set utf8 collate utf8_unicode_ci")
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql.mchist .. "` (`id` bigint(20) unsigned not null auto_increment primary key, `realnick` varchar(255) not null, `nick` varchar(255) not null, `ip` varchar(15) null, `date` bigint(20) unsigned not null, `message` text not null)")
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql.ophist .. "` (`id` bigint(20) unsigned not null auto_increment primary key, `nick` varchar(255) not null, `date` bigint(20) unsigned not null, `message` text not null, `class` tinyint(2) unsigned not null default 10)")
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql.crhist .. "` (`id` bigint(20) unsigned not null auto_increment primary key, `room` varchar(255) not null, `realnick` varchar(255) not null, `nick` varchar(255) not null, `ip` varchar(15) null, `date` bigint(20) unsigned not null, `message` text not null)")
 
 -- commands
-VH:SQLQuery ("create table if not exists `" .. tbl_sql.ledocmd .. "` (`original` varchar(255) not null, `new` varchar(255) not null, primary key (`original`)) engine = myisam default character set utf8 collate utf8_unicode_ci")
-VH:SQLQuery ("create table if not exists `" .. tbl_sql.cmd .. "` (`command` varchar(255) not null, `class` tinyint(2) unsigned not null default 11, `occurred` bigint(20) unsigned not null default 0, primary key (`command`)) engine = myisam default character set utf8 collate utf8_unicode_ci")
-VH:SQLQuery ("create table if not exists `" .. tbl_sql.cmdex .. "` (`exception` varchar(255) not null, `occurred` bigint(20) unsigned not null default 0, primary key (`exception`)) engine = myisam default character set utf8 collate utf8_unicode_ci")
+VH:SQLQuery ("create table if not exists `" .. tbl_sql.ledocmd .. "` (`original` varchar(255) not null, `new` varchar(255) not null, primary key (`original`))")
+VH:SQLQuery ("create table if not exists `" .. tbl_sql.cmd .. "` (`command` varchar(255) not null, `class` tinyint(2) unsigned not null default 11, `occurred` bigint(20) unsigned not null default 0, primary key (`command`))")
+VH:SQLQuery ("create table if not exists `" .. tbl_sql.cmdex .. "` (`exception` varchar(255) not null, `occurred` bigint(20) unsigned not null default 0, primary key (`exception`))")
 
 	-- user log
-	VH:SQLQuery ("create table if not exists `" .. tbl_sql.ulog .. "` (`id` bigint(20) unsigned not null auto_increment primary key, `time` bigint(20) unsigned not null, `out` bigint(20) unsigned not null default 0, `nick` varchar(255) not null, `ip` varchar(15) not null, `cc` varchar(2) null, `desc` varchar(255) null, `tag` varchar(255) null, `conn` varchar(255) null, `email` varchar(255) null, `share` bigint(20) unsigned not null default 0, `nmdc` varchar(255) null, `sups` varchar(255) null) engine = myisam default character set utf8 collate utf8_unicode_ci")
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql.ulog .. "` (`id` bigint(20) unsigned not null auto_increment primary key, `time` bigint(20) unsigned not null, `out` bigint(20) unsigned not null default 0, `nick` varchar(255) not null, `ip` varchar(15) not null, `cc` varchar(2) null, `desc` varchar(255) null, `tag` varchar(255) null, `conn` varchar(255) null, `email` varchar(255) null, `share` bigint(20) unsigned not null default 0, `nmdc` varchar(255) null, `sups` varchar(255) null)")
 
 -- command log
-VH:SQLQuery ("create table if not exists `" .. tbl_sql.clog .. "` (`id` bigint(20) unsigned not null auto_increment, `time` bigint(20) unsigned not null, `nick` varchar(255) not null, `class` tinyint(2) unsigned not null, `command` text not null, primary key (`id`)) engine = myisam default character set utf8 collate utf8_unicode_ci")
+VH:SQLQuery ("create table if not exists `" .. tbl_sql.clog .. "` (`id` bigint(20) unsigned not null auto_increment, `time` bigint(20) unsigned not null, `nick` varchar(255) not null, `class` tinyint(2) unsigned not null, `command` text not null, primary key (`id`))")
 
 -- hublist
-VH:SQLQuery ("create table if not exists `" .. tbl_sql.hubs .. "` (`address` varchar(255) not null, `name` varchar(255) not null, `owner` varchar(255) not null, `status` tinyint(1) not null default 0, primary key (`address`)) engine = myisam default character set utf8 collate utf8_unicode_ci")
+VH:SQLQuery ("create table if not exists `" .. tbl_sql.hubs .. "` (`address` varchar(255) not null, `name` varchar(255) not null, `owner` varchar(255) not null, `status` tinyint(1) not null default 0, primary key (`address`))")
 
 	-- protected list
-	VH:SQLQuery ("create table if not exists `" .. tbl_sql.prot .. "` (`protected` varchar(255) not null primary key, `occurred` bigint(20) unsigned not null default 0) engine = myisam default character set utf8 collate utf8_unicode_ci")
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql.prot .. "` (`protected` varchar(255) not null primary key, `occurred` bigint(20) unsigned not null default 0)")
 
 -- statistics
-VH:SQLQuery ("create table if not exists `" .. tbl_sql.stat .. "` (`type` varchar(255) not null, `time` bigint(20) unsigned not null default 0, `count` text not null, primary key (`type`)) engine = myisam default character set utf8 collate utf8_unicode_ci")
+VH:SQLQuery ("create table if not exists `" .. tbl_sql.stat .. "` (`type` varchar(255) not null, `time` bigint(20) unsigned not null default 0, `count` text not null, primary key (`type`))")
 
 	-- no pm
-	VH:SQLQuery ("create table if not exists `" .. tbl_sql.nopm .. "` (`nick` varchar(255) not null, `action` tinyint(1) unsigned not null default 0, `maxclass` tinyint(2) unsigned not null default 2, `password` varchar(255) null, `reason` text not null, primary key (`nick`)) engine = myisam default character set utf8 collate utf8_unicode_ci") -- password not used yet
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql.nopm .. "` (`nick` varchar(255) not null, `action` tinyint(1) unsigned not null default 0, `maxclass` tinyint(2) unsigned not null default 2, `password` varchar(255) null, `reason` text not null, primary key (`nick`))") -- password not used yet
 
 	-- hard ban
-	VH:SQLQuery ("create table if not exists `" .. tbl_sql.hban .. "` (`ip` varchar(255) not null, `reason` text not null, primary key (`ip`)) engine = myisam default character set utf8 collate utf8_unicode_ci")
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql.hban .. "` (`ip` varchar(255) not null, `reason` text not null, primary key (`ip`))")
 
 	-- ip watch
-	VH:SQLQuery ("create table if not exists `" .. tbl_sql.ipwa .. "` (`ip` varchar(255) not null, `reason` text not null, `result` tinyint(1) unsigned not null default 0, primary key (`ip`)) engine = myisam default character set utf8 collate utf8_unicode_ci")
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql.ipwa .. "` (`ip` varchar(255) not null, `reason` text not null, `result` tinyint(1) unsigned not null default 0, primary key (`ip`))")
 
 	-- ip gag
-	VH:SQLQuery ("create table if not exists `" .. tbl_sql.ipgag .. "` (`ip` varchar(255) not null, `flag` tinyint(1) unsigned not null default 0, primary key (`ip`)) engine = myisam default character set utf8 collate utf8_unicode_ci")
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql.ipgag .. "` (`ip` varchar(255) not null, `flag` tinyint(1) unsigned not null default 0, primary key (`ip`))")
 
 	-- cc gag
-	VH:SQLQuery ("create table if not exists `" .. tbl_sql.ccgag .. "` (`item` varchar(255) not null primary key, `flag` tinyint(1) unsigned not null default 0, `why` varchar(255) null) engine = myisam default character set utf8 collate utf8_unicode_ci")
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql.ccgag .. "` (`item` varchar(255) not null primary key, `flag` tinyint(1) unsigned not null default 0, `why` varchar(255) null)")
 
 	-- city gag
-	VH:SQLQuery ("create table if not exists `" .. tbl_sql.citygag .. "` (`item` varchar(255) not null primary key, `flag` tinyint(1) unsigned not null default 0, `why` varchar(255) null) engine = myisam default character set utf8 collate utf8_unicode_ci")
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql.citygag .. "` (`item` varchar(255) not null primary key, `flag` tinyint(1) unsigned not null default 0, `why` varchar(255) null)")
 
 	-- right click menu
-	VH:SQLQuery ("create table if not exists `" .. tbl_sql.rcmenu .. "` (`id` bigint(20) unsigned not null auto_increment primary key, `menu` varchar(255) not null, `command` varchar(255) not null, `type` tinyint(3) unsigned not null default 1, `cont` tinyint(2) unsigned not null default 3, `order` smallint(5) unsigned not null default 0, `minclass` tinyint(2) unsigned not null default 0, `maxclass` tinyint(2) unsigned not null default 10, `off` tinyint(1) unsigned not null default 0) engine = myisam default character set utf8 collate utf8_unicode_ci")
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql.rcmenu .. "` (`id` bigint(20) unsigned not null auto_increment primary key, `menu` varchar(255) not null, `command` varchar(255) not null, `type` tinyint(3) unsigned not null default 1, `cont` tinyint(2) unsigned not null default 3, `order` smallint(5) unsigned not null default 0, `minclass` tinyint(2) unsigned not null default 0, `maxclass` tinyint(2) unsigned not null default 10, `off` tinyint(1) unsigned not null default 0)")
 end
 
 ----- ---- --- -- -
@@ -23184,81 +23184,67 @@ end
 ----- ---- --- -- -
 
 function altertables ()
--- todo: alter tables to default character set utf8 collate utf8_unicode_ci
-
--- settings
-VH:SQLQuery ("alter table `" .. tbl_sql.conf .. "` engine = myisam") -- engine
-VH:SQLQuery ("alter table `" .. tbl_sql.conf .. "` change column `variable` `variable` varchar(255) not null") -- variable
-VH:SQLQuery ("alter table `" .. tbl_sql.conf .. "` change column `value` `value` text not null") -- value
+	-- settings
+	VH:SQLQuery ("alter table `" .. tbl_sql.conf .. "` change column `variable` `variable` varchar(255) not null") -- variable
+	VH:SQLQuery ("alter table `" .. tbl_sql.conf .. "` change column `value` `value` text not null") -- value
 
 -- antispam
-VH:SQLQuery ("alter table `" .. tbl_sql.anti .. "` engine = myisam") -- engine
 VH:SQLQuery ("alter table `" .. tbl_sql.anti .. "` change column `antispam` `antispam` varchar(255) not null") -- antispam
 VH:SQLQuery ("alter table `" .. tbl_sql.anti .. "` change column `occured` `occurred` bigint(20) unsigned not null default 0") -- occurred
 VH:SQLQuery ("alter table `" .. tbl_sql.anti .. "` add column `priority` tinyint(1) unsigned not null default 0 after `occurred`") -- priority
 VH:SQLQuery ("alter table `" .. tbl_sql.anti .. "` change column `action` `action` tinyint(2) unsigned not null default 0") -- action
 VH:SQLQuery ("alter table `" .. tbl_sql.anti .. "` add column `flags` tinyint(1) unsigned not null default 3 after `action`") -- flags
 
-VH:SQLQuery ("alter table `" .. tbl_sql.antiex .. "` engine = myisam") -- engine
 VH:SQLQuery ("alter table `" .. tbl_sql.antiex .. "` change column `exception` `exception` varchar(255) not null") -- exception
 VH:SQLQuery ("alter table `" .. tbl_sql.antiex .. "` change column `occured` `occurred` bigint(20) unsigned not null default 0") -- occurred
 
 	-- search filter
-	VH:SQLQuery ("alter table `" .. tbl_sql.sefi .. "` engine = myisam") -- engine
 	VH:SQLQuery ("alter table `" .. tbl_sql.sefi .. "` change column `filter` `filter` varchar(255) not null") -- filter
 	VH:SQLQuery ("alter table `" .. tbl_sql.sefi .. "` change column `occured` `occurred` bigint(20) unsigned not null default 0") -- occurred
 	VH:SQLQuery ("alter table `" .. tbl_sql.sefi .. "` add column `priority` tinyint(1) unsigned not null default 0 after `occurred`") -- priority
 	VH:SQLQuery ("alter table `" .. tbl_sql.sefi .. "` change column `action` `action` tinyint(1) unsigned not null default 0") -- action
 	VH:SQLQuery ("alter table `" .. tbl_sql.sefi .. "` add column `type` tinyint(1) unsigned not null default 1 after `action`") -- type
 
-	VH:SQLQuery ("alter table `" .. tbl_sql.sefiex .. "` engine = myisam") -- engine
 	VH:SQLQuery ("alter table `" .. tbl_sql.sefiex .. "` change column `exception` `exception` varchar(255) not null") -- exception
 	VH:SQLQuery ("alter table `" .. tbl_sql.sefiex .. "` change column `occurred` `occurred` bigint(20) unsigned not null default 0") -- occurred
 
 	-- myinfo check
-	VH:SQLQuery ("alter table `" .. tbl_sql.minick .. "` engine = myisam") -- engine
 	VH:SQLQuery ("alter table `" .. tbl_sql.minick .. "` change column `nick` `nick` varchar(255) not null") -- nick
 	VH:SQLQuery ("alter table `" .. tbl_sql.minick .. "` add column `time` varchar(10) null after `nick`") -- time
 	VH:SQLQuery ("alter table `" .. tbl_sql.minick .. "` change column `time` `time` varchar(10) null") -- time
 	VH:SQLQuery ("alter table `" .. tbl_sql.minick .. "` change column `occured` `occurred` bigint(20) unsigned not null default 0") -- occurred
 	VH:SQLQuery ("alter table `" .. tbl_sql.minick .. "` add column `note` varchar(255) null after `occurred`") -- note
 
-	VH:SQLQuery ("alter table `" .. tbl_sql.midesc .. "` engine = myisam") -- engine
 	VH:SQLQuery ("alter table `" .. tbl_sql.midesc .. "` change column `description` `description` varchar(255) not null") -- description
 	VH:SQLQuery ("alter table `" .. tbl_sql.midesc .. "` add column `time` varchar(10) null after `description`") -- time
 	VH:SQLQuery ("alter table `" .. tbl_sql.midesc .. "` change column `time` `time` varchar(10) null") -- time
 	VH:SQLQuery ("alter table `" .. tbl_sql.midesc .. "` change column `occured` `occurred` bigint(20) unsigned not null default 0") -- occurred
 	VH:SQLQuery ("alter table `" .. tbl_sql.midesc .. "` add column `note` varchar(255) null after `occurred`") -- note
 
-	VH:SQLQuery ("alter table `" .. tbl_sql.mitag .. "` engine = myisam") -- engine
 	VH:SQLQuery ("alter table `" .. tbl_sql.mitag .. "` change column `tag` `tag` varchar(255) not null") -- tag
 	VH:SQLQuery ("alter table `" .. tbl_sql.mitag .. "` add column `time` varchar(10) null after `tag`") -- time
 	VH:SQLQuery ("alter table `" .. tbl_sql.mitag .. "` change column `time` `time` varchar(10) null") -- time
 	VH:SQLQuery ("alter table `" .. tbl_sql.mitag .. "` change column `occured` `occurred` bigint(20) unsigned not null default 0") -- occurred
 	VH:SQLQuery ("alter table `" .. tbl_sql.mitag .. "` add column `note` varchar(255) null after `occurred`") -- note
 
-	VH:SQLQuery ("alter table `" .. tbl_sql.miconn .. "` engine = myisam") -- engine
 	VH:SQLQuery ("alter table `" .. tbl_sql.miconn .. "` change column `connection` `connection` varchar(255) not null") -- connection
 	VH:SQLQuery ("alter table `" .. tbl_sql.miconn .. "` add column `time` varchar(10) null after `connection`") -- time
 	VH:SQLQuery ("alter table `" .. tbl_sql.miconn .. "` change column `time` `time` varchar(10) null") -- time
 	VH:SQLQuery ("alter table `" .. tbl_sql.miconn .. "` change column `occured` `occurred` bigint(20) unsigned not null default 0") -- occurred
 	VH:SQLQuery ("alter table `" .. tbl_sql.miconn .. "` add column `note` varchar(255) null after `occurred`") -- note
 
-	VH:SQLQuery ("alter table `" .. tbl_sql.miemail .. "` engine = myisam") -- engine
 	VH:SQLQuery ("alter table `" .. tbl_sql.miemail .. "` change column `email` `email` varchar(255) not null") -- email
 	VH:SQLQuery ("alter table `" .. tbl_sql.miemail .. "` add column `time` varchar(10) null after `email`") -- time
 	VH:SQLQuery ("alter table `" .. tbl_sql.miemail .. "` change column `time` `time` varchar(10) null") -- time
 	VH:SQLQuery ("alter table `" .. tbl_sql.miemail .. "` change column `occured` `occurred` bigint(20) unsigned not null default 0") -- occurred
 	VH:SQLQuery ("alter table `" .. tbl_sql.miemail .. "` add column `note` varchar(255) null after `occurred`") -- note
 
-	VH:SQLQuery ("alter table `" .. tbl_sql.mishare .. "` engine = myisam") -- engine
 	VH:SQLQuery ("alter table `" .. tbl_sql.mishare .. "` change column `share` `share` varchar(255) not null") -- share
 	VH:SQLQuery ("alter table `" .. tbl_sql.mishare .. "` add column `time` varchar(10) null after `share`") -- time
 	VH:SQLQuery ("alter table `" .. tbl_sql.mishare .. "` change column `time` `time` varchar(10) null") -- time
 	VH:SQLQuery ("alter table `" .. tbl_sql.mishare .. "` change column `occured` `occurred` bigint(20) unsigned not null default 0") -- occurred
 	VH:SQLQuery ("alter table `" .. tbl_sql.mishare .. "` add column `note` varchar(255) null after `occurred`") -- note
 
-	VH:SQLQuery ("alter table `" .. tbl_sql.miip .. "` engine = myisam") -- engine
 	VH:SQLQuery ("alter table `" .. tbl_sql.miip .. "` change column `ip` `ip` varchar(255) not null") -- ip
 	VH:SQLQuery ("alter table `" .. tbl_sql.miip .. "` add column `time` varchar(10) null after `ip`") -- time
 	VH:SQLQuery ("alter table `" .. tbl_sql.miip .. "` change column `time` `time` varchar(10) null") -- time
@@ -23278,13 +23264,11 @@ VH:SQLQuery ("alter table `" .. tbl_sql.antiex .. "` change column `occured` `oc
 	VH:SQLQuery ("alter table `" .. tbl_sql.miver .. "` change column `time` `time` varchar(10) null") -- time
 	VH:SQLQuery ("alter table `" .. tbl_sql.miver .. "` add column `note` varchar(255) null after `occurred`") -- note
 
-	VH:SQLQuery ("alter table `" .. tbl_sql.miex .. "` engine = myisam") -- engine
 	VH:SQLQuery ("alter table `" .. tbl_sql.miex .. "` change column `exception` `exception` varchar(255) not null") -- exception
 	VH:SQLQuery ("alter table `" .. tbl_sql.miex .. "` change column `occured` `occurred` bigint(20) unsigned not null default 0") -- occurred
 	VH:SQLQuery ("alter table `" .. tbl_sql.miex .. "` add column `note` varchar(255) null after `occurred`") -- note
 
 -- ip authorization
-VH:SQLQuery ("alter table `" .. tbl_sql.auth .. "` engine = myisam") -- engine
 VH:SQLQuery ("alter table `" .. tbl_sql.auth .. "` drop primary key")
 VH:SQLQuery ("alter table `" .. tbl_sql.auth .. "` add column `id` bigint(20) unsigned auto_increment first, add primary key (`id`)") -- id
 VH:SQLQuery ("alter table `" .. tbl_sql.auth .. "` change column `nick` `nick` varchar(255) not null") -- nick
@@ -23295,7 +23279,6 @@ VH:SQLQuery ("alter table `" .. tbl_sql.auth .. "` change column `good` `good` b
 VH:SQLQuery ("alter table `" .. tbl_sql.auth .. "` change column `bad` `bad` bigint(20) unsigned not null default 0") -- bad
 
 	-- releases
-	VH:SQLQuery ("alter table `" .. tbl_sql.rel .. "` engine = myisam") -- engine
 	VH:SQLQuery ("alter table `" .. tbl_sql.rel .. "` change column `release` `release` varchar(255) not null") -- release
 	VH:SQLQuery ("alter table `" .. tbl_sql.rel .. "` change column `category` `category` varchar(255) not null") -- category
 	VH:SQLQuery ("alter table `" .. tbl_sql.rel .. "` add column `tth` varchar(255) not null after `category`") -- tth
@@ -23303,7 +23286,6 @@ VH:SQLQuery ("alter table `" .. tbl_sql.auth .. "` change column `bad` `bad` big
 	VH:SQLQuery ("alter table `" .. tbl_sql.rel .. "` change column `date` `date` bigint(20) unsigned not null") -- date
 
 	-- welcome messages
-	VH:SQLQuery ("alter table `" .. tbl_sql.wm .. "` engine = myisam") -- engine
 	VH:SQLQuery ("alter table `" .. tbl_sql.wm .. "` change column `nick` `nick` varchar(255) not null") -- nick
 	VH:SQLQuery ("alter table `" .. tbl_sql.wm .. "` change column `in` `in` text null default null") -- in
 	VH:SQLQuery ("update `" .. tbl_sql.wm .. "` set `in` = null where `in` = ''")
@@ -23311,12 +23293,10 @@ VH:SQLQuery ("alter table `" .. tbl_sql.auth .. "` change column `bad` `bad` big
 	VH:SQLQuery ("update `" .. tbl_sql.wm .. "` set `out` = null where `out` = ''")
 
 -- custom nicks
-VH:SQLQuery ("alter table `" .. tbl_sql.cust .. "` engine = myisam") -- engine
 VH:SQLQuery ("alter table `" .. tbl_sql.cust .. "` change column `nick` `nick` varchar(255) not null") -- nick
 VH:SQLQuery ("alter table `" .. tbl_sql.cust .. "` change column `custom` `custom` varchar(255) not null") -- custom
 
 -- chatrooms
-VH:SQLQuery ("alter table `" .. tbl_sql.chat .. "` engine = myisam") -- engine
 VH:SQLQuery ("alter table `" .. tbl_sql.chat .. "` change column `room` `room` varchar(255) not null") -- room
 VH:SQLQuery ("alter table `" .. tbl_sql.chat .. "` change column `description` `description` varchar(255) not null") -- description
 VH:SQLQuery ("alter table `" .. tbl_sql.chat .. "` change column `minclass` `minclass` tinyint(2) unsigned not null default 0") -- minclass
@@ -23324,7 +23304,6 @@ VH:SQLQuery ("alter table `" .. tbl_sql.chat .. "` change column `maxclass` `max
 VH:SQLQuery ("alter table `" .. tbl_sql.chat .. "` add column `cc` varchar(2) not null default '*' after `maxclass`") -- cc
 
 -- reminders
-VH:SQLQuery ("alter table `" .. tbl_sql.rem .. "` engine = myisam") -- engine
 VH:SQLQuery ("alter table `" .. tbl_sql.rem .. "` change column `id` `id` varchar(255) not null") -- id
 VH:SQLQuery ("alter table `" .. tbl_sql.rem .. "` change column `content` `content` text not null") -- content
 VH:SQLQuery ("alter table `" .. tbl_sql.rem .. "` change column `minclass` `minclass` tinyint(2) unsigned not null default 0") -- minclass
@@ -23334,7 +23313,6 @@ VH:SQLQuery ("alter table `" .. tbl_sql.rem .. "` change column `interval` `inte
 VH:SQLQuery ("alter table `" .. tbl_sql.rem .. "` change column `timer` `timer` smallint(5) unsigned not null default 0") -- timer
 
 	-- news
-	VH:SQLQuery ("alter table `" .. tbl_sql.news .. "` engine = myisam") -- engine
 	VH:SQLQuery ("alter table `" .. tbl_sql.news .. "` change column `id` `id` bigint(20) unsigned auto_increment") -- id
 	VH:SQLQuery ("alter table `" .. tbl_sql.news .. "` change column `date` `date` bigint(20) unsigned not null") -- date
 	VH:SQLQuery ("alter table `" .. tbl_sql.news .. "` change column `by` `by` varchar(255) not null") -- by
@@ -23345,7 +23323,6 @@ VH:SQLQuery ("alter table `" .. tbl_sql.rem .. "` change column `timer` `timer` 
 	VH:SQLQuery ("alter table `" .. tbl_sql.replex .. "` add column `type` tinyint(1) not null default 0 after `exception`") -- type
 
 -- chat responder
-VH:SQLQuery ("alter table `" .. tbl_sql.mcresp .. "` engine = myisam") -- engine
 VH:SQLQuery ("alter table `" .. tbl_sql.mcresp .. "` drop primary key")
 VH:SQLQuery ("alter table `" .. tbl_sql.mcresp .. "` add column `id` bigint(20) unsigned auto_increment first, add primary key (`id`)") -- id
 VH:SQLQuery ("alter table `" .. tbl_sql.mcresp .. "` change column `message` `message` varchar(255) not null") -- message
@@ -23353,39 +23330,32 @@ VH:SQLQuery ("alter table `" .. tbl_sql.mcresp .. "` change column `reply` `repl
 VH:SQLQuery ("alter table `" .. tbl_sql.mcresp .. "` add column `maxclass` tinyint(2) unsigned not null default 10 after `reply`") -- maxclass
 VH:SQLQuery ("alter table `" .. tbl_sql.mcresp .. "` change column `occurred` `occurred` bigint(20) unsigned not null default 0") -- occurred
 
-VH:SQLQuery ("alter table `" .. tbl_sql.respex .. "` engine = myisam") -- engine
 VH:SQLQuery ("alter table `" .. tbl_sql.respex .. "` change column `nick` `exception` varchar(255) not null") -- exception
 VH:SQLQuery ("alter table `" .. tbl_sql.respex .. "` change column `occurred` `occurred` bigint(20) unsigned not null default 0") -- occurred
 
 -- ranks
-VH:SQLQuery ("alter table `" .. tbl_sql.chran .. "` engine = myisam") -- engine
 VH:SQLQuery ("alter table `" .. tbl_sql.chran .. "` change column `nick` `nick` varchar(255) not null") -- nick
 VH:SQLQuery ("alter table `" .. tbl_sql.chran .. "` change column `rank` `rank` bigint(20) unsigned not null default 1") -- rank
 
-VH:SQLQuery ("alter table `" .. tbl_sql.opran .. "` engine = myisam") -- engine
 VH:SQLQuery ("alter table `" .. tbl_sql.opran .. "` change column `nick` `nick` varchar(255) not null") -- nick
 VH:SQLQuery ("alter table `" .. tbl_sql.opran .. "` change column `rank` `rank` bigint(20) unsigned not null default 1") -- rank
 
-VH:SQLQuery ("alter table `" .. tbl_sql.shran .. "` engine = myisam") -- engine
 VH:SQLQuery ("alter table `" .. tbl_sql.shran .. "` change column `nick` `nick` varchar(255) not null") -- nick
 VH:SQLQuery ("alter table `" .. tbl_sql.shran .. "` change column `rank` `rank` bigint(20) unsigned not null default 1") -- rank
 
 -- search ranks
 -- not added
 
-VH:SQLQuery ("alter table `" .. tbl_sql.wdran .. "` engine = myisam") -- engine
 VH:SQLQuery ("alter table `" .. tbl_sql.wdran .. "` change column `word` `word` varchar(255) not null") -- word
 VH:SQLQuery ("alter table `" .. tbl_sql.wdran .. "` change column `rank` `rank` bigint(20) unsigned not null default 1") -- rank
 
 -- user location statistics
 -- not added
 
-VH:SQLQuery ("alter table `" .. tbl_sql.ranex .. "` engine = myisam") -- engine
 VH:SQLQuery ("alter table `" .. tbl_sql.ranex .. "` change column `nick` `nick` varchar(255) not null") -- nick
 VH:SQLQuery ("alter table `" .. tbl_sql.ranex .. "` add column `occurred` bigint(20) unsigned not null default 0 after `nick`") -- occurred
 
 	-- offline messenger
-	VH:SQLQuery ("alter table `" .. tbl_sql.off .. "` engine = myisam") -- engine
 	VH:SQLQuery ("alter table `" .. tbl_sql.off .. "` change column `id` `id` bigint(20) unsigned auto_increment") -- id
 	VH:SQLQuery ("alter table `" .. tbl_sql.off .. "` change column `from` `from` varchar(255) not null") -- from
 	VH:SQLQuery ("alter table `" .. tbl_sql.off .. "` change column `ip` `ip` varchar(15) not null") -- ip
@@ -23394,7 +23364,6 @@ VH:SQLQuery ("alter table `" .. tbl_sql.ranex .. "` add column `occurred` bigint
 	VH:SQLQuery ("alter table `" .. tbl_sql.off .. "` change column `message` `message` text not null") -- message
 
 	-- chat history
-	VH:SQLQuery ("alter table `" .. tbl_sql.mchist .. "` engine = myisam") -- engine
 	VH:SQLQuery ("alter table `" .. tbl_sql.mchist .. "` change column `id` `id` bigint(20) unsigned auto_increment") -- id
 	VH:SQLQuery ("alter table `" .. tbl_sql.mchist .. "` add column `realnick` varchar(255) not null after `id`") -- realnick
 	VH:SQLQuery ("alter table `" .. tbl_sql.mchist .. "` change column `nick` `nick` varchar(255) not null") -- nick
@@ -23403,7 +23372,6 @@ VH:SQLQuery ("alter table `" .. tbl_sql.ranex .. "` add column `occurred` bigint
 	VH:SQLQuery ("alter table `" .. tbl_sql.mchist .. "` change column `message` `message` text not null") -- message
 
 	-- opchat history
-	VH:SQLQuery ("alter table `" .. tbl_sql.ophist .. "` engine = myisam") -- engine
 	VH:SQLQuery ("alter table `" .. tbl_sql.ophist .. "` change column `id` `id` bigint(20) unsigned auto_increment") -- id
 	VH:SQLQuery ("alter table `" .. tbl_sql.ophist .. "` change column `nick` `nick` varchar(255) not null") -- nick
 	VH:SQLQuery ("alter table `" .. tbl_sql.ophist .. "` change column `date` `date` bigint(20) unsigned not null") -- date
@@ -23411,16 +23379,13 @@ VH:SQLQuery ("alter table `" .. tbl_sql.ranex .. "` add column `occurred` bigint
 	VH:SQLQuery ("alter table `" .. tbl_sql.ophist .. "` add column `class` tinyint(2) unsigned not null default 10 after `message`") -- class
 
 -- commands
-VH:SQLQuery ("alter table `" .. tbl_sql.ledocmd .. "` engine = myisam") -- engine
 VH:SQLQuery ("alter table `" .. tbl_sql.ledocmd .. "` change column `original` `original` varchar(255) not null") -- original
 VH:SQLQuery ("alter table `" .. tbl_sql.ledocmd .. "` change column `new` `new` varchar(255) not null") -- new
 
-VH:SQLQuery ("alter table `" .. tbl_sql.cmd .. "` engine = myisam") -- engine
 VH:SQLQuery ("alter table `" .. tbl_sql.cmd .. "` change column `command` `command` varchar(255) not null") -- command
 VH:SQLQuery ("alter table `" .. tbl_sql.cmd .. "` change column `class` `class` tinyint(2) unsigned not null default 11") -- class
 VH:SQLQuery ("alter table `" .. tbl_sql.cmd .. "` add column `occurred` bigint(20) unsigned not null default 0 after `class`") -- occurred
 
-VH:SQLQuery ("alter table `" .. tbl_sql.cmdex .. "` engine = myisam") -- engine
 VH:SQLQuery ("alter table `" .. tbl_sql.cmdex .. "` change column `exception` `exception` varchar(255) not null") -- exception
 VH:SQLQuery ("alter table `" .. tbl_sql.cmdex .. "` change column `occurred` `occurred` bigint(20) unsigned not null default 0") -- occurred
 
@@ -25419,7 +25384,7 @@ end
 ----- ---- --- -- -
 
 function mysqltoutf8 (data, enc)
-	local _, res = VH:SQLQuery ("select convert(_" .. repsqlchars (enc) .. "'" .. repsqlchars (data) .. "' using utf8)")
+	local _, res = VH:SQLQuery ("select convert(_" .. repsqlchars (enc) .. "'" .. repsqlchars (data) .. "' using utf8mb4)")
 
 	if res and res > 0 then
 		_, res = VH:SQLFetch (0)
@@ -25432,7 +25397,7 @@ end
 ----- ---- --- -- -
 
 function mysqlfromutf8 (data, enc)
-	local _, res = VH:SQLQuery ("select convert(_utf8'" .. repsqlchars (data) .. "' using " .. repsqlchars (enc) .. ")")
+	local _, res = VH:SQLQuery ("select convert(_utf8mb4'" .. repsqlchars (data) .. "' using " .. repsqlchars (enc) .. ")")
 
 	if res and res > 0 then
 		_, res = VH:SQLFetch (0)
