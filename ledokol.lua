@@ -63,7 +63,7 @@ Tzaca, JOE™, Foxtrot, Deivis
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.7" -- ledokol version
-bld_ledo = "97" -- build number
+bld_ledo = "98" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -12873,7 +12873,7 @@ function hublistshow (nick)
 				addr = "dchub://" .. addr
 			end
 
-			if addr:match (":411$") then
+			if addr:match (":411$") and addr:match ("^dchub://") then -- only if dchub://
 				addr = addr:sub (1, -5)
 			end
 
