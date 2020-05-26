@@ -1274,3 +1274,8 @@ Found %d configuration variables|
 No configuration variables found.|
 Secure connection: %s|
 TLS version: %s|
+You can't set IP on user whose class is higher or equals your own: %s|
+Failed to set user IP: %s @ %s|
+IP successfully set on user: %s @ %s|
+Invalid command parameters specified: %s|
+Set user IP|

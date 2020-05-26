@@ -63,7 +63,7 @@ Tzaca, JOE™, Foxtrot, Deivis
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.7" -- ledokol version
-bld_ledo = "98" -- build number
+bld_ledo = "99" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -457,7 +457,8 @@ table_refu = {
 	IsSecConn = false,
 	GetTLSVer = false,
 	PassTempBan = false,
-	SetRegClass = false
+	SetRegClass = false,
+	SetUserIP = false
 }
 
 ---------------------------------------------------------------------
@@ -557,6 +558,7 @@ table_cmnds = {
 	protadd = "protadd",
 	protdel = "protdel",
 	protlist = "protlist",
+	setuserip = "setuserip",
 	authadd = "authadd",
 	authmod = "authmod",
 	authdel = "authdel",
@@ -1524,6 +1526,8 @@ function Main (file)
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('badpassbanmult', '" .. repsqlchars (table_sets.badpassbanmult) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('avdetclass', '" .. repsqlchars (table_sets.avdetclass) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('ulogouttime', '" .. repsqlchars (table_sets.ulogouttime) .. "')")
+
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.ledocmd .. "` (`original`, `new`) values ('setuserip', '" .. repsqlchars (table_cmnds.setuserip) .. "')")
 					end
 
 					if ver <= 298 then
@@ -3810,7 +3814,19 @@ end
 
 return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
+
+	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.setuserip .. " [^ ]+ %d+%.%d+%.%d+%.%d+$") then
+		if ucl >= table_sets.mincommandclass then
+			donotifycmd (nick, data, 0, ucl)
+			setuserip (nick, data:sub (# table_cmnds.setuserip + 3))
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
+
+		return 0
+
+	----- ---- --- -- -
 
 	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.custdel .. " %S+$") then
 		if ucl >= table_sets.mincommandclass then
@@ -12642,6 +12658,35 @@ end
 
 ----- ---- --- -- -
 
+function setuserip (nick, line)
+	if not table_refu.SetUserIP then
+		commandanswer (nick, gettext ("This feature requires %s or later installed on your system."):format ("Verlihub 1.2.0.20"))
+
+	else
+		local user, addr = line:match ("^([^ ]+) (%d+%.%d+%.%d+%.%d+)$")
+
+		if user and # user > 0 and addr and # addr >= 7 and # addr <= 15 then
+			if getstatus (user) == 0 then
+				commandanswer (nick, gettext ("User not in list: %s"):format (user))
+
+			elseif getclass (user) >= getclass (nick) then
+				commandanswer (nick, gettext ("You can't set IP on user whose class is higher or equals your own: %s"):format (user))
+
+			elseif not VH:SetUserIP (user, addr) then
+				commandanswer (nick, gettext ("Failed to set user IP: %s @ %s"):format (user, addr))
+
+			else
+				commandanswer (nick, gettext ("IP successfully set on user: %s @ %s"):format (user, addr))
+			end
+
+		else
+			commandanswer (nick, gettext ("Invalid command parameters specified: %s"):format (line))
+		end
+	end
+end
+
+----- ---- --- -- -
+
 function addprotentry (nick, line)
 	local ent = repnmdcinchars (line)
 	local ok = true
@@ -17737,14 +17782,15 @@ end
 		sopmenitm (usr, gettext ("MyINFO check") .. "\\" .. gettext ("Delete MyINFO entry"), table_cmnds.myinfdel .. " %[line:<" .. gettext ("type") .. ">] %[line:<" .. gettext ("lre") .. ">]")
 	end
 
--- protection list
-
-if ucl >= table_sets.mincommandclass then
-sopmenitm (usr, gettext ("Protection list") .. "\\" .. gettext ("Add protection entry"), table_cmnds.protadd .. " %[line:<" .. gettext ("lre") .. ">]")
-sopmenitm (usr, gettext ("Protection list") .. "\\" .. gettext ("Protection list"), table_cmnds.protlist)
-smensep (usr)
-sopmenitm (usr, gettext ("Protection list") .. "\\" .. gettext ("Delete protection entry"), table_cmnds.protdel .. " %[line:<" .. gettext ("lre") .. ">]")
-end
+	-- protection list
+	if ucl >= table_sets.mincommandclass then
+		sopmenitm (usr, gettext ("Protection list") .. "\\" .. gettext ("Add protection entry"), table_cmnds.protadd .. " %[line:<" .. gettext ("lre") .. ">]")
+		sopmenitm (usr, gettext ("Protection list") .. "\\" .. gettext ("Protection list"), table_cmnds.protlist)
+		smensep (usr)
+		sopmenitm (usr, gettext ("Protection list") .. "\\" .. gettext ("Delete protection entry"), table_cmnds.protdel .. " %[line:<" .. gettext ("lre") .. ">]")
+		smensep (usr)
+		sopmenitm (usr, gettext ("Protection list") .. "\\" .. gettext ("Set user IP"), table_cmnds.setuserip .. " %[line:<" .. gettext ("nick") .. ">] %[line:" .. gettext ("ip") .. "]")
+	end
 
 -- authorization
 
@@ -22225,7 +22271,8 @@ function sendophelp (nick, clas, pm)
 	-- protection list
 	help = help .. " " .. trig .. table_cmnds.protadd .. " <" .. gettext ("lre") .. "> - " .. gettext ("Add protection entry") .. "\r\n"
 	help = help .. " " .. trig .. table_cmnds.protlist .. " - " .. gettext ("Protection list") .. "\r\n"
-	help = help .. " " .. trig .. table_cmnds.protdel .. " <" .. gettext ("lre") .. "> - " .. gettext ("Delete protection entry") .. "\r\n\r\n"
+	help = help .. " " .. trig .. table_cmnds.protdel .. " <" .. gettext ("lre") .. "> - " .. gettext ("Delete protection entry") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.setuserip .. " <" .. gettext ("nick") .. "> <" .. gettext ("ip") .. "> - " .. gettext ("Set user IP") .. "\r\n\r\n"
 
 	-- ip authorization
 	help = help .. " " .. trig .. table_cmnds.authadd .. " <" .. gettext ("nick") .. "> <" .. gettext ("lre") .. "> - " .. gettext ("Add IP authorization entry") .. "\r\n"
