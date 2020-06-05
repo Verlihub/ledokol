@@ -8,6 +8,7 @@
 [ 94] Fixed: Automated replace consequence, probably first of
 [ 95] Fixed: Lua error, report by KCAHDEP
 [ 98] Fixed: Display of default port in links with non standard protocols in frienly hublist
+[100] Fixed: Cut down too long string in user logger
 [ 88] Added: Secure connection information to user information
 [ 89] Added: TLS version information to user information
 [ 89] Added: badpassbanmult configuration to multiply incorrect password ban time each time, request by KCAHDEP

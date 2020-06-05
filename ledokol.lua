@@ -63,7 +63,7 @@ Tzaca, JOE™, Foxtrot, Deivis
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.7" -- ledokol version
-bld_ledo = "99" -- build number
+bld_ledo = "100" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -5220,7 +5220,7 @@ function VH_OnUserLogin (nick, uip)
 			local on, temp = VH:GetUserSupports (nick)
 
 			if on and temp and temp ~= "" then
-				sups = temp
+				sups = cutmaxstr (temp, 255)
 			end
 		end
 
@@ -25505,6 +25505,19 @@ function reppatchars (data)
 	safe = safe:gsub ("%-", "%%-")
 	safe = safe:gsub ("%?", "%%?")
 	return safe
+end
+
+----- ---- --- -- -
+
+function cutmaxstr (data, lim)
+	local out = data
+
+	if # out > lim then
+		out = out:sub (1, lim)
+	end
+
+	-- varchar (255)
+	return out
 end
 
 ----- ---- --- -- -
