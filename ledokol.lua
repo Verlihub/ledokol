@@ -63,7 +63,7 @@ Tzaca, JOE™, Foxtrot, Deivis
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.7" -- ledokol version
-bld_ledo = "100" -- build number
+bld_ledo = "101" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -10739,7 +10739,12 @@ function seenlookup (nick, line)
 							list = list .. repnmdcoutchars (loco) .. " &#124; "
 						end
 
-						list = list .. "dchub://" .. repnmdcoutchars (lohu) .. "/\r\n"
+						if not lohu:find ("^%S+://") then
+							list = list .. "dchub://" .. repnmdcoutchars (lohu) .. "\r\n"
+						else
+							list = list .. repnmdcoutchars (lohu) .. "\r\n"
+						end
+
 						lpos = lpos + 1
 					end
 				end
