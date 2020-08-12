@@ -18,6 +18,7 @@
 [ 96] Added: ulogouttime configuration to disable logout time recording for user logger
 [ 98] Added: setuserip command for temporary IP change
 [101] Added: Support for other hub protocols in seen command results
+[102] Added: User uptime ranking
 [ 97] Removed: Predefined MySQL character set, collation and engine to use system defaults
 
 [ 2.9.6 :: 2019-03-10 ]

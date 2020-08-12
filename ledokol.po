@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: Ledokol\n"
 "Project-Version: 2.9.7\n"
 "Report-Msgid-Bugs-To: RoLex <webmaster@feardc.net>\n"
-"POT-Creation-Date: 2020-05-26 00:00+0200\n"
-"PO-Revision-Date: 2020-05-26 00:00+0200\n"
+"POT-Creation-Date: 2020-08-12 00:00+0200\n"
+"PO-Revision-Date: 2020-08-12 00:00+0200\n"
 "Last-Translator: RoLex <webmaster@feardc.net>\n"
 "Language-Team: RoLex <webmaster@feardc.net>\n"
 "Language: en_GB\n"
@@ -3833,4 +3833,37 @@ msgid "Invalid command parameters specified: %s"
 msgstr ""
 
 msgid "Set user IP"
+msgstr ""
+
+msgid "Top %d uptime rankers"
+msgstr ""
+
+msgid "Your uptime rank"
+msgstr ""
+
+msgid "Your uptime rank is: %s"
+msgstr ""
+
+msgid "You have to reconnect to get started."
+msgstr ""
+
+msgid "Uptime rank list is empty."
+msgstr ""
+
+msgid "Top %d uptime rankers"
+msgstr ""
+
+msgid "Deleted from uptime rank list: %s"
+msgstr ""
+
+msgid "Not found in uptime rank list: %s"
+msgstr ""
+
+msgid "%s with class %d deleted %d uptime ranks lower than %d."
+msgstr ""
+
+msgid "Size of uptime ranks table: %d [ %s: %d @ %s ]"
+msgstr ""
+
+msgid "Total uptime rank time: %s"
 msgstr ""

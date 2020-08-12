@@ -63,7 +63,7 @@ Tzaca, JOE™, Foxtrot, Deivis
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.7" -- ledokol version
-bld_ledo = "101" -- build number
+bld_ledo = "102" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -254,6 +254,7 @@ table_sets = {
 	chranprizetext = "Please welcome our new chat prize winner with rank <rank>: <nick>",
 	sharerankclass = 11,
 	shareranmin = 500,
+	uprankclass = 11,
 	oprankclass = 11,
 	searrankclass = 11,
 	wordrankclass = 11,
@@ -502,6 +503,7 @@ tbl_sql = {
 	auth = "lua_ledo_auth",
 	rel = "lua_ledo_rel",
 	chran = "lua_ledo_chran",
+	upran = "lua_ledo_upran",
 	opran = "lua_ledo_opran",
 	shran = "lua_ledo_shran",
 	srran = "lua_ledo_srran",
@@ -639,9 +641,11 @@ table_cmnds = {
 	lretoplain = "lretoplain",
 	mychatrank = "mychatrank",
 	mysharerank = "mysharerank",
+	myuprank = "myuprank",
 	myoprank = "myoprank",
 	chatranks = "chatranks",
 	shareranks = "shareranks",
+	upranks = "upranks",
 	opranks = "opranks",
 	searranks = "searranks",
 	wordranks = "wordranks",
@@ -1523,11 +1527,16 @@ function Main (file)
 					end
 
 					if ver <= 297 then
+						VH:SQLQuery ("create table if not exists `" .. tbl_sql.upran .. "` (`nick` varchar(255) not null primary key, `rank` bigint(20) unsigned not null default 1)")
+
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('badpassbanmult', '" .. repsqlchars (table_sets.badpassbanmult) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('avdetclass', '" .. repsqlchars (table_sets.avdetclass) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('ulogouttime', '" .. repsqlchars (table_sets.ulogouttime) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('uprankclass', '" .. repsqlchars (table_sets.uprankclass) .. "')")
 
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.ledocmd .. "` (`original`, `new`) values ('setuserip', '" .. repsqlchars (table_cmnds.setuserip) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.ledocmd .. "` (`original`, `new`) values ('upranks', '" .. repsqlchars (table_cmnds.upranks) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.ledocmd .. "` (`original`, `new`) values ('myuprank', '" .. repsqlchars (table_cmnds.myuprank) .. "')")
 					end
 
 					if ver <= 298 then
@@ -2832,75 +2841,99 @@ return 0
 
 	----- ---- --- -- -
 
-elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.cchist .. "$") then
-if table_sets.savecchistory == 1 and ucl >= table_sets.ccstatsclass then
-donotifycmd (nick, data, 0, ucl)
-sendhistcc (nick)
-else
-commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
-end
+	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.cchist .. "$") then
+		if table_sets.savecchistory == 1 and ucl >= table_sets.ccstatsclass then
+			donotifycmd (nick, data, 0, ucl)
+			sendhistcc (nick)
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
 
-return 0
+		return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
 
-elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.opranks .. "$") then
-if ucl >= table_sets.oprankclass then
-donotifycmd (nick, data, 0, ucl)
-opranksendall (nick)
-else
-commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
-end
+	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.upranks .. "$") then
+		if ucl >= table_sets.uprankclass then
+			donotifycmd (nick, data, 0, ucl)
+			upranksendall (nick)
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
 
-return 0
+	return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
 
-elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.shareranks .. "$") then
-if ucl >= table_sets.sharerankclass then
-donotifycmd (nick, data, 0, ucl)
-shareranksendall (nick)
-else
-commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
-end
+	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.opranks .. "$") then
+		if ucl >= table_sets.oprankclass then
+			donotifycmd (nick, data, 0, ucl)
+			opranksendall (nick)
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
 
-return 0
+	return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
 
-elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.chatranks .. "$") then
-if ucl >= table_sets.chatrankclass then
-donotifycmd (nick, data, 0, ucl)
-chatranksendall (nick)
-else
-commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
-end
+	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.shareranks .. "$") then
+		if ucl >= table_sets.sharerankclass then
+			donotifycmd (nick, data, 0, ucl)
+			shareranksendall (nick)
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
 
-return 0
+		return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
 
-elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.mysharerank .. "$") then
-if ucl >= table_sets.sharerankclass then
-donotifycmd (nick, data, 0, ucl)
-shareranksendown (nick)
-else
-commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
-end
+	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.chatranks .. "$") then
+		if ucl >= table_sets.chatrankclass then
+			donotifycmd (nick, data, 0, ucl)
+			chatranksendall (nick)
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
 
-return 0
+		return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
 
-elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.mychatrank .. "$") then
-if ucl >= table_sets.chatrankclass then
-donotifycmd (nick, data, 0, ucl)
-chatranksendown (nick)
-else
-commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
-end
+	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.myuprank .. "$") then
+		if ucl >= table_sets.uprankclass then
+			donotifycmd (nick, data, 0, ucl)
+			upranksendown (nick, ucl)
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
 
-return 0
+		return 0
+
+	----- ---- --- -- -
+
+	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.mysharerank .. "$") then
+		if ucl >= table_sets.sharerankclass then
+			donotifycmd (nick, data, 0, ucl)
+			shareranksendown (nick)
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
+
+		return 0
+
+	----- ---- --- -- -
+
+	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.mychatrank .. "$") then
+		if ucl >= table_sets.chatrankclass then
+			donotifycmd (nick, data, 0, ucl)
+			chatranksendown (nick)
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
+
+		return 0
 
 	----- ---- --- -- -
 
@@ -3347,19 +3380,19 @@ end
 
 return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
 
-elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.myoprank .. "$") then
-if ucl >= table_sets.oprankclass then
-donotifycmd (nick, data, 0, ucl)
-opranksendown (nick)
-else
-commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
-end
+	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.myoprank .. "$") then
+		if ucl >= table_sets.oprankclass then
+			donotifycmd (nick, data, 0, ucl)
+			opranksendown (nick)
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
 
-return 0
+		return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
 
 elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.say .. " %S* .*$") then
 if ucl >= table_sets.sayclass then
@@ -4694,65 +4727,89 @@ end
 
 return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
 
-elseif data:match ("^" .. table_othsets.ustrig .. table_cmnds.mychatrank .. "$") then
-if ucl >= table_sets.chatrankclass then
-donotifycmd (nick, data, 0, ucl)
-chatranksendown (nick)
-else
-commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
-end
+	elseif data:match ("^" .. table_othsets.ustrig .. table_cmnds.mychatrank .. "$") then
+		if ucl >= table_sets.chatrankclass then
+			donotifycmd (nick, data, 0, ucl)
+			chatranksendown (nick)
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
 
-return 0
+		return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
 
-elseif data:match ("^" .. table_othsets.ustrig .. table_cmnds.mysharerank .. "$") then
-if ucl >= table_sets.sharerankclass then
-donotifycmd (nick, data, 0, ucl)
-shareranksendown (nick)
-else
-commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
-end
+	elseif data:match ("^" .. table_othsets.ustrig .. table_cmnds.myuprank .. "$") then
+		if ucl >= table_sets.uprankclass then
+			donotifycmd (nick, data, 0, ucl)
+			upranksendown (nick, ucl)
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
 
-return 0
+		return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
 
-elseif data:match ("^" .. table_othsets.ustrig .. table_cmnds.chatranks .. "$") then
-if ucl >= table_sets.chatrankclass then
-donotifycmd (nick, data, 0, ucl)
-chatranksendall (nick)
-else
-commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
-end
+	elseif data:match ("^" .. table_othsets.ustrig .. table_cmnds.mysharerank .. "$") then
+		if ucl >= table_sets.sharerankclass then
+			donotifycmd (nick, data, 0, ucl)
+			shareranksendown (nick)
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
 
-return 0
+		return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
 
-elseif data:match ("^" .. table_othsets.ustrig .. table_cmnds.shareranks .. "$") then
-if ucl >= table_sets.sharerankclass then
-donotifycmd (nick, data, 0, ucl)
-shareranksendall (nick)
-else
-commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
-end
+	elseif data:match ("^" .. table_othsets.ustrig .. table_cmnds.chatranks .. "$") then
+		if ucl >= table_sets.chatrankclass then
+			donotifycmd (nick, data, 0, ucl)
+			chatranksendall (nick)
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
 
-return 0
+		return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
 
-elseif data:match ("^" .. table_othsets.ustrig .. table_cmnds.opranks .. "$") then
-if ucl >= table_sets.oprankclass then
-donotifycmd (nick, data, 0, ucl)
-opranksendall (nick)
-else
-commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
-end
+	elseif data:match ("^" .. table_othsets.ustrig .. table_cmnds.shareranks .. "$") then
+		if ucl >= table_sets.sharerankclass then
+			donotifycmd (nick, data, 0, ucl)
+			shareranksendall (nick)
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
 
-return 0
+		return 0
+
+	----- ---- --- -- -
+
+	elseif data:match ("^" .. table_othsets.ustrig .. table_cmnds.upranks .. "$") then
+		if ucl >= table_sets.uprankclass then
+			donotifycmd (nick, data, 0, ucl)
+			upranksendall (nick)
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
+
+		return 0
+
+	----- ---- --- -- -
+
+	elseif data:match ("^" .. table_othsets.ustrig .. table_cmnds.opranks .. "$") then
+		if ucl >= table_sets.oprankclass then
+			donotifycmd (nick, data, 0, ucl)
+			opranksendall (nick)
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
+
+		return 0
 
 	----- ---- --- -- -
 
@@ -4768,15 +4825,15 @@ return 0
 
 	----- ---- --- -- -
 
-elseif data:match ("^" .. table_othsets.ustrig .. table_cmnds.searranks .. "$") then
-	if ucl >= table_sets.searrankclass then
-		donotifycmd (nick, data, 0, ucl)
-		searranksendall (nick)
-	else
-		commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
-	end
+	elseif data:match ("^" .. table_othsets.ustrig .. table_cmnds.searranks .. "$") then
+		if ucl >= table_sets.searrankclass then
+			donotifycmd (nick, data, 0, ucl)
+			searranksendall (nick)
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
 
-	return 0
+		return 0
 
 ----- ---- --- -- -
 
@@ -5632,6 +5689,7 @@ function VH_OnUserLogout (nick, ip) -- ip available only on new versions
 	end
 
 	if table_sets.showuseruptime == 1 then -- user uptime
+		uprankaccept (nick, clas) -- note: must be before
 		table_usup [nick] = nil
 		table_uumd.sear [nick] = nil
 		table_uumd.ctm [nick] = nil
@@ -16169,6 +16227,34 @@ end
 
 ----- ---- --- -- -
 
+function uprankaccept (nick, clas)
+	if clas < table_sets.uprankclass then
+		return
+	end
+
+	if table_sets.showuseruptime == 0 then
+		return
+	end
+
+	local tick = table_usup [nick]
+
+	if not tick then
+		return
+	end
+
+	local user = repsqlchars (nick)
+	local _, rows = VH:SQLQuery ("select `nick` from `" .. tbl_sql.ranex .. "` where `nick` = '" .. user .. "'")
+
+	if rows > 0 then
+		VH:SQLQuery ("update `" .. tbl_sql.ranex .. "` set `occurred` = `occurred` + 1 where `nick` = '" .. user .. "'")
+	else
+		tick = os.time () - tick
+		VH:SQLQuery ("insert into `" .. tbl_sql.upran .. "` (`nick`, `rank`) values ('" .. user .. "', " .. _tostring (tick) .. ") on duplicate key update `rank` = `rank` + " .. _tostring (tick))
+	end
+end
+
+----- ---- --- -- -
+
 function searrankaccept (nick, ucls, data)
 if ucls < table_sets.searrankclass then return end
 local _, _, tp, str = data:find ("^%$Search .* .*%?.*%?.*%?(.*)%?(.*)$")
@@ -16266,224 +16352,260 @@ end
 ----- ---- --- -- -
 
 function delrank (nick, line)
-local _, _, ctype, cuser = line:find ("^(%S+) (%S+)$")
-local auser = repsqlchars (cuser)
+	local _, _, ctype, cuser = line:find ("^(%S+) (%S+)$")
+	local auser = repsqlchars (cuser)
 
-if ctype == "chat" then
-local _, rows = VH:SQLQuery ("select `rank` from `" .. tbl_sql.chran .. "` where `nick` = '" .. auser .. "'")
+	if ctype == "chat" then
+		local _, rows = VH:SQLQuery ("select `rank` from `" .. tbl_sql.chran .. "` where `nick` = '" .. auser .. "'")
 
-if rows > 0 then
-VH:SQLQuery ("delete from `" .. tbl_sql.chran .. "` where `nick` = '" .. auser .. "'")
-commandanswer (nick, gettext ("Deleted from chat rank list: %s"):format (cuser))
-else
-commandanswer (nick, gettext ("Not found in chat rank list: %s"):format (cuser))
-end
+		if rows > 0 then
+			VH:SQLQuery ("delete from `" .. tbl_sql.chran .. "` where `nick` = '" .. auser .. "'")
+			commandanswer (nick, gettext ("Deleted from chat rank list: %s"):format (cuser))
+		else
+			commandanswer (nick, gettext ("Not found in chat rank list: %s"):format (cuser))
+		end
 
-elseif ctype == "share" then
-local _, rows = VH:SQLQuery ("select `rank` from `" .. tbl_sql.shran .. "` where `nick` = '" .. auser .. "'")
+	elseif ctype == "share" then
+		local _, rows = VH:SQLQuery ("select `rank` from `" .. tbl_sql.shran .. "` where `nick` = '" .. auser .. "'")
 
-if rows > 0 then
-VH:SQLQuery ("delete from `" .. tbl_sql.shran .. "` where `nick` = '" .. auser .. "'")
-commandanswer (nick, gettext ("Deleted from share rank list: %s"):format (cuser))
-else
-commandanswer (nick, gettext ("Not found in share rank list: %s"):format (cuser))
-end
+		if rows > 0 then
+			VH:SQLQuery ("delete from `" .. tbl_sql.shran .. "` where `nick` = '" .. auser .. "'")
+			commandanswer (nick, gettext ("Deleted from share rank list: %s"):format (cuser))
+		else
+			commandanswer (nick, gettext ("Not found in share rank list: %s"):format (cuser))
+		end
 
-elseif ctype == "op" then
-local _, rows = VH:SQLQuery ("select `rank` from `" .. tbl_sql.opran .. "` where `nick` = '" .. auser .. "'")
+	elseif ctype == "up" then -- uptime
+		local _, rows = VH:SQLQuery ("select `rank` from `" .. tbl_sql.upran .. "` where `nick` = '" .. auser .. "'")
 
-if rows > 0 then
-VH:SQLQuery ("delete from `" .. tbl_sql.opran .. "` where `nick` = '" .. auser .. "'")
-commandanswer (nick, gettext ("Deleted from operator rank list: %s"):format (cuser))
-else
-commandanswer (nick, gettext ("Not found in operator rank list: %s"):format (cuser))
-end
+		if rows > 0 then
+			VH:SQLQuery ("delete from `" .. tbl_sql.upran .. "` where `nick` = '" .. auser .. "'")
+			commandanswer (nick, gettext ("Deleted from uptime rank list: %s"):format (cuser))
+		else
+			commandanswer (nick, gettext ("Not found in uptime rank list: %s"):format (cuser))
+		end
 
-elseif ctype == "sear" then
-	local _, rows = VH:SQLQuery ("select `rank` from `" .. tbl_sql.srran .. "` where `search` = '" .. auser .. "'")
+	elseif ctype == "op" then
+		local _, rows = VH:SQLQuery ("select `rank` from `" .. tbl_sql.opran .. "` where `nick` = '" .. auser .. "'")
 
-	if rows > 0 then
-		VH:SQLQuery ("delete from `" .. tbl_sql.srran .. "` where `search` = '" .. auser .. "'")
-		commandanswer (nick, gettext ("Deleted from search rank list: %s"):format (cuser))
-	else
-		commandanswer (nick, gettext ("Not found in search rank list: %s"):format (cuser))
+		if rows > 0 then
+			VH:SQLQuery ("delete from `" .. tbl_sql.opran .. "` where `nick` = '" .. auser .. "'")
+			commandanswer (nick, gettext ("Deleted from operator rank list: %s"):format (cuser))
+		else
+			commandanswer (nick, gettext ("Not found in operator rank list: %s"):format (cuser))
+		end
+
+	elseif ctype == "sear" then
+		local _, rows = VH:SQLQuery ("select `rank` from `" .. tbl_sql.srran .. "` where `search` = '" .. auser .. "'")
+
+		if rows > 0 then
+			VH:SQLQuery ("delete from `" .. tbl_sql.srran .. "` where `search` = '" .. auser .. "'")
+			commandanswer (nick, gettext ("Deleted from search rank list: %s"):format (cuser))
+		else
+			commandanswer (nick, gettext ("Not found in search rank list: %s"):format (cuser))
+		end
+
+	elseif ctype == "word" then
+		local _, rows = VH:SQLQuery ("select `rank` from `" .. tbl_sql.wdran .. "` where `word` = '" .. auser .. "'")
+
+		if rows > 0 then
+			VH:SQLQuery ("delete from `" .. tbl_sql.wdran .. "` where `word` = '" .. auser .. "'")
+			commandanswer (nick, gettext ("Deleted from word rank list: %s"):format (cuser))
+		else
+			commandanswer (nick, gettext ("Not found in word rank list: %s"):format (cuser))
+		end
+
+	elseif ctype == "cc" then
+		local _, rows = VH:SQLQuery ("select `cc` from `" .. tbl_sql.ccstat .. "` where `cc` = '" .. auser .. "'")
+
+		if rows > 0 then
+			VH:SQLQuery ("delete from `" .. tbl_sql.ccstat .. "` where `cc` = '" .. auser .. "'")
+			commandanswer (nick, gettext ("Deleted %d rows from country code statistics table: %s"):format (rows, cuser))
+		else
+			commandanswer (nick, gettext ("Not found in country code statistics table: %s"):format (cuser))
+		end
+
+	elseif ctype == "all" then
+		delrank (nick, "chat " .. cuser)
+		delrank (nick, "share " .. cuser)
+		delrank (nick, "up " .. cuser)
+		delrank (nick, "op " .. cuser)
+		-- search ranks not added
+		-- word ranks not added
+		-- cc ranks not added
+
+	else -- unknown type
+		commandanswer (nick, gettext ("Known types are: %s"):format ("chat, share, up, op, sear, word, cc " .. gettext ("and") .. " all"))
 	end
-
-elseif ctype == "word" then
-local _, rows = VH:SQLQuery ("select `rank` from `" .. tbl_sql.wdran .. "` where `word` = '" .. auser .. "'")
-
-if rows > 0 then
-VH:SQLQuery ("delete from `" .. tbl_sql.wdran .. "` where `word` = '" .. auser .. "'")
-commandanswer (nick, gettext ("Deleted from word rank list: %s"):format (cuser))
-else
-commandanswer (nick, gettext ("Not found in word rank list: %s"):format (cuser))
-end
-
-elseif ctype == "cc" then
-local _, rows = VH:SQLQuery ("select `cc` from `" .. tbl_sql.ccstat .. "` where `cc` = '" .. auser .. "'")
-
-if rows > 0 then
-VH:SQLQuery ("delete from `" .. tbl_sql.ccstat .. "` where `cc` = '" .. auser .. "'")
-commandanswer (nick, gettext ("Deleted %d rows from country code statistics table: %s"):format (rows, cuser))
-else
-commandanswer (nick, gettext ("Not found in country code statistics table: %s"):format (cuser))
-end
-
-elseif ctype == "all" then
-delrank (nick, "chat " .. cuser)
-delrank (nick, "share " .. cuser)
-delrank (nick, "op " .. cuser)
--- search ranks not added
--- word ranks not added
--- cc ranks not added
-
-else -- unknown type
-commandanswer (nick, gettext ("Known types are: %s"):format ("chat, share, op, sear, word, cc " .. gettext ("and") .. " all"))
-end
 end
 
 ----- ---- --- -- -
 
 function cleanupranks (nick, line, cls)
-local _, _, ctype, climt = line:find ("^(%S+) (%d+)$")
-local climt = tonumber (climt)
-local tm = os.time () + table_sets.srvtimediff
+	local _, _, ctype, climt = line:find ("^(%S+) (%d+)$")
+	local climt = tonumber (climt)
+	local tm = os.time () + table_sets.srvtimediff
 
-if ctype == "chat" then
-commandanswer (nick, gettext ("This operation might take very long time depending on how much is going to be removed, please be patient."))
-local rows = 0
+	if ctype == "chat" then
+		commandanswer (nick, gettext ("This operation might take very long time depending on how much is going to be removed, please be patient."))
+		local rows = 0
 
-if climt == 0 then
-rows = counttable (tbl_sql.chran)
-else
-_, rows = VH:SQLQuery ("select `rank` from `" .. tbl_sql.chran .. "` where `rank` < " .. _tostring (climt))
-end
-
-if rows > 0 then
-if climt == 0 then
-VH:SQLQuery ("truncate table `" .. tbl_sql.chran .. "`")
-else
-VH:SQLQuery ("delete from `" .. tbl_sql.chran .. "` where `rank` < " .. _tostring (climt))
-end
-
-commandanswer (nick, gettext ("Deleted %d rows: %s"):format (rows, ctype))
-opsnotify (table_sets.classnotiledoact, gettext ("%s with class %d deleted %d chat ranks lower than %d."):format (nick, cls, rows, climt))
-VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('lastcleanchran', " .. _tostring (tm) .. ") on duplicate key update `value` = " .. _tostring (tm))
-VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('limcleanchran', " .. _tostring (climt) .. ") on duplicate key update `value` = " .. _tostring (climt))
-else
-commandanswer (nick, gettext ("No rows to remove: %s"):format (ctype))
-end
-
-elseif ctype == "share" then
-commandanswer (nick, gettext ("This operation might take very long time depending on how much is going to be removed, please be patient."))
-local rows, cbytes = 0, 0
-
-if climt == 0 then
-rows = counttable (tbl_sql.shran)
-else
-cbytes = roundint ((climt * 1073741824), 0)
-_, rows = VH:SQLQuery ("select `rank` from `" .. tbl_sql.shran .. "` where `rank` < " .. _tostring (cbytes))
-end
-
-if rows > 0 then
-if climt == 0 then
-VH:SQLQuery ("truncate table `" .. tbl_sql.shran .. "`")
-else
-VH:SQLQuery ("delete from `" .. tbl_sql.shran .. "` where `rank` < " .. _tostring (cbytes))
-end
-
-commandanswer (nick, gettext ("Deleted %d rows: %s"):format (rows, ctype))
-opsnotify (table_sets.classnotiledoact, gettext ("%s with class %d deleted %d share ranks lower than %s."):format (nick, cls, rows, _tostring (climt) .. " " .. gettext ("GiB")))
-VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('lastcleanshran', " .. _tostring (tm) .. ") on duplicate key update `value` = " .. _tostring (tm))
-VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('limcleanshran', " .. _tostring (climt) .. ") on duplicate key update `value` = " .. _tostring (climt))
-else
-commandanswer (nick, gettext ("No rows to remove: %s"):format (ctype))
-end
-
-elseif ctype == "op" then
-commandanswer (nick, gettext ("This operation might take very long time depending on how much is going to be removed, please be patient."))
-local rows = 0
-
-if climt == 0 then
-rows = counttable (tbl_sql.opran)
-else
-_, rows = VH:SQLQuery ("select `rank` from `" .. tbl_sql.opran .. "` where `rank` < " .. _tostring (climt))
-end
-
-if rows > 0 then
-if climt == 0 then
-VH:SQLQuery ("truncate table `" .. tbl_sql.opran .. "`")
-else
-VH:SQLQuery ("delete from `" .. tbl_sql.opran .. "` where `rank` < " .. _tostring (climt))
-end
-
-commandanswer (nick, gettext ("Deleted %d rows: %s"):format (rows, ctype))
-opsnotify (table_sets.classnotiledoact, gettext ("%s with class %d deleted %d operator ranks lower than %d."):format (nick, cls, rows, climt))
-VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('lastcleanopran', " .. _tostring (tm) .. ") on duplicate key update `value` = " .. _tostring (tm))
-VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('limcleanopran', " .. _tostring (climt) .. ") on duplicate key update `value` = " .. _tostring (climt))
-else
-commandanswer (nick, gettext ("No rows to remove: %s"):format (ctype))
-end
-
-elseif ctype == "sear" then
-	commandanswer (nick, gettext ("This operation might take very long time depending on how much is going to be removed, please be patient."))
-	local rows = 0
-
-	if climt == 0 then
-		rows = counttable (tbl_sql.srran)
-	else
-		_, rows = VH:SQLQuery ("select `rank` from `" .. tbl_sql.srran .. "` where `rank` < " .. _tostring (climt))
-	end
-
-	if rows > 0 then
 		if climt == 0 then
-			VH:SQLQuery ("truncate table `" .. tbl_sql.srran .. "`")
+			rows = counttable (tbl_sql.chran)
 		else
-			VH:SQLQuery ("delete from `" .. tbl_sql.srran .. "` where `rank` < " .. _tostring (climt))
+			_, rows = VH:SQLQuery ("select `rank` from `" .. tbl_sql.chran .. "` where `rank` < " .. _tostring (climt))
 		end
 
-		commandanswer (nick, gettext ("Deleted %d rows: %s"):format (rows, ctype))
-		opsnotify (table_sets.classnotiledoact, gettext ("%s with class %d deleted %d search ranks lower than %d."):format (nick, cls, rows, climt))
-		VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('lastcleansrran', " .. _tostring (tm) .. ") on duplicate key update `value` = " .. _tostring (tm))
-		VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('limcleansrran', " .. _tostring (climt) .. ") on duplicate key update `value` = " .. _tostring (climt))
-	else
-		commandanswer (nick, gettext ("No rows to remove: %s"):format (ctype))
+		if rows > 0 then
+			if climt == 0 then
+				VH:SQLQuery ("truncate table `" .. tbl_sql.chran .. "`")
+			else
+				VH:SQLQuery ("delete from `" .. tbl_sql.chran .. "` where `rank` < " .. _tostring (climt))
+			end
+
+			commandanswer (nick, gettext ("Deleted %d rows: %s"):format (rows, ctype))
+			opsnotify (table_sets.classnotiledoact, gettext ("%s with class %d deleted %d chat ranks lower than %d."):format (nick, cls, rows, climt))
+			VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('lastcleanchran', " .. _tostring (tm) .. ") on duplicate key update `value` = " .. _tostring (tm))
+			VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('limcleanchran', " .. _tostring (climt) .. ") on duplicate key update `value` = " .. _tostring (climt))
+		else
+			commandanswer (nick, gettext ("No rows to remove: %s"):format (ctype))
+		end
+
+	elseif ctype == "share" then
+		commandanswer (nick, gettext ("This operation might take very long time depending on how much is going to be removed, please be patient."))
+		local rows, cbytes = 0, 0
+
+		if climt == 0 then
+			rows = counttable (tbl_sql.shran)
+		else
+			cbytes = roundint ((climt * 1073741824), 0)
+			_, rows = VH:SQLQuery ("select `rank` from `" .. tbl_sql.shran .. "` where `rank` < " .. _tostring (cbytes))
+		end
+
+		if rows > 0 then
+			if climt == 0 then
+				VH:SQLQuery ("truncate table `" .. tbl_sql.shran .. "`")
+			else
+				VH:SQLQuery ("delete from `" .. tbl_sql.shran .. "` where `rank` < " .. _tostring (cbytes))
+			end
+
+			commandanswer (nick, gettext ("Deleted %d rows: %s"):format (rows, ctype))
+			opsnotify (table_sets.classnotiledoact, gettext ("%s with class %d deleted %d share ranks lower than %s."):format (nick, cls, rows, _tostring (climt) .. " " .. gettext ("GiB")))
+			VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('lastcleanshran', " .. _tostring (tm) .. ") on duplicate key update `value` = " .. _tostring (tm))
+			VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('limcleanshran', " .. _tostring (climt) .. ") on duplicate key update `value` = " .. _tostring (climt))
+		else
+			commandanswer (nick, gettext ("No rows to remove: %s"):format (ctype))
+		end
+
+	elseif ctype == "up" then -- uptime
+		commandanswer (nick, gettext ("This operation might take very long time depending on how much is going to be removed, please be patient."))
+		local rows = 0
+
+		if climt == 0 then
+			rows = counttable (tbl_sql.upran)
+		else
+			_, rows = VH:SQLQuery ("select `rank` from `" .. tbl_sql.upran .. "` where `rank` < " .. _tostring (climt))
+		end
+
+		if rows > 0 then
+			if climt == 0 then
+				VH:SQLQuery ("truncate table `" .. tbl_sql.upran .. "`")
+			else
+				VH:SQLQuery ("delete from `" .. tbl_sql.upran .. "` where `rank` < " .. _tostring (climt))
+			end
+
+			commandanswer (nick, gettext ("Deleted %d rows: %s"):format (rows, ctype))
+			opsnotify (table_sets.classnotiledoact, gettext ("%s with class %d deleted %d uptime ranks lower than %d."):format (nick, cls, rows, climt))
+			VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('lastcleanupran', " .. _tostring (tm) .. ") on duplicate key update `value` = " .. _tostring (tm))
+			VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('limcleanupran', " .. _tostring (climt) .. ") on duplicate key update `value` = " .. _tostring (climt))
+		else
+			commandanswer (nick, gettext ("No rows to remove: %s"):format (ctype))
+		end
+
+	elseif ctype == "op" then
+		commandanswer (nick, gettext ("This operation might take very long time depending on how much is going to be removed, please be patient."))
+		local rows = 0
+
+		if climt == 0 then
+			rows = counttable (tbl_sql.opran)
+		else
+			_, rows = VH:SQLQuery ("select `rank` from `" .. tbl_sql.opran .. "` where `rank` < " .. _tostring (climt))
+		end
+
+		if rows > 0 then
+			if climt == 0 then
+				VH:SQLQuery ("truncate table `" .. tbl_sql.opran .. "`")
+			else
+				VH:SQLQuery ("delete from `" .. tbl_sql.opran .. "` where `rank` < " .. _tostring (climt))
+			end
+
+			commandanswer (nick, gettext ("Deleted %d rows: %s"):format (rows, ctype))
+			opsnotify (table_sets.classnotiledoact, gettext ("%s with class %d deleted %d operator ranks lower than %d."):format (nick, cls, rows, climt))
+			VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('lastcleanopran', " .. _tostring (tm) .. ") on duplicate key update `value` = " .. _tostring (tm))
+			VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('limcleanopran', " .. _tostring (climt) .. ") on duplicate key update `value` = " .. _tostring (climt))
+		else
+			commandanswer (nick, gettext ("No rows to remove: %s"):format (ctype))
+		end
+
+	elseif ctype == "sear" then
+		commandanswer (nick, gettext ("This operation might take very long time depending on how much is going to be removed, please be patient."))
+		local rows = 0
+
+		if climt == 0 then
+			rows = counttable (tbl_sql.srran)
+		else
+			_, rows = VH:SQLQuery ("select `rank` from `" .. tbl_sql.srran .. "` where `rank` < " .. _tostring (climt))
+		end
+
+		if rows > 0 then
+			if climt == 0 then
+				VH:SQLQuery ("truncate table `" .. tbl_sql.srran .. "`")
+			else
+				VH:SQLQuery ("delete from `" .. tbl_sql.srran .. "` where `rank` < " .. _tostring (climt))
+			end
+
+			commandanswer (nick, gettext ("Deleted %d rows: %s"):format (rows, ctype))
+			opsnotify (table_sets.classnotiledoact, gettext ("%s with class %d deleted %d search ranks lower than %d."):format (nick, cls, rows, climt))
+			VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('lastcleansrran', " .. _tostring (tm) .. ") on duplicate key update `value` = " .. _tostring (tm))
+			VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('limcleansrran', " .. _tostring (climt) .. ") on duplicate key update `value` = " .. _tostring (climt))
+		else
+			commandanswer (nick, gettext ("No rows to remove: %s"):format (ctype))
+		end
+
+	elseif ctype == "word" then
+		commandanswer (nick, gettext ("This operation might take very long time depending on how much is going to be removed, please be patient."))
+		local rows = 0
+
+		if climt == 0 then
+			rows = counttable (tbl_sql.wdran)
+		else
+			_, rows = VH:SQLQuery ("select `rank` from `" .. tbl_sql.wdran .. "` where `rank` < " .. _tostring (climt))
+		end
+
+		if rows > 0 then
+			if climt == 0 then
+				VH:SQLQuery ("truncate table `" .. tbl_sql.wdran .. "`")
+			else
+				VH:SQLQuery ("delete from `" .. tbl_sql.wdran .. "` where `rank` < " .. _tostring (climt))
+			end
+
+			commandanswer (nick, gettext ("Deleted %d rows: %s"):format (rows, ctype))
+			opsnotify (table_sets.classnotiledoact, gettext ("%s with class %d deleted %d word ranks lower than %d."):format (nick, cls, rows, climt))
+			VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('lastcleanwdran', " .. _tostring (tm) .. ") on duplicate key update `value` = " .. _tostring (tm))
+			VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('limcleanwdran', " .. _tostring (climt) .. ") on duplicate key update `value` = " .. _tostring (climt))
+		else
+			commandanswer (nick, gettext ("No rows to remove: %s"):format (ctype))
+		end
+
+	elseif ctype == "cc" then
+		VH:SQLQuery ("truncate table `" .. tbl_sql.ccstat .. "`")
+		VH:SQLQuery ("update ignore `" .. tbl_sql.conf .. "` set `value` = '" .. (os.time () + table_sets.srvtimediff) .. "' where `variable` = 'date_ccstats'")
+		commandanswer (nick, gettext ("Deleted all rows: %s"):format (ctype))
+		opsnotify (table_sets.classnotiledoact, gettext ("%s with class %d deleted all user location entries."):format (nick, cls))
+
+	else -- unknown type
+		commandanswer (nick, gettext ("Known types are: %s"):format ("chat, share, up, op, sear, word " .. gettext ("and") .. " cc"))
 	end
-
-elseif ctype == "word" then
-commandanswer (nick, gettext ("This operation might take very long time depending on how much is going to be removed, please be patient."))
-local rows = 0
-
-if climt == 0 then
-rows = counttable (tbl_sql.wdran)
-else
-_, rows = VH:SQLQuery ("select `rank` from `" .. tbl_sql.wdran .. "` where `rank` < " .. _tostring (climt))
-end
-
-if rows > 0 then
-if climt == 0 then
-VH:SQLQuery ("truncate table `" .. tbl_sql.wdran .. "`")
-else
-VH:SQLQuery ("delete from `" .. tbl_sql.wdran .. "` where `rank` < " .. _tostring (climt))
-end
-
-commandanswer (nick, gettext ("Deleted %d rows: %s"):format (rows, ctype))
-opsnotify (table_sets.classnotiledoact, gettext ("%s with class %d deleted %d word ranks lower than %d."):format (nick, cls, rows, climt))
-VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('lastcleanwdran', " .. _tostring (tm) .. ") on duplicate key update `value` = " .. _tostring (tm))
-VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('limcleanwdran', " .. _tostring (climt) .. ") on duplicate key update `value` = " .. _tostring (climt))
-else
-commandanswer (nick, gettext ("No rows to remove: %s"):format (ctype))
-end
-
-elseif ctype == "cc" then
-VH:SQLQuery ("truncate table `" .. tbl_sql.ccstat .. "`")
-VH:SQLQuery ("update ignore `" .. tbl_sql.conf .. "` set `value` = '" .. (os.time () + table_sets.srvtimediff) .. "' where `variable` = 'date_ccstats'")
-commandanswer (nick, gettext ("Deleted all rows: %s"):format (ctype))
-opsnotify (table_sets.classnotiledoact, gettext ("%s with class %d deleted all user location entries."):format (nick, cls))
-
-else -- unknown type
-	commandanswer (nick, gettext ("Known types are: %s"):format ("chat, share, op, sear, word " .. gettext ("and") .. " cc"))
-end
 end
 
 ----- ---- --- -- -
@@ -16510,6 +16632,20 @@ commandanswer (nick, gettext ("Your share rank is: %s"):format (makesize (rank))
 else
 commandanswer (nick, gettext ("You have to share %s and reconnect to get started."):format (_tostring (table_sets.shareranmin) .. " " .. gettext ("GiB")))
 end
+end
+
+----- ---- --- -- -
+
+function upranksendown (nick, clas)
+	--uprankaccept (nick, clas) -- todo: sync self
+	local _, rows = VH:SQLQuery ("select `rank` from `" .. tbl_sql.upran .. "` where `nick` = '" .. repsqlchars (nick) .. "'")
+
+	if rows > 0 then
+		local _, rank = VH:SQLFetch (0)
+		commandanswer (nick, gettext ("Your uptime rank is: %s"):format (formatuptime (os.time () - rank, false)))
+	else
+		commandanswer (nick, gettext ("You have to reconnect to get started."))
+	end
 end
 
 ----- ---- --- -- -
@@ -16562,6 +16698,26 @@ commandanswer (nick, gettext ("Top %d share rankers"):format (rows) .. ":\r\n\r\
 else
 commandanswer (nick, gettext ("Share rank list is empty."))
 end
+end
+
+----- ---- --- -- -
+
+function upranksendall (nick)
+	-- todo: sync all
+	local _, rows = VH:SQLQuery ("select `nick`, `rank` from `" .. tbl_sql.upran .. "` order by `rank` desc limit " .. _tostring (table_sets.ranklimit))
+
+	if rows > 0 then
+		local list = ""
+
+		for pos = 0, rows - 1 do
+			local _, user, rank = VH:SQLFetch (pos)
+			list = list .. " " .. prezero (# _tostring (rows), (pos + 1)) .. ". [ R: " .. formatuptime (os.time () - rank, true) .. " ] " .. user .. "\r\n"
+		end
+
+		commandanswer (nick, gettext ("Top %d uptime rankers"):format (rows) .. ":\r\n\r\n" .. list)
+	else
+		commandanswer (nick, gettext ("Uptime rank list is empty."))
+	end
 end
 
 ----- ---- --- -- -
@@ -17337,36 +17493,37 @@ end
 ----- ---- --- -- -
 
 function namereg (nick, line, cls)
-local _, _, oldn = line:find ("^(%S+) %S+$")
+	local _, _, oldn = line:find ("^(%S+) %S+$")
 
-if not getregclass (oldn) then -- check if physically registered
-commandanswer (nick, gettext ("User is not registered: %s"):format (oldn))
-else
-local _, _, newn = line:find ("^%S+ (%S+)$")
-newn = repnickchars (newn)
+	if not getregclass (oldn) then -- check if physically registered
+		commandanswer (nick, gettext ("User is not registered: %s"):format (oldn))
+	else
+		local _, _, newn = line:find ("^%S+ (%S+)$")
+		newn = repnickchars (newn)
 
-if getstatus (oldn) == 1 then -- notify and disconnect user if hes online
-pmtouser (oldn, table_othsets.botnick, gettext ("You are now going to be disconnected from the hub in order for your new nick to apply: %s"):format (newn))
-VH:Disconnect (oldn)
-end
+		if getstatus (oldn) == 1 then -- notify and disconnect user if hes online
+			pmtouser (oldn, table_othsets.botnick, gettext ("You are now going to be disconnected from the hub in order for your new nick to apply: %s"):format (newn))
+			VH:Disconnect (oldn)
+		end
 
-local rnewn = repsqlchars (newn)
-local roldn = repsqlchars (oldn)
-VH:SQLQuery ("update `reglist` set `nick` = '" .. rnewn .. "' where `nick` = '" .. roldn .. "'")
-	VH:SQLQuery ("update `" .. tbl_sql.wm .. "` set `nick` = '" .. rnewn .. "' where `nick` = '" .. roldn .. "'")
-VH:SQLQuery ("update `" .. tbl_sql.cust .. "` set `nick` = '" .. rnewn .. "' where `nick` = '" .. roldn .. "'")
-VH:SQLQuery ("update `" .. tbl_sql.auth .. "` set `nick` = '" .. rnewn .. "' where `nick` = '" .. roldn .. "'") -- no limit
-VH:SQLQuery ("update `" .. tbl_sql.chran .. "` set `nick` = '" .. rnewn .. "' where `nick` = '" .. roldn .. "'")
-VH:SQLQuery ("update `" .. tbl_sql.opran .. "` set `nick` = '" .. rnewn .. "' where `nick` = '" .. roldn .. "'")
-VH:SQLQuery ("update `" .. tbl_sql.shran .. "` set `nick` = '" .. rnewn .. "' where `nick` = '" .. roldn .. "'")
-VH:SQLQuery ("update `" .. tbl_sql.off .. "` set `from` = '" .. rnewn .. "' where `from` = '" .. roldn .. "'") -- no limit
-VH:SQLQuery ("update `" .. tbl_sql.news .. "` set `by` = '" .. rnewn .. "' where `by` = '" .. roldn .. "'") -- no limit
-VH:SQLQuery ("update `" .. tbl_sql.rel .. "` set `by` = '" .. rnewn .. "' where `by` = '" .. roldn .. "'") -- no limit
-VH:SQLQuery ("update `" .. tbl_sql.mchist .. "` set `realnick` = '" .. rnewn .. "' where `realnick` = '" .. roldn .. "'") -- no limit
-VH:SQLQuery ("update `" .. tbl_sql.ophist .. "` set `nick` = '" .. rnewn .. "' where `nick` = '" .. roldn .. "'") -- no limit
-commandanswer (nick, gettext ("Renamed account %s: %s"):format (oldn, newn))
-opsnotify (table_sets.classnotireg, gettext ("%s with class %d renamed account %s: %s"):format (nick, cls, oldn, newn))
-end
+		local rnewn = repsqlchars (newn)
+		local roldn = repsqlchars (oldn)
+		VH:SQLQuery ("update `reglist` set `nick` = '" .. rnewn .. "' where `nick` = '" .. roldn .. "'")
+		VH:SQLQuery ("update `" .. tbl_sql.wm .. "` set `nick` = '" .. rnewn .. "' where `nick` = '" .. roldn .. "'")
+		VH:SQLQuery ("update `" .. tbl_sql.cust .. "` set `nick` = '" .. rnewn .. "' where `nick` = '" .. roldn .. "'")
+		VH:SQLQuery ("update `" .. tbl_sql.auth .. "` set `nick` = '" .. rnewn .. "' where `nick` = '" .. roldn .. "'") -- no limit
+		VH:SQLQuery ("update `" .. tbl_sql.chran .. "` set `nick` = '" .. rnewn .. "' where `nick` = '" .. roldn .. "'")
+		VH:SQLQuery ("update `" .. tbl_sql.upran .. "` set `nick` = '" .. rnewn .. "' where `nick` = '" .. roldn .. "'")
+		VH:SQLQuery ("update `" .. tbl_sql.opran .. "` set `nick` = '" .. rnewn .. "' where `nick` = '" .. roldn .. "'")
+		VH:SQLQuery ("update `" .. tbl_sql.shran .. "` set `nick` = '" .. rnewn .. "' where `nick` = '" .. roldn .. "'")
+		VH:SQLQuery ("update `" .. tbl_sql.off .. "` set `from` = '" .. rnewn .. "' where `from` = '" .. roldn .. "'") -- no limit
+		VH:SQLQuery ("update `" .. tbl_sql.news .. "` set `by` = '" .. rnewn .. "' where `by` = '" .. roldn .. "'") -- no limit
+		VH:SQLQuery ("update `" .. tbl_sql.rel .. "` set `by` = '" .. rnewn .. "' where `by` = '" .. roldn .. "'") -- no limit
+		VH:SQLQuery ("update `" .. tbl_sql.mchist .. "` set `realnick` = '" .. rnewn .. "' where `realnick` = '" .. roldn .. "'") -- no limit
+		VH:SQLQuery ("update `" .. tbl_sql.ophist .. "` set `nick` = '" .. rnewn .. "' where `nick` = '" .. roldn .. "'") -- no limit
+		commandanswer (nick, gettext ("Renamed account %s: %s"):format (oldn, newn))
+		opsnotify (table_sets.classnotireg, gettext ("%s with class %d renamed account %s: %s"):format (nick, cls, oldn, newn))
+	end
 end
 
 ----- ---- --- -- -
@@ -17474,6 +17631,7 @@ function delledouser (nick)
 	VH:SQLQuery ("delete from `" .. tbl_sql.auth .. "` where `nick` = '" .. usr .. "'")
 	VH:SQLQuery ("delete from `" .. tbl_sql.off .. "` where `from` = '" .. usr .. "'")
 	VH:SQLQuery ("delete from `" .. tbl_sql.chran .. "` where `nick` = '" .. usr .. "'")
+	VH:SQLQuery ("delete from `" .. tbl_sql.upran .. "` where `nick` = '" .. usr .. "'")
 	VH:SQLQuery ("delete from `" .. tbl_sql.opran .. "` where `nick` = '" .. usr .. "'")
 	VH:SQLQuery ("delete from `" .. tbl_sql.shran .. "` where `nick` = '" .. usr .. "'")
 end
@@ -17807,34 +17965,39 @@ smensep (usr)
 sopmenitm (usr, gettext ("Authorization") .. "\\" .. gettext ("Delete authorization entry"), table_cmnds.authdel .. " %[line:<" .. gettext ("identifier") .. ">]")
 end
 
--- ranks
+	-- ranks
+	if ucl >= table_sets.chatrankclass then
+		susmenitm (usr, gettext ("Ranks") .. "\\" .. gettext ("Top %d chat rankers"):format (table_sets.ranklimit), table_cmnds.chatranks)
+		susmenitm (usr, gettext ("Ranks") .. "\\" .. gettext ("Your chat rank"), table_cmnds.mychatrank)
+		smensep (usr)
+	end
 
-if ucl >= table_sets.chatrankclass then
-susmenitm (usr, gettext ("Ranks") .. "\\" .. gettext ("Top %d chat rankers"):format (table_sets.ranklimit), table_cmnds.chatranks)
-susmenitm (usr, gettext ("Ranks") .. "\\" .. gettext ("Your chat rank"), table_cmnds.mychatrank)
-smensep (usr)
-end
+	if ucl >= table_sets.uprankclass then
+		susmenitm (usr, gettext ("Ranks") .. "\\" .. gettext ("Top %d uptime rankers"):format (table_sets.ranklimit), table_cmnds.upranks)
+		susmenitm (usr, gettext ("Ranks") .. "\\" .. gettext ("Your uptime rank"), table_cmnds.myuprank)
+		smensep (usr)
+	end
 
-if ucl >= table_sets.sharerankclass then
-susmenitm (usr, gettext ("Ranks") .. "\\" .. gettext ("Top %d share rankers"):format (table_sets.ranklimit), table_cmnds.shareranks)
-susmenitm (usr, gettext ("Ranks") .. "\\" .. gettext ("Your share rank"), table_cmnds.mysharerank)
-smensep (usr)
-end
+	if ucl >= table_sets.sharerankclass then
+		susmenitm (usr, gettext ("Ranks") .. "\\" .. gettext ("Top %d share rankers"):format (table_sets.ranklimit), table_cmnds.shareranks)
+		susmenitm (usr, gettext ("Ranks") .. "\\" .. gettext ("Your share rank"), table_cmnds.mysharerank)
+		smensep (usr)
+	end
 
-if ucl >= table_sets.oprankclass then
-susmenitm (usr, gettext ("Ranks") .. "\\" .. gettext ("Top %d operator rankers"):format (table_sets.ranklimit), table_cmnds.opranks)
+	if ucl >= table_sets.oprankclass then
+		susmenitm (usr, gettext ("Ranks") .. "\\" .. gettext ("Top %d operator rankers"):format (table_sets.ranklimit), table_cmnds.opranks)
 
-if ucl >= 3 then
-sopmenitm (usr, gettext ("Ranks") .. "\\" .. gettext ("Your operator rank"), table_cmnds.myoprank)
-end
+		if ucl >= 3 then
+			sopmenitm (usr, gettext ("Ranks") .. "\\" .. gettext ("Your operator rank"), table_cmnds.myoprank)
+		end
 
-smensep (usr)
-end
+		smensep (usr)
+	end
 
-if ucl >= table_sets.searrankclass then
-susmenitm (usr, gettext ("Ranks") .. "\\" .. gettext ("Top %d search requests"):format (table_sets.ranklimit), table_cmnds.searranks)
-smensep (usr)
-end
+	if ucl >= table_sets.searrankclass then
+		susmenitm (usr, gettext ("Ranks") .. "\\" .. gettext ("Top %d search requests"):format (table_sets.ranklimit), table_cmnds.searranks)
+		smensep (usr)
+	end
 
 	if ucl >= table_sets.wordrankclass then
 		susmenitm (usr, gettext ("Ranks") .. "\\" .. gettext ("Top %d used words"):format (table_sets.ranklimit), table_cmnds.wordranks)
@@ -20040,61 +20203,84 @@ elseif tvar == "enablecmdlog" then
 
 	----- ---- --- -- -
 
-elseif tvar == "oprankclass" then
-if num then
-if (setto >= 0 and setto <= 5) or setto == 10 or setto == 11 then
-ok = true
-if setto > table_sets [tvar] then cleantablebyclass (setto, tbl_sql.opran) end
-else
-commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0, 1, 2, 3, 4, 5, 10 " .. gettext ("or") .. " 11"))
-end
+	elseif tvar == "uprankclass" then
+		if num then
+			if (setto >= 0 and setto <= 5) or setto == 10 or setto == 11 then
+				if setto > 0 and table_sets.showuseruptime == 0 then
+					commandanswer (nick, gettext ("In order to use this feature you need to set %s to: %d"):format ("showuseruptime", 1))
+				end
 
-else
-commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
-end
+				ok = true
 
------ ---- --- -- -
-
-elseif tvar == "searrankclass" then
-	if num then
-		if (setto >= 0 and setto <= 5) or setto == 10 or setto == 11 then
-			ok = true
+				if setto > table_sets [tvar] then
+					cleantablebyclass (setto, tbl_sql.upran)
+				end
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0, 1, 2, 3, 4, 5, 10 " .. gettext ("or") .. " 11"))
+			end
 		else
-			commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0, 1, 2, 3, 4, 5, 10 " .. gettext ("or") .. " 11"))
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
 		end
 
-	else
-		commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
-	end
+	----- ---- --- -- -
 
------ ---- --- -- -
+	elseif tvar == "oprankclass" then
+		if num then
+			if (setto >= 0 and setto <= 5) or setto == 10 or setto == 11 then
+				ok = true
 
-elseif tvar == "sharerankclass" then
-if num then
-if (setto >= 0 and setto <= 5) or setto == 10 or setto == 11 then
-ok = true
-if setto > table_sets [tvar] then cleantablebyclass (setto, tbl_sql.shran) end
-else
-commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0, 1, 2, 3, 4, 5, 10 " .. gettext ("or") .. " 11"))
-end
+				if setto > table_sets [tvar] then
+					cleantablebyclass (setto, tbl_sql.opran)
+				end
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0, 1, 2, 3, 4, 5, 10 " .. gettext ("or") .. " 11"))
+			end
+		else
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
+		end
 
-else
-commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
-end
+	----- ---- --- -- -
 
------ ---- --- -- -
+	elseif tvar == "searrankclass" then
+		if num then
+			if (setto >= 0 and setto <= 5) or setto == 10 or setto == 11 then
+				ok = true
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0, 1, 2, 3, 4, 5, 10 " .. gettext ("or") .. " 11"))
+			end
+		else
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
+		end
 
-elseif tvar == "wordrankclass" then
-if num then
-if (setto >= 0 and setto <= 5) or setto == 10 or setto == 11 then
-ok = true
-else
-commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0, 1, 2, 3, 4, 5, 10 " .. gettext ("or") .. " 11"))
-end
+	----- ---- --- -- -
 
-else
-commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
-end
+	elseif tvar == "sharerankclass" then
+		if num then
+			if (setto >= 0 and setto <= 5) or setto == 10 or setto == 11 then
+				ok = true
+
+				if setto > table_sets [tvar] then
+					cleantablebyclass (setto, tbl_sql.shran)
+				end
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0, 1, 2, 3, 4, 5, 10 " .. gettext ("or") .. " 11"))
+			end
+		else
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
+		end
+
+	----- ---- --- -- -
+
+	elseif tvar == "wordrankclass" then
+		if num then
+			if (setto >= 0 and setto <= 5) or setto == 10 or setto == 11 then
+				ok = true
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0, 1, 2, 3, 4, 5, 10 " .. gettext ("or") .. " 11"))
+			end
+		else
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
+		end
 
 	----- ---- --- -- -
 
@@ -22490,8 +22676,10 @@ function senduserhelp (nick, pm)
 	-- ranks
 	help = help .. " " .. trig .. table_cmnds.mychatrank .. " - " .. gettext ("Your chat rank") .. "\r\n"
 	help = help .. " " .. trig .. table_cmnds.mysharerank .. " - " .. gettext ("Your share rank") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.myuprank .. " - " .. gettext ("Your uptime rank") .. "\r\n"
 	help = help .. " " .. trig .. table_cmnds.chatranks .. " - " .. gettext ("Top %d chat rankers"):format (table_sets.ranklimit) .. "\r\n"
 	help = help .. " " .. trig .. table_cmnds.shareranks .. " - " .. gettext ("Top %d share rankers"):format (table_sets.ranklimit) .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.upranks .. " - " .. gettext ("Top %d uptime rankers"):format (table_sets.ranklimit) .. "\r\n"
 	help = help .. " " .. trig .. table_cmnds.opranks .. " - " .. gettext ("Top %d operator rankers"):format (table_sets.ranklimit) .. "\r\n"
 	help = help .. " " .. trig .. table_cmnds.searranks .. " - " .. gettext ("Top %d search requests"):format (table_sets.ranklimit) .. "\r\n"
 	help = help .. " " .. trig .. table_cmnds.wordranks .. " [" .. gettext ("word") .. "] - " .. gettext ("Top %d used words"):format (table_sets.ranklimit) .. "\r\n"
@@ -22650,6 +22838,7 @@ function sendstats (nick)
 	stats = stats .. "\r\n"
 	stats = stats .. "\r\n " .. gettext ("Total chat rank points: %d"):format (cntchatran)
 	stats = stats .. "\r\n " .. gettext ("Total share rank size: %s"):format (makesize (countranks (tbl_sql.shran)))
+	stats = stats .. "\r\n " .. gettext ("Total uptime rank time: %s"):format (formatuptime (os.time () - countranks (tbl_sql.upran), false))
 	stats = stats .. "\r\n " .. gettext ("Total operator rank points: %d"):format (countranks (tbl_sql.opran))
 	stats = stats .. "\r\n " .. gettext ("Total search rank points: %d"):format (countranks (tbl_sql.srran))
 	stats = stats .. "\r\n " .. gettext ("Total word rank points: %d"):format (countranks (tbl_sql.wdran))
@@ -22680,6 +22869,7 @@ function sendstats (nick)
 	stats = stats .. "\r\n " .. gettext ("Size of release table: %d [ %s: %d @ %s ]"):format (counttable (tbl_sql.rel), "C", (getledoconf ("limcleanrel") or 0), fromunixtime ((getledoconf ("lastcleanrel") or 0), true))
 	stats = stats .. "\r\n " .. gettext ("Size of chat ranks table: %d [ %s: %d @ %s ]"):format (counttable (tbl_sql.chran), "C", (getledoconf ("limcleanchran") or 0), fromunixtime ((getledoconf ("lastcleanchran") or 0), true))
 	stats = stats .. "\r\n " .. gettext ("Size of share ranks table: %d [ %s: %d @ %s ]"):format (counttable (tbl_sql.shran), "C", (getledoconf ("limcleanshran") or 0), fromunixtime ((getledoconf ("lastcleanshran") or 0), true))
+	stats = stats .. "\r\n " .. gettext ("Size of uptime ranks table: %d [ %s: %d @ %s ]"):format (counttable (tbl_sql.upran), "C", (getledoconf ("limcleanupran") or 0), fromunixtime ((getledoconf ("lastcleanupran") or 0), true))
 	stats = stats .. "\r\n " .. gettext ("Size of operator ranks table: %d [ %s: %d @ %s ]"):format (counttable (tbl_sql.opran), "C", (getledoconf ("limcleanopran") or 0), fromunixtime ((getledoconf ("lastcleanopran") or 0), true))
 	stats = stats .. "\r\n " .. gettext ("Size of search ranks table: %d [ %s: %d @ %s ]"):format (counttable (tbl_sql.srran), "C", (getledoconf ("limcleansrran") or 0), fromunixtime ((getledoconf ("lastcleansrran") or 0), true))
 	stats = stats .. "\r\n " .. gettext ("Size of word ranks table: %d [ %s: %d @ %s ]"):format (counttable (tbl_sql.wdran), "C", (getledoconf ("limcleanwdran") or 0), fromunixtime ((getledoconf ("lastcleanwdran") or 0), true))
@@ -22937,6 +23127,7 @@ function showledoconf (nick)
 	conf = conf .. "\r\n [::] chranprizetext = " .. _tostring (table_sets.chranprizetext)
 	conf = conf .. "\r\n [::] sharerankclass = " .. _tostring (table_sets.sharerankclass)
 	conf = conf .. "\r\n [::] shareranmin = " .. _tostring (table_sets.shareranmin)
+	conf = conf .. "\r\n [::] uprankclass = " .. _tostring (table_sets.uprankclass)
 	conf = conf .. "\r\n [::] oprankclass = " .. _tostring (table_sets.oprankclass)
 	conf = conf .. "\r\n [::] searrankclass = " .. _tostring (table_sets.searrankclass)
 	conf = conf .. "\r\n [::] wordrankclass = " .. _tostring (table_sets.wordrankclass)
@@ -23125,14 +23316,15 @@ VH:SQLQuery ("create table if not exists `" .. tbl_sql.auth .. "` (`id` bigint(2
 	-- releases
 	VH:SQLQuery ("create table if not exists `" .. tbl_sql.rel .. "` (`release` varchar(255) not null primary key, `category` varchar(255) not null, `tth` varchar(255) not null, `by` varchar(255) not null, `date` bigint(20) unsigned not null)")
 
--- ranks
-VH:SQLQuery ("create table if not exists `" .. tbl_sql.chran .. "` (`nick` varchar(255) not null, `rank` bigint(20) unsigned not null default 1, primary key (`nick`))")
-VH:SQLQuery ("create table if not exists `" .. tbl_sql.opran .. "` (`nick` varchar(255) not null, `rank` bigint(20) unsigned not null default 1, primary key (`nick`))")
-VH:SQLQuery ("create table if not exists `" .. tbl_sql.shran .. "` (`nick` varchar(255) not null, `rank` bigint(20) unsigned not null default 1, primary key (`nick`))")
-VH:SQLQuery ("create table if not exists `" .. tbl_sql.srran .. "` (`search` varchar(255) not null, `rank` bigint(20) unsigned not null default 1, primary key (`search`))")
-VH:SQLQuery ("create table if not exists `" .. tbl_sql.wdran .. "` (`word` varchar(255) not null, `rank` bigint(20) unsigned not null default 1, primary key (`word`))")
-VH:SQLQuery ("create table if not exists `" .. tbl_sql.ccstat .. "` (`nick` varchar(255) not null, `cc` varchar(2) not null, primary key (`nick`))")
-VH:SQLQuery ("create table if not exists `" .. tbl_sql.ranex .. "` (`nick` varchar(255) not null, `occurred` bigint(20) unsigned not null default 0, primary key (`nick`))")
+	-- ranks
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql.chran .. "` (`nick` varchar(255) not null, `rank` bigint(20) unsigned not null default 1, primary key (`nick`))")
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql.upran .. "` (`nick` varchar(255) not null primary key, `rank` bigint(20) unsigned not null default 1)")
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql.opran .. "` (`nick` varchar(255) not null, `rank` bigint(20) unsigned not null default 1, primary key (`nick`))")
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql.shran .. "` (`nick` varchar(255) not null, `rank` bigint(20) unsigned not null default 1, primary key (`nick`))")
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql.srran .. "` (`search` varchar(255) not null, `rank` bigint(20) unsigned not null default 1, primary key (`search`))")
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql.wdran .. "` (`word` varchar(255) not null, `rank` bigint(20) unsigned not null default 1, primary key (`word`))")
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql.ccstat .. "` (`nick` varchar(255) not null, `cc` varchar(2) not null, primary key (`nick`))")
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql.ranex .. "` (`nick` varchar(255) not null, `occurred` bigint(20) unsigned not null default 0, primary key (`nick`))")
 
 	-- offline messenger
 	VH:SQLQuery ("create table if not exists `" .. tbl_sql.off .. "` (`id` bigint(20) unsigned not null auto_increment primary key, `from` varchar(255) not null, `ip` varchar(15) not null, `to` varchar(255) not null, `date` bigint(20) unsigned not null, `message` text not null)")
@@ -23385,21 +23577,21 @@ VH:SQLQuery ("alter table `" .. tbl_sql.mcresp .. "` change column `occurred` `o
 VH:SQLQuery ("alter table `" .. tbl_sql.respex .. "` change column `nick` `exception` varchar(255) not null") -- exception
 VH:SQLQuery ("alter table `" .. tbl_sql.respex .. "` change column `occurred` `occurred` bigint(20) unsigned not null default 0") -- occurred
 
--- ranks
-VH:SQLQuery ("alter table `" .. tbl_sql.chran .. "` change column `nick` `nick` varchar(255) not null") -- nick
-VH:SQLQuery ("alter table `" .. tbl_sql.chran .. "` change column `rank` `rank` bigint(20) unsigned not null default 1") -- rank
+	-- ranks
+	VH:SQLQuery ("alter table `" .. tbl_sql.chran .. "` change column `nick` `nick` varchar(255) not null") -- nick
+	VH:SQLQuery ("alter table `" .. tbl_sql.chran .. "` change column `rank` `rank` bigint(20) unsigned not null default 1") -- rank
 
-VH:SQLQuery ("alter table `" .. tbl_sql.opran .. "` change column `nick` `nick` varchar(255) not null") -- nick
-VH:SQLQuery ("alter table `" .. tbl_sql.opran .. "` change column `rank` `rank` bigint(20) unsigned not null default 1") -- rank
+	VH:SQLQuery ("alter table `" .. tbl_sql.opran .. "` change column `nick` `nick` varchar(255) not null") -- nick
+	VH:SQLQuery ("alter table `" .. tbl_sql.opran .. "` change column `rank` `rank` bigint(20) unsigned not null default 1") -- rank
 
-VH:SQLQuery ("alter table `" .. tbl_sql.shran .. "` change column `nick` `nick` varchar(255) not null") -- nick
-VH:SQLQuery ("alter table `" .. tbl_sql.shran .. "` change column `rank` `rank` bigint(20) unsigned not null default 1") -- rank
+	VH:SQLQuery ("alter table `" .. tbl_sql.shran .. "` change column `nick` `nick` varchar(255) not null") -- nick
+	VH:SQLQuery ("alter table `" .. tbl_sql.shran .. "` change column `rank` `rank` bigint(20) unsigned not null default 1") -- rank
 
--- search ranks
--- not added
+	-- search ranks
+	-- not added
 
-VH:SQLQuery ("alter table `" .. tbl_sql.wdran .. "` change column `word` `word` varchar(255) not null") -- word
-VH:SQLQuery ("alter table `" .. tbl_sql.wdran .. "` change column `rank` `rank` bigint(20) unsigned not null default 1") -- rank
+	VH:SQLQuery ("alter table `" .. tbl_sql.wdran .. "` change column `word` `word` varchar(255) not null") -- word
+	VH:SQLQuery ("alter table `" .. tbl_sql.wdran .. "` change column `rank` `rank` bigint(20) unsigned not null default 1") -- rank
 
 -- user location statistics
 -- not added
@@ -26241,6 +26433,14 @@ end
 ----- ---- --- -- -
 
 function formatuptime (uptime, fmt)
+	if uptime == 0 then -- todo: do we break anything here?
+		if fmt then -- short
+			return table_sets.shrtuptimefmt:format (prezero (2, 0), prezero (2, 0), prezero (2, 0), prezero (2, 0), prezero (2, 0))
+		else -- long
+			return "0 " ..  gettext ("seconds")
+		end
+	end
+
 	local t = os.date ("!*t", os.time () - uptime)
 	t.month = t.month - 1
 	t.day = t.day - 1

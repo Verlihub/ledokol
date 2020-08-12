@@ -1279,3 +1279,14 @@ Failed to set user IP: %s @ %s|
 IP successfully set on user: %s @ %s|
 Invalid command parameters specified: %s|
 Set user IP|
+Top %d uptime rankers|
+Your uptime rank|
+Your uptime rank is: %s|
+You have to reconnect to get started.|
+Uptime rank list is empty.|
+Top %d uptime rankers|
+Deleted from uptime rank list: %s|
+Not found in uptime rank list: %s|
+%s with class %d deleted %d uptime ranks lower than %d.|
+Size of uptime ranks table: %d [ %s: %d @ %s ]|
+Total uptime rank time: %s|
