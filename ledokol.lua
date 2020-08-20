@@ -63,7 +63,7 @@ Tzaca, JOE™, Foxtrot, Deivis
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.7" -- ledokol version
-bld_ledo = "102" -- build number
+bld_ledo = "103" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -3852,7 +3852,7 @@ return 0
 	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.setuserip .. " [^ ]+ %d+%.%d+%.%d+%.%d+$") then
 		if ucl >= table_sets.mincommandclass then
 			donotifycmd (nick, data, 0, ucl)
-			setuserip (nick, data:sub (# table_cmnds.setuserip + 3))
+			setuserip (nick, data:sub (# table_cmnds.setuserip + 3), ucl)
 		else
 			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
@@ -7167,7 +7167,7 @@ function VH_OnScriptCommand (name, data, plug, file)
 			if table_refu.InUserSupports then -- check if client supports mcto
 				local on, has = VH:InUserSupports (to, "MCTo")
 
-				if on and has and tonumber (has) == 1 then
+				if on and istrue (has) then
 					mcto = true
 				end
 			end
@@ -7594,7 +7594,7 @@ function VH_OnParsedMsgMCTo (from, data, to)
 		if table_refu.InUserSupports then -- check if other user supports mcto
 			local on, has = VH:InUserSupports (to, "MCTo")
 
-			if on and has and tonumber (has) == 1 then
+			if on and istrue (has) then
 				VH:SendToUser ("$MCTo: " .. to .. " From: " .. from .. " $<" .. fake .. "> " .. pmdat .. "|", to)
 				return 0
 			end
@@ -9874,7 +9874,7 @@ function sendrcmenu (nick, class)
 	if table_refu.InUserSupports then -- check if client supports user commands
 		local on, has = VH:InUserSupports (nick, "UserCommand")
 
-		if on and has and tonumber (has) == 0 then
+		if on and not istrue (has) then
 			return
 		end
 	end
@@ -12721,7 +12721,7 @@ end
 
 ----- ---- --- -- -
 
-function setuserip (nick, line)
+function setuserip (nick, line, clas)
 	if not table_refu.SetUserIP then
 		commandanswer (nick, gettext ("This feature requires %s or later installed on your system."):format ("Verlihub 1.2.0.20"))
 
@@ -12732,7 +12732,7 @@ function setuserip (nick, line)
 			if getstatus (user) == 0 then
 				commandanswer (nick, gettext ("User not in list: %s"):format (user))
 
-			elseif getclass (user) >= getclass (nick) then
+			elseif clas < 10 and getclass (user) >= clas then -- master can do it on anyone
 				commandanswer (nick, gettext ("You can't set IP on user whose class is higher or equals your own: %s"):format (user))
 
 			elseif not VH:SetUserIP (user, addr) then
@@ -17901,7 +17901,7 @@ function installusermenu (usr)
 	if table_refu.InUserSupports then -- check if client supports user commands
 		local on, has = VH:InUserSupports (usr, "UserCommand")
 
-		if on and has and tonumber (has) == 0 then
+		if on and not istrue (has) then
 			return
 		end
 	end
@@ -26385,6 +26385,22 @@ function valor (val, bad)
 		return
 	else
 		return val
+	end
+end
+
+----- ---- --- -- -
+
+function istrue (bool)
+	if type (bool) == "number" then
+		if tonumber (bool) == 1 then
+			return true
+		else
+			return false
+		end
+	elseif bool then
+		return true
+	else
+		return false
 	end
 end
 
