@@ -14040,12 +14040,14 @@ function checkclone (nick, addr, clas, desc, tag, conn, stat, mail, shar)
 		return false
 	end
 
+	tag = tag:gsub (",H:%d+/%d+/%d+,S:", ",H:,S:") -- workaround for clients that cant predict hub count before sending myinfo
 	local same = desc .. tag .. conn .. _tostring (stat) .. mail .. _tostring (shar)
 	local sssh, sadd = repnmdcinchars (shar), repnmdcinchars (addr)
 
 	for user in getnicklist ():gmatch ("[^%$ ]+") do
 		if user ~= nick and getclass (user) < table_sets.scanbelowclass and getip (user) == addr then -- same ip, skip user himself and if second user is protected
 			local codesc, cotag, coconn, costat, comail, coshar = parsemyinfo (getmyinfo (user))
+			cotag = cotag:gsub (",H:%d+/%d+/%d+,S:", ",H:,S:")
 			local comp = codesc .. cotag .. coconn .. _tostring (costat) .. comail .. _tostring (coshar)
 
 			if comp == same then -- myinfo match
