@@ -10899,6 +10899,7 @@ function moveclones (nick, url)
 
 		if addr ~= "0.0.0.0" then -- skip bots
 			local desc, tag, conn, stat, mail, shar = parsemyinfo (getmyinfo (user))
+			tag = tag:gsub (",H:%d+/%d+/%d+,S:", ",H:,S:") -- workaround for clients that cant predict hub count before sending myinfo
 			local id = addr .. desc .. tag .. conn .. _tostring (stat) .. mail .. _tostring (shar)
 
 			if not cist [id] then
@@ -10939,6 +10940,7 @@ function showcloneinfo (nick)
 
 		if addr ~= "0.0.0.0" then -- skip bots
 			local desc, tag, conn, stat, mail, shar = parsemyinfo (getmyinfo (user))
+			tag = tag:gsub (",H:%d+/%d+/%d+,S:", ",H:,S:") -- workaround for clients that cant predict hub count before sending myinfo
 			local id = addr .. "_" .. desc .. tag .. conn .. _tostring (stat) .. mail .. "_" .. _tostring (shar)
 
 			if not cist [id] then
