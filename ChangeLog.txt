@@ -10,6 +10,7 @@
 [ 98] Fixed: Display of default port in links with non standard protocols in frienly hublist
 [100] Fixed: Cut down too long string in user logger
 [103] Fixed: Lua 5.4 now pushes booleans correctly
+[104] Changed: Clone detection is performed using all MyINFO and IP parameters instead of only IP and share size
 [ 88] Added: Secure connection information to user information
 [ 89] Added: TLS version information to user information
 [ 89] Added: badpassbanmult configuration to multiply incorrect password ban time each time, request by KCAHDEP

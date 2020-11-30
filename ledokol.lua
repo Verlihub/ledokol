@@ -63,7 +63,7 @@ Tzaca, JOE™, Foxtrot, Deivis
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.7" -- ledokol version
-bld_ledo = "103" -- build number
+bld_ledo = "104" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -5138,7 +5138,7 @@ function VH_OnParsedMsgMyINFO (nick, data)
 		return 1
 	end
 
-	local _, addr, cc, desc, tag, conn, mail, size, hasinfo, gotaddr, gotcc = 0, "", "", "", "", "", "", 0, false, false, false
+	local _, addr, cc, desc, tag, conn, stat, mail, size, hasinfo, gotaddr, gotcc = 0, "", "", "", "", "", 1, "", 0, false, false, false
 
 	if table_sets.enableuserlog == 1 and table_sets.logallmyinfos == 1 then -- user logger
 		--if not gotaddr then
@@ -5149,7 +5149,7 @@ function VH_OnParsedMsgMyINFO (nick, data)
 			cc, gotcc = getcc (nick), true
 		end
 
-		desc, tag, conn, _, mail, size = parsemyinfo (nil, data)
+		desc, tag, conn, stat, mail, size = parsemyinfo (data)
 		hasinfo = true
 		local nmdc, sups = "", ""
 
@@ -5191,7 +5191,7 @@ function VH_OnParsedMsgMyINFO (nick, data)
 	end
 
 	if not hasinfo then -- prepare
-		desc, tag, conn, _, mail, size = parsemyinfo (nil, data)
+		desc, tag, conn, stat, mail, size = parsemyinfo (data)
 	end
 
 	if checkdesc (nick, desc, cls, addr) then
@@ -5218,7 +5218,7 @@ function VH_OnParsedMsgMyINFO (nick, data)
 		return 0
 	end
 
-	if checkclone (nick, size, addr, cls) then
+	if checkclone (nick, addr, cls, desc, tag, conn, stat, mail, size) then
 		return 0
 	end
 
@@ -5232,7 +5232,7 @@ function VH_OnUserLogin (nick, uip)
 		return 1
 	end
 
-	local mistr, addr, cc, desc, tag, conn, email, size, prot, hasip, hascc, hasinfo, hasprot, hasmistr, _ = "", "", "", "", "", "", "", 0, false, false, false, false, false, false, 0
+	local mistr, addr, cc, desc, tag, conn, stat, email, size, prot, hasip, hascc, hasinfo, hasprot, hasmistr, _ = "", "", "", "", "", "", 1, "", 0, false, false, false, false, false, false, 0
 
 	if table_sets.badpassbanmult > 0 and table_refu.PassTempBan then -- bad password ban multiplier
 		addr, hasip = (uip or getip (nick)), true
@@ -5261,7 +5261,7 @@ function VH_OnUserLogin (nick, uip)
 			mistr, hasmistr = getmyinfo (nick), true
 		end
 
-		desc, tag, conn, _, email, size = parsemyinfo (nil, mistr)
+		desc, tag, conn, stat, email, size = parsemyinfo (mistr)
 		hasinfo = true
 		local nmdc, sups = "", ""
 
@@ -5347,7 +5347,7 @@ function VH_OnUserLogin (nick, uip)
 					mistr, hasmistr = getmyinfo (nick), true
 				end
 
-				desc, tag, conn, _, email, size = parsemyinfo (nil, mistr)
+				desc, tag, conn, stat, email, size = parsemyinfo (mistr)
 				hasinfo = true
 			end
 
@@ -5405,7 +5405,7 @@ function VH_OnUserLogin (nick, uip)
 					mistr, hasmistr = getmyinfo (nick), true
 				end
 
-				desc, tag, conn, _, email, size = parsemyinfo (nil, mistr)
+				desc, tag, conn, stat, email, size = parsemyinfo (mistr)
 				hasinfo = true
 			end
 
@@ -5457,7 +5457,7 @@ function VH_OnUserLogin (nick, uip)
 				return 0
 			end
 
-			if checkclone (nick, size, addr, cls) then
+			if checkclone (nick, addr, cls, desc, tag, conn, stat, email, size) then
 				return 0
 			end
 
@@ -10898,26 +10898,23 @@ function moveclones (nick, url)
 		local addr = getip (user)
 
 		if addr ~= "0.0.0.0" then -- skip bots
-			local shar = parsemyinfoshare (getmyinfo (user))
+			local desc, tag, conn, stat, mail, shar = parsemyinfo (getmyinfo (user))
+			local id = addr .. desc .. tag .. conn .. _tostring (stat) .. mail .. _tostring (shar)
 
-			if shar > 0 then -- only users with share
-				local id = addr .. "_" .. _tostring (shar)
-
-				if not cist [id] then
-					cist [id] = {}
-				end
-
-				table.insert (cist [id], user)
+			if not cist [id] then
+				cist [id] = {}
 			end
+
+			table.insert (cist [id], user)
 		end
 	end
 
 	local tot = 0
 
-	for id, data in pairs (cist) do
+	for _, data in pairs (cist) do
 		local num = # data
 
-		if num > 1 then
+		if num > 1 then -- more than one
 			for pos = 2, num do
 				VH:SendToUser ("$ForceMove " .. url .. "|", data [pos])
 				tot = tot + 1
@@ -10941,7 +10938,8 @@ function showcloneinfo (nick)
 		local addr = getip (user)
 
 		if addr ~= "0.0.0.0" then -- skip bots
-			local id = addr .. "_" .. _tostring (parsemyinfoshare (getmyinfo (user)))
+			local desc, tag, conn, stat, mail, shar = parsemyinfo (getmyinfo (user))
+			local id = addr .. "_" .. desc .. tag .. conn .. _tostring (stat) .. mail .. "_" .. _tostring (shar)
 
 			if not cist [id] then
 				cist [id] = {}
@@ -10956,10 +10954,9 @@ function showcloneinfo (nick)
 	for id, data in pairs (cist) do
 		local num = # data
 
-		if num > 1 then
-			local pos = id:find ("_", 1, true)
-			local addr = id:sub (1, pos - 1)
-			list = list .. " " .. gettext ("%d users with IP %s and shared bytes %d: %s"):format (num, addr .. tryipcc (addr), id:sub (pos + 1), table.concat (data, " ")) .. "\r\n"
+		if num > 1 then -- more than one
+			local addr, shar = id:match ("^(%d+%.%d+%.%d+%.%d+)_.+_(%d+)$")
+			list = list .. " " .. gettext ("%d users with IP %s and shared bytes %d: %s"):format (num, addr .. tryipcc (addr), _tostring (shar), table.concat (data, " ")) .. "\r\n"
 			tot = tot + num - 1
 		end
 	end
@@ -10998,7 +10995,7 @@ function showuserinfo (nick, usr)
 						end
 
 						if v ["sMyINFO"] then -- myinfo
-							local desc, tag, conn, sts, email, share = parsemyinfo (user, v ["sMyINFO"])
+							local desc, tag, conn, sts, email, share = parsemyinfo (v ["sMyINFO"])
 							info = info .. " " .. gettext ("Description: %s"):format (desc) .. "\r\n" -- description
 							info = info .. " " .. gettext ("Tag: %s"):format (tag) .. "\r\n" -- tag
 
@@ -11181,7 +11178,7 @@ function showuserinfo (nick, usr)
 		local mi = getmyinfo (user)
 
 		if mi then
-			local desc, tag, conn, sts, email, share = parsemyinfo (user, mi)
+			local desc, tag, conn, sts, email, share = parsemyinfo (mi)
 			info = info .. " " .. gettext ("Description: %s"):format (desc) .. "\r\n" -- description
 			info = info .. " " .. gettext ("Tag: %s"):format (tag) .. "\r\n" -- tag
 
@@ -14038,20 +14035,22 @@ end
 
 ----- ---- --- -- -
 
-function checkclone (nick, shar, addr, clas)
-	if table_sets.michclone == 0 or tonumber (shar) == 0 or # addr == 0 or addr == "0.0.0.0" then -- skip 0 share
+function checkclone (nick, addr, clas, desc, tag, conn, stat, mail, shar)
+	if table_sets.michclone == 0 or # addr == 0 or addr == "0.0.0.0" then -- skip bots
 		return false
 	end
 
-	local ssha = _tostring (shar)
+	local same = desc .. tag .. conn .. _tostring (stat) .. mail .. _tostring (shar)
+	local sssh, sadd = repnmdcinchars (shar), repnmdcinchars (addr)
 
 	for user in getnicklist ():gmatch ("[^%$ ]+") do
-		if user ~= nick and getclass (user) < table_sets.scanbelowclass then -- skip user himself and if second user is protected
-			if parsemyinfoshare (getmyinfo (user)) == ssha and getip (user) == addr then -- exact share and ip match
-				local sssh, sadd = repnmdcinchars (shar), repnmdcinchars (addr)
+		if user ~= nick and getclass (user) < table_sets.scanbelowclass and getip (user) == addr then -- same ip, skip user himself and if second user is protected
+			local codesc, cotag, coconn, costat, comail, coshar = parsemyinfo (getmyinfo (user))
+			local comp = codesc .. cotag .. coconn .. _tostring (costat) .. comail .. _tostring (coshar)
 
+			if comp == same then -- myinfo match
 				for id, item in pairs (table_myfo.ex) do
-					if sssh:match (item.ent) or sadd:match (item.ent) then
+					if sssh:match (item.ent) or sadd:match (item.ent) then -- exception by share or ip, todo: add rest of available parameters
 						table_myfo.ex [id].occ = item.occ + 1
 						VH:SQLQuery ("update `" .. tbl_sql.miex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (item.ent) .. "'")
 						opsnotify (table_sets.classnotiex, gettext ("%s with IP %s and class %d allowed due to clone exception: %s"):format (nick, addr .. tryipcc (addr, nick), clas, user))
@@ -14810,7 +14809,7 @@ end
 
 ----- ---- --- -- -
 
-function parsemyinfo (nick, info)
+function parsemyinfo (info)
 	local desc, conn, mail, size = info:match ("^%$MyINFO %$ALL [^ ]+ (.*)%$.*%$(.*)%$(.*)%$(.*)%$$")
 	local tag, sts = "", 1
 	desc = desc or ""
@@ -21545,7 +21544,7 @@ end
 			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
 		end
 
------ ---- --- -- -
+	----- ---- --- -- -
 
 	elseif tvar == "michclone" then
 		if num then
@@ -21791,14 +21790,14 @@ else
 commandanswer (nick, gettext ("Configuration variable %s can't be empty."):format (tvar))
 end
 
------ ---- --- -- -
+	----- ---- --- -- -
 
-elseif tvar == "miclonemessage" then
-if # setto > 0 then
-ok = true
-else
-commandanswer (nick, gettext ("Configuration variable %s can't be empty."):format (tvar))
-end
+	elseif tvar == "miclonemessage" then
+		if # setto > 0 then
+			ok = true
+		else
+			commandanswer (nick, gettext ("Configuration variable %s can't be empty."):format (tvar))
+		end
 
 ----- ---- --- -- -
 
@@ -25956,7 +25955,7 @@ function reptextvars (data, vick, vata)
 		local myinfo = getmyinfo (vick)
 
 		if myinfo then
-			local desc, tag, conn, sts, email, share = parsemyinfo (vick, myinfo)
+			local desc, tag, conn, sts, email, share = parsemyinfo (myinfo)
 
 			if back:find ("<myinfodesc>", 1, true) then
 				back = back:gsub ("<myinfodesc>", reprexpchars (desc))
