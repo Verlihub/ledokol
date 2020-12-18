@@ -7195,6 +7195,32 @@ function VH_OnScriptCommand (name, data, plug, file)
 		if nick and line then
 			addophistoryline (nick, line, clas or getconfig ("opchat_class") or 3) -- repnmdcoutchars (nick), repnmdcoutchars (line)
 		end
+
+	elseif name == "sefi_user_block" then -- seach filter block if enabled
+		if table_sets.enablesearfilt >= 1 then
+			local say, nick, str = data:match ("^([01]) ([^ ]+) (.+)$")
+
+			if say ~= nil and nick and str and not table_sfbl [nick] then
+				if table_sets.sefiblockmsg == 1 then
+					sefinotify (table_sets.classnotisefi, gettext ("User added to search block list: %s"):format (nick))
+				end
+
+				table_sfbl [nick] = {
+					sil = (tonumber (say) == 0), -- silent
+					req = str,
+					num = 1
+				}
+			end
+		end
+
+	--[[
+	elseif name == "sefi_block_request" then -- seach filter block test
+		if table_sets.enablesearfilt >= 1 and table_sfbl [data] then
+			VH:ScriptCommand ("sefi_block_reply", "1 " .. data)
+		else
+			VH:ScriptCommand ("sefi_block_reply", "0 " .. data)
+		end
+	]]--
 	end
 
 	return 1
