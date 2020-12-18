@@ -2,7 +2,7 @@
 --[[ license agreement >>
 ---------------------------------------------------------------------
 
-Copyright © 2007-2020 RoLex
+Copyright © 2007-2021 RoLex
 
 Ledokol is free software; You can redistribute it
 and modify it under the terms of the GNU General
@@ -63,7 +63,7 @@ Tzaca, JOE™, Foxtrot, Deivis
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.7" -- ledokol version
-bld_ledo = "104" -- build number
+bld_ledo = "105" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -326,6 +326,8 @@ table_sets = {
 	chatintelqueue = 100,
 	chatintelquote = 500,
 	chatintelmaxreq = 1,
+	chatintelreqtime = 3,
+	chatintelreqwait = 10,
 	chatintelemail = "",
 	ctmminclass = 0,
 	ctmmsginterval = 300,
@@ -1533,6 +1535,8 @@ function Main (file)
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('avdetclass', '" .. repsqlchars (table_sets.avdetclass) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('ulogouttime', '" .. repsqlchars (table_sets.ulogouttime) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('uprankclass', '" .. repsqlchars (table_sets.uprankclass) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('chatintelreqtime', '" .. repsqlchars (table_sets.chatintelreqtime) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('chatintelreqwait', '" .. repsqlchars (table_sets.chatintelreqwait) .. "')")
 
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.ledocmd .. "` (`original`, `new`) values ('setuserip', '" .. repsqlchars (table_cmnds.setuserip) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.ledocmd .. "` (`original`, `new`) values ('upranks', '" .. repsqlchars (table_cmnds.upranks) .. "')")
@@ -6153,7 +6157,7 @@ function VH_OnTimer (msec)
 					end
 
 					os.remove (name) -- remove old file
-					local res, err, code = os.execute ("curl -G -L --max-redirs 1 --retry 2 --connect-timeout 3 -m 10" .. face .. " -A \"" .. table_othsets.useragent .. "\" -s -o \"" .. name .. "\" \"" .. table_othsets.chinurl:format (table_sets.chatintelemail, addr) .. "\"")
+					local res, err, code = os.execute ("curl --get --location --max-redirs 1 --connect-timeout " .. _tostring (table_sets.chatintelreqtime) .. " --max-time " .. _tostring (table_sets.chatintelreqwait) .. face .. " --user-agent \"" .. table_othsets.useragent .. "\" --silent --output \"" .. name .. "\" \"" .. table_othsets.chinurl:format (table_sets.chatintelemail, addr) .. "\"")
 
 					if res then
 						local file, err = io.open (name, "r") -- make use of err, it could be permission
@@ -19832,6 +19836,32 @@ end
 
 	----- ---- --- -- -
 
+	elseif tvar == "chatintelreqtime" then
+		if num then
+			if setto >= 1 and setto <= 60 then
+				ok = true
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "1 " .. gettext ("to") .. " 60"))
+			end
+		else
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
+		end
+
+	----- ---- --- -- -
+
+	elseif tvar == "chatintelreqwait" then
+		if num then
+			if setto >= 1 and setto <= 120 then
+				ok = true
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "1 " .. gettext ("to") .. " 120"))
+			end
+		else
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
+		end
+
+	----- ---- --- -- -
+
 	elseif tvar == "chatcodeon" then
 		if num then
 			if setto >= 0 and setto <= 2 then
@@ -23231,6 +23261,8 @@ function showledoconf (nick)
 	conf = conf .. "\r\n [::] chatintelqueue = " .. _tostring (table_sets.chatintelqueue)
 	conf = conf .. "\r\n [::] chatintelquote = " .. _tostring (table_sets.chatintelquote)
 	conf = conf .. "\r\n [::] chatintelmaxreq = " .. _tostring (table_sets.chatintelmaxreq)
+	conf = conf .. "\r\n [::] chatintelreqtime = " .. _tostring (table_sets.chatintelreqtime)
+	conf = conf .. "\r\n [::] chatintelreqwait = " .. _tostring (table_sets.chatintelreqwait)
 	conf = conf .. "\r\n [::] chatintelemail = " .. _tostring (table_sets.chatintelemail)
 	conf = conf .. "\r\n"
 
