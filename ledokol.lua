@@ -63,7 +63,7 @@ Tzaca, JOE™, Foxtrot, Deivis
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.7" -- ledokol version
-bld_ledo = "105" -- build number
+bld_ledo = "106" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -454,8 +454,8 @@ table_refu = {
 	GetUserVersion = false,
 	GetUserSupports = false,
 	GetUserHubURL = false,
-	SendToActiveClass = false,
-	SendToPassiveClass = false,
+	--SendToActiveClass = false,
+	--SendToPassiveClass = false,
 	InUserSupports = false,
 	IsSecConn = false,
 	GetTLSVer = false,
@@ -1090,7 +1090,7 @@ table_avlo = {}
 table_avus = {}
 table_avse = {}
 table_avbl = {}
-table_avss = {}
+--table_avss = {}
 table_myfo = {}
 table_sefi = {}
 table_sfex = {}
@@ -1630,7 +1630,7 @@ function Main (file)
 	end
 
 	if table_sets.avsearchint > 0 then -- antivirus search
-		if table_sets.avsearservaddr ~= "" then -- server
+		if # table_sets.avsearservaddr > 0 then -- server
 			avsearservstart ()
 		end
 
@@ -1650,7 +1650,7 @@ function UnLoad ()
 		return 1
 	end
 
-	if table_sets.avsearchint > 0 and table_sets.avsearservaddr ~= "" then -- antivirus search server
+	if table_sets.avsearchint > 0 and # table_sets.avsearservaddr > 0 then -- antivirus search server
 		avsearservstop ()
 	end
 
@@ -3575,7 +3575,7 @@ elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.ledostats .. "$") 
 			table_othsets.locked = true -- lock the script
 			donotifycmd (nick, data, 10, ucl)
 
-			if table_sets.avsearchint > 0 and table_sets.avsearservaddr ~= "" then -- antivirus search server
+			if table_sets.avsearchint > 0 and # table_sets.avsearservaddr > 0 then -- antivirus search server
 				avsearservstop ()
 			end
 
@@ -6333,18 +6333,19 @@ function VH_OnTimer (msec)
 		end
 	end
 
-	if table_sets.avsearchint > 0 and table_sets.avsearservaddr ~= "" then -- antivirus search server
-		avsearservread () -- todo: read every second?
+	if table_sets.avsearchint > 0 and # table_sets.avsearservaddr > 0 then -- antivirus search server
+		avsearservread ()
 	end
 
-	if table_sets.avsearchint > 0 and os.difftime (now, table_othsets.avlastseartick) >= table_sets.avsearchint then -- antivirus search
+	if table_sets.avsearchint > 0 and # table_sets.avsearservaddr > 0 and table_othsets.serv_udp and os.difftime (now, table_othsets.avlastseartick) >= table_sets.avsearchint then -- antivirus search
 		for nick, data in pairs (table_avus) do
 			if os.difftime (now, data [""]) >= table_sets.avuserfree * 60 then
 				table_avus [nick] = nil
 			end
 		end
 
-		if table_sets.avsearservaddr ~= "" and table_othsets.serv_udp then -- we have search server, todo: dont send to no share, self and similar users
+		--[[
+		if # table_sets.avsearservaddr > 0 and table_othsets.serv_udp then -- we have search server, todo: dont send to no share, self and similar users
 			if table_refu.SendToActiveClass and table_refu.SendToPassiveClass then -- active request to passive users and passive request to active users
 				if minhubver (1, 0, 2, 15) then
 					VH:SendToPassiveClass ("$Search " .. table_sets.avsearservaddr .. ":" .. _tostring (table_sets.avsearservport) .. " F?F?0?1?" .. table_avse [table_othsets.avnextitem] .. "|", 0, table_sets.scanbelowclass - 1, getconfig ("delayed_search"))
@@ -6353,19 +6354,24 @@ function VH_OnTimer (msec)
 					VH:SendToPassiveClass ("$Search " .. table_sets.avsearservaddr .. ":" .. _tostring (table_sets.avsearservport) .. " F?F?0?1?" .. table_avse [table_othsets.avnextitem] .. "|", 0, table_sets.scanbelowclass - 1)
 					VH:SendToActiveClass ("$Search Hub:" .. table_othsets.sendfrom .. " F?F?0?1?" .. table_avse [table_othsets.avnextitem] .. "|", 0, table_sets.scanbelowclass - 1)
 				end
+
 			else -- active request to all users
+		]]--
 				if minhubver (1, 0, 2, 15) then
 					VH:SendToClass ("$Search " .. table_sets.avsearservaddr .. ":" .. _tostring (table_sets.avsearservport) .. " F?F?0?1?" .. table_avse [table_othsets.avnextitem] .. "|", 0, table_sets.scanbelowclass - 1, getconfig ("delayed_search"))
 				else
 					VH:SendToClass ("$Search " .. table_sets.avsearservaddr .. ":" .. _tostring (table_sets.avsearservport) .. " F?F?0?1?" .. table_avse [table_othsets.avnextitem] .. "|", 0, table_sets.scanbelowclass - 1)
 				end
+		--[[
 			end
+
 		elseif table_refu.SendToActiveClass then -- we dont have server
 			if minhubver (1, 0, 2, 15) then
 				VH:SendToActiveClass ("$Search Hub:" .. table_othsets.sendfrom .. " F?F?0?1?" .. table_avse [table_othsets.avnextitem] .. "|", 0, table_sets.scanbelowclass - 1, getconfig ("delayed_search"))
 			else
 				VH:SendToActiveClass ("$Search Hub:" .. table_othsets.sendfrom .. " F?F?0?1?" .. table_avse [table_othsets.avnextitem] .. "|", 0, table_sets.scanbelowclass - 1)
 			end
+
 		else -- we have nothing
 			if minhubver (1, 0, 2, 15) then
 				VH:SendToClass ("$Search Hub:" .. table_othsets.sendfrom .. " F?F?0?1?" .. table_avse [table_othsets.avnextitem] .. "|", 0, table_sets.scanbelowclass - 1, getconfig ("delayed_search"))
@@ -6373,12 +6379,14 @@ function VH_OnTimer (msec)
 				VH:SendToClass ("$Search Hub:" .. table_othsets.sendfrom .. " F?F?0?1?" .. table_avse [table_othsets.avnextitem] .. "|", 0, table_sets.scanbelowclass - 1)
 			end
 		end
+		]]--
 
 		if table_othsets.avnextitem >= # table_avse then
 			if table_sets.avrandrequest == 1 then -- generate and send special random request
 				table_othsets.avrandstr = genrandstr (30)
 
-				if table_sets.avsearservaddr ~= "" and table_othsets.serv_udp then -- we have search server
+				--[[
+				if # table_sets.avsearservaddr > 0 and table_othsets.serv_udp then -- we have search server
 					if table_refu.SendToActiveClass and table_refu.SendToPassiveClass then -- active request to passive users and passive request to active users
 						if minhubver (1, 0, 2, 15) then
 							VH:SendToPassiveClass ("$Search " .. table_sets.avsearservaddr .. ":" .. _tostring (table_sets.avsearservport) .. " F?F?0?1?" .. table_othsets.avrandstr .. "|", 0, table_sets.scanbelowclass - 1, getconfig ("delayed_search"))
@@ -6387,19 +6395,24 @@ function VH_OnTimer (msec)
 							VH:SendToPassiveClass ("$Search " .. table_sets.avsearservaddr .. ":" .. _tostring (table_sets.avsearservport) .. " F?F?0?1?" .. table_othsets.avrandstr .. "|", 0, table_sets.scanbelowclass - 1)
 							VH:SendToActiveClass ("$Search Hub:" .. table_othsets.sendfrom .. " F?F?0?1?" .. table_othsets.avrandstr .. "|", 0, table_sets.scanbelowclass - 1)
 						end
+
 					else -- active request to all users
+				]]--
 						if minhubver (1, 0, 2, 15) then
 							VH:SendToClass ("$Search " .. table_sets.avsearservaddr .. ":" .. _tostring (table_sets.avsearservport) .. " F?F?0?1?" .. table_othsets.avrandstr .. "|", 0, table_sets.scanbelowclass - 1, getconfig ("delayed_search"))
 						else
 							VH:SendToClass ("$Search " .. table_sets.avsearservaddr .. ":" .. _tostring (table_sets.avsearservport) .. " F?F?0?1?" .. table_othsets.avrandstr .. "|", 0, table_sets.scanbelowclass - 1)
 						end
+				--[[
 					end
+
 				elseif table_refu.SendToActiveClass then -- we dont have server
 					if minhubver (1, 0, 2, 15) then
 						VH:SendToActiveClass ("$Search Hub:" .. table_othsets.sendfrom .. " F?F?0?1?" .. table_othsets.avrandstr .. "|", 0, table_sets.scanbelowclass - 1, getconfig ("delayed_search"))
 					else
 						VH:SendToActiveClass ("$Search Hub:" .. table_othsets.sendfrom .. " F?F?0?1?" .. table_othsets.avrandstr .. "|", 0, table_sets.scanbelowclass - 1)
 					end
+
 				else -- we have nothing
 					if minhubver (1, 0, 2, 15) then
 						VH:SendToClass ("$Search Hub:" .. table_othsets.sendfrom .. " F?F?0?1?" .. table_othsets.avrandstr .. "|", 0, table_sets.scanbelowclass - 1, getconfig ("delayed_search"))
@@ -6407,9 +6420,11 @@ function VH_OnTimer (msec)
 						VH:SendToClass ("$Search Hub:" .. table_othsets.sendfrom .. " F?F?0?1?" .. table_othsets.avrandstr .. "|", 0, table_sets.scanbelowclass - 1)
 					end
 				end
+				]]--
 			end
 
 			table_othsets.avnextitem = 1
+
 		else
 			if table_sets.avrandrequest == 1 and table_othsets.avrandstr ~= "" then -- clear special random request
 				table_othsets.avrandstr = ""
@@ -7197,17 +7212,17 @@ function VH_OnScriptCommand (name, data, plug, file)
 		end
 
 	elseif name == "sefi_user_block" then -- seach filter block if enabled
-		if table_sets.enablesearfilt >= 1 then
-			local say, nick, str = data:match ("^([01]) ([^ ]+) (.+)$")
+		if table_sets.enablesearfilt >= 1 and not isprotected (nick, getip (nick)) then -- not protected
+			local say, nick, line = data:match ("^([01]) ([^ ]+) (.+)$")
 
-			if say ~= nil and nick and str and not table_sfbl [nick] then
+			if say ~= nil and nick and line and not table_sfbl [nick] then -- only once
 				if table_sets.sefiblockmsg == 1 then
 					sefinotify (table_sets.classnotisefi, gettext ("User added to search block list: %s"):format (nick))
 				end
 
 				table_sfbl [nick] = {
 					sil = (tonumber (say) == 0), -- silent
-					req = str,
+					req = line,
 					num = 1
 				}
 			end
@@ -7221,6 +7236,33 @@ function VH_OnScriptCommand (name, data, plug, file)
 			VH:ScriptCommand ("sefi_block_reply", "0 " .. data)
 		end
 	]]--
+
+	elseif name == "avdb_user_detect" then -- trigger antivirus detection
+		local nick, addr, path = data:match ("^([^ ]+) (%d+%.%d+%.%d+%.%d+) (.*)$")
+
+		if nick and addr and path then
+			if not isprotected (nick, addr) then -- not protected
+				local size = parsemyinfoshare (getmyinfo (nick))
+
+				if size > 0 then -- has share
+					if table_sets.avdetaction == 1 or not table_avbl [nick] then -- only once
+						opsnotify (table_sets.classnotiav, gettext ("Infected user found with IP %s and share %s: %s"):format (addr .. tryipcc (addr, nick), makesize (size), nick))
+					end
+
+					avdbreport (nick, addr, size, true, path) -- report to avdb
+
+					if table_sets.avdetaction == 0 then
+						if not table_avbl [nick] then -- only once
+							table_avbl [nick] = true
+							opsnotify (table_sets.classnotiav, gettext ("Connection requests to following user will be blocked: %s"):format (nick))
+						end
+
+					else
+						VH:KickUser (table_othsets.sendfrom, nick, table_sets.avkicktext)
+					end
+				end
+			end
+		end
 	end
 
 	return 1
@@ -19088,7 +19130,7 @@ end
 					table_othsets.avnextitem = 1
 					table_othsets.avrandstr = ""
 				else
-					if table_sets.avsearservaddr ~= "" then
+					if # table_sets.avsearservaddr > 0 then
 						avsearservstart (nil, nil, nick)
 					end
 
@@ -19206,7 +19248,7 @@ end
 	elseif tvar == "avsearservport" then
 		if num then
 			if setto >= 1 and setto <= 65535 then
-				if table_sets.avsearchint > 0 and table_sets.avsearservaddr ~= "" then
+				if table_sets.avsearchint > 0 and # table_sets.avsearservaddr > 0 then
 					avsearservstop (nick)
 					avsearservstart (table_sets.avsearservaddr, setto, nick)
 				end
@@ -24593,6 +24635,27 @@ function avsearservread ()
 		return
 	end
 
+	for tot = 1, 10 do -- active result, client sends 10
+		local data, addr, port = table_othsets.serv_udp:receivefrom ()
+
+		if not data or not addr or not port or # data == 0 or # addr == 0 or addr == "timeout" then -- no data
+			break
+		end
+
+		for part in data:gmatch ("[^|]+") do
+			local _, stop = avparsesr (part, nil, addr)
+
+			if stop then -- have detection
+				break
+			end
+
+			table_othsets.mod_sock.sleep (0.001) -- unload cpu
+		end
+
+		table_othsets.mod_sock.sleep (0.001) -- unload cpu
+	end
+
+	--[[
 	local runc, runm = 0, 10 -- dc++ sends only 10 search results
 
 	while runc < runm do
@@ -24643,6 +24706,7 @@ function avsearservread ()
 
 		table_othsets.mod_sock.sleep (0.001) -- sleep for 1 ms to minimize cpu load
 	end
+	]]--
 end
 
 ----- ---- --- -- -

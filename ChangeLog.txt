@@ -1,4 +1,4 @@
-[ 2.9.7 :: 2020-##-## ]
+[ 2.9.7 :: 2021-##-## ]
 
 [ 87] Fixed: Properly unload script when called by hub
 [ 90] Fixed: Public proxy lookup for hubs with different locale and decimal separator, report by Master
@@ -10,6 +10,7 @@
 [ 98] Fixed: Display of default port in links with non standard protocols in frienly hublist
 [100] Fixed: Cut down too long string in user logger
 [103] Fixed: Lua 5.4 now pushes booleans correctly
+[106] Fixed: Antivirus search server
 [104] Changed: Clone detection is performed using all MyINFO and IP parameters instead of only IP and share size
 [ 88] Added: Secure connection information to user information
 [ 89] Added: TLS version information to user information
@@ -23,6 +24,7 @@
 [102] Added: User uptime ranking
 [105] Added: Timeout variables chatintelreqtime and chatintelreqwait for public proxy lookup
 [105] Added: Search filter block script command sefi_user_block
+[106] Added: AVDB detection script command avdb_user_detect
 [ 97] Removed: Predefined MySQL character set, collation and engine to use system defaults
 
 [ 2.9.6 :: 2019-03-10 ]
