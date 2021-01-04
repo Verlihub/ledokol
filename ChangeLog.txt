@@ -25,6 +25,7 @@
 [105] Added: Timeout variables chatintelreqtime and chatintelreqwait for public proxy lookup
 [105] Added: Search filter block script command sefi_user_block
 [106] Added: AVDB detection script command avdb_user_detect
+[107] Added: ledobotdesc configuration for custom bot description
 [ 97] Removed: Predefined MySQL character set, collation and engine to use system defaults
 
 [ 2.9.6 :: 2019-03-10 ]

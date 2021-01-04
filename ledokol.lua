@@ -63,7 +63,7 @@ Tzaca, JOE™, Foxtrot, Deivis
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.7" -- ledokol version
-bld_ledo = "106" -- build number
+bld_ledo = "107" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -275,6 +275,7 @@ table_sets = {
 	addspecialver = 0,
 	addledobot = 1,
 	ledobotnick = "#" .. string.char (160) .. "Ledokol",
+	ledobotdesc = "",
 	ledobotmail = "",
 	ledobotsize = -1,
 	useextrafeed = 0,
@@ -1202,7 +1203,7 @@ if not VH.GetLuaBots then
 	VH.GetLuaBots = VH.GetBots
 end
 
-function _tostring (val) -- lua 5.3 fix
+function _tostring (val)
 	if type (val) == "number" then
 		return string.format ("%d", val)
 	end
@@ -1556,6 +1557,7 @@ function Main (file)
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('uprankclass', '" .. repsqlchars (table_sets.uprankclass) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('chatintelreqtime', '" .. repsqlchars (table_sets.chatintelreqtime) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('chatintelreqwait', '" .. repsqlchars (table_sets.chatintelreqwait) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('ledobotdesc', '" .. repsqlchars (table_sets.ledobotdesc) .. "')")
 
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.ledocmd .. "` (`original`, `new`) values ('setuserip', '" .. repsqlchars (table_cmnds.setuserip) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.ledocmd .. "` (`original`, `new`) values ('upranks', '" .. repsqlchars (table_cmnds.upranks) .. "')")
@@ -1591,7 +1593,7 @@ function Main (file)
 	table_othsets.opchatnick = getconfig ("opchat_name")
 
 	if table_sets.addledobot == 1 then
-		addhubrobot (table_sets.ledobotnick, table_othsets.ledobotdesc .. table_othsets.ledobottag, 2, table_sets.ledobotmail, getownsize (true, table_sets.ledobotsize))
+		addhubrobot (table_sets.ledobotnick, ((# table_sets.ledobotdesc > 0) and table_sets.ledobotdesc or table_othsets.ledobotdesc) .. table_othsets.ledobottag, 2, table_sets.ledobotmail, getownsize (true, table_sets.ledobotsize))
 
 		if table_sets.useextrafeed == 1 then
 			table_othsets.feednick = table_sets.extrafeednick
@@ -22367,7 +22369,7 @@ end
 						table_othsets.sendfrom = table_othsets.botnick
 						delhubrobot (table_sets.ledobotnick)
 					else
-						addhubrobot (table_sets.ledobotnick, table_othsets.ledobotdesc .. table_othsets.ledobottag, 2, table_sets.ledobotmail, getownsize (true, table_sets.ledobotsize))
+						addhubrobot (table_sets.ledobotnick, ((# table_sets.ledobotdesc > 0) and table_sets.ledobotdesc or table_othsets.ledobotdesc) .. table_othsets.ledobottag, 2, table_sets.ledobotmail, getownsize (true, table_sets.ledobotsize))
 
 						if table_sets.useextrafeed == 0 then
 							table_othsets.feednick = table_sets.ledobotnick
@@ -22390,7 +22392,7 @@ end
 			if setto >= -1 and setto <= 21990232555520 then
 				if table_sets.addledobot == 1 then
 					delhubrobot (table_sets.ledobotnick)
-					addhubrobot (table_sets.ledobotnick, table_othsets.ledobotdesc .. table_othsets.ledobottag, 2, table_sets.ledobotmail, getownsize (true, setto))
+					addhubrobot (table_sets.ledobotnick, ((# table_sets.ledobotdesc > 0) and table_sets.ledobotdesc or table_othsets.ledobotdesc) .. table_othsets.ledobottag, 2, table_sets.ledobotmail, getownsize (true, setto))
 				end
 
 				ok = true
@@ -22436,7 +22438,7 @@ end
 
 			if table_sets.addledobot == 1 then
 				delhubrobot (table_sets [tvar])
-				addhubrobot (setto, table_othsets.ledobotdesc .. table_othsets.ledobottag, 2, table_sets.ledobotmail, getownsize (true, table_sets.ledobotsize))
+				addhubrobot (setto, ((# table_sets.ledobotdesc > 0) and table_sets.ledobotdesc or table_othsets.ledobotdesc) .. table_othsets.ledobottag, 2, table_sets.ledobotmail, getownsize (true, table_sets.ledobotsize))
 				if table_sets.useextrafeed == 0 then table_othsets.feednick = setto end
 				table_othsets.sendfrom = setto
 			end
@@ -22444,12 +22446,17 @@ end
 			commandanswer (nick, gettext ("Configuration variable %s can't be empty."):format (tvar))
 		end
 
------ ---- --- -- -
+	----- ---- --- -- -
 
-elseif tvar == "ledobotmail" then
-ok = true
+	elseif tvar == "ledobotdesc" then
+		ok = true
 
------ ---- --- -- -
+	----- ---- --- -- -
+
+	elseif tvar == "ledobotmail" then
+		ok = true
+
+	----- ---- --- -- -
 
 elseif tvar == "useextrafeed" then
 if num then
@@ -23272,6 +23279,7 @@ function showledoconf (nick)
 	conf = conf .. "\r\n [::] addspecialver = " .. _tostring (table_sets.addspecialver)
 	conf = conf .. "\r\n [::] addledobot = " .. _tostring (table_sets.addledobot)
 	conf = conf .. "\r\n [::] ledobotnick = " .. _tostring (table_sets.ledobotnick)
+	conf = conf .. "\r\n [::] ledobotdesc = " .. _tostring (table_sets.ledobotdesc)
 	conf = conf .. "\r\n [::] ledobotmail = " .. _tostring (table_sets.ledobotmail)
 	conf = conf .. "\r\n [::] ledobotsize = " .. _tostring (table_sets.ledobotsize)
 	conf = conf .. "\r\n"
