@@ -63,7 +63,7 @@ Tzaca, JOE™, Foxtrot, Deivis
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.7" -- ledokol version
-bld_ledo = "107" -- build number
+bld_ledo = "108" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -282,6 +282,7 @@ table_sets = {
 	extrafeednick = "#" .. string.char (160) .. "Feed",
 	timebotint = 0,
 	timebotnick = "#" .. string.char (160) .. "%d/%m" .. string.char (160) .. "%H:%M",
+	timebotdesc = "",
 	fasttimebot = 0,
 	srvtimediff = 0,
 	longdateformat = "%Y-%m-%d",
@@ -1558,6 +1559,7 @@ function Main (file)
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('chatintelreqtime', '" .. repsqlchars (table_sets.chatintelreqtime) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('chatintelreqwait', '" .. repsqlchars (table_sets.chatintelreqwait) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('ledobotdesc', '" .. repsqlchars (table_sets.ledobotdesc) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('timebotdesc', '" .. repsqlchars (table_sets.timebotdesc) .. "')")
 
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.ledocmd .. "` (`original`, `new`) values ('setuserip', '" .. repsqlchars (table_cmnds.setuserip) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.ledocmd .. "` (`original`, `new`) values ('upranks', '" .. repsqlchars (table_cmnds.upranks) .. "')")
@@ -9485,7 +9487,7 @@ function installtimebot ()
 			delhubrobot (table_othsets.lasttimenick)
 		end
 
-		addhubrobot (bottime, table_othsets.timebotdesc, 2, "", 0)
+		addhubrobot (bottime, ((# table_sets.timebotdesc > 0) and table_sets.timebotdesc or table_othsets.timebotdesc), 2, "", 0)
 	end
 
 	table_othsets.lasttimenick = bottime
@@ -22307,24 +22309,28 @@ else
 commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
 end
 
------ ---- --- -- -
+	----- ---- --- -- -
 
-elseif tvar == "timebotnick" then
-if # setto > 0 then
-setto = repnickchars (setto)
+	elseif tvar == "timebotnick" then
+		if # setto > 0 then
+			setto = repnickchars (setto)
 
-if setto == table_sets [tvar] or getstatus (setto) == 1 then
--- isbot (setto)
-commandanswer (nick, gettext ("Specified nick is already in use."))
-return
-end
+			if setto == table_sets [tvar] or getstatus (setto) == 1 then -- isbot (setto)
+				commandanswer (nick, gettext ("Specified nick is already in use."))
+				return
+			end
 
-ok = true
-else
-commandanswer (nick, gettext ("Configuration variable %s can't be empty."):format (tvar))
-end
+			ok = true
+		else
+			commandanswer (nick, gettext ("Configuration variable %s can't be empty."):format (tvar))
+		end
 
------ ---- --- -- -
+	----- ---- --- -- -
+
+	elseif tvar == "timebotdesc" then
+		ok = true
+
+	----- ---- --- -- -
 
 elseif tvar == "fasttimebot" then
 if num then
@@ -23290,6 +23296,7 @@ function showledoconf (nick)
 
 	conf = conf .. "\r\n [::] timebotint = " .. _tostring (table_sets.timebotint)
 	conf = conf .. "\r\n [::] timebotnick = " .. _tostring (table_sets.timebotnick)
+	conf = conf .. "\r\n [::] timebotdesc = " .. _tostring (table_sets.timebotdesc)
 	conf = conf .. "\r\n [::] fasttimebot = " .. _tostring (table_sets.fasttimebot)
 	conf = conf .. "\r\n"
 
