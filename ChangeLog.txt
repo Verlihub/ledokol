@@ -27,6 +27,7 @@
 [106] Added: AVDB detection script command avdb_user_detect
 [107] Added: ledobotdesc configuration for custom main bot description
 [108] Added: timebotdesc configuration for custom time bot description
+[109] Added: avdetforceconv configuration for conversion of parameters from UTF-8 into hub encoding
 [ 97] Removed: Predefined MySQL character set, collation and engine to use system defaults
 
 [ 2.9.6 :: 2019-03-10 ]

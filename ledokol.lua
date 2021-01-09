@@ -63,7 +63,7 @@ Tzaca, JOE™, Foxtrot, Deivis
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.7" -- ledokol version
-bld_ledo = "108" -- build number
+bld_ledo = "109" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -107,6 +107,7 @@ table_sets = {
 	avdetaction = 0,
 	avdetclass = 5,
 	avdetblockmsg = 5,
+	avdetforceconv = 0,
 	avkicktext = "Virus spreaders are not welcome here _ban_30d",
 	classnotianti = 3,
 	classnotiex = 3,
@@ -1560,6 +1561,7 @@ function Main (file)
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('chatintelreqwait', '" .. repsqlchars (table_sets.chatintelreqwait) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('ledobotdesc', '" .. repsqlchars (table_sets.ledobotdesc) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('timebotdesc', '" .. repsqlchars (table_sets.timebotdesc) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('avdetforceconv', '" .. repsqlchars (table_sets.avdetforceconv) .. "')")
 
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.ledocmd .. "` (`original`, `new`) values ('setuserip', '" .. repsqlchars (table_cmnds.setuserip) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.ledocmd .. "` (`original`, `new`) values ('upranks', '" .. repsqlchars (table_cmnds.upranks) .. "')")
@@ -19230,6 +19232,19 @@ end
 
 	----- ---- --- -- -
 
+	elseif tvar == "avdetforceconv" then
+		if num then
+			if setto == 0 or setto == 1 then
+				ok = true
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0 " .. gettext ("or") .. " 1"))
+			end
+		else
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
+		end
+
+	----- ---- --- -- -
+
 	elseif tvar == "avrandrequest" then
 		if num then
 			if setto == 0 or setto == 1 then
@@ -23082,6 +23097,7 @@ function showledoconf (nick)
 	conf = conf .. "\r\n [::] avdetaction = " .. _tostring (table_sets.avdetaction)
 	conf = conf .. "\r\n [::] avdetclass = " .. _tostring (table_sets.avdetclass)
 	conf = conf .. "\r\n [::] avdetblockmsg = " .. _tostring (table_sets.avdetblockmsg)
+	conf = conf .. "\r\n [::] avdetforceconv = " .. _tostring (table_sets.avdetforceconv)
 	conf = conf .. "\r\n [::] avkicktext = " .. _tostring (table_sets.avkicktext)
 	conf = conf .. "\r\n"
 
@@ -24500,29 +24516,53 @@ end
 ----- ---- --- -- -
 
 function avdetforce (nick, line)
-	local user, path = "", ""
+	local user, path, part = "", "", line
 
-	if line:match ("^[^ ]+ .+$") then
-		user, path = line:match ("^([^ ]+) (.+)$")
+	if table_sets.avdetforceconv == 1 then -- convert from utf8
+		local enc = getconfig ("hub_encoding")
+
+		if enc and # enc > 0 then
+			enc = enc:lower ()
+		else
+			enc = "cp1251" -- default
+		end
+
+		local _, rows = VH:SQLQuery ("select convert(_utf8'" .. repsqlchars (part) .. "' using " .. repsqlchars (enc) .. ")")
+
+		if rows == 1 then
+			local _, conv = VH:SQLFetch (0)
+
+			if conv and # conv > 0 then
+				part = conv
+			end
+		end
+	end
+
+	if part:match ("^[^ ]+ .+$") then
+		user, path = part:match ("^([^ ]+) (.+)$")
 	else
-		user = line
+		user = part
 	end
 
 	if getstatus (user) == 0 then
 		commandanswer (nick, gettext ("User not in list: %s"):format (user))
+
 	elseif getclass (user) >= getclass (nick) then
 		if table_sets.avdetaction == 0 then
 			commandanswer (nick, gettext ("You can't block user whose class is higher or equals your own: %s"):format (user))
 		else
 			commandanswer (nick, gettext ("You can't kick user whose class is higher or equals your own: %s"):format (user))
 		end
+
 	else
 		local addr = getip (user)
 
 		if isprotected (user, addr) then
 			commandanswer (nick, gettext ("User you're trying to kick or redirect is protected: %s"):format (user))
+
 		elseif table_sets.avdetaction == 0 and table_avbl [user] then
 			commandanswer (nick, gettext ("User already blocked: %s"):format (user))
+
 		else
 			local size = parsemyinfoshare (getmyinfo (user))
 
@@ -24532,6 +24572,7 @@ function avdetforce (nick, line)
 				else
 					commandanswer (nick, gettext ("You can't kick user who don't share anything: %s"):format (user))
 				end
+
 			else
 				local spent = os.time ()
 
@@ -24545,6 +24586,7 @@ function avdetforce (nick, line)
 				if table_sets.avdetaction == 0 then
 					table_avbl [user] = true
 					opsnotify (table_sets.classnotiav, gettext ("Connection requests to following user will be blocked: %s"):format (user))
+
 				else
 					VH:KickUser (nick, user, table_sets.avkicktext)
 				end
