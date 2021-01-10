@@ -1,4 +1,4 @@
-[ 2.9.7 :: 2021-##-## ]
+[ 2.9.7 :: 2021-01-10 ]
 
 [ 87] Fixed: Properly unload script when called by hub
 [ 90] Fixed: Public proxy lookup for hubs with different locale and decimal separator, report by Master

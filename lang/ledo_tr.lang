@@ -1,6 +1,6 @@
 # Language: tr_TR
 # Charset: CP1254
-# Version: 2.9.6
+# Version: 2.9.7
 # Author: Mauron
 # Email: mauron@vmail.me
 
@@ -370,9 +370,8 @@ B|B
 EiB|EiB
 Get user's real nick|Kullanýcýnýn gerçek rumuzunu al
 Requested nick wasn't found in custom nick list.|Ýstenen rumuz özel rumuz listesinde bulunamadý.
-Requested nick belongs to a user who is %s: %s|Talep edilen rumuz þu kullanýcýya aittir: %s: %s
-offline|çevrimdýþý
-online|çevrimiçi
+Requested nick belongs to a user who is online: %s|Talep edilen rumuz çevrimiçi olan bir kullanýcýya ait: %s
+Requested nick belongs to a user who is offline: %s|Talep edilen rumuz çevrimdýþý bir kullanýcýya ait: %s
 Clean up ranks|Düzeyleri temizle
 limit|sýnýr
 %s with class %d deleted %d chat ranks lower than %d.|%d sýnýflý %s %d sohbet düzeyini sildi ki onlarýn düzeyi %d deðerinden düþüktü. 
@@ -1269,3 +1268,24 @@ Unsent offline private chat message from logged out user %s with IP %s to %s wit
 %s logged in with IP %s previously detected as public proxy.|%s kullanýcýsý daha önce herkese açýk vekil olarak tespit edilen %s IP adresi ile giriþ yaptý.
 %s logged in with IP %s previously detected as public proxy with ASN: %s|%s kullanýcýsý daha önce ASN ile herkese açýk vekil olarak tespit edilen %s IP adresi ile giriþ yaptý: %s
 Filtered search request duplicates: %d of %d|Arama talebi kopyalarý filtrelendi: %d, toplam talep %d
+Find configuration variables|Yapýlandýrma deðiþkenlerini bul
+Found %d configuration variables|%d yapýlandýrma deðiþkeni bulundu
+No configuration variables found.|Hiçbir yapýlandýrma deðiþkeni bulunamadý.
+Secure connection: %s|Güvenli baðlantý: %s
+TLS version: %s|TLS sürümü: %s
+You can't set IP on user whose class is higher or equals your own: %s|Sýnýfý kendi sýnýfýnýza eþit ya da sýnýfýnýzdan yüksek olan bir kullanýcý üzerinde IP tanýmlayamazsýnýz: %s
+Failed to set user IP: %s @ %s|Kullanýcý IP'sinin tanýmlanmasý baþarýsýz: %s @ %s
+IP successfully set on user: %s @ %s|IP kullanýcý üzerine baþarýyla tanýmlandý: %s @ %s
+Invalid command parameters specified: %s|Geçersiz komut parametreleri belirtildi: %s
+Set user IP|Kullanýcý IP'sini tanýmla
+Top %d uptime rankers|En uzun çalýþma süresine sahip %d unsur
+Your uptime rank|Çalýþma süresi sýralamanýz
+Your uptime rank is: %s|Çalýþma süresi sýralamanýz þudur: %s
+You have to reconnect to get started.|Baþlamak için yeniden baðlanmanýz gerekmektedir.
+Uptime rank list is empty.|Çalýþma süresi sýralama listesi boþtur.
+Top %d uptime rankers|En uzun çalýþma süresine sahip %d unsur
+Deleted from uptime rank list: %s|Çalýþma süresi sýralama listesinden silindi: %s
+Not found in uptime rank list: %s|Çalýþma süresi sýralama listesinde bulunamadý: %s
+%s with class %d deleted %d uptime ranks lower than %d.|%ski sýnýfý %d, %d çalýþma süresini sildi, ki bunlar %d deðerinden düþüktü.
+Size of uptime ranks table: %d [ %s: %d @ %s ]|Çalýþma süresi sýralama tablosunun boyutu: %d [ %s: %d @ %s ]
+Total uptime rank time: %s|Toplam çalýþma süresi sýralamasý süresi: %s

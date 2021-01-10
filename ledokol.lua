@@ -24527,7 +24527,7 @@ function avdetforce (nick, line)
 			enc = "cp1251" -- default
 		end
 
-		local _, rows = VH:SQLQuery ("select convert(_utf8'" .. repsqlchars (part) .. "' using " .. repsqlchars (enc) .. ")")
+		local _, rows = VH:SQLQuery ("select convert(_utf8mb4'" .. repsqlchars (part) .. "' using " .. repsqlchars (enc) .. ")")
 
 		if rows == 1 then
 			local _, conv = VH:SQLFetch (0)

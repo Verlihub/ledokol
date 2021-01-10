@@ -1,7 +1,7 @@
 # Language: ro_RO
 # Charset: CP1250
-# Version: 2.9.6
-# Author: S0RiN
+# Version: 2.9.7
+# Author: S0RiN [rest in peace dear friend]
 # Email: rusu_sorin_con@yahoo.com
 
 Current topic: %s|Topicul actual: %s
@@ -370,9 +370,8 @@ B|B
 EiB|EiB
 Get user's real nick|Obþine nick-ul real al userului
 Requested nick wasn't found in custom nick list.|Nu a fost gãsit nick-ul cãutat, în lista de nick-uri predefinite.
-Requested nick belongs to a user who is %s: %s|Nick-ul cerut aparþine utilizatorului care este: %s: %s
-offline|offline
-online|online
+Requested nick belongs to a user who is online: %s|Nick-ul solicitat aparþine utilizatorului online: %s
+Requested nick belongs to a user who is offline: %s|Nick-ul solicitat aparþine utilizatorului offline: %s
 Clean up ranks|Curãþare Cei mai...
 limit|limitã
 %s with class %d deleted %d chat ranks lower than %d.|%s cu clasa %d a ºters %d Cei mai... activi pe chat cu activitate mai slabã de %d.
@@ -1212,7 +1211,7 @@ Release deleted by %s: %s|Eliberare ºtearsã de %s: %s
 Release category deleted by %s: %s|Categorie de eliberãri ºtearsã de %s: %s
 Someone from your IP address have already voted for kicking that user.|Cineva cu adresa ta IP a votat deja kick-uirea acestui utilizator.
 IP list: %s|Lista de IP-uri: %s
-First vote can't be negative.|?????? ????? ?? ????? ???? ?????????????.
+First vote can't be negative.|Pervy`j golos ne mozhet by`t` otriczatel`ny`m.
 You can't vote for kicking yourself.|Nu poþi vota sã-þi dai singur kick.
 Redirect all clones|Redirecþioneazã toate clonele
 Number of redirected clones: %d|Numãrul clonelor redirecþionate: %d
@@ -1269,3 +1268,24 @@ Unsent offline private chat message from logged out user %s with IP %s to %s wit
 %s logged in with IP %s previously detected as public proxy.|%s logat pe hub cu IP %s anterior detectat cu public proxy.
 %s logged in with IP %s previously detected as public proxy with ASN: %s|%s logat pe hub cu IP %s anterior detectat cu public proxy cu ASN: %s
 Filtered search request duplicates: %d of %d|Dublura %d a cãutãrii filtrate: %d
+Find configuration variables|Gãsire variabile configurate
+Found %d configuration variables|Gãsire %d variabile configurate
+No configuration variables found.|Nu s-au gãsit variabile configurate.
+Secure connection: %s|
+TLS version: %s|
+You can't set IP on user whose class is higher or equals your own: %s|
+Failed to set user IP: %s @ %s|
+IP successfully set on user: %s @ %s|
+Invalid command parameters specified: %s|
+Set user IP|
+Top %d uptime rankers|
+Your uptime rank|
+Your uptime rank is: %s|
+You have to reconnect to get started.|
+Uptime rank list is empty.|
+Top %d uptime rankers|
+Deleted from uptime rank list: %s|
+Not found in uptime rank list: %s|
+%s with class %d deleted %d uptime ranks lower than %d.|
+Size of uptime ranks table: %d [ %s: %d @ %s ]|
+Total uptime rank time: %s|

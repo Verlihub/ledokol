@@ -1,11 +1,11 @@
 # Language: de_DE
 # Charset: CP1252
-# Version: 2.9.6
+# Version: 2.9.7
 # Author: Ettore Atalan
 # Email: atalanttore@googlemail.com
 
-Current topic: %s|
-Current topic set by %s: %s|
+Current topic: %s|Aktuelles Thema: %s
+Current topic set by %s: %s|Aktuelles Thema festgelegt von %s: %s
 This operation might take very long time depending on how much is going to be removed, please be patient.|
 days|Tage
 %s with class %d deleted %d IP logger plugin entries older than %d days.|
@@ -43,7 +43,7 @@ Deleted %d offline messages.|%d Offline-Nachrichten gelöscht.
 Couldn't delete offline messages because not found: %s|
 %s with class %d deleted all offline messages.|
 There are no offline messages to remove.|Es gibt keine Offline-Nachrichten zum Entfernen.
-No topic is set.|
+No topic is set.|Es ist kein Thema festgelegt.
 %s with IP %s and class %d allowed due to forbidden nick exception: %s|
 message|Nachricht
 %s with IP %s and class %d allowed due to forbidden description exception: %s|
@@ -370,9 +370,8 @@ B|B
 EiB|EiB
 Get user's real nick|
 Requested nick wasn't found in custom nick list.|
-Requested nick belongs to a user who is %s: %s|
-offline|offline
-online|online
+Requested nick belongs to a user who is online: %s|
+Requested nick belongs to a user who is offline: %s|
 Clean up ranks|
 limit|Begrenzung
 %s with class %d deleted %d chat ranks lower than %d.|
@@ -1269,3 +1268,24 @@ Unsent offline private chat message from logged out user %s with IP %s to %s wit
 %s logged in with IP %s previously detected as public proxy.|
 %s logged in with IP %s previously detected as public proxy with ASN: %s|
 Filtered search request duplicates: %d of %d|
+Find configuration variables|
+Found %d configuration variables|
+No configuration variables found.|
+Secure connection: %s|
+TLS version: %s|
+You can't set IP on user whose class is higher or equals your own: %s|
+Failed to set user IP: %s @ %s|
+IP successfully set on user: %s @ %s|
+Invalid command parameters specified: %s|
+Set user IP|
+Top %d uptime rankers|
+Your uptime rank|
+Your uptime rank is: %s|
+You have to reconnect to get started.|
+Uptime rank list is empty.|
+Top %d uptime rankers|
+Deleted from uptime rank list: %s|
+Not found in uptime rank list: %s|
+%s with class %d deleted %d uptime ranks lower than %d.|
+Size of uptime ranks table: %d [ %s: %d @ %s ]|
+Total uptime rank time: %s|

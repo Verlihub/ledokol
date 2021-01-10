@@ -1,6 +1,6 @@
 # Language: el_GR
 # Charset: CP1253
-# Version: 2.9.6
+# Version: 2.9.7
 # Author: Marinus Savoritias
 # Email: msavorritias@gmail.com
 
@@ -370,9 +370,8 @@ B|
 EiB|
 Get user's real nick|
 Requested nick wasn't found in custom nick list.|
-Requested nick belongs to a user who is %s: %s|
-offline|
-online|
+Requested nick belongs to a user who is online: %s|
+Requested nick belongs to a user who is offline: %s|
 Clean up ranks|
 limit|
 %s with class %d deleted %d chat ranks lower than %d.|
@@ -1269,3 +1268,24 @@ Unsent offline private chat message from logged out user %s with IP %s to %s wit
 %s logged in with IP %s previously detected as public proxy.|
 %s logged in with IP %s previously detected as public proxy with ASN: %s|
 Filtered search request duplicates: %d of %d|
+Find configuration variables|
+Found %d configuration variables|
+No configuration variables found.|
+Secure connection: %s|
+TLS version: %s|
+You can't set IP on user whose class is higher or equals your own: %s|
+Failed to set user IP: %s @ %s|
+IP successfully set on user: %s @ %s|
+Invalid command parameters specified: %s|
+Set user IP|
+Top %d uptime rankers|
+Your uptime rank|
+Your uptime rank is: %s|
+You have to reconnect to get started.|
+Uptime rank list is empty.|
+Top %d uptime rankers|
+Deleted from uptime rank list: %s|
+Not found in uptime rank list: %s|
+%s with class %d deleted %d uptime ranks lower than %d.|
+Size of uptime ranks table: %d [ %s: %d @ %s ]|
+Total uptime rank time: %s|

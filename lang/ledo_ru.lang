@@ -1,6 +1,6 @@
 # Language: ru_RU
 # Charset: CP1251
-# Version: 2.9.6
+# Version: 2.9.7
 # Author: KCAHDEP
 # Email: admin@milenahub.ru
 
@@ -370,9 +370,8 @@ B|Б
 EiB|ЕБ
 Get user's real nick|Узнать настоящий ник пользователя
 Requested nick wasn't found in custom nick list.|Запрашиваемый ник не найден в таблице временных ников.
-Requested nick belongs to a user who is %s: %s|Запрашиваемые ник принадлежит пользователю, который %s: %s
-offline|офлайн
-online|онлайн
+Requested nick belongs to a user who is online: %s|Запрошенный ник принадлежит пользователю, который находится онлайн: %s
+Requested nick belongs to a user who is offline: %s|Запрошенный ник принадлежит пользователю, который находится офлайн: %s
 Clean up ranks|Очистить рейтинги
 limit|предел
 %s with class %d deleted %d chat ranks lower than %d.|Пользователь %s %d-го класса удалил %d пользователей из таблицы рангов в чате с рангом ниже %d.
@@ -482,7 +481,7 @@ Both numbers must be either pi or numbers.|Оба введённых значения должны быть ил
 Known operations are: %s|Известные операции: %s
 Your logout message: %s|Ваше сообщение при выходе: %s
 Force welcome message for user|Принудительно установить приветственное сообщение пользователю
-Login message set for %s: %s|Сообщение при выходе установлено пользователем %s: %s
+Login message set for %s: %s|Сообщение при входе установлено для пользователя %s: %s
 Change nick of a registered user|Изменить ник зарегистрированному пользователю
 User is not registered: %s|Пользователь не зарегистрирован: %s
 You are now going to be disconnected from the hub in order for your new nick to apply: %s|Теперь вам нужно переподключиться к хабу, чтобы использовать ваш новый ник: %s
@@ -1269,3 +1268,24 @@ Unsent offline private chat message from logged out user %s with IP %s to %s wit
 %s logged in with IP %s previously detected as public proxy.|%s зашёл на хаб с IP %s ранее обнаруженным как прокси.
 %s logged in with IP %s previously detected as public proxy with ASN: %s|%s зашёл на хаб с IP %s ранее обнаруженным как прокси с ASN: %s
 Filtered search request duplicates: %d of %d|Дубликаты отфильтрованных поисковых запросов: %dиз %d
+Find configuration variables|Найти переменные конфигурации.
+Found %d configuration variables|Найдены %d переменные конфигурации.
+No configuration variables found.|Переменные конфигурации не найдены.
+Secure connection: %s|Защищенное соединение: %s
+TLS version: %s|Версия TLS: %s
+You can't set IP on user whose class is higher or equals your own: %s|Вы не можете установить IP пользователя чей класс равен или выше вашего: %s
+Failed to set user IP: %s @ %s|Не удалось установить IP пользователя: %s @ %s
+IP successfully set on user: %s @ %s|IP пользователя успешно установлен: %s @ %s
+Invalid command parameters specified: %s|Указаны неверные параметры команды: %s
+Set user IP|Установить IP пользователя
+Top %d uptime rankers|Список %d лидеров по проведённому времени на хабе
+Your uptime rank|Ваш рейтинг ро проведённому времени на хабе
+Your uptime rank is: %s|Ваш рейтинг по проведённому времени на хабе: %s
+You have to reconnect to get started.|Вам необходимо переподключиться для начала.
+Uptime rank list is empty.|Список рейтингов по проведённому времени на хабе пуст.
+Top %d uptime rankers|Список %d лидеров по проведённому времени на хабе
+Deleted from uptime rank list: %s|Удалено из списка рейтингов по проведённому времени на хабе: %s
+Not found in uptime rank list: %s|Не найдено в списке рейтингов по проведённому времени на хабе: %s
+%s with class %d deleted %d uptime ranks lower than %d.|Пользователь %s с классом %d удалил %d записей из списка рейтингов по проведённому времени на хабе ниже %d.
+Size of uptime ranks table: %d [ %s: %d @ %s ]|Размер таблицы рейтингов по проведённому времени на хабе: %d [ %s: %d @ %s ]
+Total uptime rank time: %s|Общее количество проведённого времени на хабе: %s

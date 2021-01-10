@@ -1,6 +1,6 @@
 # Language: nl_NL
 # Charset: CP1252
-# Version: 2.9.6
+# Version: 2.9.7
 # Author: Marcel
 # Email: future_dance@hotmail.com
 
@@ -370,9 +370,8 @@ B|B
 EiB|EiB
 Get user's real nick|Neem echte nick van gebruiker
 Requested nick wasn't found in custom nick list.|Gevraagde nick is niet gevonden in custon nick lijst.
-Requested nick belongs to a user who is %s: %s|Gevraagde nick hoort toe aan gebruiker die is %s: %s
-offline|offline
-online|online
+Requested nick belongs to a user who is online: %s|Gevraagde gebruikersnaam is van een gebruiker die online is: 1%s
+Requested nick belongs to a user who is offline: %s|Gevraagde gebruikersnaam behoort toe aan een gebruiker die offline is: 1%s
 Clean up ranks|Clean up ranks
 limit|limiet
 %s with class %d deleted %d chat ranks lower than %d.|%s met class %d verwijderd %d chat ranks lager dan %d.
@@ -1269,3 +1268,24 @@ Unsent offline private chat message from logged out user %s with IP %s to %s wit
 %s logged in with IP %s previously detected as public proxy.|%s aangemeld met IP %s eerder gedetecteerd als openbare proxy.
 %s logged in with IP %s previously detected as public proxy with ASN: %s|%saangemeld met IP%s eerder gedetecteerd als openbare proxy met ASN: %s
 Filtered search request duplicates: %d of %d|Gefilterde duplicaten van zoekverzoeken: %dvan %d
+Find configuration variables|Zoek configuratie variabelen
+Found %d configuration variables|Gevonden configuratie variabelen
+No configuration variables found.|Gen configuratie variabelen gevonden
+Secure connection: %s|
+TLS version: %s|
+You can't set IP on user whose class is higher or equals your own: %s|
+Failed to set user IP: %s @ %s|
+IP successfully set on user: %s @ %s|
+Invalid command parameters specified: %s|
+Set user IP|
+Top %d uptime rankers|
+Your uptime rank|
+Your uptime rank is: %s|
+You have to reconnect to get started.|
+Uptime rank list is empty.|
+Top %d uptime rankers|
+Deleted from uptime rank list: %s|
+Not found in uptime rank list: %s|
+%s with class %d deleted %d uptime ranks lower than %d.|
+Size of uptime ranks table: %d [ %s: %d @ %s ]|
+Total uptime rank time: %s|
