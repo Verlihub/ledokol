@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ledokol\n"
-"Project-Version: 2.9.7\n"
+"Project-Version: 2.9.8\n"
 "Report-Msgid-Bugs-To: RoLex <webmaster@feardc.net>\n"
 "POT-Creation-Date: 2021-01-10 00:00+0200\n"
 "PO-Revision-Date: 2021-01-10 00:00+0200\n"

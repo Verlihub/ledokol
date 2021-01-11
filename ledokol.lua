@@ -62,8 +62,8 @@ Tzaca, JOE™, Foxtrot, Deivis
 -- global storage variables and tables >>
 ---------------------------------------------------------------------
 
-ver_ledo = "2.9.7" -- ledokol version
-bld_ledo = "109" -- build number
+ver_ledo = "2.9.8" -- ledokol version
+bld_ledo = "110" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -1569,6 +1569,10 @@ function Main (file)
 					end
 
 					if ver <= 298 then
+						-- todo
+					end
+
+					if ver <= 299 then
 						-- todo: next version
 					end
 
@@ -24518,22 +24522,22 @@ end
 function avdetforce (nick, line)
 	local user, path, part = "", "", line
 
-	if table_sets.avdetforceconv == 1 then -- convert from utf8
-		local enc = getconfig ("hub_encoding")
+	if table_sets.avdetforceconv == 1 and utf8 ~= nil then -- convert from utf8, requires lua 5.4
+		local size = utf8.len (part)
 
-		if enc and # enc > 0 then
-			enc = enc:lower ()
-		else
-			enc = "cp1251" -- default
-		end
+		if size ~= nil and size ~= part:len () then
+			local enc = getconfig ("hub_encoding")
 
-		local _, rows = VH:SQLQuery ("select convert(_utf8mb4'" .. repsqlchars (part) .. "' using " .. repsqlchars (enc) .. ")")
+			if enc and # enc > 0 then
+				enc = enc:lower ()
+			else
+				enc = "cp1251" -- default
+			end
 
-		if rows == 1 then
-			local _, conv = VH:SQLFetch (0)
+			local res = mysqlfromutf8 (part, enc)
 
-			if conv and # conv > 0 then
-				part = conv
+			if res and # res > 0 then
+				part = res
 			end
 		end
 	end

@@ -1,3 +1,7 @@
+[ 2.9.8 :: 2021-05-05 ]
+
+[110] Improved: UTF-8 detection in avdetforce command when avdetforceconv is enabled
+
 [ 2.9.7 :: 2021-01-10 ]
 
 [ 87] Fixed: Properly unload script when called by hub
