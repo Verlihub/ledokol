@@ -63,7 +63,7 @@ Tzaca, JOE™, Foxtrot, Deivis
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.8" -- ledokol version
-bld_ledo = "110" -- build number
+bld_ledo = "111" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -246,6 +246,7 @@ table_sets = {
 	resprunning = 0,
 	respdelay = 3,
 	respskiplast = 0,
+	cleanallbangags = 0,
 	newsclass = 0,
 	newsautolines = 0,
 	newsdeflines = 25,
@@ -464,7 +465,8 @@ table_refu = {
 	GetTLSVer = false,
 	PassTempBan = false,
 	SetRegClass = false,
-	SetUserIP = false
+	SetUserIP = false,
+	ParseCommand = false
 }
 
 ---------------------------------------------------------------------
@@ -1569,7 +1571,7 @@ function Main (file)
 					end
 
 					if ver <= 298 then
-						-- todo
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('cleanallbangags', '" .. repsqlchars (table_sets.cleanallbangags) .. "')")
 					end
 
 					if ver <= 299 then
@@ -1786,6 +1788,16 @@ function VH_OnOperatorCommand (nick, data)
 	if data:match ("^" .. table_othsets.optrig .. "kick%s+%S+%s*.*$") then
 		if table_sets.classnotikick == 11 then
 			donotifycmd (nick, data, 0, ucl)
+		end
+
+	----- ---- --- -- -
+
+	elseif data:match ("^" .. table_othsets.optrig .. "cleanallban$") then
+		if ucl >= table_sets.mincommandclass and table_sets.cleanallbangags == 1 and table_refu.ParseCommand then
+			local trig = getconfig ("cmd_start_op"):sub (1, 1)
+			VH:ParseCommand (nick, trig .. table_cmnds.gagipdel .. " *", 0)
+			VH:ParseCommand (nick, trig .. table_cmnds.gagccdel .. " *", 0)
+			VH:ParseCommand (nick, trig .. table_cmnds.gagcitydel .. " *", 0)
 		end
 
 	----- ---- --- -- -
@@ -19239,7 +19251,11 @@ end
 	elseif tvar == "avdetforceconv" then
 		if num then
 			if setto == 0 or setto == 1 then
-				ok = true
+				if setto == 1 and utf8 == nil then
+					commandanswer (nick, gettext ("This feature requires %s or later installed on your system."):format ("Lua 5.3"))
+				else
+					ok = true
+				end
 			else
 				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0 " .. gettext ("or") .. " 1"))
 			end
@@ -21439,6 +21455,23 @@ end
 
 	----- ---- --- -- -
 
+	elseif tvar == "cleanallbangags" then
+		if num then
+			if setto == 0 or setto == 1 then
+				if setto == 1 and not table_refu.ParseCommand then
+					commandanswer (nick, gettext ("Latest version of %s is required in order to use this feature."):format ("Verlihub"))
+				end
+
+				ok = true
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0 " .. gettext ("or") .. " 1"))
+			end
+		else
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
+		end
+
+	----- ---- --- -- -
+
 	elseif tvar == "custmaxlen" then
 		if num then
 			if setto >= 3 and setto <= 64 then
@@ -23267,6 +23300,7 @@ function showledoconf (nick)
 	conf = conf .. "\r\n [::] resprunning = " .. _tostring (table_sets.resprunning)
 	conf = conf .. "\r\n [::] respdelay = " .. _tostring (table_sets.respdelay)
 	conf = conf .. "\r\n [::] respskiplast = " .. _tostring (table_sets.respskiplast)
+	conf = conf .. "\r\n [::] cleanallbangags = " .. _tostring (table_sets.cleanallbangags)
 	conf = conf .. "\r\n"
 
 	conf = conf .. "\r\n [::] newsclass = " .. _tostring (table_sets.newsclass)
@@ -24522,7 +24556,7 @@ end
 function avdetforce (nick, line)
 	local user, path, part = "", "", line
 
-	if table_sets.avdetforceconv == 1 and utf8 ~= nil then -- convert from utf8, requires lua 5.4
+	if table_sets.avdetforceconv == 1 and utf8 ~= nil then -- convert from utf8, requires lua 5.3
 		local size = utf8.len (part)
 
 		if size ~= nil and size ~= part:len () then
@@ -25713,7 +25747,7 @@ function getcurl (url, enc, del, reh)
 		rehreq = " -D \"" .. table_othsets.cfgdir .. table_othsets.headfile .. "\""
 	end
 
-	local res, err, code = os.execute ("curl -G -L --max-redirs 1 --retry 3 --connect-timeout 5 -m 30" .. face .. " -A \"" .. table_othsets.useragent .. "\" -s -o \"" .. table_othsets.cfgdir .. table_othsets.tmpfile .. "\"" .. rehreq .. urlenc .. " \"" .. url .. "\"")
+	local res, err, code = os.execute ("curl --get --location --max-redirs 1 --retry 2 --connect-timeout 5 --max-time 15" .. face .. " --user-agent \"" .. table_othsets.useragent .. "\" --silent --output \"" .. table_othsets.cfgdir .. table_othsets.tmpfile .. "\"" .. rehreq .. urlenc .. " \"" .. url .. "\"")
 
 	if res then
 		local head = ""
