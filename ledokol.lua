@@ -1174,6 +1174,7 @@ table_avex = { -- todo: add apk
 }
 
 cache_prot = {}
+cache_hban = {}
 
 ---------------------------------------------------------------------
 -- global storage variables and tables <<
@@ -10086,30 +10087,30 @@ end
 ----- ---- --- -- -
 
 function addhban (nick, line)
-	local _, _, lst, rsn = line:find ("^(.+) \"(.+)\"$")
-	local cnt = 0
+	local list, why = line:match ("^(.+) \"(.+)\"$")
+	local tot = 0
 
-	for lre in lst:gmatch ("%S+") do
-		cnt = cnt + 1
-		local rlre = repsqlchars (repnmdcinchars (lre))
-		local _, rows = VH:SQLQuery ("select `ip` from `" .. tbl_sql.hban .. "` where `ip` = '" .. rlre .. "'")
-
-		if rows > 0 then -- update
-			VH:SQLQuery ("update `" .. tbl_sql.hban .. "` set `reason` = '" .. repsqlchars (rsn) .. "' where `ip` = '" .. rlre .. "'")
+	for lre in list:gmatch ("%S+") do
+		if cache_hban [lre] then -- update
+			VH:SQLQuery ("update `" .. tbl_sql.hban .. "` set `reason` = '" .. repsqlchars (repnmdcinchars (why)) .. "' where `ip` = '" .. repsqlchars (repnmdcinchars (lre)) .. "'")
 
 			if nick then
 				commandanswer (nick, gettext ("Modified hard IP ban entry: %s"):format (lre))
 			end
+
 		else -- add
-			VH:SQLQuery ("insert into `" .. tbl_sql.hban .. "` (`ip`, `reason`) values ('" .. rlre .. "', '" .. repsqlchars (rsn) .. "')")
+			VH:SQLQuery ("insert into `" .. tbl_sql.hban .. "` (`ip`, `reason`) values ('" .. repsqlchars (repnmdcinchars (lre)) .. "', '" .. repsqlchars (repnmdcinchars (why)) .. "')")
 
 			if nick then
 				commandanswer (nick, gettext ("Added hard IP ban entry: %s"):format (lre))
 			end
 		end
+
+		cache_hban [lre] = why
+		tot = tot + 1
 	end
 
-	if cnt == 0 and nick then
+	if tot == 0 and nick then
 		commandanswer (nick, gettext ("To add multiple entries with this command you need to separate every entry by space."))
 	end
 end
@@ -10117,13 +10118,12 @@ end
 ----- ---- --- -- -
 
 function delhban (nick, line)
-	local rlre = repsqlchars (repnmdcinchars (line))
-	local _, rows = VH:SQLQuery ("select `ip` from `" .. tbl_sql.hban .. "` where `ip` = '" .. rlre .. "'")
-
-	if rows > 0 then -- delete
-		VH:SQLQuery ("delete from `" .. tbl_sql.hban .. "` where `ip` = '" .. rlre .. "'")
+	if cache_hban [line] then -- delete
+		VH:SQLQuery ("delete from `" .. tbl_sql.hban .. "` where `ip` = '" .. repsqlchars (repnmdcinchars (line)) .. "'")
 		commandanswer (nick, gettext ("Deleted hard IP ban entry: %s"):format (line))
-	else -- not in list
+		cache_hban [line] = nil
+
+	else -- not found
 		commandanswer (nick, gettext ("Couldn't delete hard IP ban entry because not found: %s"):format (line))
 	end
 end
@@ -10131,17 +10131,15 @@ end
 ----- ---- --- -- -
 
 function listhban (nick)
-	local _, rows = VH:SQLQuery ("select `ip`, `reason` from `" .. tbl_sql.hban .. "`")
+	local list, pos = "", 0
 
-	if rows > 0 then -- ok
-		local hblist = ""
+	for lre, why in pairs (cache_hban) do
+		pos = pos + 1
+		list = list .. " " .. _tostring (pos) .. ". " .. lre .. " [ R: " .. why .. " ]\r\n"
+	end
 
-		for x = 0, rows - 1 do
-			local _, lre, rsn = VH:SQLFetch (x)
-			hblist = hblist .. " " .. prezero (# _tostring (rows), (x + 1)) .. ". " .. repnmdcoutchars (lre) .. " [ R: " .. rsn .. " ]\r\n"
-		end
-
-		commandanswer (nick, gettext ("List of hard IP ban entries") .. ":\r\n\r\n" .. hblist)
+	if # list > 0 then -- list
+		commandanswer (nick, gettext ("List of hard IP ban entries") .. ":\r\n\r\n" .. list)
 	else -- empty
 		commandanswer (nick, gettext ("Hard IP ban list is empty."))
 	end
@@ -10149,17 +10147,11 @@ end
 
 ----- ---- --- -- -
 
-function checkhban (ip)
-	local _, rows = VH:SQLQuery ("select `ip`, `reason` from `" .. tbl_sql.hban .. "`")
-
-	if rows > 0 then
-		for x = 0, rows - 1 do
-			local _, lre, rsn = VH:SQLFetch (x)
-
-			if ip:find ("^" .. lre) then
-				opsnotify (table_sets.classnotihardban, gettext ("Hard IP ban refused connection from IP %s: %s"):format (ip .. tryipcc (ip), rsn)) -- notify
-				return true
-			end
+function checkhban (addr)
+	for lre, why in pairs (cache_hban) do
+		if addr:match ("^" .. repnmdcinchars (lre)) then
+			opsnotify (table_sets.classnotihardban, gettext ("Hard IP ban refused connection from IP %s: %s"):format (addr .. tryipcc (addr), why)) -- notify
+			return true
 		end
 	end
 
@@ -23962,13 +23954,21 @@ end
 ----- ---- --- -- -
 
 function loadcachelists ()
-	-- protected list
-	local _, rows = VH:SQLQuery ("select `protected` from `" .. tbl_sql.prot .. "`")
+	local _, rows = VH:SQLQuery ("select `protected` from `" .. tbl_sql.prot .. "`") -- protected list
 
 	if rows > 0 then
-		for x = 0, rows - 1 do
-			local _, prot = VH:SQLFetch (x)
+		for row = 0, rows - 1 do
+			local _, prot = VH:SQLFetch (row)
 			table.insert (cache_prot, prot)
+		end
+	end
+
+	local _, rows = VH:SQLQuery ("select `ip`, `reason` from `" .. tbl_sql.hban .. "`") -- hard bans
+
+	if rows > 0 then
+		for row = 0, rows - 1 do
+			local _, lre, why = VH:SQLFetch (row)
+			cache_hban [repnmdcoutchars (lre)] = repnmdcoutchars (why)
 		end
 	end
 end
@@ -27089,7 +27089,7 @@ function antiscan (nick, class, data, where, to, status)
 				end
 
 			elseif action == 10 then -- hard ban
-				addhban (nil, repexdots (ip) .. "$ \"" .. repnmdcoutchars (entry) .. "\"")
+				addhban (nil, repexdots (ip) .. "&#36; \"" .. repnmdcoutchars (entry) .. "\"")
 				opsnotify (table_sets.classnotianti, gettext ("Added %s to hard ban list, %d users in total."):format (ip, # getusersbyip (ip, table_sets.scanbelowclass)))
 				VH:Disconnect (nick)
 			end
