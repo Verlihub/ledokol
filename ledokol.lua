@@ -63,7 +63,7 @@ Tzaca, JOE™, Foxtrot, Deivis
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.8" -- ledokol version
-bld_ledo = "111" -- build number
+bld_ledo = "112" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -9353,17 +9353,17 @@ end
 
 ----- ---- --- -- -
 
-function checkcmd (nick, class, cmd)
+function checkcmd (nick, clas, cmd)
 	local _, rows = VH:SQLQuery ("select `command`, `class` from `" .. tbl_sql.cmd .. "` order by `occurred` desc")
 
 	if rows > 0 then
-		local rcmd = repnmdcinchars (cmd)
+		local safe = repnmdcinchars (cmd)
 
-		for x = 0, rows - 1 do
-			local _, entry, cls = VH:SQLFetch (x)
+		for row = 0, rows - 1 do
+			local _, line, cls = VH:SQLFetch (row)
 
-			if rcmd:find (entry) and (class < tonumber (cls)) then
-				VH:SQLQuery ("update `" .. tbl_sql.cmd .. "` set `occurred` = `occurred` + 1 where `command` = '" .. repsqlchars (entry) .. "'")
+			if safe:match (line) and clas < tonumber (cls) then
+				VH:SQLQuery ("update `" .. tbl_sql.cmd .. "` set `occurred` = `occurred` + 1 where `command` = '" .. repsqlchars (line) .. "'")
 				commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 				return 0
 			end
@@ -9376,107 +9376,121 @@ end
 ----- ---- --- -- -
 
 function addcmdentry (nick, item)
-local _, _, class = item:find ("^.+ (%d+)$")
-class = tonumber (class)
+	local clas = item:match ("^.+ (%d+)$")
+	clas = tonumber (clas)
 
-if class == 11 or class == 10 or class == 5 or class == 4 or class == 3 or class == 2 or class == 1 then -- only if valid class
-local _, _, entry = item:find ("^(.+) %d+$")
-local str = repsqlchars (repnmdcinchars (entry))
-local _, rows = VH:SQLQuery ("select `class` from `" .. tbl_sql.cmd .. "` where `command` = '" .. str .. "'")
+	if clas == 11 or clas == 10 or clas == 5 or clas == 4 or clas == 3 or clas == 2 or clas == 1 or clas == 0 then -- validate class
+		local line = item:match ("^(.+) %d+$")
+		local safe = repsqlchars (repnmdcinchars (line))
+		local _, rows = VH:SQLQuery ("select `class` from `" .. tbl_sql.cmd .. "` where `command` = '" .. safe .. "'")
 
-if rows > 0 then
-VH:SQLQuery ("update `" .. tbl_sql.cmd .. "` set `class` = " .. _tostring (class) .. " where `command` = '" .. str .. "'")
-commandanswer (nick, gettext ("Modified command permission with class %d: %s"):format (class, entry))
-else
-VH:SQLQuery ("insert into `" .. tbl_sql.cmd .. "` (`command`, `class`) values ('" .. str .. "', " .. _tostring (class) .. ")")
-commandanswer (nick, gettext ("Added command permission with class %d: %s"):format (class, entry))
-end
+		if rows > 0 then
+			VH:SQLQuery ("update `" .. tbl_sql.cmd .. "` set `class` = " .. _tostring (clas) .. " where `command` = '" .. safe .. "'")
+			commandanswer (nick, gettext ("Modified command permission with class %d: %s"):format (clas, line))
 
-else
-commandanswer (nick, gettext ("Known classes are: %s"):format ("1, 2, 3, 4, 5, 10 " .. gettext ("and") .. " 11"))
-end
+		else
+			VH:SQLQuery ("insert into `" .. tbl_sql.cmd .. "` (`command`, `class`) values ('" .. safe .. "', " .. _tostring (clas) .. ")")
+			commandanswer (nick, gettext ("Added command permission with class %d: %s"):format (clas, line))
+		end
+
+	else
+		commandanswer (nick, gettext ("Known classes are: %s"):format ("0, 1, 2, 3, 4, 5, 10 " .. gettext ("and") .. " 11"))
+	end
 end
 
 ----- ---- --- -- -
 
 function delcmdentry (nick, item)
-local aitem = repsqlchars (repnmdcinchars (item))
-local _, rows = VH:SQLQuery ("select `class` from `" .. tbl_sql.cmd .. "` where `command` = '" .. aitem .. "'")
+	local safe = repsqlchars (repnmdcinchars (item))
+	local _, rows = VH:SQLQuery ("select `class` from `" .. tbl_sql.cmd .. "` where `command` = '" .. safe .. "'")
 
-if rows > 0 then
-VH:SQLQuery ("delete from `" .. tbl_sql.cmd .. "` where `command` = '" .. aitem .. "'")
-commandanswer (nick, gettext ("Deleted command permission: %s"):format (item))
-else
-commandanswer (nick, gettext ("Couldn't delete command permission because not found: %s"):format (item))
-end
+	if rows > 0 then
+		VH:SQLQuery ("delete from `" .. tbl_sql.cmd .. "` where `command` = '" .. safe .. "'")
+		commandanswer (nick, gettext ("Deleted command permission: %s"):format (item))
+
+	else
+		commandanswer (nick, gettext ("Couldn't delete command permission because not found: %s"):format (item))
+	end
 end
 
 ----- ---- --- -- -
 
 function listcmdentry (nick)
-local _, rows = VH:SQLQuery ("select `command`, `class`, `occurred` from `" .. tbl_sql.cmd .. "` order by `occurred` desc")
+	local _, rows = VH:SQLQuery ("select `command`, `class`, `occurred` from `" .. tbl_sql.cmd .. "` order by `occurred` desc")
 
-if rows > 0 then
-local anentry, len = "", 0
+	if rows > 0 then
+		local list, zero = "", 0
 
-for x = 0, rows - 1 do
-local _, entry, class, occurred = VH:SQLFetch (x)
-if x == 0 then len = # _tostring (occurred) end
-anentry = anentry .. " " .. prezero (# _tostring (rows), (x + 1)) .. ". [ O: " .. prezero (len, occurred) .. " ] " .. repnmdcoutchars (entry) .. " [" .. class .. "]\r\n"
-end
+		for row = 0, rows - 1 do
+			local _, line, clas, occ = VH:SQLFetch (row)
 
-commandanswer (nick, gettext ("Command permission list") .. ":\r\n\r\n" .. anentry)
-else
-commandanswer (nick, gettext ("Command permission list is empty."))
-end
+			if row == 0 then
+				zero = # _tostring (occ)
+			end
+
+			list = list .. " " .. prezero (# _tostring (rows), (row + 1)) .. ". [ O: " .. prezero (zero, occ) .. " ] " .. repnmdcoutchars (line) .. " [" .. _tostring (clas) .. "]\r\n"
+		end
+
+		commandanswer (nick, gettext ("Command permission list") .. ":\r\n\r\n" .. list)
+
+	else
+		commandanswer (nick, gettext ("Command permission list is empty."))
+	end
 end
 
 ----- ---- --- -- -
 
 function addcmdexentry (nick, item)
-local entry = repsqlchars (repnmdcinchars (item))
-local _, rows = VH:SQLQuery ("select `occurred` from `" .. tbl_sql.cmdex .. "` where `exception` = '" .. entry .. "'")
+	local safe = repsqlchars (repnmdcinchars (item))
+	local _, rows = VH:SQLQuery ("select `occurred` from `" .. tbl_sql.cmdex .. "` where `exception` = '" .. safe .. "'")
 
-if rows > 0 then
-commandanswer (nick, gettext ("Couldn't add command notification exception entry because already exists: %s"):format (item))
-else
-VH:SQLQuery ("insert into `" .. tbl_sql.cmdex .. "` (`exception`) values ('" .. entry .. "')")
-commandanswer (nick, gettext ("Added command notification exception entry: %s"):format (item))
-end
+	if rows > 0 then
+		commandanswer (nick, gettext ("Couldn't add command notification exception entry because already exists: %s"):format (item))
+
+	else
+		VH:SQLQuery ("insert into `" .. tbl_sql.cmdex .. "` (`exception`) values ('" .. safe .. "')")
+		commandanswer (nick, gettext ("Added command notification exception entry: %s"):format (item))
+	end
 end
 
 ----- ---- --- -- -
 
 function delcmdexentry (nick, item)
-local aitem = repsqlchars (repnmdcinchars (item))
-local _, rows = VH:SQLQuery ("select `occurred` from `" .. tbl_sql.cmdex .. "` where `exception` = '" .. aitem .. "'")
+	local safe = repsqlchars (repnmdcinchars (item))
+	local _, rows = VH:SQLQuery ("select `occurred` from `" .. tbl_sql.cmdex .. "` where `exception` = '" .. safe .. "'")
 
-if rows > 0 then
-VH:SQLQuery ("delete from `" .. tbl_sql.cmdex .. "` where `exception` = '" .. aitem .. "'")
-commandanswer (nick, gettext ("Deleted command notification exception entry: %s"):format (item))
-else
-commandanswer (nick, gettext ("Couldn't delete command notification exception entry because not found: %s"):format (item))
-end
+	if rows > 0 then
+		VH:SQLQuery ("delete from `" .. tbl_sql.cmdex .. "` where `exception` = '" .. safe .. "'")
+		commandanswer (nick, gettext ("Deleted command notification exception entry: %s"):format (item))
+
+	else
+		commandanswer (nick, gettext ("Couldn't delete command notification exception entry because not found: %s"):format (item))
+	end
 end
 
 ----- ---- --- -- -
 
 function listcmdexentry (nick)
-local _, rows = VH:SQLQuery ("select `exception`, `occurred` from `" .. tbl_sql.cmdex .. "` order by `occurred` desc")
+	local _, rows = VH:SQLQuery ("select `exception`, `occurred` from `" .. tbl_sql.cmdex .. "` order by `occurred` desc")
 
-if rows > 0 then
-local anentry, len = "", 0
+	if rows > 0 then
+		local list, zero = "", 0
 
-for x = 0, rows - 1 do
-local _, entry, occurred = VH:SQLFetch (x)
-if x == 0 then len = # _tostring (occurred) end
-anentry = anentry .. " " .. prezero (# _tostring (rows), (x + 1)) .. ". [ O: " .. prezero (len, occurred) .. " ] " .. repnmdcoutchars (entry) .. "\r\n"
-end
+		for row = 0, rows - 1 do
+			local _, line, occ = VH:SQLFetch (row)
 
-commandanswer (nick, gettext ("Command notification exception list") .. ":\r\n\r\n" .. anentry)
-else
-commandanswer (nick, gettext ("Command notification exception list is empty."))
-end
+			if row == 0 then
+				zero = # _tostring (occ)
+			end
+
+			list = list .. " " .. prezero (# _tostring (rows), (row + 1)) .. ". [ O: " .. prezero (zero, occ) .. " ] " .. repnmdcoutchars (line) .. "\r\n"
+		end
+
+		commandanswer (nick, gettext ("Command notification exception list") .. ":\r\n\r\n" .. list)
+
+	else
+		commandanswer (nick, gettext ("Command notification exception list is empty."))
+	end
 end
 
 ----- ---- --- -- -
@@ -26913,8 +26927,7 @@ function antiscan (nick, class, data, where, to, status)
 						end
 
 						if table_sets.antispamdebug == 1 then -- debug
-							opsnotify (table_sets.classnotianti, gettext ("Entry used in detection: %s"):format (repnmdcoutchars (entry)))
-							opsnotify (table_sets.classnotianti, gettext ("Exception used in detection: %s"):format (repnmdcoutchars (value)))
+							opsnotify (table_sets.classnotianti, gettext ("Entry used in detection: %s"):format (repnmdcoutchars (entry)) .. " &#124; " .. gettext ("Exception used in detection: %s"):format (repnmdcoutchars (value)))
 						end
 
 						return 1

@@ -2,6 +2,7 @@
 
 [111] Added: cleanallbangags configuration to clean all gag lists on cleanallban hub command, request by FAUST
 [110] Improved: UTF-8 detection in avdetforce command when avdetforceconv is enabled
+[112] Improved: Allow to use class 0 in command permissions
 
 [ 2.9.7 :: 2021-01-10 ]
 
