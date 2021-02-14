@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: Ledokol\n"
 "Project-Version: 2.9.8\n"
 "Report-Msgid-Bugs-To: RoLex <webmaster@feardc.net>\n"
-"POT-Creation-Date: 2021-01-10 00:00+0200\n"
-"PO-Revision-Date: 2021-01-10 00:00+0200\n"
+"POT-Creation-Date: 2021-02-14 00:00+0200\n"
+"PO-Revision-Date: 2021-02-14 00:00+0200\n"
 "Last-Translator: RoLex <webmaster@feardc.net>\n"
 "Language-Team: RoLex <webmaster@feardc.net>\n"
 "Language: en_GB\n"
@@ -3866,4 +3866,25 @@ msgid "Size of uptime ranks table: %d [ %s: %d @ %s ]"
 msgstr ""
 
 msgid "Total uptime rank time: %s"
+msgstr ""
+
+msgid "Function disabled"
+msgstr ""
+
+msgid "Code %d"
+msgstr ""
+
+msgid "Unknown error"
+msgstr ""
+
+msgid "No file"
+msgstr ""
+
+msgid "No data"
+msgstr ""
+
+msgid "Unknown data"
+msgstr ""
+
+msgid "IP intelligence: %s"
 msgstr ""

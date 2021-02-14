@@ -1290,3 +1290,10 @@ Not found in uptime rank list: %s|
 %s with class %d deleted %d uptime ranks lower than %d.|
 Size of uptime ranks table: %d [ %s: %d @ %s ]|
 Total uptime rank time: %s|
+Function disabled|
+Code %d|
+Unknown error|
+No file|
+No data|
+Unknown data|
+IP intelligence: %s|

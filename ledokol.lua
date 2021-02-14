@@ -63,7 +63,7 @@ Tzaca, JOE™, Foxtrot, Deivis
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.8" -- ledokol version
-bld_ledo = "112" -- build number
+bld_ledo = "113" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -11460,6 +11460,8 @@ function showipinfo (nick, ip)
 			if geoip ["area_code"] and geoip ["area_code"] > 0 then -- area code
 				info = info .. " " .. gettext ("Area code: %d"):format (geoip ["area_code"]) .. "\r\n"
 			end
+
+			info = info .. " " .. gettext ("IP intelligence: %s"):format (getipintel (ip)) .. "\r\n" -- ip intelligence
 		end
 
 		if info ~= "" then
@@ -25803,6 +25805,90 @@ function getcurl (url, enc, del, reh)
 			return false, gettext ("Failed to execute %s without code and error."):format ("cURL"), nil, nil
 		end
 	end
+end
+
+----- ---- --- -- -
+
+function getipintel (addr)
+	if table_sets.chatintelon == 0 or # table_sets.chatintelemail == 0 or not table_othsets.ver_curl then
+		return gettext ("Function disabled")
+	end
+
+	local face, name = getconfig ("listen_ip"), table_othsets.cfgdir .. table_othsets.chindir .. "/" .. addr
+
+	if face and # face >= 7 and # face <= 15 and face ~= "0.0.0.0" and face ~= "127.0.0.1" then -- interface address
+		face = " --interface " .. face
+	else
+		face = ""
+	end
+
+	os.remove (name) -- remove old file
+	local res, err, code = os.execute ("curl --get --location --max-redirs 1 --connect-timeout " .. _tostring (table_sets.chatintelreqtime) .. " --max-time " .. _tostring (table_sets.chatintelreqwait) .. face .. " --user-agent \"" .. table_othsets.useragent .. "\" --silent --output \"" .. name .. "\" \"" .. table_othsets.chinurl:format (table_sets.chatintelemail, addr) .. "\"")
+
+	if not res then -- execute error
+		if code ~= nil then
+			code = tonumber (code) or -1
+		end
+
+		if code ~= -1 then
+			return gettext ("Code %d"):format (code)
+		elseif err and # err > 0 then
+			return repnmdcoutchars (err)
+		end
+
+		return gettext ("Unknown error")
+	end
+
+	local file, err = io.open (name, "r") -- make use of err, it could be permission
+
+	if not file then
+		return gettext ("No file")
+	end
+
+	local data = file:read ("*all")
+	file:close ()
+	os.remove (name)
+
+	if not data or # data == 0 then
+		return gettext ("No data")
+	end
+
+	local temp = tonumber (data)
+
+	if not temp then
+		temp = data:gsub ("%.", ",")
+		temp = tonumber (temp)
+	end
+
+	data = temp
+
+	if type (data) ~= "number" then
+		return gettext ("Unknown data")
+	end
+
+	if data < 0 then
+		if data == -1 then
+			return gettext ("Invalid request")
+		elseif data == -2 then
+			return gettext ("Invalid IP")
+		elseif data == -3 then
+			return gettext ("Private IP")
+		elseif data == -4 then
+			return gettext ("Under maintenance")
+		elseif data == -5 then
+			return gettext ("Request banned")
+		elseif data == -6 then
+			return gettext ("Invalid email")
+		end
+
+		return gettext ("Code %d"):format (data)
+	end
+
+	if data >= 0 then
+		data = roundint (data * 100)
+	end
+
+	return gettext ("%d of %d"):format (data, table_sets.chatintelmatch)
 end
 
 ----- ---- --- -- -
