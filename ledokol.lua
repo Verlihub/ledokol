@@ -1340,6 +1340,7 @@ function Main (file)
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('avfeedverb', '" .. repsqlchars (table_sets.avfeedverb) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('avsendtodb', '" .. repsqlchars (table_sets.avsendtodb) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('avdbloadint', '" .. repsqlchars (table_sets.avdbloadint) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('avkicktext', '" .. repsqlchars (table_sets.avkicktext) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('classnotiav', '" .. repsqlchars (table_sets.classnotiav) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('trigrunning', '" .. repsqlchars (table_sets.trigrunning) .. "')")
 					end
