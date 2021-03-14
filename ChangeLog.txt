@@ -3,6 +3,7 @@
 [111] Added: cleanallbangags configuration to clean all gag lists on cleanallban hub command, request by FAUST
 [112] Added: Hard ban cache list
 [113] Added: IP intelligence result to ipinfo command
+[114] Added: avkickhide configuration to hide antivirus kicks, requires Verlihub 1.3.0.2
 [110] Improved: UTF-8 detection in avdetforce command when avdetforceconv is enabled
 [112] Improved: Allow to use class 0 in command permissions
 

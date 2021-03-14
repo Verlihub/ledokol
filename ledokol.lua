@@ -63,7 +63,7 @@ Tzaca, JOE™, Foxtrot, Deivis
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.8" -- ledokol version
-bld_ledo = "113" -- build number
+bld_ledo = "114" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -109,6 +109,7 @@ table_sets = {
 	avdetblockmsg = 5,
 	avdetforceconv = 0,
 	avkicktext = "Virus spreaders are not welcome here _ban_30d",
+	avkickhide = 0,
 	classnotianti = 3,
 	classnotiex = 3,
 	classnotisefi = 3,
@@ -1339,7 +1340,6 @@ function Main (file)
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('avfeedverb', '" .. repsqlchars (table_sets.avfeedverb) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('avsendtodb', '" .. repsqlchars (table_sets.avsendtodb) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('avdbloadint', '" .. repsqlchars (table_sets.avdbloadint) .. "')")
-						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('avkicktext', '" .. repsqlchars (table_sets.avkicktext) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('classnotiav', '" .. repsqlchars (table_sets.classnotiav) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('trigrunning', '" .. repsqlchars (table_sets.trigrunning) .. "')")
 					end
@@ -1573,6 +1573,7 @@ function Main (file)
 
 					if ver <= 298 then
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('cleanallbangags', '" .. repsqlchars (table_sets.cleanallbangags) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('avkickhide', '" .. repsqlchars (table_sets.avkickhide) .. "')")
 					end
 
 					if ver <= 299 then
@@ -5411,7 +5412,12 @@ function VH_OnUserLogin (nick, uip)
 								table_faau [nick] = 1
 							end
 
-							VH:KickUser (table_othsets.sendfrom, nick, table_sets.avkicktext)
+							if minhubver (1, 3, 0, 2) then
+								VH:KickUser (table_othsets.sendfrom, nick, table_sets.avkicktext, "", "", table_sets.avkickhide)
+							else
+								VH:KickUser (table_othsets.sendfrom, nick, table_sets.avkicktext)
+							end
+
 							return 0
 						end
 
@@ -7300,7 +7306,11 @@ function VH_OnScriptCommand (name, data, plug, file)
 						end
 
 					else
-						VH:KickUser (table_othsets.sendfrom, nick, table_sets.avkicktext)
+						if minhubver (1, 3, 0, 2) then
+							VH:KickUser (table_othsets.sendfrom, nick, table_sets.avkicktext, "", "", table_sets.avkickhide)
+						else
+							VH:KickUser (table_othsets.sendfrom, nick, table_sets.avkicktext)
+						end
 					end
 				end
 			end
@@ -19367,6 +19377,19 @@ end
 
 	----- ---- --- -- -
 
+	elseif tvar == "avkickhide" then
+		if num then
+			if setto == 0 or setto == 1 then
+				ok = true
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0 " .. gettext ("or") .. " 1"))
+			end
+		else
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
+		end
+
+	----- ---- --- -- -
+
 elseif tvar == "scanbelowclass" then
 if num then
 if (setto >= 1 and setto <= 5) or setto == 10 then
@@ -23144,6 +23167,7 @@ function showledoconf (nick)
 	conf = conf .. "\r\n [::] avdetblockmsg = " .. _tostring (table_sets.avdetblockmsg)
 	conf = conf .. "\r\n [::] avdetforceconv = " .. _tostring (table_sets.avdetforceconv)
 	conf = conf .. "\r\n [::] avkicktext = " .. _tostring (table_sets.avkicktext)
+	conf = conf .. "\r\n [::] avkickhide = " .. _tostring (table_sets.avkickhide)
 	conf = conf .. "\r\n"
 
 	conf = conf .. "\r\n [::] classnotianti = " .. _tostring (table_sets.classnotianti)
@@ -24427,8 +24451,13 @@ function avdbcheckall ()
 							if table_sets.avdetaction == 0 then
 								table_avbl [nick] = true
 								opsnotify (table_sets.classnotiav, gettext ("Connection requests to following user will be blocked: %s"):format (nick))
+
 							else
-								VH:KickUser (table_othsets.sendfrom, nick, table_sets.avkicktext)
+								if minhubver (1, 3, 0, 2) then
+									VH:KickUser (table_othsets.sendfrom, nick, table_sets.avkicktext, "", "", table_sets.avkickhide)
+								else
+									VH:KickUser (table_othsets.sendfrom, nick, table_sets.avkicktext)
+								end
 							end
 
 							break
@@ -24642,7 +24671,11 @@ function avdetforce (nick, line)
 					opsnotify (table_sets.classnotiav, gettext ("Connection requests to following user will be blocked: %s"):format (user))
 
 				else
-					VH:KickUser (nick, user, table_sets.avkicktext)
+					if minhubver (1, 3, 0, 2) then
+						VH:KickUser (nick, user, table_sets.avkicktext, "", "", table_sets.avkickhide)
+					else
+						VH:KickUser (nick, user, table_sets.avkicktext)
+					end
 				end
 
 				if table_sets.avsearchint > 0 then
@@ -24925,7 +24958,11 @@ function avparsesr (data, user, addr)
 						checkipwat (nick, usip, data) -- we will return 0 anyway
 					end
 
-					VH:KickUser (table_othsets.sendfrom, nick, table_sets.avkicktext)
+					if minhubver (1, 3, 0, 2) then
+						VH:KickUser (table_othsets.sendfrom, nick, table_sets.avkicktext, "", "", table_sets.avkickhide)
+					else
+						VH:KickUser (table_othsets.sendfrom, nick, table_sets.avkicktext)
+					end
 				end
 
 				if table_avus [nick] then
@@ -25005,7 +25042,11 @@ function avparsesr (data, user, addr)
 													checkipwat (nick, usip, data) -- we will return 0 anyway
 												end
 
-												VH:KickUser (table_othsets.sendfrom, nick, table_sets.avkicktext)
+												if minhubver (1, 3, 0, 2) then
+													VH:KickUser (table_othsets.sendfrom, nick, table_sets.avkicktext, "", "", table_sets.avkickhide)
+												else
+													VH:KickUser (table_othsets.sendfrom, nick, table_sets.avkicktext)
+												end
 											end
 
 											table_avus [nick] = nil
