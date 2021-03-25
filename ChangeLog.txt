@@ -6,6 +6,7 @@
 [114] Added: avkickhide configuration to hide antivirus kicks, requires Verlihub 1.3.0.2
 [110] Improved: UTF-8 detection in avdetforce command when avdetforceconv is enabled
 [112] Improved: Allow to use class 0 in command permissions
+[115] Improved: Magnet parameter is optional in release bot, request by barrow
 
 [ 2.9.7 :: 2021-01-10 ]
 

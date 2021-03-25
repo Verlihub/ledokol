@@ -63,7 +63,7 @@ Tzaca, JOE™, Foxtrot, Deivis
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.8" -- ledokol version
-bld_ledo = "114" -- build number
+bld_ledo = "115" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -1573,6 +1573,8 @@ function Main (file)
 					end
 
 					if ver <= 298 then
+						VH:SQLQuery ("alter table `" .. tbl_sql.rel .. "` change column `tth` varchar(255) null default null")
+
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('cleanallbangags', '" .. repsqlchars (table_sets.cleanallbangags) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('avkickhide', '" .. repsqlchars (table_sets.avkickhide) .. "')")
 					end
@@ -2153,7 +2155,7 @@ return 0
 
 	----- ---- --- -- -
 
-	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.reladd .. " \".+\" %S+$") or data:match ("^" .. table_othsets.optrig .. table_cmnds.reladd .. " .+ %S+$") then
+	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.reladd .. " \".+\" .+$") or data:match ("^" .. table_othsets.optrig .. table_cmnds.reladd .. " .+ %S+$") then
 		if ucl >= table_sets.relmodclass then
 			donotifycmd (nick, data, 0, ucl)
 			addrelease (nick, data:sub (# table_cmnds.reladd + 3))
@@ -5016,7 +5018,7 @@ elseif data:match ("^" .. table_othsets.ustrig .. table_cmnds.mode .. " %S+$") t
 
 	----- ---- --- -- -
 
-	elseif data:match ("^" .. table_othsets.ustrig .. table_cmnds.reladd .. " \".+\" %S+$") or data:match ("^" .. table_othsets.ustrig .. table_cmnds.reladd .. " .+ %S+$") then
+	elseif data:match ("^" .. table_othsets.ustrig .. table_cmnds.reladd .. " \".+\" .+$") or data:match ("^" .. table_othsets.ustrig .. table_cmnds.reladd .. " .+ %S+$") then
 		if ucl >= table_sets.relmodclass then
 			donotifycmd (nick, data, 0, ucl)
 			addrelease (nick, data:sub (# table_cmnds.reladd + 3))
@@ -10652,41 +10654,54 @@ end
 ----- ---- --- -- -
 
 function addrelease (nick, line)
-	local cat, uri = "", ""
+	local cat, name = "", ""
 
-	if line:match ("^\".+\" %S+$") then
-		cat, uri = line:match ("^\"(.+)\" (%S+)$")
+	if line:match ("^\".+\" .+$") then
+		cat, name = line:match ("^\"(.+)\" (.+)$")
 	else
-		cat, uri = line:match ("^(.+) (%S+)$")
+		cat, name = line:match ("^(.+) (%S+)$")
 	end
 
-	local rel = uri:match ("^magnet:%?xt=urn:tree:tiger:%w+&xl=%d+&dn=(.+)$")
+	local uri = name:match ("^magnet:%?xt=urn:tree:tiger:%w+&xl=%d+&dn=(.+)$") -- magnet link or not
 
-	if rel then
-		rel = rel:gsub ("%%20", string.char (32))
-		local safe = repsqlchars (rel)
-		local _, rows = VH:SQLQuery ("select `date` from `" .. tbl_sql.rel .. "` where `release` = '" .. safe .. "'")
-		local stamp = os.time () + table_sets.srvtimediff -- current time
+	if uri then
+		uri = uri:gsub ("%%20", string.char (32))
+	end
 
-		if rows > 0 then
-			VH:SQLQuery ("update `" .. tbl_sql.rel .. "` set `category` = '" .. repsqlchars (cat) .. "', `tth` = '" .. repsqlchars (uri) .. "', `date` = " .. _tostring (stamp) .. " where `release` = '" .. safe .. "'")
+	local safe = repsqlchars (name)
 
-			if table_sets.reluseclass < 11 then
-				maintoall (gettext ("Release modified within category %s by %s: %s"):format (cat, nick, uri), table_sets.reluseclass, 10)
-			else
-				commandanswer (nick, gettext ("Modified release: %s"):format (rel))
-			end
+	if uri then
+		safe = repsqlchars (uri)
+	end
+
+	local _, rows = VH:SQLQuery ("select `date` from `" .. tbl_sql.rel .. "` where `release` = '" .. safe .. "'")
+	local stam = os.time () + table_sets.srvtimediff -- current time
+
+	if rows > 0 then -- modify
+		if uri then
+			VH:SQLQuery ("update `" .. tbl_sql.rel .. "` set `category` = '" .. repsqlchars (cat) .. "', `tth` = '" .. repsqlchars (name) .. "', `date` = " .. _tostring (stam) .. " where `release` = '" .. safe .. "'")
 		else
-			VH:SQLQuery ("insert into `" .. tbl_sql.rel .. "` (`release`, `category`, `tth`, `by`, `date`) values ('" .. safe .. "', '" .. repsqlchars (cat) .. "', '" .. repsqlchars (uri) .. "', '" .. repsqlchars (nick) .. "', " .. _tostring (stamp) .. ")")
-
-			if table_sets.reluseclass < 11 then
-				maintoall (gettext ("Release added within category %s by %s: %s"):format (cat, nick, uri), table_sets.reluseclass, 10)
-			else
-				commandanswer (nick, gettext ("Added release: %s"):format (rel))
-			end
+			VH:SQLQuery ("update `" .. tbl_sql.rel .. "` set `category` = '" .. repsqlchars (cat) .. "', `tth` = null, `date` = " .. _tostring (stam) .. " where `release` = '" .. safe .. "'")
 		end
-	else
-		commandanswer (nick, gettext ("Please specify complete magnet URI."))
+
+		if table_sets.reluseclass < 11 then
+			maintoall (gettext ("Release modified within category %s by %s: %s"):format (cat, nick, name), table_sets.reluseclass, 10)
+		else
+			commandanswer (nick, gettext ("Modified release: %s"):format (name))
+		end
+
+	else -- add
+		if uri then
+			VH:SQLQuery ("insert into `" .. tbl_sql.rel .. "` (`release`, `category`, `tth`, `by`, `date`) values ('" .. safe .. "', '" .. repsqlchars (cat) .. "', '" .. repsqlchars (name) .. "', '" .. repsqlchars (nick) .. "', " .. _tostring (stam) .. ")")
+		else
+			VH:SQLQuery ("insert into `" .. tbl_sql.rel .. "` (`release`, `category`, `by`, `date`) values ('" .. safe .. "', '" .. repsqlchars (cat) .. "', '" .. repsqlchars (nick) .. "', " .. _tostring (stam) .. ")")
+		end
+
+		if table_sets.reluseclass < 11 then
+			maintoall (gettext ("Release added within category %s by %s: %s"):format (cat, nick, name), table_sets.reluseclass, 10)
+		else
+			commandanswer (nick, gettext ("Added release: %s"):format (name))
+		end
 	end
 end
 
@@ -10695,7 +10710,7 @@ end
 function delrelease (nick, line)
 	local sype = line:match ("^(%S+) .+$")
 
-	if sype == "rel" then
+	if sype == "rel" then -- release
 		local rel = line:match ("^%S+ (.+)$")
 		local safe = repsqlchars (rel)
 		local _, rows = VH:SQLQuery ("select `date` from `" .. tbl_sql.rel .. "` where `release` = '" .. safe .. "'")
@@ -10708,23 +10723,25 @@ function delrelease (nick, line)
 			else
 				commandanswer (nick, gettext ("Deleted release: %s"):format (rel))
 			end
+
 		else
 			commandanswer (nick, gettext ("Couldn't delete release because not found: %s"):format (rel))
 		end
 
-	elseif sype == "cat" then
+	elseif sype == "cat" then -- category
 		local cat = line:match ("^%S+ (.+)$")
 		local safe = repsqlchars (cat)
 		local _, rows = VH:SQLQuery ("select `date` from `" .. tbl_sql.rel .. "` where `category` = '" .. safe .. "'")
 
 		if rows > 0 then
-			VH:SQLQuery ("delete from `" .. tbl_sql.rel .. "` where `category` = '" .. safe .. "'") -- no limit
+			VH:SQLQuery ("delete from `" .. tbl_sql.rel .. "` where `category` = '" .. safe .. "'") -- note: no limit
 
 			if table_sets.reluseclass < 11 then
 				maintoall (gettext ("Release category deleted by %s: %s"):format (nick, cat), table_sets.reluseclass, 10)
 			else
 				commandanswer (nick, gettext ("Deleted %d releases from category: %s"):format (rows, cat))
 			end
+
 		else
 			commandanswer (nick, gettext ("Couldn't delete category because not found: %s"):format (cat))
 		end
@@ -10753,9 +10770,10 @@ function listrelease (nick, line)
 		num = 1
 	end
 
-	if sype == "cat" then
+	if sype == "cat" then -- category
 		if not ext then
 			commandanswer (nick, gettext ("Selected type requires extra parameters. Please refer to manual for more information."))
+
 		else
 			local _, rows = VH:SQLQuery ("select `release`, `tth`, `by`, `date` from `" .. tbl_sql.rel .. "` where `category` = '" .. repsqlchars (ext) .. "' order by `date` desc limit " .. _tostring (num))
 
@@ -10763,19 +10781,27 @@ function listrelease (nick, line)
 				local list = ""
 
 				for pos = 0, rows - 1 do
-					local _, rel, uri, auth, stamp = VH:SQLFetch (pos)
-					list = list .. "\r\n " .. prezero (# _tostring (rows), (pos + 1)) .. ". " .. rel .. "\r\n " .. gettext ("Added by: %s"):format (auth) .. "\r\n " .. gettext ("Published: %s"):format (os.date (table_sets.dateformat .. " " .. table_sets.timeformat, stamp)) .. "\r\n " .. gettext ("Magnet URI: %s"):format (uri) .. "\r\n"
+					local _, rel, uri, auth, stam = VH:SQLFetch (pos)
+					list = list .. "\r\n " .. prezero (# _tostring (rows), (pos + 1)) .. ". " .. rel .. "\r\n " .. gettext ("Added by: %s"):format (auth) .. "\r\n " .. gettext ("Published: %s"):format (os.date (table_sets.dateformat .. " " .. table_sets.timeformat, stam))
+
+					if uri and # uri > 0 then
+						list = list .. "\r\n " .. gettext ("Magnet URI: %s"):format (uri)
+					end
+
+					list = list .. "\r\n"
 				end
 
 				commandanswer (nick, gettext ("Last %d releases by category %s"):format (rows, ext) .. ":\r\n" .. list)
+
 			else
 				commandanswer (nick, gettext ("No releases by requested category were found: %s"):format (ext))
 			end
 		end
 
-	elseif sype == "pub" then
+	elseif sype == "pub" then -- publisher
 		if not ext then
 			commandanswer (nick, gettext ("Selected type requires extra parameters. Please refer to manual for more information."))
+
 		else
 			local _, rows = VH:SQLQuery ("select `release`, `category`, `tth`, `date` from `" .. tbl_sql.rel .. "` where `by` = '" .. repsqlchars (ext) .. "' order by `date` desc limit " .. _tostring (num))
 
@@ -10783,28 +10809,42 @@ function listrelease (nick, line)
 				local list = ""
 
 				for pos = 0, rows - 1 do
-					local _, rel, cat, uri, stamp = VH:SQLFetch (pos)
-					list = list .. "\r\n " .. prezero (# _tostring (rows), (pos + 1)) .. ". " .. rel .. "\r\n " .. gettext ("Category: %s"):format (cat) .. "\r\n " .. gettext ("Published: %s"):format (os.date (table_sets.dateformat .. " " .. table_sets.timeformat, stamp)) .. "\r\n " .. gettext ("Magnet URI: %s"):format (uri) .. "\r\n"
+					local _, rel, cat, uri, stam = VH:SQLFetch (pos)
+					list = list .. "\r\n " .. prezero (# _tostring (rows), (pos + 1)) .. ". " .. rel .. "\r\n " .. gettext ("Category: %s"):format (cat) .. "\r\n " .. gettext ("Published: %s"):format (os.date (table_sets.dateformat .. " " .. table_sets.timeformat, stam))
+
+					if uri and # uri > 0 then
+						list = list .. "\r\n " .. gettext ("Magnet URI: %s"):format (uri)
+					end
+
+					list = list .. "\r\n"
 				end
 
 				commandanswer (nick, gettext ("Last %d releases published by %s"):format (rows, ext) .. ":\r\n" .. list)
+
 			else
 				commandanswer (nick, gettext ("No releases by requested publisher were found: %s"):format (ext))
 			end
 		end
 
-	elseif sype == "all" then
+	elseif sype == "all" then -- all
 		local _, rows = VH:SQLQuery ("select `release`, `category`, `tth`, `by`, `date` from `" .. tbl_sql.rel .. "` order by `date` desc limit " .. _tostring (num))
 
 		if rows > 0 then
 			local list = ""
 
 			for pos = 0, rows - 1 do
-				local _, rel, cat, uri, auth, stamp = VH:SQLFetch (pos)
-				list = list .. "\r\n " .. prezero (# _tostring (rows), (pos + 1)) .. ". " .. rel .. "\r\n " .. gettext ("Category: %s"):format (cat) .. "\r\n " .. gettext ("Added by: %s"):format (auth) .. "\r\n " .. gettext ("Published: %s"):format (os.date (table_sets.dateformat .. " " .. table_sets.timeformat, stamp)) .. "\r\n " .. gettext ("Magnet URI: %s"):format (uri) .. "\r\n"
+				local _, rel, cat, uri, auth, stam = VH:SQLFetch (pos)
+				list = list .. "\r\n " .. prezero (# _tostring (rows), (pos + 1)) .. ". " .. rel .. "\r\n " .. gettext ("Category: %s"):format (cat) .. "\r\n " .. gettext ("Added by: %s"):format (auth) .. "\r\n " .. gettext ("Published: %s"):format (os.date (table_sets.dateformat .. " " .. table_sets.timeformat, stam))
+
+				if uri and # uri > 0 then
+					list = list .. "\r\n " .. gettext ("Magnet URI: %s"):format (uri)
+				end
+
+				list = list .. "\r\n"
 			end
 
 			commandanswer (nick, gettext ("Last %d releases"):format (rows) .. ":\r\n" .. list)
+
 		else
 			commandanswer (nick, gettext ("Release list is empty."))
 		end
@@ -10826,11 +10866,18 @@ function findrelease (nick, line)
 		local list = ""
 
 		for pos = 0, rows - 1 do
-			local _, rel, cat, uri, auth, stamp = VH:SQLFetch (pos)
-			list = list .. "\r\n " .. prezero (# _tostring (rows), (pos + 1)) .. ". " .. rel .. "\r\n " .. gettext ("Category: %s"):format (cat) .. "\r\n " .. gettext ("Added by: %s"):format (auth) .. "\r\n " .. gettext ("Published: %s"):format (os.date (table_sets.dateformat .. " " .. table_sets.timeformat, stamp)) .. "\r\n " .. gettext ("Magnet URI: %s"):format (uri) .. "\r\n"
+			local _, rel, cat, uri, auth, stam = VH:SQLFetch (pos)
+			list = list .. "\r\n " .. prezero (# _tostring (rows), (pos + 1)) .. ". " .. rel .. "\r\n " .. gettext ("Category: %s"):format (cat) .. "\r\n " .. gettext ("Added by: %s"):format (auth) .. "\r\n " .. gettext ("Published: %s"):format (os.date (table_sets.dateformat .. " " .. table_sets.timeformat, stam))
+
+			if uri and # uri > 0 then
+				list = list .. "\r\n " .. gettext ("Magnet URI: %s"):format (uri)
+			end
+
+			list = list .. "\r\n"
 		end
 
 		commandanswer (nick, gettext ("Last %d releases by search string %s"):format (rows, line) .. ":\r\n" .. list)
+
 	else
 		commandanswer (nick, gettext ("No releases by requested search string were found: %s"):format (line))
 	end
@@ -10839,14 +10886,19 @@ end
 ----- ---- --- -- -
 
 function sendrelease (nick)
-	local _, rows = VH:SQLQuery ("select `tth`, `by`, `date` from `" .. tbl_sql.rel .. "` order by `date` desc limit " .. _tostring (table_sets.relautolines))
+	local _, rows = VH:SQLQuery ("select `release`, `tth`, `by`, `date` from `" .. tbl_sql.rel .. "` order by `date` desc limit " .. _tostring (table_sets.relautolines))
 
 	if rows > 0 then
 		local list = ""
 
 		for pos = 0, rows - 1 do
-			local _, uri, auth, stamp = VH:SQLFetch (pos)
-			list = list .. " " .. gettext ("By %s on %s: %s"):format (auth, os.date (table_sets.dateformat .. " " .. table_sets.timeformat, stamp), uri) .. "\r\n"
+			local _, rel, uri, auth, stam = VH:SQLFetch (pos)
+
+			if uri and # uri > 0 then
+				list = list .. " " .. gettext ("By %s on %s: %s"):format (auth, os.date (table_sets.dateformat .. " " .. table_sets.timeformat, stam), uri) .. "\r\n"
+			else
+				list = list .. " " .. gettext ("By %s on %s: %s"):format (auth, os.date (table_sets.dateformat .. " " .. table_sets.timeformat, stam), rel) .. "\r\n"
+			end
 		end
 
 		maintouser (nick, gettext ("Last %d releases"):format (rows) .. ":\r\n\r\n" .. list)
@@ -16186,6 +16238,7 @@ function cleanuptable (nick, line, cls)
 			opsnotify (table_sets.classnotiledoact, gettext ("%s with class %d deleted %d releases older than %d days."):format (nick, cls, rows, days))
 			VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('lastcleanrel', " .. tm .. ") on duplicate key update `value` = " .. tm)
 			VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('limcleanrel', " .. _tostring (days) .. ") on duplicate key update `value` = " .. _tostring (days))
+
 		else
 			commandanswer (nick, gettext ("No rows to remove: %s"):format (cype))
 		end
@@ -17653,7 +17706,7 @@ function namereg (nick, line, cls)
 		VH:SQLQuery ("update `" .. tbl_sql.shran .. "` set `nick` = '" .. rnewn .. "' where `nick` = '" .. roldn .. "'")
 		VH:SQLQuery ("update `" .. tbl_sql.off .. "` set `from` = '" .. rnewn .. "' where `from` = '" .. roldn .. "'") -- no limit
 		VH:SQLQuery ("update `" .. tbl_sql.news .. "` set `by` = '" .. rnewn .. "' where `by` = '" .. roldn .. "'") -- no limit
-		VH:SQLQuery ("update `" .. tbl_sql.rel .. "` set `by` = '" .. rnewn .. "' where `by` = '" .. roldn .. "'") -- no limit
+		VH:SQLQuery ("update `" .. tbl_sql.rel .. "` set `by` = '" .. rnewn .. "' where `by` = '" .. roldn .. "'") -- note: no limit
 		VH:SQLQuery ("update `" .. tbl_sql.mchist .. "` set `realnick` = '" .. rnewn .. "' where `realnick` = '" .. roldn .. "'") -- no limit
 		VH:SQLQuery ("update `" .. tbl_sql.ophist .. "` set `nick` = '" .. rnewn .. "' where `nick` = '" .. roldn .. "'") -- no limit
 		commandanswer (nick, gettext ("Renamed account %s: %s"):format (oldn, newn))
@@ -18288,7 +18341,7 @@ end
 	-- releases
 
 	if ucl >= table_sets.relmodclass then
-		susmenitm (usr, gettext ("Releases") .. "\\" .. gettext ("Add new release"), table_cmnds.reladd .. " \"%[line:<" .. gettext ("category") .. ">]\" %[line:<" .. gettext ("magnet") .. ">]")
+		susmenitm (usr, gettext ("Releases") .. "\\" .. gettext ("Add new release"), table_cmnds.reladd .. " \"%[line:<" .. gettext ("category") .. ">]\" %[line:<" .. gettext ("magnet") .. " " .. gettext ("or") .. " " .. gettext ("name") .. ">]")
 		smensep (usr)
 		susmenitm (usr, gettext ("Releases") .. "\\" .. gettext ("Delete releases"), table_cmnds.reldel .. " %[line:<" .. gettext ("type") .. ">] %[line:<" .. gettext ("name") .. ">]")
 	end
@@ -22905,7 +22958,7 @@ function senduserhelp (nick, pm)
 	help = help .. " " .. trig .. table_cmnds.cchist .. " - " .. gettext ("All time user location statistics") .. "\r\n\r\n"
 
 	-- releases
-	help = help .. " " .. trig .. table_cmnds.reladd .. " <\"" .. gettext ("category") .. "\"> <" .. gettext ("magnet") .. "> - " .. gettext ("Add new release") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.reladd .. " <\"" .. gettext ("category") .. "\"> <" .. gettext ("magnet") .. " " .. gettext ("or") .. " " .. gettext ("name") .. "> - " .. gettext ("Add new release") .. "\r\n"
 	help = help .. " " .. trig .. table_cmnds.reldel .. " <" .. gettext ("type") .. "> <" .. gettext ("name") .. "> - " .. gettext ("Delete releases") .. "\r\n"
 	help = help .. " " .. trig .. table_cmnds.rellist .. " <" .. gettext ("type") .. "> [" .. gettext ("lines") .. "=10] [" .. gettext ("category") .. " " .. gettext ("or") .. " " .. gettext ("publisher") .. "] - " .. gettext ("List of available releases") .. "\r\n"
 	help = help .. " " .. trig .. table_cmnds.relfind .. " <" .. gettext ("name") .. "> - " .. gettext ("Find release by name or category") .. "\r\n\r\n"
@@ -23538,7 +23591,7 @@ VH:SQLQuery ("create table if not exists `" .. tbl_sql.respex .. "` (`exception`
 VH:SQLQuery ("create table if not exists `" .. tbl_sql.auth .. "` (`id` bigint(20) unsigned not null auto_increment, `nick` varchar(255) not null, `ip` varchar(255) not null, `badip` varchar(15) not null default '0.0.0.0', `good` bigint(20) unsigned not null default 0, `bad` bigint(20) unsigned not null default 0, primary key (`id`))")
 
 	-- releases
-	VH:SQLQuery ("create table if not exists `" .. tbl_sql.rel .. "` (`release` varchar(255) not null primary key, `category` varchar(255) not null, `tth` varchar(255) not null, `by` varchar(255) not null, `date` bigint(20) unsigned not null)")
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql.rel .. "` (`release` varchar(255) not null primary key, `category` varchar(255) not null, `tth` varchar(255) null default null, `by` varchar(255) not null, `date` bigint(20) unsigned not null)")
 
 	-- ranks
 	VH:SQLQuery ("create table if not exists `" .. tbl_sql.chran .. "` (`nick` varchar(255) not null, `rank` bigint(20) unsigned not null default 1, primary key (`nick`))")
@@ -23752,6 +23805,7 @@ VH:SQLQuery ("alter table `" .. tbl_sql.auth .. "` change column `bad` `bad` big
 	VH:SQLQuery ("alter table `" .. tbl_sql.rel .. "` add column `tth` varchar(255) not null after `category`") -- tth
 	VH:SQLQuery ("alter table `" .. tbl_sql.rel .. "` change column `by` `by` varchar(255) not null") -- by
 	VH:SQLQuery ("alter table `" .. tbl_sql.rel .. "` change column `date` `date` bigint(20) unsigned not null") -- date
+	VH:SQLQuery ("alter table `" .. tbl_sql.rel .. "` change column `tth` varchar(255) null default null") -- tth
 
 	-- welcome messages
 	VH:SQLQuery ("alter table `" .. tbl_sql.wm .. "` change column `nick` `nick` varchar(255) not null") -- nick
