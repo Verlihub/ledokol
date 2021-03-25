@@ -1573,7 +1573,7 @@ function Main (file)
 					end
 
 					if ver <= 298 then
-						VH:SQLQuery ("alter table `" .. tbl_sql.rel .. "` change column `tth` varchar(255) null default null")
+						VH:SQLQuery ("alter table `" .. tbl_sql.rel .. "` change column `tth` `tth` varchar(255) null default null")
 
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('cleanallbangags', '" .. repsqlchars (table_sets.cleanallbangags) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('avkickhide', '" .. repsqlchars (table_sets.avkickhide) .. "')")
@@ -23805,7 +23805,7 @@ VH:SQLQuery ("alter table `" .. tbl_sql.auth .. "` change column `bad` `bad` big
 	VH:SQLQuery ("alter table `" .. tbl_sql.rel .. "` add column `tth` varchar(255) not null after `category`") -- tth
 	VH:SQLQuery ("alter table `" .. tbl_sql.rel .. "` change column `by` `by` varchar(255) not null") -- by
 	VH:SQLQuery ("alter table `" .. tbl_sql.rel .. "` change column `date` `date` bigint(20) unsigned not null") -- date
-	VH:SQLQuery ("alter table `" .. tbl_sql.rel .. "` change column `tth` varchar(255) null default null") -- tth
+	VH:SQLQuery ("alter table `" .. tbl_sql.rel .. "` change column `tth` `tth` varchar(255) null default null") -- tth
 
 	-- welcome messages
 	VH:SQLQuery ("alter table `" .. tbl_sql.wm .. "` change column `nick` `nick` varchar(255) not null") -- nick
