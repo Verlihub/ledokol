@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: Ledokol\n"
 "Project-Version: 2.9.8\n"
 "Report-Msgid-Bugs-To: RoLex <webmaster@feardc.net>\n"
-"POT-Creation-Date: 2021-02-14 00:00+0200\n"
-"PO-Revision-Date: 2021-02-14 00:00+0200\n"
+"POT-Creation-Date: 2021-03-27 00:00+0200\n"
+"PO-Revision-Date: 2021-03-27 00:00+0200\n"
 "Last-Translator: RoLex <webmaster@feardc.net>\n"
 "Language-Team: RoLex <webmaster@feardc.net>\n"
 "Language: en_GB\n"
@@ -2152,91 +2152,22 @@ msgstr ""
 msgid "Away"
 msgstr ""
 
-msgid "Normal away"
-msgstr ""
-
 msgid "Fileserver"
-msgstr ""
-
-msgid "Normal fileserver"
-msgstr ""
-
-msgid "Away fileserver"
-msgstr ""
-
-msgid "Normal away fileserver"
 msgstr ""
 
 msgid "Fireball"
 msgstr ""
 
-msgid "Normal fireball"
+msgid "TLS download"
 msgstr ""
 
-msgid "Away fireball"
+msgid "TLS upload"
 msgstr ""
 
-msgid "Normal away fireball"
+msgid "IPv4"
 msgstr ""
 
-msgid "Fileserver fireball"
-msgstr ""
-
-msgid "Normal fileserver fireball"
-msgstr ""
-
-msgid "Away fileserver fireball"
-msgstr ""
-
-msgid "Normal away fileserver fireball"
-msgstr ""
-
-msgid "TLS"
-msgstr ""
-
-msgid "Normal TLS"
-msgstr ""
-
-msgid "Away TLS"
-msgstr ""
-
-msgid "Normal away TLS"
-msgstr ""
-
-msgid "Fileserver TLS"
-msgstr ""
-
-msgid "Normal fileserver TLS"
-msgstr ""
-
-msgid "Away fileserver TLS"
-msgstr ""
-
-msgid "Normal away fileserver TLS"
-msgstr ""
-
-msgid "Fireball TLS"
-msgstr ""
-
-msgid "Normal fireball TLS"
-msgstr ""
-
-msgid "Away fireball TLS"
-msgstr ""
-
-msgid "Normal away fireball TLS"
-msgstr ""
-
-msgid "Fileserver fireball TLS"
-msgstr ""
-
-msgid "Normal fileserver fireball TLS"
-msgstr ""
-
-msgid "Away fileserver fireball TLS"
-msgstr ""
-
-msgid "Normal away fileserver fireball TLS"
+msgid "IPv6"
 msgstr ""
 
 msgid "Unable to get bot information: %s"
@@ -3611,9 +3542,6 @@ msgid "Clean up registered users table"
 msgstr ""
 
 msgid "magnet"
-msgstr ""
-
-msgid "Please specify complete magnet URI."
 msgstr ""
 
 msgid "Release modified within category %s by %s: %s"

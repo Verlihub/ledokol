@@ -717,35 +717,12 @@ Client: %s|
 Version: %s|
 Normal|
 Away|
-Normal away|
 Fileserver|
-Normal fileserver|
-Away fileserver|
-Normal away fileserver|
 Fireball|
-Normal fireball|
-Away fireball|
-Normal away fireball|
-Fileserver fireball|
-Normal fileserver fireball|
-Away fileserver fireball|
-Normal away fileserver fireball|
-TLS|
-Normal TLS|
-Away TLS|
-Normal away TLS|
-Fileserver TLS|
-Normal fileserver TLS|
-Away fileserver TLS|
-Normal away fileserver TLS|
-Fireball TLS|
-Normal fireball TLS|
-Away fireball TLS|
-Normal away fireball TLS|
-Fileserver fireball TLS|
-Normal fileserver fireball TLS|
-Away fileserver fireball TLS|
-Normal away fileserver fireball TLS|
+TLS download|
+TLS upload|
+IPv4|
+IPv6|
 Unable to get bot information: %s|
 Bot information|
 Owner script: %s|

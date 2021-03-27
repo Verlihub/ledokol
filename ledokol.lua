@@ -63,7 +63,7 @@ Tzaca, JOE™, Foxtrot, Deivis
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.8" -- ledokol version
-bld_ledo = "115" -- build number
+bld_ledo = "116" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -26714,72 +26714,84 @@ end
 
 ----- ---- --- -- -
 
-function statustostr (sts)
-if sts == 1 then
-	return gettext ("Normal")
-elseif sts == 2 then
-	return gettext ("Away")
-elseif sts == 3 then
-	return gettext ("Normal away")
-elseif sts == 4 then
-	return gettext ("Fileserver")
-elseif sts == 5 then
-	return gettext ("Normal fileserver")
-elseif sts == 6 then
-	return gettext ("Away fileserver")
-elseif sts == 7 then
-	return gettext ("Normal away fileserver")
-elseif sts == 8 then
-	return gettext ("Fireball")
-elseif sts == 9 then
-	return gettext ("Normal fireball")
-elseif sts == 10 then
-	return gettext ("Away fireball")
-elseif sts == 11 then
-	return gettext ("Normal away fireball")
-elseif sts == 12 then
-	return gettext ("Fileserver fireball")
-elseif sts == 13 then
-	return gettext ("Normal fileserver fireball")
-elseif sts == 14 then
-	return gettext ("Away fileserver fireball")
-elseif sts == 15 then
-	return gettext ("Normal away fileserver fireball")
-elseif sts == 16 then
-	return gettext ("TLS")
-elseif sts == 17 then
-	return gettext ("Normal TLS")
-elseif sts == 18 then
-	return gettext ("Away TLS")
-elseif sts == 19 then
-	return gettext ("Normal away TLS")
-elseif sts == 20 then
-	return gettext ("Fileserver TLS")
-elseif sts == 21 then
-	return gettext ("Normal fileserver TLS")
-elseif sts == 22 then
-	return gettext ("Away fileserver TLS")
-elseif sts == 23 then
-	return gettext ("Normal away fileserver TLS")
-elseif sts == 24 then
-	return gettext ("Fireball TLS")
-elseif sts == 25 then
-	return gettext ("Normal fireball TLS")
-elseif sts == 26 then
-	return gettext ("Away fireball TLS")
-elseif sts == 27 then
-	return gettext ("Normal away fireball TLS")
-elseif sts == 28 then
-	return gettext ("Fileserver fireball TLS")
-elseif sts == 29 then
-	return gettext ("Normal fileserver fireball TLS")
-elseif sts == 30 then
-	return gettext ("Away fileserver fireball TLS")
-elseif sts == 31 then
-	return gettext ("Normal away fileserver fireball TLS")
-else
-	return sts
+function isflagset (flag, need)
+	return (flag & need) == need
 end
+
+----- ---- --- -- -
+
+function statustostr (flag)
+	local line = ""
+
+	if isflagset (flag, 1) then -- normal
+		if # line > 0 then
+			line = line .. " + "
+		end
+
+		line = line .. gettext ("Normal")
+	end
+
+	if isflagset (flag, 2) then -- away
+		if # line > 0 then
+			line = line .. " + "
+		end
+
+		line = line .. gettext ("Away")
+	end
+
+	if isflagset (flag, 4) then -- fileserver
+		if # line > 0 then
+			line = line .. " + "
+		end
+
+		line = line .. gettext ("Fileserver")
+	end
+
+	if isflagset (flag, 8) then -- fireball
+		if # line > 0 then
+			line = line .. " + "
+		end
+
+		line = line .. gettext ("Fireball")
+	end
+
+	if isflagset (flag, 16) then -- tls download
+		if # line > 0 then
+			line = line .. " + "
+		end
+
+		line = line .. gettext ("TLS download")
+	end
+
+	if isflagset (flag, 32) then -- tls upload
+		if # line > 0 then
+			line = line .. " + "
+		end
+
+		line = line .. gettext ("TLS upload")
+	end
+
+	if isflagset (flag, 64) then -- ipv4
+		if # line > 0 then
+			line = line .. " + "
+		end
+
+		line = line .. gettext ("IPv4")
+	end
+
+	if isflagset (flag, 128) then -- ipv6
+		if # line > 0 then
+			line = line .. " + "
+		end
+
+		line = line .. gettext ("IPv6")
+	end
+
+	if # line == 0 then -- unknown
+		line = gettext ("Unknown")
+	end
+
+	return line
 end
 
 ----- ---- --- -- -
