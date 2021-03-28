@@ -25314,10 +25314,10 @@ function loadcomponents ()
 		table_othsets.ver_lua = nil
 
 	else
-		if table_othsets.ver_lua:sub (1, 3) == "5.0" then -- lua 5.0
+		if table_othsets.ver_lua:sub (1, 3) == "5.0" then -- lua = 5.0
 			string.gmatch = string.gfind
-		elseif table_othsets.ver_lua:match ("^5%.[0-2]") then -- lua < 5.3
-			isflagset = isflagsetold
+		elseif not table_othsets.ver_lua:match ("^5%.[12]") then -- lua >= 5.3
+			load ("function isflagset (flag, need) return (flag & need) == need end")
 		end
 	end
 
@@ -26719,13 +26719,7 @@ end
 
 ----- ---- --- -- -
 
-function isflagset (flag, need)
-	return (flag & need) == need
-end
-
------ ---- --- -- -
-
-function isflagsetold (flag, need) -- lua < 5.3
+function isflagset (flag, need) -- lua < 5.3
 	local res, bit, a, b = 0, 1, flag, need
 
 	while a > 0 and b > 0 do
