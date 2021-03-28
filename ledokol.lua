@@ -6589,7 +6589,12 @@ function VH_OnTimer (msec)
 	end
 
 	if os.difftime (now, table_othsets.collgarb) >= 900 then -- collect garbage every 15 minutes
-		if table_othsets.ver_lua:sub (1, 3) == "5.0" then collectgarbage () else collectgarbage ("collect") end
+		if not table_othsets.ver_lua or table_othsets.ver_lua:sub (1, 3) == "5.0" then
+			collectgarbage ()
+		else
+			collectgarbage ("collect")
+		end
+
 		table_othsets.collgarb = now -- reset
 	end
 
@@ -24268,9 +24273,10 @@ function getmemusg ()
 	table_othsets.collgarb = os.time ()
 	local sz, _ = 0, 0
 
-	if table_othsets.ver_lua:sub (1, 3) == "5.0" then
+	if not table_othsets.ver_lua or table_othsets.ver_lua:sub (1, 3) == "5.0" then
 		collectgarbage ()
 		sz, _ = gcinfo ()
+
 	else
 		collectgarbage ("collect")
 		sz = collectgarbage ("count")
@@ -25272,47 +25278,46 @@ function loadcomponents ()
 
 	-- lua version
 
-	for _, v in pairs (paths) do
-		local res = os.execute (v .. "lua -v > \"" .. table_othsets.cfgdir .. table_othsets.tmpfile .. "\" 2>&1")
+	table_othsets.ver_lua = _VERSION:sub (5)
 
-		if res then
-			local f = io.open (table_othsets.cfgdir .. table_othsets.tmpfile, "r")
+	if not table_othsets.ver_lua or # table_othsets.ver_lua < 3 then
+		for _, v in pairs (paths) do
+			local res = os.execute (v .. "lua -v > \"" .. table_othsets.cfgdir .. table_othsets.tmpfile .. "\" 2>&1")
 
-			if f then
-				local ver = f:read ("*line") -- read first line
-				f:close ()
-				os.remove (table_othsets.cfgdir .. table_othsets.tmpfile)
+			if res then
+				local f = io.open (table_othsets.cfgdir .. table_othsets.tmpfile, "r")
 
-				if ver and # _tostring (ver) > 0 then
-					_, _, table_othsets.ver_lua = ver:find ("(%d+[%.%d]+)")
+				if f then
+					local ver = f:read ("*line") -- read first line
+					f:close ()
+					os.remove (table_othsets.cfgdir .. table_othsets.tmpfile)
 
-					if table_othsets.ver_lua then
-						break
+					if ver and # _tostring (ver) > 0 then
+						table_othsets.ver_lua = ver:match ("%d+[%.%d]+")
+
+						if table_othsets.ver_lua and # table_othsets.ver_lua >= 3 then
+							break
+						end
 					end
 				end
 			end
 		end
 	end
 
-	if not table_othsets.ver_lua then
-		if minhubver (1, 0, 2, 15) then
-			VH:SendToClass ("<" .. table_sets.ledobotnick .. "> Warning: Unable to run \"lua -v\"|", 5, 10, getconfig ("delayed_chat"))
-		else
-			VH:SendToClass ("<" .. table_sets.ledobotnick .. "> Warning: Unable to run \"lua -v\"|", 5, 10)
-		end
-
-		table_othsets.ver_lua = _VERSION:sub (5)
-	end
-
-	if not table_othsets.ver_lua then
+	if not table_othsets.ver_lua or # table_othsets.ver_lua < 3 then
 		if minhubver (1, 0, 2, 15) then
 			VH:SendToClass ("<" .. table_sets.ledobotnick .. "> Warning: Unable to detect Lua library version|", 5, 10, getconfig ("delayed_chat"))
 		else
 			VH:SendToClass ("<" .. table_sets.ledobotnick .. "> Warning: Unable to detect Lua library version|", 5, 10)
 		end
+
+		table_othsets.ver_lua = nil
+
 	else
-		if table_othsets.ver_lua:sub (1, 3) == "5.0" then
-			string.gmatch = string.gfind -- lua 5.0 fix
+		if table_othsets.ver_lua:sub (1, 3) == "5.0" then -- lua 5.0
+			string.gmatch = string.gfind
+		elseif table_othsets.ver_lua:match ("^5%.[0-2]") then -- lua < 5.3
+			isflagset = isflagsetold
 		end
 	end
 
@@ -26715,23 +26720,25 @@ end
 ----- ---- --- -- -
 
 function isflagset (flag, need)
-	if table_othsets.ver_lua:match ("^5%.[0-2]") then -- lua < 5.3
-		local res, bit, a, b = 0, 1, flag, need
+	return (flag & need) == need
+end
 
-		while a > 0 and b > 0 do
-			if (a % 2) == 1 and (b % 2) == 1 then
-				res = res + bit
-			end
+----- ---- --- -- -
 
-			bit = bit * 2
-			a = math.floor (a / 2)
-			b = math.floor (b / 2)
+function isflagsetold (flag, need) -- lua < 5.3
+	local res, bit, a, b = 0, 1, flag, need
+
+	while a > 0 and b > 0 do
+		if (a % 2) == 1 and (b % 2) == 1 then
+			res = res + bit
 		end
 
-		return res == need
+		bit = bit * 2
+		a = math.floor (a / 2)
+		b = math.floor (b / 2)
 	end
 
-	return (flag & need) == need
+	return res == need
 end
 
 ----- ---- --- -- -
