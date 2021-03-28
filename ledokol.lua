@@ -26715,6 +26715,22 @@ end
 ----- ---- --- -- -
 
 function isflagset (flag, need)
+	if table_othsets.ver_lua:match ("^5%.[0-2]") then -- lua < 5.3
+		local res, bit, a, b = 0, 1, flag, need
+
+		while a > 0 and b > 0 do
+			if (a % 2) == 1 and (b % 2) == 1 then
+				res = res + bit
+			end
+
+			bit = bit * 2
+			a = math.floor (a / 2)
+			b = math.floor (b / 2)
+		end
+
+		return res == need
+	end
+
 	return (flag & need) == need
 end
 
