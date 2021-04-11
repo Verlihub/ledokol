@@ -8,6 +8,7 @@
 [112] Improved: Allow to use class 0 in command permissions
 [115] Improved: Magnet parameter is optional in release bot, request by barrow
 [116] Improved: User information MyINFO status
+[117] Improved: Always include path in AVDB reports
 
 [ 2.9.7 :: 2021-01-10 ]
 

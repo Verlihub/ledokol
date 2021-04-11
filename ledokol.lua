@@ -63,7 +63,7 @@ Tzaca, JOE™, Foxtrot, Deivis
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.8" -- ledokol version
-bld_ledo = "116" -- build number
+bld_ledo = "117" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -108,7 +108,7 @@ table_sets = {
 	avdetclass = 5,
 	avdetblockmsg = 5,
 	avdetforceconv = 0,
-	avkicktext = "Virus spreaders are not welcome here _ban_30d",
+	avkicktext = "Virus and illegal pornography spreaders are not welcome here #_ban_3d",
 	avkickhide = 0,
 	classnotianti = 3,
 	classnotiex = 3,
@@ -3478,29 +3478,31 @@ return 0
 
 		return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
 
-elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.mode .. " .+ %S+$") then
-	if ucl >= table_sets.chatmodeclass then
-		donotifycmd (nick, data, 0, ucl)
-		setmode (nick, data:sub (# table_cmnds.mode + 3))
-	else
-		commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
-	end
+	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.mode .. " .+ %S+$") then
+		if ucl >= table_sets.chatmodeclass then
+			donotifycmd (nick, data, 0, ucl)
+			setmode (nick, data:sub (# table_cmnds.mode + 3))
 
-	return 0
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
 
------ ---- --- -- -
+		return 0
 
-elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.mode .. " %S+$") then
-	if ucl >= table_sets.chatmodeclass then
-		donotifycmd (nick, data, 0, ucl)
-		setmode (nick, reppatchars (tolow (nick)) .. " " .. data:sub (# table_cmnds.mode + 3))
-	else
-		commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
-	end
+	----- ---- --- -- -
 
-	return 0
+	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.mode .. " %S+$") then
+		if ucl >= table_sets.chatmodeclass then
+			donotifycmd (nick, data, 0, ucl)
+			setmode (nick, reppatchars (tolow (nick)) .. " " .. data:sub (# table_cmnds.mode + 3))
+
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
+
+		return 0
 
 	----- ---- --- -- -
 
@@ -4968,17 +4970,18 @@ end
 
 return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
 
-elseif data:match ("^" .. table_othsets.ustrig .. table_cmnds.mode .. " %S+$") then
-	if ucl >= table_sets.chatmodeclass then
-		donotifycmd (nick, data, 0, ucl)
-		setmode (nick, reppatchars (tolow (nick)) .. " " .. data:sub (# table_cmnds.mode + 3))
-	else
-		commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
-	end
+	elseif data:match ("^" .. table_othsets.ustrig .. table_cmnds.mode .. " %S+$") then
+		if ucl >= table_sets.chatmodeclass then
+			donotifycmd (nick, data, 0, ucl)
+			setmode (nick, reppatchars (tolow (nick)) .. " " .. data:sub (# table_cmnds.mode + 3))
 
-	return 0
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
+
+		return 0
 
 	----- ---- --- -- -
 
@@ -5405,7 +5408,7 @@ function VH_OnUserLogin (nick, uip)
 				for _, data in pairs (table_avlo) do
 					if (nick == data ["nick"] and addr == data ["addr"]) or (nick == data ["nick"] and size == data ["size"]) or (addr == data ["addr"] and size == data ["size"]) then -- nick + ip, nick + share, ip + share
 						opsnotify (table_sets.classnotiav, gettext ("Infected user logged in with IP %s and share %s: %s"):format (addr .. tryipcc (addr, nick), makesize (size), nick))
-						avdbreport (nick, addr, size, true) -- antivirus database
+						avdbreport (nick, addr, size, true, data ["path"]) -- antivirus database
 
 						if table_sets.avdetaction == 0 then
 							table_avbl [nick] = true
@@ -13029,82 +13032,80 @@ end
 ----- ---- --- -- -
 
 function setmode (nick, line)
-local _, _, usr, tp = line:find ("^(.+) (%S+)$")
+	local user, mode = line:match ("^(.+) (%S+)$")
+	local safe = repnmdcinchars (user)
 
---if getstatus (usr) == 1 then
-	if tp == "norm" then
-		if table_mode [usr] then
-			commandanswer (nick, gettext ("Changing chat mode for %s: %s => %s"):format (usr, table_mode [usr], tp))
-			table_mode [usr] = nil
+	if mode == "norm" then
+		if table_mode [safe] then
+			commandanswer (nick, gettext ("Changing chat mode for %s: %s => %s"):format (user, table_mode [safe], mode))
+			table_mode [safe] = nil
+
 		else
-			commandanswer (nick, gettext ("Not found in chat mode list: %s"):format (usr))
+			commandanswer (nick, gettext ("Not found in chat mode list: %s"):format (user))
 		end
 
-	elseif tp == "rev" or tp == "cyr" or tp == "lat" or tp == "cap" or tp == "low" or tp == "pwd" or tp == "num" then
-			commandanswer (nick, gettext ("Changing chat mode for %s: %s => %s"):format (usr, (table_mode [usr] or "norm"), tp))
-			table_mode [usr] = tp
+	elseif mode == "rev" or mode == "cyr" or mode == "lat" or mode == "cap" or mode == "low" or mode == "pwd" or mode == "num" then
+		commandanswer (nick, gettext ("Changing chat mode for %s: %s => %s"):format (user, (table_mode [safe] or "norm"), mode))
+		table_mode [safe] = mode
 
-	else -- unknown mode
+	else -- unknown
 		commandanswer (nick, gettext ("Known chat modes are: %s"):format ("rev, cyr, lat, cap, low, pwd, num " .. gettext ("and") .. " norm"))
 	end
---else
-	--commandanswer (nick, gettext ("User not in list: %s"):format (usr))
---end
 end
 
 ----- ---- --- -- -
 
 function listmodes (nick)
-local list = ""
-local x = 1
+	local list, pos = "", 0
 
-for k, v in pairs (table_mode) do
-	list = list .. " " .. x .. ". " .. k .. " @ " .. v .. "\r\n"
-	x = x + 1
-end
+	for lre, mode in pairs (table_mode) do
+		pos = pos + 1
+		list = list .. " " .. _tostring (pos) .. ". " .. repnmdcoutchars (lre) .. " @ " .. mode .. "\r\n"
+	end
 
-if list == "" then
-	commandanswer (nick, gettext ("Chat mode user list is empty."))
-else
-	commandanswer (nick, gettext ("Chat mode user list") .. ":\r\n\r\n" .. list)
-end
+	if # list == 0 then
+		commandanswer (nick, gettext ("Chat mode user list is empty."))
+	else
+		commandanswer (nick, gettext ("Chat mode user list") .. ":\r\n\r\n" .. list)
+	end
 end
 
 ----- ---- --- -- -
 
-function modusrmode (nick, ip, msg)
-local ret = msg
+function modusrmode (nick, addr, text)
+	local back, lick = text, tolow (nick)
 
-for k, v in pairs (table_mode) do
-	if tolow (nick):find (k) or ip:find (k) then
-		if v == "rev" then
-			ret = ret:reverse ()
-		elseif v == "cyr" then
-			ret = convtranslit (ret, 2)
-		elseif v == "lat" then
-			ret = convtranslit (ret, 1)
-		elseif v == "cap" then
-			ret = convcaps (ret, false)
-		elseif v == "low" then
-			ret = convcaps (ret, true)
-		elseif v == "pwd" then
-			ret = ret:gsub ("%S", "*")
-		elseif v == "num" then
-			ret = ret:gsub ("[oOîÎ]", "0")
-			ret = ret:gsub ("[iIlL]", "1")
-			ret = ret:gsub ("[eEåÅ]", "3")
-			ret = ret:gsub ("[aAàÀ÷×]", "4")
-			ret = ret:gsub ("[sS]", "5")
-			ret = ret:gsub ("[áÁøØ]", "6")
-			ret = ret:gsub ("[tTòÒ%?]", "7")
-			ret = ret:gsub ("[yYóÓ]", "9")
+	for lre, mode in pairs (table_mode) do
+		if lick:match (lre) or addr:match (lre) then
+			if mode == "rev" then
+				back = back:reverse ()
+			elseif mode == "cyr" then
+				back = convtranslit (back, 2)
+			elseif mode == "lat" then
+				back = convtranslit (back, 1)
+			elseif mode == "cap" then
+				back = convcaps (back, false)
+			elseif mode == "low" then
+				back = convcaps (back, true)
+			elseif mode == "pwd" then
+				back = back:gsub ("%S", "*")
+
+			elseif mode == "num" then
+				back = back:gsub ("[oOîÎ]", "0")
+				back = back:gsub ("[iIlL]", "1")
+				back = back:gsub ("[eEåÅ]", "3")
+				back = back:gsub ("[aAàÀ÷×]", "4")
+				back = back:gsub ("[sS]", "5")
+				back = back:gsub ("[áÁøØ]", "6")
+				back = back:gsub ("[tTòÒ%?]", "7")
+				back = back:gsub ("[yYóÓ]", "9")
+			end
+
+			return back
 		end
-
-		return ret
 	end
-end
 
-return ret
+	return back
 end
 
 ----- ---- --- -- -
@@ -19309,6 +19310,7 @@ end
 					table_othsets.avloadvercount = 0
 					table_othsets.avloaddelcount = 0
 					ok = true
+
 				else
 					if not table_othsets.ver_curl then
 						commandanswer (nick, gettext ("This feature requires following binary installed on your system: %s"):format ("cURL"))
@@ -19316,9 +19318,11 @@ end
 						ok = true
 					end
 				end
+
 			else
 				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0 " .. gettext ("or") .. " 30 " .. gettext ("to") .. " 1440"))
 			end
+
 		else
 			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
 		end
@@ -24336,15 +24340,15 @@ end
 
 ----- ---- --- -- -
 
-function loadavdb (st)
-	local res, err, avdb, head = getcurl (table_othsets.avdbloadurl .. "&vers=" .. _tostring (table_othsets.avloadvercount) .. "&time=" .. _tostring (table_othsets.avlastloadtime) .. "&cotime=0&nosort=1", nil, false, true)
+function loadavdb (stam)
+	local res, err, avdb, head = getcurl (table_othsets.avdbloadurl .. "&vers=" .. _tostring (table_othsets.avloadvercount) .. "&time=" .. _tostring (table_othsets.avlastloadtime) .. "&cotime=0&copath=1&nosort=1", nil, false, true)
 
 	if res then
 		if head ~= "" then -- parse headers
 			local have = 0
 
 			for heli in head:gmatch ("[^\r\n]+") do
-				local _, _, hena, heva = heli:find ("^Avdb%-(%a+)%-Count: (%d+)$")
+				local hena, heva = heli:match ("^Avdb%-(%a+)%-Count: (%d+)$")
 
 				if hena and heva then
 					heva = tonumber (heva)
@@ -24352,13 +24356,14 @@ function loadavdb (st)
 					if hena == "Version" then
 						table_othsets.avloadvercount = heva -- update version counter
 						have = have + 1
+
 					elseif hena == "Delete" then
 						if table_othsets.avloaddelcount > 0 and table_othsets.avloaddelcount < heva then -- only if not first time
 							table_avlo = {}
 							table_othsets.avlastloadtime = 0
 							table_othsets.avloadvercount = 0
 							table_othsets.avloaddelcount = heva
-							return loadavdb (st) -- items were removed, get fresh list from scratch
+							return loadavdb (stam) -- items were removed, get fresh list from scratch
 						end
 
 						table_othsets.avloaddelcount = heva -- update delete counter
@@ -24372,23 +24377,72 @@ function loadavdb (st)
 			end
 		end
 
-		table_othsets.avlastloadtime = st
+		table_othsets.avlastloadtime = stam
 
 		if avdb ~= "" and avdb ~= "0" and avdb ~= "-" then
 			local loco, loal = 0, 0
 
 			for avli in avdb:gmatch ("[^\r\n]+") do
-				local _, _, avni, avip, avsi = avli:find ("^([^ ]+)|(%d+%.%d+%.%d+%.%d+)|(%d+)$")
+				local avni, avip, avsi, avpa = avli:match ("^([^ ]+)|(%d+%.%d+%.%d+%.%d+)|(%d+)|(.*)$")
 
-				if avni and avip and avsi then
+				if avni and avip and avsi and avpa then
 					avsi = tonumber (avsi)
-					local ok = true
+					local ok, up = true, false
 
 					for id, data in pairs (table_avlo) do
-						if data ["nick"] == avni and data ["addr"] == avip then -- update if already exists
+						up = false
+
+						if data ["nick"] == avni and data ["addr"] == avip then -- nick + ip
 							if data ["size"] ~= avsi then
 								table_avlo [id]["size"] = avsi
 								loco = loco + 1
+								up = true
+							end
+
+							if # avpa > 0 and data ["path"] ~= avpa then
+								table_avlo [id]["path"] = avpa
+
+								if not up then
+									loco = loco + 1
+								end
+							end
+
+							ok = false
+							break
+						end
+
+						if data ["nick"] == avni and data ["size"] == avsi then -- nick + share
+							if data ["addr"] ~= avip then
+								table_avlo [id]["addr"] = avip
+								loco = loco + 1
+								up = true
+							end
+
+							if # avpa > 0 and data ["path"] ~= avpa then
+								table_avlo [id]["path"] = avpa
+
+								if not up then
+									loco = loco + 1
+								end
+							end
+
+							ok = false
+							break
+						end
+
+						if data ["addr"] == avip and data ["size"] == avsi then -- ip + share
+							if data ["nick"] ~= avni then
+								table_avlo [id]["nick"] = avni
+								loco = loco + 1
+								up = true
+							end
+
+							if # avpa > 0 and data ["path"] ~= avpa then
+								table_avlo [id]["path"] = avpa
+
+								if not up then
+									loco = loco + 1
+								end
 							end
 
 							ok = false
@@ -24400,7 +24454,8 @@ function loadavdb (st)
 						table.insert (table_avlo, {
 							["nick"] = avni,
 							["addr"] = avip,
-							["size"] = avsi
+							["size"] = avsi,
+							["path"] = avpa
 						})
 
 						loco = loco + 1
@@ -24414,15 +24469,18 @@ function loadavdb (st)
 				if loco > 0 then
 					opsnotify (table_sets.classnotiav, gettext ("Loaded %d of %d with totally %d items: %s"):format (loco, loal, # table_avlo, "AVDB"))
 					avdbcheckall () -- check all users when we get fresh db
+
 				elseif loal > 0 then
 					opsnotify (table_sets.classnotiav, gettext ("Loaded none of %d with totally %d items: %s"):format (loal, # table_avlo, "AVDB"))
 				else
 					opsnotify (table_sets.classnotiav, gettext ("Loaded none with totally %d items: %s"):format (# table_avlo, "AVDB"))
 				end
 			end
+
 		elseif table_sets.avfeedverb == 3 then
 			opsnotify (table_sets.classnotiav, gettext ("Loaded none with totally %d items: %s"):format (# table_avlo, "AVDB"))
 		end
+
 	elseif table_sets.avfeedverb == 3 then
 		opsnotify (table_sets.classnotiav, gettext ("Failed to load information from %s: %s"):format ("AVDB", err))
 	end
@@ -24507,7 +24565,7 @@ function avdbcheckall ()
 					for _, data in pairs (table_avlo) do
 						if (nick == data ["nick"] and addr == data ["addr"]) or (nick == data ["nick"] and size == data ["size"]) or (addr == data ["addr"] and size == data ["size"]) then -- nick + ip, nick + share, ip + share
 							opsnotify (table_sets.classnotiav, gettext ("Infected user found with IP %s and share %s: %s"):format (addr .. tryipcc (addr, nick), makesize (size), nick))
-							avdbreport (nick, addr, size, true) -- antivirus database
+							avdbreport (nick, addr, size, true, data ["path"]) -- antivirus database
 
 							if table_sets.avdetaction == 0 then
 								table_avbl [nick] = true
@@ -26855,17 +26913,13 @@ end
 ----- ---- --- -- -
 
 function istrue (bool)
-	if type (bool) == "number" then
-		if tonumber (bool) == 1 then
-			return true
-		else
-			return false
-		end
+	if type (bool) == "number" and tonumber (bool) == 1 then
+		return true
 	elseif bool then
 		return true
-	else
-		return false
 	end
+
+	return false
 end
 
 ----- ---- --- -- -
