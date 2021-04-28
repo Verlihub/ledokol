@@ -1273,3 +1273,11 @@ No file|
 No data|
 Unknown data|
 IP intelligence: %s|
+Forbidden MyINFO list|
+Forbidden MyINFO list is empty.|
+There is an error in following forbidden MyINFO pattern|
+Modified forbidden MyINFO with ban time %s: %s|
+Added forbidden MyINFO with ban time %s: %s|
+Deleted forbidden MyINFO: %s|
+Couldn't delete forbidden MyINFO because not found: %s|
+%s with IP %s and class %d allowed due to forbidden MyINFO exception: %s|

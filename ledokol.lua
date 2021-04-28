@@ -63,7 +63,7 @@ Tzaca, JOE™, Foxtrot, Deivis
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.8" -- ledokol version
-bld_ledo = "117" -- build number
+bld_ledo = "118" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -159,6 +159,7 @@ table_sets = {
 	michdns = 0,
 	michsup = 0,
 	michver = 0,
+	michinfo = 0,
 	michfakenum = 0,
 	michfakediv = 0,
 	michclone = 0,
@@ -175,6 +176,7 @@ table_sets = {
 	midnsmessage = "Forbidden DNS detected: *",
 	misupmessage = "Forbidden client supports detected: *",
 	mivermessage = "Forbidden NMDC version detected: *",
+	miinfomessage = "Forbidden MyINFO detected: *",
 	mifakemessage = "Fake share detected: *",
 	miclonemessage = "Clone of yourself detected: *",
 	misameipmessage = "Connection from same IP detected: *",
@@ -496,6 +498,7 @@ tbl_sql = {
 	midns = "lua_ledo_midns",
 	misup = "lua_ledo_misup",
 	miver = "lua_ledo_miver",
+	miinfo = "lua_ledo_miinfo",
 	miex = "lua_ledo_miex",
 	wm = "lua_ledo_wm",
 	cust = "lua_ledo_cust",
@@ -1573,10 +1576,14 @@ function Main (file)
 					end
 
 					if ver <= 298 then
+						VH:SQLQuery ("create table if not exists `" .. tbl_sql.miinfo .. "` (`myinfo` varchar(255) not null primary key, `time` varchar(10) null, `occurred` bigint(20) unsigned not null default 0, `note` varchar(255) null)")
+
 						VH:SQLQuery ("alter table `" .. tbl_sql.rel .. "` change column `tth` `tth` varchar(255) null default null")
 
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('cleanallbangags', '" .. repsqlchars (table_sets.cleanallbangags) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('avkickhide', '" .. repsqlchars (table_sets.avkickhide) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('miinfomessage', '" .. repsqlchars (table_sets.miinfomessage) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('michinfo', '" .. repsqlchars (table_sets.michinfo) .. "')")
 					end
 
 					if ver <= 299 then
@@ -5267,6 +5274,10 @@ function VH_OnParsedMsgMyINFO (nick, data)
 		return 0
 	end
 
+	if checkinfo (nick, data, cls, addr) then
+		return 0
+	end
+
 	if checkfake (nick, size, cls, addr) then
 		return 0
 	end
@@ -5508,6 +5519,10 @@ function VH_OnUserLogin (nick, uip)
 			end
 
 			if checkver (nick, cls, addr) then
+				return 0
+			end
+
+			if checkinfo (nick, mistr, cls, addr) then
 				return 0
 			end
 
@@ -14183,6 +14198,56 @@ end
 
 ----- ---- --- -- -
 
+function checkinfo (nick, info, clas, addr)
+	if table_sets.michinfo == 0 or # table_myfo.info == 0 then
+		return false
+	end
+
+	local low = tolow (repnmdcinchars (info))
+
+	for id, item in pairs (table_myfo.info) do
+		local fres, fval = catchfinderror (low, item.ent)
+
+		if not fres then
+			local ferr = gettext ("There is an error in following forbidden MyINFO pattern") .. ":\r\n\r\n"
+			ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (item.ent) .. "\r\n"
+			ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
+			ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
+			opsnotify (table_sets.classnotiledoact, ferr)
+
+		elseif fval then
+			table_myfo.info [id].occ = item.occ + 1
+			VH:SQLQuery ("update `" .. tbl_sql.miinfo .. "` set `occurred` = `occurred` + 1 where `myinfo` = '" .. repsqlchars (item.ent) .. "'")
+
+			for eid, eit in pairs (table_myfo.ex) do
+				local fres, fval = catchfinderror (low, eit.ent)
+
+				if not fres then
+					local ferr = gettext ("There is an error in following MyINFO exception pattern") .. ":\r\n\r\n"
+					ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. repnmdcoutchars (eit.ent) .. "\r\n"
+					ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
+					ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
+					opsnotify (table_sets.classnotiledoact, ferr)
+
+				elseif fval then
+					table_myfo.ex [eid].occ = eit.occ + 1
+					VH:SQLQuery ("update `" .. tbl_sql.miex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (eit.ent) .. "'")
+					opsnotify (table_sets.classnotiex, gettext ("%s with IP %s and class %d allowed due to forbidden MyINFO exception: %s"):format (nick, addr .. tryipcc (addr, nick), clas, repnmdcoutchars (info)))
+					return false
+				end
+			end
+
+			local why = table_sets.miinfomessage:gsub ("%*", reprexpchars (repnmdcoutchars (info)))
+			VH:KickUser (table_othsets.sendfrom, nick, why .. "     #_ban_" .. item.tim)
+			return true
+		end
+	end
+
+	return false
+end
+
+----- ---- --- -- -
+
 function checkfake (nick, shar, clas, addr)
 	if shar < 1048576 then -- skip below 1 gb
 		return false
@@ -15088,6 +15153,7 @@ function loadmyfolist ()
 		dns = {},
 		sup = {},
 		ver = {},
+		info = {},
 		ex = {}
 	}
 
@@ -15343,6 +15409,27 @@ function loadmyfolist ()
 		end
 	end
 
+	local _, rows = VH:SQLQuery ("select * from `" .. tbl_sql.miinfo .. "`") -- complete myinfo
+
+	if rows > 0 then
+		for pos = 0, rows - 1 do
+			local _, ent, tim, occ, inf = VH:SQLFetch (pos)
+
+			if ent and # ent > 0 then
+				if not tim or # tim == 0 then
+					tim = table_sets.mitbantime
+				end
+
+				table.insert (table_myfo.info, {
+					["ent"] = ent,
+					["tim"] = tim,
+					["occ"] = tonumber (occ or 0) or 0,
+					["inf"] = inf
+				})
+			end
+		end
+	end
+
 	local _, rows = VH:SQLQuery ("select * from `" .. tbl_sql.miex .. "`") -- exceptions
 
 	if rows > 0 then
@@ -15416,7 +15503,7 @@ function addmyinfoentry (nick, line)
 					["ent"] = sen,
 					["tim"] = cti,
 					["occ"] = 0,
-					["not"] = inf
+					["inf"] = inf
 				})
 
 				VH:SQLQuery ("insert into `" .. tbl_sql.michat .. "` (`chat`, `time`, `note`) values ('" .. repsqlchars (sen) .. "', " .. sqlemptnull (tim) .. ", " .. sqlemptnull (inf) .. ")")
@@ -15449,7 +15536,7 @@ function addmyinfoentry (nick, line)
 					["ent"] = sen,
 					["tim"] = cti,
 					["occ"] = 0,
-					["not"] = inf
+					["inf"] = inf
 				})
 
 				VH:SQLQuery ("insert into `" .. tbl_sql.minick .. "` (`nick`, `time`, `note`) values ('" .. repsqlchars (sen) .. "', " .. sqlemptnull (tim) .. ", " .. sqlemptnull (inf) .. ")")
@@ -15482,7 +15569,7 @@ function addmyinfoentry (nick, line)
 					["ent"] = sen,
 					["tim"] = cti,
 					["occ"] = 0,
-					["not"] = inf
+					["inf"] = inf
 				})
 
 				VH:SQLQuery ("insert into `" .. tbl_sql.midesc .. "` (`description`, `time`, `note`) values ('" .. repsqlchars (sen) .. "', " .. sqlemptnull (tim) .. ", " .. sqlemptnull (inf) .. ")")
@@ -15515,7 +15602,7 @@ function addmyinfoentry (nick, line)
 					["ent"] = sen,
 					["tim"] = cti,
 					["occ"] = 0,
-					["not"] = inf
+					["inf"] = inf
 				})
 
 				VH:SQLQuery ("insert into `" .. tbl_sql.mitag .. "` (`tag`, `time`, `note`) values ('" .. repsqlchars (sen) .. "', " .. sqlemptnull (tim) .. ", " .. sqlemptnull (inf) .. ")")
@@ -15548,7 +15635,7 @@ function addmyinfoentry (nick, line)
 					["ent"] = sen,
 					["tim"] = cti,
 					["occ"] = 0,
-					["not"] = inf
+					["inf"] = inf
 				})
 
 				VH:SQLQuery ("insert into `" .. tbl_sql.miconn .. "` (`connection`, `time`, `note`) values ('" .. repsqlchars (sen) .. "', " .. sqlemptnull (tim) .. ", " .. sqlemptnull (inf) .. ")")
@@ -15581,7 +15668,7 @@ function addmyinfoentry (nick, line)
 					["ent"] = sen,
 					["tim"] = cti,
 					["occ"] = 0,
-					["not"] = inf
+					["inf"] = inf
 				})
 
 				VH:SQLQuery ("insert into `" .. tbl_sql.miemail .. "` (`email`, `time`, `note`) values ('" .. repsqlchars (sen) .. "', " .. sqlemptnull (tim) .. ", " .. sqlemptnull (inf) .. ")")
@@ -15616,7 +15703,7 @@ function addmyinfoentry (nick, line)
 					["ent"] = sse,
 					["tim"] = cti,
 					["occ"] = 0,
-					["not"] = inf
+					["inf"] = inf
 				})
 
 				VH:SQLQuery ("insert into `" .. tbl_sql.mishare .. "` (`share`, `time`, `note`) values ('" .. repsqlchars (sse) .. "', " .. sqlemptnull (tim) .. ", " .. sqlemptnull (inf) .. ")")
@@ -15649,7 +15736,7 @@ function addmyinfoentry (nick, line)
 					["ent"] = sen,
 					["tim"] = cti,
 					["occ"] = 0,
-					["not"] = inf
+					["inf"] = inf
 				})
 
 				VH:SQLQuery ("insert into `" .. tbl_sql.miip .. "` (`ip`, `time`, `note`) values ('" .. repsqlchars (sen) .. "', " .. sqlemptnull (tim) .. ", " .. sqlemptnull (inf) .. ")")
@@ -15682,7 +15769,7 @@ function addmyinfoentry (nick, line)
 					["ent"] = sen,
 					["tim"] = cti,
 					["occ"] = 0,
-					["not"] = inf
+					["inf"] = inf
 				})
 
 				VH:SQLQuery ("insert into `" .. tbl_sql.micc .. "` (`cc`, `time`, `note`) values ('" .. repsqlchars (sen) .. "', " .. sqlemptnull (tim) .. ", " .. sqlemptnull (inf) .. ")")
@@ -15715,7 +15802,7 @@ function addmyinfoentry (nick, line)
 					["ent"] = sen,
 					["tim"] = cti,
 					["occ"] = 0,
-					["not"] = inf
+					["inf"] = inf
 				})
 
 				VH:SQLQuery ("insert into `" .. tbl_sql.midns .. "` (`dns`, `time`, `note`) values ('" .. repsqlchars (sen) .. "', " .. sqlemptnull (tim) .. ", " .. sqlemptnull (inf) .. ")")
@@ -15748,7 +15835,7 @@ function addmyinfoentry (nick, line)
 					["ent"] = sen,
 					["tim"] = cti,
 					["occ"] = 0,
-					["not"] = inf
+					["inf"] = inf
 				})
 
 				VH:SQLQuery ("insert into `" .. tbl_sql.misup .. "` (`supports`, `time`, `note`) values ('" .. repsqlchars (sen) .. "', " .. sqlemptnull (tim) .. ", " .. sqlemptnull (inf) .. ")")
@@ -15781,11 +15868,46 @@ function addmyinfoentry (nick, line)
 					["ent"] = sen,
 					["tim"] = cti,
 					["occ"] = 0,
-					["not"] = inf
+					["inf"] = inf
 				})
 
 				VH:SQLQuery ("insert into `" .. tbl_sql.miver .. "` (`version`, `time`, `note`) values ('" .. repsqlchars (sen) .. "', " .. sqlemptnull (tim) .. ", " .. sqlemptnull (inf) .. ")")
 				commandanswer (nick, gettext ("Added forbidden NMDC version with ban time %s: %s"):format (cti, ent))
+			end
+		end
+
+	elseif part == "info" then -- complete myinfo
+		if not fres then
+			local ferr = gettext ("There is an error in following forbidden MyINFO pattern") .. ":\r\n\r\n"
+			ferr = ferr .. " " .. gettext ("Pattern") .. ": " .. ent .. "\r\n"
+			ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
+			ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
+			commandanswer (nick, ferr)
+
+		else
+			for id, item in pairs (table_myfo.info) do
+				if item.ent == sen then
+					pos = id
+					break
+				end
+			end
+
+			if pos > 0 then
+				table_myfo.info [pos].tim = cti
+				table_myfo.info [pos].inf = inf
+				VH:SQLQuery ("update `" .. tbl_sql.miinfo .. "` set `time` = " .. sqlemptnull (tim) .. ", `note` = " .. sqlemptnull (inf) .. " where `myinfo` = '" .. repsqlchars (sen) .. "'")
+				commandanswer (nick, gettext ("Modified forbidden MyINFO with ban time %s: %s"):format (cti, ent))
+
+			else
+				table.insert (table_myfo.info, {
+					["ent"] = sen,
+					["tim"] = cti,
+					["occ"] = 0,
+					["inf"] = inf
+				})
+
+				VH:SQLQuery ("insert into `" .. tbl_sql.miinfo .. "` (`myinfo`, `time`, `note`) values ('" .. repsqlchars (sen) .. "', " .. sqlemptnull (tim) .. ", " .. sqlemptnull (inf) .. ")")
+				commandanswer (nick, gettext ("Added forbidden MyINFO with ban time %s: %s"):format (cti, ent))
 			end
 		end
 
@@ -15807,7 +15929,7 @@ function addmyinfoentry (nick, line)
 			table.insert (table_myfo.ex, {
 				["ent"] = sen,
 				["occ"] = 0,
-				["not"] = inf
+				["inf"] = inf
 			})
 
 			VH:SQLQuery ("insert into `" .. tbl_sql.miex .. "` (`exception`, `note`) values ('" .. repsqlchars (sen) .. "', " .. sqlemptnull (inf) .. ")")
@@ -15815,7 +15937,7 @@ function addmyinfoentry (nick, line)
 		end
 
 	else -- unknown
-		commandanswer (nick, gettext ("Known types are: %s"):format ("chat, nick, desc, tag, conn, email, share, ip, cc, dns, sup, ver " .. gettext ("and") .. " ex"))
+		commandanswer (nick, gettext ("Known types are: %s"):format ("chat, nick, desc, tag, conn, email, share, ip, cc, dns, sup, ver, info " .. gettext ("and") .. " ex"))
 	end
 end
 
@@ -15971,6 +16093,18 @@ function delmyinfoentry (nick, line)
 
 		commandanswer (nick, gettext ("Couldn't delete forbidden NMDC version because not found: %s"):format (ent))
 
+	elseif part == "info" then -- complete myinfo
+		for id, item in pairs (table_myfo.info) do
+			if item.ent == sen then
+				table.remove (table_myfo.info, id)
+				VH:SQLQuery ("delete from `" .. tbl_sql.miinfo .. "` where `myinfo` = '" .. repsqlchars (sen) .. "'")
+				commandanswer (nick, gettext ("Deleted forbidden MyINFO: %s"):format (ent))
+				return
+			end
+		end
+
+		commandanswer (nick, gettext ("Couldn't delete forbidden MyINFO because not found: %s"):format (ent))
+
 	elseif part == "ex" then
 		for id, item in pairs (table_myfo.ex) do
 			if item.ent == sen then
@@ -15984,7 +16118,7 @@ function delmyinfoentry (nick, line)
 		commandanswer (nick, gettext ("Couldn't delete MyINFO exception because not found: %s"):format (ent))
 
 	else -- unknown
-		commandanswer (nick, gettext ("Known types are: %s"):format ("chat, nick, desc, tag, conn, email, share, ip, cc, dns, sup, ver " .. gettext ("and") .. " ex"))
+		commandanswer (nick, gettext ("Known types are: %s"):format ("chat, nick, desc, tag, conn, email, share, ip, cc, dns, sup, ver, info " .. gettext ("and") .. " ex"))
 	end
 end
 
@@ -16045,12 +16179,16 @@ function listmyinfoentry (nick, part)
 		tit = gettext ("Forbidden NMDC version list")
 		noi = gettext ("Forbidden NMDC version list is empty.")
 
+	elseif part == "info" then
+		tit = gettext ("Forbidden MyINFO list")
+		noi = gettext ("Forbidden MyINFO list is empty.")
+
 	elseif part == "ex" then
 		tit = gettext ("MyINFO exception list")
 		noi = gettext ("MyINFO exception list is empty.")
 
 	else -- unknown
-		commandanswer (nick, gettext ("Known types are: %s"):format ("chat, nick, desc, tag, conn, email, share, ip, cc, dns, sup, ver " .. gettext ("and") .. " ex"))
+		commandanswer (nick, gettext ("Known types are: %s"):format ("chat, nick, desc, tag, conn, email, share, ip, cc, dns, sup, ver, info " .. gettext ("and") .. " ex"))
 		return
 	end
 
@@ -21772,6 +21910,19 @@ end
 
 ----- ---- --- -- -
 
+	elseif tvar == "michinfo" then
+		if num then
+			if setto == 0 or setto == 1 then
+				ok = true
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0 " .. gettext ("or") .. " 1"))
+			end
+		else
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
+		end
+
+----- ---- --- -- -
+
 	elseif tvar == "michcc" then
 		if num then
 			if setto == 0 or setto == 1 then
@@ -22037,6 +22188,15 @@ end
 	----- ---- --- -- -
 
 	elseif tvar == "mivermessage" then
+		if # setto > 0 then
+			ok = true
+		else
+			commandanswer (nick, gettext ("Configuration variable %s can't be empty."):format (tvar))
+		end
+
+	----- ---- --- -- -
+
+	elseif tvar == "miinfomessage" then
 		if # setto > 0 then
 			ok = true
 		else
@@ -23284,6 +23444,7 @@ function showledoconf (nick)
 	conf = conf .. "\r\n [::] michdns = " .. _tostring (table_sets.michdns)
 	conf = conf .. "\r\n [::] michsup = " .. _tostring (table_sets.michsup)
 	conf = conf .. "\r\n [::] michver = " .. _tostring (table_sets.michver)
+	conf = conf .. "\r\n [::] michinfo = " .. _tostring (table_sets.michinfo)
 	conf = conf .. "\r\n [::] michfakenum = " .. _tostring (table_sets.michfakenum)
 	conf = conf .. "\r\n [::] michfakediv = " .. _tostring (table_sets.michfakediv)
 	conf = conf .. "\r\n [::] michclone = " .. _tostring (table_sets.michclone)
@@ -23300,6 +23461,7 @@ function showledoconf (nick)
 	conf = conf .. "\r\n [::] midnsmessage = " .. _tostring (table_sets.midnsmessage)
 	conf = conf .. "\r\n [::] misupmessage = " .. _tostring (table_sets.misupmessage)
 	conf = conf .. "\r\n [::] mivermessage = " .. _tostring (table_sets.mivermessage)
+	conf = conf .. "\r\n [::] miinfomessage = " .. _tostring (table_sets.miinfomessage)
 	conf = conf .. "\r\n [::] mifakemessage = " .. _tostring (table_sets.mifakemessage)
 	conf = conf .. "\r\n [::] miclonemessage = " .. _tostring (table_sets.miclonemessage)
 	conf = conf .. "\r\n [::] misameipmessage = " .. _tostring (table_sets.misameipmessage)
@@ -23567,6 +23729,7 @@ VH:SQLQuery ("create table if not exists `" .. tbl_sql.conf .. "` (`variable` va
 	VH:SQLQuery ("create table if not exists `" .. tbl_sql.midns .. "` (`dns` varchar(255) not null primary key, `time` varchar(10) null, `occurred` bigint(20) unsigned not null default 0, `note` varchar(255) null)")
 	VH:SQLQuery ("create table if not exists `" .. tbl_sql.misup .. "` (`supports` varchar(255) not null primary key, `time` varchar(10) null, `occurred` bigint(20) unsigned not null default 0, `note` varchar(255) null)")
 	VH:SQLQuery ("create table if not exists `" .. tbl_sql.miver .. "` (`version` varchar(255) not null primary key, `time` varchar(10) null, `occurred` bigint(20) unsigned not null default 0, `note` varchar(255) null)")
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql.miinfo .. "` (`myinfo` varchar(255) not null primary key, `time` varchar(10) null, `occurred` bigint(20) unsigned not null default 0, `note` varchar(255) null)")
 	VH:SQLQuery ("create table if not exists `" .. tbl_sql.miex .. "` (`exception` varchar(255) not null primary key, `occurred` bigint(20) unsigned not null default 0, `note` varchar(255) null)")
 
 	-- welcome messages
