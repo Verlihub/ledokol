@@ -63,7 +63,7 @@ Tzaca, JOE™, Foxtrot, Deivis
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.8" -- ledokol version
-bld_ledo = "118" -- build number
+bld_ledo = "119" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -11104,6 +11104,7 @@ function moveclones (nick, url)
 
 		if addr ~= "0.0.0.0" then -- skip bots
 			local desc, tag, conn, stat, mail, shar = parsemyinfo (getmyinfo (user))
+			tag = tag:gsub (",M:[AP],H:", ",M:,H:") -- workaround for flylinkdc that sets passive mode for its second clone
 			tag = tag:gsub (",H:%d+/%d+/%d+,S:", ",H:,S:") -- workaround for clients that cant predict hub count before sending myinfo
 			local id = addr .. desc .. tag .. conn .. _tostring (stat) .. mail .. _tostring (shar)
 
