@@ -1281,3 +1281,7 @@ Added forbidden MyINFO with ban time %s: %s|
 Deleted forbidden MyINFO: %s|
 Couldn't delete forbidden MyINFO because not found: %s|
 %s with IP %s and class %d allowed due to forbidden MyINFO exception: %s|
+Adding new AVDB item to our list: %s|
+Updating AVDB item with different user nick: %s|
+Updating AVDB item with different IP address: %s|
+Updating AVDB item with different share size: %s|

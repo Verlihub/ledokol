@@ -63,7 +63,7 @@ Tzaca, JOE™, Foxtrot, Deivis
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.8" -- ledokol version
-bld_ledo = "119" -- build number
+bld_ledo = "120" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -19366,10 +19366,10 @@ end
 
 	elseif tvar == "avfeedverb" then
 		if num then
-			if setto >= 0 and setto <= 3 then
+			if setto >= 0 and setto <= 4 then
 				ok = true
 			else
-				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0, 1, 2 " .. gettext ("or") .. " 3"))
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0, 1, 2, 3 " .. gettext ("or") .. " 4"))
 			end
 		else
 			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
@@ -24561,6 +24561,10 @@ function loadavdb (stam)
 								table_avlo [id]["size"] = avsi
 								loco = loco + 1
 								up = true
+
+								if table_sets.avfeedverb == 4 then -- high level debug, class 10 only
+									opsnotify (10, gettext ("Updating AVDB item with different share size: %s"):format (_tostring (data ["size"]) .. " > " .. _tostring (avsi) .. " / " .. avni .. " / " .. avip))
+								end
 							end
 
 							if # avpa > 0 and data ["path"] ~= avpa then
@@ -24580,6 +24584,10 @@ function loadavdb (stam)
 								table_avlo [id]["addr"] = avip
 								loco = loco + 1
 								up = true
+
+								if table_sets.avfeedverb == 4 then -- high level debug, class 10 only
+									opsnotify (10, gettext ("Updating AVDB item with different IP address: %s"):format (data ["addr"] .. " > " .. avip .. " / " .. avni .. " / " .. _tostring (avsi)))
+								end
 							end
 
 							if # avpa > 0 and data ["path"] ~= avpa then
@@ -24599,6 +24607,10 @@ function loadavdb (stam)
 								table_avlo [id]["nick"] = avni
 								loco = loco + 1
 								up = true
+
+								if table_sets.avfeedverb == 4 then -- high level debug, class 10 only
+									opsnotify (10, gettext ("Updating AVDB item with different user nick: %s"):format (data ["nick"] .. " > " .. avni .. " / " .. avip .. " / " .. _tostring (avsi)))
+								end
 							end
 
 							if # avpa > 0 and data ["path"] ~= avpa then
@@ -24623,6 +24635,10 @@ function loadavdb (stam)
 						})
 
 						loco = loco + 1
+
+						if table_sets.avfeedverb == 4 then -- high level debug, class 10 only
+							opsnotify (10, gettext ("Adding new AVDB item to our list: %s"):format (avni .. " / " .. avip .. " / " .. _tostring (avsi)))
+						end
 					end
 
 					loal = loal + 1

@@ -5,6 +5,7 @@
 [113] Added: IP intelligence result to ipinfo command
 [114] Added: avkickhide configuration to hide antivirus kicks, requires Verlihub 1.3.0.2
 [118] Added: Complete user MyINFO identified by "info" to forbidden MyINFO checks
+[120] Added: AVDB verbosity level 4 available only for class 10 users
 [110] Improved: UTF-8 detection in avdetforce command when avdetforceconv is enabled
 [112] Improved: Allow to use class 0 in command permissions
 [115] Improved: Magnet parameter is optional in release bot, request by barrow
