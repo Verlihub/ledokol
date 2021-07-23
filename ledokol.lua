@@ -63,7 +63,7 @@ Tzaca, JOE™, Foxtrot, Deivis
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.8" -- ledokol version
-bld_ledo = "120" -- build number
+bld_ledo = "121" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -24544,7 +24544,7 @@ function loadavdb (stam)
 		table_othsets.avlastloadtime = stam
 
 		if avdb ~= "" and avdb ~= "0" and avdb ~= "-" then
-			local loco, loal = 0, 0
+			local loco, loal, noup = 0, 0, (# table_avlo == 0)
 
 			for avli in avdb:gmatch ("[^\r\n]+") do
 				local avni, avip, avsi, avpa = avli:match ("^([^ ]+)|(%d+%.%d+%.%d+%.%d+)|(%d+)|(.*)$")
@@ -24553,80 +24553,88 @@ function loadavdb (stam)
 					avsi = tonumber (avsi)
 					local ok, up = true, false
 
-					for id, data in pairs (table_avlo) do
-						up = false
+					if not noup then -- no update
+						for id, data in pairs (table_avlo) do
+							up = false
 
-						if data ["nick"] == avni and data ["addr"] == avip then -- nick + ip
-							if data ["size"] ~= avsi then
-								table_avlo [id]["size"] = avsi
-								loco = loco + 1
-								up = true
+							if data ["nick"] == avni and data ["addr"] == avip then -- nick + ip
+								if data ["size"] ~= avsi then
+									if table_sets.avfeedverb == 4 then -- high level debug, class 10 only
+										opsnotify (10, gettext ("Updating AVDB item with different share size: %s"):format (_tostring (data ["size"]) .. " > " .. _tostring (avsi) .. " / " .. avni .. " / " .. avip))
+									end
 
-								if table_sets.avfeedverb == 4 then -- high level debug, class 10 only
-									opsnotify (10, gettext ("Updating AVDB item with different share size: %s"):format (_tostring (data ["size"]) .. " > " .. _tostring (avsi) .. " / " .. avni .. " / " .. avip))
-								end
-							end
-
-							if # avpa > 0 and data ["path"] ~= avpa then
-								table_avlo [id]["path"] = avpa
-
-								if not up then
+									table_avlo [id]["size"] = avsi
 									loco = loco + 1
+									up = true
 								end
+
+								if # avpa > 0 and data ["path"] ~= avpa then
+									table_avlo [id]["path"] = avpa
+
+									if not up then
+										loco = loco + 1
+									end
+								end
+
+								ok = false
+								break
 							end
 
-							ok = false
-							break
-						end
+							--[[
+							if data ["nick"] == avni and data ["size"] == avsi then -- nick + share
+								if data ["addr"] ~= avip then
+									if table_sets.avfeedverb == 4 then -- high level debug, class 10 only
+										opsnotify (10, gettext ("Updating AVDB item with different IP address: %s"):format (data ["addr"] .. " > " .. avip .. " / " .. avni .. " / " .. _tostring (avsi)))
+									end
 
-						if data ["nick"] == avni and data ["size"] == avsi then -- nick + share
-							if data ["addr"] ~= avip then
-								table_avlo [id]["addr"] = avip
-								loco = loco + 1
-								up = true
-
-								if table_sets.avfeedverb == 4 then -- high level debug, class 10 only
-									opsnotify (10, gettext ("Updating AVDB item with different IP address: %s"):format (data ["addr"] .. " > " .. avip .. " / " .. avni .. " / " .. _tostring (avsi)))
-								end
-							end
-
-							if # avpa > 0 and data ["path"] ~= avpa then
-								table_avlo [id]["path"] = avpa
-
-								if not up then
+									table_avlo [id]["addr"] = avip
 									loco = loco + 1
+									up = true
 								end
+
+								if # avpa > 0 and data ["path"] ~= avpa then
+									table_avlo [id]["path"] = avpa
+
+									if not up then
+										loco = loco + 1
+									end
+								end
+
+								ok = false
+								break
 							end
 
-							ok = false
-							break
-						end
+							if data ["addr"] == avip and data ["size"] == avsi then -- ip + share
+								if data ["nick"] ~= avni then
+									if table_sets.avfeedverb == 4 then -- high level debug, class 10 only
+										opsnotify (10, gettext ("Updating AVDB item with different user nick: %s"):format (data ["nick"] .. " > " .. avni .. " / " .. avip .. " / " .. _tostring (avsi)))
+									end
 
-						if data ["addr"] == avip and data ["size"] == avsi then -- ip + share
-							if data ["nick"] ~= avni then
-								table_avlo [id]["nick"] = avni
-								loco = loco + 1
-								up = true
-
-								if table_sets.avfeedverb == 4 then -- high level debug, class 10 only
-									opsnotify (10, gettext ("Updating AVDB item with different user nick: %s"):format (data ["nick"] .. " > " .. avni .. " / " .. avip .. " / " .. _tostring (avsi)))
-								end
-							end
-
-							if # avpa > 0 and data ["path"] ~= avpa then
-								table_avlo [id]["path"] = avpa
-
-								if not up then
+									table_avlo [id]["nick"] = avni
 									loco = loco + 1
+									up = true
 								end
-							end
 
-							ok = false
-							break
+								if # avpa > 0 and data ["path"] ~= avpa then
+									table_avlo [id]["path"] = avpa
+
+									if not up then
+										loco = loco + 1
+									end
+								end
+
+								ok = false
+								break
+							end
+							]]--
 						end
 					end
 
 					if ok then -- add if doesnt exist
+						if table_sets.avfeedverb == 4 then -- high level debug, class 10 only
+							opsnotify (10, gettext ("Adding new AVDB item to our list: %s"):format (avni .. " / " .. avip .. " / " .. _tostring (avsi)))
+						end
+
 						table.insert (table_avlo, {
 							["nick"] = avni,
 							["addr"] = avip,
@@ -24635,10 +24643,6 @@ function loadavdb (stam)
 						})
 
 						loco = loco + 1
-
-						if table_sets.avfeedverb == 4 then -- high level debug, class 10 only
-							opsnotify (10, gettext ("Adding new AVDB item to our list: %s"):format (avni .. " / " .. avip .. " / " .. _tostring (avsi)))
-						end
 					end
 
 					loal = loal + 1
