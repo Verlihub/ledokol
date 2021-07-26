@@ -634,8 +634,8 @@ Chat mode user list|
 Chat mode user list is empty.|
 %s user lookup|
 Add IP gag|
-Added IP gag: %s|
-Modified IP gag: %s|
+Added IP gag %s with time %d and reason: %s|
+Modified IP gag %s with time %d and reason: %s|
 Deleted IP gag: %s|
 IP gag not found: %s|
 IP gag list|
@@ -1285,3 +1285,5 @@ Adding new AVDB item to our list: %s|
 Updating AVDB item with different user nick: %s|
 Updating AVDB item with different IP address: %s|
 Updating AVDB item with different share size: %s|
+Chat flood or spam detected from your IP|
+On restart|

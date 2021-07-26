@@ -63,7 +63,7 @@ Tzaca, JOE™, Foxtrot, Deivis
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.8" -- ledokol version
-bld_ledo = "121" -- build number
+bld_ledo = "122" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -78,6 +78,7 @@ table_sets = {
 	sixthactaddr = "hub.verlihub.net:7777",
 	seventhacttime = "",
 	ninthactrepmsg = "Sorry. I won't be spamming this hub again.",
+	ipgagdefmins = 60,
 	enableantispam = 0,
 	antispamdebug = 0,
 	antibelowclass = 3,
@@ -1579,11 +1580,14 @@ function Main (file)
 						VH:SQLQuery ("create table if not exists `" .. tbl_sql.miinfo .. "` (`myinfo` varchar(255) not null primary key, `time` varchar(10) null, `occurred` bigint(20) unsigned not null default 0, `note` varchar(255) null)")
 
 						VH:SQLQuery ("alter table `" .. tbl_sql.rel .. "` change column `tth` `tth` varchar(255) null default null")
+						VH:SQLQuery ("alter table `" .. tbl_sql.ipgag .. "` add column `why` varchar(255) null after `flag`")
+						VH:SQLQuery ("alter table `" .. tbl_sql.ipgag .. "` add column `time` bigint(20) unsigned not null default 0 after `why`")
 
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('cleanallbangags', '" .. repsqlchars (table_sets.cleanallbangags) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('avkickhide', '" .. repsqlchars (table_sets.avkickhide) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('miinfomessage', '" .. repsqlchars (table_sets.miinfomessage) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('michinfo', '" .. repsqlchars (table_sets.michinfo) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('ipgagdefmins', '" .. repsqlchars (table_sets.ipgagdefmins) .. "')")
 					end
 
 					if ver <= 299 then
@@ -3113,10 +3117,11 @@ return 0
 
 	----- ---- --- -- -
 
-	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.gagipadd .. " %S+ %d$") then
+	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.gagipadd .. " %S+ %d$") or data:match ("^" .. table_othsets.optrig .. table_cmnds.gagipadd .. " %S+ %d \".*\"$") or data:match ("^" .. table_othsets.optrig .. table_cmnds.gagipadd .. " %S+ %d \".*\" %d+$") then
 		if ucl >= table_sets.mincommandclass then
 			donotifycmd (nick, data, 0, ucl)
 			gagipadd (nick, data:sub (# table_cmnds.gagipadd + 3))
+
 		else
 			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
@@ -14375,22 +14380,38 @@ end
 ----- ---- --- -- -
 
 function gagipadd (nick, line)
-	local ent, flag = line:match ("^(%S+) (%d)$")
+	local ent, flag, why, mins, long = "", 0, "", table_sets.ipgagdefmins, 0
+
+	if line:match ("^%S+ %d \".*\" %d+$") then -- with time
+		ent, flag, why, mins = line:match ("^(%S+) (%d) \"(.*)\" (%d+)$")
+	elseif line:match ("^%S+ %d \".*\"$") then -- with reason
+		ent, flag, why = line:match ("^(%S+) (%d) \"(.*)\"$")
+	else
+		ent, flag = line:match ("^(%S+) (%d)$")
+	end
+
 	flag = tonumber (flag)
+	mins = tonumber (mins)
+
+	if mins ~= 0 then -- zero is permanent
+		long = (mins * 60) + os.time ()
+	end
 
 	if nick then
 		if flag < 0 or flag > 2 then
 			commandanswer (nick, gettext ("Known flags are: %s"):format ("0=ALL, 1=MC " .. gettext ("and") .. " 2=PM"))
+
 		else
 			local rnt = repsqlchars (repnmdcinchars (ent))
 			local _, rows = VH:SQLQuery ("select `flag` from `" .. tbl_sql.ipgag .. "` where `ip` = '" .. rnt .. "'")
 
 			if rows > 0 then -- modify
-				VH:SQLQuery ("update `" .. tbl_sql.ipgag .. "` set `flag` = " .. _tostring (flag) .. " where `ip` = '" .. rnt .. "'")
-				commandanswer (nick, gettext ("Modified IP gag: %s"):format (ent))
+				VH:SQLQuery ("update `" .. tbl_sql.ipgag .. "` set `flag` = " .. _tostring (flag) .. ", `why` = " .. sqlemptnull (why) .. ", `time` = " .. _tostring (long) .. " where `ip` = '" .. rnt .. "'")
+				commandanswer (nick, gettext ("Modified IP gag %s with time %d and reason: %s"):format (ent, mins, (valor (why, "") or gettext ("No reason specified"))))
+
 			else -- add
-				VH:SQLQuery ("insert into `" .. tbl_sql.ipgag .. "` (`ip`, `flag`) values ('" .. rnt .. "', " .. _tostring (flag) .. ")")
-				commandanswer (nick, gettext ("Added IP gag: %s"):format (ent))
+				VH:SQLQuery ("insert into `" .. tbl_sql.ipgag .. "` (`ip`, `flag`, `why`, `time`) values ('" .. rnt .. "', " .. _tostring (flag) .. ", " .. sqlemptnull (why) .. ", " .. _tostring (long) .. ")")
+				commandanswer (nick, gettext ("Added IP gag %s with time %d and reason: %s"):format (ent, mins, (valor (why, "") or gettext ("No reason specified"))))
 			end
 
 			if table_igag [ent] then
@@ -14415,6 +14436,7 @@ function gagipdel (nick, line)
 	if line == "*" then
 		table_igag = {}
 		commandanswer (nick, gettext ("Cleared temporary IP gag list."))
+
 	else
 		local ok = false
 
@@ -14453,22 +14475,45 @@ function gagiplist (nick)
 	end
 
 	local list, count = "", 0
-	local _, rows = VH:SQLQuery ("select `ip`, `flag` from `" .. tbl_sql.ipgag .. "`")
+	local _, rows = VH:SQLQuery ("select `ip`, `flag`, `why`, `time` from `" .. tbl_sql.ipgag .. "`")
 
 	if rows > 0 then -- permanent list
+		local del, now = {}, os.time ()
+
 		for pos = 0, rows - 1 do
-			local _, ent, flag = VH:SQLFetch (pos)
-			count = pos + 1
-			list = list .. " " .. _tostring (count) .. ". " .. repnmdcoutchars (ent) .. " [ F: " .. _tostring (flag).. flagname (tonumber (flag)) .. " ] [ T: P ]\r\n"
+			local _, ent, flag, why, long = VH:SQLFetch (pos)
+			long = tonumber (long)
+
+			if (long > 0) and (now >= long) then -- check expired
+				table.insert (del, ent)
+
+			else
+				count = pos + 1
+				list = list .. " " .. _tostring (count) .. ". " .. repnmdcoutchars (ent) .. " [ F: " .. _tostring (flag) .. flagname (tonumber (flag)) .. " ] [ T: P ]"
+
+				if why and # why > 0 then -- reason
+					list = list .. " [ R: " .. repnmdcoutchars (why) .. " ]"
+				else
+					list = list .. " [ R: " .. gettext ("No reason specified") .. " ]"
+				end
+
+				list = list .. " [ E: " .. os.date (table_sets.dateformat .. " " .. table_sets.timeformat, tonumber (long)) .. " ]\r\n"
+			end
+		end
+
+		if # del > 0 then -- remove expired
+			for _, val in pairs (del) do
+				VH:SQLQuery ("delete from from `" .. tbl_sql.ipgag .. "` where `ip` = '" .. repsqlchars (val) .. "'")
+			end
 		end
 	end
 
 	for key, val in pairs (table_igag) do -- temporary list
 		count = count + 1
-		list = list .. " " .. _tostring (count) .. ". " .. repnmdcoutchars (key) .. " [ F: " .. _tostring (val) .. flagname (val) .. " ] [ T: T ]\r\n"
+		list = list .. " " .. _tostring (count) .. ". " .. repnmdcoutchars (key) .. " [ F: " .. _tostring (val) .. flagname (val) .. " ] [ T: T ] [ R: " .. gettext ("Chat flood or spam detected from your IP") .. " ] [ E: " .. gettext ("On restart") .. " ]\r\n"
 	end
 
-	if list == "" then
+	if count == 0 then
 		commandanswer (nick, gettext ("IP gag list is empty."))
 	else
 		commandanswer (nick, gettext ("IP gag list") .. ":\r\n\r\n" .. list)
@@ -14485,28 +14530,61 @@ function gagipcheck (nick, addr, clas, to, data)
 	local temp = {}
 
 	for key, val in pairs (table_igag) do -- temporary list
-		temp [key] = val
+		temp [key] = {
+			["fla"] = val,
+			["why"] = gettext ("Chat flood or spam detected from your IP"),
+			["end"] = 0
+		}
 	end
 
-	local _, rows = VH:SQLQuery ("select `ip`, `flag` from `" .. tbl_sql.ipgag .. "`")
+	local _, rows = VH:SQLQuery ("select `ip`, `flag`, `why`, `time` from `" .. tbl_sql.ipgag .. "`")
 
 	if rows > 0 then -- permanent list
+		local del, now = {}, os.time ()
+
 		for pos = 0, rows - 1 do
-			local _, ent, flag = VH:SQLFetch (pos)
-			temp [ent] = tonumber (flag)
+			local _, ent, flag, why, long = VH:SQLFetch (pos)
+			long = tonumber (long)
+
+			if (long > 0) and (now >= long) then -- check expired
+				table.insert (del, ent)
+
+			else
+				temp [ent] = {
+					["fla"] = tonumber (flag),
+					["why"] = ((why and (# why > 0) and why) or ""),
+					["end"] = long
+				}
+			end
+		end
+
+		if # del > 0 then -- remove expired
+			for _, val in pairs (del) do
+				VH:SQLQuery ("delete from from `" .. tbl_sql.ipgag .. "` where `ip` = '" .. repsqlchars (val) .. "'")
+			end
 		end
 	end
 
 	for key, val in pairs (temp) do
 		if (key:match ("^%d+%.%d+%.%d+%.%d+$") and addr == key) or (key:match ("^%d+%.%d+%.%d+%.%d+%-%d+%.%d+%.%d+%.%d+$") and ipinrange (key, addr)) or addr:match (key) then -- ip, range or lre
-			if to and (val == 0 or val == 2) then -- pm
-				pmtouser (nick, to, gettext ("Private chat is currently disabled for you."))
+			if to and (val.fla == 0 or val.fla == 2) then -- pm
+				if # val.why > 0 then
+					pmtouser (nick, to, gettext ("Private chat is currently disabled for you because: %s"):format (val.why))
+				else
+					pmtouser (nick, to, gettext ("Private chat is currently disabled for you."))
+				end
+
 				local toip = getip (to)
 				opsnotify (table_sets.classnotigagip, gettext ("%s with IP %s and class %d tries to speak with IP gag in PM to %s with IP %s and class %d: %s"):format (nick, addr .. tryipcc (addr, nick), clas, to, toip .. tryipcc (toip, to), getclass (to), data))
 				return true
 
-			elseif not to and (val == 0 or val == 1) then -- mc
-				maintouser (nick, gettext ("Main chat is currently disabled for you."))
+			elseif not to and (val.fla == 0 or val.fla == 1) then -- mc
+				if # val.why > 0 then
+					pmtouser (nick, to, gettext ("Main chat is currently disabled for you because: %s"):format (val.why))
+				else
+					maintouser (nick, gettext ("Main chat is currently disabled for you."))
+				end
+
 				opsnotify (table_sets.classnotigagip, gettext ("%s with IP %s and class %d tries to speak with IP gag in MC: %s"):format (nick, addr .. tryipcc (addr, nick), clas, data))
 				return true
 			end
@@ -18638,7 +18716,7 @@ end
 
 	-- ip gag
 	if ucl >= table_sets.mincommandclass then
-		sopmenitm (usr, gettext ("IP gag") .. "\\" .. gettext ("Add IP gag"), table_cmnds.gagipadd .. " %[line:<" .. gettext ("ip") .. " " .. gettext ("or") .. " " .. gettext ("range") .. " " .. gettext ("or") .. " " .. gettext ("lre") .. ">] %[line:<" .. gettext ("flags") .. ">]")
+		sopmenitm (usr, gettext ("IP gag") .. "\\" .. gettext ("Add IP gag"), table_cmnds.gagipadd .. " %[line:<" .. gettext ("ip") .. " " .. gettext ("or") .. " " .. gettext ("range") .. " " .. gettext ("or") .. " " .. gettext ("lre") .. ">] %[line:<" .. gettext ("flags") .. ">] \"%[line:<" .. gettext ("reason") .. ">]\" %[line:<" .. gettext ("time") .. ">]")
 		sopmenitm (usr, gettext ("IP gag") .. "\\" .. gettext ("IP gag list"), table_cmnds.gagiplist)
 		smensep (usr)
 		sopmenitm (usr, gettext ("IP gag") .. "\\" .. gettext ("Delete IP gag"), table_cmnds.gagipdel .. " %[line:<" .. gettext ("lre") .. " " .. gettext ("or") .. " *>]")
@@ -19143,6 +19221,20 @@ elseif tvar == "ninthactrepmsg" then
 	else
 		commandanswer (nick, gettext ("Configuration variable %s can't be empty."):format (tvar))
 	end
+
+	----- ---- --- -- -
+
+	elseif tvar == "ipgagdefmins" then
+		if num then
+			if setto >= 0 and setto <= 525600 then -- one year
+				ok = true
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0 " .. gettext ("to") .. " 525600"))
+			end
+
+		else
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
+		end
 
 ----- ---- --- -- -
 
@@ -23031,7 +23123,7 @@ function sendophelp (nick, clas, pm)
 	help = help .. " " .. trig .. table_cmnds.clear .. " - " .. gettext ("Clear main chat") .. "\r\n\r\n"
 
 	-- ip gag
-	help = help .. " " .. trig .. table_cmnds.gagipadd .. " <" .. gettext ("ip") .. " " .. gettext ("or") .. " " .. gettext ("range") .. " " .. gettext ("or") .. " " .. gettext ("lre") .. "> <" .. gettext ("flags") .. "> - " .. gettext ("Add IP gag") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.gagipadd .. " <" .. gettext ("ip") .. " " .. gettext ("or") .. " " .. gettext ("range") .. " " .. gettext ("or") .. " " .. gettext ("lre") .. "> <" .. gettext ("flags") .. "> [\"" .. gettext ("reason") .. "\"] [" .. gettext ("time") .. "] - " .. gettext ("Add IP gag") .. "\r\n"
 	help = help .. " " .. trig .. table_cmnds.gagiplist .. " - " .. gettext ("IP gag list") .. "\r\n"
 	help = help .. " " .. trig .. table_cmnds.gagipdel .. " <" .. gettext ("lre") .. " " .. gettext ("or") .. " *> - " .. gettext ("Delete IP gag") .. "\r\n\r\n"
 
@@ -23354,6 +23446,7 @@ function showledoconf (nick)
 	conf = conf .. "\r\n [::] seventhacttime = " .. _tostring (table_sets.seventhacttime)
 	conf = conf .. "\r\n [::] sixthactaddr = " .. _tostring (table_sets.sixthactaddr)
 	conf = conf .. "\r\n [::] ninthactrepmsg = " .. _tostring (table_sets.ninthactrepmsg)
+	conf = conf .. "\r\n [::] ipgagdefmins = " .. _tostring (table_sets.ipgagdefmins)
 	conf = conf .. "\r\n"
 
 	conf = conf .. "\r\n [::] enableantispam = " .. _tostring (table_sets.enableantispam)
@@ -23814,7 +23907,7 @@ VH:SQLQuery ("create table if not exists `" .. tbl_sql.stat .. "` (`type` varcha
 	VH:SQLQuery ("create table if not exists `" .. tbl_sql.ipwa .. "` (`ip` varchar(255) not null, `reason` text not null, `result` tinyint(1) unsigned not null default 0, primary key (`ip`))")
 
 	-- ip gag
-	VH:SQLQuery ("create table if not exists `" .. tbl_sql.ipgag .. "` (`ip` varchar(255) not null, `flag` tinyint(1) unsigned not null default 0, primary key (`ip`))")
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql.ipgag .. "` (`ip` varchar(255) not null primary key, `flag` tinyint(1) unsigned not null default 0, `why` varchar(255) null, `time` bigint(20) unsigned not null default 0)")
 
 	-- cc gag
 	VH:SQLQuery ("create table if not exists `" .. tbl_sql.ccgag .. "` (`item` varchar(255) not null primary key, `flag` tinyint(1) unsigned not null default 0, `why` varchar(255) null)")
