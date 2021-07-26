@@ -24213,7 +24213,8 @@ VH:SQLQuery ("alter table `" .. tbl_sql.stat .. "` change column `count` `count`
 	-- not added
 
 	-- ip gag
-	-- not added
+	VH:SQLQuery ("alter table `" .. tbl_sql.ipgag .. "` add column `why` varchar(255) null after `flag`")
+	VH:SQLQuery ("alter table `" .. tbl_sql.ipgag .. "` add column `time` bigint(20) unsigned not null default 0 after `why`")
 
 	-- cc gag
 	VH:SQLQuery ("alter table `" .. tbl_sql.ccgag .. "` change column `cc` `item` varchar(255) not null") -- item
