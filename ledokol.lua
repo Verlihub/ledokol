@@ -24766,7 +24766,7 @@ end
 
 ----- ---- --- -- -
 
-function avdbreport (nick, addr, size, info, path, spec)
+function avdbreport (nick, addr, size, info, path, hash, spec)
 	if table_sets.avsendtodb == 0 or not table_othsets.ver_curl then
 		return
 	end
@@ -24790,6 +24790,10 @@ function avdbreport (nick, addr, size, info, path, spec)
 
 		if path and # path > 0 then
 			uenc [string.char (112, 97, 116, 104)] = path
+		end
+
+		if hash and # hash > 0 then
+			uenc [string.char (104, 97, 115, 104)] = hash
 		end
 
 		if not spec then
@@ -24996,7 +25000,7 @@ end
 ----- ---- --- -- -
 
 function avdetforce (nick, line)
-	local user, path, part = "", "", line
+	local user, path, hash, part = "", "", "", line
 
 	if table_sets.avdetforceconv == 1 and utf8 ~= nil then -- convert from utf8, requires lua 5.3
 		local size = utf8.len (part)
@@ -25018,7 +25022,15 @@ function avdetforce (nick, line)
 		end
 	end
 
-	if part:match ("^[^ ]+ .+$") then
+	if part:match ("^[^ ]+ .+ [A-Z2-7]+$") then
+		user, path, hash = part:match ("^([^ ]+) (.+) ([A-Z2-7]+)$")
+
+		if # hash ~= 39 then -- check tth
+			path = path .. " " .. hash
+			hash = ""
+		end
+
+	elseif part:match ("^[^ ]+ .+$") then
 		user, path = part:match ("^([^ ]+) (.+)$")
 	else
 		user = part
@@ -25061,7 +25073,7 @@ function avdetforce (nick, line)
 				end
 
 				opsnotify (table_sets.classnotiav, gettext ("Infected user detected with nick %s and IP %s and share %s and spent time: %s"):format (user, addr .. tryipcc (addr, user), makesize (size), formatuptime (spent, false)))
-				avdbreport (user, addr, size, true, path, true) -- report
+				avdbreport (user, addr, size, true, path, hash, true) -- report
 
 				if table_sets.avdetaction == 0 then
 					table_avbl [user] = true
@@ -25086,26 +25098,30 @@ end
 ----- ---- --- -- -
 
 function avdbfinditems (nick, data)
-	local _, _, ityp, item = data:find ("^(%S+) (.+)$")
+	local ityp, item = data:match ("^(%S+) (.+)$")
 
-	if ityp == "nick" or ityp == "addr" or ityp == "size" or ityp == "path" then
+	if ityp == "nick" or ityp == "addr" or ityp == "size" or ityp == "path" or ityp == "hash" then
 		commandanswer (nick, gettext ("Searching for %s in %s: %s"):format (ityp, "AVDB", item))
-		local res, err, avdb = getcurl (table_othsets.avdbfindurl .. "&copath=1", {[ityp] = item})
+		local res, err, avdb = getcurl (table_othsets.avdbfindurl .. "&copath=1&cohash=1", {[ityp] = item})
 
 		if res then
 			if avdb ~= "" and avdb ~= "0" then
 				local back, count = "", 0
 
 				for avli in avdb:gmatch ("[^\r\n]+") do
-					local _, _, avni, avad, avsi, avti, avpa = avli:find ("^([^ ]+)|(%d+%.%d+%.%d+%.%d+)|(%d+)|(%d+)|(.*)$")
+					local _, _, avni, avad, avsi, avti, avpa, avha = avli:find ("^([^ ]+)|(%d+%.%d+%.%d+%.%d+)|(%d+)|(%d+)|(.*)|(.*)$")
 
-					if avni and avad and avsi and avti and avpa then
+					if avni and avad and avsi and avti and avpa and avha then
 						avsi = tonumber (avsi)
 						avti = tonumber (avti)
 						back = back .. " [ N: " .. repnmdcoutchars (avni) .. " ] [ I: " .. repnmdcoutchars (avad) .. " ] [ S: " .. _tostring (avsi) .. " &#124; " .. makesize (avsi) .. " ] [ T: " .. fromunixtime (avti, false, table_sets.longdateformat .. " " .. table_sets.timeformat) .. " ]"
 
 						if avpa ~= "" then
 							back = back .. " [ P: " .. repnmdcoutchars (avpa) .. " ]"
+						end
+
+						if avha ~= "" then
+							back = back .. " [ H: " .. repnmdcoutchars (avha) .. " ]"
 						end
 
 						back = back .. "\r\n"
@@ -25118,14 +25134,17 @@ function avdbfinditems (nick, data)
 				else
 					commandanswer (nick, gettext ("Nothing was found in: %s"):format ("AVDB"))
 				end
+
 			else
 				commandanswer (nick, gettext ("Nothing was found in: %s"):format ("AVDB"))
 			end
+
 		else
 			commandanswer (nick, gettext ("Failed to load information from %s: %s"):format ("AVDB", err))
 		end
+
 	else -- unknown type
-		commandanswer (nick, gettext ("Known types are: %s"):format ("nick, addr, size " .. gettext ("and") .. " path"))
+		commandanswer (nick, gettext ("Known types are: %s"):format ("nick, addr, size, path " .. gettext ("and") .. " hash"))
 	end
 end
 
