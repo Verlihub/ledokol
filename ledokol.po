@@ -3479,7 +3479,10 @@ msgid "Deleted city gag: %s"
 msgstr ""
 
 msgid "City gag not found: %s"
-msgstr "City gag list is empty."
+msgstr ""
+
+msgid "City gag list is empty."
+msgstr ""
 
 msgid "%s with IP %s and class %d tries to speak with city gag in PM to %s with IP %s and class %d: %s"
 msgstr ""
