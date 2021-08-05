@@ -63,7 +63,7 @@ Tzaca, JOE™, Foxtrot, Deivis
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.8" -- ledokol version
-bld_ledo = "122" -- build number
+bld_ledo = "123" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -1890,17 +1890,18 @@ function VH_OnOperatorCommand (nick, data)
 
 	----- ---- --- -- -
 
-elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.remadd .. " %S+ .+ %d+ %d+ %d %d+$") then
-if ucl >= table_sets.mincommandclass then
-donotifycmd (nick, data, 0, ucl)
-addreminder (nick, data:sub (# table_cmnds.remadd + 3))
-else
-commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
-end
+	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.remadd .. " %S+ .+ %d+ %d+ %d %d+[smhdwMy]*$") then
+		if ucl >= table_sets.mincommandclass then
+			donotifycmd (nick, data, 0, ucl)
+			addreminder (nick, data:sub (# table_cmnds.remadd + 3))
 
-return 0
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
 
------ ---- --- -- -
+		return 0
+
+	----- ---- --- -- -
 
 elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.remdel .. " %S+$") then
 if ucl >= table_sets.mincommandclass then
@@ -3117,7 +3118,7 @@ return 0
 
 	----- ---- --- -- -
 
-	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.gagipadd .. " %S+ %d$") or data:match ("^" .. table_othsets.optrig .. table_cmnds.gagipadd .. " %S+ %d \".*\"$") or data:match ("^" .. table_othsets.optrig .. table_cmnds.gagipadd .. " %S+ %d \".*\" %d+$") then
+	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.gagipadd .. " %S+ %d$") or data:match ("^" .. table_othsets.optrig .. table_cmnds.gagipadd .. " %S+ %d \".*\"$") or data:match ("^" .. table_othsets.optrig .. table_cmnds.gagipadd .. " %S+ %d \".*\" %d+[smhdwMy]*$") then
 		if ucl >= table_sets.mincommandclass then
 			donotifycmd (nick, data, 0, ucl)
 			gagipadd (nick, data:sub (# table_cmnds.gagipadd + 3))
@@ -9570,8 +9571,8 @@ end
 ----- ---- --- -- -
 
 function addreminder (nick, item)
-	local _, _, ident, cntnt, minc, maxc, dest, intv = item:find ("^(%S+) (.+) (%d+) (%d+) (%d) (%d+)$")
-	minc, maxc, dest, intv = tonumber (minc), tonumber (maxc), tonumber (dest), tonumber (intv)
+	local _, _, ident, cntnt, minc, maxc, dest, intv = item:find ("^(%S+) (.+) (%d+) (%d+) (%d) (%d+[smhdwMy]*)$")
+	minc, maxc, dest, intv = tonumber (minc), tonumber (maxc), tonumber (dest), fromverlitime (intv, "m")
 
 	if (minc > 5 and minc < 10) or minc > 10 or (maxc > 5 and maxc < 10) or maxc > 10 then -- invalid class
 		commandanswer (nick, gettext ("Known classes are: %s"):format ("0, 1, 2, 3, 4, 5 " .. gettext ("and") .. " 10"))
@@ -14382,8 +14383,8 @@ end
 function gagipadd (nick, line)
 	local ent, flag, why, mins, long = "", 0, "", table_sets.ipgagdefmins, 0
 
-	if line:match ("^%S+ %d \".*\" %d+$") then -- with time
-		ent, flag, why, mins = line:match ("^(%S+) (%d) \"(.*)\" (%d+)$")
+	if line:match ("^%S+ %d \".*\" %d+[smhdwMy]*$") then -- with time
+		ent, flag, why, mins = line:match ("^(%S+) (%d) \"(.*)\" (%d+[smhdwMy]*)$")
 	elseif line:match ("^%S+ %d \".*\"$") then -- with reason
 		ent, flag, why = line:match ("^(%S+) (%d) \"(.*)\"$")
 	else
@@ -14391,7 +14392,7 @@ function gagipadd (nick, line)
 	end
 
 	flag = tonumber (flag)
-	mins = tonumber (mins)
+	mins = fromverlitime (mins, "m")
 
 	if mins ~= 0 then -- zero is permanent
 		long = (mins * 60) + os.time ()
@@ -18465,15 +18466,15 @@ end
 		sopmenitm (usr, gettext ("Chatrooms") .. "\\" .. gettext ("Delete automatic country chatroom entrance"), table_cmnds.acredel .. " %[line:<" .. gettext ("identifier") .. ">]")
 	end
 
--- reminders
+	-- reminders
 
-if ucl >= table_sets.mincommandclass then
-sopmenitm (usr, gettext ("Reminders") .. "\\" .. gettext ("Add reminder"), table_cmnds.remadd .. " %[line:<" .. gettext ("identifier") .. ">] %[line:<" .. gettext ("content") .. ">] %[line:<" .. gettext ("minclass") .. ">] %[line:<" .. gettext ("maxclass") .. ">] %[line:<" .. gettext ("destination") .. ">] %[line:<" .. gettext ("interval") .. ">]")
-sopmenitm (usr, gettext ("Reminders") .. "\\" .. gettext ("Reminder list"), table_cmnds.remlist)
-sopmenitm (usr, gettext ("Reminders") .. "\\" .. gettext ("Reminder preview"), table_cmnds.remshow .. " %[line:<" .. gettext ("identifier") .. ">]")
-smensep (usr)
-sopmenitm (usr, gettext ("Reminders") .. "\\" .. gettext ("Delete reminder"), table_cmnds.remdel .. " %[line:<" .. gettext ("identifier") .. ">]")
-end
+	if ucl >= table_sets.mincommandclass then
+		sopmenitm (usr, gettext ("Reminders") .. "\\" .. gettext ("Add reminder"), table_cmnds.remadd .. " %[line:<" .. gettext ("identifier") .. ">] %[line:<" .. gettext ("content") .. ">] %[line:<" .. gettext ("minclass") .. ">] %[line:<" .. gettext ("maxclass") .. ">] %[line:<" .. gettext ("destination") .. ">] %[line:<" .. gettext ("interval") .. ">]")
+		sopmenitm (usr, gettext ("Reminders") .. "\\" .. gettext ("Reminder list"), table_cmnds.remlist)
+		sopmenitm (usr, gettext ("Reminders") .. "\\" .. gettext ("Reminder preview"), table_cmnds.remshow .. " %[line:<" .. gettext ("identifier") .. ">]")
+		smensep (usr)
+		sopmenitm (usr, gettext ("Reminders") .. "\\" .. gettext ("Delete reminder"), table_cmnds.remdel .. " %[line:<" .. gettext ("identifier") .. ">]")
+	end
 
 	-- triggers
 	if ucl >= table_sets.mincommandclass then
@@ -27326,6 +27327,48 @@ function formatuptime (uptime, fmt)
 	end
 
 	return ret
+end
+
+----- ---- --- -- -
+
+function fromverlitime (data, need)
+	local numb, suff = data:match ("^(%d+)([smhdwMy]*)$")
+
+	if numb and suff and # suff == 1 then
+		local secs = tonumber (numb)
+
+		if suff == "m" then
+			secs = secs * 60
+		elseif suff == "h" then
+			secs = secs * 60 * 60
+		elseif suff == "d" then
+			secs = secs * 60 * 60 * 24
+		elseif suff == "w" then
+			secs = secs * 60 * 60 * 24 * 7
+		elseif suff == "M" then
+			secs = secs * 60 * 60 * 24 * 7 * 4
+		elseif suff == "y" then
+			secs = secs * 60 * 60 * 24 * 7 * 4 * 12
+		end
+
+		if need == "m" then
+			secs = secs / 60
+		elseif need == "h" then
+			secs = secs / 60 / 60
+		elseif need == "d" then
+			secs = secs / 60 / 60 / 24
+		elseif need == "w" then
+			secs = secs / 60 / 60 / 24 / 7
+		elseif need == "M" then
+			secs = secs / 60 / 60 / 24 / 7 / 4
+		elseif need == "y" then
+			secs = secs / 60 / 60 / 24 / 7 / 4 / 12
+		end
+
+		return secs
+	end
+
+	return tonumber (data) or 0
 end
 
 ----- ---- --- -- -

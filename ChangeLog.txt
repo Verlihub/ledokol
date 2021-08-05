@@ -8,6 +8,7 @@
 [118] Added: Complete user MyINFO identified by "info" to forbidden MyINFO checks
 [120] Added: AVDB verbosity level 4 available only for class 10 users
 [122] Added: Optional reason and time parameters to gagipadd command and ipgagdefmins configuration for default time in minutes where zero means forever, request by KCAHDEP
+[123] Added: Support for Verlihub time as time and interval parameters, request by KCAHDEP and Master
 [110] Improved: UTF-8 detection in avdetforce command when avdetforceconv is enabled
 [112] Improved: Allow to use class 0 in command permissions
 [115] Improved: Magnet parameter is optional in release bot, request by barrow
