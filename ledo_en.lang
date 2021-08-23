@@ -1287,3 +1287,17 @@ Updating AVDB item with different IP address: %s|
 Updating AVDB item with different share size: %s|
 Chat flood or spam detected from your IP|
 On restart|
+Modified ASN gag %s with reason: %s|
+Modified ASN gag: %s|
+Added ASN gag %s with reason: %s|
+Added ASN gag: %s|
+Cleared ASN gag list.|
+Deleted ASN gag: %s|
+ASN gag not found: %s|
+ASN gag list|
+ASN gag list is empty.|
+%s with IP %s, class %d and ASN %s tries to speak with ASN gag in PM to %s with IP %s and class %d: %s|
+%s with IP %s, class %d and ASN %s tries to speak with ASN gag in MC: %s|
+ASN gag|
+Add ASN gag|
+Delete ASN gag|

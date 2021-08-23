@@ -63,7 +63,7 @@ Tzaca, JOE™, Foxtrot, Deivis
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.8" -- ledokol version
-bld_ledo = "123" -- build number
+bld_ledo = "124" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -540,6 +540,7 @@ tbl_sql = {
 	ipgag = "lua_ledo_ipgag",
 	ccgag = "lua_ledo_ccgag",
 	citygag = "lua_ledo_citygag",
+	asngag = "lua_ledo_asngag",
 	rcmenu = "lua_ledo_rcmenu"
 }
 
@@ -708,6 +709,9 @@ table_cmnds = {
 	gagcityadd = "gagcityadd",
 	gagcitydel = "gagcitydel",
 	gagcitylist = "gagcitylist",
+	gagasnadd = "gagasnadd",
+	gagasndel = "gagasndel",
+	gagasnlist = "gagasnlist",
 	hubadd = "hubadd",
 	hubdel = "hubdel",
 	showhubs = "showhubs",
@@ -1578,10 +1582,15 @@ function Main (file)
 
 					if ver <= 298 then
 						VH:SQLQuery ("create table if not exists `" .. tbl_sql.miinfo .. "` (`myinfo` varchar(255) not null primary key, `time` varchar(10) null, `occurred` bigint(20) unsigned not null default 0, `note` varchar(255) null)")
+						VH:SQLQuery ("create table if not exists `" .. tbl_sql.asngag .. "` (`item` varchar(255) not null primary key, `flag` tinyint(1) unsigned not null default 0, `why` varchar(255) null)")
 
 						VH:SQLQuery ("alter table `" .. tbl_sql.rel .. "` change column `tth` `tth` varchar(255) null default null")
 						VH:SQLQuery ("alter table `" .. tbl_sql.ipgag .. "` add column `why` varchar(255) null after `flag`")
 						VH:SQLQuery ("alter table `" .. tbl_sql.ipgag .. "` add column `time` bigint(20) unsigned not null default 0 after `why`")
+
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.ledocmd .. "` (`original`, `new`) values ('gagasnadd', '" .. repsqlchars (table_cmnds.gagasnadd) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.ledocmd .. "` (`original`, `new`) values ('gagasndel', '" .. repsqlchars (table_cmnds.gagasndel) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.ledocmd .. "` (`original`, `new`) values ('gagasnlist', '" .. repsqlchars (table_cmnds.gagasnlist) .. "')")
 
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('cleanallbangags', '" .. repsqlchars (table_sets.cleanallbangags) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('avkickhide', '" .. repsqlchars (table_sets.avkickhide) .. "')")
@@ -1814,6 +1823,7 @@ function VH_OnOperatorCommand (nick, data)
 			VH:ParseCommand (nick, trig .. table_cmnds.gagipdel .. " *", 0)
 			VH:ParseCommand (nick, trig .. table_cmnds.gagccdel .. " *", 0)
 			VH:ParseCommand (nick, trig .. table_cmnds.gagcitydel .. " *", 0)
+			VH:ParseCommand (nick, trig .. table_cmnds.gagasndel .. " *", 0)
 		end
 
 	----- ---- --- -- -
@@ -3225,6 +3235,42 @@ return 0
 
 		return 0
 
+	----- ---- --- -- -
+
+	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.gagasnadd .. " .+ %d$") or data:match ("^" .. table_othsets.optrig .. table_cmnds.gagasnadd .. " \".+\" \".*\" %d$") then
+		if ucl >= table_sets.mincommandclass then
+			donotifycmd (nick, data, 0, ucl)
+			gagasnadd (nick, data:sub (# table_cmnds.gagasnadd + 3))
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
+
+		return 0
+
+	----- ---- --- -- -
+
+	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.gagasndel .. " .+$") then
+		if ucl >= table_sets.mincommandclass then
+			donotifycmd (nick, data, 0, ucl)
+			gagasndel (nick, data:sub (# table_cmnds.gagasndel + 3))
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
+
+		return 0
+
+	----- ---- --- -- -
+
+	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.gagasnlist .. "$") then
+		if ucl >= table_sets.mincommandclass then
+			donotifycmd (nick, data, 0, ucl)
+			gagasnlist (nick)
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
+
+		return 0
+
 ----- ---- --- -- -
 
 elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.wmdel .. " %S+$") then
@@ -4316,6 +4362,10 @@ function VH_OnUserCommand (nick, data)
 			if gagcitycheck (nick, addr, ucl, nil, data) then
 				return 0
 			end
+
+			if gagasncheck (nick, addr, ucl, nil, data) then
+				return 0
+			end
 		end
 
 		if table_sets.checkcmdspam == 1 and antiscan (nick, ucl, data, 1, nil, nil) == 0 then -- check command spam
@@ -4445,6 +4495,10 @@ function VH_OnUserCommand (nick, data)
 					end
 
 					if gagcitycheck (nick, addr, ucl, nil, msg) then
+						return 0
+					end
+
+					if gagasncheck (nick, addr, ucl, nil, msg) then
 						return 0
 					end
 				end
@@ -4643,6 +4697,10 @@ function VH_OnUserCommand (nick, data)
 					end
 
 					if gagcitycheck (nick, addr, ucl, nil, data) then
+						return 0
+					end
+
+					if gagasncheck (nick, addr, ucl, nil, data) then
 						return 0
 					end
 				end
@@ -7450,6 +7508,10 @@ function VH_OnParsedMsgPM (from, data, to)
 				return 0
 			end
 
+			if gagasncheck (from, addr, fcls, to, data) then
+				return 0
+			end
+
 			if antiscan (from, fcls, data, 2, to, nil) == 0 then -- antispam
 				return 0
 			end
@@ -7709,6 +7771,10 @@ function VH_OnParsedMsgMCTo (from, data, to)
 				return 0
 			end
 
+			if gagasncheck (from, addr, fcls, to, data) then
+				return 0
+			end
+
 			if antiscan (from, fcls, data, 2, to, nil) == 0 then -- antispam
 				return 0
 			end
@@ -7859,6 +7925,10 @@ function VH_OnParsedMsgChat (nick, data)
 			end
 
 			if gagcitycheck (nick, addr, clas, nil, data) then
+				return 0
+			end
+
+			if gagasncheck (nick, addr, clas, nil, data) then
 				return 0
 			end
 
@@ -14903,6 +14973,166 @@ end
 
 ----- ---- --- -- -
 
+function gagasnadd (nick, line)
+	local lre, why, flag = "", "", 0
+
+	if line:match ("^\".+\" \".*\" %d$") then
+		lre, why, flag = line:match ("^\"(.+)\" \"(.*)\" (%d)$")
+	elseif line:match ("^\".+\" %d$") then
+		lre, flag = line:match ("^\"(.+)\" (%d)$")
+	else
+		lre, flag = line:match ("^(.+) (%d)$")
+	end
+
+	flag = tonumber (flag or -1) or -1
+
+	if flag < 0 or flag > 2 then
+		commandanswer (nick, gettext ("Known flags are: %s"):format ("0=ALL, 1=MC " .. gettext ("and") .. " 2=PM"))
+
+	else
+		local rlre = repsqlchars (repnmdcinchars (lre))
+		local _, rows = VH:SQLQuery ("select `flag` from `" .. tbl_sql.asngag .. "` where `item` = '" .. rlre .. "'")
+
+		if rows > 0 then -- modify
+			VH:SQLQuery ("update `" .. tbl_sql.asngag .. "` set `flag` = " .. _tostring (flag) .. ", `why` = " .. sqlemptnull (why) .. " where `item` = '" .. rlre .. "'")
+
+			if # why > 0 then
+				commandanswer (nick, gettext ("Modified ASN gag %s with reason: %s"):format (lre, why))
+			else
+				commandanswer (nick, gettext ("Modified ASN gag: %s"):format (lre))
+			end
+
+		else -- add
+			VH:SQLQuery ("insert into `" .. tbl_sql.asngag .. "` (`item`, `flag`, `why`) values ('" .. rlre .. "', " .. _tostring (flag) .. ", " .. sqlemptnull (why) .. ")")
+
+			if # why > 0 then
+				commandanswer (nick, gettext ("Added ASN gag %s with reason: %s"):format (lre, why))
+			else
+				commandanswer (nick, gettext ("Added ASN gag: %s"):format (lre))
+			end
+		end
+	end
+end
+
+----- ---- --- -- -
+
+function gagasndel (nick, lre)
+	if lre == "*" then
+		VH:SQLQuery ("truncate table `" .. tbl_sql.asngag .. "`")
+		commandanswer (nick, gettext ("Cleared ASN gag list."))
+
+	else
+		local rlre = repsqlchars (repnmdcinchars (lre))
+		local _, rows = VH:SQLQuery ("select `flag` from `" .. tbl_sql.asngag .. "` where `item` = '" .. rlre .. "'")
+
+		if rows > 0 then
+			VH:SQLQuery ("delete from `" .. tbl_sql.asngag .. "` where `item` = '" .. rlre .. "'")
+			commandanswer (nick, gettext ("Deleted ASN gag: %s"):format (lre))
+
+		else -- not in list
+			commandanswer (nick, gettext ("ASN gag not found: %s"):format (lre))
+		end
+	end
+end
+
+----- ---- --- -- -
+
+function gagasnlist (nick)
+	local function flagname (flag)
+		if flag == 0 then
+			return "=ALL"
+		elseif flag == 1 then
+			return "=MC"
+		elseif flag == 2 then
+			return "=PM"
+		else
+			return "=??"
+		end
+	end
+
+	local _, rows = VH:SQLQuery ("select `item`, `flag`, `why` from `" .. tbl_sql.asngag .. "`")
+
+	if rows > 0 then
+		local list = ""
+
+		for row = 0, rows - 1 do
+			local _, lre, flag, why = VH:SQLFetch (row)
+			list = list .. " " .. _tostring (row + 1) .. ". " .. repnmdcoutchars (lre) .. " [ F: " .. _tostring (flag) .. flagname (tonumber (flag)) .. " ]"
+
+			if why and # why > 0 then
+				list = list .. " [ R: " .. repnmdcoutchars (why) .. " ]"
+			end
+
+			list = list .. "\r\n"
+		end
+
+		commandanswer (nick, gettext ("ASN gag list") .. ":\r\n\r\n" .. list)
+
+	else
+		commandanswer (nick, gettext ("ASN gag list is empty."))
+	end
+end
+
+----- ---- --- -- -
+
+function gagasncheck (nick, ip, class, to, data)
+	if class >= table_sets.scanbelowclass then
+		return false
+	end
+
+	local asn = getipasn (ip)
+
+	if not asn then
+		return false
+	end
+
+	local _, rows = VH:SQLQuery ("select `item`, `flag`, `why` from `" .. tbl_sql.asngag .. "`")
+
+	if rows > 0 then
+		low = asn:lower ()
+
+		for row = 0, rows - 1 do
+			local _, lre, flag, why = VH:SQLFetch (row)
+
+			if low:match (lre) then
+				if asn:match ("^AS%d+") then
+					asn = "https://ipinfo.io/" .. asn
+				end
+
+				flag = tonumber (flag or 0) or 0
+
+				if to and (flag == 0 or flag == 2) then -- pm
+					if why and # why > 0 then
+						pmtouser (nick, to, gettext ("Private chat is currently disabled for you because: %s"):format (repnmdcoutchars (why)))
+					else
+						pmtouser (nick, to, gettext ("Private chat is currently disabled for you."))
+					end
+
+					local toip = getip (to)
+					opsnotify (table_sets.classnotigagip, gettext ("%s with IP %s, class %d and ASN %s tries to speak with ASN gag in PM to %s with IP %s and class %d: %s"):format (nick, ip .. tryipcc (ip, nick), class, repnmdcoutchars (asn), to, toip .. tryipcc (toip, to), getclass (to), data))
+					return true
+
+				elseif not to and (flag == 0 or flag == 1) then -- mc
+					if why and # why > 0 then
+						maintouser (nick, gettext ("Main chat is currently disabled for you because: %s"):format (repnmdcoutchars (why)))
+					else
+						maintouser (nick, gettext ("Main chat is currently disabled for you."))
+					end
+
+					opsnotify (table_sets.classnotigagip, gettext ("%s with IP %s, class %d and ASN %s tries to speak with ASN gag in MC: %s"):format (nick, ip .. tryipcc (ip, nick), class, repnmdcoutchars (asn), data))
+					return true
+				end
+
+				break
+			end
+		end
+	end
+
+	return false
+end
+
+----- ---- --- -- -
+
 function detprotoflood (pref, prot, nick, ip, class)
 	if table_sets ["protoflood" .. pref .. "cnt"] == 0 then -- disabled
 		return false
@@ -18739,6 +18969,15 @@ end
 		sopmenitm (usr, gettext ("City gag") .. "\\" .. gettext ("City gag list"), table_cmnds.gagcitylist)
 		smensep (usr)
 		sopmenitm (usr, gettext ("City gag") .. "\\" .. gettext ("Delete city gag"), table_cmnds.gagcitydel .. " %[line:<" .. gettext ("lre") .. " " .. gettext ("or") .. " *>]")
+	end
+
+	-- asn gag
+
+	if ucl >= table_sets.mincommandclass then
+		sopmenitm (usr, gettext ("ASN gag") .. "\\" .. gettext ("Add ASN gag"), table_cmnds.gagasnadd .. " \"%[line:<" .. gettext ("lre") .. ">]\" \"%[line:<" .. gettext ("reason") .. ">]\" %[line:<" .. gettext ("flags") .. ">]")
+		sopmenitm (usr, gettext ("ASN gag") .. "\\" .. gettext ("ASN gag list"), table_cmnds.gagasnlist)
+		smensep (usr)
+		sopmenitm (usr, gettext ("ASN gag") .. "\\" .. gettext ("Delete ASN gag"), table_cmnds.gagasndel .. " %[line:<" .. gettext ("lre") .. " " .. gettext ("or") .. " *>]")
 	end
 
 	-- user logger
@@ -23140,6 +23379,12 @@ function sendophelp (nick, clas, pm)
 	help = help .. " " .. trig .. table_cmnds.gagcitylist .. " - " .. gettext ("City gag list") .. "\r\n"
 	help = help .. " " .. trig .. table_cmnds.gagcitydel .. " <" .. gettext ("lre") .. " " .. gettext ("or") .. " *> - " .. gettext ("Delete city gag") .. "\r\n\r\n"
 
+	-- asn gag
+
+	help = help .. " " .. trig .. table_cmnds.gagasnadd .. " <\"" .. gettext ("lre") .. "\"> [\"" .. gettext ("reason") .. "\"] <" .. gettext ("flags") .. "> - " .. gettext ("Add ASN gag") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.gagasnlist .. " - " .. gettext ("ASN gag list") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.gagasndel .. " <" .. gettext ("lre") .. " " .. gettext ("or") .. " *> - " .. gettext ("Delete ASN gag") .. "\r\n\r\n"
+
 	-- user logger
 	help = help .. " " .. trig .. table_cmnds.userinfo .. " <" .. gettext ("nick") .. "> - " .. gettext ("User information") .. "\r\n"
 	help = help .. " " .. trig .. table_cmnds.ipinfo .. " <" .. gettext ("ip") .. "> - " .. gettext ("IP information") .. "\r\n"
@@ -23915,6 +24160,9 @@ VH:SQLQuery ("create table if not exists `" .. tbl_sql.stat .. "` (`type` varcha
 
 	-- city gag
 	VH:SQLQuery ("create table if not exists `" .. tbl_sql.citygag .. "` (`item` varchar(255) not null primary key, `flag` tinyint(1) unsigned not null default 0, `why` varchar(255) null)")
+
+	-- asn gag
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql.asngag .. "` (`item` varchar(255) not null primary key, `flag` tinyint(1) unsigned not null default 0, `why` varchar(255) null)")
 
 	-- right click menu
 	VH:SQLQuery ("create table if not exists `" .. tbl_sql.rcmenu .. "` (`id` bigint(20) unsigned not null auto_increment primary key, `menu` varchar(255) not null, `command` varchar(255) not null, `type` tinyint(3) unsigned not null default 1, `cont` tinyint(2) unsigned not null default 3, `order` smallint(5) unsigned not null default 0, `minclass` tinyint(2) unsigned not null default 0, `maxclass` tinyint(2) unsigned not null default 10, `off` tinyint(1) unsigned not null default 0)")
@@ -26116,6 +26364,24 @@ function getusercity (nick)
 		return "--"
 	else
 		return city
+	end
+end
+
+----- ---- --- -- -
+
+function getipasn (addr)
+	if not table_refu.GetIPASN then
+		return
+	end
+
+	local res, asn = VH:GetIPASN (addr)
+
+	if not res or not asn then
+		return
+	elseif asn == "" then
+		return "--"
+	else
+		return asn
 	end
 end
 
