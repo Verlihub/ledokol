@@ -63,7 +63,7 @@ Tzaca, JOE™, Foxtrot, Deivis
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.8" -- ledokol version
-bld_ledo = "124" -- build number
+bld_ledo = "125" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -78,7 +78,6 @@ table_sets = {
 	sixthactaddr = "hub.verlihub.net:7777",
 	seventhacttime = "",
 	ninthactrepmsg = "Sorry. I won't be spamming this hub again.",
-	ipgagdefmins = 60,
 	enableantispam = 0,
 	antispamdebug = 0,
 	antibelowclass = 3,
@@ -209,6 +208,9 @@ table_sets = {
 	ctmuptimeact = 0,
 	ctmuptimemsg = 5,
 	showuseruptime = 0,
+	ipgagdefmins = 60,
+	ipgagtoself = 0,
+	ipgagnochat = 0,
 	custnickclass = 3,
 	custlistclass = 0,
 	custmaxlen = 64,
@@ -1597,6 +1599,8 @@ function Main (file)
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('miinfomessage', '" .. repsqlchars (table_sets.miinfomessage) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('michinfo', '" .. repsqlchars (table_sets.michinfo) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('ipgagdefmins', '" .. repsqlchars (table_sets.ipgagdefmins) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('ipgagtoself', '" .. repsqlchars (table_sets.ipgagtoself) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('ipgagnochat', '" .. repsqlchars (table_sets.ipgagnochat) .. "')")
 					end
 
 					if ver <= 299 then
@@ -4351,19 +4355,19 @@ function VH_OnUserCommand (nick, data)
 
 	if not table_othsets.chinskipchecks then -- used by chat intelligence
 		if table_sets.chatfloodcmdgag == 1 then -- check ip gag
-			if gagipcheck (nick, addr, ucl, nil, data) then
+			if gagipcheck (nick, addr, ucl, nil, data, true) then
 				return 0
 			end
 
-			if gagccheck (nick, addr, ucl, nil, data) then
+			if gagcccheck (nick, addr, ucl, nil, data, true) then
 				return 0
 			end
 
-			if gagcitycheck (nick, addr, ucl, nil, data) then
+			if gagcitycheck (nick, addr, ucl, nil, data, true) then
 				return 0
 			end
 
-			if gagasncheck (nick, addr, ucl, nil, data) then
+			if gagasncheck (nick, addr, ucl, nil, data, true) then
 				return 0
 			end
 		end
@@ -4486,19 +4490,19 @@ function VH_OnUserCommand (nick, data)
 				end
 
 				if table_sets.chatfloodcmdgag == 0 then -- ip gag, dont check twice
-					if gagipcheck (nick, addr, ucl, nil, msg) then
+					if gagipcheck (nick, addr, ucl, nil, msg, true) then
 						return 0
 					end
 
-					if gagccheck (nick, addr, ucl, nil, msg) then
+					if gagcccheck (nick, addr, ucl, nil, msg, true) then
 						return 0
 					end
 
-					if gagcitycheck (nick, addr, ucl, nil, msg) then
+					if gagcitycheck (nick, addr, ucl, nil, msg, true) then
 						return 0
 					end
 
-					if gagasncheck (nick, addr, ucl, nil, msg) then
+					if gagasncheck (nick, addr, ucl, nil, msg, true) then
 						return 0
 					end
 				end
@@ -4688,19 +4692,19 @@ function VH_OnUserCommand (nick, data)
 				end
 
 				if table_sets.chatfloodcmdgag == 0 then -- ip gag, dont check twice
-					if gagipcheck (nick, addr, ucl, nil, data) then
+					if gagipcheck (nick, addr, ucl, nil, data, true) then
 						return 0
 					end
 
-					if gagccheck (nick, addr, ucl, nil, data) then
+					if gagcccheck (nick, addr, ucl, nil, data, true) then
 						return 0
 					end
 
-					if gagcitycheck (nick, addr, ucl, nil, data) then
+					if gagcitycheck (nick, addr, ucl, nil, data, true) then
 						return 0
 					end
 
-					if gagasncheck (nick, addr, ucl, nil, data) then
+					if gagasncheck (nick, addr, ucl, nil, data, true) then
 						return 0
 					end
 				end
@@ -5529,7 +5533,7 @@ function VH_OnUserLogin (nick, uip)
 		end
 
 		if not hasprot then
-			prot = isprotected (nick, addr)
+			prot, hasprot = isprotected (nick, addr), true
 		end
 
 		if not prot then -- protection
@@ -5670,7 +5674,26 @@ function VH_OnUserLogin (nick, uip)
 		sendrelease (nick)
 	end
 
-	if table_sets.histlimit > 0 then
+	local skiphist = false
+
+	if VH.DelChatUser and table_sets.ipgagnochat == 1 then -- nochat on ip gag
+		if not hasip then
+			addr, hasip = (uip or getip (nick)), true
+		end
+
+		if not hasprot then
+			prot, hasprot = isprotected (nick, addr), true
+		end
+
+		if not prot then -- protection
+			if gagipcheck (nick, addr, cls, nil, nil, false) or gagcccheck (nick, addr, cls, nil, nil, false) or gagcitycheck (nick, addr, cls, nil, nil, false) or gagasncheck (nick, addr, cls, nil, nil, false) then
+				VH:DelChatUser (nick)
+				skiphist = true
+			end
+		end
+	end
+
+	if not skiphist and table_sets.histlimit > 0 then -- skip history on gag
 		if cls >= table_sets.mchistclass and table_sets.histautolines > 0 then -- mc history
 			sendmchistory (nick, cls, table_sets.histautolines, true)
 		end
@@ -7496,19 +7519,19 @@ function VH_OnParsedMsgPM (from, data, to)
 				return 0
 			end
 
-			if gagipcheck (from, addr, fcls, to, data) then
+			if gagipcheck (from, addr, fcls, to, data, true) then
 				return 0
 			end
 
-			if gagccheck (from, addr, fcls, to, data) then
+			if gagcccheck (from, addr, fcls, to, data, true) then
 				return 0
 			end
 
-			if gagcitycheck (from, addr, fcls, to, data) then
+			if gagcitycheck (from, addr, fcls, to, data, true) then
 				return 0
 			end
 
-			if gagasncheck (from, addr, fcls, to, data) then
+			if gagasncheck (from, addr, fcls, to, data, true) then
 				return 0
 			end
 
@@ -7759,19 +7782,19 @@ function VH_OnParsedMsgMCTo (from, data, to)
 				return 0
 			end
 
-			if gagipcheck (from, addr, fcls, to, data) then
+			if gagipcheck (from, addr, fcls, to, data, true) then
 				return 0
 			end
 
-			if gagccheck (from, addr, fcls, to, data) then
+			if gagcccheck (from, addr, fcls, to, data, true) then
 				return 0
 			end
 
-			if gagcitycheck (from, addr, fcls, to, data) then
+			if gagcitycheck (from, addr, fcls, to, data, true) then
 				return 0
 			end
 
-			if gagasncheck (from, addr, fcls, to, data) then
+			if gagasncheck (from, addr, fcls, to, data, true) then
 				return 0
 			end
 
@@ -7916,19 +7939,19 @@ function VH_OnParsedMsgChat (nick, data)
 				return 0
 			end
 
-			if gagipcheck (nick, addr, clas, nil, data) then
+			if gagipcheck (nick, addr, clas, nil, data, true) then
 				return 0
 			end
 
-			if gagccheck (nick, addr, clas, nil, data) then
+			if gagcccheck (nick, addr, clas, nil, data, true) then
 				return 0
 			end
 
-			if gagcitycheck (nick, addr, clas, nil, data) then
+			if gagcitycheck (nick, addr, clas, nil, data, true) then
 				return 0
 			end
 
-			if gagasncheck (nick, addr, clas, nil, data) then
+			if gagasncheck (nick, addr, clas, nil, data, true) then
 				return 0
 			end
 
@@ -14593,7 +14616,7 @@ end
 
 ----- ---- --- -- -
 
-function gagipcheck (nick, addr, clas, to, data)
+function gagipcheck (nick, addr, clas, to, data, noti)
 	if clas >= table_sets.scanbelowclass then
 		return false
 	end
@@ -14639,24 +14662,42 @@ function gagipcheck (nick, addr, clas, to, data)
 	for key, val in pairs (temp) do
 		if (key:match ("^%d+%.%d+%.%d+%.%d+$") and addr == key) or (key:match ("^%d+%.%d+%.%d+%.%d+%-%d+%.%d+%.%d+%.%d+$") and ipinrange (key, addr)) or addr:match (key) then -- ip, range or lre
 			if to and (val.fla == 0 or val.fla == 2) then -- pm
-				if # val.why > 0 then
-					pmtouser (nick, to, gettext ("Private chat is currently disabled for you because: %s"):format (val.why))
-				else
-					pmtouser (nick, to, gettext ("Private chat is currently disabled for you."))
+				if noti then -- notify
+					local toip = getip (to)
+					opsnotify (table_sets.classnotigagip, gettext ("%s with IP %s and class %d tries to speak with IP gag in PM to %s with IP %s and class %d: %s"):format (nick, addr .. tryipcc (addr, nick), clas, to, toip .. tryipcc (toip, to), getclass (to), data))
+
+					if table_sets.ipgagtoself == 0 then
+						if # val.why > 0 then
+							pmtouser (nick, to, gettext ("Private chat is currently disabled for you because: %s"):format (val.why))
+						else
+							pmtouser (nick, to, gettext ("Private chat is currently disabled for you."))
+						end
+
+					else -- send to self
+						opsnotify (table_sets.classnotigagip, gettext ("User received own message: %s"):format (nick))
+						-- not needed in pm
+					end
 				end
 
-				local toip = getip (to)
-				opsnotify (table_sets.classnotigagip, gettext ("%s with IP %s and class %d tries to speak with IP gag in PM to %s with IP %s and class %d: %s"):format (nick, addr .. tryipcc (addr, nick), clas, to, toip .. tryipcc (toip, to), getclass (to), data))
 				return true
 
 			elseif not to and (val.fla == 0 or val.fla == 1) then -- mc
-				if # val.why > 0 then
-					pmtouser (nick, to, gettext ("Main chat is currently disabled for you because: %s"):format (val.why))
-				else
-					maintouser (nick, gettext ("Main chat is currently disabled for you."))
+				if noti then -- notify
+					opsnotify (table_sets.classnotigagip, gettext ("%s with IP %s and class %d tries to speak with IP gag in MC: %s"):format (nick, addr .. tryipcc (addr, nick), clas, data))
+
+					if table_sets.ipgagtoself == 0 then
+						if # val.why > 0 then
+							maintouser (nick, gettext ("Main chat is currently disabled for you because: %s"):format (val.why))
+						else
+							maintouser (nick, gettext ("Main chat is currently disabled for you."))
+						end
+
+					else -- send to self
+						opsnotify (table_sets.classnotigagip, gettext ("User received own message: %s"):format (nick))
+						maintoself (nick, data)
+					end
 				end
 
-				opsnotify (table_sets.classnotigagip, gettext ("%s with IP %s and class %d tries to speak with IP gag in MC: %s"):format (nick, addr .. tryipcc (addr, nick), clas, data))
 				return true
 			end
 
@@ -14767,7 +14808,7 @@ end
 
 ----- ---- --- -- -
 
-function gagccheck (nick, ip, class, to, data)
+function gagcccheck (nick, ip, class, to, data, noti)
 	if class >= table_sets.scanbelowclass then
 		return false
 	end
@@ -14790,24 +14831,42 @@ function gagccheck (nick, ip, class, to, data)
 				flag = tonumber (flag or 0) or 0
 
 				if to and (flag == 0 or flag == 2) then -- pm
-					if why and # why > 0 then
-						pmtouser (nick, to, gettext ("Private chat is currently disabled for you because: %s"):format (repnmdcoutchars (why)))
-					else
-						pmtouser (nick, to, gettext ("Private chat is currently disabled for you."))
+					if noti then -- notify
+						local toip = getip (to)
+						opsnotify (table_sets.classnotigagip, gettext ("%s with IP %s and class %d tries to speak with country code gag in PM to %s with IP %s and class %d: %s"):format (nick, ip .. tryipcc (ip, nick), class, to, toip .. tryipcc (toip, to), getclass (to), data))
+
+						if table_sets.ipgagtoself == 0 then
+							if why and # why > 0 then
+								pmtouser (nick, to, gettext ("Private chat is currently disabled for you because: %s"):format (repnmdcoutchars (why)))
+							else
+								pmtouser (nick, to, gettext ("Private chat is currently disabled for you."))
+							end
+
+						else -- send to self
+							opsnotify (table_sets.classnotigagip, gettext ("User received own message: %s"):format (nick))
+							-- not needed in pm
+						end
 					end
 
-					local toip = getip (to)
-					opsnotify (table_sets.classnotigagip, gettext ("%s with IP %s and class %d tries to speak with country code gag in PM to %s with IP %s and class %d: %s"):format (nick, ip .. tryipcc (ip, nick), class, to, toip .. tryipcc (toip, to), getclass (to), data))
 					return true
 
 				elseif not to and (flag == 0 or flag == 1) then -- mc
-					if why and # why > 0 then
-						maintouser (nick, gettext ("Main chat is currently disabled for you because: %s"):format (repnmdcoutchars (why)))
-					else
-						maintouser (nick, gettext ("Main chat is currently disabled for you."))
+					if noti then -- notify
+						opsnotify (table_sets.classnotigagip, gettext ("%s with IP %s and class %d tries to speak with country code gag in MC: %s"):format (nick, ip .. tryipcc (ip, nick), class, data))
+
+						if table_sets.ipgagtoself == 0 then
+							if why and # why > 0 then
+								maintouser (nick, gettext ("Main chat is currently disabled for you because: %s"):format (repnmdcoutchars (why)))
+							else
+								maintouser (nick, gettext ("Main chat is currently disabled for you."))
+							end
+
+						else -- send to self
+							opsnotify (table_sets.classnotigagip, gettext ("User received own message: %s"):format (nick))
+							maintoself (nick, data)
+						end
 					end
 
-					opsnotify (table_sets.classnotigagip, gettext ("%s with IP %s and class %d tries to speak with country code gag in MC: %s"):format (nick, ip .. tryipcc (ip, nick), class, data))
 					return true
 				end
 
@@ -14919,7 +14978,7 @@ end
 
 ----- ---- --- -- -
 
-function gagcitycheck (nick, ip, class, to, data)
+function gagcitycheck (nick, ip, class, to, data, noti)
 	if class >= table_sets.scanbelowclass then
 		return false
 	end
@@ -14942,24 +15001,42 @@ function gagcitycheck (nick, ip, class, to, data)
 				flag = tonumber (flag or 0) or 0
 
 				if to and (flag == 0 or flag == 2) then -- pm
-					if why and # why > 0 then
-						pmtouser (nick, to, gettext ("Private chat is currently disabled for you because: %s"):format (repnmdcoutchars (why)))
-					else
-						pmtouser (nick, to, gettext ("Private chat is currently disabled for you."))
+					if noti then -- notify
+						local toip = getip (to)
+						opsnotify (table_sets.classnotigagip, gettext ("%s with IP %s and class %d tries to speak with city gag in PM to %s with IP %s and class %d: %s"):format (nick, ip .. tryipcc (ip, nick), class, to, toip .. tryipcc (toip, to), getclass (to), data))
+
+						if table_sets.ipgagtoself == 0 then
+							if why and # why > 0 then
+								pmtouser (nick, to, gettext ("Private chat is currently disabled for you because: %s"):format (repnmdcoutchars (why)))
+							else
+								pmtouser (nick, to, gettext ("Private chat is currently disabled for you."))
+							end
+
+						else -- send to self
+							opsnotify (table_sets.classnotigagip, gettext ("User received own message: %s"):format (nick))
+							-- not needed in pm
+						end
 					end
 
-					local toip = getip (to)
-					opsnotify (table_sets.classnotigagip, gettext ("%s with IP %s and class %d tries to speak with city gag in PM to %s with IP %s and class %d: %s"):format (nick, ip .. tryipcc (ip, nick), class, to, toip .. tryipcc (toip, to), getclass (to), data))
 					return true
 
 				elseif not to and (flag == 0 or flag == 1) then -- mc
-					if why and # why > 0 then
-						maintouser (nick, gettext ("Main chat is currently disabled for you because: %s"):format (repnmdcoutchars (why)))
-					else
-						maintouser (nick, gettext ("Main chat is currently disabled for you."))
+					if noti then -- notify
+						opsnotify (table_sets.classnotigagip, gettext ("%s with IP %s and class %d tries to speak with city gag in MC: %s"):format (nick, ip .. tryipcc (ip, nick), class, data))
+
+						if table_sets.ipgagtoself == 0 then
+							if why and # why > 0 then
+								maintouser (nick, gettext ("Main chat is currently disabled for you because: %s"):format (repnmdcoutchars (why)))
+							else
+								maintouser (nick, gettext ("Main chat is currently disabled for you."))
+							end
+
+						else -- send to self
+							opsnotify (table_sets.classnotigagip, gettext ("User received own message: %s"):format (nick))
+							maintoself (nick, data)
+						end
 					end
 
-					opsnotify (table_sets.classnotigagip, gettext ("%s with IP %s and class %d tries to speak with city gag in MC: %s"):format (nick, ip .. tryipcc (ip, nick), class, data))
 					return true
 				end
 
@@ -15075,7 +15152,7 @@ end
 
 ----- ---- --- -- -
 
-function gagasncheck (nick, ip, class, to, data)
+function gagasncheck (nick, ip, class, to, data, noti)
 	if class >= table_sets.scanbelowclass then
 		return false
 	end
@@ -15102,24 +15179,42 @@ function gagasncheck (nick, ip, class, to, data)
 				flag = tonumber (flag or 0) or 0
 
 				if to and (flag == 0 or flag == 2) then -- pm
-					if why and # why > 0 then
-						pmtouser (nick, to, gettext ("Private chat is currently disabled for you because: %s"):format (repnmdcoutchars (why)))
-					else
-						pmtouser (nick, to, gettext ("Private chat is currently disabled for you."))
+					if noti then -- notify
+						local toip = getip (to)
+						opsnotify (table_sets.classnotigagip, gettext ("%s with IP %s, class %d and ASN %s tries to speak with ASN gag in PM to %s with IP %s and class %d: %s"):format (nick, ip .. tryipcc (ip, nick), class, repnmdcoutchars (asn), to, toip .. tryipcc (toip, to), getclass (to), data))
+
+						if table_sets.ipgagtoself == 0 then
+							if why and # why > 0 then
+								pmtouser (nick, to, gettext ("Private chat is currently disabled for you because: %s"):format (repnmdcoutchars (why)))
+							else
+								pmtouser (nick, to, gettext ("Private chat is currently disabled for you."))
+							end
+
+						else -- send to self
+							opsnotify (table_sets.classnotigagip, gettext ("User received own message: %s"):format (nick))
+							-- not needed in pm
+						end
 					end
 
-					local toip = getip (to)
-					opsnotify (table_sets.classnotigagip, gettext ("%s with IP %s, class %d and ASN %s tries to speak with ASN gag in PM to %s with IP %s and class %d: %s"):format (nick, ip .. tryipcc (ip, nick), class, repnmdcoutchars (asn), to, toip .. tryipcc (toip, to), getclass (to), data))
 					return true
 
 				elseif not to and (flag == 0 or flag == 1) then -- mc
-					if why and # why > 0 then
-						maintouser (nick, gettext ("Main chat is currently disabled for you because: %s"):format (repnmdcoutchars (why)))
-					else
-						maintouser (nick, gettext ("Main chat is currently disabled for you."))
+					if noti then -- notify
+						opsnotify (table_sets.classnotigagip, gettext ("%s with IP %s, class %d and ASN %s tries to speak with ASN gag in MC: %s"):format (nick, ip .. tryipcc (ip, nick), class, repnmdcoutchars (asn), data))
+
+						if table_sets.ipgagtoself == 0 then
+							if why and # why > 0 then
+								maintouser (nick, gettext ("Main chat is currently disabled for you because: %s"):format (repnmdcoutchars (why)))
+							else
+								maintouser (nick, gettext ("Main chat is currently disabled for you."))
+							end
+
+						else -- send to self
+							opsnotify (table_sets.classnotigagip, gettext ("User received own message: %s"):format (nick))
+							maintoself (nick, data)
+						end
 					end
 
-					opsnotify (table_sets.classnotigagip, gettext ("%s with IP %s, class %d and ASN %s tries to speak with ASN gag in MC: %s"):format (nick, ip .. tryipcc (ip, nick), class, repnmdcoutchars (asn), data))
 					return true
 				end
 
@@ -20108,6 +20203,38 @@ end
 
 	----- ---- --- -- -
 
+	elseif tvar == "ipgagtoself" then
+		if num then
+			if setto == 0 or setto == 1 then
+				ok = true
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0 " .. gettext ("or") .. " 1"))
+			end
+
+		else
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
+		end
+
+	----- ---- --- -- -
+
+	elseif tvar == "ipgagnochat" then
+		if num then
+			if setto == 0 or setto == 1 then
+				if setto == 1 and not VH.DelChatUser then
+					commandanswer (nick, gettext ("This feature requires %s or later installed on your system."):format ("Verlihub 1.0.0-RC2"))
+				end
+
+				ok = true
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0 " .. gettext ("or") .. " 1"))
+			end
+
+		else
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
+		end
+
+	----- ---- --- -- -
+
 	elseif tvar == "ctmuptimemsg" then
 		if num then
 			if setto >= 0 and setto <= 60 then
@@ -23692,7 +23819,6 @@ function showledoconf (nick)
 	conf = conf .. "\r\n [::] seventhacttime = " .. _tostring (table_sets.seventhacttime)
 	conf = conf .. "\r\n [::] sixthactaddr = " .. _tostring (table_sets.sixthactaddr)
 	conf = conf .. "\r\n [::] ninthactrepmsg = " .. _tostring (table_sets.ninthactrepmsg)
-	conf = conf .. "\r\n [::] ipgagdefmins = " .. _tostring (table_sets.ipgagdefmins)
 	conf = conf .. "\r\n"
 
 	conf = conf .. "\r\n [::] enableantispam = " .. _tostring (table_sets.enableantispam)
@@ -23841,6 +23967,11 @@ function showledoconf (nick)
 	conf = conf .. "\r\n [::] ctmuptimeact = " .. _tostring (table_sets.ctmuptimeact)
 	conf = conf .. "\r\n [::] ctmuptimemsg = " .. _tostring (table_sets.ctmuptimemsg)
 	conf = conf .. "\r\n [::] showuseruptime = " .. _tostring (table_sets.showuseruptime)
+	conf = conf .. "\r\n"
+
+	conf = conf .. "\r\n [::] ipgagdefmins = " .. _tostring (table_sets.ipgagdefmins)
+	conf = conf .. "\r\n [::] ipgagtoself = " .. _tostring (table_sets.ipgagtoself)
+	conf = conf .. "\r\n [::] ipgagnochat = " .. _tostring (table_sets.ipgagnochat)
 	conf = conf .. "\r\n"
 
 	conf = conf .. "\r\n [::] custnickclass = " .. _tostring (table_sets.custnickclass)

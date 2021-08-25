@@ -10,6 +10,7 @@
 [122] Added: Optional reason and time parameters to gagipadd command and ipgagdefmins configuration for default time in minutes where zero means forever, request by KCAHDEP
 [123] Added: Support for Verlihub time as time and interval parameters, request by KCAHDEP and Master
 [124] Added: ASN gag, similar to city gag, request by Master and KCAHDEP
+[125] Added: ipgagtoself and ipgagnochat configurations, request by Master and KCAHDEP
 [110] Improved: UTF-8 detection in avdetforce command when avdetforceconv is enabled
 [112] Improved: Allow to use class 0 in command permissions
 [115] Improved: Magnet parameter is optional in release bot, request by barrow
