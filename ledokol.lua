@@ -63,7 +63,7 @@ Tzaca, JOE™, Foxtrot, Deivis
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.8" -- ledokol version
-bld_ledo = "125" -- build number
+bld_ledo = "126" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -1589,6 +1589,17 @@ function Main (file)
 						VH:SQLQuery ("alter table `" .. tbl_sql.rel .. "` change column `tth` `tth` varchar(255) null default null")
 						VH:SQLQuery ("alter table `" .. tbl_sql.ipgag .. "` add column `why` varchar(255) null after `flag`")
 						VH:SQLQuery ("alter table `" .. tbl_sql.ipgag .. "` add column `time` bigint(20) unsigned not null default 0 after `why`")
+						VH:SQLQuery ("alter table `" .. tbl_sql.news .. "` add index(`date`)")
+						VH:SQLQuery ("alter table `" .. tbl_sql.chatrepl .. "` add index(`flags`)")
+						VH:SQLQuery ("alter table `" .. tbl_sql.rel .. "` add index(`date`)")
+						VH:SQLQuery ("alter table `" .. tbl_sql.ulog .. "` add index(`time`)")
+						VH:SQLQuery ("alter table `" .. tbl_sql.mchist .. "` add index(`date`)")
+						VH:SQLQuery ("alter table `" .. tbl_sql.ophist .. "` add index(`date`)")
+						VH:SQLQuery ("alter table `" .. tbl_sql.off .. "` add index(`to`)")
+						VH:SQLQuery ("alter table `" .. tbl_sql.off .. "` add index(`date`)")
+						VH:SQLQuery ("alter table `" .. tbl_sql.rcmenu .. "` add index(`order`)")
+						VH:SQLQuery ("alter table `" .. tbl_sql.anti .. "` add index(`flags`)")
+						VH:SQLQuery ("alter table `" .. tbl_sql.anti .. "` add index(`priority`)")
 
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.ledocmd .. "` (`original`, `new`) values ('gagasnadd', '" .. repsqlchars (table_cmnds.gagasnadd) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.ledocmd .. "` (`original`, `new`) values ('gagasndel', '" .. repsqlchars (table_cmnds.gagasndel) .. "')")
@@ -6673,11 +6684,9 @@ function VH_OnTimer (msec)
 
 	if table_sets.enableuserlog == 1 and table_sets.ulogautoclean > 0 then -- clean up user logger
 		if os.difftime (now, table_othsets.ulogcleanmins) >= 86400 then -- every 24 hours
-			local secs = os.difftime (now, (table_sets.ulogautoclean * 24 * 60 * 60))
-			local _, rows = VH:SQLQuery ("select `id` from `" .. tbl_sql.ulog .. "` where `time` < " .. _tostring (secs))
+			local rows = sqlrowcount ("delete from `" .. tbl_sql.ulog .. "` where `time` < " .. _tostring (os.difftime (now, (table_sets.ulogautoclean * 24 * 60 * 60))), true)
 
 			if rows > 0 then
-				VH:SQLQuery ("delete from `" .. tbl_sql.ulog .. "` where `time` < " .. _tostring (secs))
 				opsnotify (table_sets.classnotiledoact, gettext ("Automatically deleted %d user log entries older than %d days."):format (rows, table_sets.ulogautoclean))
 				local tdiff = now + table_sets.srvtimediff
 				VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('lastcleanulog', " .. _tostring (tdiff) .. ") on duplicate key update `value` = " .. _tostring (tdiff))
@@ -8110,15 +8119,7 @@ function forcewelcome (nick, line, cls)
 			if getstatus (user) == 1 and (table_sets.welcomeclass == 11 or getclass (user) < table_sets.welcomeclass) then
 				commandanswer (nick, gettext ("Either the feature is disabled or user that you're trying to set welcome message for doesn't have access to it."))
 			else
-				local rser = repsqlchars (user)
-				local _, rows = VH:SQLQuery ("select `nick` from `" .. tbl_sql.wm .. "` where `nick` = '" .. rser .. "'")
-
-				if rows > 0 then
-					VH:SQLQuery ("update `" .. tbl_sql.wm .. "` set `" .. mype .. "` = '" .. repsqlchars (item) .. "' where `nick` = '" .. rser .. "'")
-				else
-					VH:SQLQuery ("insert into `" .. tbl_sql.wm .. "` (`nick`, `" .. mype .. "`) values ('" .. rser .. "', '" .. repsqlchars (item) .. "')")
-				end
-
+				VH:SQLQuery ("insert into `" .. tbl_sql.wm .. "` (`nick`, `" .. mype .. "`) values ('" .. repsqlchars (user) .. "', '" .. repsqlchars (item) .. "') on duplicate key update `" .. mype .. "` = '" .. repsqlchars (item) .. "'")
 				item = item:gsub ("%*", reprexpchars (user))
 
 				if mype == "in" then
@@ -8191,11 +8192,7 @@ end
 ----- ---- --- -- -
 
 function delwelcome (nick, item, cls)
-	local rtem = repsqlchars (item)
-	local _, rows = VH:SQLQuery ("select `nick` from `" .. tbl_sql.wm .. "` where `nick` = '" .. rtem .. "'")
-
-	if rows > 0 then
-		VH:SQLQuery ("delete from `" .. tbl_sql.wm .. "` where `nick` = '" .. rtem .. "'")
+	if sqlrowcount ("delete from `" .. tbl_sql.wm .. "` where `nick` = '" .. repsqlchars (item) .. "'") then
 		commandanswer (nick, gettext ("Welcome messages were deleted for user: %s"):format (item))
 		opsnotify (table_sets.classnotiwelcome, gettext ("%s with class %d deleted welcome messages for user: %s"):format (nick, cls, item))
 	else
@@ -8211,27 +8208,22 @@ function setwelcome (nick, line, cls)
 
 		if mype == "in" or mype == "out" then
 			local item = line:match ("^%S+ (.+)$")
-			local rick = repsqlchars (nick)
-			local _, rows = VH:SQLQuery ("select `nick` from `" .. tbl_sql.wm .. "` where `nick` = '" .. rick .. "'")
-
-			if rows > 0 then
-				VH:SQLQuery ("update `" .. tbl_sql.wm .. "` set `" .. mype .. "` = '" .. repsqlchars (item) .. "' where `nick` = '" .. rick .. "'")
-			else
-				VH:SQLQuery ("insert into `" .. tbl_sql.wm .. "` (`nick`, `" .. mype .. "`) values ('" .. rick .. "', '" .. repsqlchars (item) .. "')")
-			end
-
+			VH:SQLQuery ("insert into `" .. tbl_sql.wm .. "` (`nick`, `" .. mype .. "`) values ('" .. repsqlchars (nick) .. "', '" .. repsqlchars (item) .. "') on duplicate key update `" .. mype .. "` = '" .. repsqlchars (item) .. "'")
 			item = item:gsub ("%*", reprexpchars (nick))
 
 			if mype == "in" then
 				commandanswer (nick, gettext ("Your login message set: %s"):format (item))
 				opsnotify (table_sets.classnotiwelcome, gettext ("%s with class %d changed his login message: %s"):format (nick, cls, item))
+
 			elseif mype == "out" then
 				commandanswer (nick, gettext ("Your logout message set: %s"):format (item))
 				opsnotify (table_sets.classnotiwelcome, gettext ("%s with class %d changed his logout message: %s"):format (nick, cls, item))
 			end
+
 		else -- unknown type
 			commandanswer (nick, gettext ("Known types are: %s"):format ("in " .. gettext ("and") .. " out"))
 		end
+
 	else -- deleting
 		local mype = line
 
@@ -8241,12 +8233,14 @@ function setwelcome (nick, line, cls)
 			VH:SQLQuery ("delete from `" .. tbl_sql.wm .. "` where `nick` = '" .. rick .. "' and `out` is null")
 			commandanswer (nick, gettext ("Your login message deleted."))
 			opsnotify (table_sets.classnotiwelcome, gettext ("%s with class %d deleted his login message."):format (nick, cls))
+
 		elseif mype == "out" then
 			local rick = repsqlchars (nick)
 			VH:SQLQuery ("update `" .. tbl_sql.wm .. "` set `out` = null where `nick` = '" .. rick .. "'")
 			VH:SQLQuery ("delete from `" .. tbl_sql.wm .. "` where `nick` = '" .. rick .. "' and `in` is null")
 			commandanswer (nick, gettext ("Your logout message deleted."))
 			opsnotify (table_sets.classnotiwelcome, gettext ("%s with class %d deleted his logout message."):format (nick, cls))
+
 		else -- unknown type
 			commandanswer (nick, gettext ("Known types are: %s"):format ("in " .. gettext ("and") .. " out"))
 		end
@@ -9490,7 +9484,7 @@ end
 ----- ---- --- -- -
 
 function checkcmd (nick, clas, cmd)
-	local _, rows = VH:SQLQuery ("select `command`, `class` from `" .. tbl_sql.cmd .. "` order by `occurred` desc")
+	local _, rows = VH:SQLQuery ("select `command`, `class` from `" .. tbl_sql.cmd .. "`")
 
 	if rows > 0 then
 		local safe = repnmdcinchars (cmd)
@@ -10349,7 +10343,7 @@ function sendnews (nick, num, auto)
 		lnum = 1
 	end
 
-	local _, rows = VH:SQLQuery ("select `date`, `by`, `item` from `" .. tbl_sql.news .. "` order by `date` desc, `id` desc limit " .. _tostring (lnum))
+	local _, rows = VH:SQLQuery ("select `date`, `by`, `item` from `" .. tbl_sql.news .. "` order by `date` desc limit " .. _tostring (lnum))
 
 	if rows > 0 then
 		local list = ""
@@ -10386,10 +10380,7 @@ end
 ----- ---- --- -- -
 
 function delresponder (nick, id)
-	local _, rows = VH:SQLQuery ("select `maxclass` from `" .. tbl_sql.mcresp .. "` where `id` = " .. _tostring (id))
-
-	if rows > 0 then
-		VH:SQLQuery ("delete from `" .. tbl_sql.mcresp .. "` where `id` = " .. _tostring (id))
+	if sqlrowcount ("delete from `" .. tbl_sql.mcresp .. "` where `id` = " .. _tostring (id)) then
 		commandanswer (nick, gettext ("Deleted chat responder with ID: %d"):format (id))
 	else
 		commandanswer (nick, gettext ("Couldn't delete chat responder because ID not found: %d"):format (id))
@@ -13403,7 +13394,7 @@ function autosendoffmsg (nick, clas, addr)
 	end
 
 	local user = repsqlchars (nick)
-	local _, rows = VH:SQLQuery ("select `from`, `date`, `message` from `" .. tbl_sql.off .. "` where `to` = '" .. user .. "' order by `date` asc, `from` asc")
+	local _, rows = VH:SQLQuery ("select `from`, `date`, `message` from `" .. tbl_sql.off .. "` where `to` = '" .. user .. "' order by `date` asc")
 
 	if rows > 0 then
 		for row = 0, rows - 1 do
@@ -16720,10 +16711,9 @@ function cleanuptable (nick, line, cls)
 
 	elseif cype == "ulog" then
 		commandanswer (nick, gettext ("This operation might take very long time depending on how much is going to be removed, please be patient."))
-		local _, rows = VH:SQLQuery ("select `id` from `" .. tbl_sql.ulog .. "` where `time` < " .. secs)
+		local rows = sqlrowcount ("delete from `" .. tbl_sql.ulog .. "` where `time` < " .. secs, true)
 
 		if rows > 0 then
-			VH:SQLQuery ("delete from `" .. tbl_sql.ulog .. "` where `time` < " .. secs)
 			commandanswer (nick, gettext ("Deleted %d rows: %s"):format (rows, cype))
 			opsnotify (table_sets.classnotiledoact, gettext ("%s with class %d deleted %d user log entries older than %d days."):format (nick, cls, rows, days))
 			VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('lastcleanulog', " .. tm .. ") on duplicate key update `value` = " .. tm)
@@ -24180,7 +24170,7 @@ function createtables ()
 VH:SQLQuery ("create table if not exists `" .. tbl_sql.conf .. "` (`variable` varchar(255) not null, `value` text not null, primary key (`variable`))")
 
 	-- antispam
-	VH:SQLQuery ("create table if not exists `" .. tbl_sql.anti .. "` (`antispam` varchar(255) not null, `occurred` bigint(20) unsigned not null default 0, `priority` tinyint(1) unsigned not null default 0, `action` tinyint(2) unsigned not null default 0, `flags` tinyint(1) unsigned not null default 3, primary key (`antispam`))")
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql.anti .. "` (`antispam` varchar(255) not null, `occurred` bigint(20) unsigned not null default 0, `priority` tinyint(1) unsigned not null default 0, `action` tinyint(2) unsigned not null default 0, `flags` tinyint(1) unsigned not null default 3, primary key (`antispam`), index(`flags`), index(`priority`))")
 	VH:SQLQuery ("create table if not exists `" .. tbl_sql.antiex .. "` (`exception` varchar(255) not null, `occurred` bigint(20) unsigned not null default 0, primary key (`exception`))")
 
 	-- search filter
@@ -24220,10 +24210,10 @@ VH:SQLQuery ("create table if not exists `" .. tbl_sql.rem .. "` (`id` varchar(2
 	VH:SQLQuery ("create table if not exists `" .. tbl_sql.trig .. "` (`id` varchar(255) not null primary key, `content` text not null, `minclass` tinyint(2) unsigned not null default 0, `maxclass` tinyint(2) unsigned not null default 10)")
 
 	-- news
-	VH:SQLQuery ("create table if not exists `" .. tbl_sql.news .. "` (`id` bigint(20) unsigned not null auto_increment primary key, `date` bigint(20) unsigned not null, `by` varchar(255) not null, `item` text not null)")
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql.news .. "` (`id` bigint(20) unsigned not null auto_increment primary key, `date` bigint(20) unsigned not null, `by` varchar(255) not null, `item` text not null, index(`date`))")
 
 	-- chat replacer
-	VH:SQLQuery ("create table if not exists `" .. tbl_sql.chatrepl .. "` (`id` bigint(20) unsigned not null auto_increment primary key, `message` varchar(255) not null, `replace` text not null, `maxclass` tinyint(2) unsigned not null default 10, `flags` tinyint(1) unsigned not null default 1, `occurred` bigint(20) unsigned not null default 0)")
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql.chatrepl .. "` (`id` bigint(20) unsigned not null auto_increment primary key, `message` varchar(255) not null, `replace` text not null, `maxclass` tinyint(2) unsigned not null default 10, `flags` tinyint(1) unsigned not null default 1, `occurred` bigint(20) unsigned not null default 0, index(`flags`))")
 	VH:SQLQuery ("create table if not exists `" .. tbl_sql.replex .. "` (`exception` varchar(255) not null primary key, `type` tinyint(1) not null default 0, `occurred` bigint(20) unsigned not null default 0)")
 
 -- chat responder
@@ -24234,7 +24224,7 @@ VH:SQLQuery ("create table if not exists `" .. tbl_sql.respex .. "` (`exception`
 VH:SQLQuery ("create table if not exists `" .. tbl_sql.auth .. "` (`id` bigint(20) unsigned not null auto_increment, `nick` varchar(255) not null, `ip` varchar(255) not null, `badip` varchar(15) not null default '0.0.0.0', `good` bigint(20) unsigned not null default 0, `bad` bigint(20) unsigned not null default 0, primary key (`id`))")
 
 	-- releases
-	VH:SQLQuery ("create table if not exists `" .. tbl_sql.rel .. "` (`release` varchar(255) not null primary key, `category` varchar(255) not null, `tth` varchar(255) null default null, `by` varchar(255) not null, `date` bigint(20) unsigned not null)")
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql.rel .. "` (`release` varchar(255) not null primary key, `category` varchar(255) not null, `tth` varchar(255) null default null, `by` varchar(255) not null, `date` bigint(20) unsigned not null, index(`date`))")
 
 	-- ranks
 	VH:SQLQuery ("create table if not exists `" .. tbl_sql.chran .. "` (`nick` varchar(255) not null, `rank` bigint(20) unsigned not null default 1, primary key (`nick`))")
@@ -24247,11 +24237,11 @@ VH:SQLQuery ("create table if not exists `" .. tbl_sql.auth .. "` (`id` bigint(2
 	VH:SQLQuery ("create table if not exists `" .. tbl_sql.ranex .. "` (`nick` varchar(255) not null, `occurred` bigint(20) unsigned not null default 0, primary key (`nick`))")
 
 	-- offline messenger
-	VH:SQLQuery ("create table if not exists `" .. tbl_sql.off .. "` (`id` bigint(20) unsigned not null auto_increment primary key, `from` varchar(255) not null, `ip` varchar(15) not null, `to` varchar(255) not null, `date` bigint(20) unsigned not null, `message` text not null)")
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql.off .. "` (`id` bigint(20) unsigned not null auto_increment primary key, `from` varchar(255) not null, `ip` varchar(15) not null, `to` varchar(255) not null, `date` bigint(20) unsigned not null, `message` text not null, index(`to`), index(`date`))")
 
 	-- chat history
-	VH:SQLQuery ("create table if not exists `" .. tbl_sql.mchist .. "` (`id` bigint(20) unsigned not null auto_increment primary key, `realnick` varchar(255) not null, `nick` varchar(255) not null, `ip` varchar(15) null, `date` bigint(20) unsigned not null, `message` text not null)")
-	VH:SQLQuery ("create table if not exists `" .. tbl_sql.ophist .. "` (`id` bigint(20) unsigned not null auto_increment primary key, `nick` varchar(255) not null, `date` bigint(20) unsigned not null, `message` text not null, `class` tinyint(2) unsigned not null default 10)")
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql.mchist .. "` (`id` bigint(20) unsigned not null auto_increment primary key, `realnick` varchar(255) not null, `nick` varchar(255) not null, `ip` varchar(15) null, `date` bigint(20) unsigned not null, `message` text not null, index(`date`))")
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql.ophist .. "` (`id` bigint(20) unsigned not null auto_increment primary key, `nick` varchar(255) not null, `date` bigint(20) unsigned not null, `message` text not null, `class` tinyint(2) unsigned not null default 10, index(`date`))")
 	VH:SQLQuery ("create table if not exists `" .. tbl_sql.crhist .. "` (`id` bigint(20) unsigned not null auto_increment primary key, `room` varchar(255) not null, `realnick` varchar(255) not null, `nick` varchar(255) not null, `ip` varchar(15) null, `date` bigint(20) unsigned not null, `message` text not null)")
 
 -- commands
@@ -24260,7 +24250,7 @@ VH:SQLQuery ("create table if not exists `" .. tbl_sql.cmd .. "` (`command` varc
 VH:SQLQuery ("create table if not exists `" .. tbl_sql.cmdex .. "` (`exception` varchar(255) not null, `occurred` bigint(20) unsigned not null default 0, primary key (`exception`))")
 
 	-- user log
-	VH:SQLQuery ("create table if not exists `" .. tbl_sql.ulog .. "` (`id` bigint(20) unsigned not null auto_increment primary key, `time` bigint(20) unsigned not null, `out` bigint(20) unsigned not null default 0, `nick` varchar(255) not null, `ip` varchar(15) not null, `cc` varchar(2) null, `desc` varchar(255) null, `tag` varchar(255) null, `conn` varchar(255) null, `email` varchar(255) null, `share` bigint(20) unsigned not null default 0, `nmdc` varchar(255) null, `sups` varchar(255) null)")
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql.ulog .. "` (`id` bigint(20) unsigned not null auto_increment primary key, `time` bigint(20) unsigned not null, `out` bigint(20) unsigned not null default 0, `nick` varchar(255) not null, `ip` varchar(15) not null, `cc` varchar(2) null, `desc` varchar(255) null, `tag` varchar(255) null, `conn` varchar(255) null, `email` varchar(255) null, `share` bigint(20) unsigned not null default 0, `nmdc` varchar(255) null, `sups` varchar(255) null, index(`time`))")
 
 -- command log
 VH:SQLQuery ("create table if not exists `" .. tbl_sql.clog .. "` (`id` bigint(20) unsigned not null auto_increment, `time` bigint(20) unsigned not null, `nick` varchar(255) not null, `class` tinyint(2) unsigned not null, `command` text not null, primary key (`id`))")
@@ -24296,7 +24286,7 @@ VH:SQLQuery ("create table if not exists `" .. tbl_sql.stat .. "` (`type` varcha
 	VH:SQLQuery ("create table if not exists `" .. tbl_sql.asngag .. "` (`item` varchar(255) not null primary key, `flag` tinyint(1) unsigned not null default 0, `why` varchar(255) null)")
 
 	-- right click menu
-	VH:SQLQuery ("create table if not exists `" .. tbl_sql.rcmenu .. "` (`id` bigint(20) unsigned not null auto_increment primary key, `menu` varchar(255) not null, `command` varchar(255) not null, `type` tinyint(3) unsigned not null default 1, `cont` tinyint(2) unsigned not null default 3, `order` smallint(5) unsigned not null default 0, `minclass` tinyint(2) unsigned not null default 0, `maxclass` tinyint(2) unsigned not null default 10, `off` tinyint(1) unsigned not null default 0)")
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql.rcmenu .. "` (`id` bigint(20) unsigned not null auto_increment primary key, `menu` varchar(255) not null, `command` varchar(255) not null, `type` tinyint(3) unsigned not null default 1, `cont` tinyint(2) unsigned not null default 3, `order` smallint(5) unsigned not null default 0, `minclass` tinyint(2) unsigned not null default 0, `maxclass` tinyint(2) unsigned not null default 10, `off` tinyint(1) unsigned not null default 0, index(`order`))")
 end
 
 ----- ---- --- -- -
@@ -24355,15 +24345,16 @@ function altertables ()
 	VH:SQLQuery ("alter table `" .. tbl_sql.conf .. "` change column `variable` `variable` varchar(255) not null") -- variable
 	VH:SQLQuery ("alter table `" .. tbl_sql.conf .. "` change column `value` `value` text not null") -- value
 
--- antispam
-VH:SQLQuery ("alter table `" .. tbl_sql.anti .. "` change column `antispam` `antispam` varchar(255) not null") -- antispam
-VH:SQLQuery ("alter table `" .. tbl_sql.anti .. "` change column `occured` `occurred` bigint(20) unsigned not null default 0") -- occurred
-VH:SQLQuery ("alter table `" .. tbl_sql.anti .. "` add column `priority` tinyint(1) unsigned not null default 0 after `occurred`") -- priority
-VH:SQLQuery ("alter table `" .. tbl_sql.anti .. "` change column `action` `action` tinyint(2) unsigned not null default 0") -- action
-VH:SQLQuery ("alter table `" .. tbl_sql.anti .. "` add column `flags` tinyint(1) unsigned not null default 3 after `action`") -- flags
-
-VH:SQLQuery ("alter table `" .. tbl_sql.antiex .. "` change column `exception` `exception` varchar(255) not null") -- exception
-VH:SQLQuery ("alter table `" .. tbl_sql.antiex .. "` change column `occured` `occurred` bigint(20) unsigned not null default 0") -- occurred
+	-- antispam
+	VH:SQLQuery ("alter table `" .. tbl_sql.anti .. "` change column `antispam` `antispam` varchar(255) not null") -- antispam
+	VH:SQLQuery ("alter table `" .. tbl_sql.anti .. "` change column `occured` `occurred` bigint(20) unsigned not null default 0") -- occurred
+	VH:SQLQuery ("alter table `" .. tbl_sql.anti .. "` add column `priority` tinyint(1) unsigned not null default 0 after `occurred`") -- priority
+	VH:SQLQuery ("alter table `" .. tbl_sql.anti .. "` change column `action` `action` tinyint(2) unsigned not null default 0") -- action
+	VH:SQLQuery ("alter table `" .. tbl_sql.anti .. "` add column `flags` tinyint(1) unsigned not null default 3 after `action`") -- flags
+	VH:SQLQuery ("alter table `" .. tbl_sql.anti .. "` add index(`flags`)") -- flags
+	VH:SQLQuery ("alter table `" .. tbl_sql.anti .. "` add index(`priority`)") -- priority
+	VH:SQLQuery ("alter table `" .. tbl_sql.antiex .. "` change column `exception` `exception` varchar(255) not null") -- exception
+	VH:SQLQuery ("alter table `" .. tbl_sql.antiex .. "` change column `occured` `occurred` bigint(20) unsigned not null default 0") -- occurred
 
 	-- search filter
 	VH:SQLQuery ("alter table `" .. tbl_sql.sefi .. "` change column `filter` `filter` varchar(255) not null") -- filter
@@ -24452,6 +24443,7 @@ VH:SQLQuery ("alter table `" .. tbl_sql.auth .. "` change column `bad` `bad` big
 	VH:SQLQuery ("alter table `" .. tbl_sql.rel .. "` change column `by` `by` varchar(255) not null") -- by
 	VH:SQLQuery ("alter table `" .. tbl_sql.rel .. "` change column `date` `date` bigint(20) unsigned not null") -- date
 	VH:SQLQuery ("alter table `" .. tbl_sql.rel .. "` change column `tth` `tth` varchar(255) null default null") -- tth
+	VH:SQLQuery ("alter table `" .. tbl_sql.rel .. "` add index(`date`)") -- date
 
 	-- welcome messages
 	VH:SQLQuery ("alter table `" .. tbl_sql.wm .. "` change column `nick` `nick` varchar(255) not null") -- nick
@@ -24485,9 +24477,11 @@ VH:SQLQuery ("alter table `" .. tbl_sql.rem .. "` change column `timer` `timer` 
 	VH:SQLQuery ("alter table `" .. tbl_sql.news .. "` change column `date` `date` bigint(20) unsigned not null") -- date
 	VH:SQLQuery ("alter table `" .. tbl_sql.news .. "` change column `by` `by` varchar(255) not null") -- by
 	VH:SQLQuery ("alter table `" .. tbl_sql.news .. "` change column `item` `item` text not null") -- item
+	VH:SQLQuery ("alter table `" .. tbl_sql.news .. "` add index(`date`)") -- date
 
 	-- chat replacer
 	VH:SQLQuery ("alter table `" .. tbl_sql.chatrepl .. "` add column `flags` tinyint(1) unsigned not null default 1 after `maxclass`") -- flags
+	VH:SQLQuery ("alter table `" .. tbl_sql.chatrepl .. "` add index(`flags`)") -- flags
 	VH:SQLQuery ("alter table `" .. tbl_sql.replex .. "` add column `type` tinyint(1) not null default 0 after `exception`") -- type
 
 -- chat responder
@@ -24530,6 +24524,8 @@ VH:SQLQuery ("alter table `" .. tbl_sql.ranex .. "` add column `occurred` bigint
 	VH:SQLQuery ("alter table `" .. tbl_sql.off .. "` change column `to` `to` varchar(255) not null") -- to
 	VH:SQLQuery ("alter table `" .. tbl_sql.off .. "` change column `date` `date` bigint(20) unsigned not null") -- date
 	VH:SQLQuery ("alter table `" .. tbl_sql.off .. "` change column `message` `message` text not null") -- message
+	VH:SQLQuery ("alter table `" .. tbl_sql.off .. "` add index(`to`)") -- to
+	VH:SQLQuery ("alter table `" .. tbl_sql.off .. "` add index(`date`)") -- date
 
 	-- chat history
 	VH:SQLQuery ("alter table `" .. tbl_sql.mchist .. "` change column `id` `id` bigint(20) unsigned auto_increment") -- id
@@ -24538,6 +24534,7 @@ VH:SQLQuery ("alter table `" .. tbl_sql.ranex .. "` add column `occurred` bigint
 	VH:SQLQuery ("alter table `" .. tbl_sql.mchist .. "` add column `ip` varchar(15) null after `nick`") -- ip
 	VH:SQLQuery ("alter table `" .. tbl_sql.mchist .. "` change column `date` `date` bigint(20) unsigned not null") -- date
 	VH:SQLQuery ("alter table `" .. tbl_sql.mchist .. "` change column `message` `message` text not null") -- message
+	VH:SQLQuery ("alter table `" .. tbl_sql.mchist .. "` add index(`date`)") -- date
 
 	-- opchat history
 	VH:SQLQuery ("alter table `" .. tbl_sql.ophist .. "` change column `id` `id` bigint(20) unsigned auto_increment") -- id
@@ -24545,6 +24542,7 @@ VH:SQLQuery ("alter table `" .. tbl_sql.ranex .. "` add column `occurred` bigint
 	VH:SQLQuery ("alter table `" .. tbl_sql.ophist .. "` change column `date` `date` bigint(20) unsigned not null") -- date
 	VH:SQLQuery ("alter table `" .. tbl_sql.ophist .. "` change column `message` `message` text not null") -- message
 	VH:SQLQuery ("alter table `" .. tbl_sql.ophist .. "` add column `class` tinyint(2) unsigned not null default 10 after `message`") -- class
+	VH:SQLQuery ("alter table `" .. tbl_sql.ophist .. "` add index(`date`)") -- date
 
 -- commands
 VH:SQLQuery ("alter table `" .. tbl_sql.ledocmd .. "` change column `original` `original` varchar(255) not null") -- original
@@ -24568,6 +24566,7 @@ VH:SQLQuery ("alter table `" .. tbl_sql.cmdex .. "` change column `occurred` `oc
 	VH:SQLQuery ("alter table `" .. tbl_sql.ulog .. "` change column `share` `share` bigint(20) unsigned not null default 0") -- share
 	VH:SQLQuery ("alter table `" .. tbl_sql.ulog .. "` add column `nmdc` varchar(255) null after `share`") -- nmdc
 	VH:SQLQuery ("alter table `" .. tbl_sql.ulog .. "` add column `sups` varchar(255) null after `nmdc`") -- sups
+	VH:SQLQuery ("alter table `" .. tbl_sql.ulog .. "` add index(`time`)") -- time
 
 -- command log
 -- not added
@@ -24602,6 +24601,7 @@ VH:SQLQuery ("alter table `" .. tbl_sql.stat .. "` change column `count` `count`
 
 	-- right click menu
 	VH:SQLQuery ("alter table `" .. tbl_sql.rcmenu .. "` add column `off` tinyint(1) unsigned not null default 0 after `maxclass`") -- off
+	VH:SQLQuery ("alter table `" .. tbl_sql.rcmenu .. "` add index(`order`)") -- order
 end
 
 ----- ---- --- -- -
@@ -26804,6 +26804,24 @@ end
 
 ----- ---- --- -- -
 
+function sqlrowcount (sql, num)
+	VH:SQLQuery (sql)
+	local _, rows = VH:SQLQuery ("select row_count()")
+
+	if rows > 0 then
+		_, rows = VH:SQLFetch (0)
+		rows = tonumber (rows or 0) or 0
+	end
+
+	if num then
+		return rows
+	else
+		return (rows > 0)
+	end
+end
+
+----- ---- --- -- -
+
 function getmysqlmd5 (data)
 	local _, rows = VH:SQLQuery ("select md5('" .. repsqlchars (data) .. "')")
 
@@ -27882,7 +27900,7 @@ function antiscan (nick, class, data, where, to, status)
 		flag = 2
 	end
 
-	local _, rows = VH:SQLQuery ("select `antispam`, `priority`, `action` from `" .. tbl_sql.anti .. "` where `flags` = " .. _tostring (flag) .. " or `flags` = 3 order by `priority` desc, `occurred` desc")
+	local _, rows = VH:SQLQuery ("select `antispam`, `priority`, `action` from `" .. tbl_sql.anti .. "` where `flags` = " .. _tostring (flag) .. " or `flags` = 3 order by `priority` desc")
 
 	for x = 0, rows - 1 do
 		local _, entry, priority, action = VH:SQLFetch (x)

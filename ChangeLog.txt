@@ -1,4 +1,4 @@
-[ 2.9.8 :: 2021-##-## ]
+[ 2.9.8 :: 2021-12-## ]
 
 [121] Fixed: AVDB update process when items were deleted from database
 [111] Added: cleanallbangags configuration to clean all gag lists on cleanallban hub command, request by FAUST
@@ -17,6 +17,7 @@
 [116] Improved: User information MyINFO status
 [117] Improved: Always include path in AVDB reports
 [119] Improved: Workaround for FlylinkDC++ that sets passive mode for its second clone
+[126] Improved: SQL optimization, part 1
 
 [ 2.9.7 :: 2021-01-10 ]
 
