@@ -11,13 +11,14 @@
 [123] Added: Support for Verlihub time as time and interval parameters, request by KCAHDEP and Master
 [124] Added: ASN gag, similar to city gag, request by Master and KCAHDEP
 [125] Added: ipgagtoself and ipgagnochat configurations, request by Master and KCAHDEP
+[127] Added: New GeoIP country codes
 [110] Improved: UTF-8 detection in avdetforce command when avdetforceconv is enabled
 [112] Improved: Allow to use class 0 in command permissions
 [115] Improved: Magnet parameter is optional in release bot, request by barrow
 [116] Improved: User information MyINFO status
 [117] Improved: Always include path in AVDB reports
 [119] Improved: Workaround for FlylinkDC++ that sets passive mode for its second clone
-[126] Improved: SQL optimization, part 1
+[126] Improved: SQL optimization
 
 [ 2.9.7 :: 2021-01-10 ]
 

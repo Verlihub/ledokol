@@ -63,7 +63,7 @@ Tzaca, JOE™, Foxtrot, Deivis
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.8" -- ledokol version
-bld_ledo = "126" -- build number
+bld_ledo = "127" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -471,8 +471,8 @@ table_refu = {
 	GetTLSVer = false,
 	PassTempBan = false,
 	SetRegClass = false,
-	SetUserIP = false,
-	ParseCommand = false
+	SetUserIP = false--,
+	--ParseCommand = false
 }
 
 ---------------------------------------------------------------------
@@ -825,6 +825,8 @@ cc_names = {
 	A2 = "Satellite Provider",
 	O1 = "Other Country",
 	SU = "Soviet Union",
+	AP = "Asia",
+	EU = "Europe",
 	AD = "Andorra", -- official
 	AE = "United Arab Emirates",
 	AF = "Afghanistan",
@@ -833,7 +835,6 @@ cc_names = {
 	AL = "Albania",
 	AM = "Armenia",
 	AO = "Angola",
-	AP = "Asia",
 	AQ = "Antarctica",
 	AR = "Argentina",
 	AS = "American Samoa",
@@ -859,6 +860,7 @@ cc_names = {
 	BR = "Brazil",
 	BS = "Bahamas",
 	BT = "Bhutan",
+	BV = "Bouvet Island",
 	BW = "Botswana",
 	BY = "Belarus",
 	BZ = "Belize",
@@ -894,7 +896,6 @@ cc_names = {
 	ER = "Eritrea",
 	ES = "Spain",
 	ET = "Ethiopia",
-	EU = "Europe",
 	FI = "Finland",
 	FJ = "Fiji",
 	FK = "Falkland Islands",
@@ -1833,12 +1834,11 @@ function VH_OnOperatorCommand (nick, data)
 	----- ---- --- -- -
 
 	elseif data:match ("^" .. table_othsets.optrig .. "cleanallban$") then
-		if ucl >= table_sets.mincommandclass and table_sets.cleanallbangags == 1 and table_refu.ParseCommand then
-			local trig = getconfig ("cmd_start_op"):sub (1, 1)
-			VH:ParseCommand (nick, trig .. table_cmnds.gagipdel .. " *", 0)
-			VH:ParseCommand (nick, trig .. table_cmnds.gagccdel .. " *", 0)
-			VH:ParseCommand (nick, trig .. table_cmnds.gagcitydel .. " *", 0)
-			VH:ParseCommand (nick, trig .. table_cmnds.gagasndel .. " *", 0)
+		if ucl >= table_sets.mincommandclass and table_sets.cleanallbangags == 1 then
+			gagipdel (nick, "*")
+			gagccdel (nick, "*")
+			gagcitydel (nick, "*")
+			gagasndel (nick, "*")
 		end
 
 	----- ---- --- -- -
@@ -8283,7 +8283,7 @@ function sendwelcomein (nick, ucl)
 			mein = mein:gsub ("%*", reprexpchars (nick))
 		end
 
-		maintoall (mein, 0, 10)
+		maintoall (mein, 0, 10) -- todo: add support for variables
 	end
 end
 
@@ -8305,7 +8305,7 @@ function sendwelcomeout (nick, ucl)
 			meout = meout:gsub ("%*", reprexpchars (nick))
 		end
 
-		maintoall (meout, 0, 10)
+		maintoall (meout, 0, 10) -- todo: add support for variables
 	end
 end
 
@@ -8319,7 +8319,7 @@ function addchatroom (nick, item)
 		commandanswer (nick, gettext ("Known classes are: %s"):format ("0, 1, 2, 3, 4, 5 " .. gettext ("and") .. " 10"))
 	else
 		local entry = repsqlchars (room)
-		local _, rows = VH:SQLQuery ("select `minclass` from `" .. tbl_sql.chat .. "` where `room` = '" .. entry .. "'")
+		local _, rows = VH:SQLQuery ("select null from `" .. tbl_sql.chat .. "` where `room` = '" .. entry .. "'")
 
 		if rows > 0 then
 			VH:SQLQuery ("update `" .. tbl_sql.chat .. "` set `description` = '" .. repsqlchars (desc) .. "', `minclass` = " .. _tostring (minc) .. ", `maxclass` = " .. _tostring (maxc) .. ", `cc` = '" .. repsqlchars (cc:upper ()) .. "' where `room` = '" .. entry .. "'")
@@ -8340,7 +8340,7 @@ end
 
 function delchatroom (nick, item)
 	local room = repsqlchars (item)
-	local _, rows = VH:SQLQuery ("select `minclass` from `" .. tbl_sql.chat .. "` where `room` = '" .. room .. "'")
+	local _, rows = VH:SQLQuery ("select null from `" .. tbl_sql.chat .. "` where `room` = '" .. room .. "'") -- todo: row_count
 
 	if rows > 0 then
 		VH:SQLQuery ("delete from `" .. tbl_sql.chat .. "` where `room` = '" .. room .. "'")
@@ -8411,7 +8411,7 @@ end
 
 function delacre (nick, data)
 	local id = tonumber (data) or 0
-	local _, rows = VH:SQLQuery ("select `id` from `" .. tbl_sql.acre .. "` where `id` = " .. _tostring (id))
+	local _, rows = VH:SQLQuery ("select null from `" .. tbl_sql.acre .. "` where `id` = " .. _tostring (id)) -- todo: row_count
 
 	if rows > 0 then
 		VH:SQLQuery ("delete from `" .. tbl_sql.acre .. "` where `id` = " .. _tostring (id))
@@ -8525,7 +8525,7 @@ function addccroommember (nick, class)
 		return
 	end
 
-	local _, rows = VH:SQLQuery ("select `id` from `" .. tbl_sql.acre .. "` where `nick` = '" .. repsqlchars (nick) .. "' and `cc` = '" .. repsqlchars ("--") .. "'")
+	local _, rows = VH:SQLQuery ("select null from `" .. tbl_sql.acre .. "` where `nick` = '" .. repsqlchars (nick) .. "' and `cc` = '" .. repsqlchars ("--") .. "' limit 1")
 
 	if rows > 0 then
 		return
@@ -8579,7 +8579,7 @@ function addccroomacre (nick, class)
 		return
 	end
 
-	local _, rows = VH:SQLQuery ("select `cc` from `" .. tbl_sql.acre .. "` where `nick` = '" .. repsqlchars (nick) .. "' order by `cc` asc")
+	local _, rows = VH:SQLQuery ("select `cc` from `" .. tbl_sql.acre .. "` where `nick` = '" .. repsqlchars (nick) .. "'")
 
 	if rows > 0 then
 		for pos = 0, rows - 1 do
@@ -8797,167 +8797,159 @@ function broadcastchatroom (to, nick, data, class) -- class based chatroom
 		return false
 	end
 
-	local _, rows = VH:SQLQuery ("select `room`, `minclass`, `maxclass`, `cc` from `" .. tbl_sql.chat .. "`")
+	local _, rows = VH:SQLQuery ("select `minclass`, `maxclass`, `cc` from `" .. tbl_sql.chat .. "` where `room` = '" .. repsqlchars (to) .. "'")
 
 	if rows == 0 then
 		return false
 	end
 
-	for x = 0, rows - 1 do
-		local _, room, minc, maxc, cc = VH:SQLFetch (x)
+	local _, minc, maxc, cc = VH:SQLFetch (0)
+	minc, maxc = tonumber (minc) or 0, tonumber (maxc) or 10
 
-		if room == to then -- room match
-			minc, maxc = tonumber (minc) or 0, tonumber (maxc) or 10
+	if class >= minc and class <= maxc and (not table_refu.GetUserCC or cc == "*" or cc == getcc (nick)) then -- is member
+		local ign = getchatroomignore (nick, to)
+		local cmd, par = nil, nil
 
-			if class >= minc and class <= maxc and (not table_refu.GetUserCC or cc == "*" or cc == getcc (nick)) then -- is member
-				local ign = getchatroomignore (nick, to)
-				local cmd, par = nil, nil
+		if data:match ("^" .. table_othsets.ustrig .. "%S+ .*$") then
+			cmd, par = data:match ("^" .. table_othsets.ustrig .. "(%S+) (.*)$")
+		else
+			cmd = data:match ("^" .. table_othsets.ustrig .. "(%S+)$")
+		end
 
-				if data:match ("^" .. table_othsets.ustrig .. "%S+ .*$") then
-					cmd, par = data:match ("^" .. table_othsets.ustrig .. "(%S+) (.*)$")
-				else
-					cmd = data:match ("^" .. table_othsets.ustrig .. "(%S+)$")
-				end
+		local custnick = nil
 
-				local custnick = nil
+		if table_sets.custnickclass < 11 then -- use custom nick
+			custnick = getcustnick (nick)
+		end
 
-				if table_sets.custnickclass < 11 then -- use custom nick
-					custnick = getcustnick (nick)
-				end
+		if cmd then -- user command
+			if cmd == table_cmnds.chatenter then
+				if ign > 0 then -- remove from ignore list
+					table.remove (table_chat [to], ign)
+					VH:SendToUser ("$To: " .. nick .. " From: " .. to .. " $<" .. to .. "> " .. gettext ("You've entered %s chatroom."):format (to) .. "|", nick)
 
-				if cmd then -- user command
-					if cmd == table_cmnds.chatenter then
-						if ign > 0 then -- remove from ignore list
-							table.remove (table_chat [to], ign)
-							VH:SendToUser ("$To: " .. nick .. " From: " .. to .. " $<" .. to .. "> " .. gettext ("You've entered %s chatroom."):format (to) .. "|", nick)
-
-							if table_sets.roomusernotify == 1 then -- notification
-								for x in getnicklist ():gmatch ("([^%$ ]+)") do
-									if not isbot (x) then
-										local cl = getclass (x)
-
-										if x ~= nick and cl >= minc and cl <= maxc and (not table_refu.GetUserCC or cc == "*" or cc == getcc (x)) and getchatroomignore (x, to) == 0 then -- skip self
-											VH:SendToUser ("$To: " .. x .. " From: " .. to .. " $<" .. to .. "> " .. gettext ("User entered the chatroom: %s"):format (custnick or nick) .. "|", x)
-										end
-									end
-								end
-
-								if table_sets.chathistbotmsg == 1 then
-									addcrhistoryline (to, to, to, gettext ("User entered the chatroom: %s"):format (custnick or nick))
-								end
-							end
-						else -- not ignoring
-							VH:SendToUser ("$To: " .. nick .. " From: " .. to .. " $<" .. to .. "> " .. gettext ("You're already member of this chatroom.") .. "|", nick)
-						end
-
-					elseif cmd == table_cmnds.chatleave then
-						if ign > 0 then -- already ignoring
-							VH:SendToUser ("$To: " .. nick .. " From: " .. to .. " $<" .. to .. "> " .. gettext ("You're not member of this chatroom.") .. "|", nick)
-						else -- add to ignore list
-							if table_chat [to] then -- ignore list exists
-								table.insert (table_chat [to], nick)
-							else -- create ignore list
-								table_chat [to] = {nick}
-							end
-
-							VH:SendToUser ("$To: " .. nick .. " From: " .. to .. " $<" .. to .. "> " .. gettext ("You've left the chatroom.") .. "|", nick)
-
-							if table_sets.roomusernotify == 1 then -- notification
-								for x in getnicklist ():gmatch ("([^%$ ]+)") do
-									if not isbot (x) then
-										local cl = getclass (x)
-
-										if x ~= nick and cl >= minc and cl <= maxc and (not table_refu.GetUserCC or cc == "*" or cc == getcc (x)) and getchatroomignore (x, to) == 0 then -- skip self
-											VH:SendToUser ("$To: " .. x .. " From: " .. to .. " $<" .. to .. "> " .. gettext ("User left the chatroom: %s"):format (custnick or nick) .. "|", x)
-										end
-									end
-								end
-
-								if table_sets.chathistbotmsg == 1 then
-									addcrhistoryline (to, to, to, gettext ("User left the chatroom: %s"):format (custnick or nick))
-								end
-							end
-						end
-
-					elseif cmd == table_cmnds.chatusers then
-						local list = ""
-						local c = 1
-
-						for x in getnicklist ():gmatch ("([^%$ ]+)") do
-							if not isbot (x) then
-								local cl = getclass (x)
-
-								if cl >= minc and cl <= maxc and (not table_refu.GetUserCC or cc == "*" or cc == getcc (x)) and getchatroomignore (x, to) == 0 then
-									if table_sets.custnickclass < 11 then -- use custom nick
-										list = list .. " " .. _tostring (c) .. ". " .. (getcustnick (x) or x) .. "\r\n"
-									else
-										list = list .. " " .. _tostring (c) .. ". " .. x .. "\r\n"
-									end
-
-									c = c + 1
-								end
-							end
-						end
-
-						if list == "" then
-							VH:SendToUser ("$To: " .. nick .. " From: " .. to .. " $<" .. to .. "> " .. gettext ("Chatroom is empty.") .. "|", nick)
-						else
-							VH:SendToUser ("$To: " .. nick .. " From: " .. to .. " $<" .. to .. "> " .. gettext ("Chatroom member list") .. ":\r\n\r\n" .. list .. "|", nick)
-						end
-
-					elseif cmd == table_cmnds.chathist then
-						if ign > 0 then -- ignoring
-							VH:SendToUser ("$To: " .. nick .. " From: " .. to .. " $<" .. to .. "> " .. gettext ("You're not member of this chatroom.") .. "|", nick)
-						else
-							if table_sets.chathistlimit == 0 then
-								VH:SendToUser ("$To: " .. nick .. " From: " .. to .. " $<" .. to .. "> " .. gettext ("This command is either disabled or you don't have access to it.") .. "|", nick)
-							else
-								sendcrhistory (to, nick, class, par or table_sets.histdeflines)
-							end
-						end
-
-					elseif cmd == table_cmnds.chathelp then
-						VH:SendToUser ("$To: " .. nick .. " From: " .. to .. " $<" .. to .. "> " .. gettext ("Chatroom user commands") .. ":\r\n\r\n" .. chatroomhelp () .. "|", nick)
-
-					else -- unknown command
-						VH:SendToUser ("$To: " .. nick .. " From: " .. to .. " $<" .. to .. "> " .. gettext ("Unknown chatroom command, use %s for help."):format (getconfig ("cmd_start_user"):sub (1, 1) .. table_cmnds.chathelp) .. "|", nick)
-					end
-
-				else -- regular message
-					if ign > 0 then -- ignoring
-						VH:SendToUser ("$To: " .. nick .. " From: " .. to .. " $<" .. to .. "> " .. gettext ("You're not member of this chatroom.") .. "|", nick)
-					else -- broadcast
+					if table_sets.roomusernotify == 1 then -- notification
 						for x in getnicklist ():gmatch ("([^%$ ]+)") do
 							if not isbot (x) then
 								local cl = getclass (x)
 
 								if x ~= nick and cl >= minc and cl <= maxc and (not table_refu.GetUserCC or cc == "*" or cc == getcc (x)) and getchatroomignore (x, to) == 0 then -- skip self
-									VH:SendToUser ("$To: " .. x .. " From: " .. to .. " $<" .. (custnick or nick) .. "> " .. data .. "|", x)
+									VH:SendToUser ("$To: " .. x .. " From: " .. to .. " $<" .. to .. "> " .. gettext ("User entered the chatroom: %s"):format (custnick or nick) .. "|", x)
 								end
 							end
 						end
 
-						addcrhistoryline (to, (custnick or nick), nick, data)
+						if table_sets.chathistbotmsg == 1 then
+							addcrhistoryline (to, to, to, gettext ("User entered the chatroom: %s"):format (custnick or nick))
+						end
+					end
+				else -- not ignoring
+					VH:SendToUser ("$To: " .. nick .. " From: " .. to .. " $<" .. to .. "> " .. gettext ("You're already member of this chatroom.") .. "|", nick)
+				end
+
+			elseif cmd == table_cmnds.chatleave then
+				if ign > 0 then -- already ignoring
+					VH:SendToUser ("$To: " .. nick .. " From: " .. to .. " $<" .. to .. "> " .. gettext ("You're not member of this chatroom.") .. "|", nick)
+				else -- add to ignore list
+					if table_chat [to] then -- ignore list exists
+						table.insert (table_chat [to], nick)
+					else -- create ignore list
+						table_chat [to] = {nick}
+					end
+
+					VH:SendToUser ("$To: " .. nick .. " From: " .. to .. " $<" .. to .. "> " .. gettext ("You've left the chatroom.") .. "|", nick)
+
+					if table_sets.roomusernotify == 1 then -- notification
+						for x in getnicklist ():gmatch ("([^%$ ]+)") do
+							if not isbot (x) then
+								local cl = getclass (x)
+
+								if x ~= nick and cl >= minc and cl <= maxc and (not table_refu.GetUserCC or cc == "*" or cc == getcc (x)) and getchatroomignore (x, to) == 0 then -- skip self
+									VH:SendToUser ("$To: " .. x .. " From: " .. to .. " $<" .. to .. "> " .. gettext ("User left the chatroom: %s"):format (custnick or nick) .. "|", x)
+								end
+							end
+						end
+
+						if table_sets.chathistbotmsg == 1 then
+							addcrhistoryline (to, to, to, gettext ("User left the chatroom: %s"):format (custnick or nick))
+						end
 					end
 				end
 
-			else -- not member
-				local mtip = getip (nick)
-				opsnotify (table_sets.classnotibotpm, gettext ("%s with IP %s and class %d sent message to %s: %s"):format (nick, mtip .. tryipcc (mtip, nick), class, to, data))
-				VH:SendToUser ("$To: " .. nick .. " From: " .. to .. " $<" .. to .. "> " .. gettext ("You don't have access to this chatroom.") .. "|", nick)
+			elseif cmd == table_cmnds.chatusers then
+				local list, c = "", 1
+
+				for x in getnicklist ():gmatch ("([^%$ ]+)") do
+					if not isbot (x) then
+						local cl = getclass (x)
+
+						if cl >= minc and cl <= maxc and (not table_refu.GetUserCC or cc == "*" or cc == getcc (x)) and getchatroomignore (x, to) == 0 then
+							if table_sets.custnickclass < 11 then -- use custom nick
+								list = list .. " " .. _tostring (c) .. ". " .. (getcustnick (x) or x) .. "\r\n"
+							else
+								list = list .. " " .. _tostring (c) .. ". " .. x .. "\r\n"
+							end
+
+							c = c + 1
+						end
+					end
+				end
+
+				if c == 1 then
+					VH:SendToUser ("$To: " .. nick .. " From: " .. to .. " $<" .. to .. "> " .. gettext ("Chatroom is empty.") .. "|", nick)
+				else
+					VH:SendToUser ("$To: " .. nick .. " From: " .. to .. " $<" .. to .. "> " .. gettext ("Chatroom member list") .. ":\r\n\r\n" .. list .. "|", nick)
+				end
+
+			elseif cmd == table_cmnds.chathist then
+				if ign > 0 then -- ignoring
+					VH:SendToUser ("$To: " .. nick .. " From: " .. to .. " $<" .. to .. "> " .. gettext ("You're not member of this chatroom.") .. "|", nick)
+				else
+					if table_sets.chathistlimit == 0 then
+						VH:SendToUser ("$To: " .. nick .. " From: " .. to .. " $<" .. to .. "> " .. gettext ("This command is either disabled or you don't have access to it.") .. "|", nick)
+					else
+						sendcrhistory (to, nick, class, par or table_sets.histdeflines)
+					end
+				end
+
+			elseif cmd == table_cmnds.chathelp then
+				VH:SendToUser ("$To: " .. nick .. " From: " .. to .. " $<" .. to .. "> " .. gettext ("Chatroom user commands") .. ":\r\n\r\n" .. chatroomhelp () .. "|", nick)
+
+			else -- unknown command
+				VH:SendToUser ("$To: " .. nick .. " From: " .. to .. " $<" .. to .. "> " .. gettext ("Unknown chatroom command, use %s for help."):format (getconfig ("cmd_start_user"):sub (1, 1) .. table_cmnds.chathelp) .. "|", nick)
 			end
 
-			return true
+		else -- regular message
+			if ign > 0 then -- ignoring
+				VH:SendToUser ("$To: " .. nick .. " From: " .. to .. " $<" .. to .. "> " .. gettext ("You're not member of this chatroom.") .. "|", nick)
+			else -- broadcast
+				for x in getnicklist ():gmatch ("([^%$ ]+)") do
+					if not isbot (x) then
+						local cl = getclass (x)
+
+						if x ~= nick and cl >= minc and cl <= maxc and (not table_refu.GetUserCC or cc == "*" or cc == getcc (x)) and getchatroomignore (x, to) == 0 then -- skip self
+							VH:SendToUser ("$To: " .. x .. " From: " .. to .. " $<" .. (custnick or nick) .. "> " .. data .. "|", x)
+						end
+					end
+				end
+
+				addcrhistoryline (to, (custnick or nick), nick, data)
+			end
 		end
+
+	else -- not member
+		local mtip = getip (nick)
+		opsnotify (table_sets.classnotibotpm, gettext ("%s with IP %s and class %d sent message to %s: %s"):format (nick, mtip .. tryipcc (mtip, nick), class, to, data))
+		VH:SendToUser ("$To: " .. nick .. " From: " .. to .. " $<" .. to .. "> " .. gettext ("You don't have access to this chatroom.") .. "|", nick)
 	end
 
-	return false
+	return true
 end
 
 ----- ---- --- -- -
 
 function ischatroom (nick)
-	local _, rows = VH:SQLQuery ("select `room` from `" .. tbl_sql.chat .. "` where `room` = '" .. repsqlchars (nick) .. "'")
+	local _, rows = VH:SQLQuery ("select null from `" .. tbl_sql.chat .. "` where `room` = '" .. repsqlchars (nick) .. "'")
 
 	if rows > 0 then
 		return true
@@ -9159,7 +9151,7 @@ function resetrealnick (nick)
 	end
 
 	if table_sets.custnickclass ~= 11 then -- might be enabled after user login, results a conflict
-		local _, rows = VH:SQLQuery ("select `nick` from `" .. tbl_sql.cust .. "` where `custom` = '" .. repsqlchars (nick) .. "' limit 1")
+		local _, rows = VH:SQLQuery ("select `nick` from `" .. tbl_sql.cust .. "` where `custom` = '" .. repsqlchars (nick) .. "'") -- todo: add unique index custom
 
 		if rows > 0 then
 			local _, cust = VH:SQLFetch (0)
@@ -9273,7 +9265,6 @@ function resetcustnicks ()
 	if table_sets.custnickclass == 11 then return end
 	if table_sets.savecustnicks == 1 then return end
 	local _, rows = VH:SQLQuery ("select `nick`, `custom` from `" .. tbl_sql.cust .. "`")
-	if type (rows) ~= "number" then return end
 
 	if rows > 0 then
 		local table_delete = {}
@@ -9484,15 +9475,15 @@ end
 ----- ---- --- -- -
 
 function checkcmd (nick, clas, cmd)
-	local _, rows = VH:SQLQuery ("select `command`, `class` from `" .. tbl_sql.cmd .. "`")
+	local _, rows = VH:SQLQuery ("select `command` from `" .. tbl_sql.cmd .. "` where `class` > " .. _tostring (clas)) -- todo: add index class
 
 	if rows > 0 then
 		local safe = repnmdcinchars (cmd)
 
 		for row = 0, rows - 1 do
-			local _, line, cls = VH:SQLFetch (row)
+			local _, line = VH:SQLFetch (row)
 
-			if safe:match (line) and clas < tonumber (cls) then
+			if safe:match (line) then
 				VH:SQLQuery ("update `" .. tbl_sql.cmd .. "` set `occurred` = `occurred` + 1 where `command` = '" .. repsqlchars (line) .. "'")
 				commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 				return 0
@@ -9512,7 +9503,7 @@ function addcmdentry (nick, item)
 	if clas == 11 or clas == 10 or clas == 5 or clas == 4 or clas == 3 or clas == 2 or clas == 1 or clas == 0 then -- validate class
 		local line = item:match ("^(.+) %d+$")
 		local safe = repsqlchars (repnmdcinchars (line))
-		local _, rows = VH:SQLQuery ("select `class` from `" .. tbl_sql.cmd .. "` where `command` = '" .. safe .. "'")
+		local _, rows = VH:SQLQuery ("select null from `" .. tbl_sql.cmd .. "` where `command` = '" .. safe .. "'")
 
 		if rows > 0 then
 			VH:SQLQuery ("update `" .. tbl_sql.cmd .. "` set `class` = " .. _tostring (clas) .. " where `command` = '" .. safe .. "'")
@@ -9532,7 +9523,7 @@ end
 
 function delcmdentry (nick, item)
 	local safe = repsqlchars (repnmdcinchars (item))
-	local _, rows = VH:SQLQuery ("select `class` from `" .. tbl_sql.cmd .. "` where `command` = '" .. safe .. "'")
+	local _, rows = VH:SQLQuery ("select null from `" .. tbl_sql.cmd .. "` where `command` = '" .. safe .. "'") -- todo: row_count
 
 	if rows > 0 then
 		VH:SQLQuery ("delete from `" .. tbl_sql.cmd .. "` where `command` = '" .. safe .. "'")
@@ -9546,7 +9537,7 @@ end
 ----- ---- --- -- -
 
 function listcmdentry (nick)
-	local _, rows = VH:SQLQuery ("select `command`, `class`, `occurred` from `" .. tbl_sql.cmd .. "` order by `occurred` desc")
+	local _, rows = VH:SQLQuery ("select `command`, `class`, `occurred` from `" .. tbl_sql.cmd .. "` order by `occurred` desc") -- todo: add index occurred
 
 	if rows > 0 then
 		local list, zero = "", 0
@@ -9572,7 +9563,7 @@ end
 
 function addcmdexentry (nick, item)
 	local safe = repsqlchars (repnmdcinchars (item))
-	local _, rows = VH:SQLQuery ("select `occurred` from `" .. tbl_sql.cmdex .. "` where `exception` = '" .. safe .. "'")
+	local _, rows = VH:SQLQuery ("select null from `" .. tbl_sql.cmdex .. "` where `exception` = '" .. safe .. "'") -- todo: row_count
 
 	if rows > 0 then
 		commandanswer (nick, gettext ("Couldn't add command notification exception entry because already exists: %s"):format (item))
@@ -9587,7 +9578,7 @@ end
 
 function delcmdexentry (nick, item)
 	local safe = repsqlchars (repnmdcinchars (item))
-	local _, rows = VH:SQLQuery ("select `occurred` from `" .. tbl_sql.cmdex .. "` where `exception` = '" .. safe .. "'")
+	local _, rows = VH:SQLQuery ("select null from `" .. tbl_sql.cmdex .. "` where `exception` = '" .. safe .. "'") -- todo: row_count
 
 	if rows > 0 then
 		VH:SQLQuery ("delete from `" .. tbl_sql.cmdex .. "` where `exception` = '" .. safe .. "'")
@@ -9601,7 +9592,7 @@ end
 ----- ---- --- -- -
 
 function listcmdexentry (nick)
-	local _, rows = VH:SQLQuery ("select `exception`, `occurred` from `" .. tbl_sql.cmdex .. "` order by `occurred` desc")
+	local _, rows = VH:SQLQuery ("select `exception`, `occurred` from `" .. tbl_sql.cmdex .. "` order by `occurred` desc") -- todo: add index occurred
 
 	if rows > 0 then
 		local list, zero = "", 0
@@ -9672,7 +9663,7 @@ function addreminder (nick, item)
 			commandanswer (nick, gettext ("Don't be stupid."))
 		else
 			local entry = repsqlchars (ident)
-			local _, rows = VH:SQLQuery ("select `dest` from `" .. tbl_sql.rem .. "` where `id` = '" .. entry .. "'")
+			local _, rows = VH:SQLQuery ("select null from `" .. tbl_sql.rem .. "` where `id` = '" .. entry .. "'")
 
 			if rows > 0 then
 				VH:SQLQuery ("update `" .. tbl_sql.rem .. "` set `content` = '" .. repsqlchars (cntnt) .. "', `minclass` = " .. _tostring (minc) .. ", `maxclass` = " .. _tostring (maxc) .. ", `dest` = " .. _tostring (dest) .. ", `interval` = " .. _tostring (intv) .. " where `id` = '" .. entry .. "'")
@@ -9689,7 +9680,7 @@ end
 
 function delreminder (nick, item)
 	local aitem = repsqlchars (item)
-	local _, rows = VH:SQLQuery ("select `dest` from `" .. tbl_sql.rem .. "` where `id` = '" .. aitem .. "'")
+	local _, rows = VH:SQLQuery ("select null from `" .. tbl_sql.rem .. "` where `id` = '" .. aitem .. "'") -- todo: row_count
 
 	if rows > 0 then
 		VH:SQLQuery ("delete from `" .. tbl_sql.rem .. "` where `id` = '" .. aitem .. "'")
@@ -9715,7 +9706,7 @@ end
 ----- ---- --- -- -
 
 function listreminder (nick)
-local _, rows = VH:SQLQuery ("select `id`, `content`, `minclass`, `maxclass`, `dest`, `interval`, `timer` from `" .. tbl_sql.rem .. "` order by `minclass` asc, `maxclass` desc")
+local _, rows = VH:SQLQuery ("select `id`, `content`, `minclass`, `maxclass`, `dest`, `interval`, `timer` from `" .. tbl_sql.rem .. "` order by `minclass` asc, `maxclass` desc") -- todo: add index minclass and maxclass
 
 if rows > 0 then
 	local anentry = ""
@@ -9799,7 +9790,7 @@ function addtrigger (nick, data)
 		commandanswer (nick, gettext ("Known classes are: %s"):format ("0, 1, 2, 3, 4, 5 " .. gettext ("and") .. " 10"))
 	else
 		local entry = repsqlchars (id)
-		local _, rows = VH:SQLQuery ("select `minclass` from `" .. tbl_sql.trig .. "` where `id` = '" .. entry .. "'")
+		local _, rows = VH:SQLQuery ("select null from `" .. tbl_sql.trig .. "` where `id` = '" .. entry .. "'")
 
 		if rows > 0 then
 			VH:SQLQuery ("update `" .. tbl_sql.trig .. "` set `content` = '" .. repsqlchars (cont) .. "', `minclass` = " .. _tostring (minc) .. ", `maxclass` = " .. _tostring (maxc) .. " where `id` = '" .. entry .. "'")
@@ -9815,7 +9806,7 @@ end
 
 function deltrigger (nick, id)
 	local entry = repsqlchars (id)
-	local _, rows = VH:SQLQuery ("select `minclass` from `" .. tbl_sql.trig .. "` where `id` = '" .. entry .. "'")
+	local _, rows = VH:SQLQuery ("select null from `" .. tbl_sql.trig .. "` where `id` = '" .. entry .. "'") -- todo: row_count
 
 	if rows > 0 then
 		VH:SQLQuery ("delete from `" .. tbl_sql.trig .. "` where `id` = '" .. entry .. "'")
@@ -9828,7 +9819,7 @@ end
 ----- ---- --- -- -
 
 function listtrigger (nick)
-	local _, rows = VH:SQLQuery ("select `id`, `content`, `minclass`, `maxclass` from `" .. tbl_sql.trig .. "` order by `minclass` asc, `maxclass` desc")
+	local _, rows = VH:SQLQuery ("select `id`, `content`, `minclass`, `maxclass` from `" .. tbl_sql.trig .. "` order by `minclass` asc, `maxclass` desc") -- todo: add index minclass and maxclass
 
 	if rows > 0 then
 		local list = ""
@@ -9858,7 +9849,7 @@ function checktrigger (nick, data, pm)
 		return false
 	end
 
-	local _, _, id = data:find ("^" .. table_othsets.ustrig .. "(%S+)")
+	local id = data:match ("^" .. table_othsets.ustrig .. "(%S+)")
 
 	if id then
 		local _, rows = VH:SQLQuery ("select `content`, `minclass`, `maxclass` from `" .. tbl_sql.trig .. "` where `id` = '" .. repsqlchars (id) .. "'")
@@ -9899,7 +9890,7 @@ function addnopm (nick, line)
 		commandanswer (nick, gettext ("Known classes are: %s"):format ("0, 1, 2, 3, 4, 5, 10 " .. gettext ("and") .. " 11"))
 	else
 		local sre = repsqlchars (repnmdcinchars (lre))
-		local _, rows = VH:SQLQuery ("select `action` from `" .. tbl_sql.nopm .. "` where `nick` = '" .. sre .. "'")
+		local _, rows = VH:SQLQuery ("select null from `" .. tbl_sql.nopm .. "` where `nick` = '" .. sre .. "'")
 
 		if rows > 0 then -- update
 			VH:SQLQuery ("update `" .. tbl_sql.nopm .. "` set `action` = " .. _tostring (act) .. ", `maxclass` = " .. _tostring (clas) .. ", `reason` = '" .. repsqlchars (why) .. "' where `nick` = '" .. sre .. "'")
@@ -9914,7 +9905,7 @@ end
 ----- ---- --- -- -
 
 function checkipwat (nick, ip, data)
-	-- affected areas so far: supports, validatenick, myinfo, search, sr, ctm, rctm
+	-- affected areas so far: supports, validatenick, myinfo, search, passive sr, ctm, rctm
 	local _, rows = VH:SQLQuery ("select `ip`, `reason`, `result` from `" .. tbl_sql.ipwa .. "`")
 
 	if rows > 0 then
@@ -9945,7 +9936,7 @@ function addipwat (nick, line)
 		commandanswer (nick, gettext ("Known results are: %s"):format ("0 " .. gettext ("and") .. " 1"))
 	else
 		local sre = repsqlchars (repnmdcinchars (lre))
-		local _, rows = VH:SQLQuery ("select `result` from `" .. tbl_sql.ipwa .. "` where `ip` = '" .. sre .. "'")
+		local _, rows = VH:SQLQuery ("select null from `" .. tbl_sql.ipwa .. "` where `ip` = '" .. sre .. "'")
 
 		if rows > 0 then -- update
 			VH:SQLQuery ("update `" .. tbl_sql.ipwa .. "` set `reason` = '" .. repsqlchars (why) .. "', `result` = " .. _tostring (res) .. " where `ip` = '" .. sre .. "'")
@@ -9961,7 +9952,7 @@ end
 
 function delipwat (nick, line)
 	local rlre = repsqlchars (repnmdcinchars (line))
-	local _, rows = VH:SQLQuery ("select `result` from `" .. tbl_sql.ipwa .. "` where `ip` = '" .. rlre .. "'")
+	local _, rows = VH:SQLQuery ("select null from `" .. tbl_sql.ipwa .. "` where `ip` = '" .. rlre .. "'") -- todo: row_count
 
 	if rows > 0 then -- delete
 		VH:SQLQuery ("delete from `" .. tbl_sql.ipwa .. "` where `ip` = '" .. rlre .. "'")
@@ -10155,7 +10146,7 @@ end
 
 function delnopm (nick, line)
 	local rlre = repsqlchars (repnmdcinchars (line))
-	local _, rows = VH:SQLQuery ("select `action` from `" .. tbl_sql.nopm .. "` where `nick` = '" .. rlre .. "'")
+	local _, rows = VH:SQLQuery ("select null from `" .. tbl_sql.nopm .. "` where `nick` = '" .. rlre .. "'") -- todo: row_count
 
 	if rows > 0 then -- delete
 		VH:SQLQuery ("delete from `" .. tbl_sql.nopm .. "` where `nick` = '" .. rlre .. "'")
@@ -10186,9 +10177,8 @@ end
 
 ----- ---- --- -- -
 
-function checknopm (from, cls, to)
-	-- fixme: confrontation with antispam, actions that forwards the message, such as replace
-	local _, rows = VH:SQLQuery ("select `nick`, `action`, `maxclass`, `reason` from `" .. tbl_sql.nopm .. "`")
+function checknopm (from, cls, to) -- todo: confrontation with antispam, actions that forwards the message, such as replace
+	local _, rows = VH:SQLQuery ("select `nick`, `action`, `maxclass`, `reason` from `" .. tbl_sql.nopm .. "`") -- todo: use mcl in sql
 
 	if rows > 0 then
 		for x = 0, rows - 1 do
@@ -10390,7 +10380,7 @@ end
 ----- ---- --- -- -
 
 function listresponder (nick, lre)
-	local _, rows = VH:SQLQuery ("select `id`, `message`, `reply`, `maxclass`, `occurred` from `" .. tbl_sql.mcresp .. "` order by `occurred` desc, `id` desc")
+	local _, rows = VH:SQLQuery ("select `id`, `message`, `reply`, `maxclass`, `occurred` from `" .. tbl_sql.mcresp .. "` order by `occurred` desc, `id` desc") -- todo: add index occurred
 	local list, count = "", 0
 
 	if rows > 0 then
@@ -10417,7 +10407,7 @@ end
 
 function addrespex (nick, item)
 	local entry = repsqlchars (item)
-	local _, rows = VH:SQLQuery ("select `exception` from `" .. tbl_sql.respex .. "` where `exception` = '" .. entry .. "'")
+	local _, rows = VH:SQLQuery ("select null from `" .. tbl_sql.respex .. "` where `exception` = '" .. entry .. "'") -- todo: row_count
 
 	if rows > 0 then
 		commandanswer (nick, gettext ("Couldn't add chat responder exception because already exists: %s"):format (item))
@@ -10431,7 +10421,7 @@ end
 
 function delrespex (nick, item)
 	local aitem = repsqlchars (item)
-	local _, rows = VH:SQLQuery ("select `exception` from `" .. tbl_sql.respex .. "` where `exception` = '" .. aitem .. "'")
+	local _, rows = VH:SQLQuery ("select null from `" .. tbl_sql.respex .. "` where `exception` = '" .. aitem .. "'") -- todo: row_count
 
 	if rows > 0 then
 		VH:SQLQuery ("delete from `" .. tbl_sql.respex .. "` where `exception` = '" .. aitem .. "'")
@@ -10444,7 +10434,7 @@ end
 ----- ---- --- -- -
 
 function listrespex (nick)
-	local _, rows = VH:SQLQuery ("select `exception`, `occurred` from `" .. tbl_sql.respex .. "` order by `occurred` desc")
+	local _, rows = VH:SQLQuery ("select `exception`, `occurred` from `" .. tbl_sql.respex .. "` order by `occurred` desc") -- todo: add index occurred
 
 	if rows > 0 then
 		local anentry, len = "", 0
@@ -10468,7 +10458,7 @@ function replyresponder (nick, cls, msg)
 		return
 	end
 
-	local _, rows = VH:SQLQuery ("select `exception` from `" .. tbl_sql.respex .. "` where `exception` = '" .. repsqlchars (nick) .. "' or `exception` = '" .. repsqlchars (getip (nick)) .. "'")
+	local _, rows = VH:SQLQuery ("select `exception` from `" .. tbl_sql.respex .. "` where `exception` = '" .. repsqlchars (nick) .. "' or `exception` = '" .. repsqlchars (getip (nick)) .. "'") -- todo: row_count
 
 	if rows > 0 then
 		local _, ex = VH:SQLFetch (0)
@@ -10476,17 +10466,17 @@ function replyresponder (nick, cls, msg)
 		return
 	end
 
-	local _, rows = VH:SQLQuery ("select `id`, `message`, `reply`, `maxclass` from `" .. tbl_sql.mcresp .. "`")
+	local _, rows = VH:SQLQuery ("select `id`, `message`, `reply` from `" .. tbl_sql.mcresp .. "` where `maxclass` >= " .. _tostring (cls)) -- todo: add index maxclass
 
 	if rows > 0 then
 		local txt = tolow (repnmdcinchars (msg))
 		local respsel = {}
 
 		for x = 0, rows - 1 do
-			local _, id, ent, repl, maxc = VH:SQLFetch (x)
+			local _, id, ent, repl = VH:SQLFetch (x)
 			id = tonumber (id)
 
-			if cls <= tonumber (maxc) and txt:match (ent) then
+			if txt:match (ent) then
 				table.insert (respsel, {[id] = repl})
 			end
 		end
@@ -15091,7 +15081,7 @@ function gagasndel (nick, lre)
 
 	else
 		local rlre = repsqlchars (repnmdcinchars (lre))
-		local _, rows = VH:SQLQuery ("select `flag` from `" .. tbl_sql.asngag .. "` where `item` = '" .. rlre .. "'")
+		local _, rows = VH:SQLQuery ("select `flag` from `" .. tbl_sql.asngag .. "` where `item` = '" .. rlre .. "'") -- todo: row_count
 
 		if rows > 0 then
 			VH:SQLQuery ("delete from `" .. tbl_sql.asngag .. "` where `item` = '" .. rlre .. "'")
@@ -22140,10 +22130,6 @@ end
 	elseif tvar == "cleanallbangags" then
 		if num then
 			if setto == 0 or setto == 1 then
-				if setto == 1 and not table_refu.ParseCommand then
-					commandanswer (nick, gettext ("Latest version of %s is required in order to use this feature."):format ("Verlihub"))
-				end
-
 				ok = true
 			else
 				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0 " .. gettext ("or") .. " 1"))
