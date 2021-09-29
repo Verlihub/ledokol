@@ -472,8 +472,8 @@ table_refu = {
 	GetTLSVer = false,
 	PassTempBan = false,
 	SetRegClass = false,
-	SetUserIP = false--,
-	--ParseCommand = false
+	SetUserIP = false,
+	ParseCommand = false
 }
 
 ---------------------------------------------------------------------
@@ -4395,7 +4395,7 @@ function VH_OnUserCommand (nick, data)
 				return 0
 			end
 
-			if table_sets.chatintelcheckcmd == 1 and chatintelcheck (nick, addr, ucl, "", data, 6) then -- chat intelligence
+			if table_sets.chatintelcheckcmd == 1 and table_refu.ParseCommand and chatintelcheck (nick, addr, ucl, "", data, 6) then -- chat intelligence
 				return 0
 			end
 		end
@@ -6483,7 +6483,8 @@ function VH_OnTimer (msec)
 										sendoffmsg (nick, tada ["nick"] .. " " .. tada ["data"], getclass (nick))
 
 									elseif targ == 6 then -- command
-										VH_OnUserCommand (nick, tada ["data"])
+										--VH_OnUserCommand (nick, tada ["data"])
+										VH:ParseCommand (nick, tada ["data"], 0)
 									end
 
 								else -- block delayed messages
@@ -13552,7 +13553,7 @@ function chatintelcheck (nick, addr, clas, to, data, targ)
 				elseif targ == 5 then -- offline
 					opsnotify (table_sets.classnotichin, gettext ("Offline private chat message from %s with IP %s to %s with IP %s will be delayed for proxy lookup."):format (nick, addr .. tryipcc (addr, nick), to, oddr .. tryipcc (oddr, to))) -- dont show message
 				elseif targ == 6 then -- command
-					opsnotify (table_sets.classnotichin, gettext ("User command from %s with IP %s will be delayed for proxy lookup: %s"):format (nick, addr .. tryipcc (addr, nick), data))
+					opsnotify (table_sets.classnotichin, gettext ("User command from %s with IP %s will be delayed for proxy lookup: %s"):format (nick, addr .. tryipcc (addr, nick), senscmd (data))) -- dont show sensitive data
 				end
 
 				return true
@@ -13636,7 +13637,7 @@ function chatintelcheck (nick, addr, clas, to, data, targ)
 		elseif targ == 5 then -- offline
 			opsnotify (table_sets.classnotichin, gettext ("Offline private chat message from %s with IP %s to %s with IP %s will be delayed for proxy lookup."):format (nick, addr .. tryipcc (addr, nick), to, oddr .. tryipcc (oddr, to))) -- dont show message
 		elseif targ == 6 then -- command
-			opsnotify (table_sets.classnotichin, gettext ("User command from %s with IP %s will be delayed for proxy lookup: %s"):format (nick, addr .. tryipcc (addr, nick), data))
+			opsnotify (table_sets.classnotichin, gettext ("User command from %s with IP %s will be delayed for proxy lookup: %s"):format (nick, addr .. tryipcc (addr, nick), senscmd (data))) -- dont show sensitive data
 		end
 
 		table_othsets.chincount = table_othsets.chincount + 1
@@ -18484,42 +18485,50 @@ end
 ----- ---- --- -- -
 
 function savecmdlog (nick, cls, cmd, isop)
-if table_sets.enablecmdlog == 0 then return end
-if table_sets.enablecmdlog == 1 and not isop then return end
-local ucmd = cmd
+	if table_sets.enablecmdlog == 0 or (table_sets.enablecmdlog == 1 and not isop) then
+		return
+	end
 
-if ucmd:find ("^." .. table_cmnds.offmsg .. " %S+ .+$") then -- skip sensitive data
-	local _, _, par = ucmd:find ("^." .. table_cmnds.offmsg .. " (%S+) .+$")
-	ucmd = getconfig ("cmd_start_user"):sub (1, 1) .. table_cmnds.offmsg .. " " .. par .. " <" .. gettext ("message") .. ">"
-
-elseif ucmd:find ("^" .. table_othsets.ustrig .. "msgsend%s+%S+ .+$") then
-	local _, _, par = ucmd:find ("^" .. table_othsets.ustrig .. "msgsend%s+(%S+) .+$")
-	ucmd = getconfig ("cmd_start_user"):sub (1, 1) .. "msgsend " .. par .. " <" .. gettext ("message") .. ">"
-
-elseif ucmd:find ("^" .. table_othsets.optrig .. "rpass%s+%S+ .+$") then
-	local _, _, par = ucmd:find ("^" .. table_othsets.optrig .. "rpass%s+(%S+) .+$")
-	ucmd = getconfig ("cmd_start_op"):sub (1, 1) .. "rpass " .. par .. " <" .. gettext ("password") .. ">"
-
-elseif ucmd:find ("^" .. table_othsets.optrig .. "rpasswd%s+%S+ .+$") then
-	local _, _, par = ucmd:find ("^" .. table_othsets.optrig .. "rpasswd%s+(%S+) .+$")
-	ucmd = getconfig ("cmd_start_op"):sub (1, 1) .. "rpasswd " .. par .. " <" .. gettext ("password") .. ">"
-
-elseif ucmd:find ("^" .. table_othsets.optrig .. "regpass%s+%S+ .+$") then
-	local _, _, par = ucmd:find ("^" .. table_othsets.optrig .. "regpass%s+(%S+) .+$")
-	ucmd = getconfig ("cmd_start_op"):sub (1, 1) .. "regpass " .. par .. " <" .. gettext ("password") .. ">"
-
-elseif ucmd:find ("^" .. table_othsets.optrig .. "regpasswd%s+%S+ .+$") then
-	local _, _, par = ucmd:find ("^" .. table_othsets.optrig .. "regpasswd%s+(%S+) .+$")
-	ucmd = getconfig ("cmd_start_op"):sub (1, 1) .. "regpasswd " .. par .. " <" .. gettext ("password") .. ">"
-
-elseif ucmd:find ("^" .. table_othsets.ustrig .. "passwd%s+.+$") then
-	ucmd = getconfig ("cmd_start_user"):sub (1, 1) .. "passwd <" .. gettext ("password") .. ">"
-
-elseif ucmd:find ("^" .. table_othsets.ustrig .. "regme%s+.+$") then
-	ucmd = getconfig ("cmd_start_user"):sub (1, 1) .. "regme <" .. gettext ("password") .. ">"
+	VH:SQLQuery ("insert into `" .. tbl_sql.clog .. "` (`time`, `nick`, `class`, `command`) values (" .. _tostring (os.time () + table_sets.srvtimediff) .. ", '" .. repsqlchars (nick) .. "', " .. _tostring (cls) .. ", '" .. repsqlchars (senscmd (cmd)) .. "')")
 end
 
-VH:SQLQuery ("insert into `" .. tbl_sql.clog .. "` (`time`, `nick`, `class`, `command`) values (" .. _tostring (os.time () + table_sets.srvtimediff) .. ", '" .. repsqlchars (nick) .. "', " .. _tostring (cls) .. ", '" .. repsqlchars (ucmd) .. "')")
+----- ---- --- -- -
+
+function senscmd (cmd) -- skip sensitive data
+	local ucmd = cmd
+
+	if ucmd:match ("^." .. table_cmnds.offmsg .. " %S+ .+$") then
+		local par = ucmd:match ("^." .. table_cmnds.offmsg .. " (%S+) .+$")
+		ucmd = getconfig ("cmd_start_user"):sub (1, 1) .. table_cmnds.offmsg .. " " .. par .. " <" .. gettext ("message") .. ">"
+
+	elseif ucmd:match ("^" .. table_othsets.ustrig .. "msgsend%s+%S+ .+$") then
+		local par = ucmd:match ("^" .. table_othsets.ustrig .. "msgsend%s+(%S+) .+$")
+		ucmd = getconfig ("cmd_start_user"):sub (1, 1) .. "msgsend " .. par .. " <" .. gettext ("message") .. ">"
+
+	elseif ucmd:match ("^" .. table_othsets.optrig .. "rpass%s+%S+ .+$") then
+		local par = ucmd:match ("^" .. table_othsets.optrig .. "rpass%s+(%S+) .+$")
+		ucmd = getconfig ("cmd_start_op"):sub (1, 1) .. "rpass " .. par .. " <" .. gettext ("password") .. ">"
+
+	elseif ucmd:match ("^" .. table_othsets.optrig .. "rpasswd%s+%S+ .+$") then
+		local par = ucmd:match ("^" .. table_othsets.optrig .. "rpasswd%s+(%S+) .+$")
+		ucmd = getconfig ("cmd_start_op"):sub (1, 1) .. "rpasswd " .. par .. " <" .. gettext ("password") .. ">"
+
+	elseif ucmd:match ("^" .. table_othsets.optrig .. "regpass%s+%S+ .+$") then
+		local par = ucmd:match ("^" .. table_othsets.optrig .. "regpass%s+(%S+) .+$")
+		ucmd = getconfig ("cmd_start_op"):sub (1, 1) .. "regpass " .. par .. " <" .. gettext ("password") .. ">"
+
+	elseif ucmd:match ("^" .. table_othsets.optrig .. "regpasswd%s+%S+ .+$") then
+		local par = ucmd:match ("^" .. table_othsets.optrig .. "regpasswd%s+(%S+) .+$")
+		ucmd = getconfig ("cmd_start_op"):sub (1, 1) .. "regpasswd " .. par .. " <" .. gettext ("password") .. ">"
+
+	elseif ucmd:match ("^" .. table_othsets.ustrig .. "passwd%s+.+$") then
+		ucmd = getconfig ("cmd_start_user"):sub (1, 1) .. "passwd <" .. gettext ("password") .. ">"
+
+	elseif ucmd:match ("^" .. table_othsets.ustrig .. "regme%s+.+$") then
+		ucmd = getconfig ("cmd_start_user"):sub (1, 1) .. "regme <" .. gettext ("password") .. ">"
+	end
+
+	return ucmd
 end
 
 ----- ---- --- -- -
@@ -20630,6 +20639,10 @@ end
 	elseif tvar == "chatintelcheckcmd" then
 		if num then
 			if setto == 0 or setto == 1 then
+				if setto == 1 and not table_refu.ParseCommand then
+					commandanswer (nick, gettext ("Latest version of %s is required in order to use this feature."):format ("Verlihub"))
+				end
+
 				ok = true
 			else
 				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0 " .. gettext ("or") .. " 1"))
