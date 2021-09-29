@@ -1301,3 +1301,6 @@ ASN gag list is empty.|
 ASN gag|
 Add ASN gag|
 Delete ASN gag|
+User command from %s with IP %s will be delayed for proxy lookup: %s|
+Blocking user command from %s with IP %s detected as public proxy: %s|
+Unsent user command from logged out user %s with IP %s before finishing proxy lookup: %s|

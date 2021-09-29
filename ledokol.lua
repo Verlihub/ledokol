@@ -63,7 +63,7 @@ Tzaca, JOE™, Foxtrot, Deivis
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.8" -- ledokol version
-bld_ledo = "127" -- build number
+bld_ledo = "128" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -332,6 +332,7 @@ table_sets = {
 	pmminclass = 0,
 	chatintelon = 0,
 	chatintelact = 1,
+	chatintelcheckcmd = 0,
 	chatintelmatch = 99,
 	chatintelqueue = 100,
 	chatintelquote = 500,
@@ -1613,6 +1614,7 @@ function Main (file)
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('ipgagdefmins', '" .. repsqlchars (table_sets.ipgagdefmins) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('ipgagtoself', '" .. repsqlchars (table_sets.ipgagtoself) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('ipgagnochat', '" .. repsqlchars (table_sets.ipgagnochat) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('chatintelcheckcmd', '" .. repsqlchars (table_sets.chatintelcheckcmd) .. "')")
 					end
 
 					if ver <= 299 then
@@ -4362,29 +4364,40 @@ function VH_OnUserCommand (nick, data)
 		return 0
 	end
 
-	local addr = getip (nick)
+	local addr, prot, haveprot = getip (nick), false, false
 
 	if not table_othsets.chinskipchecks then -- used by chat intelligence
-		if table_sets.chatfloodcmdgag == 1 then -- check ip gag
-			if gagipcheck (nick, addr, ucl, nil, data, true) then
-				return 0
-			end
-
-			if gagcccheck (nick, addr, ucl, nil, data, true) then
-				return 0
-			end
-
-			if gagcitycheck (nick, addr, ucl, nil, data, true) then
-				return 0
-			end
-
-			if gagasncheck (nick, addr, ucl, nil, data, true) then
-				return 0
-			end
+		if not haveprot then
+			prot = isprotected (nick, addr)
+			haveprot = true
 		end
 
-		if table_sets.checkcmdspam == 1 and antiscan (nick, ucl, data, 1, nil, nil) == 0 then -- check command spam
-			return 0
+		if ucl < table_sets.scanbelowclass and not prot then -- protection
+			if table_sets.chatfloodcmdgag == 1 then -- check ip gag
+				if gagipcheck (nick, addr, ucl, nil, data, true) then
+					return 0
+				end
+
+				if gagcccheck (nick, addr, ucl, nil, data, true) then
+					return 0
+				end
+
+				if gagcitycheck (nick, addr, ucl, nil, data, true) then
+					return 0
+				end
+
+				if gagasncheck (nick, addr, ucl, nil, data, true) then
+					return 0
+				end
+			end
+
+			if table_sets.checkcmdspam == 1 and antiscan (nick, ucl, data, 1, nil, nil) == 0 then -- check command spam
+				return 0
+			end
+
+			if table_sets.chatintelcheckcmd == 1 and chatintelcheck (nick, addr, ucl, "", data, 6) then -- chat intelligence
+				return 0
+			end
 		end
 
 		savecmdlog (nick, ucl, data, false) -- command logger
@@ -4426,7 +4439,12 @@ function VH_OnUserCommand (nick, data)
 			return 1
 		end
 
-		local msg, prot = data:sub (# "me" + 3), isprotected (nick, addr)
+		local msg = data:sub (# "me" + 3)
+
+		if not haveprot then
+			prot = isprotected (nick, addr)
+			haveprot = true
+		end
 
 		if not table_othsets.chinskipchecks then -- used by chat intelligence
 			if not prot then -- protection
@@ -4644,7 +4662,12 @@ function VH_OnUserCommand (nick, data)
 				return 1
 			end
 
-			if not isprotected (nick, addr) then -- protection
+			if not haveprot then
+				prot = isprotected (nick, addr)
+				haveprot = true
+			end
+
+			if not prot then -- protection
 				if table_sets.chatuptime > 0 and table_sets.showuseruptime == 1 and ucl < table_sets.scanbelowclass and table_usup [nick] then -- chat uptime
 					local dif = os.time () - table_usup [nick]
 
@@ -4834,8 +4857,15 @@ function VH_OnUserCommand (nick, data)
 				end
 			end
 
-			if table_sets.allowspamtoops == 1 or isprotected (nick, addr) then
-				return 1
+			if table_sets.allowspamtoops == 1 then
+				if not haveprot then
+					prot = isprotected (nick, addr)
+					haveprot = true
+				end
+
+				if prot then
+					return 1
+				end
 			end
 
 			return antiscan (nick, ucl, msg, 4, nil, nil)
@@ -5844,6 +5874,8 @@ function VH_OnUserLogout (nick, ip) -- ip available only on new versions
 							opsnotify (table_sets.classnotichin, gettext ("Unsent third person main chat message from logged out user %s with IP %s before finishing proxy lookup: %s"):format (nick, addr .. tryipcc (addr, nick), tada ["data"]))
 						elseif targ == 5 then -- offline
 							opsnotify (table_sets.classnotichin, gettext ("Unsent offline private chat message from logged out user %s with IP %s to %s with IP %s before finishing proxy lookup: %s"):format (nick, addr .. tryipcc (addr, nick), tada ["nick"], oddr .. tryipcc (oddr, tada ["nick"]), tada ["data"]))
+						elseif targ == 6 then -- command
+							opsnotify (table_sets.classnotichin, gettext ("Unsent user command from logged out user %s with IP %s before finishing proxy lookup: %s"):format (nick, addr .. tryipcc (addr, nick), tada ["data"]))
 						end
 					end
 				end
@@ -6449,6 +6481,9 @@ function VH_OnTimer (msec)
 
 									elseif targ == 5 then -- offline
 										sendoffmsg (nick, tada ["nick"] .. " " .. tada ["data"], getclass (nick))
+
+									elseif targ == 6 then -- command
+										VH_OnUserCommand (nick, tada ["data"])
 									end
 
 								else -- block delayed messages
@@ -6472,6 +6507,8 @@ function VH_OnTimer (msec)
 										opsnotify (table_sets.classnotichin, gettext ("Blocking third person main chat message from %s with IP %s detected as public proxy: %s"):format (nick, addr .. tryipcc (addr, nick), tada ["data"]))
 									elseif targ == 5 then -- offline
 										opsnotify (table_sets.classnotichin, gettext ("Blocking offline private chat message from %s with IP %s detected as public proxy to %s with IP %s: %s"):format (nick, addr .. tryipcc (addr, nick), tada ["nick"], oddr .. tryipcc (oddr, tada ["nick"]), tada ["data"]))
+									elseif targ == 6 then -- command
+										opsnotify (table_sets.classnotichin, gettext ("Blocking user command from %s with IP %s detected as public proxy: %s"):format (nick, addr .. tryipcc (addr, nick), tada ["data"]))
 									end
 								end
 							end
@@ -13486,7 +13523,7 @@ function chatintelcheck (nick, addr, clas, to, data, targ)
 		if addr == uddr then -- address already queued
 			if item.stat < 2 then -- still checking
 				if not item ["nick"][nick] then
-					table_chin [addr]["nick"][nick] = { [1] = {}, [2] = {}, [3] = {}, [4] = {}, [5] = {} }
+					table_chin [addr]["nick"][nick] = { [1] = {}, [2] = {}, [3] = {}, [4] = {}, [5] = {}, [6] = {} }
 				end
 
 				table.insert (table_chin [addr]["nick"][nick][targ], {
@@ -13514,6 +13551,8 @@ function chatintelcheck (nick, addr, clas, to, data, targ)
 					opsnotify (table_sets.classnotichin, gettext ("Third person main chat message from %s with IP %s will be delayed for proxy lookup: %s"):format (nick, addr .. tryipcc (addr, nick), data))
 				elseif targ == 5 then -- offline
 					opsnotify (table_sets.classnotichin, gettext ("Offline private chat message from %s with IP %s to %s with IP %s will be delayed for proxy lookup."):format (nick, addr .. tryipcc (addr, nick), to, oddr .. tryipcc (oddr, to))) -- dont show message
+				elseif targ == 6 then -- command
+					opsnotify (table_sets.classnotichin, gettext ("User command from %s with IP %s will be delayed for proxy lookup: %s"):format (nick, addr .. tryipcc (addr, nick), data))
 				end
 
 				return true
@@ -13539,6 +13578,8 @@ function chatintelcheck (nick, addr, clas, to, data, targ)
 					opsnotify (table_sets.classnotichin, gettext ("Blocking third person main chat message from %s with IP %s detected as public proxy: %s"):format (nick, addr .. tryipcc (addr, nick), data))
 				elseif targ == 5 then -- offline
 					opsnotify (table_sets.classnotichin, gettext ("Blocking offline private chat message from %s with IP %s detected as public proxy to %s with IP %s: %s"):format (nick, addr .. tryipcc (addr, nick), to, oddr .. tryipcc (oddr, to), data))
+				elseif targ == 6 then -- command
+					opsnotify (table_sets.classnotichin, gettext ("Blocking user command from %s with IP %s detected as public proxy: %s"):format (nick, addr .. tryipcc (addr, nick), data))
 				end
 
 				if item.stat == 3 or table_sets.chatintelact == 2 then -- drop user
@@ -13594,20 +13635,23 @@ function chatintelcheck (nick, addr, clas, to, data, targ)
 			opsnotify (table_sets.classnotichin, gettext ("Third person main chat message from %s with IP %s will be delayed for proxy lookup: %s"):format (nick, addr .. tryipcc (addr, nick), data))
 		elseif targ == 5 then -- offline
 			opsnotify (table_sets.classnotichin, gettext ("Offline private chat message from %s with IP %s to %s with IP %s will be delayed for proxy lookup."):format (nick, addr .. tryipcc (addr, nick), to, oddr .. tryipcc (oddr, to))) -- dont show message
+		elseif targ == 6 then -- command
+			opsnotify (table_sets.classnotichin, gettext ("User command from %s with IP %s will be delayed for proxy lookup: %s"):format (nick, addr .. tryipcc (addr, nick), data))
 		end
 
 		table_othsets.chincount = table_othsets.chincount + 1
 
 		table_chin [addr] = { -- add to queue
 			["stat"] = 0,
-			--["time"] = 0, -- todo: use this is we use os.execute ("curl &")
+			--["time"] = 0, -- todo: use this if we use os.execute ("curl &")
 			["nick"] = {
 				[nick] = {
 					[1] = {}, -- main chat message
 					[2] = {}, -- private message
 					[3] = {}, -- private main chat message
 					[4] = {}, -- me command
-					[5] = {} -- offline message
+					[5] = {}, -- offline message
+					[6] = {} -- user command
 				}
 			}
 		}
@@ -20580,6 +20624,20 @@ end
 			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
 		end
 
+
+	----- ---- --- -- -
+
+	elseif tvar == "chatintelcheckcmd" then
+		if num then
+			if setto == 0 or setto == 1 then
+				ok = true
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0 " .. gettext ("or") .. " 1"))
+			end
+		else
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
+		end
+
 	----- ---- --- -- -
 
 	elseif tvar == "chatintelqueue" then
@@ -24117,6 +24175,7 @@ function showledoconf (nick)
 
 	conf = conf .. "\r\n [::] chatintelon = " .. _tostring (table_sets.chatintelon)
 	conf = conf .. "\r\n [::] chatintelact = " .. _tostring (table_sets.chatintelact)
+	conf = conf .. "\r\n [::] chatintelcheckcmd = " .. _tostring (table_sets.chatintelcheckcmd)
 	conf = conf .. "\r\n [::] chatintelmatch = " .. _tostring (table_sets.chatintelmatch)
 	conf = conf .. "\r\n [::] chatintelqueue = " .. _tostring (table_sets.chatintelqueue)
 	conf = conf .. "\r\n [::] chatintelquote = " .. _tostring (table_sets.chatintelquote)
