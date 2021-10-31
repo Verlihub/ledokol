@@ -63,7 +63,7 @@ Tzaca, JOE™, Foxtrot, Deivis
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.8" -- ledokol version
-bld_ledo = "128" -- build number
+bld_ledo = "129" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -27601,20 +27601,20 @@ function statustostr (flag)
 		line = line .. gettext ("Fireball")
 	end
 
-	if isflagset (flag, 16) then -- tls download
+	if isflagset (flag, 16) then -- tls
 		if # line > 0 then
 			line = line .. " + "
 		end
 
-		line = line .. gettext ("TLS download")
+		line = line .. gettext ("TLS")
 	end
 
-	if isflagset (flag, 32) then -- tls upload
+	if isflagset (flag, 32) then -- nat
 		if # line > 0 then
 			line = line .. " + "
 		end
 
-		line = line .. gettext ("TLS upload")
+		line = line .. gettext ("NAT")
 	end
 
 	if isflagset (flag, 64) then -- ipv4

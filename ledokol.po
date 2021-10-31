@@ -2158,10 +2158,10 @@ msgstr ""
 msgid "Fireball"
 msgstr ""
 
-msgid "TLS download"
+msgid "TLS"
 msgstr ""
 
-msgid "TLS upload"
+msgid "NAT"
 msgstr ""
 
 msgid "IPv4"

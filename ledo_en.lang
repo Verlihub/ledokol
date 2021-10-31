@@ -719,8 +719,8 @@ Normal|
 Away|
 Fileserver|
 Fireball|
-TLS download|
-TLS upload|
+TLS|
+NAT|
 IPv4|
 IPv6|
 Unable to get bot information: %s|

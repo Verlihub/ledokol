@@ -1,6 +1,7 @@
 [ 2.9.8 :: 2021-12-## ]
 
 [121] Fixed: AVDB update process when items were deleted from database
+[129] Fixed: NMDC status in user information
 [111] Added: cleanallbangags configuration to clean all gag lists on cleanallban hub command, request by FAUST
 [112] Added: Hard ban cache list
 [113] Added: IP intelligence result to ipinfo command
