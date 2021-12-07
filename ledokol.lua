@@ -63,7 +63,7 @@ Tzaca, JOE™, Foxtrot, Deivis
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.8" -- ledokol version
-bld_ledo = "129" -- build number
+bld_ledo = "130" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -7472,6 +7472,19 @@ function VH_OnScriptCommand (name, data, plug, file)
 							VH:KickUser (table_othsets.sendfrom, nick, table_sets.avkicktext)
 						end
 					end
+				end
+			end
+		end
+
+	elseif name == "is_ip_proxy" then -- chat intelligence request
+		if data ~= "" and table_sets.chatintelon >= 1 and table_sets.chatintelemail ~= "" then
+			for addr, item in pairs (table_chin) do
+				if addr == data then
+					if item.stat == 2 or item.stat == 3 then
+						VH:ScriptCommand ("ip_is_proxy", data)
+					end
+
+					break
 				end
 			end
 		end

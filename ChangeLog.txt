@@ -14,6 +14,7 @@
 [125] Added: ipgagtoself and ipgagnochat configurations, request by Master and KCAHDEP
 [127] Added: New GeoIP country codes
 [128] Added: chatintelcheckcmd configuration to detect public proxy on users commands, request by KCAHDEP
+[130] Added: Script command is_ip_proxy and ip_is_proxy reply
 [110] Improved: UTF-8 detection in avdetforce command when avdetforceconv is enabled
 [112] Improved: Allow to use class 0 in command permissions
 [115] Improved: Magnet parameter is optional in release bot, request by barrow
