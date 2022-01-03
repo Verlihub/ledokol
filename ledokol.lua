@@ -2,7 +2,7 @@
 --[[ license agreement >>
 ---------------------------------------------------------------------
 
-Copyright © 2007-2021 RoLex
+Copyright © 2007-2022 RoLex
 
 Ledokol is free software; You can redistribute it
 and modify it under the terms of the GNU General
@@ -63,7 +63,7 @@ Tzaca, JOE™, Foxtrot, Deivis
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.8" -- ledokol version
-bld_ledo = "130" -- build number
+bld_ledo = "131" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -1591,6 +1591,9 @@ function Main (file)
 						VH:SQLQuery ("alter table `" .. tbl_sql.rel .. "` change column `tth` `tth` varchar(255) null default null")
 						VH:SQLQuery ("alter table `" .. tbl_sql.ipgag .. "` add column `why` varchar(255) null after `flag`")
 						VH:SQLQuery ("alter table `" .. tbl_sql.ipgag .. "` add column `time` bigint(20) unsigned not null default 0 after `why`")
+						VH:SQLQuery ("alter table `" .. tbl_sql.ulog .. "` add column `stat` varchar(3) null after `conn`")
+						VH:SQLQuery ("alter table `" .. tbl_sql.ulog .. "` add column `tls` varchar(3) null after `sups`")
+
 						VH:SQLQuery ("alter table `" .. tbl_sql.news .. "` add index(`date`)")
 						VH:SQLQuery ("alter table `" .. tbl_sql.chatrepl .. "` add index(`flags`)")
 						VH:SQLQuery ("alter table `" .. tbl_sql.rel .. "` add index(`date`)")
@@ -5319,8 +5322,21 @@ function VH_OnParsedMsgMyINFO (nick, data)
 		end
 
 		desc, tag, conn, stat, mail, size = parsemyinfo (data)
+
+		if stat and stat ~= "" then
+			stat = tonumber (stat) or ""
+
+			if type (stat) == "number" and stat < 1 then
+				stat = ""
+			end
+
+			if stat ~= "" then
+				stat = string.byte (stat)
+			end
+		end
+
 		hasinfo = true
-		local nmdc, sups = "", ""
+		local nmdc, sups, tls = "", "", ""
 
 		if table_refu.GetUserVersion then -- nmdc version
 			local on, temp = VH:GetUserVersion (nick)
@@ -5338,7 +5354,15 @@ function VH_OnParsedMsgMyINFO (nick, data)
 			end
 		end
 
-		VH:SQLQuery ("insert into `" .. tbl_sql.ulog .. "` (`time`" .. ((table_sets.ulogouttime == 1) and ", `out`" or "") .. ", `nick`, `ip`, `cc`, `desc`, `tag`, `conn`, `email`, `share`, `nmdc`, `sups`) values (" .. _tostring (os.time () + table_sets.srvtimediff) .. ((table_sets.ulogouttime == 1) and ", 2" or "") .. ", '" .. repsqlchars (nick) .. "', '" .. repsqlchars (addr) .. "', " .. sqlemptnull (cc, true) .. ", " .. sqlemptnull (desc) .. ", " .. sqlemptnull (tag) .. ", " .. sqlemptnull (conn) .. ", " .. sqlemptnull (mail) .. ", " .. repsqlchars (size) .. ", " .. sqlemptnull (nmdc) .. ", " .. sqlemptnull (sups) .. ")")
+		if table_refu.GetTLSVer then -- tls version
+			local on, temp = VH:GetTLSVer (nick)
+
+			if on and temp and temp ~= "" and temp ~= "0.0" then
+				tls = temp
+			end
+		end
+
+		VH:SQLQuery ("insert into `" .. tbl_sql.ulog .. "` (`time`" .. ((table_sets.ulogouttime == 1) and ", `out`" or "") .. ", `nick`, `ip`, `cc`, `desc`, `tag`, `conn`, `stat`, `email`, `share`, `nmdc`, `sups`, `tls`) values (" .. _tostring (os.time () + table_sets.srvtimediff) .. ((table_sets.ulogouttime == 1) and ", 2" or "") .. ", '" .. repsqlchars (nick) .. "', '" .. repsqlchars (addr) .. "', " .. sqlemptnull (cc, true) .. ", " .. sqlemptnull (desc) .. ", " .. sqlemptnull (tag) .. ", " .. sqlemptnull (conn) .. ", " .. sqlemptnull (stat) .. ", " .. sqlemptnull (mail) .. ", " .. repsqlchars (size) .. ", " .. sqlemptnull (nmdc) .. ", " .. sqlemptnull (sups) .. ", " .. sqlemptnull (tls) .. ")")
 	end
 
 	if table_sets.micheck == 0 or table_sets.micallall == 0 then
@@ -5435,8 +5459,21 @@ function VH_OnUserLogin (nick, uip)
 		end
 
 		desc, tag, conn, stat, email, size = parsemyinfo (mistr)
+
+		if stat and stat ~= "" then
+			stat = tonumber (stat) or ""
+
+			if type (stat) == "number" and stat < 1 then
+				stat = ""
+			end
+
+			if stat ~= "" then
+				stat = string.byte (stat)
+			end
+		end
+
 		hasinfo = true
-		local nmdc, sups = "", ""
+		local nmdc, sups, tls = "", "", ""
 
 		if table_refu.GetUserVersion then -- nmdc version
 			local on, temp = VH:GetUserVersion (nick)
@@ -5454,7 +5491,15 @@ function VH_OnUserLogin (nick, uip)
 			end
 		end
 
-		VH:SQLQuery ("insert into `" .. tbl_sql.ulog .. "` (`time`" .. ((table_sets.ulogouttime == 1) and ", `out`" or "") .. ", `nick`, `ip`, `cc`, `desc`, `tag`, `conn`, `email`, `share`, `nmdc`, `sups`) values (" .. _tostring (os.time () + table_sets.srvtimediff) .. ((table_sets.ulogouttime == 1) and ", 1" or "") .. ", '" .. repsqlchars (nick) .. "', '" .. repsqlchars (addr) .. "', " .. sqlemptnull (cc, true) .. ", " .. sqlemptnull (desc) .. ", " .. sqlemptnull (tag) .. ", " .. sqlemptnull (conn) .. ", " .. sqlemptnull (email) .. ", " .. repsqlchars (size) .. ", " .. sqlemptnull (nmdc) .. ", " .. sqlemptnull (sups) .. ")")
+		if table_refu.GetTLSVer then -- tls version
+			local on, temp = VH:GetTLSVer (nick)
+
+			if on and temp and temp ~= "" and temp ~= "0.0" then
+				tls = temp
+			end
+		end
+
+		VH:SQLQuery ("insert into `" .. tbl_sql.ulog .. "` (`time`" .. ((table_sets.ulogouttime == 1) and ", `out`" or "") .. ", `nick`, `ip`, `cc`, `desc`, `tag`, `conn`, `stat`, `email`, `share`, `nmdc`, `sups`, `tls`) values (" .. _tostring (os.time () + table_sets.srvtimediff) .. ((table_sets.ulogouttime == 1) and ", 1" or "") .. ", '" .. repsqlchars (nick) .. "', '" .. repsqlchars (addr) .. "', " .. sqlemptnull (cc, true) .. ", " .. sqlemptnull (desc) .. ", " .. sqlemptnull (tag) .. ", " .. sqlemptnull (conn) .. ", " .. sqlemptnull (stat) .. ", " .. sqlemptnull (email) .. ", " .. repsqlchars (size) .. ", " .. sqlemptnull (nmdc) .. ", " .. sqlemptnull (sups) .. ", " .. sqlemptnull (tls) .. ")")
 
 		if table_sets.ulogouttime == 1 then -- out time
 			local _, rows = VH:SQLQuery ("select last_insert_id()")
@@ -11751,13 +11796,14 @@ end
 
 function showuserlog (nick, line)
 	local condtest = function (dat)
-		return (dat == "nick" or dat == "addr" or dat == "ip" or dat == "code" or dat == "cc" or dat == "desc" or dat == "tag" or dat == "conn" or dat == "mail" or dat == "email" or dat == "size" or dat == "share" or dat == "nmdc" or dat == "ver" or dat == "sups" or dat == "all")
+		return (dat == "nick" or dat == "addr" or dat == "ip" or dat == "code" or dat == "cc" or dat == "desc" or dat == "tag" or dat == "conn" or dat == "stat" or dat == "mail" or dat == "email" or dat == "size" or dat == "share" or dat == "nmdc" or dat == "ver" or dat == "sups" or dat == "tls" or dat == "all")
 	end
 
 	local typ, str, lim = "nick", line, 100 -- static parameters
 
 	if line:match ("^%S+ .+ %d+$") then
 		typ, str, lim = line:match ("^(%S+) (.+) (%d+)$")
+
 	elseif line:match ("^[^ ]+ %d+$") then
 		str, lim = line:match ("^([^ ]+) (%d+)$")
 
@@ -11766,6 +11812,7 @@ function showuserlog (nick, line)
 			str = _tostring (lim)
 			lim = 100 -- update it
 		end
+
 	elseif line:match ("^%S+ .+$") then
 		typ, str = line:match ("^(%S+) (.+)$")
 	end
@@ -11792,13 +11839,13 @@ function showuserlog (nick, line)
 		str = repsqlchars (str)
 
 		if typ == "all" then -- any part
-			local _, rows = VH:SQLQuery ("select `time`, `out`, `nick`, `ip`, `cc`, `desc`, `tag`, `conn`, `email`, `share`, `nmdc`, `sups` from `" .. tbl_sql.ulog .. "` where `nick` like '%" .. str .. "%' or `ip` like '%" .. str .. "%' or `cc` like '%" .. str .. "%' or `desc` like '%" .. str .. "%' or `tag` like '%" .. str .. "%' or `conn` like '%" .. str .. "%' or `email` like '%" .. str .. "%' or `share` like '%" .. str .. "%' or `nmdc` like '%" .. str .. "%' or `sups` like '%" .. str .. "%' order by `time` desc limit " .. _tostring (lim))
+			local _, rows = VH:SQLQuery ("select `time`, `out`, `nick`, `ip`, `cc`, `desc`, `tag`, `conn`, `stat`, `email`, `share`, `nmdc`, `sups`, `tls` from `" .. tbl_sql.ulog .. "` where `nick` like '%" .. str .. "%' or `ip` like '%" .. str .. "%' or `cc` like '%" .. str .. "%' or `desc` like '%" .. str .. "%' or `tag` like '%" .. str .. "%' or `conn` like '%" .. str .. "%' or `stat` like '%" .. str .. "%' or `email` like '%" .. str .. "%' or `share` like '%" .. str .. "%' or `nmdc` like '%" .. str .. "%' or `sups` like '%" .. str .. "%' or `tls` like '%" .. str .. "%' order by `time` desc limit " .. _tostring (lim))
 
 			if rows > 0 then
 				local res = ""
 
 				for row = 0, rows - 1 do
-					local _, rtime, rout, rnick, rip, rcc, rdesc, rtag, rconn, remail, rshare, rnmdc, rsups = VH:SQLFetch (row)
+					local _, rtime, rout, rnick, rip, rcc, rdesc, rtag, rconn, rstat, remail, rshare, rnmdc, rsups, rtls = VH:SQLFetch (row)
 					rnick = repnmdcoutchars (rnick)
 					rip = repnmdcoutchars (rip)
 					res = res .. " [ O: " .. fromunixtime (rtime, false) -- online
@@ -11840,6 +11887,10 @@ function showuserlog (nick, line)
 						res = res .. " [ C: " .. repnmdcoutchars (rconn) .. " ]"
 					end
 
+					if rstat and rstat ~= "" then
+						res = res .. " [ S: " .. statustostr (tonumber (rstat or 1) or 1) .. " (" .. repnmdcoutchars (rstat) .. ") ]" -- status
+					end
+
 					if remail and remail ~= "" then
 						res = res .. " [ E: " .. repnmdcoutchars (remail) .. " ]"
 					end
@@ -11854,6 +11905,10 @@ function showuserlog (nick, line)
 
 					if rsups and rsups ~= "" then
 						res = res .. " [ S: " .. repnmdcoutchars (rsups) .. " ]" -- supports
+					end
+
+					if rtls and rtls ~= "" then
+						res = res .. " [ T: " .. repnmdcoutchars (rtls) .. " ]" -- tls version
 					end
 
 					res = res .. "\r\n"
@@ -11865,13 +11920,13 @@ function showuserlog (nick, line)
 			end
 
 		else -- specific
-			local _, rows = VH:SQLQuery ("select `time`, `out`, `nick`, `ip`, `cc`, `desc`, `tag`, `conn`, `email`, `share`, `nmdc`, `sups` from `" .. tbl_sql.ulog .. "` where `" .. typ .. "` like '%" .. str .. "%' order by `time` desc limit " .. _tostring (lim))
+			local _, rows = VH:SQLQuery ("select `time`, `out`, `nick`, `ip`, `cc`, `desc`, `tag`, `conn`, `stat`, `email`, `share`, `nmdc`, `sups`, `tls` from `" .. tbl_sql.ulog .. "` where `" .. typ .. "` like '%" .. str .. "%' order by `time` desc limit " .. _tostring (lim))
 
 			if rows > 0 then
 				local res = ""
 
 				for row = 0, rows - 1 do
-					local _, rtime, rout, rnick, rip, rcc, rdesc, rtag, rconn, remail, rshare, rnmdc, rsups = VH:SQLFetch (row)
+					local _, rtime, rout, rnick, rip, rcc, rdesc, rtag, rconn, rstat, remail, rshare, rnmdc, rsups, rtls = VH:SQLFetch (row)
 					rnick = repnmdcoutchars (rnick)
 					rip = repnmdcoutchars (rip)
 					res = res .. " [ O: " .. fromunixtime (rtime, false) -- online
@@ -11913,6 +11968,10 @@ function showuserlog (nick, line)
 						res = res .. " [ C: " .. repnmdcoutchars (rconn) .. " ]"
 					end
 
+					if rstat and rstat ~= "" then
+						res = res .. " [ S: " .. statustostr (tonumber (rstat or 1) or 1) .. " (" .. repnmdcoutchars (rstat) .. ") ]" -- status
+					end
+
 					if remail and remail ~= "" then
 						res = res .. " [ E: " .. repnmdcoutchars (remail) .. " ]"
 					end
@@ -11927,6 +11986,10 @@ function showuserlog (nick, line)
 
 					if rsups and rsups ~= "" then
 						res = res .. " [ S: " .. repnmdcoutchars (rsups) .. " ]" -- supports
+					end
+
+					if rtls and rtls ~= "" then
+						res = res .. " [ T: " .. repnmdcoutchars (rtls) .. " ]" -- tls version
 					end
 
 					res = res .. "\r\n"
@@ -11939,7 +12002,7 @@ function showuserlog (nick, line)
 		end
 
 	else -- unknown type
-		commandanswer (nick, gettext ("Known types are: %s"):format ("nick, addr, code, desc, tag, conn, mail, size, nmdc, sups " .. gettext ("and") .. " all"))
+		commandanswer (nick, gettext ("Known types are: %s"):format ("nick, addr, code, desc, tag, conn, stat, mail, size, nmdc, sups, tls " .. gettext ("and") .. " all"))
 	end
 end
 
@@ -24321,7 +24384,7 @@ VH:SQLQuery ("create table if not exists `" .. tbl_sql.cmd .. "` (`command` varc
 VH:SQLQuery ("create table if not exists `" .. tbl_sql.cmdex .. "` (`exception` varchar(255) not null, `occurred` bigint(20) unsigned not null default 0, primary key (`exception`))")
 
 	-- user log
-	VH:SQLQuery ("create table if not exists `" .. tbl_sql.ulog .. "` (`id` bigint(20) unsigned not null auto_increment primary key, `time` bigint(20) unsigned not null, `out` bigint(20) unsigned not null default 0, `nick` varchar(255) not null, `ip` varchar(15) not null, `cc` varchar(2) null, `desc` varchar(255) null, `tag` varchar(255) null, `conn` varchar(255) null, `email` varchar(255) null, `share` bigint(20) unsigned not null default 0, `nmdc` varchar(255) null, `sups` varchar(255) null, index(`time`))")
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql.ulog .. "` (`id` bigint(20) unsigned not null auto_increment primary key, `time` bigint(20) unsigned not null, `out` bigint(20) unsigned not null default 0, `nick` varchar(255) not null, `ip` varchar(15) not null, `cc` varchar(2) null, `desc` varchar(255) null, `tag` varchar(255) null, `conn` varchar(255) null, `stat` varchar(3) null, `email` varchar(255) null, `share` bigint(20) unsigned not null default 0, `nmdc` varchar(255) null, `sups` varchar(255) null, `tls` varchar(3) null, index(`time`))")
 
 -- command log
 VH:SQLQuery ("create table if not exists `" .. tbl_sql.clog .. "` (`id` bigint(20) unsigned not null auto_increment, `time` bigint(20) unsigned not null, `nick` varchar(255) not null, `class` tinyint(2) unsigned not null, `command` text not null, primary key (`id`))")
@@ -24637,6 +24700,8 @@ VH:SQLQuery ("alter table `" .. tbl_sql.cmdex .. "` change column `occurred` `oc
 	VH:SQLQuery ("alter table `" .. tbl_sql.ulog .. "` change column `share` `share` bigint(20) unsigned not null default 0") -- share
 	VH:SQLQuery ("alter table `" .. tbl_sql.ulog .. "` add column `nmdc` varchar(255) null after `share`") -- nmdc
 	VH:SQLQuery ("alter table `" .. tbl_sql.ulog .. "` add column `sups` varchar(255) null after `nmdc`") -- sups
+	VH:SQLQuery ("alter table `" .. tbl_sql.ulog .. "` add column `stat` varchar(3) null after `conn`")
+	VH:SQLQuery ("alter table `" .. tbl_sql.ulog .. "` add column `tls` varchar(3) null after `sups`")
 	VH:SQLQuery ("alter table `" .. tbl_sql.ulog .. "` add index(`time`)") -- time
 
 -- command log
