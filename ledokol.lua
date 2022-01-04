@@ -20520,10 +20520,10 @@ elseif tvar == "sharerecmsg" then
 
 	elseif tvar == "chatfloodoneint" then
 		if num then
-			if setto >= 0 and setto <= 3600 then
+			if setto >= 0 and setto <= 86400 then
 				ok = true
 			else
-				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0 " .. gettext ("to") .. " 3600"))
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0 " .. gettext ("to") .. " 86400"))
 			end
 		else
 			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
