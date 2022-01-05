@@ -5329,10 +5329,6 @@ function VH_OnParsedMsgMyINFO (nick, data)
 			if type (stat) == "number" and stat < 1 then
 				stat = ""
 			end
-
-			if stat ~= "" then
-				stat = string.byte (stat)
-			end
 		end
 
 		hasinfo = true
@@ -5465,10 +5461,6 @@ function VH_OnUserLogin (nick, uip)
 
 			if type (stat) == "number" and stat < 1 then
 				stat = ""
-			end
-
-			if stat ~= "" then
-				stat = string.byte (stat)
 			end
 		end
 
