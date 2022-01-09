@@ -63,7 +63,7 @@ Tzaca, JOE™, Foxtrot, Deivis
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.8" -- ledokol version
-bld_ledo = "131" -- build number
+bld_ledo = "132" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -1594,17 +1594,17 @@ function Main (file)
 						VH:SQLQuery ("alter table `" .. tbl_sql.ulog .. "` add column `stat` varchar(3) null after `conn`")
 						VH:SQLQuery ("alter table `" .. tbl_sql.ulog .. "` add column `tls` varchar(3) null after `sups`")
 
-						VH:SQLQuery ("alter table `" .. tbl_sql.news .. "` add index(`date`)")
-						VH:SQLQuery ("alter table `" .. tbl_sql.chatrepl .. "` add index(`flags`)")
-						VH:SQLQuery ("alter table `" .. tbl_sql.rel .. "` add index(`date`)")
-						VH:SQLQuery ("alter table `" .. tbl_sql.ulog .. "` add index(`time`)")
-						VH:SQLQuery ("alter table `" .. tbl_sql.mchist .. "` add index(`date`)")
-						VH:SQLQuery ("alter table `" .. tbl_sql.ophist .. "` add index(`date`)")
-						VH:SQLQuery ("alter table `" .. tbl_sql.off .. "` add index(`to`)")
-						VH:SQLQuery ("alter table `" .. tbl_sql.off .. "` add index(`date`)")
-						VH:SQLQuery ("alter table `" .. tbl_sql.rcmenu .. "` add index(`order`)")
-						VH:SQLQuery ("alter table `" .. tbl_sql.anti .. "` add index(`flags`)")
-						VH:SQLQuery ("alter table `" .. tbl_sql.anti .. "` add index(`priority`)")
+						VH:SQLQuery ("alter table `" .. tbl_sql.news .. "` add index `date` (`date`)")
+						VH:SQLQuery ("alter table `" .. tbl_sql.chatrepl .. "` add index `flags` (`flags`)")
+						VH:SQLQuery ("alter table `" .. tbl_sql.rel .. "` add index `date` (`date`)")
+						VH:SQLQuery ("alter table `" .. tbl_sql.ulog .. "` add index `time` (`time`)")
+						VH:SQLQuery ("alter table `" .. tbl_sql.mchist .. "` add index `date` (`date`)")
+						VH:SQLQuery ("alter table `" .. tbl_sql.ophist .. "` add index `date` (`date`)")
+						VH:SQLQuery ("alter table `" .. tbl_sql.off .. "` add index `to` (`to`)")
+						VH:SQLQuery ("alter table `" .. tbl_sql.off .. "` add index `date` (`date`)")
+						VH:SQLQuery ("alter table `" .. tbl_sql.rcmenu .. "` add index `order` (`order`)")
+						VH:SQLQuery ("alter table `" .. tbl_sql.anti .. "` add index `flags` (`flags`)")
+						VH:SQLQuery ("alter table `" .. tbl_sql.anti .. "` add index `priority` (`priority`)")
 
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.ledocmd .. "` (`original`, `new`) values ('gagasnadd', '" .. repsqlchars (table_cmnds.gagasnadd) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.ledocmd .. "` (`original`, `new`) values ('gagasndel', '" .. repsqlchars (table_cmnds.gagasndel) .. "')")
@@ -24477,8 +24477,8 @@ function altertables ()
 	VH:SQLQuery ("alter table `" .. tbl_sql.anti .. "` add column `priority` tinyint(1) unsigned not null default 0 after `occurred`") -- priority
 	VH:SQLQuery ("alter table `" .. tbl_sql.anti .. "` change column `action` `action` tinyint(2) unsigned not null default 0") -- action
 	VH:SQLQuery ("alter table `" .. tbl_sql.anti .. "` add column `flags` tinyint(1) unsigned not null default 3 after `action`") -- flags
-	VH:SQLQuery ("alter table `" .. tbl_sql.anti .. "` add index(`flags`)") -- flags
-	VH:SQLQuery ("alter table `" .. tbl_sql.anti .. "` add index(`priority`)") -- priority
+	VH:SQLQuery ("alter table `" .. tbl_sql.anti .. "` add index `flags` (`flags`)") -- flags
+	VH:SQLQuery ("alter table `" .. tbl_sql.anti .. "` add index `priority` (`priority`)") -- priority
 	VH:SQLQuery ("alter table `" .. tbl_sql.antiex .. "` change column `exception` `exception` varchar(255) not null") -- exception
 	VH:SQLQuery ("alter table `" .. tbl_sql.antiex .. "` change column `occured` `occurred` bigint(20) unsigned not null default 0") -- occurred
 
@@ -24569,7 +24569,7 @@ VH:SQLQuery ("alter table `" .. tbl_sql.auth .. "` change column `bad` `bad` big
 	VH:SQLQuery ("alter table `" .. tbl_sql.rel .. "` change column `by` `by` varchar(255) not null") -- by
 	VH:SQLQuery ("alter table `" .. tbl_sql.rel .. "` change column `date` `date` bigint(20) unsigned not null") -- date
 	VH:SQLQuery ("alter table `" .. tbl_sql.rel .. "` change column `tth` `tth` varchar(255) null default null") -- tth
-	VH:SQLQuery ("alter table `" .. tbl_sql.rel .. "` add index(`date`)") -- date
+	VH:SQLQuery ("alter table `" .. tbl_sql.rel .. "` add index `date` (`date`)") -- date
 
 	-- welcome messages
 	VH:SQLQuery ("alter table `" .. tbl_sql.wm .. "` change column `nick` `nick` varchar(255) not null") -- nick
@@ -24603,11 +24603,11 @@ VH:SQLQuery ("alter table `" .. tbl_sql.rem .. "` change column `timer` `timer` 
 	VH:SQLQuery ("alter table `" .. tbl_sql.news .. "` change column `date` `date` bigint(20) unsigned not null") -- date
 	VH:SQLQuery ("alter table `" .. tbl_sql.news .. "` change column `by` `by` varchar(255) not null") -- by
 	VH:SQLQuery ("alter table `" .. tbl_sql.news .. "` change column `item` `item` text not null") -- item
-	VH:SQLQuery ("alter table `" .. tbl_sql.news .. "` add index(`date`)") -- date
+	VH:SQLQuery ("alter table `" .. tbl_sql.news .. "` add index `date` (`date`)") -- date
 
 	-- chat replacer
 	VH:SQLQuery ("alter table `" .. tbl_sql.chatrepl .. "` add column `flags` tinyint(1) unsigned not null default 1 after `maxclass`") -- flags
-	VH:SQLQuery ("alter table `" .. tbl_sql.chatrepl .. "` add index(`flags`)") -- flags
+	VH:SQLQuery ("alter table `" .. tbl_sql.chatrepl .. "` add index `flags` (`flags`)") -- flags
 	VH:SQLQuery ("alter table `" .. tbl_sql.replex .. "` add column `type` tinyint(1) not null default 0 after `exception`") -- type
 
 -- chat responder
@@ -24650,8 +24650,8 @@ VH:SQLQuery ("alter table `" .. tbl_sql.ranex .. "` add column `occurred` bigint
 	VH:SQLQuery ("alter table `" .. tbl_sql.off .. "` change column `to` `to` varchar(255) not null") -- to
 	VH:SQLQuery ("alter table `" .. tbl_sql.off .. "` change column `date` `date` bigint(20) unsigned not null") -- date
 	VH:SQLQuery ("alter table `" .. tbl_sql.off .. "` change column `message` `message` text not null") -- message
-	VH:SQLQuery ("alter table `" .. tbl_sql.off .. "` add index(`to`)") -- to
-	VH:SQLQuery ("alter table `" .. tbl_sql.off .. "` add index(`date`)") -- date
+	VH:SQLQuery ("alter table `" .. tbl_sql.off .. "` add index `to` (`to`)") -- to
+	VH:SQLQuery ("alter table `" .. tbl_sql.off .. "` add index `date` (`date`)") -- date
 
 	-- chat history
 	VH:SQLQuery ("alter table `" .. tbl_sql.mchist .. "` change column `id` `id` bigint(20) unsigned auto_increment") -- id
@@ -24660,7 +24660,7 @@ VH:SQLQuery ("alter table `" .. tbl_sql.ranex .. "` add column `occurred` bigint
 	VH:SQLQuery ("alter table `" .. tbl_sql.mchist .. "` add column `ip` varchar(15) null after `nick`") -- ip
 	VH:SQLQuery ("alter table `" .. tbl_sql.mchist .. "` change column `date` `date` bigint(20) unsigned not null") -- date
 	VH:SQLQuery ("alter table `" .. tbl_sql.mchist .. "` change column `message` `message` text not null") -- message
-	VH:SQLQuery ("alter table `" .. tbl_sql.mchist .. "` add index(`date`)") -- date
+	VH:SQLQuery ("alter table `" .. tbl_sql.mchist .. "` add index `date` (`date`)") -- date
 
 	-- opchat history
 	VH:SQLQuery ("alter table `" .. tbl_sql.ophist .. "` change column `id` `id` bigint(20) unsigned auto_increment") -- id
@@ -24668,7 +24668,7 @@ VH:SQLQuery ("alter table `" .. tbl_sql.ranex .. "` add column `occurred` bigint
 	VH:SQLQuery ("alter table `" .. tbl_sql.ophist .. "` change column `date` `date` bigint(20) unsigned not null") -- date
 	VH:SQLQuery ("alter table `" .. tbl_sql.ophist .. "` change column `message` `message` text not null") -- message
 	VH:SQLQuery ("alter table `" .. tbl_sql.ophist .. "` add column `class` tinyint(2) unsigned not null default 10 after `message`") -- class
-	VH:SQLQuery ("alter table `" .. tbl_sql.ophist .. "` add index(`date`)") -- date
+	VH:SQLQuery ("alter table `" .. tbl_sql.ophist .. "` add index `date` (`date`)") -- date
 
 -- commands
 VH:SQLQuery ("alter table `" .. tbl_sql.ledocmd .. "` change column `original` `original` varchar(255) not null") -- original
@@ -24694,7 +24694,7 @@ VH:SQLQuery ("alter table `" .. tbl_sql.cmdex .. "` change column `occurred` `oc
 	VH:SQLQuery ("alter table `" .. tbl_sql.ulog .. "` add column `sups` varchar(255) null after `nmdc`") -- sups
 	VH:SQLQuery ("alter table `" .. tbl_sql.ulog .. "` add column `stat` varchar(3) null after `conn`")
 	VH:SQLQuery ("alter table `" .. tbl_sql.ulog .. "` add column `tls` varchar(3) null after `sups`")
-	VH:SQLQuery ("alter table `" .. tbl_sql.ulog .. "` add index(`time`)") -- time
+	VH:SQLQuery ("alter table `" .. tbl_sql.ulog .. "` add index `time` (`time`)") -- time
 
 -- command log
 -- not added
@@ -24729,7 +24729,7 @@ VH:SQLQuery ("alter table `" .. tbl_sql.stat .. "` change column `count` `count`
 
 	-- right click menu
 	VH:SQLQuery ("alter table `" .. tbl_sql.rcmenu .. "` add column `off` tinyint(1) unsigned not null default 0 after `maxclass`") -- off
-	VH:SQLQuery ("alter table `" .. tbl_sql.rcmenu .. "` add index(`order`)") -- order
+	VH:SQLQuery ("alter table `" .. tbl_sql.rcmenu .. "` add index `order` (`order`)") -- order
 end
 
 ----- ---- --- -- -
