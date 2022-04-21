@@ -16,7 +16,7 @@ implied warranty of merchantability or fitness for
 a particular purpose. See the GNU General Public
 License for more details.
 
-Please see http://www.gnu.org/licenses/ for a copy
+Please see https://www.gnu.org/licenses/ for a copy
 of the GNU General Public License.
 
 ---------------------------------------------------------------------
@@ -63,7 +63,7 @@ Tzaca, JOE™, Foxtrot, Deivis
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.8" -- ledokol version
-bld_ledo = "132" -- build number
+bld_ledo = "133" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -372,9 +372,9 @@ table_othsets = {
 	ledobottag = "<Ledokol V:" .. ver_ledo .. "." .. bld_ledo .. ",M:A,H:0/0/1,S:0>",
 	ledobotdesc = "Security and entertainment bot",
 	timebotdesc = "Ledokol time bot",
-	updserv = "http://ledo.feardc.net/",
-	updservdev = "http://ledo.feardc.net/dev/",
-	updservlang = "http://ledo.feardc.net/lang/",
+	updserv = "https://ledo.feardc.net/",
+	updservdev = "https://ledo.feardc.net/dev/",
+	updservlang = "https://ledo.feardc.net/lang/",
 	userman = "https://github.com/verlihub/ledokol/wiki",
 	vazhub = "nmdcs://hub.verlihub.net:7777",
 	tmpfile = "ledokol.data",
@@ -383,10 +383,10 @@ table_othsets = {
 	luafile = "ledokol.lua",
 	langfilefmt = "ledo_%s.lang",
 	hublisturl = "https://www.te-home.net/?do=hublist",
-	seenurl = "http://www.te-home.net/?do=hublist&action=seen",
-	avdbsendurl = "http://www.te-home.net/avdb.php?do=send",
-	avdbloadurl = "http://www.te-home.net/avdb.php?do=load",
-	avdbfindurl = "http://www.te-home.net/avdb.php?do=find",
+	seenurl = "https://www.te-home.net/?do=hublist&action=seen",
+	avdbsendurl = "https://www.te-home.net/avdb.php?do=send",
+	avdbloadurl = "https://www.te-home.net/avdb.php?do=load",
+	avdbfindurl = "https://www.te-home.net/avdb.php?do=find",
 	luaman = "https://www.lua.org/manual/" .. _VERSION:sub (5) .. "/manual.html#6.4.1",
 	cfgdir = "",
 	feednick = "",
@@ -408,7 +408,7 @@ table_othsets = {
 	seartotcount = 0,
 	seardupcount = 0,
 	useragent = "Mozilla/5.0 (compatible; Ledokol/" .. ver_ledo .. "." .. bld_ledo .. "; +https://ledo.feardc.net/)",
-	chinurl = "http://check.getipintel.net/check.php?contact=%s&ip=%s",
+	chinurl = "https://check.getipintel.net/check.php?contact=%s&ip=%s",
 	chindir = "chatintel",
 	chincount = 0,
 	chinquotetime = 0,
@@ -559,6 +559,7 @@ table_cmnds = {
 	antiadd = "antiadd",
 	antidel = "antidel",
 	antilist = "antilist",
+	antitest = "antitest",
 	antiexadd = "antiexadd",
 	antiexdel = "antiexdel",
 	antiexlist = "antiexlist",
@@ -1609,6 +1610,7 @@ function Main (file)
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.ledocmd .. "` (`original`, `new`) values ('gagasnadd', '" .. repsqlchars (table_cmnds.gagasnadd) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.ledocmd .. "` (`original`, `new`) values ('gagasndel', '" .. repsqlchars (table_cmnds.gagasndel) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.ledocmd .. "` (`original`, `new`) values ('gagasnlist', '" .. repsqlchars (table_cmnds.gagasnlist) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.ledocmd .. "` (`original`, `new`) values ('antitest', '" .. repsqlchars (table_cmnds.antitest) .. "')")
 
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('cleanallbangags', '" .. repsqlchars (table_sets.cleanallbangags) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('avkickhide', '" .. repsqlchars (table_sets.avkickhide) .. "')")
@@ -2401,27 +2403,39 @@ return 0
 
 	----- ---- --- -- -
 
-elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.antidel .. " .+$") then
-if ucl >= table_sets.mincommandclass then
-donotifycmd (nick, data, 0, ucl)
-delantientry (nick, data:sub (# table_cmnds.antidel + 3))
-else
-commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
-end
+	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.antidel .. " .+$") then
+		if ucl >= table_sets.mincommandclass then
+			donotifycmd (nick, data, 0, ucl)
+			delantientry (nick, data:sub (# table_cmnds.antidel + 3))
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
 
-return 0
+		return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
 
-elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.antilist .. "$") then
-if ucl >= table_sets.mincommandclass then
-donotifycmd (nick, data, 0, ucl)
-listantientry (nick)
-else
-commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
-end
+	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.antilist .. "$") then
+		if ucl >= table_sets.mincommandclass then
+			donotifycmd (nick, data, 0, ucl)
+			listantientry (nick)
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
 
-return 0
+		return 0
+
+	----- ---- --- -- -
+
+	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.antitest .. " .+$") then
+		if ucl >= table_sets.mincommandclass then
+			donotifycmd (nick, data, 0, ucl)
+			antitestall (nick, data:sub (# table_cmnds.antitest + 3))
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
+
+		return 0
 
 	----- ---- --- -- -
 
@@ -18744,19 +18758,20 @@ function installusermenu (usr)
 		end
 	end
 
--- antispam
-
-if ucl >= table_sets.mincommandclass then
-	sopmenitm (usr, gettext ("Antispam") .. "\\" .. gettext ("Add antispam entry"), table_cmnds.antiadd .. " %[line:<" .. gettext ("lre") .. ">] %[line:<" .. gettext ("priority") .. ">] %[line:<" .. gettext ("action") .. ">] %[line:<" .. gettext ("flags") .. ">]")
-sopmenitm (usr, gettext ("Antispam") .. "\\" .. gettext ("Antispam list"), table_cmnds.antilist)
-smensep (usr)
-sopmenitm (usr, gettext ("Antispam") .. "\\" .. gettext ("Delete antispam entry"), table_cmnds.antidel .. " %[line:<" .. gettext ("lre") .. ">]")
-smensep (usr)
-sopmenitm (usr, gettext ("Antispam") .. "\\" .. gettext ("Add antispam exception entry"), table_cmnds.antiexadd .. " %[line:<" .. gettext ("lre") .. ">]")
-sopmenitm (usr, gettext ("Antispam") .. "\\" .. gettext ("Antispam exception list"), table_cmnds.antiexlist)
-smensep (usr)
-sopmenitm (usr, gettext ("Antispam") .. "\\" .. gettext ("Delete antispam exception entry"), table_cmnds.antiexdel .. " %[line:<" .. gettext ("lre") .. ">]")
-end
+	-- antispam
+	if ucl >= table_sets.mincommandclass then
+		sopmenitm (usr, gettext ("Antispam") .. "\\" .. gettext ("Add antispam entry"), table_cmnds.antiadd .. " %[line:<" .. gettext ("lre") .. ">] %[line:<" .. gettext ("priority") .. ">] %[line:<" .. gettext ("action") .. ">] %[line:<" .. gettext ("flags") .. ">]")
+		sopmenitm (usr, gettext ("Antispam") .. "\\" .. gettext ("Antispam list"), table_cmnds.antilist)
+		smensep (usr)
+		sopmenitm (usr, gettext ("Antispam") .. "\\" .. gettext ("Delete antispam entry"), table_cmnds.antidel .. " %[line:<" .. gettext ("lre") .. ">]")
+		smensep (usr)
+		sopmenitm (usr, gettext ("Antispam") .. "\\" .. gettext ("Test antispam entry"), table_cmnds.antitest .. " %[line:<" .. gettext ("text") .. ">]")
+		smensep (usr)
+		sopmenitm (usr, gettext ("Antispam") .. "\\" .. gettext ("Add antispam exception entry"), table_cmnds.antiexadd .. " %[line:<" .. gettext ("lre") .. ">]")
+		sopmenitm (usr, gettext ("Antispam") .. "\\" .. gettext ("Antispam exception list"), table_cmnds.antiexlist)
+		smensep (usr)
+		sopmenitm (usr, gettext ("Antispam") .. "\\" .. gettext ("Delete antispam exception entry"), table_cmnds.antiexdel .. " %[line:<" .. gettext ("lre") .. ">]")
+	end
 
 	-- search filter
 	if ucl >= table_sets.mincommandclass then
@@ -23454,6 +23469,7 @@ function sendophelp (nick, clas, pm)
 	help = help .. " " .. trig .. table_cmnds.antiadd .. " <" .. gettext ("lre") .. "> <" .. gettext ("priority") .. "> <" .. gettext ("action") .. "> <" .. gettext ("flags") .. "> - " .. gettext ("Add antispam entry") .. "\r\n"
 	help = help .. " " .. trig .. table_cmnds.antilist .. " - " .. gettext ("Antispam list") .. "\r\n"
 	help = help .. " " .. trig .. table_cmnds.antidel .. " <" .. gettext ("lre") .. "> - " .. gettext ("Delete antispam entry") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.antitest .. " <" .. gettext ("text") .. "> - " .. gettext ("Test antispam entry") .. "\r\n"
 	help = help .. " " .. trig .. table_cmnds.antiexadd .. " <" .. gettext ("lre") .. "> - " .. gettext ("Add antispam exception entry") .. "\r\n"
 	help = help .. " " .. trig .. table_cmnds.antiexlist .. " - " .. gettext ("Antispam exception list") .. "\r\n"
 	help = help .. " " .. trig .. table_cmnds.antiexdel .. " <" .. gettext ("lre") .. "> - " .. gettext ("Delete antispam exception entry") .. "\r\n\r\n"
@@ -27875,7 +27891,7 @@ end
 ----- ---- --- -- -
 
 function fromverlitime (data, need)
-	local numb, suff = data:match ("^(%d+)([smhdwMy]*)$")
+	local numb, suff = _tostring (data):match ("^(%d+)([smhdwMy]*)$")
 
 	if numb and suff and # suff == 1 then
 		local secs = tonumber (numb)
@@ -28251,6 +28267,69 @@ function antiscan (nick, class, data, where, to, status)
 	end
 
 	return 1
+end
+
+----- ---- --- -- -
+
+function antitestall (nick, data)
+	local _, rows = VH:SQLQuery ("select `exception` from `" .. tbl_sql.antiex .. "`")
+	local exlist = {}
+
+	for pos = 0, rows - 1 do
+		local _, entry = VH:SQLFetch (pos)
+		table.insert (exlist, entry)
+	end
+
+	local lowdata = tolow (repnmdcinchars (data))
+	local _, rows = VH:SQLQuery ("select `antispam`, `priority`, `action`, `flags` from `" .. tbl_sql.anti .. "` order by `priority` desc")
+	local list = ""
+
+	for pos = 0, rows - 1 do
+		local _, entry, priority, action, flag = VH:SQLFetch (pos)
+		local fres, fval = catchfinderror (lowdata, entry)
+
+		if not fres then
+			list = list .. " " .. _tostring (pos + 1) .. ". " .. gettext ("There is an error in following antispam entry pattern") .. ": " .. repnmdcoutchars (entry) .. " (" .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. ")\r\n"
+
+		elseif fval then
+			local note = "Spam with action %d and priority %d in MC and PM: %s"
+
+			if tonumber (flag) == 1 then -- mc
+				note = "Spam with action %d and priority %d in MC: %s"
+			elseif tonumber (flag) == 2 then -- pm
+				note = "Spam with action %d and priority %d in PM: %s"
+			end
+
+			list = list .. " " .. _tostring (pos + 1) .. ". " .. gettext (note):format (tonumber (action), tonumber (priority), repnmdcoutchars (entry)) .. "\r\n"
+
+			if tonumber (priority) < 7 then
+				for id, value in pairs (exlist) do
+					local fres, fval = catchfinderror (lowdata, value)
+
+					if not fres then
+						list = list .. " " .. _tostring (pos + 1) .. "." .. _tostring (id) .. ". " .. gettext ("There is an error in following antispam exception entry pattern") .. ": " .. repnmdcoutchars (value) .. " (" .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. ")\r\n"
+
+					elseif fval then
+						local note = "Spam exception with action %d and priority %d in MC and PM: %s"
+
+						if tonumber (flag) == 1 then -- mc
+							note = "Spam exception with action %d and priority %d in MC: %s"
+						elseif tonumber (flag) == 2 then -- pm
+							note = "Spam exception with action %d and priority %d in PM: %s"
+						end
+
+						list = list .. " " .. _tostring (pos + 1) .. "." .. _tostring (id) .. ". " .. gettext (note):format (tonumber (action), tonumber (priority), repnmdcoutchars (value)) .. "\r\n"
+					end
+				end
+			end
+		end
+	end
+
+	if # list > 0 then
+		commandanswer (nick, gettext ("List of antispam matches for text: %s"):format (lowdata) .. "\r\n\r\n" .. list)
+	else
+		commandanswer (nick, gettext ("No antispam matches for text: %s"):format (lowdata))
+	end
 end
 
 ----- ---- --- -- -

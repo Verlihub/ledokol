@@ -1304,3 +1304,12 @@ Delete ASN gag|
 User command from %s with IP %s will be delayed for proxy lookup: %s|
 Blocking user command from %s with IP %s detected as public proxy: %s|
 Unsent user command from logged out user %s with IP %s before finishing proxy lookup: %s|
+Test antispam entry|
+Spam exception with action %d and priority %d in MC: %s|
+Spam exception with action %d and priority %d in PM: %s|
+Spam exception with action %d and priority %d in MC and PM: %s|
+Spam with action %d and priority %d in MC: %s|
+Spam with action %d and priority %d in PM: %s|
+Spam with action %d and priority %d in MC and PM: %s|
+No antispam matches for text: %s|
+List of antispam matches for text: %s|
