@@ -63,7 +63,7 @@ Tzaca, JOE™, Foxtrot, Deivis
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.8" -- ledokol version
-bld_ledo = "133" -- build number
+bld_ledo = "134" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -7398,7 +7398,7 @@ function VH_OnScriptCommand (name, data, plug, file)
 
 	elseif name == "remove_history_line" and # data > 0 then -- blacklist script wants to remove last main chat history line from user, dont ask why, plug == "python" and file:sub (-12) == "blacklist.py"
 		if table_sets.histlimit > 0 then
-			local nick, line = data:match ("^<([^ ]+)> (.*)$")
+			local nick, line = data:match ("^<([^ ]+)> (.+)$")
 
 			if nick and line then
 				VH:SQLQuery ("delete from `" .. tbl_sql.mchist .. "` where `realnick` = '" .. repsqlchars (nick) .. "' and `message` = '" .. repsqlchars (line) .. "' order by `date` desc limit 1") -- only last one
@@ -7406,14 +7406,14 @@ function VH_OnScriptCommand (name, data, plug, file)
 		end
 
 	elseif name == "chat_to_all" then -- user sends main chat message to all
-		local nick, line = data:match ("^<([^ ]+)> (.*)$")
+		local nick, line = data:match ("^<([^ ]+)> (.+)$")
 
 		if nick and line then
 			addmchistoryline (nick, nick, line) -- repnmdcoutchars (nick), repnmdcoutchars (line)
 		end
 
 	elseif name == "delayed_chat_to_all" then -- user sends delayed main chat message to all
-		local nick, line = data:match ("^<([^ ]+)> (.*)$")
+		local nick, line = data:match ("^<([^ ]+)> (.+)$")
 
 		if nick and line and getstatus (nick) == 1 then
 			addmchistoryline (nick, nick, line)
@@ -7430,14 +7430,14 @@ function VH_OnScriptCommand (name, data, plug, file)
 		end
 
 	elseif name == "delayed_pm_to_user" then -- user sends delayed private message to user
-		local to, nick = data:match ("^%$To: ([^ ]+) From: ([^ ]+) %$<[^ ]+> .*$")
+		local to, nick = data:match ("^%$To: ([^ ]+) From: ([^ ]+) %$<[^ ]+> .+$")
 
 		if to and nick and getstatus (to) == 1 and getstatus (nick) == 1 then
 			VH:SendToUser (data .. "|", to)
 		end
 
 	elseif name == "delayed_mcto_to_user" then -- user sends delayed private main chat message to user
-		local to, nick, line = data:match ("^%$MCTo: ([^ ]+) From: ([^ ]+) %$<[^ ]+> (.*)$")
+		local to, nick, line = data:match ("^%$MCTo: ([^ ]+) %$([^ ]+) (.+)$")
 
 		if to and nick and line and getstatus (to) == 1 and getstatus (nick) == 1 then
 			local mcto = false
@@ -7460,10 +7460,10 @@ function VH_OnScriptCommand (name, data, plug, file)
 	elseif name == "opchat_to_all" then -- user sends operator chat message to all
 		local clas, nick, line = nil, "", ""
 
-		if data:match ("^%[%d+%] <[^ ]+> .*$") then
-			clas, nick, line = data:match ("^%[(%d+)%] <([^ ]+)> (.*)$")
+		if data:match ("^%[%d+%] <[^ ]+> .+$") then
+			clas, nick, line = data:match ("^%[(%d+)%] <([^ ]+)> (.+)$")
 		else
-			nick, line = data:match ("^<([^ ]+)> (.*)$")
+			nick, line = data:match ("^<([^ ]+)> (.+)$")
 		end
 
 		if nick and line then
@@ -7658,7 +7658,7 @@ function VH_OnParsedMsgPM (from, data, to)
 				return 0
 			end
 
-			if chatintelcheck (from, addr, fcls, to, data:match ("^%$To: [^ ]+ From: [^ ]+ %$<[^ ]+> (.*)$") or repnmdcoutchars (data), 2) then -- chat intelligence
+			if chatintelcheck (from, addr, fcls, to, data:match ("^%$To: [^ ]+ From: [^ ]+ %$<[^ ]+> (.+)$") or repnmdcoutchars (data), 2) then -- chat intelligence
 				return 0
 			end
 
@@ -7921,7 +7921,7 @@ function VH_OnParsedMsgMCTo (from, data, to)
 				return 0
 			end
 
-			if chatintelcheck (from, addr, fcls, to, data:match ("^%$MCTo: [^ ]+ From: [^ ]+ %$<[^ ]+> (.*)$") or repnmdcoutchars (data), 3) then -- chat intelligence
+			if chatintelcheck (from, addr, fcls, to, data:match ("^%$MCTo: [^ ]+ %$[^ ]+ (.+)$") or repnmdcoutchars (data), 3) then -- chat intelligence
 				return 0
 			end
 
@@ -7951,7 +7951,7 @@ function VH_OnParsedMsgMCTo (from, data, to)
 			local on, has = VH:InUserSupports (to, "MCTo")
 
 			if on and istrue (has) then
-				VH:SendToUser ("$MCTo: " .. to .. " From: " .. from .. " $<" .. fake .. "> " .. pmdat .. "|", to)
+				VH:SendToUser ("$MCTo: " .. to .. " $" .. fake .. " " .. pmdat .. "|", to)
 				return 0
 			end
 		end
@@ -8074,7 +8074,7 @@ function VH_OnParsedMsgChat (nick, data)
 				return 0
 			end
 
-			if chatintelcheck (nick, addr, clas, "", data:match ("^<[^ ]+> (.*)$") or repnmdcoutchars (data), 1) then -- chat intelligence
+			if chatintelcheck (nick, addr, clas, "", data:match ("^<[^ ]+> (.+)$") or repnmdcoutchars (data), 1) then -- chat intelligence
 				return 0
 			end
 
