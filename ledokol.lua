@@ -52,7 +52,7 @@ Doxtur, chaos, sphinx, Zorro, W1ZaRd, S0RiN, MaxFox, Krzychu,
 @tlantide, Ettore Atalan, Trumpy, Modswat, KCAHDEP, mauron, DiegoZ,
 Mank, Nickel, Lord_Zero, Meka][Meka, Ger, PetterOSS, Marcel, PPK,
 madkid, Aeolide, Jaguar, Toecutter, SCALOlaz, FlylinkDC-dev, Men_VAf,
-Tzaca, JOE™, Foxtrot, Deivis
+Tzaca, JOE™, Foxtrot, Deivis and others
 
 ---------------------------------------------------------------------
 ]]-- special thanks to <<
@@ -63,7 +63,7 @@ Tzaca, JOE™, Foxtrot, Deivis
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.8" -- ledokol version
-bld_ledo = "134" -- build number
+bld_ledo = "135" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -536,6 +536,7 @@ tbl_sql = {
 	clog = "lua_ledo_clog",
 	hubs = "lua_ledo_hubs",
 	prot = "lua_ledo_prot",
+	proxprot = "lua_ledo_proxprot",
 	stat = "lua_ledo_stat",
 	nopm = "lua_ledo_nopm",
 	hban = "lua_ledo_hban",
@@ -577,6 +578,9 @@ table_cmnds = {
 	protadd = "protadd",
 	protdel = "protdel",
 	protlist = "protlist",
+	proxprotadd = "proxprotadd",
+	proxprotdel = "proxprotdel",
+	proxprotlist = "proxprotlist",
 	setuserip = "setuserip",
 	authadd = "authadd",
 	authmod = "authmod",
@@ -1188,6 +1192,7 @@ table_avex = { -- todo: add apk
 }
 
 cache_prot = {}
+cache_prpr = {}
 cache_hban = {}
 
 ---------------------------------------------------------------------
@@ -1588,6 +1593,7 @@ function Main (file)
 					if ver <= 298 then
 						VH:SQLQuery ("create table if not exists `" .. tbl_sql.miinfo .. "` (`myinfo` varchar(255) not null primary key, `time` varchar(10) null, `occurred` bigint(20) unsigned not null default 0, `note` varchar(255) null)")
 						VH:SQLQuery ("create table if not exists `" .. tbl_sql.asngag .. "` (`item` varchar(255) not null primary key, `flag` tinyint(1) unsigned not null default 0, `why` varchar(255) null)")
+						VH:SQLQuery ("create table if not exists `" .. tbl_sql.proxprot .. "` (`protected` varchar(255) not null primary key, `occurred` bigint(20) unsigned not null default 0)")
 
 						VH:SQLQuery ("alter table `" .. tbl_sql.rel .. "` change column `tth` `tth` varchar(255) null default null")
 						VH:SQLQuery ("alter table `" .. tbl_sql.ipgag .. "` add column `why` varchar(255) null after `flag`")
@@ -1611,6 +1617,9 @@ function Main (file)
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.ledocmd .. "` (`original`, `new`) values ('gagasndel', '" .. repsqlchars (table_cmnds.gagasndel) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.ledocmd .. "` (`original`, `new`) values ('gagasnlist', '" .. repsqlchars (table_cmnds.gagasnlist) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.ledocmd .. "` (`original`, `new`) values ('antitest', '" .. repsqlchars (table_cmnds.antitest) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.ledocmd .. "` (`original`, `new`) values ('proxprotadd', '" .. repsqlchars (table_cmnds.proxprotadd) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.ledocmd .. "` (`original`, `new`) values ('proxprotdel', '" .. repsqlchars (table_cmnds.proxprotdel) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.ledocmd .. "` (`original`, `new`) values ('proxprotlist', '" .. repsqlchars (table_cmnds.proxprotlist) .. "')")
 
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('cleanallbangags', '" .. repsqlchars (table_sets.cleanallbangags) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('avkickhide', '" .. repsqlchars (table_sets.avkickhide) .. "')")
@@ -3958,39 +3967,75 @@ elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.ledoshell .. " .+$
 
 	----- ---- --- -- -
 
-elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.protadd .. " .+$") then
-if ucl >= table_sets.mincommandclass then
-donotifycmd (nick, data, 0, ucl)
-addprotentry (nick, data:sub (# table_cmnds.protadd + 3))
-else
-commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
-end
+	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.protadd .. " .+$") then
+		if ucl >= table_sets.mincommandclass then
+			donotifycmd (nick, data, 0, ucl)
+			addprotentry (nick, data:sub (# table_cmnds.protadd + 3))
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
 
-return 0
+		return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
 
-elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.protdel .. " .+$") then
-if ucl >= table_sets.mincommandclass then
-donotifycmd (nick, data, 0, ucl)
-delprotentry (nick, data:sub (# table_cmnds.protdel + 3))
-else
-commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
-end
+	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.protdel .. " .+$") then
+		if ucl >= table_sets.mincommandclass then
+			donotifycmd (nick, data, 0, ucl)
+			delprotentry (nick, data:sub (# table_cmnds.protdel + 3))
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
 
-return 0
+		return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
 
-elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.protlist .. "$") then
-if ucl >= table_sets.mincommandclass then
-donotifycmd (nick, data, 0, ucl)
-listprotentry (nick)
-else
-commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
-end
+	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.protlist .. "$") then
+		if ucl >= table_sets.mincommandclass then
+			donotifycmd (nick, data, 0, ucl)
+			listprotentry (nick)
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
 
-return 0
+		return 0
+
+	----- ---- --- -- -
+
+	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.proxprotadd .. " .+$") then
+		if ucl >= table_sets.mincommandclass then
+			donotifycmd (nick, data, 0, ucl)
+			addproxprotentry (nick, data:sub (# table_cmnds.proxprotadd + 3))
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
+
+		return 0
+
+	----- ---- --- -- -
+
+	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.proxprotdel .. " .+$") then
+		if ucl >= table_sets.mincommandclass then
+			donotifycmd (nick, data, 0, ucl)
+			delproxprotentry (nick, data:sub (# table_cmnds.proxprotdel + 3))
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
+
+		return 0
+
+	----- ---- --- -- -
+
+	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.proxprotlist .. "$") then
+		if ucl >= table_sets.mincommandclass then
+			donotifycmd (nick, data, 0, ucl)
+			listproxprotentry (nick)
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
+
+		return 0
 
 	----- ---- --- -- -
 
@@ -6418,7 +6463,7 @@ function VH_OnTimer (msec)
 							os.remove (name)
 
 							if data and # data > 0 then
-								local temp = tonumber (data)
+								local orig, temp = data, tonumber (data)
 
 								if not temp then
 									temp = data:gsub ("%.", ",")
@@ -6476,15 +6521,22 @@ function VH_OnTimer (msec)
 										end
 
 										opsnotify (table_sets.classnotichin, note)
-										send = false
-										table_chin [addr]["stat"] = 2
+
+										if isproxprotected (addr) then -- protected is marked as not proxy
+											opsnotify (table_sets.classnotichin, gettext ("IP is protected: %s"):format (addr))
+											table_chin [addr]["stat"] = 4
+
+										else
+											table_chin [addr]["stat"] = 2
+											send = false
+										end
 
 									else
 										opsnotify (table_sets.classnotichin, gettext ("Not enough matches for proxy lookup of IP %s: %d of %d"):format (addr .. tryipcc (addr), data, table_sets.chatintelmatch))
 										table_chin [addr]["stat"] = 4
 									end
 								else
-									opsnotify (table_sets.classnotichin, gettext ("Failed proxy lookup of IP %s with unknown result data: %s"):format (addr .. tryipcc (addr), repnmdcoutchars (data)))
+									opsnotify (table_sets.classnotichin, gettext ("Failed proxy lookup of IP %s with unknown result data: %s"):format (addr .. tryipcc (addr), repnmdcoutchars (data) .. " (" .. repnmdcoutchars (orig) .. ")"))
 									table.insert (dels, addr)
 								end
 							else
@@ -6939,10 +6991,10 @@ function VH_OnParsedMsgAny (nick, data)
 		if isprotected (who, ip) then
 			commandanswer (nick, gettext ("User you're trying to kick or redirect is protected: %s"):format (who))
 			return 0
-		else
-			opsnotify (table_sets.classnotiredir, gettext ("Redirected %s with IP %s and class %d to %s: <%s> %s"):format (who, ip .. tryipcc (ip, who), getclass (who), where, nick, msg))
-			oprankaccept (nick, cls)
 		end
+
+		opsnotify (table_sets.classnotiredir, gettext ("Redirected %s with IP %s and class %d to %s: <%s> %s"):format (who, ip .. tryipcc (ip, who), getclass (who), where, nick, msg))
+		oprankaccept (nick, cls)
 
 	elseif data:find ("^%$ConnectToMe ") then -- connecttome
 		local cls = getclass (nick)
@@ -13155,6 +13207,7 @@ function setuserip (nick, line, clas)
 	end
 end
 
+
 ----- ---- --- -- -
 
 function addprotentry (nick, line)
@@ -13239,6 +13292,102 @@ function isprotected (nick, addr)
 				VH:SQLQuery ("update ignore `" .. tbl_sql.prot .. "` set `occurred` = `occurred` + 1 where `protected` = '" .. repsqlchars (prot) .. "'")
 				return true
 			end
+		end
+	end
+
+	return false
+end
+
+----- ---- --- -- -
+
+function addproxprotentry (nick, line)
+	local ent = repnmdcinchars (line)
+	local ok = true
+
+	for _, prot in pairs (cache_prpr) do
+		if prot == ent then
+			ok = false
+			break
+		end
+	end
+
+	if ok then -- add
+		table.insert (cache_prpr, ent)
+		VH:SQLQuery ("insert ignore into `" .. tbl_sql.proxprot .. "` (`protected`) values ('" .. repsqlchars (ent) .. "')")
+		commandanswer (nick, gettext ("Added proxy protection entry: %s"):format (line))
+
+	else -- exists
+		commandanswer (nick, gettext ("Proxy protection entry already exists: %s"):format (line))
+	end
+end
+
+----- ---- --- -- -
+
+function delproxprotentry (nick, line)
+	if line == "*" then -- clear
+		cache_prpr = {}
+		VH:SQLQuery ("truncate table `" .. tbl_sql.proxprot .. "`")
+		commandanswer (nick, gettext ("Cleared proxy protection list."))
+		return
+	end
+
+	local ent = repnmdcinchars (line)
+	local id = 0
+
+	for pos, prot in pairs (cache_prpr) do
+		if prot == ent then
+			id = pos
+			break
+		end
+	end
+
+	if id > 0 then -- delete
+		table.remove (cache_prpr, id)
+		VH:SQLQuery ("delete ignore from `" .. tbl_sql.proxprot .. "` where `protected` = '" .. repsqlchars (ent) .. "'")
+		commandanswer (nick, gettext ("Deleted proxy protection entry: %s"):format (line))
+
+	else -- not in list
+		commandanswer (nick, gettext ("Proxy protection entry not found: %s"):format (line))
+	end
+end
+
+----- ---- --- -- -
+
+function listproxprotentry (nick)
+	local _, rows = VH:SQLQuery ("select `protected`, `occurred` from `" .. tbl_sql.proxprot .. "` order by `occurred` desc")
+
+	if rows > 0 then
+		local list, rlen, olen = "", 0, 0
+
+		for x = 0, rows - 1 do
+			local _, ent, occ = VH:SQLFetch (x)
+
+			if x == 0 then
+				rlen = # _tostring (rows)
+				olen = # _tostring (occ)
+			end
+
+			list = list .. " " .. prezero (rlen, (x + 1)) .. ". [ O: " .. prezero (olen, occ) .. " ] " .. repnmdcoutchars (ent) .. "\r\n"
+		end
+
+		commandanswer (nick, gettext ("Proxy protection list") .. ":\r\n\r\n" .. list)
+
+	else -- empty
+		commandanswer (nick, gettext ("Proxy protection list is empty."))
+	end
+end
+
+----- ---- --- -- -
+
+function isproxprotected (addr)
+	if # cache_prpr == 0 then
+		return false
+	end
+
+	for _, prot in pairs (cache_prpr) do
+		if addr:match (prot) then
+			VH:SQLQuery ("update ignore `" .. tbl_sql.proxprot .. "` set `occurred` = `occurred` + 1 where `protected` = '" .. repsqlchars (prot) .. "'")
+			return true
 		end
 	end
 
@@ -18806,6 +18955,11 @@ function installusermenu (usr)
 		sopmenitm (usr, gettext ("Protection list") .. "\\" .. gettext ("Delete protection entry"), table_cmnds.protdel .. " %[line:<" .. gettext ("lre") .. ">]")
 		smensep (usr)
 		sopmenitm (usr, gettext ("Protection list") .. "\\" .. gettext ("Set user IP"), table_cmnds.setuserip .. " %[line:<" .. gettext ("nick") .. ">] %[line:" .. gettext ("ip") .. "]")
+		smensep (usr)
+		sopmenitm (usr, gettext ("Protection list") .. "\\" .. gettext ("Add proxy protection entry"), table_cmnds.proxprotadd .. " %[line:<" .. gettext ("lre") .. ">]")
+		sopmenitm (usr, gettext ("Protection list") .. "\\" .. gettext ("Proxy protection list"), table_cmnds.proxprotlist)
+		smensep (usr)
+		sopmenitm (usr, gettext ("Protection list") .. "\\" .. gettext ("Delete proxy protection entry"), table_cmnds.proxprotdel .. " %[line:<" .. gettext ("lre") .. " " .. gettext ("or") .. " *>]")
 	end
 
 -- authorization
@@ -23493,7 +23647,10 @@ function sendophelp (nick, clas, pm)
 	help = help .. " " .. trig .. table_cmnds.protadd .. " <" .. gettext ("lre") .. "> - " .. gettext ("Add protection entry") .. "\r\n"
 	help = help .. " " .. trig .. table_cmnds.protlist .. " - " .. gettext ("Protection list") .. "\r\n"
 	help = help .. " " .. trig .. table_cmnds.protdel .. " <" .. gettext ("lre") .. "> - " .. gettext ("Delete protection entry") .. "\r\n"
-	help = help .. " " .. trig .. table_cmnds.setuserip .. " <" .. gettext ("nick") .. "> <" .. gettext ("ip") .. "> - " .. gettext ("Set user IP") .. "\r\n\r\n"
+	help = help .. " " .. trig .. table_cmnds.setuserip .. " <" .. gettext ("nick") .. "> <" .. gettext ("ip") .. "> - " .. gettext ("Set user IP") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.proxprotadd .. " <" .. gettext ("lre") .. "> - " .. gettext ("Add proxy protection entry") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.proxprotlist .. " - " .. gettext ("Proxy protection list") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.proxprotdel .. " <" .. gettext ("lre") .. " " .. gettext ("or") .. " *> - " .. gettext ("Delete proxy protection entry") .. "\r\n\r\n"
 
 	-- ip authorization
 	help = help .. " " .. trig .. table_cmnds.authadd .. " <" .. gettext ("nick") .. "> <" .. gettext ("lre") .. "> - " .. gettext ("Add IP authorization entry") .. "\r\n"
@@ -24403,6 +24560,9 @@ VH:SQLQuery ("create table if not exists `" .. tbl_sql.hubs .. "` (`address` var
 	-- protected list
 	VH:SQLQuery ("create table if not exists `" .. tbl_sql.prot .. "` (`protected` varchar(255) not null primary key, `occurred` bigint(20) unsigned not null default 0)")
 
+	-- proxy protected list
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql.proxprot .. "` (`protected` varchar(255) not null primary key, `occurred` bigint(20) unsigned not null default 0)")
+
 -- statistics
 VH:SQLQuery ("create table if not exists `" .. tbl_sql.stat .. "` (`type` varchar(255) not null, `time` bigint(20) unsigned not null default 0, `count` text not null, primary key (`type`))")
 
@@ -24718,8 +24878,8 @@ VH:SQLQuery ("alter table `" .. tbl_sql.cmdex .. "` change column `occurred` `oc
 -- hublist
 -- not added
 
--- protected list
--- not added
+	-- protected list
+	-- not added
 
 -- statistics
 VH:SQLQuery ("alter table `" .. tbl_sql.stat .. "` change column `count` `count` text not null") -- count
@@ -24832,6 +24992,15 @@ function loadcachelists ()
 		for row = 0, rows - 1 do
 			local _, prot = VH:SQLFetch (row)
 			table.insert (cache_prot, prot)
+		end
+	end
+
+	local _, rows = VH:SQLQuery ("select `protected` from `" .. tbl_sql.proxprot .. "`") -- proxy protected list
+
+	if rows > 0 then
+		for row = 0, rows - 1 do
+			local _, prot = VH:SQLFetch (row)
+			table.insert (cache_prpr, prot)
 		end
 	end
 
@@ -27099,6 +27268,7 @@ end
 
 function repnmdcoutchars (data) -- todo: add & replacement
 	local safe = _tostring (data)
+	safe = safe:gsub (string.char (0), "\\0") -- null character
 	safe = safe:gsub ("%$", "&#36;")
 	safe = safe:gsub ("|", "&#124;")
 	return safe

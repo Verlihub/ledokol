@@ -19,6 +19,7 @@
 [130] Added: Script command is_ip_proxy and ip_is_proxy reply
 [131] Added: User logger parameters stat and tls
 [133] Added: antitest command to test match of specified text
+[135] Added: Proxy protection list, request by KCAHDEP
 [110] Improved: UTF-8 detection in avdetforce command when avdetforceconv is enabled
 [112] Improved: Allow to use class 0 in command permissions
 [115] Improved: Magnet parameter is optional in release bot, request by barrow
