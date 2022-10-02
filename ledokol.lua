@@ -4457,7 +4457,7 @@ function VH_OnUserCommand (nick, data)
 				return 0
 			end
 
-			if table_sets.chatintelcheckcmd == 1 and table_refu.ParseCommand and chatintelcheck (nick, addr, ucl, "", data, 6) then -- chat intelligence
+			if table_sets.chatintelcheckcmd == 1 and table_refu.ParseCommand and not isproxprotected (addr) and chatintelcheck (nick, addr, ucl, "", data, 6) then -- chat intelligence
 				return 0
 			end
 		end
@@ -4606,7 +4606,7 @@ function VH_OnUserCommand (nick, data)
 					return 0
 				end
 
-				if chatintelcheck (nick, addr, ucl, "", getconfig ("cmd_start_user"):sub (1, 1) .. "me " .. msg, 4) then -- chat intelligence
+				if not isproxprotected (addr) and chatintelcheck (nick, addr, ucl, "", getconfig ("cmd_start_user"):sub (1, 1) .. "me " .. msg, 4) then -- chat intelligence
 					return 0
 				end
 
@@ -4809,7 +4809,7 @@ function VH_OnUserCommand (nick, data)
 					return 0
 				end
 
-				if chatintelcheck (nick, addr, ucl, "", data, 4) then -- chat intelligence
+				if not isproxprotected (addr) and chatintelcheck (nick, addr, ucl, "", data, 4) then -- chat intelligence
 					return 0
 				end
 
@@ -7710,7 +7710,7 @@ function VH_OnParsedMsgPM (from, data, to)
 				return 0
 			end
 
-			if chatintelcheck (from, addr, fcls, to, data:match ("^%$To: [^ ]+ From: [^ ]+ %$<[^ ]+> (.+)$") or repnmdcoutchars (data), 2) then -- chat intelligence
+			if not isproxprotected (addr) and chatintelcheck (from, addr, fcls, to, data:match ("^%$To: [^ ]+ From: [^ ]+ %$<[^ ]+> (.+)$") or repnmdcoutchars (data), 2) then -- chat intelligence
 				return 0
 			end
 
@@ -7973,7 +7973,7 @@ function VH_OnParsedMsgMCTo (from, data, to)
 				return 0
 			end
 
-			if chatintelcheck (from, addr, fcls, to, data:match ("^%$MCTo: [^ ]+ %$[^ ]+ (.+)$") or repnmdcoutchars (data), 3) then -- chat intelligence
+			if not isproxprotected (addr) and chatintelcheck (from, addr, fcls, to, data:match ("^%$MCTo: [^ ]+ %$[^ ]+ (.+)$") or repnmdcoutchars (data), 3) then -- chat intelligence
 				return 0
 			end
 
@@ -8126,7 +8126,7 @@ function VH_OnParsedMsgChat (nick, data)
 				return 0
 			end
 
-			if chatintelcheck (nick, addr, clas, "", data:match ("^<[^ ]+> (.+)$") or repnmdcoutchars (data), 1) then -- chat intelligence
+			if not isproxprotected (addr) and chatintelcheck (nick, addr, clas, "", data:match ("^<[^ ]+> (.+)$") or repnmdcoutchars (data), 1) then -- chat intelligence
 				return 0
 			end
 
@@ -13628,7 +13628,7 @@ function sendoffmsg (from, line, clas)
 				return
 			end
 
-			if chatintelcheck (from, addr, clas, to, text, 5) then -- chat intelligence
+			if not isproxprotected (addr) and chatintelcheck (from, addr, clas, to, text, 5) then -- chat intelligence
 				return
 			end
 		end
