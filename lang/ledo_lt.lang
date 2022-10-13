@@ -1,77 +1,77 @@
 # Language: lt_LT
 # Charset: CP1257
 # Version: 2.9.7
-# Author: Mindaugas K
+# Author: Mindaugas K; Vlz
 # Email: mex@micro.lt
 
 Current topic: %s|Dabartinis topic: %s
-Current topic set by %s: %s|Dabartini topic nustate %s: %s
-This operation might take very long time depending on how much is going to be removed, please be patient.|
+Current topic set by %s: %s|Dabartiná topic nustatë %s: %s
+This operation might take very long time depending on how much is going to be removed, please be patient.|Ði operacija gali uþtrukti labai ilgai, priklausomai nuo to, kiek turinio bus paðalinta. Praðome kantriai laukti.
 days|dienos
-%s with class %d deleted %d IP logger plugin entries older than %d days.|%s su klase %d istryne %d IP logerio irasus senesnius nei %d dienos.
-%s with class %d deleted %d unbans older than %d days.|%s su klase %d istryne %d nuimtus banus senesnius nei %d dienos.
-%s with class %d deleted %d bans older than %d days.|%s su klase %d istryne %d banus senesnius nei %d dienos.
-%s with class %d deleted %d kicks older than %d days.|%s su klase %d istryne %d kickus senesnius nei %d dienos.
-I'm probably away. State your business and I might answer later if you're lucky.|Að tikriausiai toli. Nurodykite del ko kreipiates ir jeigu pamatysiu sia zinute butinai atsakysiu.
+%s with class %d deleted %d IP logger plugin entries older than %d days.|%s su klase %d iðtrynë %d IP logerio iraðus senesnius nei %d dienos.
+%s with class %d deleted %d unbans older than %d days.|%s su klase %d iðtrynë %d nuimtus banus, senesnius nei %d dienos.
+%s with class %d deleted %d bans older than %d days.|%s su klase %d iðtrynë %d banus, senesnius nei %d dienos.
+%s with class %d deleted %d kicks older than %d days.|%s su klase %d iðtrynë %d kickus, senesnius nei %d dienos.
+I'm probably away. State your business and I might answer later if you're lucky.|Að tikriausiai toli. Nurodykite dël ko kreipiatës, jeigu pamatysiu ðià þinutæ - bûtinai atsakysiu.
 Perform script update|Vykdyti skripto atnaujinimà
-Deleted %d main chat history messages.|Is atminties istrintos %d pagrindinio pokalbiu lango zinutes.
+Deleted %d main chat history messages.|Ið atminties iðtrintos %d pagrindinio pokalbiø lango þinutës.
 There are no main chat history messages to remove.|MC istorija tuðèia.
-Deleted %d operator chat history messages.|Is atminties istrintos %d operatoriu pokalbiu lango zinutes.
-There are no operator chat history messages to remove.|OpChat istorija tuðèia.
-%s with class %d deleted %d main chat history messages.|
+Deleted %d operator chat history messages.|Ið atminties iðtrintos %d operatoriø pokalbiø lango þinutës.
+There are no operator chat history messages to remove.|OpChat'e nëra kà valyti.
+%s with class %d deleted %d main chat history messages.| %s su klase %d iðtrynë %d pagrindinio pokalbiø lango þinutes.
 Unable to connect to target server. Please try again later.|Neámanoma prisijungti prie serverio, praðome pamëginti vëliau.
-Last %d main chat messages|
-Main chat history is empty.|Main chat istorija tuðèia.
+Last %d main chat messages|Paskutiniai %d pokalbiø lango praneðimai.
+Main chat history is empty.|Pokalbiø istorija tuðèia.
 %s is now known as: %s|%s dabar þinomas kaip: %s
-Last %d operator chat messages|
+Last %d operator chat messages|Paskutiniai %d operatoriø pokalbiø praneðimai.
 Operator chat history is empty.|OpChat istorija tuðèia.
-Valid priority is a number from %d to %d.|
-You are using latest version of %s, no update is required.|
+Valid priority is a number from %d to %d.|Tinkamas prioritetas yra skaièius nuo %d iki %d
+You are using latest version of %s, no update is required.|Naudojate vëliausià %s versijà, naujinti nereikia.
 Why would you send offline message to yourself?|Kodël tu nori siøsti offline praneðimus pats sau?
 User %s is online. Sending message directly.|User'is %s prisijungæs. Praneðimas siunèiamas tiesiogiai.
 Your offline message stored for user: %s|Jûsø offline praneðimas vartotojui '%s' iðsaugotas
-%s with IP %s and class %d sent offline message.|
-priority|
-Offline|Prisijungæs
-Online|Atsijungæs
+%s with IP %s and class %d sent offline message.|%s su IP %s ir klase %d iðsiuntë offline praneðimà.
+priority|prioritetas
+Offline|Atsijungæs
+Online|Prisijungæs
 I sent offline message to you on %s|Að Jums iðsiunèiau offline praneðimà %s
 My current status|Mano dabartinë bûsena
-%s with IP %s and class %d received offline messages.|
+%s with IP %s and class %d received offline messages.|%s su IP %s ir klase %d gavo offline praneðimus.
 Stored offline messages|Saugomi offline praneðimai
 Offline message list is empty.|Offline praneðimø sàraðas tuðèias.
-Deleted %d offline messages.|
+Deleted %d offline messages.|Iðtrinti %d offline praneðimai
 Couldn't delete offline messages because not found: %s|Negaliu iðtrinti offline praneðimø, nes jie nerasti: %s
-%s with class %d deleted all offline messages.|
-There are no offline messages to remove.|Nëra offline praneðimø, kuriuos galtum iðtrinti.
+%s with class %d deleted all offline messages.|%s su klase %d iðtrynë visus offline praneðimus.
+There are no offline messages to remove.|Nëra offline praneðimø, kuriuos galëtum iðtrinti.
 No topic is set.|Topic nenustatytas.
-%s with IP %s and class %d allowed due to forbidden nick exception: %s|
-message|
-%s with IP %s and class %d allowed due to forbidden description exception: %s|
-User you're trying to kick or redirect is protected: %s|
-%s with IP %s and class %d allowed due to forbidden tag exception: %s|
-type|
-%s with IP %s and class %d allowed due to forbidden connection type exception: %s|
-%s with class %d changed configuration variable %s: %s => %s|
-%s with IP %s and class %d allowed due to forbidden email exception: %s|
-User received own message: %s|
-%s with IP %s and class %d allowed due to forbidden share size exception: %s|
-Deleted %d releases from category: %s|
+%s with IP %s and class %d allowed due to forbidden nick exception: %s|%s su IP %s ir klase %d leidþiamas dël draudþiamos nick iðimties.
+message|praneðimas
+%s with IP %s and class %d allowed due to forbidden description exception: %s|%s su IP %s ir klase %d leidþiamas dël draudþiamos description iðimties.
+User you're trying to kick or redirect is protected: %s|Ueris, kurá nori iðspirti ar redirectinti yra apsaugotas: %s
+%s with IP %s and class %d allowed due to forbidden tag exception: %s|%s su IP %s ir klase %d leidþiamas dël draudþiamos tag iðimties
+type|tipas
+%s with IP %s and class %d allowed due to forbidden connection type exception: %s|%s su IP %s ir klase %d leidþiamas dël draudþiamos prisijungimo tipo iðimties.
+%s with class %d changed configuration variable %s: %s => %s|%s su klase %d pakeitë konfigûracijos reikðmæ %s: %s => %s
+%s with IP %s and class %d allowed due to forbidden email exception: %s|%s su IP %s ir klase %d leidþiamas dël draudþiamos email iðimties.
+User received own message: %s|Useris gavo savo paties praneðimà: %s
+%s with IP %s and class %d allowed due to forbidden share size exception: %s|%s su IP %s ir klase %d leidþiamas dël draudþiamos share dydþio iðimties.
+Deleted %d releases from category: %s|Iðtrinti %d leidiniai ið kategorijos: %s
 Why would you want to set empty topic?|Kodël nori nustatyti tuðèià topic?
-Modified forbidden nick with ban time %s: %s|
-Added forbidden nick with ban time %s: %s|
-Modified forbidden description with ban time %s: %s|
-Added forbidden description with ban time %s: %s|
-Modified forbidden tag with ban time %s: %s|
-Added forbidden tag with ban time %s: %s|
-Modified forbidden connection type with ban time %s: %s|
-Added forbidden connection type with ban time %s: %s|
-Modified forbidden email with ban time %s: %s|
-Added forbidden email with ban time %s: %s|
-Modified forbidden share size with ban time %s: %s|
-Added forbidden share size with ban time %s: %s|
-Couldn't add MyINFO exception because already exists: %s|Couldn't add MyINFO exception, nes toks jau egzistuoja: %s
+Modified forbidden nick with ban time %s: %s|Pakeistas draudþiamas nick su ban laiku %s: %s
+Added forbidden nick with ban time %s: %s|Pridëtas draudþiamas nick su ban laiku %s: %s
+Modified forbidden description with ban time %s: %s|Pakeistas draudþiamas description su ban laiku %s: %s
+Added forbidden description with ban time %s: %s|Pridëtas draudþiamas description su ban laiku %s: %s
+Modified forbidden tag with ban time %s: %s|Pakeistas draudþiamas tag su ban laiku %s: %s
+Added forbidden tag with ban time %s: %s|Pridëtas draudþiamas tag su ban laiku %s: %s
+Modified forbidden connection type with ban time %s: %s|Pakeistas draudþiamas prisijungimo tipas su ban laiku %s: %s
+Added forbidden connection type with ban time %s: %s|Pridëtas draudþiamas prisijungimo tipas su ban laiku %s: %s
+Modified forbidden email with ban time %s: %s|Pakeistas draudþiamas email su ban laiku %s: %s
+Added forbidden email with ban time %s: %s|Pridëtas draudþiamas email su ban laiku %s: %s
+Modified forbidden share size with ban time %s: %s|Pakeistas draudþiamas share dydis su ban laiku %s: %s
+Added forbidden share size with ban time %s: %s|Pridëtas draudþiamas share dydis su ban laiku %s: %s
+Couldn't add MyINFO exception because already exists: %s|Negaliu pridëti MyINFO iðimties, nes tokia jau egzistuoja: %s
 Added MyINFO exception: %s|Pridëta MyINFO iðimtis: %s
-and|
+and|ir
 Deleted forbidden nick: %s|Paðalintas draudþiamas nick: %s
 Couldn't delete forbidden nick because not found: %s|Negaliu paðalinti draudþiamo nick, nes nerasta: %s
 Deleted forbidden description: %s|Paðalintas draudþiamas description: %s
@@ -98,39 +98,39 @@ Forbidden email list|Draudþiamø email sàraðas
 Forbidden email list is empty.|Draudþiamø email list sàraðas tuðèias.
 Forbidden share size list|Draudþiamø share size sàraðas
 Forbidden share size list is empty.|Draudþiamø share size list sàraðas tuðèias.
-MyINFO exception list|
+MyINFO exception list|MyINFO iðimèiø sàraðas
 MyINFO exception list is empty.|MyINFO exception list sàraðas tuðèias.
-Deleted %d rows: %s|
-Known types are: %s|Þinomi tipai yra: %s
+Deleted %d rows: %s|Paðalintos %d eilutës: %s
+Known types are: %s|þinomi tipai yra: %s
 No rows to remove: %s|Nëra eiluèiø, kurias galëtumëm paðalinti: %s
-date|
-%s with IP %s and class %d used following command: %s|
-context|%s uþbanintas visam laikui: <%s> %s
-Deleted from chat rank list: %s|
-Not found in chat rank list: %s|
-Deleted from operator rank list: %s|
-Not found in operator rank list: %s|
-Antispam|
-Your chat rank is: %d|
-You have to write something in main chat to get started.|
-Custom nick list is empty.|
-Total share rank size: %s|
-Your operator rank is: %d|
-You have to do some operator actions to get started.|
-Top %d chat rankers|
-Chat rank list is empty.|
+date|data
+%s with IP %s and class %d used following command: %s|%s su IP %s ir klase %d panaudojo komandà: %s
+context|kontekstas
+Deleted from chat rank list: %s|Paðalintas ið chat reitingø sáraðo: %s
+Not found in chat rank list: %s|Nerastas chat reitingø saraðe: %s
+Deleted from operator rank list: %s|Paðalintas ið OP reitingø sáraðo: %s
+Not found in operator rank list: %s|Nerastas OP reitingø saraðe: %s
+Antispam|Antispam
+Your chat rank is: %d|Tavo chat reitingas yra: %d
+You have to write something in main chat to get started.|Kad pradëti, turi kà nors paraðyti pagrindiniame chat'e.
+Custom nick list is empty.|Pasirinktø nick sàraðas yra tuðèias.
+Total share rank size: %s|Bendro share reitingo dydis: %s
+Your operator rank is: %d|Tavo operatoriaus reitingas: %s
+You have to do some operator actions to get started.|Turi padaryti koká nors operatoriaus veiksmà, kad pradëtum.
+Top %d chat rankers|Top %d chat reitingai.
+Chat rank list is empty.|Chat reitingø sàraðas tuðèias.
 Top %d operator rankers|
-Operator rank list is empty.|
-string|
-No user results found.|
-Showing %d user log results|
-Size of user log table: %d [ %s: %d @ %s ]|
-Add protection entry|
-Delete protection entry|
-flags|
+Operator rank list is empty.|Operatoriø reitingø sàraðas tuðèias.
+string|string
+No user results found.|Userio rezultatai nerasti.
+Showing %d user log results|Rodomi %d userio rezultatai.
+Size of user log table: %d [ %s: %d @ %s ]|User log lentelës dydis: %d [ %s: %d @ %s ]
+Add protection entry|Pridëti apsaugos áraðà
+Delete protection entry|Paðalinti apsaugos raðà
+flags|flags
 %s dropped due to bad search request.|%s atjungtas uþ blogà paieðkos uþklausà.
-This command is either disabled or you don't have access to it.|Ði komanda arba atjungta, arba ja naudotis tau neuþtenka teisiø.
-Deleted antispam entry: %s|Iðtrintas antispam áraðas: %s
+This command is either disabled or you don't have access to it.|Ði komanda arba atjungta, arba ja naudotis tau nesuteikta teisë.
+Deleted antispam entry: %s|Iðtrintas antispam raðas: %s
 Couldn't delete antispam entry because not found: %s|Negaliu iðtrinti antispam áraðo, nes toks nerastas: %s
 Antispam list|Antispam sàraðas
 Antispam list is empty.|Antispam sàraðas tuðèias.
@@ -140,23 +140,24 @@ Deleted antispam exception entry: %s|Paðalinta antispam iðimtis: %s
 Couldn't delete antispam exception entry because not found: %s|Negaliu paðalinti antispam iðimties, nes tokia nerasta: %s
 Antispam exception list|Antispam iðimèiø sàraðas
 Antispam exception list is empty.|Antispam iðimèiø sàraðas tuðèias.
-The user you're trying to send offline message to is a bot. Message is discarded.|Tu bandai paraðyti þinutæ botui. Þinutë atmesta.
+The user you're trying to send offline message to is a bot. Message is discarded.|Tu bandai paraðyti þinutæ botui. þinutë atmesta.
 You can't start at user number %d when you only have %d accounts with class %d.|
 Showing %d out of total %d accounts with class %d starting at user number %d|
 There are no accounts with class: %d|
 Known classes are: %s|Þinomos klasës yra: %s
-%s with class %d sent say message: <%s> %s|
-%s with class %d had bad luck sending say message: <%s> %s|
+%s with class %d sent say message: <%s> %s|%s su klase %d iðsiuntë say þinutæ: <%s> %s
+%s with class %d had bad luck sending say message: <%s> %s|%s su klase %d nepavyko iðsiøsti say þinutës: <%s> %s
 You can't talk from nick whose class is higher or equals your own.|Tu negali kalbëti uþ userá, kurio klasë yra lygi arba aukðtesnë uþ tavàjà.
-%s with IP %s and class %d kicked: <%s> %s|
+%s with IP %s and class %d kicked: <%s> %s|%s su IP %s ir klase %d iðspirtas: <%s> %s
 %s with class %d deleted %d statistics plugin entries older than %d days.|
-offset|
-order|%s unbanned: <%s> %s
+offset|ofsetas
+order|eilës tvarka
+%s unbanned: <%s> %s| %s atbanintas: <%s> %s
 %s didn't get any search results.|%s negaus jokiø paieðkos rezultatø.
-Redirected %s with IP %s and class %d to %s: <%s> %s|
-Unknown protocol command from %s with IP %s and class %d: %s|
-Custom nick list|
-%s operator commands|
+Redirected %s with IP %s and class %d to %s: <%s> %s| Nukreipiau %s su IP %s ir klase %d á %s: <%s> %s
+Unknown protocol command from %s with IP %s and class %d: %s|Neþinoma protokolo komanda ið %s su IP %s ir klase %d: %s
+Custom nick list|Pasirinktas nick sàraðas
+%s operator commands|%s operatoriaus komandos
 Add antispam entry|Pridëti antispam taisyklæ
 Showing last %d lines out of total %d found in %s file|
 Delete antispam entry|Paðalinti antispam taisyklæ
@@ -166,11 +167,11 @@ Add MyINFO entry|Pridëti MyINFO taisyklæ
 Delete MyINFO entry|Paðalinti MyINFO taisyklæ
 MyINFO list|MyINFO sàraðas
 List of registered users by class|Registruotø useriø sàraðas pagal klasæ
-Speak from other nick|Kalbëti kito nick vardu
-Remove user or word from rank list|Paðalinti userá arbà þodá ið reitingø lentelës
+Speak from other nick|Kalbûti kito nick vardu
+Remove user or word from rank list|Paðalinti userá arba þodá ið reitingø lentelës
 %s with class %d deleted %d user log entries older than %d days.|
 List stored offline messages|Rodyti offline praneðimus
-Delete offline messages by date|Trinti offline praneðimus pagal datà
+Delete offline messages by date|Trinti offline praneðimus pagal data
 Delete all offline messages|Trinti visus offline praneðimus
 class|klasë
 Clean up tables|Iðvalyti lenteles
@@ -179,39 +180,39 @@ Delete all history messages|Trinti visus istorijos praneðimus
 Your operator rank|Tavo operatoriaus rangas
 Script configuration variables|Skripto parametrai
 Change configuration variable|Keisti skripto parametrus
-nick|
-This list of commands|
-%s user commands|
-Current topic|Esamas topic
+nick|nikas
+This list of commands|Ðis komandø sàraðas
+%s user commands|%s userio komandos
+Current topic|Dabartinis topic
 Your chat rank|Tavo chat reitingas
 You're not allowed to send private messages.|Tau uþdrausta siøsti privaèias þinutes.
 Unknown|Neþinoma
 identifier|identifikatorius
-Offline message to user|Offline praneðimasuseriui
+Offline message to user|Offline praneðimas useriui
 Main chat history|Main chat istorija
-%s statistics|
+%s statistics|%s statistika
 Script version: %s|Skripto versija: %s
 Total chat rank points: %d|
 Total operator rank points: %d|
 Average message count per user: %.2f|
-lre|
+lre|lre
 action|veiksmas
 Changed configuration variable %s: %s => %s|Pakeistas parametras %s: %s => %s
 Configuration variable %s can only be set to: %s|Parametras %s gali bûti nustatytas tik á: %s
 or|ar
-Configuration variable %s must be a number.|Parametras %s turi bûti skaièiusr.
+Configuration variable %s must be a number.|Parametras %s turi bûti skaièius.
 to|á
 Unknown configuration variable: %s|Neþinomas parametras: %s
 %s version: %s|%s versija: %s
 Not installed|Neinstaliuota
-User dropped due to spam: %s|
+User dropped due to spam: %s|Useris atjungtas uþ spamà
 variable|parametras
 value|reikðmë
 minutes|minutës
 %s library version: %s|%s bibliotekos versija: %s
-Reorder right click menu item|%s laikinai iðbanintas uþ %s: <%s> %s
+Reorder right click menu item|Pertvarkyti deðinio mygtuko meniø elementà
 lines|eilutës
-Couldn't add rank exception because already exists: %s|Negaliu pridëti reitingo iðimties, nes toks jau yra: %s
+Couldn't add rank exception because already exists: %s|Negaliu pridëti reitingo iðimties, nes tokia jau yra: %s
 Added rank exception: %s|Pridëta reitingo iðimtis: %s
 Deleted rank exception: %s|Paðalinta reitingo iðimtis: %s
 Couldn't delete rank exception because not found: %s|Negaliu iðtrinti reitingo iðimties, nes tokios nëra: %s
@@ -219,119 +220,119 @@ Rank exception list|Reitingo iðimèiø sàraðas
 Rank exception list is empty.|Reitingo iðimèiø sàraðas tuðèias.
 Add rank exception|Pridëti reitingo iðimtá
 Delete rank exception|Paðalinti reitingo iðimtá
-In order to use this feature you must turn off registered users list cache. Do it by setting hub configuration variable %s to %d and restarting the hub. Please note: Turning cache off is not recommended with large list of registered users.|
-Both|
+In order to use this feature you must turn off registered users list cache. Do it by setting hub configuration variable %s to %d and restarting the hub. Please note: Turning cache off is not recommended with large list of registered users.| Tam, kad naudoti ðià funkcijà, reikia iðjungti registruotø useriø saraðo keða. Tai galima padaryti nustaèius hubo konfigûracijos reikðmæ %s á %d ir perkrovus hubà. Praðau ásidëmëti, kad keðo iðjungimas nerekomenduotinas, kai yra daug registruotø useriø.
+Both|Abu
 Deleted search filter: %s|Paðalintas paieðkos filtras: %s
 Couldn't delete search filter because not found: %s|Negaliu paðalinti paieðkos filtro, nes toks  nerastas: %s
 Search filter list|Paieðkos filtrø sàraðas
 Search filter list is empty.|Paieðkos filtrø sàraðas tuðèias.
-Magnet URI: %s|
-Add search filter|Pridëti paieðkos filtrà
-Delete search filter|Paðalinti paieðkos filtrà
-Known actions are: %s|Þinomi veiksmai yra: %s
-Known flags are: %s|Þinomi flag'ai: %s
-Downloading version file: %s|
-Size of kicks table: %d [ %s: %d @ %s ]|
-Size of bans table: %d [ %s: %d @ %s ]|
-Size of unbans table: %d [ %s: %d @ %s ]|
-Size of IP logger plugin table: %d [ %s: %d @ %s ]|
-Size of statistics plugin table: %d [ %s: %d @ %s ]|
-Modified authorization entry: %s @ %s|Pakeistas autorizacijos áraðas: %s @ %s
-Added authorization entry: %s @ %s|Pridëtas autorizacijos áraðas: %s @ %s
-Deleted authorization entry: %s|Paðalintas autorizacijos áraðas: %s
+Magnet URI: %s|Magneto URI: %s
+Add search filter|Pridëti paieðkos filtra
+Delete search filter|Paðalinti paieðkos filtra
+Known actions are: %s|þinomi veiksmai yra: %s
+Known flags are: %s|þinomi flag'ai: %s
+Downloading version file: %s|Atsisiunèiamas versijos failas: %s
+Size of kicks table: %d [ %s: %d @ %s ]|Kick lentelës dydis: %d [ %s: %d @ %s ]
+Size of bans table: %d [ %s: %d @ %s ]|Ban lentelës dydis: %d [ %s: %d @ %s ]
+Size of unbans table: %d [ %s: %d @ %s ]|Neþinomø ban lentelës dydis: %d [ %s: %d @ %s ]
+Size of IP logger plugin table: %d [ %s: %d @ %s ]|IP Logerio lentelës dydis: %d [ %s: %d @ %s ]
+Size of statistics plugin table: %d [ %s: %d @ %s ]|Statistikos plugino lentelës dydis: %d [ %s: %d @ %s ]
+Modified authorization entry: %s @ %s|Pakeistas autorizacijos raðas: %s @ %s
+Added authorization entry: %s @ %s|Pridëtas autorizacijos raðas: %s @ %s
+Deleted authorization entry: %s|Paðalintas autorizacijos raðas: %s
 Couldn't delete authorization entry because not found: %s|Negaliu paðalinti autorizacijos áraðo, nes toks nerastas: %s
 IP authorization list|IP autorizacijø sàraðas
 IP authorization list is empty.|IP autorizacijø sàraðas tuðèias.
 Add IP authorization entry|Pridëti IP autorizacijà
 Delete authorization entry|Paðalinti IP autorizacijà
-ip|
-%s with IP %s and class %d authorized.|
-%s with IP %s and class %d failed authorization and disconnected.|
+ip|ip
+%s with IP %s and class %d authorized.|%s su IP %s ir klase %d autentifikavosi.
+%s with IP %s and class %d failed authorization and disconnected.|%s su IP %s ir klase %d nepavyko autentifikuotis ir buvo atjungtas.
 Category: %s|Kategorija: %s
 Set custom nick for yourself|Nusistatyti savo custom nick'a
 This nick is registered or in use and therefore can't be used as custom nick: %s|Nick'as registruotas ir todel negali bûti naudojamas kaip custom nick'as: %s
-Set your welcome message|Nustatyti savo pasveikinimo tekstà
+Set your welcome message|Nusistatyti savo pasveikinimo tekstà
 Division by zero is forbidden.|Dalyba ið nulio yra draudþiama.
 Show your welcome messages|Rodyti tavo pasveikinimo praneðimus
 Welcome message list|Pasveikinimo praneðimø sàraðas
 Delete user and his welcome messages|Iðtrinti userá ir jo pasveikinimus
-Nick|
+Nick|Nikas
 Login message|Login praneðimas
 Logout message|Logout praneðimas
 Welcome message list is empty.|Pasveikinimø praneðimø sàraðas tuðèias.
-Welcome messages were deleted for user: %s|
-Couldn't delete user from welcome message list because not found: %s|
-Your login message set: %s|
-%s with class %d changed his login message: %s|
-Your logout message set: %s|
-%s with class %d changed his logout message: %s|
-You don't have any welcome messages.|
-Your login message: %s|
-Add chatroom|
-Chatroom list|
-Delete chatroom|
-description|
+Welcome messages were deleted for user: %s|Buvo iðtringi ðio userio pasveikinimo praneðimai: %s
+Couldn't delete user from welcome message list because not found: %s|Negaliu iðtrinti userio pasveikinimø sáraðo, nes toks useris nerastas: %s
+Your login message set: %s|Tavo prisijungimo praneðimas nustatytas: %s
+%s with class %d changed his login message: %s|%s su klase %d pakeitë jo prisijungimo praneðimà: %s
+Your logout message set: %s|Tavo atsijungimo praneðimas nustatytas: %s
+%s with class %d changed his logout message: %s|%s su klase %d pakeitë jo atsisijungimo praneðimà: %s
+You don't have any welcome messages.|Tu neturi jokiø pasveikinimo praneðimø.
+Your login message: %s|Tavo prisijungimo praneðimas: %s
+Add chatroom|Pridëti pokalbiø kambará
+Chatroom list|Pokalbiø kambariø sàraðas
+Delete chatroom|Trinti pokalbiø kambará
+description|apraðymas
 minclass|
 maxclass|
-Modified chatroom: %s|
-Added chatroom: %s|
-Deleted chatroom: %s|
-Couldn't delete chatroom because not found: %s|
-Chatroom|
-Description|
-Chatroom list is empty.|
-Not found in country code statistics table: %s|
-Custom nick %s is now owned by real user and therefore has been reset for user: %s|
-%s is registered with class %d.|
-Query executed but didn't return any results.|
-Published: %s|
-Add search filter exception entry|
-Delete search filter exception entry|
-Search filter exception list|
-Couldn't add search filter exception entry because already exists: %s|
-Added search filter exception entry: %s|
-Deleted search filter exception entry: %s|
-Couldn't delete search filter exception entry because not found: %s|
-Search filter exception list is empty.|
-file|
+Modified chatroom: %s|Pakeistas pokalbiø kambarys: %s
+Added chatroom: %s|Pridëtas pokalbiø kambarys: %s
+Deleted chatroom: %s|Iðtrintas pokalbiø kambarys: %s
+Couldn't delete chatroom because not found: %s|Negaliu iðtrinti pokalbiø kambario, nes toks nerastas: %s
+Chatroom|Pokalbiø kambarys
+Description|Apraðymas
+Chatroom list is empty.|Pokalbiø kambarys tuðèias
+Not found in country code statistics table: %s|Nerastas ðalies kodø statistikos lentelëje: %s
+Custom nick %s is now owned by real user and therefore has been reset for user: %s|Pasirinktinis nick %s dabar priklauso tikram useriui: %s
+%s is registered with class %d.|%s yra registruotas nick su klase %d.
+Query executed but didn't return any results.|Uþklausa ávykdyta, bet negràþino jokiø rezultatø
+Published: %s|Paskelbta: %s
+Add search filter exception entry|Pridëti paieðkos filtro iðimties áraðà
+Delete search filter exception entry|Trinti paieðkos filtro iðimties áraðà
+Search filter exception list|Ieðkoti paieðkos filtrø iðimèiø saraðe
+Couldn't add search filter exception entry because already exists: %s|Negaliu pridëti paieðkos filtro iðimties áraðo, nes toks jau yra: %s
+Added search filter exception entry: %s|Pridëta paieðkos filtro iðimtis: %s
+Deleted search filter exception entry: %s|Paðalinta paieðkos filtro iðimtis: %s
+Couldn't delete search filter exception entry because not found: %s|Negaliu paðalinti paieðkos filtro iðimties, nes tokia nerasta: %s
+Search filter exception list is empty.|Paieðkos filtrø iðimèiø sàraðas yra tuðèias.
+file|failas
 Read hub logs|Skaityti hub'o logus
-Known files are: %s|Þinomi failai: %s
-Log file is empty or does not exist.|
-Add command notification exception|
-Delete command notification exception|
-Command notification exception list|
-Added command notification exception entry: %s|
-Couldn't add command notification exception entry because already exists: %s|
-Deleted command notification exception entry: %s|
-Couldn't delete command notification exception entry because not found: %s|
-Command notification exception list is empty.|
-Couldn't add chatroom because nick is already in use: %s|
+Known files are: %s|þinomi failai: %s
+Log file is empty or does not exist.|Logo failas tuðèias arba neegzistuoja.
+Add command notification exception|Pridëti komandos praneðimo iðimtá
+Delete command notification exception|Trinti komandos praneðimo iðimtá
+Command notification exception list|Komandos praneðimø iðimèiø sàraðas
+Added command notification exception entry: %s|Pridëtas komandos iðimties áraðas: %s
+Couldn't add command notification exception entry because already exists: %s|Negaliu pridëti komandos praneðimo iðimties áraðo, nes toks jau yra: %s
+Deleted command notification exception entry: %s|Paðalinta komandos praneðimo iðimtis: %s
+Couldn't delete command notification exception entry because not found: %s|Negaliu paðalinti komandos praneðimo iðimties, nes tokia nerasta: %s
+Command notification exception list is empty.|Komandos praneðimø iðimèiø sàraðas yra tuðèias.
+Couldn't add chatroom because nick is already in use: %s|Negaliu sukurti pokalbiø kambario, nes toks nick jau naudojamas: %s
 Query results|Uþklausos rezultatai
-Connections from your IP aren't allowed for another %d seconds.|
-Executed shell command didn't return any status code: %s|
-Returned status code: %s|
-Added by: %s|
-publisher|
-Release list is empty.|
-Last %d releases|
-No releases by requested publisher were found: %s|
-Last %d releases published by %s|
-No releases by requested category were found: %s|
-Last %d releases by category %s|
-No releases by requested search string were found: %s|
-time|
-Known search types are: %s|
-Configuration variable %s can't be empty.|
-Deleted from share rank list: %s|
-Not found in share rank list: %s|
-Your share rank|
-Top %d share rankers|
-You have to share %s and reconnect to get started.|
-Share rank list is empty.|
-Your share rank is: %s|
-Custom nick can't be longer than %d characters.|
-Delete custom nick|
-Deleted user from custom nick list: %s|
+Connections from your IP aren't allowed for another %d seconds.|Prisijungimai ið tavo IP neleidþiami dar %s sekundes.
+Executed shell command didn't return any status code: %s|Ávykdya shell komanda negraþino jokio bûsenos kodo: %s
+Returned status code: %s|Gràþintas bûsenos kodas: %s
+Added by: %s|Pridëjo: %s
+publisher|paskelbë
+Release list is empty.|Leidiniø sàraðas tuðèias
+Last %d releases|Paskutiniai %d leidiniai
+No releases by requested publisher were found: %s|Leidiniø pagal praðoma leidëjà nerasta: %s
+Last %d releases published by %s|Paskutiniai %d leidiniai, kuriuos iðleido %s
+No releases by requested category were found: %s|Pagal praðomà kategorijà leidimø nerasta: %s
+Last %d releases by category %s|Paskutiniai %d leidiniai pagal kategorijà %s
+No releases by requested search string were found: %s|Leidiniø pagal paieðkos frazæ nerasta: %s
+time|laikas
+Known search types are: %s|Þinomi paieðkos tipai yra: %s
+Configuration variable %s can't be empty.|Konfigûracijos reikðmë %s negali bûti tuðèia.
+Deleted from share rank list: %s|Paðalintas ið share reitingø sàraðo: %s
+Not found in share rank list: %s|Nerastas share reitingø sàraðe: %s
+Your share rank|Tavo reigingas
+Top %d share rankers|Top %d share reitingai
+You have to share %s and reconnect to get started.|Tam, kad pradëti, turi pasharinti %s ir prisijugungti ið naujo.
+Share rank list is empty.|Share reitingø sàraðas tuðèias
+Your share rank is: %s|Tavo share reitingas: %s
+Custom nick can't be longer than %d characters.| Pasirinktinis nick negali bûti ilgesnis nei %d simboliai.
+Delete custom nick|Trinti pasirinktiná nick
+Deleted user from custom nick list: %s|Iðtrintas useris ið pasirinktiniø nick sàraðo: %s
 Couldn't delete user from custom nick list because not found: %s|
 Selected type requires extra parameters. Please refer to manual for more information.|
 Size of registered users table: %d [ %s: %d @ %s ]|
@@ -380,50 +381,50 @@ limit|
 Size of chat ranks table: %d [ %s: %d @ %s ]|
 Size of share ranks table: %d [ %s: %d @ %s ]|
 Size of operator ranks table: %d [ %s: %d @ %s ]|
-content|
+content|turinys
 destination|
-interval|
-Add reminder|
-Delete reminder|
-Reminder list|
-Reminder list is empty.|
+interval|intervalas
+Add reminder|Pridëti priminimà
+Delete reminder|Ðalinti priminimà
+Reminder list|Priminimø sàraðas
+Reminder list is empty.|Priminimø sàraðas tuðèias.
 Known destinations are: %s|
-Known interval is: %s|
-Modified reminder: %s|
-Added reminder: %s|
-Deleted reminder: %s|
-Reminder not found: %s|
-Identifier: %s|
-Content: %s|
-Interval: %d of %d|
+Known interval is: %s|Þinomi intervalai yra: %s
+Modified reminder: %s|Priminimas pakeistas: %s
+Added reminder: %s|Priminimas pridëtas: %s
+Deleted reminder: %s|Priminimas paðalintas: %s
+Reminder not found: %s|Priminimas nerastas: %s
+Identifier: %s|Identifikatorius: %s
+Content: %s|Turinys: %s
+Interval: %d of %d|Intervalas: %d ið %d
 Destination: %s|
-Raw command|
-PM|
-MC|
-reply|
-Add chat responder|
-Delete chat responder|
-Main chat responder list|
-Main chat responder list is empty.|
-%s with class %d deleted %d operator chat history messages.|
-Search in user log|
+Raw command|Raw komanda
+PM|PM
+MC|MC
+reply|atsakyti
+Add chat responder|Pridëti chat atsakiklá
+Delete chat responder|Trinti chat atsakiklá
+Main chat responder list|Chat atsakikliø sàraðas
+Main chat responder list is empty.|Chat atsakikliø sàraðas tuðèias.
+%s with class %d deleted %d operator chat history messages.|%s su klase %d iðtrynë %d operatoriø chat istorijos praneðimus.
+Search in user log|Ieðkoti useriø loge
 Added chat responder: %s|Pridëtas chat atsakiklis: %s
-Deleted chat responder with ID: %d|
-Couldn't delete chat responder because ID not found: %d|
+Deleted chat responder with ID: %d|Paðalintas chat atsakiklis su ID: %d
+Couldn't delete chat responder because ID not found: %d|Negaliu paðalinti chat atsakiklio, nes ID nerastas: %d
 Responder|Atsakiklis
-Reply|
-Add chat responder exception|
-Delete chat responder exception|
-Chat responder exception list|
-Chat responder exception list is empty.|
-Couldn't add chat responder exception because already exists: %s|
-Added chat responder exception: %s|
-Deleted chat responder exception: %s|
-Couldn't delete chat responder exception because not found: %s|
-command|
+Reply|Atsakyti
+Add chat responder exception|Pridëti chat atsakiklio iðimtá
+Delete chat responder exception|Ðalinti chat atsakiklio iðimtá
+Chat responder exception list|Chat atsakiklio iðimtiø sàraðas
+Chat responder exception list is empty.|Chat atsakiklio iðimtiø sàraðas tuðèias
+Couldn't add chat responder exception because already exists: %s|Negaliu pridëti chat atsakiklio iðimties, nes tokia jau egzistuoja: %s
+Added chat responder exception: %s|Pridëta chat atsakiklio iðimtis: %s
+Deleted chat responder exception: %s|Paðalinta chat atsakiklio iðimtis: %s
+Couldn't delete chat responder exception because not found: %s|Negaliu paðalinti chat atsakiklio iðimties, nes tokia nerasta: %s
+command|komanda
 Customize script command|
 Customized script command: %s => %s|
-Unknown script command: %s|
+Unknown script command: %s|Neþinoma skripto komanda: %s
 Requested nick is real.|
 %s with class %d customized script command: %s => %s|
 Reset all custom commands|
@@ -433,12 +434,12 @@ Please unload the script and remove it from scripts directory.|
 Good luck.|Sëkmës.
 Please unload the script to finish.|
 %s with IP %s and class %d sent message to %s: %s|
-Script uptime: %s|
-month|
-months|
-day|
-hour|
-hours|
+Script uptime: %s|Skripto uptime: %s
+month|mënuo
+months|mënesiai
+day|diena
+hour|valanda
+hours|valandos
 Top %d used words|
 Deleted from word rank list: %s|
 Not found in word rank list: %s|
@@ -452,31 +453,31 @@ Word rank list is empty.|
 %s with IP %s and class %d allowed due to fake share exception: %s|
 %s with IP %s and class %d allowed due to clone exception: %s|
 %s with IP %s and class %d allowed due to same IP exception: %s|
-seconds|
-Add news item|
-Delete news items|
-Read hub news|
-Added news item: %s|
+seconds|sekundës
+Add news item|Pridëti naujienø elementà
+Delete news items|Ðalinti naujienø elementà
+Read hub news|Skaityti hub naujienas
+Added news item: %s|Pridëta naujiena: %s
 Hub news list is empty.|
-Deleted %d news items.|
+Deleted %d news items.|Paðalinta naujiena: %s
 Couldn't delete news items because not found: %s|
-Last %d news items|
+Last %d news items|Paskutinës %d naujienos
 By %s on %s: %s|
 There are no main chat history messages written by you.|
 Last %d main chat messages written by you|
-Your main chat history|
-Script memory usage: %s|
+Your main chat history|Tavo mainchat istorija
+Script memory usage: %s|S
 Failed to load translation file %s: %s|
 Force custom nick for user|
 Either the feature is disabled or user that you're trying to set welcome message for doesn't have access to it.|
-name|
-category|
-Add new release|
-Delete releases|
-List of available releases|
-Find release by name or category|
-equation|
-Calculate an equation|
+name|pavadinimas
+category|kategorija
+Add new release|Pridëti naujà leidiná
+Delete releases|Trinti leidinius
+List of available releases|Leidiniø sàraðas
+Find release by name or category|Rasti leidiná pagal pavadinimà arba kategorijà
+equation|lygtis
+Calculate an equation|Iðspræskite lygtá
 Both numbers must be either pi or numbers.|
 Known operations are: %s|
 Your logout message: %s|
@@ -487,8 +488,8 @@ User is not registered: %s|
 You are now going to be disconnected from the hub in order for your new nick to apply: %s|
 Renamed account %s: %s|
 %s with class %d renamed account %s: %s|
-Your login message deleted.|
-Your logout message deleted.|
+Your login message deleted.|Tavo prisijungimo praneðimas paðalintas.
+Your logout message deleted.|Tavo atsijungimo praneðimas paðalintas.
 %s with class %d deleted his login message.|
 %s with class %d deleted his logout message.|
 Logout message set for %s: %s|
@@ -499,12 +500,12 @@ Logout message deleted for user: %s|
 %s with class %d deleted login message for user: %s|
 %s with class %d deleted logout message for user: %s|
 %s with class %d deleted welcome messages for user: %s|
-minute|
+minute|minutë
 Last %d releases by search string %s|
-Modified release: %s|
-Added release: %s|
-Deleted release: %s|
-Couldn't delete release because not found: %s|
+Modified release: %s|Pakeistas leidinys: %s
+Added release: %s|Pridëtas leidinys: %s
+Deleted release: %s|Paðalintas leidinys: %s
+Couldn't delete release because not found: %s|Negaliu paðalinti leidinio, nes toks nerastas: %s
 Reminder preview|
 Preview of %s reminder: %s|
 Specified nick is already in use.|
@@ -512,28 +513,28 @@ Live user location statistics by country|Live user location statistics
 All time user location statistics|
 This feature requires %s or later installed on your system.|
 Total count since %s: %d|
-Unknown country|
-No users in the hub.|
-User location statistics table is empty.|
-Total count: %d|
+Unknown country|Neþinoma ðalis
+No users in the hub.|Hube nëra useriø.
+User location statistics table is empty.|Useriø statistikos lentelë tuðèia.
+Total count: %d|Bendroj sumoj: %d
 Deleted all rows: %s|
 %s with class %d deleted all user location entries.|
-address|
-owner|
+address|adresas
+owner|savininkas
 Add friendly hub|Pridëti draugiðkà hub
 Delete friendly hub|Paðalinti draugiðkà hub
-Show friendly hubs|Rodyti draugiðkus hub
-Added friendly hub: %s|Pridëtas draugiðkas hub: %s
-Modified friendly hub: %s|Pakeistas draugiðkas hub: %s
-Deleted friendly hub: %s|Paðalintas draugiðkas hub: %s
-Friendly hub not found: %s|Draugiðkas hub nerastas: %s
-Friendly hublist|Draugiðkø hub sàraðas
-Friendly hublist is empty.|Draugiðkø hub sàraðas tuðèias.
-Executed shell command didn't return any output.|Ávykdyta shell komanda neparaðë jokio atsakymo.
+Show friendly hubs|Rodyti draugiðkus hubus
+Added friendly hub: %s|Pridëtas draugiðkas hubas: %s
+Modified friendly hub: %s|Pakeistas draugiðkas hubas: %s
+Deleted friendly hub: %s|Paðalintas draugiðkas hubas: %s
+Friendly hub not found: %s|Draugiðkas hubas nerastas: %s
+Friendly hublist|Draugiðkø hubø sàraðas
+Friendly hublist is empty.|Draugiðkø hubø sàraðas tuðèias.
+Executed shell command didn't return any output.|Ávykdyta shell komanda negràþino jokio atsakymo.
 Returned output|Komandos atsakymas
 %s renamed %s to: %s|%s pervardintas %s á: %s
 %s plugin version: %s|%s plugin versija: %s
-second|
+second|sekundë
 You are now known as: %s|Tu þinomas kaip: %s
 You renamed %s to: %s|Tu pervardinai %s á: %s
 Spam exception from %s with IP %s and class %d in MC: %s|
@@ -610,7 +611,7 @@ Protection entry already exists: %s|
 Protection entry not found: %s|
 Protection list is empty.|
 Missing %s in configuration variable.|
-Chatroom: %s|
+Chatroom: %s|Pokalbiø kanalas: %s
 You've left the chatroom.|Tu palikai pokalbiø kanalà.
 User left the chatroom: %s|User'is paliko pokalbiø kanalà: %s
 User entered the chatroom: %s|User'is prisijungë á pokalbiø kanalà: %s
@@ -633,14 +634,14 @@ Not found in chat mode list: %s|
 Chat mode user list|
 Chat mode user list is empty.|
 %s user lookup|
-Add IP gag|
-Added IP gag: %s|
+Add IP gag|Uþèiaupti IP
+Added IP gag: %s|IP Uþèiauptas: %s
 Modified IP gag: %s|
-Deleted IP gag: %s|
+Deleted IP gag: %s|IP leidþiama kalbëti: %s
 IP gag not found: %s|
-IP gag list|
-IP gag list is empty.|
-Delete IP gag|
+IP gag list|Uþèiauptø IP sàraðas
+IP gag list is empty.|Uþèiauptø IP sàraðas yra tuðèias
+Delete IP gag|Leisti IP kalbëti vël
 Main chat is currently disabled for you.|
 Main chat is currently disabled for you because: %s|
 Cleared temporary IP gag list.|
@@ -665,7 +666,7 @@ Chatrooms|Pokalbiø kambariai
 Reminders|Priminimai
 Hub news|Hubo naujienos
 Chat responder|Chat atsakiklis
-Releases|Relyzai
+Releases|Leidiniai
 Offline messenger|Offline þinutës
 Chat history|Chat istorija
 Commands|Komandos
@@ -680,9 +681,9 @@ Configuration|Konfigûracija
 Clear main chat|Iðvalyti mainchat
 Chat cleanup performed by %s|Chat iðvalë %s
 Search in registered users list|Paieðka tarp registruotø useriø
-Registered users list statistics|
-Registered users list results for %s|
-Class %d: %d|
+Registered users list statistics|Registruotø useriø sàraðo statistika
+Registered users list results for %s|Registruotø useriø sàraðo statistokos rezultatai %s
+Class %d: %d|Klasë %d: %d
 Registered users list is empty.|Nëra registruotø useriø.
 This feature requires following binary installed on your system: %s|
 Configuration directory: %s|Konfigûracijos katalogas: %s
@@ -695,24 +696,24 @@ Not found in search rank list: %s|
 Size of search ranks table: %d [ %s: %d @ %s ]|
 Size of user location statistics table: %d [ %s: %s ]|
 Open files limit: %d|
-User information|
-User not in list: %s|
-Nick: %s|
-Description: %s|
-Tag: %s|
-Mode: %s|
-Slots: %s|
-Hubs: %s|
-Limiter: %s KiB/s|
-Connection: %s|
-Status: %s|
-Email: %s|
-Share: %s|
-Exact share: %s|
-Class: %d|
-IP: %s|
-DNS: %s|
-Country: %s|Salies kodas: %s
+User information|Userio informacija
+User not in list: %s|Userio nëra nick sàraðe: %s
+Nick: %s|Nikas: %s
+Description: %s|Apraðymas: %s
+Tag: %s|Þyma: %s
+Mode: %s|Reþimas: %s
+Slots: %s|Slotai: %s
+Hubs: %s|Hubai: %s
+Limiter: %s KiB/s|Srauto ribojimas: %s KiB/s
+Connection: %s|Prisijungimas: %s
+Status: %s|Bûsena: %s
+Email: %s|Email: %s
+Share: %s|Share: %s
+Exact share: %s|Tiskslus share: %s
+Class: %d|Klasë: %d
+IP: %s|IP: %s
+DNS: %s|DNS: %s
+Country: %s|ðalies kodas: %s
 Client: %s|Klientas: %s
 Version: %s|Versija: %s
 Normal|
@@ -748,34 +749,34 @@ Away fileserver fireball TLS|
 Normal away fileserver fireball TLS|
 Unable to get bot information: %s|
 Bot information|Boto informacija
-Owner script: %s|
+Owner script: %s|Savininko skriptas: %s
 %s with IP %s and class %d allowed due to forbidden DNS exception: %s|
 In order to use this feature you need to enable DNS lookup. Do it by setting hub configuration variable %s to %d. Please note: Enabling DNS lookup might slow your hub performance down.|
 Modified forbidden DNS with ban time %s: %s|
 Added forbidden DNS with ban time %s: %s|
-Deleted forbidden DNS: %s|
+Deleted forbidden DNS: %s|Paðalintas uþdraustas DNS: %s
 Couldn't delete forbidden DNS because not found: %s|
-Forbidden DNS list|
-Forbidden DNS list is empty.|
+Forbidden DNS list|Uþdraustø DNS sàraðas
+Forbidden DNS list is empty.|Uþdraustø DNS sàraðas yra tuðèias.
 Powered by %s|
-Warning: %s|
-Open files limit set to %d is smaller than maximum users configuration which is %d. You can correct this by setting %s to %d or higher and restarting the hub.|
-Additional help|
+Warning: %s|Áspëjimas: %s
+Open files limit set to %d is smaller than maximum users configuration which is %d. You can correct this by setting %s to %d or higher and restarting the hub.|Atvirø failø limitas, nustatytas á %d yra maþesnis, nei maksimalus useriø skaièius konfigûracijoje. Tai galima pataisyti nustaèius %s á %d ar daugiau ir perkrovus hubà.
+Additional help|Papildoma pagalba
 Remove all %s tables and files|
 You can't kick user whose class is higher or equals your own: %s|
 Your topic contains forbidden characters which can't be used for security reason: %s|
-Hub uptime: %s|
-User count: %s|
-Total share: %s|
+Hub uptime: %s|Hubas veikia: %s
+User count: %s|Prisijungæ useriai: %s
+Total share: %s|Bendras share: %s
 %s with IP %s and class %d tries to speak with IP gag in MC: %s|
 %s with IP %s and class %d tries to speak with IP gag in PM to %s with IP %s and class %d: %s|
 Private message replaced for user: %s|
-Command logger|
+Command logger|Komandø registratorius
 Showing %d entries from command logger|
 Command logger is empty.|
 %s with class %d deleted %d command log entries older than %d days.|
 Size of command log table: %d [ %s: %d @ %s ]|
-password|
+password|slaptaþodis
 Modify IP authorization entry|
 Couldn't modify authorization entry because not found: %d|
 Uptime: %s|
@@ -794,7 +795,7 @@ Deleted chat replacer with ID %d: %s|
 Couldn't delete chat replacer because not found: %s|
 Chat replacer list|
 Chat replacer list is empty.|
-Replace|
+Replace|Pakeisti
 Modified chat replacer exception with type %d: %s|
 Added chat replacer exception with type %d: %s|
 Deleted chat replacer exception with type %d: %s|
@@ -814,7 +815,7 @@ Please reconnect to gain %d seconds of uptime in order to use hub registration.|
 Dropping %s with IP %s and class %d due to protocol flood detection: %s|
 Protocol flood detected from your client: %s|
 Automatic update check detected stable version of %s available, use following command to update: %s|
-menu|
+menu|meniu
 Dropping user due to clone detection from IP %s with class %d: %s = %s|
 Configuration variable %s must be a valid IP address.|
 Average share per user: %s|
@@ -828,11 +829,11 @@ Added blocked PM entry: %s|
 Deleted blocked PM entry: %s|
 Blocked PM list is empty.|
 Couldn't delete blocked PM entry because not found: %s|
-Reason: %s|
+Reason: %s|Prieþastis: %s
 You're not allowed to send PM to this user because: %s|
 %s with class %d deleted %d antispam entries with occurrence less than %d.|
 %s with class %d deleted %d search filter entries with occurrence less than %d.|
-query|
+query|uþklausa
 Execute MySQL query|Vykdyti MySQL uzklausa
 Execute shell command|Vykdyti shell komanda
 Experts only|Tik ekspertams
@@ -849,30 +850,30 @@ Please wait another %d seconds before using hub search engine.|
 Loading %s in memory...|
 Finished loading %s in memory.|
 Unable to locate %s in hub configuration directory.|
-Add right click menu item|
-Delete right click menu item|
-List of right click menu items|
+Add right click menu item|Pridëti deðiniojo mygtuko meniø elementà
+Delete right click menu item|Ðalinti deðiniojo mygtuko meniø elementà
+List of right click menu items|Deðiniojo mygtuko meniu elementai
 Blacklisted connection from IP %s dropped: %s|
 To add multiple entries with this command you need to separate every entry by space.|
-Add IP watch entry|
-Delete IP watch entry|
-List of IP watch entries|
-result|
-Modified IP watch entry: %s|
-Added IP watch entry: %s|
+Add IP watch entry|Pridëti IP stebëjimo áraðà
+Delete IP watch entry|Ðalinti  IP stebëjimo áraðà
+List of IP watch entries|IP stebëjimo áraðø sàraðas
+result|rezultatas
+Modified IP watch entry: %s|Pakeistas IP stebëjimo áraðas: %s
+Added IP watch entry: %s|Pridëtas IP stebëjimo áraðas: %s
 Known results are: %s|
-Deleted IP watch entry: %s|
-IP watch list is empty.|
+Deleted IP watch entry: %s|Paðalintas IP stebëjimo áraðas: %s
+IP watch list is empty.|IP stebëjimo áraðø sàraðas yra tuðèias.
 Couldn't delete IP watch entry because not found: %s|
-IP watch notification from %s with IP %s: %s|
-unknown nick|
+IP watch notification from %s with IP %s: %s|IP stebëjimo praneðimas ið %s su IP %s: %s
+unknown nick|neþinomas nick
 Country code gag|Uþèiaupt pagal ðalies kodà
-Add country code gag|Pridet sali, kuriai norim uzkist burna
+Add country code gag|Pridëti ðalá, kuriai norim uþkiðt burnà
 Added country code gag: %s|Uþkiðta burna ðiai ðaliai: %s
 Added country code gag %s with reason: %s|
-Modified country code gag: %s|Pakeista ðalis, kuri negali ðnekët: %s
+Modified country code gag: %s|Pakeista ðalis, kuri negali ðnekëti: %s
 Modified country code gag %s with reason: %s|
-Deleted country code gag: %s|Ðiai ðaliai vël leidþiama ðnekëti: %s
+Deleted country code gag: %s|ðiai ðaliai vël leidþiama ðnekëti: %s
 Country code gag not found: %s|
 Country code gag list|
 Country code gag list is empty.|
@@ -880,7 +881,7 @@ Delete country code gag|
 Cleared country code gag list.|
 %s with IP %s and class %d tries to speak with country code gag in MC: %s|
 %s with IP %s and class %d tries to speak with country code gag in PM to %s with IP %s and class %d: %s|
-No reason specified|
+No reason specified|Prieþastis nenurodyta
 Automatically deleted %d user log entries older than %d days.|
 Main chat message replaced for user: %s|
 Unknown protocol command from IP %s before login: %s|
@@ -898,8 +899,8 @@ Deleted forbidden NMDC version: %s|
 Couldn't delete forbidden NMDC version because not found: %s|
 Forbidden client supports list|
 Forbidden client supports list is empty.|
-Forbidden NMDC version list|
-Forbidden NMDC version list is empty.|
+Forbidden NMDC version list|Uþdraustas NMDC versijø sàraðas
+Forbidden NMDC version list is empty.|Uþdraustas NMDC versijø sàraðas yra tuðèias.
 %s with IP %s and class %d allowed due to forbidden client supports exception: %s|
 %s with IP %s and class %d allowed due to forbidden NMDC version exception: %s|
 City: %s|Miestas: %s
@@ -910,60 +911,60 @@ Continent: %s|Kontinentas: %s
 Postal code: %s|Paðto kodas: %s
 Coordinates: %.4f %.4f|
 Metro code: %d|Metro kodas: %d
-Area code: %d|
+Area code: %d|Srities kodas: %s
 Drop users with IP|Atjungti userius su IP
 No users found with IP: %s|Neradau jokiu useriu su IP: %s
-Dropped %d users with IP: %s|
-%s dropped %d users with IP: %s|
+Dropped %d users with IP: %s|Atjungti %d useriai kuriø IP: %s
+%s dropped %d users with IP: %s|%s atjungë %d userius, kuriø IP: %s
 Live user location statistics by city|
 Live user location statistics by city from %s=%s|
 No users in the hub from: %s=%s|
-Help notes|
-parameter|
-Command parameters %s are always required, while %s are optional.|
-Quoted parameters %s or %s must be used with quotes.|
+Help notes|Pagalbos pastabos
+parameter|parametras
+Command parameters %s are always required, while %s are optional.|Komandø parametrus, parodytus kaip %s visuomet privaloma nurodyti, tuo tarpu %s yra nebûtini. 
+Quoted parameters %s or %s must be used with quotes.|Parametrai su kabutëmis, tokie kaip: %s, arba %s, visuomet turi bûti naudojami su kabutëmis.
 IP information|IP informacija
 IP information not available: %s|Nëra IP informacijos: %s
 Message replaced for user with IP %s and class %d in MC: <%s> %s|
-IP %s permanently banned: <%s> %s|
-Nick %s permanently banned: <%s> %s|
-Range %s permanently banned: <%s> %s|
-Host %s permanently banned: <%s> %s|
-Share %s permanently banned: <%s> %s|
-Prefix %s permanently banned: <%s> %s|
-IP %s temporarily banned until %s: <%s> %s|
-Nick %s temporarily banned until %s: <%s> %s|
-Range %s temporarily banned until %s: <%s> %s|
-Host %s temporarily banned until %s: <%s> %s|
-Share %s temporarily banned until %s: <%s> %s|
-Prefix %s temporarily banned until %s: <%s> %s|
-IP %s unbanned: <%s> %s|
-Nick %s unbanned: <%s> %s|
-Range %s unbanned: <%s> %s|
-Host %s unbanned: <%s> %s|
-Share %s unbanned: <%s> %s|
-Prefix %s unbanned: <%s> %s|
-Known contexts are: %s|
+IP %s permanently banned: <%s> %s|IP %s uþbanintas visam laikui: <%s> %s
+Nick %s permanently banned: <%s> %s|Nick %s uþbanintas visam laikui: <%s> %s
+Range %s permanently banned: <%s> %s|Range %s uþbanintas visam laikui: <%s> %s
+Host %s permanently banned: <%s> %s|Hostas %s uþbanintas visam laikui: <%s> %s
+Share %s permanently banned: <%s> %s|Share %s uþbanintas visam laikui: <%s> %s
+Prefix %s permanently banned: <%s> %s|Prefiksas %s uþbanintas visam laikui: <%s> %s
+IP %s temporarily banned until %s: <%s> %s|IP %s laikinai uþbanintas iki %s: <%s> %s
+Nick %s temporarily banned until %s: <%s> %s|Nick %s laikinai uþbanintas iki %s: <%s> %s
+Range %s temporarily banned until %s: <%s> %s|Range %s laikinai uþbanintas iki %s: <%s> %s
+Host %s temporarily banned until %s: <%s> %s|Hostas %s laikinai uþbanintas iki %s: <%s> %s
+Share %s temporarily banned until %s: <%s> %s|Share %s laikinai uþbanintas iki %s: <%s> %s
+Prefix %s temporarily banned until %s: <%s> %s|Prefiksas %s laikinai uþbanintas iki %s: <%s> %s
+IP %s unbanned: <%s> %s|IP %s atbanintas: <%s> %s
+Nick %s unbanned: <%s> %s|Nick %s atbanintas: <%s> %s
+Range %s unbanned: <%s> %s|Range %s atbanintas: <%s> %s
+Host %s unbanned: <%s> %s|Hostas %s atbanintas: <%s> %s
+Share %s unbanned: <%s> %s|Share %s atbanintas: <%s> %s
+Prefix %s unbanned: <%s> %s|Prefiksas %s atbanintas: <%s> %s
+Known contexts are: %s|Þinomi kontekstai yra: $s
 Known orders are: %s|
 Modified right click menu item: %s|
 Added right click menu item: %s|
 Deleted right click menu item: %s|
 Right click menu item not found: %d|
 Right click menu item list is empty.|
-Menu item|
-Menu command|
+Menu item|Meniu elementas
+Menu command|Meniu komanda
 Changed right click menu item order: %s|
-Separator or eraser|
+Separator or eraser|Skirtukas arba trintukas
 Nick and IP %s unbanned: <%s> %s|
 Other %s unbanned: <%s> %s|
-Vote for user to be kicked|
-You don't want to vote for kicking an operator.|
-User voted kick|
-You have already voted for kicking that user.|
-There is an error in following antispam entry pattern|
-Pattern|
-Error|
-Solution|
+Vote for user to be kicked|Balstuoti dël userio iðspyrimo
+You don't want to vote for kicking an operator.|Tu nenori balsuoti dël operatoriaus iðspyrimo.
+User voted kick|Useris balsavo iðspirti
+You have already voted for kicking that user.|Tu jau balsavai dël userio iðspyrimo.
+There is an error in following antispam entry pattern|Þemiau pateiktame antispam ðablone aptikta klaida
+Pattern|Ðablonas
+Error|Klaida
+Solution|Sprendimas
 There is an error in following search filter pattern|
 There is an error in following search filter exception pattern|
 There is an error in following antispam exception entry pattern|
@@ -983,19 +984,19 @@ Added replacer in PM: %s|
 Added replacer in MC and PM: %s|
 Message replaced for user with IP %s and class %d in PM to %s with IP %s and class %d: <%s> %s|
 Message ignored due to flood detection from %s with IP %s and class %d in MC: %s|
-Users with same IP|
+Users with same IP|Useriai su vienodu IP
 Parameter count mismatch detected in following translation string: %s|
-Infected user detected|
-Found files|
-Infected user detected with nick %s and IP %s and share %s and spent time: %s|
-Sadly I don't have access to send infected user information to AVDB, please ask maintainer of this script to add your server IP address to access list. AVDB reporting feature has been automatically disabled.|
-In order to send infected user information to AVDB you need to ask maintainer of this script to add your server IP address to AVDB access list.|
-Antivirus statistics|
-File names used for search|
-File extensions used for search|
-Possibly infected users|
-Spent time: %s|
-Infected user logged in with IP %s and share %s: %s|
+Infected user detected|Aptiktas infekuotas useris
+Found files|Rasti failai
+Infected user detected with nick %s and IP %s and share %s and spent time: %s|Aptiktas infekuotas useris su nick %s ir share %s, kuris praleido laiko: %s
+Sadly I don't have access to send infected user information to AVDB, please ask maintainer of this script to add your server IP address to access list. AVDB reporting feature has been automatically disabled.|Deja, að negaliu siøsti uþkrësto vartotojo informacijos á AVDB, papraðykite ðio skripto priþiûrëtojo átraukti jûsø serverio IP adresà á prieigos sàraðà. AVDB ataskaitø teikimo funkcija buvo automatiðkai iðjungta.
+In order to send infected user information to AVDB you need to ask maintainer of this script to add your server IP address to AVDB access list.|Norëdami nusiøsti uþkrësto vartotojo informacijà á AVDB, turite papraðyti ðio skripto priþiûrëtojo átraukti jûsø serverio IP adresà á AVDB prieigos sàraðà.
+Antivirus statistics|Antiviruso statistika
+File names used for search|Paieðkai naudoti failø pavadinimai
+File extensions used for search|Paieðkai naudotos failø galûnës
+Possibly infected users|Galimai infekuoti useriai
+Spent time: %s|Praleistas laikas: %s
+Infected user logged in with IP %s and share %s: %s|Infekuotas useris yra prisijungæs su IP %s ir share %s: %s
 Loaded %d of %d with totally %d items: %s|
 Infected user information sent to %s: %s|
 Failed to load information from %s: %s|
@@ -1003,30 +1004,30 @@ Failed to send information to %s: %s|
 Loaded none with totally %d items: %s|
 Infected user found with IP %s and share %s: %s|
 Server didn't reply with expected status code.|
-Size of %s: %d @ %s|
-Clear kick votes for user|
-Vote kick list|
-Vote kick list is empty.|
-Votes: %d of %d|
-Voters: %s|
-Triggers|
-Add trigger|
-Trigger list|
-Delete trigger|
-Modified trigger: %s|
-Added trigger: %s|
-Deleted trigger: %s|
-Trigger not found: %s|
-Trigger list is empty.|
-Class range: %d to %d|
-Pinger|
-Guest|
-Registered|
-VIP|
-Operator|
-Cheef|
-Administrator|
-Master|
+Size of %s: %d @ %s|%s Dydis: %d @ %s
+Clear kick votes for user|Iðvalyti praspyrimo balsus useriui
+Vote kick list|Iðspyrimo balsavimø sàraðas
+Vote kick list is empty.|Iðspyrimo balsavimø sàraðas yra tuðèias
+Votes: %d of %d|Balsai: %d ið %d
+Voters: %s|Balsavo: %s
+Triggers|Trigeriai
+Add trigger|Pridëti trigerá
+Trigger list|Trigeriø sàraðas
+Delete trigger|Ðalinti trigerá
+Modified trigger: %s|Modifikuotas trigeris: %s
+Added trigger: %s|Pridëtas trigeris: %s
+Deleted trigger: %s|Paðalintas trigeris %s
+Trigger not found: %s|Trigeris nerastas: %s
+Trigger list is empty.|Trigeriø sàraðas tuðèias.
+Class range: %d to %d|Klasiø intervalas nuo %d iki %d
+Pinger|Pingeris
+Guest|Sveèias
+Registered|Registruotas
+VIP|VIP
+Operator|Operatorius
+Cheef|Ðefas
+Administrator|Administratorius
+Master|Master
 News item added by %s: %s|
 Your connection request is blocked because user that you're trying connect to was detected as virus spreader: %s|
 Connection requests to following user will be blocked: %s|
@@ -1042,13 +1043,13 @@ Failed to move file: %s|
 Downloading translation file: %s|
 File not found on update server: %s|
 File not found on remote server: %s|
-File is empty.|
+File is empty.|Failas yra tuðèias.
 Force infected user detection|
 You can't block user whose class is higher or equals your own: %s|
 User already blocked: %s|
 item|
-Search in %s|
-Antivirus|
+Search in %s|Ieðkoti tarp %s
+Antivirus|Antivirusas
 Nothing was found in: %s|
 Searching for %s in %s: %s|
 Showing %d results from %s|
@@ -1067,14 +1068,14 @@ Couldn't delete automatic country chatroom entrance because ID not found: %d|
 Deleted automatic country chatroom entrance with ID: %d|
 Automatic country chatroom entrance list is empty.|
 Please note, following function is required for features available in this version of %s and is currently not available in running version of %s but is available in latest update: %s|
-note|
-Access is restricted.|
-Convert LRE to plain text|
-LRE converted to plain text: %s|
-Please check your command syntax, something is wrong there.|
-Entry used in detection: %s|
-Exception used in detection: %s|
-text|
+note|pastaba
+Access is restricted.|Prieiga yra apribota.
+Convert LRE to plain text|Konvertuoti LRE á tekstà
+LRE converted to plain text: %s|LRE konvertuotas á tekstà: %s
+Please check your command syntax, something is wrong there.|Pasitikrink savo komandos sintaksæ, kaþkas ten negerai.
+Entry used in detection: %s|Áraðas, naudojamas aptikimui: %s
+Exception used in detection: %s|Iðimtis, naudojama aptikimui: %s
+text|tekstas
 Delete history messages by text|
 Deleted %d main chat history messages by text: %s|
 %s with class %d deleted %d main chat history messages by text: %s|
@@ -1099,18 +1100,18 @@ Users with connection type %s found in following hubs|
 Users with email address %s found in following hubs|
 Users with share size %s found in following hubs|
 Users with IP address %s found in following hubs|
-Blocked PM|
-Right click menu|
+Blocked PM|Blokuotas PM
+Right click menu|Deðiniojo klaviðo meniu
 IP watch|
 Hard IP bans|
-Chatroom history|
-Chatroom history is empty.|
-Last %d chatroom messages|
+Chatroom history|Pokalbiø kanalo istorija
+Chatroom history is empty.|Pokalbiø kanalo istorija yra tuðèia.
+Last %d chatroom messages|Paskutiniai %d pokalbiø kambario praneðimai
 There are no chatroom history messages to remove: %s|
 Deleted %d chatroom history messages: %s|
 %s with class %d deleted %d chatroom history messages: %s|
 Set your chat mode|
-real|
+real|realus
 Specified country code isn't valid: %s|
 You can't block user who don't share anything: %s|
 You can't kick user who don't share anything: %s|
@@ -1124,14 +1125,14 @@ Disabled right click menu item: %s|
 Enabled right click menu item: %s|
 %s added to search block list.|
 Your search request is discarded due to previous forbidden search request or result: %s|
-Hub URL: %s|
+Hub URL: %s|Hubo URL: %s
 Search filter block list|
 Delete search filter block list entry|
 Search filter block list is empty.|
 Deleted search filter block list entry: %s|
 Couldn't delete search filter block list entry because not found: %s|
-Yes|
-No|
+Yes|Taip
+No|Ne
 %s with class %d changed configuration variable %s.%s: %s => %s|
 Please wait another %d seconds before using public chat.|
 Please wait another %d seconds before using private chat.|
@@ -1139,8 +1140,8 @@ Low chat uptime of %d seconds from %s with IP %s and class %d in PM to %s with I
 Low chat uptime of %d seconds from %s with IP %s and class %d in MC: %s|
 Low chat uptime of %d seconds from %s with IP %s and class %d in command: %s|
 Low registration uptime from %s with IP %s and class %d: %s|
-%d seconds|
-Thank you, your report has been accepted.|
+%d seconds|%d sekundës
+Thank you, your report has been accepted.|Aèiû, Jûsø praneðimas buvo priimtas.
 Low search uptime of %d seconds from %s with IP %s and class %d as any file: %s|
 Low search uptime of %d seconds from %s with IP %s and class %d as audio file: %s|
 Low search uptime of %d seconds from %s with IP %s and class %d as compressed file: %s|
@@ -1150,15 +1151,15 @@ Low search uptime of %d seconds from %s with IP %s and class %d as picture: %s|
 Low search uptime of %d seconds from %s with IP %s and class %d as video: %s|
 Low search uptime of %d seconds from %s with IP %s and class %d as folder: %s|
 Low search uptime of %d seconds from %s with IP %s and class %d as TTH: %s|
-User dropped: %s|
-%d of %d|
+User dropped: %s|Useris atjungtas: %s
+%d of %d|%d ið %d
 Main chat responder list contains %d items, but none matched your pattern.|
-word|
+word|þodis
 Top %d used words with filter: %s|
-Support hub|
-User manual|
+Support hub|Pagalbos hubas
+User manual|Vartotojo instrukcija
 range|
-There is an error in following forbidden chat nick pattern|
+There is an error in following forbidden chat nick pattern|Aptikta klaida toliau sekanèiame uþdraustø nick ðablone
 Modified forbidden chat nick with ban time %s: %s|
 Added forbidden chat nick with ban time %s: %s|
 Deleted forbidden chat nick: %s|
@@ -1166,16 +1167,16 @@ Couldn't delete forbidden chat nick because not found: %s|
 Forbidden chat nick list|
 Forbidden chat nick list is empty.|
 %s with IP %s and class %d allowed due to forbidden chat nick exception: %s|
-%s lookup|
-%s lookup didn't return anything.|
-%s result|
-No entrance|
+%s lookup|%s paieðka
+%s lookup didn't return anything.|%s paieðka negràþino jokiø rezultatø.
+%s result|%s rezultatas
+No entrance|Nëra áëjimo
 ASN: %s|
 %s was kicked with reason: %s|
-City gag|
-Add city gag|
-City gag list|
-Delete city gag|
+City gag|Uþèiauptas miestas
+Add city gag|Uþèiaupti miestà
+City gag list|Uþèiauptu miestø sàraðas
+Delete city gag|Leisti miestui vël kalbëti
 Modified city gag %s with reason: %s|
 Modified city gag: %s|
 Added city gag %s with reason: %s|
@@ -1189,39 +1190,39 @@ City gag not found: %s|
 %s with IP %s and class %d tried to speak without chat code in PM to %s with IP %s and class %d.|
 Low connection attempt uptime of %d seconds from %s with IP %s and class %d to user: %s|
 Please wait another %d seconds before connecting to other users.|
-path|
-Search in history messages|
-Show history lines at position|
-No main chat history messages found.|
-Found %d main chat messages|
-Search in command logs|
-No command logs found.|
-Found %d command logs|
-Unavailable|
-Clone information|
-No clones detected.|
-%d users with IP %s and shared bytes %d: %s|
-Total number of clones: %d|
-Clean up registered users table|
-magnet|
+path|kelias
+Search in history messages|Ieðkoti praneðimø istorijoje
+Show history lines at position|Rodyti istorijos eilutes pozicijoje
+No main chat history messages found.|Nerasta jokiø pagrindinio pokalbiø lango istorijos praneðimø.
+Found %d main chat messages|Rasti %d pagrindinio pokalbiø lango praneðimai
+Search in command logs|Ieðkoti komandø loguose
+No command logs found.|Komandø logai nerasti.
+Found %d command logs|rasti %d komandø logai
+Unavailable|Nepasiekiamas
+Clone information|Klonø informacija
+No clones detected.|Klonø neaptikta.
+%d users with IP %s and shared bytes %d: %s|%d useriai su IP %s ir share baitais: %d: %s
+Total number of clones: %d|Viso klonø: %d
+Clean up registered users table|Apvalyti registruotø useriø lentelæ
+magnet|magnetas
 Please specify complete magnet URI.|
 Release modified within category %s by %s: %s|
 Release added within category %s by %s: %s|
 Release deleted by %s: %s|
 Release category deleted by %s: %s|
-Someone from your IP address have already voted for kicking that user.|
-IP list: %s|
-First vote can't be negative.|
-You can't vote for kicking yourself.|
-Redirect all clones|
-Number of redirected clones: %d|
+Someone from your IP address have already voted for kicking that user.|Kaþkas ið tavo IP jau balsavo dël ðio userio iðspyrimo.
+IP list: %s|IP sàraðas
+First vote can't be negative.|Pirmas balsas negali bûti negatyvus.
+You can't vote for kicking yourself.|Negali balsuoti dël savo paties iðspyrimo.
+Redirect all clones|Nukreipti visus klonus
+Number of redirected clones: %d|Viso nukreiptø klonø: %d
 Your search result is discarded due to previous forbidden search result or request: %s|
 Search result exception from %s with IP %s and class %d as any file: %s|
 Search result notification from %s with IP %s and class %d as any file: %s|
 Bad search result from %s with IP %s and class %d as any file: %s|
 User dropped due to bad search result: %s|
-User didn't send any search results: %s|
-User redirected due to bad search result: %s|
+User didn't send any search results: %s|Useris neiðsiuntë jokiø paieðkos rezultatø: %s
+User redirected due to bad search result: %s|Useris nukreiptas dël blogo paieðkos rezultato: %s
 Search result exception from %s with IP %s and class %d as folder: %s|
 Search result notification from %s with IP %s and class %d as folder: %s|
 Bad search result from %s with IP %s and class %d as folder: %s|
@@ -1251,39 +1252,39 @@ Failed proxy lookup of IP %s with unknown result data: %s|
 Failed proxy lookup of IP %s without result data.|
 Failed proxy lookup of IP %s without result file.|
 Failed proxy lookup of IP %s with result: %s|
-Invalid request|
-Invalid IP|
-Private IP|
-Under maintenance|
-Request banned|
-Invalid email|
+Invalid request|Netinkama uþklausa
+Invalid IP|Neteisingas IP
+Private IP|Privatus IP
+Under maintenance|Tvarkoma
+Request banned|Uþklausa uþdrausta
+Invalid email|Neteisingas email
 Not enough matches for proxy lookup of IP %s: %d of %d|
-Public proxy detected on IP: %s|
-Public proxy detected on IP %s with ASN: %s|
+Public proxy detected on IP: %s|Aptiktas vietas proxy IP: %s
+Public proxy detected on IP %s with ASN: %s|Aptiktas vietas proxy IP: %s su ASN %s
 Unsent main chat message from logged out user %s with IP %s before finishing proxy lookup: %s|
 Unsent private chat message from logged out user %s with IP %s to %s with IP %s before finishing proxy lookup: %s|
 Unsent private main chat message from logged out user %s with IP %s to %s with IP %s before finishing proxy lookup: %s|
 Unsent third person main chat message from logged out user %s with IP %s before finishing proxy lookup: %s|
 Unsent offline private chat message from logged out user %s with IP %s to %s with IP %s before finishing proxy lookup: %s|
-%s logged in with IP %s previously detected as public proxy.|
+%s logged in with IP %s previously detected as public proxy.| 
 %s logged in with IP %s previously detected as public proxy with ASN: %s|
-Filtered search request duplicates: %d of %d|
-Find configuration variables|
-Found %d configuration variables|
-No configuration variables found.|
-Secure connection: %s|
-TLS version: %s|
-You can't set IP on user whose class is higher or equals your own: %s|
-Failed to set user IP: %s @ %s|
-IP successfully set on user: %s @ %s|
-Invalid command parameters specified: %s|
-Set user IP|
+Filtered search request duplicates: %d of %d|Nufiltruotos besidubliuojanèios paieðkos uþklausos: %d ið %d
+Find configuration variables|Rasti konfigûracijos kintamuosius
+Found %d configuration variables|Rasti %d konifgûracijos kintamieji
+No configuration variables found.|Konfigûracijos kintamøjø nerasta.
+Secure connection: %s|Saugus prisijungimas: %s
+TLS version: %s|TLS versija: %s
+You can't set IP on user whose class is higher or equals your own: %s|Negali nustatyti userio IP, kurio klasë yra tokia pati ar aukðtesnë, nei tavo: %s
+Failed to set user IP: %s @ %s|Nepavyko nustatyti userio IP: %s @ %s
+IP successfully set on user: %s @ %s|Userio IP nustatytas sëkmingai: %s @ %s
+Invalid command parameters specified: %s|Nurodyti neteisingi komandos parametrai: %s
+Set user IP|Nustatyti userio IP
 Top %d uptime rankers|
-Your uptime rank|
-Your uptime rank is: %s|
-You have to reconnect to get started.|
-Uptime rank list is empty.|
-Top %d uptime rankers|
+Your uptime rank|Tavo uptime reitingas
+Your uptime rank is: %s|Tavo uptime reitingas yra: %s
+You have to reconnect to get started.|Kad pradëti, turi prisijungti ið naujo.
+Uptime rank list is empty.|Uptime reitingø sàraðas tuðèias.
+Top %d uptime rankers|Top %d uptime reitingai
 Deleted from uptime rank list: %s|
 Not found in uptime rank list: %s|
 %s with class %d deleted %d uptime ranks lower than %d.|
