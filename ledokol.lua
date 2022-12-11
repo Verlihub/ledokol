@@ -16,7 +16,7 @@ implied warranty of merchantability or fitness for
 a particular purpose. See the GNU General Public
 License for more details.
 
-Please see https://www.gnu.org/licenses/ for a copy
+Please see https://www.gnu.org/licenses for a copy
 of the GNU General Public License.
 
 ---------------------------------------------------------------------
@@ -30,12 +30,12 @@ of the GNU General Public License.
 Author: RoLex
 Email: webmaster@feardc.net
 License: GNU General Public License
-Website: https://ledo.feardc.net/
-Support hub: nmdcs://hub.verlihub.net:7777/
+Website: https://ledo.feardc.net
+Support hub: nmdcs://hub.verlihub.net:7777
 Description:
 
 Ledokol stands for Russian word - icebreaker. In this case it's the
-biggest multifunctional security and entertainment Lua script with
+largest multifunctional security and entertainment Lua script with
 over seventy different features for Verlihub.
 
 ---------------------------------------------------------------------

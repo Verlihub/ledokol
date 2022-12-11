@@ -1,7 +1,7 @@
 Ledokol
 =======
 
-Ledokol stands for Russian word - icebreaker. In this case it's the biggest multifunctional security and entertainment Lua script with over seventy different features for Verlihub.
+Ledokol stands for Russian word - icebreaker. In this case it's the largest multifunctional security and entertainment Lua script with over seventy different features for Verlihub.
 
 Download
 =======
