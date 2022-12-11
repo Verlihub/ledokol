@@ -1,6 +1,6 @@
 # Language: uk_UA
 # Charset: CP1251
-# Version: 2.9.7
+# Version: 2.9.8
 # Author: Neolo
 # Email: admin@nlight.org.ua
 
@@ -634,8 +634,8 @@ Chat mode user list|Список користувацьких режимів чату
 Chat mode user list is empty.|Список користувацьких режимів чату порожній.
 %s user lookup|%s пошук користувача
 Add IP gag|Додати IP gag
-Added IP gag: %s|IP gag додано: %s
-Modified IP gag: %s|IP gag вже записано: %s
+Added IP gag %s with time %d and reason: %s|
+Modified IP gag %s with time %d and reason: %s|
 Deleted IP gag: %s|Видалено IP gag: %s
 IP gag not found: %s|IP gag не знайдено: %s
 IP gag list|IP gag список
@@ -717,35 +717,12 @@ Client: %s|Клієнт: %s
 Version: %s|Версія: %s
 Normal|Нормальний
 Away|Відсутній
-Normal away|Нормальний Відсутній
 Fileserver|Сервер
-Normal fileserver|Нормальний Сервер
-Away fileserver|Сервер Відсутній
-Normal away fileserver|Нормальний Сервер Відсутнів
 Fireball|Швидкісний
-Normal fireball|Нормальний Швидкісний
-Away fireball|Відсутній Швидкісний
-Normal away fireball|Нормальний Відсутній Швидкісний
-Fileserver fireball|Сервер Швидкісний
-Normal fileserver fireball|Нормальний Сервер Швидкісний
-Away fileserver fireball|Відсутній Сервер Швидкісний
-Normal away fileserver fireball|Нормальний Відсутній Сервер Швидкісний
-TLS|TLS
-Normal TLS|Нормальний TLS
-Away TLS|Відсутній TLS
-Normal away TLS|Нормальний Відсутній TLS
-Fileserver TLS|Сервер TLS
-Normal fileserver TLS|Нормальний Сервер TLS
-Away fileserver TLS|Відсутній Сервер TLS
-Normal away fileserver TLS|Нормальний Відсутній Сервер TLS
-Fireball TLS|Швидкісний TLS
-Normal fireball TLS|Нормальний Швидкісний TLS
-Away fireball TLS|Відсутній Швидкісний TLS
-Normal away fireball TLS|Нормальний Відсутній Швидкісний TLS
-Fileserver fireball TLS|Сервер Швидкісний TLS
-Normal fileserver fireball TLS|Нормальний Сервер Швидкісний TLS
-Away fileserver fireball TLS|Відсутній Сервер Швидкісний TLS
-Normal away fileserver fireball TLS|Нормальний Відсутній Сервер Швидкісний TLS
+TLS|
+NAT|
+IPv4|
+IPv6|
 Unable to get bot information: %s|Не вдалося отримати інформацію про бота: %s
 Bot information|Бот інформація
 Owner script: %s|Власник скрипту: %s
@@ -1183,6 +1160,7 @@ Added city gag: %s|
 Cleared city gag list.|
 Deleted city gag: %s|
 City gag not found: %s|
+City gag list is empty.|
 %s with IP %s and class %d tries to speak with city gag in PM to %s with IP %s and class %d: %s|
 %s with IP %s and class %d tries to speak with city gag in MC: %s|
 %s with IP %s and class %d tried to speak in MC without chat code: <%s> %s|
@@ -1204,7 +1182,6 @@ No clones detected.|
 Total number of clones: %d|
 Clean up registered users table|
 magnet|
-Please specify complete magnet URI.|
 Release modified within category %s by %s: %s|
 Release added within category %s by %s: %s|
 Release deleted by %s: %s|
@@ -1289,3 +1266,60 @@ Not found in uptime rank list: %s|
 %s with class %d deleted %d uptime ranks lower than %d.|
 Size of uptime ranks table: %d [ %s: %d @ %s ]|
 Total uptime rank time: %s|
+Function disabled|
+Code %d|
+Unknown error|
+No file|
+No data|
+Unknown data|
+IP intelligence: %s|
+Forbidden MyINFO list|
+Forbidden MyINFO list is empty.|
+There is an error in following forbidden MyINFO pattern|
+Modified forbidden MyINFO with ban time %s: %s|
+Added forbidden MyINFO with ban time %s: %s|
+Deleted forbidden MyINFO: %s|
+Couldn't delete forbidden MyINFO because not found: %s|
+%s with IP %s and class %d allowed due to forbidden MyINFO exception: %s|
+Adding new AVDB item to our list: %s|
+Updating AVDB item with different user nick: %s|
+Updating AVDB item with different IP address: %s|
+Updating AVDB item with different share size: %s|
+Chat flood or spam detected from your IP|
+On restart|
+Modified ASN gag %s with reason: %s|
+Modified ASN gag: %s|
+Added ASN gag %s with reason: %s|
+Added ASN gag: %s|
+Cleared ASN gag list.|
+Deleted ASN gag: %s|
+ASN gag not found: %s|
+ASN gag list|
+ASN gag list is empty.|
+%s with IP %s, class %d and ASN %s tries to speak with ASN gag in PM to %s with IP %s and class %d: %s|
+%s with IP %s, class %d and ASN %s tries to speak with ASN gag in MC: %s|
+ASN gag|
+Add ASN gag|
+Delete ASN gag|
+User command from %s with IP %s will be delayed for proxy lookup: %s|
+Blocking user command from %s with IP %s detected as public proxy: %s|
+Unsent user command from logged out user %s with IP %s before finishing proxy lookup: %s|
+Test antispam entry|
+Spam exception with action %d and priority %d in MC: %s|
+Spam exception with action %d and priority %d in PM: %s|
+Spam exception with action %d and priority %d in MC and PM: %s|
+Spam with action %d and priority %d in MC: %s|
+Spam with action %d and priority %d in PM: %s|
+Spam with action %d and priority %d in MC and PM: %s|
+No antispam matches for text: %s|
+List of antispam matches for text: %s|
+Added proxy protection entry: %s|
+Proxy protection entry already exists: %s|
+Cleared proxy protection list.|
+Deleted proxy protection entry: %s|
+Proxy protection entry not found: %s|
+Proxy protection list|
+Proxy protection list is empty.|
+Add proxy protection entry|
+Delete proxy protection entry|
+IP is protected: %s|

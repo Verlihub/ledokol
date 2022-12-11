@@ -1,7 +1,7 @@
 # Language: lt_LT
 # Charset: CP1257
-# Version: 2.9.7
-# Author: Mindaugas K; Vlz
+# Version: 2.9.8
+# Author: Mindaugas K
 # Email: mex@micro.lt
 
 Current topic: %s|Dabartinis topic: %s
@@ -152,7 +152,6 @@ You can't talk from nick whose class is higher or equals your own.|Tu negali kal
 %s with class %d deleted %d statistics plugin entries older than %d days.|
 offset|ofsetas
 order|eilës tvarka
-%s unbanned: <%s> %s| %s atbanintas: <%s> %s
 %s didn't get any search results.|%s negaus jokiø paieðkos rezultatø.
 Redirected %s with IP %s and class %d to %s: <%s> %s| Nukreipiau %s su IP %s ir klase %d á %s: <%s> %s
 Unknown protocol command from %s with IP %s and class %d: %s|Neþinoma protokolo komanda ið %s su IP %s ir klase %d: %s
@@ -635,8 +634,8 @@ Chat mode user list|
 Chat mode user list is empty.|
 %s user lookup|
 Add IP gag|Uþèiaupti IP
-Added IP gag: %s|IP Uþèiauptas: %s
-Modified IP gag: %s|
+Added IP gag %s with time %d and reason: %s|
+Modified IP gag %s with time %d and reason: %s|
 Deleted IP gag: %s|IP leidþiama kalbëti: %s
 IP gag not found: %s|
 IP gag list|Uþèiauptø IP sàraðas
@@ -718,35 +717,12 @@ Client: %s|Klientas: %s
 Version: %s|Versija: %s
 Normal|
 Away|
-Normal away|
 Fileserver|
-Normal fileserver|
-Away fileserver|
-Normal away fileserver|
 Fireball|
-Normal fireball|
-Away fireball|
-Normal away fireball|
-Fileserver fireball|
-Normal fileserver fireball|
-Away fileserver fireball|
-Normal away fileserver fireball|
 TLS|
-Normal TLS|
-Away TLS|
-Normal away TLS|
-Fileserver TLS|
-Normal fileserver TLS|
-Away fileserver TLS|
-Normal away fileserver TLS|
-Fireball TLS|
-Normal fireball TLS|
-Away fireball TLS|
-Normal away fireball TLS|
-Fileserver fireball TLS|
-Normal fileserver fireball TLS|
-Away fileserver fireball TLS|
-Normal away fileserver fireball TLS|
+NAT|
+IPv4|
+IPv6|
 Unable to get bot information: %s|
 Bot information|Boto informacija
 Owner script: %s|Savininko skriptas: %s
@@ -1184,6 +1160,7 @@ Added city gag: %s|
 Cleared city gag list.|
 Deleted city gag: %s|
 City gag not found: %s|
+City gag list is empty.|
 %s with IP %s and class %d tries to speak with city gag in PM to %s with IP %s and class %d: %s|
 %s with IP %s and class %d tries to speak with city gag in MC: %s|
 %s with IP %s and class %d tried to speak in MC without chat code: <%s> %s|
@@ -1205,7 +1182,6 @@ No clones detected.|Klonø neaptikta.
 Total number of clones: %d|Viso klonø: %d
 Clean up registered users table|Apvalyti registruotø useriø lentelæ
 magnet|magnetas
-Please specify complete magnet URI.|
 Release modified within category %s by %s: %s|
 Release added within category %s by %s: %s|
 Release deleted by %s: %s|
@@ -1279,7 +1255,7 @@ Failed to set user IP: %s @ %s|Nepavyko nustatyti userio IP: %s @ %s
 IP successfully set on user: %s @ %s|Userio IP nustatytas sëkmingai: %s @ %s
 Invalid command parameters specified: %s|Nurodyti neteisingi komandos parametrai: %s
 Set user IP|Nustatyti userio IP
-Top %d uptime rankers|
+Top %d uptime rankers|Top %d uptime reitingai
 Your uptime rank|Tavo uptime reitingas
 Your uptime rank is: %s|Tavo uptime reitingas yra: %s
 You have to reconnect to get started.|Kad pradëti, turi prisijungti ið naujo.
@@ -1290,3 +1266,60 @@ Not found in uptime rank list: %s|
 %s with class %d deleted %d uptime ranks lower than %d.|
 Size of uptime ranks table: %d [ %s: %d @ %s ]|
 Total uptime rank time: %s|
+Function disabled|
+Code %d|
+Unknown error|
+No file|
+No data|
+Unknown data|
+IP intelligence: %s|
+Forbidden MyINFO list|
+Forbidden MyINFO list is empty.|
+There is an error in following forbidden MyINFO pattern|
+Modified forbidden MyINFO with ban time %s: %s|
+Added forbidden MyINFO with ban time %s: %s|
+Deleted forbidden MyINFO: %s|
+Couldn't delete forbidden MyINFO because not found: %s|
+%s with IP %s and class %d allowed due to forbidden MyINFO exception: %s|
+Adding new AVDB item to our list: %s|
+Updating AVDB item with different user nick: %s|
+Updating AVDB item with different IP address: %s|
+Updating AVDB item with different share size: %s|
+Chat flood or spam detected from your IP|
+On restart|
+Modified ASN gag %s with reason: %s|
+Modified ASN gag: %s|
+Added ASN gag %s with reason: %s|
+Added ASN gag: %s|
+Cleared ASN gag list.|
+Deleted ASN gag: %s|
+ASN gag not found: %s|
+ASN gag list|
+ASN gag list is empty.|
+%s with IP %s, class %d and ASN %s tries to speak with ASN gag in PM to %s with IP %s and class %d: %s|
+%s with IP %s, class %d and ASN %s tries to speak with ASN gag in MC: %s|
+ASN gag|
+Add ASN gag|
+Delete ASN gag|
+User command from %s with IP %s will be delayed for proxy lookup: %s|
+Blocking user command from %s with IP %s detected as public proxy: %s|
+Unsent user command from logged out user %s with IP %s before finishing proxy lookup: %s|
+Test antispam entry|
+Spam exception with action %d and priority %d in MC: %s|
+Spam exception with action %d and priority %d in PM: %s|
+Spam exception with action %d and priority %d in MC and PM: %s|
+Spam with action %d and priority %d in MC: %s|
+Spam with action %d and priority %d in PM: %s|
+Spam with action %d and priority %d in MC and PM: %s|
+No antispam matches for text: %s|
+List of antispam matches for text: %s|
+Added proxy protection entry: %s|
+Proxy protection entry already exists: %s|
+Cleared proxy protection list.|
+Deleted proxy protection entry: %s|
+Proxy protection entry not found: %s|
+Proxy protection list|
+Proxy protection list is empty.|
+Add proxy protection entry|
+Delete proxy protection entry|
+IP is protected: %s|

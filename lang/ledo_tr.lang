@@ -1,6 +1,6 @@
 # Language: tr_TR
 # Charset: CP1254
-# Version: 2.9.7
+# Version: 2.9.8
 # Author: Mauron
 # Email: mauron@vmail.me
 
@@ -634,8 +634,8 @@ Chat mode user list|Sohbet kipi kullanýcý listesi
 Chat mode user list is empty.|Sohbet kipi kullanýcý listesi boþtur.
 %s user lookup|%s kullanýcý aramasý
 Add IP gag|IP susturmasý ekle
-Added IP gag: %s|IP susturmasý eklendi: %s
-Modified IP gag: %s|IP susturmasý deðiþtirildi: %s
+Added IP gag %s with time %d and reason: %s|%s IP susturmasý, %d süresi ve þu sebeple ilave edildi: %s
+Modified IP gag %s with time %d and reason: %s|%s IP susturmasý, %d süresi ve þu sebeple ilave edildi: %s
 Deleted IP gag: %s|IP susturmasý silindi: %s
 IP gag not found: %s|IP susturmasý bulunamadý: %s
 IP gag list|IP susturma listesi
@@ -717,35 +717,12 @@ Client: %s|Ýstemci: %s
 Version: %s|Sürüm: %s
 Normal|Normal
 Away|Uzakta
-Normal away|Normal uzakta
 Fileserver|Dosya sunucusu
-Normal fileserver|Normal dosya sunucusu
-Away fileserver|Uzakta dosya sunucusu
-Normal away fileserver|Normal uzakta dosya sunucusu
 Fireball|Ateþ topu
-Normal fireball|Normal ateþ topu
-Away fireball|Uzakta ateþ topu
-Normal away fireball|Normal uzakta ateþ topu
-Fileserver fireball|Dosya sunucusu ateþ topu
-Normal fileserver fireball|Normal dosya sunucusu ateþ topu
-Away fileserver fireball|Uzakta dosya sunucusu ateþ topu
-Normal away fileserver fireball|Normal uzakta dosya sunucusu ateþ topu
 TLS|TLS
-Normal TLS|Normal TLS
-Away TLS|Uzakta TLS
-Normal away TLS|Normal uzakta TLS
-Fileserver TLS|Dosya sunucusu TLS
-Normal fileserver TLS|Normal dosya sunucusu TLS
-Away fileserver TLS|Uzakta dosya sunucusu TLS
-Normal away fileserver TLS|Normal uzakta dosya sunucusu TLS
-Fireball TLS|Ateþ topu TLS
-Normal fireball TLS|Normal ateþ topu TLS
-Away fireball TLS|Uzakta ateþ topu TLS
-Normal away fireball TLS|Normal uzakta ateþ topu TLS
-Fileserver fireball TLS|Dosya sunucusu ateþ topu TLS
-Normal fileserver fireball TLS|Normal dosya sunucusu ateþ topu TLS
-Away fileserver fireball TLS|Uzakta dosya sunucusu ateþ topu TLS
-Normal away fileserver fireball TLS|Normal uzakta dosya sunucusu ateþ topu TLS
+NAT|NAT
+IPv4|IPv4
+IPv6|IPv6
 Unable to get bot information: %s|Robot bilgisi alýnamadý: %s
 Bot information|Robot bilgisi
 Owner script: %s|Sahip betik: %s
@@ -1182,7 +1159,8 @@ Added city gag %s with reason: %s|%s kent susturmasý þu sebeple eklenmiþtir: %s
 Added city gag: %s|Eklenen kent susturmasý: %s
 Cleared city gag list.|Kent susturma listesi temizlendi.
 Deleted city gag: %s|Kaldýrýlan kent susturmasý: %s
-City gag not found: %s|Kent susturma listesi boþtur.
+City gag not found: %s|Kent susturulma listesi bulunamadý: %s
+City gag list is empty.|Kent susturulma listesi boþtur.
 %s with IP %s and class %d tries to speak with city gag in PM to %s with IP %s and class %d: %s|, ki IP adresi %s ve sýnýfý %d özel sohbette kent susturmasýna raðmen %s ile ki IP adresi %s ve sýnýfý %s konuþmaya çalýþýyor: %s
 %s with IP %s and class %d tries to speak with city gag in MC: %s|Ana sohbette %s ki IP adresi %s ve sýnýfý %d kent susturmasýna raðmen konuþmaya çalýþmaktadýr: %s
 %s with IP %s and class %d tried to speak in MC without chat code: <%s> %s|%s ki IP adresi %s ve sýnýfý %d sohbet kodsuz ana sohbette konuþmaya çalýþtý: <%s> %s
@@ -1204,7 +1182,6 @@ No clones detected.|Hiçbir klon tespit edilmedi.
 Total number of clones: %d|Toplam klon sayýsý: %d
 Clean up registered users table|Kayýtlý kullanýcýlar tablosunu temizle
 magnet|magnet
-Please specify complete magnet URI.|Lütfen eksiksiz magnet URI'sini belirtin.
 Release modified within category %s by %s: %s|Bu sürüm, %s kategorisi içinde %s tarafýndan deðiþtirildi: %s
 Release added within category %s by %s: %s|Sürüm %s kategorisinde %s tarafýndan eklendi: %s
 Release deleted by %s: %s|Sürüm %s tarafýndan silindi: %s
@@ -1289,3 +1266,60 @@ Not found in uptime rank list: %s|Çalýþma süresi sýralama listesinde bulunamadý:
 %s with class %d deleted %d uptime ranks lower than %d.|%ski sýnýfý %d, %d çalýþma süresini sildi, ki bunlar %d deðerinden düþüktü.
 Size of uptime ranks table: %d [ %s: %d @ %s ]|Çalýþma süresi sýralama tablosunun boyutu: %d [ %s: %d @ %s ]
 Total uptime rank time: %s|Toplam çalýþma süresi sýralamasý süresi: %s
+Function disabled|Ýþlem devre dýþý
+Code %d|Kod: %d
+Unknown error|Bilinmeyen hata
+No file|Dosya yok
+No data|Veri yok
+Unknown data|Bilinmeyen veri
+IP intelligence: %s|IP istihbaratý: %s
+Forbidden MyINFO list|Yasaklý MyINFO listesi
+Forbidden MyINFO list is empty.|Yasaklý MyINFO listesi boþ.
+There is an error in following forbidden MyINFO pattern|Þu yasaklý MyINFO deseninde bir hata bulunmaktadýr
+Modified forbidden MyINFO with ban time %s: %s|Yasaklý MyINFO þu yasak süresi ile deðiþtirildi: %s: %s
+Added forbidden MyINFO with ban time %s: %s|Þu yasak süresi ile yasaklý MyINFO ilave edildi: %s: %s
+Deleted forbidden MyINFO: %s|Yasaklý MyINFO silindi: %s
+Couldn't delete forbidden MyINFO because not found: %s|Yasaklý MyINFO silinemedi çünkü bulunamadý: %s
+%s with IP %s and class %d allowed due to forbidden MyINFO exception: %s|%s kullanýcýsýna, ki IP adresi %s ve sýnýfý %d, yasaklý MyINFO istisnasý sebebiyle izin verildi: %s
+Adding new AVDB item to our list: %s|AVDB listemize yeni bir unsur ekleniyor: %s
+Updating AVDB item with different user nick: %s|AVDB unsuru farklý bir kullanýcý rumuzuyla güncelleniyor: %s
+Updating AVDB item with different IP address: %s|AVDB unsuru farklý bir IP adresi ile güncelleniyor: %s
+Updating AVDB item with different share size: %s|AVDB unsuru farklý bir paylaþým boyutuyla güncelleniyor: %s
+Chat flood or spam detected from your IP|Sohbette IP adresinizden aþýrý tekrar veya yýðýn mesaj tespit edildi
+On restart|Yeniden baþlatmada
+Modified ASN gag %s with reason: %s|%s ASN susturmasý þu sebeple deðiþtirildi: %s
+Modified ASN gag: %s|ASN susturmasý deðiþtirildi: %s
+Added ASN gag %s with reason: %s|%s ASN susturmasý þu sebeple eklendi: %s
+Added ASN gag: %s|ASN susturmasý eklendi: %s
+Cleared ASN gag list.|ASN susturma listesi temizlendi.
+Deleted ASN gag: %s|ASN susturmasý silindi: %s
+ASN gag not found: %s|ASN susturmsý bulunamadý: %s
+ASN gag list|ASN susturma listesi
+ASN gag list is empty.|ASN susturma listesi boþtur.
+%s with IP %s, class %d and ASN %s tries to speak with ASN gag in PM to %s with IP %s and class %d: %s|%s, ki IP adresi %s, sýnýfý %d ve ASN'i  %s, özel mesajda ASN susturmasýyla %s, ki IP adresi %s ve sýnýfý %d olan kiþiyle konuþmaya çalýþýyor: %s
+%s with IP %s, class %d and ASN %s tries to speak with ASN gag in MC: %s|%s, ki IP adresi %s, sýnýfý %d ve ASN'i %s, ana sohbette ASN susturmasýyla konuþmaya çalýþýyor: %s
+ASN gag|ASN susturmasý
+Add ASN gag|ASN susturmasý ekle
+Delete ASN gag|ASN susturmasý sil
+User command from %s with IP %s will be delayed for proxy lookup: %s|%s kullanýcýsýndan, ki IP adresi %s, kullanýcý komutu vekil sunucu aramasý için geciktirilecektir: %s
+Blocking user command from %s with IP %s detected as public proxy: %s|%s kullanýcýsýndan kullanýcý komutu, IP adresi %s herkese açýk vekil sunucu tespit edildiðinden engellenmiþtir: %s 
+Unsent user command from logged out user %s with IP %s before finishing proxy lookup: %s|Vekil sunucu aramasý sonlanmadan baðlantýdan çýkmýþ %s kullanýcýsýnýn, ki IP adresi %s, kullanýcý komutu gönderilmemiþtir: %s
+Test antispam entry|Spam karþýtý unsuru dene
+Spam exception with action %d and priority %d in MC: %s|Ana sohbette %d eylemi ve %d önceliði ile spam istisnasý: %s
+Spam exception with action %d and priority %d in PM: %s|%d eylemi ve %d önceliði ile özel sohbette spam istisnasý: %s
+Spam exception with action %d and priority %d in MC and PM: %s|Ana ve özel sohbetlerde %d eylemiyle %d önceliði ile spam istisnasý: %s
+Spam with action %d and priority %d in MC: %s|Ana sohbette %d eylemi ve %d önceliði ile spam: %s
+Spam with action %d and priority %d in PM: %s|Özel sohbette %d eylemi ve %d önceliði ile spam: %s
+Spam with action %d and priority %d in MC and PM: %s|Ana ve özel sohbetlerde %d eylemiyle %d önceliði ile spam: %s
+No antispam matches for text: %s|Þu metin için hiçbir spam karþýtý eþleþme bulunamadý: %s
+List of antispam matches for text: %s|Þu metin için spam karþýtý eþleþmeler listesi: %s
+Added proxy protection entry: %s|Vekil sunucu koruma unsuru eklendi: %s
+Proxy protection entry already exists: %s|Vekil sunucu koruma unsuru zaten mevcut: %s
+Cleared proxy protection list.|Vekil sunucu koruma listesi temizlendi.
+Deleted proxy protection entry: %s|Vekil sunucu koruma unsuru silindi: %s
+Proxy protection entry not found: %s|Vekil sunucu koruma unsuru bulunamadý: %s
+Proxy protection list|Vekil sunucu koruma listesi
+Proxy protection list is empty.|Vekil sunucu koruma listesi boþtur.
+Add proxy protection entry|Vekil sunucu koruma unsuru ekle
+Delete proxy protection entry|Vekil sunucu koruma unsuru sil
+IP is protected: %s|IP korumalýdýr: %s

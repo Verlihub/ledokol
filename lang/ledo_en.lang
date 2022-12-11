@@ -1313,3 +1313,13 @@ Spam with action %d and priority %d in PM: %s|
 Spam with action %d and priority %d in MC and PM: %s|
 No antispam matches for text: %s|
 List of antispam matches for text: %s|
+Added proxy protection entry: %s|
+Proxy protection entry already exists: %s|
+Cleared proxy protection list.|
+Deleted proxy protection entry: %s|
+Proxy protection entry not found: %s|
+Proxy protection list|
+Proxy protection list is empty.|
+Add proxy protection entry|
+Delete proxy protection entry|
+IP is protected: %s|

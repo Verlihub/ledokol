@@ -1,6 +1,6 @@
 # Language: nl_NL
 # Charset: CP1252
-# Version: 2.9.7
+# Version: 2.9.8
 # Author: Marcel
 # Email: future_dance@hotmail.com
 
@@ -634,8 +634,8 @@ Chat mode user list|Chat mode gebruikerslijst
 Chat mode user list is empty.|Chat mode gebruikers lijst is leeg.
 %s user lookup|%s gebruiker lookup
 Add IP gag|IP gag toevoegen
-Added IP gag: %s|Toegevoed IP gag: %s
-Modified IP gag: %s|Gewijzigde IP gag: %s 
+Added IP gag %s with time %d and reason: %s|
+Modified IP gag %s with time %d and reason: %s|
 Deleted IP gag: %s|Verwijderde IP gag: %s
 IP gag not found: %s|IP gag niet gevonden: %s
 IP gag list|IP gag lijst
@@ -717,35 +717,12 @@ Client: %s|Client: %s
 Version: %s|Versie: %s
 Normal|Normaal
 Away|Weg
-Normal away|Normaal weg
 Fileserver|Bestand server
-Normal fileserver|Normale bestands server
-Away fileserver|Weg bestand server
-Normal away fileserver|Normaal weg bestand server
 Fireball|Fireball
-Normal fireball|Normaal  fireball
-Away fireball|Weg fireball
-Normal away fireball|Normaal weg fireball
-Fileserver fireball|Bestand server fireball
-Normal fileserver fireball|Normaal bestand server fireball
-Away fileserver fireball|Weg bestand server fireball
-Normal away fileserver fireball|Normaal weg bestand server fireball
-TLS|TLS
-Normal TLS|Normaal TLS
-Away TLS|Weg TLS
-Normal away TLS|Normaal weg TLS
-Fileserver TLS|Bestand server TLS
-Normal fileserver TLS|Normaal bestand server TLS
-Away fileserver TLS|Weg bestand server TLS
-Normal away fileserver TLS|Normaal weg bestand server TLS
-Fireball TLS|Fireball TLS
-Normal fireball TLS|Normaal fireball TLS
-Away fireball TLS|Weg fireball TLS
-Normal away fireball TLS|Normaal weg fireball TLS
-Fileserver fireball TLS|Bestand fireball TLS
-Normal fileserver fireball TLS|Normaal bestand server TLS
-Away fileserver fireball TLS|Weg bestand server fireball TLS
-Normal away fileserver fireball TLS|Normaal weg bestand server fireball TLS
+TLS|
+NAT|
+IPv4|
+IPv6|
 Unable to get bot information: %s|Kan geen bot informatie krijgen: %s
 Bot information|Bot informatie
 Owner script: %s|Eigenaar script: %s
@@ -1182,7 +1159,8 @@ Added city gag %s with reason: %s|Toegevoegd stad gag %s met reden: %s
 Added city gag: %s|Toegevoegd stad gag: %s
 Cleared city gag list.|Gewiste stad gag lijst.
 Deleted city gag: %s|Verwijderd stad gag: %s
-City gag not found: %s|Stad gag lijst is leeg.
+City gag not found: %s|
+City gag list is empty.|
 %s with IP %s and class %d tries to speak with city gag in PM to %s with IP %s and class %d: %s|%s met IP %s en klasse %d probeert iets te schrijven met stad gag in PM naar %s met IP %s en klasse%d: %s
 %s with IP %s and class %d tries to speak with city gag in MC: %s|%s met IP en klasse %d probeert iets te schrijven met stad gag in MC: %s
 %s with IP %s and class %d tried to speak in MC without chat code: <%s> %s|%s met IP %s en klasse %d probeert iets te schrijven zonder chat code: <%s>%s
@@ -1204,7 +1182,6 @@ No clones detected.|Geen kloons gevonden.
 Total number of clones: %d|Totaal aantal kloons: %d
 Clean up registered users table|Geregistreerde gebruikers database tabel clean up
 magnet|magnet
-Please specify complete magnet URI.|Geef de volledige magneet-URI op.
 Release modified within category %s by %s: %s|Release gewijzigd in categorie %s door %s:%s
 Release added within category %s by %s: %s|Release toegevoegd binnen categorie %s door %s:%s
 Release deleted by %s: %s|Release verwijderd door%s:%s
@@ -1289,3 +1266,60 @@ Not found in uptime rank list: %s|
 %s with class %d deleted %d uptime ranks lower than %d.|
 Size of uptime ranks table: %d [ %s: %d @ %s ]|
 Total uptime rank time: %s|
+Function disabled|
+Code %d|
+Unknown error|
+No file|
+No data|
+Unknown data|
+IP intelligence: %s|
+Forbidden MyINFO list|
+Forbidden MyINFO list is empty.|
+There is an error in following forbidden MyINFO pattern|
+Modified forbidden MyINFO with ban time %s: %s|
+Added forbidden MyINFO with ban time %s: %s|
+Deleted forbidden MyINFO: %s|
+Couldn't delete forbidden MyINFO because not found: %s|
+%s with IP %s and class %d allowed due to forbidden MyINFO exception: %s|
+Adding new AVDB item to our list: %s|
+Updating AVDB item with different user nick: %s|
+Updating AVDB item with different IP address: %s|
+Updating AVDB item with different share size: %s|
+Chat flood or spam detected from your IP|
+On restart|
+Modified ASN gag %s with reason: %s|
+Modified ASN gag: %s|
+Added ASN gag %s with reason: %s|
+Added ASN gag: %s|
+Cleared ASN gag list.|
+Deleted ASN gag: %s|
+ASN gag not found: %s|
+ASN gag list|
+ASN gag list is empty.|
+%s with IP %s, class %d and ASN %s tries to speak with ASN gag in PM to %s with IP %s and class %d: %s|
+%s with IP %s, class %d and ASN %s tries to speak with ASN gag in MC: %s|
+ASN gag|
+Add ASN gag|
+Delete ASN gag|
+User command from %s with IP %s will be delayed for proxy lookup: %s|
+Blocking user command from %s with IP %s detected as public proxy: %s|
+Unsent user command from logged out user %s with IP %s before finishing proxy lookup: %s|
+Test antispam entry|
+Spam exception with action %d and priority %d in MC: %s|
+Spam exception with action %d and priority %d in PM: %s|
+Spam exception with action %d and priority %d in MC and PM: %s|
+Spam with action %d and priority %d in MC: %s|
+Spam with action %d and priority %d in PM: %s|
+Spam with action %d and priority %d in MC and PM: %s|
+No antispam matches for text: %s|
+List of antispam matches for text: %s|
+Added proxy protection entry: %s|
+Proxy protection entry already exists: %s|
+Cleared proxy protection list.|
+Deleted proxy protection entry: %s|
+Proxy protection entry not found: %s|
+Proxy protection list|
+Proxy protection list is empty.|
+Add proxy protection entry|
+Delete proxy protection entry|
+IP is protected: %s|

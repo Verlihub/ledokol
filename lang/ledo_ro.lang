@@ -1,6 +1,6 @@
 # Language: ro_RO
 # Charset: CP1250
-# Version: 2.9.7
+# Version: 2.9.8
 # Author: S0RiN [rest in peace dear friend]
 # Email: rusu_sorin_con@yahoo.com
 
@@ -634,8 +634,8 @@ Chat mode user list|Lista cu moduri de chat a utilizatorilor
 Chat mode user list is empty.|Lista cu moduri de chat a utilizatorilor, este goalã.
 %s user lookup|Utilizator cãutat: %s
 Add IP gag|Adãugare gag pe IP
-Added IP gag: %s|Gag adãugat pe IP: %s
-Modified IP gag: %s|Gag modificat pentru IP: %s
+Added IP gag %s with time %d and reason: %s|
+Modified IP gag %s with time %d and reason: %s|
 Deleted IP gag: %s|ªtergere gag pe IP: %s
 IP gag not found: %s|Nu a fost gãsit gag pe IP: %s
 IP gag list|Lista de gag-uri pe IP
@@ -717,35 +717,12 @@ Client: %s|ClientDC: %s
 Version: %s|Versiune: %s
 Normal|Normal
 Away|Departe
-Normal away|Normal depãrtat de taste
 Fileserver|Server de fiºiere
-Normal fileserver|Server normal de fiºiere
-Away fileserver|Server de fiºiere îndepãrtat de taste
-Normal away fileserver|Server normal de fiºiere îndepãrtat de taste
 Fireball|Minge de foc
-Normal fireball|Minge de foc normalã
-Away fireball|Minge de foc îndepãrtat de taste
-Normal away fireball|Minge de foc normalã îndepãrtat de taste
-Fileserver fireball|Server de fiºiere minge de foc
-Normal fileserver fireball|Server de fiºiere normal minge de foc
-Away fileserver fireball|Server de fiºiere minge de foc îndepãrtat de taste
-Normal away fileserver fireball|Server de fiºiere normal minge de foc îndepãrtat de taste
-TLS|TLS
-Normal TLS|TLS normal
-Away TLS|TLS îndepãrtat de taste
-Normal away TLS|TLS normal îndepãrtat de taste
-Fileserver TLS|TLS server de fiºiere
-Normal fileserver TLS|TLS normal server de fiºiere
-Away fileserver TLS|TLS server de fiºiere îndepãrtat de taste
-Normal away fileserver TLS|TLS normal server de fiºiere îndepãrtat de taste
-Fireball TLS|TLS minge de foc
-Normal fireball TLS|TLS normal minge de foc
-Away fireball TLS|TLS minge de foc îndepãrtat de taste
-Normal away fireball TLS|TLS normal minge de foc îndepãrtat de taste
-Fileserver fireball TLS|TLS minge de foc server de fiºiere
-Normal fileserver fireball TLS|TLS normal minge de foc server de fiºiere
-Away fileserver fireball TLS|TLS minge de foc server de fiºiere îndepãrtat de taste
-Normal away fileserver fireball TLS|TLS normal minge de foc server de fiºiere îndepãrtat de taste
+TLS|
+NAT|
+IPv4|
+IPv6|
 Unable to get bot information: %s|Nu eºti abilitat sã iei informaþii despre bot: %s
 Bot information|Informaþiile botului
 Owner script: %s|Script de proprietar: %s
@@ -1182,7 +1159,8 @@ Added city gag %s with reason: %s|Adãugat gag pe oraº %s cu motiv %s
 Added city gag: %s|Gag pe oraº adãugat %s
 Cleared city gag list.|Lista gaguri pe oraº curãþatã.
 Deleted city gag: %s|ªters gag pe oraº: %s
-City gag not found: %s|Lista cu gaguri pe oraº e goalã.
+City gag not found: %s|
+City gag list is empty.|
 %s with IP %s and class %d tries to speak with city gag in PM to %s with IP %s and class %d: %s|%s cu IP %s ºi clasa %d încearcã sã scrie cu gag pe oraº în PM cãtre %s cu IP %s ºi clasa %d : %s
 %s with IP %s and class %d tries to speak with city gag in MC: %s|%s cu IP %s ºi clasa %d încearcã sã scrie cu gag pe oraº în MC: %s
 %s with IP %s and class %d tried to speak in MC without chat code: <%s> %s|%s cu IP %s ºi clasa %d încearcã sã scrie în main-chat fãrã a scrie codul: <%s> %s
@@ -1204,14 +1182,13 @@ No clones detected.|Nu s-au detectat clone.
 Total number of clones: %d|Numãrul total de clone: %d
 Clean up registered users table|Curãþarea registrului de utilizatori
 magnet|magnet
-Please specify complete magnet URI.|Te rugãm sã menþionezi adresa magnet URL completã.
 Release modified within category %s by %s: %s|Eliberarea a fost modificatã în cadrul categoriei %s by %s: %s 
 Release added within category %s by %s: %s|Eliberarea a fost adãugatã în cadrul categoriei %s by %s: %s
 Release deleted by %s: %s|Eliberare ºtearsã de %s: %s
 Release category deleted by %s: %s|Categorie de eliberãri ºtearsã de %s: %s
 Someone from your IP address have already voted for kicking that user.|Cineva cu adresa ta IP a votat deja kick-uirea acestui utilizator.
 IP list: %s|Lista de IP-uri: %s
-First vote can't be negative.|Pervy`j golos ne mozhet by`t` otriczatel`ny`m.
+First vote can't be negative.|     .
 You can't vote for kicking yourself.|Nu poþi vota sã-þi dai singur kick.
 Redirect all clones|Redirecþioneazã toate clonele
 Number of redirected clones: %d|Numãrul clonelor redirecþionate: %d
@@ -1289,3 +1266,60 @@ Not found in uptime rank list: %s|
 %s with class %d deleted %d uptime ranks lower than %d.|
 Size of uptime ranks table: %d [ %s: %d @ %s ]|
 Total uptime rank time: %s|
+Function disabled|
+Code %d|
+Unknown error|
+No file|
+No data|
+Unknown data|
+IP intelligence: %s|
+Forbidden MyINFO list|
+Forbidden MyINFO list is empty.|
+There is an error in following forbidden MyINFO pattern|
+Modified forbidden MyINFO with ban time %s: %s|
+Added forbidden MyINFO with ban time %s: %s|
+Deleted forbidden MyINFO: %s|
+Couldn't delete forbidden MyINFO because not found: %s|
+%s with IP %s and class %d allowed due to forbidden MyINFO exception: %s|
+Adding new AVDB item to our list: %s|
+Updating AVDB item with different user nick: %s|
+Updating AVDB item with different IP address: %s|
+Updating AVDB item with different share size: %s|
+Chat flood or spam detected from your IP|
+On restart|
+Modified ASN gag %s with reason: %s|
+Modified ASN gag: %s|
+Added ASN gag %s with reason: %s|
+Added ASN gag: %s|
+Cleared ASN gag list.|
+Deleted ASN gag: %s|
+ASN gag not found: %s|
+ASN gag list|
+ASN gag list is empty.|
+%s with IP %s, class %d and ASN %s tries to speak with ASN gag in PM to %s with IP %s and class %d: %s|
+%s with IP %s, class %d and ASN %s tries to speak with ASN gag in MC: %s|
+ASN gag|
+Add ASN gag|
+Delete ASN gag|
+User command from %s with IP %s will be delayed for proxy lookup: %s|
+Blocking user command from %s with IP %s detected as public proxy: %s|
+Unsent user command from logged out user %s with IP %s before finishing proxy lookup: %s|
+Test antispam entry|
+Spam exception with action %d and priority %d in MC: %s|
+Spam exception with action %d and priority %d in PM: %s|
+Spam exception with action %d and priority %d in MC and PM: %s|
+Spam with action %d and priority %d in MC: %s|
+Spam with action %d and priority %d in PM: %s|
+Spam with action %d and priority %d in MC and PM: %s|
+No antispam matches for text: %s|
+List of antispam matches for text: %s|
+Added proxy protection entry: %s|
+Proxy protection entry already exists: %s|
+Cleared proxy protection list.|
+Deleted proxy protection entry: %s|
+Proxy protection entry not found: %s|
+Proxy protection list|
+Proxy protection list is empty.|
+Add proxy protection entry|
+Delete proxy protection entry|
+IP is protected: %s|

@@ -6,7 +6,7 @@ Ledokol stands for Russian word - icebreaker. In this case it's the biggest mult
 Download
 =======
 
-Ledokol can be downloaded from here: https://ledo.feardc.net/
+Ledokol can be downloaded from here: https://ledo.feardc.net
 
 Documentation
 =======
@@ -16,4 +16,4 @@ Ledokol documentation can be found here: https://github.com/verlihub/ledokol/wik
 Support hub
 =======
 
-VAZ can be accessed from here: dchub://hub.verlihub.net:7777
+VAZ can be accessed from here: nmdcs://hub.verlihub.net:7777

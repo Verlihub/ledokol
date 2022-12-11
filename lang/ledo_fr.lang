@@ -1,6 +1,6 @@
 # Language: fr_FR
 # Charset: CP1252
-# Version: 2.9.7
+# Version: 2.9.8
 # Author: @tlantide
 # Email: chatonhubfrance@gmail.com
 
@@ -15,7 +15,7 @@ days|jours
 I'm probably away. State your business and I might answer later if you're lucky.|Je suis probablement absent. Dites de quoi il s'agit et je pourrais répondre plus tard si vous avez de la chance.
 Perform script update|Effectuer la mise à jour du script
 Deleted %d main chat history messages.|%d messages supprimés de l'historique du chat central.
-There are no main chat history messages to remove.|Il n’y a pas de message à supprimer dans l'historique du chat central.
+There are no main chat history messages to remove.|Il n'y a pas de message à supprimer dans l'historique du chat central.
 Deleted %d operator chat history messages.|%d messages supprimés de l'historique des chats opérateur.
 There are no operator chat history messages to remove.|Il n'y a pas de message à supprimer dans l'historique du chat des opérateurs.
 %s with class %d deleted %d main chat history messages.|%s de classe %d a supprimé %d messages de l'historique du chat central.
@@ -634,8 +634,8 @@ Chat mode user list|Liste d'utilisateurs du mode de chat
 Chat mode user list is empty.|La liste d'utilisateurs du mode de chat est vide.
 %s user lookup|%s recherches de l'utilisateur
 Add IP gag|Ajouter un bâillon IP
-Added IP gag: %s|Bâillon IP ajouté : %s
-Modified IP gag: %s|Bâillon IP modifié : %s
+Added IP gag %s with time %d and reason: %s|Ajout du bâillon IP %s avec la durée %d et la raison : %s
+Modified IP gag %s with time %d and reason: %s|Modification du bâillon IP %s avec la durée %d et la raison : %s
 Deleted IP gag: %s|Bâillon IP supprimé : %s
 IP gag not found: %s|Bâillon IP introuvable : %s
 IP gag list|Liste de bâillons d'IP
@@ -717,35 +717,12 @@ Client: %s|Client : %s
 Version: %s|Version : %s
 Normal|Normal
 Away|Loin
-Normal away|Loin normal
 Fileserver|Serveur de fichiers
-Normal fileserver|Serveur de fichiers normal
-Away fileserver|Serveur de fichiers au loin
-Normal away fileserver|Serveur de fichiers au loin normal
 Fireball|Boule de feu
-Normal fireball|Boule de feu normale
-Away fireball|Boule de feu au loin
-Normal away fireball|Boule de feu au loin normale
-Fileserver fireball|Serveur de fichiers boule de feu
-Normal fileserver fireball|Serveur de fichiers normal boule de feu
-Away fileserver fireball|Au loin serveur de fichiers boule de feu
-Normal away fileserver fireball|Serveur de fichiers au loin normal boule de feu
 TLS|TLS
-Normal TLS|TLS normal
-Away TLS|Au loin TLS
-Normal away TLS|Normal au loin TLS
-Fileserver TLS|Serveur de fichiers TLS
-Normal fileserver TLS|Serveur de fichiers normal TLS
-Away fileserver TLS|Serveur de fichiers au loin TLS
-Normal away fileserver TLS|Serveur de fichiers normal au loin TLS
-Fireball TLS|Boule de feu TLS
-Normal fireball TLS|Boule de feu normale TLS
-Away fireball TLS|Boule de feu loin TLS
-Normal away fireball TLS|Normal loin boule de feu TLS
-Fileserver fireball TLS|Serveur de fichiers boule de feu TLS
-Normal fileserver fireball TLS|Serveur de fichiers normal boule de feu TLS
-Away fileserver fireball TLS|Serveur de fichiers au loin boule de feu TLS
-Normal away fileserver fireball TLS|Serveur de fichiers normal au loin boule de feu TLS
+NAT|NAT
+IPv4|IPv4
+IPv6|IPv6
 Unable to get bot information: %s|Impossible d'obtenir des informations sur le bot : %s
 Bot information|Informations du bot
 Owner script: %s|Script du propriétaire : %s
@@ -1076,7 +1053,7 @@ Entry used in detection: %s|Entrée utilisée dans la détection : %s
 Exception used in detection: %s|Exception utilisée dans la détection : %s
 text|texte
 Delete history messages by text|Supprimer les messages d'historique par texte
-Deleted %d main chat history messages by text: %s|%d messages de l’historique de la discussion principale supprimés par texte : %s
+Deleted %d main chat history messages by text: %s|%d messages de l'historique de la discussion principale supprimés par texte : %s
 %s with class %d deleted %d main chat history messages by text: %s|%s avec la classe %d a supprimé %d messages de l'historique chat par texte : %s
 Looking for users with nick %s on: %s|Recherche des utilisateurs avec le pseudo %s sur: %s
 Looking for users with description %s on: %s|Recherche des utilisateurs avec la description %s sur : %s
@@ -1133,8 +1110,8 @@ Couldn't delete search filter block list entry because not found: %s|Échec de la
 Yes|Oui
 No|Non
 %s with class %d changed configuration variable %s.%s: %s => %s|%s avec la classe %d a modifié la variable de configuration %s.%s : %s => %s
-Please wait another %d seconds before using public chat.|Veuillez attendre encore %d secondes avant d’utiliser le chat public.
-Please wait another %d seconds before using private chat.|Veuillez attendre encore %d secondes avant d’utiliser le chat privé.
+Please wait another %d seconds before using public chat.|Veuillez attendre encore %d secondes avant d'utiliser le chat public.
+Please wait another %d seconds before using private chat.|Veuillez attendre encore %d secondes avant d'utiliser le chat privé.
 Low chat uptime of %d seconds from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s|Faible durée de fonctionnement du chat de %d secondes de %s avec l'IP %s et la classe %d en message privé à %s avec l'IP %s et de la classe %d : %s
 Low chat uptime of %d seconds from %s with IP %s and class %d in MC: %s|Faible durée de fonctionnement du chat de %d secondes de %s avec l'IP %s et la classe %d en chat principal : %s
 Low chat uptime of %d seconds from %s with IP %s and class %d in command: %s|Faible durée de fonctionnement du chat de %d secondes de %s avec l'IP %s et la classe %d dans la commande : %s
@@ -1182,7 +1159,8 @@ Added city gag %s with reason: %s|Bâillon de ville %s ajouté pour la raison : %s
 Added city gag: %s|Bâillon de ville ajouté : %s
 Cleared city gag list.|La liste des bâillons de ville a été nettoyée.
 Deleted city gag: %s|Bâillon de ville supprimé : %s
-City gag not found: %s|Le bâillon de ville n'a pas été trouvé : %s
+City gag not found: %s|Bâillon de ville introuvable : %s
+City gag list is empty.|La liste des bâillons de ville est vide.
 %s with IP %s and class %d tries to speak with city gag in PM to %s with IP %s and class %d: %s|%s avec l'IP %s et la classe %d essaie de parler avec un bâillon de ville en message privé à %s avec l'IP %s avec la classe %d : %s
 %s with IP %s and class %d tries to speak with city gag in MC: %s|%s avec l'IP %s et la classe %d essaie de parler avec le bâillon de ville dans le chat principal : %s
 %s with IP %s and class %d tried to speak in MC without chat code: <%s> %s|%s avec l'IP %s et la classe %d essaye de parler dans le chat principal sans code de chat : <%s> %s
@@ -1204,7 +1182,6 @@ No clones detected.|Aucun clone détecté.
 Total number of clones: %d|Nombre total de clones : %d
 Clean up registered users table|Nettoyer le tableau des utilisateurs enregistrés
 magnet|magnet
-Please specify complete magnet URI.|Veuillez spécifier un URI magnet complet.
 Release modified within category %s by %s: %s|Release modifiée dans la catégorie %s par %s : %s
 Release added within category %s by %s: %s|Release ajoutée dans la catégorie %s par %s : %s
 Release deleted by %s: %s|Release effacée par %s : %s
@@ -1289,3 +1266,60 @@ Not found in uptime rank list: %s|Introuvable dans la liste de classement par du
 %s with class %d deleted %d uptime ranks lower than %d.|%s avec la classe %d a effacé %d classements de durée de fonctionnement inférieurs à %d.
 Size of uptime ranks table: %d [ %s: %d @ %s ]|Taille du tableau des classements par durée de fonctionnement : %d [ %s : %d @ %s ] 
 Total uptime rank time: %s|Total de la durée de classement par temps de fonctionnement : %s
+Function disabled|Fonction désactivée
+Code %d|Code %d
+Unknown error|Erreur inconnue
+No file|Pas de fichier
+No data|Pas de données
+Unknown data|Données inconnues
+IP intelligence: %s|Informations d'IP : %s
+Forbidden MyINFO list|Liste des MyINFO interdits
+Forbidden MyINFO list is empty.|La liste des MyINFO interdits est vide.
+There is an error in following forbidden MyINFO pattern|Il existe une erreur dans le schéma des MyINFO interdits suivant
+Modified forbidden MyINFO with ban time %s: %s|Modification du MyINFO interdit avec la durée de bannissement %s : %s
+Added forbidden MyINFO with ban time %s: %s|Ajout du MyINFO interdit avec la durée de bannissement %s : %s
+Deleted forbidden MyINFO: %s|MyINFO interdit effacé : %s
+Couldn't delete forbidden MyINFO because not found: %s|Impossible d'effacer le MyINFO interdit car introuvable : %s
+%s with IP %s and class %d allowed due to forbidden MyINFO exception: %s|%s avec l'IP %s et la classe %d a été autorisé en raison de l'exception de MyINFO interdit : %s
+Adding new AVDB item to our list: %s|Ajout d'un nouvel élément AVDB à notre liste : %s
+Updating AVDB item with different user nick: %s|Mise à jour de l'élément AVDB avec un pseudo utilisateur différent : %s
+Updating AVDB item with different IP address: %s|Mise à jour de l'élément AVDB avec une adresse IP différente : %s
+Updating AVDB item with different share size: %s|Mise à jour de l'élément AVDB avec une taille de partage différente : %s
+Chat flood or spam detected from your IP|Trop de messages (flood) ou spam détecté depuis votre IP
+On restart|Lors du redémarrage
+Modified ASN gag %s with reason: %s|Bâillon ASN %s modifié avec la raison : %s
+Modified ASN gag: %s|Bâillon ASN modifié : %s
+Added ASN gag %s with reason: %s|Bâillon ASN %s ajouté avec la raison : %s
+Added ASN gag: %s|Bâillon ASN ajouté : %s
+Cleared ASN gag list.|Liste des bâillons ASN effacé.
+Deleted ASN gag: %s|Bâillon ASN effacé : %s
+ASN gag not found: %s|Bâillon ASN introuvable : %s
+ASN gag list|Liste des bâillons ASN
+ASN gag list is empty.|La liste des bâillons ASN est vide.
+%s with IP %s, class %d and ASN %s tries to speak with ASN gag in PM to %s with IP %s and class %d: %s|%s avec l'IP %s, la classe %d et l'ASN %s essaye e parler avec un bâillon ASN en MP à  %s avec l'IP %s et la classe %d : %s
+%s with IP %s, class %d and ASN %s tries to speak with ASN gag in MC: %s|%s avec l'IP %s, la classe %d et l'ASN %s essaye de parler avec un baîllon ASN dans la discussion principale : %s 
+ASN gag|Bâillon ASN
+Add ASN gag|Ajouter un bâillon ASN
+Delete ASN gag|Effacer le bâillon ASN
+User command from %s with IP %s will be delayed for proxy lookup: %s|La commande d'utilisateur de %s avec l'IP %s sera retardé pour la recherche de proxy : %s
+Blocking user command from %s with IP %s detected as public proxy: %s|Blocage de la commande d'utilisateur de %s avec l'IP %s détecté comme proxy public : %s
+Unsent user command from logged out user %s with IP %s before finishing proxy lookup: %s|Commande d'utilisateur non envoyé de l'utilisateur %s s'étant déconnecté avec l'IP %s avant la fin de la recherche de proxy : %s
+Test antispam entry|Tester l'élément anti-spam
+Spam exception with action %d and priority %d in MC: %s|Exception de spam avec l'action %d et la priorité %d dans la discussion principale : %s
+Spam exception with action %d and priority %d in PM: %s|Exception de spam avec l'action %d et la priorité %d dans la discussion privée : %s
+Spam exception with action %d and priority %d in MC and PM: %s|Exception de spam avec l'action %d et la priorité %d dans les discussions principale et privée : %s
+Spam with action %d and priority %d in MC: %s|Spam avec l'action %d et la priorité %d dans la discussion principale : %s
+Spam with action %d and priority %d in PM: %s|Spam avec l'action %d et la priorité %d dans la discussion privée : %s
+Spam with action %d and priority %d in MC and PM: %s|Spam avec l'action %d et la priorité %d dans les discussions principale et privée : %s
+No antispam matches for text: %s|Aucune correspondance anti-spam pour le texte : %s
+List of antispam matches for text: %s|Liste des correspondances anti-spam pour le texte : %s
+Added proxy protection entry: %s|Entrée de protection de serveur mandataire ajoutée : %s
+Proxy protection entry already exists: %s|L'entrée de protection de serveur mandataire existe déjà : %s
+Cleared proxy protection list.|Liste de protection de serveurs mandataires nettoyé.
+Deleted proxy protection entry: %s|L'entrée de protection de serveur mandataire effacée : %s
+Proxy protection entry not found: %s|L'entrée de protection de serveur mandataire introuvable : %s
+Proxy protection list|Liste de protection de serveurs mandataires
+Proxy protection list is empty.|La liste de protection de serveurs mandataires est vide.
+Add proxy protection entry|Ajouter une entrée de protection de serveur mandataire
+Delete proxy protection entry|Effacer l'entrée de protection de serveur mandataire
+IP is protected: %s|L'IP est protégée : %s

@@ -1,8 +1,8 @@
 # Language: ru_RU
 # Charset: CP1251
 # Version: 2.9.8
-# Author: KCAHDEP
-# Email: admin@milenahub.ru
+# Author: RoLex
+# Email: webmaster@feardc.net
 
 Current topic: %s|Данная тема: %s
 Current topic set by %s: %s|Данная тема установленная %s: %s
@@ -719,8 +719,8 @@ Normal|Normal
 Away|Away
 Fileserver|Fileserver
 Fireball|Fireball
-TLS download|Скачка по TLS
-TLS upload|Отдача по TLS
+TLS|TLS
+NAT|NAT
 IPv4|IPv4
 IPv6|IPv6
 Unable to get bot information: %s|Невозможно получить данные бота: %s
@@ -1287,3 +1287,39 @@ Updating AVDB item with different IP address: %s|Обновляю пункт AVDB с отличающи
 Updating AVDB item with different share size: %s|Обновляю пункт AVDB с отличающимся размером шары: %s
 Chat flood or spam detected from your IP|Флуд в чат или спам обнаружен с вашего IP
 On restart|При перезагрузке
+Modified ASN gag %s with reason: %s|Изменена заглушка по ASN %s с причиной: %s
+Modified ASN gag: %s|Изменена заглушка по ASN: %s
+Added ASN gag %s with reason: %s|Добавлена заглушка по ASN %s с причиной: %s
+Added ASN gag: %s|Добавлена заглушка по ASN: %s
+Cleared ASN gag list.|Список заглушек по ASN очищен.
+Deleted ASN gag: %s|Удалена заглушка по ASN: %s
+ASN gag not found: %s|Заглушка по ASN не найдена: %s
+ASN gag list|Список заглушек по ASN
+ASN gag list is empty.|Список заглушек по ASN пуст.
+%s with IP %s, class %d and ASN %s tries to speak with ASN gag in PM to %s with IP %s and class %d: %s|%s c IP %s, классом %d и ASN %s пытался отправить личное сообщение не смотря на заглушку по ASN пользователю %s с IP адресом %s и классом %d: %s
+%s with IP %s, class %d and ASN %s tries to speak with ASN gag in MC: %s|%s c IP %s, классом %d и ASN %s пытался отправить сообщение в главный чат не смотря на заглушку по ASN: %s
+ASN gag|Заглушка по ASN
+Add ASN gag|Добавить заглушку по ASN
+Delete ASN gag|Удалить заглушку по ASN
+User command from %s with IP %s will be delayed for proxy lookup: %s|Пользовательская команда от %s с IP %s будет отложена для определения прокси: %s
+Blocking user command from %s with IP %s detected as public proxy: %s|Блокировка пользовательской команды от %s с IP %s обнаруженного как публичный прокси: %s
+Unsent user command from logged out user %s with IP %s before finishing proxy lookup: %s|Неотправленная пользовательская команда от вышедшего с хаба пользователя %s с IP %s до окончания проверки прокси: %s
+Test antispam entry|Проверить запись антиспама
+Spam exception with action %d and priority %d in MC: %s|Исключение для антиспама с действием %d и приоритетом %d в MC: %s
+Spam exception with action %d and priority %d in PM: %s|Исключение для антиспама с действием %d и приоритетом %d в PM: %s
+Spam exception with action %d and priority %d in MC and PM: %s|Исключение для антиспама с действием %d и приоритетом %d в MC и PM: %s
+Spam with action %d and priority %d in MC: %s|Спам с действием %d и приоритетом %d в MC: %s
+Spam with action %d and priority %d in PM: %s|Спам с действием %d и приоритетом %d в PM: %s
+Spam with action %d and priority %d in MC and PM: %s|Спам с действием %d и приоритетом %d в MC и PM: %s
+No antispam matches for text: %s|Нет совпадений антиспама для текста: %s
+List of antispam matches for text: %s|Список совпадений антиспама для текста: %s
+Added proxy protection entry: %s|Добавлена запись защищённого прокси: %s
+Proxy protection entry already exists: %s|Запись защищённого прокси уже существует: %s
+Cleared proxy protection list.|Очищен список защищённых прокси.
+Deleted proxy protection entry: %s|Удалена запись защищённого прокси: %s
+Proxy protection entry not found: %s|Запись защищённого прокси не найдена: %s
+Proxy protection list|Список защищённых прокси
+Proxy protection list is empty.|Список защищённых прокси пуст.
+Add proxy protection entry|Добавить запись защищённого прокси
+Delete proxy protection entry|Уладить запись защищённого прокси
+IP is protected: %s|IP защищён: %s
