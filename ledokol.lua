@@ -10739,7 +10739,7 @@ end
 ----- ---- --- -- -
 
 function checkblacklist (addr)
-	local a1 = rang:match ("^(%d+)%.")
+	local a1 = addr:match ("^(%d+)%.")
 	a1 = tonumber (a1 or -1)
 
 	if a1 >= 0 and a1 <= 255 then
