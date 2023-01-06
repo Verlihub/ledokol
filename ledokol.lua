@@ -2,7 +2,7 @@
 --[[ license agreement >>
 ---------------------------------------------------------------------
 
-Copyright © 2007-2022 RoLex
+Copyright © 2007-2023 RoLex
 
 Ledokol is free software; You can redistribute it
 and modify it under the terms of the GNU General
@@ -62,8 +62,8 @@ Tzaca, JOE™, Foxtrot, Deivis and others
 -- global storage variables and tables >>
 ---------------------------------------------------------------------
 
-ver_ledo = "2.9.8" -- ledokol version
-bld_ledo = "135" -- build number
+ver_ledo = "2.9.9" -- ledokol version
+bld_ledo = "136" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -315,6 +315,7 @@ table_sets = {
 	ipconantiflint = 0,
 	enablehardban = 0,
 	useblacklist = 0,
+	blistupdateint = 0,
 	--hublistpingint = 0,
 	--hubpingtimeout = 1,
 	enableuserlog = 0,
@@ -405,6 +406,7 @@ table_othsets = {
 	avloaddelcount = 0,
 	avnextitem = 1,
 	avrandstr = "",
+	blistlastupd = 0,
 	seartotcount = 0,
 	seardupcount = 0,
 	useragent = "Mozilla/5.0 (compatible; Ledokol/" .. ver_ledo .. "." .. bld_ledo .. "; +https://ledo.feardc.net/)",
@@ -540,6 +542,7 @@ tbl_sql = {
 	stat = "lua_ledo_stat",
 	nopm = "lua_ledo_nopm",
 	hban = "lua_ledo_hban",
+	blist = "lua_ledo_blist",
 	ipwa = "lua_ledo_ipwa",
 	ipgag = "lua_ledo_ipgag",
 	ccgag = "lua_ledo_ccgag",
@@ -624,6 +627,12 @@ table_cmnds = {
 	hban = "hban",
 	hunban = "hunban",
 	hbans = "hbans",
+	blistadd = "blistadd",
+	blistdel = "blistdel",
+	blistlist = "blistlist",
+	blistoff = "blistoff",
+	blistimport = "blistimport",
+	blistfind = "blistfind",
 	newsadd = "newsadd",
 	newsdel = "newsdel",
 	hubnews = "hubnews",
@@ -1632,6 +1641,19 @@ function Main (file)
 					end
 
 					if ver <= 299 then
+						VH:SQLQuery ("create table if not exists `" .. tbl_sql.blist .. "` (`list` varchar(255) not null primary key, `type` varchar(10) not null, `name` varchar(255) not null, `off` tinyint(1) unsigned not null default 0)")
+
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.ledocmd .. "` (`original`, `new`) values ('blistadd', '" .. repsqlchars (table_cmnds.blistadd) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.ledocmd .. "` (`original`, `new`) values ('blistdel', '" .. repsqlchars (table_cmnds.blistdel) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.ledocmd .. "` (`original`, `new`) values ('blistlist', '" .. repsqlchars (table_cmnds.blistlist) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.ledocmd .. "` (`original`, `new`) values ('blistoff', '" .. repsqlchars (table_cmnds.blistoff) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.ledocmd .. "` (`original`, `new`) values ('blistimport', '" .. repsqlchars (table_cmnds.blistimport) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.ledocmd .. "` (`original`, `new`) values ('blistfind', '" .. repsqlchars (table_cmnds.blistfind) .. "')")
+
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('blistupdateint', '" .. repsqlchars (table_sets.blistupdateint) .. "')")
+					end
+
+					if ver <= 300 then
 						-- todo: next version
 					end
 
@@ -2182,7 +2204,85 @@ return 0
 
 		return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
+
+	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.blistadd .. " %S+ %S+ .+$") then
+		if ucl >= table_sets.mincommandclass then
+			donotifycmd (nick, data, 0, ucl)
+			addblist (nick, data:sub (# table_cmnds.blistadd + 3))
+
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
+
+		return 0
+
+	----- ---- --- -- -
+
+	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.blistdel .. " %S+$") then
+		if ucl >= table_sets.mincommandclass then
+			donotifycmd (nick, data, 0, ucl)
+			delblist (nick, data:sub (# table_cmnds.blistdel + 3))
+
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
+
+		return 0
+
+	----- ---- --- -- -
+
+	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.blistlist .. "$") then
+		if ucl >= table_sets.mincommandclass then
+			donotifycmd (nick, data, 0, ucl)
+			listblist (nick)
+
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
+
+		return 0
+
+	----- ---- --- -- -
+
+	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.blistoff .. " %S$") then
+		if ucl >= table_sets.mincommandclass then
+			donotifycmd (nick, data, 0, ucl)
+			offblist (nick, data:sub (# table_cmnds.blistoff + 3))
+
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
+
+		return 0
+
+	----- ---- --- -- -
+
+	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.blistimport .. "$") then
+		if ucl >= table_sets.mincommandclass then
+			donotifycmd (nick, data, 0, ucl)
+			importblist (nick)
+
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
+
+		return 0
+
+	----- ---- --- -- -
+
+	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.blistfind .. " .+$") then
+		if ucl >= table_sets.mincommandclass then
+			donotifycmd (nick, data, 0, ucl)
+			findblist (nick, data:sub (# table_cmnds.blistfind + 3))
+
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
+
+		return 0
+
+	----- ---- --- -- -
 
 elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.newsadd .. " .+$") then
 if ucl >= table_sets.mincommandclass then
@@ -6749,6 +6849,10 @@ function VH_OnTimer (msec)
 		table_othsets.avlastloadtick = now
 	end
 
+	if table_sets.useblacklist == 1 and ((table_othsets.blistlastupd == 0) or (table_sets.blistupdateint >= 1 and os.difftime (now, table_othsets.blistlastupd) >= (table_sets.blistupdateint * 60))) then -- update blacklist on timer or once
+		loadblacklist ()
+	end
+
 	if table_sets.votekickclass < 11 then -- vote kicks
 		local dels = {}
 
@@ -10433,6 +10537,346 @@ end
 
 ----- ---- --- -- -
 
+function addblist (nick, line)
+	local list, cype, name = line:match ("^(%S+) (%S+) (.+)$")
+
+	if cype ~= "p2p" and cype ~= "range" and cype ~= "single" then
+		commandanswer (nick, gettext ("Known types are: %s"):format ("p2p, range, " .. gettext ("and") .. " single"))
+		return
+	end
+
+	if (list:sub (1, 8):lower () == "https://" or list:sub (1, 7):lower () == "http://") and not table_othsets.ver_curl then
+		commandanswer (nick, gettext ("This feature requires following binary installed on your system: %s"):format ("cURL"))
+		return
+	end
+
+	local replist = repsqlchars (repnmdcoutchars (list))
+	local repname = repsqlchars (repnmdcoutchars (name))
+
+	local _, rows = VH:SQLQuery ("select null from `" .. tbl_sql.blist .. "` where `list` = '" .. replist .. "'")
+
+	if rows > 0 then -- update
+		VH:SQLQuery ("update `" .. tbl_sql.blist .. "` set `type` = '" .. cype .. "', `name` = '" .. repname .. "' where `list` = '" .. replist .. "'")
+		commandanswer (nick, gettext ("Modified blacklist entry: %s"):format (list))
+
+	else -- add
+		VH:SQLQuery ("insert into `" .. tbl_sql.blist .. "` (`list`, `type`, `name`) values ('" .. replist .. "', '" .. cype .. "', '" .. repname .. "')")
+		commandanswer (nick, gettext ("Added blacklist entry: %s"):format (list))
+	end
+end
+
+----- ---- --- -- -
+
+function delblist (nick, list)
+	local replist = repsqlchars (repnmdcoutchars (list))
+	local _, rows = VH:SQLQuery ("select null from `" .. tbl_sql.blist .. "` where `list` = '" .. replist .. "'")
+
+	if rows > 0 then
+		VH:SQLQuery ("delete from `" .. tbl_sql.blist .. "` where `list` = '" .. replist .. "'")
+		commandanswer (nick, gettext ("Deleted blacklist entry: %s"):format (list))
+
+	else
+		commandanswer (nick, gettext ("Blacklist entry not found: %s"):format (list))
+	end
+end
+
+----- ---- --- -- -
+
+function listblist (nick)
+	local _, rows = VH:SQLQuery ("select * from `" .. tbl_sql.blist .. "` order by `name` asc, `off` asc")
+
+	if rows > 0 then
+		local back = ""
+
+		for pos = 0, rows - 1 do
+			local _, list, cype, name, off = VH:SQLFetch (pos)
+			back = back .. " [ L: " .. list .. " ] [ T: " .. cype .. " ] [ N: " .. name .. " ] [ D: " .. ((tonumber (off) == 0) and gettext ("No") or gettext ("Yes")) .. " ]\r\n"
+		end
+
+		commandanswer (nick, gettext ("List of blacklist entries") .. ":\r\n\r\n" .. back)
+
+	else
+		commandanswer (nick, gettext ("Blacklist list is empty."))
+	end
+end
+
+----- ---- --- -- -
+
+function offblist (nick, list)
+	local replist = repsqlchars (repnmdcoutchars (list))
+	local _, rows = VH:SQLQuery ("select `off` from `" .. tbl_sql.blist .. "` where `list` = '" .. replist .. "'")
+
+	if rows > 0 then
+		local _, off = VH:SQLFetch (0)
+
+		if tonumber (off) == 0 then
+			VH:SQLQuery ("update `" .. tbl_sql.blist .. "` set `off` = 1 where `list` = '" .. replist .. "'")
+			commandanswer (nick, gettext ("Disabled blacklist entry: %s"):format (list))
+
+		else
+			VH:SQLQuery ("update `" .. tbl_sql.blist .. "` set `off` = 0 where `list` = '" .. replist .. "'")
+			commandanswer (nick, gettext ("Enabled blacklist entry: %s"):format (list))
+		end
+
+	else
+		commandanswer (nick, gettext ("Blacklist entry not found: %s"):format (list))
+	end
+end
+
+----- ---- --- -- -
+
+function findblist (nick, line)
+	if table_sets.useblacklist == 0 then
+		commandanswer (nick, gettext ("Blacklist feature is disabled."))
+		return
+	end
+
+	local list, lim = "", 0
+	local a1 = line:match ("^(%d+)%.%d+%.%d+%.%d+$")
+	a1 = tonumber (a1 or -1)
+
+	if a1 >= 0 and a1 <= 255 then -- address
+		for _, data in pairs (table_blst [a1 + 1]) do -- note: +1 due to lua index 1+
+			if ipinrange (data.rang, line) then
+				lim = lim + 1
+				list = list .. " " .. data.rang .. " [" .. repnmdcoutchars (data.name) .. "]\r\n"
+
+				if lim >= 1000 then -- limit
+					break
+				end
+			end
+		end
+
+	else -- name
+		local low = line:lower ()
+
+		for pos = 1, 256 do -- note: +1 due to lua index 1+
+			local ok = false
+
+			for _, data in pairs (table_blst [pos]) do
+				if data.name:lower ():find (low, 1, true) then
+					lim = lim + 1
+					list = list .. " " .. data.rang .. " [" .. repnmdcoutchars (data.name) .. "]\r\n"
+
+					if lim >= 1000 then -- limit
+						break
+						ok = true
+					end
+				end
+			end
+
+			if ok then
+				break
+			end
+		end
+	end
+
+	if # list > 0 then
+		commandanswer (nick, gettext ("Found blacklist entries") .. ":\r\n\r\n" .. list)
+	else
+		commandanswer (nick, gettext ("No blacklist entries found."))
+	end
+end
+
+----- ---- --- -- -
+
+function importblist (nick, id)
+	local _, rows = VH:SQLQuery ("select `list` from `" .. tbl_sql.blist .. "`")
+	local have = {}
+
+	if rows > 0 then
+		for pos = 0, rows - 1 do
+			local _, list = VH:SQLFetch (pos)
+			have [list:lower ()] = true
+		end
+	end
+
+	local _, rows = VH:SQLQuery ("select `list`, `type`, `title`, `off` from `py_bl_list` order by `list` asc, `type` asc")
+
+	if rows > 0 then
+		local back, todo = "", {}
+
+		for pos = 0, rows - 1 do
+			local _, list, cype, name, off = VH:SQLFetch (pos)
+			local lrep = list:gsub ("^[Hh][Tt][Tt][Pp]://[Tt][Ee]%-[Hh][Oo][Mm][Ee]%.[Nn][Ee][Tt]", "https://www.te-home.net") -- force https since its supported
+			lrep = lrep:gsub ("^[Hh][Tt][Tt][Pp]://[Ww][Ww][Ww]%.[Tt][Ee]%-[Hh][Oo][Mm][Ee]%.[Nn][Ee][Tt]", "https://www.te-home.net")
+			back = back .. " [ L: " .. list .. " ] [ T: " .. cype .. " ] [ N: " .. name .. " ] [ D: " .. ((tonumber (off) == 0) and gettext ("No") or gettext ("Yes")) .. " ] [ S: "
+
+			if (list:sub (1, 8):lower () == "https://" or list:sub (1, 7):lower () == "http://") and not table_othsets.ver_curl then
+				back = back .. gettext ("Binary is required: %s"):format ("cURL")
+
+			elseif cype ~= "p2p" and cype ~= "range" and cype ~= "single" then
+				back = back .. gettext ("Unsupported type: %s"):format (repnmdcoutchars (cype))
+
+			elseif have [list:lower ()] or have [lrep:lower ()] then
+				back = back .. gettext ("Already in our list")
+
+			else
+				back = back .. gettext ("Successfully imported")
+
+				table.insert (todo, {
+					l = lrep,
+					t = cype,
+					n = name,
+					o = tonumber (off)
+				})
+			end
+
+			back = back .. " ]\r\n"
+		end
+
+		for _, data in pairs (todo) do
+			VH:SQLQuery ("insert into `" .. tbl_sql.blist .. "` (`list`, `type`, `name`, `off`) values ('" .. repsqlchars (data.l) .. "', '" .. data.t .. "', '" .. repsqlchars (data.n) .. "', " .. _tostring (data.o) .. ")")
+		end
+
+		commandanswer (nick, gettext ("Import status") .. ":\r\n\r\n" .. back)
+
+	else
+		commandanswer (nick, gettext ("Import status") .. ": " .. gettext ("Table does not exist or is empty: %s"):format ("py_bl_list"))
+	end
+end
+
+----- ---- --- -- -
+
+function checkblacklist (addr)
+	local a1 = rang:match ("^(%d+)%.")
+	a1 = tonumber (a1 or -1)
+
+	if a1 >= 0 and a1 <= 255 then
+		for _, data in pairs (table_blst [a1 + 1]) do -- note: +1 due to lua index 1+
+			if ipinrange (data.rang, addr) then
+				opsnotify (table_sets.classnotiblist, gettext ("Blacklisted connection from IP %s dropped: %s"):format (addr .. tryipcc (addr), repnmdcoutchars (data.name) .. " [" .. data.rang .. "]")) -- notify
+				return true
+			end
+		end
+	end
+
+	return false
+end
+
+----- ---- --- -- -
+
+function loadblacklist ()
+	table_blst = {} -- flush
+
+	for x = 1, 256 do -- split
+		table_blst [x] = {}
+	end
+
+	local _, rows = VH:SQLQuery ("select `list`, `type`, `name` from `" .. tbl_sql.blist .. "` where `off` = 0")
+
+	if rows > 0 then
+		for pos = 0, rows - 1 do
+			local _, list, cype, name = VH:SQLFetch (pos)
+
+			if list:sub (1, 8):lower () == "https://" or list:sub (1, 7):lower () == "http://" then -- remote
+				if not table_othsets.ver_curl then
+					opsnotify (table_sets.classnotiblist, gettext ("%s blacklist not loaded because: %s"):format (repnmdcoutchars (name), gettext ("Binary is required: %s"):format ("cURL")))
+
+				else
+					local res, err, data = getcurl (list)
+
+					if res and # data > 0 then
+						local tot = 0
+
+						for line in data:gmatch ("[^\r\n]+") do
+							local xname, xlow, xhigh = nil, nil, nil
+
+							if cype == "p2p" then
+								xname, xlow, xhigh = line:match ("^(.+):(%d+%.%d+%.%d+%.%d+)%-(%d+%.%d+%.%d+%.%d+)$")
+
+							elseif cype == "range" then
+								xlow, xhigh = line:match ("^(%d+%.%d+%.%d+%.%d+)%-(%d+%.%d+%.%d+%.%d+)$")
+								xname = name
+
+							elseif cype == "single" then
+								xlow = line:match ("^(%d+%.%d+%.%d+%.%d+)$")
+								xhigh = xlow
+								xname = name
+							end
+
+							if xname and xlow and xhigh then
+								local a1 = xlow:match ("^(%d+)%.")
+								local b1 = xhigh:match ("^(%d+)%.")
+								a1 = tonumber (a1)
+								b1 = tonumber (b1)
+
+								if a1 >= 0 and a1 <= 255 and b1 >= 0 and b1 <= 255 then
+									tot = tot + 1
+
+									for x = a1 + 1, b1 + 1 do -- note: +1 due to lua index 1+
+										table.insert (table_blst [x], {
+											["rang"] = xlow .. "-" .. xhigh,
+											["name"] = xname
+										})
+									end
+								end
+							end
+						end
+
+						opsnotify (table_sets.classnotiblist, gettext ("Blacklist loaded with %d items: %s"):format (tot, repnmdcoutchars (name)))
+
+					else
+						opsnotify (table_sets.classnotiblist, gettext ("%s blacklist not loaded because: %s"):format (repnmdcoutchars (name), (# err > 0 and err or gettext ("Nothing was found in: %s"):format (list))))
+					end
+				end
+
+			else -- local
+				local file = io.open (list)
+
+				if file then
+					file:close ()
+					local tot = 0
+
+					for line in io.lines (list) do
+						local xname, xlow, xhigh = nil, nil, nil
+
+						if cype == "p2p" then
+							xname, xlow, xhigh = line:match ("^(.+):(%d+%.%d+%.%d+%.%d+)%-(%d+%.%d+%.%d+%.%d+)$")
+
+						elseif cype == "range" then
+							xlow, xhigh = line:match ("^(%d+%.%d+%.%d+%.%d+)%-(%d+%.%d+%.%d+%.%d+)$")
+							xname = name
+
+						elseif cype == "single" then
+							xlow = line:match ("^(%d+%.%d+%.%d+%.%d+)$")
+							xhigh = xlow
+							xname = name
+						end
+
+						if xname and xlow and xhigh then
+							local a1 = xlow:match ("^(%d+)%.")
+							local b1 = xhigh:match ("^(%d+)%.")
+							a1 = tonumber (a1)
+							b1 = tonumber (b1)
+
+							if a1 >= 0 and a1 <= 255 and b1 >= 0 and b1 <= 255 then
+								tot = tot + 1
+
+								for x = a1 + 1, b1 + 1 do -- note: +1 due to lua index 1+
+									table.insert (table_blst [x], {
+										["rang"] = xlow .. "-" .. xhigh,
+										["name"] = xname
+									})
+								end
+							end
+						end
+					end
+
+					opsnotify (table_sets.classnotiblist, gettext ("Blacklist loaded with %d items: %s"):format (tot, repnmdcoutchars (name)))
+
+				else
+					opsnotify (table_sets.classnotiblist, gettext ("%s blacklist not loaded because: %s"):format (repnmdcoutchars (name), gettext ("File does not exist")))
+				end
+			end
+		end
+	end
+
+	table_othsets.blistlastupd = os.time ()
+end
+
+----- ---- --- -- -
+
 function addnews (nick, item)
 	local ndate = os.time () + table_sets.srvtimediff -- current time
 	VH:SQLQuery ("insert into `" .. tbl_sql.news .. "` (`date`, `by`, `item`) values (" .. _tostring (ndate) .. ", '" .. repsqlchars (nick) .. "', '" .. repsqlchars (item) .. "')")
@@ -11424,7 +11868,9 @@ function showuserinfo (nick, usr)
 			local info = ""
 
 			if bots then
+			--if bots and type (bots) == "table" and # bots == 1 then
 				for _, v in pairs (bots) do
+				--for _, v in pairs (bots [1]) do
 					if user == v ["sNick"] then
 						info = info .. " " .. gettext ("Nick: %s"):format (user) .. "\r\n" -- nick
 
@@ -19114,6 +19560,19 @@ end
 		sopmenitm (usr, gettext ("Hard IP bans") .. "\\" .. gettext ("Delete hard IP ban entry"), table_cmnds.hunban .. " %[line:<" .. gettext ("lre") .. ">]")
 	end
 
+	-- blacklist
+	if ucl >= table_sets.mincommandclass then
+		sopmenitm (usr, gettext ("Blacklist") .. "\\" .. gettext ("Add blacklist entry"), table_cmnds.blistadd .. " %[line:<" .. gettext ("list") .. ">] %[line:<" .. gettext ("type") .. ">] %[line:<" .. gettext ("name") .. ">]")
+		sopmenitm (usr, gettext ("Blacklist") .. "\\" .. gettext ("List blacklist entries"), table_cmnds.blistlist)
+		smensep (usr)
+		sopmenitm (usr, gettext ("Blacklist") .. "\\" .. gettext ("Disable or enable blacklist entry"), table_cmnds.blistoff .. " %[line:<" .. gettext ("list") .. ">]")
+		smensep (usr)
+		sopmenitm (usr, gettext ("Blacklist") .. "\\" .. gettext ("Delete blacklist entry"), table_cmnds.blistdel .. " %[line:<" .. gettext ("list") .. ">]")
+		smensep (usr)
+		sopmenitm (usr, gettext ("Blacklist") .. "\\" .. gettext ("Search in blacklist"), table_cmnds.blistfind .. " %[line:<" .. gettext ("ip") .. " " .. gettext ("or") .. " " .. gettext ("name") .. ">]")
+		sopmenitm (usr, gettext ("Blacklist") .. "\\" .. gettext ("Import blacklist entries from %s"):format ("blacklist.py"), table_cmnds.blistimport)
+	end
+
 	-- hub news
 	if ucl >= table_sets.mincommandclass then
 		sopmenitm (usr, gettext ("Hub news") .. "\\" .. gettext ("Add news item"), table_cmnds.newsadd .. " %[line:<" .. gettext ("string") .. ">]")
@@ -21105,32 +21564,42 @@ end
 			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
 		end
 
------ ---- --- -- -
+	----- ---- --- -- -
 
 	elseif tvar == "useblacklist" then
 		if num then
 			if setto == 0 or setto == 1 then
+				ok = true
+
 				if setto == 0 then
 					table_blst = {} -- flush
-					ok = true
 				elseif table_sets [tvar] == 0 then -- load
-					commandanswer (nick, gettext ("Loading %s in memory..."):format ("blacklist.txt"))
-
-					if loadblacklist () then
-						ok = true
-						commandanswer (nick, gettext ("Finished loading %s in memory."):format ("blacklist.txt"))
-					else
-						commandanswer (nick, gettext ("Unable to locate %s in hub configuration directory."):format ("blacklist.txt"))
-					end
+					loadblacklist ()
 				end
+
 			else
 				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0 " .. gettext ("or") .. " 1"))
 			end
+
 		else
 			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
 		end
 
------ ---- --- -- -
+	----- ---- --- -- -
+
+	elseif tvar == "blistupdateint" then
+		if num then
+			if setto >= 0 and setto <= 1440 then
+				ok = true
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0 " .. gettext ("to") .. " 1440"))
+			end
+
+		else
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
+		end
+
+	----- ---- --- -- -
 
 	elseif tvar == "chatfloodcmdgag" then
 		if num then
@@ -23580,41 +24049,6 @@ end
 
 ----- ---- --- -- -
 
-function checkblacklist (ip)
-	for _, bld in pairs (table_blst) do
-		if ipinrange (bld.r, ip) then
-			opsnotify (table_sets.classnotiblist, gettext ("Blacklisted connection from IP %s dropped: %s"):format (ip .. tryipcc (ip), repnmdcoutchars (bld.d))) -- notify
-			return true
-		end
-	end
-
-	return false
-end
-
------ ---- --- -- -
-
-function loadblacklist ()
-	local f = io.open (table_othsets.cfgdir .. "blacklist.txt")
-
-	if f then
-		f:close ()
-
-		for l in io.lines (table_othsets.cfgdir .. "blacklist.txt") do
-			local p = l:find (":")
-
-			if p then
-				table.insert (table_blst, {d = l:sub (1, p - 1), r = l:sub (p + 1)})
-			end
-		end
-	else
-		return false
-	end
-
-	return true
-end
-
------ ---- --- -- -
-
 function sendophelp (nick, clas, pm)
 	local trig = getconfig ("cmd_start_op"):sub (1, 1)
 	local help = ".:: " .. gettext ("%s operator commands"):format ("Ledokol") .. ":\r\n\r\n"
@@ -23711,6 +24145,14 @@ function sendophelp (nick, clas, pm)
 	help = help .. " " .. trig .. table_cmnds.hban .. " <" .. gettext ("lre") .. "> <\"" .. gettext ("reason") .. "\"> - " .. gettext ("Add hard IP ban entry") .. "\r\n"
 	help = help .. " " .. trig .. table_cmnds.hbans .. " - " .. gettext ("List of hard IP ban entries") .. "\r\n"
 	help = help .. " " .. trig .. table_cmnds.hunban .. " <" .. gettext ("lre") .. "> - " .. gettext ("Delete hard IP ban entry") .. "\r\n\r\n"
+
+	-- blacklist
+	help = help .. " " .. trig .. table_cmnds.blistadd .. " <" .. gettext ("list") .. "> <" .. gettext ("type") .. "> <" .. gettext ("name") .. "> - " .. gettext ("Add blacklist entry") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.blistlist .. " - " .. gettext ("List blacklist entries") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.blistdel .. " <" .. gettext ("list") .. "> - " .. gettext ("Delete blacklist entry") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.blistoff .. " <" .. gettext ("list") .. "> - " .. gettext ("Disable or enable blacklist entry") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.blistfind .. " <" .. gettext ("ip") .. " " .. gettext ("or") .. " " .. gettext ("name") .. "> - " .. gettext ("Search in blacklist") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.blistimport .. " - " .. gettext ("Import blacklist entries from %s"):format ("blacklist.py") .. "\r\n\r\n"
 
 	-- news
 	help = help .. " " .. trig .. table_cmnds.newsadd .. " <" .. gettext ("string") .. "> - " .. gettext ("Add news item") .. "\r\n"
@@ -24402,7 +24844,10 @@ function showledoconf (nick)
 	conf = conf .. "\r\n [::] chatfloodcmdgag = " .. _tostring (table_sets.chatfloodcmdgag)
 	conf = conf .. "\r\n [::] ipconantiflint = " .. _tostring (table_sets.ipconantiflint)
 	conf = conf .. "\r\n [::] enablehardban = " .. _tostring (table_sets.enablehardban)
+	conf = conf .. "\r\n"
+
 	conf = conf .. "\r\n [::] useblacklist = " .. _tostring (table_sets.useblacklist)
+	conf = conf .. "\r\n [::] blistupdateint = " .. _tostring (table_sets.blistupdateint)
 	conf = conf .. "\r\n"
 
 	conf = conf .. "\r\n [::] protofloodctmcnt = " .. _tostring (table_sets.protofloodctmcnt)
@@ -24571,6 +25016,9 @@ VH:SQLQuery ("create table if not exists `" .. tbl_sql.stat .. "` (`type` varcha
 
 	-- hard ban
 	VH:SQLQuery ("create table if not exists `" .. tbl_sql.hban .. "` (`ip` varchar(255) not null, `reason` text not null, primary key (`ip`))")
+
+	-- blacklist
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql.blist .. "` (`list` varchar(255) not null primary key, `type` varchar(10) not null, `name` varchar(255) not null, `off` tinyint(1) unsigned not null default 0)")
 
 	-- ip watch
 	VH:SQLQuery ("create table if not exists `" .. tbl_sql.ipwa .. "` (`ip` varchar(255) not null, `reason` text not null, `result` tinyint(1) unsigned not null default 0, primary key (`ip`))")
@@ -24941,8 +25389,8 @@ function createsettings ()
 		"('" .. repsqlchars ("^" .. table_othsets.ustrig .. "regme") .. "')")
 	end
 
-	if not getledoconf ("defmyinfnick") then -- add dangerous nicks
-		VH:SQLQuery ("insert ignore into `" .. tbl_sql.minick .. "` (`nick`) values ('" .. repsqlchars ("%" .. string.char (173)) .. "')")
+	if not getledoconf ("defmyinfnick") then -- soft hyphen in nick
+		VH:SQLQuery ("insert ignore into `" .. tbl_sql.minick .. "` (`nick`) values ('" .. repsqlchars (string.char (173)) .. "')")
 	end
 
 	-- update hidden variables
@@ -24973,12 +25421,6 @@ function loadsettings ()
 		if rows > 0 then
 			local _, val = VH:SQLFetch (0)
 			table_cmnds [k] = val
-		end
-	end
-
-	if table_sets.useblacklist == 1 then -- blacklist
-		if not loadblacklist () then
-			table_sets.useblacklist = 0
 		end
 	end
 end
@@ -25178,7 +25620,11 @@ function ipinrange (rang, addr)
 			c1, c2, c3 = tonumber (c1), tonumber (c2), tonumber (c3)
 			d1, d2, d3 = tonumber (d1), tonumber (d2), tonumber (d3)
 
-			if a3 >= a1 and a3 <= a2 and b3 >= b1 and b3 <= b2 and c3 >= c1 and c3 <= c2 and d3 >= d1 and d3 <= d2 then
+			if a1 >= 0 and a1 <= 255 and a2 >= 0 and a2 <= 255 and a3 >= 0 and a3 <= 255 and -- validate
+			b1 >= 0 and b1 <= 255 and b2 >= 0 and b2 <= 255 and b3 >= 0 and b3 <= 255 and
+			c1 >= 0 and c1 <= 255 and c2 >= 0 and c2 <= 255 and c3 >= 0 and c3 <= 255 and
+			d1 >= 0 and d1 <= 255 and d2 >= 0 and d2 <= 255 and d3 >= 0 and d3 <= 255 and
+			a3 >= a1 and a3 <= a2 and b3 >= b1 and b3 <= b2 and c3 >= c1 and c3 <= c2 and d3 >= d1 and d3 <= d2 then -- compare
 				return true
 			end
 		end
@@ -26314,7 +26760,7 @@ function loadcomponents ()
 
 	-- plugin version
 
-	table_othsets.ver_luaplug = _PLUGINVERSION
+	table_othsets.ver_luaplug = VH.PlugVer or nil
 
 	if not table_othsets.ver_luaplug then
 		if minhubver (1, 0, 2, 15) then

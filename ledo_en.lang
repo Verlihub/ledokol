@@ -1,6 +1,6 @@
 # Language: en_GB
 # Charset: CP1252
-# Version: 2.9.8
+# Version: 2.9.9
 # Author: RoLex
 # Email: webmaster@feardc.net
 
@@ -823,9 +823,6 @@ Hard IP ban list is empty.|
 Couldn't delete hard IP ban entry because not found: %s|
 Hard IP ban refused connection from IP %s: %s|
 Please wait another %d seconds before using hub search engine.|
-Loading %s in memory...|
-Finished loading %s in memory.|
-Unable to locate %s in hub configuration directory.|
 Add right click menu item|
 Delete right click menu item|
 List of right click menu items|
@@ -1323,3 +1320,31 @@ Proxy protection list is empty.|
 Add proxy protection entry|
 Delete proxy protection entry|
 IP is protected: %s|
+Blacklist|
+Add blacklist entry|
+List blacklist entries|
+Disable or enable blacklist entry|
+Delete blacklist entry|
+list|
+Import blacklist entries from %s|
+Modified blacklist entry: %s|
+Added blacklist entry: %s|
+Blacklist entry not found: %s|
+Deleted blacklist entry: %s|
+Blacklist list is empty.|
+List of blacklist entries|
+Disabled blacklist entry: %s|
+Enabled blacklist entry: %s|
+Import status|
+Table does not exist or is empty: %s|
+Binary is required: %s|
+Successfully imported|
+Unsupported type: %s|
+Already in our list|
+Search in blacklist|
+No blacklist entries found.|
+Found blacklist entries|
+Blacklist feature is disabled.|
+%s blacklist not loaded because: %s|
+Blacklist loaded with %d items: %s|
+File does not exist|

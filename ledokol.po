@@ -1,10 +1,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ledokol\n"
-"Project-Version: 2.9.8\n"
+"Project-Version: 2.9.9\n"
 "Report-Msgid-Bugs-To: RoLex <webmaster@feardc.net>\n"
-"POT-Creation-Date: 2022-12-11 00:00+0200\n"
-"PO-Revision-Date: 2022-12-11 00:00+0200\n"
+"POT-Creation-Date: 2023-01-04 00:00+0200\n"
+"PO-Revision-Date: 2023-01-04 00:00+0200\n"
 "Last-Translator: RoLex <webmaster@feardc.net>\n"
 "Language-Team: RoLex <webmaster@feardc.net>\n"
 "Language: en_GB\n"
@@ -2470,15 +2470,6 @@ msgstr ""
 msgid "Please wait another %d seconds before using hub search engine."
 msgstr ""
 
-msgid "Loading %s in memory..."
-msgstr ""
-
-msgid "Finished loading %s in memory."
-msgstr ""
-
-msgid "Unable to locate %s in hub configuration directory."
-msgstr ""
-
 msgid "Add right click menu item"
 msgstr ""
 
@@ -3968,4 +3959,88 @@ msgid "Delete proxy protection entry"
 msgstr ""
 
 msgid "IP is protected: %s"
+msgstr ""
+
+msgid "Blacklist"
+msgstr ""
+
+msgid "Add blacklist entry"
+msgstr ""
+
+msgid "List blacklist entries"
+msgstr ""
+
+msgid "Disable or enable blacklist entry"
+msgstr ""
+
+msgid "Delete blacklist entry"
+msgstr ""
+
+msgid "list"
+msgstr ""
+
+msgid "Import blacklist entries from %s"
+msgstr ""
+
+msgid "Modified blacklist entry: %s"
+msgstr ""
+
+msgid "Added blacklist entry: %s"
+msgstr ""
+
+msgid "Blacklist entry not found: %s"
+msgstr ""
+
+msgid "Deleted blacklist entry: %s"
+msgstr ""
+
+msgid "Blacklist list is empty."
+msgstr ""
+
+msgid "List of blacklist entries"
+msgstr ""
+
+msgid "Disabled blacklist entry: %s"
+msgstr ""
+
+msgid "Enabled blacklist entry: %s"
+msgstr ""
+
+msgid "Import status"
+msgstr ""
+
+msgid "Table does not exist or is empty: %s"
+msgstr ""
+
+msgid "Binary is required: %s"
+msgstr ""
+
+msgid "Successfully imported"
+msgstr ""
+
+msgid "Unsupported type: %s"
+msgstr ""
+
+msgid "Already in our list"
+msgstr ""
+
+msgid "Search in blacklist"
+msgstr ""
+
+msgid "No blacklist entries found."
+msgstr ""
+
+msgid "Found blacklist entries"
+msgstr ""
+
+msgid "Blacklist feature is disabled."
+msgstr ""
+
+msgid "%s blacklist not loaded because: %s"
+msgstr ""
+
+msgid "Blacklist loaded with %d items: %s"
+msgstr ""
+
+msgid "File does not exist"
 msgstr ""

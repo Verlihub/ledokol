@@ -1,3 +1,7 @@
+[ 2.9.9 :: 2023-##-## ]
+
+[136] Added: Blacklist feature, similar to blacklist.py but less advanced, allows to import lists from blacklist.py
+
 [ 2.9.8 :: 2022-12-12 ]
 
 [121] Fixed: AVDB update process when items were deleted from database
