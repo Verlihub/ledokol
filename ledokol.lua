@@ -10694,7 +10694,7 @@ function checkhban (addr)
 				ok = true
 			end
 
-		elseif addr:match ("^" .. data) then -- lre
+		elseif addr:match (data) then -- lre
 			ok = true
 		end
 
