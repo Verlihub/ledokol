@@ -11056,7 +11056,7 @@ function loadblacklist ()
 			end
 		end
 
-		opsnotify (table_sets.classnotiblist, getlang ("Blacklist load results") .. ":\r\n\r\n" .. feed)
+		opsnotify (table_sets.classnotiblist, gettext ("Blacklist load results") .. ":\r\n\r\n" .. feed)
 	end
 
 	table_othsets.blistlastupd = os.time ()
