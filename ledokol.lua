@@ -63,7 +63,7 @@ Tzaca, JOE™, Foxtrot, Deivis and others
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.9" -- ledokol version
-bld_ledo = "136" -- build number
+bld_ledo = "137" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -627,6 +627,8 @@ table_cmnds = {
 	hban = "hban",
 	hunban = "hunban",
 	hbans = "hbans",
+	hbanoff = "hbanoff",
+	hbanimport = "hbanimport",
 	blistadd = "blistadd",
 	blistdel = "blistdel",
 	blistlist = "blistlist",
@@ -1116,6 +1118,7 @@ table_uumd = {sear = {}, ctm = {}, avdb = {}}
 table_cust = {}
 table_ctmb = {}
 table_regm = {}
+table_hban = {}
 table_blst = {}
 table_prfl = {ctm = {}}
 table_avlo = {}
@@ -1202,7 +1205,6 @@ table_avex = { -- todo: add apk
 
 cache_prot = {}
 cache_prpr = {}
-cache_hban = {}
 
 ---------------------------------------------------------------------
 -- global storage variables and tables <<
@@ -1643,12 +1645,16 @@ function Main (file)
 					if ver <= 299 then
 						VH:SQLQuery ("create table if not exists `" .. tbl_sql.blist .. "` (`list` varchar(255) not null primary key, `type` varchar(10) not null, `name` varchar(255) not null, `off` tinyint(1) unsigned not null default 0)")
 
+						VH:SQLQuery ("alter table `" .. tbl_sql.hban .. "` add column `off` tinyint(1) unsigned not null default 0 after `reason`")
+
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.ledocmd .. "` (`original`, `new`) values ('blistadd', '" .. repsqlchars (table_cmnds.blistadd) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.ledocmd .. "` (`original`, `new`) values ('blistdel', '" .. repsqlchars (table_cmnds.blistdel) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.ledocmd .. "` (`original`, `new`) values ('blistlist', '" .. repsqlchars (table_cmnds.blistlist) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.ledocmd .. "` (`original`, `new`) values ('blistoff', '" .. repsqlchars (table_cmnds.blistoff) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.ledocmd .. "` (`original`, `new`) values ('blistimport', '" .. repsqlchars (table_cmnds.blistimport) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.ledocmd .. "` (`original`, `new`) values ('blistfind', '" .. repsqlchars (table_cmnds.blistfind) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.ledocmd .. "` (`original`, `new`) values ('hbanoff', '" .. repsqlchars (table_cmnds.hbanoff) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.ledocmd .. "` (`original`, `new`) values ('hbanimport', '" .. repsqlchars (table_cmnds.hbanimport) .. "')")
 
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('blistupdateint', '" .. repsqlchars (table_sets.blistupdateint) .. "')")
 					end
@@ -1677,6 +1683,10 @@ function Main (file)
 	loadsettings ()
 	loadcachelists ()
 	loadlangfile (nil, nil)
+
+	if table_sets.enablehardban == 1 then -- hard ip ban
+		loadhardbans ()
+	end
 
 	table_othsets.botnick = getconfig ("hub_security")
 	table_othsets.opchatnick = getconfig ("opchat_name")
@@ -2168,36 +2178,65 @@ return 0
 
 		return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
 
 	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.hban .. " .+ \".+\"$") then
 		if ucl >= table_sets.mincommandclass then
 			donotifycmd (nick, data, 0, ucl)
 			addhban (nick, data:sub (# table_cmnds.hban + 3))
+
 		else
 			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
 
 	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.hunban .. " %S+$") then
 		if ucl >= table_sets.mincommandclass then
 			donotifycmd (nick, data, 0, ucl)
 			delhban (nick, data:sub (# table_cmnds.hunban + 3))
+
 		else
 			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
 
 		return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
+
+	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.hbanoff .. " %S+$") then
+		if ucl >= table_sets.mincommandclass then
+			donotifycmd (nick, data, 0, ucl)
+			offhban (nick, data:sub (# table_cmnds.hbanoff + 3))
+
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
+
+		return 0
+
+	----- ---- --- -- -
 
 	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.hbans .. "$") then
 		if ucl >= table_sets.mincommandclass then
 			donotifycmd (nick, data, 0, ucl)
 			listhban (nick)
+
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
+
+		return 0
+
+	----- ---- --- -- -
+
+	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.hbanimport .. "$") then
+		if ucl >= table_sets.mincommandclass then
+			donotifycmd (nick, data, 0, ucl)
+			importhbans (nick)
+
 		else
 			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
@@ -10467,23 +10506,36 @@ function addhban (nick, line)
 	local list, why = line:match ("^(.+) \"(.+)\"$")
 	local tot = 0
 
-	for lre in list:gmatch ("%S+") do
-		if cache_hban [lre] then -- update
-			VH:SQLQuery ("update `" .. tbl_sql.hban .. "` set `reason` = '" .. repsqlchars (repnmdcinchars (why)) .. "' where `ip` = '" .. repsqlchars (repnmdcinchars (lre)) .. "'")
+	for data in list:gmatch ("[^ ]+") do
+		local repaddr = repnmdcinchars (data)
+		local sqladdr = repsqlchars (repaddr)
+		local _, rows = VH:SQLQuery ("select `off` from `" .. tbl_sql.hban .. "` where `ip` = '" .. sqladdr .. "'")
+
+		if rows > 0 then -- update
+			local _, off = VH:SQLFetch (0)
+
+			if table_sets.enablehardban == 1 and tonumber (off) == 0 then
+				table_hban [repaddr] = why
+			end
+
+			VH:SQLQuery ("update `" .. tbl_sql.hban .. "` set `reason` = '" .. repsqlchars (why) .. "' where `ip` = '" .. sqladdr .. "'")
 
 			if nick then
-				commandanswer (nick, gettext ("Modified hard IP ban entry: %s"):format (lre))
+				commandanswer (nick, gettext ("Modified hard IP ban entry: %s"):format (data))
 			end
 
 		else -- add
-			VH:SQLQuery ("insert into `" .. tbl_sql.hban .. "` (`ip`, `reason`) values ('" .. repsqlchars (repnmdcinchars (lre)) .. "', '" .. repsqlchars (repnmdcinchars (why)) .. "')")
+			if table_sets.enablehardban == 1 then
+				table_hban [repaddr] = why
+			end
+
+			VH:SQLQuery ("insert into `" .. tbl_sql.hban .. "` (`ip`, `reason`) values ('" .. sqladdr .. "', '" .. repsqlchars (why) .. "')")
 
 			if nick then
-				commandanswer (nick, gettext ("Added hard IP ban entry: %s"):format (lre))
+				commandanswer (nick, gettext ("Added hard IP ban entry: %s"):format (data))
 			end
 		end
 
-		cache_hban [lre] = why
 		tot = tot + 1
 	end
 
@@ -10494,29 +10546,73 @@ end
 
 ----- ---- --- -- -
 
-function delhban (nick, line)
-	if cache_hban [line] then -- delete
-		VH:SQLQuery ("delete from `" .. tbl_sql.hban .. "` where `ip` = '" .. repsqlchars (repnmdcinchars (line)) .. "'")
-		commandanswer (nick, gettext ("Deleted hard IP ban entry: %s"):format (line))
-		cache_hban [line] = nil
+function delhban (nick, addr)
+	local repaddr = repnmdcinchars (addr)
+	local sqladdr = repsqlchars (repaddr)
+	local _, rows = VH:SQLQuery ("select `off` from `" .. tbl_sql.hban .. "` where `ip` = '" .. sqladdr .. "'")
+
+	if rows > 0 then -- delete
+		local _, off = VH:SQLFetch (0)
+
+		if table_sets.enablehardban == 1 and tonumber (off) == 0 then
+			table_hban [repaddr] = nil
+		end
+
+		VH:SQLQuery ("delete from `" .. tbl_sql.hban .. "` where `ip` = '" .. sqladdr .. "'")
+		commandanswer (nick, gettext ("Deleted hard IP ban entry: %s"):format (addr))
 
 	else -- not found
-		commandanswer (nick, gettext ("Couldn't delete hard IP ban entry because not found: %s"):format (line))
+		commandanswer (nick, gettext ("Hard IP ban entry not found: %s"):format (addr))
+	end
+end
+
+----- ---- --- -- -
+
+function offhban (nick, addr)
+	local repaddr = repnmdcinchars (addr)
+	local sqladdr = repsqlchars (repaddr)
+	local _, rows = VH:SQLQuery ("select `off`, `reason` from `" .. tbl_sql.hban .. "` where `ip` = '" .. sqladdr .. "'")
+
+	if rows > 0 then
+		local _, off, why = VH:SQLFetch (0)
+
+		if tonumber (off) == 0 then -- disable
+			if table_sets.enablehardban == 1 then
+				table_hban [repaddr] = nil
+			end
+
+			VH:SQLQuery ("update `" .. tbl_sql.hban .. "` set `off` = 1 where `ip` = '" .. sqladdr .. "'")
+			commandanswer (nick, gettext ("Disabled hard IP ban entry: %s"):format (addr))
+
+		else -- enable
+			if table_sets.enablehardban == 1 then
+				table_hban [repaddr] = why
+			end
+
+			VH:SQLQuery ("update `" .. tbl_sql.hban .. "` set `off` = 0 where `ip` = '" .. sqladdr .. "'")
+			commandanswer (nick, gettext ("Enabled hard IP ban entry: %s"):format (addr))
+		end
+
+	else
+		commandanswer (nick, gettext ("Hard IP ban entry not found: %s"):format (addr))
 	end
 end
 
 ----- ---- --- -- -
 
 function listhban (nick)
-	local list, pos = "", 0
+	local _, rows = VH:SQLQuery ("select * from `" .. tbl_sql.hban .. "` order by `ip` asc, `off` asc")
 
-	for lre, why in pairs (cache_hban) do
-		pos = pos + 1
-		list = list .. " " .. _tostring (pos) .. ". " .. lre .. " [ R: " .. why .. " ]\r\n"
-	end
+	if rows > 0 then
+		local list = ""
 
-	if # list > 0 then -- list
+		for pos = 0, rows - 1 do
+			local _, addr, why, off = VH:SQLFetch (pos)
+			list = list .. " [ I: " .. repnmdcoutchars (addr) .. " ] [ R: " .. repnmdcoutchars (why) .. " ] [ D: " .. (tonumber (off) == 0 and gettext ("No") or gettext ("Yes")) .. " ]\r\n"
+		end
+
 		commandanswer (nick, gettext ("List of hard IP ban entries") .. ":\r\n\r\n" .. list)
+
 	else -- empty
 		commandanswer (nick, gettext ("Hard IP ban list is empty."))
 	end
@@ -10524,15 +10620,104 @@ end
 
 ----- ---- --- -- -
 
+function importhbans (nick)
+	local _, rows = VH:SQLQuery ("select `ip` from `" .. tbl_sql.hban .. "`")
+	local have = {}
+
+	if rows > 0 then
+		for pos = 0, rows - 1 do
+			local _, addr = VH:SQLFetch (pos)
+			have [addr] = true
+		end
+	end
+
+	local _, rows = VH:SQLQuery ("select `loaddr`, `hiaddr`, `title`, `off` from `py_bl_myli`")
+
+	if rows > 0 then
+		local list, todo = "", {}
+
+		for pos = 0, rows - 1 do
+			local _, loaddr, hiaddr, name, off = VH:SQLFetch (pos)
+			local lorang, hirang = numtoaddr (loaddr), numtoaddr (hiaddr)
+			local rang = lorang
+
+			if lorang ~= hirang then
+				rang = lorang .. "-" .. hirang
+			end
+
+			list = list .. " [ I: " .. repnmdcoutchars (rang) .. " ] [ N: " .. repnmdcoutchars (name) .. " ] [ D: " .. ((tonumber (off) == 0) and gettext ("No") or gettext ("Yes")) .. " ] [ S: "
+
+			if have [rang] then
+				list = list .. gettext ("Already in our list")
+
+			else
+				list = list .. gettext ("Successfully imported")
+
+				table.insert (todo, {
+					i = rang,
+					n = name,
+					o = tonumber (off)
+				})
+			end
+
+			list = list .. " ]\r\n"
+		end
+
+		for _, data in pairs (todo) do
+			if table_sets.enablehardban == 1 and data.o == 0 then
+				table_hban [data.i] = data.n
+			end
+
+			VH:SQLQuery ("insert into `" .. tbl_sql.hban .. "` (`ip`, `reason`, `off`) values ('" .. repsqlchars (data.i) .. "', '" .. repsqlchars (data.n) .. "', " .. _tostring (data.o) .. ")")
+		end
+
+		commandanswer (nick, gettext ("Import status") .. ":\r\n\r\n" .. list)
+
+	else
+		commandanswer (nick, gettext ("Import status") .. ": " .. gettext ("Table does not exist or is empty: %s"):format ("py_bl_myli"))
+	end
+end
+
+----- ---- --- -- -
+
 function checkhban (addr)
-	for lre, why in pairs (cache_hban) do
-		if addr:match ("^" .. repnmdcinchars (lre)) then
-			opsnotify (table_sets.classnotihardban, gettext ("Hard IP ban refused connection from IP %s: %s"):format (addr .. tryipcc (addr), why)) -- notify
+	local ok = false
+
+	for data, why in pairs (table_hban) do
+		if data:match ("^%d+%.%d+%.%d+%.%d+%-%d+%.%d+%.%d+%.%d+$") then -- ip range
+			if ipinrange (data, addr) then
+				ok = true
+			end
+
+		elseif data:match ("^%d+%.%d+%.%d+%.%d+$") then -- single ip
+			if addr == data then
+				ok = true
+			end
+
+		elseif addr:match ("^" .. data) then -- lre
+			ok = true
+		end
+
+		if ok then
+			opsnotify (table_sets.classnotihardban, gettext ("Hard IP ban refused connection from IP %s: %s"):format (addr .. tryipcc (addr), repnmdcoutchars (why))) -- notify
 			return true
 		end
 	end
 
 	return false
+end
+
+----- ---- --- -- -
+
+function loadhardbans ()
+	local _, rows = VH:SQLQuery ("select `ip`, `reason` from `" .. tbl_sql.hban .. "` where `off` = 0")
+
+	if rows > 0 then
+		for pos = 0, rows - 1 do
+			local _, data, why = VH:SQLFetch (pos)
+			table_hban [data] = why
+		end
+	end
 end
 
 ----- ---- --- -- -
@@ -10550,17 +10735,15 @@ function addblist (nick, line)
 		return
 	end
 
-	local replist = repsqlchars (repnmdcoutchars (list))
-	local repname = repsqlchars (repnmdcoutchars (name))
-
+	local replist = repsqlchars (repnmdcinchars (list))
 	local _, rows = VH:SQLQuery ("select null from `" .. tbl_sql.blist .. "` where `list` = '" .. replist .. "'")
 
 	if rows > 0 then -- update
-		VH:SQLQuery ("update `" .. tbl_sql.blist .. "` set `type` = '" .. cype .. "', `name` = '" .. repname .. "' where `list` = '" .. replist .. "'")
+		VH:SQLQuery ("update `" .. tbl_sql.blist .. "` set `type` = '" .. repsqlchars (cype) .. "', `name` = '" .. repsqlchars (name) .. "' where `list` = '" .. replist .. "'")
 		commandanswer (nick, gettext ("Modified blacklist entry: %s"):format (list))
 
 	else -- add
-		VH:SQLQuery ("insert into `" .. tbl_sql.blist .. "` (`list`, `type`, `name`) values ('" .. replist .. "', '" .. cype .. "', '" .. repname .. "')")
+		VH:SQLQuery ("insert into `" .. tbl_sql.blist .. "` (`list`, `type`, `name`) values ('" .. replist .. "', '" .. repsqlchars (cype) .. "', '" .. repsqlchars (name) .. "')")
 		commandanswer (nick, gettext ("Added blacklist entry: %s"):format (list))
 	end
 end
@@ -10568,7 +10751,7 @@ end
 ----- ---- --- -- -
 
 function delblist (nick, list)
-	local replist = repsqlchars (repnmdcoutchars (list))
+	local replist = repsqlchars (repnmdcinchars (list))
 	local _, rows = VH:SQLQuery ("select null from `" .. tbl_sql.blist .. "` where `list` = '" .. replist .. "'")
 
 	if rows > 0 then
@@ -10590,7 +10773,7 @@ function listblist (nick)
 
 		for pos = 0, rows - 1 do
 			local _, list, cype, name, off = VH:SQLFetch (pos)
-			back = back .. " [ L: " .. list .. " ] [ T: " .. cype .. " ] [ N: " .. name .. " ] [ D: " .. ((tonumber (off) == 0) and gettext ("No") or gettext ("Yes")) .. " ]\r\n"
+			back = back .. " [ L: " .. repnmdcoutchars (list) .. " ] [ T: " .. repnmdcoutchars (cype) .. " ] [ N: " .. repnmdcoutchars (name) .. " ] [ D: " .. (tonumber (off) == 0 and gettext ("No") or gettext ("Yes")) .. " ]\r\n"
 		end
 
 		commandanswer (nick, gettext ("List of blacklist entries") .. ":\r\n\r\n" .. back)
@@ -10603,17 +10786,17 @@ end
 ----- ---- --- -- -
 
 function offblist (nick, list)
-	local replist = repsqlchars (repnmdcoutchars (list))
+	local replist = repsqlchars (repnmdcinchars (list))
 	local _, rows = VH:SQLQuery ("select `off` from `" .. tbl_sql.blist .. "` where `list` = '" .. replist .. "'")
 
 	if rows > 0 then
 		local _, off = VH:SQLFetch (0)
 
-		if tonumber (off) == 0 then
+		if tonumber (off) == 0 then -- disable
 			VH:SQLQuery ("update `" .. tbl_sql.blist .. "` set `off` = 1 where `list` = '" .. replist .. "'")
 			commandanswer (nick, gettext ("Disabled blacklist entry: %s"):format (list))
 
-		else
+		else -- enable
 			VH:SQLQuery ("update `" .. tbl_sql.blist .. "` set `off` = 0 where `list` = '" .. replist .. "'")
 			commandanswer (nick, gettext ("Enabled blacklist entry: %s"):format (list))
 		end
@@ -10680,7 +10863,7 @@ end
 
 ----- ---- --- -- -
 
-function importblist (nick, id)
+function importblist (nick)
 	local _, rows = VH:SQLQuery ("select `list` from `" .. tbl_sql.blist .. "`")
 	local have = {}
 
@@ -10700,7 +10883,7 @@ function importblist (nick, id)
 			local _, list, cype, name, off = VH:SQLFetch (pos)
 			local lrep = list:gsub ("^[Hh][Tt][Tt][Pp]://[Tt][Ee]%-[Hh][Oo][Mm][Ee]%.[Nn][Ee][Tt]", "https://www.te-home.net") -- force https since its supported
 			lrep = lrep:gsub ("^[Hh][Tt][Tt][Pp]://[Ww][Ww][Ww]%.[Tt][Ee]%-[Hh][Oo][Mm][Ee]%.[Nn][Ee][Tt]", "https://www.te-home.net")
-			back = back .. " [ L: " .. list .. " ] [ T: " .. cype .. " ] [ N: " .. name .. " ] [ D: " .. ((tonumber (off) == 0) and gettext ("No") or gettext ("Yes")) .. " ] [ S: "
+			back = back .. " [ L: " .. repnmdcoutchars (list) .. " ] [ T: " .. repnmdcoutchars (cype) .. " ] [ N: " .. repnmdcoutchars (name) .. " ] [ D: " .. ((tonumber (off) == 0) and gettext ("No") or gettext ("Yes")) .. " ] [ S: "
 
 			if (list:sub (1, 8):lower () == "https://" or list:sub (1, 7):lower () == "http://") and not table_othsets.ver_curl then
 				back = back .. gettext ("Binary is required: %s"):format ("cURL")
@@ -10726,7 +10909,7 @@ function importblist (nick, id)
 		end
 
 		for _, data in pairs (todo) do
-			VH:SQLQuery ("insert into `" .. tbl_sql.blist .. "` (`list`, `type`, `name`, `off`) values ('" .. repsqlchars (data.l) .. "', '" .. data.t .. "', '" .. repsqlchars (data.n) .. "', " .. _tostring (data.o) .. ")")
+			VH:SQLQuery ("insert into `" .. tbl_sql.blist .. "` (`list`, `type`, `name`, `off`) values ('" .. repsqlchars (repnmdcinchars (data.l)) .. "', '" .. repsqlchars (data.t) .. "', '" .. repsqlchars (data.n) .. "', " .. _tostring (data.o) .. ")")
 		end
 
 		commandanswer (nick, gettext ("Import status") .. ":\r\n\r\n" .. back)
@@ -10817,7 +11000,7 @@ function loadblacklist ()
 						opsnotify (table_sets.classnotiblist, gettext ("Blacklist loaded with %d items: %s"):format (tot, repnmdcoutchars (name)))
 
 					else
-						opsnotify (table_sets.classnotiblist, gettext ("%s blacklist not loaded because: %s"):format (repnmdcoutchars (name), (# err > 0 and err or gettext ("Nothing was found in: %s"):format (list))))
+						opsnotify (table_sets.classnotiblist, gettext ("%s blacklist not loaded because: %s"):format (repnmdcoutchars (name), (# err > 0 and repnmdcoutchars (err) or gettext ("Nothing was found in: %s"):format (repnmdcoutchars (list)))))
 					end
 				end
 
@@ -10866,7 +11049,7 @@ function loadblacklist ()
 					opsnotify (table_sets.classnotiblist, gettext ("Blacklist loaded with %d items: %s"):format (tot, repnmdcoutchars (name)))
 
 				else
-					opsnotify (table_sets.classnotiblist, gettext ("%s blacklist not loaded because: %s"):format (repnmdcoutchars (name), gettext ("File does not exist")))
+					opsnotify (table_sets.classnotiblist, gettext ("%s blacklist not loaded because: %s"):format (repnmdcoutchars (name), gettext ("File does not exist: %s"):format (repnmdcoutchars (list))))
 				end
 			end
 		end
@@ -19554,10 +19737,14 @@ end
 
 	-- hard ip ban
 	if ucl >= table_sets.mincommandclass then
-		sopmenitm (usr, gettext ("Hard IP bans") .. "\\" .. gettext ("Add hard IP ban entry"), table_cmnds.hban .. " %[line:<" .. gettext ("lre") .. ">] \"%[line:<" .. gettext ("reason") .. ">]\"")
+		sopmenitm (usr, gettext ("Hard IP bans") .. "\\" .. gettext ("Add hard IP ban entries separated by space"), table_cmnds.hban .. " %[line:<" .. gettext ("ip") .. " " .. gettext ("or") .. " " .. gettext ("range") .. " " .. gettext ("or") .. " " .. gettext ("lre") .. ">] \"%[line:<" .. gettext ("reason") .. ">]\"")
 		sopmenitm (usr, gettext ("Hard IP bans") .. "\\" .. gettext ("List of hard IP ban entries"), table_cmnds.hbans)
 		smensep (usr)
-		sopmenitm (usr, gettext ("Hard IP bans") .. "\\" .. gettext ("Delete hard IP ban entry"), table_cmnds.hunban .. " %[line:<" .. gettext ("lre") .. ">]")
+		sopmenitm (usr, gettext ("Hard IP bans") .. "\\" .. gettext ("Disable or enable hard IP ban entry"), table_cmnds.hbanoff .. " %[line:<" .. gettext ("ip") .. " " .. gettext ("or") .. " " .. gettext ("range") .. " " .. gettext ("or") .. " " .. gettext ("lre") .. ">]")
+		smensep (usr)
+		sopmenitm (usr, gettext ("Hard IP bans") .. "\\" .. gettext ("Delete hard IP ban entry"), table_cmnds.hunban .. " %[line:<" .. gettext ("ip") .. " " .. gettext ("or") .. " " .. gettext ("range") .. " " .. gettext ("or") .. " " .. gettext ("lre") .. ">]")
+		smensep (usr)
+		sopmenitm (usr, gettext ("Hard IP bans") .. "\\" .. gettext ("Import hard IP ban entries from %s"):format ("blacklist.py"), table_cmnds.hbanimport)
 	end
 
 	-- blacklist
@@ -21557,9 +21744,17 @@ end
 		if num then
 			if setto == 0 or setto == 1 then
 				ok = true
+
+				if setto == 0 then -- flush
+					table_hban = {}
+				elseif table_sets [tvar] == 0 then -- load
+					loadhardbans ()
+				end
+
 			else
 				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0 " .. gettext ("or") .. " 1"))
 			end
+
 		else
 			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
 		end
@@ -21571,8 +21766,8 @@ end
 			if setto == 0 or setto == 1 then
 				ok = true
 
-				if setto == 0 then
-					table_blst = {} -- flush
+				if setto == 0 then -- flush
+					table_blst = {}
 				elseif table_sets [tvar] == 0 then -- load
 					loadblacklist ()
 				end
@@ -24142,9 +24337,11 @@ function sendophelp (nick, clas, pm)
 	help = help .. " " .. trig .. table_cmnds.ipwatdel .. " <" .. gettext ("lre") .. "> - " .. gettext ("Delete IP watch entry") .. "\r\n\r\n"
 
 	-- hard ban
-	help = help .. " " .. trig .. table_cmnds.hban .. " <" .. gettext ("lre") .. "> <\"" .. gettext ("reason") .. "\"> - " .. gettext ("Add hard IP ban entry") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.hban .. " <" .. gettext ("ip") .. " " .. gettext ("or") .. " " .. gettext ("range") .. " " .. gettext ("or") .. " " .. gettext ("lre") .. "> <\"" .. gettext ("reason") .. "\"> - " .. gettext ("Add hard IP ban entries separated by space") .. "\r\n"
 	help = help .. " " .. trig .. table_cmnds.hbans .. " - " .. gettext ("List of hard IP ban entries") .. "\r\n"
-	help = help .. " " .. trig .. table_cmnds.hunban .. " <" .. gettext ("lre") .. "> - " .. gettext ("Delete hard IP ban entry") .. "\r\n\r\n"
+	help = help .. " " .. trig .. table_cmnds.hunban .. " <" .. gettext ("ip") .. " " .. gettext ("or") .. " " .. gettext ("range") .. " " .. gettext ("or") .. " " .. gettext ("lre") .. "> - " .. gettext ("Delete hard IP ban entry") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.hbanoff .. " <" .. gettext ("ip") .. " " .. gettext ("or") .. " " .. gettext ("range") .. " " .. gettext ("or") .. " " .. gettext ("lre") .. "> - " .. gettext ("Disable or enable hard IP ban entry") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.hbanimport .. " - " .. gettext ("Import hard IP ban entries from %s"):format ("blacklist.py") .. "\r\n\r\n"
 
 	-- blacklist
 	help = help .. " " .. trig .. table_cmnds.blistadd .. " <" .. gettext ("list") .. "> <" .. gettext ("type") .. "> <" .. gettext ("name") .. "> - " .. gettext ("Add blacklist entry") .. "\r\n"
@@ -24843,9 +25040,9 @@ function showledoconf (nick)
 	conf = conf .. "\r\n [::] chatfloodaction = " .. _tostring (table_sets.chatfloodaction)
 	conf = conf .. "\r\n [::] chatfloodcmdgag = " .. _tostring (table_sets.chatfloodcmdgag)
 	conf = conf .. "\r\n [::] ipconantiflint = " .. _tostring (table_sets.ipconantiflint)
-	conf = conf .. "\r\n [::] enablehardban = " .. _tostring (table_sets.enablehardban)
 	conf = conf .. "\r\n"
 
+	conf = conf .. "\r\n [::] enablehardban = " .. _tostring (table_sets.enablehardban)
 	conf = conf .. "\r\n [::] useblacklist = " .. _tostring (table_sets.useblacklist)
 	conf = conf .. "\r\n [::] blistupdateint = " .. _tostring (table_sets.blistupdateint)
 	conf = conf .. "\r\n"
@@ -25015,7 +25212,7 @@ VH:SQLQuery ("create table if not exists `" .. tbl_sql.stat .. "` (`type` varcha
 	VH:SQLQuery ("create table if not exists `" .. tbl_sql.nopm .. "` (`nick` varchar(255) not null, `action` tinyint(1) unsigned not null default 0, `maxclass` tinyint(2) unsigned not null default 2, `password` varchar(255) null, `reason` text not null, primary key (`nick`))") -- password not used yet
 
 	-- hard ban
-	VH:SQLQuery ("create table if not exists `" .. tbl_sql.hban .. "` (`ip` varchar(255) not null, `reason` text not null, primary key (`ip`))")
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql.hban .. "` (`ip` varchar(255) not null primary key, `reason` text not null, `off` tinyint(1) unsigned not null default 0)")
 
 	-- blacklist
 	VH:SQLQuery ("create table if not exists `" .. tbl_sql.blist .. "` (`list` varchar(255) not null primary key, `type` varchar(10) not null, `name` varchar(255) not null, `off` tinyint(1) unsigned not null default 0)")
@@ -25338,7 +25535,7 @@ VH:SQLQuery ("alter table `" .. tbl_sql.stat .. "` change column `count` `count`
 	VH:SQLQuery ("alter table `" .. tbl_sql.nopm .. "` change column `password` `password` varchar(255) null") -- password
 
 	-- hard ban
-	-- not added
+	VH:SQLQuery ("alter table `" .. tbl_sql.hban .. "` add column `off` tinyint(1) unsigned not null default 0 after `reason`")
 
 	-- ip watch
 	-- not added
@@ -25443,15 +25640,6 @@ function loadcachelists ()
 		for row = 0, rows - 1 do
 			local _, prot = VH:SQLFetch (row)
 			table.insert (cache_prpr, prot)
-		end
-	end
-
-	local _, rows = VH:SQLQuery ("select `ip`, `reason` from `" .. tbl_sql.hban .. "`") -- hard bans
-
-	if rows > 0 then
-		for row = 0, rows - 1 do
-			local _, lre, why = VH:SQLFetch (row)
-			cache_hban [repnmdcoutchars (lre)] = repnmdcoutchars (why)
 		end
 	end
 end
@@ -25604,6 +25792,17 @@ end
 
 function delhubrobot (nick)
 	VH:UnRegBot (nick)
+end
+
+----- ---- --- -- -
+
+function numtoaddr (num)
+	local int = tonumber (num)
+	local a1 = math.floor (int / (2 ^ 24))
+	local a2 = math.floor ((int - a1 * (2 ^ 24)) / (2 ^ 16))
+	local a3 = math.floor ((int - a1 * (2 ^ 24) - a2 * (2 ^ 16)) / (2 ^ 8))
+	local a4 = math.floor ((int - a1 * (2 ^ 24) - a2 * (2 ^ 16) - a3 * (2 ^ 8)))
+	return _tostring (a1) .. "." .. _tostring (a2) .. "." .. _tostring (a3) .. "." .. _tostring (a4)
 end
 
 ----- ---- --- -- -
@@ -28869,7 +29068,7 @@ function antiscan (nick, class, data, where, to, status)
 				end
 
 			elseif action == 10 then -- hard ban
-				addhban (nil, repexdots (ip) .. "&#36; \"" .. repnmdcoutchars (entry) .. "\"")
+				addhban (nil, ip .. " \"" .. repnmdcoutchars (entry) .. "\"")
 				opsnotify (table_sets.classnotianti, gettext ("Added %s to hard ban list, %d users in total."):format (ip, # getusersbyip (ip, table_sets.scanbelowclass)))
 				VH:Disconnect (nick)
 			end

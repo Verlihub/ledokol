@@ -2440,7 +2440,7 @@ msgstr ""
 msgid "Experts only"
 msgstr ""
 
-msgid "Add hard IP ban entry"
+msgid "Add hard IP ban entries separated by space"
 msgstr ""
 
 msgid "Delete hard IP ban entry"
@@ -2459,9 +2459,6 @@ msgid "Deleted hard IP ban entry: %s"
 msgstr ""
 
 msgid "Hard IP ban list is empty."
-msgstr ""
-
-msgid "Couldn't delete hard IP ban entry because not found: %s"
 msgstr ""
 
 msgid "Hard IP ban refused connection from IP %s: %s"
@@ -4042,5 +4039,20 @@ msgstr ""
 msgid "Blacklist loaded with %d items: %s"
 msgstr ""
 
-msgid "File does not exist"
+msgid "File does not exist: %s"
+msgstr ""
+
+msgid "Hard IP ban entry not found: %s"
+msgstr ""
+
+msgid "Disabled hard IP ban entry: %s"
+msgstr ""
+
+msgid "Enabled hard IP ban entry: %s"
+msgstr ""
+
+msgid "Disable or enable hard IP ban entry"
+msgstr ""
+
+msgid "Import hard IP ban entries from %s"
 msgstr ""

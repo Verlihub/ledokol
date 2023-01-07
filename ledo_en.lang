@@ -813,14 +813,13 @@ query|
 Execute MySQL query|
 Execute shell command|
 Experts only|
-Add hard IP ban entry|
+Add hard IP ban entries separated by space|
 Delete hard IP ban entry|
 List of hard IP ban entries|
 Modified hard IP ban entry: %s|
 Added hard IP ban entry: %s|
 Deleted hard IP ban entry: %s|
 Hard IP ban list is empty.|
-Couldn't delete hard IP ban entry because not found: %s|
 Hard IP ban refused connection from IP %s: %s|
 Please wait another %d seconds before using hub search engine.|
 Add right click menu item|
@@ -1347,4 +1346,9 @@ Found blacklist entries|
 Blacklist feature is disabled.|
 %s blacklist not loaded because: %s|
 Blacklist loaded with %d items: %s|
-File does not exist|
+File does not exist: %s|
+Hard IP ban entry not found: %s|
+Disabled hard IP ban entry: %s|
+Enabled hard IP ban entry: %s|
+Disable or enable hard IP ban entry|
+Import hard IP ban entries from %s|
