@@ -4056,3 +4056,6 @@ msgstr ""
 
 msgid "Import hard IP ban entries from %s"
 msgstr ""
+
+msgid "Blacklist load results"
+msgstr ""

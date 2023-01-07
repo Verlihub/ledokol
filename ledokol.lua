@@ -2284,7 +2284,7 @@ return 0
 
 	----- ---- --- -- -
 
-	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.blistoff .. " %S$") then
+	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.blistoff .. " %S+$") then
 		if ucl >= table_sets.mincommandclass then
 			donotifycmd (nick, data, 0, ucl)
 			offblist (nick, data:sub (# table_cmnds.blistoff + 3))
@@ -10949,12 +10949,14 @@ function loadblacklist ()
 	local _, rows = VH:SQLQuery ("select `list`, `type`, `name` from `" .. tbl_sql.blist .. "` where `off` = 0")
 
 	if rows > 0 then
+		local feed = ""
+
 		for pos = 0, rows - 1 do
 			local _, list, cype, name = VH:SQLFetch (pos)
 
 			if list:sub (1, 8):lower () == "https://" or list:sub (1, 7):lower () == "http://" then -- remote
 				if not table_othsets.ver_curl then
-					opsnotify (table_sets.classnotiblist, gettext ("%s blacklist not loaded because: %s"):format (repnmdcoutchars (name), gettext ("Binary is required: %s"):format ("cURL")))
+					feed = feed .. " " .. gettext ("%s blacklist not loaded because: %s"):format (repnmdcoutchars (name), gettext ("Binary is required: %s"):format ("cURL")) .. "\r\n"
 
 				else
 					local res, err, data = getcurl (list)
@@ -10997,15 +10999,15 @@ function loadblacklist ()
 							end
 						end
 
-						opsnotify (table_sets.classnotiblist, gettext ("Blacklist loaded with %d items: %s"):format (tot, repnmdcoutchars (name)))
+						feed = feed .. " " .. gettext ("Blacklist loaded with %d items: %s"):format (tot, repnmdcoutchars (name)) .. "\r\n"
 
 					else
-						opsnotify (table_sets.classnotiblist, gettext ("%s blacklist not loaded because: %s"):format (repnmdcoutchars (name), (# err > 0 and repnmdcoutchars (err) or gettext ("Nothing was found in: %s"):format (repnmdcoutchars (list)))))
+						feed = feed .. " " .. gettext ("%s blacklist not loaded because: %s"):format (repnmdcoutchars (name), (# err > 0 and repnmdcoutchars (err) or gettext ("Nothing was found in: %s"):format (repnmdcoutchars (list)))) .. "\r\n"
 					end
 				end
 
 			else -- local
-				local file = io.open (list)
+				local file = io.open (list, "r")
 
 				if file then
 					file:close ()
@@ -11046,13 +11048,15 @@ function loadblacklist ()
 						end
 					end
 
-					opsnotify (table_sets.classnotiblist, gettext ("Blacklist loaded with %d items: %s"):format (tot, repnmdcoutchars (name)))
+					feed = feed .. " " .. gettext ("Blacklist loaded with %d items: %s"):format (tot, repnmdcoutchars (name)) .. "\r\n"
 
 				else
-					opsnotify (table_sets.classnotiblist, gettext ("%s blacklist not loaded because: %s"):format (repnmdcoutchars (name), gettext ("File does not exist: %s"):format (repnmdcoutchars (list))))
+					feed = feed .. " " .. gettext ("%s blacklist not loaded because: %s"):format (repnmdcoutchars (name), gettext ("File does not exist: %s"):format (repnmdcoutchars (list))) .. "\r\n"
 				end
 			end
 		end
+
+		opsnotify (table_sets.classnotiblist, getlang ("Blacklist load results") .. ":\r\n\r\n" .. feed)
 	end
 
 	table_othsets.blistlastupd = os.time ()
@@ -29769,7 +29773,7 @@ function opsnotify (micl, data) -- todo: replace nmdc characters here instead of
 	VH:SendPMToAll ("[" .. prezero (2, micl) .. "] " .. data, table_othsets.feednick, micl, 10)
 
 	if table_sets.histbotmsg == 1 then -- table_sets.addledobot == 0 and table_sets.useextrafeed == 0
-		addophistoryline (table_othsets.feednick, data, micl)
+		addophistoryline (table_othsets.feednick, data, micl) -- note: opsnotify cant be used between sql fetch
 	end
 end
 
