@@ -63,7 +63,7 @@ Tzaca, JOE™, Foxtrot, Deivis and others
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.9" -- ledokol version
-bld_ledo = "137" -- build number
+bld_ledo = "138" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -314,8 +314,10 @@ table_sets = {
 	protofloodctmact = 0,
 	ipconantiflint = 0,
 	enablehardban = 0,
+	hbanfeedint = 0,
 	useblacklist = 0,
 	blistupdateint = 0,
+	blistfeedint = 0,
 	--hublistpingint = 0,
 	--hubpingtimeout = 1,
 	enableuserlog = 0,
@@ -1657,6 +1659,8 @@ function Main (file)
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.ledocmd .. "` (`original`, `new`) values ('hbanimport', '" .. repsqlchars (table_cmnds.hbanimport) .. "')")
 
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('blistupdateint', '" .. repsqlchars (table_sets.blistupdateint) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('blistfeedint', '" .. repsqlchars (table_sets.blistfeedint) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('hbanfeedint', '" .. repsqlchars (table_sets.hbanfeedint) .. "')")
 					end
 
 					if ver <= 300 then
@@ -10515,7 +10519,7 @@ function addhban (nick, line)
 			local _, off = VH:SQLFetch (0)
 
 			if table_sets.enablehardban == 1 and tonumber (off) == 0 then
-				table_hban [repaddr] = why
+				table_hban [repaddr].reas = why
 			end
 
 			VH:SQLQuery ("update `" .. tbl_sql.hban .. "` set `reason` = '" .. repsqlchars (why) .. "' where `ip` = '" .. sqladdr .. "'")
@@ -10526,7 +10530,10 @@ function addhban (nick, line)
 
 		else -- add
 			if table_sets.enablehardban == 1 then
-				table_hban [repaddr] = why
+				table_hban [repaddr] = {
+					["reas"] = why,
+					["last"] = 0
+				}
 			end
 
 			VH:SQLQuery ("insert into `" .. tbl_sql.hban .. "` (`ip`, `reason`) values ('" .. sqladdr .. "', '" .. repsqlchars (why) .. "')")
@@ -10586,7 +10593,10 @@ function offhban (nick, addr)
 
 		else -- enable
 			if table_sets.enablehardban == 1 then
-				table_hban [repaddr] = why
+				table_hban [repaddr] = {
+					["reas"] = why,
+					["last"] = 0
+				}
 			end
 
 			VH:SQLQuery ("update `" .. tbl_sql.hban .. "` set `off` = 0 where `ip` = '" .. sqladdr .. "'")
@@ -10665,7 +10675,10 @@ function importhbans (nick)
 
 		for _, data in pairs (todo) do
 			if table_sets.enablehardban == 1 and data.o == 0 then
-				table_hban [data.i] = data.n
+				table_hban [data.i] = {
+					["reas"] = data.n,
+					["last"] = 0
+				}
 			end
 
 			VH:SQLQuery ("insert into `" .. tbl_sql.hban .. "` (`ip`, `reason`, `off`) values ('" .. repsqlchars (data.i) .. "', '" .. repsqlchars (data.n) .. "', " .. _tostring (data.o) .. ")")
@@ -10683,23 +10696,29 @@ end
 function checkhban (addr)
 	local ok = false
 
-	for data, why in pairs (table_hban) do
-		if data:match ("^%d+%.%d+%.%d+%.%d+%-%d+%.%d+%.%d+%.%d+$") then -- ip range
-			if ipinrange (data, addr) then
+	for item, data in pairs (table_hban) do
+		if item:match ("^%d+%.%d+%.%d+%.%d+%-%d+%.%d+%.%d+%.%d+$") then -- ip range
+			if ipinrange (item, addr) then
 				ok = true
 			end
 
-		elseif data:match ("^%d+%.%d+%.%d+%.%d+$") then -- single ip
-			if addr == data then
+		elseif item:match ("^%d+%.%d+%.%d+%.%d+$") then -- single ip
+			if addr == item then
 				ok = true
 			end
 
-		elseif addr:match (data) then -- lre
+		elseif addr:match (item) then -- lre
 			ok = true
 		end
 
 		if ok then
-			opsnotify (table_sets.classnotihardban, gettext ("Hard IP ban refused connection from IP %s: %s"):format (addr .. tryipcc (addr), repnmdcoutchars (why))) -- notify
+			local now = os.time ()
+
+			if now - data.last >= table_sets.hbanfeedint * 60 then -- not too often
+				opsnotify (table_sets.classnotihardban, gettext ("Hard IP ban refused connection from IP %s: %s"):format (addr .. tryipcc (addr), repnmdcoutchars (data.reas))) -- notify
+				table_hban [item].last = now
+			end
+
 			return true
 		end
 	end
@@ -10715,7 +10734,10 @@ function loadhardbans ()
 	if rows > 0 then
 		for pos = 0, rows - 1 do
 			local _, data, why = VH:SQLFetch (pos)
-			table_hban [data] = why
+			table_hban [data] = {
+				["reas"] = why,
+				["last"] = 0
+			}
 		end
 	end
 end
@@ -10922,13 +10944,23 @@ end
 ----- ---- --- -- -
 
 function checkblacklist (addr)
+	if not table_blst [1] then -- not yet loaded
+		return false
+	end
+
 	local a1 = addr:match ("^(%d+)%.")
 	a1 = tonumber (a1 or -1)
 
 	if a1 >= 0 and a1 <= 255 then
-		for _, data in pairs (table_blst [a1 + 1]) do -- note: +1 due to lua index 1+
+		local now = os.time ()
+
+		for pos, data in pairs (table_blst [a1 + 1]) do -- note: +1 due to lua index 1+
 			if ipinrange (data.rang, addr) then
-				opsnotify (table_sets.classnotiblist, gettext ("Blacklisted connection from IP %s dropped: %s"):format (addr .. tryipcc (addr), repnmdcoutchars (data.name) .. " [" .. data.rang .. "]")) -- notify
+				if now - data.last >= table_sets.blistfeedint * 60 then -- not too often
+					opsnotify (table_sets.classnotiblist, gettext ("Blacklisted connection from IP %s dropped: %s"):format (addr .. tryipcc (addr), repnmdcoutchars (data.name) .. " [" .. data.rang .. "]")) -- notify
+					table_blst [a1 + 1][pos].last = now
+				end
+
 				return true
 			end
 		end
@@ -10992,7 +11024,8 @@ function loadblacklist ()
 									for x = a1 + 1, b1 + 1 do -- note: +1 due to lua index 1+
 										table.insert (table_blst [x], {
 											["rang"] = xlow .. "-" .. xhigh,
-											["name"] = xname
+											["name"] = xname,
+											["last"] = 0
 										})
 									end
 								end
@@ -11041,7 +11074,8 @@ function loadblacklist ()
 								for x = a1 + 1, b1 + 1 do -- note: +1 due to lua index 1+
 									table.insert (table_blst [x], {
 										["rang"] = xlow .. "-" .. xhigh,
-										["name"] = xname
+										["name"] = xname,
+										["last"] = 0
 									})
 								end
 							end
@@ -21786,7 +21820,35 @@ end
 
 	----- ---- --- -- -
 
+	elseif tvar == "hbanfeedint" then
+		if num then
+			if setto >= 0 and setto <= 1440 then
+				ok = true
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0 " .. gettext ("to") .. " 1440"))
+			end
+
+		else
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
+		end
+
+	----- ---- --- -- -
+
 	elseif tvar == "blistupdateint" then
+		if num then
+			if setto >= 0 and setto <= 1440 then
+				ok = true
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0 " .. gettext ("to") .. " 1440"))
+			end
+
+		else
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
+		end
+
+	----- ---- --- -- -
+
+	elseif tvar == "blistfeedint" then
 		if num then
 			if setto >= 0 and setto <= 1440 then
 				ok = true
@@ -25047,8 +25109,10 @@ function showledoconf (nick)
 	conf = conf .. "\r\n"
 
 	conf = conf .. "\r\n [::] enablehardban = " .. _tostring (table_sets.enablehardban)
+	conf = conf .. "\r\n [::] hbanfeedint = " .. _tostring (table_sets.hbanfeedint)
 	conf = conf .. "\r\n [::] useblacklist = " .. _tostring (table_sets.useblacklist)
 	conf = conf .. "\r\n [::] blistupdateint = " .. _tostring (table_sets.blistupdateint)
+	conf = conf .. "\r\n [::] blistfeedint = " .. _tostring (table_sets.blistfeedint)
 	conf = conf .. "\r\n"
 
 	conf = conf .. "\r\n [::] protofloodctmcnt = " .. _tostring (table_sets.protofloodctmcnt)
