@@ -25,9 +25,6 @@ msgstr ""
 msgid "days"
 msgstr ""
 
-msgid "%s with class %d deleted %d IP logger plugin entries older than %d days."
-msgstr ""
-
 msgid "%s with class %d deleted %d unbans older than %d days."
 msgstr ""
 
@@ -448,9 +445,6 @@ msgstr ""
 msgid "%s with IP %s and class %d kicked: <%s> %s"
 msgstr ""
 
-msgid "%s with class %d deleted %d statistics plugin entries older than %d days."
-msgstr ""
-
 msgid "offset"
 msgstr ""
 
@@ -701,12 +695,6 @@ msgid "Size of bans table: %d [ %s: %d @ %s ]"
 msgstr ""
 
 msgid "Size of unbans table: %d [ %s: %d @ %s ]"
-msgstr ""
-
-msgid "Size of IP logger plugin table: %d [ %s: %d @ %s ]"
-msgstr ""
-
-msgid "Size of statistics plugin table: %d [ %s: %d @ %s ]"
 msgstr ""
 
 msgid "Modified authorization entry: %s @ %s"

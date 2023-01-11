@@ -8,7 +8,6 @@ Current topic: %s|
 Current topic set by %s: %s|
 This operation might take very long time depending on how much is going to be removed, please be patient.|
 days|
-%s with class %d deleted %d IP logger plugin entries older than %d days.|
 %s with class %d deleted %d unbans older than %d days.|
 %s with class %d deleted %d bans older than %d days.|
 %s with class %d deleted %d kicks older than %d days.|
@@ -149,7 +148,6 @@ Known classes are: %s|
 %s with class %d had bad luck sending say message: <%s> %s|
 You can't talk from nick whose class is higher or equals your own.|
 %s with IP %s and class %d kicked: <%s> %s|
-%s with class %d deleted %d statistics plugin entries older than %d days.|
 offset|
 order|
 %s didn't get any search results.|
@@ -234,8 +232,6 @@ Downloading version file: %s|
 Size of kicks table: %d [ %s: %d @ %s ]|
 Size of bans table: %d [ %s: %d @ %s ]|
 Size of unbans table: %d [ %s: %d @ %s ]|
-Size of IP logger plugin table: %d [ %s: %d @ %s ]|
-Size of statistics plugin table: %d [ %s: %d @ %s ]|
 Modified authorization entry: %s @ %s|
 Added authorization entry: %s @ %s|
 Deleted authorization entry: %s|

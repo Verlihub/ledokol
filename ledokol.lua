@@ -13434,7 +13434,7 @@ function cleanhistory (nick, sype, limit, auto, class)
 	end
 
 	if sype == "all" or sype == "mc" then -- main chat
-		local rows = counttable (tbl_sql.mchist)
+		local rows = counttable (tbl_sql.mchist, "id")
 
 		if rows > 0 then
 			if limit == 0 then
@@ -13458,7 +13458,7 @@ function cleanhistory (nick, sype, limit, auto, class)
 	end
 
 	if sype == "all" or sype == "op" then -- operator chat
-		local rows = counttable (tbl_sql.ophist)
+		local rows = counttable (tbl_sql.ophist, "id")
 
 		if rows > 0 then
 			if limit == 0 then
@@ -13487,7 +13487,7 @@ end
 function cleanroomhistory (room, nick, limit, auto, class)
 	if room then
 		local item = repsqlchars (room)
-		local _, rows = VH:SQLQuery ("select count(*) from `" .. tbl_sql.crhist .. "` where `room` = '" .. item .. "'")
+		local _, rows = VH:SQLQuery ("select count(`id`) from `" .. tbl_sql.crhist .. "` where `room` = '" .. item .. "'")
 
 		if rows > 0 then
 			local _, num = VH:SQLFetch (0)
@@ -13522,7 +13522,7 @@ function cleanroomhistory (room, nick, limit, auto, class)
 
 			for _, name in pairs (rooms) do -- iterate rooms
 				local item = repsqlchars (name)
-				local _, rows = VH:SQLQuery ("select count(*) from `" .. tbl_sql.crhist .. "` where `room` = '" .. item .. "'")
+				local _, rows = VH:SQLQuery ("select count(`id`) from `" .. tbl_sql.crhist .. "` where `room` = '" .. item .. "'")
 
 				if rows > 0 then
 					local _, num = VH:SQLFetch (0)
@@ -13780,7 +13780,7 @@ function addmchistoryline (nick, real, line, refl)
 		return
 	end
 
-	local count = counttable (tbl_sql.mchist)
+	local count = counttable (tbl_sql.mchist, "id")
 	local addr = getip (real)
 	local data = line:gsub ("is kicking", reprexpchars ("is" .. string.char (160) .. "kicking"))
 
@@ -13817,7 +13817,7 @@ function addophistoryline (nick, line, class)
 		return
 	end
 
-	if counttable (tbl_sql.ophist) >= table_sets.histlimit then
+	if counttable (tbl_sql.ophist, "id") >= table_sets.histlimit then
 		VH:SQLQuery ("select `id` from `" .. tbl_sql.ophist .. "` order by `date` asc limit 1") -- get oldest message
 		local _, old_id = VH:SQLFetch (0)
 		VH:SQLQuery ("update `" .. tbl_sql.ophist .. "` set `nick` = '" .. repsqlchars (nick) .. "', `date` = " .. _tostring (os.time () + table_sets.srvtimediff) .. ", `message` = '" .. repsqlchars (line) .. "', `class` = " .. _tostring (class) .. " where `id` = " .. _tostring (old_id))
@@ -13836,7 +13836,7 @@ function addcrhistoryline (room, nick, real, line)
 	local rep_room = repsqlchars (room)
 	local addr = getip (real)
 
-	if counttable (tbl_sql.crhist, "`room` = '" .. rep_room .. "'") >= table_sets.chathistlimit then
+	if counttable (tbl_sql.crhist, "id", "`room` = '" .. rep_room .. "'") >= table_sets.chathistlimit then
 		VH:SQLQuery ("select `id` from `" .. tbl_sql.crhist .. "` where `room` = '" .. rep_room .. "' order by `date` asc limit 1") -- get oldest message
 		local _, old_id = VH:SQLFetch (0)
 		VH:SQLQuery ("update `" .. tbl_sql.crhist .. "` set `realnick` = '" .. repsqlchars (real) .. "', `nick` = '" .. repsqlchars (nick) .. "', `ip` = " .. sqlemptnull (valor (addr, "0.0.0.0")) .. ", `date` = " .. _tostring (os.time () + table_sets.srvtimediff) .. ", `message` = '" .. repsqlchars (line) .. "' where `id` = " .. _tostring (old_id))
@@ -14398,7 +14398,7 @@ end
 ----- ---- --- -- -
 
 function cleanoffline (nick, cls)
-local rows = counttable (tbl_sql.off)
+local rows = counttable (tbl_sql.off, "id")
 
 if rows > 0 then
 VH:SQLQuery ("truncate table `" .. tbl_sql.off .. "`")
@@ -17614,34 +17614,6 @@ function cleanuptable (nick, line, cls)
 	elseif cype == "reg" then
 		commandanswer (nick, gettext ("Selected type requires extra parameters. Please refer to manual for more information."))
 
-	elseif cype == "iplog" then
-		commandanswer (nick, gettext ("This operation might take very long time depending on how much is going to be removed, please be patient."))
-		local _, rows = VH:SQLQuery ("select `id` from `pi_iplog` where `date` < " .. secs)
-
-		if rows > 0 then
-			VH:SQLQuery ("delete from `pi_iplog` where `date` < " .. secs)
-			commandanswer (nick, gettext ("Deleted %d rows: %s"):format (rows, cype))
-			opsnotify (table_sets.classnotiledoact, gettext ("%s with class %d deleted %d IP logger plugin entries older than %d days."):format (nick, cls, rows, days))
-			VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('lastcleaniplog', " .. tm .. ") on duplicate key update `value` = " .. tm)
-			VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('limcleaniplog', " .. _tostring (days) .. ") on duplicate key update `value` = " .. _tostring (days))
-		else
-			commandanswer (nick, gettext ("No rows to remove: %s"):format (cype))
-		end
-
-	elseif cype == "stats" then
-		commandanswer (nick, gettext ("This operation might take very long time depending on how much is going to be removed, please be patient."))
-		local _, rows = VH:SQLQuery ("select `realtime` from `pi_stats` where `realtime` < " .. secs)
-
-		if rows > 0 then
-			VH:SQLQuery ("delete from `pi_stats` where `realtime` < " .. secs)
-			commandanswer (nick, gettext ("Deleted %d rows: %s"):format (rows, cype))
-			opsnotify (table_sets.classnotiledoact, gettext ("%s with class %d deleted %d statistics plugin entries older than %d days."):format (nick, cls, rows, days))
-			VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('lastcleanstats', " .. tm .. ") on duplicate key update `value` = " .. tm)
-			VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('limcleanstats', " .. _tostring (days) .. ") on duplicate key update `value` = " .. _tostring (days))
-		else
-			commandanswer (nick, gettext ("No rows to remove: %s"):format (cype))
-		end
-
 	elseif cype == "ulog" then
 		commandanswer (nick, gettext ("This operation might take very long time depending on how much is going to be removed, please be patient."))
 		local rows = sqlrowcount ("delete from `" .. tbl_sql.ulog .. "` where `time` < " .. secs, true)
@@ -17716,7 +17688,7 @@ function cleanuptable (nick, line, cls)
 		end
 
 	else -- unknown type
-		commandanswer (nick, gettext ("Known types are: %s"):format ("kick, ban, unban, reg, ulog, clog, rel, anti, sefi, iplog " .. gettext ("and") .. " stats"))
+		commandanswer (nick, gettext ("Known types are: %s"):format ("kick, ban, unban, reg, ulog, clog, rel, anti " .. gettext ("and") .. " sefi"))
 	end
 end
 
@@ -18111,7 +18083,7 @@ function cleanupranks (nick, line, cls)
 		local rows = 0
 
 		if climt == 0 then
-			rows = counttable (tbl_sql.chran)
+			rows = counttable (tbl_sql.chran, "nick")
 		else
 			_, rows = VH:SQLQuery ("select `rank` from `" .. tbl_sql.chran .. "` where `rank` < " .. _tostring (climt))
 		end
@@ -18136,7 +18108,7 @@ function cleanupranks (nick, line, cls)
 		local rows, cbytes = 0, 0
 
 		if climt == 0 then
-			rows = counttable (tbl_sql.shran)
+			rows = counttable (tbl_sql.shran, "nick")
 		else
 			cbytes = roundint ((climt * 1073741824), 0)
 			_, rows = VH:SQLQuery ("select `rank` from `" .. tbl_sql.shran .. "` where `rank` < " .. _tostring (cbytes))
@@ -18162,7 +18134,7 @@ function cleanupranks (nick, line, cls)
 		local rows = 0
 
 		if climt == 0 then
-			rows = counttable (tbl_sql.upran)
+			rows = counttable (tbl_sql.upran, "nick")
 		else
 			_, rows = VH:SQLQuery ("select `rank` from `" .. tbl_sql.upran .. "` where `rank` < " .. _tostring (climt))
 		end
@@ -18187,7 +18159,7 @@ function cleanupranks (nick, line, cls)
 		local rows = 0
 
 		if climt == 0 then
-			rows = counttable (tbl_sql.opran)
+			rows = counttable (tbl_sql.opran, "nick")
 		else
 			_, rows = VH:SQLQuery ("select `rank` from `" .. tbl_sql.opran .. "` where `rank` < " .. _tostring (climt))
 		end
@@ -18212,7 +18184,7 @@ function cleanupranks (nick, line, cls)
 		local rows = 0
 
 		if climt == 0 then
-			rows = counttable (tbl_sql.srran)
+			rows = counttable (tbl_sql.srran, "search")
 		else
 			_, rows = VH:SQLQuery ("select `rank` from `" .. tbl_sql.srran .. "` where `rank` < " .. _tostring (climt))
 		end
@@ -18237,7 +18209,7 @@ function cleanupranks (nick, line, cls)
 		local rows = 0
 
 		if climt == 0 then
-			rows = counttable (tbl_sql.wdran)
+			rows = counttable (tbl_sql.wdran, "word")
 		else
 			_, rows = VH:SQLQuery ("select `rank` from `" .. tbl_sql.wdran .. "` where `rank` < " .. _tostring (climt))
 		end
@@ -24631,7 +24603,7 @@ end
 ----- ---- --- -- -
 
 function sendstats (nick)
-	local entchatran = counttable (tbl_sql.chran)
+	local entchatran = counttable (tbl_sql.chran, "nick")
 	local cntchatran = countranks (tbl_sql.chran)
 	local mesperuser = 0
 
@@ -24758,22 +24730,20 @@ function sendstats (nick)
 
 	-- mysql table sizes
 
-	stats = stats .. "\r\n " .. gettext ("Size of kicks table: %d [ %s: %d @ %s ]"):format (counttable ("kicklist"), "C", (getledoconf ("limcleankick") or 0), fromunixtime ((getledoconf ("lastcleankick") or 0), true))
-	stats = stats .. "\r\n " .. gettext ("Size of bans table: %d [ %s: %d @ %s ]"):format (counttable ("banlist"), "C", (getledoconf ("limcleanban") or 0), fromunixtime ((getledoconf ("lastcleanban") or 0), true))
-	stats = stats .. "\r\n " .. gettext ("Size of unbans table: %d [ %s: %d @ %s ]"):format (counttable ("unbanlist"), "C", (getledoconf ("limcleanunban") or 0), fromunixtime ((getledoconf ("lastcleanunban") or 0), true))
-	stats = stats .. "\r\n " .. gettext ("Size of registered users table: %d [ %s: %d @ %s ]"):format (counttable ("reglist"), "C", (getledoconf ("limcleanreg") or 0), fromunixtime ((getledoconf ("lastcleanreg") or 0), true))
-	stats = stats .. "\r\n " .. gettext ("Size of user log table: %d [ %s: %d @ %s ]"):format (counttable (tbl_sql.ulog), "C", (getledoconf ("limcleanulog") or 0), fromunixtime ((getledoconf ("lastcleanulog") or 0), true))
-	stats = stats .. "\r\n " .. gettext ("Size of command log table: %d [ %s: %d @ %s ]"):format (counttable (tbl_sql.clog), "C", (getledoconf ("limcleanclog") or 0), fromunixtime ((getledoconf ("lastcleanclog") or 0), true))
-	stats = stats .. "\r\n " .. gettext ("Size of release table: %d [ %s: %d @ %s ]"):format (counttable (tbl_sql.rel), "C", (getledoconf ("limcleanrel") or 0), fromunixtime ((getledoconf ("lastcleanrel") or 0), true))
-	stats = stats .. "\r\n " .. gettext ("Size of chat ranks table: %d [ %s: %d @ %s ]"):format (counttable (tbl_sql.chran), "C", (getledoconf ("limcleanchran") or 0), fromunixtime ((getledoconf ("lastcleanchran") or 0), true))
-	stats = stats .. "\r\n " .. gettext ("Size of share ranks table: %d [ %s: %d @ %s ]"):format (counttable (tbl_sql.shran), "C", (getledoconf ("limcleanshran") or 0), fromunixtime ((getledoconf ("lastcleanshran") or 0), true))
-	stats = stats .. "\r\n " .. gettext ("Size of uptime ranks table: %d [ %s: %d @ %s ]"):format (counttable (tbl_sql.upran), "C", (getledoconf ("limcleanupran") or 0), fromunixtime ((getledoconf ("lastcleanupran") or 0), true))
-	stats = stats .. "\r\n " .. gettext ("Size of operator ranks table: %d [ %s: %d @ %s ]"):format (counttable (tbl_sql.opran), "C", (getledoconf ("limcleanopran") or 0), fromunixtime ((getledoconf ("lastcleanopran") or 0), true))
-	stats = stats .. "\r\n " .. gettext ("Size of search ranks table: %d [ %s: %d @ %s ]"):format (counttable (tbl_sql.srran), "C", (getledoconf ("limcleansrran") or 0), fromunixtime ((getledoconf ("lastcleansrran") or 0), true))
-	stats = stats .. "\r\n " .. gettext ("Size of word ranks table: %d [ %s: %d @ %s ]"):format (counttable (tbl_sql.wdran), "C", (getledoconf ("limcleanwdran") or 0), fromunixtime ((getledoconf ("lastcleanwdran") or 0), true))
-	stats = stats .. "\r\n " .. gettext ("Size of user location statistics table: %d [ %s: %s ]"):format (counttable (tbl_sql.ccstat), "C", fromunixtime ((getledoconf ("date_ccstats") or 0), true))
-	stats = stats .. "\r\n " .. gettext ("Size of IP logger plugin table: %d [ %s: %d @ %s ]"):format (counttable ("pi_iplog"), "C", (getledoconf ("limcleaniplog") or 0), fromunixtime ((getledoconf ("lastcleaniplog") or 0), true))
-	stats = stats .. "\r\n " .. gettext ("Size of statistics plugin table: %d [ %s: %d @ %s ]"):format (counttable ("pi_stats"), "C", (getledoconf ("limcleanstats") or 0), fromunixtime ((getledoconf ("lastcleanstats") or 0), true)) .. "\r\n"
+	stats = stats .. "\r\n " .. gettext ("Size of kicks table: %d [ %s: %d @ %s ]"):format (counttable ("kicklist", "nick"), "C", (getledoconf ("limcleankick") or 0), fromunixtime ((getledoconf ("lastcleankick") or 0), true))
+	stats = stats .. "\r\n " .. gettext ("Size of bans table: %d [ %s: %d @ %s ]"):format (counttable ("banlist", "ban_type"), "C", (getledoconf ("limcleanban") or 0), fromunixtime ((getledoconf ("lastcleanban") or 0), true))
+	stats = stats .. "\r\n " .. gettext ("Size of unbans table: %d [ %s: %d @ %s ]"):format (counttable ("unbanlist", "ban_type"), "C", (getledoconf ("limcleanunban") or 0), fromunixtime ((getledoconf ("lastcleanunban") or 0), true))
+	stats = stats .. "\r\n " .. gettext ("Size of registered users table: %d [ %s: %d @ %s ]"):format (counttable ("reglist", "nick"), "C", (getledoconf ("limcleanreg") or 0), fromunixtime ((getledoconf ("lastcleanreg") or 0), true))
+	stats = stats .. "\r\n " .. gettext ("Size of user log table: %d [ %s: %d @ %s ]"):format (counttable (tbl_sql.ulog, "id"), "C", (getledoconf ("limcleanulog") or 0), fromunixtime ((getledoconf ("lastcleanulog") or 0), true))
+	stats = stats .. "\r\n " .. gettext ("Size of command log table: %d [ %s: %d @ %s ]"):format (counttable (tbl_sql.clog, "id"), "C", (getledoconf ("limcleanclog") or 0), fromunixtime ((getledoconf ("lastcleanclog") or 0), true))
+	stats = stats .. "\r\n " .. gettext ("Size of release table: %d [ %s: %d @ %s ]"):format (counttable (tbl_sql.rel, "release"), "C", (getledoconf ("limcleanrel") or 0), fromunixtime ((getledoconf ("lastcleanrel") or 0), true))
+	stats = stats .. "\r\n " .. gettext ("Size of chat ranks table: %d [ %s: %d @ %s ]"):format (counttable (tbl_sql.chran, "nick"), "C", (getledoconf ("limcleanchran") or 0), fromunixtime ((getledoconf ("lastcleanchran") or 0), true))
+	stats = stats .. "\r\n " .. gettext ("Size of share ranks table: %d [ %s: %d @ %s ]"):format (counttable (tbl_sql.shran, "nick"), "C", (getledoconf ("limcleanshran") or 0), fromunixtime ((getledoconf ("lastcleanshran") or 0), true))
+	stats = stats .. "\r\n " .. gettext ("Size of uptime ranks table: %d [ %s: %d @ %s ]"):format (counttable (tbl_sql.upran, "nick"), "C", (getledoconf ("limcleanupran") or 0), fromunixtime ((getledoconf ("lastcleanupran") or 0), true))
+	stats = stats .. "\r\n " .. gettext ("Size of operator ranks table: %d [ %s: %d @ %s ]"):format (counttable (tbl_sql.opran, "nick"), "C", (getledoconf ("limcleanopran") or 0), fromunixtime ((getledoconf ("lastcleanopran") or 0), true))
+	stats = stats .. "\r\n " .. gettext ("Size of search ranks table: %d [ %s: %d @ %s ]"):format (counttable (tbl_sql.srran, "search"), "C", (getledoconf ("limcleansrran") or 0), fromunixtime ((getledoconf ("lastcleansrran") or 0), true))
+	stats = stats .. "\r\n " .. gettext ("Size of word ranks table: %d [ %s: %d @ %s ]"):format (counttable (tbl_sql.wdran, "word"), "C", (getledoconf ("limcleanwdran") or 0), fromunixtime ((getledoconf ("lastcleanwdran") or 0), true))
+	stats = stats .. "\r\n " .. gettext ("Size of user location statistics table: %d [ %s: %s ]"):format (counttable (tbl_sql.ccstat, "nick"), "C", fromunixtime ((getledoconf ("date_ccstats") or 0), true)) .. "\r\n"
 
 	commandanswer (nick, stats)
 end
@@ -28815,11 +28785,17 @@ end
 
 ----- ---- --- -- -
 
-function counttable (tbl, where)
-	local sql = "select count(*) from `" .. tbl .. "`"
+function counttable (tbl, colu, wher)
+	local col = "count(*)"
 
-	if where and where ~= "" then
-		sql = sql .. " where " .. where
+	if colu and colu ~= "" then
+		col = "count(`" .. colu .. "`)"
+	end
+
+	local sql = "select " .. col .. " from `" .. tbl .. "`"
+
+	if wher and wher ~= "" then
+		sql = sql .. " where " .. wher
 	end
 
 	local _, rows = VH:SQLQuery (sql)
