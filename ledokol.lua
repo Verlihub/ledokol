@@ -63,7 +63,7 @@ Tzaca, JOE™, Foxtrot, Deivis and others
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.9" -- ledokol version
-bld_ledo = "138" -- build number
+bld_ledo = "139" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -1774,6 +1774,8 @@ function UnLoad ()
 		return 1
 	end
 
+	table_othsets.restart = true
+
 	if table_sets.avsearchint > 0 and # table_sets.avsearservaddr > 0 then -- antivirus search server
 		avsearservstop ()
 	end
@@ -1808,7 +1810,6 @@ function UnLoad ()
 		delhubrobot (table_sets.sefifeednick)
 	end
 
-	table_othsets.restart = true
 	return 1
 end
 
@@ -8767,9 +8768,11 @@ end
 function uninstallchatrooms ()
 	local _, rows = VH:SQLQuery ("select `room` from `" .. tbl_sql.chat .. "`")
 
-	for x = 0, (tonumber (rows) or 0) - 1 do
-		local _, room = VH:SQLFetch (x)
-		delhubrobot (room)
+	if rows and type (rows) == "number" and rows > 0 then
+		for x = 0, rows - 1 do
+			local _, room = VH:SQLFetch (x)
+			delhubrobot (room)
+		end
 	end
 
 	table_chat = {} -- clear ignore list
@@ -9563,11 +9566,13 @@ end
 ----- ---- --- -- -
 
 function resetcustnicks ()
-	if table_sets.custnickclass == 11 then return end
-	if table_sets.savecustnicks == 1 then return end
+	if table_sets.custnickclass == 11 or table_sets.savecustnicks == 1 then
+		return
+	end
+
 	local _, rows = VH:SQLQuery ("select `nick`, `custom` from `" .. tbl_sql.cust .. "`")
 
-	if rows > 0 then
+	if rows and type (rows) == "number" and rows > 0 then
 		local table_delete = {}
 
 		for x = 0, rows - 1 do
