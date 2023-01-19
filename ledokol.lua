@@ -318,6 +318,7 @@ table_sets = {
 	useblacklist = 0,
 	blistupdateint = 0,
 	blistfeedint = 0,
+	blistshowrange = 0,
 	--hublistpingint = 0,
 	--hubpingtimeout = 1,
 	enableuserlog = 0,
@@ -1660,6 +1661,7 @@ function Main (file)
 
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('blistupdateint', '" .. repsqlchars (table_sets.blistupdateint) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('blistfeedint', '" .. repsqlchars (table_sets.blistfeedint) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('blistshowrange', '" .. repsqlchars (table_sets.blistshowrange) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('hbanfeedint', '" .. repsqlchars (table_sets.hbanfeedint) .. "')")
 					end
 
@@ -10962,7 +10964,13 @@ function checkblacklist (addr)
 		for pos, data in pairs (table_blst [a1 + 1]) do -- note: +1 due to lua index 1+
 			if ipinrange (data.rang, addr) then
 				if now - data.last >= table_sets.blistfeedint * 60 then -- not too often
-					opsnotify (table_sets.classnotiblist, gettext ("Blacklisted connection from IP %s dropped: %s"):format (addr .. tryipcc (addr), repnmdcoutchars (data.name) .. " [" .. data.rang .. "]")) -- notify
+					local line = gettext ("Blacklisted connection from IP %s dropped: %s"):format (addr .. tryipcc (addr), repnmdcoutchars (data.name))
+
+					if table_sets.blistshowrange == 1 then
+						line = line .. " [" .. data.rang .. "]"
+					end
+
+					opsnotify (table_sets.classnotiblist, line) -- notify
 					table_blst [a1 + 1][pos].last = now
 				end
 
@@ -21839,6 +21847,20 @@ end
 
 	----- ---- --- -- -
 
+	elseif tvar == "blistshowrange" then
+		if num then
+			if setto == 0 or setto == 1 then
+				ok = true
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0 " .. gettext ("or") .. " 1"))
+			end
+
+		else
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
+		end
+
+	----- ---- --- -- -
+
 	elseif tvar == "chatfloodcmdgag" then
 		if num then
 			if setto == 0 or setto == 1 then
@@ -25088,6 +25110,7 @@ function showledoconf (nick)
 	conf = conf .. "\r\n [::] useblacklist = " .. _tostring (table_sets.useblacklist)
 	conf = conf .. "\r\n [::] blistupdateint = " .. _tostring (table_sets.blistupdateint)
 	conf = conf .. "\r\n [::] blistfeedint = " .. _tostring (table_sets.blistfeedint)
+	conf = conf .. "\r\n [::] blistshowrange = " .. _tostring (table_sets.blistshowrange)
 	conf = conf .. "\r\n"
 
 	conf = conf .. "\r\n [::] protofloodctmcnt = " .. _tostring (table_sets.protofloodctmcnt)
