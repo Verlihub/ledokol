@@ -63,7 +63,7 @@ Tzaca, JOE™, Foxtrot, Deivis and others
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.9" -- ledokol version
-bld_ledo = "139" -- build number
+bld_ledo = "140" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -319,6 +319,8 @@ table_sets = {
 	blistupdateint = 0,
 	blistfeedint = 0,
 	blistshowrange = 0,
+	enablesysbans = 0,
+	sysbanuseclass = 10,
 	--hublistpingint = 0,
 	--hubpingtimeout = 1,
 	enableuserlog = 0,
@@ -443,6 +445,7 @@ table_othsets = {
 	ver_luaplug = nil,
 	ver_sql = nil,
 	ver_curl = nil,
+	ver_iptables = nil,
 	--ver_iconv = nil,
 	ver_sock = nil,
 	mod_sock = nil,
@@ -546,6 +549,7 @@ tbl_sql = {
 	nopm = "lua_ledo_nopm",
 	hban = "lua_ledo_hban",
 	blist = "lua_ledo_blist",
+	sysban = "lua_ledo_sysban",
 	ipwa = "lua_ledo_ipwa",
 	ipgag = "lua_ledo_ipgag",
 	ccgag = "lua_ledo_ccgag",
@@ -638,6 +642,9 @@ table_cmnds = {
 	blistoff = "blistoff",
 	blistimport = "blistimport",
 	blistfind = "blistfind",
+	sysban = "sysban",
+	sysunban = "sysunban",
+	sysbans = "sysbans",
 	newsadd = "newsadd",
 	newsdel = "newsdel",
 	hubnews = "hubnews",
@@ -1647,6 +1654,7 @@ function Main (file)
 
 					if ver <= 299 then
 						VH:SQLQuery ("create table if not exists `" .. tbl_sql.blist .. "` (`list` varchar(255) not null primary key, `type` varchar(10) not null, `name` varchar(255) not null, `off` tinyint(1) unsigned not null default 0)")
+						VH:SQLQuery ("create table if not exists `" .. tbl_sql.sysban .. "` (`ip` varchar(18) not null primary key, `reason` varchar(255) not null)")
 
 						VH:SQLQuery ("alter table `" .. tbl_sql.hban .. "` add column `off` tinyint(1) unsigned not null default 0 after `reason`")
 
@@ -1658,11 +1666,16 @@ function Main (file)
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.ledocmd .. "` (`original`, `new`) values ('blistfind', '" .. repsqlchars (table_cmnds.blistfind) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.ledocmd .. "` (`original`, `new`) values ('hbanoff', '" .. repsqlchars (table_cmnds.hbanoff) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.ledocmd .. "` (`original`, `new`) values ('hbanimport', '" .. repsqlchars (table_cmnds.hbanimport) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.ledocmd .. "` (`original`, `new`) values ('sysban', '" .. repsqlchars (table_cmnds.sysban) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.ledocmd .. "` (`original`, `new`) values ('sysuban', '" .. repsqlchars (table_cmnds.sysuban) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.ledocmd .. "` (`original`, `new`) values ('sysbans', '" .. repsqlchars (table_cmnds.sysbans) .. "')")
 
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('blistupdateint', '" .. repsqlchars (table_sets.blistupdateint) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('blistfeedint', '" .. repsqlchars (table_sets.blistfeedint) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('blistshowrange', '" .. repsqlchars (table_sets.blistshowrange) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('hbanfeedint', '" .. repsqlchars (table_sets.hbanfeedint) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('enablesysbans', '" .. repsqlchars (table_sets.enablesysbans) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('sysbanuseclass', '" .. repsqlchars (table_sets.sysbanuseclass) .. "')")
 					end
 
 					if ver <= 300 then
@@ -1689,10 +1702,6 @@ function Main (file)
 	loadsettings ()
 	loadcachelists ()
 	loadlangfile (nil, nil)
-
-	if table_sets.enablehardban == 1 then -- hard ip ban
-		loadhardbans ()
-	end
 
 	table_othsets.botnick = getconfig ("hub_security")
 	table_othsets.opchatnick = getconfig ("opchat_name")
@@ -1733,6 +1742,18 @@ function Main (file)
 		--hublistping ()
 	--end
 
+	if table_sets.enablehardban == 1 then -- hard ip ban
+		loadhardbans ()
+	end
+
+	if table_sets.enablesysbans == 1 then -- system ban
+		table_othsets.ver_iptables = iptablesinit ()
+
+		if table_othsets.ver_iptables and not iptablessetup () then
+			table_othsets.ver_iptables = nil
+		end
+	end
+
 	local ulim = getulimit () -- ulimit warning
 
 	if ulim then
@@ -1765,6 +1786,7 @@ function Main (file)
 
 	loadsefilist () -- load search filter cache, even if disabled
 	loadmyfolist () -- load forbidden myinfo cache, even if disabled
+
 	math.randomseed (os.time ()) -- randomize
 	return 1
 end
@@ -1777,6 +1799,10 @@ function UnLoad ()
 	end
 
 	table_othsets.restart = true
+
+	if table_sets.enablesysbans == 1 then -- system ban
+		iptablesflush ()
+	end
 
 	if table_sets.avsearchint > 0 and # table_sets.avsearservaddr > 0 then -- antivirus search server
 		avsearservstop ()
@@ -2321,6 +2347,45 @@ return 0
 		if ucl >= table_sets.mincommandclass then
 			donotifycmd (nick, data, 0, ucl)
 			findblist (nick, data:sub (# table_cmnds.blistfind + 3))
+
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
+
+		return 0
+
+	----- ---- --- -- -
+
+	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.sysban .. " .+ \".+\"$") then
+		if ucl >= table_sets.sysbanuseclass then
+			donotifycmd (nick, data, 0, ucl)
+			addsysban (nick, data:sub (# table_cmnds.sysban + 3))
+
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
+
+		return 0
+
+	----- ---- --- -- -
+
+	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.sysunban .. " %S+$") then
+		if ucl >= table_sets.sysbanuseclass then
+			donotifycmd (nick, data, 0, ucl)
+			delsysban (nick, data:sub (# table_cmnds.sysunban + 3))
+
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
+
+		return 0
+
+	----- ---- --- -- -
+
+	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.sysbans .. "$") then
+		if ucl >= table_sets.sysbanuseclass then
+			donotifycmd (nick, data, 0, ucl)
+			listsysbans (nick)
 
 		else
 			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
@@ -11111,6 +11176,447 @@ end
 
 ----- ---- --- -- -
 
+function addsysban (nick, line)
+	if not table_othsets.ver_iptables then
+		commandanswer (nick, gettext ("This feature requires following binary installed on your system: %s"):format ("IPTables"))
+		return
+	end
+
+	local list, why = line:match ("^(.+) \"(.+)\"$")
+	local tot = 0
+
+	for data in list:gmatch ("[^ ]+") do
+		local a, b, c, d, e = data:match ("^(%d+)%.(%d+)%.(%d+)%.(%d+)/?([%d]*)$")
+		a = tonumber (a or -1) or -1
+		b = tonumber (b or -1) or -1
+		c = tonumber (c or -1) or -1
+		d = tonumber (d or -1) or -1
+
+		if e and # _tostring (e) > 0 then
+			e = tonumber (e) or -1
+		else
+			e = nil
+		end
+
+		if a < 0 or a > 255 or b < 0 or b > 255 or c < 0 or c > 255 or d < 0 or d > 255 or (e and (e < 1 or e > 32)) then
+			commandanswer (nick, gettext ("Invalid IP or CIDR: %s"):format (data))
+
+		else
+			local repaddr = repsqlchars (data)
+			local _, rows = VH:SQLQuery ("select null from `" .. tbl_sql.sysban .. "` where `ip` = '" .. repaddr .. "'")
+
+			if rows > 0 then -- update
+				VH:SQLQuery ("update `" .. tbl_sql.sysban .. "` set `reason` = '" .. repsqlchars (why) .. "' where `ip` = '" .. repaddr .. "'")
+				local res, err = iptablesexec ("check LEDOKOL --source " .. data .. " --jump DROP")
+
+				if not res then -- add if not found
+					--commandanswer (nick, gettext ("Warning: %s"):format (gettext ("Failed to check rule in %s: %s"):format ("IPTables", repnmdcoutchars (err))))
+					res, err = iptablesexec ("append LEDOKOL --source " .. data .. " --jump DROP")
+
+					if not res then
+						commandanswer (nick, gettext ("Warning: %s"):format (gettext ("Failed to create rule in %s: %s"):format ("IPTables", repnmdcoutchars (err))))
+					end
+				end
+
+				commandanswer (nick, gettext ("Modified system ban: %s"):format (data))
+
+			else -- add
+				VH:SQLQuery ("insert into `" .. tbl_sql.sysban .. "` (`ip`, `reason`) values ('" .. repaddr .. "', '" .. repsqlchars (why) .. "')")
+				local res, err = iptablesexec ("check LEDOKOL --source " .. data .. " --jump DROP")
+
+				if not res then -- error not used
+					res, err = iptablesexec ("append LEDOKOL --source " .. data .. " --jump DROP")
+
+					if not res then
+						commandanswer (nick, gettext ("Warning: %s"):format (gettext ("Failed to create rule in %s: %s"):format ("IPTables", repnmdcoutchars (err))))
+					end
+				end
+
+				commandanswer (nick, gettext ("Added system ban: %s"):format (data))
+			end
+
+			tot = tot + 1
+		end
+	end
+
+	if tot == 0 then
+		commandanswer (nick, gettext ("To add multiple entries with this command you need to separate every entry by space."))
+	end
+end
+
+----- ---- --- -- -
+
+function delsysban (nick, addr)
+	if not table_othsets.ver_iptables then
+		commandanswer (nick, gettext ("This feature requires following binary installed on your system: %s"):format ("IPTables"))
+		return
+	end
+
+	if addr == "*" then -- clear all
+		local res, err = iptablesexec ("flush LEDOKOL") -- try flush
+
+		if not res then
+			commandanswer (nick, gettext ("Warning: %s"):format (gettext ("Failed to flush chain in %s: %s"):format ("IPTables", repnmdcoutchars (err))))
+		end
+
+		VH:SQLQuery ("truncate table `" .. tbl_sql.sysban .. "`")
+		commandanswer (nick, gettext ("Cleared system bans."))
+		return
+	end
+
+	local a, b, c, d, e = addr:match ("^(%d+)%.(%d+)%.(%d+)%.(%d+)/?([%d]*)$")
+	a = tonumber (a or -1) or -1
+	b = tonumber (b or -1) or -1
+	c = tonumber (c or -1) or -1
+	d = tonumber (d or -1) or -1
+
+	if e and # _tostring (e) > 0 then
+		e = tonumber (e) or -1
+	else
+		e = nil
+	end
+
+	if a < 0 or a > 255 or b < 0 or b > 255 or c < 0 or c > 255 or d < 0 or d > 255 or (e and (e < 1 or e > 32)) then
+		commandanswer (nick, gettext ("Invalid IP or CIDR: %s"):format (addr))
+		return
+	end
+
+	local repaddr = repsqlchars (addr)
+	local _, rows = VH:SQLQuery ("select null from `" .. tbl_sql.sysban .. "` where `ip` = '" .. repaddr .. "'")
+
+	if rows > 0 then -- delete
+		VH:SQLQuery ("delete from `" .. tbl_sql.sysban .. "` where `ip` = '" .. repaddr .. "'")
+		local res, err = iptablesexec ("check LEDOKOL --source " .. addr .. " --jump DROP")
+
+		if res then -- rule found, error not used
+			res, err = iptablesexec ("delete LEDOKOL --source " .. addr .. " --jump DROP")
+
+			if not res then
+				commandanswer (nick, gettext ("Warning: %s"):format (gettext ("Failed to delete rule in %s: %s"):format ("IPTables", repnmdcoutchars (err))))
+			end
+
+		else
+			commandanswer (nick, gettext ("Warning: %s"):format (gettext ("Failed to check rule in %s: %s"):format ("IPTables", repnmdcoutchars (err))))
+		end
+
+		commandanswer (nick, gettext ("Deleted system ban: %s"):format (addr))
+
+	else -- not found
+		commandanswer (nick, gettext ("System ban not found: %s"):format (addr))
+	end
+end
+
+----- ---- --- -- -
+
+function listsysbans (nick)
+	if not table_othsets.ver_iptables then
+		commandanswer (nick, gettext ("This feature requires following binary installed on your system: %s"):format ("IPTables"))
+		return
+	end
+
+	local _, rows = VH:SQLQuery ("select * from `" .. tbl_sql.sysban .. "` order by `ip` asc")
+
+	if rows > 0 then
+		local res, list, ref = iptablesexec ("list LEDOKOL --numeric")
+
+		if not res then
+			commandanswer (nick, gettext ("Warning: %s"):format (gettext ("Failed to get rules in %s: %s"):format ("IPTables", repnmdcoutchars (list)))) -- list is error
+		end
+
+		local back = ""
+
+		for pos = 0, rows - 1 do
+			local _, addr, why = VH:SQLFetch (pos)
+			local have = false
+
+			if res then
+				for _, comp in pairs (list) do -- find in list
+					if comp == addr then
+						have = true
+						break
+					end
+				end
+			end
+
+			back = back .. " [ I: " .. repnmdcoutchars (addr) .. " ] [ R: " .. repnmdcoutchars (why) .. " ] [ F: " .. (have and gettext ("Yes") or gettext ("No")) .. " ]\r\n"
+		end
+
+		if res and ref then
+			commandanswer (nick, gettext ("Referenced list of system bans") .. ":\r\n\r\n" .. back)
+		else
+			commandanswer (nick, gettext ("Unreferenced list of system bans") .. ":\r\n\r\n" .. back)
+		end
+
+	else -- empty
+		commandanswer (nick, gettext ("System ban list is empty."))
+	end
+end
+
+----- ---- --- -- -
+
+function iptablesinit (nick)
+	local res, err = iptablesexec ("version")
+
+	if not res then
+		commandanswer (nick, gettext ("Warning: %s"):format (gettext ("Failed to detect version: %s"):format ("IPTables")))
+		return nil
+	end
+
+	return err
+end
+
+----- ---- --- -- -
+
+function iptablessetup (nick)
+	local res, err = iptablesexec ("version")
+
+	if not res then
+		commandanswer (nick, gettext ("Warning: %s"):format (gettext ("Failed to detect version: %s"):format ("IPTables")))
+		return false
+	end
+
+	local ver = err
+	res, err = iptablesexec ("list LEDOKOL --numeric") -- check chain
+
+	if not res then
+		if err == "Chain missing" then -- create chain
+			res, err = iptablesexec ("new LEDOKOL")
+
+			if not ((res and err == "Chain created") or (not res and err == "Chain exists")) then
+				commandanswer (nick, gettext ("Warning: %s"):format (gettext ("Failed to create chain in %s: %s"):format ("IPTables", repnmdcoutchars (err))))
+				return false
+			end
+
+			res, err = iptablesexec ("list LEDOKOL --numeric") -- check chain again
+
+			if not res then
+				commandanswer (nick, gettext ("Warning: %s"):format (gettext ("Failed to check chain in %s: %s"):format ("IPTables", repnmdcoutchars (err))))
+				return false
+			end
+
+		else -- other error
+			commandanswer (nick, gettext ("Warning: %s"):format (gettext ("Failed to check chain in %s: %s"):format ("IPTables", repnmdcoutchars (err))))
+			return false
+		end
+	end
+
+	res, err = iptablesexec ("flush LEDOKOL") -- try flush
+
+	if not res then
+		commandanswer (nick, gettext ("Warning: %s"):format (gettext ("Failed to flush chain in %s: %s"):format ("IPTables", repnmdcoutchars (err))))
+		return false
+	end
+
+	res, err = iptablesexec ("check INPUT --jump LEDOKOL") -- check jump
+
+	if not res then
+		if err == "Rule missing" then -- create jump
+			res, err = iptablesexec ("insert INPUT --jump LEDOKOL") -- note: this will break counters
+
+			if not (res and err == "Rule created") then
+				commandanswer (nick, gettext ("Warning: %s"):format (gettext ("Failed to create rule in %s: %s"):format ("IPTables", repnmdcoutchars (err))))
+				return false
+			end
+
+			res, err = iptablesexec ("check INPUT --jump LEDOKOL") -- check jump again
+
+			if not res then
+				commandanswer (nick, gettext ("Warning: %s"):format (gettext ("Failed to check rule in %s: %s"):format ("IPTables", repnmdcoutchars (err))))
+				return false
+			end
+
+		else -- other error
+			commandanswer (nick, gettext ("Warning: %s"):format (gettext ("Failed to check rule in %s: %s"):format ("IPTables", repnmdcoutchars (err))))
+			return false
+		end
+	end
+
+	local _, rows = VH:SQLQuery ("select `ip` from `" .. tbl_sql.sysban .. "`") -- try add rules
+
+	for pos = 0, rows - 1 do
+		local _, addr = VH:SQLFetch (pos)
+		res, err = iptablesexec ("check LEDOKOL --source " .. addr .. " --jump DROP")
+
+		if not res and err == "Rule missing" then -- only if missing
+			res, err = iptablesexec ("append LEDOKOL --source " .. addr .. " --jump DROP")
+
+			if not res then
+				commandanswer (nick, gettext ("Warning: %s"):format (gettext ("Failed to create rule for %s in %s: %s"):format (addr, "IPTables", repnmdcoutchars (err))))
+			end
+		end
+	end
+
+	return true
+end
+
+----- ---- --- -- -
+
+function iptablesflush (nick)
+	local res, err = iptablesexec ("check INPUT --jump LEDOKOL") -- check jump
+
+	if not res then
+		commandanswer (nick, gettext ("Warning: %s"):format (gettext ("Failed to check rule in %s: %s"):format ("IPTables", repnmdcoutchars (err))))
+		--return false
+	end
+
+	res, err = iptablesexec ("delete INPUT --jump LEDOKOL") -- delete jump
+
+	if not res then
+		commandanswer (nick, gettext ("Warning: %s"):format (gettext ("Failed to delete rule in %s: %s"):format ("IPTables", repnmdcoutchars (err))))
+		--return false
+	end
+
+	res, err = iptablesexec ("list LEDOKOL --numeric") -- check chain
+
+	if not res then
+		commandanswer (nick, gettext ("Warning: %s"):format (gettext ("Failed to check chain in %s: %s"):format ("IPTables", repnmdcoutchars (err))))
+		--return false
+	end
+
+	res, err = iptablesexec ("flush LEDOKOL") -- try flush
+
+	if not res then
+		commandanswer (nick, gettext ("Warning: %s"):format (gettext ("Failed to flush chain in %s: %s"):format ("IPTables", repnmdcoutchars (err))))
+		--return false
+	end
+
+	res, err = iptablesexec ("delete-chain LEDOKOL") -- delete chain
+
+	if not res then
+		commandanswer (nick, gettext ("Warning: %s"):format (gettext ("Failed to delete chain in %s: %s"):format ("IPTables", repnmdcoutchars (err))))
+		--return false
+	end
+
+	table_othsets.ver_iptables = nil
+end
+
+----- ---- --- -- -
+
+function iptablesexec (cmd, nick)
+	local res, err, code = os.execute ("iptables --" .. cmd .. " > \"" .. table_othsets.cfgdir .. table_othsets.tmpfile .. "\" 2>&1")
+
+	if res then
+		local file = io.open (table_othsets.cfgdir .. table_othsets.tmpfile, "r")
+
+		if file then
+			local data = file:read ("*all")
+			file:close ()
+			os.remove (table_othsets.cfgdir .. table_othsets.tmpfile)
+
+			if data and # _tostring (data) > 0 then
+				if cmd == "version" then
+					local ver = data:match ("%d+[%.%d]+")
+
+					if not ver then
+						return false, "Unknown version"
+					end
+
+					return true, ver
+
+				elseif cmd:sub (1, 4) == "list" then
+					local list, ref, pos = {}, false, 0
+
+					for item in data:gmatch ("[^\r\n]+") do
+						if pos == 0 then -- reference
+							local num = item:match ("LEDOKOL %((%d+)")
+							num = tonumber (num or 0) or 0
+
+							if num > 0 then
+								ref = true
+							end
+
+						elseif pos == 1 then
+							-- skip headers
+
+						elseif # item > 0 then
+							local addr = item:match ("(%d+%.%d+%.%d+%.%d+/?[%d]*)")
+
+							if addr and addr:sub (1, 7) ~= "0.0.0.0" then
+								table.insert (list, addr)
+							end
+						end
+
+						pos = pos + 1
+					end
+
+					return true, list, ref
+
+				else
+					return false, "Unknown command"
+				end
+
+			else -- no data
+				if cmd:sub (1, 3) == "new" then
+					return true, "Chain created"
+
+				elseif cmd:sub (1, 6) == "insert" then
+					return true, "Rule created"
+
+				elseif cmd:sub (1, 6) == "append" then
+					return true, "Rule created"
+
+				elseif cmd:sub (1, 5) == "check" then
+					return true, "Rule exists"
+
+				elseif cmd:sub (1, 12) == "delete-chain" then
+					return true, "Chain deleted"
+
+				elseif cmd:sub (1, 6) == "delete" then
+					return true, "Rule deleted"
+
+				elseif cmd:sub (1, 5) == "flush" then
+					return true, "Flush done"
+
+				else
+					return false, "Missing data"
+				end
+			end
+
+		else -- no file
+			return false, "Missing file"
+		end
+
+	elseif err == "exit" then
+		if code == 127 then
+			return false, "Missing binary"
+
+		elseif code == 2 then
+			return false, "Bad parameter or permission"
+
+		elseif code == 1 then
+			if cmd:sub (1, 4) == "list" then
+				return false, "Chain missing"
+
+			elseif cmd:sub (1, 3) == "new" then
+				return false, "Chain exists"
+
+			elseif cmd:sub (1, 5) == "check" then
+				return false, "Rule missing"
+
+			elseif cmd:sub (1, 12) == "delete-chain" then
+				return false, "Chain missing"
+
+			elseif cmd:sub (1, 6) == "delete" then
+				return false, "Rule missing"
+
+			elseif cmd:sub (1, 5) == "flush" then
+				return false, "Flush impossible"
+
+			else
+				return false, "Unknown code", "1"
+			end
+
+		else -- bad exit
+			return false, "Unknown code", (code and _tostring (code) or "0")
+		end
+
+	else -- other error
+		return false, "Unknown error", (err and err or "Unknown")
+	end
+end
+
+----- ---- --- -- -
+
 function addnews (nick, item)
 	local ndate = os.time () + table_sets.srvtimediff -- current time
 	VH:SQLQuery ("insert into `" .. tbl_sql.news .. "` (`date`, `by`, `item`) values (" .. _tostring (ndate) .. ", '" .. repsqlchars (nick) .. "', '" .. repsqlchars (item) .. "')")
@@ -19783,6 +20289,14 @@ end
 		sopmenitm (usr, gettext ("Blacklist") .. "\\" .. gettext ("Import blacklist entries from %s"):format ("blacklist.py"), table_cmnds.blistimport)
 	end
 
+	-- system ban
+	if ucl >= table_sets.sysbanuseclass then
+		sopmenitm (usr, gettext ("System bans") .. "\\" .. gettext ("Add system bans separated by space"), table_cmnds.sysban .. " %[line:<" .. gettext ("ip") .. " " .. gettext ("or") .. " " .. gettext ("cidr") .. ">] \"%[line:<" .. gettext ("reason") .. ">]\"")
+		sopmenitm (usr, gettext ("System bans") .. "\\" .. gettext ("List of system bans"), table_cmnds.sysbans)
+		smensep (usr)
+		sopmenitm (usr, gettext ("System bans") .. "\\" .. gettext ("Delete system ban"), table_cmnds.sysunban .. " %[line:<" .. gettext ("ip") .. " " .. gettext ("or") .. " " .. gettext ("cidr") .. " " .. gettext ("or") .. " *>]")
+	end
+
 	-- hub news
 	if ucl >= table_sets.mincommandclass then
 		sopmenitm (usr, gettext ("Hub news") .. "\\" .. gettext ("Add news item"), table_cmnds.newsadd .. " %[line:<" .. gettext ("string") .. ">]")
@@ -21853,6 +22367,52 @@ end
 				ok = true
 			else
 				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0 " .. gettext ("or") .. " 1"))
+			end
+
+		else
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
+		end
+
+	----- ---- --- -- -
+
+	elseif tvar == "enablesysbans" then
+		if num then
+			if setto == 0 or setto == 1 then
+				if setto == 0 and table_sets [tvar] == 1 then -- flush
+					if table_othsets.ver_iptables then
+						iptablesflush (nick)
+					end
+
+					ok = true
+
+				elseif table_sets [tvar] == 0 and setto == 1 then -- initiate and setup
+					table_othsets.ver_iptables = iptablesinit (nick)
+
+					if table_othsets.ver_iptables and not iptablessetup (nick) then
+						table_othsets.ver_iptables = nil
+					end
+
+					if table_othsets.ver_iptables then
+						ok = true
+					end
+				end
+
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0 " .. gettext ("or") .. " 1"))
+			end
+
+		else
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
+		end
+
+	----- ---- --- -- -
+
+	elseif tvar == "sysbanuseclass" then
+		if num then
+			if (setto >= 0 and setto <= 5) or setto == 10 then
+				ok = true
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0, 1, 2, 3, 4, 5 " .. gettext ("or") .. " 10"))
 			end
 
 		else
@@ -24416,6 +24976,11 @@ function sendophelp (nick, clas, pm)
 	help = help .. " " .. trig .. table_cmnds.blistfind .. " <" .. gettext ("ip") .. " " .. gettext ("or") .. " " .. gettext ("name") .. "> - " .. gettext ("Search in blacklist") .. "\r\n"
 	help = help .. " " .. trig .. table_cmnds.blistimport .. " - " .. gettext ("Import blacklist entries from %s"):format ("blacklist.py") .. "\r\n\r\n"
 
+	-- system ban
+	help = help .. " [" .. prezero (2, table_sets.sysbanuseclass) .. "] " .. trig .. table_cmnds.sysban .. " <" .. gettext ("ip") .. " " .. gettext ("or") .. " " .. gettext ("cidr") .. "> <\"" .. gettext ("reason") .. "\"> - " .. gettext ("Add system bans separated by space") .. "\r\n"
+	help = help .. " [" .. prezero (2, table_sets.sysbanuseclass) .. "] " .. trig .. table_cmnds.sysbans .. " - " .. gettext ("List of system bans") .. "\r\n"
+	help = help .. " [" .. prezero (2, table_sets.sysbanuseclass) .. "] " .. trig .. table_cmnds.sysunban .. " <" .. gettext ("ip") .. " " .. gettext ("or") .. " " .. gettext ("cidr") .. " " .. gettext ("or") .. " *> - " .. gettext ("Delete system ban") .. "\r\n\r\n"
+
 	-- news
 	help = help .. " " .. trig .. table_cmnds.newsadd .. " <" .. gettext ("string") .. "> - " .. gettext ("Add news item") .. "\r\n"
 	help = help .. " " .. trig .. table_cmnds.newsdel .. " <" .. gettext ("date") .. "> - " .. gettext ("Delete news items") .. "\r\n\r\n"
@@ -25111,6 +25676,8 @@ function showledoconf (nick)
 	conf = conf .. "\r\n [::] blistupdateint = " .. _tostring (table_sets.blistupdateint)
 	conf = conf .. "\r\n [::] blistfeedint = " .. _tostring (table_sets.blistfeedint)
 	conf = conf .. "\r\n [::] blistshowrange = " .. _tostring (table_sets.blistshowrange)
+	conf = conf .. "\r\n [::] enablesysbans = " .. _tostring (table_sets.enablesysbans)
+	conf = conf .. "\r\n [::] sysbanuseclass = " .. _tostring (table_sets.sysbanuseclass)
 	conf = conf .. "\r\n"
 
 	conf = conf .. "\r\n [::] protofloodctmcnt = " .. _tostring (table_sets.protofloodctmcnt)
@@ -25282,6 +25849,9 @@ VH:SQLQuery ("create table if not exists `" .. tbl_sql.stat .. "` (`type` varcha
 
 	-- blacklist
 	VH:SQLQuery ("create table if not exists `" .. tbl_sql.blist .. "` (`list` varchar(255) not null primary key, `type` varchar(10) not null, `name` varchar(255) not null, `off` tinyint(1) unsigned not null default 0)")
+
+	-- system ban
+	VH:SQLQuery ("create table if not exists `" .. tbl_sql.sysban .. "` (`ip` varchar(18) not null primary key, `reason` varchar(255) not null)")
 
 	-- ip watch
 	VH:SQLQuery ("create table if not exists `" .. tbl_sql.ipwa .. "` (`ip` varchar(255) not null, `reason` text not null, `result` tinyint(1) unsigned not null default 0, primary key (`ip`))")
@@ -25602,6 +26172,12 @@ VH:SQLQuery ("alter table `" .. tbl_sql.stat .. "` change column `count` `count`
 
 	-- hard ban
 	VH:SQLQuery ("alter table `" .. tbl_sql.hban .. "` add column `off` tinyint(1) unsigned not null default 0 after `reason`")
+
+	-- blacklist
+	-- not added
+
+	-- system ban
+	-- not added
 
 	-- ip watch
 	-- not added
@@ -29806,6 +30382,10 @@ end
 ----- ---- --- -- -
 
 function commandanswer (to, data, pm) -- todo: replace nmdc characters here instead of each place that calls this function
+	if not to then
+		return
+	end
+
 	if pm or table_sets.commandstopm == 1 then
 		VH:SendToUser ("$To: " .. to .. " From: " .. table_othsets.botnick .. " $<" .. table_othsets.sendfrom .. "> " .. data .. "|", to)
 

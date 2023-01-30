@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: Ledokol\n"
 "Project-Version: 2.9.9\n"
 "Report-Msgid-Bugs-To: RoLex <webmaster@feardc.net>\n"
-"POT-Creation-Date: 2023-01-04 00:00+0200\n"
-"PO-Revision-Date: 2023-01-04 00:00+0200\n"
+"POT-Creation-Date: 2023-01-30 00:00+0200\n"
+"PO-Revision-Date: 2023-01-30 00:00+0200\n"
 "Last-Translator: RoLex <webmaster@feardc.net>\n"
 "Language-Team: RoLex <webmaster@feardc.net>\n"
 "Language: en_GB\n"
@@ -4046,4 +4046,76 @@ msgid "Import hard IP ban entries from %s"
 msgstr ""
 
 msgid "Blacklist load results"
+msgstr ""
+
+msgid "Invalid IP or CIDR: %s"
+msgstr ""
+
+msgid "System bans"
+msgstr ""
+
+msgid "Add system bans separated by space"
+msgstr ""
+
+msgid "cidr"
+msgstr ""
+
+msgid "List of system bans"
+msgstr ""
+
+msgid "Referenced list of system bans"
+msgstr ""
+
+msgid "Unreferenced list of system bans"
+msgstr ""
+
+msgid "System ban list is empty."
+msgstr ""
+
+msgid "Delete system ban"
+msgstr ""
+
+msgid "System ban not found: %s"
+msgstr ""
+
+msgid "Deleted system ban: %s"
+msgstr ""
+
+msgid "Modified system ban: %s"
+msgstr ""
+
+msgid "Added system ban: %s"
+msgstr ""
+
+msgid "Cleared system bans."
+msgstr ""
+
+msgid "Failed to create rule for %s in %s: %s"
+msgstr ""
+
+msgid "Failed to get rules in %s: %s"
+msgstr ""
+
+msgid "Failed to detect version: %s"
+msgstr ""
+
+msgid "Failed to create chain in %s: %s"
+msgstr ""
+
+msgid "Failed to check chain in %s: %s"
+msgstr ""
+
+msgid "Failed to flush chain in %s: %s"
+msgstr ""
+
+msgid "Failed to delete chain in %s: %s"
+msgstr ""
+
+msgid "Failed to create rule in %s: %s"
+msgstr ""
+
+msgid "Failed to check rule in %s: %s"
+msgstr ""
+
+msgid "Failed to delete rule in %s: %s"
 msgstr ""

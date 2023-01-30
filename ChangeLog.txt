@@ -4,6 +4,7 @@
 [136] Added: Blacklist feature, similar to blacklist.py but less advanced, allows to import lists from blacklist.py
 [137] Added: Hard IP ban now supports single IP, IP range or LRE and ability to disable items aswell as importing from blacklist.py
 [138] Added: hbanfeedint and blistfeedint configurations to delay blacklist and hard IP ban notifications in minutes
+[140] Added: System ban feature, requires IPTables and super user, use with caution if other rules defined
 
 [ 2.9.8 :: 2022-12-12 ]
 

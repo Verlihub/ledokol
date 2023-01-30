@@ -1349,3 +1349,27 @@ Enabled hard IP ban entry: %s|
 Disable or enable hard IP ban entry|
 Import hard IP ban entries from %s|
 Blacklist load results|
+Invalid IP or CIDR: %s|
+System bans|
+Add system bans separated by space|
+cidr|
+List of system bans|
+Referenced list of system bans|
+Unreferenced list of system bans|
+System ban list is empty.|
+Delete system ban|
+System ban not found: %s|
+Deleted system ban: %s|
+Modified system ban: %s|
+Added system ban: %s|
+Cleared system bans.|
+Failed to create rule for %s in %s: %s|
+Failed to get rules in %s: %s|
+Failed to detect version: %s|
+Failed to create chain in %s: %s|
+Failed to check chain in %s: %s|
+Failed to flush chain in %s: %s|
+Failed to delete chain in %s: %s|
+Failed to create rule in %s: %s|
+Failed to check rule in %s: %s|
+Failed to delete rule in %s: %s|
