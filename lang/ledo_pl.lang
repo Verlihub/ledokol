@@ -1,14 +1,13 @@
 # Language: pl_PL
 # Charset: CP1250
-# Version: 2.9.8
-# Author: Zorro
-# Email: zbyszekslyz@hostpl.eu
+# Version: 2.9.9
+# Author: PWiAM
+# Email: hublist@pwiam.com
 
 Current topic: %s|Aktualny topik: %s 
 Current topic set by %s: %s|Obecny topic ustawiony przez %s: %s
 This operation might take very long time depending on how much is going to be removed, please be patient.|Operacja ta moze potrwac bardzo d³ugo w zaleznosci od tego ile ma byc usunietych, prosimy o cierpliwosc.
 days|dni
-%s with class %d deleted %d IP logger plugin entries older than %d days.|%s z klasa %d usunol %d wpisy pluginu logu IP starsze niz %d dni.
 %s with class %d deleted %d unbans older than %d days.|%s z klasa %d usunol %d unbany starsze niz %d dni.
 %s with class %d deleted %d bans older than %d days.|%s z klasa %d usunol %d bany starsze niz %d dni.
 %s with class %d deleted %d kicks older than %d days.|%s z klasa %d usunol %d kicki starsze niz %d dni.
@@ -44,17 +43,17 @@ Couldn't delete offline messages because not found: %s|Nie mozna usunac wiadomos
 %s with class %d deleted all offline messages.|%s z klasa %d usunol wszystkie wiadomosci offline.
 There are no offline messages to remove.|Nie ma wiadomosci offline do usuniecia.
 No topic is set.|Nie ma ustawionego topica.
-%s with IP %s and class %d allowed due to forbidden nick exception: %s|% z IP i klasy %d dozwolone ze wzgledu na zakaz  Uzytkownika z wyjatkiem: %s
+%s with IP %s and class %d allowed due to forbidden nick exception: %s|%s z IP %s i klasy %d dozwolone ze wzgledu na zakaz uzytkownika z wyjatkiem: %s
 message|wiadomosc
-%s with IP %s and class %d allowed due to forbidden description exception: %s|% z IP i klasy %d dozwolone ze wzgledu na zakaz  Opisu z wyjatkiem: %s
+%s with IP %s and class %d allowed due to forbidden description exception: %s|%s z IP %s i klasy %d dozwolone ze wzgledu na zakaz opisu z wyjatkiem: %s
 User you're trying to kick or redirect is protected: %s|Uzytkownik, ktorego chcesz kopnac lub przekierowac jest chroniony %s
-%s with IP %s and class %d allowed due to forbidden tag exception: %s|% z IP i klasy %d dozwolone ze wzgledu na zakaz Tagu z wyjatkiem: %s.
+%s with IP %s and class %d allowed due to forbidden tag exception: %s|%s z IP %s i klasy %d dozwolone ze wzgledu na zakaz tagu z wyjatkiem: %s.
 type|typ
-%s with IP %s and class %d allowed due to forbidden connection type exception: %s|% z IP i klasy %d dozwolone ze wzgledu na zakaz Typ polaczena z wyjatkiem:  %s.
+%s with IP %s and class %d allowed due to forbidden connection type exception: %s|%s z IP %s i klasy %d dozwolone ze wzgledu na zakaz typu polaczena z wyjatkiem:  %s.
 %s with class %d changed configuration variable %s: %s => %s|%s z klasa %d zmienil wartosc konfiguracji %s: %s => %s
-%s with IP %s and class %d allowed due to forbidden email exception: %s|% z IP i klasy %d dozwolone ze wzgledu na zakaz Email z wyjatkiem:  %s.
+%s with IP %s and class %d allowed due to forbidden email exception: %s|%s z IP %s i klasy %d dozwolone ze wzgledu na zakaz email z wyjatkiem: %s.
 User received own message: %s|Uzytkownik otrzymal wiadomosc: %s
-%s with IP %s and class %d allowed due to forbidden share size exception: %s|% z IP i klasy %d dozwolone ze wzgledu na zakaz Wielosci Shere  z wyjatkiem:  %s.
+%s with IP %s and class %d allowed due to forbidden share size exception: %s|%s z IP %s i klasy %d dozwolone ze wzgledu na zakazwielosci shere z wyjatkiem: %s
 Deleted %d releases from category: %s|Usunieto %d nowosc z kategorii: %s
 Why would you want to set empty topic?|Czemu chcesz ustawic pusty topic?
 Modified forbidden nick with ban time %s: %s|Zmodyfikowano florbida nick z czasem ban %s: %s
@@ -149,7 +148,6 @@ Known classes are: %s|Uznawane klasy to: %s
 %s with class %d had bad luck sending say message: <%s> %s|%s z klasa %d nie mial szczescia wysylajac wiadomosc say: <%s> %s
 You can't talk from nick whose class is higher or equals your own.|Nie mozna wysylac wiadomosci z nicka ktorego klasa jest wyzsza lub rowna twojej.
 %s with IP %s and class %d kicked: <%s> %s|%s z IP %s i klasa %d uzyl komendy kick: <%s> %s
-%s with class %d deleted %d statistics plugin entries older than %d days.|%s z klasa %d usunol %d wpisy statystkyk pluginu starsze niz %d dni.
 offset|offset
 order|zamowienie
 %s didn't get any search results.|%s nie wyswietlono zadnych resultatow wyszukiwania.
@@ -234,8 +232,6 @@ Downloading version file: %s|Pobieranie wersji pliku: %s
 Size of kicks table: %d [ %s: %d @ %s ]|Rozmiar tablicy kickow: %d [ %s: %d @ %s ]
 Size of bans table: %d [ %s: %d @ %s ]|Rozmiar tablicy banow: %d [ %s: %d @ %s ]
 Size of unbans table: %d [ %s: %d @ %s ]|Rozmiar tablicy unbanow: %d [ %s: %d @ %s ]
-Size of IP logger plugin table: %d [ %s: %d @ %s ]|Rozmiar tablicy pluginu loggera IP: %d [ %s: %d @ %s ]
-Size of statistics plugin table: %d [ %s: %d @ %s ]|Rozmiar tablicy pluginu statystyk: %d [ %s: %d @ %s ]
 Modified authorization entry: %s @ %s|Zmienony wpis autoryzacji: %s @ %s
 Added authorization entry: %s @ %s|Dodano wpis autoryzacji: %s @ %s
 Deleted authorization entry: %s|Usunieto wpis autoryzacji: %s
@@ -355,10 +351,10 @@ Deleted forbidden IP address: %s|Usunieto zakazany adres IP: %s
 Couldn't delete forbidden IP address because not found: %s|Nie mozna usunac wpisu adresu IP, nie znaleziono: %s
 Forbidden IP address list|Lista zakazanych adresow IP
 Forbidden IP address list is empty.|Lista zakazanych adresow IP jest pusta.
-%s with IP %s and class %d allowed due to forbidden IP address exception: %s|% z IP i klasy %d dozwolone ze wzgledu na zakaz IP adresow z wyjatkiem:  %s.
+%s with IP %s and class %d allowed due to forbidden IP address exception: %s|%s z IP %s i klasy %d dozwolone ze wzgledu na zakaz IP adresow z wyjatkiem: %s.
 Couldn't delete category because not found: %s|Nie mozna usunac kategorii, poniewaz nie znaleziono: %s
 User redirected due to spam: %s|Uzytkownik przekierowany ze wzgledu na spam: %s
-%s redirected due to bad search request.|% Prziekierowano z powodu zlych zapytan
+%s redirected due to bad search request.|%s Przekierowano z powodu zlych zapytan.
 You can download me from: %s|Mozesz mnie pobrac z: %s
 %s is registered with class %d and has been automatically unregistered and deleted from other tables.|%s jest zarejestrowany z klasa %d. Konto zostalo aktuomatycznie usuniete oraz wyczyszczono dane z tablic.
 PiB|PiB
@@ -450,8 +446,8 @@ Word rank list is empty.|Lista rankingu slow jest pusta.
 %s with class %d deleted registered user with class %d: %s|%s z klasa %d usunol konto zatejestrowanego uzytkownika z klasa %d: %s
 %s with class %d changed user class from %d to %d: %s|%s z klasa %d zmienil klase uzytkownika z klasy %d na %d: %s
 %s with IP %s and class %d allowed due to fake share exception: %s|%s z IP %s i klasy %d dozwolone ze wzgledu na fake share z wyjatkiem: %s
-%s with IP %s and class %d allowed due to clone exception: %s|%s z IP i klasy %d dozwolone ze wzgledu klonu z wyjatkiem: %s
-%s with IP %s and class %d allowed due to same IP exception: %s|%s z IP i klasy %d  dozwolone ze wzgledu na IP z wyjatkiem: %s
+%s with IP %s and class %d allowed due to clone exception: %s|%s z IP %s i klasy %d dozwolone ze wzgledu klonu z wyjatkiem: %s
+%s with IP %s and class %d allowed due to same IP exception: %s|%s z IP %s i klasy %d dozwolone ze wzgledu na IP z wyjatkiem: %s
 seconds|sekund
 Add news item|Dodaj pozycje do newsow
 Delete news items|Usun pozycje z newsow
@@ -764,7 +760,7 @@ Deleted forbidden country code: %s|Usunieto zakazany KK: %s
 Couldn't delete forbidden country code because not found: %s|Nie mozna usunac zakazanego kodu kraju, nie znaleziono: %s
 Forbidden country code list|Lista zakazanych kodow krajow
 Forbidden country code list is empty.|Lista zakazanych kodow krajow jest pusta.
-%s with IP %s and class %d allowed due to forbidden country code exception: %s|%s z IP i klasy %d dozwolone ze wzgledu na florbid kodem kraju z wyjatkiem: %s
+%s with IP %s and class %d allowed due to forbidden country code exception: %s|%s z IP %s i klasy %d dozwolone ze wzgledu na florbid kodem kraju z wyjatkiem: %s
 I'm staying idle due to confusion.|Zostaje bezczynny z poowodu bledu.
 Added replacer in MC: %s|Dodano zamiennik w MC: %s
 Deleted chat replacer with ID %d: %s|Skasowano element czatu z ID%d:%s
@@ -788,7 +784,7 @@ You need to send another %d main chat messages in order to use hub registration.
 Please wait another %d seconds before using hub registration.|Prosze czekac %s minut przed rejestracja huba.
 In order to use this feature you need to set %s to: %d|Aby uzyc tej opcji powinienes ustawic %s na: %d
 Please reconnect to gain %d seconds of uptime in order to use hub registration.|Prosze zalogowac sie na hub ponownie by zyskac %d minuty czasu, aby moc uzyc rejestracji na hubie.
-Dropping %s with IP %s and class %d due to protocol flood detection: %s|Kopniety %s z IP i klasy %d ze wzgledu na wykrycie protokolu floodu
+Dropping %s with IP %s and class %d due to protocol flood detection: %s|Kopniety %s z IP %s i klasy %d ze wzgledu na wykrycie protokolu floodu
 Protocol flood detected from your client: %s|Protokol floodowania wykryty od klienta: %s
 Automatic update check detected stable version of %s available, use following command to update: %s|Automatyczne sprawdzanie aktualizacji stabilnej wersji wykryto %s dostepne, uzyj nastepujacych polecen do aktualizacji: %s
 menu|spis
@@ -801,7 +797,7 @@ Add blocked PM entry|Dodaj zablokowane wpisy na PM
 Delete blocked PM entry|Usun zablokowane wpisy z PM
 List of blocked PM entries|Lista zablokowanych wpisow PM
 Modified blocked PM entry: %s|Zmodyfikowano zablokowany wpis PM: %s
-Added blocked PM entry: %s|Dodano zablokowany wpis PM: $s
+Added blocked PM entry: %s|Dodano zablokowany wpis PM: %s
 Deleted blocked PM entry: %s|Usunieto zablokowany wpis PM: %s
 Blocked PM list is empty.|Lista zablokowanych wpisow PM jest pusta.
 Couldn't delete blocked PM entry because not found: %s|Nie mozna usunac zablokowany wpis PM, poniewaz nie znaleziono: %s
@@ -813,19 +809,15 @@ query|zapytanie
 Execute MySQL query|Wykonaj zapytanie do bazy MySQL
 Execute shell command|Wykonaj polecenie powloki
 Experts only|Tylko dla ekspertow
-Add hard IP ban entry|Dodaj IP do zbanowania na stale
+Add hard IP ban entries separated by space|
 Delete hard IP ban entry|Usun IP ze stalegio zbanowania
 List of hard IP ban entries|Lista stalych zbanowanych adresow IP
 Modified hard IP ban entry: %s|Zmodyfikowany wpis zbanowanego IP: %s
 Added hard IP ban entry: %s|Dodano IP do zbanowania na stale: %s
 Deleted hard IP ban entry: %s|Usunieto IP z zbanowanej listy na stale: %s
 Hard IP ban list is empty.|Lista zbanowanych IP na stale jest pusta.
-Couldn't delete hard IP ban entry because not found: %s|Nie mozna usunac IP z listy zbanowanych na stale, poniewaz nie znaleziono: %s
 Hard IP ban refused connection from IP %s: %s|Staly IP ban odrzucil polaczenie z IP %s: %s
 Please wait another %d seconds before using hub search engine.|Prosze czekac %d sekund aby mozna uzyc wyszukiwarki.
-Loading %s in memory...|Ladowanie %s w pamieci ...
-Finished loading %s in memory.|Zakonczono ladowanie %s w pamieci.
-Unable to locate %s in hub configuration directory.|Nie mozna znalesc zmiennej %s w konfiguracji huba.
 Add right click menu item|Dodaj element menu z pod prawoklika myszy
 Delete right click menu item|Usun pozycje menu z pod prawoklika myszki
 List of right click menu items|Lista pozycji menu pod prawoklikiem myszki
@@ -855,7 +847,7 @@ Country code gag list|Lista kod kraju gag
 Country code gag list is empty.|Lista gagow wedlug kodu kraju jest pusta.
 Delete country code gag|Usun gaga wedlug kodu kraju
 Cleared country code gag list.|Wyczyszczona lista gagow kodu kraju.
-%s with IP %s and class %d tries to speak with country code gag in MC: %s|%s z IP i klasy %d prubuje pisac na MC majac gag na kod kraju: %s
+%s with IP %s and class %d tries to speak with country code gag in MC: %s|%s z IP %s i klasy %d prubuje pisac na MC majac gag z kodu kraju: %s
 %s with IP %s and class %d tries to speak with country code gag in PM to %s with IP %s and class %d: %s|%s z IP %s i klasy %d prubuje pisac na PM majac gag na kod kraju i PM do %s z IP %s  klasa %d: %s
 No reason specified|Bez uzasadnienia
 Automatically deleted %d user log entries older than %d days.|Automatycznie usuwane %d wpisy logu  uzytkownika starsze niz %d dni.
@@ -864,8 +856,8 @@ Unknown protocol command from IP %s before login: %s|Nieznana komeda protokolu z
 Added %s to hard IP ban list, %d users in total.|Dodano %s do listy IP ban, %d users w sumie.
 NMDC version: %s|Wersja NMDC: %s
 Client supports: %s|Wspierany klient: %s
-Modified forbidden client supports with ban time %s: %s|Zmodyfikowano florbida klient obs³uguje czasu bana
-Added forbidden client supports with ban time %s: %s|Dodano florbida klient obs³uguje czasu bana
+Modified forbidden client supports with ban time %s: %s|Zmodyfikowano florbida klient obs³uguje czasu bana %s: %s
+Added forbidden client supports with ban time %s: %s|Dodano florbida klient obs³uguje czasu bana %s: %s
 Modified forbidden NMDC version with ban time %s: %s|Zmodyfikowano florbida NMDC wersja z czasem ban %s: %s
 Added forbidden NMDC version with ban time %s: %s|Dodano florbida NMDC wersja z czasem ban %s: %s
 Latest version of %s is required in order to use this feature.|Najnowsza wersja z %s jest wymagana, aby uzyc tej funkcji.
@@ -877,15 +869,15 @@ Forbidden client supports list|Zakazany klient obsluguje listy
 Forbidden client supports list is empty.|Zakazany klient obsluguje lista jest pusta.
 Forbidden NMDC version list|Lista zakazanych wersji NMDC
 Forbidden NMDC version list is empty.|Zakazane NMDC wersja lista jest pusta.
-%s with IP %s and class %d allowed due to forbidden client supports exception: %s|%s z IP i klasy %d dozwolono ze wzgledu na niedozwolone ,klient obsluguje wyjatek: %s
-%s with IP %s and class %d allowed due to forbidden NMDC version exception: %s|%s z IP i klasy %d dozwolone ze wzgledu na zabronione NMDC wersja, wyjatek: %s
+%s with IP %s and class %d allowed due to forbidden client supports exception: %s|%s z IP %s i klasy %d dozwolono ze wzgledu na niedozwolone, klient obsluguje wyjatek: %s
+%s with IP %s and class %d allowed due to forbidden NMDC version exception: %s|%s z IP %s i klasy %d dozwolone ze wzgledu na zabroniona NMDC wersja, wyjatek: %s
 City: %s|Miasto: %s
 IP range: %s - %s|Zakres IP: %s - %s
 Region: %s|Wojewodztwo: %s
 Time zone: %s|Strefa czasowa: %s
 Continent: %s|Kontynent: %s
 Postal code: %s|Kod pocztowy: %s
-Coordinates: %.4f %.4f|Wspolrzedne: %.4f %4f 
+Coordinates: %.4f %.4f|Wspolrzedne: %.4f %.4f
 Metro code: %d|Kod metra: %d
 Area code: %d|Numer kierunkowy: %d
 Drop users with IP|Drop uzytkownika z IP
@@ -914,7 +906,7 @@ Range %s temporarily banned until %s: <%s> %s|Range %s tymczasowo zbanowany, az 
 Host %s temporarily banned until %s: <%s> %s|Host %s tymczasowo zbanowany, az %s: <%s> %s
 Share %s temporarily banned until %s: <%s> %s|Share %s tymczasowo zbanowany, az %s: <%s> %s
 Prefix %s temporarily banned until %s: <%s> %s|Prefix %s tymczasowo zbanowany, az %s: <%s> %s
-IP %s unbanned: <%s> %s|IP %S odbanowany: <%s> %s
+IP %s unbanned: <%s> %s|IP %s odbanowany: <%s> %s
 Nick %s unbanned: <%s> %s|Nazwa uzytkownika %s odbanowana: <%s> %s
 Range %s unbanned: <%s> %s|Zakres %s odbanowany: <%s> %s
 Host %s unbanned: <%s> %s|Host %s odbanowany: <%s> %s
@@ -923,7 +915,7 @@ Prefix %s unbanned: <%s> %s|Prefiks %s odbanowany: <%s> %s
 Known contexts are: %s|Znane sa konteksty: %s
 Known orders are: %s|Znane sa zamowienia: %s
 Modified right click menu item: %s|Zmodefikowana pozycja menu prawoklika myszki: %s
-Added right click menu item: %s|Dodano pozycje menu  prawoklika myszki
+Added right click menu item: %s|Dodano pozycje menu prawoklika myszy: %s
 Deleted right click menu item: %s|Usunieta pozycja menu prawoklika szyszki: %s
 Right click menu item not found: %d|Pod prawoklikiem myszki elementu menu nie znaleziono: %s
 Right click menu item list is empty.|Lista menu pod prawoklikiem myszki jest pusta.
@@ -977,7 +969,7 @@ Loaded %d of %d with totally %d items: %s|Zaladowany %d z %d z calkowitej %d poz
 Infected user information sent to %s: %s|Zainfekowane informacje wysylane do uzytkownika %s: %s
 Failed to load information from %s: %s|Nie udalo sie zaladowac informacji od %s: %s
 Failed to send information to %s: %s|Nie udalo sie wyslac informacji do %s: %s
-Loaded none with totally %d items: %s|Zaden zaladowany z calkowitej %d pozycji: %d
+Loaded none with totally %d items: %s|Zaden zaladowany z calkowitej %d pozycji: %s
 Infected user found with IP %s and share %s: %s|Znaleziono zainfekowanego uzytkownika o IP %s i z udostepnieniem %s: %s
 Server didn't reply with expected status code.|Serwer nie odpowiada na odpowiedz o kod statusu.
 Size of %s: %d @ %s|Rozmiar %s: %d @ %s
@@ -993,7 +985,7 @@ Delete trigger|Usun triggera
 Modified trigger: %s|Zmodyfikowany trigger: %s
 Added trigger: %s|Dodano triggera: %s
 Deleted trigger: %s|Usunieto triggera: %s
-Trigger not found: %s|Nie znaleziono triggera: %
+Trigger not found: %s|Nie znaleziono triggera: %s
 Trigger list is empty.|Lista triggerow jest pusta.
 Class range: %d to %d|Zakres klasy: %d do %d
 Pinger|Pinger
@@ -1112,11 +1104,11 @@ No|Nie
 %s with class %d changed configuration variable %s.%s: %s => %s|%s z klasa %d zmienil wartosc konfiguracji %s.%s: %s => %s
 Please wait another %d seconds before using public chat.|Prosze czekac %s sekund aby moc kozystac z publicznego czata.
 Please wait another %d seconds before using private chat.|Prosze czekac %s sekund aby moc kozystac z prywatnego czata. 
-Low chat uptime of %d seconds from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s|Niskie uptime czatu z %d sekund od %s IP %s i klasy %d w PM di IP %s i klasy %d: %s
+Low chat uptime of %d seconds from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s|Niskie uptime czatu z %d sekund od %s IP %s i klasy %d w PM do %s i IP %s i klasy %d: %s
 Low chat uptime of %d seconds from %s with IP %s and class %d in MC: %s|Niski czat uptime z %d sekund od %s z IP %s i klasa %d w MC: %s
 Low chat uptime of %d seconds from %s with IP %s and class %d in command: %s|Niski czat uptime z %d sekund od %s z IP %s i klasa %d w komendzie: %s 
-Low registration uptime from %s with IP %s and class %d: %s|Niskie uptime w rejestracji od %s z IP i klasa %d: %s
-%d seconds|sekund
+Low registration uptime from %s with IP %s and class %d: %s|Niskie uptime w rejestracji od %s z IP %s i klasa %d: %s
+%d seconds|%d sekund
 Thank you, your report has been accepted.|Dziekujemy, twoj raport zostal przyjety.
 Low search uptime of %d seconds from %s with IP %s and class %d as any file: %s|Niskie czas wyszukiwania z %d sekund od %s z IP %s i klasa %d w dowolnym pliku: %s
 Low search uptime of %d seconds from %s with IP %s and class %d as audio file: %s|Niskie czas wyszukiwania z %d sekund od %s z IP %s i klasa %d w postaci pliku dzwieku: %s
@@ -1142,7 +1134,7 @@ Deleted forbidden chat nick: %s|Usunieto zakazany nick: %s
 Couldn't delete forbidden chat nick because not found: %s|Nie mozna usunac zakazanego nicku gdyz nie znaleziono go na liscie: %s
 Forbidden chat nick list|Lista zakazanych nickow czata
 Forbidden chat nick list is empty.|Lista zakazanych nickow jest pusta.
-%s with IP %s and class %d allowed due to forbidden chat nick exception: %s|% z IP i klasy %d dozwolone ze wzgledu na zakaz uzytkownika z wyjatkiem: %s
+%s with IP %s and class %d allowed due to forbidden chat nick exception: %s|%s z IP %s i klasy %d dozwolone ze wzgledu na zakaz uzytkownika z wyjatkiem: %s
 %s lookup|%swyszukiwanie
 %s lookup didn't return anything.|%swyszukiwanie zwrocilo pusty wynik
 %s result|%s wynik
@@ -1159,7 +1151,7 @@ Added city gag %s with reason: %s|Dodano gag miasta %s z powodu: %s
 Added city gag: %s|Dodano gag miasta: %s
 Cleared city gag list.|Wyczysc liste gag miast.
 Deleted city gag: %s|Usunieto gag miasta: %s
-City gag not found: %s|
+City gag not found: %s|Lista gag miast jest pusta: %s
 City gag list is empty.|
 %s with IP %s and class %d tries to speak with city gag in PM to %s with IP %s and class %d: %s|%sz IP %si klasa %dprubuje porozmawiaæ z gag miastem na PM %s z IP %si klasa %d: %s
 %s with IP %s and class %d tries to speak with city gag in MC: %s|%s z IP %s i klasa %dprubuje porozmawiaæ z gag miastem na MC: %s
@@ -1323,3 +1315,62 @@ Proxy protection list is empty.|
 Add proxy protection entry|
 Delete proxy protection entry|
 IP is protected: %s|
+Blacklist|
+Add blacklist entry|
+List blacklist entries|
+Disable or enable blacklist entry|
+Delete blacklist entry|
+list|
+Import blacklist entries from %s|
+Modified blacklist entry: %s|
+Added blacklist entry: %s|
+Blacklist entry not found: %s|
+Deleted blacklist entry: %s|
+Blacklist list is empty.|
+List of blacklist entries|
+Disabled blacklist entry: %s|
+Enabled blacklist entry: %s|
+Import status|
+Table does not exist or is empty: %s|
+Binary is required: %s|
+Successfully imported|
+Unsupported type: %s|
+Already in our list|
+Search in blacklist|
+No blacklist entries found.|
+Found blacklist entries|
+Blacklist feature is disabled.|
+%s blacklist not loaded because: %s|
+Blacklist loaded with %d items: %s|
+File does not exist: %s|
+Hard IP ban entry not found: %s|
+Disabled hard IP ban entry: %s|
+Enabled hard IP ban entry: %s|
+Disable or enable hard IP ban entry|
+Import hard IP ban entries from %s|
+Blacklist load results|
+Invalid IP or CIDR: %s|
+System bans|
+Add system bans separated by space|
+cidr|
+List of system bans|
+Referenced list of system bans|
+Unreferenced list of system bans|
+System ban list is empty.|
+Delete system ban|
+System ban not found: %s|
+Deleted system ban: %s|
+Modified system ban: %s|
+Added system ban: %s|
+Cleared system bans.|
+Failed to create rule for %s in %s: %s|
+Failed to get rules in %s: %s|
+Failed to detect version: %s|
+Failed to create chain in %s: %s|
+Failed to check chain in %s: %s|
+Failed to flush chain in %s: %s|
+Failed to delete chain in %s: %s|
+Failed to create rule in %s: %s|
+Failed to check rule in %s: %s|
+Failed to delete rule in %s: %s|
+Please compare with original string and make sure parameters equal: %s|
