@@ -781,10 +781,10 @@ Add chat replacer exception|Dodaj wyjatek replacer czatu
 Delete chat replacer exception|Usun wyjatek replacer czatu
 Chat replacer|Replacer czatu
 You need to send another %d main chat messages in order to use hub registration.|Musisz wyslac jeszcze %d wiadomosci na czat glowny abyt moc uzyc rejestracji na hubie.
-Please wait another %d seconds before using hub registration.|Prosze czekac %s minut przed rejestracja huba.
+Please wait another %d seconds before using hub registration.|Prosze czekac %d minut przed rejestracja huba.
 In order to use this feature you need to set %s to: %d|Aby uzyc tej opcji powinienes ustawic %s na: %d
 Please reconnect to gain %d seconds of uptime in order to use hub registration.|Prosze zalogowac sie na hub ponownie by zyskac %d minuty czasu, aby moc uzyc rejestracji na hubie.
-Dropping %s with IP %s and class %d due to protocol flood detection: %s|Kopniety %s z IP %s i klasy %d ze wzgledu na wykrycie protokolu floodu
+Dropping %s with IP %s and class %d due to protocol flood detection: %s|Kopniety %s z IP %s i klasy %d ze wzgledu na wykrycie protokolu floodu: %s
 Protocol flood detected from your client: %s|Protokol floodowania wykryty od klienta: %s
 Automatic update check detected stable version of %s available, use following command to update: %s|Automatyczne sprawdzanie aktualizacji stabilnej wersji wykryto %s dostepne, uzyj nastepujacych polecen do aktualizacji: %s
 menu|spis
@@ -917,7 +917,7 @@ Known orders are: %s|Znane sa zamowienia: %s
 Modified right click menu item: %s|Zmodefikowana pozycja menu prawoklika myszki: %s
 Added right click menu item: %s|Dodano pozycje menu prawoklika myszy: %s
 Deleted right click menu item: %s|Usunieta pozycja menu prawoklika szyszki: %s
-Right click menu item not found: %d|Pod prawoklikiem myszki elementu menu nie znaleziono: %s
+Right click menu item not found: %d|Pod prawoklikiem myszki elementu menu nie znaleziono: %d
 Right click menu item list is empty.|Lista menu pod prawoklikiem myszki jest pusta.
 Menu item|Pozycja menu
 Menu command|Komenda menu
@@ -1102,8 +1102,8 @@ Couldn't delete search filter block list entry because not found: %s|Nie mozna u
 Yes|Tak
 No|Nie
 %s with class %d changed configuration variable %s.%s: %s => %s|%s z klasa %d zmienil wartosc konfiguracji %s.%s: %s => %s
-Please wait another %d seconds before using public chat.|Prosze czekac %s sekund aby moc kozystac z publicznego czata.
-Please wait another %d seconds before using private chat.|Prosze czekac %s sekund aby moc kozystac z prywatnego czata. 
+Please wait another %d seconds before using public chat.|Prosze czekac %d sekund aby moc kozystac z publicznego czata.
+Please wait another %d seconds before using private chat.|Prosze czekac %d sekund aby moc kozystac z prywatnego czata. 
 Low chat uptime of %d seconds from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s|Niskie uptime czatu z %d sekund od %s IP %s i klasy %d w PM do %s i IP %s i klasy %d: %s
 Low chat uptime of %d seconds from %s with IP %s and class %d in MC: %s|Niski czat uptime z %d sekund od %s z IP %s i klasa %d w MC: %s
 Low chat uptime of %d seconds from %s with IP %s and class %d in command: %s|Niski czat uptime z %d sekund od %s z IP %s i klasa %d w komendzie: %s 
