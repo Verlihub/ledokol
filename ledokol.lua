@@ -52,7 +52,7 @@ Doxtur, chaos, sphinx, Zorro, W1ZaRd, S0RiN, MaxFox, Krzychu,
 @tlantide, Ettore Atalan, Trumpy, Modswat, KCAHDEP, mauron, DiegoZ,
 Mank, Nickel, Lord_Zero, Meka][Meka, Ger, PetterOSS, Marcel, PPK,
 madkid, Aeolide, Jaguar, Toecutter, SCALOlaz, FlylinkDC-dev, Men_VAf,
-Tzaca, JOE™, Foxtrot, Deivis and others
+Tzaca, JOE™, Foxtrot, Deivis, PWiAM and others
 
 ---------------------------------------------------------------------
 ]]-- special thanks to <<
@@ -26349,13 +26349,19 @@ function loadlangfile (nick, pref)
 				local orig, tran = line:match ("^(.+)|(.*)$")
 
 				if orig and tran and # orig > 0 and # tran > 0 then
-					local _, cori = orig:gsub ("%%[%.%dsdf]+", "")
-					local _, ctra = tran:gsub ("%%[%.%dsdf]+", "")
+					local _, cnt_int_ori = orig:gsub ("%%d", "")
+					local _, cnt_int_tra = tran:gsub ("%%d", "")
+					local _, cnt_str_ori = orig:gsub ("%%s", "")
+					local _, cnt_str_tra = tran:gsub ("%%s", "")
+					local _, cnt_dec_ori = orig:gsub ("%%%.%df", "")
+					local _, cnt_dec_tra = tran:gsub ("%%%.%df", "")
 
-					if cori == ctra then
+					if cnt_int_ori == cnt_int_tra and cnt_str_ori == cnt_str_tra and cnt_dec_ori == cnt_dec_tra then
 						table_lang [orig] = repnmdcoutchars (tran)
+
 					else
 						opsnotify (table_sets.classnotiledoact, gettext ("Parameter count mismatch detected in following translation string: %s"):format (repnmdcoutchars (tran)))
+						opsnotify (table_sets.classnotiledoact, gettext ("Please compare with original string and make sure parameters equal: %s"):format (repnmdcoutchars (orig)))
 					end
 				end
 			end

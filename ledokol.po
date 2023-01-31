@@ -4119,3 +4119,6 @@ msgstr ""
 
 msgid "Failed to delete rule in %s: %s"
 msgstr ""
+
+msgid "Please compare with original string and make sure parameters equal: %s"
+msgstr ""
