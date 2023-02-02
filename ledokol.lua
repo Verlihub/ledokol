@@ -2357,7 +2357,7 @@ return 0
 	----- ---- --- -- -
 
 	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.sysban .. " .+ \".+\"$") then
-		if ucl >= table_sets.sysbanuseclass then
+		if table_sets.enablesysbans == 1 and ucl >= table_sets.sysbanuseclass then
 			donotifycmd (nick, data, 0, ucl)
 			addsysban (nick, data:sub (# table_cmnds.sysban + 3))
 
@@ -2370,7 +2370,7 @@ return 0
 	----- ---- --- -- -
 
 	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.sysunban .. " %S+$") then
-		if ucl >= table_sets.sysbanuseclass then
+		if table_sets.enablesysbans == 1 and ucl >= table_sets.sysbanuseclass then
 			donotifycmd (nick, data, 0, ucl)
 			delsysban (nick, data:sub (# table_cmnds.sysunban + 3))
 
@@ -2383,7 +2383,7 @@ return 0
 	----- ---- --- -- -
 
 	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.sysbans .. "$") then
-		if ucl >= table_sets.sysbanuseclass then
+		if table_sets.enablesysbans == 1 and ucl >= table_sets.sysbanuseclass then
 			donotifycmd (nick, data, 0, ucl)
 			listsysbans (nick)
 
@@ -3879,15 +3879,16 @@ elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.mode .. "$") then
 
 	----- ---- --- -- -
 
-elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.ledostats .. "$") then
-	if ucl >= table_sets.mincommandclass then
-		donotifycmd (nick, data, 0, ucl)
-		sendstats (nick)
-	else
-		commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
-	end
+	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.ledostats .. "$") then
+		if ucl >= table_sets.mincommandclass then
+			donotifycmd (nick, data, 0, ucl)
+			sendstats (nick)
 
-	return 0
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
+
+		return 0
 
 	----- ---- --- -- -
 
@@ -25212,6 +25213,11 @@ function sendstats (nick)
 	--stats = stats .. "\r\n " .. gettext ("%s module version: %s"):format ("LTN12", (table_othsets.ver_ltn12 or gettext ("Unknown")))
 	stats = stats .. "\r\n " .. gettext ("%s version: %s"):format ("MySQL", (table_othsets.ver_sql or gettext ("Unknown")))
 	stats = stats .. "\r\n " .. gettext ("%s version: %s"):format ("cURL", (table_othsets.ver_curl or gettext ("Unknown")))
+
+	if table_sets.enablesysbans == 1 then
+		stats = stats .. "\r\n " .. gettext ("%s version: %s"):format ("IPTables", (table_othsets.ver_iptables or gettext ("Unknown")))
+	end
+
 	--stats = stats .. "\r\n " .. gettext ("%s version: %s"):format ("iConv", (table_othsets.ver_iconv or gettext ("Unknown")))
 	stats = stats .. "\r\n"
 	stats = stats .. "\r\n " .. gettext ("Script uptime: %s"):format (formatuptime (table_othsets.uptime, false))
