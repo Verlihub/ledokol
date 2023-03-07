@@ -12523,7 +12523,7 @@ function moveclones (nick, url)
 	for user in getnicklist ():gmatch ("[^%$ ]+") do
 		local addr = getip (user)
 
-		if addr ~= "0.0.0.0" then -- skip bots
+		if addr ~= "0.0.0.0" and addr ~= "127.0.0.1" then -- skip bots
 			local desc, tag, conn, stat, mail, shar = parsemyinfo (getmyinfo (user))
 			tag = tag:gsub (",M:[AP],H:", ",M:,H:") -- workaround for flylinkdc that sets passive mode for its second clone
 			tag = tag:gsub (",H:%d+/%d+/%d+,S:", ",H:,S:") -- workaround for clients that cant predict hub count before sending myinfo
@@ -12565,7 +12565,7 @@ function showcloneinfo (nick)
 	for user in getnicklist ():gmatch ("[^%$ ]+") do
 		local addr = getip (user)
 
-		if addr ~= "0.0.0.0" then -- skip bots
+		if addr ~= "0.0.0.0" and addr ~= "127.0.0.1" then -- skip bots
 			local desc, tag, conn, stat, mail, shar = parsemyinfo (getmyinfo (user))
 			tag = tag:gsub (",H:%d+/%d+/%d+,S:", ",H:,S:") -- workaround for clients that cant predict hub count before sending myinfo
 			local id = addr .. "_" .. desc .. tag .. conn .. _tostring (stat) .. mail .. "_" .. _tostring (shar)

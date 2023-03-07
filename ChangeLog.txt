@@ -2,6 +2,7 @@
 
 [139] Fixed: Errors on reloading Lua plugin, report by KCAHDEP
 [141] Fixed: Skip parsing +me command when mainchat_class is set, thanks to Gabriel
+[141] Fixed: Skip hub bots when detecting clones, thanks to Gabriel
 [136] Added: Blacklist feature, similar to blacklist.py but less advanced, allows to import lists from blacklist.py
 [137] Added: Hard IP ban now supports single IP, IP range or LRE and ability to disable items aswell as importing from blacklist.py
 [138] Added: hbanfeedint and blistfeedint configurations to delay blacklist and hard IP ban notifications in minutes
