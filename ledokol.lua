@@ -4,7 +4,7 @@
 
 Copyright © 2007-2023 RoLex
 
-Ledokol is free software; You can redistribute it
+Ledokol is free software, you can redistribute it
 and modify it under the terms of the GNU General
 Public License as published by the Free Software
 Foundation, either version 3 of the license, or at
@@ -52,7 +52,7 @@ Doxtur, chaos, sphinx, Zorro, W1ZaRd, S0RiN, MaxFox, Krzychu,
 @tlantide, Ettore Atalan, Trumpy, Modswat, KCAHDEP, mauron, DiegoZ,
 Mank, Nickel, Lord_Zero, Meka][Meka, Ger, PetterOSS, Marcel, PPK,
 madkid, Aeolide, Jaguar, Toecutter, SCALOlaz, FlylinkDC-dev, Men_VAf,
-Tzaca, JOE™, Foxtrot, Deivis, PWiAM and others
+Tzaca, JOE™, Foxtrot, Deivis, PWiAM, Gabriel and others
 
 ---------------------------------------------------------------------
 ]]-- special thanks to <<
@@ -63,7 +63,7 @@ Tzaca, JOE™, Foxtrot, Deivis, PWiAM and others
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.9" -- ledokol version
-bld_ledo = "140" -- build number
+bld_ledo = "141" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -4709,7 +4709,7 @@ function VH_OnUserCommand (nick, data)
 	-- process +me command
 
 	if data:match ("^" .. table_othsets.ustrig .. "me .*$") then
-		if getconfig ("disable_me_cmd") ~= 0 then
+		if getconfig ("disable_me_cmd") ~= 0 or ucl < getconfig ("mainchat_class") then
 			return 1
 		end
 
@@ -4932,7 +4932,7 @@ function VH_OnUserCommand (nick, data)
 
 	elseif data:match ("^" .. table_othsets.ustrig .. "me$") then
 		if not table_othsets.chinskipchecks then -- used by chat intelligence
-			if getconfig ("disable_me_cmd") ~= 0 then
+			if getconfig ("disable_me_cmd") ~= 0 or ucl < getconfig ("mainchat_class") then
 				return 1
 			end
 
@@ -10255,29 +10255,6 @@ end
 
 ----- ---- --- -- -
 
-function addnopm (nick, line)
-	local lre, act, clas, why = line:match ("^(%S+) (%d) (%d+) (.+)$")
-
-	if tonumber (act) > 1 then -- invalid action
-		commandanswer (nick, gettext ("Known actions are: %s"):format ("0 " .. gettext ("and") .. " 1"))
-	elseif (tonumber (clas) > 5 and tonumber (clas) < 10) or tonumber (clas) > 11 then -- invalid class
-		commandanswer (nick, gettext ("Known classes are: %s"):format ("0, 1, 2, 3, 4, 5, 10 " .. gettext ("and") .. " 11"))
-	else
-		local sre = repsqlchars (repnmdcinchars (lre))
-		local _, rows = VH:SQLQuery ("select null from `" .. tbl_sql.nopm .. "` where `nick` = '" .. sre .. "'")
-
-		if rows > 0 then -- update
-			VH:SQLQuery ("update `" .. tbl_sql.nopm .. "` set `action` = " .. _tostring (act) .. ", `maxclass` = " .. _tostring (clas) .. ", `reason` = '" .. repsqlchars (why) .. "' where `nick` = '" .. sre .. "'")
-			commandanswer (nick, gettext ("Modified blocked PM entry: %s"):format (lre))
-		else -- add
-			VH:SQLQuery ("insert into `" .. tbl_sql.nopm .. "` (`nick`, `action`, `maxclass`, `reason`) values ('" .. sre .. "', " .. _tostring (act) .. ", " .. _tostring (clas) .. ", '" .. repsqlchars (why) .. "')")
-			commandanswer (nick, gettext ("Added blocked PM entry: %s"):format (lre))
-		end
-	end
-end
-
------ ---- --- -- -
-
 function checkipwat (nick, ip, data)
 	-- affected areas so far: supports, validatenick, myinfo, search, passive sr, ctm, rctm
 	local _, rows = VH:SQLQuery ("select `ip`, `reason`, `result` from `" .. tbl_sql.ipwa .. "`")
@@ -10512,6 +10489,31 @@ function sendrcmenu (nick, class)
 			else
 				VH:SendToUser ("$UserCommand " .. _tostring (cype) .. " " .. _tostring (cont) .. " " .. menu .. "$<%[mynick]> " .. cmnd .. "&#124;|", nick)
 			end
+		end
+	end
+end
+
+----- ---- --- -- -
+
+function addnopm (nick, line)
+	local lre, act, clas, why = line:match ("^(%S+) (%d) (%d+) (.+)$")
+
+	if tonumber (act) > 1 then -- invalid action
+		commandanswer (nick, gettext ("Known actions are: %s"):format ("0=BLOCK " .. gettext ("and") .. " 1=DROP"))
+	elseif (tonumber (clas) > 5 and tonumber (clas) < 10) or tonumber (clas) > 11 then -- invalid class
+		commandanswer (nick, gettext ("Known classes are: %s"):format ("0, 1, 2, 3, 4, 5, 10 " .. gettext ("and") .. " 11"))
+
+	else
+		local sre = repsqlchars (repnmdcinchars (lre))
+		local _, rows = VH:SQLQuery ("select null from `" .. tbl_sql.nopm .. "` where `nick` = '" .. sre .. "'")
+
+		if rows > 0 then -- update
+			VH:SQLQuery ("update `" .. tbl_sql.nopm .. "` set `action` = " .. _tostring (act) .. ", `maxclass` = " .. _tostring (clas) .. ", `reason` = '" .. repsqlchars (why) .. "' where `nick` = '" .. sre .. "'")
+			commandanswer (nick, gettext ("Modified blocked PM entry: %s"):format (lre))
+
+		else -- add
+			VH:SQLQuery ("insert into `" .. tbl_sql.nopm .. "` (`nick`, `action`, `maxclass`, `reason`) values ('" .. sre .. "', " .. _tostring (act) .. ", " .. _tostring (clas) .. ", '" .. repsqlchars (why) .. "')")
+			commandanswer (nick, gettext ("Added blocked PM entry: %s"):format (lre))
 		end
 	end
 end
@@ -19036,11 +19038,12 @@ function addsefientry (nick, line)
 	pri, act, typ = tonumber (pri), tonumber (act), tonumber (typ)
 
 	if act < 0 or act > 9 then -- invalid action
-		commandanswer (nick, gettext ("Known actions are: %s"):format ("0, 1, 2, 3, 4, 5, 6, 7, 8 " .. gettext ("and") .. " 9"))
+		commandanswer (nick, gettext ("Known actions are: %s"):format ("0=BLOCK, 1=DROP, 2=KICK, 3=TEMPBAN, 4=SILENT, 5=NOTIFY, 6=REDIRECT, 7=PERMBAN, 8=SILENTBLOCK " .. gettext ("and") .. " 9=BLOCKLIST"))
 	elseif pri < 0 or pri > 9 then -- invalid priority
 		commandanswer (nick, gettext ("Valid priority is a number from %d to %d."):format (0, 9))
 	elseif typ < 1 or typ > 9 then -- invalid search type
 		commandanswer (nick, gettext ("Known search types are: %s"):format ("1, 2, 3, 4, 5, 6, 7, 8 " .. gettext ("and") .. " 9"))
+
 	else
 		local sen = repnmdcinchars (ent)
 		local fres, fval = catchfinderror ("", sen)
@@ -19051,6 +19054,7 @@ function addsefientry (nick, line)
 			ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
 			ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
 			commandanswer (nick, ferr)
+
 		else
 			local pos = 0
 
@@ -19087,6 +19091,7 @@ function addsefientry (nick, line)
 				end
 
 				commandanswer (nick, gettext (note):format (act, pri, ent))
+
 			else
 				table.insert (table_sefi, {
 					["ent"] = sen,
@@ -19289,11 +19294,12 @@ function addantientry (nick, item)
 	prio, aaction, flags = tonumber (prio), tonumber (aaction), tonumber (flags)
 
 	if aaction < 0 or aaction > 10 then -- invalid action
-		commandanswer (nick, gettext ("Known actions are: %s"):format ("0, 1, 2, 3, 4, 5, 6, 7, 8, 9 " .. gettext ("and") .. " 10"))
+		commandanswer (nick, gettext ("Known actions are: %s"):format ("0=BLOCK, 1=DROP, 2=KICK, 3=TEMPBAN, 4=SILENT, 5=NOTIFY, 6=REDIRECT, 7=PERMBAN, 8=IPGAG, 9=REPLACE " .. gettext ("and") .. " 10=HARDBAN"))
 	elseif flags < 1 or flags > 3 then -- invalid flag
-		commandanswer (nick, gettext ("Known flags are: %s"):format ("1, 2 " .. gettext ("and") .. " 3"))
+		commandanswer (nick, gettext ("Known flags are: %s"):format ("1=MC, 2=PM " .. gettext ("and") .. " 3=BOTH"))
 	elseif prio < 0 or prio > 9 then -- invalid priority
 		commandanswer (nick, gettext ("Valid priority is a number from %d to %d."):format (0, 9))
+
 	else
 		local fres, fval = catchfinderror ("", repnmdcinchars (aitem))
 
@@ -19303,6 +19309,7 @@ function addantientry (nick, item)
 			ferr = ferr .. " " .. gettext ("Error") .. ": " .. repnmdcoutchars (fval or gettext ("No error message specified.")) .. "\r\n"
 			ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
 			commandanswer (nick, ferr)
+
 		else
 			local entry = repsqlchars (repnmdcinchars (aitem))
 			local _, rows = VH:SQLQuery ("select `action` from `" .. tbl_sql.anti .. "` where `antispam` = '" .. entry .. "'")
@@ -19318,6 +19325,7 @@ function addantientry (nick, item)
 				end
 
 				commandanswer (nick, gettext (note):format (aaction, prio, aitem))
+
 			else
 				VH:SQLQuery ("insert into `" .. tbl_sql.anti .. "` (`antispam`, `priority`, `action`, `flags`) values ('" .. entry .. "', " .. _tostring (prio) .. ", " .. _tostring (aaction) .. ", " .. _tostring (flags) .. ")")
 				local note = "Added antispam entry with action %d and priority %d to scan in MC and PM: %s"
