@@ -7,6 +7,7 @@
 [137] Added: Hard IP ban now supports single IP, IP range or LRE and ability to disable items aswell as importing from blacklist.py
 [138] Added: hbanfeedint and blistfeedint configurations to delay blacklist and hard IP ban notifications in minutes
 [140] Added: System ban feature, requires IPTables and super user, use with caution if other rules defined
+[142] Added: votekickregdays configuration as number of days user has to be registered before using vote kicks
 [140] Improved: Translation parameter count mismatch, thanks to PWiAM
 
 [ 2.9.8 :: 2022-12-12 ]

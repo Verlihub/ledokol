@@ -63,7 +63,7 @@ Tzaca, JOE™, Foxtrot, Deivis, PWiAM, Gabriel and others
 ---------------------------------------------------------------------
 
 ver_ledo = "2.9.9" -- ledokol version
-bld_ledo = "141" -- build number
+bld_ledo = "142" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -220,6 +220,7 @@ table_sets = {
 	opkeyshare = 0,
 	enablevipkick = 0,
 	votekickclass = 11,
+	votekickregdays = 7,
 	votekickcount = 5,
 	votekickclean = 60,
 	voteplustext = "<nick> added vote <count> of <total> for kicking user with class <class>: <user>",
@@ -1676,6 +1677,7 @@ function Main (file)
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('hbanfeedint', '" .. repsqlchars (table_sets.hbanfeedint) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('enablesysbans', '" .. repsqlchars (table_sets.enablesysbans) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('sysbanuseclass', '" .. repsqlchars (table_sets.sysbanuseclass) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('votekickregdays', '" .. repsqlchars (table_sets.votekickregdays) .. "')")
 					end
 
 					if ver <= 300 then
@@ -19455,6 +19457,24 @@ function votekickuser (nick, line)
 					return
 				end
 
+				if table_sets.votekickclass > 0 and table_sets.votekickregdays > 0 then -- registered days
+					local _, rows = VH:SQLQuery ("select `reg_date` from `reglist` where `nick` = '" .. repsqlchars (nick) .. "'")
+
+					if rows > 0 then
+						local _, rate = VH:SQLFetch (0)
+						local now = os.time ()
+
+						if os.difftime (now, (tonumber (rate) or now)) < (table_sets.votekickregdays * 60 * 60 * 24) then
+							commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+							return
+						end
+
+					else
+						commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+						return
+					end
+				end
+
 				local addr, noti = getip (nick), table_sets.voteplustext
 
 				if table_voki [user] then -- add vote
@@ -24080,6 +24100,20 @@ end
 
 	----- ---- --- -- -
 
+	elseif tvar == "votekickregdays" then
+		if num then
+			if setto >= 0 and setto <= 365 then
+				ok = true
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0 " .. gettext ("to") .. " 365"))
+			end
+
+		else
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
+		end
+
+	----- ---- --- -- -
+
 	elseif tvar == "votekickclean" then
 		if num then
 			if setto >= 0 and setto <= 1440 then
@@ -25556,6 +25590,7 @@ function showledoconf (nick)
 
 	conf = conf .. "\r\n [::] enablevipkick = " .. _tostring (table_sets.enablevipkick)
 	conf = conf .. "\r\n [::] votekickclass = " .. _tostring (table_sets.votekickclass)
+	conf = conf .. "\r\n [::] votekickregdays = " .. _tostring (table_sets.votekickregdays)
 	conf = conf .. "\r\n [::] votekickcount = " .. _tostring (table_sets.votekickcount)
 	conf = conf .. "\r\n [::] votekickclean = " .. _tostring (table_sets.votekickclean)
 	conf = conf .. "\r\n [::] voteplustext = " .. _tostring (table_sets.voteplustext)
