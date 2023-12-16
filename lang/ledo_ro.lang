@@ -1,6 +1,6 @@
 # Language: ro_RO
 # Charset: CP1250
-# Version: 2.9.8
+# Version: 2.9.9
 # Author: S0RiN [rest in peace dear friend]
 # Email: rusu_sorin_con@yahoo.com
 
@@ -8,7 +8,6 @@ Current topic: %s|Topicul actual: %s
 Current topic set by %s: %s|Topicul actual setat de %s: %s
 This operation might take very long time depending on how much is going to be removed, please be patient.|Aceastã operaþiune s-ar putea sã dureze ceva mai mult timp, depinde cât de mult va trebui ºters. Te rog sã ai rãbdare.
 days|zile
-%s with class %d deleted %d IP logger plugin entries older than %d days.|%s cu clasa %d a ºters %d intrãri în logul IP-urilor mai vechi de %d zile.
 %s with class %d deleted %d unbans older than %d days.|%s cu clasa %d a ºters %d unban-uri mai vechi de %d zile.
 %s with class %d deleted %d bans older than %d days.|%s cu clasa %d a ºters %d ban-uri mai vechi de %d zile.
 %s with class %d deleted %d kicks older than %d days.|%s cu clasa %d a ºters %d kick-uri mai vechi de %d zile.
@@ -149,7 +148,6 @@ Known classes are: %s|Clasele cunoscute sunt: %s
 %s with class %d had bad luck sending say message: <%s> %s|%s cu clasa %d a scrântit-o trimiþând cu comanda say, în main chat, mesajul: <%s> %s
 You can't talk from nick whose class is higher or equals your own.|Nu poþi discuta cu un nick a cãrui clasã este mai mare sau egalã cu propria ta clasã.
 %s with IP %s and class %d kicked: <%s> %s|%s cu IP %s ºi clasa %d a primit kick de la: <%s> %s
-%s with class %d deleted %d statistics plugin entries older than %d days.|%s cu clasa %d a ºters %d intrãrile din puginul statistic mai vechi de %d zile.
 offset|echilibrare
 order|ordine
 %s didn't get any search results.|%s nu a avut nici un rezultat al cãutãrii.
@@ -234,8 +232,6 @@ Downloading version file: %s|Se descarcã fila versiunii: %s
 Size of kicks table: %d [ %s: %d @ %s ]|Mãrimea tabelei de kick-uri: %d [ %s: %d @ %s ]
 Size of bans table: %d [ %s: %d @ %s ]|Mãrimea tabelei de ban-uri: %d [ %s: %d @ %s ]
 Size of unbans table: %d [ %s: %d @ %s ]|Mãrimea tabelei de ban-uri scoase: %d [ %s: %d @ %s ]
-Size of IP logger plugin table: %d [ %s: %d @ %s ]|Mãrimea tabelei pluginului de log-IP: %d [ %s: %d @ %s ]
-Size of statistics plugin table: %d [ %s: %d @ %s ]|Mãrimea tabelei pluginului de statistici: %d [ %s: %d @ %s ]
 Modified authorization entry: %s @ %s|Modificat autorizarea intrãrii: %s @ %s
 Added authorization entry: %s @ %s|Adãugat autorizarea intrãrii: %s @ %s
 Deleted authorization entry: %s|S-a ºters autorizarea intrãrii: %s
@@ -813,19 +809,15 @@ query|necesar
 Execute MySQL query|Execurarea necesarului MySQL
 Execute shell command|Executare comandã cochilie
 Experts only|Doar pentru experþi
-Add hard IP ban entry|Adãugare intrare ban greu pe IP
+Add hard IP ban entries separated by space|
 Delete hard IP ban entry|ªtergere intrare ban greu pe IP
 List of hard IP ban entries|Lista de intrãri banãri grele pe IP
 Modified hard IP ban entry: %s|Modificare intrare ban greu pe IP: %s
 Added hard IP ban entry: %s|Adãugare intrare ban greu pe IP: %s
 Deleted hard IP ban entry: %s|ªtergere intrare ban greu pe IP: %s
 Hard IP ban list is empty.|Lista de banãri grele pe IP, este goalã.
-Couldn't delete hard IP ban entry because not found: %s|Nu s-a putut ºterge intrare ban greu pe IP, pentru cã nu s-a gãsit: %s
 Hard IP ban refused connection from IP %s: %s|Banarea grea pe IP nu permite conectarea de pe IP %s: %s
 Please wait another %d seconds before using hub search engine.|Te rog sã aºtepþi încã %d secunde înainte sã utilizezi funcþia de cãutare a hubului.
-Loading %s in memory...|Încarcã %s în memorie...
-Finished loading %s in memory.|S-a finalizat încãrcarea %s în memorie.
-Unable to locate %s in hub configuration directory.|Imposibil de localizat %s în dosarul configurãrilor hubului.
 Add right click menu item|Adãugare element pentru meniul de click dreapta
 Delete right click menu item|ªtergere element pentru meniul de click dreapta
 List of right click menu items|Lista de elemente pentru meniul de click dreapta
@@ -1188,7 +1180,7 @@ Release deleted by %s: %s|Eliberare ºtearsã de %s: %s
 Release category deleted by %s: %s|Categorie de eliberãri ºtearsã de %s: %s
 Someone from your IP address have already voted for kicking that user.|Cineva cu adresa ta IP a votat deja kick-uirea acestui utilizator.
 IP list: %s|Lista de IP-uri: %s
-First vote can't be negative.|     .
+First vote can't be negative.|Pervy`j golos ne mozhet by`t` otriczatel`ny`m.
 You can't vote for kicking yourself.|Nu poþi vota sã-þi dai singur kick.
 Redirect all clones|Redirecþioneazã toate clonele
 Number of redirected clones: %d|Numãrul clonelor redirecþionate: %d
@@ -1323,3 +1315,62 @@ Proxy protection list is empty.|
 Add proxy protection entry|
 Delete proxy protection entry|
 IP is protected: %s|
+Blacklist|
+Add blacklist entry|
+List blacklist entries|
+Disable or enable blacklist entry|
+Delete blacklist entry|
+list|
+Import blacklist entries from %s|
+Modified blacklist entry: %s|
+Added blacklist entry: %s|
+Blacklist entry not found: %s|
+Deleted blacklist entry: %s|
+Blacklist list is empty.|
+List of blacklist entries|
+Disabled blacklist entry: %s|
+Enabled blacklist entry: %s|
+Import status|
+Table does not exist or is empty: %s|
+Binary is required: %s|
+Successfully imported|
+Unsupported type: %s|
+Already in our list|
+Search in blacklist|
+No blacklist entries found.|
+Found blacklist entries|
+Blacklist feature is disabled.|
+%s blacklist not loaded because: %s|
+Blacklist loaded with %d items: %s|
+File does not exist: %s|
+Hard IP ban entry not found: %s|
+Disabled hard IP ban entry: %s|
+Enabled hard IP ban entry: %s|
+Disable or enable hard IP ban entry|
+Import hard IP ban entries from %s|
+Blacklist load results|
+Invalid IP or CIDR: %s|
+System bans|
+Add system bans separated by space|
+cidr|
+List of system bans|
+Referenced list of system bans|
+Unreferenced list of system bans|
+System ban list is empty.|
+Delete system ban|
+System ban not found: %s|
+Deleted system ban: %s|
+Modified system ban: %s|
+Added system ban: %s|
+Cleared system bans.|
+Failed to create rule for %s in %s: %s|
+Failed to get rules in %s: %s|
+Failed to detect version: %s|
+Failed to create chain in %s: %s|
+Failed to check chain in %s: %s|
+Failed to flush chain in %s: %s|
+Failed to delete chain in %s: %s|
+Failed to create rule in %s: %s|
+Failed to check rule in %s: %s|
+Failed to delete rule in %s: %s|
+Please compare with original string and make sure parameters equal: %s|

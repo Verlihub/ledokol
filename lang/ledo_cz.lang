@@ -1,6 +1,6 @@
 # Language: cs_CZ
 # Charset: CP1250
-# Version: 2.9.8
+# Version: 2.9.9
 # Author: Uhlik
 # Email: pjanos.uk@gmail.com
 
@@ -8,7 +8,6 @@ Current topic: %s|Aktualni topic: %s
 Current topic set by %s: %s|Aktualni topic nastavil %s: %s
 This operation might take very long time depending on how much is going to be removed, please be patient.|Tato operace muze trvat velmi dlouho, podle toho, kolik dat se bude odstranovat. Bud trpelivy.
 days|dny
-%s with class %d deleted %d IP logger plugin entries older than %d days.|%s s class %d smazal %d IP logger plugin zaznamu starsich nez %d dnu.
 %s with class %d deleted %d unbans older than %d days.|%s s class %d smazal %d unbanu starsich nez %d dnu.
 %s with class %d deleted %d bans older than %d days.|%s s class %d smazal %d banu starsich nez %d dnu.
 %s with class %d deleted %d kicks older than %d days.|%s s class %d smazal %d kicku starsich nez %d dnu.
@@ -149,7 +148,6 @@ Known classes are: %s|Zname class jsou: %s
 %s with class %d had bad luck sending say message: <%s> %s|%s s class %d neuspel pri odesilani !say zpravy: <%s> %s
 You can't talk from nick whose class is higher or equals your own.|Nemuzes mluvit jinym nickem, pokud je jeho class stejna nebo vetsi nez tvoje.
 %s with IP %s and class %d kicked: <%s> %s|%s s IP %s a class %d vykopnut: <%s> %s
-%s with class %d deleted %d statistics plugin entries older than %d days.|%s s class %d smazal %d zaznamu statistiky starsich nez %d dnu.
 offset|offset
 order|poradi
 %s didn't get any search results.|%s neobdrzel zadne vysledky hledani.
@@ -234,8 +232,6 @@ Downloading version file: %s|Stahuji soubor verzi: %s
 Size of kicks table: %d [ %s: %d @ %s ]|Velikost zaznamu kicku: %d [ %s: %d @ %s ]
 Size of bans table: %d [ %s: %d @ %s ]|Velikost zaznamu banu: %d [ %s: %d @ %s ]
 Size of unbans table: %d [ %s: %d @ %s ]|Velikost zaznamu unbanu: %d [ %s: %d @ %s ]
-Size of IP logger plugin table: %d [ %s: %d @ %s ]|Velikost zaznamu IP loggeru: %d [ %s: %d @ %s ]
-Size of statistics plugin table: %d [ %s: %d @ %s ]|Velikost zaznamu statistickeho pluginu: %d [ %s: %d @ %s ]
 Modified authorization entry: %s @ %s|Modifikovan zaznam autorizace: %s @ %s
 Added authorization entry: %s @ %s|Vlozen zaznam autorizace: %s @ %s
 Deleted authorization entry: %s|Smazan zaznam autorizace: %s
@@ -813,19 +809,15 @@ query|prikaz
 Execute MySQL query|Provede prikaz pro MySQL 
 Execute shell command|Provede prikaz pro shell
 Experts only|Pouze pro zkusene uzivatele
-Add hard IP ban entry|Vlozi hard IP ban polozku
+Add hard IP ban entries separated by space|
 Delete hard IP ban entry|Smaze hard IP ban polozku
 List of hard IP ban entries|Seznam hard IP ban polozek
 Modified hard IP ban entry: %s|Upravena hard IP ban polozka: %s
 Added hard IP ban entry: %s|Vlozena hard IP ban polozka: %s
 Deleted hard IP ban entry: %s|Smazana hard IP ban polozka: %s
 Hard IP ban list is empty.|Seznam hard IP ban je prazdny.
-Couldn't delete hard IP ban entry because not found: %s|Nemohu smazat hard IP ban polozku protoze nebyla nalezena: %s
 Hard IP ban refused connection from IP %s: %s|Hard IP ban odmitlo pripojeni z IP %s: %s
 Please wait another %d seconds before using hub search engine.|Prosim pockej jeste %d sekund pred zapocetim pouzivani vyhledavani na hubu.
-Loading %s in memory...|Nahravam %s do pameti...
-Finished loading %s in memory.|Dokonceno nahravani %s do pameti.
-Unable to locate %s in hub configuration directory.|Nemohu nalezt %s v konfiguracni slozce.
 Add right click menu item|Vlozit polozku do menu pod pravym tlacitkem mysi
 Delete right click menu item|Smazat polozku z menu pod pravym tlacitkem mysi
 List of right click menu items|Seznam polozek v menu pod pravym tlacitkem mysi
@@ -1323,3 +1315,62 @@ Proxy protection list is empty.|
 Add proxy protection entry|
 Delete proxy protection entry|
 IP is protected: %s|
+Blacklist|
+Add blacklist entry|
+List blacklist entries|
+Disable or enable blacklist entry|
+Delete blacklist entry|
+list|
+Import blacklist entries from %s|
+Modified blacklist entry: %s|
+Added blacklist entry: %s|
+Blacklist entry not found: %s|
+Deleted blacklist entry: %s|
+Blacklist list is empty.|
+List of blacklist entries|
+Disabled blacklist entry: %s|
+Enabled blacklist entry: %s|
+Import status|
+Table does not exist or is empty: %s|
+Binary is required: %s|
+Successfully imported|
+Unsupported type: %s|
+Already in our list|
+Search in blacklist|
+No blacklist entries found.|
+Found blacklist entries|
+Blacklist feature is disabled.|
+%s blacklist not loaded because: %s|
+Blacklist loaded with %d items: %s|
+File does not exist: %s|
+Hard IP ban entry not found: %s|
+Disabled hard IP ban entry: %s|
+Enabled hard IP ban entry: %s|
+Disable or enable hard IP ban entry|
+Import hard IP ban entries from %s|
+Blacklist load results|
+Invalid IP or CIDR: %s|
+System bans|
+Add system bans separated by space|
+cidr|
+List of system bans|
+Referenced list of system bans|
+Unreferenced list of system bans|
+System ban list is empty.|
+Delete system ban|
+System ban not found: %s|
+Deleted system ban: %s|
+Modified system ban: %s|
+Added system ban: %s|
+Cleared system bans.|
+Failed to create rule for %s in %s: %s|
+Failed to get rules in %s: %s|
+Failed to detect version: %s|
+Failed to create chain in %s: %s|
+Failed to check chain in %s: %s|
+Failed to flush chain in %s: %s|
+Failed to delete chain in %s: %s|
+Failed to create rule in %s: %s|
+Failed to check rule in %s: %s|
+Failed to delete rule in %s: %s|
+Please compare with original string and make sure parameters equal: %s|

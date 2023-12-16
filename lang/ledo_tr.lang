@@ -1,6 +1,6 @@
 # Language: tr_TR
 # Charset: CP1254
-# Version: 2.9.8
+# Version: 2.9.9
 # Author: Mauron
 # Email: mauron@vmail.me
 
@@ -8,7 +8,6 @@ Current topic: %s|Güncel konu: %s
 Current topic set by %s: %s|Güncel konu %s tarafýndan ayarlandý: %s
 This operation might take very long time depending on how much is going to be removed, please be patient.|Bu iþlem kaldýrýlacak öðelere göre uzun zaman alabilir, lütfen sabýrlý olun.
 days|gün
-%s with class %d deleted %d IP logger plugin entries older than %d days.|%d sýnýflý %s, %d IP kütükleyici eklentisi unsurunu sildi ki bunlar %d günden daha eskiydi.
 %s with class %d deleted %d unbans older than %d days.|%d sýnýflý %s, %d yasaklama kaldýrýmýný sildi ki bunlar %d günden daha eskiydi.
 %s with class %d deleted %d bans older than %d days.|%d sýnýflý %s, %d yasaklamayý sildi ki bunlar %d günden daha eskiydi.
 %s with class %d deleted %d kicks older than %d days.|%d sýnýflý %s, %d kovmayý sildi ki bunlar %d günden daha eskiydi.
@@ -149,7 +148,6 @@ Known classes are: %s|Bilinen sýnýflar þunlardýr: %s
 %s with class %d had bad luck sending say message: <%s> %s|%d sýnýflý %s þu mesajý gönderirken þanssýzlýða uðradý: <%s> %s
 You can't talk from nick whose class is higher or equals your own.|Sýnýfý kendi sýnýfýnýza eþit ya da sýnýfýnýzdan yüksek olan bir rumuzdan konuþamazsýnýz.
 %s with IP %s and class %d kicked: <%s> %s|%s, %s IP adresli ve %d sýnýflý, kovdu: <%s> %s
-%s with class %d deleted %d statistics plugin entries older than %d days.|%d sýnýflý %s, %d istatistik eklenti unsurunu sildi ki bunlar %d günden daha eskiydi.
 offset|dengele
 order|sýrala
 %s didn't get any search results.|%s hiçbir arama sonucu alamadý.
@@ -234,8 +232,6 @@ Downloading version file: %s|Sürüm dosyasý inidiriliyor: %s
 Size of kicks table: %d [ %s: %d @ %s ]|Kovma tablosunun boyutu: %d [ %s: %d @ %s ]
 Size of bans table: %d [ %s: %d @ %s ]|Yasaklama tablosunun boyutu: %d [ %s: %d @ %s ]
 Size of unbans table: %d [ %s: %d @ %s ]|Yasaklama kaldýrma tablosunun boyutu: %d [ %s: %d @ %s ]
-Size of IP logger plugin table: %d [ %s: %d @ %s ]|IP kütükleyicisi eklentisi tablosunun boyutu: %d [ %s: %d @ %s ]
-Size of statistics plugin table: %d [ %s: %d @ %s ]|Ýstatistik eklentisi tablosunun boyutu: %d [ %s: %d @ %s ]
 Modified authorization entry: %s @ %s|Ýzin unsuru deðiþtirildi: %s @ %s
 Added authorization entry: %s @ %s|Ýzin unsuru eklendi: %s @ %s
 Deleted authorization entry: %s|Ýzin unsuru silindi: %s
@@ -813,19 +809,15 @@ query|sorgu
 Execute MySQL query|MySQL sorgusunu çalýþtýr
 Execute shell command|Kabuk komutunu çalýþtýr
 Experts only|Sadece uzmanlar için
-Add hard IP ban entry|Sert IP yasaðý unsurunu ekle
+Add hard IP ban entries separated by space|Boþlukla ayrýlmýþ sert IP yasaklama unsurlarý gir
 Delete hard IP ban entry|Sert IP yasaðý unsurunu sil
 List of hard IP ban entries|Sert IP yasaðý unsurlarý listesi
 Modified hard IP ban entry: %s|Deðiþtirilen sert IP yasaðý unsuru: %s
 Added hard IP ban entry: %s|Sert IP yasaklama unsuru eklendi: %s
 Deleted hard IP ban entry: %s|Sert IP yasaðý unsuru silindi: %s
 Hard IP ban list is empty.|Sert IP yasaklama listesi boþtur.
-Couldn't delete hard IP ban entry because not found: %s|Sert IP yasaklama unsuru silinemedi çünkü bulunamadý: %s
 Hard IP ban refused connection from IP %s: %s|Sert IP yasaðý %s IP adresinden baðlantýyý reddetti: %s
 Please wait another %d seconds before using hub search engine.|Hub'ýn arama motorunu kullanmadan önce lütfen %d saniye bekleyin.
-Loading %s in memory...|%s belleðe yükleniyor...
-Finished loading %s in memory.|%s belleðe yüklendi.
-Unable to locate %s in hub configuration directory.|Hub yapýlandýrma klasöründe %s bulunamadý.
 Add right click menu item|Sað týklama menü unsuru ekle
 Delete right click menu item|Sað týklama menü unsurunu sil
 List of right click menu items|Sað týklama menü unsuru listesi
@@ -1323,3 +1315,62 @@ Proxy protection list is empty.|Vekil sunucu koruma listesi boþtur.
 Add proxy protection entry|Vekil sunucu koruma unsuru ekle
 Delete proxy protection entry|Vekil sunucu koruma unsuru sil
 IP is protected: %s|IP korumalýdýr: %s
+Blacklist|Kara Liste
+Add blacklist entry|Kara liste unsuru ekle
+List blacklist entries|Kara liste unsurlarýný listele
+Disable or enable blacklist entry|Kara liste unsurunu devre dýþý býrak veya etkinleþtir
+Delete blacklist entry|Kara liste unsurunu sil
+list|listele
+Import blacklist entries from %s|Kara liste unsurlarýný %s konumundan içe aktar
+Modified blacklist entry: %s|Deðiþtirilen kara liste unsuru: %s
+Added blacklist entry: %s|Eklenen kara liste unsuru: %s
+Blacklist entry not found: %s|Kara liste unsuru bulunamadý: %s
+Deleted blacklist entry: %s|Silinen kara liste unsuru: %s
+Blacklist list is empty.|Kara liste boþ.
+List of blacklist entries|Kara liste unsurlarý listesi
+Disabled blacklist entry: %s|Devre dýþý býrakýlan kara liste unsuru: %s
+Enabled blacklist entry: %s|Etkinleþtirilen kara liste unsuru: %s
+Import status|Ýçe aktarma durumu
+Table does not exist or is empty: %s|Tablo mevcut deðil veya boþ: %s
+Binary is required: %s|Ýkili gereklidir: %s
+Successfully imported|Baþarýyla içe aktarýldý
+Unsupported type: %s|Desteklenmeyen tür: %s
+Already in our list|Zaten listemizde mevcut
+Search in blacklist|Kara listede ara
+No blacklist entries found.|Kara liste giriþi bulunamadý.
+Found blacklist entries|Kara liste giriþleri bulundu
+Blacklist feature is disabled.|Kara liste iþlevi devre dýþý býrakýlmýþ.
+%s blacklist not loaded because: %s|%s kara listesi yüklenmedi çünkü: %s
+Blacklist loaded with %d items: %s|Kara liste %d unsur ile yüklendi: %s
+File does not exist: %s|Dosya mevcut deðil: %s
+Hard IP ban entry not found: %s|Sert IP yasaklama unsuru bulunamadý: %s
+Disabled hard IP ban entry: %s|Sert IP yasaklama unsuru devre dýþý: %s
+Enabled hard IP ban entry: %s|Etkinleþtirilmiþ sert IP yasaklama unsuru: %s
+Disable or enable hard IP ban entry|Sert IP yasaklama unsurunu etkinleþtir veya devre dýþý býrak
+Import hard IP ban entries from %s|%s konumundan sert IP yasaklama unsurlarýný içe aktar
+Blacklist load results|Kara liste yükleme sonuçlarý
+Invalid IP or CIDR: %s|Geçersiz IP veya CIDR: %s
+System bans|Sistem yasaklamalarý
+Add system bans separated by space|Sistem yasaklamalarýný boþluklarlar ayýrarak gir
+cidr|cidr
+List of system bans|Sistem yasaklamalarý listesi
+Referenced list of system bans|Referanslý sistem yasaklamalarý listesi
+Unreferenced list of system bans|Referanssýz sistem yasaklamalarý listesi
+System ban list is empty.|Sistem yasaklama listesi boþ.
+Delete system ban|Sistem yasaklamasýný sil
+System ban not found: %s|Sistem yasaklamasý bulunamadý: %s
+Deleted system ban: %s|Sistem yasaklamasý silindi: %s
+Modified system ban: %s|Sistem yasaklamasý deðiþtirildi: %s
+Added system ban: %s|Sistem yasaklamasý eklendi: %s
+Cleared system bans.|Sistem yasaklamalarý temizlendi.
+Failed to create rule for %s in %s: %s|%s için %s dahilinde kural oluþturulmasý baþarýsýz oldu: %s
+Failed to get rules in %s: %s|%s içinde kurallarýn alýnmasý baþarýsýz oldu: %s
+Failed to detect version: %s|Sürüm tespiti baþarýsýz oldu: %s
+Failed to create chain in %s: %s|%s içinde dize oluþturmasý baþarýsýz oldu: %s
+Failed to check chain in %s: %s|%s içinde dize kontrolü baþarýsýz oldu: %s
+Failed to flush chain in %s: %s|%s içinde dizenin temizlenmesi baþarýsýz oldu: %s
+Failed to delete chain in %s: %s|%s içinde dizenin silinmesi baþarýsýz oldu: %s
+Failed to create rule in %s: %s|%s içinde kural oluþturulmasý baþarýsýz oldu: %s
+Failed to check rule in %s: %s|%s içinde kural kontrolü baþarýsýz oldu: %s
+Failed to delete rule in %s: %s|%s içinde kural silinmesi baþarýsýz oldu: %s
+Please compare with original string and make sure parameters equal: %s|Lütfen orijinal dizeyle karþýlaþtýrýn ve parametrelerin eþit olduklarýndan emin olun: %s

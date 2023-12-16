@@ -2,7 +2,7 @@
 --[[ license agreement >>
 ---------------------------------------------------------------------
 
-Copyright © 2007-2023 RoLex
+Copyright © 2007-2024 RoLex
 
 Ledokol is free software, you can redistribute it
 and modify it under the terms of the GNU General

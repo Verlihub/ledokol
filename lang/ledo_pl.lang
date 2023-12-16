@@ -366,8 +366,8 @@ B|B
 EiB|EiB
 Get user's real nick|Pobierz prawdziwy nick uzytkownika
 Requested nick wasn't found in custom nick list.|Szukany nick nie zostal znaleziony na liscie nickow.
-Requested nick belongs to a user who is online: %s|
-Requested nick belongs to a user who is offline: %s|
+Requested nick belongs to a user who is online: %s|¯¹dany nick nale¿y do u¿ytkownika, który jest online:
+Requested nick belongs to a user who is offline: %s|¯¹dany nick nale¿y do u¿ytkownika, który jest offline:
 Clean up ranks|Czyszczenie rankingu
 limit|limit
 %s with class %d deleted %d chat ranks lower than %d.|%s z klasa %d usunol %d ranking czatu ponizej %d.
@@ -715,10 +715,10 @@ Normal|Normalny
 Away|Away
 Fileserver|Fileserver
 Fireball|Fireball
-TLS|
-NAT|
-IPv4|
-IPv6|
+TLS|TLS
+NAT|NAT
+IPv4|IPv4
+IPv6|IPv6
 Unable to get bot information: %s|Nie mozna pobrac informacji o bota: %s
 Bot information|Informacjie bota
 Owner script: %s|Skrypt ownera: %s
@@ -781,7 +781,7 @@ Add chat replacer exception|Dodaj wyjatek replacer czatu
 Delete chat replacer exception|Usun wyjatek replacer czatu
 Chat replacer|Replacer czatu
 You need to send another %d main chat messages in order to use hub registration.|Musisz wyslac jeszcze %d wiadomosci na czat glowny abyt moc uzyc rejestracji na hubie.
-Please wait another %d seconds before using hub registration.|Prosze czekac %d minut przed rejestracja huba.
+Please wait another %d seconds before using hub registration.|Prosze czekac %d sekund przed rejestracja huba.
 In order to use this feature you need to set %s to: %d|Aby uzyc tej opcji powinienes ustawic %s na: %d
 Please reconnect to gain %d seconds of uptime in order to use hub registration.|Prosze zalogowac sie na hub ponownie by zyskac %d minuty czasu, aby moc uzyc rejestracji na hubie.
 Dropping %s with IP %s and class %d due to protocol flood detection: %s|Kopniety %s z IP %s i klasy %d ze wzgledu na wykrycie protokolu floodu: %s
@@ -1092,7 +1092,7 @@ Disable or enable right click menu item|Wylacz lub wlacz opcje menu prawokliku
 Disabled right click menu item: %s|Wylacz pozycje menu prawokliku: %s
 Enabled right click menu item: %s|Wlacz pozycje menu prawokliku: %s
 %s added to search block list.|%s dodany do wyszukiwañ listy zablokowanych
-Your search request is discarded due to previous forbidden search request or result: %s|
+Your search request is discarded due to previous forbidden search request or result: %s|Twoje ¿¹danie wyszukiwania zosta³o odrzucone z powodu wczeœniejszego niedozwolonego ¿¹dania lub wyniku wyszukiwania:%s
 Hub URL: %s|Adres URL huba: %s
 Search filter block list|Filtr wyszukiwan listy zablokowanych
 Delete search filter block list entry|Usun wpisy wyszukiwan listy zablokowanych
@@ -1152,7 +1152,7 @@ Added city gag: %s|Dodano gag miasta: %s
 Cleared city gag list.|Wyczysc liste gag miast.
 Deleted city gag: %s|Usunieto gag miasta: %s
 City gag not found: %s|Lista gag miast jest pusta: %s
-City gag list is empty.|
+City gag list is empty.|Lista gag miast jest pusta.
 %s with IP %s and class %d tries to speak with city gag in PM to %s with IP %s and class %d: %s|%sz IP %si klasa %dprubuje porozmawiaæ z gag miastem na PM %s z IP %si klasa %d: %s
 %s with IP %s and class %d tries to speak with city gag in MC: %s|%s z IP %s i klasa %dprubuje porozmawiaæ z gag miastem na MC: %s
 %s with IP %s and class %d tried to speak in MC without chat code: <%s> %s|%s z IP %s i klasa %d probowal rozmawiaæ na MC bez kodu czatu: <%s> %s
@@ -1168,41 +1168,41 @@ Search in command logs|Szukaj w logach polecen
 No command logs found.|Nie znaleziono komend
 Found %d command logs|Znaleziono %d komend logow
 Unavailable|Niedostepne
-Clone information|
-No clones detected.|
-%d users with IP %s and shared bytes %d: %s|
+Clone information|Klon informacji
+No clones detected.|Nie wykryto klonów.
+%d users with IP %s and shared bytes %d: %s|%du¿ytkownicy z IP %s i wspó³dzielonymi bajtami %d : %s
 Total number of clones: %d|
-Clean up registered users table|
-magnet|
-Release modified within category %s by %s: %s|
-Release added within category %s by %s: %s|
-Release deleted by %s: %s|
-Release category deleted by %s: %s|
-Someone from your IP address have already voted for kicking that user.|
-IP list: %s|
-First vote can't be negative.|
-You can't vote for kicking yourself.|
-Redirect all clones|
-Number of redirected clones: %d|
-Your search result is discarded due to previous forbidden search result or request: %s|
-Search result exception from %s with IP %s and class %d as any file: %s|
-Search result notification from %s with IP %s and class %d as any file: %s|
-Bad search result from %s with IP %s and class %d as any file: %s|
-User dropped due to bad search result: %s|
-User didn't send any search results: %s|
-User redirected due to bad search result: %s|
-Search result exception from %s with IP %s and class %d as folder: %s|
+Clean up registered users table|Wyczyœæ tabelê zarejestrowanych u¿ytkowników
+magnet|Magnet
+Release modified within category %s by %s: %s|Wydanie zmodyfikowane w ramach kategorii %s przez: %s : %s
+Release added within category %s by %s: %s|Wersja dodana w kategorii %s przez %s: %s
+Release deleted by %s: %s|Wersja usuniêta przez%s : %s
+Release category deleted by %s: %s|Kategoria wydania usuniêta przez %s:%s
+Someone from your IP address have already voted for kicking that user.|Ktoœ z twojego adresu IP ju¿ g³osowa³ za wyrzuceniem tego u¿ytkownika.
+IP list: %s|IP lista: %s
+First vote can't be negative.|Pierwszy g³os nie mo¿e byæ negatywny.
+You can't vote for kicking yourself.|Nie mo¿esz g³osowaæ za kopaniem siebie.
+Redirect all clones|Przekieruj wszystkie klony
+Number of redirected clones: %d|Liczba przekierowanych klonów: %d
+Your search result is discarded due to previous forbidden search result or request: %s|Twoje ¿¹danie wyszukiwania zosta³o odrzucone z powodu wczeœniejszego niedozwolonego ¿¹dania lub wyniku wyszukiwania:%s
+Search result exception from %s with IP %s and class %d as any file: %s|Prosba wyszukiwania wyjatku %s z IP %s i klasa %d jako dowolny plik: %s
+Search result notification from %s with IP %s and class %d as any file: %s|Notyfikacja o wyszukiwaniu: %s z IP %s i klasa %d jako plik: %s
+Bad search result from %s with IP %s and class %d as any file: %s|Zle wyszukiwanie od: %s z IP %s i klasa %d jako plik: %s
+User dropped due to bad search result: %s|U¿ytkownik wykopany z powodu z³ych wyników wyszukiwania: %s
+User didn't send any search results: %s|U¿ytkownik nie wys³a³ ¿adnych wyników wyszukiwania: %s
+User redirected due to bad search result: %s|U¿ytkownik przekierowany z powodu z³ego wyniku wyszukiwania: %s
+Search result exception from %s with IP %s and class %d as folder: %s|Prosba wyszukiwania wyjatku: %s z IP %s i klasa %d jako folder: %s
 Search result notification from %s with IP %s and class %d as folder: %s|
 Bad search result from %s with IP %s and class %d as folder: %s|
 Search result exception from %s with IP %s and class %d as TTH: %s|
 Search result notification from %s with IP %s and class %d as TTH: %s|
 Bad search result from %s with IP %s and class %d as TTH: %s|
-Resetting proxy lookup daily quote limit: %d|
-Your message will be delayed for proxy lookup of your IP address.|
-You're not allowed to chat due to public proxy detection of your IP address.|
-Proxy lookup daily quote limit reached on chat message from user with IP %s: %s|
-Proxy lookup queue limit reached on chat message from user with IP %s: %s|
-Blocking private main chat message from %s with IP %s detected as public proxy to %s with IP %s: %s|
+Resetting proxy lookup daily quote limit: %d|Resetowanie dziennego limitu ofert wyszukiwania proxy: %d
+Your message will be delayed for proxy lookup of your IP address.|Twoja wiadomoœæ zostanie opóŸniona ze wzglêdu na wyszukiwanie adresu IP przez serwer proxy.
+You're not allowed to chat due to public proxy detection of your IP address.|Nie mo¿esz rozmawiaæ na czacie z powodu wykrycia Twojego adresu IP przez publiczne proxy.
+Proxy lookup daily quote limit reached on chat message from user with IP %s: %s|Osi¹gniêto dzienny limit wyszukiwania proxy dla wiadomoœci czatu od u¿ytkownika z adresem IP %s:%s
+Proxy lookup queue limit reached on chat message from user with IP %s: %s|Osi¹gniêto limit kolejki wyszukiwania proxy dla wiadomoœci czatu od u¿ytkownika z adresem IP %s:%s
+Blocking private main chat message from %s with IP %s detected as public proxy to %s with IP %s: %s|Blokowanie prywatnej g³ównej wiadomoœci czatu z %s z IP %swykryty jako publiczny serwer proxy dla %s z IP %s:%s
 Blocking main chat message from %s with IP %s detected as public proxy: %s|
 Blocking private chat message from %s with IP %s detected as public proxy to %s with IP %s: %s|
 Blocking third person main chat message from %s with IP %s detected as public proxy: %s|
@@ -1220,14 +1220,14 @@ Failed proxy lookup of IP %s with unknown result data: %s|
 Failed proxy lookup of IP %s without result data.|
 Failed proxy lookup of IP %s without result file.|
 Failed proxy lookup of IP %s with result: %s|
-Invalid request|
-Invalid IP|
-Private IP|
-Under maintenance|
-Request banned|
-Invalid email|
-Not enough matches for proxy lookup of IP %s: %d of %d|
-Public proxy detected on IP: %s|
+Invalid request|Nieprawid³owe ¿¹danie
+Invalid IP|Nieprawid³owy adres IP
+Private IP|Prywatny IP
+Under maintenance|Trwaj¹ prace konserwacyjne
+Request banned|¯¹danie zbanowane
+Invalid email|Niepoprawny adres email
+Not enough matches for proxy lookup of IP %s: %d of %d|Za ma³o dopasowañ do wyszukiwania adresu IP przez serwer proxy %s:%d of %d
+Public proxy detected on IP: %s|Wykryto publiczny serwer proxy na IP: %s
 Public proxy detected on IP %s with ASN: %s|
 Unsent main chat message from logged out user %s with IP %s before finishing proxy lookup: %s|
 Unsent private chat message from logged out user %s with IP %s to %s with IP %s before finishing proxy lookup: %s|
@@ -1237,62 +1237,62 @@ Unsent offline private chat message from logged out user %s with IP %s to %s wit
 %s logged in with IP %s previously detected as public proxy.|
 %s logged in with IP %s previously detected as public proxy with ASN: %s|
 Filtered search request duplicates: %d of %d|
-Find configuration variables|
-Found %d configuration variables|
-No configuration variables found.|
-Secure connection: %s|
-TLS version: %s|
-You can't set IP on user whose class is higher or equals your own: %s|
-Failed to set user IP: %s @ %s|
-IP successfully set on user: %s @ %s|
-Invalid command parameters specified: %s|
-Set user IP|
-Top %d uptime rankers|
-Your uptime rank|
-Your uptime rank is: %s|
-You have to reconnect to get started.|
-Uptime rank list is empty.|
-Top %d uptime rankers|
-Deleted from uptime rank list: %s|
-Not found in uptime rank list: %s|
+Find configuration variables|ZnajdŸ zmienne konfiguracyjne
+Found %d configuration variables|Znaleziono %d zmienne konfiguracyjne
+No configuration variables found.|Nie znaleziono zmiennych konfiguracyjnych.
+Secure connection: %s|Bezpieczne po³¹czenie: %s
+TLS version: %s|TLS wersja: %s
+You can't set IP on user whose class is higher or equals your own: %s|Nie mo¿esz ustawiæ adresu IP na u¿ytkownika, którego klasa jest wy¿sza lub równa twojej: %s
+Failed to set user IP: %s @ %s|Nie uda³o siê ustawiæ adresu IP u¿ytkownika: %s @ %s
+IP successfully set on user: %s @ %s|Adres IP pomyœlnie ustawiony dla u¿ytkownika: %s @ %s
+Invalid command parameters specified: %s|Okreœlono nieprawid³owe parametry polecenia: %s
+Set user IP|Ustaw adres IP u¿ytkownika
+Top %d uptime rankers|Najlepsi %d rankingi dyspozycyjnoœci
+Your uptime rank|Twój ranking dyspozycyjnoœci
+Your uptime rank is: %s|Twoja ranga dyspozycyjnoœci to: %s
+You have to reconnect to get started.|Aby rozpocz¹æ, musisz po³¹czyæ siê ponownie.
+Uptime rank list is empty.|Lista rankingowa Uptime jest pusta.
+Top %d uptime rankers|Najlepsi %d rankingi dyspozycyjnoœci
+Deleted from uptime rank list: %s|Usuniêto z listy rankingowej dostêpnoœci: %s
+Not found in uptime rank list: %s|Nie znaleziono na liœcie rankingowej dostêpnoœci: %s
 %s with class %d deleted %d uptime ranks lower than %d.|
 Size of uptime ranks table: %d [ %s: %d @ %s ]|
-Total uptime rank time: %s|
-Function disabled|
-Code %d|
-Unknown error|
-No file|
-No data|
-Unknown data|
-IP intelligence: %s|
-Forbidden MyINFO list|
-Forbidden MyINFO list is empty.|
-There is an error in following forbidden MyINFO pattern|
+Total uptime rank time: %s|Ca³kowity czas pracy w rankingu: %s
+Function disabled|Funkcja wy³¹czona
+Code %d|Kod %d
+Unknown error|Nieznany b³¹d
+No file|Brak pliku
+No data|Brak danych
+Unknown data|Nieznane dane
+IP intelligence: %s|Inteligencja IP: %s
+Forbidden MyINFO list|Zakazana lista MyINFO
+Forbidden MyINFO list is empty.|Zakazana lista MyINFO jest pusta.
+There is an error in following forbidden MyINFO pattern|Wyst¹pi³ b³¹d w pod¹¿aniu za zabronionym wzorcem MyINFO
 Modified forbidden MyINFO with ban time %s: %s|
 Added forbidden MyINFO with ban time %s: %s|
-Deleted forbidden MyINFO: %s|
+Deleted forbidden MyINFO: %s|Usuniêto zabronione MyINFO: %s
 Couldn't delete forbidden MyINFO because not found: %s|
 %s with IP %s and class %d allowed due to forbidden MyINFO exception: %s|
 Adding new AVDB item to our list: %s|
 Updating AVDB item with different user nick: %s|
 Updating AVDB item with different IP address: %s|
 Updating AVDB item with different share size: %s|
-Chat flood or spam detected from your IP|
-On restart|
+Chat flood or spam detected from your IP|Wykryto flood czatu lub spam z Twojego adresu IP
+On restart|Przy ponownym uruchomieniu
 Modified ASN gag %s with reason: %s|
 Modified ASN gag: %s|
 Added ASN gag %s with reason: %s|
 Added ASN gag: %s|
-Cleared ASN gag list.|
-Deleted ASN gag: %s|
-ASN gag not found: %s|
-ASN gag list|
-ASN gag list is empty.|
+Cleared ASN gag list.|Wyczyszczona lista gagów ASN.
+Deleted ASN gag: %s|Usuniêty gag ASN: %s
+ASN gag not found: %s|Nie znaleziono knebla ASN:%s
+ASN gag list|Lista gagów ASN
+ASN gag list is empty.|Lista gagów ASN jest pusta.
 %s with IP %s, class %d and ASN %s tries to speak with ASN gag in PM to %s with IP %s and class %d: %s|
 %s with IP %s, class %d and ASN %s tries to speak with ASN gag in MC: %s|
-ASN gag|
-Add ASN gag|
-Delete ASN gag|
+ASN gag|Gag ASN
+Add ASN gag|Dodaj gaga ASN
+Delete ASN gag|Usuñ gaga ASN
 User command from %s with IP %s will be delayed for proxy lookup: %s|
 Blocking user command from %s with IP %s detected as public proxy: %s|
 Unsent user command from logged out user %s with IP %s before finishing proxy lookup: %s|
@@ -1303,43 +1303,43 @@ Spam exception with action %d and priority %d in MC and PM: %s|
 Spam with action %d and priority %d in MC: %s|
 Spam with action %d and priority %d in PM: %s|
 Spam with action %d and priority %d in MC and PM: %s|
-No antispam matches for text: %s|
-List of antispam matches for text: %s|
-Added proxy protection entry: %s|
-Proxy protection entry already exists: %s|
-Cleared proxy protection list.|
-Deleted proxy protection entry: %s|
-Proxy protection entry not found: %s|
-Proxy protection list|
-Proxy protection list is empty.|
-Add proxy protection entry|
-Delete proxy protection entry|
-IP is protected: %s|
-Blacklist|
-Add blacklist entry|
-List blacklist entries|
-Disable or enable blacklist entry|
-Delete blacklist entry|
-list|
-Import blacklist entries from %s|
-Modified blacklist entry: %s|
-Added blacklist entry: %s|
-Blacklist entry not found: %s|
-Deleted blacklist entry: %s|
-Blacklist list is empty.|
-List of blacklist entries|
-Disabled blacklist entry: %s|
-Enabled blacklist entry: %s|
-Import status|
-Table does not exist or is empty: %s|
-Binary is required: %s|
-Successfully imported|
-Unsupported type: %s|
-Already in our list|
-Search in blacklist|
-No blacklist entries found.|
-Found blacklist entries|
-Blacklist feature is disabled.|
+No antispam matches for text: %s|Brak dopasowañ antyspamowych dla tekstu: %s
+List of antispam matches for text: %s|Lista dopasowañ antyspamowych dla tekstu: %s
+Added proxy protection entry: %s|Dodano wpis ochrony proxy:%s
+Proxy protection entry already exists: %s|Wpis ochrony serwera proxy ju¿ istnieje: %s
+Cleared proxy protection list.|Cleared proxy protection list.
+Deleted proxy protection entry: %s|Usuniêty wpis ochrony proxy: %s
+Proxy protection entry not found: %s|Nie znaleziono wpisu ochrony proxy:%s
+Proxy protection list|Lista ochrony proxy
+Proxy protection list is empty.|Lista ochrony serwera proxy jest pusta.
+Add proxy protection entry|Dodaj wpis ochrony proxy
+Delete proxy protection entry|Usuñ wpis ochrony proxy
+IP is protected: %s|IP jest chronione: %s
+Blacklist|Czarnalista
+Add blacklist entry|Dodaj wpis na czarnej liœcie
+List blacklist entries|Lista wpisów na czarnej liœcie
+Disable or enable blacklist entry|Wy³¹cz lub w³¹cz wpis na czarnej liœcie
+Delete blacklist entry|Usuñ wpis z czarnej listy
+list|Lista
+Import blacklist entries from %s|Importuj wpisy z czarnej listy z %s
+Modified blacklist entry: %s|Zmodyfikowany wpisy z czarnej listy z %s
+Added blacklist entry: %s|Dodano wpis na czarnej liœcie: %s
+Blacklist entry not found: %s|Nie znaleziono wpisu na czarnej liœcie: %s
+Deleted blacklist entry: %s|Usuniêty wpis z czarnej listy: %s
+Blacklist list is empty.|Czarna lista jest pusta.
+List of blacklist entries|Lista wpisów na czarnej liœcie
+Disabled blacklist entry: %s|Wy³¹czony wpis na czarnej liœcie: %s
+Enabled blacklist entry: %s|W³¹czony wpis na czarnej liœcie: %s
+Import status|Stan importu
+Table does not exist or is empty: %s|Tabela nie istnieje lub jest pusta: %s
+Binary is required: %s|Wymagany jest plik binarny:
+Successfully imported|Pomyœlnie zaimportowano
+Unsupported type: %s|Nieobs³ugiwany typ: %s
+Already in our list|Ju¿ na naszej liœcie
+Search in blacklist|Szukaj na czarnej liœcie
+No blacklist entries found.|Nie znaleziono wpisów na czarnej liœcie.
+Found blacklist entries|Znaleziono wpisy na czarnej liœcie
+Blacklist feature is disabled.|Funkcja czarnej listy jest wy³¹czona.
 %s blacklist not loaded because: %s|
 Blacklist loaded with %d items: %s|
 File does not exist: %s|

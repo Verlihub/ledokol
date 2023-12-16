@@ -1,6 +1,6 @@
 # Language: ru_RU
 # Charset: CP1251
-# Version: 2.9.8
+# Version: 2.9.9
 # Author: RoLex
 # Email: webmaster@feardc.net
 
@@ -8,7 +8,6 @@ Current topic: %s|Данная тема: %s
 Current topic set by %s: %s|Данная тема установленная %s: %s
 This operation might take very long time depending on how much is going to be removed, please be patient.|Время выполнения данной операции может занять очень много времени в зависимости от количества удаляемых данных, пожалуйста будьте терпеливы.
 days|дней
-%s with class %d deleted %d IP logger plugin entries older than %d days.|Пользователь %s с классом %d удалил %d записей плагина IP logger которые являлись старше %d дней.
 %s with class %d deleted %d unbans older than %d days.|Пользователь %s %d-го класса удалил %d записей о снятых банах. Удалялись записи старше %d дней.
 %s with class %d deleted %d bans older than %d days.|Пользователь %s %d-го класса удалил %d записей о банах. Удалялись записи старше %d дней.
 %s with class %d deleted %d kicks older than %d days.|Пользователь %s %d-го класса удалил %d записей о киках. Удалялись записи старше %d дней.
@@ -149,7 +148,6 @@ Known classes are: %s|Известные классы: %s
 %s with class %d had bad luck sending say message: <%s> %s|Пользователю %s %d-го не удалось послать сообщение от другого ника (say message): <%s> %s
 You can't talk from nick whose class is higher or equals your own.|Вы не можете писать от ника человека, класс которого равен или выше вашего.
 %s with IP %s and class %d kicked: <%s> %s|Пользователь %s с IP-адресом %s %d-го класса был кикнут: <%s> %s
-%s with class %d deleted %d statistics plugin entries older than %d days.|Пользователь %s %d-го класса удалил %d записей планига статистики. Удалялись записи старше %d дней.
 offset|позиция
 order|порядок
 %s didn't get any search results.|Поиск %s не дал результатов.
@@ -234,8 +232,6 @@ Downloading version file: %s|Загружаю файл версии: %s
 Size of kicks table: %d [ %s: %d @ %s ]|Размер таблицы киков: %d [ %s: %d @ %s ]
 Size of bans table: %d [ %s: %d @ %s ]|Размер таблицы банов: %d [ %s: %d @ %s ]
 Size of unbans table: %d [ %s: %d @ %s ]|Размер таблицы снятых банов: %d [ %s: %d @ %s ]
-Size of IP logger plugin table: %d [ %s: %d @ %s ]|Размер таблицы плагина IP logger: %d [ %s: %d @ %s ]
-Size of statistics plugin table: %d [ %s: %d @ %s ]|Размер таблицы плагина statistics: %d [ %s: %d @ %s ]
 Modified authorization entry: %s @ %s|Изменить запись авторизации: %s @ %s
 Added authorization entry: %s @ %s|Добавить запись авторизации: %s @ %s
 Deleted authorization entry: %s|Удалить запись авторизации: %s
@@ -813,19 +809,15 @@ query|запрос
 Execute MySQL query|Выполнить MySQL запрос
 Execute shell command|Выполнить команду оболочки
 Experts only|Только для экспертов
-Add hard IP ban entry|Добавить жёсткий бан IP на вход
+Add hard IP ban entries separated by space|Добавить пункты жёстких банов IP на вход через пробел
 Delete hard IP ban entry|Удалить жёсткий бан IP на вход
 List of hard IP ban entries|Список жёстких банов IP на вход
 Modified hard IP ban entry: %s|Изменить жёсткий бан IP на вход: %s
 Added hard IP ban entry: %s|Добавлен жёсткий бан IP на вход: %s
 Deleted hard IP ban entry: %s|Удалён жёсткий бан IP на вход: %s
 Hard IP ban list is empty.|Список жёстких банов IP пуст.
-Couldn't delete hard IP ban entry because not found: %s|Невозможно удалить жёсткий бан IP на вход, не найден: %s
 Hard IP ban refused connection from IP %s: %s|Жёсткий бан IP, сброс соединения с IP %s: %s
 Please wait another %d seconds before using hub search engine.|Пожалуйста подождите %d секунд, перед тем как использовать поиск.
-Loading %s in memory...|Загрузка %s в память...
-Finished loading %s in memory.|Загрузка %s в память закончена.
-Unable to locate %s in hub configuration directory.|Не удалось найти %s в каталоге хаба.
 Add right click menu item|Добавить пункт всплывающего меню
 Delete right click menu item|Удалить пункт всплывающего меню
 List of right click menu items|Список пунктов всплывающего меню
@@ -1323,3 +1315,62 @@ Proxy protection list is empty.|Список защищённых прокси пуст.
 Add proxy protection entry|Добавить запись защищённого прокси
 Delete proxy protection entry|Уладить запись защищённого прокси
 IP is protected: %s|IP защищён: %s
+Blacklist|Чёрный список
+Add blacklist entry|Добавить пункт в чёрный список
+List blacklist entries|Показать пункты в чёрном списке
+Disable or enable blacklist entry|Отключить или включить пункт в чёрном списке
+Delete blacklist entry|Удалить пункт из чёрного списка
+list|список
+Import blacklist entries from %s|Импортировать пункты из чёрного списка %s
+Modified blacklist entry: %s|Изменён пункт чёрного списка: %s
+Added blacklist entry: %s|Добавлен пункт чёрного списка: %s
+Blacklist entry not found: %s|Пункт чёрного списка не найден: %s
+Deleted blacklist entry: %s|Удалён пункт чёрного списка: %s
+Blacklist list is empty.|Чёрный список пуст.
+List of blacklist entries|Список пунктов в чёрном списке
+Disabled blacklist entry: %s|Отключить пункт чёрного списка: %s
+Enabled blacklist entry: %s|Включить пункт чёрного списка: %s
+Import status|Статус импорта
+Table does not exist or is empty: %s|Таблица не существует или пуста: %s
+Binary is required: %s|Бинарный файл обязателен: %s
+Successfully imported|Успешный импорт
+Unsupported type: %s|Тип не поддерживается: %s
+Already in our list|Уже в нашем списке
+Search in blacklist|Поиск по чёрному списку
+No blacklist entries found.|Пункты чёрного списка не найдены.
+Found blacklist entries|Найдены пункты чёрного списка
+Blacklist feature is disabled.|Функция чёрных списков отключена.
+%s blacklist not loaded because: %s|Чёрный список %s не загружен поскольку: %s
+Blacklist loaded with %d items: %s|Чёрный список загружен с %d пунктами: %s
+File does not exist: %s|Файл не найден: %s
+Hard IP ban entry not found: %s|Пункт жёсткого бана IP на вход не найден: %s
+Disabled hard IP ban entry: %s|Пункт жёсткого бана IP на вход отключён: %s
+Enabled hard IP ban entry: %s|Пункт жёсткого бана IP на вход включён: %s
+Disable or enable hard IP ban entry|Отключить или включить пункт жёсткого бана IP на вход
+Import hard IP ban entries from %s|Импорт пунктов жёстких банов IP на вход из %s
+Blacklist load results|Результаты загрузки чёрных списков
+Invalid IP or CIDR: %s|Неверный IP или CIDR: %s
+System bans|Системные баны
+Add system bans separated by space|Добавить системные баны через пробел
+cidr|cidr
+List of system bans|Список системных банов
+Referenced list of system bans|Связанный список системных банов
+Unreferenced list of system bans|Несвязанный список системных банов
+System ban list is empty.|Список системных банов пуст.
+Delete system ban|Удалить системный бан
+System ban not found: %s|Системный бан не найден: %s
+Deleted system ban: %s|Системный бан удалён: %s
+Modified system ban: %s|Системный бан изменён: %s
+Added system ban: %s|Системный бан добавлен: %s
+Cleared system bans.|Системные баны очищены.
+Failed to create rule for %s in %s: %s|Не удалось создать правило для %s в %s: %s
+Failed to get rules in %s: %s|Не удалось добыть список правил в %s: %s
+Failed to detect version: %s|Не удалось узнать версию: %s
+Failed to create chain in %s: %s|Не удалось создать цепь в %s: %s
+Failed to check chain in %s: %s|Не удалось проверить цепь в %s: %s
+Failed to flush chain in %s: %s|Не удалось очистить цепь в %s: %s
+Failed to delete chain in %s: %s|Не удалось удалить цепь в %s: %s
+Failed to create rule in %s: %s|Не удалось создать правило в %s: %s
+Failed to check rule in %s: %s|Не удалось проверить правило в %s: %s
+Failed to delete rule in %s: %s|Не удалось удалить правило в %s: %s
+Please compare with original string and make sure parameters equal: %s|Пожалуйста сравните с оригиналом и убедитесь что кол-во параметров является равным: %s

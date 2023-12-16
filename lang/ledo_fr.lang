@@ -1,6 +1,6 @@
 # Language: fr_FR
 # Charset: CP1252
-# Version: 2.9.8
+# Version: 2.9.9
 # Author: @tlantide
 # Email: chatonhubfrance@gmail.com
 
@@ -8,7 +8,6 @@ Current topic: %s|Sujet actuel : %s
 Current topic set by %s: %s|Sujet actuel défini par %s : %s
 This operation might take very long time depending on how much is going to be removed, please be patient.|Cette opération peut prendre très longtemps en fonction de la quantité à supprimer, s'il vous plaît soyez patient.
 days|jours
-%s with class %d deleted %d IP logger plugin entries older than %d days.|%s de classe %d a supprimé %d éléments de journalisation d'IP enregistrés depuis plus de %d  jours.
 %s with class %d deleted %d unbans older than %d days.|%s de classe %d a supprimé %d débannissements vieux de plus de %d jours.
 %s with class %d deleted %d bans older than %d days.|%s de classe %d a supprimé %d bans âgés de plus de %d jours.
 %s with class %d deleted %d kicks older than %d days.|%s de classe %d a supprimé %d kicks âgés de plus %d jours.
@@ -149,7 +148,6 @@ Known classes are: %s|Les classes connues sont : %s
 %s with class %d had bad luck sending say message: <%s> %s|%s avec la classe %d n'a pas de chance avec l'envoi du message « say » : <%s> %s
 You can't talk from nick whose class is higher or equals your own.|Vous ne pouvez pas parler depuis un pseudo dont la classe est supérieure ou égale à la vôtre.
 %s with IP %s and class %d kicked: <%s> %s|%s avec l'IP %s et la classe %d a kické : <%s> %s
-%s with class %d deleted %d statistics plugin entries older than %d days.|%s avec la classe %d a supprimé %d des entrées du plugin des statistiques antérieures à %d jours.
 offset|compenser
 order|ordre
 %s didn't get any search results.|%s n'a reçu aucun résultat de recherche.
@@ -234,8 +232,6 @@ Downloading version file: %s|Téléchargement du fichier de version : %s
 Size of kicks table: %d [ %s: %d @ %s ]|Taille de la table des kicks : %d [ %s : %d @ %s ]
 Size of bans table: %d [ %s: %d @ %s ]|Taille de la table des bans : %d [ %s : %d @ %s ]
 Size of unbans table: %d [ %s: %d @ %s ]|Taille de la table des débanissements : %d [ %s : %d @ %s ]
-Size of IP logger plugin table: %d [ %s: %d @ %s ]|Taille de la table du plug-in de journalisation d'IP : %d [ %s : %d @ %s ]
-Size of statistics plugin table: %d [ %s: %d @ %s ]|Taille de la table du plug-in des statistiques : %d [ %s : %d @ %s ]
 Modified authorization entry: %s @ %s|Entrée d'autorisation modifiée : %s @ %s
 Added authorization entry: %s @ %s|Entrée d'autorisation ajoutée : %s @ %s
 Deleted authorization entry: %s|Entrée d'autorisation supprimée : %s
@@ -813,19 +809,15 @@ query|requète
 Execute MySQL query|Exécuter la requète MySQL
 Execute shell command|Exécuter la commande shell
 Experts only|Uniquement pour les experts
-Add hard IP ban entry|Ajouter une entrée de ban dur d'IP
+Add hard IP ban entries separated by space|Ajouter des bannissements d'IP durs séparés avec des espaces
 Delete hard IP ban entry|Supprimer l'entrée de ban dur d'IP
 List of hard IP ban entries|Entrées de la liste de bans durs d'IP
 Modified hard IP ban entry: %s|Entrée de ban dur d'IP modifiée : %s
 Added hard IP ban entry: %s|Entrée de ban dur d'IP ajoutée : %s
 Deleted hard IP ban entry: %s|Entrée de ban dur d'IP supprimée : %s
 Hard IP ban list is empty.|La liste des bans durs d'IP est vide.
-Couldn't delete hard IP ban entry because not found: %s|Échec de la suppression de l'entrée de ban dur d'IP car elle est introuvable : %s
 Hard IP ban refused connection from IP %s: %s|Le ban dur d'IP a refusé la connexion de l'IP %s : %s
 Please wait another %d seconds before using hub search engine.|Veuillez patienter encore %d secondes avant d'utiliser le moteur de recherche du hub.
-Loading %s in memory...|Chargement de %s dans la mémoire...
-Finished loading %s in memory.|Chargement de %s dans la mémoire terminé.
-Unable to locate %s in hub configuration directory.|Impossible de localiser %s dans le répertoire de configuration du hub.
 Add right click menu item|Ajouter un élément de menu clic droit
 Delete right click menu item|Supprimer un élément de menu clic droit
 List of right click menu items|Liste des éléments du menu du clic droit
@@ -1323,3 +1315,62 @@ Proxy protection list is empty.|La liste de protection de serveurs mandataires e
 Add proxy protection entry|Ajouter une entrée de protection de serveur mandataire
 Delete proxy protection entry|Effacer l'entrée de protection de serveur mandataire
 IP is protected: %s|L'IP est protégée : %s
+Blacklist|Liste noire
+Add blacklist entry|Ajouter un élément de liste noire
+List blacklist entries|Lister les éléments de liste noire
+Disable or enable blacklist entry|Désactiver ou activer un élément de liste noire
+Delete blacklist entry|Effacer un élément de liste noire
+list|lister
+Import blacklist entries from %s|Importer des éléments de liste noire depuis %s
+Modified blacklist entry: %s|Élément de liste noire modifié : %s
+Added blacklist entry: %s|Élément de liste noire ajouté : %s
+Blacklist entry not found: %s|Élément de liste noire introuvable : %s
+Deleted blacklist entry: %s|Élément de liste noire effacé : %s
+Blacklist list is empty.|La liste noire est vide.
+List of blacklist entries|Liste des éléments de liste noire
+Disabled blacklist entry: %s|Élément de liste noire désactivé : %s
+Enabled blacklist entry: %s|Élément de liste noire activé : %s
+Import status|Importer l'état
+Table does not exist or is empty: %s|Le tableau n'existe pas ou est vide : %s
+Binary is required: %s|Le binaire est requis : %s
+Successfully imported|Importé avec succès
+Unsupported type: %s|Type non pris en charge : %s
+Already in our list|Déjà sur notre liste
+Search in blacklist|Rechercher sur la liste noire
+No blacklist entries found.|Aucun élément de liste noire trouvé.
+Found blacklist entries|Éléments de liste noire trouvés
+Blacklist feature is disabled.|La fonctionnalité de liste noire est désactivée.
+%s blacklist not loaded because: %s|La liste noire %s non chargée car : %s
+Blacklist loaded with %d items: %s|Liste noire avec %d éléments chargée : %s
+File does not exist: %s|Le fichier n'existe pas : %s
+Hard IP ban entry not found: %s|Élément de bannissement dur d'IP introuvable : %s
+Disabled hard IP ban entry: %s|Élément de bannissement dur d'IP désactivé : %s
+Enabled hard IP ban entry: %s|Élément de bannissement d'IP dur activé : %s
+Disable or enable hard IP ban entry|Désactiver ou activer le bannissement dur d'élément IP
+Import hard IP ban entries from %s|Importer des éléments de bannissement d'IP dur depuis %s
+Blacklist load results|Résultats de chargement de la liste noire
+Invalid IP or CIDR: %s|IP ou CIDR invalide : %s
+System bans|Bannissements système
+Add system bans separated by space|Ajouter des bannissements système séparés par des espaces
+cidr|cidr
+List of system bans|Liste des bannissements système
+Referenced list of system bans|Liste référencée des bannissements système
+Unreferenced list of system bans|Liste non référencée des bannissements système
+System ban list is empty.|La liste des bannissements système est vide.
+Delete system ban|Effacer le bannissement système
+System ban not found: %s|Bannissement système introuvable : %s
+Deleted system ban: %s|Bannissement système effacé : %s
+Modified system ban: %s|Bannissement système modifié : %s
+Added system ban: %s|Bannissement système ajouté : %s
+Cleared system bans.|Bannissements système effacés.
+Failed to create rule for %s in %s: %s|La création d'une règle pour %s dans %s a échoué : %s
+Failed to get rules in %s: %s|Échec de l'obtention des règles dans %s : %s
+Failed to detect version: %s|Échec de la détection de version : %s
+Failed to create chain in %s: %s|Échec de la création de chaîne dans %s : %s
+Failed to check chain in %s: %s|Échec de la vérification de la chaîne dans %s : %s
+Failed to flush chain in %s: %s|Échec du nettoyage de la chaîne dans %s : %s
+Failed to delete chain in %s: %s|Échec de l'effacement de la chaîne dans %s  : %s
+Failed to create rule in %s: %s|Échec de la création de la règle dans %s : %s
+Failed to check rule in %s: %s|Échec de la vérification de la règle dans %s : %s
+Failed to delete rule in %s: %s|Échec de l'effacement de la règle dans %s : %s
+Please compare with original string and make sure parameters equal: %s|Veuillez comparer avec la chaîne originale et assurez-vous que les paramètres sont égaux : %s

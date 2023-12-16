@@ -1,6 +1,6 @@
 # Language: nl_NL
 # Charset: CP1252
-# Version: 2.9.8
+# Version: 2.9.9
 # Author: Marcel
 # Email: future_dance@hotmail.com
 
@@ -8,7 +8,6 @@ Current topic: %s|Huidige topic gemaakt door %s: %s
 Current topic set by %s: %s|Huidige topic gemaakt door %s: %s
 This operation might take very long time depending on how much is going to be removed, please be patient.|Deze operatie kan erg lang duren, afhankelijk van hoeveel zal worden verwijderd, wees geduldig .
 days|Dagen
-%s with class %d deleted %d IP logger plugin entries older than %d days.|%s met clas %d verwijderd %d IP logger plugin entries ouder dan %d dagen
 %s with class %d deleted %d unbans older than %d days.|%s met class %d verwijderde %d unbans ouder dan %d dagen.
 %s with class %d deleted %d bans older than %d days.|%s met class %d verwijderde %d bans ouder dan %d dagen.
 %s with class %d deleted %d kicks older than %d days.|%s met class %d verwijderde %d kicks ouder dan %d dagen
@@ -149,7 +148,6 @@ Known classes are: %s|Bekende classes zijn: %s
 %s with class %d had bad luck sending say message: <%s> %s|%s met class %d heeft dikke pech met het versturen van say bericht: <%s> %s
 You can't talk from nick whose class is higher or equals your own.|Je kunt niet praten tegen een nick wiens klasse is hoger of gelijk aan uw eigen .
 %s with IP %s and class %d kicked: <%s> %s|%s met IP %s en class %d kicked: <%s> %s
-%s with class %d deleted %d statistics plugin entries older than %d days.|%s met class %d verwijderd %d statistieken plugin regels ouder dan %d dagen.
 offset|compenseren
 order|order
 %s didn't get any search results.|%s leverde geen zoekresultaten op.
@@ -234,8 +232,6 @@ Downloading version file: %s|Versie %s wordt gedownload
 Size of kicks table: %d [ %s: %d @ %s ]|Grote van de kik tabel: %d [ %s: %d @ %s ]
 Size of bans table: %d [ %s: %d @ %s ]|Grote van de bans tabel: %d [ %s: %d @ %s ]
 Size of unbans table: %d [ %s: %d @ %s ]|Grote van de unbans tabel: %d [ %s: %d @ %s ]
-Size of IP logger plugin table: %d [ %s: %d @ %s ]|Grote van de IP log plugin tabel: %d [ %s: %d @ %s ]
-Size of statistics plugin table: %d [ %s: %d @ %s ]|Grote van de statistieken plugin tabel: %d [ %s: %d @ %s ]
 Modified authorization entry: %s @ %s|Gewijzigd authorization: %s @ %s
 Added authorization entry: %s @ %s|Toegevoegd authorization regel: %s @ %s
 Deleted authorization entry: %s|Verwijderde authorization regel: %s
@@ -813,19 +809,15 @@ query|query
 Execute MySQL query|Uitvoeren MySQL query
 Execute shell command|Uitvoeren shell command
 Experts only|Alleen voor experts
-Add hard IP ban entry|Hard IP ban regel toevoegen
+Add hard IP ban entries separated by space|
 Delete hard IP ban entry|Verwijder hard IP ban regel
 List of hard IP ban entries|Lijst van hard IP ban regels
 Modified hard IP ban entry: %s|Aangepaste hard IP ban regel: %s
 Added hard IP ban entry: %s|Hard IP ban regel toegevoegd: %s
 Deleted hard IP ban entry: %s|Hard IP ban regel verwijderd: %s
 Hard IP ban list is empty.|Lijst hard IP ban is leeg.
-Couldn't delete hard IP ban entry because not found: %s|Kon hard IP ban regel niet verwijderen omdat deze is niet gevonden: %s
 Hard IP ban refused connection from IP %s: %s|Hard IP ban weigerd verbinding van IP %s: %s
 Please wait another %d seconds before using hub search engine.|Even geduld aub % d seconden voordat u hub zoekmachine kunt gebruiken.
-Loading %s in memory...|Laden %s in geheugen...
-Finished loading %s in memory.|Laden %s in geheugen is klaar
-Unable to locate %s in hub configuration directory.|Kan %s niet vinden in hub configuratie directory .
 Add right click menu item|Right klik menu item toevoegen
 Delete right click menu item|Right klik menu item verwijderen
 List of right click menu items|Lijst van right klik menu items
@@ -1323,3 +1315,62 @@ Proxy protection list is empty.|
 Add proxy protection entry|
 Delete proxy protection entry|
 IP is protected: %s|
+Blacklist|
+Add blacklist entry|
+List blacklist entries|
+Disable or enable blacklist entry|
+Delete blacklist entry|
+list|
+Import blacklist entries from %s|
+Modified blacklist entry: %s|
+Added blacklist entry: %s|
+Blacklist entry not found: %s|
+Deleted blacklist entry: %s|
+Blacklist list is empty.|
+List of blacklist entries|
+Disabled blacklist entry: %s|
+Enabled blacklist entry: %s|
+Import status|
+Table does not exist or is empty: %s|
+Binary is required: %s|
+Successfully imported|
+Unsupported type: %s|
+Already in our list|
+Search in blacklist|
+No blacklist entries found.|
+Found blacklist entries|
+Blacklist feature is disabled.|
+%s blacklist not loaded because: %s|
+Blacklist loaded with %d items: %s|
+File does not exist: %s|
+Hard IP ban entry not found: %s|
+Disabled hard IP ban entry: %s|
+Enabled hard IP ban entry: %s|
+Disable or enable hard IP ban entry|
+Import hard IP ban entries from %s|
+Blacklist load results|
+Invalid IP or CIDR: %s|
+System bans|
+Add system bans separated by space|
+cidr|
+List of system bans|
+Referenced list of system bans|
+Unreferenced list of system bans|
+System ban list is empty.|
+Delete system ban|
+System ban not found: %s|
+Deleted system ban: %s|
+Modified system ban: %s|
+Added system ban: %s|
+Cleared system bans.|
+Failed to create rule for %s in %s: %s|
+Failed to get rules in %s: %s|
+Failed to detect version: %s|
+Failed to create chain in %s: %s|
+Failed to check chain in %s: %s|
+Failed to flush chain in %s: %s|
+Failed to delete chain in %s: %s|
+Failed to create rule in %s: %s|
+Failed to check rule in %s: %s|
+Failed to delete rule in %s: %s|
+Please compare with original string and make sure parameters equal: %s|

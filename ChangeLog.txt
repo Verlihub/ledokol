@@ -1,4 +1,4 @@
-[ 2.9.9 :: 2023-##-## ]
+[ 2.9.9 :: 2023-12-16 ]
 
 [139] Fixed: Errors on reloading Lua plugin, report by KCAHDEP
 [141] Fixed: Skip parsing +me command when mainchat_class is set, thanks to Gabriel
