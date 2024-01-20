@@ -62,8 +62,8 @@ Tzaca, JOE™, Foxtrot, Deivis, PWiAM, Gabriel and others
 -- global storage variables and tables >>
 ---------------------------------------------------------------------
 
-ver_ledo = "2.9.9" -- ledokol version
-bld_ledo = "142" -- build number
+ver_ledo = "3.0.0" -- ledokol version
+bld_ledo = "143" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -3730,20 +3730,21 @@ end
 
 return 0
 
------ ---- --- -- -
+	----- ---- --- -- -
 
-elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.ranclean .. " %S+ %d+$") then
-if ucl >= table_sets.mincommandclass then
-if table_sets.classnotiledoact == 11 then
-donotifycmd (nick, data, 0, ucl)
-end
+	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.ranclean .. " %S+ %-?%d+$") then
+		if ucl >= table_sets.mincommandclass then
+			if table_sets.classnotiledoact == 11 then
+				donotifycmd (nick, data, 0, ucl)
+			end
 
-cleanupranks (nick, data:sub (# table_cmnds.ranclean + 3), ucl)
-else
-commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
-end
+			cleanupranks (nick, data:sub (# table_cmnds.ranclean + 3), ucl)
 
-return 0
+		else
+			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+		end
+
+		return 0
 
 	----- ---- --- -- -
 
@@ -18598,15 +18599,58 @@ end
 ----- ---- --- -- -
 
 function cleanupranks (nick, line, cls)
-	local _, _, ctype, climt = line:find ("^(%S+) (%d+)$")
-	local climt = tonumber (climt)
+	local ctype, climt = line:match ("^(%S+) (%-?%d+)$")
+	climt = tonumber (climt)
 	local tm = os.time () + table_sets.srvtimediff
 
-	if ctype == "chat" then
+	if ctype == "chat" then -- chat
 		commandanswer (nick, gettext ("This operation might take very long time depending on how much is going to be removed, please be patient."))
-		local rows = 0
+		local rows, _ = 0, 0
 
-		if climt == 0 then
+		if climt < 0 then -- check registered
+			if table_sets.chatrankclass > 0 then
+				local rans = {}
+				_, rows = VH:SQLQuery ("select `nick` from `" .. tbl_sql.chran .. "`")
+
+				if rows > 0 then
+					for pos = 0, rows - 1 do
+						local _, user = VH:SQLFetch (pos)
+						rans [user] = true
+					end
+
+					local regs = {}
+					_, rows = VH:SQLQuery ("select `nick` from `reglist` where `class` >= " .. _tostring (table_sets.chatrankclass))
+
+					if rows > 0 then
+						for pos = 0, rows - 1 do
+							local _, user = VH:SQLFetch (pos)
+							regs [user] = true
+						end
+
+						rows = 0
+
+						for key, _ in pairs (rans) do
+							if not regs [key] then -- not registered or lower class
+								VH:SQLQuery ("delete from `" .. tbl_sql.chran .. "` where `nick` = '" .. repsqlchars (key) .. "'")
+								rows = rows + 1
+							end
+						end
+
+						if rows > 0 then
+							commandanswer (nick, gettext ("Deleted %d rows: %s"):format (rows, ctype))
+							opsnotify (table_sets.classnotiledoact, gettext ("%s with class %d deleted %d chat ranks lower than %d."):format (nick, cls, rows, climt))
+							VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('lastcleanchran', " .. _tostring (tm) .. ") on duplicate key update `value` = " .. _tostring (tm))
+							VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('limcleanchran', " .. _tostring (climt) .. ") on duplicate key update `value` = " .. _tostring (climt))
+							rows = -1 -- do not continue
+						end
+					end
+				end
+
+			else
+				commandanswer (nick, gettext ("This feature is not set for registered users only."))
+			end
+
+		elseif climt == 0 then
 			rows = counttable (tbl_sql.chran, "nick")
 		else
 			_, rows = VH:SQLQuery ("select `rank` from `" .. tbl_sql.chran .. "` where `rank` < " .. _tostring (climt))
@@ -18623,16 +18667,61 @@ function cleanupranks (nick, line, cls)
 			opsnotify (table_sets.classnotiledoact, gettext ("%s with class %d deleted %d chat ranks lower than %d."):format (nick, cls, rows, climt))
 			VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('lastcleanchran', " .. _tostring (tm) .. ") on duplicate key update `value` = " .. _tostring (tm))
 			VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('limcleanchran', " .. _tostring (climt) .. ") on duplicate key update `value` = " .. _tostring (climt))
-		else
+
+		elseif rows == 0 then
 			commandanswer (nick, gettext ("No rows to remove: %s"):format (ctype))
 		end
 
-	elseif ctype == "share" then
+	elseif ctype == "share" then -- share
 		commandanswer (nick, gettext ("This operation might take very long time depending on how much is going to be removed, please be patient."))
-		local rows, cbytes = 0, 0
+		local rows, cbytes, _ = 0, 0, 0
 
-		if climt == 0 then
+		if climt < 0 then -- check registered
+			if table_sets.sharerankclass > 0 then
+				local rans = {}
+				_, rows = VH:SQLQuery ("select `nick` from `" .. tbl_sql.shran .. "`")
+
+				if rows > 0 then
+					for pos = 0, rows - 1 do
+						local _, user = VH:SQLFetch (pos)
+						rans [user] = true
+					end
+
+					local regs = {}
+					_, rows = VH:SQLQuery ("select `nick` from `reglist` where `class` >= " .. _tostring (table_sets.sharerankclass))
+
+					if rows > 0 then
+						for pos = 0, rows - 1 do
+							local _, user = VH:SQLFetch (pos)
+							regs [user] = true
+						end
+
+						rows = 0
+
+						for key, _ in pairs (rans) do
+							if not regs [key] then -- not registered or lower class
+								VH:SQLQuery ("delete from `" .. tbl_sql.shran .. "` where `nick` = '" .. repsqlchars (key) .. "'")
+								rows = rows + 1
+							end
+						end
+
+						if rows > 0 then
+							commandanswer (nick, gettext ("Deleted %d rows: %s"):format (rows, ctype))
+							opsnotify (table_sets.classnotiledoact, gettext ("%s with class %d deleted %d share ranks lower than %s."):format (nick, cls, rows, _tostring (climt) .. " " .. gettext ("GiB")))
+							VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('lastcleanshran', " .. _tostring (tm) .. ") on duplicate key update `value` = " .. _tostring (tm))
+							VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('limcleanshran', " .. _tostring (climt) .. ") on duplicate key update `value` = " .. _tostring (climt))
+							rows = -1 -- do not continue
+						end
+					end
+				end
+
+			else
+				commandanswer (nick, gettext ("This feature is not set for registered users only."))
+			end
+
+		elseif climt == 0 then
 			rows = counttable (tbl_sql.shran, "nick")
+
 		else
 			cbytes = roundint ((climt * 1073741824), 0)
 			_, rows = VH:SQLQuery ("select `rank` from `" .. tbl_sql.shran .. "` where `rank` < " .. _tostring (cbytes))
@@ -18649,15 +18738,59 @@ function cleanupranks (nick, line, cls)
 			opsnotify (table_sets.classnotiledoact, gettext ("%s with class %d deleted %d share ranks lower than %s."):format (nick, cls, rows, _tostring (climt) .. " " .. gettext ("GiB")))
 			VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('lastcleanshran', " .. _tostring (tm) .. ") on duplicate key update `value` = " .. _tostring (tm))
 			VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('limcleanshran', " .. _tostring (climt) .. ") on duplicate key update `value` = " .. _tostring (climt))
-		else
+
+		elseif rows == 0 then
 			commandanswer (nick, gettext ("No rows to remove: %s"):format (ctype))
 		end
 
 	elseif ctype == "up" then -- uptime
 		commandanswer (nick, gettext ("This operation might take very long time depending on how much is going to be removed, please be patient."))
-		local rows = 0
+		local rows, _ = 0, 0
 
-		if climt == 0 then
+		if climt < 0 then -- check registered
+			if table_sets.uprankclass > 0 then
+				local rans = {}
+				_, rows = VH:SQLQuery ("select `nick` from `" .. tbl_sql.upran .. "`")
+
+				if rows > 0 then
+					for pos = 0, rows - 1 do
+						local _, user = VH:SQLFetch (pos)
+						rans [user] = true
+					end
+
+					local regs = {}
+					_, rows = VH:SQLQuery ("select `nick` from `reglist` where `class` >= " .. _tostring (table_sets.uprankclass))
+
+					if rows > 0 then
+						for pos = 0, rows - 1 do
+							local _, user = VH:SQLFetch (pos)
+							regs [user] = true
+						end
+
+						rows = 0
+
+						for key, _ in pairs (rans) do
+							if not regs [key] then -- not registered or lower class
+								VH:SQLQuery ("delete from `" .. tbl_sql.upran .. "` where `nick` = '" .. repsqlchars (key) .. "'")
+								rows = rows + 1
+							end
+						end
+
+						if rows > 0 then
+							commandanswer (nick, gettext ("Deleted %d rows: %s"):format (rows, ctype))
+							opsnotify (table_sets.classnotiledoact, gettext ("%s with class %d deleted %d uptime ranks lower than %d."):format (nick, cls, rows, climt))
+							VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('lastcleanupran', " .. _tostring (tm) .. ") on duplicate key update `value` = " .. _tostring (tm))
+							VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('limcleanupran', " .. _tostring (climt) .. ") on duplicate key update `value` = " .. _tostring (climt))
+							rows = -1 -- do not continue
+						end
+					end
+				end
+
+			else
+				commandanswer (nick, gettext ("This feature is not set for registered users only."))
+			end
+
+		elseif climt == 0 then
 			rows = counttable (tbl_sql.upran, "nick")
 		else
 			_, rows = VH:SQLQuery ("select `rank` from `" .. tbl_sql.upran .. "` where `rank` < " .. _tostring (climt))
@@ -18674,15 +18807,59 @@ function cleanupranks (nick, line, cls)
 			opsnotify (table_sets.classnotiledoact, gettext ("%s with class %d deleted %d uptime ranks lower than %d."):format (nick, cls, rows, climt))
 			VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('lastcleanupran', " .. _tostring (tm) .. ") on duplicate key update `value` = " .. _tostring (tm))
 			VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('limcleanupran', " .. _tostring (climt) .. ") on duplicate key update `value` = " .. _tostring (climt))
-		else
+
+		elseif rows == 0 then
 			commandanswer (nick, gettext ("No rows to remove: %s"):format (ctype))
 		end
 
-	elseif ctype == "op" then
+	elseif ctype == "op" then -- operator
 		commandanswer (nick, gettext ("This operation might take very long time depending on how much is going to be removed, please be patient."))
-		local rows = 0
+		local rows, _ = 0, 0
 
-		if climt == 0 then
+		if climt < 0 then -- check registered
+			if table_sets.oprankclass > 0 then
+				local rans = {}
+				_, rows = VH:SQLQuery ("select `nick` from `" .. tbl_sql.opran .. "`")
+
+				if rows > 0 then
+					for pos = 0, rows - 1 do
+						local _, user = VH:SQLFetch (pos)
+						rans [user] = true
+					end
+
+					local regs = {}
+					_, rows = VH:SQLQuery ("select `nick` from `reglist` where `class` >= " .. _tostring (table_sets.oprankclass))
+
+					if rows > 0 then
+						for pos = 0, rows - 1 do
+							local _, user = VH:SQLFetch (pos)
+							regs [user] = true
+						end
+
+						rows = 0
+
+						for key, _ in pairs (rans) do
+							if not regs [key] then -- not registered or lower class
+								VH:SQLQuery ("delete from `" .. tbl_sql.opran .. "` where `nick` = '" .. repsqlchars (key) .. "'")
+								rows = rows + 1
+							end
+						end
+
+						if rows > 0 then
+							commandanswer (nick, gettext ("Deleted %d rows: %s"):format (rows, ctype))
+							opsnotify (table_sets.classnotiledoact, gettext ("%s with class %d deleted %d operator ranks lower than %d."):format (nick, cls, rows, climt))
+							VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('lastcleanopran', " .. _tostring (tm) .. ") on duplicate key update `value` = " .. _tostring (tm))
+							VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('limcleanopran', " .. _tostring (climt) .. ") on duplicate key update `value` = " .. _tostring (climt))
+							rows = -1 -- do not continue
+						end
+					end
+				end
+
+			else
+				commandanswer (nick, gettext ("This feature is not set for registered users only."))
+			end
+
+		elseif climt == 0 then
 			rows = counttable (tbl_sql.opran, "nick")
 		else
 			_, rows = VH:SQLQuery ("select `rank` from `" .. tbl_sql.opran .. "` where `rank` < " .. _tostring (climt))
@@ -18699,15 +18876,18 @@ function cleanupranks (nick, line, cls)
 			opsnotify (table_sets.classnotiledoact, gettext ("%s with class %d deleted %d operator ranks lower than %d."):format (nick, cls, rows, climt))
 			VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('lastcleanopran', " .. _tostring (tm) .. ") on duplicate key update `value` = " .. _tostring (tm))
 			VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('limcleanopran', " .. _tostring (climt) .. ") on duplicate key update `value` = " .. _tostring (climt))
-		else
+
+		elseif rows == 0 then
 			commandanswer (nick, gettext ("No rows to remove: %s"):format (ctype))
 		end
 
-	elseif ctype == "sear" then
+	elseif ctype == "sear" then -- search
 		commandanswer (nick, gettext ("This operation might take very long time depending on how much is going to be removed, please be patient."))
-		local rows = 0
+		local rows, _ = 0, 0
 
-		if climt == 0 then
+		if climt < 0 then -- check registered
+			commandanswer (nick, gettext ("Operation not supported on this type."))
+		elseif climt == 0 then
 			rows = counttable (tbl_sql.srran, "search")
 		else
 			_, rows = VH:SQLQuery ("select `rank` from `" .. tbl_sql.srran .. "` where `rank` < " .. _tostring (climt))
@@ -18724,15 +18904,18 @@ function cleanupranks (nick, line, cls)
 			opsnotify (table_sets.classnotiledoact, gettext ("%s with class %d deleted %d search ranks lower than %d."):format (nick, cls, rows, climt))
 			VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('lastcleansrran', " .. _tostring (tm) .. ") on duplicate key update `value` = " .. _tostring (tm))
 			VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('limcleansrran', " .. _tostring (climt) .. ") on duplicate key update `value` = " .. _tostring (climt))
-		else
+
+		elseif rows == 0 then
 			commandanswer (nick, gettext ("No rows to remove: %s"):format (ctype))
 		end
 
-	elseif ctype == "word" then
+	elseif ctype == "word" then -- words
 		commandanswer (nick, gettext ("This operation might take very long time depending on how much is going to be removed, please be patient."))
-		local rows = 0
+		local rows, _ = 0, 0
 
-		if climt == 0 then
+		if climt < 0 then -- check registered
+			commandanswer (nick, gettext ("Operation not supported on this type."))
+		elseif climt == 0 then
 			rows = counttable (tbl_sql.wdran, "word")
 		else
 			_, rows = VH:SQLQuery ("select `rank` from `" .. tbl_sql.wdran .. "` where `rank` < " .. _tostring (climt))
@@ -18749,11 +18932,12 @@ function cleanupranks (nick, line, cls)
 			opsnotify (table_sets.classnotiledoact, gettext ("%s with class %d deleted %d word ranks lower than %d."):format (nick, cls, rows, climt))
 			VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('lastcleanwdran', " .. _tostring (tm) .. ") on duplicate key update `value` = " .. _tostring (tm))
 			VH:SQLQuery ("insert into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('limcleanwdran', " .. _tostring (climt) .. ") on duplicate key update `value` = " .. _tostring (climt))
-		else
+
+		elseif rows == 0 then
 			commandanswer (nick, gettext ("No rows to remove: %s"):format (ctype))
 		end
 
-	elseif ctype == "cc" then
+	elseif ctype == "cc" then -- country
 		VH:SQLQuery ("truncate table `" .. tbl_sql.ccstat .. "`")
 		VH:SQLQuery ("update ignore `" .. tbl_sql.conf .. "` set `value` = '" .. (os.time () + table_sets.srvtimediff) .. "' where `variable` = 'date_ccstats'")
 		commandanswer (nick, gettext ("Deleted all rows: %s"):format (ctype))
@@ -20204,16 +20388,16 @@ end
 		susmenitm (usr, gettext ("Ranks") .. "\\" .. gettext ("All time user location statistics"), table_cmnds.cchist)
 	end
 
-if ucl >= table_sets.mincommandclass then
-smensep (usr)
-sopmenitm (usr, gettext ("Ranks") .. "\\" .. gettext ("Add rank exception"), table_cmnds.ranexadd .. " %[line:<" .. gettext ("nick") .. ">]")
-sopmenitm (usr, gettext ("Ranks") .. "\\" .. gettext ("Rank exception list"), table_cmnds.ranexlist)
-smensep (usr)
-sopmenitm (usr, gettext ("Ranks") .. "\\" .. gettext ("Delete rank exception"), table_cmnds.ranexdel .. " %[line:<" .. gettext ("nick") .. ">]")
-smensep (usr)
-sopmenitm (usr, gettext ("Ranks") .. "\\" .. gettext ("Remove user or word from rank list"), table_cmnds.randel .. " %[line:<" .. gettext ("type") .. ">] %[line:<" .. gettext ("value") .. ">]")
-sopmenitm (usr, gettext ("Ranks") .. "\\" .. gettext ("Clean up ranks"), table_cmnds.ranclean .. " %[line:<" .. gettext ("type") .. ">] %[line:<" .. gettext ("limit") .. ">]")
-end
+	if ucl >= table_sets.mincommandclass then
+		smensep (usr)
+		sopmenitm (usr, gettext ("Ranks") .. "\\" .. gettext ("Add rank exception"), table_cmnds.ranexadd .. " %[line:<" .. gettext ("nick") .. ">]")
+		sopmenitm (usr, gettext ("Ranks") .. "\\" .. gettext ("Rank exception list"), table_cmnds.ranexlist)
+		smensep (usr)
+		sopmenitm (usr, gettext ("Ranks") .. "\\" .. gettext ("Delete rank exception"), table_cmnds.ranexdel .. " %[line:<" .. gettext ("nick") .. ">]")
+		smensep (usr)
+		sopmenitm (usr, gettext ("Ranks") .. "\\" .. gettext ("Remove user or word from rank list"), table_cmnds.randel .. " %[line:<" .. gettext ("type") .. ">] %[line:<" .. gettext ("value") .. ">]")
+		sopmenitm (usr, gettext ("Ranks") .. "\\" .. gettext ("Clean up ranks"), table_cmnds.ranclean .. " %[line:<" .. gettext ("type") .. ">] %[line:<" .. gettext ("limit") .. ">]")
+	end
 
 -- welcome messages
 
