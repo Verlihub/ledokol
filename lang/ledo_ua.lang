@@ -1,12 +1,14 @@
 # Language: uk_UA
 # Charset: CP1251
 # Version: 2.9.9
-# Author: Neolo
+# Author: Neolo & Master
 # Email: admin@nlight.org.ua
+# © 2024 translation completed by Master
+# Email: admin@dchub.in.ua
 
 Current topic: %s|Поточна тема: %s
 Current topic set by %s: %s|Поточна тема встановлена %s: %s
-This operation might take very long time depending on how much is going to be removed, please be patient.|
+This operation might take very long time depending on how much is going to be removed, please be patient.|Час виконання цієї операції може зайняти дуже багато часу в залежності від кількості даних, що видаляються, будь ласка терплячі.
 days|днів
 %s with class %d deleted %d unbans older than %d days.|%s з класом %d видалив %d записів розбанів що старші за %d днів.
 %s with class %d deleted %d bans older than %d days.|%s з класом %d видалив %d записів банів ща старші за %d днів.
@@ -25,7 +27,7 @@ Main chat history is empty.|Історія головного чату порожня.
 Last %d operator chat messages|Останні %d фраз в оператор-чаті
 Operator chat history is empty.|Історія оператор-чату порожня.
 Valid priority is a number from %d to %d.|Значення пріоритету має бути цифра від %d до %d.
-You are using latest version of %s, no update is required.|
+You are using latest version of %s, no update is required.|Ви використовуєте останню версію %s, оновлення не потрібні.
 Why would you send offline message to yourself?|Для чого ви хочете надіслати офлайн повідомлення самі собі?
 User %s is online. Sending message directly.|Користувач %s в мережі. Надсилаю повідомлення негайно.
 Your offline message stored for user: %s|Ваше офлайн повідомлення збережено для: %s
@@ -43,31 +45,31 @@ Couldn't delete offline messages because not found: %s|Не знайдено: %s Видалення
 %s with class %d deleted all offline messages.|%s з класом %d видалив(ла) всі офлайн повідомлення.
 There are no offline messages to remove.|Список офлайн повідомлень порожній.
 No topic is set.|Тему не встановлено.
-%s with IP %s and class %d allowed due to forbidden nick exception: %s|
+%s with IP %s and class %d allowed due to forbidden nick exception: %s|Користувач %s з IP-адресою %s і класом %d пропущений за винятком ніку: %s
 message|повідомлення
-%s with IP %s and class %d allowed due to forbidden description exception: %s|
-User you're trying to kick or redirect is protected: %s|
-%s with IP %s and class %d allowed due to forbidden tag exception: %s|
-type|type
-%s with IP %s and class %d allowed due to forbidden connection type exception: %s|
+%s with IP %s and class %d allowed due to forbidden description exception: %s|Користувач %s з IP-адресою %s та класом %d пропущений за винятком за описом: %s
+User you're trying to kick or redirect is protected: %s|Користувач якого ви намагаєтеся кикнути або перенаправити захищений від таких дій: %s
+%s with IP %s and class %d allowed due to forbidden tag exception: %s|Користувач %s з IP-адресою %s та класом %d пропущений за винятком за тегом: %s
+type|тип
+%s with IP %s and class %d allowed due to forbidden connection type exception: %s|Користувач %s з IP-адресою %s і класом %d пропущений з виключенням за типу підключення: %s
 %s with class %d changed configuration variable %s: %s => %s|%s з класом %d змінив(ла) значення конфігурації %s: %s => %s
-%s with IP %s and class %d allowed due to forbidden email exception: %s|
-User received own message: %s|
-%s with IP %s and class %d allowed due to forbidden share size exception: %s|
+%s with IP %s and class %d allowed due to forbidden email exception: %s|Користувач %s з IP-адресою %s та класом %d пропущений за винятком на адресу електронної пошти: %s
+User received own message: %s|Наївно вважає, що його повідомлення прочитали. Успіху йому в нелегкій справі - бесіді самим із собою... %s
+%s with IP %s and class %d allowed due to forbidden share size exception: %s|Користувач %s з IP-адресою %s та класом %d пропущений з винятком за розміром шари: %s
 Deleted %d releases from category: %s|Видалено %d релізів з категорії: %s
 Why would you want to set empty topic?|Чому вам захотілося встановити порожню тему? Придумайте щось =)
-Modified forbidden nick with ban time %s: %s|
-Added forbidden nick with ban time %s: %s|
-Modified forbidden description with ban time %s: %s|
-Added forbidden description with ban time %s: %s|
-Modified forbidden tag with ban time %s: %s|
-Added forbidden tag with ban time %s: %s|
-Modified forbidden connection type with ban time %s: %s|
-Added forbidden connection type with ban time %s: %s|
-Modified forbidden email with ban time %s: %s|
-Added forbidden email with ban time %s: %s|
-Modified forbidden share size with ban time %s: %s|
-Added forbidden share size with ban time %s: %s|
+Modified forbidden nick with ban time %s: %s|Змінено заборонений нік з баном %s: %s
+Added forbidden nick with ban time %s: %s|Доданий заборонений нік із баном %s: %s
+Modified forbidden description with ban time %s: %s|Змінено заборонений опис із баном %s: %s
+Added forbidden description with ban time %s: %s|Додано заборонений опис з баном %s: %s
+Modified forbidden tag with ban time %s: %s|Змінено заборонений тег із баном %s: %s
+Added forbidden tag with ban time %s: %s|Додано заборонений тег із баном %s: %s
+Modified forbidden connection type with ban time %s: %s|Змінено заборонений тип з'єднання з баном %s: %s
+Added forbidden connection type with ban time %s: %s|Доданий заборонений тип з'єднання з баном %s: %s
+Modified forbidden email with ban time %s: %s|Змінено заборонену електронну поштову адресу з баном %s: %s
+Added forbidden email with ban time %s: %s|Додана заборонена електронна поштова адреса з баном %s: %s
+Modified forbidden share size with ban time %s: %s|Змінено заборонений розмір шари з баном %s: %s
+Added forbidden share size with ban time %s: %s|Додано заборонений розмір шари з баном %s: %s
 Couldn't add MyINFO exception because already exists: %s|Цей MYINFO вже занесено до списку виключень: %s
 Added MyINFO exception: %s|Додано MyINFO виключення: %s
 and|і
@@ -103,8 +105,8 @@ Deleted %d rows: %s|Видалено %d рядків: %s
 Known types are: %s|Відомі варіанти: %s
 No rows to remove: %s|Немає рядків для видалення: %s
 date|дата
-%s with IP %s and class %d used following command: %s|
-context|
+%s with IP %s and class %d used following command: %s|Користувач %s з IP адресою %s та класом %d використовував таку команду: %s
+context|контекст
 Deleted from chat rank list: %s|Видалено з ТОП чат: %s
 Not found in chat rank list: %s|Не знайдено в ТОП чат: %s
 Deleted from operator rank list: %s|Видалено з ТОП операторів: %s
@@ -127,7 +129,7 @@ Size of user log table: %d [ %s: %d @ %s ]|Розмір логу користувача: %d [ %s: %d 
 Add protection entry|Додати захист
 Delete protection entry|Зняти захист
 flags|прапорці
-%s dropped due to bad search request.|
+%s dropped due to bad search request.|Користувач %s вимкнено за спробу пошуку забороненої інформації.
 This command is either disabled or you don't have access to it.|Ця команда вимкнена адміністратором або у вас немає прав на її використання.
 Deleted antispam entry: %s|Видалено значення антиспаму: %s
 Couldn't delete antispam entry because not found: %s|Не можливо видалити, тому що значення не знайдено: %s
@@ -148,13 +150,13 @@ Known classes are: %s|Відомі класи: %s
 %s with class %d had bad luck sending say message: <%s> %s|%s з класом %d намагався надіслати SAY повідомлення, але йому не вдалося =D: <%s> %s
 You can't talk from nick whose class is higher or equals your own.|Ви не можете говорити від імені користувача, клас якого вище або дорівнює вашому =D.
 %s with IP %s and class %d kicked: <%s> %s|%s з IP %s та класом %d кікнуто: <%s> %s
-offset|offset
-order|
+offset|позиція
+order|порядок
 %s didn't get any search results.|%s не отримав жодних результатів пошуку.
 Redirected %s with IP %s and class %d to %s: <%s> %s|Перенаправлено %s з IP %s класом %d на %s: <%s> %s
 Unknown protocol command from %s with IP %s and class %d: %s|Невідома команда протоколу була отримана %s з IP %s та класом %d: %s
 Custom nick list|Список підробних ніків
-%s operator commands|
+%s operator commands|Команди %s для операторів
 Add antispam entry|Додати значення антиспаму
 Showing last %d lines out of total %d found in %s file|Відображаються останні %d рядків з %d знайдених у файлі %s
 Delete antispam entry|Видалити значення антиспаму
@@ -179,7 +181,7 @@ Script configuration variables|Скрипт конфігураційних значень
 Change configuration variable|Змінтити значення конфігурації
 nick|нік
 This list of commands|Цей список команд
-%s user commands|
+%s user commands|Команди %s для користувачів
 Current topic|Поточна тема
 Your chat rank|Ваша позиція в ТОП чату
 You're not allowed to send private messages.|Вам було заборонено надсилати приватні повідомлення.
@@ -187,7 +189,7 @@ Unknown|Невідомо
 identifier|ідентифікатор
 Offline message to user|Оффлайн повідомлення користувачу
 Main chat history|Історія головного чату
-%s statistics|
+%s statistics|Статистика %s
 Script version: %s|Версія скрипту: %s
 Total chat rank points: %d|Загальна кількість балів ТОП чату: %d
 Total operator rank points: %d|Загальна кількість балів ТОП операторів: %d
@@ -202,12 +204,12 @@ to|до
 Unknown configuration variable: %s|Такого значення конфігурації не знайдено: %s
 %s version: %s|%s версія: %s
 Not installed|Не встановлено
-User dropped due to spam: %s|
+User dropped due to spam: %s|Користувач викинуть за спам: %s
 variable|змінна
 value|значення
 minutes|хвилин
 %s library version: %s|%s версія бібліотеки: %s
-Reorder right click menu item|
+Reorder right click menu item|Змінити порядок пункту з меню хаба
 lines|рядків
 Couldn't add rank exception because already exists: %s|Не можливо додати виключення ТОП, воно вже існує: %s
 Added rank exception: %s|ТОП виключення додано: %s
@@ -223,12 +225,12 @@ Deleted search filter: %s|Пошуковий фільтр видалено: %s
 Couldn't delete search filter because not found: %s|Видалити не вдалося, значення пошукового фільтру не знайдено: %s
 Search filter list|Список пошукового фільтру
 Search filter list is empty.|Список пошукового фільтру порожній.
-Magnet URI: %s|
+Magnet URI: %s|Магнет-посилання: %s
 Add search filter|Додати пошуковий фільтр
 Delete search filter|Видалити пошуковий фільтр
 Known actions are: %s|Наявні дії: %s
 Known flags are: %s|Наявні прапорці: %s
-Downloading version file: %s|
+Downloading version file: %s|Завантажую файл версії: %s
 Size of kicks table: %d [ %s: %d @ %s ]|Розмір таблиці кіків: %d [ %s: %d @ %s ]
 Size of bans table: %d [ %s: %d @ %s ]|Розмір таблиці блокувань: %d [ %s: %d @ %s ]
 Size of unbans table: %d [ %s: %d @ %s ]|Розмір таблиці розблокувань: %d [ %s: %d @ %s ]
@@ -292,7 +294,7 @@ Search filter exception list is empty.|Список вийнятків пошукового фільтру порож
 file|файл
 Read hub logs|Читати логи хабу
 Known files are: %s|Відомі файли: %s
-Log file is empty or does not exist.|
+Log file is empty or does not exist.|Файл із логом порожній чи не існує.
 Add command notification exception|Додати виняток команди сповіщення
 Delete command notification exception|Видалити виняток команди сповіщення
 Command notification exception list|Список вийнятків команди сповіщення
@@ -342,19 +344,19 @@ Deleted command permission: %s|Видалено параметри доступу команди: %s
 Couldn't delete command permission because not found: %s|Параметр не знайдено, нічого видаляти: %s
 Command permission list is empty.|Список параметрів доступу команд порожній.
 Total search rank points: %d|Загальна кількість балів ТОП пошуку: %d
-Please use following commands to finish update process|
-Moving file: %s|
+Please use following commands to finish update process|Використовуйте такі команди, щоб завершити процес оновлення
+Moving file: %s|Переміщаю файл: %s
 Please visit %s to download the script manually.|Відвідайте %s щоб завантажити скрипт вручну.
-Modified forbidden IP address with ban time %s: %s|
-Added forbidden IP address with ban time %s: %s|
+Modified forbidden IP address with ban time %s: %s|Змінена заборонена IP-адреса з баном %s: %s
+Added forbidden IP address with ban time %s: %s|Додана заборонена IP-адреса з баном %s: %s
 Deleted forbidden IP address: %s|Видалена заборонена IP адреса: %s
 Couldn't delete forbidden IP address because not found: %s|Заборонена IP адреса не знайдена, нічого видаляти: %s
 Forbidden IP address list|Список заборонених IP адрес
 Forbidden IP address list is empty.|Список заборонених IP адрес порожній.
-%s with IP %s and class %d allowed due to forbidden IP address exception: %s|
+%s with IP %s and class %d allowed due to forbidden IP address exception: %s|Користувач %s з IP-адресою %s та класом %d пропущений за винятком за IP-адресою: %s
 Couldn't delete category because not found: %s|Така категорія не знайдена, нічого видаляти: %s
-User redirected due to spam: %s|
-%s redirected due to bad search request.|
+User redirected due to spam: %s|Користувач перенаправлений за спам: %s
+%s redirected due to bad search request.|Користувач %s перенаправлений за пошук забороненої інформації.
 You can download me from: %s|Ви можете завантажити мене з: %s
 %s is registered with class %d and has been automatically unregistered and deleted from other tables.|%s зареєстровано з класом %d і було видалено з усіх таблиць бази даних.
 PiB|ПБ
@@ -364,10 +366,10 @@ MiB|МБ
 KiB|КБ
 B|Б
 EiB|ЕБ
-Get user's real nick|
+Get user's real nick|Дізнатися справжній нік користувача
 Requested nick wasn't found in custom nick list.|Запитаний нік не знайдено серед списку підробних ніків.
-Requested nick belongs to a user who is online: %s|
-Requested nick belongs to a user who is offline: %s|
+Requested nick belongs to a user who is online: %s|Запрошений нік належить користувачеві онлайн: %s
+Requested nick belongs to a user who is offline: %s|Запрошений нік належить користувачу, який знаходиться в офлайн: %s
 Clean up ranks|Очистити всі ТОП таблиці
 limit|обмеження
 %s with class %d deleted %d chat ranks lower than %d.|%s з класом %d видалив(ла) %d позиції ТОП чат нижчі за %d.
@@ -383,7 +385,7 @@ Add reminder|Додати нагадування
 Delete reminder|Видалити нагадування
 Reminder list|Список нагадувань
 Reminder list is empty.|Список нагадувань порожній.
-Known destinations are: %s|
+Known destinations are: %s|Відомі значення напрямів: %s
 Known interval is: %s|Відомі значення інтервалів: %s
 Modified reminder: %s|Нагадування відредаговано: %s
 Added reminder: %s|Нагадування додано: %s
@@ -424,7 +426,7 @@ Requested nick is real.|Запитаний нік використовується існуючим юзером.
 %s with class %d customized script command: %s => %s|%s з класом %d перейменував(ла) команду скрипту: %s => %s
 Reset all custom commands|Скинути всі операції з командами скрипту
 %d custom commands were reset.|%d команд було скинуто.
-%s tables are now deleted and script is locked.|
+%s tables are now deleted and script is locked.|Таблиці %s були видалені та скрипт заблоковано.
 Please unload the script and remove it from scripts directory.|Вивантажте скрипт та видаліть його з папки Scripts вашого хабу.
 Good luck.|Вього найкращого!
 Please unload the script to finish.|Для завершення операції вивантажте скрипт.
@@ -445,9 +447,9 @@ Word rank list is empty.|Список ТОП слів порожній.
 %s with class %d registered new user with class %d: %s|%s з класом %d зареєстрував(ла) нового користувача з класом %d: %s
 %s with class %d deleted registered user with class %d: %s|%s з класом %d видалив(ла) обліковий запис користувача з класом %d: %s
 %s with class %d changed user class from %d to %d: %s|%s з класом %d змінив(ла) клас зареєстрованого учасника з %d на %d: %s
-%s with IP %s and class %d allowed due to fake share exception: %s|
-%s with IP %s and class %d allowed due to clone exception: %s|
-%s with IP %s and class %d allowed due to same IP exception: %s|
+%s with IP %s and class %d allowed due to fake share exception: %s|Користувач %s з IP-адресою %s і класом %d пропущений за винятком підробленої шари: %s
+%s with IP %s and class %d allowed due to clone exception: %s|Користувач %s з IP-адресою %s та класом %d пропущений за винятком дублювання: %s
+%s with IP %s and class %d allowed due to same IP exception: %s|Користувач %s з IP-адресою %s і класом %d пропущений за винятком дублюючого IP: %s
 seconds|секунд
 Add news item|Додати новину
 Delete news items|Видалити новини
@@ -462,7 +464,7 @@ There are no main chat history messages written by you.|Немає збереженої історії
 Last %d main chat messages written by you|Останні %d повідомлень головного чату написані вами
 Your main chat history|Ваша історія головного чату
 Script memory usage: %s|Використання пам`яті скриптом: %s
-Failed to load translation file %s: %s|
+Failed to load translation file %s: %s|Неможливо завантажити файл з перекладом %s: %s
 Force custom nick for user|Примусовий підробний нік для користувача
 Either the feature is disabled or user that you're trying to set welcome message for doesn't have access to it.|
 name|ім`я
@@ -478,7 +480,7 @@ Known operations are: %s|Відомі операції: %s
 Your logout message: %s|Ваше повідомлення при виході: %s
 Force welcome message for user|Примусове вітальне повідомлення для користувача
 Login message set for %s: %s|Привітання входу встановлене для %s: %s
-Change nick of a registered user|
+Change nick of a registered user|Змінити нік зареєстрованому користувачеві
 User is not registered: %s|Користувач не зареєстрований: %s
 You are now going to be disconnected from the hub in order for your new nick to apply: %s|Зараз вам необхідно перез'єднатися з хабом для задіяння нового ніку: %s
 Renamed account %s: %s|Обліковий запис перейменовано %s: %s
@@ -504,7 +506,7 @@ Couldn't delete release because not found: %s|Неможливо видалити реліз, не знайд
 Reminder preview|Передогляд нагадування
 Preview of %s reminder: %s|Передогляд %s нагадування: %s
 Specified nick is already in use.|Вказаний нік вже використовується.
-Live user location statistics by country|
+Live user location statistics by country|Поточний розподіл користувачів по країнах
 All time user location statistics|Статистика місцезнаходження користувача за весь час
 This feature requires %s or later installed on your system.|Ця функція потребує %s або пізнішої версії встановленої у вашій системі.
 Total count since %s: %d|Загальна кількість від %s: %d
@@ -532,18 +534,18 @@ Returned output|Повернений результат
 second|секунда
 You are now known as: %s|Ви зараз відомі як: %s
 You renamed %s to: %s|Ви перейменували %s в: %s
-Spam exception from %s with IP %s and class %d in MC: %s|Спам виключення %s з IP %s та класом %d в ГЧ: %s
-Spam exception from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s|
+Spam exception from %s with IP %s and class %d in MC: %s|Виявлено виняток для антиспаму. Писав користувач %s з IP-адреси %s. Клас користувача %d, виняток виявлено в головному чаті: %s
+Spam exception from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s|Виявлено виключення антиспаму від користувача %s з IP адресою %s та класом %d у вигляді особистого повідомлення користувачу %s з IP адресою %s та класом %d: %s
 Spam exception from %s with IP %s and class %d in offline message: %s|Спам виключення %s з IP %s та класом %d в offline повідомленні: %s
-Spam exception from %s with IP %s and class %d in report: %s|Спам виключення %s з IP %s та класом %d в report повідомленні: %s
-Spam notification from %s with IP %s and class %d in MC: %s|Спам сповіщення від %s з IP %s та класом %d в ГЧ: %s
-Spam notification from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s|
-Spam notification from %s with IP %s and class %d in offline message: %s|Спам сповіщення від %s з IP %s та класом %d в offline повідомленні: %s
-Spam notification from %s with IP %s and class %d in report: %s|Спам сповіщення від %s з IP %s та класом %d в report повідомленні: %s
-Spam from %s with IP %s and class %d in MC: %s|Спам від %s з IP %s та класом %d в ГЧ: %s
-Spam from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s|
+Spam exception from %s with IP %s and class %d in report: %s|Виявлено виняток для антиспаму. Писав користувач %s з IP-адреси %s. Клас користувача %d, виключення доповіді в головному чаті: %s
+Spam notification from %s with IP %s and class %d in MC: %s|Попередження про спам від користувача %s з IP %s та класом %d в головному чаті: %s
+Spam notification from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s|Повідомлення про спам від користувача %s з IP адресою %s та класом %d у вигляді особистого повідомлення користувачу %s з IP адресою %s та класом %d: %s
+Spam notification from %s with IP %s and class %d in offline message: %s|Попередження про спам від користувача %s з IP %s та класом %d в онлайн повідомленні: %s
+Spam notification from %s with IP %s and class %d in report: %s|Попередження про спам від користувача %s з IP %s та класом %d у доповіді: %s
+Spam from %s with IP %s and class %d in MC: %s|Спам від користувача %s з IP-адреси %s. Клас користувача %d, спамив у головний чат: %s
+Spam from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s|Спам від користувача %s c IP адресою %s та класом %d у вигляді особистого повідомлення користувачу %s з IP адресою %s та класом %d: %s
 Spam from %s with IP %s and class %d in offline message: %s|Спам від %s з IP %s та класом %d в offline повідомленні: %s
-Spam from %s with IP %s and class %d in report: %s|Спам від %s з IP %s та класом %d в report повідомленні: %s
+Spam from %s with IP %s and class %d in report: %s|Спам від користувача %s з IP-адреси %s. Клас користувача %d, спамив у доповіді: %s
 Modified antispam entry with action %d and priority %d to scan in MC: %s|Змінено антиспам запис з дією %d та пріорітетом %d для сканування в ГЧ: %s
 Modified antispam entry with action %d and priority %d to scan in PM: %s|Змінено антиспам запис з дією %d та пріорітетом %d для сканування в ПП: %s
 Modified antispam entry with action %d and priority %d to scan in MC and PM: %s|Змінено антиспам запис з дією %d та пріорітетом %d для сканування в ГЧ та ПП: %s
@@ -617,11 +619,11 @@ Chatroom member list|Список учасників кімнати
 Chatroom is empty.|Список учасників кімнати порожній.
 You're already member of this chatroom.|Ви вже учасник цієї кімнати.
 Chatroom user commands|Команди користувачів у кімнаті
-Unknown chatroom command, use %s for help.|
+Unknown chatroom command, use %s for help.|Невідома команда чату кімнати, використовуйте %s для отримання допомоги.
 Enter the chatroom|Увійти в чат-кімнату
 Leave the chatroom|Вийти з чат-кімнати
 Deleted %d rows from country code statistics table: %s|Видалено %d записів з БД статистики кодів країн: %s
-Force chat mode for user|
+Force chat mode for user|Встановити режим чату для користувача
 Known chat modes are: %s|Відомі режими: %s
 mode|режим
 Changing chat mode for %s: %s => %s|Змінення чат режиму для %s: %s => %s
@@ -630,16 +632,16 @@ Chat mode user list|Список користувацьких режимів чату
 Chat mode user list is empty.|Список користувацьких режимів чату порожній.
 %s user lookup|%s пошук користувача
 Add IP gag|Додати IP gag
-Added IP gag %s with time %d and reason: %s|
-Modified IP gag %s with time %d and reason: %s|
+Added IP gag %s with time %d and reason: %s|Додано заглушку по IP %s з часом %d та причиною: %s.
+Modified IP gag %s with time %d and reason: %s|Змінена заглушка по IP %s з часом %d і причиною: %s
 Deleted IP gag: %s|Видалено IP gag: %s
 IP gag not found: %s|IP gag не знайдено: %s
 IP gag list|IP gag список
 IP gag list is empty.|IP gag список порожній.
 Delete IP gag|Видалити IP gag
 Main chat is currently disabled for you.|Головний чат вимкнено для вас.
-Main chat is currently disabled for you because: %s|
-Cleared temporary IP gag list.|
+Main chat is currently disabled for you because: %s|Головний чат вимкнено для вас, причина: %s
+Cleared temporary IP gag list.|Список тимчасових заглушок IP очищений.
 Show custom script commands|Відобразити нестандатні команди скрипту
 Custom script command list|Список нестандартних команд скрипту
 Custom script command list is empty.|Список нестандартних команд скрипту порожній.
@@ -648,9 +650,9 @@ Added %s to IP gag list, %d users in total.|Додано %s в IP gag список, %d users 
 Flood detected from IP %s last known as %s with class %d in MC: %s|Виявлено флуд з IP %s останній раз відомий як %s з класом %d в ГЧ: %s
 Flood detected from IP %s last known as %s with class %d in PM to %s with IP %s and class %d: %s|
 Private chat is currently disabled for you.|Приватні повідомлення вимкнено для вас.
-Private chat is currently disabled for you because: %s|
-Main chat flood detected from your IP.|
-%d users with IP %s dropped due to flood.|
+Private chat is currently disabled for you because: %s|Приватний чат вимкнено для вас, причина: %s
+Main chat flood detected from your IP.|Виявлено флуд у головний чат від вашої IP адреси.
+%d users with IP %s dropped due to flood.|Користувач %d з IP %s викинутий за флуд.
 No error message specified.|Немає відповідного повідомлення про помилку.
 Search filter|Пошуковий фільтр
 MyINFO check|Перевірка MyINFO
@@ -702,13 +704,13 @@ Hubs: %s|Хабів: %s
 Limiter: %s KiB/s|Обмеження: %s KiB/s
 Connection: %s|Тип з`єднання: %s
 Status: %s|Статус: %s
-Email: %s|Email: %s
+Email: %s|Електронна пошта: %s
 Share: %s|Шара: %s
 Exact share: %s|Точна шара: %s
 Class: %d|Клас: %d
 IP: %s|IP: %s
 DNS: %s|DNS: %s
-Country: %s|
+Country: %s|Код країни: %s
 Client: %s|Клієнт: %s
 Version: %s|Версія: %s
 Normal|Нормальний
@@ -722,10 +724,10 @@ IPv6|
 Unable to get bot information: %s|Не вдалося отримати інформацію про бота: %s
 Bot information|Бот інформація
 Owner script: %s|Власник скрипту: %s
-%s with IP %s and class %d allowed due to forbidden DNS exception: %s|
+%s with IP %s and class %d allowed due to forbidden DNS exception: %s|Користувач %s з IP-адресою %s і класом %d пропущений за винятком забороненого DNS-ім'я: %s
 In order to use this feature you need to enable DNS lookup. Do it by setting hub configuration variable %s to %d. Please note: Enabling DNS lookup might slow your hub performance down.|Для використання цієї функції вам необхідно увімкнути виявлення DNS на вашому хабі. Встановіть значення конфігурації хабу %s на %d зі списку !gc. Попередження: Увімкнення цієї опції знижує швидкодію хабу.
-Modified forbidden DNS with ban time %s: %s|
-Added forbidden DNS with ban time %s: %s|
+Modified forbidden DNS with ban time %s: %s|Змінена заборонена DNS-адреса з баном %s: %s
+Added forbidden DNS with ban time %s: %s|Додана заборонена DNS-адреса з баном %s: %s
 Deleted forbidden DNS: %s|Видалено заборонений DNS: %s
 Couldn't delete forbidden DNS because not found: %s|Не вдалося видалити заборонений DNS тому що не знайдено: %s
 Forbidden DNS list|Список заборонених DNS
@@ -734,15 +736,15 @@ Powered by %s|Захищено з %s
 Warning: %s|Увага: %s
 Open files limit set to %d is smaller than maximum users configuration which is %d. You can correct this by setting %s to %d or higher and restarting the hub.|Обмеження відкритих файлів встановлено на %d менше ніж %d. Встаніть значення конфігурації %s на %d або більше та перезавантажте хаб.
 Additional help|Додаткова допомога
-Remove all %s tables and files|
-You can't kick user whose class is higher or equals your own: %s|
+Remove all %s tables and files|Видалити таблиці та файли %s
+You can't kick user whose class is higher or equals your own: %s|Ви не можете кикнути користувача чий клас дорівнює або вище вашого: %s
 Your topic contains forbidden characters which can't be used for security reason: %s|Вказана тема містить недопустимі символи і не може бути встановлена з міркувань безпеки: %s
 Hub uptime: %s|Безперервна робота хабу: %s
 User count: %s|Кількість коистувачів: %s
 Total share: %s|Загальний розмір шар: %s
-%s with IP %s and class %d tries to speak with IP gag in MC: %s|%s з IP %s та класом %d намагається щось сказати з заблокованого IP в ГЧ: %s
-%s with IP %s and class %d tries to speak with IP gag in PM to %s with IP %s and class %d: %s|
-Private message replaced for user: %s|
+%s with IP %s and class %d tries to speak with IP gag in MC: %s|Користувач %s з IP-адресою %s та класом %d намагався надіслати повідомлення незважаючи на заглушку по IP у головному чаті: %s
+%s with IP %s and class %d tries to speak with IP gag in PM to %s with IP %s and class %d: %s|Користувач %s c IP адресою %s та класом %d намагався відправити повідомлення незважаючи на заглушку по IP у вигляді приватного повідомлення користувачу %s з IP адресою %s та класом %d: %s
+Private message replaced for user: %s|Повідомлення замінено на %s.
 Command logger|Логгер команд
 Showing %d entries from command logger|Відображення %d записів з логу команд
 Command logger is empty.|Лог команд порожній.
@@ -754,23 +756,23 @@ Couldn't modify authorization entry because not found: %d|Неможливо змінити запи
 Uptime: %s|Безперервна робота: %s
 Enable requested feature and try again.|Увімкніть функцію запитів і спробуйте ще раз.
 cc|кк
-Modified forbidden country code with ban time %s: %s|
-Added forbidden country code with ban time %s: %s|
+Modified forbidden country code with ban time %s: %s|Змінено заборонений код країни з баном %s: %s
+Added forbidden country code with ban time %s: %s|Доданий заборонений код країни з баном %s: %s
 Deleted forbidden country code: %s|Видалено заборонений код країни (КК): %s
 Couldn't delete forbidden country code because not found: %s|Неможливо видалити заборонений код країни (КК) тому що не знайдений: %s
 Forbidden country code list|Список заборонених кодів країн (КК)
 Forbidden country code list is empty.|Список заборонених кодів країн (КК) порожній.
-%s with IP %s and class %d allowed due to forbidden country code exception: %s|
-I'm staying idle due to confusion.|
-Added replacer in MC: %s|
-Deleted chat replacer with ID %d: %s|
-Couldn't delete chat replacer because not found: %s|
-Chat replacer list|
-Chat replacer list is empty.|
+%s with IP %s and class %d allowed due to forbidden country code exception: %s|Користувач %s з IP адресою %s та класом %d пропущений за винятком за забороненим кодом країни: %s
+I'm staying idle due to confusion.|Я простою через плутанину.
+Added replacer in MC: %s|Заміна виразів до головного чату додана: %s
+Deleted chat replacer with ID %d: %s|Видалено пункт заміни повідомлень у чаті з ID %d: %s
+Couldn't delete chat replacer because not found: %s|Неможливо видалити пункт заміни повідомлень у чаті, тому що не знайдено: %s
+Chat replacer list|Список замінних виразів
+Chat replacer list is empty.|Список замінних виразів порожній.
 Replace|Заміна
-Modified chat replacer exception with type %d: %s|
-Added chat replacer exception with type %d: %s|
-Deleted chat replacer exception with type %d: %s|
+Modified chat replacer exception with type %d: %s|Змінено виняток для заміни виразів із типом %d: %s
+Added chat replacer exception with type %d: %s|Додано виняток для заміни виразів із типом %d: %s
+Deleted chat replacer exception with type %d: %s|Видалено виняток для заміни виразів із типом %d: %s
 Couldn't delete chat replacer exception because not found: %s|Неможливо видалити виключення чат замінювача тому що не знайдено: %s
 Chat replacer exception list|Список виключень виключення чат замінювача
 Chat replacer exception list is empty.|Список виключень виключення чат замінювача порожній.
@@ -781,14 +783,14 @@ Add chat replacer exception|Додати виключення чат замінювача
 Delete chat replacer exception|Видалити виключення чат замінювача
 Chat replacer|Чат замінювач
 You need to send another %d main chat messages in order to use hub registration.|Використовуючи команду +regme накладаються слідуючі обмеження: вам потрібно надіслати не менше %d повідомлень в головний чат.
-Please wait another %d seconds before using hub registration.|
+Please wait another %d seconds before using hub registration.|Зачекайте ще %d секунд, перш ніж використовувати реєстрацію.
 In order to use this feature you need to set %s to: %d|Для використання цієї опції ви маєте встановити %s на: %d
-Please reconnect to gain %d seconds of uptime in order to use hub registration.|
-Dropping %s with IP %s and class %d due to protocol flood detection: %s|
-Protocol flood detected from your client: %s|
-Automatic update check detected stable version of %s available, use following command to update: %s|
-menu|
-Dropping user due to clone detection from IP %s with class %d: %s = %s|
+Please reconnect to gain %d seconds of uptime in order to use hub registration.|Будь ласка, перепідключіться та зачекайте %s секунд для можливості реєстрації на хабі.
+Dropping %s with IP %s and class %d due to protocol flood detection: %s|Вимкнено користувача %s з IP %s та класом %d у зв'язку з виявлення флуду: %s
+Protocol flood detected from your client: %s|З вашого клієнта виявлено флуд: %s
+Automatic update check detected stable version of %s available, use following command to update: %s|Автоматична перевірка оновлень виявила стабільну версію %s, для оновлення використовуйте: %s
+menu|Меню
+Dropping user due to clone detection from IP %s with class %d: %s = %s|Вимкнено користувач у зв'язку з виявленням клону з IP %s з класом %d: %s = %s
 Configuration variable %s must be a valid IP address.|Значення %s повинне бути корректною IP адресою
 Average share per user: %s|Розмір шари в середньому на користувача: %s
 Don't be stupid.|Не будьте дурними :)
@@ -809,568 +811,568 @@ query|запит
 Execute MySQL query|Виконати MySQL запит
 Execute shell command|Виконати shell-команду
 Experts only|Тільки для експертів
-Add hard IP ban entries separated by space|
-Delete hard IP ban entry|
-List of hard IP ban entries|
-Modified hard IP ban entry: %s|
-Added hard IP ban entry: %s|
-Deleted hard IP ban entry: %s|
-Hard IP ban list is empty.|
-Hard IP ban refused connection from IP %s: %s|
-Please wait another %d seconds before using hub search engine.|
-Add right click menu item|
-Delete right click menu item|
-List of right click menu items|
-Blacklisted connection from IP %s dropped: %s|
-To add multiple entries with this command you need to separate every entry by space.|
-Add IP watch entry|
-Delete IP watch entry|
-List of IP watch entries|
-result|
-Modified IP watch entry: %s|
-Added IP watch entry: %s|
-Known results are: %s|
-Deleted IP watch entry: %s|
-IP watch list is empty.|
-Couldn't delete IP watch entry because not found: %s|
-IP watch notification from %s with IP %s: %s|
-unknown nick|
-Country code gag|
-Add country code gag|
-Added country code gag: %s|
-Added country code gag %s with reason: %s|
-Modified country code gag: %s|
-Modified country code gag %s with reason: %s|
-Deleted country code gag: %s|
-Country code gag not found: %s|
-Country code gag list|
-Country code gag list is empty.|
-Delete country code gag|
-Cleared country code gag list.|
-%s with IP %s and class %d tries to speak with country code gag in MC: %s|
-%s with IP %s and class %d tries to speak with country code gag in PM to %s with IP %s and class %d: %s|
-No reason specified|
-Automatically deleted %d user log entries older than %d days.|
-Main chat message replaced for user: %s|
-Unknown protocol command from IP %s before login: %s|
-Added %s to hard IP ban list, %d users in total.|
-NMDC version: %s|
-Client supports: %s|
-Modified forbidden client supports with ban time %s: %s|
-Added forbidden client supports with ban time %s: %s|
-Modified forbidden NMDC version with ban time %s: %s|
-Added forbidden NMDC version with ban time %s: %s|
-Latest version of %s is required in order to use this feature.|
-Deleted forbidden client supports: %s|
-Couldn't delete forbidden client supports because not found: %s|
-Deleted forbidden NMDC version: %s|
-Couldn't delete forbidden NMDC version because not found: %s|
-Forbidden client supports list|
-Forbidden client supports list is empty.|
-Forbidden NMDC version list|
-Forbidden NMDC version list is empty.|
-%s with IP %s and class %d allowed due to forbidden client supports exception: %s|
-%s with IP %s and class %d allowed due to forbidden NMDC version exception: %s|
-City: %s|
-IP range: %s - %s|
-Region: %s|
-Time zone: %s|
-Continent: %s|
-Postal code: %s|
-Coordinates: %.4f %.4f|
-Metro code: %d|
-Area code: %d|
-Drop users with IP|
-No users found with IP: %s|
-Dropped %d users with IP: %s|
-%s dropped %d users with IP: %s|
-Live user location statistics by city|
-Live user location statistics by city from %s=%s|
-No users in the hub from: %s=%s|
-Help notes|
-parameter|
-Command parameters %s are always required, while %s are optional.|
-Quoted parameters %s or %s must be used with quotes.|
-IP information|
-IP information not available: %s|
-Message replaced for user with IP %s and class %d in MC: <%s> %s|
-IP %s permanently banned: <%s> %s|
-Nick %s permanently banned: <%s> %s|
-Range %s permanently banned: <%s> %s|
-Host %s permanently banned: <%s> %s|
-Share %s permanently banned: <%s> %s|
-Prefix %s permanently banned: <%s> %s|
-IP %s temporarily banned until %s: <%s> %s|
-Nick %s temporarily banned until %s: <%s> %s|
-Range %s temporarily banned until %s: <%s> %s|
-Host %s temporarily banned until %s: <%s> %s|
-Share %s temporarily banned until %s: <%s> %s|
-Prefix %s temporarily banned until %s: <%s> %s|
-IP %s unbanned: <%s> %s|
-Nick %s unbanned: <%s> %s|
-Range %s unbanned: <%s> %s|
-Host %s unbanned: <%s> %s|
-Share %s unbanned: <%s> %s|
-Prefix %s unbanned: <%s> %s|
-Known contexts are: %s|
-Known orders are: %s|
-Modified right click menu item: %s|
-Added right click menu item: %s|
-Deleted right click menu item: %s|
-Right click menu item not found: %d|
-Right click menu item list is empty.|
-Menu item|
-Menu command|
-Changed right click menu item order: %s|
-Separator or eraser|
-Nick and IP %s unbanned: <%s> %s|
-Other %s unbanned: <%s> %s|
-Vote for user to be kicked|
-You don't want to vote for kicking an operator.|
-User voted kick|
-You have already voted for kicking that user.|
-There is an error in following antispam entry pattern|
-Pattern|
-Error|
-Solution|
-There is an error in following search filter pattern|
-There is an error in following search filter exception pattern|
-There is an error in following antispam exception entry pattern|
-There is an error in following forbidden nick pattern|
-There is an error in following MyINFO exception pattern|
-There is an error in following forbidden description pattern|
-There is an error in following forbidden tag pattern|
-There is an error in following forbidden connection type pattern|
-There is an error in following forbidden email pattern|
-There is an error in following forbidden share size pattern|
-There is an error in following forbidden IP address pattern|
-There is an error in following forbidden country code pattern|
-There is an error in following forbidden DNS pattern|
-There is an error in following forbidden client supports pattern|
-There is an error in following forbidden NMDC version pattern|
-Added replacer in PM: %s|
-Added replacer in MC and PM: %s|
-Message replaced for user with IP %s and class %d in PM to %s with IP %s and class %d: <%s> %s|
-Message ignored due to flood detection from %s with IP %s and class %d in MC: %s|
-Users with same IP|
-Parameter count mismatch detected in following translation string: %s|
-Infected user detected|
-Found files|
-Infected user detected with nick %s and IP %s and share %s and spent time: %s|
-Sadly I don't have access to send infected user information to AVDB, please ask maintainer of this script to add your server IP address to access list. AVDB reporting feature has been automatically disabled.|
-In order to send infected user information to AVDB you need to ask maintainer of this script to add your server IP address to AVDB access list.|
-Antivirus statistics|
-File names used for search|
-File extensions used for search|
-Possibly infected users|
-Spent time: %s|
-Infected user logged in with IP %s and share %s: %s|
-Loaded %d of %d with totally %d items: %s|
-Infected user information sent to %s: %s|
-Failed to load information from %s: %s|
-Failed to send information to %s: %s|
-Loaded none with totally %d items: %s|
-Infected user found with IP %s and share %s: %s|
-Server didn't reply with expected status code.|
-Size of %s: %d @ %s|
-Clear kick votes for user|
-Vote kick list|
-Vote kick list is empty.|
-Votes: %d of %d|
-Voters: %s|
-Triggers|
-Add trigger|
-Trigger list|
-Delete trigger|
-Modified trigger: %s|
-Added trigger: %s|
-Deleted trigger: %s|
-Trigger not found: %s|
-Trigger list is empty.|
-Class range: %d to %d|
-Pinger|
-Guest|
-Registered|
-VIP|
-Operator|
-Cheef|
-Administrator|
-Master|
-News item added by %s: %s|
-Your connection request is blocked because user that you're trying connect to was detected as virus spreader: %s|
-Connection requests to following user will be blocked: %s|
-Downloading script file: %s|
-Stable version of %s is available: %s|
-Development version of %s is available: %s|
-Translation file loaded: %s|
-Loaded none of %d with totally %d items: %s|
-Failed to execute %s with code: %d|
-Failed to execute %s with error: %s|
-Failed to execute %s without code and error.|
-Failed to move file: %s|
-Downloading translation file: %s|
-File not found on update server: %s|
-File not found on remote server: %s|
-File is empty.|
-Force infected user detection|
-You can't block user whose class is higher or equals your own: %s|
-User already blocked: %s|
-item|
-Search in %s|
-Antivirus|
-Nothing was found in: %s|
-Searching for %s in %s: %s|
-Showing %d results from %s|
-%s module version: %s|
-This feature requires following module installed on your system: %s|
-Failed to start antivirus search server: %s|
-Started antivirus search server: %s|
-Stopped antivirus search server: %s|
-Blocked infected users|
-Add automatic country chatroom entrance|
-Automatic country chatroom entrance list|
-Delete automatic country chatroom entrance|
-Couldn't add automatic country chatroom entrance because already exists with ID: %d|
-Added automatic country chatroom entrance for %s: %s|
-Couldn't delete automatic country chatroom entrance because ID not found: %d|
-Deleted automatic country chatroom entrance with ID: %d|
-Automatic country chatroom entrance list is empty.|
-Please note, following function is required for features available in this version of %s and is currently not available in running version of %s but is available in latest update: %s|
-note|
-Access is restricted.|
-Convert LRE to plain text|
-LRE converted to plain text: %s|
-Please check your command syntax, something is wrong there.|
-Entry used in detection: %s|
-Exception used in detection: %s|
-text|
-Delete history messages by text|
-Deleted %d main chat history messages by text: %s|
-%s with class %d deleted %d main chat history messages by text: %s|
-Looking for users with nick %s on: %s|
-Looking for users with description %s on: %s|
-Looking for users with client tag %s on: %s|
-Looking for users with connection type %s on: %s|
-Looking for users with email address %s on: %s|
-Looking for users with share size %s on: %s|
-Looking for users with IP address %s on: %s|
-Users with nick not found in any hubs: %s|
-Users with description not found in any hubs: %s|
-Users with client tag not found in any hubs: %s|
-Users with connection type not found in any hubs: %s|
-Users with email address not found in any hubs: %s|
-Users with share size not found in any hubs: %s|
-Users with IP address not found in any hubs: %s|
-Users with nick %s found in following hubs|
-Users with description %s found in following hubs|
-Users with client tag %s found in following hubs|
-Users with connection type %s found in following hubs|
-Users with email address %s found in following hubs|
-Users with share size %s found in following hubs|
-Users with IP address %s found in following hubs|
-Blocked PM|
-Right click menu|
-IP watch|
-Hard IP bans|
-Chatroom history|
-Chatroom history is empty.|
-Last %d chatroom messages|
-There are no chatroom history messages to remove: %s|
-Deleted %d chatroom history messages: %s|
-%s with class %d deleted %d chatroom history messages: %s|
-Set your chat mode|
-real|
-Specified country code isn't valid: %s|
-You can't block user who don't share anything: %s|
-You can't kick user who don't share anything: %s|
-Flood detected from %s with IP %s and class %d in MC: %s|
-User dropped due to flood: %s|
-Main chat flood detected from your nick.|
-Private chat flood detected from your IP.|
-Sorry, your message has been ignored.|
-Disable or enable right click menu item|
-Disabled right click menu item: %s|
-Enabled right click menu item: %s|
-%s added to search block list.|
-Your search request is discarded due to previous forbidden search request or result: %s|
-Hub URL: %s|
-Search filter block list|
-Delete search filter block list entry|
-Search filter block list is empty.|
-Deleted search filter block list entry: %s|
-Couldn't delete search filter block list entry because not found: %s|
-Yes|
-No|
-%s with class %d changed configuration variable %s.%s: %s => %s|
-Please wait another %d seconds before using public chat.|
-Please wait another %d seconds before using private chat.|
-Low chat uptime of %d seconds from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s|
-Low chat uptime of %d seconds from %s with IP %s and class %d in MC: %s|
-Low chat uptime of %d seconds from %s with IP %s and class %d in command: %s|
-Low registration uptime from %s with IP %s and class %d: %s|
-%d seconds|
-Thank you, your report has been accepted.|
-Low search uptime of %d seconds from %s with IP %s and class %d as any file: %s|
-Low search uptime of %d seconds from %s with IP %s and class %d as audio file: %s|
-Low search uptime of %d seconds from %s with IP %s and class %d as compressed file: %s|
-Low search uptime of %d seconds from %s with IP %s and class %d as document: %s|
-Low search uptime of %d seconds from %s with IP %s and class %d as executable: %s|
-Low search uptime of %d seconds from %s with IP %s and class %d as picture: %s|
-Low search uptime of %d seconds from %s with IP %s and class %d as video: %s|
-Low search uptime of %d seconds from %s with IP %s and class %d as folder: %s|
-Low search uptime of %d seconds from %s with IP %s and class %d as TTH: %s|
-User dropped: %s|
-%d of %d|
-Main chat responder list contains %d items, but none matched your pattern.|
-word|
-Top %d used words with filter: %s|
-Support hub|
-User manual|
-range|
-There is an error in following forbidden chat nick pattern|
-Modified forbidden chat nick with ban time %s: %s|
-Added forbidden chat nick with ban time %s: %s|
-Deleted forbidden chat nick: %s|
-Couldn't delete forbidden chat nick because not found: %s|
-Forbidden chat nick list|
-Forbidden chat nick list is empty.|
-%s with IP %s and class %d allowed due to forbidden chat nick exception: %s|
-%s lookup|
-%s lookup didn't return anything.|
-%s result|
-No entrance|
-ASN: %s|
-%s was kicked with reason: %s|
-City gag|
-Add city gag|
-City gag list|
-Delete city gag|
-Modified city gag %s with reason: %s|
-Modified city gag: %s|
-Added city gag %s with reason: %s|
-Added city gag: %s|
-Cleared city gag list.|
-Deleted city gag: %s|
-City gag not found: %s|
-City gag list is empty.|
-%s with IP %s and class %d tries to speak with city gag in PM to %s with IP %s and class %d: %s|
-%s with IP %s and class %d tries to speak with city gag in MC: %s|
-%s with IP %s and class %d tried to speak in MC without chat code: <%s> %s|
-%s with IP %s and class %d tried to speak without chat code in PM to %s with IP %s and class %d.|
-Low connection attempt uptime of %d seconds from %s with IP %s and class %d to user: %s|
-Please wait another %d seconds before connecting to other users.|
-path|
-Search in history messages|
-Show history lines at position|
-No main chat history messages found.|
-Found %d main chat messages|
-Search in command logs|
-No command logs found.|
-Found %d command logs|
-Unavailable|
-Clone information|
-No clones detected.|
-%d users with IP %s and shared bytes %d: %s|
-Total number of clones: %d|
-Clean up registered users table|
-magnet|
-Release modified within category %s by %s: %s|
-Release added within category %s by %s: %s|
-Release deleted by %s: %s|
-Release category deleted by %s: %s|
-Someone from your IP address have already voted for kicking that user.|
-IP list: %s|
-First vote can't be negative.|
-You can't vote for kicking yourself.|
-Redirect all clones|
-Number of redirected clones: %d|
-Your search result is discarded due to previous forbidden search result or request: %s|
-Search result exception from %s with IP %s and class %d as any file: %s|
-Search result notification from %s with IP %s and class %d as any file: %s|
-Bad search result from %s with IP %s and class %d as any file: %s|
-User dropped due to bad search result: %s|
-User didn't send any search results: %s|
-User redirected due to bad search result: %s|
-Search result exception from %s with IP %s and class %d as folder: %s|
-Search result notification from %s with IP %s and class %d as folder: %s|
-Bad search result from %s with IP %s and class %d as folder: %s|
-Search result exception from %s with IP %s and class %d as TTH: %s|
-Search result notification from %s with IP %s and class %d as TTH: %s|
-Bad search result from %s with IP %s and class %d as TTH: %s|
-Resetting proxy lookup daily quote limit: %d|
-Your message will be delayed for proxy lookup of your IP address.|
-You're not allowed to chat due to public proxy detection of your IP address.|
-Proxy lookup daily quote limit reached on chat message from user with IP %s: %s|
-Proxy lookup queue limit reached on chat message from user with IP %s: %s|
-Blocking private main chat message from %s with IP %s detected as public proxy to %s with IP %s: %s|
-Blocking main chat message from %s with IP %s detected as public proxy: %s|
-Blocking private chat message from %s with IP %s detected as public proxy to %s with IP %s: %s|
-Blocking third person main chat message from %s with IP %s detected as public proxy: %s|
-Blocking offline private chat message from %s with IP %s detected as public proxy to %s with IP %s: %s|
-Main chat message from %s with IP %s will be delayed for proxy lookup: %s|
-Private chat message from %s with IP %s to %s with IP %s will be delayed for proxy lookup.|
-Private main chat message from %s with IP %s to %s with IP %s will be delayed for proxy lookup.|
-Third person main chat message from %s with IP %s will be delayed for proxy lookup: %s|
-Offline private chat message from %s with IP %s to %s with IP %s will be delayed for proxy lookup.|
-In order to use this feature you need to set %s to your email address.|
-Failed to execute %s for proxy lookup of IP %s with code: %d|
-Failed to execute %s for proxy lookup of IP %s with error: %s|
-Failed to execute %s for proxy lookup of IP %s without code and error.|
-Failed proxy lookup of IP %s with unknown result data: %s|
-Failed proxy lookup of IP %s without result data.|
-Failed proxy lookup of IP %s without result file.|
-Failed proxy lookup of IP %s with result: %s|
-Invalid request|
-Invalid IP|
-Private IP|
-Under maintenance|
-Request banned|
-Invalid email|
-Not enough matches for proxy lookup of IP %s: %d of %d|
-Public proxy detected on IP: %s|
-Public proxy detected on IP %s with ASN: %s|
-Unsent main chat message from logged out user %s with IP %s before finishing proxy lookup: %s|
-Unsent private chat message from logged out user %s with IP %s to %s with IP %s before finishing proxy lookup: %s|
-Unsent private main chat message from logged out user %s with IP %s to %s with IP %s before finishing proxy lookup: %s|
-Unsent third person main chat message from logged out user %s with IP %s before finishing proxy lookup: %s|
-Unsent offline private chat message from logged out user %s with IP %s to %s with IP %s before finishing proxy lookup: %s|
-%s logged in with IP %s previously detected as public proxy.|
-%s logged in with IP %s previously detected as public proxy with ASN: %s|
-Filtered search request duplicates: %d of %d|
-Find configuration variables|
-Found %d configuration variables|
-No configuration variables found.|
-Secure connection: %s|
-TLS version: %s|
-You can't set IP on user whose class is higher or equals your own: %s|
-Failed to set user IP: %s @ %s|
-IP successfully set on user: %s @ %s|
-Invalid command parameters specified: %s|
-Set user IP|
-Top %d uptime rankers|
-Your uptime rank|
-Your uptime rank is: %s|
-You have to reconnect to get started.|
-Uptime rank list is empty.|
-Top %d uptime rankers|
-Deleted from uptime rank list: %s|
-Not found in uptime rank list: %s|
-%s with class %d deleted %d uptime ranks lower than %d.|
-Size of uptime ranks table: %d [ %s: %d @ %s ]|
-Total uptime rank time: %s|
-Function disabled|
-Code %d|
-Unknown error|
-No file|
-No data|
-Unknown data|
-IP intelligence: %s|
-Forbidden MyINFO list|
-Forbidden MyINFO list is empty.|
-There is an error in following forbidden MyINFO pattern|
-Modified forbidden MyINFO with ban time %s: %s|
-Added forbidden MyINFO with ban time %s: %s|
-Deleted forbidden MyINFO: %s|
-Couldn't delete forbidden MyINFO because not found: %s|
-%s with IP %s and class %d allowed due to forbidden MyINFO exception: %s|
-Adding new AVDB item to our list: %s|
-Updating AVDB item with different user nick: %s|
-Updating AVDB item with different IP address: %s|
-Updating AVDB item with different share size: %s|
-Chat flood or spam detected from your IP|
-On restart|
-Modified ASN gag %s with reason: %s|
-Modified ASN gag: %s|
-Added ASN gag %s with reason: %s|
-Added ASN gag: %s|
-Cleared ASN gag list.|
-Deleted ASN gag: %s|
-ASN gag not found: %s|
-ASN gag list|
-ASN gag list is empty.|
-%s with IP %s, class %d and ASN %s tries to speak with ASN gag in PM to %s with IP %s and class %d: %s|
-%s with IP %s, class %d and ASN %s tries to speak with ASN gag in MC: %s|
-ASN gag|
-Add ASN gag|
-Delete ASN gag|
-User command from %s with IP %s will be delayed for proxy lookup: %s|
-Blocking user command from %s with IP %s detected as public proxy: %s|
-Unsent user command from logged out user %s with IP %s before finishing proxy lookup: %s|
-Test antispam entry|
-Spam exception with action %d and priority %d in MC: %s|
-Spam exception with action %d and priority %d in PM: %s|
-Spam exception with action %d and priority %d in MC and PM: %s|
-Spam with action %d and priority %d in MC: %s|
-Spam with action %d and priority %d in PM: %s|
-Spam with action %d and priority %d in MC and PM: %s|
-No antispam matches for text: %s|
-List of antispam matches for text: %s|
-Added proxy protection entry: %s|
-Proxy protection entry already exists: %s|
-Cleared proxy protection list.|
-Deleted proxy protection entry: %s|
-Proxy protection entry not found: %s|
-Proxy protection list|
-Proxy protection list is empty.|
-Add proxy protection entry|
-Delete proxy protection entry|
-IP is protected: %s|
-Blacklist|
-Add blacklist entry|
-List blacklist entries|
-Disable or enable blacklist entry|
-Delete blacklist entry|
-list|
-Import blacklist entries from %s|
-Modified blacklist entry: %s|
-Added blacklist entry: %s|
-Blacklist entry not found: %s|
-Deleted blacklist entry: %s|
-Blacklist list is empty.|
-List of blacklist entries|
-Disabled blacklist entry: %s|
-Enabled blacklist entry: %s|
-Import status|
-Table does not exist or is empty: %s|
-Binary is required: %s|
-Successfully imported|
-Unsupported type: %s|
-Already in our list|
-Search in blacklist|
-No blacklist entries found.|
-Found blacklist entries|
-Blacklist feature is disabled.|
-%s blacklist not loaded because: %s|
-Blacklist loaded with %d items: %s|
-File does not exist: %s|
-Hard IP ban entry not found: %s|
-Disabled hard IP ban entry: %s|
-Enabled hard IP ban entry: %s|
-Disable or enable hard IP ban entry|
-Import hard IP ban entries from %s|
-Blacklist load results|
-Invalid IP or CIDR: %s|
-System bans|
-Add system bans separated by space|
-cidr|
-List of system bans|
-Referenced list of system bans|
-Unreferenced list of system bans|
-System ban list is empty.|
-Delete system ban|
-System ban not found: %s|
-Deleted system ban: %s|
-Modified system ban: %s|
-Added system ban: %s|
-Cleared system bans.|
-Failed to create rule for %s in %s: %s|
-Failed to get rules in %s: %s|
-Failed to detect version: %s|
-Failed to create chain in %s: %s|
-Failed to check chain in %s: %s|
-Failed to flush chain in %s: %s|
-Failed to delete chain in %s: %s|
-Failed to create rule in %s: %s|
-Failed to check rule in %s: %s|
-Failed to delete rule in %s: %s|
-Please compare with original string and make sure parameters equal: %s|
+Add hard IP ban entries separated by space|Додати пункти жорстких банів IP на вхід через пропуск
+Delete hard IP ban entry|Видалити жорсткий бан IP на вхід
+List of hard IP ban entries|Список жорстких банів IP на вхід
+Modified hard IP ban entry: %s|Змінити жорсткий бан IP на вхід: %s
+Added hard IP ban entry: %s|Доданий жорсткий бан IP на вхід: %s
+Deleted hard IP ban entry: %s|Видалено жорсткий бан IP на вхід: %s
+Hard IP ban list is empty.|Список жорстких банів IP порожній.
+Hard IP ban refused connection from IP %s: %s|Жорсткий бан IP, скидання з'єднання з IP %s: %s
+Please wait another %d seconds before using hub search engine.|Зачекайте %d секунд, перш ніж використовувати пошук.
+Add right click menu item|Додати пункт спливаючого меню
+Delete right click menu item|Видалити пункт спливаючого меню
+List of right click menu items|Список пунктів спливаючого меню
+Blacklisted connection from IP %s dropped: %s|Заблоковане з'єднання з IP %s вимкнено: %s
+To add multiple entries with this command you need to separate every entry by space.|Для додавання одразу декількох записів їх необхідно розділити пробілами.
+Add IP watch entry|Додати IP для відстеження введення
+Delete IP watch entry|Видалити IP для відстеження введення
+List of IP watch entries|Список IP для відстеження введення
+result|результат
+Modified IP watch entry: %s|Змінено IP для відстеження введення: %s
+Added IP watch entry: %s|Доданий IP для відстеження введення: %s
+Known results are: %s|Відомий результат: %s
+Deleted IP watch entry: %s|Видалити IP для відстеження введення: %s
+IP watch list is empty.|Список IP для відстеження введення порожній.
+Couldn't delete IP watch entry because not found: %s|Неможливо видалити IP для відстеження введення, не знайдено: %s
+IP watch notification from %s with IP %s: %s|Повідомлення про стеження по IP від %s з адресою %s: %s
+unknown nick|Невідомий нік
+Country code gag|Заглушка за кодом країни
+Add country code gag|Додати заглушку за кодом країни
+Added country code gag: %s|Додано заглушку за кодом країни: %s
+Added country code gag %s with reason: %s|Додано заглушку за кодом країни %s з причиною: %s
+Modified country code gag: %s|Змінено заглушку за кодом країни: %s
+Modified country code gag %s with reason: %s|Змінено заглушку за кодом країни %s через: %s
+Deleted country code gag: %s|Видалена заглушка за кодом країни: %s
+Country code gag not found: %s|Заглушку за кодом країни не знайдено: %s
+Country code gag list|Список заглушок за кодом країни
+Country code gag list is empty.|Список заглушок за кодом країни порожній.
+Delete country code gag|Видалити заглушку за кодом країни
+Cleared country code gag list.|Список заглушених за кодом країни очищено.
+%s with IP %s and class %d tries to speak with country code gag in MC: %s|Користувач %s з IP %s і класом %d із заглушкою за кодом країни намагається надіслати повідомлення до головних чатів: %s
+%s with IP %s and class %d tries to speak with country code gag in PM to %s with IP %s and class %d: %s|Користувач %s c IP адресою %s та класом %d намагався надіслати повідомлення незважаючи на заглушку за кодом країни у вигляді особистого повідомлення користувачу %s з IP адресою %s та класом %d: %s
+No reason specified|Немає вказаних причин
+Automatically deleted %d user log entries older than %d days.|Автоматично видалено %d пунктів старіше, ніж %d днів з лога користувачів.
+Main chat message replaced for user: %s|Повідомлення головного чату замінюються для користувача: %s
+Unknown protocol command from IP %s before login: %s|Невідома команда протоколу з IP %s до логіну: %s
+Added %s to hard IP ban list, %d users in total.|%s доданий до жорсткого IP банліста, всього %d користувачів.
+NMDC version: %s|NMDC версія: %s
+Client supports: %s|Клієнт підтримує: %s
+Modified forbidden client supports with ban time %s: %s|Змінено заборонений саппорт клієнта з баном %s: %s
+Added forbidden client supports with ban time %s: %s|Додано заборонений саппорт клієнта з баном %s: %s
+Modified forbidden NMDC version with ban time %s: %s|Змінено заборонену версію NMDC з баном %s: %s
+Added forbidden NMDC version with ban time %s: %s|Додано заборонену версію NMDC з баном %s: %s
+Latest version of %s is required in order to use this feature.|Остання версія %s потрібна для використання цієї функції.
+Deleted forbidden client supports: %s|Видалено блокування підтримки клієнта: %s
+Couldn't delete forbidden client supports because not found: %s|Неможливо видалити блокування підтримки клієнта, не знайдено: %s
+Deleted forbidden NMDC version: %s|Видалена підтримка NMDC версії: %s
+Couldn't delete forbidden NMDC version because not found: %s|Неможливо видалити підтримку NMDC версії, не знайдено: %s
+Forbidden client supports list|Список заблокованих підтримуваних клієнтів
+Forbidden client supports list is empty.|Список заблокованих клієнтів порожній.
+Forbidden NMDC version list|Список заблокованих NMDC версій
+Forbidden NMDC version list is empty.|Список заблокованих версій NMDC порожній.
+%s with IP %s and class %d allowed due to forbidden client supports exception: %s|Користувач %s з IP %s та класом %d дозволений, через заборонений клієнт, виняток: %s
+%s with IP %s and class %d allowed due to forbidden NMDC version exception: %s|Користувач %s з IP %s та класом %d дозволений, через заборонену NMDC версію, виняток: %s
+City: %s|Місто: %s
+IP range: %s - %s|Діапазон IP: %s - %s
+Region: %s|Регіон: %s
+Time zone: %s|Часова зона: %s
+Continent: %s|Континент: %s
+Postal code: %s|Поштовий індекс: %s
+Coordinates: %.4f %.4f|Координати: %.4f %.4f
+Metro code: %d|Код метро: %d
+Area code: %d|Телефонний код: %d
+Drop users with IP|Вимкнути користувача з IP
+No users found with IP: %s|Не знайдено користувача з IP: %s
+Dropped %d users with IP: %s|Вимкнено %d користувачів з IP: %s
+%s dropped %d users with IP: %s|Користувач %s вимкнув %d користувачів з IP: %s
+Live user location statistics by city|Статистика, в реальному часі, розташування користувачів по містах
+Live user location statistics by city from %s=%s|Статистика, в реальному часі, розташування користувачів по містах із %s=%s
+No users in the hub from: %s=%s|На хабі немає користувачів з: %s=%s
+Help notes|Допоміжні примітки
+parameter|параметр
+Command parameters %s are always required, while %s are optional.|Параметри команди %s потрібні завжди, тоді як для %s не обов'язкові.
+Quoted parameters %s or %s must be used with quotes.|Параметри %s або %s, що цитуються, повинні бути в лапках.
+IP information|Інформація по IP
+IP information not available: %s|Інформації щодо IP не виявлено: %s
+Message replaced for user with IP %s and class %d in MC: <%s> %s|Замінено повідомлення для користувача з IP адресою %s та класом %d у головному чаті: <%s> %s
+IP %s permanently banned: <%s> %s|IP %s забанен назавжди: <%s> %s
+Nick %s permanently banned: <%s> %s|Нік %s забанен назавжди: <%s> %s
+Range %s permanently banned: <%s> %s|IP діапазон %s забанен назавжди: <%s> %s
+Host %s permanently banned: <%s> %s|Хост %s забанен назавжди: <%s> %s
+Share %s permanently banned: <%s> %s|Розмір шари %s забанен назавжди: <%s> %s
+Prefix %s permanently banned: <%s> %s|Префікс ніка %s забанен назавжди: <%s> %s
+IP %s temporarily banned until %s: <%s> %s|IP %s тимчасово забанен до %s: <%s> %s
+Nick %s temporarily banned until %s: <%s> %s|Нік %s тимчасово забанен до %s: <%s> %s
+Range %s temporarily banned until %s: <%s> %s|IP діапазон %s тимчасово забанен до %s: <%s> %s
+Host %s temporarily banned until %s: <%s> %s|Хост %s тимчасово забанен до %s: <%s> %s
+Share %s temporarily banned until %s: <%s> %s|Розмір шари %s тимчасово забанен до %s: <%s> %s
+Prefix %s temporarily banned until %s: <%s> %s|Префікс ніка %s тимчасово забанен до %s: <%s> %s
+IP %s unbanned: <%s> %s|Бан по IP %s знято: <%s> %s
+Nick %s unbanned: <%s> %s|Бан по ніку %s знято: <%s> %s
+Range %s unbanned: <%s> %s|Бан по IP діапазону %s знято: <%s> %s
+Host %s unbanned: <%s> %s|Бан по хосту %s знято: <%s> %s
+Share %s unbanned: <%s> %s|Бан за розміром шари %s знято: <%s> %s
+Prefix %s unbanned: <%s> %s|Бан за префіксом ніка %s знято: <%s> %s
+Known contexts are: %s|Варіанти контексту: %s
+Known orders are: %s|Варіанти порядку: %s
+Modified right click menu item: %s|Змінено пункт меню правої кнопки миші: %s
+Added right click menu item: %s|Додано пункт меню правої кнопки миші: %s
+Deleted right click menu item: %s|Видалено пункт меню правої кнопки миші: %s
+Right click menu item not found: %d|Пункт меню правої кнопки миші не знайдено: %d
+Right click menu item list is empty.|Список пунктів меню правої кнопки миші порожній.
+Menu item|Пункт меню
+Menu command|Команда меню
+Changed right click menu item order: %s|Змінено пункт меню правої кнопки миші: %s
+Separator or eraser|Розділювач або стіратель
+Nick and IP %s unbanned: <%s> %s|Бан за ніком та IP-адресою %s знято: <%s> %s
+Other %s unbanned: <%s> %s|Бан невідомого типу %s знято: <%s> %s
+Vote for user to be kicked|Голосувати за кік користувача
+You don't want to vote for kicking an operator.|Не думаю, що ви хочете голосувати за кік оператора.
+User voted kick|Кік за голосуванням користувачів
+You have already voted for kicking that user.|Ви вже проголосували за кік цього користувача.
+There is an error in following antispam entry pattern|Існує помилка у наступному шаблоні антиспаму
+Pattern|Шаблон
+Error|Помилка
+Solution|Рішення
+There is an error in following search filter pattern|Існує помилка у наступному шаблоні фільтра пошуку
+There is an error in following search filter exception pattern|Існує помилка у наступному шаблоні виключень фільтра пошуку
+There is an error in following antispam exception entry pattern|Існує помилка в наступному шаблоні виключень антиспаму
+There is an error in following forbidden nick pattern|Існує помилка у наступному шаблоні заборонених ніків
+There is an error in following MyINFO exception pattern|Існує помилка у наступному шаблоні виключень MyINFO
+There is an error in following forbidden description pattern|Існує помилка у наступному шаблоні заборонених описів
+There is an error in following forbidden tag pattern|Існує помилка у наступному шаблоні заборонених тегів
+There is an error in following forbidden connection type pattern|Існує помилка у наступному шаблоні заборонених типів підключень
+There is an error in following forbidden email pattern|Існує помилка у наступному шаблоні заборонених електронних поштових адрес
+There is an error in following forbidden share size pattern|Існує помилка в наступному шаблоні заборонених розмірів шар
+There is an error in following forbidden IP address pattern|Існує помилка у наступному шаблоні заборонених IP адрес
+There is an error in following forbidden country code pattern|Існує помилка у наступному шаблоні заборонених кодів країн
+There is an error in following forbidden DNS pattern|Існує помилка в наступному шаблоні заборонених DNS-адрес
+There is an error in following forbidden client supports pattern|Існує помилка у наступному шаблоні заборонених підтримуваних клієнтів
+There is an error in following forbidden NMDC version pattern|Існує помилка у наступному шаблоні заборонених NMDC версій
+Added replacer in PM: %s|Заміна виразів у особистий чат додана: %s
+Added replacer in MC and PM: %s|Заміна виразів у головний та особистий чат додана: %s
+Message replaced for user with IP %s and class %d in PM to %s with IP %s and class %d: <%s> %s|Замінено повідомлення користувача з IP адресою %s та класом %d у вигляді особистого повідомлення користувачу %s з IP адресою %s та класом %d: <%s> %s
+Message ignored due to flood detection from %s with IP %s and class %d in MC: %s|Повідомлення ігнорується, визначено як спам від %s з IP %s та класом %d у головний чат: %s
+Users with same IP|Користувачі з даними IP
+Parameter count mismatch detected in following translation string: %s|Кількість параметрів у даному рядку перекладу відрізняється від оригіналу: %s
+Infected user detected|Виявлено заражений користувач
+Found files|Знайдені файли
+Infected user detected with nick %s and IP %s and share %s and spent time: %s|Виявлено заражений користувач з ніком %s та IP адресою %s та шарою %s та проведеним часом: %s
+Sadly I don't have access to send infected user information to AVDB, please ask maintainer of this script to add your server IP address to access list. AVDB reporting feature has been automatically disabled.|На жаль, у мене немає доступу для надсилання інформації про зараженого користувача в AVDB, будь ласка попросіть розробника цього скрипту додати IP адресу вашого сервера до списку доступу. Надсилання в AVDB було автоматично вимкнено.
+In order to send infected user information to AVDB you need to ask maintainer of this script to add your server IP address to AVDB access list.|Для надсилання інформації про зараженого користувача в AVDB вам потрібно попросити розробника цього скрипту додати IP-адресу вашого сервера до списку доступу AVDB.
+Antivirus statistics|Статистика антивируса
+File names used for search|Назви файлів, які використовуються для пошуку
+File extensions used for search|Розширення файлів, які використовуються для пошуку
+Possibly infected users|Можливо заражені користувачі
+Spent time: %s|Витрачений час: %s
+Infected user logged in with IP %s and share %s: %s|Заражений користувач увійшов з IP-адресою %s та шарою %s: %s
+Loaded %d of %d with totally %d items: %s|Завантажено %d з %d всього %d пунктів: %s
+Infected user information sent to %s: %s|Інформація про зараженого користувача надіслана в %s: %s
+Failed to load information from %s: %s|Неможливо завантажити інформацію з %s: %s
+Failed to send information to %s: %s|Неможливо надіслати інформацію до %s: %s
+Loaded none with totally %d items: %s|Не завантажено жодного разом %d пунктів: %s
+Infected user found with IP %s and share %s: %s|Заражений користувач знайдено з IP-адресою %s та шарою %s: %s
+Server didn't reply with expected status code.|Сервер не відповів очікуваним кодом статусу.
+Size of %s: %d @ %s|Розмір %s: %d @ %s
+Clear kick votes for user|Очистити голоси для кіка користувача
+Vote kick list|Список голосів за кік
+Vote kick list is empty.|Список голосів за кік порожній.
+Votes: %d of %d|Голосів: %d з %d
+Voters: %s|Голосуючі: %s
+Triggers|Тригери
+Add trigger|Додати тригер
+Trigger list|Список тригерів
+Delete trigger|Видалити тригер
+Modified trigger: %s|Тригер змінено: %s
+Added trigger: %s|Тригер доданий: %s
+Deleted trigger: %s|Тригер видалено: %s
+Trigger not found: %s|Тригер не знайдено: %
+Trigger list is empty.|Список тригерів порожній.
+Class range: %d to %d|Діапазон класів: %d до %d
+Pinger|Пингер
+Guest|Гость
+Registered|Зареєстрований
+VIP|VIP
+Operator|Оператор
+Cheef|Шеф
+Administrator|Адміністратор
+Master|Мастер
+News item added by %s: %s|Додано новину користувачем %s: %s
+Your connection request is blocked because user that you're trying connect to was detected as virus spreader: %s|Ваш запит на підключення був відхилений тому що користувач, до якого ви намагаєтеся підключитися, був позначений як заражений вірусами: %s
+Connection requests to following user will be blocked: %s|Запити на підключення до цього користувача будуть відхилені: %s
+Downloading script file: %s|Завантажую файл скрипту: %s
+Stable version of %s is available: %s|Стабільна версія %s доступна: %s
+Development version of %s is available: %s|Версія %s, що розробляється, доступна: %s
+Translation file loaded: %s|Файл перекладу завантажено: %s
+Loaded none of %d with totally %d items: %s|Не завантажено жодного з %d разом %d пунктів: %s
+Failed to execute %s with code: %d|Не вдалося виконати %s з кодом: %d
+Failed to execute %s with error: %s|Не вдалося виконати %s з помилкою: %s
+Failed to execute %s without code and error.|Не вдалося виконати %s без коду та повідомлення.
+Failed to move file: %s|Неможливо перемістити файл: %s
+Downloading translation file: %s|Завантажую файл з перекладом: %s
+File not found on update server: %s|Файл не знайдено на сервері з оновленнями: %s
+File not found on remote server: %s|Файл не знайдено на віддаленому сервері: %s
+File is empty.|Файл порожній.
+Force infected user detection|Примусове виявлення зараженого користувача
+You can't block user whose class is higher or equals your own: %s|Ви не можете заблокувати користувача чий клас дорівнює або вище вашого: %s
+User already blocked: %s|Користувач вже заблокований: %s
+item|пункт
+Search in %s|Пошук у %s
+Antivirus|Антивірус
+Nothing was found in: %s|Нічого не знайдено в: %s
+Searching for %s in %s: %s|Пошук %s у %s: %s
+Showing %d results from %s|Показую %d результатів із %s
+%s module version: %s|Версія модуля %s: %s
+This feature requires following module installed on your system: %s|Ця функція вимагає наступний модуль, встановлений на вашій системі: %s
+Failed to start antivirus search server: %s|Помилка під час запуску антивірусного пошукового сервера: %s
+Started antivirus search server: %s|Запущено антивірусний пошуковий сервер: %s
+Stopped antivirus search server: %s|Зупинено антивірусний пошуковий сервер: %s
+Blocked infected users|Заблоковані заражені користувачі
+Add automatic country chatroom entrance|Додати автоматичний вхід у чат кімнату по країні
+Automatic country chatroom entrance list|Список автоматичних входів у чат кімнати по країні
+Delete automatic country chatroom entrance|Видалити автоматичний вхід у чат кімнату за кодом країни
+Couldn't add automatic country chatroom entrance because already exists with ID: %d|Не вдалося додати автоматичний вхід до чату за кодом країни тому, що вже існує з ID: %d
+Added automatic country chatroom entrance for %s: %s|Доданий автоматичний вхід до чату за кодом країни для %s: %s
+Couldn't delete automatic country chatroom entrance because ID not found: %d|Не вдалося видалити автоматичний вхід до чату за кодом країни тому, що ID не знайдено: %d
+Deleted automatic country chatroom entrance with ID: %d|Видалено автоматичний вхід у чат кімнату за кодом країни з ID: %d
+Automatic country chatroom entrance list is empty.|Список автоматичних входів до чату за кодом країни порожній.
+Please note, following function is required for features available in this version of %s and is currently not available in running version of %s but is available in latest update: %s|Увага, наступна функція потрібна для повноцінної роботи даної версії %s і є недоступною в даній версії %s, але доступна в останньому оновленні: %s
+note|замітка
+Access is restricted.|Доступ обмежений.
+Convert LRE to plain text|Конвертація LRE у чистий текст
+LRE converted to plain text: %s|LRE конвертований у чистий текст: %s
+Please check your command syntax, something is wrong there.|Будь ласка, перевірте синтаксис вашої команди, в ній щось не так.
+Entry used in detection: %s|Пункт використаний для детекту: %s
+Exception used in detection: %s|Виняток використаний для детекту: %s
+text|текст
+Delete history messages by text|Видалити повідомлення з історії чату по ніку/тексту
+Deleted %d main chat history messages by text: %s|Видалено %d повідомлень з історії спільного чату з текстом: %s
+%s with class %d deleted %d main chat history messages by text: %s|%s з класом %d видалив %d записів з історії загального чату з текстом: %s
+Looking for users with nick %s on: %s|Виконую пошук користувачів з ніком %s на: %s
+Looking for users with description %s on: %s|Шукаю користувачів з описом %s на: %s
+Looking for users with client tag %s on: %s|Шукаю користувачів з тегом клієнта %s на: %s
+Looking for users with connection type %s on: %s|Виконую пошук користувачів із типом з'єднання %s на: %s
+Looking for users with email address %s on: %s|Шукаю користувачів з електронною поштовою адресою %s на: %s
+Looking for users with share size %s on: %s|Виконую пошук користувачів з розміром кулі %s на: %s
+Looking for users with IP address %s on: %s|Виконую пошук користувачів з IP адресою %s на: %s
+Users with nick not found in any hubs: %s|Користувачів з ніком не виявлено на жодному хабі: %s
+Users with description not found in any hubs: %s|Користувачів з описом не виявлено на жодному хабі: %s
+Users with client tag not found in any hubs: %s|Користувачів з тегом клієнта не виявлено на жодному хабі: %s
+Users with connection type not found in any hubs: %s|Користувачів з типом з'єднання не виявлено на жодному хабі: %s
+Users with email address not found in any hubs: %s|Користувачів з електронною поштовою адресою не виявлено на жодному хабі: %s
+Users with share size not found in any hubs: %s|Користувачів з розміром шари не виявлено на жодному хабі: %s
+Users with IP address not found in any hubs: %s|Користувачів з IP-адресою не виявлено на жодному хабі: %s
+Users with nick %s found in following hubs|Користувачі з ніком %s знайдені на наступних хабах
+Users with description %s found in following hubs|Користувачі з описом %s знайдені на наступних хабах
+Users with client tag %s found in following hubs|Користувачі з тегом клієнта %s знайдені на наступних хабах
+Users with connection type %s found in following hubs|Користувачі з типом з'єднання %s знайдені на наступних хабах
+Users with email address %s found in following hubs|Користувачі з електронною поштовою адресою %s знайдені на наступних хабах:
+Users with share size %s found in following hubs|Пользователи с размером шары %s найдены на следующих хабах
+Users with IP address %s found in following hubs|Користувачі з IP-адресою %s знайдені на наступних хабах
+Blocked PM|Блокування особистих повідомлень
+Right click menu|Меню правої кнопки
+IP watch|Відстеження IP
+Hard IP bans|Жорсткі бани по IP
+Chatroom history|Історія чат кімнати
+Chatroom history is empty.|Історія чат кімнати порожня.
+Last %d chatroom messages|Останні %d повідомлення історії чат кімнати
+There are no chatroom history messages to remove: %s|Немає повідомлень для видалення з історії чату кімнати: %s
+Deleted %d chatroom history messages: %s|Видалено %d повідомлень з історії чату кімнати: %s
+%s with class %d deleted %d chatroom history messages: %s|%s із класом %d видалив %d повідомлень з історії чат кімнати: %s
+Set your chat mode|Встановити свій режим чату
+real|справжній
+Specified country code isn't valid: %s|Цей код країни недійсний: %s
+You can't block user who don't share anything: %s|Ви не можете заблокувати користувача чия шара порожня: %s
+You can't kick user who don't share anything: %s|Ви не можете кикнути користувача чия шара порожня: %s
+Flood detected from %s with IP %s and class %d in MC: %s|Виявлено флуд від користувача %s з IP адресою %s та класом %d у головний чат: %s
+User dropped due to flood: %s|Користувач викинуть через флуд: %s
+Main chat flood detected from your nick.|Виявлено флуд у головний чат від вашого ніка.
+Private chat flood detected from your IP.|Виявлено флуд у вигляді особистого повідомлення від вашої IP адреси.
+Sorry, your message has been ignored.|Вибачте, ваше повідомлення було ігноровано.
+Disable or enable right click menu item|Закрити або відкрити пункт меню правої кнопки миші
+Disabled right click menu item: %s|Пункт меню правої кнопки миші закрито: %s
+Enabled right click menu item: %s|Пункт меню правої кнопки миші відкрито: %s
+%s added to search block list.|%s додано до пошукового блоку список.
+Your search request is discarded due to previous forbidden search request or result: %s|Ваш пошуковий запит відхиляється через попередній заборонений пошуковий запит або результат: %s
+Hub URL: %s|Адреса хаба: %s
+Search filter block list|Список блокування пошукового фільтра
+Delete search filter block list entry|Видалити пункт зі списку блокування пошукового фільтра
+Search filter block list is empty.|Список блокування пошукового фільтра порожній.
+Deleted search filter block list entry: %s|Видалити пункт зі списку блокування пошукового фільтра: %s
+Couldn't delete search filter block list entry because not found: %s|Не вдалося видалити пункт зі списку блокування пошукового фільтра, тому що не знайдено: %s
+Yes|Так
+No|Ні
+%s with class %d changed configuration variable %s.%s: %s => %s|Користувач %s із класом %d змінив конфігураційну змінну %s.%s: %s => %s
+Please wait another %d seconds before using public chat.|Зачекайте %d секунд, перш ніж використовувати головний чат.
+Please wait another %d seconds before using private chat.|Зачекайте %d секунд перед використанням приватного чату.
+Low chat uptime of %d seconds from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s|Недостатній аптайм чату %d секунд від %s c IP адресою %s та класом %d у вигляді приватного повідомлення користувачу %s з IP адресою %s та класом %d: %s
+Low chat uptime of %d seconds from %s with IP %s and class %d in MC: %s|Недостатній аптайм чату %d секунд від %s з IP адресою %s та класом %d в головний чат: %s
+Low chat uptime of %d seconds from %s with IP %s and class %d in command: %s|Недостатній аптайм чату %d секунд від %s з IP адресою %s та класом %d у команді: %s
+Low registration uptime from %s with IP %s and class %d: %s|Недостатній аптайм реєстрації від %s з IP адресою %s та класом %d: %s
+%d seconds|%d секунд
+Thank you, your report has been accepted.|Дякую, ваш звіт прийнято.
+Low search uptime of %d seconds from %s with IP %s and class %d as any file: %s|Недостатній аптайм пошуку %d секунд від %s c IP адресою %s та класом %d для будь-якого файлу: %s
+Low search uptime of %d seconds from %s with IP %s and class %d as audio file: %s|Недостатній аптайм пошуку %d секунд від %s з IP адресою %s та класом %d для аудіо файлу: %s
+Low search uptime of %d seconds from %s with IP %s and class %d as compressed file: %s|Недостатній аптайм пошуку %d секунд від %s c IP адресою %s та класом %d для стисненого файлу: %s
+Low search uptime of %d seconds from %s with IP %s and class %d as document: %s|Недостатній аптайм пошуку %d секунд від %s c IP адресою %s та класом %d для документа: %s
+Low search uptime of %d seconds from %s with IP %s and class %d as executable: %s|Недостатній аптайм пошуку %d секунд від %s c IP адресою %s і класом %d для файлу: %s
+Low search uptime of %d seconds from %s with IP %s and class %d as picture: %s|Недостатній аптайм пошуку %d секунд від %s c IP адресою %s та класом %d для картинки: %s
+Low search uptime of %d seconds from %s with IP %s and class %d as video: %s|Недостатній аптайм пошуку %d секунд від %s c IP адресою %s та класом %d для відеофайлу: %s
+Low search uptime of %d seconds from %s with IP %s and class %d as folder: %s|Недостатній аптайм пошуку %d секунд від %s з IP адресою %s та класом %d для каталогу: %s
+Low search uptime of %d seconds from %s with IP %s and class %d as TTH: %s|Недостатній аптайм пошуку %d секунд від %s з IP адресою %s та класом %d для TTH: %s
+User dropped: %s|Користувач викинуть: %s
+%d of %d|%d із %d
+Main chat responder list contains %d items, but none matched your pattern.|Автовідповідач чату містить %d елементів, але жоден не підходить твоєму шаблону.
+word|слово
+Top %d used words with filter: %s|Топ %d використовуваних слів із фільтром: %s
+Support hub|Підтримка хаба
+User manual|Посібник користувача
+range|діапазон
+There is an error in following forbidden chat nick pattern|Існує помилка у наступному шаблоні забороненого ніка у чаті
+Modified forbidden chat nick with ban time %s: %s|Змінено заборонений чат нік з баном %s: %s
+Added forbidden chat nick with ban time %s: %s|Доданий заборонений чат нік з баном %s: %s
+Deleted forbidden chat nick: %s|Видалений раніше заборонений чат нік: %s
+Couldn't delete forbidden chat nick because not found: %s|Не можу видалити заборонений чат нік. Не знайдено в базі: %s
+Forbidden chat nick list|Список заборонених чат ніків
+Forbidden chat nick list is empty.|Список заборонених чат ніків порожній.
+%s with IP %s and class %d allowed due to forbidden chat nick exception: %s|Пользователь %s с IP-адресом %s и классом %d пропущен с исключением по чат ніку: %s
+%s lookup|Перевірка %s
+%s lookup didn't return anything.|Перевірка %s не дала результатів.
+%s result|Результати %s
+No entrance|Входу немає
+ASN: %s|ASN: %s
+%s was kicked with reason: %s|%s був кікнутий з причиною: %s
+City gag|Заглушка по місту
+Add city gag|Додати заглушку по місту
+City gag list|Список заглушок по місту
+Delete city gag|Видалити заглушку по місту
+Modified city gag %s with reason: %s|Змінено заглушку по місту %s з причиною: %s
+Modified city gag: %s|Змінено заглушку по місту: %s
+Added city gag %s with reason: %s|Додано заглушку по місту %s з причиною: %s
+Added city gag: %s|Додано заглушку по місту: %s
+Cleared city gag list.|Список заглушених по місту очищений.
+Deleted city gag: %s|Видалена заглушка по місту: %s
+City gag not found: %s|Заглушку по місту не знайдено: %s
+City gag list is empty.|Список заглушок по місту порожній.
+%s with IP %s and class %d tries to speak with city gag in PM to %s with IP %s and class %d: %s|Користувач %s c IP адресою %s та класом %d намагався надіслати повідомлення незважаючи на заглушку по місту у вигляді особистого повідомлення користувачу %s з IP адресою %s та класом %d: %s
+%s with IP %s and class %d tries to speak with city gag in MC: %s|Користувач %s з IP адресою %s та класом %d намагався відправити повідомлення до головного чату незважаючи на заглушку по місту: %s
+%s with IP %s and class %d tried to speak in MC without chat code: <%s> %s|%s з IP %s та класом %d намагався надіслати повідомлення до головного чату без захисного коду: <%s> %s
+%s with IP %s and class %d tried to speak without chat code in PM to %s with IP %s and class %d.|%s з IP %s та класом %d намагався говорити без захисного коду у вигляді особистого повідомлення користувачу %s з IP %s та класом %d.
+Low connection attempt uptime of %d seconds from %s with IP %s and class %d to user: %s|Недостатній аптайм у %d секунд для спроби з'єднання від %s c IP %s та класом %d користувачу: %s
+Please wait another %d seconds before connecting to other users.|Зачекайте %d секунд, перш ніж підключатися до інших користувачів.
+path|шлях
+Search in history messages|Пошук у повідомленнях історії чату
+Show history lines at position|Показати історію чату за позицією
+No main chat history messages found.|Не знайдено повідомлень з історії чату.
+Found %d main chat messages|Знайдено %d повідомлень з історії чату
+Search in command logs|Пошук у логах команд
+No command logs found.|Не виявлено логів команд.
+Found %d command logs|Знайдено %d логів команд
+Unavailable|Недоступно
+Clone information|Інформація про клони
+No clones detected.|Клони не знайдено.
+%d users with IP %s and shared bytes %d: %s|%d користувачів з IP %s та шарою в %d байт: %s
+Total number of clones: %d|Загальна кількість клонів: %s
+Clean up registered users table|Очистити таблицю зареєстрованих користувачів
+magnet|магнет
+Release modified within category %s by %s: %s|Реліз змінено в категорії %s користувачем %s: %s
+Release added within category %s by %s: %s|Реліз додано до категорії %s користувачем %s: %s
+Release deleted by %s: %s|Реліз видалено користувачем %s: %s
+Release category deleted by %s: %s|Реліз видалено користувачем %s: %s
+Someone from your IP address have already voted for kicking that user.|Хтось із вашої IP адреси вже проголосував за кік цього користувача.
+IP list: %s|Приклад IP: %s
+First vote can't be negative.|Перший голос може бути негативним.
+You can't vote for kicking yourself.|Ви не можете голосувати за кік себе.
+Redirect all clones|Перенаправити всіх клонів
+Number of redirected clones: %d|Кількість перенаправлених клонів: %d
+Your search result is discarded due to previous forbidden search result or request: %s|Результати пошуку будуть відхилені через попередні заборонені результати пошуку або запити: %s
+Search result exception from %s with IP %s and class %d as any file: %s|Виявлено виняток результатів пошуку від користувача %s з IP-адреси %s клас користувача: %d, виняток виявлено у категорії "будь-які файли": %s
+Search result notification from %s with IP %s and class %d as any file: %s|Повідомлення про результати пошуку від користувача %s з IP-адреси %s клас користувача: %d у категорії "будь-які файли": %s
+Bad search result from %s with IP %s and class %d as any file: %s|Заборонений результат пошуку від користувача %s з IP-адреси %s клас користувача: %d у категорії "будь-які файли": %s
+User dropped due to bad search result: %s|Користувач: %s вимкнено через заборонений результат пошуку
+User didn't send any search results: %s|Користувач: %s не надіслав результатів пошуку
+User redirected due to bad search result: %s|Перенаправлення користувача: %s через заборонений результат пошуку
+Search result exception from %s with IP %s and class %d as folder: %s|Виявлено виняток результатів пошуку від користувача: %s з IP-адреси %s клас користувача: %d, виняток виявлено у категорії "папки": %s
+Search result notification from %s with IP %s and class %d as folder: %s|Повідомлення про результати пошуку від користувача %s з IP-адреси %s клас користувача: %d у категорії "папки": %s
+Bad search result from %s with IP %s and class %d as folder: %s|Заборонений результат пошуку від користувача %s з IP-адреси %s клас користувача: %d у категорії папки: %s
+Search result exception from %s with IP %s and class %d as TTH: %s|Виявлено виняток результатів пошуку від користувача: %s з IP-адреси %s клас користувача: %d, виняток виявлено у категорії "TTH": %s
+Search result notification from %s with IP %s and class %d as TTH: %s|Повідомлення про результати пошуку від користувача %s з IP-адреси %s клас користувача: %d у категорії "TTH": %s
+Bad search result from %s with IP %s and class %d as TTH: %s|Заборонений результат пошуку від користувача: %s з IP-адреси %s клас користувача: %d у категорії "TTH": %s
+Resetting proxy lookup daily quote limit: %d|Скидання обмеження щоденної квоти на запити для визначення проксі: %d
+Your message will be delayed for proxy lookup of your IP address.|Ваше повідомлення буде затримано на час визначення вашого IP на наявність публічного проксі або VPN.
+You're not allowed to chat due to public proxy detection of your IP address.|У вас немає прав на спілкування в чаті, тому що ваш IP визначений як публічний проксі або VPN.
+Proxy lookup daily quote limit reached on chat message from user with IP %s: %s|Досягнуто обмеження щоденної квоти на запити для визначення проксі під час повідомлення від користувача з IP %s: %s
+Proxy lookup queue limit reached on chat message from user with IP %s: %s|Досягнуто обмеження черги на запити для визначення проксі під час повідомлення від користувача з IP %s: %s
+Blocking private main chat message from %s with IP %s detected as public proxy to %s with IP %s: %s|Блокування приватного повідомлення в головний чат від %s з IP %s, виявленого як публічний проксі, користувачу %s з IP %s: %s
+Blocking main chat message from %s with IP %s detected as public proxy: %s|Блокування повідомлення в головний чат від %s з IP %s, виявленого як публічний проксі: %s
+Blocking private chat message from %s with IP %s detected as public proxy to %s with IP %s: %s|Блокування приватного повідомлення від %s з IP %s, виявленого як публічний проксі, користувачу %s з IP %s: %s
+Blocking third person main chat message from %s with IP %s detected as public proxy: %s|Блокування повідомлення від третьої особи в головний чат від %s з IP %s, виявленого як публічний проксі: %s
+Blocking offline private chat message from %s with IP %s detected as public proxy to %s with IP %s: %s|Блокування приватного офлайн повідомлення від %s з IP %s, виявленого як публічний проксі, користувачу %s з IP %s: %s
+Main chat message from %s with IP %s will be delayed for proxy lookup: %s|Повідомлення в головний чат від %s з IP %s буде відкладено для визначення проксі: %s
+Private chat message from %s with IP %s to %s with IP %s will be delayed for proxy lookup.|Приватне повідомлення від %s з IP %s користувача %s з IP %s буде відкладено для визначення проксі.
+Private main chat message from %s with IP %s to %s with IP %s will be delayed for proxy lookup.|Приватне повідомлення в головний чат від %s з IP %s користувачу %s з IP %s буде відкладено для визначення проксі
+Third person main chat message from %s with IP %s will be delayed for proxy lookup: %s|Повідомлення від третьої особи в головний чат від %s з IP %s буде відкладено для визначення проксі: %s
+Offline private chat message from %s with IP %s to %s with IP %s will be delayed for proxy lookup.|Приватне офлайн повідомлення від %s з IP %s користувача %s з IP %s буде відкладено для визначення проксі.
+In order to use this feature you need to set %s to your email address.|Для використання цієї функції необхідно встановити %s на вашу адресу електронної пошти.
+Failed to execute %s for proxy lookup of IP %s with code: %d|Не вдалося виконати %s для визначення проксі IP %s з кодом: %d
+Failed to execute %s for proxy lookup of IP %s with error: %s|Не вдалося виконати %s для визначення проксі IP %s з помилкою: %s
+Failed to execute %s for proxy lookup of IP %s without code and error.|Не вдалося виконати %s для визначення проксі IP %s без коду та помилки.
+Failed proxy lookup of IP %s with unknown result data: %s|Невдале визначення проксі IP %s з невідомими даними результату: %s
+Failed proxy lookup of IP %s without result data.|Невдале визначення проксі IP %s без даних результату.
+Failed proxy lookup of IP %s without result file.|Невдале визначення проксі IP %s без файлу з результатом.
+Failed proxy lookup of IP %s with result: %s|Невдале визначення проксі IP %s з результатом: %s
+Invalid request|Невірний запит
+Invalid IP|Невірний IP
+Private IP|Приватний IP
+Under maintenance|На техобслуговуванні
+Request banned|Запит заборонено
+Invalid email|Невірна адреса електронної пошти
+Not enough matches for proxy lookup of IP %s: %d of %d|Недостатньо збігів для визначення проксі IP %s: %d із %d
+Public proxy detected on IP: %s|Виявлено публічний проксі за IP-адресою: %s
+Public proxy detected on IP %s with ASN: %s|Публічний проксі знайдено за IP-адресою %s з ASN: %s
+Unsent main chat message from logged out user %s with IP %s before finishing proxy lookup: %s|Невідправлене повідомлення в головний чат від користувача %s, що вийшов з хаба, з IP %s до закінчення перевірки проксі: %s
+Unsent private chat message from logged out user %s with IP %s to %s with IP %s before finishing proxy lookup: %s|Невідправлене особисте повідомлення від користувача %s з IP %s, що вийшов з хаба, користувачу %s з IP %s до закінчення перевірки проксі: %s
+Unsent private main chat message from logged out user %s with IP %s to %s with IP %s before finishing proxy lookup: %s|Невідправлене особисте повідомлення в головний чат від користувача %s з IP %s, що вийшов з хаба, користувачу %s з IP %s до закінчення перевірки проксі: %s
+Unsent third person main chat message from logged out user %s with IP %s before finishing proxy lookup: %s|Невідправлене повідомлення від третьої особи в головний чат від користувача %s, що вийшов з хаба, з IP %s до закінчення перевірки проксі: %s
+Unsent offline private chat message from logged out user %s with IP %s to %s with IP %s before finishing proxy lookup: %s|Невідправлене особисте офлайн повідомлення від користувача %s з IP %s, що вийшов з хаба, користувачу %s з IP %s до закінчення перевірки проксі: %s
+%s logged in with IP %s previously detected as public proxy.|%s зайшов на хаб з IP %s раніше виявленим як проксі.
+%s logged in with IP %s previously detected as public proxy with ASN: %s|%s зайшов на хаб з IP %s раніше виявленим як проксі з ASN: %s
+Filtered search request duplicates: %d of %d|Дублікати відфільтрованих пошукових запитів: %d з %d
+Find configuration variables|Знайти змінні конфігурації.
+Found %d configuration variables|Знайдено %d змінних конфігурацій.
+No configuration variables found.|Змінних конфігурацій не знайдено.
+Secure connection: %s|Захищене з'єднання: %s
+TLS version: %s|Версія TLS: %s
+You can't set IP on user whose class is higher or equals your own: %s|Ви не можете встановити IP користувача чий клас дорівнює або вище вашого: %s
+Failed to set user IP: %s @ %s|Не вдалося встановити IP користувача: %s @ %s
+IP successfully set on user: %s @ %s|IP користувача успішно встановлено: %s @ %s
+Invalid command parameters specified: %s|Вказано неправильні параметри команди: %s
+Set user IP|Встановити IP користувача
+Top %d uptime rankers|Список %d лідерів за проведеним часом на хабі
+Your uptime rank|Ваш рейтинг за проведеним часом на хабі
+Your uptime rank is: %s|Ваш рейтинг за проведеним часом на хабі: %s
+You have to reconnect to get started.|Вам необхідно перепідключитись для початку.
+Uptime rank list is empty.|Список рейтингів за проведеним часом на хабі порожній.
+Top %d uptime rankers|Список %d лідерів за проведеним часом на хабі
+Deleted from uptime rank list: %s|Видалено зі списку рейтингів за проведеним часом на хабі: %s
+Not found in uptime rank list: %s|Не знайдено у списку рейтингів за проведеним часом на хабі: %s
+%s with class %d deleted %d uptime ranks lower than %d.|Користувач %s із класом %d видалив %d записів зі списку рейтингів за проведеним часом на хабі нижче від %d.
+Size of uptime ranks table: %d [ %s: %d @ %s ]|Розмір таблиці рейтингів за проведеним часом на хабі: %d [%s: %d@%s]
+Total uptime rank time: %s|Загальна кількість часу на хабі: %s
+Function disabled|Функцію вимкнено
+Code %d|Код
+Unknown error|Невідома помилка
+No file|Немає файлу
+No data|Немає даних
+Unknown data|Невідомі дані
+IP intelligence: %s|IP інтелект: %s
+Forbidden MyINFO list|Список заборонених MyINFO
+Forbidden MyINFO list is empty.|Список заборонених MyINFO порожній.
+There is an error in following forbidden MyINFO pattern|Існує помилка у наступному шаблоні заборонених MyINFO
+Modified forbidden MyINFO with ban time %s: %s|Змінено заборонений MyINFO з баном %s: %s
+Added forbidden MyINFO with ban time %s: %s|Доданий заборонений MyINFO з баном %s: %s
+Deleted forbidden MyINFO: %s|Видалено заборонений MyINFO: %s
+Couldn't delete forbidden MyINFO because not found: %s|Неможливо видалити заборонений MyINFO, оскільки він не знайдений: %s
+%s with IP %s and class %d allowed due to forbidden MyINFO exception: %s|Користувач %s з IP %s та класом %d пропущений за винятком заборонених MyINFO: %s
+Adding new AVDB item to our list: %s|Додаю новий пункт AVDB до нашого списку: %s
+Updating AVDB item with different user nick: %s|Обновлюю пункт AVDB з нікчем користувача: %s
+Updating AVDB item with different IP address: %s|Оновлюю пункт AVDB з різною IP адресою: %s
+Updating AVDB item with different share size: %s|Оновлюю пункт AVDB з різним розміром шари: %s
+Chat flood or spam detected from your IP|Флуд у чат або спам виявлено з вашого IP
+On restart|При перезавантаженні
+Modified ASN gag %s with reason: %s|Змінено заглушку за ASN %s з причиною: %s
+Modified ASN gag: %s|Змінено заглушку за ASN: %s
+Added ASN gag %s with reason: %s|Додано заглушку по ASN %s з причиною: %s
+Added ASN gag: %s|Додано заглушку за ASN: %s
+Cleared ASN gag list.|Список заглушок ASN очищений.
+Deleted ASN gag: %s|Видалена заглушка ASN: %s
+ASN gag not found: %s|Заглушку ASN не знайдено: %s
+ASN gag list|Список заглушок за ASN
+ASN gag list is empty.|Список заглушок ASN порожній.
+%s with IP %s, class %d and ASN %s tries to speak with ASN gag in PM to %s with IP %s and class %d: %s|%s c IP %s, класом %d та ASN %s намагався відправити особисте повідомлення незважаючи на заглушку по ASN користувачу %s з IP адресою %s та класом %d: %s
+%s with IP %s, class %d and ASN %s tries to speak with ASN gag in MC: %s|%s c IP %s, класом %d та ASN %s намагався надіслати повідомлення до головного чату, не дивлячись на заглушку за ASN: %s
+ASN gag|Заглушка за ASN
+Add ASN gag|Додати заглушку за ASN
+Delete ASN gag|Видалити заглушку за ASN
+User command from %s with IP %s will be delayed for proxy lookup: %s|Користувальницька команда від %s з IP %s буде відкладена для визначення проксі: %s
+Blocking user command from %s with IP %s detected as public proxy: %s|Блокування команди користувача від %s з IP %s виявленого як публічний проксі: %s
+Unsent user command from logged out user %s with IP %s before finishing proxy lookup: %s|Невідправлена користувальницька команда від користувача %s, що вийшов з хаба, з IP %s до закінчення перевірки проксі: %s
+Test antispam entry|Перевірити запис антиспаму
+Spam exception with action %d and priority %d in MC: %s|Виняток для антиспаму з дією %d та пріоритетом %d в MC: %s
+Spam exception with action %d and priority %d in PM: %s|Виняток для антиспаму з дією %d та пріоритетом %d в PM: %
+Spam exception with action %d and priority %d in MC and PM: %s|Виняток для антиспаму з дією %d та пріоритетом %d в MC та PM: %s
+Spam with action %d and priority %d in MC: %s|Спам із дією %d та пріоритетом %d в MC: %s
+Spam with action %d and priority %d in PM: %s|Спам із дією %d та пріоритетом %d в PM: %s
+Spam with action %d and priority %d in MC and PM: %s|Спам із дією %d та пріоритетом %d в MC та PM: %s
+No antispam matches for text: %s|Немає збігів антиспаму для тексту: %s
+List of antispam matches for text: %s|Список збігів антиспаму для тексту: %s
+Added proxy protection entry: %s|Додано запис захищеного проксі: %s
+Proxy protection entry already exists: %s|Запис захищеного проксі вже існує: %s
+Cleared proxy protection list.|Очищено список захищених проксі.
+Deleted proxy protection entry: %s|Видалено запис захищеного проксі: %s
+Proxy protection entry not found: %s|Запис захищеного проксі не знайдено: %s
+Proxy protection list|Список захищених проксі
+Proxy protection list is empty.|Список захищених проксі порожній.
+Add proxy protection entry|Додати запис захищеного проксі
+Delete proxy protection entry|Залагодити запис захищеного проксі
+IP is protected: %s|IP захищений: %s
+Blacklist|Чорний список
+Add blacklist entry|Додати пункт до чорного списку
+List blacklist entries|Показати пункти у чорному списку
+Disable or enable blacklist entry|Вимкнути або увімкнути пункт у чорному списку
+Delete blacklist entry|Видалити пункт із чорного списку
+list|список
+Import blacklist entries from %s|Імпортувати елементи з чорного списку %s
+Modified blacklist entry: %s|Змінено елемент чорного списку: %s
+Added blacklist entry: %s|Доданий пункт чорного списку: %s
+Blacklist entry not found: %s|Пункт чорного списку не знайдено: %s
+Deleted blacklist entry: %s|Видалено пункт чорного списку: %s
+Blacklist list is empty.|Чорний список порожній.
+List of blacklist entries|Список пунктів у чорному списку
+Disabled blacklist entry: %s|Вимкнути запис у чорний список: %s
+Enabled blacklist entry: %s|Включити запис у чорний список: %s
+Import status|Статус імпорту
+Table does not exist or is empty: %s|Таблиця не існує або порожня: %s
+Binary is required: %s|Бінарний файл є обов'язковим: %s
+Successfully imported|Успішний імпорт
+Unsupported type: %s|Тип не підтримується: %s
+Already in our list|Вже у нашому списку
+Search in blacklist|Пошук за чорним списком
+No blacklist entries found.|Пункти чорного списку не знайдено.
+Found blacklist entries|Знайдено пункти чорного списку
+Blacklist feature is disabled.|Функцію чорних списків вимкнено.
+%s blacklist not loaded because: %s|Чорний список %s не завантажений, оскільки: %s
+Blacklist loaded with %d items: %s|Чорний список завантажений з %d пунктами: %s
+File does not exist: %s|Файл не знайдено: %s
+Hard IP ban entry not found: %s|Пункт жорсткого бана IP на вхід не знайдено: %s
+Disabled hard IP ban entry: %s|Пункт жорсткого бана IP на вхід вимкнено: %s
+Enabled hard IP ban entry: %s|Пункт жорсткого бана IP на вхід включено: %s
+Disable or enable hard IP ban entry|Вимкнути або увімкнути пункт жорсткого бана IP на вхід
+Import hard IP ban entries from %s|Імпорт пунктів жорстких банів IP на вхід із %s
+Blacklist load results|Результати завантаження чорних списків
+Invalid IP or CIDR: %s|Невірний IP або CIDR: %s
+System bans|Системні бани
+Add system bans separated by space|Додати системні бани через пропуск
+cidr|cidr
+List of system bans|Список системних банів
+Referenced list of system bans|Пов'язаний список системних банів
+Unreferenced list of system bans|Незв'язаний список системних банів
+System ban list is empty.|Список системних банів порожній.
+Delete system ban|Видалити системний бан
+System ban not found: %s|Системний бан не знайдено: %s
+Deleted system ban: %s|Системний бан видалено: %s
+Modified system ban: %s|Системний бан змінено: %s
+Added system ban: %s|Системний бан додано: %s
+Cleared system bans.|Системні бани очищені.
+Failed to create rule for %s in %s: %s|Не вдалося створити правило для %s у %s: %s
+Failed to get rules in %s: %s|Не вдалося добути список правил у %s: %s
+Failed to detect version: %s|Неможливо дізнатися версію: %s
+Failed to create chain in %s: %s|Не вдалося створити ланцюг у %s: %s
+Failed to check chain in %s: %s|Не вдалося перевірити ланцюг у %s: %s
+Failed to flush chain in %s: %s|Не вдалося очистити ланцюг у %s: %s
+Failed to delete chain in %s: %s|Не вдалося видалити ланцюг у %s: %s
+Failed to create rule in %s: %s|Не вдалося створити правило у %s: %s
+Failed to check rule in %s: %s|Не вдалося перевірити правило у %s: %s
+Failed to delete rule in %s: %s|Не вдалося видалити правило у %s: %s
+Please compare with original string and make sure parameters equal: %s|Пожалуйста сравните с оригиналом и убедитесь что кол-во параметров является равным: %s
