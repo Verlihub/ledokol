@@ -1103,7 +1103,7 @@ Deleted search filter block list entry: %s|Видалити пункт зі списку блокування п
 Couldn't delete search filter block list entry because not found: %s|Не вдалося видалити пункт зі списку блокування пошукового фільтра, тому що не знайдено: %s
 Yes|Так
 No|Ні
-%s with class %d changed configuration variable %s.%s: %s => %s|Користувач %s та класом %d змінив конфігураційну змінну %s.%s: %s => %s
+%s with class %d changed configuration variable %s.%s: %s => %s|Користувач %s з класом %d змінив конфігураційну змінну %s.%s: %s => %s
 Please wait another %d seconds before using public chat.|Зачекайте %d секунд, перш ніж використовувати головний чат.
 Please wait another %d seconds before using private chat.|Зачекайте %d секунд перед використанням приватного чату.
 Low chat uptime of %d seconds from %s with IP %s and class %d in PM to %s with IP %s and class %d: %s|Недостатній аптайм чату %d секунд від %s c IP адресою %s та класом %d у вигляді приватного повідомлення користувачу %s з IP адресою %s та класом %d: %s
