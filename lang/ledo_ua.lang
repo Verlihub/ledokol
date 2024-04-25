@@ -506,7 +506,7 @@ Couldn't delete release because not found: %s|Неможливо видалити реліз, не знайд
 Reminder preview|Передогляд нагадування
 Preview of %s reminder: %s|Передогляд %s нагадування: %s
 Specified nick is already in use.|Вказаний нік вже використовується.
-Live user location statistics by country|Поточний розподіл користувачів по країнах
+Live user location statistics by country|Поточний розподіл користувачів за назвою країни
 All time user location statistics|Статистика місцезнаходження користувача за весь час
 This feature requires %s or later installed on your system.|Ця функція потребує %s або пізнішої версії встановленої у вашій системі.
 Total count since %s: %d|Загальна кількість від %s: %d
