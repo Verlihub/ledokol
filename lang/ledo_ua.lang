@@ -886,8 +886,8 @@ Drop users with IP|Вимкнути користувача з IP
 No users found with IP: %s|Не знайдено користувача з IP: %s
 Dropped %d users with IP: %s|Вимкнено %d користувачів з IP: %s
 %s dropped %d users with IP: %s|Користувач %s вимкнув %d користувачів з IP: %s
-Live user location statistics by city|Статистика, в реальному часі, розташування користувачів по містах
-Live user location statistics by city from %s=%s|Статистика, в реальному часі, розташування користувачів по містах із %s=%s
+Live user location statistics by city|Статистика, в реальному часі, розташування користувачів за назвою міста
+Live user location statistics by city from %s=%s|Статистика, в реальному часі, розташування користувачів за назвою міста із %s=%s
 No users in the hub from: %s=%s|На хабі немає користувачів з: %s=%s
 Help notes|Допоміжні примітки
 parameter|параметр
@@ -1079,14 +1079,14 @@ Chatroom history is empty.|Історія чат кімнати порожня.
 Last %d chatroom messages|Останні %d повідомлення історії чат кімнати
 There are no chatroom history messages to remove: %s|Немає повідомлень для видалення з історії чату кімнати: %s
 Deleted %d chatroom history messages: %s|Видалено %d повідомлень з історії чату кімнати: %s
-%s with class %d deleted %d chatroom history messages: %s|%s із класом %d видалив %d повідомлень з історії чат кімнати: %s
+%s with class %d deleted %d chatroom history messages: %s|%s з класом %d видалив %d повідомлень з історії чат кімнати: %s
 Set your chat mode|Встановити свій режим чату
 real|справжній
 Specified country code isn't valid: %s|Цей код країни недійсний: %s
 You can't block user who don't share anything: %s|Ви не можете заблокувати користувача чия шара порожня: %s
 You can't kick user who don't share anything: %s|Ви не можете кикнути користувача чия шара порожня: %s
 Flood detected from %s with IP %s and class %d in MC: %s|Виявлено флуд від користувача %s з IP адресою %s та класом %d у головний чат: %s
-User dropped due to flood: %s|Користувач викинуть через флуд: %s
+User dropped due to flood: %s|Користувач був викинутий через флуд: %s
 Main chat flood detected from your nick.|Виявлено флуд у головний чат від вашого ніка.
 Private chat flood detected from your IP.|Виявлено флуд у вигляді особистого повідомлення від вашої IP адреси.
 Sorry, your message has been ignored.|Вибачте, ваше повідомлення було ігноровано.
@@ -1143,22 +1143,22 @@ Forbidden chat nick list is empty.|Список заборонених чат ніків порожній.
 No entrance|Входу немає
 ASN: %s|ASN: %s
 %s was kicked with reason: %s|%s був кікнутий з причиною: %s
-City gag|Заглушка по місту
-Add city gag|Додати заглушку по місту
-City gag list|Список заглушок по місту
-Delete city gag|Видалити заглушку по місту
-Modified city gag %s with reason: %s|Змінено заглушку по місту %s з причиною: %s
-Modified city gag: %s|Змінено заглушку по місту: %s
-Added city gag %s with reason: %s|Додано заглушку по місту %s з причиною: %s
-Added city gag: %s|Додано заглушку по місту: %s
-Cleared city gag list.|Список заглушених по місту очищений.
-Deleted city gag: %s|Видалена заглушка по місту: %s
-City gag not found: %s|Заглушку по місту не знайдено: %s
-City gag list is empty.|Список заглушок по місту порожній.
-%s with IP %s and class %d tries to speak with city gag in PM to %s with IP %s and class %d: %s|Користувач %s c IP адресою %s та класом %d намагався надіслати повідомлення незважаючи на заглушку по місту у вигляді особистого повідомлення користувачу %s з IP адресою %s та класом %d: %s
-%s with IP %s and class %d tries to speak with city gag in MC: %s|Користувач %s з IP адресою %s та класом %d намагався відправити повідомлення до головного чату незважаючи на заглушку по місту: %s
+City gag|Заглушка за назвою міста
+Add city gag|Додати заглушку за назвою міста
+City gag list|Список заглушок за назвою міста
+Delete city gag|Видалити заглушку за назвою міста
+Modified city gag %s with reason: %s|Змінено заглушку за назвою міста %s з причиною: %s
+Modified city gag: %s|Змінено заглушку за назвою міста: %s
+Added city gag %s with reason: %s|Додано заглушку за назвою міста %s з причиною: %s
+Added city gag: %s|Додано заглушку за назвою міста: %s
+Cleared city gag list.|Список заглушених за назвою міста очищений.
+Deleted city gag: %s|Видалена заглушка за назвою міста: %s
+City gag not found: %s|Заглушку за назвою міста не знайдено: %s
+City gag list is empty.|Список заглушок за назвою міста порожній.
+%s with IP %s and class %d tries to speak with city gag in PM to %s with IP %s and class %d: %s|Користувач %s з IP адресою %s та класом %d намагався надіслати повідомлення незважаючи на заглушку за назвою міста у вигляді приватного повідомлення користувачу %s з IP адресою %s та класом %d: %s
+%s with IP %s and class %d tries to speak with city gag in MC: %s|Користувач %s з IP адресою %s та класом %d намагався відправити повідомлення до головного чату незважаючи на заглушку за містом: %s
 %s with IP %s and class %d tried to speak in MC without chat code: <%s> %s|%s з IP %s та класом %d намагався надіслати повідомлення до головного чату без захисного коду: <%s> %s
-%s with IP %s and class %d tried to speak without chat code in PM to %s with IP %s and class %d.|%s з IP %s та класом %d намагався говорити без захисного коду у вигляді особистого повідомлення користувачу %s з IP %s та класом %d.
+%s with IP %s and class %d tried to speak without chat code in PM to %s with IP %s and class %d.|%s з IP %s та класом %d намагався говорити без захисного коду у вигляді приватного повідомлення користувачу %s з IP %s та класом %d.
 Low connection attempt uptime of %d seconds from %s with IP %s and class %d to user: %s|Недостатній аптайм у %d секунд для спроби з'єднання від %s c IP %s та класом %d користувачу: %s
 Please wait another %d seconds before connecting to other users.|Зачекайте %d секунд, перш ніж підключатися до інших користувачів.
 path|шлях
@@ -1257,7 +1257,7 @@ Uptime rank list is empty.|Список рейтингів за проведеним часом на хабі порожній
 Top %d uptime rankers|Список %d лідерів за проведеним часом на хабі
 Deleted from uptime rank list: %s|Видалено зі списку рейтингів за проведеним часом на хабі: %s
 Not found in uptime rank list: %s|Не знайдено у списку рейтингів за проведеним часом на хабі: %s
-%s with class %d deleted %d uptime ranks lower than %d.|Користувач %s із класом %d видалив %d записів зі списку рейтингів за проведеним часом на хабі нижче від %d.
+%s with class %d deleted %d uptime ranks lower than %d.|Користувач %s з класом %d видалив %d записів зі списку рейтингів за проведеним часом на хабі нижче від %d.
 Size of uptime ranks table: %d [ %s: %d @ %s ]|Розмір таблиці рейтингів за проведеним часом на хабі: %d [%s: %d@%s]
 Total uptime rank time: %s|Загальна кількість часу на хабі: %s
 Function disabled|Функцію вимкнено
