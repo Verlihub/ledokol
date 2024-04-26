@@ -52,7 +52,7 @@ Doxtur, chaos, sphinx, Zorro, W1ZaRd, S0RiN, MaxFox, Krzychu,
 @tlantide, Ettore Atalan, Trumpy, Modswat, KCAHDEP, mauron, DiegoZ,
 Mank, Nickel, Lord_Zero, Meka][Meka, Ger, PetterOSS, Marcel, PPK,
 madkid, Aeolide, Jaguar, Toecutter, SCALOlaz, FlylinkDC-dev, Men_VAf,
-Tzaca, JOE™, Foxtrot, Deivis, PWiAM, Gabriel and others
+Tzaca, JOE™, Foxtrot, Deivis, PWiAM, Gabriel, Master and others
 
 ---------------------------------------------------------------------
 ]]-- special thanks to <<
@@ -63,7 +63,7 @@ Tzaca, JOE™, Foxtrot, Deivis, PWiAM, Gabriel and others
 ---------------------------------------------------------------------
 
 ver_ledo = "3.0.0" -- ledokol version
-bld_ledo = "143" -- build number
+bld_ledo = "144" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -3313,10 +3313,10 @@ return 0
 
 	----- ---- --- -- -
 
-	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.cloneinfo .. "$") then
+	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.cloneinfo .. "$") or data:match ("^" .. table_othsets.optrig .. table_cmnds.cloneinfo .. " %d$") then
 		if ucl >= table_sets.mincommandclass then
 			donotifycmd (nick, data, 0, ucl)
-			showcloneinfo (nick)
+			showcloneinfo (nick, data:sub (# table_cmnds.cloneinfo + 3))
 		else
 			commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 		end
@@ -3325,7 +3325,7 @@ return 0
 
 	----- ---- --- -- -
 
-	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.clonemove .. " %S+$") then
+	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.clonemove .. " %S+$") or data:match ("^" .. table_othsets.optrig .. table_cmnds.clonemove .. " %S+ %d$") then
 		if ucl >= table_sets.mincommandclass then
 			donotifycmd (nick, data, 0, ucl)
 			moveclones (nick, data:sub (# table_cmnds.clonemove + 3))
@@ -12355,7 +12355,7 @@ end
 ----- ---- --- -- -
 
 function seenlookup (nick, line)
-	local _, fype, fext = 0, "nick", ""
+	local fype, fext = 0, "nick", ""
 
 	if line:match ("^[^ ]+ .+$") then
 		fype, fext = line:match ("^([^ ]+) (.+)$")
@@ -12520,7 +12520,21 @@ end
 
 ----- ---- --- -- -
 
-function moveclones (nick, url)
+function moveclones (nick, line)
+	local url, many = "", ""
+
+	if line:match ("^%S+ %d$") then
+		url, many = line:match ("^(%S+) (%d)$")
+	else
+		url = line
+	end
+
+	many = tonumber (many) or 1
+
+	if many < 1 then
+		many = 1
+	end
+
 	local cist = {}
 
 	for user in getnicklist ():gmatch ("[^%$ ]+") do
@@ -12545,7 +12559,7 @@ function moveclones (nick, url)
 	for _, data in pairs (cist) do
 		local num = # data
 
-		if num > 1 then -- more than one
+		if num > many then -- more than one
 			for pos = 2, num do
 				VH:SendToUser ("$ForceMove " .. url .. "|", data [pos])
 				tot = tot + 1
@@ -12562,7 +12576,7 @@ end
 
 ----- ---- --- -- -
 
-function showcloneinfo (nick)
+function showcloneinfo (nick, many)
 	local cist = {}
 
 	for user in getnicklist ():gmatch ("[^%$ ]+") do
@@ -12581,12 +12595,16 @@ function showcloneinfo (nick)
 		end
 	end
 
-	local list, tot = "", 0
+	local list, tot, comp = "", 0, tonumber (many) or 1
+
+	if comp < 1 then
+		comp = 1
+	end
 
 	for id, data in pairs (cist) do
 		local num = # data
 
-		if num > 1 then -- more than one
+		if num > comp then -- more than one
 			local addr, shar = id:match ("^(%d+%.%d+%.%d+%.%d+)_.+_(%d+)$")
 			list = list .. " " .. gettext ("%d users with IP %s and shared bytes %d: %s"):format (num, addr .. tryipcc (addr), _tostring (shar), table.concat (data, " ")) .. "\r\n"
 			tot = tot + num - 1
@@ -20749,8 +20767,8 @@ end
 		sopmenitm (usr, gettext ("User logger") .. "\\" .. gettext ("Search in user log"), table_cmnds.ulog .. " %[line:<" .. gettext ("type") .. ">] %[line:<" .. gettext ("string") .. ">] %[line:<" .. gettext ("lines") .. ">]")
 		sopmenitm (usr, gettext ("User logger") .. "\\" .. gettext ("%s user lookup"):format (table_othsets.hublisturl), table_cmnds.seen .. " %[line:<" .. gettext ("type") .. ">] %[line:<" .. gettext ("text") .. ">]")
 		sopmenitm (usr, gettext ("User logger") .. "\\" .. gettext ("%s lookup"):format ("WHOIS"), table_cmnds.whois .. " %[line:<" .. gettext ("address") .. ">]")
-		sopmenitm (usr, gettext ("User logger") .. "\\" .. gettext ("Clone information"), table_cmnds.cloneinfo)
-		sopmenitm (usr, gettext ("User logger") .. "\\" .. gettext ("Redirect all clones"), table_cmnds.clonemove .. " %[line:<" .. gettext ("address") .. ">]")
+		sopmenitm (usr, gettext ("User logger") .. "\\" .. gettext ("Clone information"), table_cmnds.cloneinfo .. " %[line:<" .. gettext ("limit") .. ">]")
+		sopmenitm (usr, gettext ("User logger") .. "\\" .. gettext ("Redirect all clones"), table_cmnds.clonemove .. " %[line:<" .. gettext ("address") .. ">] %[line:<" .. gettext ("limit") .. ">]")
 	end
 
 	-- todo: no pm
@@ -25302,8 +25320,8 @@ function sendophelp (nick, clas, pm)
 	help = help .. " " .. trig .. table_cmnds.ulog .. " [" .. gettext ("type") .. "=nick] <" .. gettext ("string") .. "> [" .. gettext ("lines") .. "=100] - " .. gettext ("Search in user log") .. "\r\n" -- static parameters
 	help = help .. " " .. trig .. table_cmnds.seen .. " <" .. gettext ("type") .. "> <" .. gettext ("text") .. "> - " .. gettext ("%s user lookup"):format (table_othsets.hublisturl) .. "\r\n"
 	help = help .. " " .. trig .. table_cmnds.whois .. " <" .. gettext ("address") .. "> - " .. gettext ("%s lookup"):format ("WHOIS") .. "\r\n"
-	help = help .. " " .. trig .. table_cmnds.cloneinfo .. " - " .. gettext ("Clone information") .. "\r\n"
-	help = help .. " " .. trig .. table_cmnds.clonemove .. " <" .. gettext ("address") .. "> - " .. gettext ("Redirect all clones") .. "\r\n\r\n"
+	help = help .. " " .. trig .. table_cmnds.cloneinfo .. " [" .. gettext ("limit") .. "] - " .. gettext ("Clone information") .. "\r\n"
+	help = help .. " " .. trig .. table_cmnds.clonemove .. " <" .. gettext ("address") .. "> [" .. gettext ("limit") .. "] - " .. gettext ("Redirect all clones") .. "\r\n\r\n"
 
 	-- vote kick
 	help = help .. " " .. trig .. table_cmnds.votekickdel .. " <" .. gettext ("nick") .. "> - " .. gettext ("Clear kick votes for user") .. "\r\n"

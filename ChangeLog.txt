@@ -1,6 +1,7 @@
 [ 3.0.0 :: 2024-##-## ]
 
 [143] Added: Ranks cleanup negative limit to remove unregistered users when minimum usage class is set
+[144] Added: cloneinfo and clonemove commands now accept number of clones as limit parameter
 
 [ 2.9.9 :: 2023-12-16 ]
 
