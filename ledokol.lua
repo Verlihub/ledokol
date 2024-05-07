@@ -63,7 +63,7 @@ Tzaca, JOE™, Foxtrot, Deivis, PWiAM, Gabriel, Master and others
 ---------------------------------------------------------------------
 
 ver_ledo = "3.0.0" -- ledokol version
-bld_ledo = "144" -- build number
+bld_ledo = "145" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -394,6 +394,7 @@ table_othsets = {
 	avdbsendurl = "https://www.te-home.net/avdb.php?do=send",
 	avdbloadurl = "https://www.te-home.net/avdb.php?do=load",
 	avdbfindurl = "https://www.te-home.net/avdb.php?do=find",
+	avdbcheckall = false,
 	luaman = "https://www.lua.org/manual/" .. _VERSION:sub (5) .. "/manual.html#6.4.1",
 	cfgdir = "",
 	feednick = "",
@@ -6962,6 +6963,11 @@ function VH_OnTimer (msec)
 	if table_sets.avdbloadint > 0 and table_othsets.ver_curl and os.difftime (now, table_othsets.avlastloadtick) >= (table_sets.avdbloadint * 60) then -- antivirus load
 		loadavdb (now)
 		table_othsets.avlastloadtick = now
+	end
+
+	if table_othsets.avdbcheckall then -- schedule avdb check on all users
+		avdbcheckall ()
+		table_othsets.avdbcheckall = false
 	end
 
 	if table_sets.useblacklist == 1 and ((table_othsets.blistlastupd == 0) or (table_sets.blistupdateint >= 1 and os.difftime (now, table_othsets.blistlastupd) >= (table_sets.blistupdateint * 60))) then -- update blacklist on timer or once
@@ -26983,7 +26989,7 @@ function loadavdb (stam)
 			if table_sets.avfeedverb == 3 then
 				if loco > 0 then
 					opsnotify (table_sets.classnotiav, gettext ("Loaded %d of %d with totally %d items: %s"):format (loco, loal, # table_avlo, "AVDB"))
-					avdbcheckall () -- check all users when we get fresh db
+					table_othsets.avdbcheckall = true -- check all users on next timer when we get fresh db
 
 				elseif loal > 0 then
 					opsnotify (table_sets.classnotiav, gettext ("Loaded none of %d with totally %d items: %s"):format (loal, # table_avlo, "AVDB"))
