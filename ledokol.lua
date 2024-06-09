@@ -6960,14 +6960,14 @@ function VH_OnTimer (msec)
 		table_othsets.avlastseartick = now
 	end
 
+	if table_othsets.avdbcheckall then -- schedule avdb check on all users, must be before loading
+		avdbcheckall ()
+		table_othsets.avdbcheckall = false
+	end
+
 	if table_sets.avdbloadint > 0 and table_othsets.ver_curl and os.difftime (now, table_othsets.avlastloadtick) >= (table_sets.avdbloadint * 60) then -- antivirus load
 		loadavdb (now)
 		table_othsets.avlastloadtick = now
-	end
-
-	if table_othsets.avdbcheckall then -- schedule avdb check on all users
-		avdbcheckall ()
-		table_othsets.avdbcheckall = false
 	end
 
 	if table_sets.useblacklist == 1 and ((table_othsets.blistlastupd == 0) or (table_sets.blistupdateint >= 1 and os.difftime (now, table_othsets.blistlastupd) >= (table_sets.blistupdateint * 60))) then -- update blacklist on timer or once
