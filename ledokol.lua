@@ -2,7 +2,7 @@
 --[[ license agreement >>
 ---------------------------------------------------------------------
 
-Copyright © 2007-2024 RoLex
+Copyright © 2007-2025 RoLex
 
 Ledokol is free software, you can redistribute it
 and modify it under the terms of the GNU General
@@ -63,7 +63,7 @@ Tzaca, JOE™, Foxtrot, Deivis, PWiAM, Gabriel, Master and others
 ---------------------------------------------------------------------
 
 ver_ledo = "3.0.0" -- ledokol version
-bld_ledo = "145" -- build number
+bld_ledo = "146" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -317,6 +317,8 @@ table_sets = {
 	enablehardban = 0,
 	hbanfeedint = 0,
 	useblacklist = 0,
+	addblistfeed = 0,
+	blistfeednick = "#" .. string.char (160) .. "Blacklist",
 	blistupdateint = 0,
 	blistfeedint = 0,
 	blistshowrange = 0,
@@ -389,11 +391,11 @@ table_othsets = {
 	verfile = "ledokol.ver",
 	luafile = "ledokol.lua",
 	langfilefmt = "ledo_%s.lang",
-	hublisturl = "https://www.te-home.net/?do=hublist",
-	seenurl = "https://www.te-home.net/?do=hublist&action=seen",
-	avdbsendurl = "https://www.te-home.net/avdb.php?do=send",
-	avdbloadurl = "https://www.te-home.net/avdb.php?do=load",
-	avdbfindurl = "https://www.te-home.net/avdb.php?do=find",
+	hublisturl = "https://te-home.net/?do=hublist",
+	seenurl = "https://te-home.net/?do=hublist&action=seen",
+	avdbsendurl = "https://te-home.net/avdb.php?do=send",
+	avdbloadurl = "https://te-home.net/avdb.php?do=load",
+	avdbfindurl = "https://te-home.net/avdb.php?do=find",
 	avdbcheckall = false,
 	luaman = "https://www.lua.org/manual/" .. _VERSION:sub (5) .. "/manual.html#6.4.1",
 	cfgdir = "",
@@ -1679,6 +1681,8 @@ function Main (file)
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('enablesysbans', '" .. repsqlchars (table_sets.enablesysbans) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('sysbanuseclass', '" .. repsqlchars (table_sets.sysbanuseclass) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('votekickregdays', '" .. repsqlchars (table_sets.votekickregdays) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('addblistfeed', '" .. repsqlchars (table_sets.addblistfeed) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('blistfeednick', '" .. repsqlchars (table_sets.blistfeednick) .. "')")
 					end
 
 					if ver <= 300 then
@@ -1731,6 +1735,10 @@ function Main (file)
 
 	if table_sets.enablesearfilt >= 1 and table_sets.addsefifeed == 1 then -- search filter feed
 		addhubrobot (table_sets.sefifeednick, "", 2, "", 0)
+	end
+
+	if table_sets.useblacklist == 1 and table_sets.addblistfeed == 1 then -- blacklist feed
+		addhubrobot (table_sets.blistfeednick, "", 2, "", 0)
 	end
 
 	if table_sets.chatrunning == 1 then
@@ -1839,6 +1847,10 @@ function UnLoad ()
 
 	if table_sets.enablesearfilt >= 1 and table_sets.addsefifeed == 1 then -- search filter feed
 		delhubrobot (table_sets.sefifeednick)
+	end
+
+	if table_sets.useblacklist == 1 and table_sets.addblistfeed == 1 then -- blacklist feed
+		delhubrobot (table_sets.blistfeednick)
 	end
 
 	return 1
@@ -3973,6 +3985,10 @@ elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.mode .. "$") then
 
 			if table_sets.enablesearfilt >= 1 and table_sets.addsefifeed == 1 then -- search filter feed
 				delhubrobot (table_sets.sefifeednick)
+			end
+
+			if table_sets.useblacklist == 1 and table_sets.addblistfeed == 1 then -- blacklist feed
+				delhubrobot (table_sets.blistfeednick)
 			end
 
 			if table_sets.addspecialver == 1 then
@@ -8043,6 +8059,14 @@ function VH_OnParsedMsgPM (from, data, to)
 
 	----- ---- --- -- -
 
+	elseif to == table_sets.blistfeednick then -- blacklist feed
+		if table_sets.useblacklist == 1 and table_sets.addblistfeed == 1 and fcls < 3 then
+			opsnotify (table_sets.classnotibotpm, gettext ("%s with IP %s and class %d sent message to %s: %s"):format (from, addr .. tryipcc (addr, from), fcls, to, data))
+			VH:SendToUser ("$To: " .. from .. " From: " .. to .. " $<" .. to .. "> " .. gettext ("I'm probably away. State your business and I might answer later if you're lucky.") .. "|", from)
+		end
+
+	----- ---- --- -- -
+
 	elseif table_othsets.lasttimenick and (to == table_othsets.lasttimenick) then -- time bot
 		if table_sets.timebotint > 0 then
 			opsnotify (table_sets.classnotibotpm, gettext ("%s with IP %s and class %d sent message to %s: %s"):format (from, addr .. tryipcc (addr, from), fcls, to, data))
@@ -10987,8 +11011,8 @@ function importblist (nick)
 
 		for pos = 0, rows - 1 do
 			local _, list, cype, name, off = VH:SQLFetch (pos)
-			local lrep = list:gsub ("^[Hh][Tt][Tt][Pp]://[Tt][Ee]%-[Hh][Oo][Mm][Ee]%.[Nn][Ee][Tt]", "https://www.te-home.net") -- force https since its supported
-			lrep = lrep:gsub ("^[Hh][Tt][Tt][Pp]://[Ww][Ww][Ww]%.[Tt][Ee]%-[Hh][Oo][Mm][Ee]%.[Nn][Ee][Tt]", "https://www.te-home.net")
+			local lrep = list:gsub ("^[Hh][Tt][Tt][Pp]://[Tt][Ee]%-[Hh][Oo][Mm][Ee]%.[Nn][Ee][Tt]", "https://te-home.net") -- force https since its supported
+			lrep = lrep:gsub ("^[Hh][Tt][Tt][Pp]://[Ww][Ww][Ww]%.[Tt][Ee]%-[Hh][Oo][Mm][Ee]%.[Nn][Ee][Tt]", "https://te-home.net")
 			back = back .. " [ L: " .. repnmdcoutchars (list) .. " ] [ T: " .. repnmdcoutchars (cype) .. " ] [ N: " .. repnmdcoutchars (name) .. " ] [ D: " .. ((tonumber (off) == 0) and gettext ("No") or gettext ("Yes")) .. " ] [ S: "
 
 			if (list:sub (1, 8):lower () == "https://" or list:sub (1, 7):lower () == "http://") and not table_othsets.ver_curl then
@@ -11047,7 +11071,7 @@ function checkblacklist (addr)
 						line = line .. " [" .. data.rang .. "]"
 					end
 
-					opsnotify (table_sets.classnotiblist, line) -- notify
+					blistnotify (table_sets.classnotiblist, line) -- notify
 					table_blst [a1 + 1][pos].last = now
 				end
 
@@ -11180,7 +11204,7 @@ function loadblacklist ()
 			end
 		end
 
-		opsnotify (table_sets.classnotiblist, gettext ("Blacklist load results") .. ":\r\n\r\n" .. feed)
+		blistnotify (table_sets.classnotiblist, gettext ("Blacklist load results") .. ":\r\n\r\n" .. feed) -- notify
 	end
 
 	table_othsets.blistlastupd = os.time ()
@@ -22540,10 +22564,20 @@ end
 			if setto == 0 or setto == 1 then
 				ok = true
 
-				if setto == 0 then -- flush
-					table_blst = {}
-				elseif table_sets [tvar] == 0 then -- load
-					loadblacklist ()
+				if table_sets [tvar] ~= setto then
+					if table_sets.addblistfeed == 1 then -- feed first
+						if setto == 0 then
+							delhubrobot (table_sets.blistfeednick)
+						else
+							addhubrobot (table_sets.blistfeednick, "", 2, "", 0)
+						end
+					end
+
+					if setto == 0 then -- flush
+						table_blst = {}
+					elseif table_sets [tvar] == 0 then -- load
+						loadblacklist ()
+					end
 				end
 
 			else
@@ -22552,6 +22586,51 @@ end
 
 		else
 			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
+		end
+
+	----- ---- --- -- -
+
+	elseif tvar == "addblistfeed" then
+		if num then
+			if setto == 0 or setto == 1 then
+				ok = true
+
+				if table_sets [tvar] ~= setto and table_sets.useblacklist == 1 then
+					if setto == 0 then
+						delhubrobot (table_sets.blistfeednick)
+					else
+						addhubrobot (table_sets.blistfeednick, "", 2, "", 0)
+					end
+				end
+
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0 " .. gettext ("or") .. " 1"))
+			end
+
+		else
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
+		end
+
+	----- ---- --- -- -
+
+	elseif tvar == "blistfeednick" then
+		if # setto > 0 then
+			setto = repnickchars (setto)
+
+			if setto == table_sets [tvar] or getstatus (setto) == 1 then -- isbot (setto)
+				commandanswer (nick, gettext ("Specified nick is already in use."))
+				return
+			end
+
+			ok = true
+
+			if table_sets.useblacklist == 1 and table_sets.addblistfeed == 1 then
+				delhubrobot (table_sets [tvar])
+				addhubrobot (setto, "", 2, "", 0)
+			end
+
+		else
+			commandanswer (nick, gettext ("Configuration variable %s can't be empty."):format (tvar))
 		end
 
 	----- ---- --- -- -
@@ -23496,7 +23575,7 @@ end
 			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
 		end
 
------ ---- --- -- -
+	----- ---- --- -- -
 
 	elseif tvar == "classnotiblist" then
 		if num then
@@ -23505,11 +23584,12 @@ end
 			else
 				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0, 1, 2, 3, 4, 5, 10 " .. gettext ("or") .. " 11"))
 			end
+
 		else
 			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
 		end
 
------ ---- --- -- -
+	----- ---- --- -- -
 
 elseif tvar == "classnoticust" then
 if num then
@@ -25930,6 +26010,8 @@ function showledoconf (nick)
 	conf = conf .. "\r\n [::] enablehardban = " .. _tostring (table_sets.enablehardban)
 	conf = conf .. "\r\n [::] hbanfeedint = " .. _tostring (table_sets.hbanfeedint)
 	conf = conf .. "\r\n [::] useblacklist = " .. _tostring (table_sets.useblacklist)
+	conf = conf .. "\r\n [::] addblistfeed = " .. _tostring (table_sets.addblistfeed)
+	conf = conf .. "\r\n [::] blistfeednick = " .. _tostring (table_sets.blistfeednick)
 	conf = conf .. "\r\n [::] blistupdateint = " .. _tostring (table_sets.blistupdateint)
 	conf = conf .. "\r\n [::] blistfeedint = " .. _tostring (table_sets.blistfeedint)
 	conf = conf .. "\r\n [::] blistshowrange = " .. _tostring (table_sets.blistshowrange)
@@ -30669,6 +30751,20 @@ function sefinotify (micl, data) -- todo: replace nmdc characters here instead o
 
 	if table_sets.addsefifeed == 1 then
 		VH:SendPMToAll ("[" .. prezero (2, micl) .. "] " .. data, table_sets.sefifeednick, micl, 10)
+	else
+		opsnotify (micl, data)
+	end
+end
+
+----- ---- --- -- -
+
+function blistnotify (micl, data) -- todo: replace nmdc characters here instead of each place that calls this function
+	if micl == 11 then
+		return
+	end
+
+	if table_sets.addblistfeed == 1 then
+		VH:SendPMToAll ("[" .. prezero (2, micl) .. "] " .. data, table_sets.blistfeednick, micl, 10)
 	else
 		opsnotify (micl, data)
 	end

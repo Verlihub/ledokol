@@ -1,8 +1,9 @@
-[ 3.0.0 :: 2024-12-## ]
+[ 3.0.0 :: 2025-##-## ]
 
 [143] Added: Ranks cleanup negative limit to remove unregistered users when minimum usage class is set
 [144] Added: cloneinfo and clonemove commands now accept number of clones as limit parameter
 [145] Added: Schedule AVDB check on all users on next timer rather than doing it directly
+[146] Added: Separate feed for blacklist notifications, configured using addblistfeed and blistfeednick
 
 [ 2.9.9 :: 2023-12-16 ]
 
