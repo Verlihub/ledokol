@@ -1681,11 +1681,14 @@ function Main (file)
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('enablesysbans', '" .. repsqlchars (table_sets.enablesysbans) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('sysbanuseclass', '" .. repsqlchars (table_sets.sysbanuseclass) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('votekickregdays', '" .. repsqlchars (table_sets.votekickregdays) .. "')")
+					end
+
+					if ver <= 300 then
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('addblistfeed', '" .. repsqlchars (table_sets.addblistfeed) .. "')")
 						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('blistfeednick', '" .. repsqlchars (table_sets.blistfeednick) .. "')")
 					end
 
-					if ver <= 300 then
+					if ver <= 301 then
 						-- todo: next version
 					end
 
