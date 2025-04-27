@@ -1180,7 +1180,7 @@ Release deleted by %s: %s|Eliberare ºtearsã de %s: %s
 Release category deleted by %s: %s|Categorie de eliberãri ºtearsã de %s: %s
 Someone from your IP address have already voted for kicking that user.|Cineva cu adresa ta IP a votat deja kick-uirea acestui utilizator.
 IP list: %s|Lista de IP-uri: %s
-First vote can't be negative.|     .
+First vote can't be negative.|
 You can't vote for kicking yourself.|Nu poþi vota sã-þi dai singur kick.
 Redirect all clones|Redirecþioneazã toate clonele
 Number of redirected clones: %d|Numãrul clonelor redirecþionate: %d
