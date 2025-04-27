@@ -1,6 +1,6 @@
 # Language: uk_UA
 # Charset: CP1251
-# Version: 2.9.9
+# Version: 3.0.0
 # Author: Master
 # Email: admin@dchub.in.ua
 
@@ -1185,18 +1185,18 @@ You can't vote for kicking yourself.|Ви не можете голосувати за кік себе.
 Redirect all clones|Перенаправити всіх клонів
 Number of redirected clones: %d|Кількість перенаправлених клонів: %d
 Your search result is discarded due to previous forbidden search result or request: %s|Результати пошуку будуть відхилені через попередні заборонені результати пошуку або запити: %s
-Search result exception from %s with IP %s and class %d as any file: %s|Виявлено виняток результатів пошуку від користувача %s з IP-адреси %s клас користувача: %d, виняток виявлено у категорії "будь-які файли": %s
-Search result notification from %s with IP %s and class %d as any file: %s|Повідомлення про результати пошуку від користувача %s з IP-адреси %s клас користувача: %d у категорії "будь-які файли": %s
-Bad search result from %s with IP %s and class %d as any file: %s|Заборонений результат пошуку від користувача %s з IP-адреси %s клас користувача: %d у категорії "будь-які файли": %s
+Search result exception from %s with IP %s and class %d as any file: %s|Виявлено виняток результатів пошуку від користувача %s з IP-адреси %s клас користувача: %d, виняток виявлено у категорії 'будь-які файли': %s
+Search result notification from %s with IP %s and class %d as any file: %s|Повідомлення про результати пошуку від користувача %s з IP-адреси %s клас користувача: %d у категорії 'будь-які файли': %s
+Bad search result from %s with IP %s and class %d as any file: %s|Заборонений результат пошуку від користувача %s з IP-адреси %s клас користувача: %d у категорії 'будь-які файли': %s
 User dropped due to bad search result: %s|Користувач: %s вимкнено через заборонений результат пошуку
 User didn't send any search results: %s|Користувач: %s не надіслав результатів пошуку
 User redirected due to bad search result: %s|Перенаправлення користувача: %s через заборонений результат пошуку
-Search result exception from %s with IP %s and class %d as folder: %s|Виявлено виняток результатів пошуку від користувача: %s з IP-адреси %s клас користувача: %d, виняток виявлено у категорії "папки": %s
-Search result notification from %s with IP %s and class %d as folder: %s|Повідомлення про результати пошуку від користувача %s з IP-адреси %s клас користувача: %d у категорії "папки": %s
+Search result exception from %s with IP %s and class %d as folder: %s|Виявлено виняток результатів пошуку від користувача: %s з IP-адреси %s клас користувача: %d, виняток виявлено у категорії 'папки': %s
+Search result notification from %s with IP %s and class %d as folder: %s|Повідомлення про результати пошуку від користувача %s з IP-адреси %s клас користувача: %d у категорії 'папки': %s
 Bad search result from %s with IP %s and class %d as folder: %s|Заборонений результат пошуку від користувача %s з IP-адреси %s клас користувача: %d у категорії папки: %s
-Search result exception from %s with IP %s and class %d as TTH: %s|Виявлено виняток результатів пошуку від користувача: %s з IP-адреси %s клас користувача: %d, виняток виявлено у категорії "TTH": %s
-Search result notification from %s with IP %s and class %d as TTH: %s|Повідомлення про результати пошуку від користувача %s з IP-адреси %s клас користувача: %d у категорії "TTH": %s
-Bad search result from %s with IP %s and class %d as TTH: %s|Заборонений результат пошуку від користувача: %s з IP-адреси %s клас користувача: %d у категорії "TTH": %s
+Search result exception from %s with IP %s and class %d as TTH: %s|Виявлено виняток результатів пошуку від користувача: %s з IP-адреси %s клас користувача: %d, виняток виявлено у категорії 'TTH': %s
+Search result notification from %s with IP %s and class %d as TTH: %s|Повідомлення про результати пошуку від користувача %s з IP-адреси %s клас користувача: %d у категорії 'TTH': %s
+Bad search result from %s with IP %s and class %d as TTH: %s|Заборонений результат пошуку від користувача: %s з IP-адреси %s клас користувача: %d у категорії 'TTH': %s
 Resetting proxy lookup daily quote limit: %d|Скидання обмеження щоденної квоти на запити для визначення проксі: %d
 Your message will be delayed for proxy lookup of your IP address.|Ваше повідомлення буде затримано на час визначення вашого IP на наявність публічного проксі або VPN.
 You're not allowed to chat due to public proxy detection of your IP address.|У вас немає прав на спілкування в чаті, тому що ваш IP визначений як публічний проксі або VPN.
@@ -1374,3 +1374,5 @@ Failed to create rule in %s: %s|Не вдалося створити правило у %s: %s
 Failed to check rule in %s: %s|Не вдалося перевірити правило у %s: %s
 Failed to delete rule in %s: %s|Не вдалося видалити правило у %s: %s
 Please compare with original string and make sure parameters equal: %s|Пожалуйста сравните с оригиналом и убедитесь что кол-во параметров является равным: %s
+This feature is not set for registered users only.|
+Operation not supported on this type.|

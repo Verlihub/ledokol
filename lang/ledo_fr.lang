@@ -1,8 +1,8 @@
 # Language: fr_FR
 # Charset: CP1252
-# Version: 2.9.9
-# Author: @tlantide
-# Email: chatonhubfrance@gmail.com
+# Version: 3.0.0
+# Author: mauron
+# Email: mauron@vmail.me
 
 Current topic: %s|Sujet actuel : %s
 Current topic set by %s: %s|Sujet actuel défini par %s : %s
@@ -1374,3 +1374,5 @@ Failed to create rule in %s: %s|Échec de la création de la règle dans %s : %s
 Failed to check rule in %s: %s|Échec de la vérification de la règle dans %s : %s
 Failed to delete rule in %s: %s|Échec de l'effacement de la règle dans %s : %s
 Please compare with original string and make sure parameters equal: %s|Veuillez comparer avec la chaîne originale et assurez-vous que les paramètres sont égaux : %s
+This feature is not set for registered users only.|Cette fonctionnalité n'est pas définie que pour les utilisateurs enregistrés.
+Operation not supported on this type.|Opération non prise en charge sur ce type.

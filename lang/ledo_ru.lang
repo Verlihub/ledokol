@@ -1,6 +1,6 @@
 # Language: ru_RU
 # Charset: CP1251
-# Version: 2.9.9
+# Version: 3.0.0
 # Author: RoLex
 # Email: webmaster@feardc.net
 
@@ -1374,3 +1374,5 @@ Failed to create rule in %s: %s|Не удалось создать правило в %s: %s
 Failed to check rule in %s: %s|Не удалось проверить правило в %s: %s
 Failed to delete rule in %s: %s|Не удалось удалить правило в %s: %s
 Please compare with original string and make sure parameters equal: %s|Пожалуйста сравните с оригиналом и убедитесь что кол-во параметров является равным: %s
+This feature is not set for registered users only.|Данная функция не установлена только для зарегистрированных пользователей.
+Operation not supported on this type.|Операция не поддерживается для указанного типа.

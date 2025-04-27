@@ -1,7 +1,7 @@
 # Language: tr_TR
 # Charset: CP1254
-# Version: 2.9.9
-# Author: Mauron
+# Version: 3.0.0
+# Author: mauron
 # Email: mauron@vmail.me
 
 Current topic: %s|Güncel konu: %s
@@ -1374,3 +1374,5 @@ Failed to create rule in %s: %s|%s içinde kural oluþturulmasý baþarýsýz oldu: %s
 Failed to check rule in %s: %s|%s içinde kural kontrolü baþarýsýz oldu: %s
 Failed to delete rule in %s: %s|%s içinde kural silinmesi baþarýsýz oldu: %s
 Please compare with original string and make sure parameters equal: %s|Lütfen orijinal dizeyle karþýlaþtýrýn ve parametrelerin eþit olduklarýndan emin olun: %s
+This feature is not set for registered users only.|Bu özellik yalnýzca kayýtlý kullanýcýlar için ayarlanmamýþtýr.
+Operation not supported on this type.|Ýþlem bu türde desteklenmez.

@@ -1,5 +1,6 @@
-[ 3.0.0 :: 2025-##-## ]
+[ 3.0.0 :: 2025-04-27 ]
 
+[146] Updated: Ukrainian translation, thanks to Master
 [143] Added: Ranks cleanup negative limit to remove unregistered users when minimum usage class is set
 [144] Added: cloneinfo and clonemove commands now accept number of clones as limit parameter
 [145] Added: Schedule AVDB check on all users on next timer rather than doing it directly

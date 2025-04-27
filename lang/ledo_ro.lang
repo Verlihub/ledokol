@@ -1,6 +1,6 @@
 # Language: ro_RO
 # Charset: CP1250
-# Version: 2.9.9
+# Version: 3.0.0
 # Author: S0RiN [rest in peace dear friend]
 # Email: rusu_sorin_con@yahoo.com
 
@@ -1180,7 +1180,7 @@ Release deleted by %s: %s|Eliberare ºtearsã de %s: %s
 Release category deleted by %s: %s|Categorie de eliberãri ºtearsã de %s: %s
 Someone from your IP address have already voted for kicking that user.|Cineva cu adresa ta IP a votat deja kick-uirea acestui utilizator.
 IP list: %s|Lista de IP-uri: %s
-First vote can't be negative.|Pervy`j golos ne mozhet by`t` otriczatel`ny`m.
+First vote can't be negative.|     .
 You can't vote for kicking yourself.|Nu poþi vota sã-þi dai singur kick.
 Redirect all clones|Redirecþioneazã toate clonele
 Number of redirected clones: %d|Numãrul clonelor redirecþionate: %d
@@ -1374,3 +1374,5 @@ Failed to create rule in %s: %s|
 Failed to check rule in %s: %s|
 Failed to delete rule in %s: %s|
 Please compare with original string and make sure parameters equal: %s|
+This feature is not set for registered users only.|
+Operation not supported on this type.|

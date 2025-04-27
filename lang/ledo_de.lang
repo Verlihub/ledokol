@@ -1,24 +1,24 @@
 # Language: de_DE
 # Charset: CP1252
-# Version: 2.9.9
-# Author: Ettore Atalan
-# Email: atalanttore@googlemail.com
+# Version: 3.0.0
+# Author: TiLTED
+# Email: tilted@jix.im
 
 Current topic: %s|Aktuelles Thema: %s
 Current topic set by %s: %s|Aktuelles Thema festgelegt von %s: %s
-This operation might take very long time depending on how much is going to be removed, please be patient.|
+This operation might take very long time depending on how much is going to be removed, please be patient.|Diese Operation kann sehr lange dauern, je nachdem, wie viel entfernt werden muss. Bitte haben Sie Geduld.
 days|Tage
-%s with class %d deleted %d unbans older than %d days.|
+%s with class %d deleted %d unbans older than %d days.|%s mit Klasse %d gelöscht %d Entsperrungen älter als %d Tage.
 %s with class %d deleted %d bans older than %d days.|
 %s with class %d deleted %d kicks older than %d days.|
-I'm probably away. State your business and I might answer later if you're lucky.|
+I'm probably away. State your business and I might answer later if you're lucky.|Ich bin wahrscheinlich abwesend. Nennen Sie Ihr Anliegen und ich antworte vielleicht später, wenn Sie Glück haben.
 Perform script update|Skriptaktualisierung ausführen
 Deleted %d main chat history messages.|%d Hauptchatverlaufsnachrichten gelöscht.
-There are no main chat history messages to remove.|
-Deleted %d operator chat history messages.|
-There are no operator chat history messages to remove.|
+There are no main chat history messages to remove.|Es gibt keine Nachrichten im Hauptchat die entfernt werden müssen.
+Deleted %d operator chat history messages.|Gelöschte %d Operator-Chatverlauf-Nachrichten.
+There are no operator chat history messages to remove.|Es gibt keine Nachrichten im Operator-Chat zu entfernen.
 %s with class %d deleted %d main chat history messages.|
-Unable to connect to target server. Please try again later.|
+Unable to connect to target server. Please try again later.|Die Verbindung zum Zielserver kann nicht hergestellt werden. Bitte versuchen Sie es später noch einmal.
 Last %d main chat messages|Letzte %d Hauptchatnachrichten
 Main chat history is empty.|Hauptchatverlauf ist leer.
 %s is now known as: %s|%s ist jetzt bekannt als: %s
@@ -1374,3 +1374,5 @@ Failed to create rule in %s: %s|
 Failed to check rule in %s: %s|
 Failed to delete rule in %s: %s|
 Please compare with original string and make sure parameters equal: %s|
+This feature is not set for registered users only.|
+Operation not supported on this type.|

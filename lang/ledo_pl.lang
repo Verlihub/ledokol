@@ -1,8 +1,8 @@
 # Language: pl_PL
 # Charset: CP1250
-# Version: 2.9.9
-# Author: PWiAM
-# Email: hublist@pwiam.com
+# Version: 3.0.0
+# Author: byrk0ff
+# Email: byrkoff@tlen.pl
 
 Current topic: %s|Aktualny topik: %s 
 Current topic set by %s: %s|Obecny topic ustawiony przez %s: %s
@@ -1374,3 +1374,5 @@ Failed to create rule in %s: %s|
 Failed to check rule in %s: %s|
 Failed to delete rule in %s: %s|
 Please compare with original string and make sure parameters equal: %s|
+This feature is not set for registered users only.|
+Operation not supported on this type.|

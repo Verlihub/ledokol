@@ -1,6 +1,6 @@
 # Language: be_BY
 # Charset: CP1251
-# Version: 2.9.9
+# Version: 3.0.0
 # Author: Iska Play
 # Email: vorbissmcgregor@gmail.com
 
@@ -1374,3 +1374,5 @@ Failed to create rule in %s: %s|
 Failed to check rule in %s: %s|
 Failed to delete rule in %s: %s|
 Please compare with original string and make sure parameters equal: %s|
+This feature is not set for registered users only.|
+Operation not supported on this type.|
