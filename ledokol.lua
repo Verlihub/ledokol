@@ -2,7 +2,7 @@
 --[[ license agreement >>
 ---------------------------------------------------------------------
 
-Copyright © 2007-2025 RoLex
+Copyright © 2007-2026 RoLex
 
 Ledokol is free software, you can redistribute it
 and modify it under the terms of the GNU General
@@ -62,8 +62,8 @@ Tzaca, JOE™, Foxtrot, Deivis, PWiAM, Gabriel, Master and others
 -- global storage variables and tables >>
 ---------------------------------------------------------------------
 
-ver_ledo = "3.0.0" -- ledokol version
-bld_ledo = "146" -- build number
+ver_ledo = "3.0.1" -- ledokol version
+bld_ledo = "147" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -18517,11 +18517,11 @@ function wordrankaccept (nick, ucls, line)
 		local str = repwordranchars (repnmdcinchars (line), 0) .. "$"
 
 		for aword in str:gmatch ("([^$]+)%$") do
-			aword = repwordranchars (aword, 1)
-			local stlen = # aword
+			local lword = repwordranchars (aword, 1)
+			local stlen = # lword
 
 			if stlen >= table_sets.wordranmin and stlen <= table_sets.wordranmax then
-				VH:SQLQuery ("insert into `" .. tbl_sql.wdran .. "` (`word`) values ('" .. repsqlchars (aword) .. "') on duplicate key update `rank` = `rank` + 1")
+				VH:SQLQuery ("insert into `" .. tbl_sql.wdran .. "` (`word`) values ('" .. repsqlchars (lword) .. "') on duplicate key update `rank` = `rank` + 1")
 			end
 		end
 	end
@@ -20978,8 +20978,8 @@ for k, v in pairs (table_cmnds) do
 	if v ~= k then
 		cnum = cnum + 1
 		table_cmnds [k] = k
-		k = repsqlchars (k)
-		VH:SQLQuery ("update `" .. tbl_sql.ledocmd .. "` set `new` = '" .. k .. "' where `original` = '" .. k .. "'")
+		local lk = repsqlchars (k)
+		VH:SQLQuery ("update `" .. tbl_sql.ledocmd .. "` set `new` = '" .. lk .. "' where `original` = '" .. lk .. "'")
 	end
 end
 
@@ -27310,8 +27310,8 @@ function showavstats (nick, user)
 
 					for fame, fize in pairs (file) do
 						if # fame > 0 then
-							fame = fame:gsub ("[\r\n]", " ")
-							stats = stats .. " " .. string.rep (" ", plen) .. repnmdcoutchars (fame) .. " &#124; " .. makesize (fize) .. "\r\n"
+							local lfame = fame:gsub ("[\r\n]", " ")
+							stats = stats .. " " .. string.rep (" ", plen) .. repnmdcoutchars (lfame) .. " &#124; " .. makesize (fize) .. "\r\n"
 						end
 					end
 				end
@@ -27744,8 +27744,8 @@ function avparsesr (data, user, addr)
 
 												for fame, fize in pairs (table_avus [nick][path]) do
 													if # fame > 0 then
-														fame = fame:gsub ("[\r\n]", " ")
-														list = list .. " " .. string.rep (" ", plen) .. repnmdcoutchars (fame) .. " &#124; " .. makesize (fize) .. "\r\n"
+														local lfame = fame:gsub ("[\r\n]", " ")
+														list = list .. " " .. string.rep (" ", plen) .. repnmdcoutchars (lfame) .. " &#124; " .. makesize (fize) .. "\r\n"
 													end
 												end
 
