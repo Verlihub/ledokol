@@ -7156,16 +7156,30 @@ function VH_OnUnknownMsg (nick, data, isnick, ipaddr)
 		local class = getclass (nick)
 		opsnotify (table_sets.classnotiunk, gettext ("Unknown protocol command from %s with IP %s and class %d: %s"):format (nick, ip .. tryipcc (ip, nick), class, repnmdcoutchars (data)))
 
-		if table_sets.kickunkusers == 1 and class < table_sets.scanbelowclass and not isprotected (nick, ip) then -- kick
+		if table_sets.kickunkusers > 0 and class < table_sets.scanbelowclass and not isprotected (nick, ip) then -- kick
 			local rsn = table_sets.unkkickreason:gsub ("%*", reprexpchars (repnmdcoutchars (data)))
-			VH:KickUser (table_othsets.sendfrom, nick, rsn .. "     #_ban_" .. table_sets.unktbantime)
+
+			if table_sets.kickunkusers == 2 then -- hard ban
+				addhban (nil, ip .. " \"" .. rsn .. "\"")
+				opsnotify (table_sets.classnotiunk, gettext ("Added %s to hard ban list, %d users in total."):format (ip, # getusersbyip (ip, table_sets.scanbelowclass)))
+			else
+				VH:KickUser (table_othsets.sendfrom, nick, rsn .. "     #_ban_" .. table_sets.unktbantime)
+			end
+
 			return 0
 		end
+
 	elseif table_sets.unkbeforelogin == 1 then -- new version with ip
 		opsnotify (table_sets.classnotiunk, gettext ("Unknown protocol command from IP %s before login: %s"):format (nick .. tryipcc (nick), repnmdcoutchars (data)))
 
-		if table_sets.kickunkusers == 1 and not isprotected (nil, nick) then -- drop
+		if table_sets.kickunkusers > 0 and not isprotected (nil, nick) then -- drop
 			local rsn = table_sets.unkkickreason:gsub ("%*", reprexpchars (repnmdcoutchars (data)))
+
+			if table_sets.kickunkusers == 2 then -- hard ban
+				addhban (nil, ip .. " \"" .. rsn .. "\"")
+				opsnotify (table_sets.classnotiunk, gettext ("Added %s to hard ban list, %d users in total."):format (ip, # getusersbyip (ip, table_sets.scanbelowclass)))
+			end
+
 			return {"<" .. table_othsets.sendfrom .. "> " .. rsn .. "|", 0, 0}
 		end
 	end
@@ -21056,10 +21070,10 @@ function setledoconf (nick, ucls, line)
 
 	elseif tvar == "kickunkusers" then
 		if num then
-			if setto == 0 or setto == 1 then
+			if setto >= 0 and setto <= 2 then
 				ok = true
 			else
-				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0 " .. gettext ("or") .. " 1"))
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0 " .. gettext ("to") .. " 2"))
 			end
 		else
 			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))

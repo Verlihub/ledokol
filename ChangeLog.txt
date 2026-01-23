@@ -1,6 +1,7 @@
 [ 3.0.1 :: 2026-##-## ]
 
 [147] Fixed: Lua 5.5 errors
+[147] Added: Hard IP ban is added when kickunkusers is set to 2
 
 [ 3.0.0 :: 2025-04-27 ]
 
