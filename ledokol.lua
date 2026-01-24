@@ -7176,8 +7176,8 @@ function VH_OnUnknownMsg (nick, data, isnick, ipaddr)
 			local rsn = table_sets.unkkickreason:gsub ("%*", reprexpchars (repnmdcoutchars (data)))
 
 			if table_sets.kickunkusers == 2 then -- hard ban
-				addhban (nil, ip .. " \"" .. rsn .. "\"")
-				opsnotify (table_sets.classnotiunk, gettext ("Added %s to hard ban list, %d users in total."):format (ip, # getusersbyip (ip, table_sets.scanbelowclass)))
+				addhban (nil, nick .. " \"" .. rsn .. "\"")
+				opsnotify (table_sets.classnotiunk, gettext ("Added %s to hard ban list, %d users in total."):format (nick, # getusersbyip (nick, table_sets.scanbelowclass)))
 			end
 
 			return {"<" .. table_othsets.sendfrom .. "> " .. rsn .. "|", 0, 0}
