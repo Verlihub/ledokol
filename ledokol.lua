@@ -63,7 +63,7 @@ Tzaca, JOE™, Foxtrot, Deivis, PWiAM, Gabriel, Master and others
 ---------------------------------------------------------------------
 
 ver_ledo = "3.0.1" -- ledokol version
-bld_ledo = "147" -- build number
+bld_ledo = "148" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -327,6 +327,7 @@ table_sets = {
 	--hublistpingint = 0,
 	--hubpingtimeout = 1,
 	enableuserlog = 0,
+	ulogverbosity = 2,
 	ulogouttime = 0,
 	ulogautoclean = 30,
 	logallmyinfos = 0,
@@ -5606,7 +5607,7 @@ function VH_OnParsedMsgMyINFO (nick, data)
 
 	local _, addr, cc, desc, tag, conn, stat, mail, size, hasinfo, gotaddr, gotcc = 0, "", "", "", "", "", 1, "", 0, false, false, false
 
-	if table_sets.enableuserlog == 1 and table_sets.logallmyinfos == 1 then -- user logger
+	if table_sets.enableuserlog == 1 and table_sets.logallmyinfos == 1 and table_sets.ulogverbosity >= 1 then -- user logger
 		--if not gotaddr then
 			addr, gotaddr = getip (nick), true
 		--end
@@ -5628,27 +5629,29 @@ function VH_OnParsedMsgMyINFO (nick, data)
 		hasinfo = true
 		local nmdc, sups, tls = "", "", ""
 
-		if table_refu.GetUserVersion then -- nmdc version
-			local on, temp = VH:GetUserVersion (nick)
+		if table_sets.ulogverbosity == 2 then
+			if table_refu.GetUserVersion then -- nmdc version
+				local on, temp = VH:GetUserVersion (nick)
 
-			if on and temp and temp ~= "" then
-				nmdc = temp
+				if on and temp and temp ~= "" then
+					nmdc = temp
+				end
 			end
-		end
 
-		if table_refu.GetUserSupports then -- supports
-			local on, temp = VH:GetUserSupports (nick)
+			if table_refu.GetUserSupports then -- supports
+				local on, temp = VH:GetUserSupports (nick)
 
-			if on and temp and temp ~= "" then
-				sups = temp
+				if on and temp and temp ~= "" then
+					sups = temp
+				end
 			end
-		end
 
-		if table_refu.GetTLSVer then -- tls version
-			local on, temp = VH:GetTLSVer (nick)
+			if table_refu.GetTLSVer then -- tls version
+				local on, temp = VH:GetTLSVer (nick)
 
-			if on and temp and temp ~= "" and temp ~= "0.0" then
-				tls = temp
+				if on and temp and temp ~= "" and temp ~= "0.0" then
+					tls = temp
+				end
 			end
 		end
 
@@ -5748,40 +5751,45 @@ function VH_OnUserLogin (nick, uip)
 			mistr, hasmistr = getmyinfo (nick), true
 		end
 
-		desc, tag, conn, stat, email, size = parsemyinfo (mistr)
+		if table_sets.ulogverbosity >= 1 then
+			desc, tag, conn, stat, email, size = parsemyinfo (mistr)
 
-		if stat and stat ~= "" then
-			stat = tonumber (stat) or ""
+			if stat and stat ~= "" then
+				stat = tonumber (stat) or ""
 
-			if type (stat) == "number" and stat < 1 then
-				stat = ""
+				if type (stat) == "number" and stat < 1 then
+					stat = ""
+				end
 			end
+
+			hasinfo = true
 		end
 
-		hasinfo = true
 		local nmdc, sups, tls = "", "", ""
 
-		if table_refu.GetUserVersion then -- nmdc version
-			local on, temp = VH:GetUserVersion (nick)
+		if table_sets.ulogverbosity == 2 then
+			if table_refu.GetUserVersion then -- nmdc version
+				local on, temp = VH:GetUserVersion (nick)
 
-			if on and temp and temp ~= "" then
-				nmdc = temp
+				if on and temp and temp ~= "" then
+					nmdc = temp
+				end
 			end
-		end
 
-		if table_refu.GetUserSupports then -- supports
-			local on, temp = VH:GetUserSupports (nick)
+			if table_refu.GetUserSupports then -- supports
+				local on, temp = VH:GetUserSupports (nick)
 
-			if on and temp and temp ~= "" then
-				sups = cutmaxstr (temp, 255)
+				if on and temp and temp ~= "" then
+					sups = cutmaxstr (temp, 255)
+				end
 			end
-		end
 
-		if table_refu.GetTLSVer then -- tls version
-			local on, temp = VH:GetTLSVer (nick)
+			if table_refu.GetTLSVer then -- tls version
+				local on, temp = VH:GetTLSVer (nick)
 
-			if on and temp and temp ~= "" and temp ~= "0.0" then
-				tls = temp
+				if on and temp and temp ~= "" and temp ~= "0.0" then
+					tls = temp
+				end
 			end
 		end
 
@@ -22490,6 +22498,19 @@ end
 
 	----- ---- --- -- -
 
+	elseif tvar == "ulogverbosity" then
+		if num then
+			if setto >= 0 and setto <= 2 then
+				ok = true
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0, 1 " .. gettext ("or") .. " 2"))
+			end
+		else
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
+		end
+
+	----- ---- --- -- -
+
 	elseif tvar == "ulogouttime" then
 		if num then
 			if setto == 0 or setto == 1 then
@@ -26042,6 +26063,7 @@ function showledoconf (nick)
 	conf = conf .. "\r\n"
 
 	conf = conf .. "\r\n [::] enableuserlog = " .. _tostring (table_sets.enableuserlog)
+	conf = conf .. "\r\n [::] ulogverbosity = " .. _tostring (table_sets.ulogverbosity)
 	conf = conf .. "\r\n [::] ulogouttime = " .. _tostring (table_sets.ulogouttime)
 	conf = conf .. "\r\n [::] ulogautoclean = " .. _tostring (table_sets.ulogautoclean)
 	conf = conf .. "\r\n [::] logallmyinfos = " .. _tostring (table_sets.logallmyinfos)
