@@ -2,7 +2,7 @@
 --[[ license agreement >>
 ---------------------------------------------------------------------
 
-Copyright © 2007-2026 RoLex
+Copyright Â© 2007-2026 RoLex
 
 Ledokol is free software, you can redistribute it
 and modify it under the terms of the GNU General
@@ -52,7 +52,7 @@ Doxtur, chaos, sphinx, Zorro, W1ZaRd, S0RiN, MaxFox, Krzychu,
 @tlantide, Ettore Atalan, Trumpy, Modswat, KCAHDEP, mauron, DiegoZ,
 Mank, Nickel, Lord_Zero, Meka][Meka, Ger, PetterOSS, Marcel, PPK,
 madkid, Aeolide, Jaguar, Toecutter, SCALOlaz, FlylinkDC-dev, Men_VAf,
-Tzaca, JOE™, Foxtrot, Deivis, PWiAM, Gabriel, Master and others
+Tzaca, JOEâ„¢, Foxtrot, Deivis, PWiAM, Gabriel, Master and others
 
 ---------------------------------------------------------------------
 ]]-- special thanks to <<
@@ -63,7 +63,7 @@ Tzaca, JOE™, Foxtrot, Deivis, PWiAM, Gabriel, Master and others
 ---------------------------------------------------------------------
 
 ver_ledo = "3.0.1" -- ledokol version
-bld_ledo = "148" -- build number
+bld_ledo = "149" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -414,9 +414,12 @@ table_othsets = {
 	avlastloadtime = 0,
 	avloadvercount = 0,
 	avloaddelcount = 0,
+	avdbload = nil, -- note: token of waiting avdb load
+	avsendgen = 0, -- note: number of avsendtodb changes, reply of older report can not switch reporting off
 	avnextitem = 1,
 	avrandstr = "",
 	blistlastupd = 0,
+	blistload = nil, -- note: token of waiting blacklist load
 	seartotcount = 0,
 	seardupcount = 0,
 	useragent = "Mozilla/5.0 (compatible; Ledokol/" .. ver_ledo .. "." .. bld_ledo .. "; +https://ledo.feardc.net/)",
@@ -450,6 +453,7 @@ table_othsets = {
 	ver_luaplug = nil,
 	ver_sql = nil,
 	ver_curl = nil,
+	ver_http = nil,
 	ver_iptables = nil,
 	--ver_iconv = nil,
 	ver_sock = nil,
@@ -459,6 +463,7 @@ table_othsets = {
 	--mod_ltn12 = nil,
 	serv_udp = nil,
 	langver = "EN",
+	langload = nil, -- note: translation file that is downloading
 	locked = false,
 	restart = false
 }
@@ -1148,6 +1153,7 @@ table_sfbl = {}
 table_sdbl = {}
 table_laul = {}
 table_chin = {}
+table_http = {}
 table_bapa = {}
 
 table_avfi = {
@@ -3378,7 +3384,7 @@ return 0
 
 	----- ---- --- -- -
 
-	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.whois .. " [%w%.%-]+$") then
+	elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.whois .. " [%w][%w%.%-]*$") then
 		if ucl >= table_sets.mincommandclass then
 			donotifycmd (nick, data, 0, ucl)
 			whoislookup (nick, data:sub (# table_cmnds.whois + 3))
@@ -5988,7 +5994,7 @@ function VH_OnUserLogin (nick, uip)
 		end
 	end
 
-	if table_sets.chatintelon == 2 and table_sets.chatintelemail ~= "" and table_othsets.ver_curl then -- chat intelligence
+	if table_sets.chatintelon == 2 and table_sets.chatintelemail ~= "" and httpready () then -- chat intelligence
 		if not hasip then
 			addr, hasip = (uip or getip (nick)), true
 		end
@@ -6190,7 +6196,7 @@ function VH_OnUserLogout (nick, ip) -- ip available only on new versions
 		end
 	end
 
-	if table_sets.chatintelon >= 1 and table_sets.chatintelemail ~= "" and table_othsets.ver_curl then -- chat intelligence
+	if table_sets.chatintelon >= 1 and table_sets.chatintelemail ~= "" and httpready () then -- chat intelligence
 		if not hasip then
 			addr, hasip = getip (nick), true
 		end
@@ -6680,207 +6686,27 @@ function VH_OnTimer (msec)
 
 	local now = os.time () -- current time
 
-	if table_sets.chatintelon >= 1 and table_sets.chatintelemail ~= "" and table_othsets.ver_curl then -- chat intelligence
-		local size, dels = 0, {}
+	if table_sets.chatintelon >= 1 and table_sets.chatintelemail ~= "" and httpready () then -- chat intelligence
+		local size = 0
+
+		for _, item in pairs (table_chin) do
+			if item.stat == 1 then -- waiting for lookup result
+				size = size + 1
+			end
+		end
 
 		for addr, item in pairs (table_chin) do
 			if item.stat == 0 then -- ready for lookup
 				if size < table_sets.chatintelmaxreq then -- maximum requests
-					local send, face, name = true, getconfig ("listen_ip"), table_othsets.cfgdir .. table_othsets.chindir .. "/" .. addr
-
-					if face and # face >= 7 and # face <= 15 and face ~= "0.0.0.0" and face ~= "127.0.0.1" then -- interface address
-						face = " --interface " .. face
-					else
-						face = ""
-					end
-
-					os.remove (name) -- remove old file
-					local res, err, code = os.execute ("curl --get --location --max-redirs 1 --connect-timeout " .. _tostring (table_sets.chatintelreqtime) .. " --max-time " .. _tostring (table_sets.chatintelreqwait) .. face .. " --user-agent \"" .. table_othsets.useragent .. "\" --silent --output \"" .. name .. "\" \"" .. table_othsets.chinurl:format (table_sets.chatintelemail, addr) .. "\"")
-
-					if res then
-						local file, err = io.open (name, "r") -- make use of err, it could be permission
-
-						if file then
-							local data = file:read ("*all")
-							file:close ()
-							os.remove (name)
-
-							if data and # data > 0 then
-								local orig, temp = data, tonumber (data)
-
-								if not temp then
-									temp = data:gsub ("%.", ",")
-									temp = tonumber (temp)
-								end
-
-								data = temp
-
-								if type (data) == "number" then
-									-- todo: see if os.execute ("curl &") is faster
-									--table_chin [addr]["time"] = now
-
-									if data < 0 then
-										local note = _tostring (data)
-
-										if data == -1 then
-											note = gettext ("Invalid request")
-										elseif data == -2 then
-											note = gettext ("Invalid IP")
-										elseif data == -3 then
-											note = gettext ("Private IP")
-										elseif data == -4 then
-											note = gettext ("Under maintenance")
-										elseif data == -5 then
-											note = gettext ("Request banned")
-										elseif data == -6 then
-											note = gettext ("Invalid email")
-										end
-
-										opsnotify (table_sets.classnotichin, gettext ("Failed proxy lookup of IP %s with result: %s"):format (addr .. tryipcc (addr), note))
-										table.insert (dels, addr)
-									end
-
-									if data >= 0 then
-										data = roundint (data * 100)
-									end
-
-									if data >= table_sets.chatintelmatch then
-										local note = ""
-
-										if table_refu.GetIPASN then -- asn
-											local ok, asn = VH:GetIPASN (addr)
-
-											if ok and asn and asn ~= "" then
-												if asn:match ("^AS%d+") then
-													asn = "https://ipinfo.io/" .. asn
-												end
-
-												note = gettext ("Public proxy detected on IP %s with ASN: %s"):format (addr .. tryipcc (addr), repnmdcoutchars (asn))
-											end
-										end
-
-										if note == "" then
-											note = gettext ("Public proxy detected on IP: %s"):format (addr .. tryipcc (addr))
-										end
-
-										opsnotify (table_sets.classnotichin, note)
-
-										if isproxprotected (addr) then -- protected is marked as not proxy
-											opsnotify (table_sets.classnotichin, gettext ("IP is protected: %s"):format (addr))
-											table_chin [addr]["stat"] = 4
-
-										else
-											table_chin [addr]["stat"] = 2
-											send = false
-										end
-
-									else
-										opsnotify (table_sets.classnotichin, gettext ("Not enough matches for proxy lookup of IP %s: %d of %d"):format (addr .. tryipcc (addr), data, table_sets.chatintelmatch))
-										table_chin [addr]["stat"] = 4
-									end
-								else
-									opsnotify (table_sets.classnotichin, gettext ("Failed proxy lookup of IP %s with unknown result data: %s"):format (addr .. tryipcc (addr), repnmdcoutchars (data) .. " (" .. repnmdcoutchars (orig) .. ")"))
-									table.insert (dels, addr)
-								end
-							else
-								opsnotify (table_sets.classnotichin, gettext ("Failed proxy lookup of IP %s without result data."):format (addr .. tryipcc (addr)))
-								table.insert (dels, addr)
-							end
-						else
-							opsnotify (table_sets.classnotichin, gettext ("Failed proxy lookup of IP %s without result file."):format (addr .. tryipcc (addr)))
-							table.insert (dels, addr)
-						end
-
-					else -- execute error
-						if code ~= nil then
-							code = tonumber (code) or -1
-						end
-
-						if code ~= -1 then -- http://curl.haxx.se/docs/manpage.html
-							opsnotify (table_sets.classnotichin, gettext ("Failed to execute %s for proxy lookup of IP %s with code: %d"):format ("cURL", addr .. tryipcc (addr), code))
-						elseif err and err ~= "" then
-							opsnotify (table_sets.classnotichin, gettext ("Failed to execute %s for proxy lookup of IP %s with error: %s"):format ("cURL", addr .. tryipcc (addr), repnmdcoutchars (err)))
-						else
-							opsnotify (table_sets.classnotichin, gettext ("Failed to execute %s for proxy lookup of IP %s without code and error."):format ("cURL", addr .. tryipcc (addr)))
-						end
-
-						table.insert (dels, addr)
-					end
-
-					table_othsets.chinskipchecks = true
-
-					for nick, nili in pairs (item ["nick"]) do
-						for targ, tali in pairs (nili) do
-							for _, tada in pairs (tali) do
-								if send then -- send delayed messages
-									if targ == 1 then -- mc
-										VH_OnParsedMsgChat (nick, tada ["data"])
-
-									elseif targ == 2 then -- pm
-										VH_OnParsedMsgPM (nick, tada ["data"], tada ["nick"])
-
-									elseif targ == 3 then -- mcto
-										VH_OnParsedMsgMCTo (nick, tada ["data"], tada ["nick"])
-
-									elseif targ == 4 then -- me
-										VH_OnUserCommand (nick, tada ["data"])
-
-									elseif targ == 5 then -- offline
-										sendoffmsg (nick, tada ["nick"] .. " " .. tada ["data"], getclass (nick))
-
-									elseif targ == 6 then -- command
-										--VH_OnUserCommand (nick, tada ["data"])
-										VH:ParseCommand (nick, tada ["data"], 0)
-									end
-
-								else -- block delayed messages
-									if targ == 2 then -- pm
-										VH:SendToUser ("$To: " .. nick .. " From: " .. tada ["nick"] .. " $<" .. table_othsets.sendfrom .. "> " .. gettext ("You're not allowed to chat due to public proxy detection of your IP address.") .. "|", nick)
-									elseif minhubver (1, 0, 2, 15) then
-										VH:SendToUser ("<" .. table_othsets.sendfrom .. "> " .. gettext ("You're not allowed to chat due to public proxy detection of your IP address.") .. "|", nick, getconfig ("delayed_chat"))
-									else
-										VH:SendToUser ("<" .. table_othsets.sendfrom .. "> " .. gettext ("You're not allowed to chat due to public proxy detection of your IP address.") .. "|", nick)
-									end
-
-									local oddr = getip (tada ["nick"])
-
-									if targ == 1 then -- mc
-										opsnotify (table_sets.classnotichin, gettext ("Blocking main chat message from %s with IP %s detected as public proxy: %s"):format (nick, addr .. tryipcc (addr, nick), tada ["data"]))
-									elseif targ == 2 then -- pm
-										opsnotify (table_sets.classnotichin, gettext ("Blocking private chat message from %s with IP %s detected as public proxy to %s with IP %s: %s"):format (nick, addr .. tryipcc (addr, nick), tada ["nick"], oddr .. tryipcc (oddr, tada ["nick"]), tada ["data"]))
-									elseif targ == 3 then -- mcto
-										opsnotify (table_sets.classnotichin, gettext ("Blocking private main chat message from %s with IP %s detected as public proxy to %s with IP %s: %s"):format (nick, addr .. tryipcc (addr, nick), tada ["nick"], oddr .. tryipcc (oddr, tada ["nick"]), tada ["data"]))
-									elseif targ == 4 then -- me
-										opsnotify (table_sets.classnotichin, gettext ("Blocking third person main chat message from %s with IP %s detected as public proxy: %s"):format (nick, addr .. tryipcc (addr, nick), tada ["data"]))
-									elseif targ == 5 then -- offline
-										opsnotify (table_sets.classnotichin, gettext ("Blocking offline private chat message from %s with IP %s detected as public proxy to %s with IP %s: %s"):format (nick, addr .. tryipcc (addr, nick), tada ["nick"], oddr .. tryipcc (oddr, tada ["nick"]), tada ["data"]))
-									elseif targ == 6 then -- command
-										opsnotify (table_sets.classnotichin, gettext ("Blocking user command from %s with IP %s detected as public proxy: %s"):format (nick, addr .. tryipcc (addr, nick), tada ["data"]))
-									end
-								end
-							end
-						end
-
-						if not send and table_sets.chatintelact == 2 then -- drop only once
-							table_chin [addr]["stat"] = 3
-							opsnotify (table_sets.classnotichin, gettext ("User dropped: %s"):format (nick))
-							VH:Disconnect (nick) -- todo: can we drop user here? maybe drop him at the end of this function, create drop flag
-						end
-					end
-
-					table_othsets.chinskipchecks = false
+					item.stat = 1
 					size = size + 1
+					chatintellookup (addr)
 				end
-
-			--elseif item.stat == 1 then
-				 -- todo: see if os.execute ("curl &") is faster
 			end
 
-			table_chin [addr]["nick"] = {} -- clear, todo: see if os.execute ("curl &") is faster
-		end
-
-		for _, addr in pairs (dels) do -- delete errored
-			table_chin [addr] = nil
+			if item.stat ~= 1 then -- note: delayed messages of waiting lookup are sent or blocked by its result
+				item ["nick"] = {} -- clear
+			end
 		end
 	end
 
@@ -6992,12 +6818,12 @@ function VH_OnTimer (msec)
 		table_othsets.avdbcheckall = false
 	end
 
-	if table_sets.avdbloadint > 0 and table_othsets.ver_curl and os.difftime (now, table_othsets.avlastloadtick) >= (table_sets.avdbloadint * 60) then -- antivirus load
+	if table_sets.avdbloadint > 0 and httpready () and not table_othsets.avdbload and os.difftime (now, table_othsets.avlastloadtick) >= (table_sets.avdbloadint * 60) then -- antivirus load
 		loadavdb (now)
 		table_othsets.avlastloadtick = now
 	end
 
-	if table_sets.useblacklist == 1 and ((table_othsets.blistlastupd == 0) or (table_sets.blistupdateint >= 1 and os.difftime (now, table_othsets.blistlastupd) >= (table_sets.blistupdateint * 60))) then -- update blacklist on timer or once
+	if table_sets.useblacklist == 1 and not table_othsets.blistload and ((table_othsets.blistlastupd == 0) or (table_sets.blistupdateint >= 1 and os.difftime (now, table_othsets.blistlastupd) >= (table_sets.blistupdateint * 60))) then -- update blacklist on timer or once
 		loadblacklist ()
 	end
 
@@ -7090,7 +6916,7 @@ function VH_OnTimer (msec)
 		end
 	end
 
-	if table_sets.autoupdcheck > 0 and table_othsets.ver_curl and table_sets.classnotiledoact ~= 11 and os.difftime (now, table_othsets.lastupdcheck) >= (table_sets.autoupdcheck * 3600) then -- automatic update check
+	if table_sets.autoupdcheck > 0 and httpready () and table_sets.classnotiledoact ~= 11 and os.difftime (now, table_othsets.lastupdcheck) >= (table_sets.autoupdcheck * 3600) then -- automatic update check
 		autoupdatecheck ()
 		table_othsets.lastupdcheck = now -- reset
 	end
@@ -10885,7 +10711,7 @@ function addblist (nick, line)
 		return
 	end
 
-	if (list:sub (1, 8):lower () == "https://" or list:sub (1, 7):lower () == "http://") and not table_othsets.ver_curl then
+	if (list:sub (1, 8):lower () == "https://" or list:sub (1, 7):lower () == "http://") and not httpready () then
 		commandanswer (nick, gettext ("This feature requires following binary installed on your system: %s"):format ("cURL"))
 		return
 	end
@@ -11040,7 +10866,7 @@ function importblist (nick)
 			lrep = lrep:gsub ("^[Hh][Tt][Tt][Pp]://[Ww][Ww][Ww]%.[Tt][Ee]%-[Hh][Oo][Mm][Ee]%.[Nn][Ee][Tt]", "https://te-home.net")
 			back = back .. " [ L: " .. repnmdcoutchars (list) .. " ] [ T: " .. repnmdcoutchars (cype) .. " ] [ N: " .. repnmdcoutchars (name) .. " ] [ D: " .. ((tonumber (off) == 0) and gettext ("No") or gettext ("Yes")) .. " ] [ S: "
 
-			if (list:sub (1, 8):lower () == "https://" or list:sub (1, 7):lower () == "http://") and not table_othsets.ver_curl then
+			if (list:sub (1, 8):lower () == "https://" or list:sub (1, 7):lower () == "http://") and not httpready () then
 				back = back .. gettext ("Binary is required: %s"):format ("cURL")
 
 			elseif cype ~= "p2p" and cype ~= "range" and cype ~= "single" then
@@ -11110,72 +10936,43 @@ end
 
 ----- ---- --- -- -
 
-function loadblacklist ()
-	table_blst = {} -- flush
+function newblacklist ()
+	local back = {}
 
 	for x = 1, 256 do -- split
-		table_blst [x] = {}
+		back [x] = {}
 	end
 
+	return back
+end
+
+----- ---- --- -- -
+
+function loadblacklist ()
+	table_othsets.blistload = nil -- note: reply of earlier load is ignored, also when no list is enabled now
 	local _, rows = VH:SQLQuery ("select `list`, `type`, `name` from `" .. tbl_sql.blist .. "` where `off` = 0")
 
 	if rows > 0 then
-		local feed = ""
+		local load = {
+			["list"] = newblacklist (), -- note: current blacklist stays active until this one is complete
+			["feed"] = {}, -- note: result line of each list by its row, so order is same as in table
+			["rows"] = rows,
+			["wait"] = 1 -- note: one for this function, remote lists answer later, results are sent when all are done
+		}
+
+		table_othsets.blistload = load
 
 		for pos = 0, rows - 1 do
 			local _, list, cype, name = VH:SQLFetch (pos)
+			local row = pos + 1
 
 			if list:sub (1, 8):lower () == "https://" or list:sub (1, 7):lower () == "http://" then -- remote
-				if not table_othsets.ver_curl then
-					feed = feed .. " " .. gettext ("%s blacklist not loaded because: %s"):format (repnmdcoutchars (name), gettext ("Binary is required: %s"):format ("cURL")) .. "\r\n"
+				if not httpready () then
+					load.feed [row] = " " .. gettext ("%s blacklist not loaded because: %s"):format (repnmdcoutchars (name), gettext ("Binary is required: %s"):format ("cURL")) .. "\r\n"
 
 				else
-					local res, err, data = getcurl (list)
-
-					if res and # data > 0 then
-						local tot = 0
-
-						for line in data:gmatch ("[^\r\n]+") do
-							local xname, xlow, xhigh = nil, nil, nil
-
-							if cype == "p2p" then
-								xname, xlow, xhigh = line:match ("^(.+):(%d+%.%d+%.%d+%.%d+)%-(%d+%.%d+%.%d+%.%d+)$")
-
-							elseif cype == "range" then
-								xlow, xhigh = line:match ("^(%d+%.%d+%.%d+%.%d+)%-(%d+%.%d+%.%d+%.%d+)$")
-								xname = name
-
-							elseif cype == "single" then
-								xlow = line:match ("^(%d+%.%d+%.%d+%.%d+)$")
-								xhigh = xlow
-								xname = name
-							end
-
-							if xname and xlow and xhigh then
-								local a1 = xlow:match ("^(%d+)%.")
-								local b1 = xhigh:match ("^(%d+)%.")
-								a1 = tonumber (a1)
-								b1 = tonumber (b1)
-
-								if a1 >= 0 and a1 <= 255 and b1 >= 0 and b1 <= 255 then
-									tot = tot + 1
-
-									for x = a1 + 1, b1 + 1 do -- note: +1 due to lua index 1+
-										table.insert (table_blst [x], {
-											["rang"] = xlow .. "-" .. xhigh,
-											["name"] = xname,
-											["last"] = 0
-										})
-									end
-								end
-							end
-						end
-
-						feed = feed .. " " .. gettext ("Blacklist loaded with %d items: %s"):format (tot, repnmdcoutchars (name)) .. "\r\n"
-
-					else
-						feed = feed .. " " .. gettext ("%s blacklist not loaded because: %s"):format (repnmdcoutchars (name), (# err > 0 and repnmdcoutchars (err) or gettext ("Nothing was found in: %s"):format (repnmdcoutchars (list)))) .. "\r\n"
-					end
+					load.wait = load.wait + 1
+					gethttp (list, nil, false, false, nil, loadblacklistreply, load, row, list, cype, name)
 				end
 
 			else -- local
@@ -11211,7 +11008,7 @@ function loadblacklist ()
 								tot = tot + 1
 
 								for x = a1 + 1, b1 + 1 do -- note: +1 due to lua index 1+
-									table.insert (table_blst [x], {
+									table.insert (load.list [x], {
 										["rang"] = xlow .. "-" .. xhigh,
 										["name"] = xname,
 										["last"] = 0
@@ -11221,18 +11018,94 @@ function loadblacklist ()
 						end
 					end
 
-					feed = feed .. " " .. gettext ("Blacklist loaded with %d items: %s"):format (tot, repnmdcoutchars (name)) .. "\r\n"
+					load.feed [row] = " " .. gettext ("Blacklist loaded with %d items: %s"):format (tot, repnmdcoutchars (name)) .. "\r\n"
 
 				else
-					feed = feed .. " " .. gettext ("%s blacklist not loaded because: %s"):format (repnmdcoutchars (name), gettext ("File does not exist: %s"):format (repnmdcoutchars (list))) .. "\r\n"
+					load.feed [row] = " " .. gettext ("%s blacklist not loaded because: %s"):format (repnmdcoutchars (name), gettext ("File does not exist: %s"):format (repnmdcoutchars (list))) .. "\r\n"
 				end
 			end
 		end
 
-		blistnotify (table_sets.classnotiblist, gettext ("Blacklist load results") .. ":\r\n\r\n" .. feed) -- notify
+		loadblacklistdone (load)
+
+	else -- note: no list is enabled
+		table_blst = newblacklist ()
 	end
 
 	table_othsets.blistlastupd = os.time ()
+end
+
+----- ---- --- -- -
+
+function loadblacklistreply (res, err, data, _, load, row, list, cype, name)
+	if load ~= table_othsets.blistload then -- note: blacklists were loaded again meanwhile
+		return
+	end
+
+	if res and # data > 0 then
+		local tot = 0
+
+		for line in data:gmatch ("[^\r\n]+") do
+			local xname, xlow, xhigh = nil, nil, nil
+
+			if cype == "p2p" then
+				xname, xlow, xhigh = line:match ("^(.+):(%d+%.%d+%.%d+%.%d+)%-(%d+%.%d+%.%d+%.%d+)$")
+
+			elseif cype == "range" then
+				xlow, xhigh = line:match ("^(%d+%.%d+%.%d+%.%d+)%-(%d+%.%d+%.%d+%.%d+)$")
+				xname = name
+
+			elseif cype == "single" then
+				xlow = line:match ("^(%d+%.%d+%.%d+%.%d+)$")
+				xhigh = xlow
+				xname = name
+			end
+
+			if xname and xlow and xhigh then
+				local a1 = xlow:match ("^(%d+)%.")
+				local b1 = xhigh:match ("^(%d+)%.")
+				a1 = tonumber (a1)
+				b1 = tonumber (b1)
+
+				if a1 >= 0 and a1 <= 255 and b1 >= 0 and b1 <= 255 then
+					tot = tot + 1
+
+					for x = a1 + 1, b1 + 1 do -- note: +1 due to lua index 1+
+						table.insert (load.list [x], {
+							["rang"] = xlow .. "-" .. xhigh,
+							["name"] = xname,
+							["last"] = 0
+						})
+					end
+				end
+			end
+		end
+
+		load.feed [row] = " " .. gettext ("Blacklist loaded with %d items: %s"):format (tot, repnmdcoutchars (name)) .. "\r\n"
+
+	else
+		load.feed [row] = " " .. gettext ("%s blacklist not loaded because: %s"):format (repnmdcoutchars (name), ((err and # err > 0) and repnmdcoutchars (err) or gettext ("Nothing was found in: %s"):format (repnmdcoutchars (list)))) .. "\r\n"
+	end
+
+	loadblacklistdone (load)
+end
+
+----- ---- --- -- -
+
+function loadblacklistdone (load)
+	load.wait = load.wait - 1
+
+	if load.wait == 0 then -- note: all lists are done
+		local feed = ""
+
+		for row = 1, load.rows do
+			feed = feed .. (load.feed [row] or "")
+		end
+
+		table_blst = load.list
+		table_othsets.blistload = nil
+		blistnotify (table_sets.classnotiblist, gettext ("Blacklist load results") .. ":\r\n\r\n" .. feed) -- notify
+	end
 end
 
 ----- ---- --- -- -
@@ -12443,10 +12316,62 @@ function seenlookup (nick, line)
 			encs ["co" .. fype] = "1"
 		end
 
-		local res, err, data = getcurl (table_othsets.seenurl, encs)
+		gethttp (table_othsets.seenurl, encs, false, false, nil, seenlookupreply, nick, fype, fext)
+	else
+		commandanswer (nick, gettext ("Known types are: %s"):format ("nick, desc, tag, conn, mail, share " .. gettext ("and") .. " ip"))
+	end
+end
 
-		if res then
-			if data == "" or data == "0" then
+----- ---- --- -- -
+
+function seenlookupreply (res, err, data, _, nick, fype, fext)
+	if res then
+		if data == "" or data == "0" then
+			if fype == "nick" then
+				commandanswer (nick, gettext ("Users with nick not found in any hubs: %s"):format (fext))
+			elseif fype == "desc" then
+				commandanswer (nick, gettext ("Users with description not found in any hubs: %s"):format (fext))
+			elseif fype == "tag" then
+				commandanswer (nick, gettext ("Users with client tag not found in any hubs: %s"):format (fext))
+			elseif fype == "conn" then
+				commandanswer (nick, gettext ("Users with connection type not found in any hubs: %s"):format (fext))
+			elseif fype == "mail" then
+				commandanswer (nick, gettext ("Users with email address not found in any hubs: %s"):format (fext))
+			elseif fype == "share" then
+				commandanswer (nick, gettext ("Users with share size not found in any hubs: %s"):format (fext))
+			elseif fype == "ip" then
+				commandanswer (nick, gettext ("Users with IP address not found in any hubs: %s"):format (fext))
+			end
+		else
+			local list, lpos = "", 1
+
+			for line in data:gmatch ("[^\r\n]+") do
+				local lous, loco, lohu = nil, nil, nil
+
+				if fype ~= "nick" then
+					lous, loco, lohu = line:match ("^([^ ]+)|([^|]+)|([^ ]+)$")
+				else
+					lous, lohu = line:match ("^([^ ]+)|([^ ]+)$")
+				end
+
+				if lous and lohu then
+					list = list .. " " .. _tostring (lpos) .. ". " .. repnmdcoutchars (lous) .. " &#124; "
+
+					if fype ~= "nick" and loco then
+						list = list .. repnmdcoutchars (loco) .. " &#124; "
+					end
+
+					if not lohu:find ("^%S+://") then
+						list = list .. "dchub://" .. repnmdcoutchars (lohu) .. "\r\n"
+					else
+						list = list .. repnmdcoutchars (lohu) .. "\r\n"
+					end
+
+					lpos = lpos + 1
+				end
+			end
+
+			if list == "" then
 				if fype == "nick" then
 					commandanswer (nick, gettext ("Users with nick not found in any hubs: %s"):format (fext))
 				elseif fype == "desc" then
@@ -12463,73 +12388,25 @@ function seenlookup (nick, line)
 					commandanswer (nick, gettext ("Users with IP address not found in any hubs: %s"):format (fext))
 				end
 			else
-				local list, lpos = "", 1
-
-				for line in data:gmatch ("[^\r\n]+") do
-					local lous, loco, lohu = nil, nil, nil
-
-					if fype ~= "nick" then
-						lous, loco, lohu = line:match ("^([^ ]+)|([^|]+)|([^ ]+)$")
-					else
-						lous, lohu = line:match ("^([^ ]+)|([^ ]+)$")
-					end
-
-					if lous and lohu then
-						list = list .. " " .. _tostring (lpos) .. ". " .. repnmdcoutchars (lous) .. " &#124; "
-
-						if fype ~= "nick" and loco then
-							list = list .. repnmdcoutchars (loco) .. " &#124; "
-						end
-
-						if not lohu:find ("^%S+://") then
-							list = list .. "dchub://" .. repnmdcoutchars (lohu) .. "\r\n"
-						else
-							list = list .. repnmdcoutchars (lohu) .. "\r\n"
-						end
-
-						lpos = lpos + 1
-					end
-				end
-
-				if list == "" then
-					if fype == "nick" then
-						commandanswer (nick, gettext ("Users with nick not found in any hubs: %s"):format (fext))
-					elseif fype == "desc" then
-						commandanswer (nick, gettext ("Users with description not found in any hubs: %s"):format (fext))
-					elseif fype == "tag" then
-						commandanswer (nick, gettext ("Users with client tag not found in any hubs: %s"):format (fext))
-					elseif fype == "conn" then
-						commandanswer (nick, gettext ("Users with connection type not found in any hubs: %s"):format (fext))
-					elseif fype == "mail" then
-						commandanswer (nick, gettext ("Users with email address not found in any hubs: %s"):format (fext))
-					elseif fype == "share" then
-						commandanswer (nick, gettext ("Users with share size not found in any hubs: %s"):format (fext))
-					elseif fype == "ip" then
-						commandanswer (nick, gettext ("Users with IP address not found in any hubs: %s"):format (fext))
-					end
-				else
-					if fype == "nick" then
-						commandanswer (nick, gettext ("Users with nick %s found in following hubs"):format (fext) .. ":\r\n\r\n" .. list)
-					elseif fype == "desc" then
-						commandanswer (nick, gettext ("Users with description %s found in following hubs"):format (fext) .. ":\r\n\r\n" .. list)
-					elseif fype == "tag" then
-						commandanswer (nick, gettext ("Users with client tag %s found in following hubs"):format (fext) .. ":\r\n\r\n" .. list)
-					elseif fype == "conn" then
-						commandanswer (nick, gettext ("Users with connection type %s found in following hubs"):format (fext) .. ":\r\n\r\n" .. list)
-					elseif fype == "mail" then
-						commandanswer (nick, gettext ("Users with email address %s found in following hubs"):format (fext) .. ":\r\n\r\n" .. list)
-					elseif fype == "share" then
-						commandanswer (nick, gettext ("Users with share size %s found in following hubs"):format (fext) .. ":\r\n\r\n" .. list)
-					elseif fype == "ip" then
-						commandanswer (nick, gettext ("Users with IP address %s found in following hubs"):format (fext) .. ":\r\n\r\n" .. list)
-					end
+				if fype == "nick" then
+					commandanswer (nick, gettext ("Users with nick %s found in following hubs"):format (fext) .. ":\r\n\r\n" .. list)
+				elseif fype == "desc" then
+					commandanswer (nick, gettext ("Users with description %s found in following hubs"):format (fext) .. ":\r\n\r\n" .. list)
+				elseif fype == "tag" then
+					commandanswer (nick, gettext ("Users with client tag %s found in following hubs"):format (fext) .. ":\r\n\r\n" .. list)
+				elseif fype == "conn" then
+					commandanswer (nick, gettext ("Users with connection type %s found in following hubs"):format (fext) .. ":\r\n\r\n" .. list)
+				elseif fype == "mail" then
+					commandanswer (nick, gettext ("Users with email address %s found in following hubs"):format (fext) .. ":\r\n\r\n" .. list)
+				elseif fype == "share" then
+					commandanswer (nick, gettext ("Users with share size %s found in following hubs"):format (fext) .. ":\r\n\r\n" .. list)
+				elseif fype == "ip" then
+					commandanswer (nick, gettext ("Users with IP address %s found in following hubs"):format (fext) .. ":\r\n\r\n" .. list)
 				end
 			end
-		else
-			commandanswer (nick, err)
 		end
 	else
-		commandanswer (nick, gettext ("Known types are: %s"):format ("nick, desc, tag, conn, mail, share " .. gettext ("and") .. " ip"))
+		commandanswer (nick, err)
 	end
 end
 
@@ -13047,16 +12924,26 @@ function showipinfo (nick, ip)
 				info = info .. " " .. gettext ("Area code: %d"):format (geoip ["area_code"]) .. "\r\n"
 			end
 
-			info = info .. " " .. gettext ("IP intelligence: %s"):format (getipintel (ip)) .. "\r\n" -- ip intelligence
+			return getipintel (ip, showipinforeply, nick, ip, info) -- ip intelligence
 		end
 
-		if info ~= "" then
-			commandanswer (nick, gettext ("IP information") .. ":\r\n\r\n " .. gettext ("IP: %s"):format (ip) .. "\r\n" .. info)
-		else
-			commandanswer (nick, gettext ("IP information not available: %s"):format (ip))
-		end
+		showipinforeply (nil, nick, ip, info)
 	else
 		commandanswer (nick, gettext ("This feature requires %s or later installed on your system."):format ("Verlihub 1.0.0-RC1"))
+	end
+end
+
+----- ---- --- -- -
+
+function showipinforeply (intel, nick, ip, info)
+	if intel then
+		info = info .. " " .. gettext ("IP intelligence: %s"):format (intel) .. "\r\n" -- ip intelligence
+	end
+
+	if info ~= "" then
+		commandanswer (nick, gettext ("IP information") .. ":\r\n\r\n " .. gettext ("IP: %s"):format (ip) .. "\r\n" .. info)
+	else
+		commandanswer (nick, gettext ("IP information not available: %s"):format (ip))
 	end
 end
 
@@ -13671,8 +13558,12 @@ end
 ----- ---- --- -- -
 
 function autoupdatecheck ()
-	local res, err, data = getcurl (table_othsets.updserv .. table_othsets.verfile)
+	gethttp (table_othsets.updserv .. table_othsets.verfile, nil, false, false, nil, autoupdatecheckreply)
+end
 
+----- ---- --- -- -
+
+function autoupdatecheckreply (res, err, data)
 	if res and data ~= "" and data:find ("^%d+%.%d+%.%d+$") then
 		local reve = data:gsub ("%.", "")
 		local myve = ver_ledo:gsub ("%.", "")
@@ -13687,8 +13578,12 @@ end
 
 function updatescript (nick)
 	commandanswer (nick, gettext ("Downloading version file: %s"):format (table_othsets.verfile))
-	local res, err, data = getcurl (table_othsets.updserv .. table_othsets.verfile)
+	gethttp (table_othsets.updserv .. table_othsets.verfile, nil, false, false, nil, updatescriptverreply, nick)
+end
 
+----- ---- --- -- -
+
+function updatescriptverreply (res, err, data, _, nick)
 	if res then
 		if data ~= "" and data:find ("^%d+%.%d+%.%d+$") then
 			local veda = data
@@ -13698,49 +13593,7 @@ function updatescript (nick)
 			if (tonumber (reve) or 0) > (tonumber (myve) or 0) then -- version number must be higher
 				commandanswer (nick, gettext ("Stable version of %s is available: %s"):format ("Ledokol", veda))
 				commandanswer (nick, gettext ("Downloading script file: %s"):format (table_othsets.luafile))
-				local res, err, data = getcurl (table_othsets.updserv .. table_othsets.luafile, nil, true)
-
-				if res then
-					if data ~= "" and data:find ("ver_ledo = \"" .. veda .. "\" -- ledokol version", 1, true) then
-						commandanswer (nick, gettext ("Moving file: %s"):format (table_othsets.luafile))
-						local res, err = os.execute ("mv -f \"" .. table_othsets.cfgdir .. table_othsets.tmpfile .. "\" \"" .. table_othsets.cfgdir .. "scripts/" .. table_othsets.luafile .. "\"")
-
-						if res then
-							if table_sets.langfileprefix ~= "" then
-								local lafi = table_othsets.langfilefmt:format (table_sets.langfileprefix)
-								commandanswer (nick, gettext ("Downloading translation file: %s"):format (lafi))
-								local res, err, data = getcurl (table_othsets.updservlang .. lafi, nil, true)
-
-								if res then
-									if data ~= "" and data:find ("# Version: " .. veda, 1, true) then
-										commandanswer (nick, gettext ("Moving file: %s"):format (lafi))
-										local res, err = os.execute ("mv -f \"" .. table_othsets.cfgdir .. table_othsets.tmpfile .. "\" \"" .. table_othsets.cfgdir .. "scripts/" .. lafi .. "\"")
-
-										if not res then
-											os.remove (table_othsets.cfgdir .. table_othsets.tmpfile)
-											commandanswer (nick, gettext ("Failed to move file: %s"):format (repnmdcoutchars (err or gettext ("No error message specified."))))
-										end
-									else
-										os.remove (table_othsets.cfgdir .. table_othsets.tmpfile)
-										commandanswer (nick, gettext ("File not found on update server: %s"):format (lafi))
-									end
-								else
-									commandanswer (nick, err)
-								end
-							end
-
-							commandanswer (nick, gettext ("Please use following commands to finish update process") .. ":\r\n\r\n !luaunload " .. table_othsets.cfgdir .. "scripts/" .. table_othsets.luafile .. "\r\n !luaload " .. table_othsets.cfgdir .. "scripts/" .. table_othsets.luafile .. "\r\n")
-						else
-							os.remove (table_othsets.cfgdir .. table_othsets.tmpfile)
-							commandanswer (nick, gettext ("Failed to move file: %s"):format (repnmdcoutchars (err or gettext ("No error message specified."))))
-						end
-					else
-						os.remove (table_othsets.cfgdir .. table_othsets.tmpfile)
-						commandanswer (nick, gettext ("File not found on update server: %s"):format (table_othsets.luafile))
-					end
-				else
-					commandanswer (nick, err)
-				end
+				gethttp (table_othsets.updserv .. table_othsets.luafile, nil, true, false, nil, updatescriptreply, nick, veda)
 			else
 				commandanswer (nick, gettext ("You are using latest version of %s, no update is required."):format ("Ledokol"))
 			end
@@ -13754,48 +13607,36 @@ end
 
 ----- ---- --- -- -
 
+function updatescriptreply (res, err, data, _, nick, veda)
+	if res then
+		if data ~= "" and data:find ("ver_ledo = \"" .. veda .. "\" -- ledokol version", 1, true) then
+			updatescriptmove (nick, table_othsets.updservlang, "# Version: " .. veda, true)
+		else
+			os.remove (table_othsets.cfgdir .. table_othsets.tmpfile)
+			commandanswer (nick, gettext ("File not found on update server: %s"):format (table_othsets.luafile))
+		end
+	else
+		commandanswer (nick, err)
+	end
+end
+
+----- ---- --- -- -
+
 function updatescriptdev (nick)
 	commandanswer (nick, gettext ("Downloading script file: %s"):format (table_othsets.luafile))
-	local res, err, data = getcurl (table_othsets.updservdev .. table_othsets.luafile, nil, true)
+	gethttp (table_othsets.updservdev .. table_othsets.luafile, nil, true, false, nil, updatescriptdevreply, nick)
+end
 
+----- ---- --- -- -
+
+function updatescriptdevreply (res, err, data, _, nick)
 	if res then
 		if data ~= "" then
 			local _, _, veda = data:find ("ver_ledo = \"(%d+%.%d+%.%d+)\" %-%- ledokol version")
 
 			if veda then
 				commandanswer (nick, gettext ("Development version of %s is available: %s"):format ("Ledokol", veda))
-				commandanswer (nick, gettext ("Moving file: %s"):format (table_othsets.luafile))
-				local res, err = os.execute ("mv -f \"" .. table_othsets.cfgdir .. table_othsets.tmpfile .. "\" \"" .. table_othsets.cfgdir .. "scripts/" .. table_othsets.luafile .. "\"")
-
-				if res then
-					if table_sets.langfileprefix ~= "" then
-						local lafi = table_othsets.langfilefmt:format (table_sets.langfileprefix)
-						commandanswer (nick, gettext ("Downloading translation file: %s"):format (lafi))
-						local res, err, data = getcurl (table_othsets.updservdev .. lafi, nil, true)
-
-						if res then
-							if data ~= "" and data:find ("# Version: %d+%.%d+%.%d+") then
-								commandanswer (nick, gettext ("Moving file: %s"):format (lafi))
-								local res, err = os.execute ("mv -f \"" .. table_othsets.cfgdir .. table_othsets.tmpfile .. "\" \"" .. table_othsets.cfgdir .. "scripts/" .. lafi .. "\"")
-
-								if not res then
-									os.remove (table_othsets.cfgdir .. table_othsets.tmpfile)
-									commandanswer (nick, gettext ("Failed to move file: %s"):format (repnmdcoutchars (err or gettext ("No error message specified."))))
-								end
-							else
-								os.remove (table_othsets.cfgdir .. table_othsets.tmpfile)
-								commandanswer (nick, gettext ("File not found on update server: %s"):format (lafi))
-							end
-						else
-							commandanswer (nick, err)
-						end
-					end
-
-					commandanswer (nick, gettext ("Please use following commands to finish update process") .. ":\r\n\r\n !luaunload " .. table_othsets.cfgdir .. "scripts/" .. table_othsets.luafile .. "\r\n !luaload " .. table_othsets.cfgdir .. "scripts/" .. table_othsets.luafile .. "\r\n")
-				else
-					os.remove (table_othsets.cfgdir .. table_othsets.tmpfile)
-					commandanswer (nick, gettext ("Failed to move file: %s"):format (repnmdcoutchars (err or gettext ("No error message specified."))))
-				end
+				updatescriptmove (nick, table_othsets.updservdev, "# Version: %d+%.%d+%.%d+", false)
 			else
 				os.remove (table_othsets.cfgdir .. table_othsets.tmpfile)
 				commandanswer (nick, gettext ("File not found on update server: %s"):format (table_othsets.luafile))
@@ -13813,46 +13654,19 @@ end
 
 function updatescriptforce (nick)
 	commandanswer (nick, gettext ("Downloading script file: %s"):format (table_othsets.luafile))
-	local res, err, data = getcurl (table_othsets.updserv .. table_othsets.luafile, nil, true)
+	gethttp (table_othsets.updserv .. table_othsets.luafile, nil, true, false, nil, updatescriptforcereply, nick)
+end
 
+----- ---- --- -- -
+
+function updatescriptforcereply (res, err, data, _, nick)
 	if res then
 		if data ~= "" then
 			local _, _, veda = data:find ("ver_ledo = \"(%d+%.%d+%.%d+)\" %-%- ledokol version")
 
 			if veda then
 				commandanswer (nick, gettext ("Stable version of %s is available: %s"):format ("Ledokol", veda))
-				commandanswer (nick, gettext ("Moving file: %s"):format (table_othsets.luafile))
-				local res, err = os.execute ("mv -f \"" .. table_othsets.cfgdir .. table_othsets.tmpfile .. "\" \"" .. table_othsets.cfgdir .. "scripts/" .. table_othsets.luafile .. "\"")
-
-				if res then
-					if table_sets.langfileprefix ~= "" then
-						local lafi = table_othsets.langfilefmt:format (table_sets.langfileprefix)
-						commandanswer (nick, gettext ("Downloading translation file: %s"):format (lafi))
-						local res, err, data = getcurl (table_othsets.updservlang .. lafi, nil, true)
-
-						if res then
-							if data ~= "" and data:find ("# Version: " .. veda, 1, true) then
-								commandanswer (nick, gettext ("Moving file: %s"):format (lafi))
-								local res, err = os.execute ("mv -f \"" .. table_othsets.cfgdir .. table_othsets.tmpfile .. "\" \"" .. table_othsets.cfgdir .. "scripts/" .. lafi .. "\"")
-
-								if not res then
-									os.remove (table_othsets.cfgdir .. table_othsets.tmpfile)
-									commandanswer (nick, gettext ("Failed to move file: %s"):format (repnmdcoutchars (err or gettext ("No error message specified."))))
-								end
-							else
-								os.remove (table_othsets.cfgdir .. table_othsets.tmpfile)
-								commandanswer (nick, gettext ("File not found on update server: %s"):format (lafi))
-							end
-						else
-							commandanswer (nick, err)
-						end
-					end
-
-					commandanswer (nick, gettext ("Please use following commands to finish update process") .. ":\r\n\r\n !luaunload " .. table_othsets.cfgdir .. "scripts/" .. table_othsets.luafile .. "\r\n !luaload " .. table_othsets.cfgdir .. "scripts/" .. table_othsets.luafile .. "\r\n")
-				else
-					os.remove (table_othsets.cfgdir .. table_othsets.tmpfile)
-					commandanswer (nick, gettext ("Failed to move file: %s"):format (repnmdcoutchars (err or gettext ("No error message specified."))))
-				end
+				updatescriptmove (nick, table_othsets.updservlang, "# Version: " .. veda, true)
 			else
 				os.remove (table_othsets.cfgdir .. table_othsets.tmpfile)
 				commandanswer (nick, gettext ("File not found on update server: %s"):format (table_othsets.luafile))
@@ -13864,6 +13678,61 @@ function updatescriptforce (nick)
 	else
 		commandanswer (nick, err)
 	end
+end
+
+----- ---- --- -- -
+
+function updatescriptmove (nick, serv, mark, plain) -- note: downloaded script file replaces old one, translation file follows
+	commandanswer (nick, gettext ("Moving file: %s"):format (table_othsets.luafile))
+	local res, err = os.execute ("mv -f \"" .. table_othsets.cfgdir .. table_othsets.tmpfile .. "\" \"" .. table_othsets.cfgdir .. "scripts/" .. table_othsets.luafile .. "\"")
+
+	if res then
+		updatescriptlang (nick, serv, mark, plain)
+	else
+		os.remove (table_othsets.cfgdir .. table_othsets.tmpfile)
+		commandanswer (nick, gettext ("Failed to move file: %s"):format (repnmdcoutchars (err or gettext ("No error message specified."))))
+	end
+end
+
+----- ---- --- -- -
+
+function updatescriptlang (nick, serv, mark, plain)
+	if table_sets.langfileprefix == "" then
+		return updatescriptfinish (nick)
+	end
+
+	local lafi = table_othsets.langfilefmt:format (table_sets.langfileprefix)
+	commandanswer (nick, gettext ("Downloading translation file: %s"):format (lafi))
+	gethttp (serv .. lafi, nil, true, false, nil, updatescriptlangreply, nick, lafi, mark, plain)
+end
+
+----- ---- --- -- -
+
+function updatescriptlangreply (res, err, data, _, nick, lafi, mark, plain)
+	if res then
+		if data ~= "" and data:find (mark, 1, plain) then
+			commandanswer (nick, gettext ("Moving file: %s"):format (lafi))
+			local res, err = os.execute ("mv -f \"" .. table_othsets.cfgdir .. table_othsets.tmpfile .. "\" \"" .. table_othsets.cfgdir .. "scripts/" .. lafi .. "\"")
+
+			if not res then
+				os.remove (table_othsets.cfgdir .. table_othsets.tmpfile)
+				commandanswer (nick, gettext ("Failed to move file: %s"):format (repnmdcoutchars (err or gettext ("No error message specified."))))
+			end
+		else
+			os.remove (table_othsets.cfgdir .. table_othsets.tmpfile)
+			commandanswer (nick, gettext ("File not found on update server: %s"):format (lafi))
+		end
+	else
+		commandanswer (nick, err)
+	end
+
+	updatescriptfinish (nick)
+end
+
+----- ---- --- -- -
+
+function updatescriptfinish (nick)
+	commandanswer (nick, gettext ("Please use following commands to finish update process") .. ":\r\n\r\n !luaunload " .. table_othsets.cfgdir .. "scripts/" .. table_othsets.luafile .. "\r\n !luaload " .. table_othsets.cfgdir .. "scripts/" .. table_othsets.luafile .. "\r\n")
 end
 
 ----- ---- --- -- -
@@ -14721,14 +14590,14 @@ function modusrmode (nick, addr, text)
 				back = back:gsub ("%S", "*")
 
 			elseif mode == "num" then
-				back = back:gsub ("[oOîÎ]", "0")
+				back = back:gsub ("[oO" .. string.char (238, 206) .. "]", "0") -- note: cyrillic letters are cp1251 byte codes, same as in tbl_cyrlet
 				back = back:gsub ("[iIlL]", "1")
-				back = back:gsub ("[eEåÅ]", "3")
-				back = back:gsub ("[aAàÀ÷×]", "4")
+				back = back:gsub ("[eE" .. string.char (229, 197) .. "]", "3")
+				back = back:gsub ("[aA" .. string.char (224, 192, 247, 215) .. "]", "4")
 				back = back:gsub ("[sS]", "5")
-				back = back:gsub ("[áÁøØ]", "6")
-				back = back:gsub ("[tTòÒ%?]", "7")
-				back = back:gsub ("[yYóÓ]", "9")
+				back = back:gsub ("[" .. string.char (225, 193, 248, 216) .. "]", "6")
+				back = back:gsub ("[tT" .. string.char (242, 210) .. "%?]", "7")
+				back = back:gsub ("[yY" .. string.char (243, 211) .. "]", "9")
 			end
 
 			return back
@@ -15010,7 +14879,7 @@ end
 ----- ---- --- -- -
 
 function chatintelcheck (nick, addr, clas, to, data, targ)
-	if table_sets.chatintelon == 0 or table_sets.chatintelemail == "" or clas >= table_sets.scanbelowclass or not table_othsets.ver_curl then
+	if table_sets.chatintelon == 0 or table_sets.chatintelemail == "" or clas >= table_sets.scanbelowclass or not httpready () then
 		return false
 	end
 
@@ -15165,6 +15034,221 @@ function chatintelcheck (nick, addr, clas, to, data, targ)
 	end
 
 	return false
+end
+
+----- ---- --- -- -
+
+function chatintellookup (addr) -- note: result goes to chatintelreply, curl gives it at once and hub request later
+	local url = table_othsets.chinurl:format (table_sets.chatintelemail, addr)
+
+	if table_othsets.ver_http then
+		return gethttp (url, nil, false, false, table_sets.chatintelreqwait, chatintelreply, addr)
+	end
+
+	local face, name = getconfig ("listen_ip"), table_othsets.cfgdir .. table_othsets.chindir .. "/" .. addr
+
+	if face and # face >= 7 and # face <= 15 and face ~= "0.0.0.0" and face ~= "127.0.0.1" then -- interface address
+		face = " --interface " .. face
+	else
+		face = ""
+	end
+
+	os.remove (name) -- remove old file
+	local res, err, code = os.execute ("curl --get --location --max-redirs 1 --connect-timeout " .. _tostring (table_sets.chatintelreqtime) .. " --max-time " .. _tostring (table_sets.chatintelreqwait) .. face .. " --user-agent \"" .. table_othsets.useragent .. "\" --silent --output \"" .. name .. "\" \"" .. repurlchars (url) .. "\"")
+
+	if res then
+		local file, err = io.open (name, "r") -- make use of err, it could be permission
+
+		if file then
+			local data = file:read ("*all")
+			file:close ()
+			os.remove (name)
+			return chatintelreply (true, nil, data, nil, addr)
+		end
+
+		opsnotify (table_sets.classnotichin, gettext ("Failed proxy lookup of IP %s without result file."):format (addr .. tryipcc (addr)))
+
+	else -- execute error
+		if code ~= nil then
+			code = tonumber (code) or -1
+		end
+
+		if code ~= -1 then -- http://curl.haxx.se/docs/manpage.html
+			opsnotify (table_sets.classnotichin, gettext ("Failed to execute %s for proxy lookup of IP %s with code: %d"):format ("cURL", addr .. tryipcc (addr), code))
+		elseif err and err ~= "" then
+			opsnotify (table_sets.classnotichin, gettext ("Failed to execute %s for proxy lookup of IP %s with error: %s"):format ("cURL", addr .. tryipcc (addr), repnmdcoutchars (err)))
+		else
+			opsnotify (table_sets.classnotichin, gettext ("Failed to execute %s for proxy lookup of IP %s without code and error."):format ("cURL", addr .. tryipcc (addr)))
+		end
+	end
+
+	chatintelreply (false, nil, nil, nil, addr) -- note: error is already shown, delayed messages are sent
+end
+
+----- ---- --- -- -
+
+function chatintelreply (res, err, data, _, addr)
+	local item = table_chin [addr]
+
+	if not item or item.stat ~= 1 then -- note: queue was cleared meanwhile
+		return
+	end
+
+	local send, dele = true, false
+
+	if not res then
+		if err then
+			opsnotify (table_sets.classnotichin, gettext ("Failed proxy lookup of IP %s with result: %s"):format (addr .. tryipcc (addr), err))
+		end
+
+		dele = true
+
+	elseif data and # data > 0 then
+		local orig, temp = data, tonumber (data)
+
+		if not temp then
+			temp = data:gsub ("%.", ",")
+			temp = tonumber (temp)
+		end
+
+		data = temp
+
+		if type (data) == "number" then
+			if data < 0 then
+				local note = _tostring (data)
+
+				if data == -1 then
+					note = gettext ("Invalid request")
+				elseif data == -2 then
+					note = gettext ("Invalid IP")
+				elseif data == -3 then
+					note = gettext ("Private IP")
+				elseif data == -4 then
+					note = gettext ("Under maintenance")
+				elseif data == -5 then
+					note = gettext ("Request banned")
+				elseif data == -6 then
+					note = gettext ("Invalid email")
+				end
+
+				opsnotify (table_sets.classnotichin, gettext ("Failed proxy lookup of IP %s with result: %s"):format (addr .. tryipcc (addr), note))
+				dele = true
+			end
+
+			if data >= 0 then
+				data = roundint (data * 100)
+			end
+
+			if data >= table_sets.chatintelmatch then
+				local note = ""
+
+				if table_refu.GetIPASN then -- asn
+					local ok, asn = VH:GetIPASN (addr)
+
+					if ok and asn and asn ~= "" then
+						if asn:match ("^AS%d+") then
+							asn = "https://ipinfo.io/" .. asn
+						end
+
+						note = gettext ("Public proxy detected on IP %s with ASN: %s"):format (addr .. tryipcc (addr), repnmdcoutchars (asn))
+					end
+				end
+
+				if note == "" then
+					note = gettext ("Public proxy detected on IP: %s"):format (addr .. tryipcc (addr))
+				end
+
+				opsnotify (table_sets.classnotichin, note)
+
+				if isproxprotected (addr) then -- protected is marked as not proxy
+					opsnotify (table_sets.classnotichin, gettext ("IP is protected: %s"):format (addr))
+					item.stat = 4
+
+				else
+					item.stat = 2
+					send = false
+				end
+
+			else
+				opsnotify (table_sets.classnotichin, gettext ("Not enough matches for proxy lookup of IP %s: %d of %d"):format (addr .. tryipcc (addr), data, table_sets.chatintelmatch))
+				item.stat = 4
+			end
+		else
+			opsnotify (table_sets.classnotichin, gettext ("Failed proxy lookup of IP %s with unknown result data: %s"):format (addr .. tryipcc (addr), repnmdcoutchars (data) .. " (" .. repnmdcoutchars (orig) .. ")"))
+			dele = true
+		end
+	else
+		opsnotify (table_sets.classnotichin, gettext ("Failed proxy lookup of IP %s without result data."):format (addr .. tryipcc (addr)))
+		dele = true
+	end
+
+	table_othsets.chinskipchecks = true
+
+	for nick, nili in pairs (item ["nick"]) do
+		for targ, tali in pairs (nili) do
+			for _, tada in pairs (tali) do
+				if send then -- send delayed messages
+					if targ == 1 then -- mc
+						VH_OnParsedMsgChat (nick, tada ["data"])
+
+					elseif targ == 2 then -- pm
+						VH_OnParsedMsgPM (nick, tada ["data"], tada ["nick"])
+
+					elseif targ == 3 then -- mcto
+						VH_OnParsedMsgMCTo (nick, tada ["data"], tada ["nick"])
+
+					elseif targ == 4 then -- me
+						VH_OnUserCommand (nick, tada ["data"])
+
+					elseif targ == 5 then -- offline
+						sendoffmsg (nick, tada ["nick"] .. " " .. tada ["data"], getclass (nick))
+
+					elseif targ == 6 then -- command
+						--VH_OnUserCommand (nick, tada ["data"])
+						VH:ParseCommand (nick, tada ["data"], 0)
+					end
+
+				else -- block delayed messages
+					if targ == 2 then -- pm
+						VH:SendToUser ("$To: " .. nick .. " From: " .. tada ["nick"] .. " $<" .. table_othsets.sendfrom .. "> " .. gettext ("You're not allowed to chat due to public proxy detection of your IP address.") .. "|", nick)
+					elseif minhubver (1, 0, 2, 15) then
+						VH:SendToUser ("<" .. table_othsets.sendfrom .. "> " .. gettext ("You're not allowed to chat due to public proxy detection of your IP address.") .. "|", nick, getconfig ("delayed_chat"))
+					else
+						VH:SendToUser ("<" .. table_othsets.sendfrom .. "> " .. gettext ("You're not allowed to chat due to public proxy detection of your IP address.") .. "|", nick)
+					end
+
+					local oddr = getip (tada ["nick"])
+
+					if targ == 1 then -- mc
+						opsnotify (table_sets.classnotichin, gettext ("Blocking main chat message from %s with IP %s detected as public proxy: %s"):format (nick, addr .. tryipcc (addr, nick), tada ["data"]))
+					elseif targ == 2 then -- pm
+						opsnotify (table_sets.classnotichin, gettext ("Blocking private chat message from %s with IP %s detected as public proxy to %s with IP %s: %s"):format (nick, addr .. tryipcc (addr, nick), tada ["nick"], oddr .. tryipcc (oddr, tada ["nick"]), tada ["data"]))
+					elseif targ == 3 then -- mcto
+						opsnotify (table_sets.classnotichin, gettext ("Blocking private main chat message from %s with IP %s detected as public proxy to %s with IP %s: %s"):format (nick, addr .. tryipcc (addr, nick), tada ["nick"], oddr .. tryipcc (oddr, tada ["nick"]), tada ["data"]))
+					elseif targ == 4 then -- me
+						opsnotify (table_sets.classnotichin, gettext ("Blocking third person main chat message from %s with IP %s detected as public proxy: %s"):format (nick, addr .. tryipcc (addr, nick), tada ["data"]))
+					elseif targ == 5 then -- offline
+						opsnotify (table_sets.classnotichin, gettext ("Blocking offline private chat message from %s with IP %s detected as public proxy to %s with IP %s: %s"):format (nick, addr .. tryipcc (addr, nick), tada ["nick"], oddr .. tryipcc (oddr, tada ["nick"]), tada ["data"]))
+					elseif targ == 6 then -- command
+						opsnotify (table_sets.classnotichin, gettext ("Blocking user command from %s with IP %s detected as public proxy: %s"):format (nick, addr .. tryipcc (addr, nick), tada ["data"]))
+					end
+				end
+			end
+		end
+
+		if not send and table_sets.chatintelact == 2 then -- drop only once
+			item.stat = 3
+			opsnotify (table_sets.classnotichin, gettext ("User dropped: %s"):format (nick))
+			VH:Disconnect (nick) -- todo: can we drop user here? maybe drop him at the end of this function, create drop flag
+		end
+	end
+
+	table_othsets.chinskipchecks = false
+	item ["nick"] = {} -- clear
+
+	if dele then -- delete errored
+		table_chin [addr] = nil
+	end
 end
 
 ----- ---- --- -- -
@@ -21588,7 +21672,7 @@ end
 		if num then
 			if setto == 0 or setto == 1 then
 				if setto == 1 then
-					if not table_othsets.ver_curl then
+					if not httpready () then
 						commandanswer (nick, gettext ("This feature requires following binary installed on your system: %s"):format ("cURL"))
 					else
 						commandanswer (nick, gettext ("In order to send infected user information to AVDB you need to ask maintainer of this script to add your server IP address to AVDB access list."))
@@ -21596,6 +21680,10 @@ end
 					end
 				else
 					ok = true
+				end
+
+				if ok then -- note: reports that are still waiting were sent before this change
+					table_othsets.avsendgen = table_othsets.avsendgen + 1
 				end
 			else
 				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0 " .. gettext ("or") .. " 1"))
@@ -21614,10 +21702,11 @@ end
 					table_othsets.avlastloadtime = 0
 					table_othsets.avloadvercount = 0
 					table_othsets.avloaddelcount = 0
+					table_othsets.avdbload = nil -- note: reply of waiting load is ignored
 					ok = true
 
 				else
-					if not table_othsets.ver_curl then
+					if not httpready () then
 						commandanswer (nick, gettext ("This feature requires following binary installed on your system: %s"):format ("cURL"))
 					else
 						ok = true
@@ -22296,14 +22385,17 @@ end
 				if setto == 0 then -- clear
 					table_chin = {}
 					ok = true
-				elseif setto >= 1 and not table_othsets.ver_curl then
+				elseif setto >= 1 and not httpready () then
 					commandanswer (nick, gettext ("This feature requires following binary installed on your system: %s"):format ("cURL"))
 				else
 					if setto >= 1 and table_sets.chatintelemail == "" then
 						commandanswer (nick, gettext ("In order to use this feature you need to set %s to your email address."):format ("chatintelemail"))
 					end
 
-					os.execute ("mkdir -p \"" .. table_othsets.cfgdir .. table_othsets.chindir .. "\"")
+					if table_othsets.ver_curl then -- note: folder is only for output files of curl
+						os.execute ("mkdir -p \"" .. table_othsets.cfgdir .. table_othsets.chindir .. "\"")
+					end
+
 					ok = true
 				end
 			else
@@ -22612,6 +22704,7 @@ end
 					end
 
 					if setto == 0 then -- flush
+						table_othsets.blistload = nil -- note: reply of waiting load is ignored
 						table_blst = {}
 					elseif table_sets [tvar] == 0 then -- load
 						loadblacklist ()
@@ -24890,7 +24983,10 @@ elseif tvar == "tolowcharcase" then
 	elseif tvar == "langfileprefix" then
 		setto = setto:lower ()
 
-		if # setto > 0 and setto ~= "en" and setto ~= "l1" and setto ~= "p1" and setto ~= "a1" and setto ~= "a2" and setto ~= "o1" and setto ~= "eu" and setto ~= "ap" then
+		if table_othsets.langload then -- note: download of translation file is not done yet
+			commandanswer (nick, gettext ("Translation file is still downloading, please try again later: %s"):format (table_othsets.langload))
+
+		elseif # setto > 0 and setto ~= "en" and setto ~= "l1" and setto ~= "p1" and setto ~= "a1" and setto ~= "a2" and setto ~= "o1" and setto ~= "eu" and setto ~= "ap" then
 			for code, name in pairs (cc_names) do
 				local lowcode, lowname = code:lower (), name:lower ()
 
@@ -25580,7 +25676,12 @@ function sendstats (nick)
 	stats = stats .. "\r\n " .. gettext ("%s module version: %s"):format ("LuaSocket", (table_othsets.ver_sock or gettext ("Not installed")))
 	--stats = stats .. "\r\n " .. gettext ("%s module version: %s"):format ("LTN12", (table_othsets.ver_ltn12 or gettext ("Unknown")))
 	stats = stats .. "\r\n " .. gettext ("%s version: %s"):format ("MySQL", (table_othsets.ver_sql or gettext ("Unknown")))
-	stats = stats .. "\r\n " .. gettext ("%s version: %s"):format ("cURL", (table_othsets.ver_curl or gettext ("Unknown")))
+
+	if table_othsets.ver_http then
+		stats = stats .. "\r\n " .. gettext ("%s requests: %s"):format ("HTTP", "Verlihub")
+	else
+		stats = stats .. "\r\n " .. gettext ("%s version: %s"):format ("cURL", (table_othsets.ver_curl or gettext ("Unknown")))
+	end
 
 	if table_sets.enablesysbans == 1 then
 		stats = stats .. "\r\n " .. gettext ("%s version: %s"):format ("IPTables", (table_othsets.ver_iptables or gettext ("Unknown")))
@@ -26677,50 +26778,63 @@ function loadlangfile (nick, pref)
 
 	local lafi = table_othsets.langfilefmt:format (lang)
 	local file, err = io.open (table_othsets.cfgdir .. "scripts/" .. lafi, "r")
-	local data = ""
 
 	if file then
-		data = file:read ("*all")
+		local data = file:read ("*all")
 		file:close ()
 
 		if nick and (not data or data == "") then
 			commandanswer (nick, gettext ("Failed to load translation file %s: %s"):format (lafi, gettext ("File is empty.")))
 		end
-	else -- try to download
-		if nick then
-			commandanswer (nick, gettext ("Downloading translation file: %s"):format (lafi))
-		end
 
-		local res, err = false, nil
-		res, err, data = getcurl (table_othsets.updservlang .. lafi, nil, true)
+		return loadlangdata (nick, lang, lafi, data)
+	end
 
-		if res then
-			if data ~= "" and data:match ("# Version: %d%.%d%.%d") then
-				if nick then
-					commandanswer (nick, gettext ("Moving file: %s"):format (lafi))
-				end
+	if nick then -- try to download
+		commandanswer (nick, gettext ("Downloading translation file: %s"):format (lafi))
+	end
 
-				local res, err = os.execute ("mv -f \"" .. table_othsets.cfgdir .. table_othsets.tmpfile .. "\" \"" .. table_othsets.cfgdir .. "scripts/" .. lafi .. "\"")
+	table_othsets.langload = lafi -- note: language can not be changed until download is done or failed
+	gethttp (table_othsets.updservlang .. lafi, nil, true, false, nil, loadlangfilereply, nick, lang, lafi)
+end
 
-				if not res then
-					os.remove (table_othsets.cfgdir .. table_othsets.tmpfile)
+----- ---- --- -- -
 
-					if nick then
-						commandanswer (nick, gettext ("Failed to move file: %s"):format (repnmdcoutchars (err or gettext ("No error message specified."))))
-					end
-				end
-			else
+function loadlangfilereply (res, err, data, _, nick, lang, lafi)
+	table_othsets.langload = nil
+
+	if res then
+		if data ~= "" and data:match ("# Version: %d%.%d%.%d") then
+			if nick then
+				commandanswer (nick, gettext ("Moving file: %s"):format (lafi))
+			end
+
+			local res, err = os.execute ("mv -f \"" .. table_othsets.cfgdir .. table_othsets.tmpfile .. "\" \"" .. table_othsets.cfgdir .. "scripts/" .. lafi .. "\"")
+
+			if not res then
 				os.remove (table_othsets.cfgdir .. table_othsets.tmpfile)
 
 				if nick then
-					commandanswer (nick, gettext ("File not found on update server: %s"):format (lafi))
+					commandanswer (nick, gettext ("Failed to move file: %s"):format (repnmdcoutchars (err or gettext ("No error message specified."))))
 				end
 			end
-		elseif nick then
-			commandanswer (nick, err)
+		else
+			os.remove (table_othsets.cfgdir .. table_othsets.tmpfile)
+
+			if nick then
+				commandanswer (nick, gettext ("File not found on update server: %s"):format (lafi))
+			end
 		end
+	elseif nick then
+		commandanswer (nick, err)
 	end
 
+	loadlangdata (nick, lang, lafi, data)
+end
+
+----- ---- --- -- -
+
+function loadlangdata (nick, lang, lafi, data)
 	if data and data ~= "" then
 		for line in data:gmatch ("[^\r\n]+") do
 			if # line > 1 and line:sub (1, 1) ~= "#" then
@@ -26918,6 +27032,7 @@ function repurlchars (data)
 	back = back:gsub ("\\", "\\\\")
 	back = back:gsub ("\"", "\\\"")
 	back = back:gsub (string.char (96), "\\" .. string.char (96))
+	back = back:gsub ("%$", "\\$")
 	return back
 end
 
@@ -26962,8 +27077,24 @@ end
 
 ----- ---- --- -- -
 
-function loadavdb (stam)
-	local res, err, avdb, head = getcurl (table_othsets.avdbloadurl .. "&vers=" .. _tostring (table_othsets.avloadvercount) .. "&time=" .. _tostring (table_othsets.avlastloadtime) .. "&cotime=0&copath=1&nosort=1", nil, false, true)
+function loadavdb (stam, fresh)
+	local load = {} -- note: token of this load, only its reply is used
+	table_othsets.avdbload = load
+	gethttp (table_othsets.avdbloadurl .. "&vers=" .. _tostring (table_othsets.avloadvercount) .. "&time=" .. _tostring (table_othsets.avlastloadtime) .. "&cotime=0&copath=1&nosort=1", nil, false, true, nil, loadavdbreply, stam, load, fresh)
+end
+
+----- ---- --- -- -
+
+function loadavdbreply (res, err, avdb, head, stam, load, fresh)
+	if load ~= table_othsets.avdbload then -- note: load was dropped or newer one started meanwhile
+		return
+	end
+
+	table_othsets.avdbload = nil
+
+	if fresh then -- note: list is emptied only now, so old list was used while fresh one was downloading
+		table_avlo = {}
+	end
 
 	if res then
 		if head ~= "" then -- parse headers
@@ -26981,11 +27112,10 @@ function loadavdb (stam)
 
 					elseif hena == "Delete" then
 						if table_othsets.avloaddelcount > 0 and table_othsets.avloaddelcount < heva then -- only if not first time
-							table_avlo = {}
 							table_othsets.avlastloadtime = 0
 							table_othsets.avloadvercount = 0
 							table_othsets.avloaddelcount = heva
-							return loadavdb (stam) -- items were removed, get fresh list from scratch
+							return loadavdb (stam, true) -- items were removed, get fresh list from scratch, current list is kept until it arrives
 						end
 
 						table_othsets.avloaddelcount = heva -- update delete counter
@@ -27131,7 +27261,7 @@ end
 ----- ---- --- -- -
 
 function avdbreport (nick, addr, size, info, path, hash, spec)
-	if table_sets.avsendtodb == 0 or not table_othsets.ver_curl then
+	if table_sets.avsendtodb == 0 or not httpready () then
 		return
 	end
 
@@ -27171,27 +27301,32 @@ function avdbreport (nick, addr, size, info, path, hash, spec)
 			uenc [string.char (108, 111, 99, 107)] = data .. string.char (48) .. string.char (_tostring (num):byte ()) .. genrandhex (num)
 		end
 
-		local res, err, avre = getcurl (table_othsets.avdbsendurl .. "&size=" .. _tostring (shar) .. "&addr=" .. addr, uenc)
+		gethttp (table_othsets.avdbsendurl .. "&size=" .. _tostring (shar) .. "&addr=" .. addr, uenc, false, false, nil, avdbreportreply, nick, spec, table_othsets.avsendgen)
+	end
+end
 
-		if res then
-			if avre == "1" then
-				if table_sets.avfeedverb == 3 then
-					opsnotify (table_sets.classnotiav, gettext ("Infected user information sent to %s: %s"):format ("AVDB", nick))
-				end
-			elseif avre == "0" then
-				if not spec then
-					table_sets.avsendtodb = 0
-					VH:SQLQuery ("update `" .. tbl_sql.conf .. "` set `value` = '0' where `variable` = 'avsendtodb'")
-					opsnotify (table_sets.classnotiav, gettext ("Sadly I don't have access to send infected user information to AVDB, please ask maintainer of this script to add your server IP address to access list. AVDB reporting feature has been automatically disabled."))
-				elseif table_sets.avfeedverb == 3 then
-					opsnotify (table_sets.classnotiav, gettext ("Failed to send information to %s: %s"):format ("AVDB", gettext ("Access is restricted.")))
-				end
+----- ---- --- -- -
+
+function avdbreportreply (res, err, avre, _, nick, spec, gen)
+	if res then
+		if avre == "1" then
+			if table_sets.avfeedverb == 3 then
+				opsnotify (table_sets.classnotiav, gettext ("Infected user information sent to %s: %s"):format ("AVDB", nick))
+			end
+		elseif avre == "0" then
+			if not spec and gen == table_othsets.avsendgen then -- note: reporting was not changed after this report was sent
+				table_sets.avsendtodb = 0
+				table_othsets.avsendgen = table_othsets.avsendgen + 1 -- note: other waiting reports only notify
+				VH:SQLQuery ("update `" .. tbl_sql.conf .. "` set `value` = '0' where `variable` = 'avsendtodb'")
+				opsnotify (table_sets.classnotiav, gettext ("Sadly I don't have access to send infected user information to AVDB, please ask maintainer of this script to add your server IP address to access list. AVDB reporting feature has been automatically disabled."))
 			elseif table_sets.avfeedverb == 3 then
-				opsnotify (table_sets.classnotiav, gettext ("Failed to send information to %s: %s"):format ("AVDB", gettext ("Server didn't reply with expected status code.")))
+				opsnotify (table_sets.classnotiav, gettext ("Failed to send information to %s: %s"):format ("AVDB", gettext ("Access is restricted.")))
 			end
 		elseif table_sets.avfeedverb == 3 then
-			opsnotify (table_sets.classnotiav, gettext ("Failed to send information to %s: %s"):format ("AVDB", err))
+			opsnotify (table_sets.classnotiav, gettext ("Failed to send information to %s: %s"):format ("AVDB", gettext ("Server didn't reply with expected status code.")))
 		end
+	elseif table_sets.avfeedverb == 3 then
+		opsnotify (table_sets.classnotiav, gettext ("Failed to send information to %s: %s"):format ("AVDB", err))
 	end
 end
 
@@ -27466,49 +27601,53 @@ function avdbfinditems (nick, data)
 
 	if ityp == "nick" or ityp == "addr" or ityp == "size" or ityp == "path" or ityp == "hash" then
 		commandanswer (nick, gettext ("Searching for %s in %s: %s"):format (ityp, "AVDB", item))
-		local res, err, avdb = getcurl (table_othsets.avdbfindurl .. "&copath=1&cohash=1", {[ityp] = item})
+		gethttp (table_othsets.avdbfindurl .. "&copath=1&cohash=1", {[ityp] = item}, false, false, nil, avdbfinditemsreply, nick)
 
-		if res then
-			if avdb ~= "" and avdb ~= "0" then
-				local back, count = "", 0
+	else -- unknown type
+		commandanswer (nick, gettext ("Known types are: %s"):format ("nick, addr, size, path " .. gettext ("and") .. " hash"))
+	end
+end
 
-				for avli in avdb:gmatch ("[^\r\n]+") do
-					local _, _, avni, avad, avsi, avti, avpa, avha = avli:find ("^([^ ]+)|(%d+%.%d+%.%d+%.%d+)|(%d+)|(%d+)|(.*)|(.*)$")
+----- ---- --- -- -
 
-					if avni and avad and avsi and avti and avpa and avha then
-						avsi = tonumber (avsi)
-						avti = tonumber (avti)
-						back = back .. " [ N: " .. repnmdcoutchars (avni) .. " ] [ I: " .. repnmdcoutchars (avad) .. " ] [ S: " .. _tostring (avsi) .. " &#124; " .. makesize (avsi) .. " ] [ T: " .. fromunixtime (avti, false, table_sets.longdateformat .. " " .. table_sets.timeformat) .. " ]"
+function avdbfinditemsreply (res, err, avdb, _, nick)
+	if res then
+		if avdb ~= "" and avdb ~= "0" then
+			local back, count = "", 0
 
-						if avpa ~= "" then
-							back = back .. " [ P: " .. repnmdcoutchars (avpa) .. " ]"
-						end
+			for avli in avdb:gmatch ("[^\r\n]+") do
+				local _, _, avni, avad, avsi, avti, avpa, avha = avli:find ("^([^ ]+)|(%d+%.%d+%.%d+%.%d+)|(%d+)|(%d+)|(.*)|(.*)$")
 
-						if avha ~= "" then
-							back = back .. " [ H: " .. repnmdcoutchars (avha) .. " ]"
-						end
+				if avni and avad and avsi and avti and avpa and avha then
+					avsi = tonumber (avsi)
+					avti = tonumber (avti)
+					back = back .. " [ N: " .. repnmdcoutchars (avni) .. " ] [ I: " .. repnmdcoutchars (avad) .. " ] [ S: " .. _tostring (avsi) .. " &#124; " .. makesize (avsi) .. " ] [ T: " .. fromunixtime (avti, false, table_sets.longdateformat .. " " .. table_sets.timeformat) .. " ]"
 
-						back = back .. "\r\n"
-						count = count + 1
+					if avpa ~= "" then
+						back = back .. " [ P: " .. repnmdcoutchars (avpa) .. " ]"
 					end
-				end
 
-				if count > 0 then
-					commandanswer (nick, gettext ("Showing %d results from %s"):format (count, "AVDB") .. ":\r\n\r\n" .. back)
-				else
-					commandanswer (nick, gettext ("Nothing was found in: %s"):format ("AVDB"))
-				end
+					if avha ~= "" then
+						back = back .. " [ H: " .. repnmdcoutchars (avha) .. " ]"
+					end
 
+					back = back .. "\r\n"
+					count = count + 1
+				end
+			end
+
+			if count > 0 then
+				commandanswer (nick, gettext ("Showing %d results from %s"):format (count, "AVDB") .. ":\r\n\r\n" .. back)
 			else
 				commandanswer (nick, gettext ("Nothing was found in: %s"):format ("AVDB"))
 			end
 
 		else
-			commandanswer (nick, gettext ("Failed to load information from %s: %s"):format ("AVDB", err))
+			commandanswer (nick, gettext ("Nothing was found in: %s"):format ("AVDB"))
 		end
 
-	else -- unknown type
-		commandanswer (nick, gettext ("Known types are: %s"):format ("nick, addr, size, path " .. gettext ("and") .. " hash"))
+	else
+		commandanswer (nick, gettext ("Failed to load information from %s: %s"):format ("AVDB", err))
 	end
 end
 
@@ -27900,6 +28039,16 @@ end
 
 ----- ---- --- -- -
 
+function httpready ()
+	if table_othsets.ver_http or table_othsets.ver_curl then -- note: hub requests or curl binary
+		return true
+	end
+
+	return false
+end
+
+----- ---- --- -- -
+
 function loadcomponents ()
 	local ver = getconfig ("hub_version")
 
@@ -28053,27 +28202,35 @@ function loadcomponents ()
 		end
 	end
 
-	-- curl version
+	-- http requests of hub
 
-	if os.execute ("curl -s --version > \"" .. table_othsets.cfgdir .. table_othsets.tmpfile .. "\" 2>&1") then
-		local file = io.open (table_othsets.cfgdir .. table_othsets.tmpfile, "r")
-
-		if file then
-			local cuve = file:read ("*line") -- read first line
-			file:close ()
-			os.remove (table_othsets.cfgdir .. table_othsets.tmpfile)
-
-			if cuve and cuve ~= "" then
-				_, _, table_othsets.ver_curl = cuve:find ("(%d+[%.%d]+)")
-			end
-		end
+	if minhubver (2, 0, 0, 0) and VH.HTTPGet then -- note: hub makes requests in background, curl is not needed
+		table_othsets.ver_http = true
 	end
 
-	if not table_othsets.ver_curl then
-		if minhubver (1, 0, 2, 15) then
-			VH:SendToClass ("<" .. table_sets.ledobotnick .. "> Warning: Unable to run \"curl --version\"|", 5, 10, getconfig ("delayed_chat"))
-		else
-			VH:SendToClass ("<" .. table_sets.ledobotnick .. "> Warning: Unable to run \"curl --version\"|", 5, 10)
+	-- curl version
+
+	if not table_othsets.ver_http then
+		if os.execute ("curl -s --version > \"" .. table_othsets.cfgdir .. table_othsets.tmpfile .. "\" 2>&1") then
+			local file = io.open (table_othsets.cfgdir .. table_othsets.tmpfile, "r")
+
+			if file then
+				local cuve = file:read ("*line") -- read first line
+				file:close ()
+				os.remove (table_othsets.cfgdir .. table_othsets.tmpfile)
+
+				if cuve and cuve ~= "" then
+					_, _, table_othsets.ver_curl = cuve:find ("(%d+[%.%d]+)")
+				end
+			end
+		end
+
+		if not table_othsets.ver_curl then
+			if minhubver (1, 0, 2, 15) then
+				VH:SendToClass ("<" .. table_sets.ledobotnick .. "> Warning: Unable to run \"curl --version\"|", 5, 10, getconfig ("delayed_chat"))
+			else
+				VH:SendToClass ("<" .. table_sets.ledobotnick .. "> Warning: Unable to run \"curl --version\"|", 5, 10)
+			end
 		end
 	end
 
@@ -28407,12 +28564,22 @@ end
 function getcc (nick)
 	local res, cc = VH:GetUserCC (nick)
 
-	if not res or not cc or cc == "User not found" then
-		return
-	elseif cc == "" then
-		return "--"
-	else
+	if res then
+		if not cc or cc == "User not found" then
+			return
+		elseif cc == "" or cc == "--" then
+			return "--"
+		end
+
 		return cc:upper ()
+	end
+
+	if not cc then -- new verlihub returns false and nil when country is unknown, older one when user is not found
+		local ok, online = VH:IsUserOnline (nick)
+
+		if ok and online then
+			return "--"
+		end
 	end
 end
 
@@ -28473,12 +28640,22 @@ end
 function getusercity (nick)
 	local res, city = VH:GetUserCity (nick)
 
-	if not res or not city then
-		return
-	elseif city == "" then
-		return "--"
-	else
+	if res then
+		if not city then
+			return
+		elseif city == "" or city == "--" then
+			return "--"
+		end
+
 		return city
+	end
+
+	if not city then -- new verlihub returns false and nil when city is unknown, older one when user is not found
+		local ok, online = VH:IsUserOnline (nick)
+
+		if ok and online then
+			return "--"
+		end
 	end
 end
 
@@ -28601,7 +28778,7 @@ function getcurl (url, enc, del, reh)
 		rehreq = " -D \"" .. table_othsets.cfgdir .. table_othsets.headfile .. "\""
 	end
 
-	local res, err, code = os.execute ("curl --get --location --max-redirs 1 --retry 2 --connect-timeout 5 --max-time 15" .. face .. " --user-agent \"" .. table_othsets.useragent .. "\" --silent --output \"" .. table_othsets.cfgdir .. table_othsets.tmpfile .. "\"" .. rehreq .. urlenc .. " \"" .. url .. "\"")
+	local res, err, code = os.execute ("curl --get --location --max-redirs 1 --retry 2 --connect-timeout 5 --max-time 15" .. face .. " --user-agent \"" .. table_othsets.useragent .. "\" --silent --output \"" .. table_othsets.cfgdir .. table_othsets.tmpfile .. "\"" .. rehreq .. urlenc .. " \"" .. repurlchars (url) .. "\"")
 
 	if res then
 		local head = ""
@@ -28647,9 +28824,92 @@ end
 
 ----- ---- --- -- -
 
-function getipintel (addr)
-	if table_sets.chatintelon == 0 or # table_sets.chatintelemail == 0 or not table_othsets.ver_curl then
-		return gettext ("Function disabled")
+function urlencode (data)
+	local back = _tostring (data):gsub ("[^%w%-%.%_%~]", function (char)
+		return ("%%%02X"):format (char:byte ())
+	end)
+
+	return back
+end
+
+----- ---- --- -- -
+
+function gethttp (url, enc, keep, head, wait, func, ...)
+	if not table_othsets.ver_http then -- note: curl answers at once, reply function is called before return
+		local res, err, data, rehe = getcurl (url, enc, keep, head)
+		return func (res, err, data, rehe, ...)
+	end
+
+	local query = ""
+
+	if enc then -- note: same as data-urlencode of curl, only value is encoded
+		for id, val in pairs (enc) do
+			if # query > 0 then
+				query = query .. "&"
+			elseif url:find ("?", 1, true) then -- note: same as get option of curl, url that already has query gets values after it
+				query = "&"
+			else
+				query = "?"
+			end
+
+			query = query .. id .. "=" .. urlencode (val)
+		end
+	end
+
+	local item = {
+		["keep"] = keep,
+		["func"] = func,
+		["args"] = {["n"] = select ("#", ...), ...}
+	}
+
+	local ok, id = VH:HTTPGet (url .. query, "ledohttpreply", {["User-Agent"] = table_othsets.useragent}, (wait or 15), 2) -- note: hub tries again twice, same as retry of curl
+
+	if not ok then
+		return func (false, gettext ("Failed to start HTTP request: %s"):format (repnmdcoutchars (_tostring (id))), nil, nil, ...)
+	end
+
+	table_http [id] = item
+end
+
+----- ---- --- -- -
+
+function ledohttpreply (id, code, body, head, err)
+	local item = table_http [id]
+
+	if not item then -- note: unknown request
+		return
+	end
+
+	table_http [id] = nil
+	local args = item.args
+
+	if code < 0 then
+		return item.func (false, gettext ("HTTP request failed with code %d: %s"):format (code, repnmdcoutchars (_tostring (err))), nil, nil, (table.unpack or unpack) (args, 1, args.n))
+	end
+
+	if item.keep then -- note: same as output file of curl, caller moves or removes it
+		local file = io.open (table_othsets.cfgdir .. table_othsets.tmpfile, "wb")
+
+		if file then
+			file:write (body or "")
+			file:close ()
+		end
+	end
+
+	return item.func (true, nil, (body or ""), (head or ""), (table.unpack or unpack) (args, 1, args.n))
+end
+
+----- ---- --- -- -
+
+function getipintel (addr, func, ...) -- note: result text goes to func, curl gives it at once and hub request later
+	if table_sets.chatintelon == 0 or # table_sets.chatintelemail == 0 or not httpready () then
+		return func (gettext ("Function disabled"), ...)
+	end
+
+	local url = table_othsets.chinurl:format (table_sets.chatintelemail, addr)
+
+	if table_othsets.ver_http then
+		return gethttp (url, nil, false, false, table_sets.chatintelreqwait, getipintelreply, func, ...)
 	end
 
 	local face, name = getconfig ("listen_ip"), table_othsets.cfgdir .. table_othsets.chindir .. "/" .. addr
@@ -28661,7 +28921,7 @@ function getipintel (addr)
 	end
 
 	os.remove (name) -- remove old file
-	local res, err, code = os.execute ("curl --get --location --max-redirs 1 --connect-timeout " .. _tostring (table_sets.chatintelreqtime) .. " --max-time " .. _tostring (table_sets.chatintelreqwait) .. face .. " --user-agent \"" .. table_othsets.useragent .. "\" --silent --output \"" .. name .. "\" \"" .. table_othsets.chinurl:format (table_sets.chatintelemail, addr) .. "\"")
+	local res, err, code = os.execute ("curl --get --location --max-redirs 1 --connect-timeout " .. _tostring (table_sets.chatintelreqtime) .. " --max-time " .. _tostring (table_sets.chatintelreqwait) .. face .. " --user-agent \"" .. table_othsets.useragent .. "\" --silent --output \"" .. name .. "\" \"" .. repurlchars (url) .. "\"")
 
 	if not res then -- execute error
 		if code ~= nil then
@@ -28669,26 +28929,35 @@ function getipintel (addr)
 		end
 
 		if code ~= -1 then
-			return gettext ("Code %d"):format (code)
+			return func (gettext ("Code %d"):format (code), ...)
 		elseif err and # err > 0 then
-			return repnmdcoutchars (err)
+			return func (repnmdcoutchars (err), ...)
 		end
 
-		return gettext ("Unknown error")
+		return func (gettext ("Unknown error"), ...)
 	end
 
 	local file, err = io.open (name, "r") -- make use of err, it could be permission
 
 	if not file then
-		return gettext ("No file")
+		return func (gettext ("No file"), ...)
 	end
 
 	local data = file:read ("*all")
 	file:close ()
 	os.remove (name)
+	return getipintelreply (true, nil, data, nil, func, ...)
+end
+
+----- ---- --- -- -
+
+function getipintelreply (res, err, data, _, func, ...)
+	if not res then
+		return func (err, ...)
+	end
 
 	if not data or # data == 0 then
-		return gettext ("No data")
+		return func (gettext ("No data"), ...)
 	end
 
 	local temp = tonumber (data)
@@ -28701,32 +28970,32 @@ function getipintel (addr)
 	data = temp
 
 	if type (data) ~= "number" then
-		return gettext ("Unknown data")
+		return func (gettext ("Unknown data"), ...)
 	end
 
 	if data < 0 then
 		if data == -1 then
-			return gettext ("Invalid request")
+			return func (gettext ("Invalid request"), ...)
 		elseif data == -2 then
-			return gettext ("Invalid IP")
+			return func (gettext ("Invalid IP"), ...)
 		elseif data == -3 then
-			return gettext ("Private IP")
+			return func (gettext ("Private IP"), ...)
 		elseif data == -4 then
-			return gettext ("Under maintenance")
+			return func (gettext ("Under maintenance"), ...)
 		elseif data == -5 then
-			return gettext ("Request banned")
+			return func (gettext ("Request banned"), ...)
 		elseif data == -6 then
-			return gettext ("Invalid email")
+			return func (gettext ("Invalid email"), ...)
 		end
 
-		return gettext ("Code %d"):format (data)
+		return func (gettext ("Code %d"):format (data), ...)
 	end
 
 	if data >= 0 then
 		data = roundint (data * 100)
 	end
 
-	return gettext ("%d of %d"):format (data, table_sets.chatintelmatch)
+	return func (gettext ("%d of %d"):format (data, table_sets.chatintelmatch), ...)
 end
 
 ----- ---- --- -- -

@@ -1,0 +1,12 @@
+[ Can freeze the hub ]
+
+whois command: whoislookup runs "whois" that asks remote whois server without own timeout, hub waits few seconds or 30+ seconds when server hangs
+System bans: iptablessetup runs 2 "iptables" processes for every stored system ban on script load, 1000 bans freeze hub for 10-40 seconds
+Antivirus search server: avsearservread sleeps 1 ms per result part and per datagram on main thread, up to 110 ms per timer call while results come in
+
+[ Short, but still a process start ]
+
+sysban and sysunban commands: "iptables" check plus append or delete per command, slow when other program holds xtables lock
+ledostats command: runs "ulimit -n" each time
+Script load: runs "ulimit -n", and "lua -v" when _VERSION is unusual
+Updates: "mv -f" after script and translation file download

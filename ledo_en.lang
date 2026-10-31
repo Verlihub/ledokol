@@ -1376,3 +1376,7 @@ Failed to delete rule in %s: %s|
 Please compare with original string and make sure parameters equal: %s|
 This feature is not set for registered users only.|
 Operation not supported on this type.|
+%s requests: %s|
+Failed to start HTTP request: %s|
+HTTP request failed with code %d: %s|
+Translation file is still downloading, please try again later: %s|

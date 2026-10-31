@@ -4128,3 +4128,15 @@ msgstr ""
 
 msgid "Operation not supported on this type."
 msgstr ""
+
+msgid "%s requests: %s"
+msgstr ""
+
+msgid "Failed to start HTTP request: %s"
+msgstr ""
+
+msgid "HTTP request failed with code %d: %s"
+msgstr ""
+
+msgid "Translation file is still downloading, please try again later: %s"
+msgstr ""
