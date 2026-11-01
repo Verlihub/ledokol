@@ -63,7 +63,7 @@ Tzaca, JOE™, Foxtrot, Deivis, PWiAM, Gabriel, Master and others
 ---------------------------------------------------------------------
 
 ver_ledo = "3.0.1" -- ledokol version
-bld_ledo = "149" -- build number
+bld_ledo = "150" -- build number
 
 ---------------------------------------------------------------------
 -- default custom settings table >>
@@ -5661,7 +5661,7 @@ function VH_OnParsedMsgMyINFO (nick, data)
 			end
 		end
 
-		VH:SQLQuery ("insert into `" .. tbl_sql.ulog .. "` (`time`" .. ((table_sets.ulogouttime == 1) and ", `out`" or "") .. ", `nick`, `ip`, `cc`, `desc`, `tag`, `conn`, `stat`, `email`, `share`, `nmdc`, `sups`, `tls`) values (" .. _tostring (os.time () + table_sets.srvtimediff) .. ((table_sets.ulogouttime == 1) and ", 2" or "") .. ", '" .. repsqlchars (nick) .. "', '" .. repsqlchars (addr) .. "', " .. sqlemptnull (cc, true) .. ", " .. sqlemptnull (desc) .. ", " .. sqlemptnull (tag) .. ", " .. sqlemptnull (conn) .. ", " .. sqlemptnull (stat) .. ", " .. sqlemptnull (mail) .. ", " .. repsqlchars (size) .. ", " .. sqlemptnull (nmdc) .. ", " .. sqlemptnull (sups) .. ", " .. sqlemptnull (tls) .. ")")
+		sqlwrite ("insert into `" .. tbl_sql.ulog .. "` (`time`" .. ((table_sets.ulogouttime == 1) and ", `out`" or "") .. ", `nick`, `ip`, `cc`, `desc`, `tag`, `conn`, `stat`, `email`, `share`, `nmdc`, `sups`, `tls`) values (" .. _tostring (os.time () + table_sets.srvtimediff) .. ((table_sets.ulogouttime == 1) and ", 2" or "") .. ", '" .. repsqlchars (nick) .. "', '" .. repsqlchars (addr) .. "', " .. sqlemptnull (cc, true) .. ", " .. sqlemptnull (desc) .. ", " .. sqlemptnull (tag) .. ", " .. sqlemptnull (conn) .. ", " .. sqlemptnull (stat) .. ", " .. sqlemptnull (mail) .. ", " .. repsqlchars (size) .. ", " .. sqlemptnull (nmdc) .. ", " .. sqlemptnull (sups) .. ", " .. sqlemptnull (tls) .. ")")
 	end
 
 	if table_sets.micheck == 0 or table_sets.micallall == 0 then
@@ -5799,19 +5799,11 @@ function VH_OnUserLogin (nick, uip)
 			end
 		end
 
-		VH:SQLQuery ("insert into `" .. tbl_sql.ulog .. "` (`time`" .. ((table_sets.ulogouttime == 1) and ", `out`" or "") .. ", `nick`, `ip`, `cc`, `desc`, `tag`, `conn`, `stat`, `email`, `share`, `nmdc`, `sups`, `tls`) values (" .. _tostring (os.time () + table_sets.srvtimediff) .. ((table_sets.ulogouttime == 1) and ", 1" or "") .. ", '" .. repsqlchars (nick) .. "', '" .. repsqlchars (addr) .. "', " .. sqlemptnull (cc, true) .. ", " .. sqlemptnull (desc) .. ", " .. sqlemptnull (tag) .. ", " .. sqlemptnull (conn) .. ", " .. sqlemptnull (stat) .. ", " .. sqlemptnull (email) .. ", " .. repsqlchars (size) .. ", " .. sqlemptnull (nmdc) .. ", " .. sqlemptnull (sups) .. ", " .. sqlemptnull (tls) .. ")")
+		local tm = os.time () + table_sets.srvtimediff -- note: login time, with nick it finds this row again when out time is written
+		sqlwrite ("insert into `" .. tbl_sql.ulog .. "` (`time`" .. ((table_sets.ulogouttime == 1) and ", `out`" or "") .. ", `nick`, `ip`, `cc`, `desc`, `tag`, `conn`, `stat`, `email`, `share`, `nmdc`, `sups`, `tls`) values (" .. _tostring (tm) .. ((table_sets.ulogouttime == 1) and ", 1" or "") .. ", '" .. repsqlchars (nick) .. "', '" .. repsqlchars (addr) .. "', " .. sqlemptnull (cc, true) .. ", " .. sqlemptnull (desc) .. ", " .. sqlemptnull (tag) .. ", " .. sqlemptnull (conn) .. ", " .. sqlemptnull (stat) .. ", " .. sqlemptnull (email) .. ", " .. repsqlchars (size) .. ", " .. sqlemptnull (nmdc) .. ", " .. sqlemptnull (sups) .. ", " .. sqlemptnull (tls) .. ")")
 
 		if table_sets.ulogouttime == 1 then -- out time
-			local _, rows = VH:SQLQuery ("select last_insert_id()")
-
-			if rows > 0 then
-				local _, last = VH:SQLFetch (0)
-				last = tonumber (last or 0) or 0
-
-				if last > 0 then
-					table_laul [nick] = last
-				end
-			end
+			table_laul [nick] = tm
 		end
 	end
 
@@ -6036,7 +6028,7 @@ function VH_OnUserLogin (nick, uip)
 
 			if cc then
 				local repcc = repsqlchars (cc)
-				VH:SQLQuery ("insert into `" .. tbl_sql.ccstat .. "` (`nick`, `cc`) values ('" .. repsqlchars (nick) .. "', '" .. repcc .. "') on duplicate key update `cc` = '" .. repcc .. "'")
+				sqlwrite ("insert into `" .. tbl_sql.ccstat .. "` (`nick`, `cc`) values ('" .. repsqlchars (nick) .. "', '" .. repcc .. "') on duplicate key update `cc` = '" .. repcc .. "'")
 			end
 		end
 	end
@@ -6147,7 +6139,7 @@ function VH_OnUserLogout (nick, ip) -- ip available only on new versions
 	end
 
 	if table_sets.enableuserlog == 1 and table_sets.ulogouttime == 1 and table_laul [nick] then -- user logger, out time
-		VH:SQLQuery ("update `" .. tbl_sql.ulog .. "` set `out` = " .. _tostring (os.time () + table_sets.srvtimediff) .. " where `id` = " .. _tostring (table_laul [nick]))
+		sqlwrite ("update `" .. tbl_sql.ulog .. "` set `out` = " .. _tostring (os.time () + table_sets.srvtimediff) .. " where `time` = " .. _tostring (table_laul [nick]) .. " and `nick` = '" .. repsqlchars (nick) .. "' and `out` = 1")
 		table_laul [nick] = nil
 	end
 
@@ -9742,7 +9734,7 @@ function checkcmd (nick, clas, cmd)
 			local _, line = VH:SQLFetch (row)
 
 			if safe:match (line) then
-				VH:SQLQuery ("update `" .. tbl_sql.cmd .. "` set `occurred` = `occurred` + 1 where `command` = '" .. repsqlchars (line) .. "'")
+				sqlwrite ("update `" .. tbl_sql.cmd .. "` set `occurred` = `occurred` + 1 where `command` = '" .. repsqlchars (line) .. "'")
 				commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
 				return 0
 			end
@@ -11734,7 +11726,7 @@ function replyresponder (nick, cls, msg)
 
 	if rows > 0 then
 		local _, ex = VH:SQLFetch (0)
-		VH:SQLQuery ("update `" .. tbl_sql.respex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (ex) .. "'")
+		sqlwrite ("update `" .. tbl_sql.respex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (ex) .. "'")
 		return
 	end
 
@@ -11768,7 +11760,7 @@ function replyresponder (nick, cls, msg)
 
 			for k, v in pairs (respsel [math.random (cnt)]) do
 				table.insert (table_resp, {[os.time ()] = reptextvars (v, nick, msg)})
-				VH:SQLQuery ("update `" .. tbl_sql.mcresp .. "` set `occurred` = `occurred` + 1 where `id` = " .. _tostring (k))
+				sqlwrite ("update `" .. tbl_sql.mcresp .. "` set `occurred` = `occurred` + 1 where `id` = " .. _tostring (k))
 
 				if table_sets.respskiplast == 1 then
 					table_lars.last = k
@@ -11946,7 +11938,7 @@ function replchatmsg (nick, addr, class, data, flag)
 		end
 
 		if done ~= "" then
-			VH:SQLQuery ("update `" .. tbl_sql.replex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (done) .. "'")
+			sqlwrite ("update `" .. tbl_sql.replex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (done) .. "'")
 			return data
 		end
 	end
@@ -11991,7 +11983,7 @@ function replchatmsg (nick, addr, class, data, flag)
 
 							for _, exen in pairs (exli) do
 								if expa:match (exen) then
-									VH:SQLQuery ("update `" .. tbl_sql.replex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (exen) .. "'")
+									sqlwrite ("update `" .. tbl_sql.replex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (exen) .. "'")
 									cont = false
 									break
 								end
@@ -12011,7 +12003,7 @@ function replchatmsg (nick, addr, class, data, flag)
 							opsnotify (table_sets.classnotirepl, gettext ("Entry used in detection: %s"):format (repnmdcoutchars (item.d)))
 						end
 
-						VH:SQLQuery ("update `" .. tbl_sql.chatrepl .. "` set `occurred` = `occurred` + 1 where `id` = " .. _tostring (id))
+						sqlwrite ("update `" .. tbl_sql.chatrepl .. "` set `occurred` = `occurred` + 1 where `id` = " .. _tostring (id))
 						done = true
 					end
 				end
@@ -13507,14 +13499,14 @@ function authcheck (nick, cls, uip)
 		local _, id, ip = VH:SQLFetch (x)
 
 		if uip:find (ip) then -- match
-			VH:SQLQuery ("update `" .. tbl_sql.auth .. "` set `good` = `good` + 1 where `id` = " .. _tostring (id))
+			sqlwrite ("update `" .. tbl_sql.auth .. "` set `good` = `good` + 1 where `id` = " .. _tostring (id))
 			opsnotify (table_sets.classnotiauth, gettext ("%s with IP %s and class %d authorized."):format (nick, uip .. tryipcc (uip, nick), cls))
 			return false
 		end
 	end
 
 	maintouser (nick, table_sets.authmessage)
-	VH:SQLQuery ("update `" .. tbl_sql.auth .. "` set `badip` = '" .. repsqlchars (uip) .. "', `bad` = `bad` + 1 where `nick` = '" .. user .. "'")
+	sqlwrite ("update `" .. tbl_sql.auth .. "` set `badip` = '" .. repsqlchars (uip) .. "', `bad` = `bad` + 1 where `nick` = '" .. user .. "'")
 	VH:Disconnect (nick) -- drop user
 	opsnotify (table_sets.classnotiauth, gettext ("%s with IP %s and class %d failed authorization and disconnected."):format (nick, uip .. tryipcc (uip, nick), cls))
 	return true
@@ -14263,9 +14255,9 @@ function addmchistoryline (nick, real, line, refl)
 	if count >= table_sets.histlimit then
 		VH:SQLQuery ("select `id` from `" .. tbl_sql.mchist .. "` order by `date` asc limit 1") -- get oldest message
 		local _, old_id = VH:SQLFetch (0)
-		VH:SQLQuery ("update `" .. tbl_sql.mchist .. "` set `realnick` = '" .. repsqlchars (real) .. "', `nick` = '" .. repsqlchars (nick) .. "', `ip` = " .. sqlemptnull (valor (addr, "0.0.0.0")) .. ", `date` = " .. _tostring (os.time () + table_sets.srvtimediff) .. ", `message` = '" .. repsqlchars (data) .. "' where `id` = " .. _tostring (old_id))
+		sqlwrite ("update `" .. tbl_sql.mchist .. "` set `realnick` = '" .. repsqlchars (real) .. "', `nick` = '" .. repsqlchars (nick) .. "', `ip` = " .. sqlemptnull (valor (addr, "0.0.0.0")) .. ", `date` = " .. _tostring (os.time () + table_sets.srvtimediff) .. ", `message` = '" .. repsqlchars (data) .. "' where `id` = " .. _tostring (old_id))
 	else
-		VH:SQLQuery ("insert into `" .. tbl_sql.mchist .. "` (`realnick`, `nick`, `ip`, `date`, `message`) values ('" .. repsqlchars (real) .. "', '" .. repsqlchars (nick) .. "', " .. sqlemptnull (valor (addr, "0.0.0.0")) .. ", " .. _tostring (os.time () + table_sets.srvtimediff) .. ", '" .. repsqlchars (data) .. "')")
+		sqlwrite ("insert into `" .. tbl_sql.mchist .. "` (`realnick`, `nick`, `ip`, `date`, `message`) values ('" .. repsqlchars (real) .. "', '" .. repsqlchars (nick) .. "', " .. sqlemptnull (valor (addr, "0.0.0.0")) .. ", " .. _tostring (os.time () + table_sets.srvtimediff) .. ", '" .. repsqlchars (data) .. "')")
 	end
 end
 
@@ -14287,9 +14279,9 @@ function addophistoryline (nick, line, class)
 	if counttable (tbl_sql.ophist, "id") >= table_sets.histlimit then
 		VH:SQLQuery ("select `id` from `" .. tbl_sql.ophist .. "` order by `date` asc limit 1") -- get oldest message
 		local _, old_id = VH:SQLFetch (0)
-		VH:SQLQuery ("update `" .. tbl_sql.ophist .. "` set `nick` = '" .. repsqlchars (nick) .. "', `date` = " .. _tostring (os.time () + table_sets.srvtimediff) .. ", `message` = '" .. repsqlchars (line) .. "', `class` = " .. _tostring (class) .. " where `id` = " .. _tostring (old_id))
+		sqlwrite ("update `" .. tbl_sql.ophist .. "` set `nick` = '" .. repsqlchars (nick) .. "', `date` = " .. _tostring (os.time () + table_sets.srvtimediff) .. ", `message` = '" .. repsqlchars (line) .. "', `class` = " .. _tostring (class) .. " where `id` = " .. _tostring (old_id))
 	else
-		VH:SQLQuery ("insert into `" .. tbl_sql.ophist .. "` (`nick`, `date`, `message`, `class`) values ('" .. repsqlchars (nick) .. "', " .. _tostring (os.time () + table_sets.srvtimediff) .. ", '" .. repsqlchars (line) .. "', " .. _tostring (class) .. ")")
+		sqlwrite ("insert into `" .. tbl_sql.ophist .. "` (`nick`, `date`, `message`, `class`) values ('" .. repsqlchars (nick) .. "', " .. _tostring (os.time () + table_sets.srvtimediff) .. ", '" .. repsqlchars (line) .. "', " .. _tostring (class) .. ")")
 	end
 end
 
@@ -14306,9 +14298,9 @@ function addcrhistoryline (room, nick, real, line)
 	if counttable (tbl_sql.crhist, "id", "`room` = '" .. rep_room .. "'") >= table_sets.chathistlimit then
 		VH:SQLQuery ("select `id` from `" .. tbl_sql.crhist .. "` where `room` = '" .. rep_room .. "' order by `date` asc limit 1") -- get oldest message
 		local _, old_id = VH:SQLFetch (0)
-		VH:SQLQuery ("update `" .. tbl_sql.crhist .. "` set `realnick` = '" .. repsqlchars (real) .. "', `nick` = '" .. repsqlchars (nick) .. "', `ip` = " .. sqlemptnull (valor (addr, "0.0.0.0")) .. ", `date` = " .. _tostring (os.time () + table_sets.srvtimediff) .. ", `message` = '" .. repsqlchars (line) .. "' where `id` = " .. _tostring (old_id))
+		sqlwrite ("update `" .. tbl_sql.crhist .. "` set `realnick` = '" .. repsqlchars (real) .. "', `nick` = '" .. repsqlchars (nick) .. "', `ip` = " .. sqlemptnull (valor (addr, "0.0.0.0")) .. ", `date` = " .. _tostring (os.time () + table_sets.srvtimediff) .. ", `message` = '" .. repsqlchars (line) .. "' where `id` = " .. _tostring (old_id))
 	else
-		VH:SQLQuery ("insert into `" .. tbl_sql.crhist .. "` (`room`, `realnick`, `nick`, `ip`, `date`, `message`) values ('" .. rep_room .. "', '" .. repsqlchars (real) .. "', '" .. repsqlchars (nick) .. "', " .. sqlemptnull (valor (addr, "0.0.0.0")) .. ", " .. _tostring (os.time () + table_sets.srvtimediff) .. ", '" .. repsqlchars (line) .. "')")
+		sqlwrite ("insert into `" .. tbl_sql.crhist .. "` (`room`, `realnick`, `nick`, `ip`, `date`, `message`) values ('" .. rep_room .. "', '" .. repsqlchars (real) .. "', '" .. repsqlchars (nick) .. "', " .. sqlemptnull (valor (addr, "0.0.0.0")) .. ", " .. _tostring (os.time () + table_sets.srvtimediff) .. ", '" .. repsqlchars (line) .. "')")
 	end
 end
 
@@ -14423,7 +14415,7 @@ function isprotected (nick, addr)
 
 		for _, prot in pairs (cache_prot) do
 			if (nick and lick:match (prot)) or (addr and addr:match (prot)) then
-				VH:SQLQuery ("update ignore `" .. tbl_sql.prot .. "` set `occurred` = `occurred` + 1 where `protected` = '" .. repsqlchars (prot) .. "'")
+				sqlwrite ("update ignore `" .. tbl_sql.prot .. "` set `occurred` = `occurred` + 1 where `protected` = '" .. repsqlchars (prot) .. "'")
 				return true
 			end
 		end
@@ -14520,7 +14512,7 @@ function isproxprotected (addr)
 
 	for _, prot in pairs (cache_prpr) do
 		if addr:match (prot) then
-			VH:SQLQuery ("update ignore `" .. tbl_sql.proxprot .. "` set `occurred` = `occurred` + 1 where `protected` = '" .. repsqlchars (prot) .. "'")
+			sqlwrite ("update ignore `" .. tbl_sql.proxprot .. "` set `occurred` = `occurred` + 1 where `protected` = '" .. repsqlchars (prot) .. "'")
 			return true
 		end
 	end
@@ -15272,7 +15264,7 @@ function checkchatnick (nick, clas, addr)
 
 		elseif fval then
 			table_myfo.chat [id].occ = item.occ + 1
-			VH:SQLQuery ("update `" .. tbl_sql.michat .. "` set `occurred` = `occurred` + 1 where `chat` = '" .. repsqlchars (item.ent) .. "'")
+			sqlwrite ("update `" .. tbl_sql.michat .. "` set `occurred` = `occurred` + 1 where `chat` = '" .. repsqlchars (item.ent) .. "'")
 
 			for eid, eit in pairs (table_myfo.ex) do
 				local fres, fval = catchfinderror (low, eit.ent)
@@ -15286,7 +15278,7 @@ function checkchatnick (nick, clas, addr)
 
 				elseif fval then
 					table_myfo.ex [eid].occ = eit.occ + 1
-					VH:SQLQuery ("update `" .. tbl_sql.miex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (eit.ent) .. "'")
+					sqlwrite ("update `" .. tbl_sql.miex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (eit.ent) .. "'")
 					opsnotify (table_sets.classnotiex, gettext ("%s with IP %s and class %d allowed due to forbidden chat nick exception: %s"):format (nick, addr .. tryipcc (addr, nick), clas, nick))
 					return false
 				end
@@ -15322,7 +15314,7 @@ function checknick (nick, clas, addr)
 
 		elseif fval then
 			table_myfo.nick [id].occ = item.occ + 1
-			VH:SQLQuery ("update `" .. tbl_sql.minick .. "` set `occurred` = `occurred` + 1 where `nick` = '" .. repsqlchars (item.ent) .. "'")
+			sqlwrite ("update `" .. tbl_sql.minick .. "` set `occurred` = `occurred` + 1 where `nick` = '" .. repsqlchars (item.ent) .. "'")
 
 			for eid, eit in pairs (table_myfo.ex) do
 				local fres, fval = catchfinderror (low, eit.ent)
@@ -15336,7 +15328,7 @@ function checknick (nick, clas, addr)
 
 				elseif fval then
 					table_myfo.ex [eid].occ = eit.occ + 1
-					VH:SQLQuery ("update `" .. tbl_sql.miex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (eit.ent) .. "'")
+					sqlwrite ("update `" .. tbl_sql.miex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (eit.ent) .. "'")
 					opsnotify (table_sets.classnotiex, gettext ("%s with IP %s and class %d allowed due to forbidden nick exception: %s"):format (nick, addr .. tryipcc (addr, nick), clas, nick))
 					return false
 				end
@@ -15372,7 +15364,7 @@ function checkdesc (nick, desc, clas, addr)
 
 		elseif fval then
 			table_myfo.desc [id].occ = item.occ + 1
-			VH:SQLQuery ("update `" .. tbl_sql.midesc .. "` set `occurred` = `occurred` + 1 where `description` = '" .. repsqlchars (item.ent) .. "'")
+			sqlwrite ("update `" .. tbl_sql.midesc .. "` set `occurred` = `occurred` + 1 where `description` = '" .. repsqlchars (item.ent) .. "'")
 
 			for eid, eit in pairs (table_myfo.ex) do
 				local fres, fval = catchfinderror (low, eit.ent)
@@ -15386,7 +15378,7 @@ function checkdesc (nick, desc, clas, addr)
 
 				elseif fval then
 					table_myfo.ex [eid].occ = eit.occ + 1
-					VH:SQLQuery ("update `" .. tbl_sql.miex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (eit.ent) .. "'")
+					sqlwrite ("update `" .. tbl_sql.miex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (eit.ent) .. "'")
 					opsnotify (table_sets.classnotiex, gettext ("%s with IP %s and class %d allowed due to forbidden description exception: %s"):format (nick, addr .. tryipcc (addr, nick), clas, desc))
 					return false
 				end
@@ -15422,7 +15414,7 @@ function checktag (nick, tag, clas, addr)
 
 		elseif fval then
 			table_myfo.tag [id].occ = item.occ + 1
-			VH:SQLQuery ("update `" .. tbl_sql.mitag .. "` set `occurred` = `occurred` + 1 where `tag` = '" .. repsqlchars (item.ent) .. "'")
+			sqlwrite ("update `" .. tbl_sql.mitag .. "` set `occurred` = `occurred` + 1 where `tag` = '" .. repsqlchars (item.ent) .. "'")
 
 			for eid, eit in pairs (table_myfo.ex) do
 				local fres, fval = catchfinderror (low, eit.ent)
@@ -15436,7 +15428,7 @@ function checktag (nick, tag, clas, addr)
 
 				elseif fval then
 					table_myfo.ex [eid].occ = eit.occ + 1
-					VH:SQLQuery ("update `" .. tbl_sql.miex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (eit.ent) .. "'")
+					sqlwrite ("update `" .. tbl_sql.miex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (eit.ent) .. "'")
 					opsnotify (table_sets.classnotiex, gettext ("%s with IP %s and class %d allowed due to forbidden tag exception: %s"):format (nick, addr .. tryipcc (addr, nick), clas, tag))
 					return false
 				end
@@ -15499,7 +15491,7 @@ function checkconn (nick, conn, clas, addr)
 
 		elseif fval then
 			table_myfo.conn [id].occ = item.occ + 1
-			VH:SQLQuery ("update `" .. tbl_sql.miconn .. "` set `occurred` = `occurred` + 1 where `connection` = '" .. repsqlchars (item.ent) .. "'")
+			sqlwrite ("update `" .. tbl_sql.miconn .. "` set `occurred` = `occurred` + 1 where `connection` = '" .. repsqlchars (item.ent) .. "'")
 
 			for eid, eit in pairs (table_myfo.ex) do
 				local fres, fval = catchfinderror (low, eit.ent)
@@ -15513,7 +15505,7 @@ function checkconn (nick, conn, clas, addr)
 
 				elseif fval then
 					table_myfo.ex [eid].occ = eit.occ + 1
-					VH:SQLQuery ("update `" .. tbl_sql.miex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (eit.ent) .. "'")
+					sqlwrite ("update `" .. tbl_sql.miex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (eit.ent) .. "'")
 					opsnotify (table_sets.classnotiex, gettext ("%s with IP %s and class %d allowed due to forbidden connection type exception: %s"):format (nick, addr .. tryipcc (addr, nick), clas, conn))
 					return false
 				end
@@ -15549,7 +15541,7 @@ function checkemail (nick, mail, clas, addr)
 
 		elseif fval then
 			table_myfo.mail [id].occ = item.occ + 1
-			VH:SQLQuery ("update `" .. tbl_sql.miemail .. "` set `occurred` = `occurred` + 1 where `email` = '" .. repsqlchars (item.ent) .. "'")
+			sqlwrite ("update `" .. tbl_sql.miemail .. "` set `occurred` = `occurred` + 1 where `email` = '" .. repsqlchars (item.ent) .. "'")
 
 			for eid, eit in pairs (table_myfo.ex) do
 				local fres, fval = catchfinderror (low, eit.ent)
@@ -15563,7 +15555,7 @@ function checkemail (nick, mail, clas, addr)
 
 				elseif fval then
 					table_myfo.ex [eid].occ = eit.occ + 1
-					VH:SQLQuery ("update `" .. tbl_sql.miex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (eit.ent) .. "'")
+					sqlwrite ("update `" .. tbl_sql.miex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (eit.ent) .. "'")
 					opsnotify (table_sets.classnotiex, gettext ("%s with IP %s and class %d allowed due to forbidden email exception: %s"):format (nick, addr .. tryipcc (addr, nick), clas, mail))
 					return false
 				end
@@ -15599,7 +15591,7 @@ function checkshare (nick, shar, clas, addr)
 
 		elseif fval then
 			table_myfo.shar [id].occ = item.occ + 1
-			VH:SQLQuery ("update `" .. tbl_sql.mishare .. "` set `occurred` = `occurred` + 1 where `share` = '" .. repsqlchars (item.ent) .. "'")
+			sqlwrite ("update `" .. tbl_sql.mishare .. "` set `occurred` = `occurred` + 1 where `share` = '" .. repsqlchars (item.ent) .. "'")
 
 			for eid, eit in pairs (table_myfo.ex) do
 				local fres, fval = catchfinderror (low, eit.ent)
@@ -15613,7 +15605,7 @@ function checkshare (nick, shar, clas, addr)
 
 				elseif fval then
 					table_myfo.ex [eid].occ = eit.occ + 1
-					VH:SQLQuery ("update `" .. tbl_sql.miex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (eit.ent) .. "'")
+					sqlwrite ("update `" .. tbl_sql.miex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (eit.ent) .. "'")
 					opsnotify (table_sets.classnotiex, gettext ("%s with IP %s and class %d allowed due to forbidden share size exception: %s"):format (nick, addr .. tryipcc (addr, nick), clas, shar))
 					return false
 				end
@@ -15649,7 +15641,7 @@ function checkip (nick, addr, clas)
 
 		elseif fval then
 			table_myfo.addr [id].occ = item.occ + 1
-			VH:SQLQuery ("update `" .. tbl_sql.miip .. "` set `occurred` = `occurred` + 1 where `ip` = '" .. repsqlchars (item.ent) .. "'")
+			sqlwrite ("update `" .. tbl_sql.miip .. "` set `occurred` = `occurred` + 1 where `ip` = '" .. repsqlchars (item.ent) .. "'")
 
 			for eid, eit in pairs (table_myfo.ex) do
 				local fres, fval = catchfinderror (low, eit.ent)
@@ -15663,7 +15655,7 @@ function checkip (nick, addr, clas)
 
 				elseif fval then
 					table_myfo.ex [eid].occ = eit.occ + 1
-					VH:SQLQuery ("update `" .. tbl_sql.miex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (eit.ent) .. "'")
+					sqlwrite ("update `" .. tbl_sql.miex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (eit.ent) .. "'")
 					opsnotify (table_sets.classnotiex, gettext ("%s with IP %s and class %d allowed due to forbidden IP address exception: %s"):format (nick, addr .. tryipcc (addr, nick), clas, addr))
 					return false
 				end
@@ -15705,7 +15697,7 @@ function checkcc (nick, clas, addr)
 
 		elseif fval then
 			table_myfo.code [id].occ = item.occ + 1
-			VH:SQLQuery ("update `" .. tbl_sql.micc .. "` set `occurred` = `occurred` + 1 where `cc` = '" .. repsqlchars (item.ent) .. "'")
+			sqlwrite ("update `" .. tbl_sql.micc .. "` set `occurred` = `occurred` + 1 where `cc` = '" .. repsqlchars (item.ent) .. "'")
 
 			for eid, eit in pairs (table_myfo.ex) do
 				local fres, fval = catchfinderror (low, eit.ent)
@@ -15719,7 +15711,7 @@ function checkcc (nick, clas, addr)
 
 				elseif fval then
 					table_myfo.ex [eid].occ = eit.occ + 1
-					VH:SQLQuery ("update `" .. tbl_sql.miex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (eit.ent) .. "'")
+					sqlwrite ("update `" .. tbl_sql.miex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (eit.ent) .. "'")
 					opsnotify (table_sets.classnotiex, gettext ("%s with IP %s and class %d allowed due to forbidden country code exception: %s"):format (nick, addr .. tryipcc (addr, nick), clas, code .. "=" .. (cc_names [code] or gettext ("Unknown country"))))
 					return false
 				end
@@ -15761,7 +15753,7 @@ function checkdns (nick, clas, addr)
 
 		elseif fval then
 			table_myfo.dns [id].occ = item.occ + 1
-			VH:SQLQuery ("update `" .. tbl_sql.midns .. "` set `occurred` = `occurred` + 1 where `dns` = '" .. repsqlchars (item.ent) .. "'")
+			sqlwrite ("update `" .. tbl_sql.midns .. "` set `occurred` = `occurred` + 1 where `dns` = '" .. repsqlchars (item.ent) .. "'")
 
 			for eid, eit in pairs (table_myfo.ex) do
 				local fres, fval = catchfinderror (low, eit.ent)
@@ -15775,7 +15767,7 @@ function checkdns (nick, clas, addr)
 
 				elseif fval then
 					table_myfo.ex [eid].occ = eit.occ + 1
-					VH:SQLQuery ("update `" .. tbl_sql.miex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (eit.ent) .. "'")
+					sqlwrite ("update `" .. tbl_sql.miex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (eit.ent) .. "'")
 					opsnotify (table_sets.classnotiex, gettext ("%s with IP %s and class %d allowed due to forbidden DNS exception: %s"):format (nick, addr .. tryipcc (addr, nick), clas, dns))
 					return false
 				end
@@ -15817,7 +15809,7 @@ function checksup (nick, clas, addr)
 
 		elseif fval then
 			table_myfo.sup [id].occ = item.occ + 1
-			VH:SQLQuery ("update `" .. tbl_sql.misup .. "` set `occurred` = `occurred` + 1 where `supports` = '" .. repsqlchars (item.ent) .. "'")
+			sqlwrite ("update `" .. tbl_sql.misup .. "` set `occurred` = `occurred` + 1 where `supports` = '" .. repsqlchars (item.ent) .. "'")
 
 			for eid, eit in pairs (table_myfo.ex) do
 				local fres, fval = catchfinderror (low, eit.ent)
@@ -15831,7 +15823,7 @@ function checksup (nick, clas, addr)
 
 				elseif fval then
 					table_myfo.ex [eid].occ = eit.occ + 1
-					VH:SQLQuery ("update `" .. tbl_sql.miex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (eit.ent) .. "'")
+					sqlwrite ("update `" .. tbl_sql.miex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (eit.ent) .. "'")
 					opsnotify (table_sets.classnotiex, gettext ("%s with IP %s and class %d allowed due to forbidden client supports exception: %s"):format (nick, addr .. tryipcc (addr, nick), clas, sup)) -- not escaped, should be safe
 					return false
 				end
@@ -15873,7 +15865,7 @@ function checkver (nick, clas, addr)
 
 		elseif fval then
 			table_myfo.ver [id].occ = item.occ + 1
-			VH:SQLQuery ("update `" .. tbl_sql.miver .. "` set `occurred` = `occurred` + 1 where `version` = '" .. repsqlchars (item.ent) .. "'")
+			sqlwrite ("update `" .. tbl_sql.miver .. "` set `occurred` = `occurred` + 1 where `version` = '" .. repsqlchars (item.ent) .. "'")
 
 			for eid, eit in pairs (table_myfo.ex) do
 				local fres, fval = catchfinderror (low, eit.ent)
@@ -15887,7 +15879,7 @@ function checkver (nick, clas, addr)
 
 				elseif fval then
 					table_myfo.ex [eid].occ = eit.occ + 1
-					VH:SQLQuery ("update `" .. tbl_sql.miex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (eit.ent) .. "'")
+					sqlwrite ("update `" .. tbl_sql.miex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (eit.ent) .. "'")
 					opsnotify (table_sets.classnotiex, gettext ("%s with IP %s and class %d allowed due to forbidden NMDC version exception: %s"):format (nick, addr .. tryipcc (addr, nick), clas, ver))
 					return false
 				end
@@ -15923,7 +15915,7 @@ function checkinfo (nick, info, clas, addr)
 
 		elseif fval then
 			table_myfo.info [id].occ = item.occ + 1
-			VH:SQLQuery ("update `" .. tbl_sql.miinfo .. "` set `occurred` = `occurred` + 1 where `myinfo` = '" .. repsqlchars (item.ent) .. "'")
+			sqlwrite ("update `" .. tbl_sql.miinfo .. "` set `occurred` = `occurred` + 1 where `myinfo` = '" .. repsqlchars (item.ent) .. "'")
 
 			for eid, eit in pairs (table_myfo.ex) do
 				local fres, fval = catchfinderror (low, eit.ent)
@@ -15937,7 +15929,7 @@ function checkinfo (nick, info, clas, addr)
 
 				elseif fval then
 					table_myfo.ex [eid].occ = eit.occ + 1
-					VH:SQLQuery ("update `" .. tbl_sql.miex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (eit.ent) .. "'")
+					sqlwrite ("update `" .. tbl_sql.miex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (eit.ent) .. "'")
 					opsnotify (table_sets.classnotiex, gettext ("%s with IP %s and class %d allowed due to forbidden MyINFO exception: %s"):format (nick, addr .. tryipcc (addr, nick), clas, repnmdcoutchars (info)))
 					return false
 				end
@@ -15982,7 +15974,7 @@ function checkfake (nick, shar, clas, addr)
 		for id, item in pairs (table_myfo.ex) do
 			if sssh:match (item.ent) then
 				table_myfo.ex [id].occ = item.occ + 1
-				VH:SQLQuery ("update `" .. tbl_sql.miex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (item.ent) .. "'")
+				sqlwrite ("update `" .. tbl_sql.miex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (item.ent) .. "'")
 				opsnotify (table_sets.classnotiex, gettext ("%s with IP %s and class %d allowed due to fake share exception: %s"):format (nick, addr .. tryipcc (addr, nick), clas, ssha .. " " .. gettext ("B")))
 				return false
 			end
@@ -16017,7 +16009,7 @@ function checkclone (nick, addr, clas, desc, tag, conn, stat, mail, shar)
 				for id, item in pairs (table_myfo.ex) do
 					if sssh:match (item.ent) or sadd:match (item.ent) then -- exception by share or ip, todo: add rest of available parameters
 						table_myfo.ex [id].occ = item.occ + 1
-						VH:SQLQuery ("update `" .. tbl_sql.miex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (item.ent) .. "'")
+						sqlwrite ("update `" .. tbl_sql.miex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (item.ent) .. "'")
 						opsnotify (table_sets.classnotiex, gettext ("%s with IP %s and class %d allowed due to clone exception: %s"):format (nick, addr .. tryipcc (addr, nick), clas, user))
 						return false
 					end
@@ -16061,7 +16053,7 @@ function checksameip (nick, addr, clas)
 				for id, item in pairs (table_myfo.ex) do
 					if sadd:match (item.ent) then
 						table_myfo.ex [id].occ = item.occ + 1
-						VH:SQLQuery ("update `" .. tbl_sql.miex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (item.ent) .. "'")
+						sqlwrite ("update `" .. tbl_sql.miex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (item.ent) .. "'")
 						opsnotify (table_sets.classnotiex, gettext ("%s with IP %s and class %d allowed due to same IP exception: %s"):format (nick, addr .. tryipcc (addr, nick), clas, user))
 						return false
 					end
@@ -16203,7 +16195,7 @@ function gagiplist (nick)
 
 		if # del > 0 then -- remove expired
 			for _, val in pairs (del) do
-				VH:SQLQuery ("delete from from `" .. tbl_sql.ipgag .. "` where `ip` = '" .. repsqlchars (val) .. "'")
+				VH:SQLQuery ("delete from `" .. tbl_sql.ipgag .. "` where `ip` = '" .. repsqlchars (val) .. "'")
 			end
 		end
 	end
@@ -16260,7 +16252,7 @@ function gagipcheck (nick, addr, clas, to, data, noti)
 
 		if # del > 0 then -- remove expired
 			for _, val in pairs (del) do
-				VH:SQLQuery ("delete from from `" .. tbl_sql.ipgag .. "` where `ip` = '" .. repsqlchars (val) .. "'")
+				VH:SQLQuery ("delete from `" .. tbl_sql.ipgag .. "` where `ip` = '" .. repsqlchars (val) .. "'")
 			end
 		end
 	end
@@ -18468,7 +18460,7 @@ function chatrankaccept (nick, class)
 	local _, rows = VH:SQLQuery ("select `nick` from `" .. tbl_sql.ranex .. "` where `nick` = '" .. user .. "'")
 
 	if rows > 0 then
-		VH:SQLQuery ("update `" .. tbl_sql.ranex .. "` set `occurred` = `occurred` + 1 where `nick` = '" .. user .. "'")
+		sqlwrite ("update `" .. tbl_sql.ranex .. "` set `occurred` = `occurred` + 1 where `nick` = '" .. user .. "'")
 		return
 	end
 
@@ -18508,7 +18500,7 @@ local usr = repsqlchars (nick)
 local _, rows = VH:SQLQuery ("select `nick` from `" .. tbl_sql.ranex .. "` where `nick` = '" .. usr .. "'")
 
 if rows > 0 then
-	VH:SQLQuery ("update `" .. tbl_sql.ranex .. "` set `occurred` = `occurred` + 1 where `nick` = '" .. usr .. "'")
+	sqlwrite ("update `" .. tbl_sql.ranex .. "` set `occurred` = `occurred` + 1 where `nick` = '" .. usr .. "'")
 else
 	local _, rows = VH:SQLQuery ("select `rank` from `" .. tbl_sql.shran .. "` where `nick` = '" .. usr .. "'")
 
@@ -18516,11 +18508,11 @@ else
 		local _, rank = VH:SQLFetch (0)
 
 		if share > tonumber (rank) then
-			VH:SQLQuery ("update `" .. tbl_sql.shran .. "` set `rank` = " .. share .. " where `nick` = '" .. usr .. "'")
+			sqlwrite ("update `" .. tbl_sql.shran .. "` set `rank` = " .. share .. " where `nick` = '" .. usr .. "'")
 		end
 
 	else
-		VH:SQLQuery ("insert into `" .. tbl_sql.shran .. "` (`nick`, `rank`) values ('" .. usr .. "', " .. _tostring (share) .. ")")
+		sqlwrite ("insert into `" .. tbl_sql.shran .. "` (`nick`, `rank`) values ('" .. usr .. "', " .. _tostring (share) .. ")")
 	end
 end
 end
@@ -18533,9 +18525,9 @@ local usr = repsqlchars (nick)
 local _, rows = VH:SQLQuery ("select `nick` from `" .. tbl_sql.ranex .. "` where `nick` = '" .. usr .. "'")
 
 if rows > 0 then
-	VH:SQLQuery ("update `" .. tbl_sql.ranex .. "` set `occurred` = `occurred` + 1 where `nick` = '" .. usr .. "'")
+	sqlwrite ("update `" .. tbl_sql.ranex .. "` set `occurred` = `occurred` + 1 where `nick` = '" .. usr .. "'")
 else
-	VH:SQLQuery ("insert into `" .. tbl_sql.opran .. "` (`nick`) values ('" .. usr .. "') on duplicate key update `rank` = `rank` + 1")
+	sqlwrite ("insert into `" .. tbl_sql.opran .. "` (`nick`) values ('" .. usr .. "') on duplicate key update `rank` = `rank` + 1")
 end
 end
 
@@ -18560,10 +18552,10 @@ function uprankaccept (nick, clas)
 	local _, rows = VH:SQLQuery ("select `nick` from `" .. tbl_sql.ranex .. "` where `nick` = '" .. user .. "'")
 
 	if rows > 0 then
-		VH:SQLQuery ("update `" .. tbl_sql.ranex .. "` set `occurred` = `occurred` + 1 where `nick` = '" .. user .. "'")
+		sqlwrite ("update `" .. tbl_sql.ranex .. "` set `occurred` = `occurred` + 1 where `nick` = '" .. user .. "'")
 	else
 		tick = os.time () - tick
-		VH:SQLQuery ("insert into `" .. tbl_sql.upran .. "` (`nick`, `rank`) values ('" .. user .. "', " .. _tostring (tick) .. ") on duplicate key update `rank` = `rank` + " .. _tostring (tick))
+		sqlwrite ("insert into `" .. tbl_sql.upran .. "` (`nick`, `rank`) values ('" .. user .. "', " .. _tostring (tick) .. ") on duplicate key update `rank` = `rank` + " .. _tostring (tick))
 	end
 end
 
@@ -18581,9 +18573,9 @@ local usr = repsqlchars (nick)
 local _, rows = VH:SQLQuery ("select `nick` from `" .. tbl_sql.ranex .. "` where `nick` = '" .. usr .. "'")
 
 if rows > 0 then
-	VH:SQLQuery ("update `" .. tbl_sql.ranex .. "` set `occurred` = `occurred` + 1 where `nick` = '" .. usr .. "'")
+	sqlwrite ("update `" .. tbl_sql.ranex .. "` set `occurred` = `occurred` + 1 where `nick` = '" .. usr .. "'")
 else
-	VH:SQLQuery ("insert into `" .. tbl_sql.srran .. "` (`search`) values ('" .. repsqlchars (str) .. "') on duplicate key update `rank` = `rank` + 1")
+	sqlwrite ("insert into `" .. tbl_sql.srran .. "` (`search`) values ('" .. repsqlchars (str) .. "') on duplicate key update `rank` = `rank` + 1")
 end
 end
 
@@ -18618,7 +18610,7 @@ function wordrankaccept (nick, ucls, line)
 	local _, rows = VH:SQLQuery ("select `nick` from `" .. tbl_sql.ranex .. "` where `nick` = '" .. usr .. "'")
 
 	if rows > 0 then
-		VH:SQLQuery ("update `" .. tbl_sql.ranex .. "` set `occurred` = `occurred` + 1 where `nick` = '" .. usr .. "'")
+		sqlwrite ("update `" .. tbl_sql.ranex .. "` set `occurred` = `occurred` + 1 where `nick` = '" .. usr .. "'")
 	else
 		local str = repwordranchars (repnmdcinchars (line), 0) .. "$"
 
@@ -18627,7 +18619,7 @@ function wordrankaccept (nick, ucls, line)
 			local stlen = # lword
 
 			if stlen >= table_sets.wordranmin and stlen <= table_sets.wordranmax then
-				VH:SQLQuery ("insert into `" .. tbl_sql.wdran .. "` (`word`) values ('" .. repsqlchars (lword) .. "') on duplicate key update `rank` = `rank` + 1")
+				sqlwrite ("insert into `" .. tbl_sql.wdran .. "` (`word`) values ('" .. repsqlchars (lword) .. "') on duplicate key update `rank` = `rank` + 1")
 			end
 		end
 	end
@@ -20217,7 +20209,7 @@ function donotifycmd (nick, data, micl, class)
 			local _, lre = VH:SQLFetch (row)
 
 			if repnmdcinchars (data):match (lre) then
-				VH:SQLQuery ("update `" .. tbl_sql.cmdex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (lre) .. "'")
+				sqlwrite ("update `" .. tbl_sql.cmdex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (lre) .. "'")
 				return
 			end
 		end
@@ -20248,7 +20240,7 @@ function savecmdlog (nick, cls, cmd, isop)
 		return
 	end
 
-	VH:SQLQuery ("insert into `" .. tbl_sql.clog .. "` (`time`, `nick`, `class`, `command`) values (" .. _tostring (os.time () + table_sets.srvtimediff) .. ", '" .. repsqlchars (nick) .. "', " .. _tostring (cls) .. ", '" .. repsqlchars (senscmd (cmd)) .. "')")
+	sqlwrite ("insert into `" .. tbl_sql.clog .. "` (`time`, `nick`, `class`, `command`) values (" .. _tostring (os.time () + table_sets.srvtimediff) .. ", '" .. repsqlchars (nick) .. "', " .. _tostring (cls) .. ", '" .. repsqlchars (senscmd (cmd)) .. "')")
 end
 
 ----- ---- --- -- -
@@ -29085,6 +29077,16 @@ end
 
 ----- ---- --- -- -
 
+function sqlwrite (sql) -- note: query without result, hub runs it in background when it can, else it runs at once same as before
+	if VH.SQLWrite then
+		VH:SQLWrite (sql)
+	else
+		VH:SQLQuery (sql)
+	end
+end
+
+----- ---- --- -- -
+
 function sqlrowcount (sql, num)
 	VH:SQLQuery (sql)
 	local _, rows = VH:SQLQuery ("select row_count()")
@@ -30201,7 +30203,7 @@ function antiscan (nick, class, data, where, to, status)
 			ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
 			opsnotify (table_sets.classnotiledoact, ferr)
 		elseif fval then
-			VH:SQLQuery ("update `" .. tbl_sql.anti .. "` set `occurred` = `occurred` + 1 where `antispam` = '" .. repsqlchars (entry) .. "'")
+			sqlwrite ("update `" .. tbl_sql.anti .. "` set `occurred` = `occurred` + 1 where `antispam` = '" .. repsqlchars (entry) .. "'")
 
 			if tonumber (priority) < 7 then -- skip exlist for 7, 8 and 9
 				for _, value in pairs (exlist) do
@@ -30214,7 +30216,7 @@ function antiscan (nick, class, data, where, to, status)
 						ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
 						opsnotify (table_sets.classnotiledoact, ferr)
 					elseif fval then
-						VH:SQLQuery ("update `" .. tbl_sql.antiex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (value) .. "'")
+						sqlwrite ("update `" .. tbl_sql.antiex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (value) .. "'")
 						local note = "Spam exception from %s with IP %s and class %d in MC: %s"
 
 						if where == 2 then
@@ -30579,7 +30581,7 @@ function sefiscan (nick, line, clas, addr, issr)
 					opsnotify (table_sets.classnotiledoact, ferr)
 				elseif fval then
 					table_sefi [item.id].occ = item.occ + 1
-					VH:SQLQuery ("update `" .. tbl_sql.sefi .. "` set `occurred` = `occurred` + 1 where `filter` = '" .. repsqlchars (item.ent) .. "'")
+					sqlwrite ("update `" .. tbl_sql.sefi .. "` set `occurred` = `occurred` + 1 where `filter` = '" .. repsqlchars (item.ent) .. "'")
 
 					if item.pri < 7 then -- skip for 7, 8, 9
 						for id, exi in pairs (table_sfex) do
@@ -30593,7 +30595,7 @@ function sefiscan (nick, line, clas, addr, issr)
 								opsnotify (table_sets.classnotiledoact, ferr)
 							elseif fval then
 								table_sfex [id].occ = exi.occ + 1
-								VH:SQLQuery ("update `" .. tbl_sql.sefiex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (exi.exc) .. "'")
+								sqlwrite ("update `" .. tbl_sql.sefiex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (exi.exc) .. "'")
 								sefinotify (table_sets.classnotiex, gettext ("Search result exception from %s with IP %s and class %d as any file: %s"):format (nick, addr .. tryipcc (addr, nick), clas, str))
 								return false
 							end
@@ -30663,7 +30665,7 @@ function sefiscan (nick, line, clas, addr, issr)
 					opsnotify (table_sets.classnotiledoact, ferr)
 				elseif fval then
 					table_sefi [item.id].occ = item.occ + 1
-					VH:SQLQuery ("update `" .. tbl_sql.sefi .. "` set `occurred` = `occurred` + 1 where `filter` = '" .. repsqlchars (item.ent) .. "'")
+					sqlwrite ("update `" .. tbl_sql.sefi .. "` set `occurred` = `occurred` + 1 where `filter` = '" .. repsqlchars (item.ent) .. "'")
 
 					if item.pri < 7 then -- skip for 7, 8, 9
 						for id, exi in pairs (table_sfex) do
@@ -30677,7 +30679,7 @@ function sefiscan (nick, line, clas, addr, issr)
 								opsnotify (table_sets.classnotiledoact, ferr)
 							elseif fval then
 								table_sfex [id].occ = exi.occ + 1
-								VH:SQLQuery ("update `" .. tbl_sql.sefiex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (exi.exc) .. "'")
+								sqlwrite ("update `" .. tbl_sql.sefiex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (exi.exc) .. "'")
 								sefinotify (table_sets.classnotiex, gettext ("Search result exception from %s with IP %s and class %d as folder: %s"):format (nick, addr .. tryipcc (addr, nick), clas, dir))
 								return false
 							end
@@ -30747,7 +30749,7 @@ function sefiscan (nick, line, clas, addr, issr)
 					opsnotify (table_sets.classnotiledoact, ferr)
 				elseif fval then
 					table_sefi [item.id].occ = item.occ + 1
-					VH:SQLQuery ("update `" .. tbl_sql.sefi .. "` set `occurred` = `occurred` + 1 where `filter` = '" .. repsqlchars (item.ent) .. "'")
+					sqlwrite ("update `" .. tbl_sql.sefi .. "` set `occurred` = `occurred` + 1 where `filter` = '" .. repsqlchars (item.ent) .. "'")
 
 					if item.pri < 7 then -- skip for 7, 8, 9
 						for id, exi in pairs (table_sfex) do
@@ -30761,7 +30763,7 @@ function sefiscan (nick, line, clas, addr, issr)
 								opsnotify (table_sets.classnotiledoact, ferr)
 							elseif fval then
 								table_sfex [id].occ = exi.occ + 1
-								VH:SQLQuery ("update `" .. tbl_sql.sefiex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (exi.exc) .. "'")
+								sqlwrite ("update `" .. tbl_sql.sefiex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (exi.exc) .. "'")
 								sefinotify (table_sets.classnotiex, gettext ("Search result exception from %s with IP %s and class %d as TTH: %s"):format (nick, addr .. tryipcc (addr, nick), clas, tth))
 								return false
 							end
@@ -30876,7 +30878,7 @@ function sefiscan (nick, line, clas, addr, issr)
 			opsnotify (table_sets.classnotiledoact, ferr)
 		elseif fval then
 			table_sefi [item.id].occ = item.occ + 1
-			VH:SQLQuery ("update `" .. tbl_sql.sefi .. "` set `occurred` = `occurred` + 1 where `filter` = '" .. repsqlchars (item.ent) .. "'")
+			sqlwrite ("update `" .. tbl_sql.sefi .. "` set `occurred` = `occurred` + 1 where `filter` = '" .. repsqlchars (item.ent) .. "'")
 
 			if item.pri < 7 then -- skip for 7, 8, 9
 				for id, exi in pairs (table_sfex) do
@@ -30890,7 +30892,7 @@ function sefiscan (nick, line, clas, addr, issr)
 						opsnotify (table_sets.classnotiledoact, ferr)
 					elseif fval then
 						table_sfex [id].occ = exi.occ + 1
-						VH:SQLQuery ("update `" .. tbl_sql.sefiex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (exi.exc) .. "'")
+						sqlwrite ("update `" .. tbl_sql.sefiex .. "` set `occurred` = `occurred` + 1 where `exception` = '" .. repsqlchars (exi.exc) .. "'")
 						local note = "Search request exception from %s with IP %s and class %d as any file: %s"
 
 						if typ == 2 then

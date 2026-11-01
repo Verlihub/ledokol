@@ -1,8 +1,11 @@
 [ 3.0.1 :: 2026-##-## ]
 
 [147] Fixed: Lua 5.5 errors
+[150] Fixed: Expired IP gags were never cleared
 [147] Added: Hard IP ban is added when kickunkusers is set to 2
 [148] Added: ulogverbosity configuration, 0 = nick and IP, 1 = MyINFO, default 2 = all data, request by Mek
+[149] Added: New VH:HTTP calls now replace old "curl" calls
+[150] Added: New VH:SQLWrite call for faster results
 
 [ 3.0.0 :: 2025-04-27 ]
 
