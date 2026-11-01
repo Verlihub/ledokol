@@ -13684,7 +13684,7 @@ end
 
 function updatescriptmove (nick, serv, mark, plain) -- note: downloaded script file replaces old one, translation file follows
 	commandanswer (nick, gettext ("Moving file: %s"):format (table_othsets.luafile))
-	local res, err = os.execute ("mv -f \"" .. table_othsets.cfgdir .. table_othsets.tmpfile .. "\" \"" .. table_othsets.cfgdir .. "scripts/" .. table_othsets.luafile .. "\"")
+	local res, err = movefile (table_othsets.cfgdir .. table_othsets.tmpfile, table_othsets.cfgdir .. "scripts/" .. table_othsets.luafile)
 
 	if res then
 		updatescriptlang (nick, serv, mark, plain)
@@ -13712,7 +13712,7 @@ function updatescriptlangreply (res, err, data, _, nick, lafi, mark, plain)
 	if res then
 		if data ~= "" and data:find (mark, 1, plain) then
 			commandanswer (nick, gettext ("Moving file: %s"):format (lafi))
-			local res, err = os.execute ("mv -f \"" .. table_othsets.cfgdir .. table_othsets.tmpfile .. "\" \"" .. table_othsets.cfgdir .. "scripts/" .. lafi .. "\"")
+			local res, err = movefile (table_othsets.cfgdir .. table_othsets.tmpfile, table_othsets.cfgdir .. "scripts/" .. lafi)
 
 			if not res then
 				os.remove (table_othsets.cfgdir .. table_othsets.tmpfile)
@@ -26809,7 +26809,7 @@ function loadlangfilereply (res, err, data, _, nick, lang, lafi)
 				commandanswer (nick, gettext ("Moving file: %s"):format (lafi))
 			end
 
-			local res, err = os.execute ("mv -f \"" .. table_othsets.cfgdir .. table_othsets.tmpfile .. "\" \"" .. table_othsets.cfgdir .. "scripts/" .. lafi .. "\"")
+			local res, err = movefile (table_othsets.cfgdir .. table_othsets.tmpfile, table_othsets.cfgdir .. "scripts/" .. lafi)
 
 			if not res then
 				os.remove (table_othsets.cfgdir .. table_othsets.tmpfile)
@@ -27724,6 +27724,8 @@ function avsearservread ()
 			break
 		end
 
+		local cnt = 0
+
 		for part in data:gmatch ("[^|]+") do
 			local _, stop = avparsesr (part, nil, addr)
 
@@ -27731,10 +27733,12 @@ function avsearservread ()
 				break
 			end
 
-			table_othsets.mod_sock.sleep (0.001) -- unload cpu
-		end
+			cnt = cnt + 1
 
-		table_othsets.mod_sock.sleep (0.001) -- unload cpu
+			if cnt >= 10 then
+				break
+			end
+		end
 	end
 
 	--[[
@@ -28724,6 +28728,18 @@ end
 ----- ---- --- -- -
 
 function getulimit ()
+local f = io.open ("/proc/self/limits", "r") -- note: soft limit of hub process, same as ulimit, but without starting a process
+
+if f then
+	local data = f:read ("*all")
+	f:close ()
+	local ulim = data and data:match ("Max open files%s+(%d+)")
+
+	if ulim and tonumber (ulim) then
+		return tonumber (ulim)
+	end
+end
+
 local res = os.execute ("ulimit -n > \"" .. table_othsets.cfgdir .. table_othsets.tmpfile .. "\"") -- open files limit
 
 if res then
@@ -28741,6 +28757,18 @@ if res then
 end
 
 return
+end
+
+----- ---- --- -- -
+
+function movefile (src, dst) -- note: rename without starting a process, mv only when rename fails, for example to other file system
+	local res, err = os.rename (src, dst)
+
+	if res then
+		return res, err
+	end
+
+	return os.execute ("mv -f \"" .. src .. "\" \"" .. dst .. "\"")
 end
 
 ----- ---- --- -- -
