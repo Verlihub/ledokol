@@ -28728,35 +28728,35 @@ end
 ----- ---- --- -- -
 
 function getulimit ()
-local f = io.open ("/proc/self/limits", "r") -- note: soft limit of hub process, same as ulimit, but without starting a process
-
-if f then
-	local data = f:read ("*all")
-	f:close ()
-	local ulim = data and data:match ("Max open files%s+(%d+)")
-
-	if ulim and tonumber (ulim) then
-		return tonumber (ulim)
-	end
-end
-
-local res = os.execute ("ulimit -n > \"" .. table_othsets.cfgdir .. table_othsets.tmpfile .. "\"") -- open files limit
-
-if res then
-	local f = io.open (table_othsets.cfgdir .. table_othsets.tmpfile, "r")
+	local f = io.open ("/proc/self/limits", "r") -- note: soft limit of hub process, same as ulimit, but without starting a process
 
 	if f then
-		local ulim = f:read ("*line") -- read first line
+		local data = f:read ("*all")
 		f:close ()
-		os.remove (table_othsets.cfgdir .. table_othsets.tmpfile)
+		local ulim = data and data:match ("Max open files%s+(%d+)")
 
 		if ulim and tonumber (ulim) then
 			return tonumber (ulim)
 		end
 	end
-end
 
-return
+	local res = os.execute ("ulimit -n > \"" .. table_othsets.cfgdir .. table_othsets.tmpfile .. "\"") -- open files limit
+
+	if res then
+		local f = io.open (table_othsets.cfgdir .. table_othsets.tmpfile, "r")
+
+		if f then
+			local ulim = f:read ("*line") -- read first line
+			f:close ()
+			os.remove (table_othsets.cfgdir .. table_othsets.tmpfile)
+
+			if ulim and tonumber (ulim) then
+				return tonumber (ulim)
+			end
+		end
+	end
+
+	return
 end
 
 ----- ---- --- -- -
