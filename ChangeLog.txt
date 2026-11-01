@@ -6,6 +6,8 @@
 [148] Added: ulogverbosity configuration, 0 = nick and IP, 1 = MyINFO, default 2 = all data, request by Mek
 [149] Added: New VH:HTTP calls now replace old "curl" calls
 [150] Added: New VH:SQLWrite call for faster results
+[150] Added: Gag list cache
+[150] Added: Custom nick list cache
 
 [ 3.0.0 :: 2025-04-27 ]
 

@@ -1226,6 +1226,8 @@ table_avex = { -- todo: add apk
 
 cache_prot = {}
 cache_prpr = {}
+cache_gag = {["ip"] = {}, ["cc"] = {}, ["city"] = {}, ["asn"] = {}} -- note: gag tables as hub returns their rows, see loadgagcache
+cache_cust = {["nick"] = {}, ["cust"] = {}} -- note: custom nick table by lower case nick and by lower case custom nick, see loadcustcache
 
 ---------------------------------------------------------------------
 -- global storage variables and tables <<
@@ -9209,14 +9211,12 @@ end
 ----- ---- --- -- -
 
 function getcustnick (nick)
-	local _, rows = VH:SQLQuery ("select `custom` from `" .. tbl_sql.cust .. "` where `nick` = '" .. repsqlchars (nick) .. "'")
+	local lownick = tolow (nick)
+	local row = cache_cust.nick [lownick]
 
-	if rows > 0 then
-		local _, value = VH:SQLFetch (0)
-		return value
+	if row then
+		return row [2]
 	else
-		local lownick = tolow (nick)
-
 		for key, value in pairs (table_cust) do
 			if tolow (key) == lownick then
 				return value
@@ -9250,14 +9250,12 @@ end
 ----- ---- --- -- -
 
 function findcustnick (nick)
-	local _, rows = VH:SQLQuery ("select `nick` from `" .. tbl_sql.cust .. "` where `custom` = '" .. repsqlchars (nick) .. "'")
+	local lnick = tolow (nick)
+	local row = cache_cust.cust [lnick]
 
-	if rows > 0 then
-		local _, val = VH:SQLFetch (0)
-		return val
+	if row then
+		return row [1]
 	else
-		local lnick = tolow (nick)
-
 		for k, v in pairs (table_cust) do
 			if tolow (v) == lnick then
 				return k
@@ -9287,6 +9285,8 @@ function addcustnick (nick, custom)
 	else
 		VH:SQLQuery ("insert into `" .. tbl_sql.cust .. "` (`nick`, `custom`) values ('" .. nnick .. "', '" .. repsqlchars (custom) .. "')")
 	end
+
+	loadcustcache ()
 
 	--if getconfig ("send_user_ip") == 1 then
 		--local ip = getip (nick)
@@ -9339,6 +9339,8 @@ function cleancustnick (limit, byclass)
 			end
 		end
 	end
+
+	loadcustcache ()
 end
 
 ----- ---- --- -- -
@@ -9369,6 +9371,7 @@ function delcustnick (nick, cls, quit)
 		if rows > 0 then
 			local _, cust = VH:SQLFetch (0)
 			VH:SQLQuery ("delete from `" .. tbl_sql.cust .. "` where `custom` = '" .. repsqlchars (cust) .. "'")
+			loadcustcache ()
 
 			if quit then
 				if minhubver (1, 0, 2, 15) then
@@ -9399,11 +9402,12 @@ function resetrealnick (nick)
 	end
 
 	if table_sets.custnickclass ~= 11 then -- might be enabled after user login, results a conflict
-		local _, rows = VH:SQLQuery ("select `nick` from `" .. tbl_sql.cust .. "` where `custom` = '" .. repsqlchars (nick) .. "'") -- todo: add unique index custom
+		local row = cache_cust.cust [lnick]
 
-		if rows > 0 then
-			local _, cust = VH:SQLFetch (0)
+		if row then
+			local cust = row [1]
 			VH:SQLQuery ("delete from `" .. tbl_sql.cust .. "` where `nick` = '" .. repsqlchars (cust) .. "'")
+			loadcustcache ()
 			maintoall (gettext ("Custom nick %s is now owned by real user and therefore has been reset for user: %s"):format (nick, cust), 0, 10)
 		end
 	end
@@ -9471,6 +9475,7 @@ function opdelcustnick (nick, user)
 	if rows > 0 then
 		_, orig, cust = VH:SQLFetch (0)
 		VH:SQLQuery ("delete from `" .. tbl_sql.cust .. "` where `nick` = '" .. repsqlchars (orig) .. "'")
+		loadcustcache ()
 		ok = true
 	else
 		luser = tolow (user)
@@ -9534,6 +9539,8 @@ function resetcustnicks ()
 			end
 		end
 	end
+
+	loadcustcache ()
 end
 
 ----- ---- --- -- -
@@ -16111,6 +16118,8 @@ function gagipadd (nick, line)
 			end
 		end
 
+		loadgagcache ("ip")
+
 	else
 		if table_igag [ent] then -- flood or spam detected both in mc and pm
 			flag = 0
@@ -16151,6 +16160,8 @@ function gagipdel (nick, line)
 			commandanswer (nick, gettext ("IP gag not found: %s"):format (line))
 		end
 	end
+
+	loadgagcache ("ip")
 end
 
 ----- ---- --- -- -
@@ -16197,6 +16208,8 @@ function gagiplist (nick)
 			for _, val in pairs (del) do
 				VH:SQLQuery ("delete from `" .. tbl_sql.ipgag .. "` where `ip` = '" .. repsqlchars (val) .. "'")
 			end
+
+			loadgagcache ("ip")
 		end
 	end
 
@@ -16229,13 +16242,13 @@ function gagipcheck (nick, addr, clas, to, data, noti)
 		}
 	end
 
-	local _, rows = VH:SQLQuery ("select `ip`, `flag`, `why`, `time` from `" .. tbl_sql.ipgag .. "`")
+	local rows = cache_gag.ip
 
-	if rows > 0 then -- permanent list
+	if # rows > 0 then -- permanent list
 		local del, now = {}, os.time ()
 
-		for pos = 0, rows - 1 do
-			local _, ent, flag, why, long = VH:SQLFetch (pos)
+		for pos = 1, # rows do
+			local ent, flag, why, long = rows [pos][1], rows [pos][2], rows [pos][3], rows [pos][4]
 			long = tonumber (long)
 
 			if (long > 0) and (now >= long) then -- check expired
@@ -16254,6 +16267,8 @@ function gagipcheck (nick, addr, clas, to, data, noti)
 			for _, val in pairs (del) do
 				VH:SQLQuery ("delete from `" .. tbl_sql.ipgag .. "` where `ip` = '" .. repsqlchars (val) .. "'")
 			end
+
+			loadgagcache ("ip")
 		end
 	end
 
@@ -16346,6 +16361,8 @@ function gagccadd (nick, line)
 			end
 		end
 	end
+
+	loadgagcache ("cc")
 end
 
 ----- ---- --- -- -
@@ -16365,6 +16382,8 @@ function gagccdel (nick, lre)
 			commandanswer (nick, gettext ("Country code gag not found: %s"):format (lre))
 		end
 	end
+
+	loadgagcache ("cc")
 end
 
 ----- ---- --- -- -
@@ -16417,13 +16436,13 @@ function gagcccheck (nick, ip, class, to, data, noti)
 		return false
 	end
 
-	local _, rows = VH:SQLQuery ("select `item`, `flag`, `why` from `" .. tbl_sql.ccgag .. "`")
+	local rows = cache_gag.cc
 
-	if rows > 0 then
+	if # rows > 0 then
 		cc = cc:lower ()
 
-		for row = 0, rows - 1 do
-			local _, lre, flag, why = VH:SQLFetch (row)
+		for row = 1, # rows do
+			local lre, flag, why = rows [row][1], rows [row][2], rows [row][3]
 
 			if cc:match (lre) then
 				flag = tonumber (flag or 0) or 0
@@ -16516,6 +16535,8 @@ function gagcityadd (nick, line)
 			end
 		end
 	end
+
+	loadgagcache ("city")
 end
 
 ----- ---- --- -- -
@@ -16535,6 +16556,8 @@ function gagcitydel (nick, lre)
 			commandanswer (nick, gettext ("City gag not found: %s"):format (lre))
 		end
 	end
+
+	loadgagcache ("city")
 end
 
 ----- ---- --- -- -
@@ -16587,13 +16610,13 @@ function gagcitycheck (nick, ip, class, to, data, noti)
 		return false
 	end
 
-	local _, rows = VH:SQLQuery ("select `item`, `flag`, `why` from `" .. tbl_sql.citygag .. "`")
+	local rows = cache_gag.city
 
-	if rows > 0 then
+	if # rows > 0 then
 		city = city:lower ()
 
-		for row = 0, rows - 1 do
-			local _, lre, flag, why = VH:SQLFetch (row)
+		for row = 1, # rows do
+			local lre, flag, why = rows [row][1], rows [row][2], rows [row][3]
 
 			if city:match (lre) then
 				flag = tonumber (flag or 0) or 0
@@ -16687,6 +16710,8 @@ function gagasnadd (nick, line)
 			end
 		end
 	end
+
+	loadgagcache ("asn")
 end
 
 ----- ---- --- -- -
@@ -16708,6 +16733,8 @@ function gagasndel (nick, lre)
 			commandanswer (nick, gettext ("ASN gag not found: %s"):format (lre))
 		end
 	end
+
+	loadgagcache ("asn")
 end
 
 ----- ---- --- -- -
@@ -16761,13 +16788,13 @@ function gagasncheck (nick, ip, class, to, data, noti)
 		return false
 	end
 
-	local _, rows = VH:SQLQuery ("select `item`, `flag`, `why` from `" .. tbl_sql.asngag .. "`")
+	local rows = cache_gag.asn
 
-	if rows > 0 then
+	if # rows > 0 then
 		low = asn:lower ()
 
-		for row = 0, rows - 1 do
-			local _, lre, flag, why = VH:SQLFetch (row)
+		for row = 1, # rows do
+			local lre, flag, why = rows [row][1], rows [row][2], rows [row][3]
 
 			if low:match (lre) then
 				if asn:match ("^AS%d+") then
@@ -20024,6 +20051,7 @@ function namereg (nick, line, cls)
 		VH:SQLQuery ("update `reglist` set `nick` = '" .. rnewn .. "' where `nick` = '" .. roldn .. "'")
 		VH:SQLQuery ("update `" .. tbl_sql.wm .. "` set `nick` = '" .. rnewn .. "' where `nick` = '" .. roldn .. "'")
 		VH:SQLQuery ("update `" .. tbl_sql.cust .. "` set `nick` = '" .. rnewn .. "' where `nick` = '" .. roldn .. "'")
+		loadcustcache ()
 		VH:SQLQuery ("update `" .. tbl_sql.auth .. "` set `nick` = '" .. rnewn .. "' where `nick` = '" .. roldn .. "'") -- no limit
 		VH:SQLQuery ("update `" .. tbl_sql.chran .. "` set `nick` = '" .. rnewn .. "' where `nick` = '" .. roldn .. "'")
 		VH:SQLQuery ("update `" .. tbl_sql.upran .. "` set `nick` = '" .. rnewn .. "' where `nick` = '" .. roldn .. "'")
@@ -20141,6 +20169,7 @@ function delledouser (nick)
 	local usr = repsqlchars (nick)
 	VH:SQLQuery ("delete from `" .. tbl_sql.wm .. "` where `nick` = '" .. usr .. "'")
 	VH:SQLQuery ("delete from `" .. tbl_sql.cust .. "` where `nick` = '" .. usr .. "'")
+	loadcustcache ()
 	VH:SQLQuery ("delete from `" .. tbl_sql.auth .. "` where `nick` = '" .. usr .. "'")
 	VH:SQLQuery ("delete from `" .. tbl_sql.off .. "` where `from` = '" .. usr .. "'")
 	VH:SQLQuery ("delete from `" .. tbl_sql.chran .. "` where `nick` = '" .. usr .. "'")
@@ -26755,6 +26784,56 @@ function loadcachelists ()
 			table.insert (cache_prpr, prot)
 		end
 	end
+
+	loadgagcache ("ip")
+	loadgagcache ("cc")
+	loadgagcache ("city")
+	loadgagcache ("asn")
+	loadcustcache ()
+end
+
+----- ---- --- -- -
+
+function loadgagcache (kind) -- note: whole table in same order as select gives it, loaded again after every change of that table
+	local tbl, cols = tbl_sql.ipgag, "`ip`, `flag`, `why`, `time`"
+
+	if kind == "cc" then
+		tbl, cols = tbl_sql.ccgag, "`item`, `flag`, `why`"
+	elseif kind == "city" then
+		tbl, cols = tbl_sql.citygag, "`item`, `flag`, `why`"
+	elseif kind == "asn" then
+		tbl, cols = tbl_sql.asngag, "`item`, `flag`, `why`"
+	end
+
+	local list = {}
+	local _, rows = VH:SQLQuery ("select " .. cols .. " from `" .. tbl .. "`")
+
+	for row = 0, rows - 1 do
+		local _, one, two, three, four = VH:SQLFetch (row)
+		table.insert (list, {one, two, three, four})
+	end
+
+	cache_gag [kind] = list
+end
+
+----- ---- --- -- -
+
+function loadcustcache () -- note: same rows as select by nick or custom nick finds, lower case like case insensitive table, first row in table order wins for same custom nick
+	local list = {["nick"] = {}, ["cust"] = {}}
+	local _, rows = VH:SQLQuery ("select `nick`, `custom` from `" .. tbl_sql.cust .. "`")
+
+	for row = 0, rows - 1 do
+		local _, nick, custom = VH:SQLFetch (row)
+		local item = {nick, custom}
+		local low = tolow (custom)
+		list.nick [tolow (nick)] = item
+
+		if not list.cust [low] then
+			list.cust [low] = item
+		end
+	end
+
+	cache_cust = list
 end
 
 ----- ---- --- -- -
