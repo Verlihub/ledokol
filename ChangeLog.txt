@@ -2,6 +2,7 @@
 
 [147] Fixed: Lua 5.5 errors
 [150] Fixed: Expired IP gags were never cleared
+[150] Fixed: AVDB check of all online users
 [147] Added: Hard IP ban is added when kickunkusers is set to 2
 [148] Added: ulogverbosity configuration, 0 = nick and IP, 1 = MyINFO, default 2 = all data, request by Mek
 [149] Added: New VH:HTTP calls now replace old "curl" calls
@@ -12,6 +13,7 @@
 [150] Improved: Faster search filter
 [150] Improved: No full garbage collection
 [150] Improved: Faster online check
+[150] Improved: Faster AVDB check
 [150] Improved: Faster statistics and rank cleanup on big tables
 
 [ 3.0.0 :: 2025-04-27 ]

@@ -1142,6 +1142,7 @@ table_hban = {}
 table_blst = {}
 table_prfl = {ctm = {}}
 table_avlo = {}
+cache_avlo = nil -- note: positions in table_avlo by nick and by ip, see findavlo, made again after every change of table_avlo
 table_avus = {}
 table_avse = {}
 table_avbl = {}
@@ -5866,29 +5867,27 @@ function VH_OnUserLogin (nick, uip)
 			end
 
 			if size > 0 then
-				for _, data in pairs (table_avlo) do
-					if (nick == data ["nick"] and addr == data ["addr"]) or (nick == data ["nick"] and size == data ["size"]) or (addr == data ["addr"] and size == data ["size"]) then -- nick + ip, nick + share, ip + share
-						opsnotify (table_sets.classnotiav, gettext ("Infected user logged in with IP %s and share %s: %s"):format (addr .. tryipcc (addr, nick), makesize (size), nick))
-						avdbreport (nick, addr, size, true, data ["path"]) -- antivirus database
+				local data = findavlo (nick, addr, size)
 
-						if table_sets.avdetaction == 0 then
-							table_avbl [nick] = true
-							opsnotify (table_sets.classnotiav, gettext ("Connection requests to following user will be blocked: %s"):format (nick))
-						else
-							if cls >= table_sets.welcomeclass then -- dont send logout message
-								table_faau [nick] = 1
-							end
+				if data then
+					opsnotify (table_sets.classnotiav, gettext ("Infected user logged in with IP %s and share %s: %s"):format (addr .. tryipcc (addr, nick), makesize (size), nick))
+					avdbreport (nick, addr, size, true, data ["path"]) -- antivirus database
 
-							if minhubver (1, 3, 0, 2) then
-								VH:KickUser (table_othsets.sendfrom, nick, table_sets.avkicktext, "", "", table_sets.avkickhide)
-							else
-								VH:KickUser (table_othsets.sendfrom, nick, table_sets.avkicktext)
-							end
-
-							return 0
+					if table_sets.avdetaction == 0 then
+						table_avbl [nick] = true
+						opsnotify (table_sets.classnotiav, gettext ("Connection requests to following user will be blocked: %s"):format (nick))
+					else
+						if cls >= table_sets.welcomeclass then -- dont send logout message
+							table_faau [nick] = 1
 						end
 
-						break
+						if minhubver (1, 3, 0, 2) then
+							VH:KickUser (table_othsets.sendfrom, nick, table_sets.avkicktext, "", "", table_sets.avkickhide)
+						else
+							VH:KickUser (table_othsets.sendfrom, nick, table_sets.avkicktext)
+						end
+
+						return 0
 					end
 				end
 			end
@@ -21689,6 +21688,7 @@ end
 			if setto == 0 or (setto >= 30 and setto <= 1440) then
 				if setto == 0 then
 					table_avlo = {} -- clear
+					cache_avlo = nil
 					table_othsets.avlastloadtime = 0
 					table_othsets.avloadvercount = 0
 					table_othsets.avloaddelcount = 0
@@ -27162,6 +27162,7 @@ function loadavdbreply (res, err, avdb, head, stam, load, fresh)
 	end
 
 	table_othsets.avdbload = nil
+	cache_avlo = nil -- note: list can change below
 
 	if fresh then -- note: list is emptied only now, so old list was used while fresh one was downloading
 		table_avlo = {}
@@ -27308,11 +27309,15 @@ function loadavdbreply (res, err, avdb, head, stam, load, fresh)
 				end
 			end
 
+			cache_avlo = nil -- note: entries were added or changed
+
+			if loco > 0 then
+				table_othsets.avdbcheckall = true -- check all users on next timer when we get fresh db
+			end
+
 			if table_sets.avfeedverb == 3 then
 				if loco > 0 then
 					opsnotify (table_sets.classnotiav, gettext ("Loaded %d of %d with totally %d items: %s"):format (loco, loal, # table_avlo, "AVDB"))
-					table_othsets.avdbcheckall = true -- check all users on next timer when we get fresh db
-
 				elseif loal > 0 then
 					opsnotify (table_sets.classnotiav, gettext ("Loaded none of %d with totally %d items: %s"):format (loal, # table_avlo, "AVDB"))
 				else
@@ -27414,29 +27419,67 @@ function avdbcheckall ()
 				local size = parsemyinfoshare (getmyinfo (nick))
 
 				if size > 0 then
-					for _, data in pairs (table_avlo) do
-						if (nick == data ["nick"] and addr == data ["addr"]) or (nick == data ["nick"] and size == data ["size"]) or (addr == data ["addr"] and size == data ["size"]) then -- nick + ip, nick + share, ip + share
-							opsnotify (table_sets.classnotiav, gettext ("Infected user found with IP %s and share %s: %s"):format (addr .. tryipcc (addr, nick), makesize (size), nick))
-							avdbreport (nick, addr, size, true, data ["path"]) -- antivirus database
+					local data = findavlo (nick, addr, size)
 
-							if table_sets.avdetaction == 0 then
-								table_avbl [nick] = true
-								opsnotify (table_sets.classnotiav, gettext ("Connection requests to following user will be blocked: %s"):format (nick))
+					if data then
+						opsnotify (table_sets.classnotiav, gettext ("Infected user found with IP %s and share %s: %s"):format (addr .. tryipcc (addr, nick), makesize (size), nick))
+						avdbreport (nick, addr, size, true, data ["path"]) -- antivirus database
 
+						if table_sets.avdetaction == 0 then
+							table_avbl [nick] = true
+							opsnotify (table_sets.classnotiav, gettext ("Connection requests to following user will be blocked: %s"):format (nick))
+
+						else
+							if minhubver (1, 3, 0, 2) then
+								VH:KickUser (table_othsets.sendfrom, nick, table_sets.avkicktext, "", "", table_sets.avkickhide)
 							else
-								if minhubver (1, 3, 0, 2) then
-									VH:KickUser (table_othsets.sendfrom, nick, table_sets.avkicktext, "", "", table_sets.avkickhide)
-								else
-									VH:KickUser (table_othsets.sendfrom, nick, table_sets.avkicktext)
-								end
+								VH:KickUser (table_othsets.sendfrom, nick, table_sets.avkicktext)
 							end
-
-							break
 						end
 					end
 				end
 			end
 		end
+	end
+end
+
+----- ---- --- -- -
+
+function findavlo (nick, addr, size) -- note: first entry in list order that matches nick and ip, nick and share or ip and share, same as loop over whole table_avlo, every match has same nick or same ip, so only those entries are checked
+	if not cache_avlo then
+		local list = {["nick"] = {}, ["addr"] = {}}
+
+		for id = 1, # table_avlo do -- note: entries are only added at end, positions in each list are in same order as loop
+			local data = table_avlo [id]
+
+			list.nick [data ["nick"]] = list.nick [data ["nick"]] or {}
+			table.insert (list.nick [data ["nick"]], id)
+			list.addr [data ["addr"]] = list.addr [data ["addr"]] or {}
+			table.insert (list.addr [data ["addr"]], id)
+		end
+
+		cache_avlo = list
+	end
+
+	local best = nil
+
+	for _, ids in ipairs ({cache_avlo.nick [nick] or {}, cache_avlo.addr [addr] or {}}) do
+		for _, id in ipairs (ids) do
+			if best and id >= best then -- note: earlier match was found in other list
+				break
+			end
+
+			local data = table_avlo [id]
+
+			if (nick == data ["nick"] and addr == data ["addr"]) or (nick == data ["nick"] and size == data ["size"]) or (addr == data ["addr"] and size == data ["size"]) then -- nick + ip, nick + share, ip + share
+				best = id
+				break
+			end
+		end
+	end
+
+	if best then
+		return table_avlo [best]
 	end
 end
 
