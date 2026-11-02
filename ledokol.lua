@@ -98,6 +98,8 @@ table_sets = {
 	avfilediff = 256,
 	avfilecount = 30,
 	avuserfree = 180,
+	addavfeed = 0,
+	avfeednick = "", 
 	avfeedverb = 2,
 	avsendtodb = 1,
 	avdbloadint = 0,
@@ -1701,6 +1703,11 @@ function Main (file)
 					end
 
 					if ver <= 301 then
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('addavfeed', '" .. repsqlchars (table_sets.addavfeed) .. "')")
+						VH:SQLQuery ("insert ignore into `" .. tbl_sql.conf .. "` (`variable`, `value`) values ('avfeednick', '" .. repsqlchars (table_sets.avfeednick) .. "')")
+					end
+
+					if ver <= 302 then
 						-- todo: next version
 					end
 
@@ -1754,6 +1761,10 @@ function Main (file)
 
 	if table_sets.useblacklist == 1 and table_sets.addblistfeed == 1 then -- blacklist feed
 		addhubrobot (table_sets.blistfeednick, "", 2, "", 0)
+	end
+
+	if table_sets.avdbloadint > 0 and table_sets.addavfeed == 1 then -- avdb feed
+		addhubrobot (table_sets.avfeednick, "", 2, "", 0)
 	end
 
 	if table_sets.chatrunning == 1 then
@@ -1866,6 +1877,10 @@ function UnLoad ()
 
 	if table_sets.useblacklist == 1 and table_sets.addblistfeed == 1 then -- blacklist feed
 		delhubrobot (table_sets.blistfeednick)
+	end
+
+	if table_sets.avdbloadint > 0 and table_sets.addavfeed == 1 then -- avdb feed
+		delhubrobot (table_sets.avfeednick)
 	end
 
 	return 1
@@ -4006,6 +4021,10 @@ elseif data:match ("^" .. table_othsets.optrig .. table_cmnds.mode .. "$") then
 				delhubrobot (table_sets.blistfeednick)
 			end
 
+			if table_sets.avdbloadint > 0 and table_sets.addavfeed == 1 then -- avdb feed
+				delhubrobot (table_sets.avfeednick)
+			end
+
 			if table_sets.addspecialver == 1 then
 				VH:SetConfig ((VH.ConfName or "config"), "hub_version_special", "")
 			end
@@ -5870,12 +5889,13 @@ function VH_OnUserLogin (nick, uip)
 				local data = findavlo (nick, addr, size)
 
 				if data then
-					opsnotify (table_sets.classnotiav, gettext ("Infected user logged in with IP %s and share %s: %s"):format (addr .. tryipcc (addr, nick), makesize (size), nick))
+					avnotify (table_sets.classnotiav, gettext ("Infected user logged in with IP %s and share %s: %s"):format (addr .. tryipcc (addr, nick), makesize (size), nick))
 					avdbreport (nick, addr, size, true, data ["path"]) -- antivirus database
 
 					if table_sets.avdetaction == 0 then
 						table_avbl [nick] = true
-						opsnotify (table_sets.classnotiav, gettext ("Connection requests to following user will be blocked: %s"):format (nick))
+						avnotify (table_sets.classnotiav, gettext ("Connection requests to following user will be blocked: %s"):format (nick))
+
 					else
 						if cls >= table_sets.welcomeclass then -- dont send logout message
 							table_faau [nick] = 1
@@ -7642,7 +7662,7 @@ function VH_OnScriptCommand (name, data, plug, file)
 
 				if size > 0 then -- has share
 					if table_sets.avdetaction == 1 or not table_avbl [nick] then -- only once
-						opsnotify (table_sets.classnotiav, gettext ("Infected user found with IP %s and share %s: %s"):format (addr .. tryipcc (addr, nick), makesize (size), nick))
+						avnotify (table_sets.classnotiav, gettext ("Infected user found with IP %s and share %s: %s"):format (addr .. tryipcc (addr, nick), makesize (size), nick))
 					end
 
 					avdbreport (nick, addr, size, true, path) -- report to avdb
@@ -7650,7 +7670,7 @@ function VH_OnScriptCommand (name, data, plug, file)
 					if table_sets.avdetaction == 0 then
 						if not table_avbl [nick] then -- only once
 							table_avbl [nick] = true
-							opsnotify (table_sets.classnotiav, gettext ("Connection requests to following user will be blocked: %s"):format (nick))
+							avnotify (table_sets.classnotiav, gettext ("Connection requests to following user will be blocked: %s"):format (nick))
 						end
 
 					else
@@ -7905,6 +7925,14 @@ function VH_OnParsedMsgPM (from, data, to)
 
 	elseif to == table_sets.blistfeednick then -- blacklist feed
 		if table_sets.useblacklist == 1 and table_sets.addblistfeed == 1 and fcls < 3 then
+			opsnotify (table_sets.classnotibotpm, gettext ("%s with IP %s and class %d sent message to %s: %s"):format (from, addr .. tryipcc (addr, from), fcls, to, data))
+			VH:SendToUser ("$To: " .. from .. " From: " .. to .. " $<" .. to .. "> " .. gettext ("I'm probably away. State your business and I might answer later if you're lucky.") .. "|", from)
+		end
+
+	----- ---- --- -- -
+
+	elseif to == table_sets.avfeednick then -- avdb feed
+		if table_sets.avdbloadint > 0 and table_sets.addavfeed == 1 and fcls < 3 then
 			opsnotify (table_sets.classnotibotpm, gettext ("%s with IP %s and class %d sent message to %s: %s"):format (from, addr .. tryipcc (addr, from), fcls, to, data))
 			VH:SendToUser ("$To: " .. from .. " From: " .. to .. " $<" .. to .. "> " .. gettext ("I'm probably away. State your business and I might answer later if you're lucky.") .. "|", from)
 		end
@@ -21616,28 +21644,88 @@ end
 
 	----- ---- --- -- -
 
+	elseif tvar == "addavfeed" then
+		if num then
+			if setto == 0 or setto == 1 then
+				ok = true
+
+				if table_sets [tvar] ~= setto and table_sets.avsearchint > 0 then
+					if setto == 0 then
+						delhubrobot (table_sets.avfeednick)
+					else
+						addhubrobot (table_sets.avfeednick, "", 2, "", 0)
+					end
+				end
+
+			else
+				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0 " .. gettext ("or") .. " 1"))
+			end
+
+		else
+			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
+		end
+
+	----- ---- --- -- -
+
+	elseif tvar == "avfeednick" then -- note: addavfeed is not required
+		if # setto > 0 then
+			setto = repnickchars (setto)
+
+			if table_sets.addavfeed == 1 then
+				if setto == table_sets [tvar] or getstatus (setto) == 1 then -- isbot (setto)
+					commandanswer (nick, gettext ("Specified nick is already in use."))
+					return
+				end
+
+				if table_sets.avsearchint > 0 then
+					delhubrobot (table_sets [tvar])
+					addhubrobot (setto, "", 2, "", 0)
+				end
+			end
+
+			ok = true
+
+		elseif table_sets.addavfeed == 1 then
+			commandanswer (nick, gettext ("Configuration variable %s can't be empty."):format (tvar))
+		end
+
+	----- ---- --- -- -
+
 	elseif tvar == "avsearchint" then
 		if num then
 			if setto >= 0 and setto <= 900 then
-				if setto == 0 then
-					avsearservstop (nick)
-					table_avse = {} -- clear
-					table_avus = {}
-					table_avbl = {}
-					table_othsets.avnextitem = 1
-					table_othsets.avrandstr = ""
-				else
-					if # table_sets.avsearservaddr > 0 then
-						avsearservstart (nil, nil, nick)
+				ok = true
+
+				if table_sets [tvar] ~= setto then
+					if table_sets.addavfeed == 1 then -- feed first
+						if setto == 0 then
+							delhubrobot (table_sets.avfeednick)
+						else
+							addhubrobot (table_sets.avfeednick, "", 2, "", 0)
+						end
 					end
 
-					loadavstr ()
+					if setto == 0 then
+						avsearservstop (nick)
+						table_avse = {} -- clear
+						table_avus = {}
+						table_avbl = {}
+						table_othsets.avnextitem = 1
+						table_othsets.avrandstr = ""
+
+					else
+						if # table_sets.avsearservaddr > 0 then
+							avsearservstart (nil, nil, nick)
+						end
+
+						loadavstr ()
+					end
 				end
 
-				ok = true
 			else
 				commandanswer (nick, gettext ("Configuration variable %s can only be set to: %s"):format (tvar, "0 " .. gettext ("to") .. " 900"))
 			end
+
 		else
 			commandanswer (nick, gettext ("Configuration variable %s must be a number."):format (tvar))
 		end
@@ -25865,6 +25953,8 @@ function showledoconf (nick)
 	conf = conf .. "\r\n [::] avfilediff = " .. _tostring (table_sets.avfilediff)
 	conf = conf .. "\r\n [::] avfilecount = " .. _tostring (table_sets.avfilecount)
 	conf = conf .. "\r\n [::] avuserfree = " .. _tostring (table_sets.avuserfree)
+	conf = conf .. "\r\n [::] addavfeed = " .. _tostring (table_sets.addavfeed)
+	conf = conf .. "\r\n [::] avfeednick = " .. _tostring (table_sets.avfeednick)
 	conf = conf .. "\r\n [::] avfeedverb = " .. _tostring (table_sets.avfeedverb)
 	conf = conf .. "\r\n [::] avsendtodb = " .. _tostring (table_sets.avsendtodb)
 	conf = conf .. "\r\n [::] avdbloadint = " .. _tostring (table_sets.avdbloadint)
@@ -27317,20 +27407,20 @@ function loadavdbreply (res, err, avdb, head, stam, load, fresh)
 
 			if table_sets.avfeedverb == 3 then
 				if loco > 0 then
-					opsnotify (table_sets.classnotiav, gettext ("Loaded %d of %d with totally %d items: %s"):format (loco, loal, # table_avlo, "AVDB"))
+					avnotify (table_sets.classnotiav, gettext ("Loaded %d of %d with totally %d items: %s"):format (loco, loal, # table_avlo, "AVDB"))
 				elseif loal > 0 then
-					opsnotify (table_sets.classnotiav, gettext ("Loaded none of %d with totally %d items: %s"):format (loal, # table_avlo, "AVDB"))
+					avnotify (table_sets.classnotiav, gettext ("Loaded none of %d with totally %d items: %s"):format (loal, # table_avlo, "AVDB"))
 				else
-					opsnotify (table_sets.classnotiav, gettext ("Loaded none with totally %d items: %s"):format (# table_avlo, "AVDB"))
+					avnotify (table_sets.classnotiav, gettext ("Loaded none with totally %d items: %s"):format (# table_avlo, "AVDB"))
 				end
 			end
 
 		elseif table_sets.avfeedverb == 3 then
-			opsnotify (table_sets.classnotiav, gettext ("Loaded none with totally %d items: %s"):format (# table_avlo, "AVDB"))
+			avnotify (table_sets.classnotiav, gettext ("Loaded none with totally %d items: %s"):format (# table_avlo, "AVDB"))
 		end
 
 	elseif table_sets.avfeedverb == 3 then
-		opsnotify (table_sets.classnotiav, gettext ("Failed to load information from %s: %s"):format ("AVDB", err))
+		avnotify (table_sets.classnotiav, gettext ("Failed to load information from %s: %s"):format ("AVDB", err))
 	end
 end
 
@@ -27387,22 +27477,26 @@ function avdbreportreply (res, err, avre, _, nick, spec, gen)
 	if res then
 		if avre == "1" then
 			if table_sets.avfeedverb == 3 then
-				opsnotify (table_sets.classnotiav, gettext ("Infected user information sent to %s: %s"):format ("AVDB", nick))
+				avnotify (table_sets.classnotiav, gettext ("Infected user information sent to %s: %s"):format ("AVDB", nick))
 			end
+
 		elseif avre == "0" then
 			if not spec and gen == table_othsets.avsendgen then -- note: reporting was not changed after this report was sent
 				table_sets.avsendtodb = 0
 				table_othsets.avsendgen = table_othsets.avsendgen + 1 -- note: other waiting reports only notify
 				VH:SQLQuery ("update `" .. tbl_sql.conf .. "` set `value` = '0' where `variable` = 'avsendtodb'")
-				opsnotify (table_sets.classnotiav, gettext ("Sadly I don't have access to send infected user information to AVDB, please ask maintainer of this script to add your server IP address to access list. AVDB reporting feature has been automatically disabled."))
+				avnotify (table_sets.classnotiav, gettext ("Sadly I don't have access to send infected user information to AVDB, please ask maintainer of this script to add your server IP address to access list. AVDB reporting feature has been automatically disabled."))
+
 			elseif table_sets.avfeedverb == 3 then
-				opsnotify (table_sets.classnotiav, gettext ("Failed to send information to %s: %s"):format ("AVDB", gettext ("Access is restricted.")))
+				avnotify (table_sets.classnotiav, gettext ("Failed to send information to %s: %s"):format ("AVDB", gettext ("Access is restricted.")))
 			end
+
 		elseif table_sets.avfeedverb == 3 then
-			opsnotify (table_sets.classnotiav, gettext ("Failed to send information to %s: %s"):format ("AVDB", gettext ("Server didn't reply with expected status code.")))
+			avnotify (table_sets.classnotiav, gettext ("Failed to send information to %s: %s"):format ("AVDB", gettext ("Server didn't reply with expected status code.")))
 		end
+
 	elseif table_sets.avfeedverb == 3 then
-		opsnotify (table_sets.classnotiav, gettext ("Failed to send information to %s: %s"):format ("AVDB", err))
+		avnotify (table_sets.classnotiav, gettext ("Failed to send information to %s: %s"):format ("AVDB", err))
 	end
 end
 
@@ -27422,12 +27516,12 @@ function avdbcheckall ()
 					local data = findavlo (nick, addr, size)
 
 					if data then
-						opsnotify (table_sets.classnotiav, gettext ("Infected user found with IP %s and share %s: %s"):format (addr .. tryipcc (addr, nick), makesize (size), nick))
+						avnotify (table_sets.classnotiav, gettext ("Infected user found with IP %s and share %s: %s"):format (addr .. tryipcc (addr, nick), makesize (size), nick))
 						avdbreport (nick, addr, size, true, data ["path"]) -- antivirus database
 
 						if table_sets.avdetaction == 0 then
 							table_avbl [nick] = true
-							opsnotify (table_sets.classnotiav, gettext ("Connection requests to following user will be blocked: %s"):format (nick))
+							avnotify (table_sets.classnotiav, gettext ("Connection requests to following user will be blocked: %s"):format (nick))
 
 						else
 							if minhubver (1, 3, 0, 2) then
@@ -27685,12 +27779,12 @@ function avdetforce (nick, line)
 					spent = table_avus [user][""]
 				end
 
-				opsnotify (table_sets.classnotiav, gettext ("Infected user detected with nick %s and IP %s and share %s and spent time: %s"):format (user, addr .. tryipcc (addr, user), makesize (size), formatuptime (spent, false)))
+				avnotify (table_sets.classnotiav, gettext ("Infected user detected with nick %s and IP %s and share %s and spent time: %s"):format (user, addr .. tryipcc (addr, user), makesize (size), formatuptime (spent, false)))
 				avdbreport (user, addr, size, true, path, hash, true) -- report
 
 				if table_sets.avdetaction == 0 then
 					table_avbl [user] = true
-					opsnotify (table_sets.classnotiav, gettext ("Connection requests to following user will be blocked: %s"):format (user))
+					avnotify (table_sets.classnotiav, gettext ("Connection requests to following user will be blocked: %s"):format (user))
 
 				else
 					if minhubver (1, 3, 0, 2) then
@@ -27778,7 +27872,7 @@ function avsearservstart (addr, port, nick)
 		if nick then
 			commandanswer (nick, gettext ("Failed to start antivirus search server: %s"):format (repnmdcoutchars (err or gettext ("No error message specified."))))
 		else
-			opsnotify (table_sets.classnotiav, gettext ("Failed to start antivirus search server: %s"):format (repnmdcoutchars (err or gettext ("No error message specified."))))
+			avnotify (table_sets.classnotiav, gettext ("Failed to start antivirus search server: %s"):format (repnmdcoutchars (err or gettext ("No error message specified."))))
 		end
 
 		return
@@ -27791,7 +27885,7 @@ function avsearservstart (addr, port, nick)
 		if nick then
 			commandanswer (nick, gettext ("Failed to start antivirus search server: %s"):format (repnmdcoutchars (err or gettext ("No error message specified."))))
 		else
-			opsnotify (table_sets.classnotiav, gettext ("Failed to start antivirus search server: %s"):format (repnmdcoutchars (err or gettext ("No error message specified."))))
+			avnotify (table_sets.classnotiav, gettext ("Failed to start antivirus search server: %s"):format (repnmdcoutchars (err or gettext ("No error message specified."))))
 		end
 
 		udp:close ()
@@ -27803,7 +27897,7 @@ function avsearservstart (addr, port, nick)
 	if nick then
 		commandanswer (nick, gettext ("Started antivirus search server: %s"):format ((addr or table_sets.avsearservaddr) .. ":" .. _tostring (port or table_sets.avsearservport)))
 	else
-		opsnotify (table_sets.classnotiav, gettext ("Started antivirus search server: %s"):format ((addr or table_sets.avsearservaddr) .. ":" .. _tostring (port or table_sets.avsearservport)))
+		avnotify (table_sets.classnotiav, gettext ("Started antivirus search server: %s"):format ((addr or table_sets.avsearservaddr) .. ":" .. _tostring (port or table_sets.avsearservport)))
 	end
 end
 
@@ -27820,7 +27914,7 @@ function avsearservstop (nick)
 	if nick then
 		commandanswer (nick, gettext ("Stopped antivirus search server: %s"):format (table_sets.avsearservaddr .. ":" .. _tostring (table_sets.avsearservport)))
 	else
-		opsnotify (table_sets.classnotiav, gettext ("Stopped antivirus search server: %s"):format (table_sets.avsearservaddr .. ":" .. _tostring (table_sets.avsearservport)))
+		avnotify (table_sets.classnotiav, gettext ("Stopped antivirus search server: %s"):format (table_sets.avsearservaddr .. ":" .. _tostring (table_sets.avsearservport)))
 	end
 end
 
@@ -27976,20 +28070,22 @@ function avparsesr (data, user, addr)
 					feed = feed .. " " .. gettext ("Found files") .. ":\r\n\r\n"
 					feed = feed .. " " .. repnmdcoutchars (path) .. "\r\n " .. string.rep (" ", # path) .. repnmdcoutchars (name) .. " &#124; " .. makesize (size) .. "\r\n"
 
-					opsnotify (table_sets.classnotiav, feed)
+					avnotify (table_sets.classnotiav, feed)
+
 				elseif table_sets.avfeedverb == 1 then
-					opsnotify (table_sets.classnotiav, gettext ("Infected user detected with nick %s and IP %s and share %s and spent time: %s"):format (nick, usip .. tryipcc (usip, nick), makesize (shar), formatuptime (table_othsets.avlastseartick, false)))
+					avnotify (table_sets.classnotiav, gettext ("Infected user detected with nick %s and IP %s and share %s and spent time: %s"):format (nick, usip .. tryipcc (usip, nick), makesize (shar), formatuptime (table_othsets.avlastseartick, false)))
 				end
 
 				avdbreport (nick, usip, shar, true, path) -- antivirus database
 
 				if table_sets.avdetaction == 0 then
 					table_avbl [nick] = true
-					opsnotify (table_sets.classnotiav, gettext ("Connection requests to following user will be blocked: %s"):format (nick))
+					avnotify (table_sets.classnotiav, gettext ("Connection requests to following user will be blocked: %s"):format (nick))
 
 					if table_sets.enableipwatch == 1 then -- ip watch
 						checkipwat (nick, usip, data) -- we will return 0 anyway
 					end
+
 				else
 					if table_sets.enableipwatch == 1 then -- ip watch
 						checkipwat (nick, usip, data) -- we will return 0 anyway
@@ -28055,25 +28151,27 @@ function avparsesr (data, user, addr)
 												feed = feed .. " " .. gettext ("Found files") .. ":\r\n\r\n"
 												feed = feed .. list
 
-												opsnotify (table_sets.classnotiav, feed)
+												avnotify (table_sets.classnotiav, feed)
+
 											elseif table_sets.avfeedverb == 1 then
 												if not haveshar then
 													shar = parsemyinfoshare (getmyinfo (nick))
 													haveshar = true
 												end
 
-												opsnotify (table_sets.classnotiav, gettext ("Infected user detected with nick %s and IP %s and share %s and spent time: %s"):format (nick, usip .. tryipcc (usip, nick), makesize (shar), formatuptime (table_avus [nick][""], false)))
+												avnotify (table_sets.classnotiav, gettext ("Infected user detected with nick %s and IP %s and share %s and spent time: %s"):format (nick, usip .. tryipcc (usip, nick), makesize (shar), formatuptime (table_avus [nick][""], false)))
 											end
 
 											avdbreport (nick, usip, shar, haveshar, path) -- antivirus database
 
 											if table_sets.avdetaction == 0 then
 												table_avbl [nick] = true
-												opsnotify (table_sets.classnotiav, gettext ("Connection requests to following user will be blocked: %s"):format (nick))
+												avnotify (table_sets.classnotiav, gettext ("Connection requests to following user will be blocked: %s"):format (nick))
 
 												if table_sets.enableipwatch == 1 then -- ip watch
 													checkipwat (nick, usip, data) -- we will return 0 anyway
 												end
+
 											else
 												if table_sets.enableipwatch == 1 then -- ip watch
 													checkipwat (nick, usip, data) -- we will return 0 anyway
@@ -31251,6 +31349,20 @@ function blistnotify (micl, data) -- todo: replace nmdc characters here instead 
 
 	if table_sets.addblistfeed == 1 then
 		VH:SendPMToAll ("[" .. prezero (2, micl) .. "] " .. data, table_sets.blistfeednick, micl, 10)
+	else
+		opsnotify (micl, data)
+	end
+end
+
+----- ---- --- -- -
+
+function avnotify (micl, data) -- todo: replace nmdc characters here instead of each place that calls this function
+	if micl == 11 then
+		return
+	end
+
+	if table_sets.addavfeed == 1 or table_sets.avfeednick ~= "" then -- note: addavfeed is not required
+		VH:SendPMToAll ("[" .. prezero (2, micl) .. "] " .. data, table_sets.avfeednick, micl, 10)
 	else
 		opsnotify (micl, data)
 	end

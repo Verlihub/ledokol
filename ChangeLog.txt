@@ -10,6 +10,7 @@
 [150] Added: Gag list cache
 [150] Added: Custom nick list cache
 [150] Added: Rank exception list cache
+[150] Added: addavfeed and avfeednick configurations where nick can be used for different feed
 [150] Improved: Faster search filter
 [150] Improved: No full garbage collection
 [150] Improved: Faster online check
