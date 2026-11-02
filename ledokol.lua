@@ -1149,6 +1149,7 @@ table_avbl = {}
 table_myfo = {}
 table_sefi = {}
 table_sfex = {}
+cache_sefi = {} -- note: sorted search filter list of each search type, made from table_sefi, emptied on every change of table_sefi
 table_sfbl = {}
 table_sdbl = {}
 table_laul = {}
@@ -1228,6 +1229,7 @@ cache_prot = {}
 cache_prpr = {}
 cache_gag = {["ip"] = {}, ["cc"] = {}, ["city"] = {}, ["asn"] = {}} -- note: gag tables as hub returns their rows, see loadgagcache
 cache_cust = {["nick"] = {}, ["cust"] = {}} -- note: custom nick table by lower case nick and by lower case custom nick, see loadcustcache
+cache_ranex = {} -- note: rank exception nicks by lower case nick, see loadranexcache
 
 ---------------------------------------------------------------------
 -- global storage variables and tables <<
@@ -6915,11 +6917,9 @@ function VH_OnTimer (msec)
 		table_othsets.lastupdcheck = now -- reset
 	end
 
-	if os.difftime (now, table_othsets.collgarb) >= 900 then -- collect garbage every 15 minutes
+	if os.difftime (now, table_othsets.collgarb) >= 900 then -- collect garbage every 15 minutes, only on lua 5.0, newer lua collects in small steps by itself and full collect freezes hub for tens of milliseconds
 		if not table_othsets.ver_lua or table_othsets.ver_lua:sub (1, 3) == "5.0" then
 			collectgarbage ()
-		else
-			collectgarbage ("collect")
 		end
 
 		table_othsets.collgarb = now -- reset
@@ -13340,7 +13340,7 @@ function collectstats ()
 
 	-- memory and peak
 
-	local mu = getmemusg ()
+	local mu = getmemusg (true) -- note: without full collect, it would freeze hub on every statistics run
 	VH:SQLQuery ("insert into `" .. tbl_sql.stat .. "` (`type`, `time`, `count`) values ('memory_now', " .. _tostring (tm) .. ", '" .. _tostring (mu) .. "') on duplicate key update `time` = " .. _tostring (tm) .. ", `count` = '" .. _tostring (mu) .. "'")
 	local _, rows = VH:SQLQuery ("select `count` from `" .. tbl_sql.stat .. "` where `type` = 'memory_peak'")
 
@@ -18366,6 +18366,8 @@ function cleanuptable (nick, line, cls)
 			end
 		end
 
+		cache_sefi = {}
+
 		if tot > 0 then
 			commandanswer (nick, gettext ("Deleted %d rows: %s"):format (tot, cype))
 			opsnotify (table_sets.classnotiledoact, gettext ("%s with class %d deleted %d search filter entries with occurrence less than %d."):format (nick, cls, tot, days))
@@ -18484,9 +18486,8 @@ function chatrankaccept (nick, class)
 	end
 
 	local user = repsqlchars (nick)
-	local _, rows = VH:SQLQuery ("select `nick` from `" .. tbl_sql.ranex .. "` where `nick` = '" .. user .. "'")
 
-	if rows > 0 then
+	if isranex (nick) then
 		sqlwrite ("update `" .. tbl_sql.ranex .. "` set `occurred` = `occurred` + 1 where `nick` = '" .. user .. "'")
 		return
 	end
@@ -18524,9 +18525,8 @@ function sharerankaccept (nick, share, ucls)
 if ucls < table_sets.sharerankclass then return end
 if share < (table_sets.shareranmin * 1073741824) then return end -- only users with share
 local usr = repsqlchars (nick)
-local _, rows = VH:SQLQuery ("select `nick` from `" .. tbl_sql.ranex .. "` where `nick` = '" .. usr .. "'")
 
-if rows > 0 then
+if isranex (nick) then
 	sqlwrite ("update `" .. tbl_sql.ranex .. "` set `occurred` = `occurred` + 1 where `nick` = '" .. usr .. "'")
 else
 	local _, rows = VH:SQLQuery ("select `rank` from `" .. tbl_sql.shran .. "` where `nick` = '" .. usr .. "'")
@@ -18549,9 +18549,8 @@ end
 function oprankaccept (nick, ucls)
 if ucls < table_sets.oprankclass then return end
 local usr = repsqlchars (nick)
-local _, rows = VH:SQLQuery ("select `nick` from `" .. tbl_sql.ranex .. "` where `nick` = '" .. usr .. "'")
 
-if rows > 0 then
+if isranex (nick) then
 	sqlwrite ("update `" .. tbl_sql.ranex .. "` set `occurred` = `occurred` + 1 where `nick` = '" .. usr .. "'")
 else
 	sqlwrite ("insert into `" .. tbl_sql.opran .. "` (`nick`) values ('" .. usr .. "') on duplicate key update `rank` = `rank` + 1")
@@ -18576,9 +18575,8 @@ function uprankaccept (nick, clas)
 	end
 
 	local user = repsqlchars (nick)
-	local _, rows = VH:SQLQuery ("select `nick` from `" .. tbl_sql.ranex .. "` where `nick` = '" .. user .. "'")
 
-	if rows > 0 then
+	if isranex (nick) then
 		sqlwrite ("update `" .. tbl_sql.ranex .. "` set `occurred` = `occurred` + 1 where `nick` = '" .. user .. "'")
 	else
 		tick = os.time () - tick
@@ -18597,9 +18595,8 @@ if tonumber (tp or 1) == 9 then return end -- skip tth
 str = repsrchchars (str)
 if str:find ("^%s+$") then return end
 local usr = repsqlchars (nick)
-local _, rows = VH:SQLQuery ("select `nick` from `" .. tbl_sql.ranex .. "` where `nick` = '" .. usr .. "'")
 
-if rows > 0 then
+if isranex (nick) then
 	sqlwrite ("update `" .. tbl_sql.ranex .. "` set `occurred` = `occurred` + 1 where `nick` = '" .. usr .. "'")
 else
 	sqlwrite ("insert into `" .. tbl_sql.srran .. "` (`search`) values ('" .. repsqlchars (str) .. "') on duplicate key update `rank` = `rank` + 1")
@@ -18634,9 +18631,8 @@ function wordrankaccept (nick, ucls, line)
 	end
 
 	local usr = repsqlchars (nick)
-	local _, rows = VH:SQLQuery ("select `nick` from `" .. tbl_sql.ranex .. "` where `nick` = '" .. usr .. "'")
 
-	if rows > 0 then
+	if isranex (nick) then
 		sqlwrite ("update `" .. tbl_sql.ranex .. "` set `occurred` = `occurred` + 1 where `nick` = '" .. usr .. "'")
 	else
 		local str = repwordranchars (repnmdcinchars (line), 0) .. "$"
@@ -18654,31 +18650,11 @@ end
 
 ----- ---- --- -- -
 
-function cleanwordrank (limit, maxi)
-local _, rows = VH:SQLQuery ("select `word` from `" .. tbl_sql.wdran .. "`")
-
-if rows > 0 then
-local table_delete = {}
-
-for x = 0, rows - 1 do
-local _, aword = VH:SQLFetch (x)
-
+function cleanwordrank (limit, maxi) -- note: length in database counts bytes, same as lua
 if maxi == 0 then
-if # aword < limit then
-table_delete [aword] = x
-end
-
+VH:SQLQuery ("delete from `" .. tbl_sql.wdran .. "` where length(`word`) < " .. _tostring (limit))
 else
-
-if # aword > limit then
-table_delete [aword] = x
-end
-end
-end
-
-for k, _ in pairs (table_delete) do
-VH:SQLQuery ("delete from `" .. tbl_sql.wdran .. "` where `word` = '" .. repsqlchars (k) .. "'")
-end
+VH:SQLQuery ("delete from `" .. tbl_sql.wdran .. "` where length(`word`) > " .. _tostring (limit))
 end
 end
 
@@ -18829,14 +18805,12 @@ function cleanupranks (nick, line, cls)
 		elseif climt == 0 then
 			rows = counttable (tbl_sql.chran, "nick")
 		else
-			_, rows = VH:SQLQuery ("select `rank` from `" .. tbl_sql.chran .. "` where `rank` < " .. _tostring (climt))
+			rows = sqlrowcount ("delete from `" .. tbl_sql.chran .. "` where `rank` < " .. _tostring (climt), true) -- note: database tells how many rows it deleted
 		end
 
 		if rows > 0 then
-			if climt == 0 then
+			if climt == 0 then -- note: rows below limit are already deleted above
 				VH:SQLQuery ("truncate table `" .. tbl_sql.chran .. "`")
-			else
-				VH:SQLQuery ("delete from `" .. tbl_sql.chran .. "` where `rank` < " .. _tostring (climt))
 			end
 
 			commandanswer (nick, gettext ("Deleted %d rows: %s"):format (rows, ctype))
@@ -18900,14 +18874,12 @@ function cleanupranks (nick, line, cls)
 
 		else
 			cbytes = roundint ((climt * 1073741824), 0)
-			_, rows = VH:SQLQuery ("select `rank` from `" .. tbl_sql.shran .. "` where `rank` < " .. _tostring (cbytes))
+			rows = sqlrowcount ("delete from `" .. tbl_sql.shran .. "` where `rank` < " .. _tostring (cbytes), true) -- note: database tells how many rows it deleted
 		end
 
 		if rows > 0 then
-			if climt == 0 then
+			if climt == 0 then -- note: rows below limit are already deleted above
 				VH:SQLQuery ("truncate table `" .. tbl_sql.shran .. "`")
-			else
-				VH:SQLQuery ("delete from `" .. tbl_sql.shran .. "` where `rank` < " .. _tostring (cbytes))
 			end
 
 			commandanswer (nick, gettext ("Deleted %d rows: %s"):format (rows, ctype))
@@ -18969,14 +18941,12 @@ function cleanupranks (nick, line, cls)
 		elseif climt == 0 then
 			rows = counttable (tbl_sql.upran, "nick")
 		else
-			_, rows = VH:SQLQuery ("select `rank` from `" .. tbl_sql.upran .. "` where `rank` < " .. _tostring (climt))
+			rows = sqlrowcount ("delete from `" .. tbl_sql.upran .. "` where `rank` < " .. _tostring (climt), true) -- note: database tells how many rows it deleted
 		end
 
 		if rows > 0 then
-			if climt == 0 then
+			if climt == 0 then -- note: rows below limit are already deleted above
 				VH:SQLQuery ("truncate table `" .. tbl_sql.upran .. "`")
-			else
-				VH:SQLQuery ("delete from `" .. tbl_sql.upran .. "` where `rank` < " .. _tostring (climt))
 			end
 
 			commandanswer (nick, gettext ("Deleted %d rows: %s"):format (rows, ctype))
@@ -19038,14 +19008,12 @@ function cleanupranks (nick, line, cls)
 		elseif climt == 0 then
 			rows = counttable (tbl_sql.opran, "nick")
 		else
-			_, rows = VH:SQLQuery ("select `rank` from `" .. tbl_sql.opran .. "` where `rank` < " .. _tostring (climt))
+			rows = sqlrowcount ("delete from `" .. tbl_sql.opran .. "` where `rank` < " .. _tostring (climt), true) -- note: database tells how many rows it deleted
 		end
 
 		if rows > 0 then
-			if climt == 0 then
+			if climt == 0 then -- note: rows below limit are already deleted above
 				VH:SQLQuery ("truncate table `" .. tbl_sql.opran .. "`")
-			else
-				VH:SQLQuery ("delete from `" .. tbl_sql.opran .. "` where `rank` < " .. _tostring (climt))
 			end
 
 			commandanswer (nick, gettext ("Deleted %d rows: %s"):format (rows, ctype))
@@ -19066,14 +19034,12 @@ function cleanupranks (nick, line, cls)
 		elseif climt == 0 then
 			rows = counttable (tbl_sql.srran, "search")
 		else
-			_, rows = VH:SQLQuery ("select `rank` from `" .. tbl_sql.srran .. "` where `rank` < " .. _tostring (climt))
+			rows = sqlrowcount ("delete from `" .. tbl_sql.srran .. "` where `rank` < " .. _tostring (climt), true) -- note: database tells how many rows it deleted
 		end
 
 		if rows > 0 then
-			if climt == 0 then
+			if climt == 0 then -- note: rows below limit are already deleted above
 				VH:SQLQuery ("truncate table `" .. tbl_sql.srran .. "`")
-			else
-				VH:SQLQuery ("delete from `" .. tbl_sql.srran .. "` where `rank` < " .. _tostring (climt))
 			end
 
 			commandanswer (nick, gettext ("Deleted %d rows: %s"):format (rows, ctype))
@@ -19094,14 +19060,12 @@ function cleanupranks (nick, line, cls)
 		elseif climt == 0 then
 			rows = counttable (tbl_sql.wdran, "word")
 		else
-			_, rows = VH:SQLQuery ("select `rank` from `" .. tbl_sql.wdran .. "` where `rank` < " .. _tostring (climt))
+			rows = sqlrowcount ("delete from `" .. tbl_sql.wdran .. "` where `rank` < " .. _tostring (climt), true) -- note: database tells how many rows it deleted
 		end
 
 		if rows > 0 then
-			if climt == 0 then
+			if climt == 0 then -- note: rows below limit are already deleted above
 				VH:SQLQuery ("truncate table `" .. tbl_sql.wdran .. "`")
-			else
-				VH:SQLQuery ("delete from `" .. tbl_sql.wdran .. "` where `rank` < " .. _tostring (climt))
 			end
 
 			commandanswer (nick, gettext ("Deleted %d rows: %s"):format (rows, ctype))
@@ -19300,6 +19264,7 @@ if rows > 0 then
 commandanswer (nick, gettext ("Couldn't add rank exception because already exists: %s"):format (item))
 else
 VH:SQLQuery ("insert into `" .. tbl_sql.ranex .. "` (`nick`) values ('" .. entry .. "')")
+loadranexcache ()
 commandanswer (nick, gettext ("Added rank exception: %s"):format (item))
 delrank (nick, "all " .. item)
 end
@@ -19313,6 +19278,7 @@ local _, rows = VH:SQLQuery ("select `nick` from `" .. tbl_sql.ranex .. "` where
 
 if rows > 0 then
 VH:SQLQuery ("delete from `" .. tbl_sql.ranex .. "` where `nick` = '" .. aitem .. "'")
+loadranexcache ()
 commandanswer (nick, gettext ("Deleted rank exception: %s"):format (item))
 else
 commandanswer (nick, gettext ("Couldn't delete rank exception because not found: %s"):format (item))
@@ -19342,14 +19308,12 @@ end
 ----- ---- --- -- -
 
 function countranks (tbl)
-local _, rows = VH:SQLQuery ("select `rank` from `" .. tbl .. "`")
+local _, rows = VH:SQLQuery ("select sum(`rank`) from `" .. tbl .. "`") -- note: database counts it, empty table gives null
 local crcount = 0
 
 if rows > 0 then
-	for x = 0, rows - 1 do
-		local _, anum = VH:SQLFetch (x)
-		crcount = crcount + tonumber (anum)
-	end
+	local _, anum = VH:SQLFetch (0)
+	crcount = tonumber (anum or 0) or 0
 end
 
 return crcount
@@ -19358,7 +19322,7 @@ end
 ----- ---- --- -- -
 
 function loadsefilist ()
-	table_sefi, table_sfex = {}, {}
+	table_sefi, table_sfex, cache_sefi = {}, {}, {}
 	local _, rows = VH:SQLQuery ("select * from `" .. tbl_sql.sefi .. "`") -- search filter
 
 	if rows > 0 then
@@ -19431,6 +19395,7 @@ function addsefientry (nick, line)
 				table_sefi [pos].pri = pri
 				table_sefi [pos].act = act
 				table_sefi [pos].typ = typ
+				cache_sefi = {}
 				VH:SQLQuery ("update `" .. tbl_sql.sefi .. "` set `priority` = " .. _tostring (pri) .. ", `action` = " .. _tostring (act) .. ", `type` = " .. _tostring (typ) .. " where `filter` = '" .. repsqlchars (sen) .. "'")
 				local note = "Modified search filter with action %d and priority %d as any file: %s"
 
@@ -19463,6 +19428,7 @@ function addsefientry (nick, line)
 					["typ"] = typ
 				})
 
+				cache_sefi = {}
 				VH:SQLQuery ("insert into `" .. tbl_sql.sefi .. "` (`filter`, `priority`, `action`, `type`) values ('" .. repsqlchars (sen) .. "', " .. _tostring (pri) .. ", " .. _tostring (act) .. ", " .. _tostring (typ) .. ")")
 				local note = "Added search filter with action %d and priority %d as any file: %s"
 
@@ -19498,6 +19464,7 @@ function delsefientry (nick, ent)
 	for id, item in pairs (table_sefi) do
 		if item.ent == sen then
 			table.remove (table_sefi, id)
+			cache_sefi = {}
 			VH:SQLQuery ("delete from `" .. tbl_sql.sefi .. "` where `filter` = '" .. repsqlchars (sen) .. "'")
 			commandanswer (nick, gettext ("Deleted search filter: %s"):format (ent))
 			return
@@ -20089,14 +20056,14 @@ end
 ----- ---- --- -- -
 
 function statsreglist (nick)
-	local _, rows = VH:SQLQuery ("select `class` from `reglist` order by `class` asc")
+	local _, rows = VH:SQLQuery ("select `class`, count(*) from `reglist` group by `class`") -- note: database counts users of each class
 
 	if rows > 0 then
 		local temp, ord, list, total = {}, {}, "", 0
 
 		for x = 0, rows - 1 do
-			local _, class = VH:SQLFetch (x)
-			temp [class] = (temp [class] or 0) + 1
+			local _, class, num = VH:SQLFetch (x)
+			temp [class] = tonumber (num or 0) or 0
 		end
 
 		for k, v in pairs (temp) do
@@ -20377,18 +20344,20 @@ function sendhistcc (nick)
 if not table_refu.GetUserCC then
 	commandanswer (nick, gettext ("This feature requires %s or later installed on your system."):format ("Verlihub 0.9.8e"))
 else
-	local _, rows = VH:SQLQuery ("select `cc` from `" .. tbl_sql.ccstat .. "`")
+	local _, rows = VH:SQLQuery ("select cast(`cc` as binary) as `code`, count(*) from `" .. tbl_sql.ccstat .. "` group by `code`") -- note: database counts users of each country, binary keeps codes apart same as lua compare
 
 	if rows > 0 then
-		local ccs = {}
+		local ccs, total = {}, 0
 
 		for x = 0, rows - 1 do
-			local _, cc = VH:SQLFetch (x)
+			local _, cc, num = VH:SQLFetch (x)
+			num = tonumber (num or 0) or 0
 			if cc == "--" then cc = "??" end -- small change
-			ccs [cc] = (ccs [cc] or 0) + 1
+			ccs [cc] = (ccs [cc] or 0) + num
+			total = total + num
 		end
 
-		commandanswer (nick, gettext ("All time user location statistics") .. ":\r\n\r\n" .. genccstats (ccs, rows) .. "\r\n\t" .. gettext ("Total count since %s: %d"):format (fromunixtime ((getledoconf ("date_ccstats") or os.time () + table_sets.srvtimediff), true), rows) .. "\r\n")
+		commandanswer (nick, gettext ("All time user location statistics") .. ":\r\n\r\n" .. genccstats (ccs, total) .. "\r\n\t" .. gettext ("Total count since %s: %d"):format (fromunixtime ((getledoconf ("date_ccstats") or os.time () + table_sets.srvtimediff), true), total) .. "\r\n")
 	else -- empty
 		commandanswer (nick, gettext ("User location statistics table is empty."))
 	end
@@ -26790,6 +26759,7 @@ function loadcachelists ()
 	loadgagcache ("city")
 	loadgagcache ("asn")
 	loadcustcache ()
+	loadranexcache ()
 end
 
 ----- ---- --- -- -
@@ -26834,6 +26804,29 @@ function loadcustcache () -- note: same rows as select by nick or custom nick fi
 	end
 
 	cache_cust = list
+end
+
+----- ---- --- -- -
+
+function loadranexcache () -- note: same nicks as select by nick finds, lower case like case insensitive table, loaded again after every change of that table
+	local list = {}
+	local _, rows = VH:SQLQuery ("select `nick` from `" .. tbl_sql.ranex .. "`")
+
+	for row = 0, rows - 1 do
+		local _, nick = VH:SQLFetch (row)
+
+		if nick then
+			list [tolow (nick)] = true
+		end
+	end
+
+	cache_ranex = list
+end
+
+----- ---- --- -- -
+
+function isranex (nick) -- note: user is in rank exception list, ranks are not counted
+	return (cache_ranex [tolow (nick)] == true)
 end
 
 ----- ---- --- -- -
@@ -27080,16 +27073,23 @@ end
 
 ----- ---- --- -- -
 
-function getmemusg ()
-	table_othsets.collgarb = os.time ()
+function getmemusg (nocoll) -- note: nocoll reads memory without full collect, garbage that is not collected yet is counted too
+	local old = (not table_othsets.ver_lua or table_othsets.ver_lua:sub (1, 3) == "5.0")
 	local sz, _ = 0, 0
 
-	if not table_othsets.ver_lua or table_othsets.ver_lua:sub (1, 3) == "5.0" then
-		collectgarbage ()
-		sz, _ = gcinfo ()
+	if not nocoll then
+		table_othsets.collgarb = os.time ()
 
+		if old then
+			collectgarbage ()
+		else
+			collectgarbage ("collect")
+		end
+	end
+
+	if old then
+		sz, _ = gcinfo ()
 	else
-		collectgarbage ("collect")
 		sz = collectgarbage ("count")
 	end
 
@@ -28429,6 +28429,11 @@ end
 ----- ---- --- -- -
 
 function getstatus (nick)
+	if VH.IsUserOnline then -- note: hub finds user by nick lowered with same tolower as lua, so same result as loop below
+		local _, online = VH:IsUserOnline (nick)
+		return (online and 1 or 0)
+	end
+
 	local lusr = nick:lower ()
 
 	for user in getnicklist ():gmatch ("([^%$ ]+)") do
@@ -29293,14 +29298,21 @@ end
 ----- ---- --- -- -
 
 function tolow (data)
-	local low = _tostring (data)
+	if not tbl_cyrlow then -- note: upper cyrillic letter to lower one, made once from tbl_cyrlet, lower letter is never an upper one, so one pass gives same result as one pass for each letter
+		local keys = {}
+		tbl_cyrlow = {}
 
-	for _, val in pairs (tbl_cyrlet) do -- cyrillic
-		if val.low then
-			low = low:gsub (string.char (val.cyr), reprexpchars (string.char (val.low)))
+		for _, val in pairs (tbl_cyrlet) do
+			if val.low then
+				tbl_cyrlow [string.char (val.cyr)] = string.char (val.low)
+				table.insert (keys, string.char (val.cyr))
+			end
 		end
+
+		tbl_cyrlowpat = "[" .. table.concat (keys) .. "]" -- note: bytes above 127, none of them has special meaning in pattern
 	end
 
+	local low = _tostring (data):gsub (tbl_cyrlowpat, tbl_cyrlow) -- cyrillic
 	low = low:lower () -- latin
 	return low
 end
@@ -30559,6 +30571,36 @@ end
 
 ----- ---- --- -- -
 
+function getsefilist (typ) -- note: same list in same order as each search request made before, made once until table_sefi changes
+	local sli = cache_sefi [typ]
+
+	if sli then
+		return sli
+	end
+
+	sli = {}
+
+	for id, item in pairs (table_sefi) do
+		if item.typ == 1 or item.typ == typ then
+			table.insert (sli, {
+				["ent"] = item.ent,
+				["pri"] = item.pri,
+				["act"] = item.act,
+				["id"] = id
+			})
+		end
+	end
+
+	table.sort (sli, function (fit, sit)
+		return fit.pri > sit.pri
+	end)
+
+	cache_sefi [typ] = sli
+	return sli
+end
+
+----- ---- --- -- -
+
 function sefiscan (nick, line, clas, addr, issr)
 	if # table_sefi == 0 then
 		return false
@@ -30928,23 +30970,7 @@ function sefiscan (nick, line, clas, addr, issr)
 		lsr = tolow (lsr)
 	end
 
-	local sli = {}
-
-	for id, item in pairs (table_sefi) do
-		if item.typ == 1 or item.typ == typ then
-			table.insert (sli, {
-				["ent"] = item.ent,
-				["occ"] = item.occ,
-				["pri"] = item.pri,
-				["act"] = item.act,
-				["id"] = id
-			})
-		end
-	end
-
-	table.sort (sli, function (fit, sit)
-		return fit.pri > sit.pri
-	end)
+	local sli = getsefilist (typ)
 
 	for _, item in pairs (sli) do
 		local fres, fval = catchfinderror (lsr, item.ent)
@@ -30956,7 +30982,7 @@ function sefiscan (nick, line, clas, addr, issr)
 			ferr = ferr .. " " .. gettext ("Solution") .. ": " .. table_othsets.luaman .. "\r\n"
 			opsnotify (table_sets.classnotiledoact, ferr)
 		elseif fval then
-			table_sefi [item.id].occ = item.occ + 1
+			table_sefi [item.id].occ = table_sefi [item.id].occ + 1 -- note: occurrence is not in sorted list, it changes without new list
 			sqlwrite ("update `" .. tbl_sql.sefi .. "` set `occurred` = `occurred` + 1 where `filter` = '" .. repsqlchars (item.ent) .. "'")
 
 			if item.pri < 7 then -- skip for 7, 8, 9

@@ -8,6 +8,11 @@
 [150] Added: New VH:SQLWrite call for faster results
 [150] Added: Gag list cache
 [150] Added: Custom nick list cache
+[150] Added: Rank exception list cache
+[150] Improved: Faster search filter
+[150] Improved: No full garbage collection
+[150] Improved: Faster online check
+[150] Improved: Faster statistics and rank cleanup on big tables
 
 [ 3.0.0 :: 2025-04-27 ]
 
