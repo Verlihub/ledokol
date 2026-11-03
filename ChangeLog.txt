@@ -3,6 +3,10 @@
 [147] Fixed: Lua 5.5 errors
 [150] Fixed: Expired IP gags were never cleared
 [150] Fixed: AVDB check of all online users
+[150] Fixed: AVDB list could stay incomplete after server error
+[150] Fixed: Failed blacklist download dropped its old entries
+[150] Fixed: Local blacklist file with Windows line ends was not loaded
+[150] Fixed: Script update could install incomplete file
 [147] Added: Hard IP ban is added when kickunkusers is set to 2
 [148] Added: ulogverbosity configuration, 0 = nick and IP, 1 = MyINFO, default 2 = all data, request by Mek
 [149] Added: New VH:HTTP calls now replace old "curl" calls

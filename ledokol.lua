@@ -11008,7 +11008,8 @@ function loadblacklist ()
 					file:close ()
 					local tot = 0
 
-					for line in io.lines (list) do
+					for text in io.lines (list) do
+						local line = text:gsub ("\r$", "") -- note: file with windows line ends
 						local xname, xlow, xhigh = nil, nil, nil
 
 						if cype == "p2p" then
@@ -11068,9 +11069,9 @@ function loadblacklistreply (res, err, data, _, load, row, list, cype, name)
 		return
 	end
 
-	if res and # data > 0 then
-		local tot = 0
+	local tot = 0
 
+	if res and # data > 0 then
 		for line in data:gmatch ("[^\r\n]+") do
 			local xname, xlow, xhigh = nil, nil, nil
 
@@ -11100,20 +11101,36 @@ function loadblacklistreply (res, err, data, _, load, row, list, cype, name)
 						table.insert (load.list [x], {
 							["rang"] = xlow .. "-" .. xhigh,
 							["name"] = xname,
-							["last"] = 0
+							["last"] = 0,
+							["list"] = list -- note: source of remote entry, its entries are kept when next download fails
 						})
 					end
 				end
 			end
 		end
+	end
 
+	if tot > 0 then
 		load.feed [row] = " " .. gettext ("Blacklist loaded with %d items: %s"):format (tot, repnmdcoutchars (name)) .. "\r\n"
 
-	else
+	else -- note: failed download or error page of server
+		keepblacklist (load, list)
 		load.feed [row] = " " .. gettext ("%s blacklist not loaded because: %s"):format (repnmdcoutchars (name), ((err and # err > 0) and repnmdcoutchars (err) or gettext ("Nothing was found in: %s"):format (repnmdcoutchars (list)))) .. "\r\n"
 	end
 
 	loadblacklistdone (load)
+end
+
+----- ---- --- -- -
+
+function keepblacklist (load, list) -- note: entries of remote list from current blacklist go to new one
+	for x = 1, 256 do -- note: current blacklist is empty table before first load
+		for _, data in ipairs (table_blst [x] or {}) do
+			if data.list == list then
+				table.insert (load.list [x], data)
+			end
+		end
+	end
 end
 
 ----- ---- --- -- -
@@ -13635,7 +13652,7 @@ end
 
 function updatescriptreply (res, err, data, _, nick, veda)
 	if res then
-		if data ~= "" and data:find ("ver_ledo = \"" .. veda .. "\" -- ledokol version", 1, true) then
+		if data ~= "" and data:find ("ver_ledo = \"" .. veda .. "\" -- ledokol version", 1, true) and scriptcomplete (data) then
 			updatescriptmove (nick, table_othsets.updservlang, "# Version: " .. veda, true)
 		else
 			os.remove (table_othsets.cfgdir .. table_othsets.tmpfile)
@@ -13660,7 +13677,7 @@ function updatescriptdevreply (res, err, data, _, nick)
 		if data ~= "" then
 			local _, _, veda = data:find ("ver_ledo = \"(%d+%.%d+%.%d+)\" %-%- ledokol version")
 
-			if veda then
+			if veda and scriptcomplete (data) then
 				commandanswer (nick, gettext ("Development version of %s is available: %s"):format ("Ledokol", veda))
 				updatescriptmove (nick, table_othsets.updservdev, "# Version: %d+%.%d+%.%d+", false)
 			else
@@ -13690,7 +13707,7 @@ function updatescriptforcereply (res, err, data, _, nick)
 		if data ~= "" then
 			local _, _, veda = data:find ("ver_ledo = \"(%d+%.%d+%.%d+)\" %-%- ledokol version")
 
-			if veda then
+			if veda and scriptcomplete (data) then
 				commandanswer (nick, gettext ("Stable version of %s is available: %s"):format ("Ledokol", veda))
 				updatescriptmove (nick, table_othsets.updservlang, "# Version: " .. veda, true)
 			else
@@ -13704,6 +13721,12 @@ function updatescriptforcereply (res, err, data, _, nick)
 	else
 		commandanswer (nick, err)
 	end
+end
+
+----- ---- --- -- -
+
+function scriptcomplete (data) -- note: cut download has no end of file block, curl on lua 5.1 reports timeout as success
+	return data:find ("%-%- end of file <<%s*%-+%s*$") ~= nil
 end
 
 ----- ---- --- -- -
@@ -27241,6 +27264,7 @@ end
 function loadavdb (stam, fresh)
 	local load = {} -- note: token of this load, only its reply is used
 	table_othsets.avdbload = load
+	fresh = fresh or table_othsets.avlastloadtime == 0 -- note: time 0 requests whole list, it replaces current list
 	gethttp (table_othsets.avdbloadurl .. "&vers=" .. _tostring (table_othsets.avloadvercount) .. "&time=" .. _tostring (table_othsets.avlastloadtime) .. "&cotime=0&copath=1&nosort=1", nil, false, true, nil, loadavdbreply, stam, load, fresh)
 end
 
@@ -27252,13 +27276,18 @@ function loadavdbreply (res, err, avdb, head, stam, load, fresh)
 	end
 
 	table_othsets.avdbload = nil
-	cache_avlo = nil -- note: list can change below
 
-	if fresh then -- note: list is emptied only now, so old list was used while fresh one was downloading
-		table_avlo = {}
+	if res and not ("\n" .. head):find ("\nAvdb%-Version%-Count: %d") then -- note: reply without avdb headers is error page of server, current list and load time are kept
+		res, err = false, gettext ("Server didn't reply with expected status code.")
 	end
 
 	if res then
+		cache_avlo = nil -- note: list can change below
+
+		if fresh then -- note: list is emptied only now, so old list was used while fresh one was downloading
+			table_avlo = {}
+		end
+
 		if head ~= "" then -- parse headers
 			local have = 0
 
@@ -27291,7 +27320,7 @@ function loadavdbreply (res, err, avdb, head, stam, load, fresh)
 			end
 		end
 
-		table_othsets.avlastloadtime = stam
+		table_othsets.avlastloadtime = tonumber (("\n" .. head):match ("\nAvdb%-Server%-Time: (%d+)")) or stam -- note: server time, rows get time of server clock
 
 		if avdb ~= "" and avdb ~= "0" and avdb ~= "-" then
 			local loco, loal, noup = 0, 0, (# table_avlo == 0)
