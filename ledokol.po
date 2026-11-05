@@ -4140,3 +4140,6 @@ msgstr ""
 
 msgid "Translation file is still downloading, please try again later: %s"
 msgstr ""
+
+msgid "You have to be registered for at least %d days to use this command."
+msgstr ""

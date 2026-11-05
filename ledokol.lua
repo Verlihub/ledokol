@@ -19842,7 +19842,7 @@ function votekickuser (nick, line)
 						local now = os.time ()
 
 						if os.difftime (now, (tonumber (rate) or now)) < (table_sets.votekickregdays * 60 * 60 * 24) then
-							commandanswer (nick, gettext ("This command is either disabled or you don't have access to it."))
+							commandanswer (nick, gettext ("You have to be registered for at least %d days to use this command."):format (table_sets.votekickregdays))
 							return
 						end
 
