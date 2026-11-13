@@ -1381,3 +1381,4 @@ Failed to start HTTP request: %s|
 HTTP request failed with code %d: %s|
 Translation file is still downloading, please try again later: %s|
 You have to be registered for at least %d days to use this command.|
+FDCX address: %s|

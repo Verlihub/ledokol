@@ -485,6 +485,7 @@ table_refu = {
 	GetUserVersion = false,
 	GetUserSupports = false,
 	GetUserHubURL = false,
+	GetUserFDCX = false,
 	--SendToActiveClass = false,
 	--SendToPassiveClass = false,
 	InUserSupports = false,
@@ -12868,6 +12869,14 @@ function showuserinfo (nick, usr)
 
 			if on and url and url ~= "" then
 				info = info .. " " .. gettext ("Hub URL: %s"):format (url) .. "\r\n" -- hub url
+			end
+		end
+
+		if table_refu.GetUserFDCX then
+			local on, addr = VH:GetUserFDCX (user)
+
+			if on and addr and addr ~= "" then
+				info = info .. " " .. gettext ("FDCX address: %s"):format (addr) .. "\r\n" -- fdcx address
 			end
 		end
 

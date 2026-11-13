@@ -4143,3 +4143,6 @@ msgstr ""
 
 msgid "You have to be registered for at least %d days to use this command."
 msgstr ""
+
+msgid "FDCX address: %s"
+msgstr ""
