@@ -13617,13 +13617,34 @@ end
 
 function autoupdatecheckreply (res, err, data)
 	if res and data ~= "" and data:find ("^%d+%.%d+%.%d+$") then
-		local reve = data:gsub ("%.", "")
-		local myve = ver_ledo:gsub ("%.", "")
-
-		if (tonumber (reve) or 0) > (tonumber (myve) or 0) then -- version number must be higher
+		if newerledover (data) then -- version number must be higher
 			opsnotify (table_sets.classnotiledoact, gettext ("Automatic update check detected stable version of %s available, use following command to update: %s"):format ("Ledokol " .. data, getconfig ("cmd_start_op"):sub (1, 1) .. table_cmnds.ledover))
 		end
 	end
+end
+
+----- ---- --- -- -
+
+function newerledover (ver) -- true when version from update server is higher than own, parts are compared one by one as numbers
+	local new, old = {}, {}
+
+	for num in ver:gmatch ("%d+") do
+		table.insert (new, tonumber (num))
+	end
+
+	for num in ver_ledo:gmatch ("%d+") do
+		table.insert (old, tonumber (num))
+	end
+
+	for pos = 1, math.max (# new, # old) do
+		local one, two = new [pos] or 0, old [pos] or 0
+
+		if one ~= two then
+			return one > two
+		end
+	end
+
+	return false
 end
 
 ----- ---- --- -- -
@@ -13639,10 +13660,8 @@ function updatescriptverreply (res, err, data, _, nick)
 	if res then
 		if data ~= "" and data:find ("^%d+%.%d+%.%d+$") then
 			local veda = data
-			local reve = veda:gsub ("%.", "")
-			local myve = ver_ledo:gsub ("%.", "")
 
-			if (tonumber (reve) or 0) > (tonumber (myve) or 0) then -- version number must be higher
+			if newerledover (veda) then -- version number must be higher
 				commandanswer (nick, gettext ("Stable version of %s is available: %s"):format ("Ledokol", veda))
 				commandanswer (nick, gettext ("Downloading script file: %s"):format (table_othsets.luafile))
 				gethttp (table_othsets.updserv .. table_othsets.luafile, nil, true, false, nil, updatescriptreply, nick, veda)
